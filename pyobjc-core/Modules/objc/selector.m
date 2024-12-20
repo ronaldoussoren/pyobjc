@@ -30,33 +30,53 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
     PyObjCSelector* self = (PyObjCSelector*)_self;
 
     if (self->sel_methinfo != NULL && self->sel_mappingcount != PyObjC_MappingCount) {
+        /* XXX: likely needs atomic read for the mappingcounts */
+        Py_BEGIN_CRITICAL_SECTION(self);
         Py_CLEAR(self->sel_methinfo);
+        Py_END_CRITICAL_SECTION();
     }
 
     if (self->sel_methinfo == NULL) {
-        self->sel_methinfo = PyObjCMethodSignature_ForSelector(
+        PyObjCMethodSignature* methinfo;
+        methinfo = PyObjCMethodSignature_ForSelector(
             self->sel_class, (self->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
             self->sel_selector, self->sel_python_signature,
             PyObjCNativeSelector_Check(self));
 
-        if (self->sel_methinfo == NULL)
+        if (methinfo == NULL)
             return NULL;
 
-        if (PyObjCPythonSelector_Check(_self)) {
-            Py_ssize_t i;
+        Py_BEGIN_CRITICAL_SECTION(self);
+#ifdef Py_GIL_DISABLED
+        if (self->sel_methinfo == NULL) {
+#endif
+            self->sel_methinfo = methinfo;
+            Py_INCREF(methinfo);
+            if (PyObjCPythonSelector_Check(_self)) {
+                Py_ssize_t i;
 
-            ((PyObjCPythonSelector*)_self)->numoutput = 0;
-            for (i = 0; i < Py_SIZE(((PyObjCPythonSelector*)_self)->base.sel_methinfo);
-                 i++) {
-                if (((PyObjCPythonSelector*)_self)->base.sel_methinfo->argtype[i]->type[0]
-                    == _C_OUT) {
-                    ((PyObjCPythonSelector*)_self)->numoutput++;
+                ((PyObjCPythonSelector*)_self)->numoutput = 0;
+                for (i = 0; i < Py_SIZE(((PyObjCPythonSelector*)_self)->base.sel_methinfo);
+                     i++) {
+                    if (((PyObjCPythonSelector*)_self)->base.sel_methinfo->argtype[i]->type[0]
+                        == _C_OUT) {
+                        ((PyObjCPythonSelector*)_self)->numoutput++;
+                    }
                 }
+#ifdef Py_GIL_DISABLED
             }
+#endif
         }
+        Py_END_CRITICAL_SECTION();
+        Py_CLEAR(methinfo);
     }
 
-    return self->sel_methinfo;
+    PyObjCMethodSignature* result;
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = self->sel_methinfo;
+    Py_INCREF(result);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 PyDoc_STRVAR(sel_metadata_doc,
@@ -72,6 +92,7 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
     }
 
     PyObject* result = PyObjCMethodSignature_AsDict(mi);
+    Py_CLEAR(mi);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
@@ -125,6 +146,10 @@ static PyObject*
 base_self(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCSelector* self = (PyObjCSelector*)_self;
+
+    /* free-threading: no locking needed because 'sel_self' is constant after
+     * initialization.
+     */
     if (self->sel_self) {
         Py_INCREF(self->sel_self);
         return self->sel_self;
@@ -143,7 +168,9 @@ static PyObject* _Nullable base_signature(PyObject* self,
         return NULL;
     }
 
-    return PyBytes_FromString(methinfo->signature);
+    PyObject* result = PyBytes_FromString(methinfo->signature);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 PyDoc_STRVAR(base_native_signature_doc, "original Objective-C signature for the method");
@@ -151,6 +178,9 @@ PyDoc_STRVAR(base_native_signature_doc, "original Objective-C signature for the 
 static PyObject*
 base_native_signature(PyObject* _self, void* closure __attribute__((__unused__)))
 {
+    /* free-threading: no locking needed because sel_native_signature is constant after
+     * initialization.
+     */
     PyObjCSelector* self = (PyObjCSelector*)_self;
     if (self->sel_native_signature == NULL) {
         /* XXX: When can this be NULL? */
@@ -185,13 +215,18 @@ base_signature_setter(PyObject* _self, PyObject* newVal,
         // LCOV_EXCL_STOP
     }
 
+    PyObjCMethodSignature* methinfo = NULL;
+    Py_BEGIN_CRITICAL_SECTION(self);
     PyMem_Free((char*)self->base.sel_python_signature);
     self->base.sel_python_signature = t;
 
     if (self->base.sel_methinfo != NULL) {
         /* Native selector was changed, ensure the metadata gets updated */
-        Py_CLEAR(self->base.sel_methinfo);
+        methinfo = self->base.sel_methinfo;
+        self->base.sel_methinfo = NULL;
     }
+    Py_END_CRITICAL_SECTION();
+    Py_CLEAR(methinfo);
     return 0;
 }
 
@@ -201,6 +236,7 @@ PyDoc_STRVAR(base_hidden_doc,
 static PyObject*
 base_hidden(PyObject* _self, void* closure __attribute__((__unused__)))
 {
+    /* Free-threading: needs atomic access? */
     if  (((PyObjCSelector*)_self)->sel_flags & PyObjCSelector_kHIDDEN) {
         Py_RETURN_TRUE;
     } else {
@@ -217,9 +253,13 @@ base_hidden_setter(PyObject* _self, PyObject* newVal,
     }
 
     if (PyObject_IsTrue(newVal)) {
+        Py_BEGIN_CRITICAL_SECTION(self);
         ((PyObjCSelector*)_self)->sel_flags |= PyObjCSelector_kHIDDEN;
+        Py_END_CRITICAL_SECTION();
     } else {
+        Py_BEGIN_CRITICAL_SECTION(self);
         ((PyObjCSelector*)_self)->sel_flags &= ~PyObjCSelector_kHIDDEN;
+        Py_END_CRITICAL_SECTION();
     }
     return 0;
 }
@@ -554,6 +594,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
                  sel_getName(sel), methinfo->deprecated / 100,
                  methinfo->deprecated % 100);
         if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
+            Py_CLEAR(methinfo);
             return NULL;
         }
     }
@@ -565,6 +606,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
         PyObjC_Assert(self->base.sel_class != Nil, NULL);
         PyObject* myClass = PyObjCClass_New(self->base.sel_class);
         if (myClass == NULL) { // LCOV_BR_EXCL_LINE
+            Py_CLEAR(methinfo);
             return NULL;       // LCOV_EXCL_LINE
         }
 
@@ -574,6 +616,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
                                                [NSString class])))) {
 
             Py_DECREF(myClass);
+            Py_CLEAR(methinfo);
             PyErr_Format(PyExc_TypeError,
                          "Expecting instance of %s as self, got one "
                          "of %s",
@@ -608,6 +651,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
             }
         }
     }
+    Py_CLEAR(methinfo);
     return res;
 }
 #endif
@@ -665,6 +709,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
                  sel_getName(sel), methinfo->deprecated / 100,
                  methinfo->deprecated % 100);
         if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
+            Py_CLEAR(methinfo);
             return NULL;
         }
     }
@@ -676,8 +721,10 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
 
         execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector,
                                       self->base.sel_methinfo->signature);
-        if (execute == NULL)
+        if (execute == NULL) {
+            Py_CLEAR(methinfo);
             return NULL;
+        }
         self->sel_call_func = execute;
 #if PY_VERSION_HEX >= 0x03090000
         /* Update the vectorcall slot when a faster call is possible */
@@ -713,6 +760,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
 
         myClass = PyObjCClass_New(self->base.sel_class);
         if (myClass == NULL) { // LCOV_BR_EXCL_LINE
+            Py_CLEAR(methinfo);
             return NULL;       // LCOV_EXCL_LINE
         }
         if (!(PyObject_IsInstance(pyself, myClass)
@@ -721,6 +769,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
                                                [NSString class])))) {
 
             Py_DECREF(myClass);
+            Py_CLEAR(methinfo);
             PyErr_Format(PyExc_TypeError,
                          "Expecting instance of %s as self, got one "
                          "of %s",
@@ -746,9 +795,13 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
 
     if (pyres && PyObjCObject_Check(pyres)) {
         if (self->base.sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
+            Py_BEGIN_CRITICAL_SECTION(self);
             ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
+            Py_END_CRITICAL_SECTION();
         } else if (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED) {
+            Py_BEGIN_CRITICAL_SECTION(self);
             ((PyObjCObject*)pyself)->flags &= ~PyObjCObject_kUNINITIALIZED;
+            Py_END_CRITICAL_SECTION();
             if (self->base.sel_self && self->base.sel_self != pyres
                 && !PyErr_Occurred()) {
                 /* XXX: This needs documentation, the logic is not 100% rigorous */
@@ -757,6 +810,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         }
     }
 
+    Py_CLEAR(methinfo);
     return res;
 }
 
@@ -873,9 +927,7 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
         Py_INCREF(result->base.sel_methinfo);
     } else {
         result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
-        if (result->base.sel_methinfo) {
-            Py_INCREF(result->base.sel_methinfo);
-        } else {
+        if (!result->base.sel_methinfo) {
             PyErr_Clear();
         }
     }
@@ -1172,10 +1224,13 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
         || sel_isEqual(selector, @selector(allocWithZone:))) {
         result->base.sel_flags |= PyObjCSelector_kRETURNS_UNINITIALIZED;
     }
-    result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
-    if (result->base.sel_methinfo == NULL) {
+    result->base.sel_methinfo = NULL;
+    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
+    if (methinfo == NULL) {
         Py_DECREF(result);
         return NULL;
+    } else {
+        Py_CLEAR(methinfo);
     }
     return (PyObject*)result;
 }
@@ -1546,7 +1601,9 @@ static PyObject* _Nullable
     if (result && (self->base.sel_self) && (PyObjCObject_Check(self->base.sel_self))
         && ((PyObjCObject*)self->base.sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
 
+        Py_BEGIN_CRITICAL_SECTION(self);
         ((PyObjCObject*)self->base.sel_self)->flags &= ~PyObjCObject_kUNINITIALIZED;
+        Py_END_CRITICAL_SECTION();
     }
 
     return result;
@@ -1870,8 +1927,6 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
     if (result->base.sel_methinfo == NULL) {
         PyErr_Clear();
-    } else {
-        Py_INCREF(result->base.sel_methinfo);
     }
     result->argcount  = meth->argcount;
     result->numoutput = meth->numoutput;

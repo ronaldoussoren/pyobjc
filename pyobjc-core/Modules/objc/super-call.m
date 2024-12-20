@@ -508,6 +508,7 @@ PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_cl
         if (special) {
             func = special->make_call_to_python_block;
         } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            Py_CLEAR(methinfo);        // LCOV_BR_EXCL_LINE
             return NULL;               // LCOV_EXCL_LINE
         }
     }

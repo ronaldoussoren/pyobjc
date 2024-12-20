@@ -4446,6 +4446,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
 
     if (methinfo->suggestion != NULL) {
         PyErr_SetObject(PyExc_TypeError, methinfo->suggestion);
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -4455,6 +4456,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
                      "d arguments, at most 126 "
                      "are supported",
                      Py_SIZE(methinfo));
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -4471,6 +4473,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     r          = PyObjCFFI_CountArguments(methinfo, 2, &byref_in_count, &byref_out_count,
                                           &plain_count, &argbuf_len, &variadicAllArgs);
     if (r == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -4710,6 +4713,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
         }
     }
 
+    Py_CLEAR(methinfo);
     PyMem_Free(argbuf);
     argbuf   = NULL;
     methinfo = NULL;
@@ -4741,6 +4745,7 @@ error_cleanup:
         PyMem_Free(argbuf);
         argbuf = NULL;
     }
+    Py_CLEAR(methinfo);
     return NULL;
 }
 
@@ -4786,17 +4791,20 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
 
     if (unlikely(methinfo->suggestion != NULL)) {
         PyErr_Format(PyExc_TypeError, "%R: %s", self, methinfo->suggestion);
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
     if (unlikely(cif == NULL)) {
         cif = PyObjCFFI_CIFForSignature(methinfo);
         if (cif == NULL) {
+            Py_CLEAR(methinfo);
             return NULL;
         }
         if (PyObjCIMP_Check(aMeth)) {
             if (PyObjCIMP_SetCIF(aMeth, cif) == -1) {
                 PyObjCFFI_FreeCIF(cif);
+                Py_CLEAR(methinfo);
                 return NULL;
             }
         } else {
@@ -4939,9 +4947,12 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
     if (PyErr_Occurred()) /* XXX: Should this before the previous check? */
         goto error_cleanup;
 
-    return PyObjCFFI_BuildResult_Simple(methinfo, msgResult, self, flags);
+    PyObject* result = PyObjCFFI_BuildResult_Simple(methinfo, msgResult, self, flags);
+    Py_CLEAR(methinfo);
+    return result;
 
 error_cleanup:
+    Py_CLEAR(methinfo);
     return NULL;
 }
 

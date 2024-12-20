@@ -65,6 +65,7 @@ PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)
 {
     PyObjC_Assert(PyObjCIMP_Check(self), NULL);
 
+    Py_INCREF(((PyObjCIMPObject*)self)->signature);
     return ((PyObjCIMPObject*)self)->signature;
 }
 
@@ -529,6 +530,7 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
     res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
                         methinfo, PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
+    Py_DECREF(methinfo);
     return res;
 }
 
@@ -619,6 +621,7 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
     res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
                         methinfo, PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
+    Py_DECREF(methinfo);
     return res;
 }
 

@@ -1391,39 +1391,46 @@ static PyObject* _Nullable _makeClosure(PyObject* self __attribute__((__unused__
         if (argIndex == -1) {
             PyErr_SetString(PyExc_ValueError,
                             "No callback argument in the specified object");
+            Py_CLEAR(methinfo);
             return NULL;
         }
 
     } else {
         if (argIndex < 0 || argIndex >= Py_SIZE(methinfo)) {
             PyErr_SetString(PyExc_IndexError, "No such argument");
+            Py_CLEAR(methinfo);
             return NULL;
         }
 
         if (methinfo->argtype[argIndex]->callable == NULL) {
             PyErr_Format(PyExc_ValueError,
                          "Argument %" PY_FORMAT_SIZE_T "d is not callable", argIndex);
+            Py_CLEAR(methinfo);
             return NULL;
         }
     }
 
-    PyObjC_callback_function result;
+    PyObjC_callback_function closure_func;
 
-    result =
+    closure_func =
         PyObjCFFI_MakeFunctionClosure(methinfo->argtype[argIndex]->callable, callable);
-    if (result == NULL) {
+    if (closure_func == NULL) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    PyObject* retval = PyCapsule_New((void*)result, "objc.__imp__", _callback_cleanup);
-    if (retval == NULL) {
-        PyObjCFFI_FreeIMP((IMP)result);
+    PyObject* capsule = PyCapsule_New((void*)closure_func, "objc.__imp__", _callback_cleanup);
+    if (capsule == NULL) {
+        PyObjCFFI_FreeIMP((IMP)closure_func);
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return Py_BuildValue(
-        "NN", retval,
+    PyObject* result = Py_BuildValue(
+        "NN", capsule,
         PyObjCMethodSignature_AsDict(methinfo->argtype[argIndex]->callable));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 PyDoc_STRVAR(_closurePointer_doc, "_closurePointer(closure)\n" CLINIC_SEP "\n"

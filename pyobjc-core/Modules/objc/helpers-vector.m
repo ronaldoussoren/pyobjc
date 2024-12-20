@@ -181,11 +181,12 @@ static PyObject* _Nullable call_v2d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -208,9 +209,11 @@ static PyObject* _Nullable call_v2d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2d>", &rv);
 }
 
@@ -282,11 +285,12 @@ static PyObject* _Nullable call_v2d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -310,9 +314,11 @@ static PyObject* _Nullable call_v2d_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2d>", &rv);
 }
 
@@ -385,11 +391,12 @@ static PyObject* _Nullable call_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -412,9 +419,11 @@ static PyObject* _Nullable call_v2f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2f>", &rv);
 }
 
@@ -486,11 +495,12 @@ static PyObject* _Nullable call_v2f_Q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -514,9 +524,11 @@ static PyObject* _Nullable call_v2f_Q(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2f>", &rv);
 }
 
@@ -593,11 +605,12 @@ static PyObject* _Nullable call_v2f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -620,9 +633,11 @@ static PyObject* _Nullable call_v2f_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2f>", &rv);
 }
 
@@ -698,11 +713,12 @@ static PyObject* _Nullable call_v2f_q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -726,9 +742,11 @@ static PyObject* _Nullable call_v2f_q(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<2f>", &rv);
 }
 
@@ -801,11 +819,12 @@ static PyObject* _Nullable call_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -828,9 +847,11 @@ static PyObject* _Nullable call_v2i(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<2i>", &rv);
 }
 
@@ -902,11 +923,12 @@ static PyObject* _Nullable call_v3d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -930,9 +952,11 @@ static PyObject* _Nullable call_v3d_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<3d>", &rv);
 }
 
@@ -1005,11 +1029,12 @@ static PyObject* _Nullable call_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1032,9 +1057,11 @@ static PyObject* _Nullable call_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1110,11 +1137,12 @@ static PyObject* _Nullable call_v3f_v2i_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1138,9 +1166,11 @@ static PyObject* _Nullable call_v3f_v2i_v2i(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1220,11 +1250,12 @@ static PyObject* _Nullable call_v3f_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1248,9 +1279,11 @@ static PyObject* _Nullable call_v3f_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1330,11 +1363,12 @@ static PyObject* _Nullable call_v3f_v3f_id(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1358,9 +1392,11 @@ static PyObject* _Nullable call_v3f_v3f_id(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1440,11 +1476,12 @@ static PyObject* _Nullable call_v3f_v4i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1468,9 +1505,11 @@ static PyObject* _Nullable call_v3f_v4i(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1546,11 +1585,12 @@ static PyObject* _Nullable call_v3f_Q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1574,9 +1614,11 @@ static PyObject* _Nullable call_v3f_Q(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1653,11 +1695,12 @@ static PyObject* _Nullable call_v3f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1680,9 +1723,11 @@ static PyObject* _Nullable call_v3f_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1758,11 +1803,12 @@ static PyObject* _Nullable call_v4d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1786,9 +1832,11 @@ static PyObject* _Nullable call_v4d_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<4d>", &rv);
 }
 
@@ -1861,11 +1909,12 @@ static PyObject* _Nullable call_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1888,9 +1937,11 @@ static PyObject* _Nullable call_v4f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<4f>", &rv);
 }
 
@@ -1962,11 +2013,12 @@ static PyObject* _Nullable call_v4f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -1989,9 +2041,11 @@ static PyObject* _Nullable call_v4f_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<4f>", &rv);
 }
 
@@ -2067,11 +2121,12 @@ static PyObject* _Nullable call_v4i_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -2095,9 +2150,11 @@ static PyObject* _Nullable call_v4i_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<4i>", &rv);
 }
 
@@ -2177,11 +2234,12 @@ static PyObject* _Nullable call_id_v2d_id(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -2205,10 +2263,13 @@ static PyObject* _Nullable call_id_v2d_id(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2290,11 +2351,12 @@ static PyObject* _Nullable call_id_v2d_q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -2319,10 +2381,13 @@ static PyObject* _Nullable call_id_v2d_q(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2401,11 +2466,12 @@ static PyObject* _Nullable call_id_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -2428,10 +2494,13 @@ static PyObject* _Nullable call_id_v2f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2518,11 +2587,12 @@ static PyObject* _Nullable call_id_v2f_v2I_q_id(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -2547,10 +2617,13 @@ static PyObject* _Nullable call_id_v2f_v2I_q_id(PyObject* method, PyObject* self
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+        Py_CLEAR(methinfo);
+        return result;
 }
 
 static IMP
@@ -2639,11 +2712,12 @@ static PyObject* _Nullable call_id_v2f_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -2667,10 +2741,13 @@ static PyObject* _Nullable call_id_v2f_v2f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+        Py_CLEAR(methinfo);
+        return result;
 }
 
 static IMP
@@ -2749,11 +2826,12 @@ static PyObject* _Nullable call_id_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -2776,10 +2854,13 @@ static PyObject* _Nullable call_id_v2i(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject*  result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+        Py_CLEAR(methinfo);
+        return result;
 }
 
 static IMP
@@ -2866,11 +2947,12 @@ static PyObject* _Nullable call_id_v2i_i_i_Z(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -2895,10 +2977,13 @@ static PyObject* _Nullable call_id_v2i_i_i_Z(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+        Py_CLEAR(methinfo);
+        return result;
 }
 
 static IMP
@@ -3000,11 +3085,12 @@ static PyObject* _Nullable call_id_v2i_i_i_Z_Class(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -3030,10 +3116,13 @@ static PyObject* _Nullable call_id_v2i_i_i_Z_Class(PyObject* method, PyObject* s
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+        Py_CLEAR(methinfo);
+        return result;
 }
 
 static IMP
@@ -3121,11 +3210,12 @@ static PyObject* _Nullable call_id_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -3148,10 +3238,13 @@ static PyObject* _Nullable call_id_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+        Py_CLEAR(methinfo);
+        return result;
 }
 
 static IMP
@@ -3251,11 +3344,12 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_Z_q_id(PyObject* method, PyObject
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -3282,10 +3376,13 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_Z_q_id(PyObject* method, PyObject
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+        Py_CLEAR(methinfo);
+        return result;
 }
 
 static IMP
@@ -3401,11 +3498,12 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_q_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -3432,10 +3530,13 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_q_id(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+        Py_CLEAR(methinfo);
+        return result;
 }
 
 static IMP
@@ -3544,11 +3645,12 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_q_id(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -3574,10 +3676,13 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_q_id(PyObject* method, PyObject* se
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+        Py_CLEAR(methinfo);
+        return result;
 }
 
 static IMP
@@ -3687,11 +3792,12 @@ static PyObject* _Nullable call_id_v3f_v2I_i_Z_q_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -3717,10 +3823,13 @@ static PyObject* _Nullable call_id_v3f_v2I_i_Z_q_id(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3824,11 +3933,12 @@ static PyObject* _Nullable call_id_v3f_v2I_q_id(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -3853,10 +3963,13 @@ static PyObject* _Nullable call_id_v3f_v2I_q_id(PyObject* method, PyObject* self
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3958,11 +4071,12 @@ static PyObject* _Nullable call_id_v3f_v3I_Z_q_id(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -3988,10 +4102,13 @@ static PyObject* _Nullable call_id_v3f_v3I_Z_q_id(PyObject* method, PyObject* se
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4097,11 +4214,12 @@ static PyObject* _Nullable call_id_v3f_v3I_q_Z_id(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -4127,10 +4245,13 @@ static PyObject* _Nullable call_id_v3f_v3I_q_Z_id(PyObject* method, PyObject* se
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4244,11 +4365,12 @@ static PyObject* _Nullable call_id_v3f_Q_Q_q_Z_Z_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -4276,10 +4398,13 @@ static PyObject* _Nullable call_id_v3f_Q_Q_q_Z_Z_id(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4387,11 +4512,12 @@ static PyObject* _Nullable call_id_v3f_Z_q_id(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -4416,10 +4542,13 @@ static PyObject* _Nullable call_id_v3f_Z_q_id(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4504,11 +4633,12 @@ static PyObject* _Nullable call_id_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -4531,10 +4661,13 @@ static PyObject* _Nullable call_id_v4f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4626,11 +4759,12 @@ static PyObject* _Nullable call_id_id_v2d_v2d_v2i_Z(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -4656,10 +4790,13 @@ static PyObject* _Nullable call_id_id_v2d_v2d_v2i_Z(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4752,11 +4889,12 @@ static PyObject* _Nullable call_id_id_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -4779,10 +4917,13 @@ static PyObject* _Nullable call_id_id_v2f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4864,11 +5005,12 @@ static PyObject* _Nullable call_id_id_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -4891,10 +5033,13 @@ static PyObject* _Nullable call_id_id_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4976,11 +5121,12 @@ static PyObject* _Nullable call_id_id_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -5003,10 +5149,13 @@ static PyObject* _Nullable call_id_id_v4f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5092,11 +5241,12 @@ static PyObject* _Nullable call_id_id_id_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -5120,10 +5270,13 @@ static PyObject* _Nullable call_id_id_id_v2i(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5217,11 +5370,12 @@ static PyObject* _Nullable call_id_id_id_v2i_f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -5246,10 +5400,13 @@ static PyObject* _Nullable call_id_id_id_v2i_f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5342,11 +5499,12 @@ static PyObject* _Nullable call_id_id_Q_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -5371,10 +5529,13 @@ static PyObject* _Nullable call_id_id_Q_v2f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5464,11 +5625,12 @@ static PyObject* _Nullable call_id_id_Q_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -5493,10 +5655,13 @@ static PyObject* _Nullable call_id_id_Q_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5586,11 +5751,12 @@ static PyObject* _Nullable call_id_id_Q_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -5615,10 +5781,13 @@ static PyObject* _Nullable call_id_id_Q_v4f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5709,11 +5878,12 @@ static PyObject* _Nullable call_id_id_Q_simd_float4x4(PyObject* method, PyObject
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -5738,10 +5908,13 @@ static PyObject* _Nullable call_id_id_Q_simd_float4x4(PyObject* method, PyObject
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+    Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5852,11 +6025,12 @@ static PyObject* _Nullable call_id_id_Z_id_v2i_q_Q_q_Z(PyObject* method, PyObjec
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -5884,10 +6058,13 @@ static PyObject* _Nullable call_id_id_Z_id_v2i_q_Q_q_Z(PyObject* method, PyObjec
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6011,11 +6188,12 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -6042,10 +6220,13 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6169,11 +6350,12 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f_f(PyObject* method, PyObject
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -6200,10 +6382,13 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f_f(PyObject* method, PyObject
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6306,11 +6491,12 @@ static PyObject* _Nullable call_id_id_GKBox(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -6333,10 +6519,13 @@ static PyObject* _Nullable call_id_id_GKBox(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6420,11 +6609,12 @@ static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -6447,10 +6637,13 @@ static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
@@ -6541,11 +6734,12 @@ static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -6570,10 +6764,13 @@ static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
@@ -6664,11 +6861,12 @@ static PyObject* _Nullable call_id_id_simd_float2x2(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -6692,10 +6890,13 @@ static PyObject* _Nullable call_id_id_simd_float2x2(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6779,11 +6980,12 @@ static PyObject* _Nullable call_id_id_simd_float3x3(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -6807,10 +7009,13 @@ static PyObject* _Nullable call_id_id_simd_float3x3(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6894,11 +7099,12 @@ static PyObject* _Nullable call_id_id_simd_float4x4(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -6922,10 +7128,13 @@ static PyObject* _Nullable call_id_id_simd_float4x4(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7009,11 +7218,12 @@ static PyObject* _Nullable call_id_id_simd_quatf(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -7036,10 +7246,13 @@ static PyObject* _Nullable call_id_id_simd_quatf(PyObject* method, PyObject* sel
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
@@ -7130,11 +7343,12 @@ static PyObject* _Nullable call_id_id_simd_quatf_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -7158,10 +7372,13 @@ static PyObject* _Nullable call_id_id_simd_quatf_id(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
@@ -7260,11 +7477,12 @@ static PyObject* _Nullable call_id_CGColor_CGColor_id_v2i(PyObject*        metho
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -7289,10 +7507,13 @@ static PyObject* _Nullable call_id_CGColor_CGColor_id_v2i(PyObject*        metho
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7385,11 +7606,12 @@ static PyObject* _Nullable call_id_f_v2f_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -7413,10 +7635,13 @@ static PyObject* _Nullable call_id_f_v2f_v2f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7511,11 +7736,12 @@ static PyObject* _Nullable call_id_f_v2f_v2f_Class(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -7540,10 +7766,13 @@ static PyObject* _Nullable call_id_f_v2f_v2f_Class(PyObject* method, PyObject* s
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7657,11 +7886,12 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_Q_q_Z_id(PyObject* method, PyObject
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -7690,10 +7920,13 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_Q_q_Z_id(PyObject* method, PyObject
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7818,11 +8051,12 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_q_Z_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -7850,10 +8084,13 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_q_Z_id(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7970,11 +8207,12 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_Z(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -8000,10 +8238,13 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_Z(PyObject* method, PyObject* se
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8119,11 +8360,12 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_CGColor_CGColor(
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -8150,10 +8392,13 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_CGColor_CGColor(
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8260,11 +8505,12 @@ static PyObject* _Nullable call_id_f_id_v2i_q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -8289,10 +8535,13 @@ static PyObject* _Nullable call_id_f_id_v2i_q(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8389,11 +8638,12 @@ static PyObject* _Nullable call_id_f_f_id_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -8418,10 +8668,13 @@ static PyObject* _Nullable call_id_f_f_id_v2i(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8507,11 +8760,12 @@ static PyObject* _Nullable call_id_GKBox(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -8534,10 +8788,13 @@ static PyObject* _Nullable call_id_GKBox(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8618,11 +8875,12 @@ static PyObject* _Nullable call_id_GKBox_f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -8645,10 +8903,13 @@ static PyObject* _Nullable call_id_GKBox_f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8728,11 +8989,12 @@ static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -8755,10 +9017,13 @@ static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
@@ -8841,11 +9106,12 @@ static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -8868,10 +9134,13 @@ static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
@@ -8955,11 +9224,12 @@ static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObjec
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -8983,10 +9253,13 @@ static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObjec
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
@@ -9065,11 +9338,12 @@ static PyObject* _Nullable call_id_simd_float4x4(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -9092,10 +9366,13 @@ static PyObject* _Nullable call_id_simd_float4x4(PyObject* method, PyObject* sel
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -9175,11 +9452,12 @@ static PyObject* _Nullable call_id_simd_float4x4_Z(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -9203,10 +9481,13 @@ static PyObject* _Nullable call_id_simd_float4x4_Z(PyObject* method, PyObject* s
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -9302,11 +9583,12 @@ static PyObject* _Nullable call_Z_v2i_id_id_id_id(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -9332,9 +9614,11 @@ static PyObject* _Nullable call_Z_v2i_id_id_id_id(PyObject* method, PyObject* se
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("Z", &rv);
 }
 
@@ -9444,11 +9728,12 @@ static PyObject* _Nullable call_Z_v2i_q_f_id_id_id(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -9474,9 +9759,11 @@ static PyObject* _Nullable call_Z_v2i_q_f_id_id_id(PyObject* method, PyObject* s
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("Z", &rv);
 }
 
@@ -9585,11 +9872,12 @@ static PyObject* _Nullable call_Z_v4i_Z_Z_Z_Z(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -9615,9 +9903,11 @@ static PyObject* _Nullable call_Z_v4i_Z_Z_Z_Z(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("Z", &rv);
 }
 
@@ -9706,11 +9996,12 @@ static PyObject* _Nullable call_CGColor_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -9734,9 +10025,11 @@ static PyObject* _Nullable call_CGColor_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("^{CGColor=}", &rv);
 }
 
@@ -9817,11 +10110,12 @@ static PyObject* _Nullable call_CGColor_v3f_CGColorSpace(PyObject* method, PyObj
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -9846,9 +10140,11 @@ static PyObject* _Nullable call_CGColor_v3f_CGColorSpace(PyObject* method, PyObj
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("^{CGColor=}", &rv);
 }
 
@@ -9928,11 +10224,12 @@ static PyObject* _Nullable call_f_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -9955,9 +10252,11 @@ static PyObject* _Nullable call_f_v2f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("f", &rv);
 }
 
@@ -10033,11 +10332,12 @@ static PyObject* _Nullable call_f_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -10060,9 +10360,11 @@ static PyObject* _Nullable call_f_v2i(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("f", &rv);
 }
 
@@ -10137,11 +10439,12 @@ static PyObject* _Nullable call_v_v2d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -10164,6 +10467,7 @@ static PyObject* _Nullable call_v_v2d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10245,11 +10549,12 @@ static PyObject* _Nullable call_v_v2d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -10273,6 +10578,7 @@ static PyObject* _Nullable call_v_v2d_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10354,11 +10660,12 @@ static PyObject* _Nullable call_v_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -10381,6 +10688,7 @@ static PyObject* _Nullable call_v_v2f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10462,11 +10770,12 @@ static PyObject* _Nullable call_v_v2f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -10490,6 +10799,7 @@ static PyObject* _Nullable call_v_v2f_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10571,11 +10881,12 @@ static PyObject* _Nullable call_v_v3d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -10598,6 +10909,7 @@ static PyObject* _Nullable call_v_v3d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10679,11 +10991,12 @@ static PyObject* _Nullable call_v_v3d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -10707,6 +11020,7 @@ static PyObject* _Nullable call_v_v3d_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10788,11 +11102,12 @@ static PyObject* _Nullable call_v_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -10815,6 +11130,7 @@ static PyObject* _Nullable call_v_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10896,11 +11212,12 @@ static PyObject* _Nullable call_v_v3f_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -10924,6 +11241,7 @@ static PyObject* _Nullable call_v_v3f_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11013,11 +11331,12 @@ static PyObject* _Nullable call_v_v3f_v3f_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -11042,6 +11361,7 @@ static PyObject* _Nullable call_v_v3f_v3f_v3f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11130,11 +11450,12 @@ static PyObject* _Nullable call_v_v3f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -11158,6 +11479,7 @@ static PyObject* _Nullable call_v_v3f_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11243,11 +11565,12 @@ static PyObject* _Nullable call_v_v4d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -11271,6 +11594,7 @@ static PyObject* _Nullable call_v_v4d_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11352,11 +11676,12 @@ static PyObject* _Nullable call_v_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -11379,6 +11704,7 @@ static PyObject* _Nullable call_v_v4f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11460,11 +11786,12 @@ static PyObject* _Nullable call_v_v4f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -11488,6 +11815,7 @@ static PyObject* _Nullable call_v_v4f_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11569,11 +11897,12 @@ static PyObject* _Nullable call_v_v4i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -11596,6 +11925,7 @@ static PyObject* _Nullable call_v_v4i(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11681,11 +12011,12 @@ static PyObject* _Nullable call_v_id_v2f_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -11709,6 +12040,7 @@ static PyObject* _Nullable call_v_id_v2f_v2f(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11805,11 +12137,12 @@ static PyObject* _Nullable call_v_id_v2f_v2f_q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -11834,6 +12167,7 @@ static PyObject* _Nullable call_v_id_v2f_v2f_q(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11925,11 +12259,12 @@ static PyObject* _Nullable call_v_f_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -11952,6 +12287,7 @@ static PyObject* _Nullable call_v_f_v2i(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12037,11 +12373,12 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox(PyObject*        met
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -12064,6 +12401,7 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox(PyObject*        met
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12153,11 +12491,12 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox_Z(PyObject*        m
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -12181,6 +12520,7 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox_Z(PyObject*        m
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12265,11 +12605,12 @@ static PyObject* _Nullable call_v_simd_double4x4(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -12292,6 +12633,7 @@ static PyObject* _Nullable call_v_simd_double4x4(PyObject* method, PyObject* sel
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12374,11 +12716,12 @@ static PyObject* _Nullable call_v_simd_double4x4_d(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -12402,6 +12745,7 @@ static PyObject* _Nullable call_v_simd_double4x4_d(PyObject* method, PyObject* s
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12483,11 +12827,12 @@ static PyObject* _Nullable call_v_simd_float2x2(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -12510,6 +12855,7 @@ static PyObject* _Nullable call_v_simd_float2x2(PyObject* method, PyObject* self
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12587,11 +12933,12 @@ static PyObject* _Nullable call_v_simd_float3x3(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -12614,6 +12961,7 @@ static PyObject* _Nullable call_v_simd_float3x3(PyObject* method, PyObject* self
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12691,11 +13039,12 @@ static PyObject* _Nullable call_v_simd_float4x4(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -12718,6 +13067,7 @@ static PyObject* _Nullable call_v_simd_float4x4(PyObject* method, PyObject* self
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12800,11 +13150,12 @@ static PyObject* _Nullable call_v_simd_float4x4_d(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -12828,6 +13179,7 @@ static PyObject* _Nullable call_v_simd_float4x4_d(PyObject* method, PyObject* se
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12914,11 +13266,12 @@ static PyObject* _Nullable call_v_simd_quatd_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -12942,6 +13295,7 @@ static PyObject* _Nullable call_v_simd_quatd_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -13027,11 +13381,12 @@ static PyObject* _Nullable call_v_simd_quatf(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -13054,6 +13409,7 @@ static PyObject* _Nullable call_v_simd_quatf(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -13139,11 +13495,12 @@ static PyObject* _Nullable call_v_simd_quatf_v3f(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -13167,6 +13524,7 @@ static PyObject* _Nullable call_v_simd_quatf_v3f(PyObject* method, PyObject* sel
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -13256,11 +13614,12 @@ static PyObject* _Nullable call_v_simd_quatf_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -13284,6 +13643,7 @@ static PyObject* _Nullable call_v_simd_quatf_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -13367,11 +13727,12 @@ static PyObject* _Nullable call_GKBox(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -13398,9 +13759,11 @@ static PyObject* _Nullable call_GKBox(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{GKBox=<3f><3f>}", &rv);
 }
 
@@ -13472,11 +13835,12 @@ static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -13499,9 +13863,11 @@ static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{GKQuad=<2f><2f>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
@@ -13578,11 +13944,12 @@ static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -13611,9 +13978,11 @@ static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{GKTriangle=[3<3f>]}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
@@ -13692,11 +14061,12 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        metho
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -13725,9 +14095,11 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        metho
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
@@ -13807,11 +14179,12 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_v4i(PyObject*        m
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -13840,9 +14213,11 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_v4i(PyObject*        m
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
@@ -13926,11 +14301,12 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_d(PyObject*        met
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -13959,9 +14335,11 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_d(PyObject*        met
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
@@ -14039,11 +14417,12 @@ static PyObject* _Nullable call_MDLVoxelIndexExtent(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -14071,9 +14450,11 @@ static PyObject* _Nullable call_MDLVoxelIndexExtent(PyObject* method, PyObject* 
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{MDLVoxelIndexExtent=<4i><4i>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
@@ -14147,11 +14528,12 @@ static PyObject* _Nullable call_simd_double4x4(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -14179,9 +14561,11 @@ static PyObject* _Nullable call_simd_double4x4(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_double4x4=[4<4d>]}", &rv);
 }
 
@@ -14254,11 +14638,12 @@ static PyObject* _Nullable call_simd_double4x4_d(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -14287,9 +14672,11 @@ static PyObject* _Nullable call_simd_double4x4_d(PyObject* method, PyObject* sel
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_double4x4=[4<4d>]}", &rv);
 }
 
@@ -14362,11 +14749,12 @@ static PyObject* _Nullable call_simd_float2x2(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -14389,9 +14777,11 @@ static PyObject* _Nullable call_simd_float2x2(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float2x2=[2<2f>]}", &rv);
 }
 
@@ -14461,11 +14851,12 @@ static PyObject* _Nullable call_simd_float3x3(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -14492,9 +14883,11 @@ static PyObject* _Nullable call_simd_float3x3(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float3x3=[3<3f>]}", &rv);
 }
 
@@ -14564,11 +14957,12 @@ static PyObject* _Nullable call_simd_float4x4(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -14595,9 +14989,11 @@ static PyObject* _Nullable call_simd_float4x4(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
 
@@ -14675,11 +15071,12 @@ static PyObject* _Nullable call_simd_float4x4_id_d(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -14708,9 +15105,11 @@ static PyObject* _Nullable call_simd_float4x4_id_d(PyObject* method, PyObject* s
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
 
@@ -14789,11 +15188,12 @@ static PyObject* _Nullable call_simd_float4x4_d(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -14822,9 +15222,11 @@ static PyObject* _Nullable call_simd_float4x4_d(PyObject* method, PyObject* self
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
 
@@ -14906,11 +15308,12 @@ static PyObject* _Nullable call_simd_float4x4_simd_float4x4_id(PyObject*        
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -14939,9 +15342,11 @@ static PyObject* _Nullable call_simd_float4x4_simd_float4x4_id(PyObject*        
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
 
@@ -15022,11 +15427,12 @@ static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -15054,9 +15460,11 @@ static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_quatd=<4d>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
@@ -15133,11 +15541,12 @@ static PyObject* _Nullable call_simd_quatf(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -15160,9 +15569,11 @@ static PyObject* _Nullable call_simd_quatf(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_quatf=<4f>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
@@ -15239,11 +15650,12 @@ static PyObject* _Nullable call_simd_quatf_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -15266,9 +15678,11 @@ static PyObject* _Nullable call_simd_quatf_d(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_quatf=<4f>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
@@ -15344,11 +15758,12 @@ static PyObject* _Nullable call_v16C(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -15371,9 +15786,11 @@ static PyObject* _Nullable call_v16C(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("<16C>", &rv);
 }
 
@@ -15444,11 +15861,12 @@ static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -15477,9 +15895,11 @@ static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
@@ -15555,11 +15975,12 @@ static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        metho
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
@@ -15588,9 +16009,11 @@ static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        metho
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+        Py_CLEAR(methinfo);
     return pythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1014 */

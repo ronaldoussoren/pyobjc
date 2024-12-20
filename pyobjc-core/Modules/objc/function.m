@@ -552,6 +552,7 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
 
 PyObjCMethodSignature* _Nullable PyObjCFunc_GetMethodSignature(PyObject* func)
 {
+    Py_INCREF(((func_object*)func)->methinfo);
     return ((func_object*)func)->methinfo;
 }
 

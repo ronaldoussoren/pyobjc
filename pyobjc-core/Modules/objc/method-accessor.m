@@ -28,6 +28,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     int                unbound_instance_method = 0;
     char*              flattened               = NULL;
     PyObject*          class_object;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (name[0] == '_' && name[1] == '_') {
         /* There are no public methods that start with a double underscore,
@@ -158,12 +159,16 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                 if (sel_imp == cur_imp) {
                     return meta;
                 } else {
-                    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(meta);
+                    methinfo = PyObjCSelector_GetMetadata(meta);
                     if (methinfo == NULL) {
                         Py_DECREF(meta);
                         return NULL;
                     }
                     flattened = (char*)methinfo->signature;
+
+                    /* Cannot decref 'methinfo' here because 'flattened'
+                     * is used below.
+                     */
                 }
             }
         }
@@ -179,9 +184,11 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
          * the NSMethodSignature is invalid, or if the encoded
          * signature would not fit buffer.
          */
+        Py_CLEAR(methinfo);
         return NULL; // LCOV_EXCL_LINE
     }
 
+    Py_CLEAR(methinfo);
     return PyObjCSelector_NewNative((Class)objc_object, sel, flattened, class_method);
 }
 
