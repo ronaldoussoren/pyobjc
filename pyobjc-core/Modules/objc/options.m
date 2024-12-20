@@ -37,7 +37,7 @@ static PyObject* PyObjCOptions_Type;
 #define _STR(v) #v
 #define STR(v) _STR(v)
 
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
 #   define MUTEX_FOR(VAR)        static PyMutex VAR##_lock = { 0 };
 #   define LOCK(VAR)             PyMutex_Lock(&VAR##_lock)
 #   define UNLOCK(VAR)           PyMutex_Unlock(&VAR##_lock)

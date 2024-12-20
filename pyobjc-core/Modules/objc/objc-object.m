@@ -244,7 +244,7 @@ object_verify_type(PyObject* obj)
             (PyTypeObject*)PyObjCClass_New((Class _Nonnull)object_getClass(obj_inst));
 
         if (tp != Py_TYPE(obj)) {
-            PyTypeObject* tmp;
+            int did_change = 0;
 
             /* XXX: The correct way to do this is calling ``setattr(obj, "__class__",
              * tp)`` Investigate the impact of that. Performance shouldn't be an issue
@@ -259,8 +259,9 @@ object_verify_type(PyObject* obj)
              * XXX: Probably need to call PyObject_Type.tp_setattro(...) to avoid hitting
              * calling object_setattro in this file.
              */
+            PyTypeObject* tmp = NULL;
             Py_BEGIN_CRITICAL_SECTION(obj);
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
             /* Recheck in a free threaded build, another thread
              * may have raced us.
              */
@@ -269,18 +270,21 @@ object_verify_type(PyObject* obj)
                 tmp = Py_TYPE(obj);
                 Py_SET_TYPE(obj, tp);
                 Py_INCREF(tp);
-                Py_END_CRITICAL_SECTION();
-                Py_DECREF(tmp);
+                did_change = 1;
 
+#ifdef Py_GIL_DISABLED
+            }
+#endif
+            Py_END_CRITICAL_SECTION();
+            Py_XDECREF(tmp);
+            if (did_change) {
                 if (PyObjCClass_CheckMethodList((PyObject*)tp, 0) < 0) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_DECREF(tp);
                     return -1;
                     // LCOV_EXCL_STOP
                 }
-#if Py_GIL_DISABLED
             }
-#endif
         }
         Py_CLEAR(tp);
     }
@@ -891,14 +895,14 @@ static PyObject* _Nullable objc_get_real_class(PyObject* self,
     }
     if (ret != (PyObject*)Py_TYPE(self)) {
         Py_BEGIN_CRITICAL_SECTION(self);
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
         /* Free-threading: Recheck within a critical section to avoid a race */
         if (ret != (PyObject*)Py_TYPE(self)) {
 #endif
             Py_DECREF(Py_TYPE(self));
             Py_SET_TYPE(self, (PyTypeObject*)ret);
             Py_INCREF(ret);
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
         }
 #endif
         Py_END_CRITICAL_SECTION();
@@ -1414,7 +1418,7 @@ PyObjCMethodSignature* _Nullable PyObjCObject_SetBlockSignature(PyObject* object
     PyObjC_Assert(PyObjCObject_IsBlock(object), NULL);
     PyObjCMethodSignature* result;
 
-    Py_BEGIN_CRITICAL_SECTION(self);
+    Py_BEGIN_CRITICAL_SECTION(object);
     result = ((PyObjCBlockObject*)(object))->signature;
     if (result == NULL) {
         SET_FIELD_INCREF(((PyObjCBlockObject*)(object))->signature, methinfo);

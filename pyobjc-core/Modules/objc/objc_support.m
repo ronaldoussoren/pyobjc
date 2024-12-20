@@ -3358,8 +3358,7 @@ PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
     if (cookie && Py_REFCNT(proxy) != 1) {
         Py_BEGIN_ALLOW_THREADS
             CFRetain(PyObjCObject_GetObject(proxy));
-        Py_END_ALLOW_THREADS((PyObjCObject*)proxy)->flags &=
-            ~PyObjCObject_kSHOULD_NOT_RELEASE;
+        Py_END_ALLOW_THREADS
     }
     Py_DECREF(proxy);
 }

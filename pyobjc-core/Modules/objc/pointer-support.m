@@ -145,7 +145,7 @@ static int FindWrapper(const char* signature, pythonify_func* _Nullable pythonif
             }
         }
     }
-#if Py_GIL_DISABLED >= 0x030d0000
+#ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&items_mutex);
 #endif
     if (pythonify != NULL) {
@@ -216,7 +216,7 @@ PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
             if (PyList_Append(result, cur) == -1) {
                 Py_DECREF(cur);
                 Py_DECREF(result);
-#if Py_GIL_DISABLED >= 0x030d0000
+#ifdef Py_GIL_DISABLED
                 PyMutex_Unlock(&items_mutex);
 #endif
                 return NULL;

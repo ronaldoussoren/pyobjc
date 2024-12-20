@@ -36,7 +36,7 @@ PyObject* _Nullable PyObjCClass_DefaultModule;
 
 PyObject* _Nullable PyObjC_TypeStr2CFTypeID;
 
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
 static PyMutex global_release_pool_lock = { 0 };
 #endif
 static NSAutoreleasePool* _Nullable global_release_pool;
@@ -136,11 +136,11 @@ PyObjC_FINAL_CLASS @interface OC_NSAutoreleasePoolCollector : NSObject
 
 - (void)dealloc
 {
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Lock(&global_release_pool_lock);
 #endif
     global_release_pool = nil;
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&global_release_pool_lock);
 #endif
     [super dealloc];
@@ -340,11 +340,11 @@ PyDoc_STRVAR(have_autorelease_pool_doc,
 static PyObject*
 have_autorelease_pool(PyObject* self __attribute__((__unused__)))
 {
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Lock(&global_release_pool_lock);
 #endif
     bool have_pool = (global_release_pool != nil);
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&global_release_pool_lock);
 #endif
     if (have_pool) {
@@ -369,12 +369,12 @@ static PyObject* _Nullable remove_autorelease_pool(PyObject* self
             /* Unconditionally clear the global autorelease pool,
              * there's not much we can do if releasing raises.
              */
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Lock(&global_release_pool_lock);
 #endif
             pool                = global_release_pool;
             global_release_pool = nil;
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&global_release_pool_lock);
 #endif
             [pool release];
@@ -399,7 +399,7 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
                                                     __attribute__((__unused__)))
 {
     NSAutoreleasePool* pool;
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Lock(&global_release_pool_lock);
 #endif
     Py_BEGIN_ALLOW_THREADS
@@ -421,7 +421,7 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
          */
         [OC_NSAutoreleasePoolCollector newAutoreleasePool];
     Py_END_ALLOW_THREADS
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&global_release_pool_lock);
 #endif
 
@@ -1722,18 +1722,18 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
 {
     static bool (*contains_func)(const char*) = NULL;
     static bool resolved_func                 = 0;
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     static PyMutex resolve_lock = { 0 };
 #endif
 
     if (!resolved_func) {
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
         PyMutex_Lock(&resolve_lock);
         if (!resolved_func) {
 #endif
             contains_func = dlsym(RTLD_DEFAULT, "_dyld_shared_cache_contains_path");
             resolved_func = 1;
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
         }
         PyMutex_Unlock(&resolve_lock);
 #endif
@@ -2174,6 +2174,7 @@ typedef int (*setup_function)(PyObject*);
  */
 static setup_function _Nullable setup_functions[] = {
     PyObjC_InitProxyRegistry, /* Must be first */
+    PyObjCClass_Setup,
 
     PyObjCFFI_Setup,
     PyObjCUtil_Init,
@@ -2338,12 +2339,12 @@ static int mod_exec_module(PyObject* m)
     /* Allocate an auto-release pool for our own use, this avoids numerous
      * warnings during startup of a python script.
      */
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Lock(&global_release_pool_lock);
 #endif
     global_release_pool = nil;
     [OC_NSAutoreleasePoolCollector newAutoreleasePool];
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&global_release_pool_lock);
 #endif
 

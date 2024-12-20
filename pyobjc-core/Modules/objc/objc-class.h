@@ -89,7 +89,6 @@ extern int        ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
 extern int        PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
 extern Py_ssize_t PyObjCClass_DictOffset(PyObject* cls);
 extern PyObject* _Nullable PyObjCClass_GetDelMethod(PyObject* cls);
-extern void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
 extern int  PyObjCClass_HasPythonImplementation(PyObject* cls);
 extern PyObject* _Nullable PyObjCClass_ClassForMetaClass(PyObject* meta);
 extern PyObject* _Nullable PyObjCClass_HiddenSelector(
@@ -152,6 +151,8 @@ PyObjCClass_IsFinal(PyTypeObject* tp)
 }
 
 PyObject* _Nullable objc_class_locate(Class objc_class);
+
+extern int PyObjCClass_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 
