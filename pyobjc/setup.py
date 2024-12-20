@@ -87,7 +87,7 @@ FRAMEWORK_WRAPPERS = [
     ("FileProvider", "10.15", None),
     ("FileProviderUI", "10.15", None),
     ("FSEvents", "10.5", None),
-    ("FSKit", "15.0", None),
+    # ("FSKit", "15.0", None),
     ("FinderSync", "10.10", None),
     ("GameCenter", "10.8", None),
     ("GameController", "10.9", None),
