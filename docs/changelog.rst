@@ -3,16 +3,24 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 11.0 (Unreleased, expected release is October 2024)
+Version 11.0 (Unreleased, expected release is December 2024)
 -----------------------------------------------------------
+
+The major change in this release is experimental support for free-threading
+(`PEP 703 <https://peps.python.org/pep-0703/>`_) which was introduced
+as an experimental feature in Python 3.13.
+
+This required fairly significant changes in the core of PyObjC to change
+C Python API use and PyObjC internal APIs (mostly related to the use of
+borrowed references).
 
 * Dropped support for Python 3.8. PyObjC 11 supports Python 3.9 and later.
 
-* Updated metadata for the macOS 15 SDK (first beta), including bindings
+* Updated metadata for the macOS 15.2 SDK, including bindings
   for the following frameworks:
 
-  - FSKit
   - MediaExtension
+  - DeviceDiscoveryExtension
 
 * :issue:`249`: Added minimal bindings to the Carbon framework.
 
@@ -26,9 +34,71 @@ Version 11.0 (Unreleased, expected release is October 2024)
 * The ``__pyobjc_copy__`` method has been removed from struct wrappers. This
   was never a public API. Use :func:`copy.deepcopy` instead.
 
-* :issue:`608`: The extension modules for framework bindings were transitioned to multi-phase
-  init. As a side effect of this the framework bindings no longer use the
-  stable ABI.
+* :meth:`objc.FSRef.from_path`` now supports ``os.PathLike`` values as its
+  arguments (as well as strings).
+
+* :issue:`608`: Experimental support for the free-threading mode
+  introduced in Python 3.13.
+
+  The core bridge and framework bindings claim compatibility with free-threading
+  as introduced as an experimental feature in Python 3.13.
+
+  The support in PyObjC is also an experimental feature: I've reviewed
+  code for free-threading issues and adjusted it where needed, but the
+  code has seen only light testing w.r.t. concurrency.
+
+  Some functionality that's explicitly not thread-safe:
+
+  - Defining an Objective-C class with the same name in multiple threads concurrently.
+
+  - Splitting calls to ``alloc`` and ``init`` and calling ``init`` multiple
+    times concurrently. E.g.:
+
+     .. sourcecode:: python
+
+        import threading
+        from Cocoa import NSObject
+
+        v = NSObject.alloc()
+
+        t_list = []
+        for _ in range(2):
+            t = threading.Thread(target=lambda: v.init())
+            t_list.append(t)
+            t.start()
+
+        for t in t_list:
+            t.join()
+
+* The internal mapping from Python values to their active Objective-C
+  proxy value now uses weak references. This should not affect user code,
+  other than being a bit more efficient.
+
+* The internal interfaces for updating this mapping, and the reverse mapping
+  from Objective-C values to their active Python proxy was changed to remove
+  a small race condition. This was required for free threading support, but
+  could in theory also bit hit when using the GIL.
+
+* The data structure for mapping Python values to their Objective-C proxy
+  has been rewritten to support free threading. This also simplifies the
+  code, and should be small performance improvement for the regular build
+  of Python.
+
+* The :exc:`TypeError` raised when passing a non-sequence value to
+  some APIs implemented in C now has a ``__cause__`` with more detailed
+  information.
+
+  This is a side effect of dropping the use of ``PySequence_Fast`` in the
+  implementation of PyObjC.
+
+* Removed ``objc.options._nscoding_version``, a private option that is no
+  longer used.
+
+* Changing the ``__block_signature__`` of a block value when the current
+  value of the signature is not ``None`` is no longer possible.
+
+  Please file an issue if you have a use case for changing the signature
+  of a block.
 
 Version 10.3.2
 --------------
@@ -41,6 +111,24 @@ Version 10.3.2
 
 * :issue:`613`: Actually expose protocols ``KHTTPCookieStoreObserver``,
   ``WKURLSchemeTask``, and ``WKURLSchemeHandler`` in the WebKit bindings.
+
+* :issue:`621`: Drop dependency on ``setuptools.command.test`` which is deprecated
+  and will be removed by the end of the year.
+
+* :issue:`627`: Fix build issue when deployment target is 15.0 or later.
+
+* :issue:`623`: Don't lowercase the first character of the first keyword
+   argument for ``__new__`` when the segment only contains upper case
+   characters.
+
+   Before this change ``initWithURL:`` mapped to an ``uRL`` keyword argument,
+   with this fix the keyword argument is named ``URL``.
+
+   Fix by user rndblnch on github
+
+* :issue:`625`: Fix crash for calling ``NSIndexSet.alloc().initWithIndex_(0)``
+
+  This "fix" is a workaround for what appears to be a bug in Foundation.
 
 Version 10.3.1
 --------------
@@ -55,6 +143,8 @@ Version 10.3.1
   Code relying on the ``__new__`` provided by PyObjC still cannot use
   ``__init__`` for the reason explained in the 10.3 release notes.
 
+* :issue:`619`: Fix race condition in creating Python proxyies for
+  Objective-C classes.
 
 Version 10.3
 ------------
