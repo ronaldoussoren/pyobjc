@@ -560,7 +560,7 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
         super.receiver = (Class _Nonnull)PyObjCClass_GetClass(self);
 
     } else {
-        super.receiver = PyObjCObject_GetObject(self);
+        super.receiver = (id _Nonnull)PyObjCObject_GetObject(self);
     }
     super.super_class = (Class _Nonnull)object_getClass(super.receiver);
 

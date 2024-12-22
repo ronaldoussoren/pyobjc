@@ -739,7 +739,7 @@ PyObjC_IsBuiltinDatetime(PyObject* object)
     return result;
 }
 
-PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id c_info)
+PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id _Nullable c_info)
 {
     PyObject* type;
     PyObject* tzinfo = NULL;

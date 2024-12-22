@@ -153,7 +153,7 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
 
     } else {
         spr.super_class = PyObjCSelector_GetClass(method);
-        spr.receiver    = PyObjCObject_GetObject(self);
+        spr.receiver    = (id _Nonnull)PyObjCObject_GetObject(self);
         aSel            = PyObjCSelector_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
@@ -246,7 +246,7 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
 
     } else {
         spr.super_class = PyObjCSelector_GetClass(method);
-        spr.receiver    = PyObjCObject_GetObject(self);
+        spr.receiver    = (id _Nonnull)PyObjCObject_GetObject(self);
         aSel            = PyObjCSelector_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
@@ -306,7 +306,7 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
 
     } else {
         spr.super_class = PyObjCSelector_GetClass(method);
-        spr.receiver    = PyObjCObject_GetObject(self);
+        spr.receiver    = (id _Nonnull)PyObjCObject_GetObject(self);
         aSel            = PyObjCSelector_GetSelector(method);
 
         // Py_BEGIN_ALLOW_THREADS

@@ -407,5 +407,8 @@ PyAPI_FUNC(int) PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonnul
 
 #endif
 
+static inline Py_ALWAYS_INLINE  void (Py_INCREF)(PyObject * _Nonnull op);
+
+
 NS_ASSUME_NONNULL_END
 #endif /* USE_STATIC_ANALYZER */

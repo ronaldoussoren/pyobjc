@@ -243,6 +243,12 @@ object_verify_type(PyObject* obj)
         PyTypeObject* tp =
             (PyTypeObject*)PyObjCClass_New((Class _Nonnull)object_getClass(obj_inst));
 
+        if (tp == NULL) {
+            PyErr_Format(PyObjCExc_Error, "Cannot get class for Objective-C class '%s'",
+                    class_getName((Class _Nonnull)object_getClass(obj_inst)));
+            return -1;
+        }
+
         if (tp != Py_TYPE(obj)) {
             int did_change = 0;
 
@@ -936,7 +942,12 @@ static PyObject* _Nullable obj_get_blocksignature(PyObject* self, void* closure
         if (v != NULL) {
             return (PyObject*)v;
         } else {
-            const char* typestr = PyObjCBlock_GetSignature(PyObjCObject_GetObject(self));
+            id objc_self = PyObjCObject_GetObject(self);
+            if (objc_self == nil) {
+                PyErr_SetString(PyObjCExc_Error, "Cannot get block signature of a 'nil' block");
+                return NULL;
+            }
+            const char* typestr = PyObjCBlock_GetSignature(objc_self);
             if (typestr != NULL) {
                 v = PyObjCMethodSignature_WithMetaData(typestr, NULL, YES);
                 if (v == NULL) {
@@ -1317,7 +1328,10 @@ PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
 
     cls_type = (PyTypeObject*)PyObjCClass_New(cls);
     if (cls_type == NULL) {
-        PyErr_SetString(PyObjCExc_Error, "Found method without selector in runtime");
+        if (!PyErr_Occurred()) {
+            PyErr_Format(PyObjCExc_Error, "Cannot find python proxy for class '%s'",
+                class_getName(cls));
+        }
         return NULL;
     }
 

@@ -29,7 +29,7 @@ extern int PyObjC_IsSetLike(PyObject* object);
 extern int PyObjC_IsDateLike(PyObject* object);
 extern int PyObjC_IsPathLike(PyObject* object);
 extern PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp) __attribute__((warn_unused_result));
-extern PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id tzinfo) __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id _Nullable tzinfo) __attribute__((warn_unused_result));
 extern PyObject* _Nullable PyObjC_GetCallableDocString(PyObject* callable, void* _Nullable closure) __attribute__((warn_unused_result));
 extern PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nullable closure) __attribute__((warn_unused_result));
 extern int PyObjC_CallClassExtender(PyObject* cls) __attribute__((warn_unused_result));

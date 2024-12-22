@@ -4,6 +4,7 @@ info:
 	@echo "sanitize-test     - clean & test with sanitizers"
 	@echo "scan-build        - build with clang static analyzer"
 	@echo "c-coverage        - clean & test with C level coverage"
+	@echo "test-no-gil       - run the free-threading tests"
 	@echo "clean             - remove build and dist"
 
 all:
@@ -11,6 +12,10 @@ all:
 
 test:
 	python3 setup.py build_ext develop test -v
+
+test-no-gil:
+	python3 setup.py develop
+	python3 Tools/run-free-threading-tests.py
 
 # Build and test using various sanitizers.
 #
@@ -27,9 +32,11 @@ clean:
 scan-build:
 	test -d build || mkdir build
 	env CFLAGS="-DPyObjC_DEBUG -DUSE_STATIC_ANALYZER" scan-build -o build   \
-            --enable-checker nullability.NullableDereferenced \
-            --enable-checker nullability.NullablePassedToNonnull \
-            --enable-checker nullability.NullableReturnedFromNonnull \
+	    --enable-checker nullability.NullPassedToNonnull \
+	    --enable-checker nullability.NullReturnedFromNonnull \
+	    --enable-checker nullability.NullableDereferenced \
+	    --enable-checker nullability.NullablePassedToNonnull \
+	    --enable-checker nullability.NullableReturnedFromNonnull \
             --enable-checker security.insecureAPI.DeprecatedOrUnsafeBufferHandling \
             --enable-checker security.insecureAPI.bcmp \
             --enable-checker security.insecureAPI.bcopy \
@@ -40,6 +47,7 @@ scan-build:
             --enable-checker valist.CopyToSelf \
             --enable-checker valist.Uninitialized \
             --enable-checker valist.Unterminated \
+            --enable-checker security \
 	    python3 setup.py build_ext
 	open build/scan-build*/index.html
 
@@ -72,4 +80,4 @@ c-coverage:
 #-arch -x86_64 build/cov-env/bin/python3 setup.py test -v
 
 
-.PHONY: info all test sanitize-test clean scan-build c-coverage
+.PHONY: info all test sanitize-test clean scan-build c-coverage test-no-gil

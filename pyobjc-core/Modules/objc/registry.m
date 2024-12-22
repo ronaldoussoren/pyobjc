@@ -16,7 +16,7 @@ int
 PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selector,
                      PyObject* value)
 {
-    int       result;
+    int       result = 0;
     PyObject* sublist;
 
     PyObjC_Assert(PyBytes_Check(class_name), -1);

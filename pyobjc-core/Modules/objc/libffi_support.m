@@ -4064,6 +4064,7 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                     if (PyObjCObject_Check(v) && PyObjCObject_IsBlock(v)) {
                                         PyObjCMethodSignature* methinfo = PyObjCObject_GetBlockSignature(v);
                                         if  (methinfo == NULL) {
+                                            assert(methinfo->argtype != NULL);
                                             PyObjCMethodSignature* tmp = PyObjCObject_SetBlockSignature( v, methinfo->argtype[i]->callable);
                                             if (tmp == NULL) {
                                                 goto error_cleanup;

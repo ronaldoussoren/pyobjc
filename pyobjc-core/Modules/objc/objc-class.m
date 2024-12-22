@@ -1310,7 +1310,14 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
                 should_call = 1;
 #endif
 
-                info->generation = PyObjC_MappingCount;
+                // XXX: See below: due to a race we can only
+                //      update the generation after calling the
+                //      class extender.
+                //
+                //      This can cause races in the extender function
+                //      itself, but that should be harmless other than
+                //      doing unnecessary work.
+                //info->generation = PyObjC_MappingCount;
 #ifdef Py_GIL_DISABLED
             } else {
                 should_call = 0;
@@ -1319,7 +1326,15 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
 
             if (should_call) {
 #endif
-
+                /* XXX: This is annoying: the class extender should
+                 *      be called in the critical section because
+                 *      otherwise racing threads can see an incomplete
+                 *      state...
+                 *
+                 *      Note that this is technically already a problem
+                 *      with the regular build, although it is a lot easier
+                 *      to hit with the GIL disabled.
+                 */
                 r = PyObjC_CallClassExtender(cls);
                 if (r < 0) {
                     return -1;
@@ -1337,6 +1352,7 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
                         info->sel_to_py = PyDict_New();
                     }
 
+                    info->generation = PyObjC_MappingCount;
                 Py_END_CRITICAL_SECTION();
                 Py_CLEAR(to_clear);
 #ifdef Py_GIL_DISABLED

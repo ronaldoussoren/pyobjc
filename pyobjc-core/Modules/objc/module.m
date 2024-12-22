@@ -1652,7 +1652,12 @@ static PyObject* _Nullable block_signature(PyObject* mod __attribute__((__unused
         return NULL;
     }
 
-    const char* sig = PyObjCBlock_GetSignature(PyObjCObject_GetObject(block));
+    id objc_block = PyObjCObject_GetObject(block);
+    if (objc_block == nil) {
+        PyErr_SetString(PyObjCExc_Error, "Cannot get block signature of 'nil' block");
+        return NULL;
+    }
+    const char* sig = PyObjCBlock_GetSignature(objc_block);
     if (sig == NULL) {
         Py_RETURN_NONE;
     }
