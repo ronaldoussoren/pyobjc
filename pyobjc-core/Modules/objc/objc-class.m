@@ -228,23 +228,24 @@ objc_metaclass_register(PyTypeObject* meta_class, Class objc_class, Class objc_m
         NSMapInsert(class_registry, objc_meta_class, meta_class);
     }
 
-    PyTypeObject* existing_meta = NSMapGet(metaclass_to_class, meta_class);
+    Class existing_meta = NSMapGet(metaclass_to_class, meta_class);
     if (existing_meta) {
-        if (existing_meta != (PyTypeObject*)existing_class) {
-            PyErr_Format(PyObjCExc_Error, "Inconsistent mapping for class/metaclass '%s'",
-                    class_getName(objc_class));
+        if (existing_class) {
+            Py_INCREF(meta_class);
+#ifdef Py_GIL_DISABLED
+            PyMutex_Unlock(&registry_lock);
+            PyMutex_Unlock(&classmap_lock);
+#endif
+            return meta_class;
+        } else {
+            PyErr_Format(PyObjCExc_InternalError,
+                    "Registering metaclass twice for '%s'", class_getName(existing_meta));
 #ifdef Py_GIL_DISABLED
             PyMutex_Unlock(&registry_lock);
             PyMutex_Unlock(&classmap_lock);
 #endif
             return NULL;
         }
-        Py_INCREF(existing_meta);
-#ifdef Py_GIL_DISABLED
-        PyMutex_Unlock(&registry_lock);
-        PyMutex_Unlock(&classmap_lock);
-#endif
-        return existing_meta;
         // LCOV_EXCL_STOP
     }
 
