@@ -126,7 +126,7 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     ffi_cif           cif;
     ffi_cif*          cifptr;
 
-    PyObject* retval;
+    PyObject* retval = NULL;
 
     if (PyObjC_CheckNoKwnames(s, kwnames) == -1) {
         return NULL;
@@ -268,34 +268,24 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     retval = PyObjCFFI_BuildResult(self->methinfo, 0, argbuf, byref, byref_attr,
                                    byref_out_count, NULL, 0, values);
 
+error:
     if (variadicAllArgs) {
         if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + nargsf, byref, byref_attr)
             < 0) {
-            goto error;
+            Py_CLEAR(retval);
         }
 
     } else {
         if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr) < 0) {
-            goto error;
+            Py_CLEAR(retval);
         }
-    }
-
-    PyMem_Free(argbuf);
-    argbuf = NULL;
-    return retval;
-
-error:
-    if (variadicAllArgs) {
-        PyObjCFFI_FreeByRef(nargsf, byref, byref_attr); /* XXX: Compare with call above */
-
-    } else {
-        PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr);
     }
 
     if (argbuf) {
         PyMem_Free(argbuf);
+        argbuf = NULL;
     }
-    return NULL;
+    return retval;
 }
 
 #if PY_VERSION_HEX >= 0x03090000
@@ -485,7 +475,6 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
     result->methinfo = methinfo;
     Py_XINCREF(methinfo);
 
-    /* XXX: Set ->cif on first call? */
     ffi_cif* cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (cif == NULL) {
         Py_DECREF(result);
@@ -540,7 +529,6 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     SET_FIELD_INCREF(result->doc, doc);
     SET_FIELD_INCREF(result->name, name);
 
-    /* XXX: Set ->cif on first call? */
     result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (result->cif == NULL) { // LCOV_BR_EXCL_LINE
         Py_DECREF(result);     // LCOV_EXCL_LINE
