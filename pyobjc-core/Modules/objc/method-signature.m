@@ -2118,14 +2118,14 @@ int
 PyObjCMethodSignature_Setup(PyObject* module __attribute__((__unused__)))
 {
     PyObject* tmp = PyType_FromSpec(&sig_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     PyObjCMethodSignature_Type = tmp;
 
     tmp = PyObjC_NewRegistry();
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     registry = tmp;
     return 0;

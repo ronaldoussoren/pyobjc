@@ -1287,6 +1287,8 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
     PyObjCClassObject* info;
     PyObject* _Nullable cls = start_cls;
 
+    PyObjC_Assert(PyObjCClass_Check(start_cls), -1);
+
     info = (PyObjCClassObject*)cls;
 
     if (info->class == NULL)
@@ -1385,6 +1387,7 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
          * proxy for the same class.
          */
         Py_DECREF(cls);
+        PyObjC_Assert(PyObjCClass_Check(cls), -1);
         info = (PyObjCClassObject*)cls;
     }
     return 0;

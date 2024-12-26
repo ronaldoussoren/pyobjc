@@ -137,15 +137,9 @@ static PyObject* PyObjCOptions_Type;
                                 void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
         LOCK(VAR);                                                                       \
-        if (VAR != NULL) {                                                               \
-            Py_INCREF(VAR);                                                              \
-            UNLOCK(VAR);                                                                 \
-            return VAR;                                                                  \
-                                                                                         \
-        } else {                                                                         \
-            UNLOCK(VAR);                                                                 \
-            Py_RETURN_NONE;                                                              \
-        }                                                                                \
+        Py_INCREF(VAR);                                                                  \
+        UNLOCK(VAR);                                                                     \
+        return VAR;                                                                      \
     }                                                                                    \
                                                                                          \
     static int NAME##_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,     \
@@ -170,15 +164,9 @@ static PyObject* PyObjCOptions_Type;
                                 void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
         LOCK(VAR);                                                                       \
-        if (VAR != NULL) {                                                               \
-            Py_INCREF(VAR);                                                              \
-            UNLOCK(VAR);                                                                 \
-            return VAR;                                                                  \
-                                                                                         \
-        } else {                                                                         \
-            UNLOCK(VAR);                                                                 \
-            Py_RETURN_NONE;                                                              \
-        }                                                                                \
+        Py_INCREF(VAR);                                                                  \
+        UNLOCK(VAR);                                                                     \
+        return VAR;                                                                      \
     }                                                                                    \
                                                                                          \
     static int NAME##_set(PyObject* s __attribute__((__unused__)), PyObject* newVal,     \
@@ -285,8 +273,8 @@ deprecation_warnings_set(PyObject* s __attribute__((__unused__)), PyObject* newV
          * needed due to the harebrained interface of strtoul
          */
         char* text = (char*)PyUnicode_AsUTF8(newVal);
-        if (text == NULL) {
-            return -1;
+        if (text == NULL) { // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
 
         unsigned long major = 0;
@@ -704,18 +692,17 @@ PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp)
         type,
         PyFloat_FromDouble(timestamp),
     };
-    if (args[2] == NULL) {
+    if (args[2] == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(type);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* value = PyObject_VectorcallMethod(PyObjCNM_fromtimestamp, args + 1,
                                       2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_CLEAR(args[2]);
     Py_DECREF(type);
-    if (value == NULL) {
-        return NULL;
-    }
     return value;
 }
 
@@ -763,9 +750,11 @@ PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id _Nullable 
         PyFloat_FromDouble(timestamp),
         tzinfo,
     };
-    if (args[2] == NULL) {
+    if (args[2] == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(type);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* value = PyObject_VectorcallMethod(PyObjCNM_fromtimestamp, args + 1,
@@ -773,9 +762,6 @@ PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id _Nullable 
     Py_CLEAR(args[2]);
     Py_DECREF(type);
     Py_CLEAR(tzinfo);
-    if (value == NULL) {
-        return NULL;
-    }
     return value;
 }
 
@@ -913,11 +899,7 @@ PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nulla
 
 int PyObjC_CallClassExtender(PyObject* cls)
 {
-
-    if (!PyObjCClass_Check(cls)) {
-        PyErr_SetString(PyExc_TypeError, "not a class");
-        return -1;
-    }
+    PyObjC_Assert(PyObjCClass_Check(cls), -1);
 
     LOCK(PyObjC_ClassExtender);
     PyObject* func = PyObjC_ClassExtender;
@@ -1115,9 +1097,11 @@ extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* c
     }
 
     PyObject* py_name = PyUnicode_FromString(name);
-    if (py_name == NULL) {
+    if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(func);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_Assert(!PyErr_Occurred(), NULL);
@@ -1229,11 +1213,13 @@ PyObjC_SetupOptions(PyObject* m)
 #undef INIT
 
 #   define INIT(VAR) do { VAR = PyTuple_New(0); if (VAR == NULL) return -1; } while(0)
+    // LCOV_BR_EXCL_START
     INIT(PyObjC_DictLikeTypes);
     INIT(PyObjC_ListLikeTypes);
     INIT(PyObjC_SetLikeTypes);
     INIT(PyObjC_DateLikeTypes);
     INIT(PyObjC_PathLikeTypes);
+    // LCOV_BR_EXCL_STOP
 #undef INIT
 
     return PyModule_AddObject(m, "options", o);
