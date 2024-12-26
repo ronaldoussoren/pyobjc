@@ -4,7 +4,6 @@ info:
 	@echo "sanitize-test     - clean & test with sanitizers"
 	@echo "scan-build        - build with clang static analyzer"
 	@echo "c-coverage        - clean & test with C level coverage"
-	@echo "c-profile         - clean & test with C level profiling"
 	@echo "test-no-gil       - run the free-threading tests"
 	@echo "clean             - remove build and dist"
 
@@ -75,15 +74,6 @@ c-coverage:
 	lcov --rc lcov_branch_coverage=1 --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert"  --no-external --capture --directory . --output-file build/coverage.info
 	genhtml --legend --branch-coverage --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert" --legend build/coverage.info --output-directory dist/c-coverage # --rc "genhtml_med_limit=80" --rc "genhtml_hi_limit=95"
 	open dist/c-coverage/index.html
-
-# Run the test suite while recording C-level coverage
-#c-profile:
-#	rm -rf build dist
-#	mkdir build dist
-#	python3 -mvenv build/prof-env
-##	build/prof-env/bin/python -m pip install -U setuptools wheel
-#	env ARCHFLAGS="-arch arm64" CFLAGS="-ftime-trace -fprofile-instr-generate -fcoverage-mapping  -O1" LDFLAGS="-ftime-trace -fprofile-instr-generate -fcoverage-mapping -O1" build/prof-env/bin/python3 setup.py build_ext -j 4 develop
-#	-build/prof-env/bin/python3 setup.py test -v
 
 # XXX: Maybe use this to run the tests to test both architectures, should lead to better coverage info:
 #-arch -arm64 build/cov-env/bin/python3 setup.py test -v

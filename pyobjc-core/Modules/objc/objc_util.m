@@ -1785,8 +1785,10 @@ PyObjCSequence_Tuple(PyObject* value, const char* context)
         PyObject *type, *cause, *traceback;
         PyErr_Fetch(&type, &cause, &traceback);
         PyErr_NormalizeException(&type, &cause, &traceback);
-        if (PyException_SetTraceback(cause, traceback) == -1) {
-            return NULL;
+        if (traceback != NULL) {
+            if (PyException_SetTraceback(cause, traceback) == -1) {
+                return NULL;
+            }
         }
         Py_CLEAR(type);
         Py_CLEAR(traceback);
@@ -1796,8 +1798,10 @@ PyObjCSequence_Tuple(PyObject* value, const char* context)
 
         PyErr_Fetch(&type, &exc, &traceback);
         PyErr_NormalizeException(&type, &exc, &traceback);
-        if (PyException_SetTraceback(exc, traceback) == -1) {
-            return NULL;
+        if (traceback != NULL) {
+            if (PyException_SetTraceback(exc, traceback) == -1) {
+                return NULL;
+            }
         }
 
         PyException_SetCause(exc, cause);

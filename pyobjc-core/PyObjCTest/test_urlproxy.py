@@ -33,7 +33,7 @@ class TestURLProxy(TestCase):
         with self.assertRaisesRegex(ValueError, "result has embedded NULs"):
             a.addObject_(p)
 
-        class MyPath(pathlib.Path):
+        class MyPath(pathlib.PosixPath):
             def __fspath__(self):
                 raise RuntimeError("cannot fspath me")
 
@@ -44,7 +44,7 @@ class TestURLProxy(TestCase):
         with self.assertRaisesRegex(RuntimeError, "cannot fspath me"):
             a.addObject_(p)
 
-        class MyPath(pathlib.Path):
+        class MyPath(pathlib.PosixPath):
             def __fspath__(self):
                 return super().__fspath__().encode()
 
@@ -56,7 +56,7 @@ class TestURLProxy(TestCase):
         # Test with an empty return value from __fspath__,
         # which isn't a valid system path and returns in a
         # 'nil' return value when constructing an NSURL.
-        class MyPath(pathlib.Path):
+        class MyPath(pathlib.PosixPath):
             def __fspath__(self):
                 return ""
 
