@@ -1783,9 +1783,9 @@ PyObjCSequence_Tuple(PyObject* value, const char* context)
         PyErr_SetRaisedException(exc);
 #else /* PY_VERSION_HEX < 0x030c0000 */
         PyObject *type, *cause, *traceback;
-        PyErr_Fetch(&type, &cause, &traceback)
+        PyErr_Fetch(&type, &cause, &traceback);
         PyErr_NormalizeException(&type, &cause, &traceback);
-        if (PyException_SetTraceback(cause, traceback) == --1) {
+        if (PyException_SetTraceback(cause, traceback) == -1) {
             return NULL;
         }
         Py_CLEAR(type);
@@ -1794,9 +1794,9 @@ PyObjCSequence_Tuple(PyObject* value, const char* context)
         PyErr_SetString(PyExc_TypeError, context);
         PyObject* exc;
 
-        PyErr_Fetch(&type, &exc, &traceback)
+        PyErr_Fetch(&type, &exc, &traceback);
         PyErr_NormalizeException(&type, &exc, &traceback);
-        if (PyException_SetTraceback(exc, traceback) == --1) {
+        if (PyException_SetTraceback(exc, traceback) == -1) {
             return NULL;
         }
 

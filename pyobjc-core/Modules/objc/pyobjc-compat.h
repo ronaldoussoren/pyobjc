@@ -234,15 +234,32 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
         PyGILState_Release(_GILState);                                                   \
     } while (0)
 
+#if PY_VERSION_HEX < 0x030a0000
+
+static inline PyObject* Py_NewRef(PyObject* o)
+{
+    Py_INCREF(o);
+    return o;
+}
+
+static inline PyObject* Py_XNewRef(PyObject* o)
+{
+    Py_XINCREF(o);
+    return o;
+}
+
+#endif /* PY_VERSION_HEX < 0x030a0000 */
+
 #if PY_VERSION_HEX < 0x030d0000
 #define Py_BEGIN_CRITICAL_SECTION(value) { (void)(value);
 #define Py_END_CRITICAL_SECTION() }
 #define Py_EXIT_CRITICAL_SECTION() ((void)0)
 
-#define Py_BEGIN_CRITICAL_SECTION2(value1, value2) { (void)((value1),(value2));
+#define Py_BEGIN_CRITICAL_SECTION2(value1, value2) { (void)(value1); (void)(value2);
 #define Py_END_CRITICAL_SECTION2() }
 #define Py_EXIT_CRITICAL_SECTION2() ((void)0)
 
+#define PyObjC_ATOMIC
 
 #else
 
