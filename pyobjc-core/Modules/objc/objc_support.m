@@ -2754,10 +2754,9 @@ depythonify_python_object(PyObject* argument, id* datum)
             if (r) {
                 *datum = [OC_PythonURL URLWithPythonObject:argument];
                 if (*datum == nil) {
-                    /* XXX: Datum can be nil due to `argument` not being
-                     *      pathlike after all or because NSURL construction
-                     *      failed.
-                     */
+                    if (!PyErr_Occurred()) {
+                        PyErr_SetString(PyObjCExc_Error, "Cannot convert path-like to URL");
+                    }
                     return -1;
                 }
             }

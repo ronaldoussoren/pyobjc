@@ -4,6 +4,7 @@ info:
 	@echo "sanitize-test     - clean & test with sanitizers"
 	@echo "scan-build        - build with clang static analyzer"
 	@echo "c-coverage        - clean & test with C level coverage"
+	@echo "c-profile         - clean & test with C level profiling"
 	@echo "test-no-gil       - run the free-threading tests"
 	@echo "clean             - remove build and dist"
 
@@ -23,7 +24,7 @@ test-no-gil:
 # sanitizer library is loaded.
 sanitize-test:
 	rm -rf build dist
-	env ASAN_OPTIONS=allocator_may_return_null=1 DYLD_INSERT_LIBRARIES=$(shell echo `xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/*/lib/darwin/libclang_rt.asan_osx_dynamic.dylib) CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/Python setup.py build_ext develop test -v
+	env ASAN_OPTIONS=allocator_may_return_null=1 DYLD_INSERT_LIBRARIES=$(shell echo `xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/[0-9][0-9]/lib/darwin/libclang_rt.asan_osx_dynamic.dylib) CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" LDFLAGS="-fsanitize-thread-atomics  -fsanitize-thread-func-entry-exit -fsanitize-thread-memory-access" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/PythonT setup.py build_ext develop test -v
 
 clean:
 	rm -rf build dist
@@ -67,6 +68,7 @@ c-coverage:
 	rm -rf build dist
 	mkdir build dist
 	python3 -mvenv build/cov-env
+	build/cov-env/bin/python -m pip install -U setuptools wheel
 	env ARCHFLAGS="-arch arm64" CFLAGS="-DCOVERAGE --coverage -fprofile-arcs -ftest-coverage -O1" LDFLAGS="--coverage -fprofile-arcs -ftest-coverage -O1" build/cov-env/bin/python3 setup.py build_ext -j 4 develop
 	lcov --directory .  --zerocounters
 	-build/cov-env/bin/python3 setup.py test -v
@@ -74,6 +76,14 @@ c-coverage:
 	genhtml --legend --branch-coverage --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert" --legend build/coverage.info --output-directory dist/c-coverage # --rc "genhtml_med_limit=80" --rc "genhtml_hi_limit=95"
 	open dist/c-coverage/index.html
 
+# Run the test suite while recording C-level coverage
+#c-profile:
+#	rm -rf build dist
+#	mkdir build dist
+#	python3 -mvenv build/prof-env
+##	build/prof-env/bin/python -m pip install -U setuptools wheel
+#	env ARCHFLAGS="-arch arm64" CFLAGS="-ftime-trace -fprofile-instr-generate -fcoverage-mapping  -O1" LDFLAGS="-ftime-trace -fprofile-instr-generate -fcoverage-mapping -O1" build/prof-env/bin/python3 setup.py build_ext -j 4 develop
+#	-build/prof-env/bin/python3 setup.py test -v
 
 # XXX: Maybe use this to run the tests to test both architectures, should lead to better coverage info:
 #-arch -arm64 build/cov-env/bin/python3 setup.py test -v

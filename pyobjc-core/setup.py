@@ -121,7 +121,7 @@ OBJC_LDFLAGS = [
     "-g",
     # "-O3",
     # "-flto=thin",
-    # "-fexceptions",
+    "-fexceptions",
 ]
 
 

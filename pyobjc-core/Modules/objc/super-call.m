@@ -85,21 +85,27 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     PyMutex_Lock(&registry_mutex);
 #endif
 
-    if (!make_call_to_python_block) {
+#ifdef PyObjC_DEBUG
+    if (!make_call_to_python_block) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error,
                         "PyObjC_RegisterMethodMapping: all functions required");
         retval = -1;
         goto exit;
+        // LCOV_EXCL_STOP
     }
+#endif
 
     if (!call_to_objc) {
         call_to_objc = PyObjCFFI_Caller;
     }
 
     py_selname = PyUnicode_FromString(sel_getName(sel));
-    if (py_selname == NULL) {
+    if (py_selname == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         retval = -1;
         goto exit;
+        // LCOV_EXCL_STOP
     }
 
     if (class == nil) {
@@ -108,9 +114,11 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     } else {
         pyclass = PyObjCClass_New(class);
         if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(py_selname);
             retval = -1;
             goto exit;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -153,19 +161,23 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
 
     r = PyDict_GetItemRef(special_registry, py_selname, &lst);
 
-    switch (r) {
+    switch (r) { // LCOV_BR_EXCL_LINE
     case -1:
+        // LCOV_EXCL_START
         Py_DECREF(py_selname);
         Py_DECREF(entry);
         retval = -1;
         goto exit;
+        // LCOV_EXCL_STOP
     case 0:
         lst = PyList_New(0);
-        if (lst == NULL) {
+        if (lst == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(py_selname);
             Py_DECREF(entry);
             retval = -1;
             goto exit;
+            // LCOV_EXCL_STOP
         }
         if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
                 special_registry, py_selname, lst)
@@ -221,8 +233,10 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 
     PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
     if (key == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         retval = -1;
         goto exit;
+        // LCOV_EXCL_STOP
     }
 
     r = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
@@ -234,30 +248,38 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
         goto exit;
     }
 
-    if (!call_to_objc || !make_call_to_python_block) {
+#ifdef PyObjC_DEBUG
+    if (!call_to_objc || !make_call_to_python_block) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(key);
         PyErr_SetString(PyObjCExc_Error,
                         "PyObjC_RegisterSignatureMapping: all functions required");
         retval = -1;
         goto exit;
+        // LCOV_EXCL_STOP
     }
+#endif
 
     v = PyMem_Malloc(sizeof(*v));
-    if (v == NULL) {
+    if (v == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(key);
         PyErr_NoMemory();
         retval = -1;
         goto exit;
+        // LCOV_EXCL_STOP
     }
     v->call_to_objc              = call_to_objc;
     v->make_call_to_python_block = make_call_to_python_block;
 
     entry = PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup);
-    if (entry == NULL) {
+    if (entry == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(key);
         PyMem_Free(v);
         retval = -1;
         goto exit;
+        // LCOV_EXCL_STOP
     }
 
     if (_PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1)) { // LCOV_BR_EXCL_LINE
@@ -268,11 +290,13 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
         // LCOV_EXCL_STOP
     }
 
-    if (PyDict_SetItem(signature_registry, key, entry) < 0) {
+    if (PyDict_SetItem(signature_registry, key, entry) < 0) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(key);
         Py_DECREF(entry);
         retval = -1;
         goto exit;
+        // LCOV_EXCL_STOP
     }
     Py_DECREF(key);
     Py_DECREF(entry);
@@ -298,17 +322,15 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
     Py_ssize_t i;
     int r;
 
+    PyObjC_Assert(special_registry != NULL, NULL);
+    PyObjC_Assert(class != Nil, NULL);
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&registry_mutex);
 #endif
-    if (special_registry == NULL)
-        goto error;
-    if (!class)
-        goto error;
 
     py_selname = PyUnicode_FromString(sel_getName(sel));
-    if (py_selname == NULL) {
-        goto error;
+    if (py_selname == NULL) { // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     }
 
     search_class = PyObjCClass_New(class);
@@ -316,9 +338,9 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
         goto error;           // LCOV_EXCL_LINE
 
     r = PyDict_GetItemRef(special_registry, py_selname, &lst);
-    switch (r) {
+    switch (r) { // LCOV_BR_EXCL_LINE
     case -1:
-        goto error;
+        goto error; // LCOV_EXCL_LINE
     case 0:
         goto error;
     /* case 1: fallthrough */
@@ -336,8 +358,8 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
     Py_ssize_t len = PyList_Size(lst);
     for (i = 0; i < len; i++) {
         PyObject* entry   = PyList_GetItemRef(lst, i);
-        if (entry == NULL) {
-            goto error;
+        if (entry == NULL) { // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
         }
         PyObject* pyclass = PyTuple_GET_ITEM(entry, 0);
 
@@ -412,16 +434,14 @@ static struct registry* _Nullable find_signature(const char* signature)
     int       res;
     struct registry* result = NULL;
 
-    if (signature_registry == NULL) {
-        return NULL;
-    }
+    PyObjC_Assert(signature_registry != NULL, NULL);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&registry_mutex);
 #endif
     PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
     if (key == NULL) { // LCOV_BR_EXCL_LINE
-        goto exit;
+        goto exit; // LCOV_EXCL_LINE
     }
 
     res = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
@@ -432,9 +452,9 @@ static struct registry* _Nullable find_signature(const char* signature)
         goto exit;
     }
 
-    if ( // LCOV_BR_EXCL_LINE
-        _PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1) == -1) {
-        goto exit;
+    int r = _PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        goto exit; // LCOV_EXCL_LINE
     }
     if (PyDict_GetItemRef(signature_registry, key, &o) != 1) {
         goto exit;

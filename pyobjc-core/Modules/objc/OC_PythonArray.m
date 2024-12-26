@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
         }
 
         if (v == Py_None) {
-            result = [NSNull null];
+            result = NSNull_null;
 
         } else {
             err = depythonify_python_object(v, &result);
@@ -126,7 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        if (unlikely(newValue == [NSNull null])) {
+        if (unlikely(newValue == NSNull_null)) {
             Py_INCREF(Py_None);
             v = Py_None;
 
@@ -151,11 +151,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
     PyObject* v;
     PyObject* w;
-
-    static NSObject* NSNull_null = nil;
-    if (NSNull_null == nil) {
-        NSNull_null = [NSNull null];
-    }
 
     PyObjC_BEGIN_WITH_GIL
 
@@ -185,11 +180,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
     PyObject* v;
     PyObject* w;
-
-    static NSObject* NSNull_null = nil;
-    if (NSNull_null == nil) {
-        NSNull_null = [NSNull null];
-    }
 
     if (unlikely(idx > PY_SSIZE_T_MAX)) {
         PyObjC_BEGIN_WITH_GIL
@@ -355,11 +345,6 @@ NS_ASSUME_NONNULL_BEGIN
      * protocol of NSArray.
      */
     NSUInteger i;
-
-    static NSObject* NSNull_null = nil;
-    if (NSNull_null == nil) {
-        NSNull_null = [NSNull null];
-    }
 
     if (count > 0 && objects == NULL) {
         [self release];

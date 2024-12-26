@@ -26,10 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
     Py_ssize_t utf8_size;
 
     utf8 = PyUnicode_AsUTF8AndSize(fspath, &utf8_size);
-    if (utf8 == NULL) {
+    if (utf8 == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(fspath);
         [self release];
         return nil;
+        // LCOV_EXCL_STOP
     }
     if (utf8_size != (Py_ssize_t)strlen(utf8)) {
         Py_DECREF(fspath);
@@ -40,9 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 
     NSString* path = [[NSString alloc] initWithUTF8String:utf8];
     Py_DECREF(fspath);
-    if (path == nil) {
+    if (path == nil) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [self release];
         return nil;
+        // LCOV_EXCL_STOP
     }
 
     self = [super initFileURLWithPath:path];

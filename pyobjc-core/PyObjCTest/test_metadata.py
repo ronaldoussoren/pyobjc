@@ -1628,6 +1628,16 @@ class TestVariableLengthValue(TestCase):
         with self.assertRaisesRegex(IndexError, ".*out of range.*"):
             v[sys.maxsize // 2 + 10] = 1
 
+        with self.assertRaisesRegex(
+            ValueError, "Cannot delete items of an 'objc.varlist"
+        ):
+            del v[0]
+
+        with self.assertRaisesRegex(
+            ValueError, "Cannot delete items of an 'objc.varlist"
+        ):
+            del v[0:4]
+
         data = v.as_buffer(4)
         self.assertEqual(data[0], 0)
         v[0] = 0x0F0F0F0F

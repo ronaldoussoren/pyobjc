@@ -3,6 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSNull* NSNull_null;
 extern PyObject* PyObjCExc_Error;
 extern PyObject* PyObjCExc_NoSuchClassError;
 extern PyObject* PyObjCExc_UnInitDeallocWarning;

@@ -26,7 +26,6 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
             CFIndex size __attribute__((__unused__)),
             void*   info __attribute__((__unused__)))
 {
-    PyObject* tmp;
     PyObject* callable;
     int       signum;
     int       r;
@@ -36,26 +35,32 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
         return;           // LCOV_EXCL_LINE
     }
     PyObjC_BEGIN_WITH_GIL
-        tmp = PyLong_FromLong((long)signum);
-        if (tmp == NULL) {            // LCOV_BR_EXCL_LINE
+        PyObject* result;
+        PyObject* py_signum = PyLong_FromLong((long)signum);
+        if (py_signum == NULL) {            // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            __builtin_unreachable();  // LOCV_EXCL_LINE
-        }
-
-        r = PyDict_GetItemRef(signalmapping, tmp, &callable);
-        Py_DECREF(tmp);
-        switch(r) {
-        case 0:
-            PyObjC_GIL_RETURNVOID;
-        case -1:
-            PyObjC_GIL_FORWARD_EXC();
-        case 1:
-            tmp = PyObject_CallFunction(callable, "i", signum);
-            Py_DECREF(callable);
-            if (tmp == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            } else {
-                Py_DECREF(tmp);
+        } else { // LCOV_EXCL_LINE
+            r = PyDict_GetItemRef(signalmapping, py_signum, &callable);
+            switch(r) { // LCOV_BR_EXCL_LINE
+            case 0:
+                Py_DECREF(py_signum);
+                PyObjC_GIL_RETURNVOID;
+            case -1:
+                Py_DECREF(py_signum); // LCOV_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            case 1:
+#if PY_VERSION_HEX >= 0x03090000
+                result = PyObject_CallOneArg(callable, py_signum);
+#else
+                result = PyObject_CallFunction(callable, "O", py_signum);
+#endif
+                Py_DECREF(py_signum);
+                Py_DECREF(callable);
+                if (result == NULL) {
+                    PyObjC_GIL_FORWARD_EXC();
+                } else {
+                    Py_DECREF(result);
+                }
             }
         }
     PyObjC_END_WITH_GIL

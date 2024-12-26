@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
         }
 
         if (object == Py_None) {
-            result = [NSNull null];
+            result = NSNull_null;
         } else {
             if (depythonify_python_object(object, &result) == -1) {
                 Py_EXIT_CRITICAL_SECTION();

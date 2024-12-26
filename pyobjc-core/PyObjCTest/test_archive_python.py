@@ -8,6 +8,7 @@ import pickle
 import sys
 import test.pickletester
 import collections
+import pathlib
 
 import objc
 import objc._pycoder as pycoder
@@ -24,6 +25,7 @@ from PyObjCTest.fnd import (
     NSSet,
     NSString,
     NSUnarchiver,
+    NSURL,
 )
 from PyObjCTools.TestSupport import (
     TestCase,
@@ -240,6 +242,16 @@ class TestKeyedArchiveSimple(TestCase):
         self.isKeyed = True
         self.archiverClass = NSKeyedArchiver
         self.unarchiverClass = NSKeyedUnarchiver
+
+    def test_roundtrip_pathlib_path(self):
+        p = pathlib.Path(__file__)
+
+        buf = self.archiverClass.archivedDataWithRootObject_(p)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertNotIsInstance(v, pathlib.Path)
+        self.assertIsInstance(v, NSURL)
+        self.assertEqual(v, p)
 
     def test_global_from_main(self):
         import __main__ as mod

@@ -74,7 +74,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             key = nil;
 
         } else if (pykey == Py_None) {
-            key = [NSNull null];
+            key = NSNull_null;
             Py_DECREF(pykey);
 
         } else {
@@ -187,7 +187,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
     PyObjC_BEGIN_WITH_GIL
 
-        if (unlikely(key == [NSNull null])) { /* XXX: NSNull_null */
+        if (unlikely(key == NSNull_null)) {
             Py_INCREF(Py_None);
             k = Py_None;
         } else {
@@ -222,7 +222,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         Py_DECREF(k);
 
         if (v == Py_None) {
-            result = [NSNull null]; /* XXX: NSNull_null */
+            result = NSNull_null;
 
         } else if (unlikely(depythonify_python_object(v, &result) == -1)) {
             Py_DECREF(v);
@@ -239,7 +239,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 {
     PyObject* v    = NULL;
     PyObject* k    = NULL;
-    id        null = [NSNull null]; /* XXX: NSNull_null */
+    id        null = NSNull_null;
 
     PyObjC_BEGIN_WITH_GIL
         if (unlikely(val == null)) {
@@ -293,7 +293,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     PyObject* k;
 
     PyObjC_BEGIN_WITH_GIL
-        if (unlikely(key == [NSNull null])) { /* XXX: NSNull_null */
+        if (unlikely(key == NSNull_null)) {
             Py_INCREF(Py_None);
             k = Py_None;
         } else {
@@ -380,7 +380,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             PyObject* v;
             int       r;
 
-            if (objects[i] == [NSNull null]) { /* XXX: NSNull_null */
+            if (objects[i] == NSNull_null) {
                 v = Py_None;
                 Py_INCREF(Py_None);
 
@@ -391,7 +391,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                 }
             }
 
-            if (keys[i] == [NSNull null]) {
+            if (keys[i] == NSNull_null) {
                 k = Py_None;
                 Py_INCREF(Py_None);
 

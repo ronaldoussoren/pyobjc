@@ -6,6 +6,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NSNull* NSNull_null;
+
 PyObject* PyObjCExc_Error;
 PyObject* PyObjCExc_NoSuchClassError;
 PyObject* PyObjCExc_InternalError;
@@ -98,6 +100,8 @@ PyObject* PyObjCNM_update;
 int
 PyObjCUtil_Init(PyObject* module)
 {
+    NSNull_null = [[NSNull null] retain];
+
 #define NEW_EXC(identifier, name, base_class)                                            \
     identifier = PyErr_NewException("objc." name, base_class, NULL);                     \
     if (identifier == NULL)                                                              \
@@ -522,7 +526,7 @@ static NSException* _Nullable python_exception_to_objc(void)
     return val;
 }
 
-void
+void __attribute__((__noreturn__))
 PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nonnull state)
 {
     NSException* exc = python_exception_to_objc();

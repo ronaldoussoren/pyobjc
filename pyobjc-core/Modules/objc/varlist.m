@@ -465,7 +465,6 @@ PyObjCVarList_New(const char* tp, void* array)
         end--;
     }
 
-    /* XXX: Use PyObject_New() + separate buffer for the encoding */
     result = (PyObjCVarList*)PyObject_Malloc(
         _PyObject_SIZE((PyTypeObject*)PyObjCVarList_Type) + (end - tp) + 1);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
@@ -501,8 +500,8 @@ PyObjCVarList_Setup(PyObject* module)
     }
     PyObjCVarList_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "varlist", PyObjCVarList_Type) == -1) {
+    int r = PyModule_AddObject(module, "varlist", PyObjCVarList_Type);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCVarList_Type);

@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
         for (i = 0; i < cnt; i++) {
             PyObject* cur;
 
-            if (objects[i] == [NSNull null]) {
+            if (objects[i] == NSNull_null) {
                 cur = Py_None;
                 Py_INCREF(Py_None);
             } else {
@@ -343,7 +343,7 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         PyObject* tmp;
 
-        if (anObject == [NSNull null]) { /* XXX: NSNull_null */
+        if (anObject == NSNull_null) {
             tmp = Py_None;
             Py_INCREF(Py_None);
         } else {
@@ -407,7 +407,7 @@ NS_ASSUME_NONNULL_BEGIN
         int       r;
         PyObject* tmpMember;
 
-        if (anObject == [NSNull null]) { /* NSNull_null */
+        if (anObject == NSNull_null) {
             tmpMember = Py_None;
             Py_INCREF(Py_None);
 
@@ -450,7 +450,7 @@ NS_ASSUME_NONNULL_BEGIN
                 if (r) {
                     /* Found the object */
                     if (v == Py_None) {
-                        result = [NSNull null];
+                        result = NSNull_null;
                     } else {
                         if (depythonify_python_object(v, &result) == -1) {
                             Py_DECREF(tmp);
