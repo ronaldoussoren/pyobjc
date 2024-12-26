@@ -100,6 +100,8 @@ borrowed references).
   Please file an issue if you have a use case for changing the signature
   of a block.
 
+* Fix compatibility with Python 3.14 (alpha 3)
+
 Version 10.3.2
 --------------
 

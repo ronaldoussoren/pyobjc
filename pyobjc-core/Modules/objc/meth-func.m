@@ -79,6 +79,7 @@ PyObjC_returns_value(PyObject* value)
     }
 #if PY_VERSION_HEX >= 0x030b0000
     PyObject* co = PyCode_GetCode(func_code);
+
     if (co == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Clear();
@@ -86,6 +87,20 @@ PyObjC_returns_value(PyObject* value)
         return true;
         // LCOV_EXCL_STOP
     }
+
+#if PY_VERSION_HEX >= 0x030e0000
+    PyObject* consts = PyObject_GetAttr((PyObject*)func_code, PyObjCNM_co_consts);
+    if (consts == NULL) {
+        // LCOV_EXCL_START
+        PyErr_Clear();
+        Py_DECREF(func_code);
+        Py_DECREF(co);
+        return true;
+        // LCOV_EXCL_STOP
+    }
+#endif /* PY_VERSION_HEX >= 0x030e0000 */
+
+
     if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
             co, &buf, PyBUF_CONTIG_RO)
         == -1) {
@@ -114,6 +129,9 @@ PyObjC_returns_value(PyObject* value)
          */
         // LCOV_EXCL_START
         Py_DECREF(func_code);
+#if PY_VERSION_HEX >= 0x030e0000
+    Py_DECREF(consts);
+#endif
         return NULL;
         // LCOV_EXCL_STOP
     }
@@ -133,19 +151,23 @@ PyObjC_returns_value(PyObject* value)
 
     for (Py_ssize_t i = 0; i < buf.len; i += 2) {
         int op = ((unsigned char*)buf.buf)[i];
+#if PY_VERSION_HEX >= 0x030e0000
+        if (op == LOAD_CONST && PyTuple_GET_ITEM(consts, ((unsigned char*)buf.buf)[i + 1]) == Py_None) {
+#else
         if (op == LOAD_CONST && ((unsigned char*)buf.buf)[i + 1] == 0) {
+#endif
             was_none = true;
         } else {
             if (op == RETURN_VALUE && !was_none) {
                 rv = true;
                 break;
             }
-#if PY_VERSION_HEX >= 0x030c0000
+#if PY_VERSION_HEX >= 0x030c0000 && PY_VERSION_HEX < 0x030e0000
             else if (op == RETURN_CONST && ((unsigned char*)buf.buf)[i + 1] != 0) {
                 rv = true;
                 break;
             }
-#endif /* PY_VERSION_HEX >= 0x030c0000 */
+#endif /* PY_VERSION_HEX >= 0x030c0000 && PY_VERSION_HEX < 0x030e0000 */
 
             was_none = false;
         }
@@ -173,6 +195,9 @@ PyObjC_returns_value(PyObject* value)
 #endif /* PY_VERSION_HEX < 0x03060000 */
     PyBuffer_Release(&buf);
     Py_DECREF(func_code);
+#if PY_VERSION_HEX >= 0x030e0000
+    Py_DECREF(consts);
+#endif
     return rv;
 }
 

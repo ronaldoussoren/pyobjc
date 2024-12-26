@@ -11,7 +11,10 @@ from objc import simd
 
 # Needs to be replaced by minimal definitions for
 # CGColor and CGColorSpace
-import Quartz  # noqa: F401
+try:
+    import Quartz  # noqa: F401
+except ImportError:
+    Quartz = None
 
 from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
 

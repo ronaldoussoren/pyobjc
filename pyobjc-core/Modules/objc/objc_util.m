@@ -95,6 +95,7 @@ PyObject* PyObjCNM___struct_pack__;
 PyObject* PyObjCNM_pyobjcSetValue_;
 PyObject* PyObjCNM_tzinfo;
 PyObject* PyObjCNM_update;
+PyObject* PyObjCNM_co_consts;
 
 
 int
@@ -207,6 +208,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_pyobjcSetValue_, "pyobjcSetValue_");
     NEW_STR(PyObjCNM_tzinfo, "tzinfo");
     NEW_STR(PyObjCNM_update, "update");
+    NEW_STR(PyObjCNM_co_consts, "co_consts");
 
 #undef NEW_STR
 
