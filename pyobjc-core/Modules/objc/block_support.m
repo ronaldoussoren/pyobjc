@@ -501,7 +501,6 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
 
     rval = PyObjC_FindPythonProxy(self);
     if (rval != NULL) {
-        [self release];
         return rval;
     }
 
@@ -509,15 +508,11 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
     [self release];
     if (rval == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
-    }
-
-    if (rval != NULL) {
+    } else {
         PyObject* actual = PyObjC_RegisterPythonProxy(self, rval);
         Py_DECREF(rval);
         return actual;
     }
-
-    return rval;
 }
 
 static PyObject* _Nullable pyobjc_PythonTransient(NSObject* self,
@@ -536,7 +531,6 @@ static PyObject* _Nullable pyobjc_PythonTransient(NSObject* self,
      */
     PyObject* result = PyObjC_FindPythonProxy(self);
     if (result) {
-        [self release];
         *cookie = 0;
         return result;
     }

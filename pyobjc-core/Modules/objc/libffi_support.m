@@ -906,7 +906,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
             format++;
 
         } else if (*format == 'L') {
-            /* typecode = _C_LNGDBL, that's odd: no type encoding for long double! */
+            typecode = _C_LNG_DBL;
             format++;
         }
 

@@ -58,11 +58,11 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
                 Py_DECREF(callable);
                 if (result == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
-                } else {  // LCOV_BR_EXCL_LINE
+                } else {  // LCOV_EXCL_LINE
                     Py_DECREF(result);
                 }
             }
-        }  // LCOV_BR_EXCL_LINE
+        }  // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 }
 

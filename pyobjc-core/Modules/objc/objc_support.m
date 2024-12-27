@@ -626,6 +626,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
     case _C_ULNG:
     case _C_FLT:
     case _C_DBL:
+    case _C_LNG_DBL:
     case _C_VOID:
     case _C_LNG_LNG:
     case _C_ULNG_LNG:
@@ -799,6 +800,7 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
     case _C_ULNG:
     case _C_FLT:
     case _C_DBL:
+    case _C_LNG_DBL:
     case _C_VOID:
     case _C_LNG_LNG:
     case _C_ULNG_LNG:
@@ -988,6 +990,8 @@ PyObjCRT_AlignOfType(const char* start_type)
         return __alignof__(float);
     case _C_DBL:
         return __alignof__(double);
+    case _C_LNG_DBL:
+        return __alignof__(long double);
     case _C_CHARPTR:
         return __alignof__(char*);
 #ifdef _C_ATOM
@@ -1154,6 +1158,8 @@ PyObjCRT_SizeOfType(const char* start_type)
         return sizeof(float);
     case _C_DBL:
         return sizeof(double);
+    case _C_LNG_DBL:
+        return sizeof(long double);
     case _C_UNICHAR:
         return sizeof(UniChar);
     case _C_CHAR_AS_TEXT:
@@ -1331,6 +1337,7 @@ PyObjCRT_IsValidEncoding(const char* _type, Py_ssize_t type_length)
     case _C_ULNG_LNG:
     case _C_FLT:
     case _C_DBL:
+    case _C_LNG_DBL:
     case _C_UNICHAR:
     case _C_CHAR_AS_TEXT:
     case _C_CHAR_AS_INT:
@@ -2281,6 +2288,14 @@ pythonify_c_value(const char* type, const void* datum)
         }
         break;
 
+    case _C_LNG_DBL:
+        {
+            long double v;
+            memcpy((void*)&v, datum, sizeof(long double));
+            retobject = (PyObject*)PyFloat_FromDouble((double)v);
+        }
+        break;
+
     case _C_ID:
         {
             id v;
@@ -3194,6 +3209,40 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             }
 
             PyErr_Format(PyExc_ValueError, "depythonifying 'double', got '%s'",
+                         Py_TYPE(argument)->tp_name);
+            return -1;
+        }
+        break;
+
+    case _C_LNG_DBL:
+        if (PyFloat_Check(argument)) {
+            long double v = PyFloat_AsDouble(argument);
+            memcpy(datum, (void*)&v, sizeof(long double));
+
+        } else if (PyLong_Check(argument)) {
+            long double v = PyLong_AsDouble(argument);
+            if (v == -1 && PyErr_Occurred()) {
+                return -1;
+            }
+            memcpy(datum, (void*)&v, sizeof(long double));
+
+        } else if (PyBytes_Check(argument) ||
+                   PyByteArray_Check(argument) ||
+                   PyUnicode_Check(argument)) {
+            PyErr_Format(PyExc_ValueError, "depythonifying 'long double', got '%s'",
+                         Py_TYPE(argument)->tp_name);
+            return -1;
+
+        } else {
+            PyObject* tmp = PyNumber_Float(argument);
+            if (tmp != NULL) {
+                long double dblval = PyFloat_AsDouble(tmp);
+                Py_DECREF(tmp);
+                memcpy(datum, (void*)&dblval, sizeof(long double));
+                return 0;
+            }
+
+            PyErr_Format(PyExc_ValueError, "depythonifying 'long double', got '%s'",
                          Py_TYPE(argument)->tp_name);
             return -1;
         }

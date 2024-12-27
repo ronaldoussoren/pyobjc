@@ -5,6 +5,7 @@
 import objc
 from PyObjCTest.block import OCTestBlock
 from PyObjCTools.TestSupport import TestCase, min_os_level
+from .fnd import NSMutableArray
 
 NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"
 
@@ -296,46 +297,53 @@ class TestBlocks(TestCase):
         )
 
     def test_block_is_collected(self):
-        deleted = False
 
-        # class Callable:
-        #    def __call__(self, arg):
-        #        return [arg]
-        #
-        #    def __del__(self):
-        #        nonlocal deleted
-        #        deleted = True
+        for use_function in (0, 1):
+            with self.subTest(use_function=use_function):
+                deleted = False
 
-        class Setter:
-            def __del__(self):
-                nonlocal deleted
-                deleted = True
+                if use_function:
 
-        def Callable():
-            def result(arg):
-                return [arg]
+                    class Setter:
+                        def __del__(self):
+                            nonlocal deleted
+                            deleted = True
 
-            result.attr = Setter()
-            return result
+                    def Callable():
+                        def result(arg):
+                            return [arg]
 
-        self.assertFalse(deleted)
-        c = Callable()
-        del c
+                        result.attr = Setter()  # noqa: B023
+                        return result  # noqa: B023
 
-        self.assertTrue(deleted)
+                else:
 
-        deleted = False
+                    class Callable:
+                        def __call__(self, arg):
+                            return [arg]
 
-        self.assertFalse(deleted)
-        with objc.autorelease_pool():
-            obj = OCTestBlock.alloc().init()
+                        def __del__(self):
+                            nonlocal deleted
+                            deleted = True
 
-            result = obj.callOptionalBlock_withValue_(Callable(), 42)
-            self.assertEqual(result, [42])
+                self.assertFalse(deleted)
+                c = Callable()
+                del c
 
-            del obj
+                self.assertTrue(deleted)
 
-        self.assertTrue(deleted)
+                deleted = False
+
+                self.assertFalse(deleted)
+                with objc.autorelease_pool():
+                    obj = OCTestBlock.alloc().init()
+
+                    result = obj.callOptionalBlock_withValue_(Callable(), 42)
+                    self.assertEqual(result, [42])
+
+                    del obj
+
+                self.assertTrue(deleted)
 
     @min_os_level("10.6")
     def testBlockToObjC(self):
@@ -481,6 +489,25 @@ class TestBlocks(TestCase):
 
         value = block()
         self.assertEqual(value, 42)
+
+    def test_block_multiple_proxy(self):
+        obj = OCTestBlock.alloc().init()
+
+        block = obj.getIntBlock()
+
+        a = NSMutableArray.alloc().init()
+        a.addObject_(block)
+        a.addObject_(block)
+
+        del block
+
+        b1 = a.objectAtIndex_(0)
+        b2 = a.objectAtIndex_(1)
+
+        self.assertIs(b1, b2)
+
+        v = b1()
+        self.assertEqual(v, 42)
 
     @min_os_level("10.6")
     def testBlockFromObjC2(self):
