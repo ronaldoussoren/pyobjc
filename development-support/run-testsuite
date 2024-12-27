@@ -131,6 +131,15 @@ def parse_arguments():
         help="Restrict python variants to test (default: no restrictions)",
     )
 
+    parser.add_argument(
+        "--gil",
+        dest="gil_enabled",
+        metavar="VAL",
+        action="append",
+        default=[],
+        help="Which -Xgil=VAL values should be tested for the free-threaded build (defaults to 0 and 1)",
+    )
+
     result = parser.parse_args()
     if not result.python_versions:
         result.python_versions = detect_pyversions()
@@ -191,34 +200,44 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir, extra_py_args):
     k["env"] = os.environ.copy()
     k["env"]["PATH"] = os.path.dirname(interpreter) + ":" + k["env"]["PATH"]
 
-    p = subprocess.Popen(
-        [
-            "/usr/bin/arch",
-            f"-{arch}",
-            interpreter,
-        ]
-        + extra_py_args
-        + [
-            # XXX: Coverage support is disabled for now because
-            # I've never actually used it.
-            # "-mcoverage",
-            # "run",
-            # "--branch",
-            # "--parallel",
-            "setup.py",
-            "test",
-            "-v",
-        ],
-        cwd=proj_dir,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        **k,
-    )
-    stdout, stderr = p.communicate()
-    exitcode = p.wait()
+    if not os.path.exists(state_dir):
+        os.makedirs(state_dir)
+
+    with (
+        open(os.path.join(state_dir, project + ".stdout"), "wb") as fp_stdout,
+        open(os.path.join(state_dir, project + ".stderr"), "wb") as fp_stderr,
+    ):
+
+        p = subprocess.Popen(
+            [
+                "/usr/bin/arch",
+                f"-{arch}",
+                interpreter,
+            ]
+            + extra_py_args
+            + [
+                # XXX: Coverage support is disabled for now because
+                # I've never actually used it.
+                # "-mcoverage",
+                # "run",
+                # "--branch",
+                # "--parallel",
+                "setup.py",
+                "test",
+                "-v",
+            ],
+            cwd=proj_dir,
+            stdout=fp_stdout,
+            stderr=fp_stderr,
+            **k,
+        )
+        exitcode = p.wait()
+
+    with open(os.path.join(state_dir, project + ".stdout")) as fp_stdout:
+        stdout = fp_stdout.read()
 
     try:
-        status_line = stdout.decode("utf-8").rsplit("\n", 2)[-2]
+        status_line = stdout.rsplit("\n", 2)[-2]
         if not status_line.startswith("SUMMARY"):
             status = {
                 "message": "No status line at end",
@@ -234,17 +253,8 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir, extra_py_args):
 
     status["exitcode"] = exitcode
 
-    if not os.path.exists(state_dir):
-        os.makedirs(state_dir)
-
     with open(os.path.join(state_dir, project + ".status"), "w") as fp:
         json.dump(status, fp)
-
-    with open(os.path.join(state_dir, project + ".stdout"), "wb") as fp:
-        fp.write(stdout)
-
-    with open(os.path.join(state_dir, project + ".stderr"), "wb") as fp:
-        fp.write(stderr)
 
 
 def test_summary(fp_out, state_dir):
@@ -431,7 +441,6 @@ def main():
                         "--no-warn-script-location",
                         "-U",
                         "coverage",
-                        "twine",
                         # For some reason 'chardet' is needed for some
                         # 'pyobjc' tests on x86_64 (in emulation)
                         "chardet",
@@ -480,9 +489,14 @@ def main():
                         interpreter,
                     )
 
-                    # Test free-threaded builds both with and without the GIL enabled.
                     if py_ver.endswith("t"):
-                        extra_args = (["-Xgil=1"], ["-Xgil=0"])
+                        # Test free-threaded builds both with and without the GIL enabled.
+                        if options.gil_enabled:
+                            extra_args = tuple(
+                                [f"-Xgil={value}"] for value in options.gil_enabled
+                            )
+                        else:
+                            extra_args = (["-Xgil=1"], ["-Xgil=0"])
                     else:
                         extra_args = []
 
