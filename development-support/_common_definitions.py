@@ -13,7 +13,7 @@ import time
 from _topsort import topological_sort
 
 
-PY_VERSIONS = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.13t"]
+PY_VERSIONS = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.13t", "3.14", "3.14t"]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -95,7 +95,7 @@ def _install_virtualenv_software(interpreter):
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "pip"])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "setuptools"])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "wheel"])
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "twine"])
+    subprocess.run([interpreter, "-mpip", "install", "-U", "twine"])
 
 
 @contextlib.contextmanager
