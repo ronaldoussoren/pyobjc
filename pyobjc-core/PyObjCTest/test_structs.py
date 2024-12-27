@@ -332,6 +332,20 @@ class TestStructs(TestCase):
         w = objc.repythonify(v, tp0.__typestr__)
         self.assertEqual(v, w)
 
+    def test_repythonify_empty_struct(self):
+        self.assertEqual(objc.repythonify((), b"{struct_tag}"), ())
+        self.assertEqual(objc.repythonify((), b"{struct_tag=}"), ())
+
+    def test_repythonify_struct_with_fieldnames(self):
+        self.assertEqual(objc.repythonify((1,), b'{struct_tag="field"i}'), (1,))
+
+        with self.assertRaisesRegex(objc.error, "invalid embedded field name"):
+            objc.repythonify((1,), b'{struct_tag="fieldi}')
+
+    def test_repythonify_struct_with_invalid_field(self):
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
+            objc.repythonify((1,), b'{struct_tag="field"X}')
+
     def testStructNotWritable(self):
         tp0 = objc.createStructType("FooStruct", b'{FooStruct="first"i"second"i}', None)
 

@@ -132,6 +132,10 @@ Version 10.3.2
 
   This "fix" is a workaround for what appears to be a bug in Foundation.
 
+* The proxy objects created when passing a Python callable to an Objective-C
+  method/function expecting a block value were never released due to an error
+  in the cleanup code in PyObjC.
+
 Version 10.3.1
 --------------
 

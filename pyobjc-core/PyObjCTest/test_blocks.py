@@ -295,6 +295,48 @@ class TestBlocks(TestCase):
             obj.callOptionalBlock_withValue_(lambda x: x + x, "hello"), "hellohello"
         )
 
+    def test_block_is_collected(self):
+        deleted = False
+
+        # class Callable:
+        #    def __call__(self, arg):
+        #        return [arg]
+        #
+        #    def __del__(self):
+        #        nonlocal deleted
+        #        deleted = True
+
+        class Setter:
+            def __del__(self):
+                nonlocal deleted
+                deleted = True
+
+        def Callable():
+            def result(arg):
+                return [arg]
+
+            result.attr = Setter()
+            return result
+
+        self.assertFalse(deleted)
+        c = Callable()
+        del c
+
+        self.assertTrue(deleted)
+
+        deleted = False
+
+        self.assertFalse(deleted)
+        with objc.autorelease_pool():
+            obj = OCTestBlock.alloc().init()
+
+            result = obj.callOptionalBlock_withValue_(Callable(), 42)
+            self.assertEqual(result, [42])
+
+            del obj
+
+        self.assertTrue(deleted)
+
     @min_os_level("10.6")
     def testBlockToObjC(self):
         obj = OCTestBlock.alloc().init()

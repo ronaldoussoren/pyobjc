@@ -93,8 +93,12 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
          * versions should build on the latest one (and preferably
          * use the "official" binary wheels).
          */
-        if (@available(macOS 10.15, *)) {
+        if (@available(macOS 10.15, *)) { // LCOV_BR_EXCL_LINE
         } else  {
+            // LCOV_EXCL_START
+            // Excluded from  coverage runs because those runs are
+            // done on a modern system and will never hit this path.
+
             /* A numbef of private(-ish) classes that cause
              * crashes when constructed here while running
              * on macOS 10.14
@@ -490,6 +494,7 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
                     continue;
                 }
              }
+            // LCOV_EXCL_START
         }
 #endif /* PyObjC_BUILD_RELEASE > 1011 */
         pyclass = PyObjCClass_New(buffer[i]);

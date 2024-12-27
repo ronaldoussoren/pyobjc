@@ -706,7 +706,6 @@ def setup(
         package_dir={"": "Lib", "PyObjCTest": "PyObjCTest"},
         dependency_links=[],
         package_data={"": ["*.bridgesupport"]},
-        test_suite="PyObjCTest",
         zip_safe=False,
         license="MIT License",
         classifiers=CLASSIFIERS,

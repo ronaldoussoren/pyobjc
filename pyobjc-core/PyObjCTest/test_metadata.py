@@ -1083,11 +1083,38 @@ class TestPrintfFormat(TestCase):
         v = o.makeArrayWithFormat_("%s", b"foo")
         self.assertEqual(list(v), ["%s", "foo"])
 
+        with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got "):
+            v = o.makeArrayWithFormat_("%s", object)
+
         v = o.makeArrayWithFormat_("hello %s", b"world")
         self.assertEqual(list(v), ["hello %s", "hello world"])
 
         v = o.makeArrayWithFormat_("hello %s", b"world")
         self.assertEqual(list(v), ["hello %s", "hello world"])
+
+        v = o.makeArrayWithFormat_("hello %*s", 10, b"world")
+        self.assertEqual(list(v), ["hello %*s", "hello      world"])
+
+        v = o.makeArrayWithFormat_("hello %.*s", 10, b"world")
+        self.assertEqual(list(v), ["hello %.*s", "hello world"])
+
+        with self.assertRaisesRegex(ValueError, "Too few arguments for format string"):
+            o.makeArrayWithFormat_("hello %*s")
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got "):
+            o.makeArrayWithFormat_("hello %*s", "ab", "b")
+
+        with self.assertRaisesRegex(ValueError, "Too few arguments for format string"):
+            o.makeArrayWithFormat_("hello %.*s")
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got "):
+            o.makeArrayWithFormat_("hello %.*s", "ab", "b")
+
+        with self.assertRaisesRegex(ValueError, "Invalid format string"):
+            o.makeArrayWithFormat_("hello %", b"world")
+
+        with self.assertRaisesRegex(TypeError, "Unsupported format string type"):
+            o.makeArrayWithFormat_(42, b"world")
 
         with self.assertRaisesRegex(
             ValueError, r"Too few arguments for format string \[cur:1/len:1\]"
@@ -1109,6 +1136,9 @@ class TestPrintfFormat(TestCase):
             v = o.makeArrayWithCFormat_(b"hello %s x %d", b"world", 42)
             self.assertEqual(list(v), ["hello %s x %d", "hello world x 42"])
 
+            with self.assertRaisesRegex(ValueError, "depythonifying 'int', got"):
+                o.makeArrayWithCFormat_(b"hello %s x %d", b"world", object())
+
         # As we implement a format string parser we'd better make sure that
         # that code is correct...
 
@@ -1126,6 +1156,10 @@ class TestPrintfFormat(TestCase):
         with self.subTest("%hhd"):
             v = o.makeArrayWithCFormat_(b"%hhd", 20)
             self.assertEqual(list(v), ["%hhd", "20"])
+
+        with self.subTest("%lld, object"):
+            with self.assertRaisesRegex(ValueError, "depythonifying 'long long', got"):
+                o.makeArrayWithCFormat_(b"%lld", object())
 
         with self.subTest("%lld, 20"):
             v = o.makeArrayWithCFormat_(b"%lld", 20)
@@ -1147,6 +1181,22 @@ class TestPrintfFormat(TestCase):
             v = o.makeArrayWithCFormat_(b"%qd", 20)
             self.assertEqual(list(v), ["%qd", "20"])
 
+        with self.subTest("%qd, 20"):
+            v = o.makeArrayWithCFormat_(b"%qd", 20)
+            self.assertEqual(list(v), ["%qd", "20"])
+
+        with self.subTest("%qd, -20"):
+            v = o.makeArrayWithCFormat_(b"%qd", -20)
+            self.assertEqual(list(v), ["%qd", "-20"])
+
+        with self.subTest("%jd, 20"):
+            v = o.makeArrayWithCFormat_(b"%jd", 20)
+            self.assertEqual(list(v), ["%jd", "20"])
+
+        with self.subTest("%jd, 20"):
+            v = o.makeArrayWithCFormat_(b"%jd", 20)
+            self.assertEqual(list(v), ["%jd", "20"])
+
         with self.subTest("%qd, -20"):
             v = o.makeArrayWithCFormat_(b"%qd", -20)
             self.assertEqual(list(v), ["%qd", "-20"])
@@ -1163,6 +1213,16 @@ class TestPrintfFormat(TestCase):
             v = o.makeArrayWithCFormat_(b"%U", 8)
             self.assertEqual(list(v), ["%U", "8"])
 
+        with self.subTest("%Lf"):
+            v = o.makeArrayWithCFormat_(b"%Lf", 8.5)
+            self.assertEqual(list(v), ["%Lf", "8.500000"])
+
+        with self.subTest("%Lf - invalid"):
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'double', got 'type'"
+            ):
+                o.makeArrayWithCFormat_(b"%f", object)
+
         with self.subTest("%p"):
             obj = object()
             v = o.makeArrayWithCFormat_(b"%p", obj)
@@ -1176,6 +1236,12 @@ class TestPrintfFormat(TestCase):
             v = o.makeArrayWithCFormat_(b"%C", "A")
             self.assertEqual(list(v), ["%C", "A"])
 
+            with self.assertRaisesRegex(ValueError, "Expecting string of length 1"):
+                o.makeArrayWithCFormat_(b"%C", "AA")
+
+            with self.assertRaisesRegex(ValueError, "depythonifying 'int', got"):
+                o.makeArrayWithCFormat_(b"%C", object())
+
         with self.subTest("%C%C%c"):
             v = o.makeArrayWithCFormat_(b"%C%C%c", "A", 90, "b")
             self.assertEqual(list(v), ["%C%C%c", "A%cb" % (90,)])
@@ -1185,6 +1251,10 @@ class TestPrintfFormat(TestCase):
             self.assertEqual(list(v), ["%S", "hello world"])
             v = o.makeArrayWithCFormat_(b"%S", "hello world")
             self.assertEqual(list(v), ["%S", "hello world"])
+
+        with self.subTest("%S - invalid"):
+            with self.assertRaisesRegex(TypeError, "object to str implicitly"):
+                o.makeArrayWithCFormat_(b"%S", object)
 
         with self.subTest("%ls"):
             v = o.makeArrayWithCFormat_(b"%ls", "hello world")
