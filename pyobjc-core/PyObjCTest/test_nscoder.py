@@ -24,6 +24,14 @@ class TestNSCoderUsage(TestCase):
                 coder.encodeBytes_length_(b"hello world!", 5)
 
                 try:
+                    coder.encodeValueOfObjCType_at_(objc._C_INT, "foo")
+                except ValueError as exc:
+                    if "depythonify" not in str(exc):
+                        raise
+                else:
+                    raise AssertionError("Invalid argument type didn't raise")
+
+                try:
                     coder.encodeValueOfObjCType_at_(objc._C_INT, 2, 3)
                 except TypeError as exc:
                     if "expected 2 arguments, got 3" not in str(exc):

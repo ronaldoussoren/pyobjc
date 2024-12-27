@@ -1,6 +1,7 @@
 import objc
 import sys
 import io
+import types
 import warnings
 import builtins
 from PyObjCTest.testbndl import PyObjC_TestClass3
@@ -1205,3 +1206,64 @@ class TestUsingDunderInit(TestCase):
         self.assertEqual(o.x, 1)
         self.assertEqual(o.y, 2)
         self.assertEqual(o.z, 3)
+
+
+class TestSubclassOptions(TestCase):
+    def test_without_attribute_transform(self):
+        orig = objc.options._transformAttribute
+        try:
+            objc.options._transformAttribute = None
+
+            class OC_SubClassOptions1(NSObject):
+                def method(self):
+                    pass
+
+            self.assertIsInstance(OC_SubClassOptions1.method, objc.selector)
+
+            def method2(self):
+                pass
+
+            OC_SubClassOptions1.method2 = method2
+            self.assertIsInstance(OC_SubClassOptions1.method2, types.FunctionType)
+
+            def raiser(*args, **kwds):
+                raise RuntimeError
+
+            objc.options._transformAttribute = raiser
+
+            def method3(self):
+                pass
+
+            with self.assertRaises(RuntimeError):
+                OC_SubClassOptions1.method3 = method3
+
+        finally:
+            objc.options._transformAttribute = orig
+
+    def test_without_classdict_processor(self):
+        orig = objc.options._processClassDict
+        try:
+            objc.options._processClassDict = None
+
+            with self.assertRaisesRegex(
+                objc.error,
+                "Cannot create class because 'objc.options._processClassDict' is not set",
+            ):
+
+                class OC_SubClassOptions2(NSObject):
+                    def method(self):
+                        pass
+
+            def raiser(*args, **kwds):
+                raise RuntimeError
+
+            objc.options._processClassDict = raiser
+
+            with self.assertRaises(RuntimeError):
+
+                class OC_SubClassOptions3(NSObject):
+                    def method(self):
+                        pass
+
+        finally:
+            objc.options._processClassDict = orig

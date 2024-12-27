@@ -66,6 +66,33 @@ class TestDefaultNewForPythonClass(TestCase):
         ):
             OCPyNew1(z=4)
 
+    def test_no_new_in_options(self):
+        orig = objc.options._setDunderNew
+        try:
+
+            def raiser(*args, **kwds):
+                raise RuntimeError
+
+            objc.options._setDunderNew = raiser
+
+            with self.assertRaises(RuntimeError):
+
+                class OCPyNew6a(NSObject):
+                    pass
+
+            objc.options._setDunderNew = None
+
+            class OCPyNew6b(NSObject):
+                pass
+
+            self.assertIs(
+                OCPyNew6b.__new__,
+                objc.lookUpClass("_PyObjCIntermediate_NSObject").__new__,
+            )
+
+        finally:
+            objc.options._setDunderNew = orig
+
     def test_explicit_new(self):
         # Test that an explicit __new__ overrides the default
         # implementation.

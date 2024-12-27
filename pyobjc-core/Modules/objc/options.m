@@ -227,8 +227,9 @@ static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
                 void*     c __attribute__((__unused__)))
 {
-    if ([OC_NSBundleHack bundleHackUsed]) {
-        Py_RETURN_TRUE;
+    /* XXX: Need to test on a 10.9 VM to check if this option is still needed... */
+    if ([OC_NSBundleHack bundleHackUsed]) { // LCOV_BR_EXCL_LINE
+        Py_RETURN_TRUE; // LCOV_EXCL_LINE
     } else {
         Py_RETURN_FALSE;
     }
@@ -434,24 +435,31 @@ PyObject* _Nullable  PyObjC_decodeWithCoder(NSCoder* coder, id self)
 
     if (decoder != Py_None) {
         PyObject* cdr = id_to_python(coder);
-        if (cdr == NULL) {
+        if (cdr == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(decoder);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         PyObject* self_as_python = PyObjCObject_New(self, 0, YES);
         if (self_as_python == NULL) {   // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(cdr);
             Py_DECREF(decoder);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         PyObject* setvalue_method = PyObject_GetAttr(self_as_python, PyObjCNM_pyobjcSetValue_);
         Py_CLEAR(self_as_python);
-        if (setvalue_method == NULL) {
+        if (setvalue_method == NULL) { // LCOV_BR_EXCL_LINE
+            /* Cannot fail with the classes we use this function in */
+            // LCOV_EXCL_START
             Py_DECREF(cdr);
             Py_DECREF(decoder);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         PyObject* args[3] = {NULL, cdr, setvalue_method};
@@ -512,9 +520,11 @@ int PyObjC_GetKey(PyObject* object, id key, id* value)
     }
 
     PyObject* keyName = id_to_python(key);
-    if (keyName == NULL) {
+    if (keyName == NULL) { //LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(func);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* args[3] = {NULL, object, keyName};
@@ -549,9 +559,11 @@ int PyObjC_GetKeyPath(PyObject* object, id keypath, id* value)
     }
 
     PyObject* keyName = id_to_python(keypath);
-    if (keyName == NULL) {
+    if (keyName == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(func);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* args[3] = {NULL, object, keyName};
@@ -586,16 +598,20 @@ int PyObjC_SetKey(PyObject* object, id key, id value)
     }
 
     PyObject* keyName = id_to_python(key);
-    if (keyName == NULL) {
+    if (keyName == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(func);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* pyValue = id_to_python(value);
-    if (pyValue == NULL) {
+    if (pyValue == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(keyName);
         Py_DECREF(func);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* args[4] = {NULL, object, keyName, pyValue};
@@ -631,16 +647,20 @@ int PyObjC_SetKeyPath(PyObject* object, id keypath, id value)
     }
 
     PyObject* keyName = id_to_python(keypath);
-    if (keyName == NULL) {
+    if (keyName == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(func);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* pyValue = id_to_python(value);
-    if (pyValue == NULL) {
+    if (pyValue == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(keyName);
         Py_DECREF(func);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* args[4] = {NULL, object, keyName, pyValue};
@@ -738,9 +758,11 @@ PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id _Nullable 
 
     if (c_info != nil) {
         tzinfo = id_to_python(c_info);
-        if (tzinfo == NULL) {
+        if (tzinfo == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(type);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -776,7 +798,7 @@ int PyObjC_IsDictLike(PyObject* object)
 
     if (type == Py_None) {
         Py_DECREF(type);
-        return -1;
+        return 0;
     }
     int result =  PyObject_IsInstance(object, type);
     Py_DECREF(type);
@@ -794,7 +816,7 @@ int PyObjC_IsListLike(PyObject* object)
 
     if (type == Py_None) {
         Py_DECREF(type);
-        return -1;
+        return 0;
     }
     int result =  PyObject_IsInstance(object, type);
     Py_DECREF(type);
@@ -945,9 +967,9 @@ int PyObjC_CallClassExtender(PyObject* cls)
             /* 'cls' is known to be an PyObjCClass instance, hence the tp_dict
              * slot is usable directly.
              */
-            if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v) == -1) {
-                PyErr_Clear();
-            }
+            if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v) == -1) { // LCOV_BR_EXCL_LINE
+                PyErr_Clear(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
             continue;
         }
 
@@ -997,8 +1019,8 @@ PyObject* _Nullable PyObjC_GetBundleForClassMethod(void)
 PyObject* _Nullable PyObjC_CreateNSNumberProxy(NSNumber* value)
 {
     PyObject* rval = PyObjCObject_New(value, PyObjCObject_kDEFAULT, YES);
-    if (rval == NULL) {
-        return NULL;
+    if (rval == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     LOCK(PyObjC_NSNumberWrapper);
@@ -1212,15 +1234,27 @@ PyObjC_SetupOptions(PyObject* m)
     INIT(PyObjC_genericNewClass);
 #undef INIT
 
-#   define INIT(VAR) do { VAR = PyTuple_New(0); if (VAR == NULL) return -1; } while(0)
     // LCOV_BR_EXCL_START
-    INIT(PyObjC_DictLikeTypes);
-    INIT(PyObjC_ListLikeTypes);
-    INIT(PyObjC_SetLikeTypes);
-    INIT(PyObjC_DateLikeTypes);
-    INIT(PyObjC_PathLikeTypes);
-    // LCOV_BR_EXCL_STOP
-#undef INIT
+    PyObjC_DictLikeTypes = PyTuple_New(0);
+    if (PyObjC_DictLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    PyObjC_ListLikeTypes = PyTuple_New(0);
+    if (PyObjC_ListLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    PyObjC_SetLikeTypes = PyTuple_New(0);
+    if (PyObjC_SetLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    PyObjC_DateLikeTypes = PyTuple_New(0);
+    if (PyObjC_DateLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    PyObjC_PathLikeTypes = PyTuple_New(0);
+    if (PyObjC_DictLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
 
     return PyModule_AddObject(m, "options", o);
 }

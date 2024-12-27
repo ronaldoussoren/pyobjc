@@ -42,6 +42,7 @@ from PyObjCTest.keyvaluehelper import (
     PyObjCTest_KVPathClass,
     PyObjCTest_KVBaseClass,
 )
+from .objectint import OC_ObjectInt
 
 # Native code is needed to access the python class from Objective-C, otherwise
 # the Key-Value support cannot be tested.
@@ -923,3 +924,83 @@ if PyObjCTest_KeyValueObserver is not None:
                 self.assertIsInstance(o, NSObject)
             finally:
                 o.removeObserver_forKeyPath_(observer, "observationInfo")
+
+
+class Helper:
+    pass
+
+
+class TestWithoutHelper(TestCase):
+    def test_get_keypath(self):
+        orig = objc.options._getKeyPath
+        try:
+            objc.options._getKeyPath = None
+
+            value = Helper()
+            value.key = 42
+
+            a = NSArray.arrayWithArray_([value])
+            with self.assertRaisesRegex(
+                ValueError, "helper function for getKeyPath not set"
+            ):
+                a.valueForKeyPath_("@unionOfObjects.key")
+
+        finally:
+            objc.options._getKeyPath = orig
+
+    def test_get_key(self):
+        orig = objc.options._getKey
+        try:
+            objc.options._getKey = None
+
+            value = Helper()
+            value.key = 42
+
+            a = NSArray.arrayWithArray_([value])
+            with self.assertRaisesRegex(
+                ValueError, "helper function for getKey not set"
+            ):
+                a.makeObjectsPerformSelector_withObject_(b"valueForKey:", "key")
+
+        finally:
+            objc.options._getKey = orig
+
+    def test_set_key(self):
+        orig = objc.options._setKey
+        try:
+            objc.options._setKey = None
+
+            value = Helper()
+            value.key = 42
+
+            with self.assertRaisesRegex(
+                ValueError, "helper function for setKey not set"
+            ):
+                OC_ObjectInt.setValue_forKey_of_("value", "key", value)
+
+            self.assertEqual(value.key, 42)
+
+        finally:
+            objc.options._setKey = orig
+
+    def test_set_keypath(self):
+        orig = objc.options._setKeyPath
+        try:
+            objc.options._setKeyPath = None
+
+            value = Helper()
+            value.key = 42
+
+            with self.assertRaisesRegex(
+                ValueError, "helper function for setKeyPath not set"
+            ):
+                OC_ObjectInt.setValue_forKeyPath_of_("value", "key.path", value)
+
+            objc.options._setKeyPath = 42
+            with self.assertRaisesRegex(TypeError, "not callable"):
+                OC_ObjectInt.setValue_forKeyPath_of_("value", "key.path", value)
+
+            self.assertEqual(value.key, 42)
+
+        finally:
+            objc.options._setKeyPath = orig

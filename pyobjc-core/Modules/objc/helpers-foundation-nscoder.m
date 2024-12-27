@@ -27,9 +27,12 @@ static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
     value = arguments[1];
 
     size = PyObjCRT_SizeOfType(view.buf);
-    if (size == -1) {
+    if (size == -1) { // LCOV_BR_EXCL_LINE
+        /* Value has already been validated */
+        // LCOV_EXCL_START
         PyBuffer_Release(&view);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     buf = PyMem_Malloc(size);
@@ -64,8 +67,8 @@ static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
                     &super, PyObjCSelector_GetSelector(method), view.buf, buf);
             }
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -180,10 +183,12 @@ static PyObject* _Nullable call_NSCoder_encodeArrayOfObjCType_count_at_(
     }
 
     buf = PyMem_Malloc(size * (count + 1));
-    if (buf == NULL) {
+    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (!PySequence_Check(value)) {
@@ -364,10 +369,12 @@ static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_(
         return NULL;
     }
     buf = PyMem_Malloc(size);
-    if (buf == NULL) {
+    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     int isIMP = PyObjCIMP_Check(method);
@@ -493,10 +500,12 @@ static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_size_(
     }
 
     buf = PyMem_Malloc(size);
-    if (buf == NULL) {
+    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     int isIMP = PyObjCIMP_Check(method);
@@ -641,10 +650,12 @@ static PyObject* _Nullable call_NSCoder_decodeArrayOfObjCType_count_at_(
     }
 
     buf = PyMem_Malloc(size * (count + 1));
-    if (buf == NULL) {
+    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     int isIMP = PyObjCIMP_Check(method);
@@ -1349,93 +1360,100 @@ PyObjC_setup_nscoder(PyObject* module __attribute__((__unused__)))
 {
     Class classNSCoder = objc_lookUpClass("NSCoder");
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder,
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
                                      @selector(encodeArrayOfObjCType:count:at:),
                                      call_NSCoder_encodeArrayOfObjCType_count_at_,
                                      mkimp_NSCoder_encodeArrayOfObjCType_count_at_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(encodeValueOfObjCType:at:),
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
+                                    @selector(encodeValueOfObjCType:at:),
                                      call_NSCoder_encodeValueOfObjCType_at_,
                                      mkimp_NSCoder_encodeValueOfObjCType_at_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder,
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
                                      @selector(decodeArrayOfObjCType:count:at:),
                                      call_NSCoder_decodeArrayOfObjCType_count_at_,
                                      mkimp_NSCoder_decodeArrayOfObjCType_count_at_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(decodeValueOfObjCType:at:),
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
+                                    @selector(decodeValueOfObjCType:at:),
                                      call_NSCoder_decodeValueOfObjCType_at_,
                                      mkimp_NSCoder_decodeValueOfObjCType_at_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder,
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
                                      @selector(decodeValueOfObjCType:at:size:),
                                      call_NSCoder_decodeValueOfObjCType_at_size_,
                                      mkimp_NSCoder_decodeValueOfObjCType_at_size_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(encodeBytes:length:),
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
+                                    @selector(encodeBytes:length:),
                                      call_NSCoder_encodeBytes_length_,
                                      mkimp_NSCoder_encodeBytes_length_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(encodeBytes:length:forKey:),
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
+                                    @selector(encodeBytes:length:forKey:),
                                      call_NSCoder_encodeBytes_length_forKey_,
                                      mkimp_NSCoder_encodeBytes_length_forKey_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder,
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
                                      @selector(decodeBytesWithReturnedLength:),
                                      call_NSCoder_decodeBytesWithReturnedLength_,
                                      mkimp_NSCoder_decodeBytesWithReturnedLength_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder,
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
                                      @selector(decodeBytesForKey:returnedLength::),
                                      call_NSCoder_decodeBytesForKey_returnedLength_,
                                      mkimp_NSCoder_decodeBytesForKey_returnedLength_)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSCoder, @selector(decodeBytesWithoutReturnedLength),
-            PyObjCUnsupportedMethod_Caller, PyObjCUnsupportedMethod_IMP)
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
+                                    @selector(decodeBytesWithoutReturnedLength),
+                                    PyObjCUnsupportedMethod_Caller,
+                                    PyObjCUnsupportedMethod_IMP)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(encodeValuesOfObjCTypes:),
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
+                                    @selector(encodeValuesOfObjCTypes:),
                                      PyObjCUnsupportedMethod_Caller,
                                      PyObjCUnsupportedMethod_IMP)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(decodeValuesOfObjCTypes:),
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
+                                    @selector(decodeValuesOfObjCTypes:),
                                      PyObjCUnsupportedMethod_Caller,
                                      PyObjCUnsupportedMethod_IMP)
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

@@ -243,6 +243,24 @@ class TestKeyedArchiveSimple(TestCase):
         self.archiverClass = NSKeyedArchiver
         self.unarchiverClass = NSKeyedUnarchiver
 
+    def test_without_helper(self):
+        orig = objc.options._nscoding_decoder
+        try:
+            objc.options._nscoding_decoder = None
+
+            p = object()
+
+            buf = self.archiverClass.archivedDataWithRootObject_(p)
+            self.assertIsInstance(buf, NSData)
+
+            with self.assertRaisesRegex(
+                ValueError, "decoding Python objects is not supported"
+            ):
+                self.unarchiverClass.unarchiveObjectWithData_(buf)
+
+        finally:
+            objc.options._nscoding_decoder = orig
+
     def test_roundtrip_pathlib_path(self):
         p = pathlib.Path(__file__)
 

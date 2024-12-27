@@ -44,7 +44,7 @@ code is correct):
 .. note::
 
    I've also started marking branches and failure cases as excluded when
-   the propagate one of the cases mentioned earlier.
+   they propagate one of the cases mentioned earlier.
 
 Use ``LCOV_EXCL_LINE`` in a comment to exclude a specific line.
 

@@ -1098,3 +1098,29 @@ class TestComparsionMethods(TestCase):
 
         with self.assertRaisesRegex(OverflowError, "int too big to convert"):
             OC_NumberInt.numberAsDecimal_(2**65)
+
+    def test_number_options(self):
+        orig = objc.options._nsnumber_wrapper
+        try:
+            v = NSNumber.numberWithInt_(42)
+
+            self.assertIn("OC_PythonLong", type(v).__name__)
+            self.assertIsInstance(v, NSNumber)
+
+            objc.options._nsnumber_wrapper = None
+
+            v = NSNumber.numberWithInt_(43)
+
+            self.assertNotIn("OC_PythonLong", type(v).__name__)
+            self.assertIsInstance(v, NSNumber)
+
+            def raiser(*args):
+                raise RuntimeError
+
+            objc.options._nsnumber_wrapper = raiser
+
+            with self.assertRaises(RuntimeError):
+                NSNumber.numberWithInt_(44)
+
+        finally:
+            objc.options._nsnumber_wrapper = orig

@@ -973,6 +973,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(metadict);
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
+        return NULL;
     }
 
     PyTypeObject* metatype;

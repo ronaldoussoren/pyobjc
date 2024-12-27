@@ -1,5 +1,9 @@
 import objc
+import warnings
 from PyObjCTools.TestSupport import TestCase
+from .fnd import NSMutableArray
+from .objectint import OC_ObjectInt
+import datetime
 
 
 class TestOptions(TestCase):
@@ -119,6 +123,16 @@ class TestOptions(TestCase):
             objc.options.deprecation_warnings = "10.2"
             self.assertEqual(objc.options.deprecation_warnings, "10.2")
 
+            for v in ("14_", "14a"):
+                with self.assertRaisesRegex(ValueError, "Invalid version for"):
+                    objc.options.deprecation_warnings = v
+
+                with self.assertRaisesRegex(ValueError, "Invalid version for"):
+                    objc.options.deprecation_warnings = f"10.{v}"
+
+            with self.assertRaisesRegex(ValueError, "Invalid version for"):
+                objc.options.deprecation_warnings = "10.14.5"
+
             with self.assertRaisesRegex(
                 TypeError,
                 r"Expecting 'str' value for 'objc.options.deprecation_warnings', got instance of 'float'",
@@ -129,6 +143,25 @@ class TestOptions(TestCase):
                 AttributeError, "Cannot delete option 'deprecation_warnings'"
             ):
                 del objc.options.deprecation_warnings
+
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", category=DeprecationWarning)
+
+                objc.options.deprecation_warnings = 1213
+                self.assertEqual(objc.options.deprecation_warnings, "12.13")
+
+                objc.options.deprecation_warnings = -1
+                self.assertEqual(objc.options.deprecation_warnings, "0.-1")
+
+                with self.assertRaises(OverflowError):
+                    objc.options.deprecation_warnings = 2**128
+
+                warnings.simplefilter("error", category=DeprecationWarning)
+
+                with self.assertRaisesRegex(
+                    DeprecationWarning, "to an integer is deprecated"
+                ):
+                    objc.options.deprecation_warnings = 1213
 
         finally:
             objc.options.deprecation_warnings = orig
@@ -311,6 +344,21 @@ class TestOptions(TestCase):
         finally:
             objc.options._date_types = orig
 
+    def test_path_types(self):
+        orig = objc.options._path_types
+        value = object()
+        try:
+            objc.options._path_types = value
+            self.assertIs(objc.options._path_types, value)
+
+            with self.assertRaisesRegex(
+                AttributeError, "Cannot delete option '_path_types'"
+            ):
+                del objc.options._path_types
+
+        finally:
+            objc.options._path_types = orig
+
     def test_datetime_date_type(self):
         orig = objc.options._datetime_date_type
         value = object()
@@ -415,3 +463,124 @@ class TestOptions(TestCase):
             "attribute '_bundle_hack_used' of 'objc._OptionsType' objects is not writable",
         ):
             del objc.options._bundle_hack_used
+
+    def test_transformAttribute(self):
+        orig = objc.options._transformAttribute
+        value = object()
+        try:
+            objc.options._transformAttribute = value
+            self.assertIs(objc.options._transformAttribute, value)
+
+            with self.assertRaisesRegex(
+                AttributeError, "Cannot delete option '_transformAttribute'"
+            ):
+                del objc.options._transformAttribute
+
+        finally:
+            objc.options._transformAttribute = orig
+
+    def test_processClassDict(self):
+        orig = objc.options._processClassDict
+        value = object()
+        try:
+            objc.options._processClassDict = value
+            self.assertIs(objc.options._processClassDict, value)
+
+            with self.assertRaisesRegex(
+                AttributeError, "Cannot delete option '_processClassDict'"
+            ):
+                del objc.options._processClassDict
+
+        finally:
+            objc.options._processClassDict = orig
+
+    def test_setDunderNew(self):
+        orig = objc.options._setDunderNew
+        value = object()
+        try:
+            objc.options._setDunderNew = value
+            self.assertIs(objc.options._setDunderNew, value)
+
+            with self.assertRaisesRegex(
+                AttributeError, "Cannot delete option '_setDunderNew'"
+            ):
+                del objc.options._setDunderNew
+
+        finally:
+            objc.options._setDunderNew = orig
+
+    def test_genericNewClass(self):
+        orig = objc.options._genericNewClass
+        value = object()
+        try:
+            objc.options._genericNewClass = value
+            self.assertIs(objc.options._genericNewClass, value)
+
+            with self.assertRaisesRegex(
+                AttributeError, "Cannot delete option '_genericNewClass'"
+            ):
+                del objc.options._genericNewClass
+
+        finally:
+            objc.options._genericNewClass = orig
+
+    def test_proxy_without_options(self):
+
+        orig_mapping_types = objc.options._mapping_types
+        orig_sequence_types = objc.options._sequence_types
+        orig_set_types = objc.options._set_types
+        orig_date_types = objc.options._date_types
+        orig_path_types = objc.options._path_types
+
+        try:
+            objc.options._mapping_types = None
+            objc.options._sequence_types = None
+            objc.options._set_types = None
+            objc.options._date_types = None
+            objc.options._path_types = None
+
+            with objc.autorelease_pool():
+                a = NSMutableArray.alloc().init()
+                a.addObject_(object())
+
+                del a
+
+        finally:
+            objc.options._mapping_types = orig_mapping_types
+            objc.options._sequence_types = orig_sequence_types
+            objc.options._set_types = orig_set_types
+            objc.options._date_types = orig_date_types
+            objc.options._path_types = orig_path_types
+
+    def test_date_proxy_without_options(self):
+        orig_date = objc.options._datetime_date_type
+        orig_datetime = objc.options._datetime_datetime_type
+        orig_date_types = objc.options._date_types
+        try:
+            cls = OC_ObjectInt.classOf_(datetime.datetime.now())
+            self.assertEqual(cls.__name__, "OC_BuiltinPythonDate")
+
+            cls = OC_ObjectInt.classOf_(datetime.date.today())
+            self.assertEqual(cls.__name__, "OC_BuiltinPythonDate")
+
+            objc.options._datetime_date_type = None
+            objc.options._datetime_datetime_type = None
+
+            cls = OC_ObjectInt.classOf_(datetime.datetime.now())
+            self.assertEqual(cls.__name__, "OC_PythonDate")
+
+            cls = OC_ObjectInt.classOf_(datetime.date.today())
+            self.assertEqual(cls.__name__, "OC_PythonDate")
+
+            objc.options._date_types = None
+
+            cls = OC_ObjectInt.classOf_(datetime.datetime.now())
+            self.assertEqual(cls.__name__, "OC_PythonObject")
+
+            cls = OC_ObjectInt.classOf_(datetime.date.today())
+            self.assertEqual(cls.__name__, "OC_PythonObject")
+
+        finally:
+            objc.options._datetime_date_type = orig_date
+            objc.options._datetime_datetime_type = orig_datetime
+            objc.options._date_types = orig_date_types

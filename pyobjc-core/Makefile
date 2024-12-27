@@ -69,6 +69,8 @@ c-coverage:
 	python3 -mvenv build/cov-env
 	build/cov-env/bin/python -m pip install -U setuptools wheel
 	env ARCHFLAGS="-arch arm64" CFLAGS="-DCOVERAGE --coverage -fprofile-arcs -ftest-coverage -O1" LDFLAGS="--coverage -fprofile-arcs -ftest-coverage -O1" build/cov-env/bin/python3 setup.py build_ext -j 4 develop
+	cd ../pyobjc-framework-Cocoa && ../pyobjc-core/build/cov-env/bin/python setup.py develop
+	cd ../pyobjc-framework-Quartz && ../pyobjc-core/build/cov-env/bin/python setup.py develop
 	lcov --directory .  --zerocounters
 	-build/cov-env/bin/python3 setup.py test -v
 	lcov --rc lcov_branch_coverage=1 --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert"  --no-external --capture --directory . --output-file build/coverage.info
