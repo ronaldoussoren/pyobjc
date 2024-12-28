@@ -471,6 +471,7 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* c
     PyObjCBlockFunction block_func = PyObjCFFI_MakeBlockFunction(signature, callable);
     if (block_func == NULL) {
         Py_CLEAR(block.descriptor_memory);
+        Py_CLEAR(block.signature_memory);
         return NULL;
     }
     block.invoke = block_func;
@@ -481,6 +482,7 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* c
         // LCOV_EXCL_START
         PyObjCFFI_FreeBlockFunction(block.invoke);
         Py_CLEAR(block.descriptor_memory);
+        Py_CLEAR(block.signature_memory);
         return NULL;
         // LCOV_EXCL_STOP
     }
@@ -516,7 +518,6 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
     self = [self copy];
 
     rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, NO);
-    [self release];
     if (rval == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
     } else {
@@ -539,7 +540,6 @@ static PyObject* _Nullable pyobjc_PythonTransient(NSObject* self,
 
     *cookie = 1;
     PyObject* result  = PyObjCObject_New(self, PyObjCObject_kDEFAULT, NO);
-    [self release];
     return result;
 }
 

@@ -342,7 +342,7 @@ signature_for_block(id _block)
 - (void)storeBlock:(id (^)(id, id))value
 {
     [stored_block release];
-    stored_block = [value retain];
+    stored_block = [value copy];
 }
 
 - (id (^)(id, id))getStoredBlock

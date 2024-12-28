@@ -1884,15 +1884,21 @@ static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
      */
     if (descr->type != NULL) {
         end = PyObjCRT_SkipTypeSpec(descr->type);
-        if (unlikely(end == NULL)) { // LCOV_BR_EXCL_LINE
-            goto error;              // LCOV_EXCL_LINE
-        }
-        end--;
-        while ((end != descr->type) && isdigit(*end)) {
+        if (unlikely(end == NULL)) {
+            /* This can happen when the registry contains invalid
+             * data. Don't error out when this happens to make it
+             * possible to debug the issue.
+             */
+            PyErr_Clear();
+            v = PyBytes_FromString(descr->type);
+        } else {
             end--;
+            while ((end != descr->type) && isdigit(*end)) {
+                end--;
+            }
+            end++;
+            v = PyBytes_FromStringAndSize(descr->type, end - descr->type);
         }
-        end++;
-        v = PyBytes_FromStringAndSize(descr->type, end - descr->type);
         if (v == NULL)  // LCOV_BR_EXCL_LINE
             goto error; // LCOV_EXCL_LINE
         r = PyDict_SetItem(result, PyObjCNM_type, v);

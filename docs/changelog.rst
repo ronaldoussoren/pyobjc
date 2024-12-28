@@ -102,6 +102,13 @@ borrowed references).
 
 * Fix compatibility with Python 3.14 (alpha 3)
 
+* Removed private function ``objc._sizeOfType`` because its unused.
+
+* Fix memory leak when using Python callables as blocks.
+
+  The memory leak also resulted in leaking a reference to the callable
+  (and hence anything kept alive by that reference).
+
 Version 10.3.2
 --------------
 
