@@ -69,7 +69,7 @@ static void
 calc_current_version(void)
 {
 #if PyObjC_BUILD_RELEASE >= 1010
-    if ([NSProcessInfo instancesRespondToSelector:@selector(operatingSystemVersion)]) {
+    if ([NSProcessInfo instancesRespondToSelector:@selector(operatingSystemVersion)]) { // LCOV_BR_EXCL_LINE
         NSAutoreleasePool* pool;
 
         pool           = [[NSAutoreleasePool alloc] init];
@@ -79,6 +79,7 @@ calc_current_version(void)
     } else
 #endif
     {
+        // LCOV_EXCL_START
         /* Code path for macOS 10.9 or earlier. Don't use Gestalt because that's
          * deprecated. */
         NSAutoreleasePool* pool;
@@ -109,6 +110,7 @@ calc_current_version(void)
         }
 
         [pool release];
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -211,22 +213,6 @@ static PyObject* _Nullable repythonify(PyObject* self __attribute__((__unused__)
     rval = pythonify_c_value(type, datum);
     PyMem_Free(datum);
     return rval;
-}
-
-static PyObject* _Nullable m_sizeoftype(PyObject* self __attribute__((__unused__)),
-                                        PyObject* value)
-{
-    if (!PyBytes_Check(value)) {
-        PyErr_SetString(PyExc_TypeError, "value must be a byte string");
-        return NULL;
-    }
-
-    Py_ssize_t size = PyObjCRT_SizeOfType(PyBytes_AsString(value));
-    if (size == -1) {
-        return NULL;
-    }
-
-    return PyLong_FromSsize_t(size);
 }
 
 PyDoc_STRVAR(macos_available_doc,
@@ -547,8 +533,8 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
     }
 
     class_list = PyObjC_GetClassList(1);
-    if (class_list == NULL) {
-        return NULL;
+    if (class_list == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     len = PyTuple_GET_SIZE(class_list);
@@ -570,18 +556,22 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
             /* skip, these have been deprecated since OpenStep! */
         } else {
             PyObject* py_nm = PyUnicode_FromString(nm);
-            if (py_nm == NULL) {
+            if (py_nm == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(class_list);
                 class_list = NULL;
                 return NULL;
+                // LCOV_EXCL_STOP
             }
-            if (PyDict_SetItem(module_globals, py_nm,
+            if (PyDict_SetItem(module_globals, py_nm, // LCOV_BR_EXCL_LINE
                                         item)
                        == -1) {
+                // LCOV_EXCL_START
                 Py_DECREF(class_list);
                 Py_DECREF(py_nm);
                 class_list = NULL;
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             Py_DECREF(py_nm);
         }
@@ -683,6 +673,10 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
         Py_INCREF(structname);
 
     } else {
+        if (end - signature - 1 < 0) {
+            PyErr_SetString(PyExc_ValueError, "value is not a complete struct signature");
+            return NULL;
+        }
         structname = PyUnicode_FromStringAndSize(signature, end - signature - 1);
         if (structname == NULL) {
             return NULL;
@@ -740,6 +734,7 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
             t--;
         }
         t++;
+
 
         str = PyBytes_FromStringAndSize(signature, t - signature);
         if (str == NULL) { // LCOV_BR_EXCL_LINE
@@ -1856,13 +1851,6 @@ static PyMethodDef mod_methods[] = {
         .ml_flags = METH_VARARGS | METH_KEYWORDS,
         .ml_doc   = objc_splitStructSignature_doc,
     },
-    {
-        .ml_name  = "_sizeOfType",
-        .ml_meth  = m_sizeoftype,
-        .ml_flags = METH_O,
-        .ml_doc   = "_sizeOfType(typestr, /)\n" CLINIC_SEP "\n"
-                    "Return the size of the type described by 'typestr'",
-    },
     {.ml_name  = "macos_available",
      .ml_meth  = (PyCFunction)macos_available,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
@@ -2300,14 +2288,14 @@ static int mod_exec_module(PyObject* m)
         if ((*cur)(m) < 0) { // LCOV_BR_EXCL_LINE
             return -1;     // LCOV_EXCL_LINE
         }
-        if (PyErr_Occurred()) {
-            return -1;
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
     }
 
     /* XXX: Move these to setup functions as well */
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(m, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            m, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF((PyObject*)&PyObjCMetaClass_Type);

@@ -60,6 +60,13 @@ class SplitSignatureTest(TestCase):
                     # Check is that the call is successfull
                     objc.splitSignature(sel.signature)
 
+    def test_invalid(self):
+        with self.assertRaises(TypeError):
+            objc.splitSignature()
+
+        with self.assertRaisesRegex(ValueError, "type signature"):
+            objc.splitSignature(b"{ab")
+
     def testSimple(self):
         self.assertEqual(objc.splitSignature(b"@:@"), (b"@", b":", b"@"))
         self.assertEqual(
@@ -189,8 +196,19 @@ class SplitSignatureTest(TestCase):
                     )
 
     def testSplitStructSignature(self):
+        with self.assertRaises(TypeError):
+            objc.splitStructSignature()
+
+        self.assertEqual(objc.splitStructSignature(b"{a}"), (None, []))
+
         with self.assertRaisesRegex(ValueError, "not a struct encoding"):
             objc.splitStructSignature(objc._C_ID)
+
+        with self.assertRaisesRegex(
+            ValueError, "value is not a complete struct signature"
+        ):
+            objc.splitStructSignature(b"{}")
+
         with self.assertRaisesRegex(
             ValueError, "value is not a complete struct signature"
         ):

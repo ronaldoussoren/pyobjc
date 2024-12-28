@@ -319,10 +319,6 @@ static PyObject* _Nullable varlist_subscript(PyObject* self, PyObject* item)
 static int
 varlist_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable value)
 {
-    if (value == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Cannot delete items of an 'objc.varlist'");
-        return -1;
-    }
     if (PyIndex_Check(item)) {
         Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);
         if (i == -1 && PyErr_Occurred()) {

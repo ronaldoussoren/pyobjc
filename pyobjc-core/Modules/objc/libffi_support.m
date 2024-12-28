@@ -1175,7 +1175,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
 
     if (argoffset != maxarg) {
         PyErr_Format(PyExc_ValueError,
-                     "Too many values for format [%" PY_FORMAT_SIZE_T
+                     "Too many arguments for format string [%" PY_FORMAT_SIZE_T
                      "d/%" PY_FORMAT_SIZE_T "d]",
                      argoffset, maxarg);
         return -1;
@@ -2868,7 +2868,7 @@ imp_capsule_cleanup(PyObject* ptr)
 static void
 block_capsule_cleanup(PyObject* ptr)
 {
-    PyObjCBlock_Release(PyCapsule_GetPointer(ptr, "objc.__block__"));
+    [(id)(PyCapsule_GetPointer(ptr, "objc.__block__")) release];
 }
 
 Py_ssize_t

@@ -13,6 +13,7 @@ NSObject (IndirectBlockTest)
 @end
 
 @interface OCTestBlock : NSObject {
+    id (^stored_block)(id, id);
 }
 
 - (int (^)(void))getIntBlock;
@@ -31,6 +32,11 @@ NSObject (IndirectBlockTest)
 - (int (^)(int, int))getIntBlock3;
 - (int (^)(NSString*))getObjectBlock;
 - (int (^)(NSString*, NSString*))getObjectBlock2;
+- (void (^)(void))getRaisingBlock;
+- (id (^)(id, ...))getVariadicBlock;
+- (id (^)(const char*, ...))getPrintfBlock;
+- (id (^)(const char*, ...))getPrintfBlock2;
+- (id (^)(const char*, ...))getPrintfBlock3;
 
 - (id)signatureForBlock1:(double (^)(double, double))block;
 - (id)signatureForBlock2:(id (^)(id))block;
@@ -39,7 +45,26 @@ NSObject (IndirectBlockTest)
 
 @end
 
+static int (^gIntBlock)(void) = nil;
+
 @implementation OCTestBlock
+
+-(id)init
+{
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+
+    if (gIntBlock == nil) {
+        gIntBlock = [^{
+          return 42;
+        } copy];
+    }
+
+    stored_block = nil;
+    return self;
+}
 
 - (NSRect (^)(double, double, double, double))getStructBlock
 {
@@ -50,9 +75,7 @@ NSObject (IndirectBlockTest)
 
 - (int (^)(void))getIntBlock
 {
-    return [[^{
-      return 42;
-    } copy] autorelease];
+    return gIntBlock;
 }
 
 - (int (^)(int))getIntBlock2
@@ -85,14 +108,120 @@ NSObject (IndirectBlockTest)
 
 - (double (^)(double, double))getFloatBlock
 {
+    __block int counter = 0;
     return [[^(double a, double b) {
-      return a + b;
+        counter ++;
+        return a + b + counter;
+    } copy] autorelease];
+}
+
+- (double (^)(double, double))getFloatBlock2
+{
+    return [[^(double a, double b) {
+      return a * b;
+    } copy] autorelease];
+}
+
+- (void (^)(void))getRaisingBlock
+{
+    return [[^(void) {
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    } copy] autorelease];
+}
+
+- (id (^)(id, ...))getVariadicBlock
+{
+    return [[^(id first, ...) {
+        NSMutableArray* result = [NSMutableArray array];
+        va_list ap;
+
+        va_start(ap, first);
+
+        do {
+            [result addObject:first];
+
+            first = va_arg(ap, id);
+        } while (first != nil);
+        return result;
+    } copy] autorelease];
+}
+
+- (id (^)(const char*, ...))getPrintfBlock
+{
+    return [[^(id fmt, ...) {
+        char buffer[256];
+        va_list ap;
+
+        va_start(ap, fmt);
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
+        vsnprintf(buffer, sizeof(buffer), [fmt UTF8String], ap);
+#pragma clang diagnostic pop
+
+        va_end(ap);
+        return [NSString stringWithUTF8String:buffer];
+    } copy] autorelease];
+}
+
+- (id (^)(const char*, ...))getPrintfBlock2
+{
+    return [[^(int* output, id fmt, ...) {
+        *output=42;
+        char buffer[256];
+        va_list ap;
+
+        va_start(ap, fmt);
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
+        vsnprintf(buffer, sizeof(buffer), [fmt UTF8String], ap);
+#pragma clang diagnostic pop
+
+        va_end(ap);
+        return [NSString stringWithUTF8String:buffer];
+    } copy] autorelease];
+}
+
+- (id (^)(const char*, ...))getPrintfBlock3
+{
+    return [[^(int* input, id fmt, ...) {
+        *input=42;
+        char buffer[256];
+        va_list ap;
+
+        va_start(ap, fmt);
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
+        vsnprintf(buffer, sizeof(buffer), [fmt UTF8String], ap);
+#pragma clang diagnostic pop
+
+        va_end(ap);
+        return [NSString stringWithUTF8String:buffer];
+    } copy] autorelease];
+}
+
+- (id(^)(id, id, id, id, id, id, id))getHugeBlock
+{
+    return [[^(id a, id b, id c, id d, id e, id f, id g) {
+        return [NSArray arrayWithObjects:a, b, c, d, e, f, g, nil];
     } copy] autorelease];
 }
 
 - (void)callIntBlock:(void (^)(int))block withValue:(int)value
 {
     block(value);
+}
+
+- (void)callCopiedIntBlock:(void (^)(int))block withValue:(int)value
+{
+    void (^copy)(int) = [block copy];
+    copy(value);
+    [copy release];
 }
 
 - (double)callDoubleBlock:(double (^)(double, double))block
@@ -209,6 +338,26 @@ signature_for_block(id _block)
 {
     return signature_for_block(block);
 }
+
+- (void)storeBlock:(id (^)(id, id))value
+{
+    [stored_block release];
+    stored_block = [value retain];
+}
+
+- (id (^)(id, id))getStoredBlock
+{
+    return [[stored_block retain] autorelease];
+}
+
+-(void)dealloc
+{
+    [stored_block release];
+    stored_block = nil;
+
+    [super dealloc];
+}
+
 
 @end
 

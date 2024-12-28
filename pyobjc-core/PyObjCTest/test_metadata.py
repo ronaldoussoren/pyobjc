@@ -1132,12 +1132,12 @@ class TestPrintfFormat(TestCase):
             v = o.makeArrayWithCFormat_(b"hello %s", b"world")
             self.assertEqual(list(v), ["hello %s", "hello world"])
 
-        with self.subTest("hello %s x %d"):
-            v = o.makeArrayWithCFormat_(b"hello %s x %d", b"world", 42)
-            self.assertEqual(list(v), ["hello %s x %d", "hello world x 42"])
+        with self.subTest("hello %s x %+d"):
+            v = o.makeArrayWithCFormat_(b"hello %s x %+d", b"world", 42)
+            self.assertEqual(list(v), ["hello %s x %+d", "hello world x +42"])
 
             with self.assertRaisesRegex(ValueError, "depythonifying 'int', got"):
-                o.makeArrayWithCFormat_(b"hello %s x %d", b"world", object())
+                o.makeArrayWithCFormat_(b"hello %s x %+d", b"world", object())
 
         # As we implement a format string parser we'd better make sure that
         # that code is correct...
@@ -1172,6 +1172,10 @@ class TestPrintfFormat(TestCase):
         with self.subTest("%zd"):
             v = o.makeArrayWithCFormat_(b"%zd", 20)
             self.assertEqual(list(v), ["%zd", "20"])
+
+        with self.subTest("%jd"):
+            v = o.makeArrayWithCFormat_(b"%jd", -20)
+            self.assertEqual(list(v), ["%jd", "-20"])
 
         with self.subTest("%td"):
             v = o.makeArrayWithCFormat_(b"%td", 20)
@@ -1208,6 +1212,13 @@ class TestPrintfFormat(TestCase):
         with self.subTest("%O"):
             v = o.makeArrayWithCFormat_(b"%O", 8)
             self.assertEqual(list(v), ["%O", "10"])
+
+        with self.subTest("%X"):
+            v = o.makeArrayWithCFormat_(b"%X", 18)
+            self.assertEqual(list(v), ["%X", "12"])
+
+            with self.assertRaises(ValueError):
+                v = o.makeArrayWithCFormat_(b"%X", object)
 
         with self.subTest("%U"):
             v = o.makeArrayWithCFormat_(b"%U", 8)
@@ -1282,6 +1293,7 @@ class TestPrintfFormat(TestCase):
             (b"%G", (-4.6,)),
             (b"%.9f", (0.249,)),
             (b"%ld", (42,)),
+            (b"%ud", (42,)),
             (b"%c", (42,)),
             (b"%hd", (42,)),
             (b"%lx", (42,)),
@@ -1298,6 +1310,23 @@ class TestPrintfFormat(TestCase):
             with self.subTest((fmt, args)):
                 v = o.makeArrayWithCFormat_(fmt, *args)
                 self.assertEqual(list(v), [fmt.decode(), fmt.decode() % args])
+
+        with self.subTest("%d %n"):
+            # XXX: This is not ideal, we don't return the value written
+            #      in the %n slot
+            v = o.makeArrayWithCFormat_(b"%d %n", 42, None)
+            self.assertEqual(v, ("%d %n", "42 "))
+
+        with self.subTest("wrong argument count"):
+            with self.assertRaisesRegex(
+                ValueError, "Too many arguments for format string"
+            ):
+                o.makeArrayWithCFormat_(b"%d", 1, 2)
+
+            with self.assertRaisesRegex(
+                ValueError, "Too few arguments for format string"
+            ):
+                o.makeArrayWithCFormat_(b"%d")
 
 
 class TestVariadic(TestCase):

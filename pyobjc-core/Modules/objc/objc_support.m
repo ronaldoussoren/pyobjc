@@ -2808,9 +2808,6 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
     PyObjC_Assert(argument != NULL, -1);
     PyObjC_Assert(datum != NULL, -1);
 
-    if (argument == NULL)
-        abort();
-
     /* Pass by reference output arguments are sometimes passed a NULL
      * pointer, this suppresses a core dump.
      */

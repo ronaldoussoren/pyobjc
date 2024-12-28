@@ -69,8 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
             // LCOV_EXCL_START
             PyErr_Clear();
             PyObjC_GIL_RETURN(0);
-            // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_STOP
         rval = [temp length];
         [temp release];
 
@@ -94,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
                                                                        writable:NO];
         if (temp == NULL) {           // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-        }
+        } // LCOV_EXCL_LINE
 
         rval = [temp buffer];
         [temp autorelease];
@@ -112,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
                                                                        writable:YES];
         if (temp == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         rval = [temp buffer];
         [temp autorelease];
@@ -165,7 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_BEGIN_WITH_GIL
                     if (PyObjC_encodeWithCoder(value, coder) == -1) {
                         PyObjC_GIL_FORWARD_EXC();
-                    }
+                    } // LCOV_EXCL_LINE
                 PyObjC_END_WITH_GIL
             }
         } @catch (NSException* exc) {
@@ -213,7 +212,7 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
     }
-    if (v == 1) {
+    if (v == 1) { // LCOV_BR_EXCL_LINE
         /* Backward compatibility:
          * PyObjC up to version 3 used this type to archive instances of bytes
          */
@@ -242,7 +241,7 @@ NS_ASSUME_NONNULL_BEGIN
                     [exc raise];
                 }
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL;
         return self;
@@ -253,18 +252,18 @@ NS_ASSUME_NONNULL_BEGIN
             PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
             if (decoded == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             SET_FIELD(value, decoded);
 
             id actual = PyObjC_RegisterObjCProxy(value, self);
-            if (actual != self) {
+            if (actual == nil) {
                 [self release];
-                self = actual;
-            } else if (actual != nil) {
-                [actual release];
-            }
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
 
+            [self release];
+            self = actual;
 
         PyObjC_END_WITH_GIL
 
@@ -278,7 +277,7 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyByteArray_FromStringAndSize(NULL, 0);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
         return [super initWithCoder:coder];
@@ -305,19 +304,18 @@ NS_ASSUME_NONNULL_BEGIN
             // LCOV_EXCL_START
             PyErr_SetString(PyExc_ValueError, "Trying to decode a too long data object");
             PyObjC_GIL_FORWARD_EXC();
-            // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_STOP
 
         if (value != NULL && PyByteArray_CheckExact(value)) {
             if (PyByteArray_Resize(value, length) < 0) { // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC();                // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
             memcpy(PyByteArray_AS_STRING(value), bytes, length);
         } else {
             value = PyBytes_FromStringAndSize(bytes, length);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
         }
     PyObjC_END_WITH_GIL
 

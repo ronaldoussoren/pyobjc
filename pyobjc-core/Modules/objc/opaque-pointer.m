@@ -192,13 +192,12 @@ opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** arg
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         *(PyObject**)retval = NULL;
-        return;
         // LCOV_EXCL_STOP
+    } else { // LCOV_EXCL_LINE
+        result->pointer_value = pointer_value;
+        PyObject_GC_Track((PyObject*)result);
+        *(PyObject**)retval = (PyObject*)result;
     }
-
-    result->pointer_value = pointer_value;
-    PyObject_GC_Track((PyObject*)result);
-    *(PyObject**)retval = (PyObject*)result;
 }
 
 static void
@@ -214,11 +213,10 @@ opaque_to_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** args,
         PyErr_Format(PyExc_TypeError, "Need instance of %s, got instance of %s",
                      opaque_type->tp_name, Py_TYPE(obj)->tp_name);
         *(int*)retval = -1;
-        return;
+    } else {
+        *(void**)pObj = ((OpaquePointerObject*)obj)->pointer_value;
+        *(int*)retval = 0;
     }
-
-    *(void**)pObj = ((OpaquePointerObject*)obj)->pointer_value;
-    *(int*)retval = 0;
 }
 
 /*
@@ -261,7 +259,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
         if (new_cif == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;       // LCOV_EXCL_LINE
         }
-    }
+    } // LCOV_BR_EXCL_LINE
 
     if (convert_cif == NULL) {
         PyObjCMethodSignature* signature;
@@ -274,7 +272,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
         if (convert_cif == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;           // LCOV_EXCL_LINE
         }
-    }
+    } // LCOV_BR_EXCL_LINE
 
     PyType_Slot opaque_slots[] = {
         {
@@ -316,7 +314,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
             // LCOV_EXCL_STOP
         }
         docslot->slot = 0;
-    }
+    } // LCOV_BR_EXCL_LINE
 
     dot = strchr(name, '.');
     if (dot == NULL) {

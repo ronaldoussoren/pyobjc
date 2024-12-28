@@ -27,23 +27,49 @@ objc.registerMetaDataForSelector(
         }
     },
 )
+
+# The metadata for this method has been disabled
+# intentionally, the compiler adds metadata to the
+# runtime.
+#
+# objc.registerMetaDataForSelector(
+#    b"OCTestBlock",
+#    b"getIntBlock",
+#    {
+#        "retval": {
+#            "callable": {
+#                "retval": {"type": b"i"},
+#                "arguments": {
+#                    0: {"type": b"^v"},
+#                },
+#            }
+#        }
+#    },
+# )
+
+# The metadata for this method has been disabled
+# intentionally, the compiler adds metadata to the
+# runtime
+#
+# objc.registerMetaDataForSelector(
+#    b"OCTestBlock",
+#    b"getFloatBlock",
+#    {
+#        "retval": {
+#            "callable": {
+#                "retval": {"type": b"d"},
+#                "arguments": {
+#                    0: {"type": b"^v"},
+#                    1: {"type": b"d"},
+#                    2: {"type": b"d"},
+#                },
+#            }
+#        }
+#    },
+# )
 objc.registerMetaDataForSelector(
     b"OCTestBlock",
-    b"getIntBlock",
-    {
-        "retval": {
-            "callable": {
-                "retval": {"type": b"i"},
-                "arguments": {
-                    0: {"type": b"^v"},
-                },
-            }
-        }
-    },
-)
-objc.registerMetaDataForSelector(
-    b"OCTestBlock",
-    b"getFloatBlock",
+    b"getFloatBlock2",
     {
         "retval": {
             "callable": {
@@ -51,12 +77,185 @@ objc.registerMetaDataForSelector(
                 "arguments": {
                     0: {"type": b"^v"},
                     1: {"type": b"d"},
-                    2: {"type": b"d"},
+                    2: {"type": b"X"},
                 },
             }
         }
     },
 )
+
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getRaisingBlock",
+    {
+        "retval": {
+            "callable": {
+                "retval": {"type": b"v"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                },
+            }
+        }
+    },
+)
+
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getVariadicBlock",
+    {
+        "retval": {
+            "callable": {
+                "variadic": True,
+                "c_array_delimited_by_null": True,
+                "retval": {"type": b"@"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                    1: {"type": b"@"},
+                },
+            }
+        }
+    },
+)
+
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getPrintfBlock",
+    {
+        "retval": {
+            "callable": {
+                "variadic": True,
+                "retval": {"type": b"@"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                    1: {"type": b"@", "printf_format": True},
+                },
+            }
+        }
+    },
+)
+
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getPrintfBlock2",
+    {
+        "retval": {
+            "callable": {
+                "variadic": True,
+                "retval": {"type": b"@"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                    1: {"type": b"o^i"},
+                    2: {"type": b"@", "printf_format": True},
+                },
+            }
+        }
+    },
+)
+
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getPrintfBlock3",
+    {
+        "retval": {
+            "callable": {
+                "variadic": True,
+                "retval": {"type": b"@"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                    1: {"type": b"N^i"},
+                    2: {"type": b"@", "printf_format": True},
+                },
+            }
+        }
+    },
+)
+
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getHugeBlock",
+    {
+        "retval": {
+            "callable": {
+                "variadic": True,
+                "retval": {"type": b"@"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                    1: {"type": b"@"},
+                    2: {"type": b"@"},
+                    3: {"type": b"@"},
+                    4: {"type": b"@"},
+                    5: {"type": b"@"},
+                    6: {"type": b"@"},
+                    7: {"type": b"@"},
+                    8: {"type": b"@"},
+                    9: {"type": b"@"},
+                    10: {"type": b"@"},
+                    11: {"type": b"@"},
+                    12: {"type": b"@"},
+                    13: {"type": b"@"},
+                    14: {"type": b"@"},
+                    15: {"type": b"@"},
+                    16: {"type": b"@"},
+                    17: {"type": b"@"},
+                    18: {"type": b"@"},
+                    19: {"type": b"@"},
+                    20: {"type": b"@"},
+                    21: {"type": b"@"},
+                    22: {"type": b"@"},
+                    23: {"type": b"@"},
+                    24: {"type": b"@"},
+                    25: {"type": b"@"},
+                    26: {"type": b"@"},
+                    27: {"type": b"@"},
+                    28: {"type": b"@"},
+                    29: {"type": b"@"},
+                    30: {"type": b"@"},
+                    31: {"type": b"@"},
+                    32: {"type": b"@"},
+                    33: {"type": b"@"},
+                    34: {"type": b"@"},
+                    35: {"type": b"@"},
+                    36: {"type": b"@"},
+                    37: {"type": b"@"},
+                    38: {"type": b"@"},
+                    39: {"type": b"@"},
+                    40: {"type": b"@"},
+                    41: {"type": b"@"},
+                    42: {"type": b"@"},
+                    43: {"type": b"@"},
+                    44: {"type": b"@"},
+                    45: {"type": b"@"},
+                    46: {"type": b"@"},
+                    47: {"type": b"@"},
+                    48: {"type": b"@"},
+                    49: {"type": b"@"},
+                    50: {"type": b"@"},
+                    51: {"type": b"@"},
+                    52: {"type": b"@"},
+                    53: {"type": b"@"},
+                    54: {"type": b"@"},
+                    55: {"type": b"@"},
+                    56: {"type": b"@"},
+                    57: {"type": b"@"},
+                    58: {"type": b"@"},
+                    59: {"type": b"@"},
+                    60: {"type": b"@"},
+                    61: {"type": b"@"},
+                    62: {"type": b"@"},
+                    63: {"type": b"@"},
+                    64: {"type": b"@"},
+                    65: {"type": b"@"},
+                    66: {"type": b"@"},
+                    67: {"type": b"@"},
+                    68: {"type": b"@"},
+                    69: {"type": b"@"},
+                },
+            }
+        }
+    },
+)
+
+
 objc.registerMetaDataForSelector(
     b"OCTestBlock",
     b"callOptionalBlock:withValue:",
@@ -74,9 +273,63 @@ objc.registerMetaDataForSelector(
         }
     },
 )
+
+
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"storeBlock:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "retval": {"type": b"@"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"@"},
+                        2: {"type": b"@"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getStoredBlock",
+    {
+        "retval": {
+            "callable": {
+                "retval": {"type": b"@"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                    1: {"type": b"@"},
+                    2: {"type": b"@"},
+                },
+            }
+        }
+    },
+)
+
 objc.registerMetaDataForSelector(
     b"OCTestBlock",
     b"callIntBlock:withValue:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"i"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"callCopiedIntBlock:withValue:",
     {
         "arguments": {
             2: {
@@ -345,6 +598,61 @@ class TestBlocks(TestCase):
 
                 self.assertTrue(deleted)
 
+    def test_block_is_stored(self):
+
+        for use_function in (0, 1):
+            with self.subTest(use_function=use_function):
+                deleted = False
+
+                if use_function:
+
+                    class Setter:
+                        def __del__(self):
+                            nonlocal deleted
+                            deleted = True
+
+                    def Callable():
+                        def result(arg1, arg2):
+                            return [arg1, arg2]
+
+                        result.attr = Setter()  # noqa: B023
+                        return result  # noqa: B023
+
+                else:
+
+                    class Callable:
+                        def __call__(self, arg1, arg2):
+                            return [arg1, arg2]
+
+                        def __del__(self):
+                            nonlocal deleted
+                            deleted = True
+
+                self.assertFalse(deleted)
+                c = Callable()
+                del c
+
+                self.assertTrue(deleted)
+
+                deleted = False
+
+                self.assertFalse(deleted)
+                with objc.autorelease_pool():
+                    obj = OCTestBlock.alloc().init()
+                    self.assertIs(obj.getStoredBlock(), None)
+
+                    obj.storeBlock_(Callable())
+
+                    bl = obj.getStoredBlock()
+                    v = bl(1, 2)
+                    self.assertIsInstance(v, list)
+                    self.assertEqual(v, [1, 2])
+
+                    del bl
+                    del obj
+
+                self.assertTrue(deleted)
+
     @min_os_level("10.6")
     def testBlockToObjC(self):
         obj = OCTestBlock.alloc().init()
@@ -360,6 +668,15 @@ class TestBlocks(TestCase):
         self.assertEqual(len(lst), 2)
 
         self.assertEqual(lst, [42, 43])
+
+        lst = []
+
+        obj.callCopiedIntBlock_withValue_(callback, 142)
+        self.assertEqual(len(lst), 1)
+        obj.callCopiedIntBlock_withValue_(callback, 143)
+        self.assertEqual(len(lst), 2)
+
+        self.assertEqual(lst, [142, 143])
 
         class Helper:
             def __init__(self):
@@ -490,6 +807,9 @@ class TestBlocks(TestCase):
         value = block()
         self.assertEqual(value, 42)
 
+        block2 = obj.getIntBlock()
+        self.assertIs(block, block2)
+
     def test_block_multiple_proxy(self):
         obj = OCTestBlock.alloc().init()
 
@@ -515,10 +835,75 @@ class TestBlocks(TestCase):
 
         block = obj.getFloatBlock()
         value = block(1, 2)
-        self.assertEqual(value, 3.0)
+        self.assertEqual(value, 4.0)
 
         value = block(2.5, 7.0)
-        self.assertEqual(value, 9.5)
+        self.assertEqual(value, 11.5)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'str'"):
+            block(2.5, "seven")
+
+        with self.assertRaisesRegex(TypeError, "Need 2 arguments, got 3"):
+            block(2.5, 7.0, 11.5)
+
+    def test_raising_block(self):
+        obj = OCTestBlock.alloc().init()
+        block = obj.getRaisingBlock()
+
+        with self.assertRaisesRegex(objc.error, "SimpleException - hello world"):
+            block()
+
+    def test_variadic_block(self):
+        obj = OCTestBlock.alloc().init()
+        block = obj.getVariadicBlock()
+
+        v = block("a", "b", object)
+        self.assertEqual(v, ["a", "b", object])
+
+        with self.assertRaisesRegex(
+            TypeError, "At most 64 arguments are supported, got 100 arguments"
+        ):
+            block(*range(100))
+
+        with self.assertRaisesRegex(TypeError, "Need 1 arguments, got 0"):
+            block()
+
+    def test_printf_block(self):
+        obj = OCTestBlock.alloc().init()
+        block = obj.getPrintfBlock()
+
+        v = block("%d %d", 10, 20)
+        self.assertEqual(v, "10 20")
+
+        with self.assertRaisesRegex(ValueError, "Too few arguments for format string"):
+            block("%d %d", 10)
+
+        with self.assertRaisesRegex(ValueError, "Too many arguments for format string"):
+            block("%d %d", 10, 20, 30)
+
+        with self.assertRaisesRegex(TypeError, "Need 1 arguments, got 0"):
+            block()
+
+        block = obj.getPrintfBlock2()
+        with self.assertRaisesRegex(
+            TypeError, "printf format with by-ref args not supported"
+        ):
+            block(None, "%d", 20)
+
+        block = obj.getPrintfBlock3()
+        with self.assertRaisesRegex(
+            TypeError, "printf format with by-ref args not supported"
+        ):
+            block(None, "%d", 20)
+
+    def test_hudge_block(self):
+        obj = OCTestBlock.alloc().init()
+        block = obj.getHugeBlock()
+
+        with self.assertRaisesRegex(
+            TypeError, "At most 64 arguments are supported, got 69 arguments"
+        ):
+            block(*range(69))
 
     @min_os_level("10.6")
     def testBlockFromObjC3(self):
@@ -621,3 +1006,59 @@ class TestBlockRuntimeSignature(TestCase):
                 objc._C_CHR + BLOCK_SELF_TYPE + objc._C_INT + objc._C_INT + objc._C_FLT
             ).decode("utf-8"),
         )
+
+
+class TestInvalidCalling(TestCase):
+    def test_wrong_signature(self):
+        import objc._convenience as mod
+
+        orig = mod._block_call
+
+        try:
+
+            def faker(*args):
+                return orig(*args, 42)
+
+            mod._block_call = faker
+
+            obj = OCTestBlock.alloc().init()
+            block = obj.getIntBlock()
+
+            with self.assertRaises(TypeError):
+                block()
+
+        finally:
+            mod._block_call = orig
+
+    def test_wrong_block_call_invocation(self):
+        import objc._convenience as mod
+
+        obj = OCTestBlock.alloc().init()
+        block = obj.getIntBlock()
+
+        with self.assertRaisesRegex(TypeError, "not a block"):
+            mod._block_call(42, block.__block_signature__, (), {})
+
+        with self.assertRaisesRegex(TypeError, "not a block"):
+            mod._block_call(obj, block.__block_signature__, (), {})
+
+        with self.assertRaisesRegex(TypeError, "not a signature"):
+            mod._block_call(block, 42, (), {})
+
+        with self.assertRaisesRegex(TypeError, "cannot call block without a signature"):
+            mod._block_call(block, None, (), {})
+
+        with self.assertRaisesRegex(TypeError, "Need 0 arguments, got 1"):
+            mod._block_call(block, block.__block_signature__, (42,), {})
+
+        with self.assertRaisesRegex(TypeError, "keyword arguments not supported"):
+            mod._block_call(block, block.__block_signature__, (), {"a": 42})
+
+        with self.assertRaisesRegex(TypeError, "keyword arguments not supported"):
+            mod._block_call(block, block.__block_signature__, (), 42)
+
+    def test_with_bad_signature(self):
+        obj = OCTestBlock.alloc().init()
+        block = obj.getFloatBlock2()
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
+            block(1.0, 2.0)

@@ -210,8 +210,11 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
     }
 
     sz = PyObjCRT_SizeOfType(tp);
-    if (sz == -1) {
-        return NULL;
+    if (sz == -1) { // LCOV_BR_EXCL_LINE
+        /* This can only be reached if an NSInvocation value returns
+         * a bogus signature string.
+         */
+        return NULL; // LCOV_EXCL_LINE
     }
 
     buf = PyMem_Malloc(sz);
@@ -297,8 +300,8 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self,
     }
 
     sz = PyObjCRT_SizeOfType(tp);
-    if (sz == -1) {
-        return NULL;
+    if (sz == -1) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     buf = PyMem_Malloc(sz);

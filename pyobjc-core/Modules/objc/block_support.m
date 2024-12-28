@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 enum {
+    BLOCK_IS_NOESCAPE      = (1 << 23),
     BLOCK_HAS_COPY_DISPOSE = (1 << 25),
+    BLOCK_HAS_CTOR         = (1 << 26),
     BLOCK_IS_GLOBAL        = (1 << 28),
     BLOCK_HAS_STRET        = (1 << 29),
     BLOCK_HAS_SIGNATURE    = (1 << 30)
@@ -31,6 +33,7 @@ enum {
  */
 
 static Class gGlobalBlockClass = nil;
+static Class gStackBlockClass = nil;
 
 struct block_descriptor {
     unsigned long int reserved;
@@ -53,6 +56,8 @@ struct block_literal {
     void (*invoke)(void*, ...);
     struct block_descriptor* descriptor;
     PyObject* _Nullable invoke_cleanup;
+    PyObject* _Nullable descriptor_memory;
+    PyObject* _Nullable signature_memory;
 };
 
 const char* _Nullable PyObjCBlock_GetSignature(void* _block)
@@ -89,6 +94,8 @@ oc_copy_helper(void* _dst, void* _src)
 
     PyObjC_BEGIN_WITH_GIL
         dst->invoke_cleanup = Py_XNewRef(src->invoke_cleanup);
+        dst->descriptor_memory = Py_XNewRef(src->descriptor_memory);
+        dst->signature_memory = Py_XNewRef(src->signature_memory);
 
     PyObjC_END_WITH_GIL
 }
@@ -100,6 +107,8 @@ oc_dispose_helper(void* _src)
 
     PyObjC_BEGIN_WITH_GIL
         Py_CLEAR(src->invoke_cleanup);
+        Py_CLEAR(src->descriptor_memory);
+        Py_CLEAR(src->signature_memory);
 
     PyObjC_END_WITH_GIL
 }
@@ -117,7 +126,10 @@ static struct block_literal gLiteralTemplate = {.isa            = 0,
                                                 .reserved       = 0,
                                                 .invoke         = NULL,
                                                 .descriptor     = &gDescriptorTemplate,
-                                                .invoke_cleanup = NULL};
+                                                .invoke_cleanup = NULL,
+                                                .descriptor_memory = NULL,
+                                                .signature_memory = NULL,
+};
 
 /*
  * PyObjCBlock_Call is exposed to python code as objc._block_call(block, signature, args,
@@ -171,15 +183,21 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
         return NULL;
     }
 
-    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
+    if (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0) {
         PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
         return NULL;
     }
 
     block_ptr = PyObjCObject_GetObject(self);
-    if (block_ptr == nil) {
+    if (block_ptr == nil) { // LCOV_BR_EXCL_LINE
+        /* There is no realistic way to get a 'nil' block here, the
+         * objc_object field is only set to 'nil' when an 'init' call
+         * fails and blocks are already initialized.
+         */
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "Cannot call nil block");
         return NULL;
+        // LCOV_EXCL_STOP
     }
     call_func = PyObjCBlock_GetFunction(block_ptr);
 
@@ -206,7 +224,7 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
     if (variadicAllArgs) {
         if (byref_in_count != 0 || byref_out_count != 0) {
             PyErr_Format(PyExc_TypeError,
-                         "Sorry, printf format with by-ref args not supported");
+                         "printf format with by-ref args not supported");
             return NULL;
         }
 
@@ -214,30 +232,23 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
             PyErr_Format(PyExc_TypeError,
                          "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
                          "d",
-                         Py_SIZE(signature) - 2, PyTuple_Size(args));
+                         Py_SIZE(signature) - 1, PyTuple_Size(args));
             return NULL;
         }
 
-        if (PyTuple_Size(args) > MAX_ARGCOUNT - 1) {
-            PyErr_Format(PyExc_TypeError,
-                         "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
-                         "d arguments",
-                         MAX_ARGCOUNT, PyTuple_Size(args));
-            return NULL;
-        }
 
     } else if (PyTuple_Size(args) != Py_SIZE(signature) - 1) {
-        if (Py_SIZE(signature) > MAX_ARGCOUNT) {
-            PyErr_Format(PyExc_TypeError,
-                         "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
-                         "d arguments",
-                         MAX_ARGCOUNT, PyTuple_Size(args));
-            return NULL;
-        }
-
         PyErr_Format(PyExc_TypeError,
                      "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
-                     Py_SIZE(signature), PyTuple_Size(args));
+                     Py_SIZE(signature) - 1, PyTuple_Size(args));
+        return NULL;
+    }
+
+    if (PyTuple_Size(args) > MAX_ARGCOUNT - 1) {
+        PyErr_Format(PyExc_TypeError,
+                     "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
+                     "d arguments",
+                     MAX_ARGCOUNT, PyTuple_Size(args));
         return NULL;
     }
 
@@ -323,17 +334,19 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 
 #endif
 
-    if (r != FFI_OK) {
+    if (r != FFI_OK) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
         goto error;
+        // LCOV_EXCL_STOP
     }
 
     Py_BEGIN_ALLOW_THREADS
         @try {
             ffi_call(&cif, FFI_FN(call_func), argbuf, values);
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -357,15 +370,15 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 #endif
 
     if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref,
+        if (PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref, // LCOV_BR_EXCL_LINE
                                 byref_attr)
             < 0) {
-            goto error;
+            goto error; // LCOV_EXCL_LINE
         }
 
     } else {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr) < 0) {
-            goto error;
+        if (PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr) < 0) { // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
         }
     }
 
@@ -379,27 +392,27 @@ error:
     } else {
         PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr);
     }
-    if (argbuf) {
+    if (argbuf) { // LCOV_BR_EXCL_LINE
         PyMem_Free(argbuf);
     }
     return NULL;
-}
+} // LCOV_BR_EXCL_LINE
 
 static void
 PyObjCBlock_CleanupCapsule(PyObject* ptr)
 {
     PyObjCBlockFunction block_func = (PyObjCBlockFunction)PyCapsule_GetPointer(ptr, "objc.__block_release__");
-    if (block_func == NULL)
-        return;
+    if (block_func == NULL) // LCOV_BR_EXCL_LINE
+        return; // LCOV_EXCL_LINE
 
     PyObjCFFI_FreeBlockFunction(block_func);
-}
+} // LCOV_BR_EXCL_LINE
 
-static char* _Nullable block_signature(PyObjCMethodSignature* signature)
+static PyObject* _Nullable block_signature(PyObjCMethodSignature* signature)
 {
     Py_ssize_t i;
     Py_ssize_t buflen = 1;
-    char*      buf;
+    PyObject*      buf;
     char*      cur;
 
     buflen += strlen(signature->rettype->type);
@@ -407,13 +420,18 @@ static char* _Nullable block_signature(PyObjCMethodSignature* signature)
         buflen += strlen(signature->argtype[i]->type);
     }
 
-    buf = PyMem_Malloc(buflen);
+    buf = PyBytes_FromStringAndSize(NULL, buflen);
     if (buf == NULL) {    // LCOV_BR_EXCL_LINE
-        PyErr_NoMemory(); // LCOV_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
 
-    cur = buf;
+    cur = PyBytes_AsString(buf);
+    if (cur == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_CLEAR(buf);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
     strlcpy(cur, signature->rettype->type, buflen);
     for (i = 0; i < Py_SIZE(signature); i++) {
         strlcat(cur, signature->argtype[i]->type, buflen);
@@ -423,20 +441,16 @@ static char* _Nullable block_signature(PyObjCMethodSignature* signature)
 
 void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
 {
-    struct block_literal* block;
+    struct block_literal block = gLiteralTemplate;
 
     PyObjC_Assert(gGlobalBlockClass, NULL);
 
-    block = PyMem_Malloc(sizeof(struct block_literal) + sizeof(struct block_literal));
-    if (block == NULL) {  // LCOV_BR_EXCL_LINE
-        PyErr_NoMemory(); // LCOV_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    block.descriptor_memory = PyBytes_FromStringAndSize(NULL, sizeof(struct block_descriptor));
+    if (block.descriptor_memory == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
-
-    *block = gLiteralTemplate;
-    block->descriptor =
-        (struct block_descriptor*)(((char*)block) + sizeof(struct block_literal));
-    *(block->descriptor) = *(gLiteralTemplate.descriptor);
+    block.descriptor = (struct block_descriptor*)PyBytes_AsString(block.descriptor_memory);
+    *(block.descriptor) = *(gLiteralTemplate.descriptor);
 
     /* The value of "signature->signature" cannot be trusted, it
      * contains the raw signature without any updates from metadata.
@@ -444,38 +458,40 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* c
      *
      * The function below only fails when running out of memory
      */
-    char* typestr = block_signature(signature);
-    if (typestr == NULL) { // LCOV_BR_EXCL_LINE
-        PyMem_Free(block); // LCOV_EXCL_LINE
-        return NULL;       // LCOV_EXCL_LINE
+    block.signature_memory = block_signature(signature);
+    if (block.signature_memory == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_CLEAR(block.descriptor_memory);
+        return NULL;
+        // LCOV_EXCL_STOP
     }
-    block->descriptor->signature = typestr;
-    block->flags |= BLOCK_HAS_SIGNATURE;
-    block->isa                     = gGlobalBlockClass;
+    block.descriptor->signature = PyBytes_AsString(block.signature_memory);
+    block.flags |= BLOCK_HAS_SIGNATURE;
+    block.isa                     = gStackBlockClass;
     PyObjCBlockFunction block_func = PyObjCFFI_MakeBlockFunction(signature, callable);
     if (block_func == NULL) {
-        PyMem_Free(block);
+        Py_CLEAR(block.descriptor_memory);
         return NULL;
     }
-    block->invoke = block_func;
+    block.invoke = block_func;
 
-    block->invoke_cleanup = PyCapsule_New((void*)(block->invoke), "objc.__block_release__",
+    block.invoke_cleanup = PyCapsule_New((void*)(block.invoke), "objc.__block_release__",
                                           PyObjCBlock_CleanupCapsule);
-    if (block->invoke_cleanup == NULL) {            // LCOV_BR_EXCL_LINE
-        PyObjCFFI_FreeBlockFunction(block->invoke); // LCOV_EXCL_LINE
-        PyMem_Free(block);                          // LCOV_EXCL_LINE
-        return NULL;                                // LCOV_EXCL_LINE
+    if (block.invoke_cleanup == NULL) {            // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyObjCFFI_FreeBlockFunction(block.invoke);
+        Py_CLEAR(block.descriptor_memory);
+        return NULL;
+        // LCOV_EXCL_STOP
     }
-    return (void*)block;
-}
 
-void
-PyObjCBlock_Release(void* _block)
-{
-    struct block_literal* block = (struct block_literal*)_block;
-    Py_CLEAR(block->invoke_cleanup);
-    PyMem_Free((void*)(block->descriptor->signature));
-    PyMem_Free(block);
+    /* We've started with a stack block, make sure it is stored into global memory */
+    id block_value = [(id)&block copy];
+    Py_CLEAR(block.invoke_cleanup);
+    Py_CLEAR(block.descriptor_memory);
+    Py_CLEAR(block.signature_memory);
+
+    return (void*)block_value;
 }
 
 _block_func_ptr
@@ -499,12 +515,7 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
      */
     self = [self copy];
 
-    rval = PyObjC_FindPythonProxy(self);
-    if (rval != NULL) {
-        return rval;
-    }
-
-    rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+    rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, NO);
     [self release];
     if (rval == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
@@ -526,17 +537,8 @@ static PyObject* _Nullable pyobjc_PythonTransient(NSObject* self,
 
     self = [self copy];
 
-    /* XXX: Check callers of this function to check if the call
-     *      below is necessary.
-     */
-    PyObject* result = PyObjC_FindPythonProxy(self);
-    if (result) {
-        *cookie = 0;
-        return result;
-    }
-
     *cookie = 1;
-    result  = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+    PyObject* result  = PyObjCObject_New(self, PyObjCObject_kDEFAULT, NO);
     [self release];
     return result;
 }
@@ -574,6 +576,7 @@ PyObjCBlock_Setup(PyObject* module __attribute__((__unused__)))
             // LCOV_EXCL_STOP
         }
     }
+    gStackBlockClass = StackBlock;
 
     return 0;
 }
