@@ -83,6 +83,7 @@ typedef NSObject<NSObject> ObjectClass;
 + (unsigned char)ucharClsFunc;
 + (float)floatClsFunc;
 + (double)doubleClsFunc;
++ (long double)longdoubleClsFunc;
 + (char*)charpClsFunc;
 + (id)idClsFunc;
 
@@ -98,6 +99,7 @@ typedef NSObject<NSObject> ObjectClass;
 - (unsigned char)ucharFunc;
 - (float)floatFunc;
 - (double)doubleFunc;
+- (long double)longdoubleFunc;
 - (char*)charpFunc;
 - (id)idFunc;
 - (NSPoint)nspointFunc;
@@ -119,6 +121,7 @@ typedef NSObject<NSObject> ObjectClass;
 - (unsigned char)ucharArg:(unsigned char)arg;
 - (float)floatArg:(float)arg;
 - (double)doubleArg:(double)arg;
+- (long double)longdoubleArg:(long double)arg;
 - (char*)charpArg:(char*)arg;
 - (id)idArg:(id)arg;
 
@@ -161,8 +164,11 @@ typedef NSObject<NSObject> ObjectClass;
 - (void)passOutFloat:(float*)arg;
 - (void)passInOutFloat:(float*)arg;
 - (double)passInDouble:(double*)arg;
+- (long double)passInLongDouble:(long double*)arg;
 - (void)passOutDouble:(double*)arg;
+- (void)passOutLongDouble:(long double*)arg;
 - (void)passInOutDouble:(double*)arg;
+- (void)passInOutLongDouble:(long double*)arg;
 - (char*)passInCharp:(char**)arg;
 - (void)passOutCharp:(char**)arg;
 - (void)passInOutCharp:(char**)arg;
@@ -194,6 +200,7 @@ static char               g_chars[]      = {-128, 0, 127};
 static unsigned char      g_uchars[]     = {0, 128, 255};
 static float              g_floats[]     = {0.128, 1.0, 42.0, 1e10};
 static double             g_doubles[]    = {0.128, 1.0, 42.0, 1e10};
+static long double        g_longdoubles[]= {0.128, 1.0, 42.0, 1e10};
 
 static char* g_charps[] = {"hello", "world", "foobar"};
 
@@ -284,6 +291,13 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     if (g_idx > ARRAYSIZE(g_doubles))
         g_idx = 0;
     return g_doubles[g_idx++];
+}
+
++ (long double)longdoubleClsFunc
+{
+    if (g_idx > ARRAYSIZE(g_longdoubles))
+        g_idx = 0;
+    return g_longdoubles[g_idx++];
 }
 
 + (char*)charpClsFunc
@@ -398,6 +412,13 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     if (g_idx > ARRAYSIZE(g_doubles))
         g_idx = 0;
     return g_doubles[g_idx++];
+}
+
+- (long double)longdoubleFunc
+{
+    if (g_idx > ARRAYSIZE(g_longdoubles))
+        g_idx = 0;
+    return g_longdoubles[g_idx++];
 }
 
 - (char*)charpFunc
@@ -516,6 +537,11 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 }
 
 - (double)doubleArg:(double)arg
+{
+    return arg / 2;
+}
+
+- (long double)longdoubleArg:(long double)arg
 {
     return arg / 2;
 }
@@ -760,6 +786,11 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     return *arg * 9;
 }
 
+- (long double)passInLongDouble:(long double*)arg
+{
+    return *arg * 9;
+}
+
 - (void)passOutDouble:(double*)arg
 {
     if (g_idx > ARRAYSIZE(g_doubles))
@@ -767,7 +798,19 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     *arg = g_doubles[g_idx++];
 }
 
+- (void)passOutLongDouble:(long double*)arg
+{
+    if (g_idx > ARRAYSIZE(g_longdoubles))
+        g_idx = 0;
+    *arg = g_longdoubles[g_idx++];
+}
+
 - (void)passInOutDouble:(double*)arg
+{
+    *arg *= 42;
+}
+
+- (void)passInOutLongDouble:(long double*)arg
 {
     *arg *= 42;
 }
@@ -902,6 +945,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (float)callInstanceFloatFuncOf:(OC_TestClass1*)arg;
 - (double)callInstanceDoubleFuncOf:(OC_TestClass1*)arg;
+- (long double)callInstanceLongDoubleFuncOf:(OC_TestClass1*)arg;
 
 - (id)callInstanceIdFuncOf:(OC_TestClass1*)arg;
 - (struct dummy)callInstanceDummyFuncOf:(OC_TestClass1*)arg;
@@ -921,6 +965,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 - (unsigned char)callInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj;
 - (float)callInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj;
 - (double)callInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj;
+- (long double)callInstanceLongDoubleArg:(long double)arg on:(OC_TestClass1*)obj;
 - (char*)callInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj;
 - (id)callInstanceIdArg:(id)arg on:(OC_TestClass1*)obj;
 
@@ -942,6 +987,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (float)invokeInstanceFloatFuncOf:(OC_TestClass1*)arg;
 - (double)invokeInstanceDoubleFuncOf:(OC_TestClass1*)arg;
+- (long double)invokeInstanceLongDoubleFuncOf:(OC_TestClass1*)arg;
 
 - (id)invokeInstanceIdFuncOf:(OC_TestClass1*)arg;
 - (struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg;
@@ -962,6 +1008,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 - (unsigned char)invokeInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj;
 - (float)invokeInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj;
 - (double)invokeInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj;
+- (long double)invokeInstanceLongDoubleArg:(long double)arg on:(OC_TestClass1*)obj;
 - (char*)invokeInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj;
 - (id)invokeInstanceIdArg:(id)arg on:(OC_TestClass1*)obj;
 
@@ -1138,6 +1185,11 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     return [arg doubleFunc];
 }
 
+- (long double)callInstanceLongDoubleFuncOf:(OC_TestClass1*)arg
+{
+    return [arg longdoubleFunc];
+}
+
 - (id)callInstanceIdFuncOf:(OC_TestClass1*)arg
 {
     return [arg idFunc];
@@ -1222,6 +1274,11 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     return [obj doubleArg:arg];
 }
 
+- (long double)callInstanceLongDoubleArg:(long double)arg on:(OC_TestClass1*)obj
+{
+    return [obj longdoubleArg:arg];
+}
+
 - (char*)callInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj
 {
     return [obj charpArg:arg];
@@ -1274,6 +1331,18 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(doubleFunc));
+
+    [arg forwardInvocation:inv];
+    [inv getReturnValue:&res];
+    return res;
+}
+
+- (long double)invokeInstanceLongDoubleFuncOf:(OC_TestClass1*)arg
+{
+    long double        res;
+    NSInvocation* inv;
+
+    SETUP_INVOCATION(inv, arg, @selector(longdoubleFunc));
 
     [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -1479,6 +1548,19 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(doubleArg:));
+    [inv setArgument:&arg atIndex:2]; // First real argument
+
+    [obj forwardInvocation:inv];
+    [inv getReturnValue:&res];
+    return res;
+}
+
+- (long double)invokeInstanceLongDoubleArg:(long double)arg on:(OC_TestClass1*)obj
+{
+    long double        res;
+    NSInvocation* inv;
+
+    SETUP_INVOCATION(inv, obj, @selector(longdoubleArg:));
     [inv setArgument:&arg atIndex:2]; // First real argument
 
     [obj forwardInvocation:inv];

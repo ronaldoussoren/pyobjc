@@ -25,12 +25,6 @@ __all__ = ("objc_method", "python_method")
 NO_VALUE = object()
 
 
-def _isSelectorPrefix(name, prefix):
-    return name.startswith(prefix) and (
-        len(name) == len(prefix) | name[len(prefix)].isupper()
-    )
-
-
 def _selectorToKeywords(selector):
     if not selector.startswith("init"):
         raise ValueError("selector is not a valid init selector")
@@ -481,7 +475,7 @@ def transformAttribute(name, value, class_object, protocols):
                     signature_parts[0] = overridden_rval
 
                 for idx in overridden_args:
-                    if (idx < 0) or idx >= len(signature_parts) - 1:
+                    if idx >= len(signature_parts) - 1:
                         raise objc.error(
                             f"{name!r} has invalid metadata, index {idx} out of range"
                         )

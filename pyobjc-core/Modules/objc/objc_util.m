@@ -257,18 +257,16 @@ PyObjCErr_FromObjC(NSObject* localException)
             PyErr_SetString(PyObjCExc_Error, "non-NSException object caught");
 
             PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
-            if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
-                PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
-            }
+            PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
             PyObject* exc = id_to_python(localException);
             if (exc == NULL) { // LCOV_BR_EXCL_LINE
                 PyErr_Clear(); // LCOV_EXCL_LINE
-            } else {
+            } else { // LCOV_EXCL_LINE
                 if ( // LCOV_BR_EXCL_LINE
                     PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc) == -1) {
                     PyErr_Clear(); // LCOV_EXCL_LINE
-                }
+                } // LCOV_EXCL_LINE
             }
             Py_CLEAR(exc);
             PyErr_Restore(exc_type, exc_value, exc_traceback);
@@ -295,26 +293,26 @@ PyObjCErr_FromObjC(NSObject* localException)
                     }
 
                     PyObjC_GIL_RETURNVOID;
-                }
+                } // LCOV_EXCL_LINE
             }
 
             c_localException_name = id_to_python([(NSException*)localException name]);
             if (c_localException_name == NULL) { // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_RETURNVOID;           // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
             c_localException_reason = id_to_python([(NSException*)localException reason]);
             if (c_localException_reason == NULL) { // LCOV_BR_EXCL_LINE
                 Py_DECREF(c_localException_name);  // LCOV_EXCL_LINE
                 PyObjC_GIL_RETURNVOID;             // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
             dict = PyDict_New();
             if (dict == NULL) {                     // LCOV_BR_EXCL_LINE
                 Py_DECREF(c_localException_name);   // LCOV_EXCL_LINE
                 Py_DECREF(c_localException_reason); // LCOV_EXCL_LINE
                 PyObjC_GIL_RETURNVOID;              // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
             /* Ignore errors in setting up ``dict``, the exception state
              * will be replaced later.
@@ -322,13 +320,13 @@ PyObjCErr_FromObjC(NSObject* localException)
             if ( // LCOV_BR_EXCL_LINE
                 PyDict_SetItem(dict, PyObjCNM_name, c_localException_name) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
             Py_DECREF(c_localException_name);
 
             if ( // LCOV_BR_EXCL_LINE
                 PyDict_SetItem(dict, PyObjCNM_reason, c_localException_reason) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
             Py_DECREF(c_localException_reason);
             if (userInfo) {
                 v = id_to_python(userInfo);
@@ -361,16 +359,16 @@ PyObjCErr_FromObjC(NSObject* localException)
             if ( // LCOV_BR_EXCL_LINE
                 PyObject_SetAttr(exc_value, PyObjCNM__pyobjc_info_, dict) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
             Py_CLEAR(dict);
             if ( // LCOV_BR_EXCL_LINE
                 PyObject_SetAttr(exc_value, PyObjCNM_name, c_localException_name) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
             PyErr_Restore(exc_type, exc_value, exc_traceback);
         }
     PyObjC_END_WITH_GIL
-}
+} // LCOV_EXCL_LINE
 
 static NSException* _Nullable python_exception_to_objc(void)
 {
@@ -423,8 +421,10 @@ static NSException* _Nullable python_exception_to_objc(void)
         r = PyDict_GetItemRef(args, PyObjCNM_reason, &v);
         switch (r) {
         case -1:
+            // LCOV_EXCL_START
             PyErr_Clear();
             break;
+            // LCOV_EXCL_STOP
         case 1:
             if (depythonify_python_object(v, &reason) < 0) {
                 PyErr_Clear();
@@ -435,8 +435,10 @@ static NSException* _Nullable python_exception_to_objc(void)
         r = PyDict_GetItemRef(args, PyObjCNM_name, &v);
         switch (r) {
         case -1:
+            // LCOV_EXCL_START
             PyErr_Clear();
             break;
+            // LCOV_EXCL_STOP
         case 1:
             if (depythonify_python_object(v, &name) < 0) {
                 PyErr_Clear();
@@ -447,8 +449,10 @@ static NSException* _Nullable python_exception_to_objc(void)
         r = PyDict_GetItemRef(args, PyObjCNM_userInfo, &v);
         switch (r) {
         case -1:
+            // LCOV_EXCL_START
             PyErr_Clear();
             break;
+            // LCOV_EXCL_STOP
         case 1:
             if (depythonify_python_object(v, &userInfo) < 0) {
                 PyErr_Clear();

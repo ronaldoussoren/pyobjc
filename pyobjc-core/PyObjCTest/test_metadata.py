@@ -16,6 +16,7 @@ import sys
 import objc
 from PyObjCTest.metadata import OC_MetaDataTest
 from PyObjCTools.TestSupport import TestCase
+from .fnd import NSArray, NSString, NSPredicate
 
 make_array = array.array
 
@@ -58,6 +59,18 @@ def setupMetaData():
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest", b"ignoreMethod", {"suggestion": "please ignore me"}
+    )
+
+    objc.registerMetaDataForSelector(
+        b"NSString",
+        b"stringWithFormat:",
+        {"variadic": True, "arguments": {2 + 0: {"printf_format": True}}},
+    )
+
+    objc.registerMetaDataForSelector(
+        b"NSPredicate",
+        b"predicateWithFormat:",
+        {"variadic": True, "arguments": {2 + 0: {"printf_format": True}}},
     )
 
     objc.registerMetaDataForSelector(
@@ -151,6 +164,20 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeIntArray:count:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeIntArray:sameSize:",
         {
             "arguments": {
                 2
@@ -932,6 +959,14 @@ class TestArraysIn(TestCase):
         ):
             o.makeIntArray_count_(a, 21)
 
+        a = o.makeIntArray_sameSize_(
+            [10, 20, 30, 40, 50], NSArray.arrayWithArray_(list(range(4)))
+        )
+        self.assertEqual(a, [10, 20, 30, 40])
+
+        a = o.makeIntArray_sameSize_([10, 20, 30, 40, 50], None)
+        self.assertEqual(a, ())
+
 
 class TestArrayReturns(TestCase):
     # TODO:
@@ -1143,10 +1178,19 @@ class TestPrintfFormat(TestCase):
         # that code is correct...
 
         # Generic table below doesn't work for these
-        for fmt, args in [(b"%#+x", (99,)), (b"%+#x", (99,)), (b"% #x", (99,))]:
+        for fmt, args in [
+            (b"%#+x", (99,)),
+            (b"%+#x", (99,)),
+            (b"% #x", (99,)),
+            (b"% x", (99,)),
+        ]:
             with self.subTest((fmt, args)):
                 v = o.makeArrayWithCFormat_(fmt, *args)
                 self.assertEqual(list(v), [fmt.decode(), ((fmt % args)[1:]).decode()])
+
+        with self.subTest("%+d"):
+            v = o.makeArrayWithCFormat_(b"%+d", 20000)
+            self.assertEqual(list(v), ["%+d", "+20000"])
 
         # Insert thousands seperator, the one in the C locale is ''
         with self.subTest("%'d"):
@@ -1327,6 +1371,14 @@ class TestPrintfFormat(TestCase):
                 ValueError, "Too few arguments for format string"
             ):
                 o.makeArrayWithCFormat_(b"%d")
+
+        with self.subTest("NSString stringWithFormat"):
+            v = NSString.stringWithFormat_("foo %@", o)
+            self.assertEqual(v, f"foo {o!r}")
+
+        with self.subTest("NSPredicate predicateWithFormat"):
+            v = NSPredicate.predicateWithFormat_("%K like %@", "key", "value")
+            self.assertEqual(repr(v), 'key LIKE "value"')
 
 
 class TestVariadic(TestCase):

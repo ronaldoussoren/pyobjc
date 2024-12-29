@@ -324,8 +324,8 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
         const ctype value;                                     \
         memcpy((void*)&value, _pvalue, sizeof(ctype)); \
         PyObject*    rv     = PyTuple_New(elemcount);                                    \
-        if (rv == NULL) {                                                                \
-            return NULL;                                                                 \
+        if (rv == NULL) {   /* LCOV_BR_EXCL_LINE */                                      \
+            return NULL;    /* LOCV_EXCL_LINE */                                         \
         }                                                                                \
                                                                                          \
         for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
@@ -353,8 +353,8 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
                                                                                          \
         for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
             PyObject* e = PySequence_GetItem(py, i);                                     \
-            if (e == NULL) {                                                             \
-                return -1;                                                               \
+            if (e == NULL) { /* LCOV_BR_EXCL_LINE */                                     \
+                return -1;  /* LCOV_EXCL_LINE */                                         \
             }                                                                            \
             value[i] = convertelem(e);                                               \
             Py_DECREF(e);                                                                \

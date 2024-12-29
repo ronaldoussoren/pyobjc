@@ -66,6 +66,11 @@ class TestFSRef(TestCase):
 
         self.assertEqual(ref.as_pathname(), os.path.realpath("/etc/hosts"))
 
+        ref = objc.FSRef.from_pathname(b"/etc/hosts")
+        self.assertIsInstance(ref, objc.FSRef)
+
+        self.assertEqual(ref.as_pathname(), os.path.realpath("/etc/hosts"))
+
         ref = objc.FSRef.from_pathname(pathlib.Path("/etc/hosts"))
         self.assertIsInstance(ref, objc.FSRef)
 
@@ -81,6 +86,11 @@ class TestFSRef(TestCase):
 
         with self.assertRaisesRegex(OSError, r"MAC Error -\d+"):
             objc.FSRef.from_pathname("no-such-file.missing")
+
+        with self.assertRaisesRegex(
+            TypeError, "expected str, bytes or os.PathLike object, not int"
+        ):
+            objc.FSRef.from_pathname(42)
 
     def test_sizeof(self):
         ref = objc.FSRef.from_pathname("/etc/hosts")

@@ -548,7 +548,7 @@ PyObjCBlock_Setup(PyObject* module __attribute__((__unused__)))
 {
     Class StackBlock;
     Class GlobalBlock = objc_lookUpClass("__NSGlobalBlock__");
-    if (GlobalBlock == NULL) { // LCOV_BR_EXCL_LINE
+    if (GlobalBlock == Nil) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         /* This should never happen... */
         PyErr_SetString(PyObjCExc_InternalError, "Cannot find __NSGlobalBlock__ class");
@@ -558,25 +558,47 @@ PyObjCBlock_Setup(PyObject* module __attribute__((__unused__)))
     gGlobalBlockClass = GlobalBlock;
 
     StackBlock = objc_lookUpClass("__NSStackBlock__");
-    if (StackBlock != Nil) {             // LCOV_BR_EXCL_LINE
-        if (!class_addMethod(StackBlock, // LCOV_BR_EXCL_LINE
-                             @selector(__pyobjc_PythonObject__), (IMP)pyobjc_PythonObject,
-                             "^{_object}@:")) {
-            // LCOV_EXCL_START
-            PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
-            return -1;
-            // LCOV_EXCL_STOP
-        }
-        if (!class_addMethod(StackBlock, // LCOV_BR_EXCL_LINE
-                             @selector(__pyobjc_PythonTransient__:),
-                             (IMP)pyobjc_PythonTransient, "^{_object}@:^i")) {
-            // LCOV_EXCL_START
-            PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
-            return -1;
-            // LCOV_EXCL_STOP
-        }
+    if (StackBlock == Nil) {             // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        /* This should never happen... */
+        PyErr_SetString(PyObjCExc_InternalError, "Cannot find __NSGlobalBlock__ class");
+        return -1;
+        // LCOV_EXCL_STOP
     }
     gStackBlockClass = StackBlock;
+
+    if (!class_addMethod(StackBlock, // LCOV_BR_EXCL_LINE
+                         @selector(__pyobjc_PythonObject__), (IMP)pyobjc_PythonObject,
+                             "^{_object}@:")) {
+        // LCOV_EXCL_START
+        PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
+        return -1;
+        // LCOV_EXCL_STOP
+    }
+    if (!class_addMethod(StackBlock, // LCOV_BR_EXCL_LINE
+                         @selector(__pyobjc_PythonTransient__:),
+                         (IMP)pyobjc_PythonTransient, "^{_object}@:^i")) {
+        // LCOV_EXCL_START
+        PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
+        return -1;
+        // LCOV_EXCL_STOP
+    }
+    if (!class_addMethod(GlobalBlock, // LCOV_BR_EXCL_LINE
+                         @selector(__pyobjc_PythonObject__), (IMP)pyobjc_PythonObject,
+                             "^{_object}@:")) {
+        // LCOV_EXCL_START
+        PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
+        return -1;
+        // LCOV_EXCL_STOP
+    }
+    if (!class_addMethod(GlobalBlock, // LCOV_BR_EXCL_LINE
+                         @selector(__pyobjc_PythonTransient__:),
+                         (IMP)pyobjc_PythonTransient, "^{_object}@:^i")) {
+        // LCOV_EXCL_START
+        PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
+        return -1;
+        // LCOV_EXCL_STOP
+    }
 
     return 0;
 }

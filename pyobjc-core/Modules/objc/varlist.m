@@ -169,7 +169,7 @@ static PyObject* _Nullable varlist__getslice__(PyObject* _self, Py_ssize_t start
 }
 
 static int
-varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject* newval)
+varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject* _Nullable newval)
 {
     int result;
     PyObjCVarList* self = (PyObjCVarList*)_self;

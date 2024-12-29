@@ -345,6 +345,13 @@ class TestKeyedArchiveSimple(TestCase):
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
+    def test_local_function(self):
+        def function():
+            pass
+
+        with self.assertRaises(pickle.PicklingError):
+            self.archiverClass.archivedDataWithRootObject_(function)
+
     def test_various_objects(self):
         o = a_newstyle_class()
         o.attr1 = False

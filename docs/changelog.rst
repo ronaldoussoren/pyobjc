@@ -109,6 +109,9 @@ borrowed references).
   The memory leak also resulted in leaking a reference to the callable
   (and hence anything kept alive by that reference).
 
+* The generic ``__new__`` implementation now works as intended when
+  registering methods that other than ``init...`` methods.
+
 Version 10.3.2
 --------------
 

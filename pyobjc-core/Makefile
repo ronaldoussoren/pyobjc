@@ -58,6 +58,8 @@ coverage:
 	python3 -mvenv build/cov-env
 	build/cov-env/bin/python3 -mpip install -U wheel pip setuptools coverage
 	build/cov-env/bin/python3 setup.py develop
+	#cd ../pyobjc-framework-Cocoa && ../pyobjc-core/build/cov-env/bin/python setup.py develop
+	#cd ../pyobjc-framework-Quartz && ../pyobjc-core/build/cov-env/bin/python setup.py develop
 	-build/cov-env/bin/python3 -mcoverage run --branch setup.py test -v
 	build/cov-env/bin/python3 -mcoverage html --omit='PyObjCTest/*,setup.py'
 	open htmlcov/index.html
@@ -69,8 +71,8 @@ c-coverage:
 	python3 -mvenv build/cov-env
 	build/cov-env/bin/python -m pip install -U setuptools wheel
 	env ARCHFLAGS="-arch arm64" CFLAGS="-DCOVERAGE --coverage -fprofile-arcs -ftest-coverage -O1" LDFLAGS="--coverage -fprofile-arcs -ftest-coverage -O1" build/cov-env/bin/python3 setup.py build_ext -j 4 develop
-	cd ../pyobjc-framework-Cocoa && ../pyobjc-core/build/cov-env/bin/python setup.py develop
-	cd ../pyobjc-framework-Quartz && ../pyobjc-core/build/cov-env/bin/python setup.py develop
+	#cd ../pyobjc-framework-Cocoa && ../pyobjc-core/build/cov-env/bin/python setup.py develop
+	#cd ../pyobjc-framework-Quartz && ../pyobjc-core/build/cov-env/bin/python setup.py develop
 	#cd ../pyobjc-framework-Security && ../pyobjc-core/build/cov-env/bin/python setup.py develop
 	lcov --directory .  --zerocounters
 	-build/cov-env/bin/python3 setup.py test -v

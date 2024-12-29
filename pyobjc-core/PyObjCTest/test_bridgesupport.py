@@ -2883,3 +2883,13 @@ class TestMisc(TestCase):
                 o = getattr(objc.ivar, name)()
                 self.assertIsInstance(o, objc.ivar)
                 self.assertEqual(o.__typestr__, encoding)
+
+    def test_resource_stubs(self):
+        self.assertTrue(bridgesupport.resource_exists("objc", "__init__.py"))
+        self.assertFalse(bridgesupport.resource_exists("objc", "no-such-file"))
+        self.assertFalse(
+            bridgesupport.resource_exists("no-such-package", "no-such-file")
+        )
+
+        data = bridgesupport.resource_string("objc", "__init__.py")
+        self.assertIsInstance(data, str)

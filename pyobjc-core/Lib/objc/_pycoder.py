@@ -202,10 +202,10 @@ def save_global(coder, obj, name=None):
         module = import_module(module_name)
         obj2 = _getattribute(module, name)
 
-    except (ImportError, KeyError, AttributeError):
+    except (ImportError, KeyError, AttributeError) as exc:
         raise PicklingError(
             f"Can't pickle {obj!r}: it's not found as {module_name}.{name}"
-        )
+        ) from exc
     else:
         if obj2 is not obj:
             raise PicklingError(

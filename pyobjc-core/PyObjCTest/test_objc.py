@@ -136,6 +136,11 @@ class TestLoadBundle(TestCase):
         ):
             objc.loadBundle("foo", {})
 
+        with self.assertRaisesRegex(
+            ValueError, "Need to specify either bundle_path or bundle_identifier"
+        ):
+            objc.loadBundle("foo", {}, bundle_identifier="foo", bundle_path="")
+
         with self.assertRaisesRegex(TypeError, "bundle_path is not a string"):
             objc.loadBundle("foo", {}, bundle_path=42)
 

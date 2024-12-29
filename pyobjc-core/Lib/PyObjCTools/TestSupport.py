@@ -1226,6 +1226,14 @@ class TestCase(_unittest.TestCase):
                         f"{value}: {idx}: pointer argument, but no by-ref annotation:{tp!r} {class_name or ''}"
                     )
 
+    def _validateBundleIdentifier(self, module):
+        if hasattr(module, "__bundle__"):
+            self.assertHasAttr(module, "__framework_identifier__")
+            self.assertEqual(
+                module.__bundle__.bundleIdentifier(),
+                module.__framework_identifier__,
+            )
+
     def assertCallableMetadataIsSane(
         self, module, *, exclude_cocoa=True, exclude_attrs=()
     ):
@@ -1239,13 +1247,8 @@ class TestCase(_unittest.TestCase):
         # XXX: exclude_cocoa may exclude too much depending on
         #      import order.
 
-        if hasattr(module, "__bundle__"):
-            with self.subTest("validate framework identifier"):
-                self.assertHasAttr(module, "__framework_identifier__")
-                self.assertEqual(
-                    module.__bundle__.bundleIdentifier(),
-                    module.__framework_identifier__,
-                )
+        with self.subTest("validate framework identifier"):
+            self._validateBundleIdentifier(module)
 
         if exclude_cocoa:
             try:
@@ -1431,8 +1434,8 @@ class TestCase(_unittest.TestCase):
         """
         try:
             cls = objc.lookUpClass("NSApplication")
-        except objc.error:
-            pass
+        except objc.error:  # pragma: no cover
+            pass  # pragma: no cover
         else:
             cls.sharedApplication()
 

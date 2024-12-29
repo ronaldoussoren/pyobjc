@@ -52,11 +52,12 @@ def calculate_new_doc(cls):
         for kwds, selector in new_map.items():
             if selector is None:
                 result.pop(kwds, None)
+                continue
 
             if not kwds:
-                result[kwds] = f"{cls.__name__}(): "
+                result[kwds] = f"{cls.__name__}():"
             else:
-                result[kwds] = f"{cls.__name__}(*, " + ", ".join(kwds) + "): "
+                result[kwds] = f"{cls.__name__}(*, " + ", ".join(kwds) + "):"
             if selector.startswith("init"):
                 result[
                     kwds
@@ -146,11 +147,13 @@ def make_generic_new(cls):
             # __new__ implementation.
             return objc.objc_object.__new__(cls, **kwds)
 
-        if key:
+        if key:  # pragma: no branch
             raise TypeError(
                 f"{cls.__name__}() does not support keyword arguments {', '.join(repr(k) for k in key)}"
             )
-        else:
+        else:  # pragma: no cover
+            # Should never be reached due to a similar test earlier
+            # in this function.
             raise TypeError(f"{cls.__name__}() requires keyword arguments")
 
     # XXX: Settings these helps, but does not yet result in the correct

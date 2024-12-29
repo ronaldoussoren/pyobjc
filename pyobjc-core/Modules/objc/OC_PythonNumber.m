@@ -15,12 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
     if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
         return nil;            // LCOV_EXCL_LINE
 
-#ifdef PyObjC_DEBUG
-    if (!PyLong_Check(v) && !PyFloat_Check(v)) { // LCOV_BR_EXCL_LINE
-        PyObjCErr_InternalError();               // LCOV_EXCL_LINE
-    }
-#endif /* PyObjC_DEBUG */
-
     SET_FIELD_INCREF(value, v);
     return self;
 }
@@ -66,21 +60,20 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
             PyObjC_GIL_RETURN(@encode(double));
-        } else if (PyLong_Check(value)) {
+        } else {
             (void)PyLong_AsLongLong(value);
             if (!PyErr_Occurred()) {
                 PyObjC_GIL_RETURN(@encode(long long));
-            } else {
-                PyErr_Clear();
-                (void)PyLong_AsUnsignedLongLong(value);
-                if (!PyErr_Occurred()) {
-                    PyObjC_GIL_RETURN(@encode(unsigned long long));
-                }
-                PyErr_Clear();
-
-                /* Wrap on overflow */
-                PyObjC_GIL_RETURN(@encode(long long));
             }
+            PyErr_Clear();
+            (void)PyLong_AsUnsignedLongLong(value);
+            if (!PyErr_Occurred()) {
+                PyObjC_GIL_RETURN(@encode(unsigned long long));
+            }
+            PyErr_Clear();
+
+            /* Wrap on overflow */
+            PyObjC_GIL_RETURN(@encode(long long));
         }
     PyObjC_END_WITH_GIL
 
@@ -95,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
         r = depythonify_c_value(encoded, value, buffer);
         if (r == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 }
 
@@ -127,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         if (r == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -139,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
             PyObjC_GIL_RETURN(PyFloat_AsDouble(value));
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
     return (double)[self longLongValue];
 }
@@ -209,7 +202,7 @@ NS_ASSUME_NONNULL_BEGIN
             double float_result = PyFloat_AsDouble(value);
             result = (long long)float_result;
             PyObjC_GIL_RETURN(result);
-        } else if (PyLong_Check(value)) {
+        } else {
             result = PyLong_AsUnsignedLongLongMask(value);
             PyObjC_GIL_RETURN(result);
         }
@@ -253,7 +246,7 @@ NS_ASSUME_NONNULL_BEGIN
                 result = (unsigned long long)temp;
             }
             PyObjC_GIL_RETURN(result);
-        }
+        } // LCOV_BR_EXCL_LINE
     PyObjC_END_WITH_GIL
 
     // LCOV_EXCL_START
@@ -278,12 +271,12 @@ NS_ASSUME_NONNULL_BEGIN
         repr = PyObject_Repr(value);
         if (repr == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object(repr, &result) == -1) {
             Py_DECREF(repr);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(repr);
     PyObjC_END_WITH_GIL
     return result;
@@ -354,7 +347,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
         if (decoded == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         SET_FIELD(value, decoded);
 
@@ -412,13 +405,13 @@ NS_ASSUME_NONNULL_BEGIN
 
         if (other == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         ok = PyObjC_Cmp(value, other, &r);
         Py_DECREF(other);
         if (ok == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (r < 0) {
             PyObjC_GIL_RETURN(NSOrderedAscending);

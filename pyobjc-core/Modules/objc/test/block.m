@@ -142,6 +142,8 @@ static int (^gIntBlock)(void) = nil;
 
             first = va_arg(ap, id);
         } while (first != nil);
+
+        va_end(ap);
         return result;
     } copy] autorelease];
 }

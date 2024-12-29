@@ -65,7 +65,6 @@ extern PyObject* PyObjCPythonSelector_Type;
 #define PyObjCPythonSelector_Check(obj)                                                  \
     PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCPythonSelector_Type)
 
-extern PyObject* _Nullable PyObjCSelector_Copy(PyObject* obj);
 extern const char* _Nullable PyObjCSelector_Signature(PyObject* obj);
 #define PyObjCSelector_GetNativeSignature(obj)                                           \
     (((PyObjCSelector*)obj)->sel_native_signature)

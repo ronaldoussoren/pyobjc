@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
         result = PySequence_Length(value);
         if (result < 0 && PyErr_Occurred()) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -92,12 +92,12 @@ NS_ASSUME_NONNULL_BEGIN
         if (unlikely(idx > PY_SSIZE_T_MAX)) {
             PyErr_SetString(PyExc_IndexError, "out of range");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         v = PySequence_GetItem(value, (Py_ssize_t)idx);
         if (unlikely(v == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (v == Py_None) {
             result = NSNull_null;
@@ -107,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
             if (unlikely(err == -1)) {
                 Py_CLEAR(v);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
         Py_CLEAR(v);
 
@@ -124,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
         if (unlikely(idx > PY_SSIZE_T_MAX)) {
             PyErr_SetString(PyExc_IndexError, "out of range");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (unlikely(newValue == NSNull_null)) {
             Py_INCREF(Py_None);
@@ -134,13 +134,13 @@ NS_ASSUME_NONNULL_BEGIN
             v = id_to_python(newValue);
             if (v == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         if (PySequence_SetItem(value, idx, v) < 0) {
             Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         Py_DECREF(v);
 
@@ -161,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
             v = id_to_python(anObject);
             if (v == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
         PyObject* args[3] = {NULL, value, v};
 
@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_DECREF(v);
         if (unlikely(w == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(w);
 
     PyObjC_END_WITH_GIL;
@@ -196,14 +196,14 @@ NS_ASSUME_NONNULL_BEGIN
             v = id_to_python(anObject);
             if (v == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         PyObject* args[4] = {NULL, value, NULL, v};
         args[2]           = PyLong_FromUnsignedLong(idx);
         if (args[2] == NULL) {        // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-        }
+        } // LCOV_EXCL_LINE
 
         w = PyObject_VectorcallMethod(PyObjCNM_insert, args + 1,
                                       3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -212,7 +212,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         if (unlikely(w == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(w);
 
     PyObjC_END_WITH_GIL;
@@ -227,17 +227,17 @@ NS_ASSUME_NONNULL_BEGIN
         idx = PySequence_Length(value);
         if (unlikely(idx == -1)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (unlikely(idx == 0)) {
             PyErr_SetString(PyExc_ValueError, "pop empty sequence");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         r = PySequence_DelItem(value, idx - 1);
         if (unlikely(r == -1)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL;
 }
@@ -250,12 +250,12 @@ NS_ASSUME_NONNULL_BEGIN
         if (unlikely(idx > PY_SSIZE_T_MAX)) {
             PyErr_SetString(PyExc_IndexError, "No such index");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         r = PySequence_DelItem(value, (Py_ssize_t)idx);
         if (unlikely(r == -1)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL;
 }
@@ -287,7 +287,7 @@ NS_ASSUME_NONNULL_BEGIN
                 [coder encodeInt64:(int64_t)PyTuple_Size(value) forKey:@"pylength"];
                 // LCOV_EXCL_STOP
 
-            } else { // LCOV_BR_EXCL_LINE
+            } else {
                 [coder encodeInt32:4 forKey:@"pytype"];
                 [coder encodeInt32:(int32_t)PyTuple_Size(value) forKey:@"pylength"];
             }
@@ -316,7 +316,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObjC_BEGIN_WITH_GIL
             if (PyObjC_encodeWithCoder(value, coder) == -1) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
     }
 }
@@ -364,7 +364,7 @@ NS_ASSUME_NONNULL_BEGIN
                     v = id_to_python(objects[i]);
                     if (v == NULL) {
                         PyObjC_GIL_FORWARD_EXC();
-                    }
+                    } // LCOV_EXCL_LINE
                 }
 
                 /* XXX: Can this every be true? */
@@ -390,13 +390,13 @@ NS_ASSUME_NONNULL_BEGIN
                     v = id_to_python(objects[i]);
                     if (v == NULL) {
                         PyObjC_GIL_FORWARD_EXC();
-                    }
+                    } // LCOV_EXCL_LINE
                 }
 
                 r = PyList_Append(value, v);
                 if (r == -1) {                // LCOV_BR_EXCL_LINE
                     PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
+                } // LCOV_EXCL_LINE
 
                 Py_DECREF(v);
             }
@@ -462,7 +462,7 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyList_New(0);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
 
@@ -479,7 +479,7 @@ NS_ASSUME_NONNULL_BEGIN
             Py_DECREF(t);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
         // LCOV_EXCL_STOP
@@ -489,7 +489,7 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyList_New(0);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
 
@@ -502,7 +502,7 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyList_New(0);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
             PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
             if (decoded == NULL) {

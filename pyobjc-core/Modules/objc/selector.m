@@ -2095,26 +2095,12 @@ PyObjCSelector_GetFlags(PyObject* obj)
     return ((PyObjCSelector*)obj)->sel_flags;
 }
 
-PyObject* _Nullable PyObjCSelector_Copy(PyObject* selector)
-{
-    if (PyObjCPythonSelector_Check(selector)) {
-        return pysel_descr_get(selector, NULL, NULL);
-
-    } else if (PyObjCNativeSelector_Check(selector)) {
-        return objcsel_descr_get(selector, NULL, NULL);
-
-    } else {
-        PyErr_SetString(PyExc_TypeError, "copy non-selector");
-        return NULL;
-    }
-}
-
 int
 PyObjCSelector_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&sel_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     PyObjCSelector_Type = tmp;
 
@@ -2126,8 +2112,8 @@ PyObjCSelector_Setup(PyObject* module)
 
 #if PY_VERSION_HEX < 0x030a0000
     PyObject* bases = PyTuple_New(1);
-    if (bases == NULL) {
-        return -1;
+    if (bases == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     PyTuple_SET_ITEM(bases, 0, PyObjCSelector_Type);
     Py_INCREF(PyObjCSelector_Type);
@@ -2163,8 +2149,8 @@ PyObjCSelector_Setup(PyObject* module)
                                    bases);
     Py_CLEAR(bases);
 #endif
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     PyObjCNativeSelector_Type = tmp;
 

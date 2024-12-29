@@ -1303,6 +1303,33 @@ class TestTransformer(TestCase):
             self.assertIsInstance(out, objc.selector)
             self.assertEqual(out.signature, b"v@:")
 
+    def test_invalid_registered_metadata(self):
+        mock_data = {}
+
+        def _registeredMetadataForSelector(class_object, selname):
+            return mock_data
+
+        orig = objc._registeredMetadataForSelector
+        try:
+            objc._registeredMetadataForSelector = _registeredMetadataForSelector
+
+            with self.subTest("out of range arguments"):
+                mock_data = {
+                    "retval": {},
+                    "arguments": [{}, {}, {}, {}, {"type": b"@"}],
+                }
+
+                def method2(self):
+                    pass
+
+                with self.assertRaisesRegex(
+                    objc.error, "'method2' has invalid metadata, index 4 out of range"
+                ):
+                    self.transformer("method2", method2, NSObject, [])
+
+        finally:
+            objc._registeredMetadataForSelector = orig
+
 
 class OC_TransformWithoutDict(NSObject):
     __slots__ = ()
@@ -1381,6 +1408,134 @@ class TestClassDictProcessor(TestCase):
         self.assertEqual(meta_dict, {})
         self.assertEqual(len(hidden_instance_methods), 0)
         self.assertEqual(len(hidden_class_methods), 0)
+
+    def test_objc_super_warning(self):
+
+        with self.subTest("mod.super is objc.super"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("error", category=objc.ObjCSuperWarning)
+
+                try:
+                    class_dict = {"__module__": "objc", "__classcell__": 1}
+                    meta_dict = {}
+                    hidden_instance_methods = {}
+                    hidden_class_methods = {}
+                    self.processor(
+                        "SomeClass",
+                        class_dict,
+                        meta_dict,
+                        NSObject,
+                        [],
+                        hidden_instance_methods,
+                        hidden_class_methods,
+                    )
+                except objc.ObjCSuperWarning:
+                    self.fail("Unexpected super warning")
+
+        with self.subTest("mod.super is objc.super"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("error", category=objc.ObjCSuperWarning)
+
+                with self.assertRaises(objc.ObjCSuperWarning):
+                    class_dict = {"__module__": "builtins", "__classcell__": 1}
+                    meta_dict = {}
+                    hidden_instance_methods = {}
+                    hidden_class_methods = {}
+                    self.processor(
+                        "SomeClass",
+                        class_dict,
+                        meta_dict,
+                        NSObject,
+                        [],
+                        hidden_instance_methods,
+                        hidden_class_methods,
+                    )
+
+        with self.subTest("module is None"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("error", category=objc.ObjCSuperWarning)
+
+                try:
+                    class_dict = {"__module__": None, "__classcell__": 1}
+                    meta_dict = {}
+                    hidden_instance_methods = {}
+                    hidden_class_methods = {}
+                    self.processor(
+                        "SomeClass",
+                        class_dict,
+                        meta_dict,
+                        NSObject,
+                        [],
+                        hidden_instance_methods,
+                        hidden_class_methods,
+                    )
+                except objc.ObjCSuperWarning:
+                    self.fail("Unexpected super warning")
+
+        with self.subTest("module is invalid"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("error", category=objc.ObjCSuperWarning)
+
+                try:
+                    class_dict = {"__module__": "no-such-module", "__classcell__": 1}
+                    meta_dict = {}
+                    hidden_instance_methods = {}
+                    hidden_class_methods = {}
+                    self.processor(
+                        "SomeClass",
+                        class_dict,
+                        meta_dict,
+                        NSObject,
+                        [],
+                        hidden_instance_methods,
+                        hidden_class_methods,
+                    )
+                except objc.ObjCSuperWarning:
+                    self.fail("Unexpected super warning")
+
+        with self.subTest("module is not set"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("error", category=objc.ObjCSuperWarning)
+
+                try:
+                    class_dict = {"__classcell__": 1}
+                    meta_dict = {}
+                    hidden_instance_methods = {}
+                    hidden_class_methods = {}
+                    self.processor(
+                        "SomeClass",
+                        class_dict,
+                        meta_dict,
+                        NSObject,
+                        [],
+                        hidden_instance_methods,
+                        hidden_class_methods,
+                    )
+                except objc.ObjCSuperWarning:
+                    self.fail("Unexpected super warning")
+
+        with self.subTest("super not used"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("error", category=objc.ObjCSuperWarning)
+
+                try:
+                    class_dict = {
+                        "__module__": "builtins",
+                    }
+                    meta_dict = {}
+                    hidden_instance_methods = {}
+                    hidden_class_methods = {}
+                    self.processor(
+                        "SomeClass",
+                        class_dict,
+                        meta_dict,
+                        NSObject,
+                        [],
+                        hidden_instance_methods,
+                        hidden_class_methods,
+                    )
+                except objc.ObjCSuperWarning:
+                    self.fail("Unexpected super warning")
 
     def test_slots(self):
         with self.subTest("no __slots__"):

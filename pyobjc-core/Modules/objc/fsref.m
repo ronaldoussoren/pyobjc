@@ -83,13 +83,12 @@ static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unuse
         }
         Py_CLEAR(fspath);
 
-    } else if (PyBytes_Check(fspath)) {
+    } else {
+        /* PyOS_FSPath guarantees that the result is
+         * a string of byte string
+         */
         value = fspath;
         fspath = NULL;
-    } else {
-        Py_DECREF(fspath);
-        PyErr_SetString(PyExc_TypeError, "Expecting string or os.PathLike");
-        return NULL;
     }
 
     PyObjC_Assert(PyBytes_Check(value), NULL);
@@ -204,8 +203,8 @@ PyObjCFSRef_Setup(PyObject* module)
     }
     PyObjCFSRef_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "FSRef", PyObjCFSRef_Type) == -1) {
+    if ( PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "FSRef", PyObjCFSRef_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFSRef_Type);

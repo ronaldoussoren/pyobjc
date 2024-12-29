@@ -14,6 +14,9 @@
 @interface OC_GenericNewChild2 : OC_GenericNewChild {
 }
 @end
+@interface OC_GenericNewChild3 : OC_GenericNew {
+}
+@end
 
 @implementation OC_GenericNew
 -(NSObject*)value
@@ -82,6 +85,15 @@
 }
 @end
 
+@implementation OC_GenericNewChild3
++(instancetype)valueWithA:(NSObject*)a b:(NSObject*)b
+{
+    OC_GenericNewChild3* result = [[super alloc] init];
+    result->value = [[NSArray alloc] initWithObjects:@"A-B", a,b,nil];
+    return [result autorelease];
+}
+@end
+
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
@@ -99,6 +111,10 @@ static int mod_exec_module(PyObject* m)
         return -1;
     }
     if (PyModule_AddObject(m, "OC_GenericNewChild2", PyObjC_IdToPython([OC_GenericNewChild2 class]))
+        < 0) {
+        return -1;
+    }
+    if (PyModule_AddObject(m, "OC_GenericNewChild3", PyObjC_IdToPython([OC_GenericNewChild3 class]))
         < 0) {
         return -1;
     }

@@ -83,6 +83,11 @@ describe_ffitype(ffi_type* type)
     case FFI_TYPE_DOUBLE:
         printf("%s", "double");
         break;
+#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+    case FFI_TYPE_LONGDOUBLE:
+        printf("%s", "long double");
+        break;
+#endif
     case FFI_TYPE_UINT8:
         printf("%s", "uint8");
         break;
@@ -240,11 +245,14 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
         return NULL;
         // LCOV_EXCL_STOP
     case 1:
+        // LCOV_EXCL_START
+        /* Excluded from coverage because this can only be hit in a race condition */
         Py_DECREF(typestr);
         ffi_type* result = (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
         Py_DECREF(v);
         Py_EXIT_CRITICAL_SECTION();
         return result;
+        // LCOV_EXCL_STOP
     }
 #endif
 
@@ -366,11 +374,14 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
         return NULL;
         // LCOV_EXCL_STOP
     case 1:
+        // LCOV_EXCL_START
+        /* Excluded from coverage because this can only be hit in a race condition */
         Py_DECREF(typestr);
         ffi_type* result = (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
         Py_DECREF(v);
         Py_EXIT_CRITICAL_SECTION();
         return result;
+        // LCOV_EXCL_STOP
     }
 #endif
 
@@ -538,6 +549,8 @@ ffi_type* _Nullable PyObjCFFI_Typestr2FFI(const char* argtype)
         return &ffi_type_float;
     case _C_DBL:
         return &ffi_type_double;
+    case _C_LNG_DBL:
+        return &ffi_type_longdouble;
     case _C_CHARPTR:
         return &ffi_type_pointer;
     case _C_PTR:
@@ -550,12 +563,6 @@ ffi_type* _Nullable PyObjCFFI_Typestr2FFI(const char* argtype)
         PyErr_SetString(PyExc_NotImplementedError,
                         "Vector types not supported by libffi caller");
         return NULL;
-
-    case _C_IN:
-    case _C_OUT:
-    case _C_INOUT:
-    case _C_CONST:
-        return PyObjCFFI_Typestr2FFI(argtype + 1);
 
     case _C_STRUCT_B:
         return struct_to_ffi_type(argtype);

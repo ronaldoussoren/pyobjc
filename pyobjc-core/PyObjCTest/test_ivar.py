@@ -2,8 +2,10 @@ import objc
 from PyObjCTest.instanceVariables import ClassWithVariables
 from PyObjCTools.TestSupport import TestCase
 
+
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
+NSArray = objc.lookUpClass("NSArray")
 
 
 # XXX: This type and instance should be in a  helper module
@@ -46,6 +48,22 @@ class TestClass(NSObject):
 class TestInstanceVariables(TestCase):
     def setUp(self):
         self.object = TestClass.alloc().init()
+
+    def test_ivar_misusage(self):
+        iv = objc.ivar("iv")
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot access Objective-C instance-variables through class"
+        ):
+            iv.__get__(objc.lookUpClass("NSObject"))
+
+        o = NSArray.alloc()
+        o.init()
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot access Objective-C instance-variables of 'nil'"
+        ):
+            iv.__get__(o)
 
     def test_ivar_equality(self):
         # Check that ivar equality tests are correct,

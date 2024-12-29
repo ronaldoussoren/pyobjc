@@ -44,10 +44,10 @@ class TestLazyImport(TestCase):
         self.assertEqual(o.bundleIdentifier(), "com.apple.AppKit")
         self.assertTrue(o.isLoaded())
 
-        # Should not be loaded yet, hence fallback from identifier to path
+        # Uses an invalid identifier on purpuse to force fallback to path.
         o = lazyimport._loadBundle(
             "PreferencePanes",
-            "com.apple.frameworks.preferencepanes",
+            "com.apple.frameworks.xxpreferencepanes",
             "/System/Library/Frameworks/PreferencePanes.framework",
         )
         o.load()
@@ -837,3 +837,19 @@ class TestLazyImport(TestCase):
         )
 
         self.assertIn("CFType", mod.LSSharedFileListItemRef.__name__)
+
+    def test_cfstr(self):
+        metadict = {"expressions": {"foo": "CFSTR(b'foo')"}}
+        initial_dict = {}
+
+        mod = objc.ObjCLazyModule(
+            "AppKit",
+            None,
+            "/System/Library/Frameworks/AppKit.framework",
+            copy.deepcopy(metadict),
+            None,
+            initial_dict,
+            (),
+        )
+
+        self.assertEqual(mod.foo, "foo")

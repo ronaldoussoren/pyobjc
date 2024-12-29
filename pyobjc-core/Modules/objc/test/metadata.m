@@ -26,10 +26,11 @@ static void use_id(id x __attribute__((__unused__))){}
 - (int*)unknownLengthArray;
 
 /* In arrays: */
-- (NSArray* _Nullable)makeIntArray:(int*)data count:(unsigned)count;
+- (NSArray* _Nullable)makeIntArray:(int*)data count:(unsigned char)count;
 - (NSArray* _Nullable)makeIntArray:(int*)data halfCount:(unsigned)count;
 - (NSArray* _Nullable)makeIntArray:(int*)data countPtr:(unsigned*)countPtr;
 - (NSArray* _Nullable)nullIntArray:(int*)data count:(unsigned)count;
+- (NSArray* _Nullable)makeIntArray:(int*)array sameSize:(NSArray*)cnt;
 - (NSArray* _Nullable)makeStringArray:(char**)data;
 - (NSArray* _Nullable)makeObjectArray:(id*)data;
 - (NSArray* _Nullable)nullStringArray:(char**)data;
@@ -79,7 +80,8 @@ static void use_id(id x __attribute__((__unused__))){}
 + (const int*)nullIntArrayOf5On:(OC_MetaDataTest*)obj;
 + (char**)nullStringArrayOn:(OC_MetaDataTest*)obj;
 + (int*)nullIntArrayOf:(int)count on:(OC_MetaDataTest*)obj;
-+ (NSArray*)makeIntArray:(int*)data count:(unsigned)count on:(OC_MetaDataTest*)obj;
++ (NSArray*)makeIntArray:(int*)data count:(unsigned char)count on:(OC_MetaDataTest*)obj;
++ (NSArray* _Nullable)makeIntArray:(int*)array sameSize:(NSArray*)cnt on:(OC_MetaDataTest*)obj;
 + (NSArray*)makeIntArray:(int*)data countPtr:(unsigned*)countPtr on:(OC_MetaDataTest*)obj;
 + (NSArray*)nullIntArray:(int*)data count:(unsigned)count on:(OC_MetaDataTest*)obj;
 + (NSArray*)makeStringArray:(char**)data on:(OC_MetaDataTest*)obj;
@@ -197,8 +199,22 @@ static void use_id(id x __attribute__((__unused__))){}
     return [self makeIntArray:data count:count * 2];
 }
 
-- (NSArray*)makeIntArray:(int*)data count:(unsigned)count
+- (NSArray*)makeIntArray:(int*)data count:(unsigned char)count
 {
+    NSMutableArray* array;
+    unsigned        i;
+
+    array = [NSMutableArray arrayWithCapacity:count];
+
+    for (i = 0; i < count; i++) {
+        [array addObject:[NSNumber numberWithInt:data[i]]];
+    }
+    return array;
+}
+
+- (NSArray* _Nullable)makeIntArray:(int*)data sameSize:(NSArray*)cnt
+{
+    NSUInteger count = [cnt count];
     NSMutableArray* array;
     unsigned        i;
 
@@ -517,9 +533,14 @@ static void use_id(id x __attribute__((__unused__))){}
     return [obj nullIntArrayOf:count];
 }
 
-+ (NSArray*)makeIntArray:(int*)data count:(unsigned)count on:(OC_MetaDataTest*)obj
++ (NSArray*)makeIntArray:(int*)data count:(unsigned char)count on:(OC_MetaDataTest*)obj
 {
     return [obj makeIntArray:data count:count];
+}
+
++ (NSArray* _Nullable)makeIntArray:(int*)array sameSize:(NSArray*)cnt on:(OC_MetaDataTest*)obj
+{
+    return [obj makeIntArray:array sameSize:cnt];
 }
 
 + (NSArray*)makeIntArray:(int*)data countPtr:(unsigned*)countPtr on:(OC_MetaDataTest*)obj

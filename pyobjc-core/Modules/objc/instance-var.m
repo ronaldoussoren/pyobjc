@@ -68,7 +68,6 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     }
 
     if (!obj || PyObjCClass_Check(obj)) {
-        /* XXX: Not sure if this is ever true... */
         PyErr_SetString(PyExc_TypeError, "Cannot access Objective-C instance-variables "
                                          "through class");
         return NULL;
@@ -82,7 +81,7 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     objc = PyObjCObject_GetObject(obj);
     if (objc == NULL) {
         PyErr_SetString(PyExc_TypeError,
-                        "Cannot access Objective-C instance-variables of NULL");
+                        "Cannot access Objective-C instance-variables of 'nil'");
         return NULL;
     }
 
