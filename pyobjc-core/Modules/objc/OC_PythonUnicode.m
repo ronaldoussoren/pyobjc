@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
     if (!realObject) {
-        switch (PyUnicode_KIND(value)) {
+        switch (PyUnicode_KIND(value)) { // LCOV_BR_EXCL_LINE
         case PyUnicode_1BYTE_KIND:
             if (PyUnicode_IS_ASCII(value)) {
                 realObject = [[NSString alloc]
@@ -117,8 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_BEGIN_WITH_GIL
                 PyObject* utf8 = PyUnicode_AsUTF8String(value);
                 if (!utf8) {
-                    NSLog(@"failed to encode unicode string to byte string");
-                    PyErr_Clear();
+                    PyObjC_GIL_FORWARD_EXC();
                 } else {
                     realObject =
                         [[NSString alloc] initWithBytes:PyBytes_AS_STRING(utf8)
@@ -243,7 +242,7 @@ NS_ASSUME_NONNULL_BEGIN
             //  LCOV_EXCL_START
             PyObjC_GIL_FORWARD_EXC();
             //  LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL;
     return self;
@@ -296,17 +295,13 @@ NS_ASSUME_NONNULL_BEGIN
             PyObject* decoder = PyObjC_decodeWithCoder(coder, self);
             if (decoder == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             SET_FIELD(value, decoder);
 
             id actual = PyObjC_RegisterObjCProxy(value, self);
-            if (actual != self) {
-                [self release];
-                self = actual;
-            } else if (actual != nil) {
-                [actual release];
-            }
+            [self release];
+            self = actual;
 
         PyObjC_END_WITH_GIL
 
@@ -341,7 +336,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObjC_BEGIN_WITH_GIL
             if (PyObjC_encodeWithCoder(value, coder) == -1) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
     }
 }

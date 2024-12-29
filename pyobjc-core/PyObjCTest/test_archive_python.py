@@ -503,6 +503,44 @@ class TestKeyedArchiveSimple(TestCase):
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_([1, 2, invalid_reduce()])
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
+
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_({1, 2, invalid_reduce()})
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
+
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_({1: 2, 2: invalid_reduce()})
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
+
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_({1: 2, invalid_reduce(): 4})
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
+
+        class List(list):
+            pass
+
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        with self.assertRaises(pickle.PicklingError):
+            archiver.encodeRootObject_(List([invalid_reduce()]))
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
+
         class invalid_reduce:
             def __reduce__(self):
                 return (1,)

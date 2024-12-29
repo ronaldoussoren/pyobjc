@@ -25,6 +25,8 @@ static void use_id(id x __attribute__((__unused__))){}
 - (int*)nullIntArrayOf:(int)count;
 - (int*)unknownLengthArray;
 
+
+
 /* In arrays: */
 - (NSArray* _Nullable)makeIntArray:(int*)data count:(unsigned char)count;
 - (NSArray* _Nullable)makeIntArray:(int*)data halfCount:(unsigned)count;
@@ -811,6 +813,78 @@ static void use_id(id x __attribute__((__unused__))){}
     for (i = 0; i < cnt; i++) {
         [result addObject:[NSNumber numberWithFloat:array[i]]];
     }
+    return result;
+}
+
+- (NSArray* _Nullable)makeNullDelimitedObjectArray:(id)value, ...
+{
+    va_list ap;
+    NSMutableArray* result = [NSMutableArray array];
+    if (!result) return nil;
+
+    va_start(ap, value);
+
+    while(value != nil) {
+        [result addObject:value];
+
+        value = va_arg(ap, id);
+    }
+
+    va_end(ap);
+    return result;
+}
+
+- (NSArray* _Nullable)makeNullDelimitedIntArray:(int)value, ...
+{
+    va_list ap;
+    NSMutableArray* result = [NSMutableArray array];
+    if (!result) return nil;
+
+    va_start(ap, value);
+
+    while(value) {
+        [result addObject:[NSNumber numberWithInt:value]];
+
+        value = va_arg(ap, int);
+    }
+
+    va_end(ap);
+    return result;
+}
+
+- (NSArray* _Nullable) makeCountedObjectArray:(int)count values:(id)value, ...
+{
+    va_list ap;
+    int i;
+    NSMutableArray* result = [NSMutableArray array];
+    if (!result) return nil;
+
+    va_start(ap, value);
+
+    for (i = 0; i < count; i++) {
+        [result addObject:value];
+        value = va_arg(ap, id);
+    }
+
+    va_end(ap);
+    return result;
+}
+
+- (NSArray* _Nullable) makeCountedIntArray:(int)count values:(int)value, ...
+{
+    va_list ap;
+    int i;
+    NSMutableArray* result = [NSMutableArray array];
+    if (!result) return nil;
+
+    va_start(ap, value);
+
+    for (i = 0; i < count; i++) {
+        [result addObject:[NSNumber numberWithInt:value]];
+        value = va_arg(ap, int);
+    }
+
+    va_end(ap);
     return result;
 }
 

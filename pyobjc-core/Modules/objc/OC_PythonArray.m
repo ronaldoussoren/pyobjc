@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
         result = PySequence_Length(value);
-        if (result < 0 && PyErr_Occurred()) {
+        if (result < 0) {
             PyObjC_GIL_FORWARD_EXC();
         } // LCOV_EXCL_LINE
 
@@ -186,7 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
             PyErr_SetString(PyExc_IndexError, "No such index");
             PyObjC_GIL_FORWARD_EXC();
         PyObjC_END_WITH_GIL // LCOV_EXCL_LINE
-    }
+    } // LCOV_EXCL_LINE
 
     PyObjC_BEGIN_WITH_GIL
         if (unlikely(anObject == NSNull_null)) {
@@ -287,7 +287,7 @@ NS_ASSUME_NONNULL_BEGIN
                 [coder encodeInt64:(int64_t)PyTuple_Size(value) forKey:@"pylength"];
                 // LCOV_EXCL_STOP
 
-            } else {
+            } else { // LCOV_EXCL_LINE
                 [coder encodeInt32:4 forKey:@"pytype"];
                 [coder encodeInt32:(int32_t)PyTuple_Size(value) forKey:@"pylength"];
             }
@@ -323,7 +323,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (Class)classForCoder
 {
-    if (value == NULL || PyTuple_CheckExact(value)) {
+    if (PyTuple_CheckExact(value)) {
         return [NSArray class];
 
     } else if (PyList_CheckExact(value)) {

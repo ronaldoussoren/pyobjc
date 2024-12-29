@@ -66,10 +66,40 @@
     }
 }
 
++ (id)setNthElement:(NSMutableArray*)array offset:(NSUInteger)offset from:(Class)value
+{
+    @try {
+        [array replaceObjectAtIndex:offset withObject:[value new]];
+        return nil;
+    } @catch (NSException* exc) {
+        return exc;
+    }
+}
+
++ (id)addToArray:(NSMutableArray*)array from:(Class)value
+{
+    @try {
+        [array addObject:[value new]];
+        return nil;
+    } @catch (NSException* exc) {
+        return exc;
+    }
+}
+
 + (id)addToArray:(NSMutableArray*)array value:(id)value
 {
     @try {
         [array addObject:value];
+        return nil;
+    } @catch (NSException* exc) {
+        return exc;
+    }
+}
+
++ (id)insertIntoArray:(NSMutableArray*)array offset:(NSUInteger)offset from:(Class)value
+{
+    @try {
+        [array insertObject:[value new] atIndex:offset];
         return nil;
     } @catch (NSException* exc) {
         return exc;

@@ -6,9 +6,11 @@ NOTE: this file is very, very incomplete and just tests copying at the moment.
 
 import objc
 import collections.abc
+import collections
 from PyObjCTest.pythonset import OC_TestSet
 from PyObjCTest.arrayint import OC_ArrayInt
 from PyObjCTools.TestSupport import TestCase, pyobjc_options
+from .objectint import OC_NoPythonRepresentation
 
 # XXX: OC_TestSet usage should be moved to a different helper class.
 
@@ -148,6 +150,10 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
         self.assertIsInstance(v, NSException)
         self.assertRegex(str(v), "IndexError.*: out of range")
 
+        r = OC_ArrayInt.setNthElement_offset_from_(s, 1, OC_NoPythonRepresentation)
+        self.assertIsNot(r, None)
+        self.assertIn("cannot have Python representation", str(r))
+
     def test_add_item(self):
         s = self.seqClass()
 
@@ -158,6 +164,10 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
         r = OC_ArrayInt.addToArray_value_(s, NSNull.null())
         self.assertIs(r, None)
         self.assertEqual(s[-1], None)
+
+        r = OC_ArrayInt.addToArray_from_(s, OC_NoPythonRepresentation)
+        self.assertIsNot(r, None)
+        self.assertIn("cannot have Python representation", str(r))
 
     def test_insert_item(self):
         s = self.seqClass(range(5))
@@ -192,6 +202,10 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
             str(r), "<class 'AttributeError'>: 'tuple' object has no attribute 'insert'"
         )
 
+        r = OC_ArrayInt.insertIntoArray_offset_from_(s, 0, OC_NoPythonRepresentation)
+        self.assertIsNot(r, None)
+        self.assertIn("cannot have Python representation", str(r))
+
     def test_remove_last(self):
         s = self.seqClass(range(1))
 
@@ -208,6 +222,14 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
         self.assertEqual(
             str(r), "<class 'TypeError'>: 'tuple' object doesn't support item deletion"
         )
+
+        class Seq(collections.UserList):
+            def __len__(self):
+                return -1
+
+        r = OC_ArrayInt.removeLast_(Seq())
+        self.assertIsInstance(r, NSException)
+        self.assertIn("should return >= 0", str(r))
 
     def test_remove_at_index(self):
         s = self.seqClass(range(3))

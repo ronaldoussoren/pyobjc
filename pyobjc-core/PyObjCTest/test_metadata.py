@@ -92,6 +92,27 @@ def setupMetaData():
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"makeCountedIntArray:values:",
+        {"variadic": True, "c_array_length_in_arg": 2},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeCountedObjectArray:values:",
+        {"variadic": True, "c_array_length_in_arg": 2},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeNullDelimitedObjectArray:",
+        {"variadic": True, "c_array_delimited_by_null": True},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeNullDelimitedIntArray:",
+        {"variadic": True, "c_array_delimited_by_null": True},
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"make4Tuple:",
         {
             "arguments": {
@@ -1376,6 +1397,14 @@ class TestPrintfFormat(TestCase):
             v = NSString.stringWithFormat_("foo %@", o)
             self.assertEqual(v, f"foo {o!r}")
 
+            class NoObjCClass:
+                @property
+                def __pyobjc_object__(self):
+                    raise TypeError("Cannot proxy")
+
+            with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+                NSString.stringWithFormat_("foo %@", NoObjCClass())
+
         with self.subTest("NSPredicate predicateWithFormat"):
             v = NSPredicate.predicateWithFormat_("%K like %@", "key", "value")
             self.assertEqual(repr(v), 'key LIKE "value"')
@@ -1393,6 +1422,71 @@ class TestVariadic(TestCase):
             TypeError, "Variadic functions/methods are not supported"
         ):
             o.varargsMethodWithObjects_(1, 2, 3)
+
+
+class TestVariadicCounted(TestCase):
+    def test_objects(self):
+        o = OC_MetaDataTest.new()
+
+        v = o.makeCountedObjectArray_values_(3, "a", "b", "c")
+        self.assertEqual(v, ["a", "b", "c"])
+
+        with self.assertRaisesRegex(
+            ValueError, "Wrong number of variadic arguments, need 3, got 1"
+        ):
+            o.makeCountedObjectArray_values_(3, "a")
+
+        with self.assertRaisesRegex(
+            ValueError, "Wrong number of variadic arguments, need 3, got 6"
+        ):
+            o.makeCountedObjectArray_values_(3, "a", "b", "c", "d", "e", "f")
+
+    def test_int(self):
+        o = OC_MetaDataTest.new()
+
+        v = o.makeCountedIntArray_values_(3, 10, 20, 30)
+        self.assertEqual(v, [10, 20, 30])
+
+        o.makeCountedIntArray_values_(3, 10, 20, 30)
+        self.assertEqual(v, [10, 20, 30])
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            o.makeCountedIntArray_values_(3, 10, "twintig", 30)
+
+        with self.assertRaisesRegex(
+            ValueError, "Wrong number of variadic arguments, need 3, got 1"
+        ):
+            o.makeCountedIntArray_values_(3, 10)
+
+        with self.assertRaisesRegex(
+            ValueError, "Wrong number of variadic arguments, need 3, got 6"
+        ):
+            o.makeCountedIntArray_values_(3, 10, 20, 30, 40, 50, 60)
+
+
+class TestVariadicNullDelimited(TestCase):
+    def test_object(self):
+        o = OC_MetaDataTest.new()
+
+        v = o.makeNullDelimitedObjectArray_("a", "b", "c", "d")
+        self.assertEqual(v, ["a", "b", "c", "d"])
+
+        v = o.makeNullDelimitedObjectArray_("a", "b", "c", "d", None)
+        self.assertEqual(v, ["a", "b", "c", "d"])
+
+        v = o.makeNullDelimitedObjectArray_()
+        self.assertEqual(v, [])
+
+        v = o.makeNullDelimitedObjectArray_(None)
+        self.assertEqual(v, [])
+
+    def test_int(self):
+        o = OC_MetaDataTest.new()
+
+        with self.assertRaisesRegex(
+            TypeError, "variadic null-terminated arrays only supported for type"
+        ):
+            o.makeNullDelimitedIntArray_(1, 2)
 
 
 class TestIgnore(TestCase):

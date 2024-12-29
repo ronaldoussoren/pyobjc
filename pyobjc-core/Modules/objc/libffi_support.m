@@ -381,8 +381,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
         Py_DECREF(v);
         Py_EXIT_CRITICAL_SECTION();
         return result;
-        // LCOV_EXCL_STOP
-    }
+    } // LCOV_EXCL_STOP
 #endif
 
     /* We don't have a type description yet, dynamically
@@ -1008,15 +1007,18 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
                 typecode = _C_LNG;
             }
 
-            if (typecode == _C_LNG_LNG || typecode == _C_ULNG_LNG) {
-                byref[curarg] = PyMem_Malloc(sizeof(long long));
-                typecode      = _C_ULNG_LNG;
+            switch (typecode) {
+            case _C_LNG:
+            case _C_ULNG:
+            case _C_LNG_LNG:
+            case _C_ULNG_LNG:
+                {
+                    _Static_assert(sizeof(long) == sizeof(long long), "long and long long should have same size");
+                    byref[curarg] = PyMem_Malloc(sizeof(long));
+                    typecode      = _C_ULNG;
+                }
 
-            } else if (typecode == _C_LNG || typecode == _C_ULNG) {
-                byref[curarg] = PyMem_Malloc(sizeof(long));
-                typecode      = _C_ULNG;
-
-            } else {
+            default:
                 byref[curarg] = PyMem_Malloc(sizeof(int));
                 typecode      = _C_UINT;
             }
@@ -1202,11 +1204,11 @@ parse_varargs_array(PyObjCMethodSignature* methinfo, PyObject* const* args, size
     PyObjC_Assert(byref != NULL, -1);
 
     if (count != -1) {
-        if (maxarg - curarg != count) {
+        if (maxarg - argoffset != count) {
             PyErr_Format(PyExc_ValueError,
                          "Wrong number of variadic arguments, need %" PY_FORMAT_SIZE_T
                          "d, got %" PY_FORMAT_SIZE_T "d",
-                         count, (maxarg - curarg));
+                         count, maxarg - argoffset);
             return -1;
         }
     }

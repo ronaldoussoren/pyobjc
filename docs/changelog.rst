@@ -146,6 +146,11 @@ Version 10.3.2
   method/function expecting a block value were never released due to an error
   in the cleanup code in PyObjC.
 
+* Variadic methods and functions where the one of the arguments contains a
+  count of the number of variadic values now work as intended (so far this
+  feature hasn't been necessary in binding Apple frameworks, so shouldn't
+  affect existing code)
+
 Version 10.3.1
 --------------
 
