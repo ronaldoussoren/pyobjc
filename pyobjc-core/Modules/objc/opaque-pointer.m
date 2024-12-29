@@ -32,6 +32,7 @@ static PyObject* _Nullable as_cobject(PyObject* self)
 
 static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 {
+    PyObjC_Assert(((OpaquePointerObject*)self)->pointer_value != NULL, NULL);
     return PyObjC_MakeCVoidP(((OpaquePointerObject*)self)->pointer_value);
 }
 

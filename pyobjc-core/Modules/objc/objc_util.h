@@ -59,7 +59,6 @@ extern PyObject* _Nullable PyObjC_ImportName(const char* name);
 
 extern PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object);
 
-extern PyObject* _Nullable PyObjC_FindSELInDict(PyObject*, SEL);
 extern int PyObjCRT_SignaturesEqual(const char*, const char*) __attribute__((__pure__));
 
 extern char* _Nullable PyObjC_SELToPythonName(SEL, char*, size_t);

@@ -1064,10 +1064,8 @@ meth_is_magic(PyObject* self)
 
 static PyObject* _Nullable as_cobject(PyObject* self)
 {
-    id self_value = PyObjCObject_GetObject(self);
-    if (self_value == nil) {
-        Py_RETURN_NONE;
-    }
+    id self_value = PyObjCObject_OBJECT(self);
+    PyObjC_Assert(self_value != nil, NULL);
 
     return PyCapsule_New(self_value, "objc.__object__", NULL);
 }
@@ -1075,7 +1073,9 @@ static PyObject* _Nullable as_cobject(PyObject* self)
 
 static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 {
-    return PyObjC_MakeCVoidP(PyObjCObject_GetObject(self));
+    id self_value = PyObjCObject_OBJECT(self);
+    PyObjC_Assert(self_value != nil, NULL);
+    return PyObjC_MakeCVoidP(self_value);
 }
 
 /*

@@ -263,8 +263,8 @@ PyObjCErr_FromObjC(NSObject* localException)
             if (exc == NULL) { // LCOV_BR_EXCL_LINE
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } else { // LCOV_EXCL_LINE
-                if ( // LCOV_BR_EXCL_LINE
-                    PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc) == -1) {
+                if (PyObject_SetAttrString( // LCOV_BR_EXCL_LINE
+                        exc_value, "_pyobjc_exc_", exc) == -1) {
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 } // LCOV_EXCL_LINE
             }
@@ -317,22 +317,22 @@ PyObjCErr_FromObjC(NSObject* localException)
             /* Ignore errors in setting up ``dict``, the exception state
              * will be replaced later.
              */
-            if ( // LCOV_BR_EXCL_LINE
-                PyDict_SetItem(dict, PyObjCNM_name, c_localException_name) == -1) {
+            if ( PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    dict, PyObjCNM_name, c_localException_name) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
             Py_DECREF(c_localException_name);
 
-            if ( // LCOV_BR_EXCL_LINE
-                PyDict_SetItem(dict, PyObjCNM_reason, c_localException_reason) == -1) {
+            if ( PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    dict, PyObjCNM_reason, c_localException_reason) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
             Py_DECREF(c_localException_reason);
             if (userInfo) {
                 v = id_to_python(userInfo);
                 if (v != NULL) {
-                    if ( // LCOV_BR_EXCL_LINE
-                        PyDict_SetItem(dict, PyObjCNM_userInfo, v) == -1) {
+                    if ( PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                            dict, PyObjCNM_userInfo, v) == -1) {
                         PyErr_Clear(); // LCOV_EXCL_LINE
                     }
                     Py_DECREF(v);
@@ -340,10 +340,10 @@ PyObjCErr_FromObjC(NSObject* localException)
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             } else {
-                if ( // LCOV_BR_EXCL_LINE
-                    PyDict_SetItem(dict, PyObjCNM_userInfo, Py_None) == -1) {
+                if ( PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                        dict, PyObjCNM_userInfo, Py_None) == -1) {
                     PyErr_Clear(); // LCOV_EXCL_LINE
-                }
+                } // LCOV_EXCL_LINE
             }
 
             const char* name   = [[(NSException*)localException name] UTF8String];
@@ -1528,58 +1528,26 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
     return strcmp(buf1, buf2) == 0;
 }
 
-PyObject* _Nullable PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
-{
-    PyObject*  values;
-    Py_ssize_t i, len;
-
-    values = PyDict_Values(clsdict);
-    if (values == NULL) {
-        return NULL;
-    }
-
-    PyObjC_Assert(PyList_Check(values), NULL);
-
-    len = PyList_Size(values);
-    for (i = 0; i < len; i++) {
-        PyObject* v = PyList_GetItemRef(values, i);
-        if (v == NULL) {
-            return NULL;
-        }
-
-        if (!PyObjCSelector_Check(v)) {
-            Py_DECREF(v);
-            continue;
-        }
-
-        if (PyObjCSelector_GetSelector(v) == selector) {
-            Py_DECREF(values);
-            return v;
-        }
-        Py_DECREF(v);
-    }
-
-    Py_DECREF(values);
-    return NULL;
-}
-
 char* _Nullable PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 {
-    /* XXX: strXcpy instead */
-    size_t res = snprintf(buf, buflen, "%s", sel_getName(sel));
+    size_t res = strlcpy(buf, sel_getName(sel), buflen);
     char*  cur;
 
-    if (res != strlen(sel_getName(sel))) {
+    if (res >= buflen) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_LINE
         PyErr_SetString(PyExc_RuntimeError, "selector too long to calculate python name");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (PyObjC_IsPythonKeyword(buf)) {
-        res = snprintf(buf, buflen, "%s__", sel_getName(sel));
-        if (res != 2 + strlen(sel_getName(sel))) {
+        res = strlcat(buf, "__", buflen);
+        if (res >= buflen) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_LINE
             PyErr_SetString(PyExc_RuntimeError,
                             "selector too long to calculate python name");
             return NULL;
+            // LCOV_EXCL_STOP
         }
         return buf;
     }
@@ -1628,11 +1596,8 @@ PyObjC_CheckNoKwnames(PyObject* callable, PyObject* _Nullable kwnames)
     return -1;
 }
 
-PyObject* _Nullable PyObjC_MakeCVoidP(void* _Nullable ptr)
+PyObject* _Nullable PyObjC_MakeCVoidP(void* ptr)
 {
-    if (ptr == NULL) {
-        Py_RETURN_NONE;
-    }
     PyObject* c_void_p = PyObjC_get_c_void_p();
     if (c_void_p == NULL) {
         return NULL;

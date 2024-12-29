@@ -1035,6 +1035,128 @@ FAIL_IF(PyObjCRT_IsValidEncoding("{a=\"f\"i}", 8));
 
 END_UNITTEST
 
+static int exception_text_matches(const char* text)
+{
+    PyObject* type;
+    PyObject* value;
+    PyObject* traceback;
+
+    PyErr_Fetch(&type, &value, &traceback);
+    if (type == NULL && value == NULL && traceback == NULL) {
+        /* No exception */
+        return 0;
+    }
+
+    PyErr_NormalizeException(&type, &value, &traceback);
+
+    PyObject* repr = PyObject_Repr(value);
+
+    Py_CLEAR(type);
+    Py_CLEAR(value);
+    Py_CLEAR(traceback);
+    if (repr == NULL) {
+        PyErr_Clear();
+        return 0;
+    }
+
+    PyObject* expected = PyUnicode_FromString(text);
+    if (expected == NULL) {
+        Py_CLEAR(repr);
+        PyErr_Clear();
+        return 0;
+    }
+
+    int r = PyObject_RichCompareBool(repr, expected, Py_EQ);
+    if (r == -1) {
+        Py_CLEAR(repr);
+        Py_CLEAR(expected);
+        PyErr_Clear();
+        return 0;
+    }
+
+    if (r) {
+        Py_CLEAR(repr);
+        Py_CLEAR(expected);
+        return 1;
+    }
+
+    _PyObject_Dump(repr);
+    _PyObject_Dump(expected);
+
+    return 0;
+}
+
+BEGIN_UNITTEST(CheckArgCount)
+    /* C test because it hitting the error paths in regular tests
+     * is not possible.
+     *
+     * Also: currently only the core only * uses the this to check
+     * the number of arguments in functions with a fixed number
+     * of arguments.
+     */
+    int r;
+    PyObject* callable = Py_None;
+
+    r = PyObjC_CheckArgCount(callable, 1, 1, 1);
+    FAIL_IF(r == -1);
+    FAIL_IF(PyErr_Occurred());
+
+    r = PyObjC_CheckArgCount(callable, 1, 3, 2);
+    FAIL_IF(r == -1);
+    FAIL_IF(PyErr_Occurred());
+
+    r = PyObjC_CheckArgCount(callable, 1, 1, 2);
+    FAIL_IF(r != -1);
+    FAIL_IF(!exception_text_matches("TypeError('None expected 1 arguments, got 2')"));
+
+    r = PyObjC_CheckArgCount(callable, 1, 3, 4);
+    FAIL_IF(r != -1);
+    FAIL_IF(!exception_text_matches("TypeError('None expected between 1 and 3 arguments, got 4')"));
+
+END_UNITTEST
+
+BEGIN_UNITTEST(NoKwNames)
+    /* C test because it hitting the error paths in regular tests
+     * is not possible.
+     */
+    int r;
+    PyObject* callable = Py_None;
+    PyObject* kwnames;
+
+    r = PyObjC_CheckNoKwnames(callable, NULL);
+    FAIL_IF(r == -1);
+    FAIL_IF(PyErr_Occurred());
+
+    kwnames = PyList_New(0);
+    if(kwnames == NULL) {
+        goto error;
+    }
+
+    r = PyObjC_CheckNoKwnames(callable, kwnames);
+    Py_CLEAR(kwnames);
+    FAIL_IF(r == -1);
+    FAIL_IF(PyErr_Occurred());
+
+    kwnames = PyList_New(0);
+    if(kwnames == NULL) {
+        goto error;
+    }
+    if (PyList_Append(kwnames, Py_None) == -1) {
+        goto error;
+    }
+
+    r = PyObjC_CheckNoKwnames(callable, kwnames);
+    Py_CLEAR(kwnames);
+    FAIL_IF(r != -1);
+    FAIL_IF(!exception_text_matches("TypeError('None does not accept keyword arguments')"));
+
+    r = PyObjC_CheckNoKwnames(callable, callable);
+    Py_CLEAR(kwnames);
+    FAIL_IF(r != -1);
+    PyErr_Clear();
+
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(VectorSize),
@@ -1073,6 +1195,8 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(InvalidRegistryUsage),
                                     TESTDEF(MethodSignatureString),
                                     TESTDEF(ValidEncoding),
+                                    TESTDEF(CheckArgCount),
+                                    TESTDEF(NoKwNames),
                                     {0, 0, 0, 0}};
 
 int
