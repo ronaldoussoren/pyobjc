@@ -246,6 +246,7 @@ Programming Language :: Python :: 3.10
 Programming Language :: Python :: 3.11
 Programming Language :: Python :: 3.12
 Programming Language :: Python :: 3.13
+Programming Language :: Python :: 3.14
 Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
