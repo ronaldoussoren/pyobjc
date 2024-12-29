@@ -1543,7 +1543,7 @@ char* _Nullable PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
     if (PyObjC_IsPythonKeyword(buf)) {
         res = strlcat(buf, "__", buflen);
         if (res >= buflen) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyExc_RuntimeError,
                             "selector too long to calculate python name");
             return NULL;

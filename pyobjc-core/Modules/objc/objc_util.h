@@ -19,7 +19,7 @@ extern int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_
                                 size_t nargsf);
 extern int PyObjC_CheckNoKwnames(PyObject* callable, PyObject* _Nullable kwnames);
 
-extern PyObject* _Nullable PyObjC_MakeCVoidP(void* _Nullable ptr);
+extern PyObject* _Nullable PyObjC_MakeCVoidP(void* ptr);
 
 extern int PyObjCUtil_Init(PyObject* module);
 
