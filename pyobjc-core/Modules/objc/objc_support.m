@@ -3473,6 +3473,9 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
         }
 
     case _C_PTR:
+        if (type2[0] == _C_CLASS && strncmp(type1, "^{objc_class=}", 14) == 0) {
+            return YES;
+        }
         if (type1[1] == _C_VOID && type2[0] == _C_ID) {
             return YES;
         }
@@ -3490,6 +3493,14 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
         }
 
         return PyObjC_signatures_compatible(type1 + 1, type2 + 1);
+
+    case _C_CLASS:
+        if (type2[0] == _C_CLASS) {
+            return YES;
+        }
+        if (strncmp(type2, "^{objc_class=}", 14) == 0) {
+            return YES;
+        }
 
     default:
         switch (*type2) {

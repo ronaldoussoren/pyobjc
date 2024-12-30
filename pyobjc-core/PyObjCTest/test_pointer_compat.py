@@ -32,7 +32,6 @@ class TestProxySupport(TestCase):
     def test_cobject_for_nil(self):
         arr = objc.lookUpClass("NSArray").alloc()
         arr.init()
-        print(arr)
         with self.assertRaisesRegex(
             AttributeError, "cannot access attribute '__cobject__' of NIL"
         ):
@@ -82,7 +81,6 @@ class TestProxySupport(TestCase):
     def test_voidp_for_nil(self):
         arr = objc.lookUpClass("NSArray").alloc()
         arr.init()
-        print(arr)
         with self.assertRaisesRegex(
             AttributeError, "cannot access attribute '__c_void_p__' of NIL"
         ):
@@ -195,10 +193,18 @@ class TestMiscTypes(TestCase):
         self.assertIs(v, None)
 
     def test_class_alias(self):
-        self.assertEqual(OC_PointerSupport.getClass(), OC_PointerSupport)
+        self.assertEqual(
+            OC_PointerSupport.getClass.__metadata__()["retval"]["type"],
+            b"^{objc_class=}",
+        )
+        self.assertEqual(
+            OC_PointerSupport.className_.__metadata__()["arguments"][2]["type"],
+            b"^{objc_class=}",
+        )
         self.assertEqual(
             OC_PointerSupport.className_(objc.lookUpClass("NSObject")), "NSObject"
         )
+        self.assertEqual(OC_PointerSupport.getClass(), OC_PointerSupport)
 
     def test_string_ref(self):
         v1 = OC_PointerSupport.getString()

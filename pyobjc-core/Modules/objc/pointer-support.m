@@ -197,8 +197,8 @@ PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
 {
     Py_ssize_t i;
     PyObject*  result = PyList_New(0);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&items_mutex);
@@ -206,20 +206,24 @@ PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
     for (i = 0; i < item_count; i++) {
         if (items[i].pythonify == (PyObjCPointerWrapper_ToPythonFunc)&ID_to_py) {
             PyObject* cur = PyBytes_FromString(items[i].signature);
-            if (cur == NULL) {
+            if (cur == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(result);
 #ifdef Py_GIL_DISABLED
                 PyMutex_Unlock(&items_mutex);
 #endif
                 return NULL;
+                // LCOV_EXCL_STOP
             }
-            if (PyList_Append(result, cur) == -1) {
+            if (PyList_Append(result, cur) == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(cur);
                 Py_DECREF(result);
 #ifdef Py_GIL_DISABLED
                 PyMutex_Unlock(&items_mutex);
 #endif
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             Py_DECREF(cur);
         }
@@ -267,9 +271,12 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     }
 #else
     if (FindWrapper(signature, &cur_pythonify, &cur_depythonify, NULL) == 0) {
-        if (cur_pythonify != pythonify || cur_depythonify != depythonify) {
+        if (cur_pythonify != pythonify || cur_depythonify != depythonify) { // LCOV_BR_EXCL_LINE
+            /* Hitting this would be a bug in PyObjC (aka, this is a fancy spelling of  PyObjC_Assert) */
+            // LCOV_EXCL_START
             PyErr_Format(PyObjCExc_Error, "already have registration for signature '%s'", signature);
             return -1;
+            // LCOV_EXCL_STOP
         }
     }
 #endif
@@ -365,7 +372,7 @@ PyObjectPtr_Convert(PyObject* obj, void* pObj)
     return 0;
 }
 
-static PyObject* _Nullable class_new(void* obj) { return pythonify_c_value("#", obj); }
+static PyObject* _Nullable class_new(void* obj) { return pythonify_c_value("#", &obj); }
 
 static int
 class_convert(PyObject* obj, void* pObj)
