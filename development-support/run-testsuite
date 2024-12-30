@@ -498,7 +498,7 @@ def main():
                         else:
                             extra_args = (["-Xgil=1"], ["-Xgil=0"])
                     else:
-                        extra_args = []
+                        extra_args = [()]
 
                     for extra in extra_args:
                         state_dir = os.path.join(osx_dir, f"{variant}-{arch}")
