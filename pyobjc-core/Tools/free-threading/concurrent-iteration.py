@@ -1,5 +1,7 @@
 from _tools import run_in_threads
-from Cocoa import NSArray
+import objc
+
+NSArray = objc.lookUpClass("NSArray")
 
 A_LEN = 100
 

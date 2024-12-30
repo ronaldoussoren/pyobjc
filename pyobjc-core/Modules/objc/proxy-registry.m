@@ -56,6 +56,8 @@ static void weak_value_release(NSMapTable* table __attribute__((__unused__)), vo
     }
 }
 
+// LCOV_EXCL_START
+/* Only used for debugging, won't be used in normal operation */
 static NSString* _Nullable weak_value_describe(NSMapTable* table __attribute__((__unused__)), const void* _value)
 {
     struct weak_value* value = (struct weak_value*)_value;
@@ -65,11 +67,13 @@ static NSString* _Nullable weak_value_describe(NSMapTable* table __attribute__((
     objc_release(ptr);
     return result;
 }
+// LCOV_EXCL_STOP
+
 static struct weak_value* _Nullable weak_value_alloc(id value)
 {
     struct weak_value* result = malloc(sizeof(struct weak_value));
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
     result->refcnt = 1;
     result->value = nil;
@@ -152,11 +156,12 @@ PyObjC_RegisterObjCProxy(PyObject* original, id proxy)
         }
     } else {
         weak = weak_value_alloc(proxy);
-        if (weak == NULL) {
-            result = nil;
-        } else {
+        if (weak == NULL) { // LCOV_BR_EXCL_LINE
+            result = nil; // LCOV_EXCL_LINE
+        } else { // LCOV_EXCL_LINE
             NSMapInsert(objc_proxies, original, weak);
             objc_retain(proxy);
+            weak_value_release(objc_proxies, weak);
             result = proxy;
         }
     }
@@ -189,7 +194,7 @@ PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
     PyMutex_Unlock(&proxy_mutex);
 #endif
 
-}
+} // LCOV_BR_EXCL_LINE
 
 void
 PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
@@ -214,7 +219,7 @@ PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
     PyMutex_Unlock(&proxy_mutex);
 #endif
 
-}
+} // LCOV_BR_EXCL_LINE
 
 PyObject* _Nullable PyObjC_FindPythonProxy(id original)
 {
