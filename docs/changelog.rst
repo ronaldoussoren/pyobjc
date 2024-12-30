@@ -159,6 +159,12 @@ Version 10.3.2
   feature hasn't been necessary in binding Apple frameworks, so shouldn't
   affect existing code)
 
+* Add support for 'long double' in function/method interfaces, including support
+  for '%Ld' in printf-style varargs handling.
+
+  Note that this primarily affects x86_64, on arm64 systems 'long double'
+  is effectively an alias for 'double'.
+
 Version 10.3.1
 --------------
 

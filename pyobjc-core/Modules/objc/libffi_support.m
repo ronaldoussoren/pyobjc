@@ -1050,8 +1050,12 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
         case 'a':
         case 'A':
             /* double */
-            typecode      = _C_DBL;
-            byref[curarg] = PyMem_Malloc(sizeof(double));
+            if (typecode != _C_LNG_DBL) {
+                typecode      = _C_DBL;
+                byref[curarg] = PyMem_Malloc(sizeof(double));
+            } else {
+                byref[curarg] = PyMem_Malloc(sizeof(long double));
+            }
             if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_NoMemory();
