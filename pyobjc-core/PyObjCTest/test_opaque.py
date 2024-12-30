@@ -164,6 +164,10 @@ class TestFromC(TestCase):
         with self.assertRaisesRegex(ValueError, "dotless name is too long"):
             objc.createOpaquePointerType("BarHandle" * 100, BarEncoded, "BarHandle doc")
 
+    def test_invalid_arguments(self):
+        with self.assertRaisesRegex(TypeError, "missing required argument"):
+            objc.createOpaquePointerType()
+
     def test_invalid_opaque_arg(self):
         with self.assertRaisesRegex(
             TypeError, "Need instance of objc.FooHandle, got instance of int"

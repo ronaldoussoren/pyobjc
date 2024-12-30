@@ -448,7 +448,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         if (@available(macOS 10.13, *)) {
             [coder decodeValueOfObjCType:@encode(int) at:&code size:sizeof(code)];
         } else {
-            [[clang::suppress]]
+            CLANG_SUPPRESS
             [coder decodeValueOfObjCType:@encode(int) at:&code];
         }
 #elif PyObjC_BUILD_RELEASE >= 1013

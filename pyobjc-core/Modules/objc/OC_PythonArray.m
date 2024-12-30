@@ -436,7 +436,7 @@ NS_ASSUME_NONNULL_BEGIN
         if (@available(macOS 10.13, *)) {
             [coder decodeValueOfObjCType:@encode(int) at:&code size:sizeof(code)];
         } else {
-            [[clang::suppress]]
+            CLANG_SUPPRESS
             [coder decodeValueOfObjCType:@encode(int) at:&code];
         }
 #elif PyObjC_BUILD_RELEASE >= 1013
@@ -535,7 +535,7 @@ NS_ASSUME_NONNULL_BEGIN
             if (@available(macOS 10.13, *)) {
                 [coder decodeValueOfObjCType:@encode(int) at:&isize size:sizeof(isize)];
             } else {
-                [[clang::suppress]]
+                CLANG_SUPPRESS
                 [coder decodeValueOfObjCType:@encode(int) at:&isize];
             }
 #elif PyObjC_BUILD_RELEASE >= 1013
@@ -574,7 +574,7 @@ NS_ASSUME_NONNULL_BEGIN
             if (@available(macOS 10.13, *)) {
                 [coder decodeValueOfObjCType:@encode(long long) at:&size size:sizeof(size)];
             } else {
-                [[clang::suppress]]
+                CLANG_SUPPRESS
                 [coder decodeValueOfObjCType:@encode(long long) at:&size];
             }
 #elif PyObjC_BUILD_RELEASE >= 1013

@@ -35,10 +35,11 @@ GlobalType = objc.createStructType(
 class TestStructs(TestCase):
     def testCreateExplicit(self):
         tp = objc.createStructType(
-            "FooStruct", b"{_FooStruct=ffff}", ["a", "b", "c", "d"]
+            "FooStruct", b"{_FooStruct=ffff}", ["a", "b", "c", "d"], "docstring"
         )
         self.assertIsInstance(tp, type)
         self.assertEqual(tp.__typestr__, b"{_FooStruct=ffff}")
+        self.assertEqual(tp.__doc__, "docstring")
 
         self.assertEqual(tp._fields, ("a", "b", "c", "d"))
 
@@ -78,6 +79,29 @@ class TestStructs(TestCase):
             TypeError, r"FooStruct\(\) got multiple values for keyword argument 'a'"
         ):
             tp(1, a=2)
+
+    def test_api_misuse(self):
+        with self.assertRaisesRegex(TypeError, "missing 3 required"):
+            objc.createStructType()
+
+        with self.assertRaisesRegex(
+            TypeError, "fieldnames must be a sequence of strings"
+        ):
+            objc.createStructType("FooStruct", b"{_FooStruct=ffff}", 42)
+
+        with self.assertRaisesRegex(
+            TypeError, "fieldnames must be a sequence of strings"
+        ):
+            objc.createStructType(
+                "FooStruct", b"{_FooStruct=ffff}", ["a", "b", 42, "d"], "docstring"
+            )
+
+        with self.assertRaises(UnicodeEncodeError):
+            objc.createStructType(
+                "FooStruct",
+                b"{_FooStruct=ffff}",
+                ["\U000fffff\uDBBB", "b", "c", "d"],
+            )
 
     def test_copy_copy(self):
         Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])

@@ -30,3 +30,13 @@ class TestProtocols(TestCase):
 
         finally:
             objc._objc.protocolsForProcess = orig_protocolsForProcess
+
+    def test_protocolForClass(self):
+        with self.assertRaisesRegex(TypeError, "missing required argument"):
+            objc.protocolsForClass()
+
+        result = objc.protocolsForClass(objc.lookUpClass("NSObject"))
+        self.assertIsInstance(result, list)
+        self.assertNotEqual(len(result), 0)
+        for item in result:
+            self.assertIsInstance(item, objc.formal_protocol)

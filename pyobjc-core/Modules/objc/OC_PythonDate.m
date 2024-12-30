@@ -201,7 +201,7 @@ NS_ASSUME_NONNULL_BEGIN
         if (@available(macOS 10.13, *)) {
             [coder decodeValueOfObjCType:@encode(int) at:&pytype size:sizeof(pytype)];
         } else {
-            [[clang::suppress]]
+            CLANG_SUPPRESS
             [coder decodeValueOfObjCType:@encode(int) at:&pytype];
         }
 #elif PyObjC_BUILD_RELEASE >= 1013

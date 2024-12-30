@@ -13,22 +13,33 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestNSDecimalWrapper(TestCase):
     def test_creation(self):
-        d = objc.NSDecimal(0)
-        self.assertEqual(str(d), "0")
+        for value in (0, 5, (2**62) + 5):
+            d = objc.NSDecimal(value)
+            self.assertIsInstance(d, objc.NSDecimal)
+            self.assertEqual(str(d), str(value))
 
-        d = objc.NSDecimal(-5)
-        self.assertEqual(str(d), "-5")
+            d = objc.NSDecimal(-value)
+            self.assertIsInstance(d, objc.NSDecimal)
+            self.assertEqual(str(d), str(-value))
+
+        value = 2**63 + 2
+        d = objc.NSDecimal(value)
+        self.assertIsInstance(d, objc.NSDecimal)
+        self.assertEqual(str(d), str(value))
 
         with self.assertRaisesRegex(OverflowError, "int too big to convert"):
             objc.NSDecimal(1 << 66)
 
         d = objc.NSDecimal(0.0)
+        self.assertIsInstance(d, objc.NSDecimal)
         self.assertEqual(str(d), "0")
 
         d = objc.NSDecimal(0.5)
+        self.assertIsInstance(d, objc.NSDecimal)
         self.assertEqual(str(d), "0.5")
 
         d = objc.NSDecimal("1.24")
+        self.assertIsInstance(d, objc.NSDecimal)
         self.assertEqual(str(d), "1.24")
 
         d = objc.NSDecimal(500, 3, False)
@@ -229,6 +240,14 @@ class TestNSDecimalWrapper(TestCase):
         o = d1 // 2
         self.assertEqual(o, objc.NSDecimal("0"))
 
+        with self.assertRaisesRegex(OverflowError, "Numeric overflow"):
+            prod = d1
+            for _ in range(10):
+                prod = prod * prod
+
+        with self.assertRaisesRegex(ZeroDivisionError, "Division by zero"):
+            objc.NSDecimal(1) / 0
+
         with self.assertRaisesRegex(
             TypeError,
             r"unsupported operand type\(s\) for \+: 'objc.NSDecimal' and 'float'",
@@ -311,7 +330,13 @@ class TestUsingNSDecimalNumber(TestCase):
         self.assertEqual(str(n), str(d))
 
         v = n.decimalValue()
+        self.assertIsInstance(v, objc.NSDecimal)
         self.assertEqual(d, v)
+
+        v2 = objc.NSDecimal(n)
+        self.assertIsInstance(v2, objc.NSDecimal)
+        self.assertEqual(d, v2)
+        self.assertEqual(v, v2)
 
         with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
             cls.decimalNumberWithDecimal_(d, 1)

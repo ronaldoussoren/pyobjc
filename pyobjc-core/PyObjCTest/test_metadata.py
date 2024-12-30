@@ -1377,10 +1377,8 @@ class TestPrintfFormat(TestCase):
                 self.assertEqual(list(v), [fmt.decode(), fmt.decode() % args])
 
         with self.subTest("%d %n"):
-            # XXX: This is not ideal, we don't return the value written
-            #      in the %n slot
-            v = o.makeArrayWithCFormat_(b"%d %n", 42, None)
-            self.assertEqual(v, ("%d %n", "42 "))
+            with self.assertRaisesRegex(ValueError, "Invalid format string"):
+                o.makeArrayWithCFormat_(b"%d %n", 42, None)
 
         with self.subTest("wrong argument count"):
             with self.assertRaisesRegex(
@@ -1939,3 +1937,12 @@ class TestVariadicArray(TestCase):
 
         v = o.makeArrayWithArguments_(*range(40))
         self.assertEqual(v, list(range(40)))
+
+
+class TestMisuse(TestCase):
+    def test_api_misuse(self):
+        with self.assertRaisesRegex(TypeError, "missing required argument"):
+            objc.registerMetaDataForSelector()
+
+        with self.assertRaisesRegex(TypeError, "metadata should be a dictionary"):
+            objc.registerMetaDataForSelector(b"Class", b"selector", 42)

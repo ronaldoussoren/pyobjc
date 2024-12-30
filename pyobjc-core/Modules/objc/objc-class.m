@@ -1288,10 +1288,10 @@ class_dealloc(PyObject* cls)
      *      when creating the proxy for a pure Objective-C class in multiple threads.
      */
 
-    [[clang::suppress]]
+    CLANG_SUPPRESS
     Py_CLEAR(self->sel_to_py);
     Py_CLEAR(self->delmethod);
-    [[clang::suppress]]
+    CLANG_SUPPRESS
     Py_CLEAR(self->hiddenSelectors);
     Py_CLEAR(self->hiddenClassSelectors);
     Py_CLEAR(self->lookup_cache);

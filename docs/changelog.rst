@@ -112,6 +112,14 @@ borrowed references).
 * The generic ``__new__`` implementation now works as intended when
   registering methods that other than ``init...`` methods.
 
+* Dropped '%n' support in handling printf-format strings for variadic
+  functions and methods.
+
+  Two reasons for that: 1) supporting this properly should return the
+  value writing to the %n location (requiring significant changes) and
+  2) Apple's libraries require using static strings for '%n' to work (at
+  least on some platforms and versions of the OS)
+
 Version 10.3.2
 --------------
 

@@ -216,6 +216,9 @@ class SplitSignatureTest(TestCase):
         with self.assertRaisesRegex(ValueError, "additional text at end of signature"):
             objc.splitStructSignature(b"{NSPoint=dd}d")
 
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
+            objc.splitStructSignature(b"{NSPoint=XX}")
+
         self.assertEqual(
             objc.splitStructSignature(b"{NSPoint=dd}"),
             ("NSPoint", [(None, b"d"), (None, b"d")]),
@@ -223,4 +226,24 @@ class SplitSignatureTest(TestCase):
         self.assertEqual(
             objc.splitStructSignature(b'{NSPoint="x"d"y"d}'),
             ("NSPoint", [("x", b"d"), ("y", b"d")]),
+        )
+
+        self.assertEqual(
+            objc.splitStructSignature(b"{=d10d}"),
+            (None, [(None, b"d"), (None, b"d")]),
+        )
+
+        self.assertEqual(
+            objc.splitStructSignature(b"{=dd}"),
+            (None, [(None, b"d"), (None, b"d")]),
+        )
+
+        self.assertEqual(
+            objc.splitStructSignature(b"{NSPoint=}"),
+            ("NSPoint", []),
+        )
+
+        self.assertEqual(
+            objc.splitStructSignature(b"{NSPoint}"),
+            ("NSPoint", []),
         )

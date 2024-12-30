@@ -110,8 +110,7 @@ calc_current_version(void)
         }
 
         [pool release];
-        // LCOV_EXCL_STOP
-    }
+    } // LCOV_EXCL_STOP
 }
 
 PyObjC_FINAL_CLASS @interface OC_NSAutoreleasePoolCollector : NSObject
@@ -543,9 +542,6 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
         const char* nm;
 
         item = PyTuple_GET_ITEM(class_list, i);
-        if (item == NULL) {
-            continue;
-        }
 
         nm = ((PyTypeObject*)item)->tp_name;
 
@@ -677,17 +673,13 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
             PyErr_SetString(PyExc_ValueError, "value is not a complete struct signature");
             return NULL;
         }
-        structname = PyUnicode_FromStringAndSize(signature, end - signature - 1);
-        if (structname == NULL) {
-            return NULL;
+        structname = PyUnicode_FromStringAndSize(signature, end - signature - (end[-1]=='='));
+        if (structname == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
     }
 
-    if (*end == '=') {
-        signature = end + 1;
-    } else {
-        signature = end;
-    }
+    signature = end;
 
     fields = PyList_New(0);
     if (fields == NULL) // LCOV_BR_EXCL_LINE
@@ -759,8 +751,8 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
             Py_DECREF(fields);
             Py_DECREF(item);
             Py_DECREF(structname);
-            // LCOV_EXCL_STOP
             return NULL;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(item);
 
@@ -828,8 +820,8 @@ static PyObject* _Nullable protocolsForProcess(PyObject* self __attribute__((__u
     unsigned int i;
 
     protlist = objc_copyProtocolList(&protCount);
-    if (protlist == NULL) {
-        Py_RETURN_NONE;
+    if (protlist == NULL) { // LCOV_BR_EXXCL_LINE
+        Py_RETURN_NONE; // LCOV_EXCL_LINE
     }
 
     protocols = PyList_New(0);
@@ -868,32 +860,6 @@ PyDoc_STRVAR(idSignatures_doc,
 static PyObject* _Nullable idSignatures(PyObject* self __attribute__((__unused__)))
 {
     return PyObjCPointer_GetIDEncodings();
-}
-
-PyDoc_STRVAR(protocolNamed_doc,
-             "_protocolNamed(name)\n" CLINIC_SEP "\n"
-             "Returns an Objective-C protocol named *name*.\n"
-             "Raises AttributeError when no such protocol can be found.\n");
-static PyObject* _Nullable protocolNamed(PyObject* self __attribute__((__unused__)),
-                                         PyObject* _Nullable args,
-                                         PyObject* _Nullable kwds)
-{
-    static char* keywords[] = {"name", NULL};
-    char*        name;
-    Protocol*    p;
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "s", keywords, &name)) {
-        return NULL;
-    }
-
-    p = objc_getProtocol(name);
-
-    if (p == NULL) {
-        PyErr_SetString(PyExc_AttributeError, name);
-        return NULL;
-    }
-
-    return PyObjCFormalProtocol_ForProtocol(p);
 }
 
 PyDoc_STRVAR(protocolsForClass_doc,
@@ -1903,10 +1869,6 @@ static PyMethodDef mod_methods[] = {
      .ml_meth  = (PyCFunction)protocolsForProcess,
      .ml_flags = METH_NOARGS,
      .ml_doc   = protocolsForProcess_doc},
-    {.ml_name  = "_protocolNamed",
-     .ml_meth  = (PyCFunction)protocolNamed,
-     .ml_flags = METH_VARARGS | METH_KEYWORDS,
-     .ml_doc   = protocolNamed_doc},
     {.ml_name  = "registerCFSignature",
      .ml_meth  = (PyCFunction)registerCFSignature,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,

@@ -32,16 +32,18 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
          */
         Py_BEGIN_CRITICAL_SECTION(registry);
 
-        switch (PyDict_GetItemRef(registry, selector, &sublist)) {
+        switch (PyDict_GetItemRef(registry, selector, &sublist)) { // LCOV_BR_EXCL_LINE
         case -1:
+            // LCOV_EXCL_START
             result = -1;
             break;
+            // LCOV_EXCL_STOP
         case 0:
 #endif /* Py_GIL_DISABLED */
             sublist = PyList_New(0);
-            if (sublist == NULL) {
-                result = -1;
-            } else {
+            if (sublist == NULL) { // LCOV_BR_EXCL_LINE
+                result = -1; // LCOV_EXCL_LINE
+            } else { // LCOV_EXCL_LINE
                 result = PyDict_SetItem(registry, selector, sublist);
             }
 #ifdef Py_GIL_DISABLED
@@ -49,8 +51,8 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
         }
         Py_END_CRITICAL_SECTION();
 #endif /* Py_GIL_DISABLED */
-        if (result != 0) {
-            return result;
+        if (result != 0) { // LCOV_BR_EXCL_LINE
+            return result; // LCOV_EXCL_LINE
         }
     /* case 1: fallthrough */
     }
@@ -68,10 +70,12 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     Py_ssize_t len = PyList_Size(sublist);
     for (Py_ssize_t i = 0; i < len; i++) {
         PyObject* item = PyList_GetItemRef(sublist, i);
-        if (item == NULL) {
+        if (item == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(sublist);
             Py_EXIT_CRITICAL_SECTION();
             return -1;
+            // LCOV_EXCL_STOP
         }
 
         PyObjC_Assert(PyTuple_CheckExact(item), -1);
@@ -79,10 +83,12 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
 
         int r = PyObject_RichCompareBool(PyTuple_GET_ITEM(item, 0), class_name, Py_EQ);
         if (r == -1) {  // LCOV_BR_EXCL_LINE
-            Py_DECREF(item); // LCOV_EXCL_LINE
-            Py_DECREF(sublist); // LCOV_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(item);
+            Py_DECREF(sublist);
             Py_EXIT_CRITICAL_SECTION();
-            return -1; // LCOV_EXCL_LINE
+            return -1;
+            // LCOV_EXCL_STOP
         }
         if (r) {
             PyObject* new_item = PyTuple_Pack(2,
@@ -99,9 +105,11 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
 
     PyObject* item = PyTuple_Pack(2, class_name, value);
     if (item == NULL) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(sublist); // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(sublist);
         Py_EXIT_CRITICAL_SECTION();
-        return -1;      // LCOV_EXCL_LINE
+        return -1;
+        // LCOV_EXCL_STOP
     }
     result = PyList_Append(sublist, item);
     Py_DECREF(item);
@@ -127,16 +135,16 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
     PyObject*  found_value = NULL;
     PyObject*  sublist;
 
-    if (registry == NULL) {
-        return NULL;
-    }
+    PyObjC_Assert(registry != NULL, NULL);
 
     PyObject* k = PyBytes_FromString(sel_getName(selector));
 
     switch (PyDict_GetItemRef(registry, k, &sublist)) {
     case -1:
+        // LCOV_EXCL_START
         Py_DECREF(k);
         return NULL;
+        // LCOV_EXCL_STOP
     case 0: // XXX: differentiate from error case.
         Py_DECREF(k);
         return NULL;
@@ -181,7 +189,7 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
         Py_XDECREF(found_value);
         found_value = PyTuple_GET_ITEM(cur, 1);
         Py_DECREF(cur);
-    }
+    } // LCOV_BR_EXCL_LINE
     Py_DECREF(sublist);
     return found_value;
 }
@@ -245,10 +253,12 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
             PyObject* new_value;
 
             item     = PyList_GetItemRef(sublist, i);
-            if (item == NULL) {
+            if (item == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(result);
                 Py_EXIT_CRITICAL_SECTION();
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             new_value = value_transform(PyTuple_GET_ITEM(item, 1));
             if (new_value == NULL) {
@@ -267,11 +277,13 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
                 // LCOV_EXCL_STOP
             }
 
-            if (PyList_Append(sl_new, new_item) < 0) {
+            if (PyList_Append(sl_new, new_item) < 0) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(new_item);
                 Py_DECREF(result);
                 Py_EXIT_CRITICAL_SECTION();
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             Py_DECREF(new_item);
         }

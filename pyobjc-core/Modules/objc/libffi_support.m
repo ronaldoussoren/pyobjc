@@ -253,7 +253,7 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
         Py_EXIT_CRITICAL_SECTION();
         return result;
         // LCOV_EXCL_STOP
-    }
+    } // LCOV_EXCL_LINE
 #endif
 
     /* We don't have a type description yet, dynamically
@@ -381,7 +381,8 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
         Py_DECREF(v);
         Py_EXIT_CRITICAL_SECTION();
         return result;
-    } // LCOV_EXCL_STOP
+        // LCOV_EXCL_STOP
+    }  // LCOV_EXCL_LINE
 #endif
 
     /* We don't have a type description yet, dynamically
@@ -1155,22 +1156,6 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
             curarg++;
             break;
 
-        case 'n':
-            /* pointer-to-int */
-            byref[curarg] = PyMem_Malloc(sizeof(long long));
-            if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                PyErr_NoMemory();
-                Py_DECREF(encoded);
-                return -1;
-                // LCOV_EXCL_STOP
-            }
-            values[curarg]  = byref[curarg];
-            arglist[curarg] = PyObjCFFI_Typestr2FFI(&typecode);
-
-            argoffset++;
-            break;
-
         default:
             PyErr_SetString(PyExc_ValueError, "Invalid format string");
             Py_DECREF(encoded);
@@ -1318,14 +1303,13 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         startArg = 2;
 
         pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
-        if (pyself == NULL) {
-            Py_XDECREF(insertArg);
-            goto error;
+        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
         }
 
         pyself = PyObjC_AdjustSelf(pyself);
-        if (pyself == NULL) {
-            goto error;
+        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
         }
         if (insertArg) {
             arglist[curArg++] = insertArg;

@@ -229,15 +229,20 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
                 return -1;
             }
 
-            if (lng < 0) {
+            if (lng < 0) { // LCOV_BR_EXCL_LINE
                 mantissa = -lng;
                 exponent = 0;
                 negative = YES;
 
             } else {
+                /* Should never get here, `PyLong_AsUnsignedLongLong`
+                 * would not have failed for positive numbers.
+                 */
+                // LCOV_EXCL_START
                 mantissa = lng;
                 exponent = 0;
                 negative = NO;
+                // LCOV_EXCL_STOP
             }
 
             DecimalFromComponents(outResult, mantissa, exponent, negative);
@@ -273,9 +278,11 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
                                                      __DECIMAL_DIG__,
 #endif
                                                      PyFloat_AsDouble(pyValue)];
-        if (stringVal == nil) {
+        if (stringVal == nil) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_Error, "Converting double to NSString failed");
             return -1;
+            // LCOV_EXCL_STOP
         }
 
         @try {
@@ -301,7 +308,7 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
         _NSDecimalNumber_Class = PyObjCClass_New([NSDecimalNumber class]);
         if (_NSDecimalNumber_Class == NULL) { // LCOV_BR_EXCL_LINE
             PyErr_Clear();                    // LCOV_EXCL_LINE
-        }
+        } // LCOV_EXCL_LINE
     }
 
     if (_NSDecimalNumber_Class != NULL
@@ -345,26 +352,7 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
             return -1;
         }
 
-        if (PyObjCObject_Check(pyValue)) {
-            NSObject* value;
-
-            if (depythonify_python_object(pyValue, &value) == -1) {
-                return -1;
-            }
-
-            if ([value isKindOfClass:[NSDecimalNumber class]]) {
-                ((DecimalObject*)self)->value = [(NSDecimalNumber*)value decimalValue];
-
-                ((DecimalObject*)self)->objc_value = (NSDecimalNumber*)value;
-                [value retain];
-                return 0;
-            }
-
-            PyErr_Format(PyExc_TypeError, "cannot convert instance of %s to NSDecimal",
-                         pyValue->ob_type->tp_name);
-            return -1;
-
-        } else if (PyUnicode_Check(pyValue)) {
+        if (PyUnicode_Check(pyValue)) {
 
             NSString* stringVal;
 
