@@ -37,8 +37,8 @@ memview_dealloc(PyObject* self)
          * above is not a documented API invariant for PyBuffer_Release
          * (but does match the behaviour of that function).
          */
-        PyObjCErr_InternalError(); /* LCOV_EXCL_LINE */
-    }
+        PyObjCErr_InternalError(); // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 #endif
 
 #if PY_VERSION_HEX >= 0x030a0000
