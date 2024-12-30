@@ -205,12 +205,9 @@ PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
 #endif
     record = NSMapGet(objc_proxies, original);
     if (record != NULL) {
-        v = objc_loadWeakRetained(&record->value);
-        if (v == proxy) {
+        v = objc_loadWeak(&record->value);
+        if (v == proxy || v == nil) {
             NSMapRemove(objc_proxies, original);
-        }
-        if (v != nil) {
-            objc_release(v);
         }
      }
 #ifdef Py_GIL_DISABLED
