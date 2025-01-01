@@ -178,27 +178,6 @@ class TestPlainPythonMethods(TestCase):
         ):
             OC_ObjectInt.nosuchSelectorOf_(forwarder)
 
-    def test_too_long_selector(self):
-        selector = "a" * 300
-
-        class Subclass(Forwarder):
-            pass
-
-        def meth(self):
-            return 42
-
-        meth.__name__ = selector
-
-        setattr(Subclass, selector, meth)
-
-        value = Subclass()
-        self.assertEqual(getattr(value, selector)(), 42)
-
-        with self.assertRaisesRegex(
-            ValueError, "NSInvalidArgumentException - <.*> does not recognize -.*"
-        ):
-            OC_ObjectInt.invokeSelector_of_(selector.encode(), value)
-
     def test_not_method(self):
         value = Forwarder()
         value.attr = 42

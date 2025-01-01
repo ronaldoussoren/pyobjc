@@ -1421,7 +1421,6 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
     Class        cls;
     Method*      methods;
     unsigned int method_count, i;
-    char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
@@ -1452,7 +1451,6 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
         methods =
             (Method* _Nonnull)class_copyMethodList(object_getClass(cls), &method_count);
         for (i = 0; i < method_count; i++) {
-            const char* name;
             PyObject*   item;
             SEL         meth_name = method_getName(methods[i]);
             if (meth_name == NULL) { // LCOV_BR_EXCL_LINE
@@ -1474,16 +1472,7 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
                 continue;
             }
 
-            name = PyObjC_SELToPythonName(meth_name, selbuf, sizeof(selbuf));
-            if (name == NULL) {
-                /* Ignore selectors that cannot be converted to a python name.
-                 * This should never happen with the size of selbuf.
-                 */
-                PyErr_Clear();
-                continue;
-            }
-
-            item = PyUnicode_FromString(name);
+            item = PyObjC_SELToPythonName(meth_name);
             if (item == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(methods);
@@ -1608,8 +1597,6 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         Class        cls;
         Method*      methods;
         unsigned int method_count, j;
-        char         selbuf[2048];
-        const char*  sel_name;
 
         base = PyTuple_GET_ITEM(mro, i);
         PyObjC_Assert(base != NULL, NULL);
@@ -1655,13 +1642,21 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 continue;
             }
 
-            sel_name = PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
+            PyObject* sel_name = PyObjC_SELToPythonName(method_getName(m));
             if (sel_name == NULL) {
                 /* Ignore selectors whose name cannot be converted to a python name */
                 PyErr_Clear();
                 continue;
             }
-            if (strcmp(sel_name, name_bytes) == 0) {
+            int same = PyObject_RichCompareBool(sel_name, name, Py_EQ);
+            Py_CLEAR(sel_name);
+            if (same == -1) { // LCOV_BR_EXCL_START
+                // LCOV_EXCL_START
+                PyErr_Clear();
+                continue;
+                // LCOV_EXCL_STOP
+            }
+            if (same) {
                 /* Create (unbound) selector */
                 const char* encoding = method_getTypeEncoding(m);
                 if (encoding == NULL) { // LCOV_BR_EXCL_LINE
@@ -1919,8 +1914,6 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
         Class        cls;
         Method*      methods;
         unsigned int method_count, j;
-        char         selbuf[2048];
-        char*        sel_name;
 
         base = PyTuple_GET_ITEM(mro, i);
         if (!PyObjCClass_Check(base)) {
@@ -1937,15 +1930,24 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
         for (j = 0; j < method_count; j++) {
             Method m = methods[j];
 
-            sel_name =
-                (char*)PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
+            PyObject* sel_name = PyObjC_SELToPythonName(method_getName(m));
             if (sel_name == NULL) {
                 /* Ignore methods whose selector cannot be converted */
                 PyErr_Clear();
                 continue;
             }
 
-            if (strcmp(sel_name, PyObjC_Unicode_Fast_Bytes(name)) == 0) {
+            int same = PyObject_RichCompareBool(sel_name, name, Py_EQ);
+            Py_CLEAR(sel_name);
+            if (same == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                /* See above */
+                PyErr_Clear();
+                continue;
+                // LCOV_EXCL_STOP
+            }
+
+            if (same) {
                 /* Create (unbound) selector */
                 const char* encoding = method_getTypeEncoding(m);
                 if (encoding == NULL) { // LCOV_BR_EXCL_LINE
@@ -1960,8 +1962,10 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
                 PyObject* result = PyObjCSelector_NewNative(cls, sel, encoding, 0);
                 free(methods);
                 if (result == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(mro);
-                    return NULL;      // LCOV_EXCL_LINE
+                    return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 /* add to __dict__ 'cache' */
@@ -2645,7 +2649,6 @@ static PyObject* _Nullable meth_dir(PyObject* self)
     Class        cls;
     Method*      methods;
     unsigned int method_count, i;
-    char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
@@ -2663,7 +2666,6 @@ static PyObject* _Nullable meth_dir(PyObject* self)
          */
         methods = (Method* _Nonnull)class_copyMethodList(cls, &method_count);
         for (i = 0; i < method_count; i++) {
-            char*     name;
             PyObject* item;
 
             /* Check if the selector should be hidden */
@@ -2679,15 +2681,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
                 continue;
             }
 
-            name = (char*)PyObjC_SELToPythonName(method_getName(methods[i]), selbuf,
-                                                 sizeof(selbuf));
-            if (name == NULL) {
-                /* Ignore methods whose SEL cannot be converted */
-                PyErr_Clear();
-                continue;
-            }
-
-            item = PyUnicode_FromString(name);
+            item = PyObjC_SELToPythonName(method_getName(methods[i]));
             if (item == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(methods);
@@ -3424,16 +3418,7 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
             }
         }
         {
-            char      selbuf[2048];
-            char*     name;
-            PyObject* py_name;
-            name = PyObjC_SELToPythonName(selector, selbuf, sizeof(selbuf));
-            if (!name) {
-                PyErr_Clear();
-                continue;
-            }
-
-            py_name = PyUnicode_FromString(name);
+            PyObject* py_name = PyObjC_SELToPythonName(selector);
             if (!py_name) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_Clear();
@@ -3447,7 +3432,7 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
             } else {
                 value = PyObjCClass_TryResolveSelector(c, py_name, selector);
             }
-            Py_DECREF(py_name);
+            Py_CLEAR(py_name);
             if (value != NULL) {
                 return value;
             } else if (PyErr_Occurred()) {

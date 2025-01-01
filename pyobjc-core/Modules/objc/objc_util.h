@@ -61,7 +61,7 @@ extern PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object);
 
 extern int PyObjCRT_SignaturesEqual(const char*, const char*) __attribute__((__pure__));
 
-extern char* _Nullable PyObjC_SELToPythonName(SEL, char*, size_t);
+extern PyObject* _Nullable PyObjC_SELToPythonName(SEL);
 
 extern bool version_is_deprecated(int version);
 

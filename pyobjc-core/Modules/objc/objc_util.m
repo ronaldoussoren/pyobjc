@@ -1528,36 +1528,32 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
     return strcmp(buf1, buf2) == 0;
 }
 
-char* _Nullable PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
+PyObject* _Nullable PyObjC_SELToPythonName(SEL sel)
 {
-    size_t res = strlcpy(buf, sel_getName(sel), buflen);
-    char*  cur;
+    const char*  selname = sel_getName(sel);
+    size_t selname_len = strlen(selname);
 
-    if (res >= buflen) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_LINE
-        PyErr_SetString(PyExc_RuntimeError, "selector too long to calculate python name");
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
+    if (PyObjC_IsPythonKeyword(selname)) {
+        return PyUnicode_FromFormat("%s__", selname);
 
-    if (PyObjC_IsPythonKeyword(buf)) {
-        res = strlcat(buf, "__", buflen);
-        if (res >= buflen) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_SetString(PyExc_RuntimeError,
-                            "selector too long to calculate python name");
-            return NULL;
-            // LCOV_EXCL_STOP
+    } else {
+        PyObject* result = PyUnicode_New(selname_len, 127);
+        if (result == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
-        return buf;
-    }
 
-    cur = strchr(buf, ':');
-    while (cur) {
-        *cur = '_';
-        cur  = strchr(cur, ':');
+        for (Py_ssize_t idx = 0; *selname != '\0'; selname++, idx++) {
+            int r = PyUnicode_WriteChar(result, idx, *selname == ':'?'_':*selname);
+            if (r == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_CLEAR(result);
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
+        }
+
+        return result;
     }
-    return buf;
 }
 
 int

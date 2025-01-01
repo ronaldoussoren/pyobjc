@@ -198,7 +198,6 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
     PyObject*    res;
     Method*      methods;
     unsigned int i, method_count;
-    char         buf[256];
     Class        objc_class;
 
     if (PyObjCClass_Check(self)) {
@@ -239,10 +238,10 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
 
         for (i = 0; i < method_count; i++) {
             PyObject* v;
-            char*     name;
+            PyObject*     py_name;
 
-            name = PyObjC_SELToPythonName(method_getName(methods[i]), buf, sizeof(buf));
-            if (name == NULL) { // LCOV_BR_EXCL_LINE
+            py_name = PyObjC_SELToPythonName(method_getName(methods[i]));
+            if (py_name == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(res);
@@ -251,10 +250,10 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
             }
 
             /* XXX: This needs some documentation. Basically resolve the method
-             * through normal lookup first, that avoid replicating objc_object.tp_getattro
+             * through normal lookup first, that avoids replicating objc_object.tp_getattro
              * here.
              */
-            v = PyObject_GetAttrString(self, name);
+            v = PyObject_GetAttr(self, py_name);
             if (v == NULL) {
                 PyErr_Clear();
 
@@ -278,6 +277,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                     PyErr_SetString(PyObjCExc_Error,
                                     "Native selector with Nil type encoding");
                     free(methods);
+                    Py_CLEAR(py_name);
                     Py_DECREF(res);
                     return NULL;
                     // LCOV_EXCL_STOP
@@ -292,32 +292,24 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                      * Ignoring the error is more useful than raising.
                      */
                     // LCOV_EXCL_START
+                    Py_CLEAR(py_name);
                     PyErr_Clear();
                     continue;
                     // LCOV_EXCL_STOP
                 }
             }
 
-            PyObject* py_name = PyUnicode_FromString(name);
-            if (py_name == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(v);
-                Py_DECREF(res);
-                free(methods);
-                return NULL;
-                // LCOV_EXCL_STOP
-            }
             if (PyDict_SetItem(res, py_name, v) == -1) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(v);
                 Py_DECREF(res);
-                Py_DECREF(py_name);
+                Py_CLEAR(py_name);
                 free(methods);
                 return NULL;
                 // LCOV_EXCL_STOP
             }
 
-            Py_DECREF(py_name);
+            Py_CLEAR(py_name);
             Py_DECREF(v);
         }
 
