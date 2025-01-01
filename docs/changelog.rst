@@ -124,6 +124,8 @@ borrowed references).
   getting channel data (``floatChannelData``, ``int16ChannelData`` and
   ``int32ChannelData``)
 
+* :issue:`632`: fix broken bindings for ``CGWindowListCreateImageFromArray``.
+
 Version 10.3.2
 --------------
 
