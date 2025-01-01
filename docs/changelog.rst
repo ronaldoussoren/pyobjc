@@ -120,6 +120,10 @@ borrowed references).
   2) Apple's libraries require using static strings for '%n' to work (at
   least on some platforms and versions of the OS)
 
+* :issue:`633`: Fix manual bindings for ``AVAudioPCMBuffer`` methods for
+  getting channel data (``floatChannelData``, ``int16ChannelData`` and
+  ``int32ChannelData``)
+
 Version 10.3.2
 --------------
 
