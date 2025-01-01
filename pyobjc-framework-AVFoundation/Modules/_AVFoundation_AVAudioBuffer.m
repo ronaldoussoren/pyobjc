@@ -53,7 +53,7 @@ call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
     }
 
     for (i = 0; i < channel_count; i++) {
-        PyObject* t = PyObjCVarList_New(@encode(float), res + i);
+        PyObject* t = PyObjCVarList_New(@encode(float), res[i]);
         if (t == NULL) {
             Py_DECREF(result);
             return NULL;
@@ -115,7 +115,7 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
     }
 
     for (i = 0; i < channel_count; i++) {
-        PyObject* t = PyObjCVarList_New(@encode(int16_t), res + i);
+        PyObject* t = PyObjCVarList_New(@encode(int16_t), res[i]);
         if (t == NULL) {
             Py_DECREF(result);
             return NULL;
@@ -177,7 +177,7 @@ call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
     }
 
     for (i = 0; i < channel_count; i++) {
-        PyObject* t = PyObjCVarList_New(@encode(int32_t), res + i);
+        PyObject* t = PyObjCVarList_New(@encode(int32_t), res[i]);
         if (t == NULL) {
             Py_DECREF(result);
             return NULL;
