@@ -204,7 +204,7 @@ m_CGWindowListCreateDescriptionFromArray(PyObject* self __attribute__((__unused_
     return rv;
 }
 
-#if defined(MAC_OS_X_VERSION_15_0) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_15_0
+#if !defined(MAC_OS_X_VERSION_15_0) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_15_0
 static PyObject*
 m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
                                    PyObject* args)
@@ -624,10 +624,10 @@ static PyMethodDef mod_methods[] = {
     {"CGWindowListCreate", (PyCFunction)m_CGWindowListCreate, METH_VARARGS, NULL},
     {"CGWindowListCreateDescriptionFromArray",
      (PyCFunction)m_CGWindowListCreateDescriptionFromArray, METH_VARARGS, NULL},
-#if defined(MAC_OS_X_VERSION_15_0) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_15_0
+#if !defined(MAC_OS_X_VERSION_15_0) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_15_0
     {"CGWindowListCreateImageFromArray", (PyCFunction)m_CGWindowListCreateImageFromArray,
      METH_VARARGS, NULL},
-#endif /* defined(MAC_OS_X_VERSION_15_0) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_15_0 */
+#endif /* !defined(MAC_OS_X_VERSION_15_0) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_15_0 */
     {"CGBitmapContextCreate", (PyCFunction)m_CGBitmapContextCreate, METH_VARARGS, NULL},
     {"CGBitmapContextCreateWithData", (PyCFunction)m_CGBitmapContextCreateWithData,
      METH_VARARGS, NULL},

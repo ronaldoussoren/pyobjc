@@ -465,14 +465,11 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
 
 /* XXX: Consider passing in name_bytes as well */
 /* returns a new reference */
-static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject* name,
-                                                      const char* name_bytes)
+static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
     PyObject * mro, *base;
     PyObject*  descr = NULL;
-    char       selbuf[1024];
-    char*      sel_name;
 
     /* Look in tp_dict of types in MRO */
     Py_BEGIN_CRITICAL_SECTION(tp);
@@ -518,8 +515,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 continue;
             }
 
-            sel_name =
-                (char*)PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
+            PyObject* sel_name = PyObjC_SELToPythonName(method_getName(m));
             if (sel_name == NULL) { // LCOV_BR_EXCL_LINE
                 /* This can only be hit if the method selector is nil or
                  * if the selector name is longer than 1K
@@ -530,7 +526,15 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 // LCOV_EXCL_STOP
             }
 
-            if (strcmp(sel_name, name_bytes) == 0) {
+            int same = PyObject_RichCompareBool(sel_name, name, Py_EQ);
+            Py_CLEAR(sel_name);
+            if (same == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                PyErr_Clear();
+                continue;
+                // LCOV_EXCL_STOP
+            }
+            if (same) {
                 const char* encoding  = method_getTypeEncoding(m);
                 SEL         meth_name = method_getName(m);
 
@@ -691,7 +695,7 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
          * for a method where the selector does not conform to the
          * naming convention that _type_lookup expects.
          */
-        descr = _type_lookup_harder(tp, name, namestr);
+        descr = _type_lookup_harder(tp, name);
 
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
@@ -1088,7 +1092,6 @@ static PyObject* _Nullable meth_dir(PyObject* self)
     Class        cls;
     Method*      methods;
     unsigned int method_count, i;
-    char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
     PyObject* class_dict = Py_TYPE(self)->tp_dict;
@@ -1122,7 +1125,6 @@ static PyObject* _Nullable meth_dir(PyObject* self)
          */
         methods = (Method* _Nonnull)class_copyMethodList(cls, &method_count);
         for (i = 0; i < method_count; i++) {
-            char*     name;
             PyObject* item;
             SEL       sel;
 
@@ -1143,17 +1145,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
                 continue;
             }
 
-            name = (char*)PyObjC_SELToPythonName(method_getName(methods[i]), selbuf,
-                                                 sizeof(selbuf));
-            if (name == NULL) { // LCOV_BR_EXCL_LINE
-                /* Can only fail if the selector name is longer than the buffer */
-                // LCOV_EXCL_START
-                PyErr_Clear();
-                continue;
-                // LCOV_EXCL_STOP
-            }
-
-            item = PyUnicode_FromString(name);
+            item = PyObjC_SELToPythonName(method_getName(methods[i]));
             if (item == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(methods);

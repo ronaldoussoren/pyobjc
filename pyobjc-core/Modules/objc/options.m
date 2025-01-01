@@ -945,6 +945,7 @@ int PyObjC_CallClassExtender(PyObject* cls)
                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     if (res == NULL) {
+        Py_DECREF(dict);
         return -1;
     }
     Py_DECREF(res);
@@ -963,6 +964,17 @@ int PyObjC_CallClassExtender(PyObject* cls)
                 continue;
             }
 
+            /* k and v are borrowed references, make sure we own
+             * a copy during the call to tp_setattro.
+             */
+            Py_INCREF(k);
+            Py_INCREF(v);
+            if (PyType_Type.tp_setattro(cls, k, v) == -1) {
+                PyErr_Clear();
+            }
+            Py_CLEAR(k);
+            Py_CLEAR(v);
+
         } else {
             /* 'cls' is known to be an PyObjCClass instance, hence the tp_dict
              * slot is usable directly.
@@ -970,12 +982,6 @@ int PyObjC_CallClassExtender(PyObject* cls)
             if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v) == -1) { // LCOV_BR_EXCL_LINE
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
-            continue;
-        }
-
-        if (PyType_Type.tp_setattro(cls, k, v) == -1) {
-            PyErr_Clear();
-            continue;
         }
     }
     Py_DECREF(dict);

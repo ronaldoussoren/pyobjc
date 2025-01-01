@@ -183,7 +183,6 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 {
     const char* meth_name;
-    char        pymeth_name[256];
     Py_ssize_t  argcount;
     PyObject*   pymethod;
     const char* p;
@@ -204,12 +203,13 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
     }
 
-    const char* py_meth_name =
-        PyObjC_SELToPythonName(aSelector, pymeth_name, sizeof(pymeth_name) - 1);
+    PyObject* py_meth_name =
+        PyObjC_SELToPythonName(aSelector);
     if (py_meth_name == NULL) {
         return NULL;
     }
-    pymethod = PyObject_GetAttrString(obj, py_meth_name);
+    pymethod = PyObject_GetAttr(obj, py_meth_name);
+    Py_CLEAR(py_meth_name);
     if (pymethod == NULL) {
         return NULL;
     }
