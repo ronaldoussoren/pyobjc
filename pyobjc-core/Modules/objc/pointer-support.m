@@ -408,6 +408,11 @@ PyObjCPointerWrapper_Init(PyObject* module __attribute__((__unused__)))
     if (r == -1)   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
 
+    r = PyObjCPointerWrapper_Register("PyObject*", "^{PyObject=}", PyObjectPtr_New,
+                                      PyObjectPtr_Convert);
+    if (r == -1)   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+
     r = PyObjCPointerWrapper_Register("Class", "^{objc_class=}", class_new,
                                       class_convert);
     if (r == -1)   // LCOV_BR_EXCL_LINE
