@@ -11,6 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#ifdef USE_STATIC_ANALYZER
+#define CLANG_SUPPRESS [[clang::suppress]]
+#else
+#define CLANG_SUPPRESS
+#endif
+
 /*
  *
  * Start of compiler definitions
