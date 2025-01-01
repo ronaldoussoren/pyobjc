@@ -3,7 +3,7 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 11.0 (Unreleased, expected release is December 2024)
+Version 11.0
 -----------------------------------------------------------
 
 The major change in this release is experimental support for free-threading
