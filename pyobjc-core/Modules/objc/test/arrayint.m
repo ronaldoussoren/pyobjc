@@ -66,7 +66,7 @@
     }
 }
 
-+ (id)setNthElement:(NSMutableArray*)array offset:(NSUInteger)offset from:(Class)value
++ (id _Nullable)setNthElement:(NSMutableArray*)array offset:(NSUInteger)offset from:(Class)value
 {
     @try {
         [array replaceObjectAtIndex:offset withObject:[value new]];
@@ -76,7 +76,7 @@
     }
 }
 
-+ (id)addToArray:(NSMutableArray*)array from:(Class)value
++ (id _Nullable)addToArray:(NSMutableArray*)array from:(Class)value
 {
     @try {
         [array addObject:[value new]];
@@ -96,7 +96,7 @@
     }
 }
 
-+ (id)insertIntoArray:(NSMutableArray*)array offset:(NSUInteger)offset from:(Class)value
++ (id _Nullable)insertIntoArray:(NSMutableArray*)array offset:(NSUInteger)offset from:(Class)value
 {
     @try {
         [array insertObject:[value new] atIndex:offset];
