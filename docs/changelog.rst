@@ -126,6 +126,12 @@ borrowed references).
 
 * :issue:`632`: fix broken bindings for ``CGWindowListCreateImageFromArray``.
 
+* The private ``__is_magic`` attribute on :class:`objc.objc_object` has
+  been renamed to ``__pyobjc_magic_coookie__``.
+
+* Various fixes to edge case behaviour that were found while improving
+  test coverage.
+
 Version 10.3.2
 --------------
 

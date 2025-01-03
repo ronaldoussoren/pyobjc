@@ -69,7 +69,9 @@
 + (id _Nullable)setNthElement:(NSMutableArray*)array offset:(NSUInteger)offset from:(Class)value
 {
     @try {
-        [array replaceObjectAtIndex:offset withObject:[value new]];
+        id ref = [[value alloc] init];
+        [array replaceObjectAtIndex:offset withObject:ref];
+        [ref release];
         return nil;
     } @catch (NSException* exc) {
         return exc;
@@ -79,14 +81,16 @@
 + (id _Nullable)addToArray:(NSMutableArray*)array from:(Class)value
 {
     @try {
-        [array addObject:[value new]];
+        id ref = [[value alloc] init];
+        [array addObject:ref];
+        [ref release];
         return nil;
     } @catch (NSException* exc) {
         return exc;
     }
 }
 
-+ (id)addToArray:(NSMutableArray*)array value:(id)value
++ (id _Nullable)addToArray:(NSMutableArray*)array value:(id)value
 {
     @try {
         [array addObject:value];
@@ -99,7 +103,9 @@
 + (id _Nullable)insertIntoArray:(NSMutableArray*)array offset:(NSUInteger)offset from:(Class)value
 {
     @try {
-        [array insertObject:[value new] atIndex:offset];
+        id ref = [[value alloc] init];
+        [array insertObject:ref atIndex:offset];
+        [ref release];
         return nil;
     } @catch (NSException* exc) {
         return exc;

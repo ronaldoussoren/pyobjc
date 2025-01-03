@@ -745,6 +745,10 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
             pyres = pyself;
         }
 
+        /* XXX: The test here seems dodgy it will reset the sel_self
+         *      for a partially initialized object on the first method
+         *      call, even if that's not an init method.
+         */
         if (PyObjCObject_Check(self->base.sel_self)
             && (((PyObjCObject*)self->base.sel_self)->flags
                 & PyObjCObject_kUNINITIALIZED)) {

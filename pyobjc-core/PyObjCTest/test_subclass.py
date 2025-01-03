@@ -1035,6 +1035,20 @@ class TestSelectorEdgeCases(TestCase):
         value = objc.selector(someSelector)
         self.assertIs(value.callable, someSelector.callable)
 
+    def test_void_selector_returns_value(self):
+        class OC_TestVoidSelectorReturnsValue(NSObject):
+            @objc.objc_method(signature=b"v@:")
+            def method(self):
+                return 42
+
+        self.assertResultHasType(OC_TestVoidSelectorReturnsValue.method, b"v")
+        o = OC_TestVoidSelectorReturnsValue()
+
+        with self.assertRaisesRegex(
+            ValueError, "method: did not return None, expecting void return value"
+        ):
+            OC_ObjectInt.invokeSelector_of_(b"method", o)
+
     def test_selector_from_bound_method(self):
         class Helper:
             def method(self, ocSelf):

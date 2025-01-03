@@ -295,8 +295,8 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
 
     if (name) {
         self->name = PyObjCUtil_Strdup(name);
-        if (self->name == NULL) {
-            return -1;
+        if (self->name == NULL) { // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
 
     } else {
@@ -304,11 +304,13 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
     }
 
     char* type_copy = PyObjCUtil_Strdup(type);
-    if (type_copy == NULL) {
+    if (type_copy == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         if (name) {
             PyMem_Free(self->name);
         }
         return -1;
+        // LCOV_EXCL_STOP
     }
     self->type = type_copy;
     if (isOutletObj) {
@@ -351,9 +353,11 @@ static PyObject* _Nullable ivar_class_setup(PyObject* _self, PyObject* _Nullable
 
     if (self->name == NULL) {
         self->name = PyObjCUtil_Strdup(name);
-        if (self->name == NULL) {
+        if (self->name == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_NoMemory();
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -388,8 +392,8 @@ ivar_hash(PyObject* o)
         result ^= 0x20;
     }
 
-    if (result == -1) {
-        result = -2;
+    if (result == -1) { // LCOV_BR_EXCL_LINE
+        result = -2; // LCOV_EXCL_LINE
     }
 
     return result;
@@ -410,17 +414,27 @@ static PyObject* _Nullable ivar_richcompare(PyObject* a, PyObject* b, int op)
                        && (strcmp(PyObjCInstanceVariable_GetName(a),
                                   PyObjCInstanceVariable_GetName(b))
                            == 0);
+            } else {
+                same = 0;
             }
 
-            if (PyObjCInstanceVariable_GetType(a) == NULL) {
+            /* XXX: ..._GetType cannot be NULL */
+            if (PyObjCInstanceVariable_GetType(a) == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 if (PyObjCInstanceVariable_GetType(b) != NULL) {
                     same = 0;
                 }
-            } else if (PyObjCInstanceVariable_GetType(b) != NULL) {
+                // LCOV_EXCL_STOP
+            } else if (PyObjCInstanceVariable_GetType(b) != NULL) { // LCOV_BR_EXCL_LINE
                 same = same
                        && (strcmp(PyObjCInstanceVariable_GetType(a),
                                   PyObjCInstanceVariable_GetType(b))
                            == 0);
+            } else {
+                // LCOV_EXCL_START
+                /* a's type is not null while b's type is */
+                same = 0;
+                // LCOV_EXCL_STOP
             }
 
             if (PyObjCInstanceVariable_IsSlot(a) != PyObjCInstanceVariable_IsSlot(b)) {

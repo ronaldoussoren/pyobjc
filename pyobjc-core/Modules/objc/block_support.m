@@ -75,7 +75,7 @@ const char* _Nullable PyObjCBlock_GetSignature(void* _block)
         return NULL;
     }
 
-    if (block->flags & BLOCK_HAS_SIGNATURE) {
+    if ((block->flags & BLOCK_HAS_SIGNATURE) != 0) {
         const char* signature_loc = (void*)(block->descriptor);
         signature_loc += sizeof(unsigned long) * 2;
         if (block->flags & BLOCK_HAS_COPY_DISPOSE) {

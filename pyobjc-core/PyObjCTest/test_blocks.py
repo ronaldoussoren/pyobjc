@@ -539,6 +539,12 @@ class BlockWithStoredCompletion(objc.lookUpClass("NSObject")):
         self.completion("world")
 
 
+class BlockImplementation(objc.lookUpClass("NSObject")):
+    @objc.objc_method(signature=b"d@:dd")
+    def multiplyX_y_(self, x, y):
+        return x * y
+
+
 class TestBlocks(TestCase):
     @min_os_level("10.6")
     def testOptionalBlock(self):
@@ -712,6 +718,14 @@ class TestBlocks(TestCase):
         self.assertEqual(len(helper.values), 2)
         self.assertEqual(helper.values, [42, 43])
 
+        def callback(v1):
+            return v1
+
+        with self.assertRaisesRegex(
+            ValueError, "did not return None, expecting void return value"
+        ):
+            obj.callIntBlock_withValue_(callback, 42)
+
     @min_os_level("10.6")
     def test_block_with_varargs(self):
         obj = OCTestBlock.alloc().init()
@@ -784,6 +798,24 @@ class TestBlocks(TestCase):
         )
         self.assertEqual(
             obj.callDoubleBlock_withValue_andValue_(callback, 2.5, 10), 25.0
+        )
+
+        def callback(a, b):
+            return
+
+        with self.assertRaisesRegex(ValueError, "returned None, expecting a value"):
+            obj.callDoubleBlock_withValue_andValue_(callback, 2.5, 10)
+
+    def test_bound_selector_as_block(self):
+        obj = OCTestBlock.alloc().init()
+        helper = BlockImplementation()
+
+        self.assertResultHasType(BlockImplementation.multiplyX_y_, objc._C_DBL)
+        self.assertArgHasType(BlockImplementation.multiplyX_y_, 1, objc._C_DBL)
+        self.assertArgHasType(BlockImplementation.multiplyX_y_, 1, objc._C_DBL)
+
+        self.assertEqual(
+            obj.callDoubleBlock_withValue_andValue_(helper.multiplyX_y_, 2.0, 3.5), 7.0
         )
 
     @min_os_level("10.6")

@@ -3411,6 +3411,8 @@ PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 BOOL
 PyObjC_signatures_compatible(const char* type1, const char* type2)
 {
+static const char CHAR[] = { _C_CHR, 0 };
+
     /* Ignore type modifiers */
     type1 = PyObjCRT_SkipTypeQualifiers(type1);
     type2 = PyObjCRT_SkipTypeQualifiers(type2);
@@ -3466,7 +3468,7 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
             return YES;
 
         } else if (*type2 == _C_PTR) {
-            return PyObjC_signatures_compatible("c", type2 + 1);
+            return PyObjC_signatures_compatible(type2 + 1, CHAR);
 
         } else {
             return NO;
@@ -3481,7 +3483,14 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
         }
 
         if (*type2 == _C_CHARPTR) {
-            return PyObjC_signatures_compatible(type1 + 1, "c");
+            return PyObjC_signatures_compatible(type1+1, CHAR);
+        }
+
+        if (*type2 == _C_ARY_B) {
+            type2++;
+            while (isdigit(*type2))
+                type2++;
+            return PyObjC_signatures_compatible(type1+1, type2);
         }
 
         if (*type2 != _C_PTR) {

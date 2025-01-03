@@ -1053,8 +1053,8 @@ meth_is_magic(PyObject* self)
 {
     int is_magic;
 
-    if (PyObjCObject_GetObject(self) == nil) {
-        is_magic = 0;
+    if (PyObjCObject_GetObject(self) == nil) { // LCOV_BR_EXCL_LINE
+        is_magic = 0; // LCOV_EXCL_LINE
     } else {
         is_magic = PyObjCObject_IsMagic(self);
     }
@@ -1194,7 +1194,7 @@ static PyMethodDef obj_methods[] = {
         .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name  = "__is_magic",
+        .ml_name  = "__pyobjc_magic_coookie__",
         .ml_meth  = (PyCFunction)meth_is_magic,
         .ml_flags = METH_NOARGS,
     },
@@ -1319,18 +1319,20 @@ PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
     }
 
     cls_type = (PyTypeObject*)PyObjCClass_New(cls);
-    if (cls_type == NULL) {
+    if (cls_type == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         if (!PyErr_Occurred()) {
             PyErr_Format(PyObjCExc_Error, "Cannot find python proxy for class '%s'",
                 class_getName(cls));
         }
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     res = cls_type->tp_alloc(cls_type, 0);
     Py_DECREF(cls_type);
-    if (res == NULL) {
-        return NULL;
+    if (res == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LOCV_EXCL_LINE
     }
 
     if (cls_type->tp_basicsize == sizeof(PyObjCBlockObject)) {
@@ -1374,16 +1376,7 @@ PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
 
 PyObject* _Nullable PyObjCObject_FindSelector(PyObject* object, SEL selector)
 {
-    PyObject* meth;
-
-    meth = PyObjCClass_FindSelector((PyObject*)Py_TYPE(object), selector, NO);
-
-    if (meth == NULL) {
-        return NULL;
-
-    } else {
-        return meth;
-    }
+    return PyObjCClass_FindSelector((PyObject*)Py_TYPE(object), selector, NO);
 }
 
 id _Nullable PyObjCObject_GetObject(PyObject* object)
@@ -1440,11 +1433,7 @@ PyObjCMethodSignature* _Nullable PyObjCObject_SetBlockSignature(PyObject* object
 void
 PyObjCObject_ClearObject(PyObject* object)
 {
-    if (!PyObjCObject_Check(object)) {
-        PyErr_Format(PyExc_TypeError, "'objc.objc_object' expected, got '%s'",
-                     Py_TYPE(object)->tp_name);
-        return;
-    }
+    assert(PyObjCObject_Check(object));
     PyObjC_UnregisterPythonProxy(((PyObjCObject*)object)->objc_object, object);
     ((PyObjCObject*)object)->objc_object = nil;
 }

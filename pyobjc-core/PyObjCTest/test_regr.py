@@ -15,6 +15,7 @@ from PyObjCTools.TestSupport import TestCase
 rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 
 NSInvocation = objc.lookUpClass("NSInvocation")
+NSArray = objc.lookUpClass("NSArray")
 
 
 class OCTestRegrWithGetItem(NSObject):
@@ -701,6 +702,17 @@ class TestSuperDealloc(TestCase):
         assert deleted
 
 
-class TestFreeThreaded(TestCase):
-    def test_freethreaded_if_configured(self):
-        self.assertFreeThreadedIfConfigured()
+class TestMagic(TestCase):
+    def test_magic_nil(self):
+        o = NSArray.alloc()
+        o.init()
+
+        with self.assertRaisesRegex(
+            AttributeError, "cannot access attribute '__pyobjc_magic_coookie__' of NIL"
+        ):
+            o.__pyobjc_magic_coookie__()
+
+    def test_magic_normal(self):
+        o = NSArray.alloc().init()
+
+        self.assertFalse(o.__pyobjc_magic_coookie__())

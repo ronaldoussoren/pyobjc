@@ -9,12 +9,17 @@ from functools import partial
 from objc import simd
 
 
-# Needs to be replaced by minimal definitions for
-# CGColor and CGColorSpace
+# Tests use CGColorRef and CGColorSpaceRef. Try to import Quartz
+# to get proper definitions for these types, otherwise fall back
+# to minimal definitions (those aren't 100% correct, but good enough
+# for these tests)
 try:
     import Quartz  # noqa: F401
 except ImportError:
-    Quartz = None
+    CGColorRef = objc.registerCFSignature("CGColorRef", b"^{CGColor=}", 0)
+    CGColorSpaceRef = objc.registerCFSignature(
+        "CGColorSpaceRef", b"^{CGColorSpace=}", 0
+    )
 
 from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
 
