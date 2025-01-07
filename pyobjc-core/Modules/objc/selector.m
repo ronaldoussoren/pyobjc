@@ -930,10 +930,10 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
         result->base.sel_methinfo = meth->base.sel_methinfo;
         Py_INCREF(result->base.sel_methinfo);
     } else {
-        result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
-        if (!result->base.sel_methinfo) {
-            PyErr_Clear();
-        }
+        //result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
+        //if (!result->base.sel_methinfo) {
+        //    PyErr_Clear();
+        //}
     }
 
 #if PY_VERSION_HEX >= 0x03090000

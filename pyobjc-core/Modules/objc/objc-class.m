@@ -68,14 +68,15 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
                     PyErr_Clear(); // LCOV_EXCL_LINE
 
                 } else { // LCOV_EXCL_LINE
-                    PyObject* r;
-                    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-                                hidden, v, &r)) {
+                    PyObject* result;
+                    int r =  PyDict_GetItemRef(hidden, v, &result);
+                    Py_CLEAR(v);
+                    switch (r) { // LCOV_BR_EXCL_LINE
                     case -1:
                         return NULL; // LCOV_EXCL_LINE
                     /* case 0: pass */
                     case 1:
-                        return r;
+                        return result;
                     }
                 }
             }
@@ -1463,6 +1464,7 @@ static PyObject* _Nullable metaclass_dir(PyObject* self)
             if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 /* Assertion error */
                 // LCOV_EXCL_START
+                free(methods);
                 Py_DECREF(result);
                 return NULL;
                 // LCOV_EXCL_STOP
@@ -1634,6 +1636,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
             PyObject* hidden = PyObjCClass_HiddenSelector(class_for_base, meth_name, YES);
             if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                free(methods);
                 Py_CLEAR(mro);
                 return NULL;                          // LCOV_EXCL_LINE
 
@@ -2063,7 +2066,8 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
             descr = NULL;
             goto done;
         } else if (PyErr_Occurred()) {
-            return NULL;
+            result = NULL;
+            goto done;
         }
     }
 
@@ -2073,7 +2077,8 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
             f = Py_TYPE(descr)->tp_descr_get;
         }
         if (PyErr_Occurred()) {
-            return NULL;
+            result = NULL;
+            goto done;
         }
     }
 
@@ -2085,7 +2090,8 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
         }
         if (PyErr_Occurred()) {
             /* XXX: can this happen without descr being NULL? */
-            return NULL;
+            result = NULL;
+            goto done;
         }
     }
 
@@ -2673,6 +2679,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
                                                           method_getName(methods[i]), NO);
             if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
+                free(methods);
                 Py_DECREF(result);
                 return NULL;
                 // LCOV_EXCL_STOP

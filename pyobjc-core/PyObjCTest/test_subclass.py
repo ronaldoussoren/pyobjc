@@ -156,6 +156,28 @@ class TestSubclassing(TestCase):
                 def method(self):
                     pass
 
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError,
+            "signature that is not compatible with super-class",
+        ):
+
+            class OC_SubClassingMethodSignatureChild2(
+                OC_SubClassingMethodSignatureBase
+            ):
+                @objc.objc_method(signature=b"d@:", isclass=True)
+                def alloc(self):
+                    pass
+
+    def test_adding_dict(self):
+        # XXX: See class-builder, this locks in current behaviour
+        #      but is questionable.
+        class OC_SubClassingWithDunderDict(NSObject):
+            __dict__ = {"a": 42}
+
+        self.assertNotIn("a", OC_SubClassingWithDunderDict.__dict__)
+        o = OC_SubClassingWithDunderDict()
+        self.assertNotIn("a", o.__dict__)
+
 
 class TestSelectors(TestCase):
     def testSelectorRepr(self):

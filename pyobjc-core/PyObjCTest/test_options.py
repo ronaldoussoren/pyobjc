@@ -3,7 +3,10 @@ import warnings
 from PyObjCTools.TestSupport import TestCase
 from .fnd import NSMutableArray
 from .objectint import OC_ObjectInt
+from .test_blocks import OCTestBlock
 import datetime
+import sys
+import io
 
 
 class TestOptions(TestCase):
@@ -21,6 +24,32 @@ class TestOptions(TestCase):
                 AttributeError, "Cannot delete option 'verbose'"
             ):
                 del objc.options.verbose
+
+            obj = OCTestBlock.alloc().init()
+
+            for verbose in (True, False):
+                orig_stderr = sys.stderr
+                try:
+                    sys.stderr = captured_stderr = io.StringIO()
+                    objc.options.verbose = verbose
+
+                    def callback(o):
+                        raise ValueError("foo")
+
+                    with self.assertRaisesRegex(ValueError, "foo"):
+                        obj.callOptionalBlock_withValue_(callback, None)
+
+                finally:
+                    sys.stderr = orig_stderr
+
+                stderr = captured_stderr.getvalue()
+                if verbose:
+                    self.assertIn(
+                        "PyObjC: Converting exception to Objective-C:", stderr
+                    )
+                    self.assertIn("ValueError: foo", stderr)
+                else:
+                    self.assertEqual(stderr, "")
 
         finally:
             objc.options.verbose = orig

@@ -334,7 +334,7 @@ PyObjCErr_FromObjC(NSObject* localException)
                     if ( PyDict_SetItem( // LCOV_BR_EXCL_LINE
                             dict, PyObjCNM_userInfo, v) == -1) {
                         PyErr_Clear(); // LCOV_EXCL_LINE
-                    }
+                    } // LCOV_EXCL_LINE
                     Py_DECREF(v);
                 } else {           // LCOV_BR_EXCL_LINE
                     PyErr_Clear(); // LCOV_EXCL_LINE
@@ -356,13 +356,13 @@ PyObjCErr_FromObjC(NSObject* localException)
             PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
             PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
-            if ( // LCOV_BR_EXCL_LINE
-                PyObject_SetAttr(exc_value, PyObjCNM__pyobjc_info_, dict) == -1) {
+            if ( PyObject_SetAttr( // LCOV_BR_EXCL_LINE
+                    exc_value, PyObjCNM__pyobjc_info_, dict) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
             Py_CLEAR(dict);
-            if ( // LCOV_BR_EXCL_LINE
-                PyObject_SetAttr(exc_value, PyObjCNM_name, c_localException_name) == -1) {
+            if ( PyObject_SetAttr( // LCOV_BR_EXCL_LINE
+                    exc_value, PyObjCNM_name, c_localException_name) == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
             PyErr_Restore(exc_type, exc_value, exc_traceback);
@@ -419,7 +419,7 @@ static NSException* _Nullable python_exception_to_objc(void)
         NSString* name   = nil;
 
         r = PyDict_GetItemRef(args, PyObjCNM_reason, &v);
-        switch (r) {
+        switch (r) { // LCOV_BR_EXCL_LINE
         case -1:
             // LCOV_EXCL_START
             PyErr_Clear();
@@ -433,7 +433,7 @@ static NSException* _Nullable python_exception_to_objc(void)
         }
 
         r = PyDict_GetItemRef(args, PyObjCNM_name, &v);
-        switch (r) {
+        switch (r) { // LCOV_BR_EXCL_LINE
         case -1:
             // LCOV_EXCL_START
             PyErr_Clear();
@@ -447,7 +447,7 @@ static NSException* _Nullable python_exception_to_objc(void)
         }
 
         r = PyDict_GetItemRef(args, PyObjCNM_userInfo, &v);
-        switch (r) {
+        switch (r) { // LCOV_BR_EXCL_LINE
         case -1:
             // LCOV_EXCL_START
             PyErr_Clear();
@@ -499,16 +499,16 @@ static NSException* _Nullable python_exception_to_objc(void)
     NSObject* oc_repr     = nil;
 
     if (typerepr) {
-        if (depythonify_python_object(typerepr, &oc_typerepr) == -1) {
+        if (depythonify_python_object(typerepr, &oc_typerepr) == -1) { // LCOV_BR_EXCL_LINE
             /* Ignore errors in conversion */
-            PyErr_Clear();
-        }
+            PyErr_Clear(); // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
     }
     if (repr) {
-        if (depythonify_python_object(repr, &oc_repr) == -1) {
+        if (depythonify_python_object(repr, &oc_repr) == -1) { // LCOV_BR_EXCL_LINE
             /* Ignore errors in conversion */
-            PyErr_Clear();
-        }
+            PyErr_Clear(); // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
     }
 
     val = [NSException
@@ -521,7 +521,7 @@ static NSException* _Nullable python_exception_to_objc(void)
 
     if (PyObjC_Verbose) {
         PyErr_Restore(exc_type, exc_value, exc_traceback);
-        NSLog(@"PyObjC: Converting exception to Objective-C:");
+        PySys_WriteStderr("PyObjC: Converting exception to Objective-C:");
         PyErr_Print();
 
     } else {
@@ -600,6 +600,8 @@ static inline PyTypeObject* _Nullable fetch_array_type(void)
 
 #define array_check(obj) PyObject_TypeCheck(obj, fetch_array_type())
 
+static char struct_elem_code(const char* typestr);
+
 static char
 array_typestr(PyObject* array)
 {
@@ -608,128 +610,83 @@ array_typestr(PyObject* array)
     char      res;
 
     typecode = PyObject_GetAttrString(array, "typecode");
-    if (typecode == NULL) {
-        return '\0';
+    if (typecode == NULL) { // LCOV_BR_EXCL_LINE
+        /* Should not happen: ``array`` is an array.array
+         * which always has this attribute.
+         */
+        return '\0'; // LCOV_EXCL_LINE
     }
 
     if (PyUnicode_Check(typecode)) {
         bytes = PyUnicode_AsEncodedString(typecode, NULL, NULL);
-        if (bytes == NULL) {
-            return '\0';
+        if (bytes == NULL) { // LCOV_BR_EXCL_LINE
+            /* Should not happen: array.array typecode is an
+             * ascii string.
+             */
+            return '\0'; // LCOV_EXCL_LINE
         }
 
     } else {
+        /* Should not happen: array.array typecode is an
+         * ascii string.
+         */
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_TypeError, "typecode not a string");
         return '\0';
+        // LCOV_EXCL_STOP
     }
 
-    switch (*PyBytes_AS_STRING(bytes)) {
-    case 'c':
-        res = _C_CHR;
-        break;
-    case 'b':
-        res = _C_CHR;
-        break;
-    case 'B':
-        res = _C_UCHR;
-        break;
-    case 'u':
-        res = _C_SHT;
-        break;
-    case 'h':
-        res = _C_SHT;
-        break;
-    case 'H':
-        res = _C_USHT;
-        break;
-    case 'i':
-        res = _C_INT;
-        break;
-    case 'I':
-        res = _C_UINT;
-        break;
-    case 'l':
-        res = _C_LNG;
-        break;
-    case 'L':
-        res = _C_ULNG;
-        break;
-    case 'f':
-        res = _C_FLT;
-        break;
-    case 'd':
-        res = _C_DBL;
-        break;
-    default:
-        PyErr_SetString(PyExc_TypeError, "unsupported typecode");
-        res = '\0';
-    }
+    res = *PyBytes_AS_STRING(bytes);
     Py_DECREF(typecode);
     Py_DECREF(bytes);
 
     return res;
 }
 
-static char struct_elem_code(const char* typestr);
-
 static char
 array_elem_code(const char* typestr)
 {
     char res = '\0';
-    char tmp;
 
-    if (*typestr++ != _C_ARY_B) {
-        return '\0';
-    }
+    typestr++;
+
     while (isdigit(*typestr))
         typestr++;
 
-    if (*typestr == _C_ARY_E) {
-        return '\0';
+    if (*typestr == _C_ARY_E) { // LCOV_BR_EXCL_LINE
+        return '\0'; // LCOV_EXCL_LINE
     }
 
-    while (*typestr != _C_ARY_E) {
-        switch (*typestr) {
-        case _C_ARY_B:
-            tmp = array_elem_code(typestr);
-            if (tmp == '\0') {
-                return '\0';
-            }
-
-            if (res == '\0') {
-                res = tmp;
-
-            } else if (tmp != res) {
-                return '\0';
-            }
-            break;
-
-        case _C_STRUCT_B:
-            tmp = struct_elem_code(typestr);
-            if (tmp == '\0') {
-                return '\0';
-            }
-
-            if (res == '\0') {
-                res = tmp;
-
-            } else if (tmp != res) {
-                return '\0';
-            }
-            break;
-
-        default:
-            if (res != '\0' && *typestr != res) {
-                return '\0';
-            }
-            res = *typestr;
-        }
-
-        const char* next = PyObjCRT_SkipTypeSpec(typestr);
-        if (next == NULL) {
+    switch (*typestr) {
+    case _C_ARY_B:
+        res = array_elem_code(typestr);
+        if (res == '\0') {
             return '\0';
         }
-        typestr = next;
+
+        break;
+
+    case _C_STRUCT_B:
+        res = struct_elem_code(typestr);
+        if (res == '\0') {
+            return '\0';
+        }
+        break;
+
+    case _C_UNION_B:
+    case _C_VECTOR_B:
+        return '\0';
+
+    default:
+        res = *typestr;
+    }
+
+    const char* next = PyObjCRT_SkipTypeSpec(typestr);
+    if (next == NULL) { // LCOV_BR_EXCL_LINE
+        return '\0'; // LCOV_EXCL_LINE
+    }
+    if (*next++ != _C_ARY_E) {
+        return  '\0';
     }
     return res;
 }
@@ -740,23 +697,23 @@ struct_elem_code(const char* start_typestr)
     char res = '\0';
     char tmp;
 
-    PyObjC_Assert(start_typestr != NULL, '\0');
-
     const char* _Nullable typestr = start_typestr;
-    if (*typestr++ != _C_STRUCT_B) {
-        return '\0';
-    }
+    typestr++;
 
     while (*typestr != '=' && *typestr != _C_STRUCT_E) {
         typestr++;
     }
 
-    if (*typestr == _C_STRUCT_E) {
-        return '\0';
+    if (*typestr == _C_STRUCT_E) { // LCOV_BR_EXCL_LINE
+        /* Cannot happen because this function is
+         * called after calculating the size and checking
+         * the size is larger than 0.
+         */
+        return '\0'; // LCOV_EXCL_LINE
     }
     typestr++;
 
-    while (typestr && *typestr != _C_STRUCT_E) {
+    while (typestr && *typestr != _C_STRUCT_E && *typestr != '\0') {
         switch (*typestr) {
         case _C_ARY_B:
             tmp = array_elem_code(typestr);
@@ -786,83 +743,107 @@ struct_elem_code(const char* start_typestr)
             }
             break;
 
+        case _C_UNION_B:
+        case _C_VECTOR_B:
+            return '\0';
+
         default:
-            if (res != '\0' && *typestr != res) {
+            tmp = *typestr;
+            if (res != '\0' && res != tmp) {
                 return '\0';
             }
-
-            res = *typestr;
+            res = tmp;
         }
 
         typestr = PyObjCRT_SkipTypeSpec(typestr);
+    }
+    if (*typestr != _C_STRUCT_E) {
+        return '\0';
     }
 
     return res;
 }
 
+/*
+ * Return YES iff 'array_code' and 'type_code'
+ * are compatible. Both are the encodings for
+ * an element, but in their native encoding:
+ *
+ * - array_code is the "type code" for an array.array
+ * - type_code is the encoding for an ObjC type (_C_...)
+ */
 static BOOL
 code_compatible(char array_code, char type_code)
 {
-    if (array_code == type_code) {
-        return YES;
+    _Static_assert(sizeof(wchar_t) == 4, "sizeof(wchar_t)");
+    _Static_assert(sizeof(long) == 8, "sizeof(long)");
+
+    switch (array_code) {
+    case 'b':
+        switch (type_code) {
+        case _C_CHR:
+        case _C_CHAR_AS_INT:
+        case _C_CHAR_AS_TEXT:
+        case _C_BOOL:
+        case _C_NSBOOL:
+            return YES;
+        }
+
+    case 'B':
+        switch (type_code) {
+        case _C_CHAR_AS_TEXT:
+        case _C_UCHR:
+            return YES;
+        case _C_CHAR_AS_INT:
+            /* This is not correct, but kept for backward
+             * compatibility.
+             */
+            return YES;
+        }
+
+    case 'u':
+    case 'w':
+        return type_code == _C_INT;
+
+    case 'h':
+        switch (type_code) {
+        case  _C_SHT:
+        case  _C_UNICHAR:
+            return YES;
+        }
+
+    case 'H':
+        return type_code == _C_USHT;
+
+    case 'i':
+        return type_code == _C_INT;
+
+    case 'I':
+        return type_code == _C_UINT;
+
+    case 'l':
+    case 'q':
+        switch (type_code) {
+        case _C_LNG:
+        case _C_LNG_LNG:
+            return YES;
+        }
+
+    case 'L':
+    case 'Q':
+        switch (type_code) {
+        case _C_ULNG:
+        case _C_ULNG_LNG:
+            return YES;
+        }
+
+    case 'f':
+        return type_code == _C_FLT;
+
+    case 'd':
+        return type_code == _C_DBL;
+
     }
-
-    switch (type_code) {
-    case _C_LNG_LNG:
-#ifdef __LP64__
-        /* fall through */
-#else
-        return NO;
-#endif
-
-    case _C_LNG:
-        return (array_code == 'l')
-#ifndef __LP64__
-               || (array_code == 'i')
-#endif
-            ;
-
-    case _C_ULNG_LNG:
-#ifdef __LP64__
-        /* fall through */
-#else
-        return NO;
-#endif
-
-    case _C_ULNG:
-        return (array_code == 'L')
-#ifndef __LP64__
-               || (array_code == 'I')
-#endif
-            ;
-
-    case _C_INT:
-        return (array_code == 'i')
-#ifndef __LP64__
-               || (array_code == 'l')
-#endif
-            ;
-
-    case _C_UINT:
-        return (array_code == 'I')
-#ifndef __LP64__
-               || (array_code == 'L')
-#endif
-            ;
-
-    case _C_NSBOOL:
-        return (array_code == _C_CHR) || (array_code == _C_UCHR);
-
-    case _C_CHAR_AS_INT:
-        return (array_code == _C_CHR) || (array_code == _C_UCHR);
-
-    case _C_CHAR_AS_TEXT:
-        return (array_code == _C_CHR);
-
-    case _C_UNICHAR:
-        return (array_code == _C_SHT);
-    }
-
     return NO;
 }
 
@@ -888,6 +869,11 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
     if (eltsize == -1) {
         return -1;
     }
+    if (eltsize == 0 && ((elementType[0] == _C_STRUCT_B || elementType[0] == _C_ARY_B))) {
+        PyErr_Format(PyExc_ValueError, "0 sized struct or array: %s", elementType);
+        return -1;
+    }
+
 
     if ((eltsize == 1 || eltsize == 0)
         && !(*elementType == _C_NSBOOL || *elementType == _C_BOOL
@@ -1192,21 +1178,29 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         }
 
         PyObject* bytes_array = PyByteArray_FromStringAndSize(NULL, 0);
-        if (bytes_array == NULL) {
+        if (bytes_array == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(seq);
             return -1;
+            // LCOV_EXCL_STOP
         }
 
-        if (PyByteArray_Resize(bytes_array, eltsize * pycount) == -1) {
+        if (PyByteArray_Resize( // LCOV_BR_EXCL_LINE
+                    bytes_array, eltsize * pycount) == -1) {
+            // LCOV_EXCL_START
             Py_DECREF(bytes_array);
             Py_DECREF(seq);
             return -1;
+            // LCOV_EXCL_STOP
         }
 
-        if (PyObject_GetBuffer(bytes_array, view, PyBUF_CONTIG) == -1) {
+        if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
+                    bytes_array, view, PyBUF_CONTIG) == -1) {
+            // LCOV_EXCL_START
             Py_DECREF(bytes_array);
             Py_DECREF(seq);
             return -1;
+            // LCOV_EXCL_STOP
         }
         *array = view->buf;
         Py_DECREF(bytes_array); /* kept alive by view */
@@ -1263,8 +1257,8 @@ PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, const void* a
     }
 
     result = PyTuple_New(size);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < size; i++) {
@@ -1320,9 +1314,11 @@ PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
         }
         end++;
 
-        if ((size_t)(end - cur) > buflen) {
+        if ((size_t)(end - cur) > buflen) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_Error, "signature too long");
             return -1;
+            // LCOV_EXCL_STOP
         }
 
         memcpy(buf, cur, end - cur);
@@ -1369,8 +1365,8 @@ PyObject* _Nullable PyObjC_CArrayToPython2(const char* elementType, const void* 
     }
 
     result = PyTuple_New(size);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < size; i++) {
@@ -1415,8 +1411,8 @@ PyObjCClass_Convert(PyObject* object, void* pvar)
     }
 
     *(Class*)pvar = PyObjCClass_GetClass(object);
-    if (*(Class*)pvar == NULL)
-        return 0;
+    if (*(Class*)pvar == NULL) // LCOC_BR_EXCL_LINE
+        return 0; // LCOV_EXCL_LINE
     return 1;
 }
 
@@ -1457,12 +1453,18 @@ PyObject* _Nullable PyObjC_ImportName(const char* name)
     if (c == NULL) {
         /* Toplevel module */
         py_name = PyUnicode_FromString(name);
+        if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
+        }
         mod     = PyImport_Import(py_name);
         Py_DECREF(py_name);
         return mod;
 
     } else {
         py_name = PyUnicode_FromStringAndSize(name, c - name);
+        if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
+        }
         mod     = PyImport_Import(py_name);
         Py_DECREF(py_name);
         if (mod == NULL) {
@@ -1507,23 +1509,33 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
      * are not used by the runtime. These are irrelevant for our comparison
      */
     r = PyObjCRT_SimplifySignature(sig1, buf1, sizeof(buf1));
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Clear();
         return 0;
+        // LCOV_EXCL_STOP
     }
 
     r = PyObjCRT_SimplifySignature(sig2, buf2, sizeof(buf2));
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Clear();
         return 0;
+        // LCOV_EXCL_STOP
     }
-    if (PyObjC_RemoveInternalTypeCodes(buf1) == -1) {
+    r = PyObjC_RemoveInternalTypeCodes(buf1);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Clear();
         return 0;
+        // LCOV_EXCL_STOP
     }
-    if (PyObjC_RemoveInternalTypeCodes(buf2) == -1) {
+    r = PyObjC_RemoveInternalTypeCodes(buf2);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Clear();
         return 0;
+        // LCOV_EXCL_STOP
     }
     return strcmp(buf1, buf2) == 0;
 }

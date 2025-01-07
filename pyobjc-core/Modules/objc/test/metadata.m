@@ -1084,12 +1084,14 @@ static void use_id(id x __attribute__((__unused__))){}
     return [self returnPointerCounted:*count];
 }
 
-- (int* _Nullable)returnPointerCountedInOut:(int*)count
+- (int* _Nullable) returnPointerCountedInOut:(int*)count
 {
     int prev = *count;
     *count=3;
     int* result = [self returnPointerCounted:*count];
-    result[0] = prev;
+    if (result) {
+        result[0] = prev;
+    }
     return result;
 }
 
@@ -1273,22 +1275,22 @@ static void use_id(id x __attribute__((__unused__))){}
 }
 
 /* Already retained values */
-- (id _Nullable)retainedObjCObject
+- (id _Nullable) NS_RETURNS_RETAINED retainedObjCObject
 {
     return [[NSArray alloc] init];
 }
 
-- (id _Nullable)retainedCFObject
+- (id _Nullable) NS_RETURNS_RETAINED retainedCFObject
 {
     return (id)CFArrayCreate(kCFAllocatorDefault, NULL, 0, &kCFTypeArrayCallBacks);
 }
 
-+(id _Nullable)retainedObjCObjectOn:(OC_MetaDataTest*)value
++(id _Nullable) NS_RETURNS_RETAINED retainedObjCObjectOn:(OC_MetaDataTest*)value
 {
     return [value retainedObjCObject];
 }
 
-+(id _Nullable)retainedCFObjectOn:(OC_MetaDataTest*)value
++(id _Nullable) NS_RETURNS_RETAINED retainedCFObjectOn:(OC_MetaDataTest*)value
 {
     return [value retainedCFObject];
 }

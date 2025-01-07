@@ -1748,7 +1748,10 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     }
                     break;
                 default:
-                    continue;
+                    /* The methinfo object won't have type modifiers
+                     * for plain types. The case is left in just in case...
+                     */
+                    continue; // LCOV_BR_EXCL_LINE
                 }
 
                 if (*(void**)args[i] == NULL) {

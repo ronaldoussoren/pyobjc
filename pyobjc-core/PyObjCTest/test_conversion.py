@@ -427,6 +427,20 @@ class TestCArray(TestCase):
     #       "[4i]" "[4[4i]]" "[2{foo=ii}]" "{foo=[4i]}"
     #       "{_Foo=fi}" (fail with array.array) + version with [{foo=if}]
     #       - other simple types
+
+    def testStringArrays(self):
+        with warnings.catch_warnings():
+            # XXX: To be removed in Python 3.16
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+            a = array.array("u", "hello")
+
+        res = carrayMaker(objc._C_INT, a, None)
+        self.assertEqual(res, tuple(map(ord, "hello")))
+
+        a = array.array("w", "world")
+        res = carrayMaker(objc._C_INT, a, None)
+        self.assertEqual(res, tuple(map(ord, "world")))
+
     def testShortTuple(self):
         arr = (1, 2, 3, 4, 5)
 
@@ -448,6 +462,7 @@ class TestCArray(TestCase):
     def testShortArray(self):
         arr = array.array("h", [1, 2, 3, 4, 5])
         arr2 = array.array("f", [1, 2, 3, 4, 5])
+        arr3 = array.array("H", [1, 2, 3, 4, 5])
 
         res = carrayMaker(objc._C_SHT, arr, None)
         self.assertEqual(res, tuple(arr))
@@ -463,6 +478,9 @@ class TestCArray(TestCase):
             ValueError, "type mismatch between array.array of f and and C array of s"
         ):
             carrayMaker(objc._C_SHT, arr2, None)
+
+        res = carrayMaker(objc._C_USHT, arr3, None)
+        self.assertEqual(res, tuple(arr3))
 
     def testIntTuple(self):
         arr = (1, 2, 3, 4, 5)
@@ -484,9 +502,20 @@ class TestCArray(TestCase):
         arr = array.array("i", [1, 2, 3, 4, 5])
         arr2 = array.array("f", [1, 2, 3, 4, 5])
         arr3 = array.array("h", [1, 2, 3, 4, 5])
+        arr4 = array.array("I", [1, 2, 3, 4, 5])
+        arr5 = array.array("l", [1, 2, 3, 4, 5])
+        arr6 = array.array("L", [1, 2, 3, 4, 5])
+        arr7 = array.array("q", [1, 2, 3, 4, 5])
+        arr8 = array.array("Q", [1, 2, 3, 4, 5])
 
         res = carrayMaker(objc._C_INT, arr, None)
         self.assertEqual(res, tuple(arr))
+
+        res = carrayMaker(objc._C_LNG, arr5, None)
+        self.assertEqual(res, tuple(arr5))
+
+        res = carrayMaker(objc._C_LNG_LNG, arr7, None)
+        self.assertEqual(res, tuple(arr7))
 
         res = carrayMaker(objc._C_INT, arr, 2)
         self.assertEqual(res, tuple(arr)[:2])
@@ -500,9 +529,18 @@ class TestCArray(TestCase):
         ):
             carrayMaker(objc._C_INT, arr2, None)
         with self.assertRaisesRegex(
-            ValueError, "type mismatch between array.array of s and and C array of i"
+            ValueError, "type mismatch between array.array of h and and C array of i"
         ):
             carrayMaker(objc._C_INT, arr3, None)
+
+        res = carrayMaker(objc._C_UINT, arr4, None)
+        self.assertEqual(res, tuple(arr4))
+
+        res = carrayMaker(objc._C_ULNG, arr6, None)
+        self.assertEqual(res, tuple(arr6))
+
+        res = carrayMaker(objc._C_ULNG_LNG, arr8, None)
+        self.assertEqual(res, tuple(arr8))
 
     def testFloatTuple(self):
         arr = (1, 2, 3, 4, 5)
@@ -574,11 +612,68 @@ class TestCArray(TestCase):
         res = carrayMaker(b"{Point=ff}", arr, 2)
         self.assertEqual(res, lst[:2])
 
+        res = carrayMaker(b"{Point=[2f]}", arr, None)
+        self.assertEqual(res, tuple((x,) for x in lst))
+
+        res = carrayMaker(b"[2f]", arr, None)
+        self.assertEqual(res, lst)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of \[2f",
+        ):
+            carrayMaker(b"[2f", arr, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of {Point=ff",
+        ):
+            carrayMaker(b"{Point=ff", arr, None)
+
+        res = carrayMaker(b"{Point=[1f]f}", arr, None)
+        self.assertEqual(res, tuple(((x[0],), x[1]) for x in lst))
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of {Point=\[1f\]d}",
+        ):
+            carrayMaker(b"{Point=[1f]d}", arr, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of {Point=d\[1f\]}",
+        ):
+            carrayMaker(b"{Point=d[1f]}", arr, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of {Point=d\[1@\]}",
+        ):
+            carrayMaker(b"{Point=d[1@]}", arr, None)
+
         with self.assertRaisesRegex(
             ValueError,
             "type mismatch between array.array of i and and C array of {Point=ff}",
         ):
             carrayMaker(b"{Point=ff}", arr2, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "type mismatch between array.array of i and and C array of {Point=il}",
+        ):
+            carrayMaker(b"{Point=il}", arr2, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "0 sized struct or array: {Point=}",
+        ):
+            carrayMaker(b"{Point=}", arr2, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "0 sized struct or array: {Point}",
+        ):
+            carrayMaker(b"{Point}", arr2, None)
 
     def testRectArray(self):
         arr = array.array(
@@ -627,14 +722,41 @@ class TestCArray(TestCase):
         res = carrayMaker(b"{Rect=[2f][2f]}", arr, None)
         self.assertEqual(res, lst)
 
-        res = carrayMaker(b"[2[2f]]}", arr, None)
+        res = carrayMaker(b"[2[2f]]", arr, None)
         self.assertEqual(res, lst)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of \[2\[1@\]\]",
+        ):
+            carrayMaker(b"[2[1@]]", arr, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of \[2@\]",
+        ):
+            carrayMaker(b"[2@]", arr, None)
+
+        res = carrayMaker(b"[2{P=ff}]", arr, None)
+        self.assertEqual(res, lst)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of \[2{P=fi}\]",
+        ):
+            carrayMaker(b"[2{P=fi}]", arr, None)
 
         with self.assertRaisesRegex(
             ValueError,
             "type mismatch between array.array of i and and C array of {Rect={P=ff}{S=ff}}",
         ):
             carrayMaker(b"{Rect={P=ff}{S=ff}}", arr2, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "type mismatch between array.array of f and and C array of {Rect={P=ff}{S=@f}}",
+        ):
+            carrayMaker(b"{Rect={P=ff}{S=@f}}", arr, None)
 
     def testMixedArray(self):
         arr = array.array(

@@ -1020,7 +1020,7 @@ PyObjCRT_AlignOfType(const char* start_type)
             int        have_align = 0;
             Py_ssize_t align      = 0;
 
-            while (type != NULL && *type != _C_STRUCT_E) {
+            while ((type != NULL) && (*type != _C_STRUCT_E) && (*type != '\0')) {
                 if (*type == '"') {
                     type = strchr(type + 1, '"');
                     if (type == NULL) {
@@ -1041,7 +1041,6 @@ PyObjCRT_AlignOfType(const char* start_type)
                 }
                 type = PyObjCRT_SkipTypeSpec(type);
             }
-
             if (type == NULL)
                 return -1;
             return align;
@@ -1219,7 +1218,7 @@ PyObjCRT_SizeOfType(const char* start_type)
         while (*type != _C_STRUCT_E && *type++ != '=')
             ; /* skip "<name>=" */
 
-        while (*type != _C_STRUCT_E) {
+        while (*type != _C_STRUCT_E && *type != '\0') {
             if (*type == '"') {
                 type = strchr(type + 1, '"');
                 if (type == NULL) {
