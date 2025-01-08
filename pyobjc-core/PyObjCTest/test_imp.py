@@ -32,6 +32,24 @@ class TestBasicIMP(TestCase):
         o = m(cls).init()
         self.assertIsInstance(o, cls)
 
+        o = NSArray.alloc()
+        m = o.methodForSelector_("init")
+
+        # XXX: Need to recreate the value because
+        #      calling a method on a partially
+        #      initialed value resets the object
+        #      reference (see comment in selector.m)
+        o = NSArray.alloc()
+
+        o2 = m(o)
+        self.assertEqual(o2, [])
+        self.assertIsInstance(o2, NSArray)
+
+        with self.assertRaisesRegex(
+            AttributeError, "cannot access attribute 'init' of NIL"
+        ):
+            o.init()
+
     def testInit1(self):
         cls = NSObject
         m = cls.instanceMethodForSelector_("init")
@@ -65,7 +83,11 @@ class TestBasicIMP(TestCase):
     def testDescription(self):
         o = NSObject.alloc().init()
 
-        self.assertEqual(o.description(), o.methodForSelector_(b"description")(o))
+        imp = o.methodForSelector_(b"description")
+        self.assertEqual(o.description(), imp(o))
+
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            imp()
 
     def test_repr(self):
         o = NSObject.alloc().init()

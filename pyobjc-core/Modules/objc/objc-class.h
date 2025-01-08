@@ -69,7 +69,9 @@ typedef struct _PyObjCClassObject {
     PyObject* _Nullable delmethod;
     PyObject* hiddenSelectors;
     PyObject* hiddenClassSelectors;
+#ifdef PyObjC_ENABLE_LOOKUP_CACHE
     PyObject* _Nullable lookup_cache;
+#endif
 
     Py_ssize_t   dictoffset;
     Py_ssize_t   generation;
@@ -105,6 +107,7 @@ extern PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObje
 extern PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base,
                                                               PyObject* name, SEL sel);
 
+#ifdef PyObjC_ENABLE_LOOKUP_CACHE
 static inline PyObject* _Nullable PyObjCClass_GetLookupCache(PyTypeObject* tp)
 {
     PyObject* result =  ((PyObjCClassObject*)tp)->lookup_cache;
@@ -115,28 +118,29 @@ static inline PyObject* _Nullable PyObjCClass_GetLookupCache(PyTypeObject* tp)
 static inline int
 PyObjCClass_AddToLookupCache(PyTypeObject* _tp, PyObject* name, PyObject* value)
 {
-#ifdef PyObjC_ENABLE_LOOKUP_CACHE
     int                r;
     PyObjCClassObject* tp = (PyObjCClassObject*)_tp;
     if (tp->lookup_cache == NULL) {
-        tp->lookup_cache = PyDict_New();
+#ifdef Py_GIL_DISABLED
+        Py_BEGIN_CRITICAL_SECTION(_tp);
         if (tp->lookup_cache == NULL) {
-            return -1;
+#endif
+            tp->lookup_cache = PyDict_New();
+            if (tp->lookup_cache == NULL) {
+#ifdef Py_GIL_DISABLED
+                Py_EXIT_CRITICAL_SECTION();
+#endif
+                return -1;
+            }
+#ifdef Py_GIL_DISABLED
         }
+        Py_END_CRITICAL_SECTION();
+#endif
     }
     r = PyDict_SetItem(tp->lookup_cache, name, value);
     return r;
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-value"
-
-    &_tp;
-    &name;
-    &value;
-#pragma clang diagnostic pop
-    return 0;
-#endif
 }
+#endif /* PyObjC_ENABLE_LOOKUP_CACHE */
 
 static inline int
 PyObjCClass_IsCFWrapper(PyTypeObject* tp)

@@ -49,6 +49,21 @@ class TestInstanceVariables(TestCase):
     def setUp(self):
         self.object = TestClass.alloc().init()
 
+    def test_class_setup(self):
+        v = objc.ivar()
+        with self.assertRaisesRegex(TypeError, "required argument "):
+            v.__pyobjc_class_setup__()
+
+        class_dict = {}
+        ilist = set()
+        clist = set()
+
+        v.__pyobjc_class_setup__("myname", class_dict, ilist, clist)
+        self.assertEqual(v.__name__, "myname")
+        self.assertEqual(class_dict, {})
+        self.assertEqual(ilist, set())
+        self.assertEqual(clist, set())
+
     def test_ivar_misusage(self):
         iv = objc.ivar("iv")
 
@@ -65,6 +80,9 @@ class TestInstanceVariables(TestCase):
         ):
             iv.__get__(o)
 
+        with self.assertRaisesRegex(ValueError, "Invalid type encoding"):
+            objc.ivar("iv", b"X")
+
     def test_ivar_equality(self):
         # Check that ivar equality tests are correct,
         # and that equal values have equal hashes.
@@ -74,6 +92,8 @@ class TestInstanceVariables(TestCase):
         ivar_b = objc.ivar("b")
         ivar_b2 = objc.ivar("b", isSlot=True)
         ivar_b3 = objc.ivar("b", isOutlet=True)
+        ivar_nameless = objc.ivar()
+        ivar_nameless2 = objc.ivar()
 
         self.assertFalse(ivar_b.__isSlot__)
         self.assertFalse(ivar_b.__isOutlet__)
@@ -86,6 +106,10 @@ class TestInstanceVariables(TestCase):
         self.assertFalse(ivar_b == ivar_b2)
         self.assertFalse(ivar_b == ivar_b3)
         self.assertFalse(ivar_b2 == ivar_b3)
+        self.assertTrue(ivar_nameless == ivar_nameless2)
+        self.assertFalse(ivar_nameless == ivar_a)
+        self.assertFalse(ivar_a == ivar_nameless)
+        self.assertFalse(ivar_a == 42)
 
         self.assertFalse(ivar_a != ivar_a2)
         self.assertTrue(ivar_a != ivar_a3)
@@ -93,8 +117,18 @@ class TestInstanceVariables(TestCase):
         self.assertTrue(ivar_b != ivar_b2)
         self.assertTrue(ivar_b != ivar_b3)
         self.assertTrue(ivar_b2 != ivar_b3)
+        self.assertFalse(ivar_nameless != ivar_nameless2)
+        self.assertTrue(ivar_nameless != ivar_a)
+        self.assertTrue(ivar_a != ivar_nameless)
+        self.assertTrue(ivar_a != 42)
 
+        with self.assertRaisesRegex(TypeError, "'<' not supported"):
+            ivar_a < ivar_b  # noqa: B015
+
+        self.assertEqual(hash(ivar_nameless), hash(ivar_nameless2))
         self.assertEqual(hash(ivar_a), hash(ivar_a2))
+        self.assertNotEqual(hash(ivar_b), hash(ivar_b2))
+        self.assertNotEqual(hash(ivar_b), hash(ivar_b3))
 
     def test_ivars_with_same_name(self):
         with self.assertRaises(objc.error):

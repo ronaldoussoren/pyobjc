@@ -15,6 +15,10 @@ static void use_id(id x __attribute__((__unused__))){}
 
 @interface OC_MetaDataTest : NSObject {
 }
+
+-(id _Nullable)makeBuffer:(void*)buffer len:(size_t)bufsize;
+
+
 + (BOOL)boolClassMethod;
 /* Return value arrays: */
 - (int*)makeIntArrayOf5;
@@ -27,8 +31,10 @@ static void use_id(id x __attribute__((__unused__))){}
 
 
 
+
 /* In arrays: */
 - (NSArray* _Nullable)makeIntArray:(int*)data count:(unsigned char)count;
+- (NSArray* _Nullable)makeIntArray:(int*)data floatcount:(float)count;
 - (NSArray* _Nullable)makeIntArray:(int*)data halfCount:(unsigned)count;
 - (NSArray* _Nullable)makeIntArray:(int*)data countPtr:(unsigned*)countPtr;
 - (NSArray* _Nullable)nullIntArray:(int*)data count:(unsigned)count;
@@ -124,9 +130,67 @@ static void use_id(id x __attribute__((__unused__))){}
 - (void)fillBuffer:(char*)data count:(int)count;
 - (void)fillVoids:(void*)data count:(int)count;
 
+
 @end
 
 @implementation OC_MetaDataTest
+
+-(id(^)(int, float))getAnonBlock
+{
+    return ^(int a, float b) {
+        return [NSString stringWithFormat:@"%d %f", a, b];
+    };
+}
+
+-(id)callBlock:(id(^)(void))block
+{
+    return block();
+}
+
++(id)callBlockOn:(OC_MetaDataTest*)obj
+{
+    return [obj callBlock:^ { return @"hello";}];
+}
+
+
+-(int)intInArg:(int)a
+{
+    return -a;
+}
+
+-(int)intOutArg:(int)a
+{
+    return 2-a;
+}
+-(int)intInOutArg:(int)a
+{
+    return 2+a;
+}
+
++(int)intInArg:(int)a on:(OC_MetaDataTest*)obj
+{
+    return [obj intInArg:a];
+}
+
++(int)intOutArg:(int)a on:(OC_MetaDataTest*)obj
+{
+    return [obj intOutArg:a];
+}
+
++(int)intInOutArg:(int)a on:(OC_MetaDataTest*)obj
+{
+    return [obj intInOutArg:a];
+}
+
+-(id)derefResultArgument:(int*)value
+{
+    return @"shouldn't happen";
+}
+
++(id)derefResultArgument:(int)value on:(OC_MetaDataTest*)obj
+{
+    return [obj derefResultArgument:&value];
+}
 
 + (BOOL)boolClassMethod
 {
@@ -201,6 +265,16 @@ static void use_id(id x __attribute__((__unused__))){}
     return [self makeIntArray:data count:count * 2];
 }
 
++ (NSArray* _Nullable)makeIntArray:(int*)data floatcount:(int)count on:(OC_MetaDataTest*)obj
+{
+    return [obj makeIntArray:data floatcount:(float)count];
+}
+
+- (NSArray*)makeIntArray:(int*)data floatcount:(float)count
+{
+    return [self makeIntArray:data count:(unsigned char)count];
+}
+
 - (NSArray*)makeIntArray:(int*)data count:(unsigned char)count
 {
     NSMutableArray* array;
@@ -236,6 +310,32 @@ static void use_id(id x __attribute__((__unused__))){}
     array = [NSMutableArray array];
 
     for (i = 0; i < 4; i++) {
+        [array addObject:[NSNumber numberWithDouble:data[i]]];
+    }
+    return array;
+}
+
+- (NSArray*)make8Tuple:(double*)data
+{
+    NSMutableArray* array;
+    unsigned        i;
+
+    array = [NSMutableArray array];
+
+    for (i = 0; i < 8; i++) {
+        [array addObject:[NSNumber numberWithDouble:data[i]]];
+    }
+    return array;
+}
+
+- (NSArray*)make8TupleB:(double*)data
+{
+    NSMutableArray* array;
+    unsigned        i;
+
+    array = [NSMutableArray array];
+
+    for (i = 0; i < 8; i++) {
         [array addObject:[NSNumber numberWithDouble:data[i]]];
     }
     return array;
@@ -505,6 +605,18 @@ static void use_id(id x __attribute__((__unused__))){}
     return 2;
 }
 
+- (id _Nullable)makeBuffer:(void*)buffer len:(size_t)bufsize
+{
+    return [NSData dataWithBytes:buffer length:bufsize];
+}
+
+
++ (id)makeBuffer:(void*)buffer len:(size_t)bufsize on:(OC_MetaDataTest*)obj
+{
+    id value =  [obj makeBuffer:buffer len:bufsize];
+    return value;
+}
+
 + (int*)makeIntArrayOf5On:(OC_MetaDataTest*)obj
 {
     return [obj makeIntArrayOf5];
@@ -573,6 +685,16 @@ static void use_id(id x __attribute__((__unused__))){}
 + (NSArray*)make4Tuple:(double*)data on:(OC_MetaDataTest*)obj
 {
     return [obj make4Tuple:data];
+}
+
++ (NSArray*)make8Tuple:(double*)data on:(OC_MetaDataTest*)obj
+{
+    return [obj make8Tuple:data];
+}
+
++ (NSArray*)make8TupleB:(double*)data on:(OC_MetaDataTest*)obj
+{
+    return [obj make8TupleB:data];
 }
 
 + (NSArray*)null4Tuple:(double*)data on:(OC_MetaDataTest*)obj
@@ -887,6 +1009,433 @@ static void use_id(id x __attribute__((__unused__))){}
     va_end(ap);
     return result;
 }
+
++ (NSArray*)makeVariableLengthArray:(int*)array halfCount:(int)cnt on:(OC_MetaDataTest*)value
+{
+    return [value makeVariableLengthArray:array halfCount:cnt];
+}
+
+/* various pointer return values */
+- (int* _Nullable)returnPointerPlain
+{
+    static int value = 42;
+    return &value;
+}
+
+- (int* _Nullable)returnPointerFixedLen
+{
+    static int values[5] = { 2, 3, 5, 7, 11 };
+    return values;
+}
+
+- (char* _Nullable)returnCharPFixedLen
+{
+    return "hello";
+}
+
+- (int* _Nullable)returnPointerVariadic
+{
+    static int values[] = { 2, 4, 8, 16, 32, 64, 128, 256, 512 };
+    return values;
+}
+
+- (int* _Nullable)returnPointerNullDelimited
+{
+    static int values[] = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
+    return values;
+}
+
+- (char* _Nullable)returnCharPNullDelimited
+{
+    return "hello world\0xyz";;
+}
+
+- (int* _Nullable)returnPointerCounted:(int)count
+{
+    static int* cache = NULL;
+
+    if (cache != NULL) {
+        free(cache);
+    }
+
+    cache = malloc(count * sizeof(int));
+    if (cache == NULL) {
+        return NULL;
+    }
+
+    for(int i = 0; i < count; i++) {
+        cache[i] = -i * i;
+    }
+    return cache;
+}
+- (int* _Nullable)returnPointerFloatCounted:(float)count
+{
+    return [self returnPointerCounted:(int)count];
+}
+
+- (int* _Nullable)returnPointerCountedIn:(int*)count
+{
+    return [self returnPointerCounted:*count];
+}
+
+- (int* _Nullable)returnPointerCountedOut:(int*)count
+{
+    *count=3;
+    return [self returnPointerCounted:*count];
+}
+
+- (int* _Nullable) returnPointerCountedInOut:(int*)count
+{
+    int prev = *count;
+    *count=3;
+    int* result = [self returnPointerCounted:*count];
+    if (result) {
+        result[0] = prev;
+    }
+    return result;
+}
+
+- (int* _Nullable)returnPointerDeref
+{
+    static int value = 99;
+    return &value;
+}
+
+-(int* _Nullable)returnPointerToFree
+{
+    int* result = malloc(4*sizeof(int));
+    if (result == NULL) {
+        return NULL;
+    }
+    result[0] = 0;
+    result[1] = 1;
+    result[2] = 2;
+    result[3] = 3;
+    return result;
+}
+
+-(int* _Nullable)returnPointerToFreeVariadic
+{
+    int* result = malloc(4*sizeof(int));
+    if (result == NULL) {
+        return NULL;
+    }
+    result[0] = 0;
+    result[1] = 1;
+    result[2] = 2;
+    result[3] = 3;
+    return result;
+}
+
++ (int* _Nullable)returnPointerPlainOn:(OC_MetaDataTest*)value
+{
+    return [value returnPointerPlain];
+}
+
++ (int* _Nullable)returnPointerFixedLenOn:(OC_MetaDataTest*)value
+{
+    return [value returnPointerFixedLen];
+}
+
++ (char* _Nullable)returnCharPFixedLenOn:(OC_MetaDataTest*)value
+{
+    return [value returnCharPFixedLen];
+}
+
++ (int* _Nullable)returnPointerVariadicOn:(OC_MetaDataTest*)value
+{
+    return [value returnPointerVariadic];
+}
+
++ (int* _Nullable)returnPointerNullDelimitedOn:(OC_MetaDataTest*)value
+{
+    return [value returnPointerNullDelimited];
+}
+
++ (char* _Nullable)returnCharPNullDelimitedOn:(OC_MetaDataTest*)value
+{
+    return [value returnCharPNullDelimited];
+}
+
++ (int* _Nullable)returnPointerCounted:(int)count on:(OC_MetaDataTest*)value
+{
+    return [value returnPointerCounted:count];
+}
+
++ (int* _Nullable)returnPointerFloatCounted:(int)count on:(OC_MetaDataTest*)value
+{
+    return [value returnPointerFloatCounted:count];
+}
+
++ (int* _Nullable)returnPointerCountedIn:(int*)count on:(OC_MetaDataTest*)value
+{
+    return [value returnPointerCountedIn:count];
+}
+
++ (int* _Nullable)returnPointerCountedOut:(int*)count on:(OC_MetaDataTest*)value
+{
+    return [value returnPointerCountedOut:count];
+}
+
++ (int* _Nullable)returnPointerCountedInOut:(int*)count on:(OC_MetaDataTest*)value
+{
+    return [value returnPointerCountedInOut:count];
+}
+
++ (int* _Nullable)returnPointerDerefOn:(OC_MetaDataTest*)value
+{
+    return [value returnPointerDeref];
+}
+
++ (int* _Nullable)returnPointerToFreeOn:(OC_MetaDataTest*)value
+{
+    return [value returnPointerToFree];
+}
+
++ (int* _Nullable)returnPointerToFreeVariadicOn:(OC_MetaDataTest*)value
+{
+    return [value returnPointerToFreeVariadic];
+}
+
+
+/* Char* input argument (_C_CHARPTR) */
+- (id _Nullable)charpArgPlain:(char*)arg
+{
+    return nil;
+}
+
+- (id _Nullable)charpArgNullTerminated:(char*)arg
+{
+    return nil;
+}
+
+- (id _Nullable)charpArg5Chars:(char*)arg
+{
+    return nil;
+}
+
+- (id _Nullable)charpArgVariadic:(char*)arg
+{
+    return nil;
+}
+
+- (id _Nullable)charpArgDeref:(char*)arg
+{
+    return nil;
+}
+
+- (id _Nullable)charpArgCounted:(char*)arg count:(int)c
+{
+    return nil;
+}
+
+- (id _Nullable)charpArgCounted:(char*)arg floatcount:(float)c
+{
+    return nil;
+}
+
++ (id _Nullable)charpArgPlainOn:(OC_MetaDataTest*)value
+{
+    return [value charpArgPlain:NULL];
+}
+
++ (id _Nullable)charpArgPlain:(char*)arg on:(OC_MetaDataTest*)value
+{
+    return [value charpArgPlain:arg];
+}
+
++ (id _Nullable)charpArgNullTerminated:(char*)arg on:(OC_MetaDataTest*)value
+{
+    return [value charpArgNullTerminated:arg];
+}
+
++ (id _Nullable)charpArg5Chars:(char*)arg on:(OC_MetaDataTest*)value
+{
+    return [value charpArg5Chars:arg];
+}
+
++ (id _Nullable)charpArgVariadic:(char*)arg on:(OC_MetaDataTest*)value
+{
+    return [value charpArgVariadic:arg];
+}
+
++ (id _Nullable)charpArgDeref:(char*)arg on:(OC_MetaDataTest*)value
+{
+    return [value charpArgDeref:arg];
+}
+
++ (id _Nullable)charpArgCounted:(char*)arg count:(int)c on:(OC_MetaDataTest*)value
+{
+    return [value charpArgCounted:arg count:c];
+}
+
++ (id _Nullable)charpArgCounted:(char*)arg floatcount:(int)c on:(OC_MetaDataTest*)value
+{
+    return [value charpArgCounted:arg floatcount:(float)c];
+}
+
+/* Already retained values */
+- (id _Nullable) NS_RETURNS_RETAINED retainedObjCObject
+{
+    return [[NSArray alloc] init];
+}
+
+- (id _Nullable) NS_RETURNS_RETAINED retainedCFObject
+{
+    return (id)CFArrayCreate(kCFAllocatorDefault, NULL, 0, &kCFTypeArrayCallBacks);
+}
+
++(id _Nullable) NS_RETURNS_RETAINED retainedObjCObjectOn:(OC_MetaDataTest*)value
+{
+    return [value retainedObjCObject];
+}
+
++(id _Nullable) NS_RETURNS_RETAINED retainedCFObjectOn:(OC_MetaDataTest*)value
+{
+    return [value retainedCFObject];
+}
+
+/* Handling by-ref output arguments */
+/* all of them in two variants: void return and value return */
+
+-(void)voidOutChar:(char*)value
+{
+    if (value) {
+        *value = 44;
+    }
+}
+-(int)intOutChar:(char*)value
+{
+    if (value) {
+        *value = 45;
+    }
+    return value?1:0;
+}
+
+-(void)voidOutCharPtr:(char**)value
+{
+    if (value) {
+        *value = "hello\0world";
+    }
+}
+-(int)intOutCharPtr:(char**)value
+{
+    if (value) {
+        *value = "hello\0world";
+    }
+    return value?1:0;
+}
+
+-(void)voidOutId:(id*)value
+{
+    if (value) {
+        *value = @"hello world";
+    }
+}
+-(int)intOutId:(id*)value
+{
+    if (value) {
+        *value = @"hello world";
+    }
+    return value?1:0;
+}
+
+-(void)voidOutIdRetained:(id*)value
+{
+    if (value) {
+        *value = [[NSArray alloc] init];
+    }
+}
+-(int)intOutIdRetained:(id*)value
+{
+    if (value) {
+        *value = [[NSArray alloc] init];
+    }
+    return value?1:0;
+}
+
+-(void)voidOutIdCFRetained:(id*)value
+{
+    if (value) {
+        *value = (id)CFArrayCreate(kCFAllocatorDefault, NULL, 0, &kCFTypeArrayCallBacks);
+    }
+}
+-(int)intOutIdCFRetained:(id*)value
+{
+    if (value) {
+        *value = (id)CFArrayCreate(kCFAllocatorDefault, NULL, 0, &kCFTypeArrayCallBacks);
+    }
+    return value?1:0;
+}
+
+-(void)voidOutInt:(int*)outval add:(int)inval
+{
+    if (outval) {
+        *outval = inval * 2;
+    }
+}
+-(int)intOutInt:(int*)outval add:(int)inval
+{
+    if (outval) {
+        *outval = inval * 2;
+    }
+    return outval?1:0;
+}
+
++(void)voidOutChar:(char*)value on:(OC_MetaDataTest*)obj
+{
+    [obj voidOutChar:value];
+}
++(int)intOutChar:(char*)value on:(OC_MetaDataTest*)obj
+{
+    return [obj intOutChar:value];
+}
+
++(void)voidOutCharPtr:(char**)value on:(OC_MetaDataTest*)obj
+{
+    [obj voidOutCharPtr:value];
+}
++(int)intOutCharPtr:(char**)value on:(OC_MetaDataTest*)obj
+{
+    return [obj intOutCharPtr:value];
+}
+
++(void)voidOutId:(id*)value on:(OC_MetaDataTest*)obj
+{
+    [obj voidOutId:value];
+}
++(int)intOutId:(id*)value on:(OC_MetaDataTest*)obj
+{
+    return [obj intOutId:value];
+}
+
++(void)voidOutIdRetained:(id*)value on:(OC_MetaDataTest*)obj
+{
+    [obj voidOutIdRetained:value];
+}
++(int)intOutIdRetained:(id*)value on:(OC_MetaDataTest*)obj
+{
+    return [obj intOutIdRetained:value];
+}
+
++(void)voidOutIdCFRetained:(id*)value on:(OC_MetaDataTest*)obj
+{
+    [obj voidOutIdCFRetained:value];
+}
++(int)intOutIdCFRetained:(id*)value on:(OC_MetaDataTest*)obj
+{
+    return [obj intOutIdCFRetained:value];
+}
+
++(void)voidOutInt:(int*)outval add:(int)inval on:(OC_MetaDataTest*)obj
+{
+    [obj voidOutInt:outval add:inval];
+}
++(int)intOutInt:(int*)outval add:(int)inval on:(OC_MetaDataTest*)obj
+{
+    return [obj intOutInt:outval add:inval];
+}
+
 
 @end
 

@@ -745,6 +745,10 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
             pyres = pyself;
         }
 
+        /* XXX: The test here seems dodgy it will reset the sel_self
+         *      for a partially initialized object on the first method
+         *      call, even if that's not an init method.
+         */
         if (PyObjCObject_Check(self->base.sel_self)
             && (((PyObjCObject*)self->base.sel_self)->flags
                 & PyObjCObject_kUNINITIALIZED)) {
@@ -926,10 +930,10 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
         result->base.sel_methinfo = meth->base.sel_methinfo;
         Py_INCREF(result->base.sel_methinfo);
     } else {
-        result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
-        if (!result->base.sel_methinfo) {
-            PyErr_Clear();
-        }
+        //result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
+        //if (!result->base.sel_methinfo) {
+        //    PyErr_Clear();
+        //}
     }
 
 #if PY_VERSION_HEX >= 0x03090000
@@ -1163,12 +1167,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     PyObjCNativeSelector* result;
     const char*           native_signature = signature;
 
-    if (signature == NULL) {
-        /* XXX: Once all callers have been updated: make this an assertion */
-        PyErr_Format(PyExc_RuntimeError, "PyObjCSelector_NewNative: nil signature for %s",
-                     sel_getName(selector));
-        return NULL;
-    }
+    PyObjC_Assert(signature != NULL, NULL);
 
     result = PyObject_New(PyObjCNativeSelector, (PyTypeObject*)PyObjCNativeSelector_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE

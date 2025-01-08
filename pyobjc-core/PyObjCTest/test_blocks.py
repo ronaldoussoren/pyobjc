@@ -5,7 +5,8 @@
 import objc
 from PyObjCTest.block import OCTestBlock
 from PyObjCTools.TestSupport import TestCase, min_os_level
-from .fnd import NSMutableArray
+from .fnd import NSMutableArray, NSException
+from .test_metadata import NoObjCClass
 
 NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"
 
@@ -539,6 +540,12 @@ class BlockWithStoredCompletion(objc.lookUpClass("NSObject")):
         self.completion("world")
 
 
+class BlockImplementation(objc.lookUpClass("NSObject")):
+    @objc.objc_method(signature=b"d@:dd")
+    def multiplyX_y_(self, x, y):
+        return x * y
+
+
 class TestBlocks(TestCase):
     @min_os_level("10.6")
     def testOptionalBlock(self):
@@ -712,6 +719,14 @@ class TestBlocks(TestCase):
         self.assertEqual(len(helper.values), 2)
         self.assertEqual(helper.values, [42, 43])
 
+        def callback(v1):
+            return v1
+
+        with self.assertRaisesRegex(
+            ValueError, "did not return None, expecting void return value"
+        ):
+            obj.callIntBlock_withValue_(callback, 42)
+
     @min_os_level("10.6")
     def test_block_with_varargs(self):
         obj = OCTestBlock.alloc().init()
@@ -784,6 +799,24 @@ class TestBlocks(TestCase):
         )
         self.assertEqual(
             obj.callDoubleBlock_withValue_andValue_(callback, 2.5, 10), 25.0
+        )
+
+        def callback(a, b):
+            return
+
+        with self.assertRaisesRegex(ValueError, "returned None, expecting a value"):
+            obj.callDoubleBlock_withValue_andValue_(callback, 2.5, 10)
+
+    def test_bound_selector_as_block(self):
+        obj = OCTestBlock.alloc().init()
+        helper = BlockImplementation()
+
+        self.assertResultHasType(BlockImplementation.multiplyX_y_, objc._C_DBL)
+        self.assertArgHasType(BlockImplementation.multiplyX_y_, 1, objc._C_DBL)
+        self.assertArgHasType(BlockImplementation.multiplyX_y_, 1, objc._C_DBL)
+
+        self.assertEqual(
+            obj.callDoubleBlock_withValue_andValue_(helper.multiplyX_y_, 2.0, 3.5), 7.0
         )
 
     @min_os_level("10.6")
@@ -1036,6 +1069,8 @@ class TestInvalidCalling(TestCase):
         obj = OCTestBlock.alloc().init()
         block = obj.getIntBlock()
 
+        self.assertIs(obj.__block_signature__, None)
+
         with self.assertRaisesRegex(TypeError, "not a block"):
             mod._block_call(42, block.__block_signature__, (), {})
 
@@ -1062,3 +1097,96 @@ class TestInvalidCalling(TestCase):
         block = obj.getFloatBlock2()
         with self.assertRaisesRegex(objc.error, "Unhandled type"):
             block(1.0, 2.0)
+
+    def test_reraising(self):
+        obj = OCTestBlock.alloc().init()
+        block = obj.getRaisingBlock()
+
+        with self.subTest("pass objc exception through python"):
+
+            def callback(b):
+                b()
+
+            with self.assertRaisesRegex(objc.error, "SimpleException - hello world"):
+                obj.callOptionalBlock_withValue_(callback, block)
+
+        with self.subTest("Don't allow depythonifying wrapped exception"):
+
+            def callback(b):
+                exc = ValueError()
+                exc._pyobjc_exc_ = NoObjCClass()
+                raise exc
+
+            with self.assertRaisesRegex(
+                objc.error,
+                "NSInternalInconsistencyException - Cannot convert Python exception",
+            ):
+                obj.callOptionalBlock_withValue_(callback, None)
+
+        with self.subTest("Don't allow depythonifying wrapped exception"):
+
+            def callback(b):
+                exc = ValueError()
+                exc._pyobjc_exc_ = NSException.exceptionWithName_reason_userInfo_(
+                    "MyException", "bla bla", None
+                )
+                raise exc
+
+            with self.assertRaisesRegex(objc.error, "MyException - bla bla"):
+                obj.callOptionalBlock_withValue_(callback, None)
+
+        with self.subTest("proxied ObjC exception"):
+
+            def callback(b):
+                exc = ValueError()
+                exc._pyobjc_info_ = {
+                    "reason": "Some Value",
+                    "name": "MyException",
+                    "userInfo": None,
+                }
+                raise exc
+
+            with self.assertRaisesRegex(objc.error, "MyException - Some Value"):
+                obj.callOptionalBlock_withValue_(callback, None)
+
+        with self.subTest("proxied ObjC exception (bad userinfo)"):
+
+            def callback(b):
+                exc = ValueError()
+                exc._pyobjc_info_ = {
+                    "reason": "Some Value",
+                    "name": "MyException",
+                    "userInfo": NoObjCClass(),
+                }
+                raise exc
+
+            with self.assertRaisesRegex(objc.error, "MyException - Some Value"):
+                obj.callOptionalBlock_withValue_(callback, None)
+
+        with self.subTest("proxied ObjC exception ignored (bad name)"):
+
+            def callback(b):
+                exc = ValueError("bla bla")
+                exc._pyobjc_info_ = {
+                    "reason": "Some Value",
+                    "name": NoObjCClass(),
+                    "userInfo": None,
+                }
+                raise exc
+
+            with self.assertRaisesRegex(ValueError, "bla bla"):
+                obj.callOptionalBlock_withValue_(callback, None)
+
+        with self.subTest("proxied ObjC exception ignored (bad reason)"):
+
+            def callback(b):
+                exc = ValueError("bla bla")
+                exc._pyobjc_info_ = {
+                    "name": "MyException",
+                    "reason": NoObjCClass(),
+                    "userInfo": None,
+                }
+                raise exc
+
+            with self.assertRaisesRegex(ValueError, "bla bla"):
+                obj.callOptionalBlock_withValue_(callback, None)

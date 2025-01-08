@@ -213,6 +213,9 @@ is_ivar(PyObject* value)
 static int
 is_instance_method(PyObject* value)
 {
+    // XXX: 'bytes' values are ignored???
+    //      (but are inserted by one of the
+    //      property classes)
     if (PyBytes_Check(value)) {
         return 1;
     }
@@ -228,8 +231,9 @@ is_instance_method(PyObject* value)
 static int
 is_class_method(PyObject* value)
 {
-    if (PyBytes_Check(value)) {
-        return 1;
+    // XXX: 'bytes' values are ignored???
+    if (PyBytes_Check(value)) { // LCOV_BR_EXCL_LINE
+        return 1; // LCOV_EXCL_LINE
     }
     if (!PyObjCSelector_Check(value)) {
         return 0;
@@ -370,7 +374,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         if (py_superclass == Nil) { // LCOV_BR_EXCL_LINE
             goto error_cleanup;     // LCOV_EXCL_LINE
         }
-    }
+    } // LCOV_BR_EXCL_LINE
 
     /* Allocate the class as soon as possible, for new selector objects */
     new_class = objc_allocateClassPair(super_class, name, 0);
@@ -411,7 +415,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             // LCOV_EXCL_STOP
         }
         Py_DECREF(wrapped_protocol);
-    }
+    } // LCOV_BR_EXCL_LINE
 
     /* add instance variables */
     for (i = 0; i < PyTuple_GET_SIZE(instance_variables); i++) {
@@ -583,7 +587,12 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
     Py_CLEAR(py_superclass);
 
-    /* XXX: Can __dict__ ever be in the class_dict? */
+    /* XXX: This is questionable at best, does not match regular
+     *      classes, and silently ignores an entry in the dict.
+     *      Probably best to emit a deprecation warning and
+     *      reject __dict__ later on (or just drop these lines,
+     *      but that requires testing)
+     */
     if (PyDict_DelItem(class_dict, PyObjCNM___dict__) == -1) {
         PyErr_Clear();
     }
@@ -724,8 +733,8 @@ free_ivars(id self, PyObject* cls)
                     @try {
                         [*(id*)(((char*)self) + ivar_getOffset(var)) autorelease];
 
-                    } @catch (NSObject* localException) {
-                        NSLog(@"ignoring exception %@ in destructor", localException);
+                    } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+                        NSLog(@"ignoring exception %@ in destructor", localException); // LCOV_EXCL_LINE
                     }
                 Py_END_ALLOW_THREADS
                 *(id*)(((char*)self) + ivar_getOffset(var)) = nil;
@@ -738,9 +747,15 @@ free_ivars(id self, PyObject* cls)
          *      the type slot with the primary superclass?
          */
         o = PyObject_GetAttrString(cur_cls, "__bases__");
-        if (o == NULL) {
+        if (o == NULL) { // LCOV_BR_EXCL_LINE
+            /* type has an __bases__ attribute, and
+             * PyObjC's subclasses don't do anything
+             * that changes that.
+             */
+            // LCOV_EXCL_START
             PyErr_Clear();
             cur_cls = NULL;
+            // LCOV_EXCL_STOP
 
         } else if (PyTuple_Size(o) == 0) {
             PyErr_Clear();
@@ -880,10 +895,12 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
             if (strcmp(ivar_getName(v), "__dict__") == 0) {
                 /* copy __dict__ */
                 *p = PyDict_Copy(*p);
-                if (*p == NULL) {
+                if (*p == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     [copy release];
                     PyObjCErr_ToObjCWithGILState(&state);
                     return;
+                    // LCOV_EXCL_STOP
                 }
             } else {
                 Py_INCREF(*p);
@@ -941,16 +958,13 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
      * again.
      */
 
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            theSelector = [invocation selector];
-        } @catch (NSObject* localException) {
-            /* XXX: This is wrong, releasing the GIL while we don't hold it */
-            Py_DECREF(pyself);
-            PyGILState_Release(state);
-            @throw;
-        }
-    Py_END_ALLOW_THREADS
+    @try {
+        theSelector = [invocation selector];
+    } @catch (NSObject* localException) {
+        Py_DECREF(pyself);
+        PyGILState_Release(state);
+        @throw;
+    }
 
     PyObject* pymeth = PyObjCObject_FindSelector(pyself, theSelector);
 
@@ -989,11 +1003,16 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         @throw;
         // LCOV_EXCL_STOP
     }
-    if (method == NULL) {
+    if (method == NULL) { // LCOV_BR_EXCL_LINE
+        /* The method is found by PyObjCObject_FindSelector, but not
+         * by methodForSelector. That should never happen.
+         */
+        // LCOV_EXCL_START
         PyGILState_Release(state);
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:@"cannot resolve selector"
                                      userInfo:nil];
+        // LCOV_EXCL_STOP
     }
 
     if (PyObjCFFI_CallUsingInvocation(method, invocation) == -1) {

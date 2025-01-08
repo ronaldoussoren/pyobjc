@@ -16,9 +16,15 @@ import sys
 import objc
 from PyObjCTest.metadata import OC_MetaDataTest
 from PyObjCTools.TestSupport import TestCase
-from .fnd import NSArray, NSString, NSPredicate
+from .fnd import NSArray, NSString, NSPredicate, NSObject
 
 make_array = array.array
+
+
+class NoObjCClass:
+    @property
+    def __pyobjc_object__(self):
+        raise TypeError("Cannot proxy")
 
 
 def setupMetaData():
@@ -29,8 +35,30 @@ def setupMetaData():
     #
     # Note2: the code below would normally be done using a metadata file
     # instead of hardcoding.
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"intInArg:",
+        {"arguments": {2 + 0: {"type_modifier": objc._C_IN}}},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"intOutArg:",
+        {"arguments": {2 + 0: {"type_modifier": objc._C_OUT}}},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"intInOutArg:",
+        {"arguments": {2 + 0: {"type_modifier": objc._C_INOUT}}},
+    )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest", b"boolClassMethod", {"retval": {"type": objc._C_NSBOOL}}
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"derefResultArgument:",
+        {"arguments": {2: {"deref_result_pointer": True, "type_modifier": "n"}}},
     )
 
     objc.registerMetaDataForSelector(
@@ -46,6 +74,15 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeVariableLengthArray:halfCount:",
+        {
+            "arguments": {
+                2 + 0: {"c_array_of_variable_length": True, "type_modifier": objc._C_IN}
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeVariableLengthArray:halfCount:on:",
         {
             "arguments": {
                 2 + 0: {"c_array_of_variable_length": True, "type_modifier": objc._C_IN}
@@ -127,6 +164,71 @@ def setupMetaData():
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"make4Tuple:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_fixed_length": 4,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"make8Tuple:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "type": b"[8d]",
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"make8Tuple:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_fixed_length": 8,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"make8TupleB:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type": b"[8d]",
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"make8TupleB:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_fixed_length": 8,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"null4Tuple:",
         {
             "arguments": {
@@ -185,6 +287,34 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeIntArray:count:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeIntArray:floatcount:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeIntArray:floatcount:on:",
         {
             "arguments": {
                 2
@@ -646,6 +776,35 @@ def setupMetaData():
         },
     )
 
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"makeBuffer:len:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type": "^v",
+                    "type_modifier": objc._C_IN,
+                },
+                3: {"type": "Q"},
+            }
+        },
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeBuffer:len:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 1,
+                },
+            }
+        },
+    )
+
 
 setupMetaData()
 
@@ -911,6 +1070,24 @@ class TestArraysIn(TestCase):
         v = o.make4Tuple_(a)
         self.assertEqual(list(v), [2.5, 3.5, 4.5, 5.5])
 
+        class OC_MetaDataTestArrayArg(OC_MetaDataTest):
+            def make8Tuple_(self, a):
+                return [a]
+
+            def make8TupleB_(self, a):
+                return ["B", a]
+
+        obj = OC_MetaDataTestArrayArg()
+        a_list = [n + 2.5 for n in range(8)]
+        a = make_array("d", a_list)
+        v = OC_MetaDataTest.make8Tuple_on_(a, obj)
+        self.assertEqual(v, [tuple(a_list)])
+
+        a_list = [n + 3.5 for n in range(8)]
+        a = make_array("d", a_list)
+        v = OC_MetaDataTest.make8TupleB_on_(a, obj)
+        self.assertEqual(v, ["B", tuple(a_list)])
+
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
 
@@ -987,6 +1164,27 @@ class TestArraysIn(TestCase):
 
         a = o.makeIntArray_sameSize_([10, 20, 30, 40, 50], None)
         self.assertEqual(a, ())
+
+        with self.assertRaisesRegex(
+            TypeError, "Don't know how to extract count from encoding: f"
+        ):
+            o.makeIntArray_floatcount_([10, 20, 30, 40, 50], 3.0)
+
+        class OC_MetaDataTestFloatCount(OC_MetaDataTest):
+            def makeIntArray_floatcount_(self, a, b):
+                return [a, b]
+
+        obj = OC_MetaDataTestFloatCount()
+
+        # v-- validate that the buffer size of the helper method is not a float
+        self.assertArgHasType(
+            OC_MetaDataTest.makeIntArray_floatcount_on_, 1, objc._C_INT
+        )
+
+        with self.assertRaisesRegex(
+            TypeError, "Don't know how to extract count from encoding: f"
+        ):
+            OC_MetaDataTest.makeIntArray_floatcount_on_([10, 20, 30, 40, 50], 3, obj)
 
 
 class TestArrayReturns(TestCase):
@@ -1394,11 +1592,6 @@ class TestPrintfFormat(TestCase):
         with self.subTest("NSString stringWithFormat"):
             v = NSString.stringWithFormat_("foo %@", o)
             self.assertEqual(v, f"foo {o!r}")
-
-            class NoObjCClass:
-                @property
-                def __pyobjc_object__(self):
-                    raise TypeError("Cannot proxy")
 
             with self.assertRaisesRegex(TypeError, "Cannot proxy"):
                 NSString.stringWithFormat_("foo %@", NoObjCClass())
@@ -1920,6 +2113,24 @@ class TestVariableLengthValue(TestCase):
         self.assertEqual(list(v), [1, 2, 3, 4])
 
         # XXX: Hard crash when using o.makeVariableLengthArray_halfCount_???
+        v = o.makeVariableLengthArray_halfCount_((1, 2, 3, 4, 5, 6), 2)
+        self.assertEqual(len(v), 4)
+        self.assertEqual(v, (1, 2, 3, 4))
+
+        class OC_MetaDataTestVarArrayImpl(OC_MetaDataTest):
+            def makeVariableLengthArray_halfCount_(self, a, b):
+                return [a, b, a[: 2 * b]]
+
+        obj = OC_MetaDataTestVarArrayImpl()
+        result = OC_MetaDataTest.makeVariableLengthArray_halfCount_on_(
+            [10, 20, 30, 40, 50, 60], 2, obj
+        )
+
+        # Note: test doesn't try to access the varlist entries because the bridge will have cleaned
+        # up the memory pointed at by the list when the method call returned.
+        self.assertIsInstance(result[0], objc.varlist)
+        self.assertEqual(result[1], 2)
+        self.assertEqual(result[2], (10, 20, 30, 40))
 
 
 class TestVariadicArray(TestCase):
@@ -1939,10 +2150,85 @@ class TestVariadicArray(TestCase):
         self.assertEqual(v, list(range(40)))
 
 
-class TestMisuse(TestCase):
+class TestMisc(TestCase):
     def test_api_misuse(self):
         with self.assertRaisesRegex(TypeError, "missing required argument"):
             objc.registerMetaDataForSelector()
 
         with self.assertRaisesRegex(TypeError, "metadata should be a dictionary"):
             objc.registerMetaDataForSelector(b"Class", b"selector", 42)
+
+    def test_by_reference_voidp(self):
+        class OC_ByRefVoidP(NSObject):
+            def makeBuffer_len_(self, buf, size):
+                return [buf, size]
+
+        self.assertArgHasType(OC_ByRefVoidP.makeBuffer_len_, 0, b"n^v")
+        obj = OC_ByRefVoidP.alloc().init()
+        value = OC_MetaDataTest.makeBuffer_len_on_(b"foo", 3, obj)
+        self.assertIsInstance(value, list)
+        self.assertIsInstance(value[0], int)
+        self.assertIsInstance(value[1], int)
+
+    def test_by_reference_deref_result(self):
+        obj = OC_MetaDataTest()
+        with self.assertRaisesRegex(
+            objc.error, "using 'deref_result' metadata for an argument"
+        ):
+            obj.derefResultArgument_(42)
+
+        class OC_MetaDataTestDerefRresult(OC_MetaDataTest):
+            def derefResultArgument_(self, value):
+                return [value]
+
+        with self.assertRaisesRegex(
+            objc.error, "using 'deref_result_pointer' for an argumen"
+        ):
+            OC_MetaDataTest.derefResultArgument_on_(99, OC_MetaDataTestDerefRresult())
+
+    def test_inout_regular_types(self):
+        class OC_MetaDataTestInOutRegular(OC_MetaDataTest):
+            def intInArg_(self, a):
+                return 4 << a
+
+            def intOutArg_(self, a):
+                return 4 + a
+
+            def intInOutArg_(self, a):
+                return 4 * a
+
+        obj = OC_MetaDataTestInOutRegular()
+
+        self.assertEqual(OC_MetaDataTest.intInArg_on_(8, obj), 4 << 8)
+        self.assertEqual(OC_MetaDataTest.intOutArg_on_(8, obj), 4 + 8)
+        self.assertEqual(OC_MetaDataTest.intInOutArg_on_(8, obj), 4 * 8)
+
+    def test_block_without_meta(self):
+        seen_blocks = []
+
+        class OC_MetaDataTestBlockNoMeta(OC_MetaDataTest):
+            def callBlock_(self, b):
+                seen_blocks.append(b)
+                return [b(), b()]
+
+        obj = OC_MetaDataTestBlockNoMeta()
+        v = OC_MetaDataTest.callBlockOn_(obj)
+        self.assertEqual(v, ["hello", "hello"])
+
+        # This is a bit dodgy, but helps hitting a code path
+        # where the block is already known to the bridge.
+        OC_MetaDataTest.callBlockOn_(obj)
+        self.assertEqual(len(seen_blocks), 2)
+        self.assertIs(seen_blocks[0], seen_blocks[1])
+
+        block = OC_MetaDataTest().getAnonBlock()
+
+        # XXX: The 'eval' is a hack, signature objects are
+        #      not introspectable and adding more complexity
+        #      for testing would not be ideal.
+        signature = eval(str(block.__block_signature__))
+
+        self.assertEqual(len(signature["arguments"]), 3)
+        self.assertEqual(signature["arguments"][0]["type"], b"@?")
+        self.assertEqual(signature["arguments"][1]["type"], b"i")
+        self.assertEqual(signature["arguments"][2]["type"], b"f")

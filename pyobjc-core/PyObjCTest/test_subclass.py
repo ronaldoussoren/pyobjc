@@ -156,6 +156,28 @@ class TestSubclassing(TestCase):
                 def method(self):
                     pass
 
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError,
+            "signature that is not compatible with super-class",
+        ):
+
+            class OC_SubClassingMethodSignatureChild2(
+                OC_SubClassingMethodSignatureBase
+            ):
+                @objc.objc_method(signature=b"d@:", isclass=True)
+                def alloc(self):
+                    pass
+
+    def test_adding_dict(self):
+        # XXX: See class-builder, this locks in current behaviour
+        #      but is questionable.
+        class OC_SubClassingWithDunderDict(NSObject):
+            __dict__ = {"a": 42}
+
+        self.assertNotIn("a", OC_SubClassingWithDunderDict.__dict__)
+        o = OC_SubClassingWithDunderDict()
+        self.assertNotIn("a", o.__dict__)
+
 
 class TestSelectors(TestCase):
     def testSelectorRepr(self):
@@ -348,6 +370,29 @@ class TestOverridingSpecials(TestCase):
         del pool
 
         self.assertEqual(aList, ["retain", "release", "release", "__del__"])
+
+        o = ClassWithRetaining.alloc().init()
+        v = o.__del__
+        self.assertIsInstance(v, types.MethodType)
+
+    def test_noncallable_del(self):
+        # Ensure's that a non-callable __del__ results in the
+        # same behaviour as for normal Python classes.
+        class ClassWithNonCallableDel(NSObject):
+            __del__ = 42
+
+        orig_stderr = sys.stderr
+        try:
+            sys.stderr = captured_stderr = io.StringIO()
+
+            o = ClassWithNonCallableDel.alloc().init()
+            del o
+
+        finally:
+            sys.stderr = orig_stderr
+
+        self.assertIn("Exception ignored in: 42", captured_stderr.getvalue())
+        self.assertIn("'int' object is not callable", captured_stderr.getvalue())
 
     def testOverrideSpecialMethods_retainCount(self):
         aList = []
@@ -1034,6 +1079,20 @@ class TestSelectorEdgeCases(TestCase):
 
         value = objc.selector(someSelector)
         self.assertIs(value.callable, someSelector.callable)
+
+    def test_void_selector_returns_value(self):
+        class OC_TestVoidSelectorReturnsValue(NSObject):
+            @objc.objc_method(signature=b"v@:")
+            def method(self):
+                return 42
+
+        self.assertResultHasType(OC_TestVoidSelectorReturnsValue.method, b"v")
+        o = OC_TestVoidSelectorReturnsValue()
+
+        with self.assertRaisesRegex(
+            ValueError, "method: did not return None, expecting void return value"
+        ):
+            OC_ObjectInt.invokeSelector_of_(b"method", o)
 
     def test_selector_from_bound_method(self):
         class Helper:
