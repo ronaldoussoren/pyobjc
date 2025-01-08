@@ -371,6 +371,29 @@ class TestOverridingSpecials(TestCase):
 
         self.assertEqual(aList, ["retain", "release", "release", "__del__"])
 
+        o = ClassWithRetaining.alloc().init()
+        v = o.__del__
+        self.assertIsInstance(v, types.MethodType)
+
+    def test_noncallable_del(self):
+        # Ensure's that a non-callable __del__ results in the
+        # same behaviour as for normal Python classes.
+        class ClassWithNonCallableDel(NSObject):
+            __del__ = 42
+
+        orig_stderr = sys.stderr
+        try:
+            sys.stderr = captured_stderr = io.StringIO()
+
+            o = ClassWithNonCallableDel.alloc().init()
+            del o
+
+        finally:
+            sys.stderr = orig_stderr
+
+        self.assertIn("Exception ignored in: 42", captured_stderr.getvalue())
+        self.assertIn("'int' object is not callable", captured_stderr.getvalue())
+
     def testOverrideSpecialMethods_retainCount(self):
         aList = []
 

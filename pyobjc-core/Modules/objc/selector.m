@@ -1167,12 +1167,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     PyObjCNativeSelector* result;
     const char*           native_signature = signature;
 
-    if (signature == NULL) {
-        /* XXX: Once all callers have been updated: make this an assertion */
-        PyErr_Format(PyExc_RuntimeError, "PyObjCSelector_NewNative: nil signature for %s",
-                     sel_getName(selector));
-        return NULL;
-    }
+    PyObjC_Assert(signature != NULL, NULL);
 
     result = PyObject_New(PyObjCNativeSelector, (PyTypeObject*)PyObjCNativeSelector_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE

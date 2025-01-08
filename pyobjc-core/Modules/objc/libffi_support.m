@@ -43,6 +43,23 @@ static const char gCharEncoding[] = {_C_CHR, 0};
 #error "Need FFI_CLOSURES!"
 #endif
 
+// LCOV_EXCL_START
+static const char*
+ffi_status_str(ffi_status rv)
+{
+    switch (rv) {
+    case FFI_OK:
+        return "OK";
+    case FFI_BAD_TYPEDEF:
+        return "bad typedef";
+    case FFI_BAD_ABI:
+        return "bad ABI";
+    default:
+        return "UNKNOWN";
+    }
+}
+// LCOV_EXCL_STOP
+
 
 static PyObject* array_types = NULL;
 static PyObject* struct_types = NULL;
@@ -163,21 +180,25 @@ num_struct_fields(const char* orig_argtype)
     PyObjC_Assert(*argtype == _C_STRUCT_B, -1);
     while (*argtype != _C_STRUCT_E && *argtype != '=')
         argtype++;
-    if (*argtype == _C_STRUCT_E)
-        return 0;
+    if (*argtype == _C_STRUCT_E) {
+        return 0; // LCOV_EXCL_LINE
+    }
 
     argtype++;
     while (*argtype != _C_STRUCT_E) {
-        if (*argtype == '"') {
+        if (*argtype == '"') { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             /* Skip field name */
             argtype++;
-            while (*argtype++ != '"') {
+            while (*argtype != '\0' && *argtype++ != '"') {
             }
+            // LCOV_EXCL_STOP
         }
 
         argtype = PyObjCRT_SkipTypeSpec(argtype);
-        if (argtype == NULL)
-            return -1;
+        if (argtype == NULL) { // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_ECL_LINE
+        }
         res++;
     }
     return res;
@@ -435,12 +456,14 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
         curtype++;
 
         while (*curtype != _C_STRUCT_E) {
-            if (*curtype == '"') {
+            if (*curtype == '"') { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 /* Skip field name */
                 curtype++;
-                while (*curtype++ != '"') {
+                while (*curtype != '\0' && *curtype++ != '"') {
                 }
-            }
+                // LCOV_EXCL_STOP
+            } // LCOV_EXCL_LINE
 
             type->elements[field_count] = PyObjCFFI_Typestr2FFI(curtype);
 
@@ -503,8 +526,8 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
 ffi_type* _Nullable PyObjCFFI_Typestr2FFI(const char* argtype)
 {
     const char* _Nullable t = PyObjCRT_SkipTypeQualifiers(argtype);
-    if (t == NULL)
-        return NULL;
+    if (t == NULL) // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     argtype = t;
     switch (*argtype) {
     case _C_VOID:
@@ -4761,7 +4784,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
         r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist);
     }
     if (r != FFI_OK) {
-        PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
+        PyErr_Format(PyObjCExc_Error, "Cannot setup FFI CIF: %s", ffi_status_str((ffi_status)r));
         goto error_cleanup;
     }
 
@@ -5235,23 +5258,6 @@ error_cleanup:
  * as an initial argument), and is set to 0 otherwise.
  */
 
-/* Only called from code that's unreachable during testing */
-// LCOV_EXCL_START
-static const char*
-ffi_status_str(ffi_status rv)
-{
-    switch (rv) {
-    case FFI_OK:
-        return "OK";
-    case FFI_BAD_TYPEDEF:
-        return "bad typedef";
-    case FFI_BAD_ABI:
-        return "bad ABI";
-    default:
-        return "UNKNOWN";
-    }
-}
-// LCOV_EXCL_STOP
 
 ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 {
@@ -5334,8 +5340,8 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
         // LCOV_EXCL_START
         PyMem_Free(cif);
         PyMem_Free(cl_arg_types);
-        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI CIF for %s: err=%d [%s]",
-                     methinfo->signature, rv, ffi_status_str(rv));
+        PyErr_Format(PyObjCExc_Error, "Cannot create FFI CIF for %s: %s",
+                     methinfo->signature, ffi_status_str(rv));
         return NULL;
         // LCOV_EXCL_STOP
     }

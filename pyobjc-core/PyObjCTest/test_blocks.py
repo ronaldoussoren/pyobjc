@@ -1069,6 +1069,8 @@ class TestInvalidCalling(TestCase):
         obj = OCTestBlock.alloc().init()
         block = obj.getIntBlock()
 
+        self.assertIs(obj.__block_signature__, None)
+
         with self.assertRaisesRegex(TypeError, "not a block"):
             mod._block_call(42, block.__block_signature__, (), {})
 

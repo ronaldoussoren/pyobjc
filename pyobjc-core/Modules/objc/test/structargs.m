@@ -10,6 +10,9 @@ struct BufferStruct {
     int   buffer_size;
 };
 
+struct empty {
+};
+
 @interface StructArgClass : NSObject {
 }
 - (NSString*)compP:(NSPoint)aPoint aRect:(NSRect)aRect anOp:(int)op;
@@ -19,6 +22,7 @@ struct BufferStruct {
 - (NSRect)someRectWithX:(int)x Y:(int)y H:(int)h W:(int)w;
 - (NSRect)someRectWithObject:(StructArgClass*)o X:(int)x Y:(int)y H:(int)h W:(int)w;
 - (NSData*)dataFromBuffer:(struct BufferStruct*)buf;
+- (int)callWithEmpty:(struct empty)empty;
 @end
 
 @implementation StructArgClass
@@ -64,6 +68,11 @@ ident(size_t v)
 - (NSData*)dataFromBuffer:(in struct BufferStruct*)buf
 {
     return [NSData dataWithBytes:buf->buffer length:buf->buffer_size];
+}
+
+- (int)callWithEmpty:(struct empty)empty
+{
+    return 99;
 }
 
 @end

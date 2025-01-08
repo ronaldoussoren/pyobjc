@@ -1,6 +1,7 @@
 import functools
 import sys
 import gc
+import io
 import warnings
 import types
 
@@ -165,6 +166,14 @@ class TestRegressions(TestCase):
         o = structargs.StructArgClass.alloc().init()
         v = o.compP_aRect_anOp_((1, 2), ((3, 4), (5, 6)), 7)
         self.assertEqual(v, "aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
+
+    def test_empty_struct(self):
+        o = structargs.StructArgClass.alloc().init()
+
+        # libffi doesn't support calling functions with an empty struct
+        # arguments (e.g. "struct empty {}", even if C compilers do.
+        with self.assertRaisesRegex(objc.error, "Cannot setup FFI CIF: bad typedef"):
+            self.assertEqual(o.callWithEmpty_(()), 99)
 
     def testInitialize(self):
         calls = []
@@ -716,3 +725,46 @@ class TestMagic(TestCase):
         o = NSArray.alloc().init()
 
         self.assertFalse(o.__pyobjc_magic_coookie__())
+
+
+class TestISA(TestCase):
+    def test_base(self):
+        o = NSArray()
+        cls = o.pyobjc_ISA
+        self.assertIsSubclass(cls, NSArray)
+
+        o = NSArray.alloc()
+        o.init()
+        with self.assertRaisesRegex(
+            AttributeError, "cannot access attribute 'pyobjc_ISA' of NIL"
+        ):
+            o.pyobjc_ISA
+
+
+class DeallocRevives(NSObject):
+    def __del__(self):
+        global VALUE
+        VALUE = self
+
+
+class TestDelRevives(TestCase):
+    def test_basic(self):
+        global VALUE
+
+        VALUE = None
+        o = DeallocRevives()
+
+        orig_stderr = sys.stderr
+        try:
+            sys.stderr = captured_stderr = io.StringIO()
+            del o
+
+        finally:
+            sys.stderr = orig_stderr
+
+        self.assertIn(
+            "revived Objective-C object of type DeallocRevives. Object is zero-ed out.",
+            captured_stderr.getvalue(),
+        )
+
+        self.assertEqual(repr(VALUE), "<DeallocRevives objective-c instance 0x0>")

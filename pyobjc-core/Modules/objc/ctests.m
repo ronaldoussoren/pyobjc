@@ -12,6 +12,8 @@
 
 // LCOV_BR_EXCL_START
 // LCOV_EXCL_START
+//
+struct empty {};
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -149,6 +151,8 @@ END_UNITTEST
 
 BEGIN_UNITTEST(StructSize)
 
+ASSERT_EQUALS(sizeof(struct empty), PyObjCRT_SizeOfType(@encode(struct empty)), "%d");
+
 ASSERT_EQUALS(sizeof(struct Struct1), PyObjCRT_SizeOfType(@encode(struct Struct1)), "%d");
 
 ASSERT_EQUALS(sizeof(struct Struct2), PyObjCRT_SizeOfType(@encode(struct Struct2)), "%d");
@@ -162,6 +166,9 @@ ASSERT_EQUALS(sizeof(NSRect), PyObjCRT_SizeOfType(@encode(NSRect)), "%d");
 END_UNITTEST
 
 BEGIN_UNITTEST(StructAlign)
+
+ASSERT_EQUALS(__alignof__(struct empty), PyObjCRT_AlignOfType(@encode(struct empty)),
+              "%d");
 
 ASSERT_EQUALS(__alignof__(struct Struct1), PyObjCRT_AlignOfType(@encode(struct Struct1)),
               "%d");

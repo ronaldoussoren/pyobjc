@@ -325,7 +325,7 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
         memcpy((void*)&value, _pvalue, sizeof(ctype)); \
         PyObject*    rv     = PyTuple_New(elemcount);                                    \
         if (rv == NULL) {   /* LCOV_BR_EXCL_LINE */                                      \
-            return NULL;    /* LOCV_EXCL_LINE */                                         \
+            return NULL;    /* LCOV_EXCL_LINE */                                         \
         }                                                                                \
                                                                                          \
         for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
@@ -1010,10 +1010,6 @@ PyObjCRT_AlignOfType(const char* start_type)
         return PyObjCRT_AlignOfType(type);
 
     case _C_STRUCT_B: {
-        struct {
-            int    x;
-            double y;
-        } fooalign;
         while (*type != _C_STRUCT_E && *type++ != '=') /* do nothing */
             ;
         if (*type != _C_STRUCT_E) {
@@ -1046,7 +1042,7 @@ PyObjCRT_AlignOfType(const char* start_type)
             return align;
 
         } else {
-            return __alignof__(fooalign);
+            return __alignof__(struct empty {});
         }
     }
 
