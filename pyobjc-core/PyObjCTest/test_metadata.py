@@ -1072,6 +1072,7 @@ class TestArraysIn(TestCase):
 
         class OC_MetaDataTestArrayArg(OC_MetaDataTest):
             def make8Tuple_(self, a):
+                print(a)
                 return [a]
 
             def make8TupleB_(self, a):
@@ -1079,6 +1080,9 @@ class TestArraysIn(TestCase):
 
         obj = OC_MetaDataTestArrayArg()
         a_list = [n + 2.5 for n in range(8)]
+        v = OC_MetaDataTest.make8Tuple_on_(a_list, obj)
+        self.assertEqual(v, [tuple(a_list)])
+
         a = make_array("d", a_list)
         v = OC_MetaDataTest.make8Tuple_on_(a, obj)
         self.assertEqual(v, [tuple(a_list)])

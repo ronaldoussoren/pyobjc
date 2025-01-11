@@ -212,7 +212,6 @@ varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject
         int       r = depythonify_c_value(
             self->typestr, v, ((unsigned char*)self->array) + (idx * self->itemsize));
         if (r == -1) {
-            Py_DECREF(seq);
             result = -1;
             break;
         }
