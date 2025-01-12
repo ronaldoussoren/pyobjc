@@ -11,56 +11,37 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 
 from _common_definitions import (
     DIST_DIR,
-    PY_VERSIONS,
     TOP_DIR,
     setup_variant,
     system_report,
     variants,
+    virtualenv,
+    detect_pyversions,
 )
 
 WHEEL_BUILD_FAILURE_IS_ERROR = True
 
+if os.isatty(sys.stdout.fileno()):
+    RED = "\033[31m"
+    BOLD = "\033[1m"
+    RESET = "\033[39m\033[m"
+else:
+    RED = ""
+    BOLD = ""
+    RESET = ""
+
 
 def files_matching(pattern, dirname):
-    return fnmatch.filter(os.listdir(dirname), pattern)
+    result = set(fnmatch.filter(os.listdir(dirname), pattern))
+    result.update(fnmatch.filter(os.listdir(dirname), pattern.lower()))
+    return sorted(result)
 
 
-_detected_versions = None
 _latest_version = None
-
-
-def is_usable_release(ver):
-    if ver.endswith("t"):
-        path = os.path.join("/Library/Frameworks/PythonT.framework/Versions", ver[:-1])
-    else:
-        path = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
-
-    if not os.path.exists(path):
-        return False
-
-    output = subprocess.check_output([f"{path}/bin/python3", "--version"]).decode()
-    if "a" in output.strip():
-        # Alpha release
-        return False
-
-    return True
-
-
-def detect_pyversions():
-    global _detected_versions
-    if _detected_versions is not None:
-        return _detected_versions
-
-    result = []
-    for ver in PY_VERSIONS:
-        if is_usable_release(ver):
-            result.append(ver)
-
-    _detected_versions = result
-    return _detected_versions
 
 
 def latest_version():
@@ -75,6 +56,32 @@ def latest_version():
         return _latest_version
 
     raise RuntimeError("Cannot find latest version")
+
+
+def has_extensions(source_root):
+    """
+    Return True if the project at ``source_root`` has
+    a C extension
+    """
+    with open(f"{source_root}/setup.py") as fp:
+        if "Extension(" in fp.read():
+            return True
+    return False
+
+
+def uses_limited_api(source_root):
+    """
+    Return True if the project at ``source_root``
+    uses the limited API/stable ABI
+    """
+    with open(f"{source_root}/setup.py") as fp:
+        for ln in fp:
+            if ln.lstrip().startswith("#"):
+                continue
+            if '"py_limited_api"' in ln:
+                return True
+
+    return False
 
 
 def main():
@@ -92,69 +99,115 @@ def main():
             names.append(nm)
 
     failed = []
-    for nm in names:
-        # Collect sdist archive with most recent python version.
-        status = subprocess.call(
-            [
-                f"python{latest_version()}",
-                "setup.py",
-                "sdist",
-                f"--dist-dir={DIST_DIR}",
-            ],
-            cwd=os.path.join(TOP_DIR, nm),
-        )
-        if status != 0:
-            if WHEEL_BUILD_FAILURE_IS_ERROR:
-                raise RuntimeError(f"Building wheel for {nm} failed")
 
-            else:
-                print(f"WARNING: Building wheel for {nm} failed")
-                failed.append((nm, "sdist", ""))
+    before = time.time()
+    for ver in detect_pyversions():
+        for variant in variants(ver):
+            if any(variant.endswith(x) for x in ("-x86_64", "-arm64")):
+                # Don't create single architecture wheels
+                continue
 
-        for ver in detect_pyversions():
-            for variant in variants(ver):
-                if ver == "3.8":
-                    pass
-                elif any(variant.endswith(x) for x in ("-x86_64", "-arm64")):
-                    # Don't create single architecture wheels for anything other than
-                    # Python 3.8 (where the universal2 build is only for macOS 11 or later)
-                    continue
-                setup_variant(ver, variant)
-                status = subprocess.call(
-                    [
-                        f"python{ver}",
-                        "setup.py",
-                        "build_ext",
-                        "-j",
-                        str(os.cpu_count()),
-                        "bdist_wheel",
-                        f"--dist-dir={DIST_DIR}",
-                    ],
-                    cwd=os.path.join(TOP_DIR, nm),
-                )
+            setup_variant(ver, variant)
 
-                if status != 0:
-                    if WHEEL_BUILD_FAILURE_IS_ERROR:
-                        raise RuntimeError(
-                            f"WARNING: Building wheel for {nm} failed (python {variant})"
+            print(f"{BOLD}Setup {variant}{RESET}")
+            with virtualenv(f"python{ver}") as interpreter:
+                for nm in names:
+                    source_root = f"{TOP_DIR}/{nm}"
+
+                    if ver == latest_version():
+                        # Collect sdist archive with most recent python version.
+                        print(f"{BOLD}{nm}:{RESET} Build sdist for Python {variant}")
+                        status = subprocess.call(
+                            [
+                                interpreter,
+                                "setup.py",
+                                "sdist",
+                                f"--dist-dir={DIST_DIR}",
+                            ],
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL,
+                            cwd=source_root,
                         )
+                        if status != 0:
+                            if WHEEL_BUILD_FAILURE_IS_ERROR:
+                                raise RuntimeError(f"Building wheel for {nm} failed")
 
+                            else:
+                                print(
+                                    f"{RED}WARNING: Building wheel for {nm} failed{RESET}"
+                                )
+                                failed.append((nm, "sdist", ""))
                     else:
                         print(
-                            f"WARNING: Building wheel for {nm} failed (python {variant})"
+                            f"{BOLD}{nm}:{RESET} Skip sdist for Python {variant} (not {latest_version()})"
                         )
-                        failed.append((nm, "wheel", variant))
+
+                    if not has_extensions(source_root):
+                        # For projects without a C extension build
+                        # the wheel using the most recent Python
+                        # version
+                        if ver != latest_version() and "-" not in variant:
+                            print(
+                                f"{BOLD}{nm}:{RESET} Skip wheel for Python {variant} (no extension, not {latest_version()})"
+                            )
+                            continue
+
+                    if uses_limited_api(source_root):
+                        # Use the olderst version to build binaries
+                        # for wheels using the stable ABI. That's
+                        # because the CPython documentation mention
+                        # that the headers are not safe for back deploying.
+                        if (
+                            "t" not in ver
+                            and ver != detect_pyversions()[0]
+                            and "-" not in variant
+                        ):
+                            print(
+                                f"{BOLD}{nm}:{RESET} Skip wheel for Python {variant} (limited ABI, not {detect_pyversions()[0]})"
+                            )
+                            continue
+
+                    print(f"{BOLD}{nm}:{RESET} Building wheel for Python {variant}")
+                    status = subprocess.call(
+                        [
+                            interpreter,
+                            "setup.py",
+                            "build_ext",
+                            "-j",
+                            str(os.cpu_count()),
+                            "bdist_wheel",
+                            f"--dist-dir={DIST_DIR}",
+                        ],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        cwd=source_root,
+                    )
+
+                    if status != 0:
+                        if WHEEL_BUILD_FAILURE_IS_ERROR:
+                            raise RuntimeError(
+                                f"WARNING: Building wheel for {nm} failed (python {variant})"
+                            )
+
+                        else:
+                            print(
+                                f"{RED}WARNING: Building wheel for {nm} failed (python {variant}){RESET}"
+                            )
+                            failed.append((nm, "wheel", variant))
+
+    after = time.time()
+    total_seconds = int(after - before)
 
     print()
-    print("Collected files")
-    print("===============")
+    print(f"{BOLD}Collected files{RESET}")
+    print(f"{BOLD}==============={RESET}")
     print()
     for nm in names:
         if nm == "pyobjc":
             continue
         have_wheel = False
         pattern = nm.replace("-", "?") + "-*"
-        print(f"{nm}:")
+        print(f"{BOLD}{nm}:{RESET}")
         for fn in sorted(files_matching(pattern, DIST_DIR)):
             if fn.endswith(".whl"):
                 have_wheel = True
@@ -165,8 +218,8 @@ def main():
 
     if failed:
         print()
-        print("Build failures")
-        print("==============")
+        print(f"{BOLD}Build failures{RESET}")
+        print(f"{BOLD}=============={RESET}")
         print()
         for nm, command, ver in failed:
             if ver:
@@ -174,8 +227,16 @@ def main():
             else:
                 print(f"{nm} {command}")
 
-        sys.exit(0)
+        print()
+        print(
+            f"{BOLD}Failed build took {total_seconds // 3600}:{(total_seconds // 60) % 60}:{total_seconds % 60}{RESET}"
+        )
+        sys.exit(1)
 
+    print()
+    print(
+        f"{BOLD}Build took {total_seconds // 3600}:{(total_seconds // 60) % 60}:{total_seconds % 60}{RESET}"
+    )
     sys.exit(0)
 
 

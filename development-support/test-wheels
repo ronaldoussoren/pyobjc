@@ -10,16 +10,27 @@ import sys
 
 from _common_definitions import (
     DIST_DIR,
-    PY_VERSIONS,
     setup_variant,
     variants,
     virtualenv,
+    detect_pyversions,
 )
+
+if os.isatty(sys.stdout.fileno()):
+    RED = "\033[31m"
+    BOLD = "\033[1m"
+    RESET = "\033[39m\033[m"
+else:
+    RED = ""
+    BOLD = ""
+    RESET = ""
 
 
 def pyobjc_ver():
     for nm in os.listdir(DIST_DIR):
-        if nm.startswith("pyobjc-core"):
+        if not nm.endswith(".tar.gz"):
+            continue
+        if nm.startswith("pyobjc-core") or nm.startswith("pyobjc_core"):
             ver = nm.split("-")[-1].replace(".tar.gz", "")
             return ver
 
@@ -27,11 +38,16 @@ def pyobjc_ver():
 
 
 def main():
-    for ver in PY_VERSIONS:
+    install_version = pyobjc_ver()
+
+    for ver in detect_pyversions():
         for variant in variants(ver):
+            print(f"{BOLD}Testing PyObjC {install_version} for Python {variant}{RESET}")
             setup_variant(ver, variant)
 
+            print("  create virtual env")
             with virtualenv(f"python{ver}") as interpreter:
+                print("  installing")
                 log = subprocess.check_output(
                     [
                         interpreter,
@@ -41,11 +57,13 @@ def main():
                         DIST_DIR,
                         "--no-index",
                         "--no-cache-dir",
-                        f"pyobjc=={pyobjc_ver()}",
+                        "--only-binary",
+                        ":all:",
+                        f"pyobjc=={install_version}",
                     ]
                 ).decode("utf-8")
 
-                sys.stdout.write(log)
+                # sys.stdout.write(log)
                 if "Building wheels for collected packages" in log:
                     print(f"WARNING: non-wheel install: {ver}")
                     sys.exit(1)
@@ -57,6 +75,7 @@ def main():
                         print(f"WARNING: non-wheel install: {ver}")
                         sys.exit(1)
 
+                print("  testing")
                 subprocess.check_call(
                     [
                         interpreter,

@@ -25,6 +25,41 @@ TEST_REPORT_DIR = os.path.join(TOP_DIR, "test-results", "html")
 TEST_TMPL_DIR = os.path.join(_basedir, "templates")
 TEST_STATIC_DIR = os.path.join(_basedir, "static")
 
+_detected_versions = None
+
+
+def is_usable_release(ver):
+    if ver.endswith("t"):
+        path = os.path.join("/Library/Frameworks/PythonT.framework/Versions", ver[:-1])
+        command = "python3t"
+    else:
+        path = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+        command = "python3"
+
+    if not os.path.exists(path):
+        return False
+
+    output = subprocess.check_output([f"{path}/bin/{command}", "--version"]).decode()
+    if "a" in output.strip():
+        # Alpha release
+        return False
+
+    return True
+
+
+def detect_pyversions():
+    global _detected_versions
+    if _detected_versions is not None:
+        return _detected_versions
+
+    result = []
+    for ver in PY_VERSIONS:
+        if is_usable_release(ver):
+            result.append(ver)
+
+    _detected_versions = result
+    return _detected_versions
+
 
 def mac_ver():
     # Return a macOS version string that includes the Build ID
@@ -91,24 +126,39 @@ def system_report(path, py_versions):
             fp.write(f"Python {ver}:         {py_version(ver)}\n")
 
 
-def _install_virtualenv_software(interpreter):
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "pip"])
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "setuptools"])
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "wheel"])
-    subprocess.run([interpreter, "-mpip", "install", "-U", "twine"])
+def _install_virtualenv_software(interpreter, silent):
+    subprocess.check_call(
+        [interpreter, "-mpip", "install", "-U", "pip"],
+        **({"stdout": subprocess.DEVNULL} if silent else {}),
+    )
+    subprocess.check_call(
+        [interpreter, "-mpip", "install", "-U", "setuptools"],
+        **({"stdout": subprocess.DEVNULL} if silent else {}),
+    )
+    subprocess.check_call(
+        [interpreter, "-mpip", "install", "-U", "wheel"],
+        **({"stdout": subprocess.DEVNULL} if silent else {}),
+    )
+    subprocess.run(
+        [interpreter, "-mpip", "install", "-U", "twine"],
+        **({"stdout": subprocess.DEVNULL} if silent else {}),
+    )
 
 
 @contextlib.contextmanager
-def virtualenv(interpreter):
+def virtualenv(interpreter, silent=True):
     if os.path.exists("test-env"):
         shutil.rmtree("test-env")
 
-    subprocess.check_call([interpreter, "-mvenv", "test-env"])
+    subprocess.check_call(
+        [interpreter, "-mvenv", "test-env"],
+        **({"stdout": subprocess.DEVNULL} if silent else {}),
+    )
     if not os.path.exists("test-env/bin/python"):
         raise RuntimeError("VirtualEnv incomplete")
 
     try:
-        _install_virtualenv_software("test-env/bin/python")
+        _install_virtualenv_software("test-env/bin/python", silent=silent)
         yield os.path.abspath("test-env/bin/python")
 
     finally:
