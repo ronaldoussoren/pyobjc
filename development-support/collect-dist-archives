@@ -35,13 +35,15 @@ _latest_version = None
 def is_usable_release(ver):
     if ver.endswith("t"):
         path = os.path.join("/Library/Frameworks/PythonT.framework/Versions", ver[:-1])
+        command = "python3t"
     else:
         path = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+        command = "python3"
 
     if not os.path.exists(path):
         return False
 
-    output = subprocess.check_output([f"{path}/bin/python3", "--version"]).decode()
+    output = subprocess.check_output([f"{path}/bin/{command}", "--version"]).decode()
     if "a" in output.strip():
         # Alpha release
         return False
