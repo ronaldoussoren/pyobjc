@@ -3,17 +3,8 @@ import subprocess
 import pathlib
 import configparser
 import glob
-import sys
-import os
 
-if os.isatty(sys.stdout.fileno()):
-    RED = "\033[31m"
-    BOLD = "\033[1m"
-    RESET = "\033[39m\033[m"
-else:
-    RED = ""
-    BOLD = ""
-    RESET = ""
+from _common_definitions import RED, BOLD, RESET
 
 IGNORE = {
     # Frameworks not present in the latest SDK
@@ -41,9 +32,7 @@ for idx, nm in enumerate(all_frameworks):
             continue
         print()
         if len(all_sections) == 1:
-            print(
-                f"{BOLD}[{idx+1}/{len(all_frameworks)}] Processing {nm}{RESET}"
-            )
+            print(f"{BOLD}[{idx+1}/{len(all_frameworks)}] Processing {nm}{RESET}")
         else:
             print(
                 f"{BOLD}[{idx+1}/{len(all_frameworks)}; {sec_idx+1}/{len(all_sections)}] Processing {nm} - {section}{RESET}"

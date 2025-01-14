@@ -10,6 +10,7 @@ import os
 import shutil
 import subprocess
 import time
+import sys
 from _topsort import topological_sort
 
 
@@ -25,10 +26,20 @@ TEST_REPORT_DIR = os.path.join(TOP_DIR, "test-results", "html")
 TEST_TMPL_DIR = os.path.join(_basedir, "templates")
 TEST_STATIC_DIR = os.path.join(_basedir, "static")
 
+# "colors" for pretty output
+if os.isatty(sys.stdout.fileno()):
+    RED = "\033[31m"
+    BOLD = "\033[1m"
+    RESET = "\033[39m\033[m"
+else:
+    RED = ""
+    BOLD = ""
+    RESET = ""
+
 _detected_versions = None
 
 
-def is_usable_release(ver):
+def is_usable_release(ver, *, include_alpha=False):
     if ver.endswith("t"):
         path = os.path.join("/Library/Frameworks/PythonT.framework/Versions", ver[:-1])
         command = "python3t"
@@ -39,6 +50,9 @@ def is_usable_release(ver):
     if not os.path.exists(path):
         return False
 
+    if include_alpha:
+        return True
+
     output = subprocess.check_output([f"{path}/bin/{command}", "--version"]).decode()
     if "a" in output.strip():
         # Alpha release
@@ -47,14 +61,14 @@ def is_usable_release(ver):
     return True
 
 
-def detect_pyversions():
+def detect_pyversions(*, include_alpha=False):
     global _detected_versions
     if _detected_versions is not None:
         return _detected_versions
 
     result = []
     for ver in PY_VERSIONS:
-        if is_usable_release(ver):
+        if is_usable_release(ver, include_alpha=include_alpha):
             result.append(ver)
 
     _detected_versions = result
@@ -166,9 +180,7 @@ def virtualenv(interpreter, silent=True):
         shutil.rmtree("test-env")
 
 
-def variants(
-    ver, permitted_variants=("64bit", "x86_64", "arm64", "intel", "universal2")
-):
+def variants(ver, permitted_variants=("universal2", "x86_64", "arm64")):
     if ver.endswith("t"):
         fwk_path = "/Library/Frameworks/PythonT.framework/Versions"
     else:

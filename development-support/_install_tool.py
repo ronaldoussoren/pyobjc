@@ -10,18 +10,9 @@ import shutil
 import subprocess
 import sys
 from sysconfig import get_config_var
+from _common_definitions import RED, BOLD, RESET
 
 TOPDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-if os.isatty(sys.stdout.fileno()):
-    RED = "\033[31m"
-    BOLD = "\033[1m"
-    RESET = "\033[39m\033[m"
-else:
-    RED = ""
-    BOLD = ""
-    RESET = ""
-
 
 # Module defining a topological sort function, see
 # <http://www.bitformation.com/art/python_toposort.html> for more
