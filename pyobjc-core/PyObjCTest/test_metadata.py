@@ -1078,6 +1078,7 @@ class TestArraysIn(TestCase):
                 return ["B", a]
 
         obj = OC_MetaDataTestArrayArg()
+        self.assertArgHasType(obj.make8Tuple_, 0, b"n[8d]")
         a_list = [n + 2.5 for n in range(8)]
         a = make_array("d", a_list)
         v = OC_MetaDataTest.make8Tuple_on_(a, obj)

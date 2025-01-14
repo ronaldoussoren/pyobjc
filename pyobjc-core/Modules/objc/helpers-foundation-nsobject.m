@@ -48,10 +48,13 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
 
     } else {
         spr.super_class = (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method));
-        if (PyObjCClass_Check(self)) {
+        if (PyObjCClass_Check(self)) { // LCOV_BR_EXCL_LINE
             spr.receiver = (id _Nonnull)PyObjCClass_GetClass(self);
         } else {
+            /* It is not possible to resolve class methods through an instance */
+            // LCOV_EXCL_START
             spr.receiver = (id _Nonnull)object_getClass(PyObjCObject_GetObject(self));
+            // LCOV_EXCL_STOP
         }
         aSel = PyObjCSelector_GetSelector(method);
 
@@ -187,8 +190,8 @@ mkimp_NSObject_dealloc(PyObject*              callable,
 
       PyObjC_BEGIN_WITH_GIL
           pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              PyObjC_GIL_FORWARD_EXC();
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
           }
 
           PyObject* args[2] = {NULL, pyself};
@@ -197,7 +200,7 @@ mkimp_NSObject_dealloc(PyObject*              callable,
           PyObjCObject_ReleaseTransient(pyself, cookie);
           if (result == NULL) {
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_BR_EXCL_LINE
 
           if (unlikely(result != Py_None)) {
               PyErr_Format(PyExc_TypeError,
@@ -205,7 +208,7 @@ mkimp_NSObject_dealloc(PyObject*              callable,
                            " of %s",
                            Py_TYPE(result)->tp_name);
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_BR_EXCL_LINE
 
           Py_DECREF(result);
 
@@ -338,9 +341,9 @@ mkimp_NSObject_release(PyObject*              callable,
 
       PyObjC_BEGIN_WITH_GIL
           pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              PyObjC_GIL_FORWARD_EXC();
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, pyself};
           result            = PyObject_Vectorcall(callable, args + 1,
@@ -380,9 +383,9 @@ mkimp_NSObject_retain(PyObject*              callable,
 
       PyObjC_BEGIN_WITH_GIL
           pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              PyObjC_GIL_FORWARD_EXC();
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           PyObject* pyargs[2] = {NULL, pyself};
           result              = PyObject_Vectorcall(callable, pyargs + 1,

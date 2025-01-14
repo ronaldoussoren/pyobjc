@@ -133,6 +133,9 @@ class TestRescanClass(TestCase):
         ):
             objc._rescanClass(naam="NSObject")
 
+        with self.assertRaisesRegex(TypeError, "missing required argument"):
+            objc._updatingMetadata()
+
     def test_valid_usage(self):
         # The tests in this method have  permanent side effects,
         # make sure that mutating tests only use classes that

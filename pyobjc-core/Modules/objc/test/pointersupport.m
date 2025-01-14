@@ -6,11 +6,29 @@
 
 static CFStringRef aString = CFSTR("a static string");
 
+union test_union {
+    int a;
+    float b;
+};
+
 @interface OC_PointerSupport : NSObject {
 }
 @end
 
 @implementation OC_PointerSupport
+
++(int)intFromUnion:(union test_union*)value
+{
+    return value->a;
+}
+
++(union test_union*)getUnion
+{
+    static union test_union value;
+    value.a = 99;
+    return &value;
+}
+
 + (Py_ssize_t)getObjectLen:(PyObject*)value
 {
     PyGILState_STATE state  = PyGILState_Ensure();
@@ -53,6 +71,20 @@ static CFStringRef aString = CFSTR("a static string");
 
 @end
 
+static PyObject* _Nullable union_new(void* obj) {
+    return PyCapsule_New(obj, "__union__", NULL);
+}
+
+static int union_convert(PyObject* obj, void* pObj)
+{
+    union test_union* value = PyCapsule_GetPointer(obj, "__union__");
+    if (value == NULL && PyErr_Occurred()) {
+        return -1;
+    }
+    *(union test_union**)pObj = value;
+    return 0;
+}
+
 static PyObject*
 make_opaque_capsule(PyObject* mod __attribute__((__unused__)))
 {
@@ -91,8 +123,15 @@ static int mod_exec_module(PyObject* m)
         < 0) {
         return -1;
     }
+
+    int r = PyObjCPointerWrapper_Register("union_test", @encode(union test_union*), union_new,
+                                      union_convert);
+    if (r == -1) {
+        return -1;
+    }
     return 0;
 }
+
 
 static struct PyModuleDef_Slot mod_slots[] = {
     {
@@ -138,4 +177,6 @@ PyObject* PyInit_pointersupport(void);
 PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit_pointersupport(void)
 {
     return PyModuleDef_Init(&mod_module);
+
+
 }

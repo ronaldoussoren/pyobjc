@@ -71,6 +71,7 @@ find_end_of_structname(const char* signature)
             return (size_t)(end - signature);
         }
     }
+
     return strlen(signature);
 }
 
@@ -89,26 +90,9 @@ static int FindWrapper(const char* signature, pythonify_func* _Nullable pythonif
     for (i = 0; i < item_count; i++) {
         if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
             /* See comment just above find_end_of_structname */
-            if (signature[1] == _C_CONST && signature[2] == _C_STRUCT_B) {
-                /* XXX: Shouldn't this adjust for _C_CONST? */
-                char ch = signature[items[i].offset];
-                if (ch == '=' || ch == _C_STRUCT_E) {
-                    if (pythonify != NULL) {
-                        *pythonify = items[i].pythonify;
-                    }
-                    if (depythonify != NULL) {
-                        *depythonify = items[i].depythonify;
-                    }
-                    if (name != NULL) {
-                        *name = items[i].name;
-                    }
-#ifdef Py_GIL_DISABLED
-                    PyMutex_Unlock(&items_mutex);
-#endif
-                    return 0;
-                }
+            if ((signature[1] == _C_CONST && signature[2] == _C_STRUCT_B)
+                    || (signature[1] == _C_STRUCT_B)) {
 
-            } else if (signature[1] == _C_STRUCT_B) {
                 char ch = signature[items[i].offset];
                 if (ch == '=' || ch == _C_STRUCT_E) {
                     if (pythonify != NULL) {
@@ -127,21 +111,19 @@ static int FindWrapper(const char* signature, pythonify_func* _Nullable pythonif
                 }
 
             } else {
-                if (signature[items[i].offset] == '\0') {
-                    if (pythonify != NULL) {
-                        *pythonify = items[i].pythonify;
-                    }
-                    if (depythonify != NULL) {
-                        *depythonify = items[i].depythonify;
-                    }
-                    if (name != NULL) {
-                        *name = items[i].name;
-                    }
-#ifdef Py_GIL_DISABLED
-                    PyMutex_Unlock(&items_mutex);
-#endif
-                    return 0;
+                if (pythonify != NULL) {
+                    *pythonify = items[i].pythonify;
                 }
+                if (depythonify != NULL) {
+                    *depythonify = items[i].depythonify;
+                }
+                if (name != NULL) {
+                    *name = items[i].name;
+                }
+#ifdef Py_GIL_DISABLED
+                PyMutex_Unlock(&items_mutex);
+#endif
+                return 0;
             }
         }
     }
@@ -182,7 +164,10 @@ static PyObject* _Nullable ID_to_py(const void* idValue)
             Py_DECREF(result);
             return actual;
         }
-        return result;
+        /* The call to ``PyObjCCF_NewSpecialFromTypeID`` can only
+         * fail due to memory problems.
+         */
+        return result; // LCOV_EXCL_LINE
     }
     return id_to_python((id)idValue);
 }

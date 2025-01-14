@@ -1450,6 +1450,12 @@ PyObject* _Nullable PyObjC_ImportName(const char* name)
     PyObject* mod;
     char*     c = strrchr(name, '.');
 
+    /* This function is only used to import names
+     * in a module, not modules.
+     */
+    PyObjC_Assert(c != NULL, NULL);
+
+#if 0
     if (c == NULL) {
         /* Toplevel module */
         py_name = PyUnicode_FromString(name);
@@ -1461,6 +1467,7 @@ PyObject* _Nullable PyObjC_ImportName(const char* name)
         return mod;
 
     } else {
+#endif
         py_name = PyUnicode_FromStringAndSize(name, c - name);
         if (py_name == NULL) { // LCOV_BR_EXCL_LINE
             return NULL; // LCOV_EXCL_LINE
@@ -1474,7 +1481,9 @@ PyObject* _Nullable PyObjC_ImportName(const char* name)
         PyObject* v = PyObject_GetAttrString(mod, c + 1);
         Py_DECREF(mod);
         return v;
+#if 0
     }
+#endif
 }
 
 PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object)
@@ -1612,8 +1621,8 @@ PyObject* _Nullable PyObjC_MakeCVoidP(void* ptr)
     }
 
     PyObject* pyptr = PyLong_FromVoidPtr(ptr);
-    if (pyptr == NULL) {
-        return NULL;
+    if (pyptr == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
     PyObject* args[2] = {NULL, pyptr};
     PyObject* res =

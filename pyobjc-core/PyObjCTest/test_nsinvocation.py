@@ -1,4 +1,5 @@
 from PyObjCTools.TestSupport import TestCase
+from .objectint import OC_NoPythonRepresentation
 import objc
 
 NSInvocation = objc.lookUpClass("NSInvocation")
@@ -105,3 +106,37 @@ class TestNSInvocation(TestCase):
         invocation.invoke()
 
         self.assertEqual(value.count(), 4)
+
+    def test_result_cannot_be_python(self):
+        arr = NSMutableArray.arrayWithArray_([])
+
+        invocation = NSInvocation.invocationWithMethodSignature_(
+            arr.methodSignatureForSelector_("description")
+        )
+
+        value = OC_NoPythonRepresentation.alloc().initAllowPython_(True)
+        invocation.setReturnValue_(value)
+        invocation.retainArguments()
+
+        value.setAllowPython_(False)
+        del value
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            invocation.getReturnValue_(None)
+
+    def test_arg_cannot_be_python(self):
+        arr = NSMutableArray.arrayWithArray_([])
+
+        invocation = NSInvocation.invocationWithMethodSignature_(
+            arr.methodSignatureForSelector_("addObject:")
+        )
+
+        value = OC_NoPythonRepresentation.alloc().initAllowPython_(True)
+        invocation.setArgument_atIndex_(value, 0)
+        invocation.retainArguments()
+
+        value.setAllowPython_(False)
+        del value
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            invocation.getArgument_atIndex_(None, 0)

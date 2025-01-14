@@ -11,6 +11,12 @@ NSObject (OC_CopyHelper)
 - (void)modify;
 @end
 
+@interface OC_CopyFails : NSObject {
+}
+-(instancetype _Nullable)copy;
+-(instancetype _Nullable)copyWithZone:(NSZone*)zone;
+@end
+
 @interface OC_CopyHelper : NSObject {
 }
 + (NSObject<NSCopying>*)doCopySetup:(Class)aClass;
@@ -82,6 +88,19 @@ NSObject (OC_CopyHelper)
 }
 @end
 
+@implementation OC_CopyFails
+-(instancetype _Nullable)copy
+{
+    return nil;
+}
+
+-(instancetype _Nullable)copyWithZone:(NSZone*)zone
+{
+    (void)&zone;
+    return nil;
+}
+@end
+
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
@@ -94,6 +113,10 @@ static int mod_exec_module(PyObject* m)
         return -1;
     }
     if (PyModule_AddObject(m, "OC_CopyBase", PyObjC_IdToPython([OC_CopyBase class]))
+        < 0) {
+        return -1;
+    }
+    if (PyModule_AddObject(m, "OC_CopyFails", PyObjC_IdToPython([OC_CopyFails class]))
         < 0) {
         return -1;
     }

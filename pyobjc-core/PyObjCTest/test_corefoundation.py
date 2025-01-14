@@ -10,8 +10,6 @@ import objc
 from PyObjCTest.corefoundation import OC_TestCoreFoundation
 from PyObjCTools.TestSupport import TestCase
 
-# registerCFSignature(name, encoding, typeId [, tollfreeName]) -> type
-
 CFUUIDRef = objc.registerCFSignature(
     "CFUUIDRef",
     OC_TestCoreFoundation.signatureForCFUUIDRef(),
@@ -98,6 +96,16 @@ class TestCoreFoundation(TestCase):
         self.assertIsInstance(str(obj), str)
         self.assertIn("<CFUUID", str(obj))
 
+        with objc.autorelease_pool():
+            obj = OC_TestCoreFoundation.createUUID()
+            obj_id = obj
+            arr = objc.lookUpClass("NSArray").arrayWithArray_([obj])
+            del obj
+
+        obj = arr[0]
+        self.assertNotEqual(id(obj), obj_id)
+        self.assertIsInstance(obj, CFUUIDRef)
+
     def test_invalid_metata_for_cf_argument(self):
         obj = OC_TestCoreFoundation.createUUID()
 
@@ -140,3 +148,12 @@ class TestCoreFoundation(TestCase):
         self.assertHasAttr(CFUUIDRef, "myMethod")
         self.assertNotHasAttr(CFDateRef, "myMethod")
         self.assertNotHasAttr(cftype, "myMethod")
+
+    def test_api_misuae(self):
+        with self.assertRaisesRegex(TypeError, "missing required argument"):
+            objc.registerCFSignature()
+
+        with self.assertRaisesRegex(
+            ValueError, "Must specify a typeid when not toll-free"
+        ):
+            objc.registerCFSignature("CFFooBar", b"^{__CFFooBar=}", None)

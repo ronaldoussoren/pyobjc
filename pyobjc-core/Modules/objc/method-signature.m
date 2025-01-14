@@ -146,8 +146,8 @@ sig_dealloc(PyObject* _self)
     }
 
     for (i = 0; i < Py_SIZE(self); i++) {
-        if (self->argtype[i] == NULL)
-            continue;
+        if (self->argtype[i] == NULL) // LCOV_BR_EXCL_LINE
+            continue; // LCOV_EXCL_LINE
         if (self->argtype[i]->tmpl)
             continue;
 
@@ -282,9 +282,11 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     }
 
     Py_ssize_t result_size = PyObjCRT_SizeOfReturnType(methinfo->rettype->type);
-    if (result_size == -1) {
+    if (result_size == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Clear();
         return 0;
+        // LCOV_EXCL_STOP
     }
     if (result_size > 128) {
         return 0;
@@ -529,9 +531,11 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
          * to avoid crapping out one (oneway void) methods.
          */
         PyObjC_Assert(retval->signature != NULL, NULL);
-        if (setup_type(retval->rettype, cur) < 0) {
+        if (setup_type(retval->rettype, cur) < 0) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(retval);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyObjC_Assert(retval->rettype->type != NULL, NULL);
     }
@@ -569,9 +573,11 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
                 // LCOV_EXCL_STOP
             }
             PyObjC_Assert(cur != NULL, NULL);
-            if (setup_type(retval->argtype[nargs], cur) < 0) {
+            if (setup_type(retval->argtype[nargs], cur) < 0) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(retval);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             PyObjC_Assert(retval->argtype[nargs]->type != NULL, NULL);
         }
@@ -609,7 +615,6 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
                                                      size_t buflen)
 {
     char*      result = buf;
-    char*      end;
     NSUInteger arg_count = [sig numberOfArguments];
     NSUInteger i;
     size_t     r;
@@ -620,29 +625,12 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
         return NULL;
     }
 
-    /* Using SkipTypeSpec validates the buffer */
-    end = (char*)PyObjCRT_SkipTypeSpec(buf);
-    if (end == NULL) {
-        return NULL;
-    }
-    *end = '\0';
-    buflen -= (end - buf);
-    buf = end;
-
     for (i = 0; i < arg_count; i++) {
-        r = strlcpy(buf, [sig getArgumentTypeAtIndex:i], buflen);
+        r = strlcat(buf, [sig getArgumentTypeAtIndex:i], buflen);
         if (r >= buflen) {
             PyErr_Format(PyObjCExc_InternalError, "NSMethodsignature too large (%ld)", r);
             return NULL;
         }
-
-        /* Using SkipTypeSpec validates the buffer */
-        end = (char*)PyObjCRT_SkipTypeSpec(buf);
-        if (end == NULL) {
-            return NULL;
-        }
-        buflen -= (end - buf);
-        buf = end;
     }
 
     return result;
@@ -1508,10 +1496,12 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
         result->argtype[i] = NULL;
     }
 
-    switch (PyDict_GetItemRef(metadata, PyObjCNM_full_signature, &value)) {
+    switch (PyDict_GetItemRef(metadata, PyObjCNM_full_signature, &value)) { // LCOV_BR_EXCL_LINE
     case -1:
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     /* case 0: pass */
     case 1:
         if (PyBytes_Check(value)) {
@@ -1674,7 +1664,7 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(struct _PyObjC_ArgDescr* d
 
             /* Plain old void*, ignore type modifiers */
 
-        } else {
+        } else { // LCOV_EXCL_LINE
             size_t bufsize = strlen(withoutModifiers) + 2;
             char* tp      = PyMem_Malloc(bufsize);
             char* to_free = NULL;
@@ -2008,10 +1998,10 @@ static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
     return result;
 
 error:
-    // LCOV_BR_EXCL_START
+    // LCOV_EXCL_START
     Py_DECREF(result);
     return NULL;
-    // LCOV_BR_EXCL_STOP
+    // LCOV_EXCL_STOP
 }
 
 PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
@@ -2105,13 +2095,15 @@ PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo
         }
 
         PyTuple_SET_ITEM(v, i, t);
-    }
+    } // LCOV_BR_EXCL_LINE
 
     return result;
 
+    // LCOV_EXCL_START
 error:
     Py_XDECREF(result);
     return NULL;
+    // LCOV_EXCL_STOP
 }
 
 PyObject* _Nullable PyObjC_copyMetadataRegistry(void)

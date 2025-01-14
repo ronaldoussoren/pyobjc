@@ -1,8 +1,10 @@
 import objc
 import sys
 import io
+import os
 import types
 import warnings
+import tempfile
 import builtins
 from PyObjCTest.testbndl import PyObjC_TestClass3
 from PyObjCTools.TestSupport import TestCase
@@ -314,16 +316,19 @@ class TestClassMethods(TestCase):
 
 class TestOverridingSpecials(TestCase):
     def testOverrideSpecialMethods_alloc(self):
-        aList = [0]
+        num_allocs = 0
 
         class ClassWithAlloc(NSObject):
             def alloc(cls):
-                aList[0] += 1
+                nonlocal num_allocs
+                num_allocs += 1
                 return objc.super(ClassWithAlloc, cls).alloc()
 
-        self.assertEqual(aList[0], 0)
+        self.assertNotIsInstance(ClassWithAlloc.alloc, objc.native_selector)
+
+        self.assertEqual(num_allocs, 0)
         o = ClassWithAlloc.alloc().init()
-        self.assertEqual(aList[0], 1)
+        self.assertEqual(num_allocs, 1)
         self.assertIsInstance(o, NSObject)
         del o
 
@@ -475,6 +480,33 @@ class TestOverridingSpecials(TestCase):
         self.assertIn("mydel", aList)
         self.assertIn("dealloc", aList)
         self.assertIn("__del__", aList)
+
+        class ClassWithBadDealloc(NSObject):
+            def dealloc(self):
+                raise RuntimeError("failure")
+
+        o = ClassWithBadDealloc.alloc().init()
+
+        # The error gets logged using NSLog, hence a fairly
+        # complicated way to capture the stderr stream.
+        orig_stderr = os.dup(2)
+        try:
+            with tempfile.TemporaryFile() as temp_fd:
+                os.dup2(temp_fd.fileno(), 2)
+
+                del o
+
+                os.lseek(2, 0, 0)
+                captured = temp_fd.read()
+
+        finally:
+            os.dup2(orig_stderr, 2)
+            os.close(orig_stderr)
+
+        self.assertIn(
+            b"Exception during dealloc of proxy: <class 'RuntimeError'>: failure",
+            captured,
+        )
 
     def testMethodNames(self):
         class MethodNamesClass(NSObject):

@@ -110,7 +110,8 @@ calc_current_version(void)
         }
 
         [pool release];
-    } // LCOV_EXCL_STOP
+        // LCOV_EXCL_STOP
+    }  // LCOV_EXCL_LINE
 }
 
 PyObjC_FINAL_CLASS @interface OC_NSAutoreleasePoolCollector : NSObject
@@ -1085,9 +1086,11 @@ static PyObject* _Nullable createStructType(PyObject* self __attribute__((__unus
                 goto error_cleanup;
             }
 
-            if (fieldnames[i] == NULL) {
+            if (fieldnames[i] == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_NoMemory();
                 goto error_cleanup;
+                // LCOV_EXCL_STOP
             }
         }
         field_count = PyTuple_GET_SIZE(pyfieldnames);
@@ -1202,8 +1205,8 @@ static PyObject* _Nullable registerCFSignature(PyObject* self __attribute__((__u
             return NULL;
         }
 
-        if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) {
-            return NULL;
+        if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
 
         /* Don't have to do anything with the cfTypeId: because
@@ -1258,12 +1261,14 @@ static PyObject* _Nullable PyObjC_objc_sync_enter(PyObject* self
 
     Py_END_ALLOW_THREADS
 
-    if (rv == OBJC_SYNC_SUCCESS) {
+    if (rv == OBJC_SYNC_SUCCESS) { // LCOV_BR_EXCL_LINE
         Py_RETURN_NONE;
     }
 
+    // LCOV_EXCL_START
     PyErr_Format(PyObjCExc_LockError, "objc_sync_enter failed: %d", rv);
     return NULL;
+    // LCOV_EXCL_STOP
 }
 
 static PyObject* _Nullable PyObjC_objc_sync_exit(PyObject* self
@@ -1323,15 +1328,17 @@ static PyObject* _Nullable _makeClosure(PyObject* self __attribute__((__unused__
 
     if (PyObjCFunction_Check(closureFor)) {
         methinfo = (PyObjCMethodSignature*)PyObjCFunc_GetMethodSignature(closureFor);
-        if (methinfo == NULL) {
-            return NULL;
+        if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
 
     } else if (PyObjCSelector_Check(closureFor)) {
         methinfo = PyObjCSelector_GetMetadata(closureFor);
-        if (methinfo == NULL) {
+        if (methinfo == NULL) { // LCOV_BR_EXCL_LNE
+            // LCOV_EXCL_START
             PyObjC_Assert(PyErr_Occurred(), NULL);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
     } else {
@@ -1381,10 +1388,12 @@ static PyObject* _Nullable _makeClosure(PyObject* self __attribute__((__unused__
     }
 
     PyObject* capsule = PyCapsule_New((void*)closure_func, "objc.__imp__", _callback_cleanup);
-    if (capsule == NULL) {
+    if (capsule == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyObjCFFI_FreeIMP((IMP)closure_func);
         Py_CLEAR(methinfo);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* result = Py_BuildValue(

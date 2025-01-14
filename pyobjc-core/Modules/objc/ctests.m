@@ -970,13 +970,22 @@ END_UNITTEST
 
 BEGIN_UNITTEST(InvalidObjCPointer)
 
-/* Invalid type encoding */
+/* Invalid type encodings
+ *
+ * XXX: This tests are artificial, but at least
+ *      ensure that some error paths are hit.
+ */
 PyObject* p = PyObjCPointer_New(&p, "^{foo=");
 ASSERT(PyErr_Occurred());
 ASSERT(!p);
 PyErr_Clear();
 
 p = PyObjCPointer_New(&p, "{foo=");
+ASSERT(PyErr_Occurred());
+ASSERT(!p);
+PyErr_Clear();
+
+p = PyObjCPointer_New(&p, "X");
 ASSERT(PyErr_Occurred());
 ASSERT(!p);
 PyErr_Clear();
@@ -1164,6 +1173,24 @@ BEGIN_UNITTEST(NoKwNames)
 
 END_UNITTEST
 
+BEGIN_UNITTEST(PyObjC_NSMethodSignatureToTypeString_Errors)
+    char buffer[2048];
+    char* result;
+    NSMethodSignature* sig = [NSURL methodSignatureForSelector:@selector(initByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:)];
+    FAIL_IF(sig == nil);
+
+    result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 0);
+    FAIL_IF(result != NULL);
+    FAIL_IF(!PyErr_Occurred());
+    PyErr_Clear();
+
+    result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 4);
+    FAIL_IF(result != NULL);
+    FAIL_IF(!PyErr_Occurred());
+    PyErr_Clear();
+
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(VectorSize),
@@ -1204,6 +1231,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(ValidEncoding),
                                     TESTDEF(CheckArgCount),
                                     TESTDEF(NoKwNames),
+                                    TESTDEF(PyObjC_NSMethodSignatureToTypeString_Errors),
                                     {0, 0, 0, 0}};
 
 int

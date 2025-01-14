@@ -4,6 +4,12 @@ import objc
 from PyObjCTest.structpointer1 import OC_TestStructPointer
 from PyObjCTools.TestSupport import TestCase, pyobjc_options
 
+objc.registerMetaDataForSelector(
+    b"OC_TestStructPointer",
+    b"returnUnwrapped2",
+    {"retval": {"type": b"^{UnwrappedStruct=iX}"}},
+)
+
 
 class TestObjCPointer(TestCase):
     def setUp(self):
@@ -53,3 +59,13 @@ class TestObjCPointer(TestCase):
                     r"PyObjCPointer created: at 0x2a of type \^{UnwrappedStruct=ii}.*",
                 ):
                     OC_TestStructPointer.returnUnwrapped()
+
+    def test_objc_pointer_with_invalid_type(self):
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=objc.ObjCPointerWarning)
+
+            with pyobjc_options(unknown_pointer_raises=False):
+                with self.assertRaisesRegex(
+                    objc.internal_error, "Unhandled type '0x58' X}"
+                ):
+                    OC_TestStructPointer.returnUnwrapped2()

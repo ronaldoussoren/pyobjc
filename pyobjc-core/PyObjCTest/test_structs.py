@@ -84,6 +84,9 @@ class TestStructs(TestCase):
         with self.assertRaisesRegex(TypeError, "missing 3 required"):
             objc.createStructType()
 
+        with self.assertRaisesRegex(TypeError, "missing required argument"):
+            objc._objc.createStructType()
+
         with self.assertRaisesRegex(
             TypeError, "fieldnames must be a sequence of strings"
         ):

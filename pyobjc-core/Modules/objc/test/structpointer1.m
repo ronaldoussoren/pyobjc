@@ -31,6 +31,11 @@ static struct TestStructPointerStruct myGlobal = {1};
     return (struct UnwrappedStruct*)42;
 }
 
++ (struct UnwrappedStruct*)returnUnwrapped2
+{
+    return (struct UnwrappedStruct*)21;
+}
+
 + (unsigned long)unwrappedToInt:(struct UnwrappedStruct*)val
 {
     return (unsigned long)val;

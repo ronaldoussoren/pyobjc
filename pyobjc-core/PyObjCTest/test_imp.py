@@ -50,6 +50,12 @@ class TestBasicIMP(TestCase):
         ):
             o.init()
 
+        o = NSObject.alloc().init()
+        i = NSObject.methodForSelector_(b"alloc")
+        o2 = i(o).init()
+        self.assertIsInstance(o2, NSObject)
+        self.assertIsNot(o, o2)
+
     def testInit1(self):
         cls = NSObject
         m = cls.instanceMethodForSelector_("init")

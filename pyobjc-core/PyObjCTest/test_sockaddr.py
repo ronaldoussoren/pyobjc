@@ -80,11 +80,17 @@ class TestSockAddrSupport(TestCase):
         v = o.sockAddrToValue_(b"/tmp/my.sock")
         self.assertEqual(v, ("UNIX", "/tmp/my.sock"))
 
+        with self.assertRaisesRegex(OSError, "AF_UNIX path too long"):
+            o.sockAddrToValue_(b"/tmp/my.sock" + b"/dir" * 500)
+
         with self.assertRaisesRegex(UnicodeEncodeError, "can't encode characters"):
             o.sockAddrToValue_("\ud800\udc00")
 
         v = o.sockAddrToValue_(("<broadcast>", 99))
         self.assertEqual(v, ("IPv4", "255.255.255.255", 99))
+
+        with self.assertRaises(socket.error):
+            o.sockAddrToValue_(("<nothing>", 99))
 
         with self.assertRaisesRegex(socket.error, "address family mismatched"):
             o.sockAddrToValue_(("<broadcast>", 99, 0))

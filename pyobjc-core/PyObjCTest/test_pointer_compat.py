@@ -4,6 +4,7 @@ except ImportError:
     ctypes = None
 
 import objc
+import types
 from PyObjCTest.pointersupport import object_capsule, opaque_capsule, OC_PointerSupport
 from PyObjCTools.TestSupport import TestCase, skipUnless
 
@@ -223,3 +224,17 @@ class TestMiscTypes(TestCase):
         v2 = OC_PointerSupport.getContext()
 
         self.assertIs(v1, v2)
+
+    def test_special_union(self):
+        self.assertResultHasType(OC_PointerSupport.getUnion, b"^(test_union=if)")
+        self.assertArgHasType(OC_PointerSupport.intFromUnion_, 0, b"^(test_union=if)")
+        v1 = OC_PointerSupport.getUnion()
+        self.assertIsInstance(v1, types.CapsuleType)
+        self.assertIn('"__union__"', str(v1))
+        v2 = OC_PointerSupport.intFromUnion_(v1)
+        self.assertEqual(v2, 99)
+
+        with self.assertRaises(ValueError):
+            OC_PointerSupport.intFromUnion_(42)
+
+        self.assertEqual(objc._nameForSignature(b"^(test_union=if)"), "union_test")

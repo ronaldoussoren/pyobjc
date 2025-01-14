@@ -5104,6 +5104,9 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
     int      isUninitialized = NO;
     ffi_cif* cif;
 
+    /* Only called for 'native' selectors */
+    PyObjC_Assert(PyObjCNativeSelector_Check(aMeth), NULL);
+
     methinfo = meth->base.sel_methinfo;
     flags    = meth->base.sel_flags;
     cif      = meth->sel_cif;
@@ -5111,23 +5114,21 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
     PyObjC_Assert(methinfo != NULL, NULL);
 
     PyObjC_Assert(methinfo->shortcut_signature, NULL);
-
-    if (unlikely(methinfo->suggestion != NULL)) {
-        PyErr_Format(PyExc_TypeError, "%R: %s", self, methinfo->suggestion);
-        return NULL;
-    }
+    PyObjC_Assert(!methinfo->suggestion, NULL);
 
     if (unlikely(cif == NULL)) {
         cif = PyObjCFFI_CIFForSignature(methinfo);
-        if (cif == NULL) {
-            return NULL;
+        if (cif == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
         if (PyObjCIMP_Check(aMeth)) {
-            if (PyObjCIMP_SetCIF(aMeth, cif) == -1) {
+            if (PyObjCIMP_SetCIF(aMeth, cif) == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyObjCFFI_FreeCIF(cif);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
-        } else {
+        } else { // LCOV_EXCL_LINE
             PyObjCSelector_SET_CIF(aMeth, cif);
         }
     }

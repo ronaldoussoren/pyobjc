@@ -354,21 +354,12 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
         latin1_cur = result->base.data.latin1;
         for (i = 0; i < length; i++) {
-            if ( // LCOV_BR_EXCL_LINE
-                Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1)
-                && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
-                Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
-                /* AFAIK  this cannot happen, surrogtes are outside of the range
-                 * of 1BYTE_KIND, likewise for the decoded character.
-                 */
-                // LCOV_EXCL_START
-                *latin1_cur++ = (Py_UCS1)ch;
-                i++;
-                // LCOV_EXCL_STOP
-
-            } else {
-                *latin1_cur++ = (Py_UCS1)characters[i];
-            }
+            /* The code had a check for surrogates here for a long time, but
+             * given that wer'e dealing with UCS1 text there cannot be
+             * surrogates here (which have values > 256)
+             */
+            PyObjC_Assert(!Py_UNICODE_IS_HIGH_SURROGATE(characters[i]), NULL);
+            *latin1_cur++ = (Py_UCS1)characters[i];
         }
 
         *latin1_cur   = 0;
@@ -418,7 +409,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
             ascii->length = length - nr_surrogates;
             *ucs2_cur     = 0;
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
 
     } else { /* 4BYTE_KIND */
         Py_UCS4* ucs4_cur;
@@ -444,7 +435,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
                      */
                     *ucs4_cur++ = (Py_UCS4)characters[i];
                     // LCOV_EXCL_STOP
-                } else { // LCOV_BR_EXCL_LINE
+                } else { // LCOV_EXCL_LINE
                     *ucs4_cur++ = (Py_UCS4)ch;
                     i++;
                 }

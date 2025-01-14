@@ -43,7 +43,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
             /* name should also be a string, unless someone calls
              * the slot directly.
              */
-            skip = 0; // LCLOV_EXCL_LINE
+            skip = 0; // LCOV_EXCL_LINE
         }
     }
 
@@ -102,11 +102,15 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
             if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj)) {
                 dict = PyType_GetDict(Py_TYPE(tmp));
 
-            } else if (PyType_Check(tmp)) {
+            } else if (PyType_Check(tmp)) { // LCOV_BR_EXCL_LINE
                 dict = PyType_GetDict((PyTypeObject*)tmp);
 
             } else {
-                continue;
+                /* This can only be reached when there's a non-class
+                 * on the MRO and that shouldn't be possible with
+                 * PyObjC's clasees.
+                 */
+                continue; // LCOV_EXCL_LINE
             }
 
             switch(PyDict_GetItemRef(dict, name, &res)) { // LCOV_BR_EXCL_LINE

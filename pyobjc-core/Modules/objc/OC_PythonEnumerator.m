@@ -55,11 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
                 PyErr_Clear();
                 Py_EXIT_CRITICAL_SECTION();
                 PyObjC_GIL_RETURN(nil);
-            } else {
+            } else { // LCOV_EXCL_LINE
                 Py_EXIT_CRITICAL_SECTION();
                 PyObjC_GIL_FORWARD_EXC();
             }
-        }
+        } // LCOV_EXCL_LINE
 
         if (object == Py_None) {
             result = NSNull_null;
@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
             if (depythonify_python_object(object, &result) == -1) {
                 Py_EXIT_CRITICAL_SECTION();
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
         Py_DECREF(object);
 

@@ -56,13 +56,18 @@ PyObjC_SockAddr_Setup(PyObject* module __attribute__((__unused__)))
 static void
 set_gaierror(int error)
 {
-    if (error == EAI_SYSTEM) {
+    if (error == EAI_SYSTEM) { // LCOV_BR_EXCL_LINE
+        /* This can happen, but haven't found a way to trigger
+         * this in testing.
+         */
+        // LCOV_EXCL_START
         PyErr_SetFromErrno(socket_error);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* v = Py_BuildValue("is", error, gai_strerror(error));
-    if (v != NULL) {
+    if (v != NULL) { // LCOV_BR_EXCL_LINE
         PyErr_SetObject(socket_gaierror, v);
         Py_DECREF(v);
     }
@@ -108,7 +113,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
             return -1;
             // LCOV_EXCL_STOP
         }
-        switch (res->ai_family) {
+        switch (res->ai_family) { // LCOV_BR_EXCL_LINE
         case AF_INET:
             size = 4;
             break;
@@ -166,10 +171,10 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
     }
     if (res->ai_addrlen < addr_ret_size) { // LCOV_BR_EXCL_LINE
         addr_ret_size = res->ai_addrlen;   // LCOV_EXCL_LINE
-    }
+    } // LCOV_EXCL_LINE
     memcpy((char*)addr_ret, res->ai_addr, addr_ret_size);
     freeaddrinfo(res);
-    switch (addr_ret->sa_family) {
+    switch (addr_ret->sa_family) { // LCOV_BR_EXCL_LINE
     case AF_INET:
         return 4;
     case AF_INET6:
@@ -240,9 +245,11 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             Py_INCREF(value);
         }
 
-        if (!PyArg_Parse(value, "y#", &path, &len)) {
+        if (PyBytes_AsStringAndSize(value, &path, &len) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(value);
             return -1;
+            // LCOV_EXCL_STOP
         }
         /* XXX: Check for correctless (NUL byte at end, embedded NUL?) */
         if (len >= (Py_ssize_t)sizeof(addr->sun_path) - 1) {

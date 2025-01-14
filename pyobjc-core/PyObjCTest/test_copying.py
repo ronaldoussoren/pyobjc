@@ -1,7 +1,8 @@
 import copy
 
 import objc
-from PyObjCTest.copying import OC_CopyBase, OC_CopyHelper
+from objc import super  # noqa: A004
+from PyObjCTest.copying import OC_CopyBase, OC_CopyHelper, OC_CopyFails
 from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
@@ -46,6 +47,8 @@ class OC_TestCopy1(NSObject):
 
 # OC_CopyBase.initWithInt_
 class OC_TestCopy2(OC_CopyBase):
+    x = objc.ivar()  # type=objc._C_INT)
+
     def init(self):
         self = objc.super(OC_TestCopy2, self).initWithInt_(10)
         if self is not None:
@@ -79,9 +82,11 @@ class OC_TestCopy3(OC_CopyBase):
 class OC_TestCopy4(OC_CopyBase):
     def init(self):
         self = objc.super(OC_TestCopy4, self).initWithInt_(10)
-        if self is not None:
-            self.x = 1
-            self.y = 2
+        if self is None:
+            return None
+
+        self.x = 1
+        self.y = 2
         return self
 
     def modify(self):
@@ -92,7 +97,7 @@ class OC_TestCopy4(OC_CopyBase):
 
     @funcattr(occlass="OC_TestCopy4")
     def copyWithZone_(self, zone):
-        other = objc.super(OC_TestCopy4, self).copyWithZone_(zone)
+        other = super().copyWithZone_(zone)
         other.x = self.x
         other.y = self.y
         other.z = "hello"
@@ -209,40 +214,37 @@ class TestNSCopying(TestCase):
         self.assertEqual(o.copyWithZone_.callable.occlass, "OC_TestCopy4")
         del o
 
-        p = NSAutoreleasePool.alloc().init()
-        v = OC_TestCopy2.alloc().init()
-        v.modify()
+        with objc.autorelease_pool():
+            v = OC_TestCopy2.alloc().init()
+            v.modify()
 
-        o = v.copy()
-        v.x = 20
-        del v
-        del p
-
-        self.assertEqual(o.x, 42)
-        self.assertEqual(o.y, 24)
-        self.assertEqual(o.intVal(), 40)
-
-        p = NSAutoreleasePool.alloc().init()
-        v = OC_TestCopy3.alloc().init()
-        v.modify()
-
-        o = v.copy()
-        v.x = 20
-        del v
-        del p
+            o = v.copy()
+            v.x = 20
+            del v
 
         self.assertEqual(o.x, 42)
         self.assertEqual(o.y, 24)
         self.assertEqual(o.intVal(), 40)
 
-        p = NSAutoreleasePool.alloc().init()
-        v = OC_TestCopy4.alloc().init()
-        v.modify()
+        with objc.autorelease_pool():
+            v = OC_TestCopy3.alloc().init()
+            v.modify()
 
-        o = v.copy()
-        v.x = 20
-        del v
-        del p
+            o = v.copy()
+            v.x = 20
+            del v
+
+        self.assertEqual(o.x, 42)
+        self.assertEqual(o.y, 24)
+        self.assertEqual(o.intVal(), 40)
+
+        with objc.autorelease_pool():
+            v = OC_TestCopy4.alloc().init()
+            v.modify()
+
+            o = v.copy()
+            v.x = 20
+            del v
 
         self.assertEqual(o.z, "hello")
         self.assertEqual(o.y, 24)
@@ -264,3 +266,34 @@ class TestPyCopyObjC(TestCase):
         b = copy.copy(a)
         self.assertIsInstance(b, NSMutableArray)
         self.assertEqual(list(a), list(b))
+
+
+class TestCopyingFailsWithPython(OC_CopyFails):
+    def copy(self):
+        self = super().copy()
+        if self is None:
+            return None
+
+        self.key = 42
+        return self
+
+    def copyWithZone_(self, zone):
+        self = super().copyWithZone_(zone)
+        if self is None:
+            return None
+
+        self.key = 21
+        return self
+
+
+class TestCopyingFails(TestCase):
+    def test_native(self):
+        o = OC_CopyFails.alloc().init()
+
+        self.assertIs(o.copy(), None)
+        self.assertIs(o.copyWithZone_(None), None)
+
+    def test_python(self):
+        o = TestCopyingFailsWithPython.alloc().init()
+        self.assertIs(o.copy(), None)
+        self.assertIs(o.copyWithZone_(None), None)

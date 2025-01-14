@@ -55,11 +55,13 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
     Py_END_ALLOW_THREADS
 
     if (cfBundle == NULL) {
-        if (PyErr_Occurred()) {
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
             return NULL;
         }
+        // LCOV_EXCL_START
         PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (![name isKindOfClass:[NSString class]]) {
@@ -83,15 +85,20 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
         }
 
         PyObject*  py_name = id_to_python(name);
-        if (py_name == NULL) {
+        if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(py_val);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
-        if (PyDict_SetItem(module_globals, py_name, py_val) == -1) {
+        if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    module_globals, py_name, py_val) == -1) {
+            // LCOV_EXCL_START
             Py_DECREF(py_val);
             Py_DECREF(py_name);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(py_val);
         Py_DECREF(py_name);
@@ -131,11 +138,13 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
     Py_END_ALLOW_THREADS
 
     if (cfBundle == NULL) {
-        if (PyErr_Occurred()) {
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
             return NULL;
         }
+        // LCOV_EXCL_START
         PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     seq = PyObjCSequence_Tuple(variableInfo, "variableInfo not a sequence");
@@ -270,9 +279,11 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             return NULL;
         }
 
-        if (cfBundle == NULL) {
+        if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -358,12 +369,14 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                 py_name = id_to_python(name);
             }
 
-            if (py_name == NULL) {
+            if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 Py_DECREF(seq);
                 if (cfBundle != NULL) {
                     CFRelease(cfBundle);
                 }
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
             py_val = PyObjCFunc_New(py_name, value, signature, doc, meta);

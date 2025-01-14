@@ -757,15 +757,20 @@ free_ivars(id self, PyObject* cls)
             cur_cls = NULL;
             // LCOV_EXCL_STOP
 
-        } else if (PyTuple_Size(o) == 0) {
+        } else if (PyTuple_Size(o) == 0) { // LCOV_BR_EXCL_LINE
+            /* It should be impossible to have and empty
+             * __bases__ for PyObjC's classes.
+             */
+            // LCOV_BR_EXCL_START
             PyErr_Clear();
             cur_cls = NULL;
             Py_DECREF(o);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             cur_cls = PyTuple_GET_ITEM(o, 0);
-            if (cur_cls == (PyObject*)&PyObjCClass_Type) {
-                cur_cls = NULL;
+            if (cur_cls == (PyObject*)&PyObjCClass_Type) { // LCOV_BR_EXCL_LINE
+                cur_cls = NULL; // LCOV_EXCL_LINE
             }
             Py_DECREF(o);
         }
@@ -875,6 +880,9 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
          *      It might be possible to make the two consistent, but that could
          *      break backward compatibility.
          *      This code also needs tests!
+         *
+         * XXX: Shouldn't this use the objc.ivar instances in the class proxy
+         *      for this class?
          */
         for (i = 0; i < ivarCount; i++) {
             Ivar        v = ivarList[i];
@@ -885,25 +893,30 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
             typestr = ivar_getTypeEncoding(v);
             offset  = ivar_getOffset(v);
 
-            if (strcmp(typestr, @encode(PyObject*)) != 0)
-                continue;
-
-            /* A PyObject, increase it's refcount */
-            p = (PyObject**)(((char*)copy) + offset);
-            if (*p == NULL)
-                continue;
-            if (strcmp(ivar_getName(v), "__dict__") == 0) {
-                /* copy __dict__ */
-                *p = PyDict_Copy(*p);
-                if (*p == NULL) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    [copy release];
-                    PyObjCErr_ToObjCWithGILState(&state);
-                    return;
-                    // LCOV_EXCL_STOP
+            if (strcmp(typestr, @encode(PyObject*)) == 0) {
+                /* A PyObject, increase it's refcount */
+                p = (PyObject**)(((char*)copy) + offset);
+                if (*p == NULL)
+                    continue;
+                if (strcmp(ivar_getName(v), "__dict__") == 0) {
+                    /* copy __dict__ */
+                    *p = PyDict_Copy(*p);
+                    if (*p == NULL) { // LCOV_BR_EXCL_LINE
+                        // LCOV_EXCL_START
+                        [copy release];
+                        PyObjCErr_ToObjCWithGILState(&state);
+                        return;
+                        // LCOV_EXCL_STOP
+                    }
+                } else {
+                    Py_INCREF(*p);
                 }
-            } else {
-                Py_INCREF(*p);
+            } else if (*typestr == _C_ID) {
+                /* XXX: This doesn't do the correct thing for
+                 *      weak reference like in outlets. Should
+                 *      look at the Python proxy!
+                 */
+                [*(id*)(((char*)copy) + offset) retain];
             }
         }
 
@@ -960,11 +973,13 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
 
     @try {
         theSelector = [invocation selector];
+    // LCOV_EXCL_START
     } @catch (NSObject* localException) {
         Py_DECREF(pyself);
         PyGILState_Release(state);
         @throw;
     }
+    // LCOV_EXCL_STOP
 
     PyObject* pymeth = PyObjCObject_FindSelector(pyself, theSelector);
 

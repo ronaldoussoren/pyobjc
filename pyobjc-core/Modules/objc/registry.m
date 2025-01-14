@@ -261,10 +261,15 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
                 // LCOV_EXCL_STOP
             }
             new_value = value_transform(PyTuple_GET_ITEM(item, 1));
-            if (new_value == NULL) {
+            if (new_value == NULL) { // LCOV_BR_EXCL_LINE
+                /* Only user of this function uses a value_transform
+                 * that cannot fail (other than resource issues).
+                 */
+                // LCOV_EXCL_START
                 Py_DECREF(result);
                 Py_EXIT_CRITICAL_SECTION();
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             new_item = PyTuple_Pack(2, PyTuple_GET_ITEM(item, 0), new_value);
             Py_DECREF(new_value);

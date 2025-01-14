@@ -51,10 +51,12 @@ const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object)
          * than one argument.
          */
         PyObject* r = PyUnicode_AsASCIIString(object);
-        if (unlikely(r != NULL)) {
+        if (unlikely(r != NULL)) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_Error, "Raising UnicodeError failed");
             Py_DECREF(r);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         PyObjC_Assert(r == NULL, NULL);
