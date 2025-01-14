@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = "11.0"
+VERSION = "11.0.1"
 
 setup(
     name="pyobjc-framework-MapKit",
