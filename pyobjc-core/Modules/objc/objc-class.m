@@ -2992,12 +2992,22 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     if (PyObjC_class_isSubclassOf(objc_class, [NSData class])) {
         ((PyTypeObject*)result)->tp_as_buffer = &nsdata_as_buffer;
         PyType_Modified((PyTypeObject*)result);
-        PyType_Ready((PyTypeObject*)result);
+        if (PyType_Ready((PyTypeObject*)result) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
 
     } else if (strcmp(className, "NSBlock") == 0) {
         ((PyTypeObject*)result)->tp_basicsize = sizeof(PyObjCBlockObject);
         PyType_Modified((PyTypeObject*)result);
-        PyType_Ready((PyTypeObject*)result);
+        if (PyType_Ready((PyTypeObject*)result) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
     }
 
     if (strncmp(className, "_NSPlaceholder", sizeof("_NSPlaceholder")-1) == 0) {

@@ -1841,7 +1841,7 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
         return -1;
     }
 
-    if (!PyObject_HasAttrString(structType, "__typestr__")) {
+    if (!PyObject_HasAttr(structType, PyObjCNM___typestr__)) {
         PyErr_SetString(PyExc_TypeError, "struct type is not valid");
         return -1;
     }

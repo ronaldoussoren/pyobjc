@@ -1072,7 +1072,6 @@ class TestArraysIn(TestCase):
 
         class OC_MetaDataTestArrayArg(OC_MetaDataTest):
             def make8Tuple_(self, a):
-                print(a)
                 return [a]
 
             def make8TupleB_(self, a):

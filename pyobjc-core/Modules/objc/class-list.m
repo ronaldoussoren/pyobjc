@@ -506,7 +506,9 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
         }
     }
 
-    PyMem_Free(buffer);
+    if (buffer != NULL) { // LCOV_BR_EXCL_LINE
+        PyMem_Free(buffer);
+    }
     buffer = NULL;
 
     PyObject* tmp = PyList_AsTuple(result);

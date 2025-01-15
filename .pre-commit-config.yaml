@@ -65,6 +65,11 @@ repos:
       language: python
       language_version: python3.10
       entry: ./development-support/validate-fwinfo
+    - id: check-python-used
+      name: check-python-used
+      language: python
+      language_version: python3.10
+      entry: ./development-support/check-pyobjc-core-python-used
 
 #  - repo: https://github.com/pre-commit/mirrors-clang-format
 #    rev: 'v13.0.0'

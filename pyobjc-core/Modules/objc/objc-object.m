@@ -682,14 +682,17 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
 
     if (PyObjC_is_ascii_string(name, "__del__")) {
         res = PyObjCClass_GetDelMethod((PyObject*)Py_TYPE(obj));
-
-        descrgetfunc f = Py_TYPE(res)->tp_descr_get;
-        if (f != NULL) {
-            PyObject* tmp = f(res, obj, (PyObject*)Py_TYPE(obj));
-            Py_CLEAR(res);
-            res = tmp;
+        if (res != NULL) {
+            descrgetfunc f = Py_TYPE(res)->tp_descr_get;
+            if (f != NULL) {
+                PyObject* tmp = f(res, obj, (PyObject*)Py_TYPE(obj));
+                Py_CLEAR(res);
+                res = tmp;
+            }
+        } else {
+            PyErr_Format(PyExc_AttributeError, "'%.50s' object has no attribute '%.400s'",
+                 tp->tp_name, namestr);
         }
-
         goto done;
     }
 

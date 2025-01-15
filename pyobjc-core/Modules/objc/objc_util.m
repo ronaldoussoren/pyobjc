@@ -757,7 +757,7 @@ struct_elem_code(const char* start_typestr)
 
         typestr = PyObjCRT_SkipTypeSpec(typestr);
     }
-    if (*typestr != _C_STRUCT_E) {
+    if (typestr == NULL || *typestr != _C_STRUCT_E) {
         return '\0';
     }
 

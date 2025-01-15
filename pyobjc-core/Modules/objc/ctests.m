@@ -1176,17 +1176,17 @@ END_UNITTEST
 BEGIN_UNITTEST(PyObjC_NSMethodSignatureToTypeString_Errors)
     char buffer[2048];
     char* result;
-    NSMethodSignature* sig = [NSURL methodSignatureForSelector:@selector(initByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:)];
-    FAIL_IF(sig == nil);
+    NSMethodSignature* sig = [NSURL instanceMethodSignatureForSelector:@selector(initByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:)];
+    ASSERT(sig != nil);
 
     result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 0);
-    FAIL_IF(result != NULL);
-    FAIL_IF(!PyErr_Occurred());
+    ASSERT(result == NULL);
+    ASSERT(PyErr_Occurred());
     PyErr_Clear();
 
     result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 4);
-    FAIL_IF(result != NULL);
-    FAIL_IF(!PyErr_Occurred());
+    ASSERT(result == NULL);
+    ASSERT(PyErr_Occurred());
     PyErr_Clear();
 
 END_UNITTEST
