@@ -128,9 +128,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSUInteger i;
 
-    if (cnt > 0 && objects == NULL) {
+    if (cnt > 0 && objects == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [self release];
         return nil;
+        // LCOV_EXCL_STOP
     }
     PyObjC_BEGIN_WITH_GIL
         for (i = 0; i < cnt; i++) {
@@ -143,7 +145,7 @@ NS_ASSUME_NONNULL_BEGIN
                 cur = id_to_python(objects[i]);
                 if (cur == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
-                }
+                } // LCOV_EXCL_LINE
             }
 
             if (PySet_Add(value, cur) < 0) {
@@ -211,12 +213,8 @@ NS_ASSUME_NONNULL_BEGIN
         SET_FIELD(value, decoded);
 
         id actual = PyObjC_RegisterObjCProxy(value, self);
-        if (actual != self) {
-            [self release];
-            self = actual;
-        } else if (actual != nil) {
-            [actual release];
-        }
+        [self release];
+        self = actual;
     PyObjC_END_WITH_GIL
 
     return self;
@@ -235,12 +233,12 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* tmp = PyObjC_Copy(value);
         if (tmp == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object(tmp, &result) == -1) {
             Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(tmp);
 
     PyObjC_END_WITH_GIL
@@ -259,14 +257,14 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* tmp = PySet_New(value);
         if (tmp == NULL) {            // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object(tmp, &result) == -1) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(tmp);
 
     PyObjC_END_WITH_GIL
@@ -283,7 +281,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* tmp = PySequence_List(value);
         if (tmp == NULL) {            // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object( // LCOV_BR_EXCL_LINE
                 tmp, &result)
@@ -292,7 +290,7 @@ NS_ASSUME_NONNULL_BEGIN
             Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
 
         Py_DECREF(tmp);
 
@@ -316,18 +314,18 @@ NS_ASSUME_NONNULL_BEGIN
             tmp = PyObject_GetIter(value);
             if (tmp == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             v = PyIter_Next(tmp);
             Py_DECREF(tmp);
             if (v == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             if (depythonify_python_object(v, &result) == -1) {
                 Py_DECREF(v);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             Py_DECREF(v);
         }
@@ -350,7 +348,7 @@ NS_ASSUME_NONNULL_BEGIN
             tmp = id_to_python(anObject);
             if (tmp == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         r = PySequence_Contains(value, tmp);
@@ -372,7 +370,7 @@ NS_ASSUME_NONNULL_BEGIN
         result = PySequence_Size(value);
         if (result == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -386,7 +384,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* tmp = PyObject_GetIter(value);
         if (tmp == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         result = [OC_PythonEnumerator enumeratorWithPythonObject:tmp];
         Py_DECREF(tmp);
@@ -415,7 +413,7 @@ NS_ASSUME_NONNULL_BEGIN
             tmpMember = id_to_python(anObject);
             if (tmpMember == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         r = PySequence_Contains(value, tmpMember);
@@ -456,7 +454,7 @@ NS_ASSUME_NONNULL_BEGIN
                             Py_DECREF(tmp);
                             Py_DECREF(tmpMember);
                             PyObjC_GIL_FORWARD_EXC();
-                        }
+                        } // LCOV_EXCL_LINE
                     }
                     break;
                 }
@@ -480,14 +478,14 @@ NS_ASSUME_NONNULL_BEGIN
         if (PyFrozenSet_CheckExact(value)) {
             PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenset");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         PyObject* args[3] = {NULL, value};
         PyObject* r       = PyObject_VectorcallMethod(PyObjCNM_clear, args + 1,
                                                       1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (r == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(r);
 
     PyObjC_END_WITH_GIL
@@ -504,7 +502,7 @@ NS_ASSUME_NONNULL_BEGIN
         if (PyFrozenSet_CheckExact(value)) {
             PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenset");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         PyObject* args[3] = {NULL, value, tmp};
         PyObject* r       = PyObject_VectorcallMethod(PyObjCNM_discard, args + 1,
@@ -512,7 +510,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_DECREF(tmp);
         if (r == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(r);
 
     PyObjC_END_WITH_GIL

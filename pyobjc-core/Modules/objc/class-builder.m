@@ -761,19 +761,19 @@ free_ivars(id self, PyObject* cls)
             /* It should be impossible to have and empty
              * __bases__ for PyObjC's classes.
              */
-            // LCOV_BR_EXCL_START
+            // LCOV_EXCL_START
             PyErr_Clear();
             cur_cls = NULL;
             Py_DECREF(o);
-            // LCOV_BR_EXCL_STOP
+            // LCOV_EXCL_STOP
 
-        } else {
+        } else { // LCOV_EXCL_LINE
             cur_cls = PyTuple_GET_ITEM(o, 0);
             if (cur_cls == (PyObject*)&PyObjCClass_Type) { // LCOV_BR_EXCL_LINE
                 cur_cls = NULL; // LCOV_EXCL_LINE
             }
             Py_DECREF(o);
-        }
+        } // LCOV_EXCL_LINE
     }
 }
 

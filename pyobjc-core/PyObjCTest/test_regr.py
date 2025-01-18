@@ -768,3 +768,23 @@ class TestDelRevives(TestCase):
         )
 
         self.assertEqual(repr(VALUE), "<DeallocRevives objective-c instance 0x0>")
+
+
+class TestConvertNegativeToUnsigedWarns(TestCase):
+    def test_repythonify_negative_int(self):
+        class Number:
+            def __int__(self):
+                return -28
+
+        with warnings.catch_warnings():
+            warnings.filterwarnings("error", category=DeprecationWarning)
+
+            with self.assertRaisesRegex(
+                DeprecationWarning, "converting negative value to unsigned integer"
+            ):
+                objc.repythonify(-40, b"I")
+
+            with self.assertRaisesRegex(
+                DeprecationWarning, "converting negative value to unsigned integer"
+            ):
+                objc.repythonify(Number(), b"I")

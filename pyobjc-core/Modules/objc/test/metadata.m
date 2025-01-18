@@ -82,6 +82,7 @@ static void use_id(id x __attribute__((__unused__))){}
 
 /* Helpers for calling back into python: */
 
++ (NSArray* _Nullable)makeIntArray:(int*)array sameSizeAs:(NSArray**)value on:(OC_MetaDataTest*)obj;;
 + (int*)makeIntArrayOf5On:(OC_MetaDataTest*)obj;
 + (char**)makeStringArrayOn:(OC_MetaDataTest*)obj;
 + (int*)makeIntArrayOf:(int)count on:(OC_MetaDataTest*)obj;
@@ -291,6 +292,20 @@ static void use_id(id x __attribute__((__unused__))){}
 - (NSArray* _Nullable)makeIntArray:(int*)data sameSize:(NSArray*)cnt
 {
     NSUInteger count = [cnt count];
+    NSMutableArray* array;
+    unsigned        i;
+
+    array = [NSMutableArray arrayWithCapacity:count];
+
+    for (i = 0; i < count; i++) {
+        [array addObject:[NSNumber numberWithInt:data[i]]];
+    }
+    return array;
+}
+
+- (NSArray* _Nullable)makeIntArray:(int*)data sameSizeAs:(NSArray**)cnt
+{
+    NSUInteger count = cnt?(*cnt?[*cnt count]:0):0;
     NSMutableArray* array;
     unsigned        i;
 
@@ -655,6 +670,17 @@ static void use_id(id x __attribute__((__unused__))){}
 + (NSArray* _Nullable)makeIntArray:(int*)array sameSize:(NSArray*)cnt on:(OC_MetaDataTest*)obj
 {
     return [obj makeIntArray:array sameSize:cnt];
+}
+
++ (NSArray* _Nullable)makeIntArray:(int*)array sameSizeAs:(NSArray**)cnt on:(OC_MetaDataTest*)obj
+{
+    return [obj makeIntArray:array sameSizeAs:cnt];
+}
+
++ (NSArray* _Nullable)makeIntArray:(int*)array sameSizeAsNilOn:(OC_MetaDataTest*)obj
+{
+    NSArray* cnt = nil;
+    return [obj makeIntArray:array sameSizeAs:&cnt];
 }
 
 + (NSArray*)makeIntArray:(int*)data countPtr:(unsigned*)countPtr on:(OC_MetaDataTest*)obj

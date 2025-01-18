@@ -342,6 +342,56 @@ def setupMetaData():
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"makeIntArray:sameSizeAs:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                },
+                2
+                + 1: {
+                    "type_modifier": objc._C_IN,
+                },
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeIntArray:sameSizeAs:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                },
+                2
+                + 1: {
+                    "type_modifier": objc._C_IN,
+                },
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeIntArray:sameSizeAsNilOn:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_variable_length": True,
+                    "null_accepted": False,
+                },
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"makeIntArray:halfCount:",
         {
             "arguments": {
@@ -1167,6 +1217,17 @@ class TestArraysIn(TestCase):
         self.assertEqual(a, [10, 20, 30, 40])
 
         a = o.makeIntArray_sameSize_([10, 20, 30, 40, 50], None)
+        self.assertEqual(a, ())
+
+        a = o.makeIntArray_sameSizeAs_(
+            [10, 20, 30, 40, 50], NSArray.arrayWithArray_(list(range(4)))
+        )
+        self.assertEqual(a, [10, 20, 30, 40])
+
+        a = o.makeIntArray_sameSizeAs_([10, 20, 30, 40, 50], None)
+        self.assertEqual(a, ())
+
+        a = o.makeIntArray_sameSizeAs_([10, 20, 30, 40, 50], objc.NULL)
         self.assertEqual(a, ())
 
         with self.assertRaisesRegex(
@@ -2125,6 +2186,9 @@ class TestVariableLengthValue(TestCase):
             def makeVariableLengthArray_halfCount_(self, a, b):
                 return [a, b, a[: 2 * b]]
 
+            def makeIntArray_sameSizeAs_(self, a, b):
+                return [a, b]
+
         obj = OC_MetaDataTestVarArrayImpl()
         result = OC_MetaDataTest.makeVariableLengthArray_halfCount_on_(
             [10, 20, 30, 40, 50, 60], 2, obj
@@ -2135,6 +2199,26 @@ class TestVariableLengthValue(TestCase):
         self.assertIsInstance(result[0], objc.varlist)
         self.assertEqual(result[1], 2)
         self.assertEqual(result[2], (10, 20, 30, 40))
+
+        result = OC_MetaDataTest.makeIntArray_sameSizeAs_on_(
+            [10, 20, 30, 40, 50, 60], [1, 2], obj
+        )
+        self.assertEqual(result, [(10, 20), [1, 2]])
+
+        result = OC_MetaDataTest.makeIntArray_sameSizeAs_on_(
+            [10, 20, 30, 40, 50, 60], None, obj
+        )
+        self.assertEqual(result, [(), objc.NULL])
+
+        result = OC_MetaDataTest.makeIntArray_sameSizeAsNilOn_(
+            [10, 20, 30, 40, 50, 60], obj
+        )
+        self.assertEqual(result, [(), None])
+
+        result = OC_MetaDataTest.makeIntArray_sameSizeAs_on_(
+            [10, 20, 30, 40, 50, 60], objc.NULL, obj
+        )
+        self.assertEqual(result, [(), objc.NULL])
 
 
 class TestVariadicArray(TestCase):

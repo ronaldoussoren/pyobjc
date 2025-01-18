@@ -167,6 +167,12 @@ class TestFunctionList(TestCase):
         ):
             objc.loadFunctionList(function_list, {}, [("foo", "@")])
 
+        with self.assertRaisesRegex(
+            ValueError, "PyCapsule_GetPointer called with incorrect name"
+        ):
+            o = NSObject.alloc().init()
+            objc.loadFunctionList(o.__cobject__(), {}, [("foo", b"@")])
+
     def test_invalid_function_signature(self):
         d = {}
 

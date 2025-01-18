@@ -9,6 +9,7 @@ from PyObjCTools.TestSupport import (
     os_level_key,
     os_release,
 )
+import objc.simd
 
 
 class TestMetadataRegistry(TestCase):
@@ -420,3 +421,33 @@ class TestOCBundleHack(TestCase):
         # XXX: Temporary test to check if the code in OC_NSBunldeHack is needed on
         # one of the supported platforms.
         self.assertFalse(objc.options._bundle_hack_used)
+
+
+class TestRegisterVectorTypes(TestCase):
+    # This only tests some non-standard cases, the regular code
+    # path's are used already.
+    def test_twice(self):
+        v = objc.repythonify((1, 2), b"<2f>")
+        self.assertIsInstance(v, objc.simd.vector_float2)
+
+        try:
+            # Create a new vector type with the same encoding and
+            # check that this is used instead.
+            cls = objc.simd.make_type("vector_float2", 0.0, float, 2, typestr=b"<2f>")
+            self.assertIsNot(cls, objc.simd.vector_float2)
+
+            v = objc.repythonify((1, 2), b"<2f>")
+            self.assertIsInstance(v, cls)
+
+        finally:
+            # Finally restory the previous situation
+            objc._registerVectorType(objc.simd.vector_float2)
+
+        v = objc.repythonify((1, 2), b"<2f>")
+        self.assertIsInstance(v, objc.simd.vector_float2)
+
+    def test_unused_simd(self):
+        with self.assertRaisesRegex(
+            objc.internal_error, "Unsupported SIMD encoding: <7f>"
+        ):
+            objc.simd.make_type("vector_float7", 0.0, float, 7, typestr=b"<7f>")

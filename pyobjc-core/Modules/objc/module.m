@@ -1100,7 +1100,7 @@ static PyObject* _Nullable createStructType(PyObject* self __attribute__((__unus
         fieldnames  = NULL;
     }
 
-    retval = PyObjC_RegisterStructType(typestr, name, docstr, NULL, field_count,
+    retval = PyObjC_RegisterStructType(typestr, name, docstr, field_count,
                                        (const char**)fieldnames, pack);
     if (retval == NULL)
         goto error_cleanup;
@@ -2159,6 +2159,7 @@ static setup_function _Nullable setup_functions[] = {
     PyObjCVarList_Setup,
     PyObjCSuper_Setup,
     PyObjCMethodSignature_Setup,
+    PyObjCStruct_Init,
     PyObjCUnicode_Setup,
     PyObjCInitNULL,
     PyObjCInstanceVariable_Setup,

@@ -63,8 +63,8 @@ mkimp_NSData_bytes(PyObject*              callable,
       PyGILState_STATE state = PyGILState_Ensure();
 
       pyself = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL)
-          goto error;
+      if (pyself == NULL) // LCOV_BR_EXCL_LINE
+          goto error; // LCOV_EXCL_LINE
 
       PyObject* arglist[2] = {NULL, pyself};
 
@@ -168,8 +168,8 @@ mkimp_NSMutableData_mutableBytes(PyObject* callable, PyObjCMethodSignature* meth
       PyGILState_STATE state = PyGILState_Ensure();
 
       pyself = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL)
-          goto error;
+      if (pyself == NULL) // LCOV_BR_EXCL_LINE
+          goto error; // LCOV_EXCL_LINE
 
       PyObject* arglist[2] = {NULL, pyself};
       result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,

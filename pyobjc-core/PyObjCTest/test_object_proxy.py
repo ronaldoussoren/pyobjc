@@ -684,3 +684,13 @@ class TestPythonMisc(TestCase):
         self.assertTrue(two > one)
         result = OC_ObjectInt.object_compareTo_(two, one)
         self.assertEqual(result, NSOrderedDescending)
+
+    def test_object_with_odd___pyobjc_object__(self):
+        class SelfPyObjCObject:
+            @property
+            def __pyobjc_object__(self):
+                return self
+
+        orig = SelfPyObjCObject()
+        out = objc.repythonify(orig)
+        self.assertIs(out, orig)

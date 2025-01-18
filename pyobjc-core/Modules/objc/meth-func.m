@@ -42,11 +42,13 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
             Py_DECREF(func);
             if (code == NULL) { // LCOV_BR_EXCL_LINE
                 return NULL;    // LCOV_EXCL_LINE
-            } else if (!PyCode_Check(code)) {
+            } else if (!PyCode_Check(code)) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_Format(PyExc_ValueError,
                              "%R does not have a valid '__code__' attribute", value);
                 Py_DECREF(code);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             return (PyCodeObject*)code;
         } else {
@@ -233,18 +235,21 @@ PyObjC_num_kwdefaults(PyObject* value)
     PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
 
     PyObject* defaults = PyObject_GetAttrString(value, "__kwdefaults__");
-    if (defaults == NULL) {
-        return -1;
+    if (defaults == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyDict_Check(defaults)) {
         Py_ssize_t num = PyDict_Size(defaults);
         Py_DECREF(defaults);
         return num;
-    } else if (defaults != Py_None) {
+    } else if (defaults != Py_None) { // LCOV_BR_EXCL_LINE
+        /* This cannot happen without poking into CPython internals */
+        // LCOV_EXCL_START
         Py_DECREF(defaults);
         PyErr_Format(PyExc_ValueError, "%R has an invalid '__kwdefaults__' attribute",
                      value);
         return -1;
+        // LCOV_EXCL_STOP
     } else {
         Py_DECREF(defaults);
         return 0;

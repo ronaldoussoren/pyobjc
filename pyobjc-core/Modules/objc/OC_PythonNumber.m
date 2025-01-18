@@ -60,16 +60,16 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
             PyObjC_GIL_RETURN(@encode(double));
-        } else {
+        } else { // LOCV_EXCL_LINE
             (void)PyLong_AsLongLong(value);
             if (!PyErr_Occurred()) {
                 PyObjC_GIL_RETURN(@encode(long long));
-            }
+            } // LOCV_EXCL_LINE
             PyErr_Clear();
             (void)PyLong_AsUnsignedLongLong(value);
             if (!PyErr_Occurred()) {
                 PyObjC_GIL_RETURN(@encode(unsigned long long));
-            }
+            } // LOCV_EXCL_LINE
             PyErr_Clear();
 
             /* Wrap on overflow */
@@ -99,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
         r = PyObject_IsTrue(value);
         if (r == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 
     return !!r;
@@ -323,7 +323,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObjC_BEGIN_WITH_GIL
             if (PyObjC_encodeWithCoder(value, coder) == -1) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
     }
 }
@@ -352,12 +352,8 @@ NS_ASSUME_NONNULL_BEGIN
         SET_FIELD(value, decoded);
 
         id actual = PyObjC_RegisterObjCProxy(value, self);
-        if (actual != self) {
-            [self release];
-            self = actual;
-        } else if (actual != nil) {
-            [actual release];
-        }
+        [self release];
+        self = actual;
 
     PyObjC_END_WITH_GIL
 
@@ -387,7 +383,7 @@ NS_ASSUME_NONNULL_BEGIN
                 r = PyLong_AsLongLong(value);
                 if (r == -1 && PyErr_Occurred()) {
                     PyErr_Clear();
-                } else {
+                } else { // LCOV_EXCL_LINE
                     use_super = 1;
                 }
             }
@@ -417,7 +413,7 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_RETURN(NSOrderedAscending);
         } else if (r > 0) {
             PyObjC_GIL_RETURN(NSOrderedDescending);
-        } else {
+        } else { // LCOV_EXCL_LINE
             PyObjC_GIL_RETURN(NSOrderedSame);
         }
 
@@ -481,19 +477,19 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
                 (void)PyLong_AsLongLong(value);
                 if (!PyErr_Occurred()) {
                     PyObjC_GIL_RETURN([NSNumber class]);
-                } else {
+                } else { // LCOV_EXCL_LINE
                     PyErr_Clear();
 
                     (void)PyLong_AsUnsignedLongLong(value);
                     if (!PyErr_Occurred()) {
                         PyObjC_GIL_RETURN([NSNumber class]);
-                    } else {
+                    } else { // LCOV_EXCL_LINE
                         PyErr_Clear();
 
                         PyObjC_GIL_RETURN([self class]);
                     }
                 }
-            } else {
+            } else { // LCOV_EXCL_LINE
                 PyObjC_GIL_RETURN([self class]);
             }
 

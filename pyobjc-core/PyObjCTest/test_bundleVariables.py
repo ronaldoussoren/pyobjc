@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 from PyObjCTest.test_object_proxy import NoObjectiveC
 
 from . import fnd as Foundation
@@ -109,6 +109,25 @@ class TestBundleVariables(TestCase):
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             objc.loadBundleVariables(self.bundle, {}, [(NoObjectiveC(), b"@")])
+
+    @min_os_level("10.15")
+    def test_charptr_variable(self):
+        bundle = Foundation.NSBundle.bundleWithPath_(
+            "/System/Library/Frameworks/IOUSBHost.framework"
+        )
+        self.assertIsNot(bundle, None)
+
+        d = {}
+        objc.loadBundleVariables(
+            bundle, d, [("IOUSBHostVersionString", objc._C_CHARPTR)]
+        )
+        self.assertIsInstance(d["IOUSBHostVersionString"], bytes)
+
+        d = {}
+        objc.loadBundleVariables(
+            bundle, d, [("IOUSBHostVersionString", objc._C_PTR + objc._C_CHR)]
+        )
+        self.assertIsInstance(d["IOUSBHostVersionString"], bytes)
 
 
 class TestSpecialVariables(TestCase):

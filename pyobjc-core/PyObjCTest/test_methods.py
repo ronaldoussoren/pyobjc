@@ -51,6 +51,15 @@ import objc
 from PyObjCTest.testbndl import OC_TestClass1, OC_TestClass2
 from PyObjCTools.TestSupport import TestCase
 
+
+class Number:
+    def __init__(self, v):
+        self._value = v
+
+    def __int__(self):
+        return self._value
+
+
 # Can't set the right signatures in plain Objective-C.
 for method, argmeta in [
     (b"passInOutChar:", {2: {"type_modifier": b"N"}}),
@@ -473,6 +482,12 @@ class PyOCTestSimpleArguments(TestCase):
         ):
             self.obj.shortArg_(1 << 16)
 
+            with self.assertRaises(OverflowError):
+                self.obj.shortArg_(Number(1 << 128))
+
+            with self.assertRaises(OverflowError):
+                self.obj.shortArg_(1 << 128)
+
     def testUShort(self):
         self.assertEqual(self.obj.ushortArg_(0), 0)
         self.assertEqual(self.obj.ushortArg_(10), 5)
@@ -515,6 +530,15 @@ class PyOCTestSimpleArguments(TestCase):
                 r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
             ):
                 self.obj.ushortArg_(1 << 16)
+
+            with self.assertRaises(OverflowError):
+                self.obj.ushortArg_(Number(1 << 128))
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "depythonifying 'unsigned short', got 'Number' of wrong magnitude ",
+            ):
+                self.obj.ushortArg_(Number(-40))
 
     def testChar(self):
         self.assertEqual(self.obj.charArg_(0), (0))

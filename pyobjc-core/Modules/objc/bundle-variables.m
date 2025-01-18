@@ -14,6 +14,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static const char gCharPtr[] = { _C_CHARPTR, 0 };
+
 static CFBundleRef _Nullable CreateCFBundleFromNSBundle(NSBundle* bundle)
 {
     CFURLRef bundleURL;
@@ -80,8 +82,11 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
 
     } else {
         PyObject* py_val = PyObjCCF_NewSpecialFromTypeID(typeid, *(id*)value);
-        if (py_val == NULL) {
-            return NULL;
+        if (py_val == NULL) { // LCOV_BR_EXCL_LINE
+            /* PyObjCCF_NewSpecialFromTypeID can basically only fail
+             * due to running out of memory.
+             */
+            return NULL; // LCOV_EXCL_LINE
         }
 
         PyObject*  py_name = id_to_python(name);
@@ -197,8 +202,14 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
         } else {
             PyObject* py_val;
 
-            if (*signature == _C_CHARPTR) {
-                py_val = pythonify_c_value(signature, &value);
+            if (*signature == _C_CHARPTR || (signature[0] == _C_PTR && signature[1] == _C_CHR)) {
+                /* Load C string variable. Special handling for the signature and value to
+                 * get the correct behaviour: Load a null terminated C string (as bytes)
+                 *
+                 * Used in practive for a number of VersionString globals in Apple
+                 * frameworks.
+                 */
+                py_val = pythonify_c_value(gCharPtr, &value);
             } else {
                 py_val = pythonify_c_value(signature, value);
             }
@@ -340,9 +351,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             if (!PyArg_ParseTuple(item, "sy|UO:functionInfo", &c_name, &signature, &doc,
                                   &meta)) {
                 Py_DECREF(seq);
-                if (cfBundle != NULL) {
-                    CFRelease(cfBundle);
-                }
+                PyObjC_Assert(cfBundle == NULL, NULL);
                 return NULL;
             }
 

@@ -29,7 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @abstract Create a mutable struct-like type
  * @param name       Name of the type, should include the module name
  * @param doc        Docstring for the type
- * @param tpinit     Optional __init__ method for the type
  * @param numFields  Number of fields in the type
  * @param fieldnames Field names, there should be exactly numFields names.
  * @param pack       Value of 'pragma pack', use -1 for default packing
@@ -37,14 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @discussion
  *    The name, doc and fieldnames should be pointers to static strings,
  *    this function will not copy them.
- *
- *    If tpinit is NULL the type will have a default __init__ that initializes
- *    the fields to None and uses its arguments to optionally initialize the
- *    fields.
- *
  */
 PyObject* _Nullable PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
-                                          initproc _Nullable tpinit, Py_ssize_t numFields,
+                                          Py_ssize_t numFields,
                                           const char* _Nonnull* _Nonnull fieldnames,
                                           const char* typestr, Py_ssize_t pack);
 
@@ -54,13 +48,12 @@ PyObject* _Nullable PyObjC_MakeStructType(const char* name, const char* _Nullabl
  * @param signature  Objective-C signature for the struct
  * @param name       Name of the type, should include the module name
  * @param doc        Docstring for the type
- * @param tpinit     Optional __init__ method for the type
  * @param numFields  Number of fields in the type
  * @param fieldnames Field names, there should be exactly numFields names.
  * @param pack       Value of 'pragma pack', use -1 for default packing
  * @result Returns a newly allocated type or NULL
  * @discussion
- *    This function calls PyObjC_MakeStructType(name, doc, tpinit, numFields,
+ *    This function calls PyObjC_MakeStructType(name, doc, numFields,
  *    fieldnames) and then adds the created type to an internal lookup table.
  *
  *    PyObjC_CreateRegisteredStruct can then be used to create instances of
@@ -68,7 +61,6 @@ PyObject* _Nullable PyObjC_MakeStructType(const char* name, const char* _Nullabl
  */
 PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char* name,
                                               const char* _Nullable doc,
-                                              initproc _Nullable tpinit,
                                               Py_ssize_t numFields,
                                               const char* _Nonnull* _Nullable fieldnames,
                                               Py_ssize_t pack);
@@ -133,6 +125,8 @@ extern PyObject* _Nullable StructAsTuple(PyObject* strval);
 
 extern PyTypeObject StructBase_Type;
 #define PyObjCStruct_Check(obj) PyObject_TypeCheck(obj, &StructBase_Type)
+
+extern int PyObjCStruct_Init(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 

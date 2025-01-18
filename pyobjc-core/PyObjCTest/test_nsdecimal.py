@@ -67,6 +67,9 @@ class TestNSDecimalWrapper(TestCase):
         ):
             objc.NSDecimal(objc.lookUpClass("NSObject").new())
 
+        with self.assertRaisesRegex(TypeError, r"unsupported operand type\(s\) for \+"):
+            objc.NSDecimal(1) + set()
+
         d = objc.NSDecimal("invalid")
         self.assertEqual(str(d), "NaN")
 
@@ -104,6 +107,12 @@ class TestNSDecimalWrapper(TestCase):
         self.assertTrue(d1 >= d3)
         self.assertFalse(d1 >= d4)
 
+        with self.assertRaisesRegex(TypeError, "Cannot compare NSDecimal and bytes"):
+            d1 < b"hello"  # noqa: B015
+
+        with self.assertRaisesRegex(TypeError, "Cannot compare NSDecimal and bytes"):
+            b"hello" < d1  # noqa: B015
+
         self.assertEqual(objc.NSDecimal("1.50"), objc.NSDecimal("1.500"))
 
         # Comparison with other types is possible when
@@ -115,7 +124,9 @@ class TestNSDecimalWrapper(TestCase):
         D5 = decimal.Decimal(5)
 
         self.assertTrue(d5 == i5)
+        self.assertTrue(i5 == d5)
         self.assertTrue(d5 == f5)
+        self.assertTrue(f5 == d5)
         self.assertFalse(d5 == D5)
         self.assertFalse(d5 != i5)
         self.assertFalse(d5 != f5)

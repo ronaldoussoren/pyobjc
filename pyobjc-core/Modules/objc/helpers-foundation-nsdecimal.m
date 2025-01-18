@@ -401,9 +401,9 @@ decimal_hash(PyObject* self)
     NSString*  strrepr = NSDecimalString(&Decimal_Value(self), nil);
     NSUInteger hash    = [strrepr hash];
 
-    if ((Py_hash_t)hash == (Py_hash_t)-1) {
+    if ((Py_hash_t)hash == (Py_hash_t)-1) { // LCOV_BR_EXCL_LINE
         /* hash -1 is not used by Python */
-        return -2;
+        return -2; // LCOV_EXCL_LINE
     } else {
         return hash;
     }
@@ -413,28 +413,21 @@ static PyObject*
 decimal_richcompare(PyObject* self, PyObject* other, int type)
 {
     NSComparisonResult res;
-    (void)decimal_coerce_compare(&self, &other);
+    int r = decimal_coerce_compare(&self, &other);
+    if (r == 1) {
+        PyErr_Clear();
+    }
 
     if (!Decimal_Check(other)) {
         if (type == Py_EQ) {
-            if (PyErr_Occurred()) {
-                PyErr_Clear();
-            }
             Py_RETURN_FALSE;
 
         } else if (type == Py_NE) {
-            if (PyErr_Occurred()) {
-                PyErr_Clear();
-            }
             Py_RETURN_TRUE;
         }
 
         PyErr_Format(PyExc_TypeError, "Cannot compare NSDecimal and %s",
                      other->ob_type->tp_name);
-        return NULL;
-    }
-
-    if (PyErr_Occurred()) {
         return NULL;
     }
 
@@ -489,13 +482,15 @@ static PyObject* _Nullable decimal_result_to_python(NSCalculationError status,
 {
     /* XXX: Need tests that trigger these errors, including the loss of precision one */
     NSDecimal value2;
-    switch (status) {
+    switch (status) { // LCOV_BR_EXCL_LINE
     case NSCalculationOverflow:
         PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
         return NULL;
     case NSCalculationUnderflow:
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
         return NULL;
+        // LCOV_EXCL_STOP
     case NSCalculationDivideByZero:
         PyErr_SetString(PyExc_ZeroDivisionError, "Division by zero");
         return NULL;
@@ -725,25 +720,14 @@ decimal_repr(PyObject* self)
 {
     NSString* val = NSDecimalString(&Decimal_Value(self), NULL);
     PyObject* tmp = id_to_python(val);
-    if (tmp == NULL) { // LCOV_BR_EXCL_START
-        return NULL;   // LCOV_EXCL_STOP
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
     PyObject* repr = PyObject_Str(tmp);
     Py_XDECREF(tmp);
     return repr;
 }
 
-static inline int
-Decimal_Convert(PyObject* self, void* val)
-{
-    if (Decimal_Check(self)) {
-        *(NSDecimal**)val = &Decimal_Value(self);
-        return 1;
-    }
-    PyErr_Format(PyExc_TypeError, "Expecting an NSDecimal, got instance of '%s'",
-                 Py_TYPE(self)->tp_name);
-    return 0;
-}
 
 static PyObject*
 Decimal_New(const NSDecimal* aDecimal)
@@ -864,8 +848,8 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
         // LCOV_EXCL_STOP
     Py_END_ALLOW_THREADS
 
-    if (res == nil && PyErr_Occurred()) {
-        return NULL;
+    if (res == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     return id_to_python(res);
@@ -1020,8 +1004,6 @@ mkimp_NSDecimalNumber_decimalValue(PyObject* callable, PyObjCMethodSignature* me
     Py_INCREF(callable);
 
     NSDecimal (^block)(id) = ^(id _Nullable self) {
-      NSDecimal* res = NULL;
-
       PyObject* result = NULL;
       PyObject* v      = NULL;
 
@@ -1039,15 +1021,11 @@ mkimp_NSDecimalNumber_decimalValue(PyObject* callable, PyObjCMethodSignature* me
       if (result == NULL)
           goto error;
 
-      Decimal_Convert(result, &res);
-      if (res == NULL) {
-          Py_DECREF(result);
-          goto error;
-      }
+      NSDecimal res = Decimal_Value(result);
 
       Py_DECREF(result);
       PyGILState_Release(state);
-      return *res;
+      return res;
 
   error:
       Py_XDECREF(v);

@@ -851,7 +851,7 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
                     type++;
                 } else {
                     PyErr_SetString(PyObjCExc_InternalError,
-                                    "Struct with invalid embedded field name");
+                                    "Struct encoding with invalid embedded field name");
                     return NULL;
                 }
             }
@@ -1219,7 +1219,7 @@ PyObjCRT_SizeOfType(const char* start_type)
                 type = strchr(type + 1, '"');
                 if (type == NULL) {
                     PyErr_Format(PyObjCExc_InternalError,
-                                 "Struct with invalid embedded field name: %s",
+                                 "Struct encoding with invalid embedded field name: %s",
                                  start_type);
                     return -1;
                 }
@@ -2501,9 +2501,14 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr, unsigned long lo
             }
             Py_DECREF(tmp);
 
-            if (*out <= max) {
-                return 0;
+            if (*out > max) {
+                PyErr_Format(PyExc_ValueError,
+                             "depythonifying '%s', got '%s' of "
+                             "wrong magnitude (max %llu, value %llu)",
+                             descr, Py_TYPE(argument)->tp_name, max, *out);
+                return -1;
             }
+            return 0;
         }
 
         PyErr_Format(PyExc_ValueError, "depythonifying '%s', got '%s'", descr,
@@ -2687,11 +2692,14 @@ depythonify_python_object(PyObject* argument, id* datum)
 
         if (*datum == nil) {
             int r = PyObjC_IsListLike(argument);
+            if (r == -1) {
+                return -1;
+            }
 
             if (r) {
                 *datum = [OC_PythonArray arrayWithPythonObject:argument];
-                if (*datum == nil) {
-                    return -1;
+                if (*datum == nil) { // LCOV_BR_EXCL_LINE
+                    return -1; // LCOV_EXCL_LINE
                 }
             }
         }
@@ -2705,8 +2713,8 @@ depythonify_python_object(PyObject* argument, id* datum)
 
             if (r) {
                 *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
-                if (*datum == nil) {
-                    return -1;
+                if (*datum == nil) {  // LCOV_BR_EXCL_LINE
+                    return -1; // LCOV_EXCL_LINE
                 }
             }
         }
@@ -2719,23 +2727,23 @@ depythonify_python_object(PyObject* argument, id* datum)
 
             if (r) {
                 *datum = [OC_PythonSet setWithPythonObject:argument];
-                if (*datum == nil) {
-                    return -1;
+                if (*datum == nil) { // LCOV_BR_EXCL_LINE
+                    return -1; // LCOV_EXCL_LINE
                 }
             }
         }
 
         if (*datum == nil && PyObjC_IsBuiltinDate(argument)) {
             *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
-            if (*datum == nil) {
-                return -1;
+            if (*datum == nil) { // LCOV_BR_EXCL_LINE
+                return -1; // LCOV_EXCL_LINE
             }
         }
 
         if (*datum == nil && PyObjC_IsBuiltinDatetime(argument)) {
             *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
-            if (*datum == nil) {
-                return -1;
+            if (*datum == nil) { // LCOV_BR_EXCL_LINE
+                return -1; // LCOV_EXCL_LINE
             }
         }
 
@@ -2757,8 +2765,8 @@ depythonify_python_object(PyObject* argument, id* datum)
             int r;
 
             r = PyObjC_IsPathLike(argument);
-            if (r == -1) {
-                return -1;
+            if (r == -1) { // LCOV_BR_EXCL_LINE
+                return -1; // LCOV_EXCL_LINE
             }
 
             if (r) {
@@ -2778,7 +2786,7 @@ depythonify_python_object(PyObject* argument, id* datum)
         }
     }
 
-    if (*datum) {
+    if (*datum) { // LCOV_BR_EXCL_LINE
         id actual = PyObjC_RegisterObjCProxy(argument, *datum);
         if (actual != nil) {
             if (actual == *datum) {
@@ -2792,7 +2800,7 @@ depythonify_python_object(PyObject* argument, id* datum)
         }
         return 0;
     } else {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 }
 

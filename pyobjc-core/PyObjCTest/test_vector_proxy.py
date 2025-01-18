@@ -34,6 +34,12 @@ class Fake:
 
 
 class TestRepythonify(TestCase):
+    def test_invalid_encoding(self):
+        with self.assertRaisesRegex(
+            objc.internal_error, "Unsupported SIMD encoding: <2i"
+        ):
+            objc.repythonify((1, 2), b"<2i")
+
     def test_from_tuple(self):
         for simd_type, args in CASES:
             with self.subTest(type=simd_type, args=args):

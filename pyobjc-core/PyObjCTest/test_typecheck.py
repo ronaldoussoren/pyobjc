@@ -39,6 +39,12 @@ class TestPython3Types(TestCase):
         objc.loadBundleFunctions(bundle, d, tab)
         self.assertIn("NSHomeDirectory", d)
 
+        tab = [("NSHomeDirectory", b"X")]
+        d = {}
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
+            objc.loadBundleFunctions(bundle, d, tab)
+        self.assertEqual(d, {})
+
         tab = [("NSHomeDirectory", "@")]
         with self.assertRaisesRegex(
             TypeError, "a bytes-like object is required, not 'str'"
@@ -54,10 +60,15 @@ class TestPython3Types(TestCase):
         bundle = NSBundle.bundleForClass_(NSBundle)
 
         tab = [("NSAppleScriptErrorMessage", b"@")]
-
         d = {}
         objc.loadBundleVariables(bundle, d, tab)
         self.assertIn("NSAppleScriptErrorMessage", d)
+
+        tab = [("NSAppleScriptErrorMessage", b"X")]
+        d = {}
+        with self.assertRaisesRegex(objc.error, "unhandled value type"):
+            objc.loadBundleVariables(bundle, d, tab)
+        self.assertEqual(d, {})
 
         tab = [("NSAppleScriptErrorMessage", "@")]
 

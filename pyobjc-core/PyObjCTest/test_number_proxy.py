@@ -203,6 +203,19 @@ class TestNSNumber(TestCase):
         self.assertEqual(OC_NumberInt.numberAsFloat_(v), 42.0)
         self.assertEqual(OC_NumberInt.numberAsDouble_(v), 42.0)
 
+        class NotBool(int):
+            __slots__ = ()
+
+            def __bool__(self):
+                raise RuntimeError("don't judge me")
+
+        value = NotBool()
+        with self.assertRaisesRegex(RuntimeError, "don't judge me"):
+            bool(value)
+
+        with self.assertRaisesRegex(RuntimeError, "don't judge me"):
+            OC_NumberInt.numberAsBOOL_(value)
+
     def testIntConversions(self):
         v = NSNumber.numberWithInt_(42)
 
@@ -733,6 +746,14 @@ class TestPyNumber(TestCase):
 
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 0), NSOrderedSame)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 0.0), NSOrderedSame)
+
+        self.assertEqual(
+            OC_NumberInt.compareA_andB_(
+                2**128,
+                2**140,
+            ),
+            NSOrderedAscending,
+        )
 
     def testNumberEqualToValue(self):
         self.assertFalse(OC_NumberInt.number_isEqualToValue_(0, 1))

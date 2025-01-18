@@ -193,11 +193,11 @@ num_struct_fields(const char* orig_argtype)
             while (*argtype != '\0' && *argtype++ != '"') {
             }
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
 
         argtype = PyObjCRT_SkipTypeSpec(argtype);
         if (argtype == NULL) { // LCOV_BR_EXCL_LINE
-            return -1; // LCOV_ECL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
         res++;
     }
