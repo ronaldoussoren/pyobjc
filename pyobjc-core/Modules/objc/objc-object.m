@@ -410,8 +410,10 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
 #endif
 
             if (PyObjCClass_CheckMethodList(base, 0) < 0) { // LCOV_BR_EXCL_LINE
+                // LOCV_EXCL_START
                 Py_CLEAR(mro);
-                return NULL;                                // LCOV_EXCL_LINE
+                return NULL;
+                // LOCV_EXCL_STOP
             }
 
             dict = PyType_GetDict((PyTypeObject*)base);
@@ -462,8 +464,10 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
             PyObject* hidden = PyObjCClass_HiddenSelector(base, sel, NO);
             if (!hidden) {
                 if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_CLEAR(mro);
-                    return NULL;        // LCOV_EXCL_LINE
+                    return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 descr = PyObjCClass_TryResolveSelector(base, name, sel);
@@ -768,7 +772,7 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
             PyErr_SetString(PyObjCExc_Error, "Descriptor getter returned NULL "
                                              "without raising an exception");
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
         goto done;
     }
 
@@ -972,7 +976,7 @@ static PyObject* _Nullable objc_get_real_class(PyObject* self,
         }
 #endif
         Py_END_CRITICAL_SECTION();
-    }
+    } // LCOV_EXCL_LINE
     return ret;
 }
 
@@ -1340,7 +1344,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
             } else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
                 /* pass */
 
-            } else {
+            } else { // LCOV_EXCL_LINE
                 CFRelease(objc_object);
             }
 

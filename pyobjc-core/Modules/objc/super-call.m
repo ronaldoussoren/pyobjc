@@ -241,11 +241,13 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 
     r = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
                                    PyBytes_GET_SIZE(key));
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(key);
         PyErr_Format(PyObjCExc_Error, "cannot simplify signature '%s'", signature);
         retval = -1;
         goto exit;
+        // LCOV_EXCL_STOP
     }
 
 #ifdef PyObjC_DEBUG
@@ -446,10 +448,12 @@ static struct registry* _Nullable find_signature(const char* signature)
 
     res = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
                                      PyBytes_GET_SIZE(key));
-    if (res == -1) {
+    if (res == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(key);
         PyErr_Format(PyObjCExc_Error, "cannot simplify signature '%s'", signature);
         goto exit;
+        // LCOV_EXCL_STOP
     }
 
     int r = _PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1);
@@ -488,7 +492,7 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
             result = special->call_to_objc;
         } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
             result = NULL;               // LCOV_EXCL_LINE
-        } else {
+        } else { // LCOV_EXCL_LINE
             result = PyObjCFFI_Caller;
         }
     }
@@ -514,8 +518,8 @@ PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_cl
     PyObjCMethodSignature*  methinfo;
 
     methinfo = PyObjCSelector_GetMetadata(sel);
-    if (methinfo == NULL) {
-        return NULL;
+    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     if (super_class != nil) {

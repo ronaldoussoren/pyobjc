@@ -118,14 +118,14 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
     if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
         && PyTuple_GET_ITEM(pyres, 0) == pyself) {
         pyres = pyself;
-    }
+    } // LCOV_EXCL_LINE
 
     if (PyObjCObject_Check(pyself)
         && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
         if (pyself != pyres && !PyErr_Occurred()) {
             PyObjCObject_ClearObject(pyself);
-        }
-    }
+        } // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 
     if (pyres && PyObjCObject_Check(res)) {
         if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
@@ -136,8 +136,8 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
             if (pyself && pyself != pyres && PyObjCObject_Check(pyself)
                 && !PyErr_Occurred()) {
                 PyObjCObject_ClearObject(pyself);
-            }
-        }
+            } // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
     }
 
     return res;
@@ -182,7 +182,7 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
     if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
         && PyTuple_GET_ITEM(pyres, 0) == pyself) {
         pyres = pyself;
-    }
+    } // LCOV_EXCL_LINE
 
     if (PyObjCObject_Check(pyself)
         && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
@@ -200,7 +200,7 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
             if (pyself && pyself != pyres && PyObjCObject_Check(pyself)
                 && !PyErr_Occurred()) {
                 PyObjCObject_ClearObject(pyself);
-            }
+            } // LCOV_EXCL_LINE
         }
     }
 

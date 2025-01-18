@@ -82,7 +82,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                 Py_DECREF(dct);
                 Py_DECREF(pykey);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
             Py_DECREF(pykey);
         }
 
@@ -153,8 +153,8 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 - (NSUInteger)count
 {
     Py_ssize_t result;
-    if (value == NULL) {
-        return 0;
+    if (value == NULL) { // LCOV_BR_EXCL_LINE
+        return 0; // LCOV_EXCL_LINE
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -181,8 +181,8 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     PyObject* k;
     id        result;
 
-    if (value == NULL) {
-        return nil;
+    if (value == NULL) { // LCOV_BR_EXCL_LINE
+        return nil; // LCOV_EXCL_LINE
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -227,7 +227,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         } else if (unlikely(depythonify_python_object(v, &result) == -1)) {
             Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(v);
 
     PyObjC_END_WITH_GIL
@@ -245,7 +245,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         if (unlikely(val == null)) {
             Py_INCREF(Py_None);
             v = Py_None;
-        } else {
+        } else { // LCOV_EXCL_LINE
             v = id_to_python(val);
             if (unlikely(v == NULL)) {
                 PyObjC_GIL_FORWARD_EXC();
@@ -272,14 +272,14 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                 Py_XDECREF(v);
                 Py_XDECREF(k);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
         } else {
             if (unlikely(PyObject_SetItem(value, k, v) < 0)) {
                 Py_XDECREF(v);
                 Py_XDECREF(k);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         Py_DECREF(v);
@@ -300,7 +300,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             k = id_to_python(key);
             if (unlikely(k == NULL)) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         if (PyDict_CheckExact(value)) {
@@ -313,7 +313,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                                                  userInfo:@{@"key" : key}];
                 }
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
         } else {
             if (unlikely(PyObject_DelItem(value, k) < 0)) {
@@ -325,7 +325,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                                                  userInfo:@{@"key" : key}];
                 }
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
         Py_DECREF(k);
 
@@ -345,7 +345,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                 PyObjCNM_keys, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             if (keys == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             PyObject* iter = PyObject_GetIter(keys);
             Py_DECREF(keys);
@@ -388,14 +388,14 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                 v = id_to_python(objects[i]);
                 if (v == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
-                }
+                } // LCOV_EXCL_LINE
             }
 
             if (keys[i] == NSNull_null) {
                 k = Py_None;
                 Py_INCREF(Py_None);
 
-            } else {
+            } else { // LCOV_EXCL_LINE
                 k = id_to_python(keys[i]);
                 if (k == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
@@ -418,7 +418,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
             if (r == -1) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
     PyObjC_END_WITH_GIL
     return self;
@@ -467,7 +467,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             value = PyDict_New();
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
 
@@ -484,12 +484,8 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             SET_FIELD(value, decoded);
 
             id actual = PyObjC_RegisterObjCProxy(value, self);
-            if (actual != self) {
-                [self release];
-                self = actual;
-            } else if (actual != nil) {
-                [actual release];
-            }
+            [self release];
+            self = actual;
         PyObjC_END_WITH_GIL
 
         return self;
@@ -541,7 +537,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         PyObjC_BEGIN_WITH_GIL
             if (PyObjC_encodeWithCoder(value, coder) == -1) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
     }
 }
@@ -554,12 +550,12 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         PyObject* copy = PyObjC_Copy(value);
         if (copy == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(copy);
     PyObjC_END_WITH_GIL
 
@@ -577,12 +573,12 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         PyObject* copy = PyDict_New();
         if (copy == NULL) {           // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-        }
+        } // LCOV_EXCL_LINE
 
         int r = PyDict_Update(copy, value);
         if (r == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object( // LCOV_BR_EXCL_LINE
                 copy, &result)

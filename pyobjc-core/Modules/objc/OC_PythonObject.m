@@ -37,19 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (id _Nullable)initWithPyObject:(PyObject*)obj
 {
     // XXX: Fix callers to do the registration for us.
-    id actual = PyObjC_RegisterObjCProxy(obj, self);
-    if (actual != self) {
-        /*
-         * Race between two threads creating a proxy, use the
-         * first one that got registered.
-         */
-        [self release];
-        return actual;
-    } else if (actual != nil) {
-        [actual release];
-    }
-
     SET_FIELD_INCREF(pyObject, obj);
+
+    id actual = PyObjC_RegisterObjCProxy(obj, self);
+    [self release];
+    self = actual;
 
     return self;
 }
@@ -82,12 +74,12 @@ NS_ASSUME_NONNULL_BEGIN
         copy = PyObjC_Copy(pyObject);
         if (copy == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(copy);
 
     PyObjC_END_WITH_GIL
@@ -128,14 +120,14 @@ NS_ASSUME_NONNULL_BEGIN
             Py_DECREF(repr);
             if (err == -1) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             PyObjC_GIL_RETURN(result);
         }
         PyObjC_GIL_FORWARD_EXC();
 
     PyObjC_END_WITH_GIL
-}
+} // LCOV_EXCL_LINE
 
 - (void)doesNotRecognizeSelector:(SEL)aSelector
 {
@@ -241,7 +233,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         if (m) {
             Py_DECREF(m);
             PyObjC_GIL_RETURN(YES);
-        } else {
+        } else { // LCOV_EXCL_LINE
             PyErr_Clear();
             PyObjC_GIL_RETURN(NO);
         }
@@ -294,7 +286,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         if (!pymethod) {
             PyErr_Clear();
             PyObjC_GIL_RETURN(nil);
-        }
+        } // LCOV_EXCL_LINE
 
         if (PyObjC_is_pymethod(pymethod)) {
             argcount = PyObjC_num_arguments(pymethod) - 1;
@@ -305,7 +297,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         Py_DECREF(pymethod);
         if (argcount < 0) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         encoding = alloca(argcount + 4);
         memset(encoding, '@', argcount + 3);
@@ -494,7 +486,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         retsize = PyObjCRT_SizeOfType(rettype);
         if (retsize == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         retbuffer = alloca(retsize);
 
@@ -527,7 +519,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             Py_DECREF(pymethod);
             PyObjC_GIL_FORWARD_EXC();
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
         for (i = 2; i < argcount; i++) {
             const char* argtype;
             char*       argbuffer;
@@ -548,7 +540,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                 Py_DECREF(args);
                 Py_DECREF(pymethod);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
             argbuffer = alloca(argsize);
 
             Py_BEGIN_ALLOW_THREADS
@@ -568,7 +560,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                 Py_DECREF(args);
                 Py_DECREF(pymethod);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             PyTuple_SET_ITEM(args, i - 2, pyarg);
         }
@@ -580,14 +572,13 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
         if (result == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-            return;
         }
 
         err = depythonify_c_value(rettype, result, retbuffer);
         Py_DECREF(result);
         if (err == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        } else {
+        } else { // LCOV_EXCL_LINE
             Py_BEGIN_ALLOW_THREADS
                 @try {
                     [invocation setReturnValue:retbuffer];
@@ -665,7 +656,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_BEGIN_WITH_GIL
         if (PyObjC_GetKey(pyObject, key, &res) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -687,7 +678,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_BEGIN_WITH_GIL
         if (PyObjC_SetKey(pyObject, key, value) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 }
@@ -721,7 +712,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_BEGIN_WITH_GIL
         if (PyObjC_GetKeyPath(pyObject, keyPath, &res) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -738,7 +729,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_BEGIN_WITH_GIL
         if (PyObjC_SetKeyPath(pyObject, keyPath, value) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 }
@@ -841,7 +832,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         if (otherPyObject == NULL) {
             PyErr_Clear();
             PyObjC_GIL_RETURN(NO);
-        }
+        } // LCOV_EXCL_LINE
         if (otherPyObject == pyObject) {
             PyObjC_GIL_RETURN(YES);
         }
@@ -850,10 +841,9 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             PyErr_Clear();
         case 0:
             PyObjC_GIL_RETURN(NO);
-            break;
         default:
             PyObjC_GIL_RETURN(YES);
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 }
 
@@ -871,14 +861,14 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         PyObject* otherPyObject = id_to_python(other);
         if (otherPyObject == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         if (otherPyObject == pyObject) {
             PyObjC_GIL_RETURN(NSOrderedSame);
-        }
+        } // LCOV_EXCL_LINE
         int r;
         if (PyObjC_Cmp(pyObject, otherPyObject, &r) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         NSComparisonResult rval;
         switch (r) {
         case -1:
@@ -905,7 +895,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         rval = PyObjC_encodeWithCoder(pyObject, coder);
         if (rval == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 }
 
@@ -930,7 +920,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
         if (decoded == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         /* To make life more interesting the correct proxy
          * type for 'v' might not be OC_PythonObject, in particular

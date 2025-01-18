@@ -144,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
                         Py_DECREF(tzinfo);
                         PyObjC_GIL_FORWARD_EXC();
                         // LCOV_EXCL_STOP
-                    }
+                    } // LCOV_EXCL_LINE
                 }
                 PyErr_Clear();
             PyObjC_END_WITH_GIL
@@ -166,7 +166,7 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         if (PyObjC_encodeWithCoder(value, coder) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 }
 
@@ -227,9 +227,9 @@ NS_ASSUME_NONNULL_BEGIN
 
             value = PyObjC_DateFromTimestamp([temp timeIntervalSince1970]);
             [temp release];
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+            if (value == NULL) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
     }
@@ -241,9 +241,9 @@ NS_ASSUME_NONNULL_BEGIN
 
             value = PyObjC_DatetimeFromTimestamp([temp timeIntervalSince1970], c_info);
             [temp release];
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+            if (value == NULL) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
     } break;
@@ -253,16 +253,12 @@ NS_ASSUME_NONNULL_BEGIN
             PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
             if (decoded == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             SET_FIELD(value, decoded);
             id actual = PyObjC_RegisterObjCProxy(value, self);
-            if (actual != self) {
-                [self release];
-                self = actual;
-            } else  if (actual != nil) {
-                [actual release];
-            }
+            [self release];
+            self = actual;
 
         PyObjC_END_WITH_GIL
 

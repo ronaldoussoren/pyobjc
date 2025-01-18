@@ -12,6 +12,7 @@ NSKeyedArchiver = objc.lookUpClass("NSKeyedArchiver")
 NSKeyedUnarchiver = objc.lookUpClass("NSKeyedUnarchiver")
 NSArchiver = objc.lookUpClass("NSArchiver")
 NSUnarchiver = objc.lookUpClass("NSUnarchiver")
+NSError = objc.lookUpClass("NSError")
 
 NSDate = objc.lookUpClass("NSDate")
 NSData = objc.lookUpClass("NSData")
@@ -49,6 +50,58 @@ def as_datetime(value):
     if isinstance(value, datetime.date) and not isinstance(value, datetime.datetime):
         return datetime.datetime.fromtimestamp(float(value.strftime("%s")))
     return value
+
+
+class CustomDate(datetime.date):
+    def strftime(self, *args):
+        raise TypeError("cannot format")
+
+
+class CustomDate2(datetime.date):
+    def strftime(self, *args):
+        return 42
+
+
+class CustomDate3(datetime.date):
+    def __reduce__(self):
+        raise RuntimeError("don't reduce me")
+
+
+class TestErrorCases(TestCase):
+    def test_strtime_raises(self):
+        v = CustomDate.today()
+        self.assertIsInstance(v, CustomDate)
+
+        with self.assertRaisesRegex(TypeError, "cannot format"):
+            objc.repythonify(v)
+
+    def test_strftime_returns_no_string(self):
+        v = CustomDate2.today()
+        self.assertIsInstance(v, CustomDate2)
+
+        with self.assertRaisesRegex(TypeError, r"float\(\) argument must be a string"):
+            objc.repythonify(v)
+
+    def test_archiving_fails(self):
+        value = CustomDate3.today()
+        self.assertIsInstance(value, CustomDate3)
+
+        with self.assertRaisesRegex(RuntimeError, "don't reduce me"):
+            NSKeyedArchiver.archivedDataWithRootObject_(value)
+
+        try:
+            blob, err = (
+                NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                    value, False, None
+                )
+            )
+        except AttributeError:
+            pass
+
+        else:
+            self.assertIsInstance(err, NSError)
+            self.assertIn("don't reduce me", str(err))
+            self.assertIs(blob, None)
 
 
 class TestDateInObjC(TestCase):
