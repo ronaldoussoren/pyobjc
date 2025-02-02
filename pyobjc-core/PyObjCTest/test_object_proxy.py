@@ -2,6 +2,8 @@ from PyObjCTools.TestSupport import TestCase, pyobjc_options, cast_ulonglong
 from PyObjCTest.objectint import OC_ObjectInt
 import copy
 import objc
+import tempfile
+import os
 
 # XXX: Some of the tests in test_*_proxy can
 #      be replaced by subclasses of the tests
@@ -52,6 +54,13 @@ class TestPythonProxy(TestCase):
         self.assertIsInstance(result, type(self.value))
         self.assertIsNot(result, self.value)
 
+        def copy_func(value):
+            return None
+
+        with pyobjc_options(_copy=copy_func):
+            result = OC_ObjectInt.copyObject_(self.value)
+            self.assertIs(result, None)
+
     def test_simple_copy_with_zone(self):
         result = OC_ObjectInt.copyObject_withZone_(self.value, None)
         self.assertEqual(result, self.value)
@@ -81,6 +90,9 @@ class TestPythonProxy(TestCase):
         result = OC_ObjectInt.object_equalTo_(self.value, self.different)
         self.assertIs(result, False)
 
+        result = OC_ObjectInt.objectEqualToNoProxy_(self.value)
+        self.assertIs(result, False)
+
     def test_compare_trivial(self):
         result = OC_ObjectInt.object_compareTo_(self.value, self.value)
         self.assertEqual(result, 0)
@@ -89,6 +101,9 @@ class TestPythonProxy(TestCase):
             ValueError, "NSInvalidArgumentException - nil argument"
         ):
             OC_ObjectInt.object_compareTo_(self.value, None)
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_ObjectInt.objectCompareToNoProxy_(self.value)
 
     # Some private NSObject methods
     def test_copyDescription(self):
@@ -144,7 +159,45 @@ class Forwarder:
         return [a, b]
 
 
+class Forwarder2:
+    voidSelector = 42
+
+
+class Forwarder3:
+    def voidSelector(self, a):
+        pass
+
+
+class Forwarder4:
+    @staticmethod
+    def voidSelector(a):
+        pass
+
+
 class TestPlainPythonMethods(TestCase):
+    def test_call_invalidSelector(self):
+        forwarder = Forwarder2()
+
+        with self.assertRaisesRegex(ValueError, "does not recognize -voidSelector"):
+            OC_ObjectInt.voidSelectorOf_(forwarder)
+
+        with self.assertRaisesRegex(ValueError, "does not recognize -voidSelector"):
+            OC_ObjectInt.invokeVoidSelectorOf_(forwarder)
+
+        forwarder = Forwarder3()
+        with self.assertRaisesRegex(ValueError, "does not recognize -voidSelector"):
+            OC_ObjectInt.voidSelectorOf_(forwarder)
+
+        with self.assertRaisesRegex(ValueError, "does not recognize -voidSelector"):
+            OC_ObjectInt.invokeVoidSelectorOf_(forwarder)
+
+        forwarder = Forwarder4()
+        with self.assertRaisesRegex(ValueError, "does not recognize -voidSelector"):
+            OC_ObjectInt.voidSelectorOf_(forwarder)
+
+        with self.assertRaisesRegex(ValueError, "does not recognize -voidSelector"):
+            OC_ObjectInt.invokeVoidSelectorOf_(forwarder)
+
     def test_call_void_selector(self):
         forwarder = Forwarder()
 
@@ -168,6 +221,9 @@ class TestPlainPythonMethods(TestCase):
         self.assertEqual(result, ["x", "y"])
 
         self.assertEqual(forwarder.calls, [("selectorWithArg:andArg:", "x", "y")])
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_ObjectInt.selectorWithArgAndArgOf_(forwarder)
 
     def test_no_such_selector(self):
         forwarder = Forwarder()
@@ -694,3 +750,28 @@ class TestPythonMisc(TestCase):
         orig = SelfPyObjCObject()
         out = objc.repythonify(orig)
         self.assertIs(out, orig)
+
+    def test_observation(self):
+        # The OC_PythonObject proxy does not actually support key value observation,
+        # therefore the test only checks that we warn about this.
+        value = object()
+        observer = object()
+
+        orig = os.dup(2)
+        with tempfile.TemporaryFile() as stream:
+            os.dup2(stream.fileno(), 2)
+            try:
+                OC_ObjectInt.addObserver_forKeyPath_options_context_on_(
+                    observer, "key.path", 0, None, value
+                )
+                OC_ObjectInt.removeObserver_forKeyPath_on_(observer, "key.path", value)
+                pass
+
+            finally:
+                os.dup2(orig, 2)
+
+            stream.seek(0)
+            capture = stream.read().decode()
+
+        self.assertIn("Ignoring *** addObserver:forKeyPath:options:context:", capture)
+        self.assertIn("Ignoring *** removeObserver:forKeyPath:", capture)

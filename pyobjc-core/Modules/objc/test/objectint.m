@@ -28,6 +28,27 @@ NSObject (TestMethods)
 - (id)selectorWithArg:(id)arg1 andArg:(id)arg2;
 @end
 
+@interface OC_NoPythonRepresentation : NSObject <NSCopying>
+/*
+ * Helper class that can be used to test error paths
+ * in creating a proxy for an ObjC object.
+ */
+{
+    bool _allowPython;
+}
+- (instancetype _Nullable)initAllowPython:(bool)allowPython;
+@end
+
+@interface CallHelper : NSObject
+{}
+@end
+
+@implementation CallHelper
+-(void)voidSelector
+{
+}
+@end
+
 @interface OC_ObjectInt : NSObject {
 }
 @end
@@ -119,6 +140,25 @@ NSObject (TestMethods)
 {
     return [first compare:second];
 }
+
++ (bool)objectEqualToNoProxy:(NSObject*)object
+{
+    NSObject* value = [[OC_NoPythonRepresentation alloc] initAllowPython:NO];
+
+    bool result = [object isEqual:value];
+    [value release];
+    return result;
+}
+
++ (NSComparisonResult)objectCompareToNoProxy:(NSObject*)object
+{
+    NSObject* value = [[OC_NoPythonRepresentation alloc] initAllowPython:NO];
+
+    NSComparisonResult result = [object compare:value];
+    [value release];
+    return result;
+}
+
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -311,6 +351,13 @@ NSObject (TestMethods)
 + (id)selectorWithArg:(id)arg1 andArg:(id)arg2 of:(NSObject*)object
 {
     return [object selectorWithArg:arg1 andArg:arg2];
+}
+
++ (id)selectorWithArgAndArgOf:(NSObject*)object
+{
+    NSObject* value = [[OC_NoPythonRepresentation alloc] initAllowPython:NO];
+
+    return [object selectorWithArg:value andArg:value];
 }
 
 + (Class)invokeClassForCoderOf:(NSObject*)object
@@ -572,6 +619,21 @@ NSObject (TestMethods)
     [object forwardInvocation:inv];
 }
 
++(void)invokeVoidSelectorOf:(NSObject*) object
+{
+    CallHelper* helper = [[CallHelper alloc] init];
+    NSMethodSignature* signature =
+        [helper methodSignatureForSelector:@selector(voidSelector)];
+    [helper dealloc];
+
+
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signature];
+    inv.target   = object;
+    inv.selector = @selector(voidSelector);
+    [object forwardInvocation:inv];
+}
+
+
 + (NSObject*)invokeMethodSignatureForSelector:(SEL)selector of:(NSObject*)object
 {
     NSObject*          result;
@@ -643,17 +705,22 @@ NSObject (TestMethods)
     return [[object class] accessInstanceVariablesDirectly];
 }
 
++(void)addObserver:(NSObject*)observer
+        forKeyPath:(NSString*)keyPath
+            options:(NSKeyValueObservingOptions)options
+        context:(void*)context
+             on:(NSObject*)value
+{
+    [value addObserver:observer forKeyPath:keyPath options:options context:context];
+}
+
++ (void)removeObserver:(NSObject*)observer forKeyPath:(NSString*)keyPath on:(NSObject*)value
+{
+    [value removeObserver:observer forKeyPath:keyPath];
+}
+
 @end
 
-@interface OC_NoPythonRepresentation : NSObject <NSCopying>
-/*
- * Helper class that can be used to test error paths
- * in creating a proxy for an ObjC object.
- */
-{
-    bool _allowPython;
-}
-@end
 
 @implementation OC_NoPythonRepresentation
 - (instancetype _Nullable)init

@@ -145,8 +145,8 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 
     if (PyObjC_is_pyfunction(pymethod)) {
         func_code = (PyCodeObject*)PyObjC_get_code(pymethod);
-        if (func_code == NULL) {
-            return -1;
+        if (func_code == NULL) { // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
         if (argcount == func_code->co_argcount) {
             Py_DECREF(func_code);
@@ -156,8 +156,8 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 
     } else if (PyObjC_is_pymethod(pymethod)) {
         func_code = PyObjC_get_code(pymethod);
-        if (func_code == NULL) {
-            return -1;
+        if (func_code == NULL) { // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
         if (argcount == func_code->co_argcount - 1) {
             Py_DECREF(func_code);
@@ -197,8 +197,9 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
     PyObject* py_meth_name =
         PyObjC_SELToPythonName(aSelector);
-    if (py_meth_name == NULL) {
-        return NULL;
+    if (py_meth_name == NULL) { // LCOV_BR_EXCL_LINE
+        /* Can only fail due to memory errors */
+        return NULL; // LCOV_EXCL_LINE
     }
     pymethod = PyObject_GetAttr(obj, py_meth_name);
     Py_CLEAR(py_meth_name);
@@ -484,8 +485,11 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_BEGIN_WITH_GIL
 
         retsize = PyObjCRT_SizeOfType(rettype);
-        if (retsize == -1) {
-            PyObjC_GIL_FORWARD_EXC();
+        if (retsize == -1) { // LCOV_BR_EXCL_LINE
+            /* Cannot happen unless the ObjC runtime contains
+             * invalid data.
+             */
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
 
         retbuffer = alloca(retsize);
@@ -536,10 +540,15 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             // LCOV_EXCL_STOP
 
             argsize = PyObjCRT_SizeOfType(argtype);
-            if (argsize == -1) {
+            if (argsize == -1) { // LCOV_BR_EXCL_LINE
+                /* Cannot happen unless the ObjC runtime
+                 * contains invalid data.
+                 */
+                // LCOV_EXCL_START
                 Py_DECREF(args);
                 Py_DECREF(pymethod);
                 PyObjC_GIL_FORWARD_EXC();
+                // LCOV_EXCL_STOP
             } // LCOV_EXCL_LINE
             argbuffer = alloca(argsize);
 
@@ -572,7 +581,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
         if (result == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         err = depythonify_c_value(rettype, result, retbuffer);
         Py_DECREF(result);
@@ -751,17 +760,37 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     }
 }
 
+/* Deprecated in macOS 10.3, not called in practice */
+// LCOV_EXCL_START
 - (void)unableToSetNilForKey:(NSString*)key
 {
-    @throw [NSException
-        exceptionWithName:NSUndefinedKeyException
-                   reason:[NSString stringWithFormat:@"cannot set Nil for key: %@", key]
-                 userInfo:nil];
+    [self setNilValueForKey:key];
 }
 
 - (id)handleQueryWithUnboundKey:(NSString*)key
 {
     return [self valueForUndefinedKey:key];
+}
+
+- (void)handleTakeValue:value forUnboundKey:(NSString*)key
+{
+    [self setValue:value forUndefinedKey:key];
+}
+// LCOV_EXCL_STOP
+
+
+
+// LCOV_EXCL_START
+/* These are defined for NSObject, but are only invoked by
+ * the setValue:forKey: implementation, and ours never does
+ * that.
+ */
+- (void)setNilValueForKey:(NSString*)key
+{
+    @throw [NSException
+        exceptionWithName:NSUndefinedKeyException
+                   reason:[NSString stringWithFormat:@"cannot set Nil for key: %@", key]
+                 userInfo:nil];
 }
 
 - (id)valueForUndefinedKey:(NSString*)key
@@ -772,11 +801,6 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                  userInfo:nil];
 }
 
-- (void)handleTakeValue:value forUnboundKey:(NSString*)key
-{
-    [self setValue:value forUndefinedKey:key];
-}
-
 - (void)setValue:value forUndefinedKey:(NSString*)key
 {
     @throw [NSException
@@ -785,6 +809,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                                                      key, value]
                  userInfo:nil];
 }
+// LCOV_EXCL_STOP
 
 - (void)addObserver:(NSObject*)observer
          forKeyPath:(NSString*)keyPath
@@ -833,9 +858,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             PyErr_Clear();
             PyObjC_GIL_RETURN(NO);
         } // LCOV_EXCL_LINE
-        if (otherPyObject == pyObject) {
-            PyObjC_GIL_RETURN(YES);
-        }
+        if (otherPyObject == pyObject) { // LCOV_BR_EXCL_LINE
+            /* Should never happen because of the test if
+             * self is other earlier in the method.
+             */
+            PyObjC_GIL_RETURN(YES); // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
         switch (PyObject_RichCompareBool(pyObject, otherPyObject, Py_EQ)) {
         case -1:
             PyErr_Clear();
@@ -862,8 +890,11 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         if (otherPyObject == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         } // LCOV_EXCL_LINE
-        if (otherPyObject == pyObject) {
-            PyObjC_GIL_RETURN(NSOrderedSame);
+        if (otherPyObject == pyObject) { // LCOV_BR_EXCL_LINE
+            /* Should never happen because of checking if self is other
+             * earlier in this method.
+             */
+            PyObjC_GIL_RETURN(NSOrderedSame); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
         int r;
         if (PyObjC_Cmp(pyObject, otherPyObject, &r) == -1) {
@@ -1061,12 +1092,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
  * Fake implementation for _cfTypeID, which gets called by
  * system frameworks on some occasions.
  */
-static BOOL     haveTypeID = NO;
-static CFTypeID _NSObjectTypeID;
+static PyObjC_ATOMIC BOOL     haveTypeID = NO;
+static PyObjC_ATOMIC CFTypeID _NSObjectTypeID;
 
 - (CFTypeID)_cfTypeID
 {
-    if (haveTypeID) {
+    if (!haveTypeID) {
         NSObject* obj   = [[NSObject alloc] init];
         _NSObjectTypeID = CFGetTypeID((CFTypeRef)obj);
         [obj release];

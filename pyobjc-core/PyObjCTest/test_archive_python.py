@@ -126,6 +126,10 @@ class cannot_pickle_number(int):
         raise RuntimeError("cannot reduce")
 
 
+class some_object:
+    pass
+
+
 def C__repr__(self):
     # Quick hack to add a proper __repr__ to class C in
     # pickletester, makes it a lot easier to debug.
@@ -831,6 +835,25 @@ class TestKeyedArchiveSimple(TestCase):
         with pyobjc_options(_nscoding_encoder=encoder):
             with self.assertRaisesRegex(RuntimeError, "encoding is broken"):
                 self.archiverClass.archivedDataWithRootObject_(o)
+
+    def test_object_value_not_pythonifyable_when_unarchiving(self):
+        o = some_object()
+
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, some_object)
+
+        def faker(self):
+            raise TypeError("cannot proxy")
+
+        try:
+            some_object.__pyobjc_object__ = property(faker)
+            with self.assertRaisesRegex(TypeError, "cannot proxy"):
+                self.unarchiverClass.unarchiveObjectWithData_(buf)
+
+        finally:
+            del some_object.__pyobjc_object__
 
     def test_archive_dict_unhashable_key_when_unarchiving(self):
         if self.archiverClass != NSKeyedArchiver:
