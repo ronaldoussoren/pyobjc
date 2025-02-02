@@ -67,7 +67,27 @@ class CustomDate3(datetime.date):
         raise RuntimeError("don't reduce me")
 
 
+class DateWithRaisingTimestamp(datetime.date):
+    def timestamp(self):
+        raise RuntimeError("no timestamp")
+
+
+class DateWithInvalidTimestamp(datetime.date):
+    def timestamp(self):
+        return "foobar"
+
+
 class TestErrorCases(TestCase):
+    def test_timestamp_raises(self):
+        v = DateWithRaisingTimestamp.today()
+
+        with self.assertRaisesRegex(RuntimeError, "no timestamp"):
+            objc.repythonify(v)
+
+        v = DateWithInvalidTimestamp.today()
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double'"):
+            objc.repythonify(v)
+
     def test_strtime_raises(self):
         v = CustomDate.today()
         self.assertIsInstance(v, CustomDate)

@@ -619,6 +619,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
     PyObjC_END_WITH_GIL
 }
+
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     PyObjC_BEGIN_WITH_GIL
@@ -627,6 +633,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_END_WITH_GIL
     return pyObject;
 }
+// LCOV_EXCL_STOP
 
 + (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {

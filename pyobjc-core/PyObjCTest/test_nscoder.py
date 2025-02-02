@@ -162,3 +162,15 @@ class TestPythonCoder(TestCase):
 
         d = o.fetchArray_(coder)
         self.assertEqual(tuple(range(10)), tuple(d))
+
+
+class TestUnsupported(TestCase):
+    def test_encodeValuesOfObjCTypes(self):
+        with self.assertRaisesRegex(
+            TypeError,
+            "Implementing encodeValuesOfObjCTypes: in Python is not supported",
+        ):
+
+            class MyCoderUnsupported(NSCoder):
+                def encodeValuesOfObjCTypes_(self, types, *args):
+                    pass

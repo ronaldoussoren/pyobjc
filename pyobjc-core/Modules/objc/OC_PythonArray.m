@@ -25,15 +25,14 @@ NS_ASSUME_NONNULL_BEGIN
     return value;
 }
 
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
-    /*
-     * XXX: Check if 'value' can ever be NULL
-     *      if not: replace by PyObjC_Assert check
-     *
-     * XXX: return [self __pyobjc_PythonObject__];
-     */
     if (likely(value)) {
         Py_INCREF(value);
         return value;
@@ -41,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_RETURN_NONE;
     }
 }
+// LCOV_EXCL_STOP
 
 + (BOOL)supportsSecureCoding
 {
@@ -58,8 +58,16 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
 
-        Py_CLEAR(value);
+        /* XXX: This is different from other proxies
+         *      to make it easier to hit a race in
+         *      proxy-registry.m for testing.
+         *
+         *      With the current implementation of
+         *      proxy-registry (using weak refs) either
+         *      order works correctly.
+         */
         PyObjC_UnregisterObjCProxy(value, self);
+        Py_XDECREF(value);
 
     PyObjC_END_WITH_GIL
 
@@ -346,9 +354,11 @@ NS_ASSUME_NONNULL_BEGIN
      */
     NSUInteger i;
 
-    if (count > 0 && objects == NULL) {
+    if (count > 0 && objects == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [self release];
         return nil;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -368,11 +378,13 @@ NS_ASSUME_NONNULL_BEGIN
                 }
 
                 /* XXX: Can this every be true? */
-                if (PyTuple_GET_ITEM(value, i) != NULL) {
+                if (PyTuple_GET_ITEM(value, i) != NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     /* use temporary object to avoid race condition */
                     PyObject* t = PyTuple_GET_ITEM(value, i);
                     PyTuple_SET_ITEM(value, i, NULL);
                     Py_DECREF(t);
+                    // LCOV_EXCL_STOP
                 }
                 PyTuple_SET_ITEM(value, i, v);
             }
@@ -624,12 +636,12 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* copy = PyObjC_Copy(value);
         if (copy == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         Py_DECREF(copy);
 
@@ -647,12 +659,12 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* copy = PySequence_List(value);
         if (copy == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         Py_DECREF(copy);
 

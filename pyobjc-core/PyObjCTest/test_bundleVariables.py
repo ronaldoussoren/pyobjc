@@ -129,6 +129,12 @@ class TestBundleVariables(TestCase):
         )
         self.assertIsInstance(d["IOUSBHostVersionString"], bytes)
 
+        # XXX: objc._loadConstant has a weird interface...
+        v = objc._loadConstant(
+            "IOUSBHostVersionString", objc._C_CHARPTR.decode(), False
+        )
+        self.assertEqual(v, d["IOUSBHostVersionString"])
+
 
 class TestSpecialVariables(TestCase):
     def setUp(self):

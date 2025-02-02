@@ -29,12 +29,18 @@ NS_ASSUME_NONNULL_BEGIN
     return value;
 }
 
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
+// LCOV_EXCL_STOP
 
 + (BOOL)supportsSecureCoding
 {
@@ -69,7 +75,8 @@ NS_ASSUME_NONNULL_BEGIN
             // LCOV_EXCL_START
             PyErr_Clear();
             PyObjC_GIL_RETURN(0);
-        } // LCOV_EXCL_STOP
+            // LCOV_EXCL_STOP
+        } // LCOV_EXCL_LINE
         rval = [temp length];
         [temp release];
 
@@ -87,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
              * an OCReleasedBuffer.
              */
             PyObjC_GIL_RETURN(PyBytes_AS_STRING(value));
-        }
+        } // LCOV_EXCL_LINE
 
         OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value
                                                                        writable:NO];
@@ -257,11 +264,6 @@ NS_ASSUME_NONNULL_BEGIN
             SET_FIELD(value, decoded);
 
             id actual = PyObjC_RegisterObjCProxy(value, self);
-            if (actual == nil) {
-                [self release];
-                PyObjC_GIL_FORWARD_EXC();
-            } // LCOV_EXCL_LINE
-
             [self release];
             self = actual;
 
@@ -304,7 +306,8 @@ NS_ASSUME_NONNULL_BEGIN
             // LCOV_EXCL_START
             PyErr_SetString(PyExc_ValueError, "Trying to decode a too long data object");
             PyObjC_GIL_FORWARD_EXC();
-        } // LCOV_EXCL_STOP
+            // LCOV_EXCL_STOP
+        } // LCOV_EXCL_LINE
 
         if (value != NULL && PyByteArray_CheckExact(value)) {
             if (PyByteArray_Resize(value, length) < 0) { // LCOV_BR_EXCL_LINE

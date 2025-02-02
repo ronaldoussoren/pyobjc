@@ -157,3 +157,6 @@ class TestCoreFoundation(TestCase):
             ValueError, "Must specify a typeid when not toll-free"
         ):
             objc.registerCFSignature("CFFooBar", b"^{__CFFooBar=}", None)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying.*got"):
+            objc.registerCFSignature("CFFooBar", b"^{__CFFooBar=}", "hello")

@@ -9,6 +9,7 @@ import sys
 import test.pickletester
 import collections
 import pathlib
+import datetime
 from unittest import mock, SkipTest
 
 import objc
@@ -78,6 +79,10 @@ class frozenset_subclass(frozenset):
 class key_class:
     def __hash__(self):
         return 42
+
+
+class custom_date(datetime.date):
+    pass
 
 
 class with_getstate:
@@ -683,6 +688,12 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, mystr)
         self.assertEqual(o, v)
 
+        with pyobjc_options(_nscoding_decoder=None):
+            with self.assertRaisesRegex(
+                ValueError, "decoding Python objects is not supported"
+            ):
+                self.unarchiverClass.unarchiveObjectWithData_(buf)
+
         o = myint(4)
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
@@ -1010,6 +1021,22 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v[0], a_classic_class)
         self.assertIs(v[0], v[1])
         self.assertIs(v[0], v[2])
+
+    def test_custom_date(self):
+        o = custom_date.today()
+        self.assertIsInstance(o, custom_date)
+
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, custom_date)
+        self.assertEqual(v, o)
+
+        with pyobjc_options(_nscoding_decoder=None):
+            with self.assertRaisesRegex(
+                ValueError, "decoding Python objects is not supported"
+            ):
+                v = self.unarchiverClass.unarchiveObjectWithData_(buf)
 
 
 class TestArchiveSimple(TestKeyedArchiveSimple):
@@ -1983,6 +2010,22 @@ class TestSecureArchivingPython(TestCase):
             "Class 'OC_PythonSet' disallows secure coding. It must return YES from supportsSecureCoding",
         ):
             archive.encodeObject_forKey_(bag, "bag")
+
+        archive.finishEncoding()
+
+    @min_os_level("10.13")
+    def test_secure_archive_int(self):
+        archive = NSKeyedArchiver.alloc().initRequiringSecureCoding_(True)
+
+        archive.encodeObject_forKey_(1, "builtin")
+
+        class myint(int):
+            pass
+
+        with self.assertRaisesRegex(
+            objc.error, "Class 'OC_PythonNumber' disallows secure coding."
+        ):
+            archive.encodeObject_forKey_(myint(1), "subclass")
 
         archive.finishEncoding()
 

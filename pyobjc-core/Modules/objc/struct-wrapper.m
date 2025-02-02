@@ -1935,18 +1935,22 @@ int PyObjCStruct_Init(PyObject* module __attribute__((__unused__)))
         PyObjCMethodSignature_WithMetaData("i^v^v^v", NULL, YES);
     if (signature == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(structRegistry);
+        Py_DECREF(structRegistry);
+        structRegistry = (PyObject* _Nonnull)NULL;
         return -1;
         // LCOV_EXCL_STOP
     }
-    init_cif = PyObjCFFI_CIFForSignature(signature);
-    Py_DECREF(signature);
-    if (init_cif == NULL) { // LCOV_BR_EXCL_LINE
+
+    ffi_cif* temp_cif = PyObjCFFI_CIFForSignature(signature);
+    Py_CLEAR(signature);
+    if (temp_cif == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(structRegistry);
+        Py_DECREF(structRegistry);
+        structRegistry = (PyObject* _Nonnull)NULL;
         return -1;
         // LCOV_EXCL_STOP
     }
+    init_cif = temp_cif;
 
     return 0;
 }

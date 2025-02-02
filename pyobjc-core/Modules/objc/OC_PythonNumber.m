@@ -25,12 +25,18 @@ NS_ASSUME_NONNULL_BEGIN
     return value;
 }
 
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
+// LCOV_EXCL_STOP
 
 + (BOOL)supportsSecureCoding
 {
@@ -60,16 +66,16 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
             PyObjC_GIL_RETURN(@encode(double));
-        } else { // LOCV_EXCL_LINE
+        } else { // LCOV_EXCL_LINE
             (void)PyLong_AsLongLong(value);
             if (!PyErr_Occurred()) {
                 PyObjC_GIL_RETURN(@encode(long long));
-            } // LOCV_EXCL_LINE
+            } // LCOV_EXCL_LINE
             PyErr_Clear();
             (void)PyLong_AsUnsignedLongLong(value);
             if (!PyErr_Occurred()) {
                 PyObjC_GIL_RETURN(@encode(unsigned long long));
-            } // LOCV_EXCL_LINE
+            } // LCOV_EXCL_LINE
             PyErr_Clear();
 
             /* Wrap on overflow */

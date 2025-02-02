@@ -22,19 +22,25 @@ NS_ASSUME_NONNULL_BEGIN
 - (PyObject*)__pyobjc_PythonObject__
 {
     /* XXX: Can value ever be NULL? */
-    if (value == NULL) {
-        Py_RETURN_NONE;
+    if (value == NULL) { // LCOV_BR_EXCL_LINE
+        Py_RETURN_NONE; // LCOV_EXCL_LINE
     }
     Py_INCREF(value);
     return value;
 }
 
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
+// LCOV_EXCL_STOP
 
 + (BOOL)supportsSecureCoding
 {
@@ -118,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObject* utf8 = PyUnicode_AsUTF8String(value);
                 if (!utf8) {
                     PyObjC_GIL_FORWARD_EXC();
-                } else {
+                } else { // LCOV_EXCL_START
                     realObject =
                         [[NSString alloc] initWithBytes:PyBytes_AS_STRING(utf8)
                                                  length:(NSUInteger)PyBytes_GET_SIZE(utf8)
@@ -160,6 +166,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
     int byteorder = 0;
     /* XXX: Call super? */
+    self = [super init];
+    if (self == nil) { // LCOV_BR_EXCL_LINE
+        return nil; // LCOV_EXCL_LINE
+    }
+
     PyObjC_BEGIN_WITH_GIL
         /* Decode as a UTF-16 string in native byteorder */
         value =
@@ -197,9 +208,9 @@ NS_ASSUME_NONNULL_BEGIN
     if (encoding == NSUTF8StringEncoding) {
         PyObjC_BEGIN_WITH_GIL
             value = PyUnicode_DecodeUTF8(bytes, length, NULL);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+            if (value == NULL) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
     }

@@ -973,6 +973,9 @@ class TestBlocks(TestCase):
             ),
         )
 
+        with self.assertRaisesRegex(ValueError, "Not a block"):
+            objc._block_signature(42)
+
     @min_os_level("10.6")
     def testBlockArgumentToPython(self):
         obj = OCTestBlock.alloc().init()

@@ -63,6 +63,18 @@
                                       encoding:NSASCIIStringEncoding] autorelease];
 }
 
++ (NSString*)getCharactersOn:(NSString*)value
+{
+    unichar buffer[1024];
+
+    if ([value length] > 1023) {
+        return nil;
+    }
+
+    [value getCharacters:buffer];
+    return [NSString stringWithCharacters:buffer length:[value length]];
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

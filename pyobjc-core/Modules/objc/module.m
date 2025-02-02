@@ -1460,13 +1460,13 @@ static PyObject* _Nullable PyObjC_setAssociatedObject(PyObject* self
         @try {
             objc_setAssociatedObject(object, (void*)key, value, policy);
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred())
-        return NULL;
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
 
     Py_RETURN_NONE;
 }
@@ -1495,14 +1495,14 @@ static PyObject* _Nullable PyObjC_getAssociatedObject(PyObject* self
         @try {
             value = objc_getAssociatedObject(object, (void*)key);
 
-        } @catch (NSObject* localException) {
-            value = nil;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            value = nil; // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred())
-        return NULL;
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
 
     return id_to_python(value);
 }
@@ -1531,13 +1531,13 @@ static PyObject* _Nullable PyObjC_removeAssociatedObjects(PyObject* self
         @try {
             objc_removeAssociatedObjects(object);
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred())
-        return NULL;
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
 
     Py_RETURN_NONE;
 }
@@ -1623,13 +1623,24 @@ static PyObject* _Nullable block_signature(PyObject* mod __attribute__((__unused
     }
 
     id objc_block = PyObjCObject_GetObject(block);
-    if (objc_block == nil) {
+    if (objc_block == nil) { // LCOV_BR_EXCL_LINE
+        /* There's no way to get a partially initialized block value,
+         * hence GetObject will not return nil.
+         */
+
+        // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot get block signature of 'nil' block");
         return NULL;
+        // LCOV_EXCL_STOP
     }
     const char* sig = PyObjCBlock_GetSignature(objc_block);
-    if (sig == NULL) {
+    if (sig == NULL) { // LCOV_BR_EXCL_LINE
+        /* AFAIK it is not possible to get a block object
+         * without a signature in modern compilers.
+         */
+        // LCOV_EXCL_START
         Py_RETURN_NONE;
+        // LCOV_EXCL_STOP
     }
 
     return PyBytes_FromString(sig);
@@ -1676,7 +1687,7 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
     /* This uses an availability check for 10.16 just in case
      * we're loaded in a Python that was compiled with an old SDK.
      */
-    if (@available(macOS 10.16, *)) {
+    if (@available(macOS 10.16, *)) { // LCOV_BR_EXCL_LINE
         const char* path = PyUnicode_AsUTF8(object);
         if (path == NULL) {
             return NULL;
@@ -1689,7 +1700,10 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
             Py_RETURN_FALSE;
         }
     } else {
-        Py_RETURN_FALSE;
+        /* coverage tests are run on a modern system, hence
+         * the lcov annotation.
+         */
+        Py_RETURN_FALSE; // LCOV_EXCL_LINE
     }
 }
 

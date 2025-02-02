@@ -80,6 +80,8 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     int retval =  0;
 
     PyObjC_Assert(special_registry != NULL, -1);
+    PyObjC_Assert(call_to_objc !=  NULL, -1);
+    PyObjC_Assert(make_call_to_python_block !=  NULL, -1);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&registry_mutex);
@@ -95,10 +97,6 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
         // LCOV_EXCL_STOP
     }
 #endif
-
-    if (!call_to_objc) {
-        call_to_objc = PyObjCFFI_Caller;
-    }
 
     py_selname = PyUnicode_FromString(sel_getName(sel));
     if (py_selname == NULL) { // LCOV_BR_EXCL_LINE

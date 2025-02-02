@@ -412,6 +412,11 @@ class TestNSNumber(TestCase):
         )
 
         self.assertEqual(
+            OC_NumberInt.compareA_andB_(2**256, NSNumber.numberWithInt_(1)),
+            NSOrderedDescending,
+        )
+
+        self.assertEqual(
             OC_NumberInt.compareA_andB_(
                 NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(0)
             ),
@@ -803,6 +808,16 @@ class TestPyNumber(TestCase):
         v = OC_NumberInt.numberDescription_(True)
         self.assertIsInstance(v, str)
         self.assertEqual(v, "1")
+
+    def test_proxy_class(self):
+        self.assertIs(OC_NumberInt.numberClass_(1), OC_BuiltinPythonNumber)
+        self.assertIs(OC_NumberInt.numberClass_(1.5), OC_BuiltinPythonNumber)
+        self.assertIsNot(OC_NumberInt.numberClass_(True), OC_BuiltinPythonNumber)
+
+        class myint(int):
+            pass
+
+        self.assertIs(OC_NumberInt.numberClass_(myint(1)), OC_PythonNumber)
 
 
 class TestInteractions(TestCase):

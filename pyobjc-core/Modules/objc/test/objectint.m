@@ -357,7 +357,11 @@ NSObject (TestMethods)
 {
     NSObject* value = [[OC_NoPythonRepresentation alloc] initAllowPython:NO];
 
-    return [object selectorWithArg:value andArg:value];
+    NSObject* result =  [object selectorWithArg:value andArg:value];
+
+    [value release];
+
+    return result;
 }
 
 + (Class)invokeClassForCoderOf:(NSObject*)object

@@ -148,3 +148,12 @@ class TestMisc(TestCase):
         with pyobjc_options(_nscoding_decoder=failed):
             with self.assertRaisesRegex(TypeError, "Cannot encode"):
                 NSKeyedUnarchiver.unarchiveObjectWithData_(blob)
+
+    def test_characters(self):
+        v = "hello"
+        self.assertEqual(OC_StringInt.getCharactersOn_(v), v)
+
+        # UCS4 + single surrogate: cannot encode to UTF-8
+        v = "\U000fffff\uDBBB"
+        with self.assertRaisesRegex(UnicodeEncodeError, "surrogates not allowed"):
+            OC_StringInt.getCharactersOn_(v)

@@ -451,3 +451,58 @@ class TestRegisterVectorTypes(TestCase):
             objc.internal_error, "Unsupported SIMD encoding: <7f>"
         ):
             objc.simd.make_type("vector_float7", 0.0, float, 7, typestr=b"<7f>")
+
+    def test_invalid_type(self):
+        class vector:
+            pass
+
+        with self.assertRaisesRegex(
+            AttributeError, "type object 'vector' has no attribute '__typestr__'"
+        ):
+            objc._registerVectorType(vector)
+
+        vector.__typestr__ = 42
+        with self.assertRaisesRegex(TypeError, "__typstr__ must be bytes"):
+            objc._registerVectorType(vector)
+
+
+class TestMakeClosure(TestCase):
+    # Most of the code is tested implicitly, only test some error cases here
+    def test_api_misuse(self):
+        with self.assertRaisesRegex(TypeError, "function missing required argument"):
+            objc._makeClosure()
+
+
+class TestClosurePointer(TestCase):
+    # Most of the code is tested implicitly, only test some error cases here
+    def test_api_misuse(self):
+        with self.assertRaisesRegex(TypeError, "function missing required argument"):
+            objc._closurePointer()
+
+        o = objc.lookUpClass("NSObject").alloc().init()
+
+        capsule = o.__cobject__()
+        with self.assertRaisesRegex(
+            ValueError, "PyCapsule_GetPointer called with incorrect name"
+        ):
+            objc._closurePointer(capsule)
+
+
+class TestLoadConstant(TestCase):
+    # Most of the code is tested implicitly, only test some error cases here
+    def test_api_misuse(self):
+        with self.assertRaisesRegex(TypeError, "function missing required argument"):
+            objc._loadConstant()
+
+
+class TestRegisteredMetadata(TestCase):
+    # Most of the code is tested implicitly, only test some error cases here
+    def test_api_misuse(self):
+        with self.assertRaisesRegex(TypeError, "function takes exactly"):
+            objc._registeredMetadataForSelector()
+
+        with self.assertRaisesRegex(TypeError, "Expecting a class"):
+            objc._registeredMetadataForSelector(object, b"init")
+
+        with self.assertRaisesRegex(TypeError, "a bytes-like object is required"):
+            objc._registeredMetadataForSelector(objc.lookUpClass("NSObject"), "init")
