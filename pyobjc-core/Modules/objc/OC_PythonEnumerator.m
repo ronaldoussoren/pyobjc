@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
+        PyObjC_UnregisterObjCProxy(value, self);
         Py_XDECREF(value);
     PyObjC_END_WITH_GIL
 

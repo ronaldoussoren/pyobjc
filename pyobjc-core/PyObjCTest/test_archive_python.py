@@ -9,6 +9,7 @@ import sys
 import test.pickletester
 import collections
 import pathlib
+from unittest import mock, SkipTest
 
 import objc
 import objc._pycoder as pycoder
@@ -72,6 +73,11 @@ class set_subclass(set):
 
 class frozenset_subclass(frozenset):
     pass
+
+
+class key_class:
+    def __hash__(self):
+        return 42
 
 
 class with_getstate:
@@ -793,7 +799,7 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, dict if self.isKeyed else NSDictionary)
         self.assertEqual(dict(v), o)
 
-        o = {"hello": "bar", 42: 1.5}
+        o = {"hello": "bar", 42: 1.5, None: b"A"}
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -818,6 +824,31 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, dict_subclass)
         self.assertEqual(v, o)
         self.assertEqual(v.a, o.a)
+
+        def encoder(value, coder):
+            raise RuntimeError("encoding is broken")
+
+        with pyobjc_options(_nscoding_encoder=encoder):
+            with self.assertRaisesRegex(RuntimeError, "encoding is broken"):
+                self.archiverClass.archivedDataWithRootObject_(o)
+
+    def test_archive_dict_unhashable_key_when_unarchiving(self):
+        if self.archiverClass != NSKeyedArchiver:
+            raise SkipTest("only usefull for NSKeyedArchiver")
+
+        o = {key_class(): "hello"}
+
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+
+        self.assertIsInstance(v, dict)
+        self.assertEqual(len(v), 1)
+        self.assertIsInstance(list(v.keys())[0], key_class)
+
+        with mock.patch.object(key_class, "__hash__", new_callable=None):
+            with self.assertRaisesRegex(TypeError, "__hash__"):
+                self.unarchiverClass.unarchiveObjectWithData_(buf)
 
     def testSimpleSetSubclass(self):
         o = set_subclass({1, 2, 3})

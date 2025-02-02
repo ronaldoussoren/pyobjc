@@ -1990,8 +1990,9 @@ carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
     PyObject*  res;
     PyObject*  v = NULL;
     Py_buffer  view;
+    int        writable = 0;
 
-    if (!PyArg_ParseTuple(args, "yOO", &signature, &o1, &o2)) {
+    if (!PyArg_ParseTuple(args, "yOO|p", &signature, &o1, &o2, &writable)) {
         return NULL;
     }
 
@@ -2004,7 +2005,7 @@ carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
         }
     }
 
-    r = PyObjC_PythonToCArray(NO, NO, signature, o1, (void**)&buf, &buflen, &v, &view);
+    r = PyObjC_PythonToCArray(writable?YES:NO, NO, signature, o1, (void**)&buf, &buflen, &v, &view);
     Py_XDECREF(v);
     if (r == -1) {
         return NULL;

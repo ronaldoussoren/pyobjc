@@ -58,8 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
 
-        PyObjC_UnregisterObjCProxy(value, self);
         Py_CLEAR(value);
+        PyObjC_UnregisterObjCProxy(value, self);
 
     PyObjC_END_WITH_GIL
 

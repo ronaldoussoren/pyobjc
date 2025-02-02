@@ -787,7 +787,7 @@ code_compatible(char array_code, char type_code)
         case _C_BOOL:
         case _C_NSBOOL:
             return YES;
-        }
+        } // LCOV_EXCL_LINE
 
     case 'B':
         switch (type_code) {
@@ -799,7 +799,7 @@ code_compatible(char array_code, char type_code)
              * compatibility.
              */
             return YES;
-        }
+        } // LCOV_EXCL_LINE
 
     case 'u':
     case 'w':
@@ -827,7 +827,7 @@ code_compatible(char array_code, char type_code)
         case _C_LNG:
         case _C_LNG_LNG:
             return YES;
-        }
+        } // LCOV_EXCL_LINE
 
     case 'L':
     case 'Q':
@@ -844,7 +844,12 @@ code_compatible(char array_code, char type_code)
         return type_code == _C_DBL;
 
     }
-    return NO;
+
+    /* Should not get here, the switch
+     * above is up-to-date with the array.array
+     * type codes as of Python 3.13
+     */
+    return NO; // LCOV_EXCL_LINE
 }
 
 /*
@@ -926,13 +931,15 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
 
                 PyBuffer_Release(view);
 
-                if (byte_array == NULL) {
-                    return -1;
+                if (byte_array == NULL) { // LCOV_BR_EXCL_LINE
+                    return -1; // LCOV_EXCL_LINE
                 }
 
-                if (PyObject_GetBuffer(byte_array, view, PyBUF_CONTIG) == -1) {
+                if (PyObject_GetBuffer(byte_array, view, PyBUF_CONTIG) == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(byte_array);
                     return -1;
+                    // LCOV_EXCL_STOP
                 }
 
                 Py_DECREF(byte_array); /* Reference is kept by the view */
@@ -1819,22 +1826,26 @@ PyObject* _Nullable PyObjC_get_c_void_p(void)
         }
 #endif
         PyObject* mod_ctypes = PyImport_ImportModule("ctypes");
-        if (mod_ctypes == NULL) {
+        if (mod_ctypes == NULL) { // LCOV_BR_EXCL_LINE
             /* ctypes is not available */
+            // LCOV_EXCL_START
 #ifdef Py_GIL_DISABLED
             PyMutex_Unlock(&c_void_p_mutex);
 #endif
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         c_void_p = PyObject_GetAttrString(mod_ctypes, "c_void_p");
         Py_DECREF(mod_ctypes);
-        if (c_void_p == NULL) {
+        if (c_void_p == NULL) { // LCOV_BR_EXCL_LINE
             /* invalid or incomplete module */
+            // LCOV_EXCL_START
 #ifdef Py_GIL_DISABLED
             PyMutex_Unlock(&c_void_p_mutex);
 #endif
             return NULL;
+            // LCOV_EXCL_STOP
         }
 #ifdef Py_GIL_DISABLED
         PyMutex_Unlock(&c_void_p_mutex);

@@ -835,6 +835,7 @@ END_UNITTEST
 BEGIN_UNITTEST(UnicodeFunctions)
 PyObject* unicode = PyUnicode_FromString("hello world");
 int       ok;
+ASSERT(unicode != NULL);
 
 ok = PyObjC_is_ascii_string(unicode, "hello world");
 ASSERT(ok);
@@ -859,6 +860,18 @@ ASSERT(ok);
 
 ok = PyObjC_is_ascii_prefix(unicode, "hello world!", 12);
 ASSERT(!ok);
+
+Py_CLEAR(unicode);
+
+unicode = PyUnicode_FromString("Straße");
+ASSERT(unicode != NULL);
+ok = PyObjC_is_ascii_prefix(unicode, "hello", 5);
+ASSERT(!ok);
+
+ok = PyObjC_is_ascii_string(unicode, "hello");
+ASSERT(!ok);
+
+Py_CLEAR(unicode);
 
 END_UNITTEST
 

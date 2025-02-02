@@ -35,6 +35,9 @@ class TestProtocols(TestCase):
         with self.assertRaisesRegex(TypeError, "missing required argument"):
             objc.protocolsForClass()
 
+        with self.assertRaisesRegex(TypeError, "Expected objective-C class"):
+            objc.protocolsForClass(42)
+
         result = objc.protocolsForClass(objc.lookUpClass("NSObject"))
         self.assertIsInstance(result, list)
         self.assertNotEqual(len(result), 0)

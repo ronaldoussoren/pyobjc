@@ -1478,6 +1478,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                 Py_INCREF(v);
             } else {
                 /* Skip output parameter */
+                /* XXX: Verify that this cannot happen */
                 continue;
             }
             break;
@@ -1667,7 +1668,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         count = extract_count(
                             methinfo->argtype[methinfo->rettype->arrayArg]->type,
                             args[methinfo->rettype->arrayArg]);
-                        if (count == -1 && PyErr_Occurred()) {
+                        if (count == -1 && PyErr_Occurred()) { // LOCV_BR_EXCL_LINE
                             goto error;
                         }
                         err = depythonify_c_return_array_count(
@@ -1774,7 +1775,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     /* The methinfo object won't have type modifiers
                      * for plain types. The case is left in just in case...
                      */
-                    continue; // LCOV_BR_EXCL_LINE
+                    continue; // LCOV_EXCL_LINE
                 }
 
                 if (*(void**)args[i] == NULL) {
@@ -1861,9 +1862,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     }
                     break;
                 case PyObjC_kDerefResultPointer:
+                    // LCOV_EXCL_START
                     PyErr_SetString(PyObjCExc_Error,
                                     "using 'deref_result_pointer' for an argument value");
                     goto error;
+                    // LCOV_EXCL_STOP
                 }
 
                 break;

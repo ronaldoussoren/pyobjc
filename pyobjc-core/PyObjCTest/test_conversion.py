@@ -428,6 +428,21 @@ class TestCArray(TestCase):
     #       "{_Foo=fi}" (fail with array.array) + version with [{foo=if}]
     #       - other simple types
 
+    def test_array_typecodes(self):
+        # key the needle in sync with objc_util.m:code_compatible()
+        code_compatible_codes = "bBuwhHiIlLqQfd"
+        self.assertEqual(set(code_compatible_codes), set(array.typecodes))
+
+    def test_byte_array(self):
+        o = carrayMaker(objc._C_CHR, b"hello", 5)
+        self.assertEqual(o, b"hello")
+
+        with self.assertRaisesRegex(TypeError, "Expecting byte-buffer, got str"):
+            carrayMaker(objc._C_CHR, "hello", 5)
+
+        o = carrayMaker(objc._C_CHR, b"hello", 5, True)
+        self.assertEqual(o, b"hello")
+
     def testStringArrays(self):
         with warnings.catch_warnings():
             # XXX: To be removed in Python 3.16
@@ -577,6 +592,9 @@ class TestCArray(TestCase):
         ):
             carrayMaker(objc._C_FLT, arr2, None)
 
+        with self.assertRaisesRegex(objc.error, "PyObjCRT_SizeOfType: Unhandled type"):
+            carrayMaker(b"X", [1, 2, 3, 4], 4)
+
     def testPointTuple(self):
         arr = ((1.0, 1.5), (2.0, 2.5), (3.0, 3.5), (4.0, 4.5), (5.0, 5.5))
         arr2 = (1.5, 2.5, 3.5, 4.5, 5.5)
@@ -662,6 +680,35 @@ class TestCArray(TestCase):
             "type mismatch between array.array of i and and C array of {Point=il}",
         ):
             carrayMaker(b"{Point=il}", arr2, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of i and and C array of \[2{Point=il}\]",
+        ):
+            carrayMaker(b"[2{Point=il}]", arr2, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of i and and C array of {X=\[2{Point=il}\]}",
+        ):
+            carrayMaker(b"{X=[2{Point=il}]}", arr2, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of i and and C array of \[2<2i>\]",
+        ):
+            carrayMaker(b"[2<2i>]", arr2, None)
+
+        with self.assertRaisesRegex(
+            ValueError, r"type mismatch between array.array of i and and C array of @"
+        ):
+            carrayMaker(b"@", arr2, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of i and and C array of {X=\[2<2i>\]}",
+        ):
+            carrayMaker(b"{X=[2<2i>]}", arr2, None)
 
         with self.assertRaisesRegex(
             ValueError,

@@ -1216,6 +1216,11 @@ class TestArraysIn(TestCase):
         )
         self.assertEqual(a, [10, 20, 30, 40])
 
+        with self.assertRaisesRegex(
+            TypeError, "Don't know how to extract count from encoding: @"
+        ):
+            o.makeIntArray_sameSize_([10, 20, 30, 40, 50], NSObject.alloc().init())
+
         a = o.makeIntArray_sameSize_([10, 20, 30, 40, 50], None)
         self.assertEqual(a, ())
 
@@ -1229,6 +1234,11 @@ class TestArraysIn(TestCase):
 
         a = o.makeIntArray_sameSizeAs_([10, 20, 30, 40, 50], objc.NULL)
         self.assertEqual(a, ())
+
+        with self.assertRaisesRegex(
+            TypeError, r"Don't know how to extract count from encoding: \^@"
+        ):
+            o.makeIntArray_sameSizeAs_([10, 20, 30, 40, 50], NSObject.alloc().init())
 
         with self.assertRaisesRegex(
             TypeError, "Don't know how to extract count from encoding: f"

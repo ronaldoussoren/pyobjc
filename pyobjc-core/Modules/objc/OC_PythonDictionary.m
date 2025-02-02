@@ -214,9 +214,9 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                 if (PyErr_ExceptionMatches(PyExc_KeyError)) {
                     PyErr_Clear();
                     PyObjC_GIL_RETURN(nil);
-                }
+                } // LCOV_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         Py_DECREF(k);
@@ -351,7 +351,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             Py_DECREF(keys);
             if (iter == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             NSEnumerator* result = [OC_PythonEnumerator enumeratorWithPythonObject:iter];
             PyObjC_GIL_RETURN(result);
@@ -369,9 +369,11 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
      */
     NSUInteger i;
 
-    if (count > 0 && (keys == NULL || objects == NULL)) {
+    if (count > 0 && (keys == NULL || objects == NULL)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         [self release];
         return nil;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -399,13 +401,15 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                 k = id_to_python(keys[i]);
                 if (k == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
-                }
+                } // LCOV_EXCL_LINE
                 if (PyObjCUnicode_Check(k)) {
                     PyObject* k2 = PyObject_Str(k);
-                    if (k2 == NULL) {
+                    if (k2 == NULL) { // LCOV_BR_EXCL_LINE
+                        // LCOV_EXCL_START
                         Py_DECREF(k);
                         PyObjC_GIL_FORWARD_EXC();
-                    }
+                        // LCOV_EXCL_STOP
+                    } // LCOV_EXCL_LINE
                     PyUnicode_InternInPlace(&k2);
                     Py_DECREF(k);
                     k = k2;
@@ -461,7 +465,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
     }
 
-    switch (code) {
+    switch (code) { // LCOV_BR_EXCL_LINE
     case 1:
         PyObjC_BEGIN_WITH_GIL
             value = PyDict_New();
@@ -479,7 +483,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
             if (decoded == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             SET_FIELD(value, decoded);
 
@@ -587,7 +591,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             Py_DECREF(copy);
             PyObjC_GIL_FORWARD_EXC();
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(copy);
 
     PyObjC_END_WITH_GIL
