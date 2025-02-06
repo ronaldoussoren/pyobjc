@@ -7,6 +7,7 @@ NOTE: this file is very, very incomplete and just tests copying at the moment.
 import objc
 from PyObjCTest.pythonset import OC_TestSet
 from PyObjCTest.dictint import OC_DictInt
+from PyObjCTest.objectint import OC_NoPythonRepresentation
 from PyObjCTools.TestSupport import TestCase, pyobjc_options
 import collections
 import collections.abc
@@ -132,6 +133,11 @@ class TestDictionary(TestCase):
 
         self.assertIs(OC_DictInt.dict_getItem_(s, "a"), None)
 
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            self.assertIs(
+                OC_DictInt.dict_getItemInstanceOf_(s, OC_NoPythonRepresentation), None
+            )
+
     def test_set_item(self):
         s = self.mapClass()
 
@@ -146,6 +152,15 @@ class TestDictionary(TestCase):
 
         OC_DictInt.dict_set_value_(s, None, "value2")
         self.assertEqual(s[None], "value2")
+
+        OC_DictInt.dict_set_value_(s, None, "value2")
+        self.assertEqual(s[None], "value2")
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_DictInt.dict_setInstanceOf_value_(s, OC_NoPythonRepresentation, "value2")
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_DictInt.dict_set_valueInstanceOf_(s, "key", OC_NoPythonRepresentation)
 
     def test_set_null(self):
         s = self.mapClass()
@@ -185,6 +200,9 @@ class TestDictionary(TestCase):
             # This should raise 'NSInvalidArgumentException',
             # not KeyError
             OC_DictInt.dict_remove_(s, "a")
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_DictInt.dict_removeInstanceOf_(s, OC_NoPythonRepresentation)
 
     def test_removing_key_raises(self):
         s = self.mapClass({RaisingKey("a"): 1})

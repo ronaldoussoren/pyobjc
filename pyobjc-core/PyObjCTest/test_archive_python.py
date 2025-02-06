@@ -14,6 +14,7 @@ from unittest import mock, SkipTest
 
 import objc
 import objc._pycoder as pycoder
+from PyObjCTest.objectint import OC_NoPythonRepresentation
 from PyObjCTest.fnd import (
     NSArchiver,
     NSArray,
@@ -167,6 +168,10 @@ class mystr(str):
 
 
 class myint(int):
+    __slots__ = ()
+
+
+class myfloat(int):
     __slots__ = ()
 
 
@@ -701,6 +706,13 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, myint)
         self.assertEqual(o, v)
 
+        o = myfloat(4.5)
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, myfloat)
+        self.assertEqual(o, v)
+
         o = 42.5
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
@@ -749,6 +761,16 @@ class TestKeyedArchiveSimple(TestCase):
             self.assertIsInstance(v, NSMutableArray)
             self.assertEqual(list(v), o)
 
+    def test_list_nopython(self):
+        if self.archiverClass != NSKeyedArchiver:
+            raise SkipTest("only usefull for NSKeyedArchiver")
+        o = [OC_NoPythonRepresentation.alloc().initAllowPython_(True)]
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            self.unarchiverClass.unarchiveObjectWithData_(buf)
+
     def testSimpleListSubclass(self):
         o = list_subclass([])
         buf = self.archiverClass.archivedDataWithRootObject_(o)
@@ -763,6 +785,12 @@ class TestKeyedArchiveSimple(TestCase):
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, list_subclass)
         self.assertEqual(v, o)
+
+        with pyobjc_options(_nscoding_decoder=None):
+            with self.assertRaisesRegex(
+                ValueError, "decoding Python objects is not supported"
+            ):
+                self.unarchiverClass.unarchiveObjectWithData_(buf)
 
     def testSimpleTuples(self):
         o = ()
@@ -786,6 +814,16 @@ class TestKeyedArchiveSimple(TestCase):
         else:
             self.assertIsInstance(v, NSArray)
             self.assertEqual(tuple(v), o)
+
+    def test_tuple_nopython(self):
+        if self.archiverClass != NSKeyedArchiver:
+            raise SkipTest("only usefull for NSKeyedArchiver")
+        o = (OC_NoPythonRepresentation.alloc().initAllowPython_(True),)
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            self.unarchiverClass.unarchiveObjectWithData_(buf)
 
     def testSimpleTupleSubclass(self):
         o = tuple_subclass()
@@ -821,6 +859,25 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, dict if self.isKeyed else NSDictionary)
         self.assertEqual(dict(v), o)
 
+    def test_dict_nopython(self):
+        if self.archiverClass != NSKeyedArchiver:
+            raise SkipTest("only usefull for NSKeyedArchiver")
+        o = {
+            42: OC_NoPythonRepresentation.alloc().initAllowPython_(True),
+        }
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            self.unarchiverClass.unarchiveObjectWithData_(buf)
+
+        o = {OC_NoPythonRepresentation.alloc().initAllowPython_(True): 42}
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            self.unarchiverClass.unarchiveObjectWithData_(buf)
+
     def testSimpleDictSubclass(self):
         o = dict_subclass({})
         o.a = 1
@@ -848,12 +905,12 @@ class TestKeyedArchiveSimple(TestCase):
                 self.archiverClass.archivedDataWithRootObject_(o)
 
     def test_object_value_not_pythonifyable_when_unarchiving(self):
-        o = some_object()
+        o = [some_object()]
 
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, some_object)
+        self.assertIsInstance(v[0], some_object)
 
         def faker(self):
             raise TypeError("cannot proxy")
@@ -896,6 +953,30 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, set_subclass)
         self.assertEqual(v, o)
         self.assertEqual(v.a, o.a)
+
+        with pyobjc_options(_nscoding_decoder=None):
+            with self.assertRaisesRegex(
+                ValueError, "decoding Python objects is not supported"
+            ):
+                self.unarchiverClass.unarchiveObjectWithData_(buf)
+
+        def encoder(value, coder):
+            raise RuntimeError("encoding is broken")
+
+        with pyobjc_options(_nscoding_encoder=encoder):
+            with self.assertRaisesRegex(RuntimeError, "encoding is broken"):
+                self.archiverClass.archivedDataWithRootObject_(o)
+
+    def test_set_nopython(self):
+        if self.archiverClass != NSKeyedArchiver:
+            raise SkipTest("only usefull for NSKeyedArchiver")
+        o = {OC_NoPythonRepresentation.alloc().initAllowPython_(True)}
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        del o
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            self.unarchiverClass.unarchiveObjectWithData_(buf)
 
     def testNestedDicts(self):
         o = {"hello": {1: 2}, "world": "foobar"}

@@ -73,6 +73,14 @@ class TestNSDecimalWrapper(TestCase):
         d = objc.NSDecimal("invalid")
         self.assertEqual(str(d), "NaN")
 
+        class NoObjCString(str):
+            @property
+            def __pyobjc_object__(self):
+                raise RuntimeError("cannot convert")
+
+        with self.assertRaisesRegex(RuntimeError, "cannot convert"):
+            objc.NSDecimal(NoObjCString("1.5"))
+
     def test_comparing(self):
         d1 = objc.NSDecimal("1.500")
         d2 = objc.NSDecimal("1.500")
@@ -151,6 +159,8 @@ class TestNSDecimalWrapper(TestCase):
             d5 >= D5  # noqa: B015
         self.assertTrue(d5 <= i5)
         self.assertTrue(d5 <= f5)
+        self.assertTrue(i5 <= d5)
+        self.assertTrue(f5 <= d5)
         with self.assertRaisesRegex(
             TypeError, "Cannot compare NSDecimal and decimal.Decimal"
         ):
@@ -301,6 +311,12 @@ class TestNSDecimalWrapper(TestCase):
         ):
             0.5 / d1
 
+        with self.assertRaisesRegex(TypeError, r"unsupported operand type\(s\) for /"):
+            d1 / []
+
+        with self.assertRaisesRegex(TypeError, r"unsupported operand type\(s\) for /"):
+            [] / d1
+
     def test_inplace_ro(self):
         d1 = objc.NSDecimal("1.5")
         d2 = objc.NSDecimal("0.5")
@@ -348,6 +364,9 @@ class TestUsingNSDecimalNumber(TestCase):
         self.assertIsInstance(v2, objc.NSDecimal)
         self.assertEqual(d, v2)
         self.assertEqual(v, v2)
+
+        with self.assertRaisesRegex(TypeError, "expected no arguments, got 1"):
+            n.decimalValue(42)
 
         with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
             cls.decimalNumberWithDecimal_(d, 1)

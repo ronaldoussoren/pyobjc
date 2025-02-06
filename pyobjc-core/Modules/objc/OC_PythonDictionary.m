@@ -200,7 +200,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             k = id_to_python(key);
             if (k == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         if (likely(PyDict_CheckExact(value))) {
@@ -255,7 +255,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             v = id_to_python(val);
             if (unlikely(v == NULL)) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         if (unlikely(key == nil)) {
@@ -270,7 +270,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             if (k == NULL) {
                 Py_XDECREF(v);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         if (likely(PyDict_CheckExact(value))) {

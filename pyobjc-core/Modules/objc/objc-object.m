@@ -236,7 +236,7 @@ object_verify_type(PyObject* obj)
          * object because that might cause havoc.
          */
 
-    } else {
+    } else { // LCOV_EXCL_LINE
         /* Special hack for KVO on MacOS X, when an object is observed it's
          * ISA is changed by the runtime. We change the python type as well.
          *
@@ -410,10 +410,10 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
 #endif
 
             if (PyObjCClass_CheckMethodList(base, 0) < 0) { // LCOV_BR_EXCL_LINE
-                // LOCV_EXCL_START
+                // LCOV_EXCL_START
                 Py_CLEAR(mro);
                 return NULL;
-                // LOCV_EXCL_STOP
+                // LCOV_EXCL_STOP
             }
 
             dict = PyType_GetDict((PyTypeObject*)base);

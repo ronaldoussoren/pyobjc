@@ -28,7 +28,7 @@ NSObject (TestMethods)
 - (id)selectorWithArg:(id)arg1 andArg:(id)arg2;
 @end
 
-@interface OC_NoPythonRepresentation : NSObject <NSCopying>
+@interface OC_NoPythonRepresentation : NSObject <NSCopying, NSCoding>
 /*
  * Helper class that can be used to test error paths
  * in creating a proxy for an ObjC object.
@@ -37,6 +37,8 @@ NSObject (TestMethods)
     bool _allowPython;
 }
 - (instancetype _Nullable)initAllowPython:(bool)allowPython;
+
+
 @end
 
 @interface CallHelper : NSObject
@@ -727,6 +729,19 @@ NSObject (TestMethods)
 
 
 @implementation OC_NoPythonRepresentation
+-(void)encodeWithCoder:(NSCoder*)coder
+{
+}
+
+-(instancetype)initWithCoder:(NSCoder*)coder
+{
+    self = [super init];
+    if (!self)
+        return nil;
+
+    self->_allowPython = false;
+    return self;
+}
 - (instancetype _Nullable)init
 {
     self = [super init];

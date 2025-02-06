@@ -112,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObjC_BEGIN_WITH_GIL
             if (PyObjC_encodeWithCoder(value, coder) == -1) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
     }
 }
@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
             if (PySet_Add(value, cur) < 0) {
                 Py_DECREF(cur);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
             Py_DECREF(cur);
         }
 
@@ -361,7 +361,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_DECREF(tmp);
         if (r == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -426,7 +426,7 @@ NS_ASSUME_NONNULL_BEGIN
         if (r == -1) {
             Py_DECREF(tmpMember);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (!r) {
             Py_DECREF(tmpMember);
@@ -441,7 +441,7 @@ NS_ASSUME_NONNULL_BEGIN
 
             if (tmp == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             while ((v = PyIter_Next(tmp)) != NULL) {
                 r = PyObject_RichCompareBool(v, tmpMember, Py_EQ);
@@ -449,7 +449,7 @@ NS_ASSUME_NONNULL_BEGIN
                     Py_DECREF(tmp);
                     Py_DECREF(tmpMember);
                     PyObjC_GIL_FORWARD_EXC();
-                }
+                } // LCOV_EXCL_LINE
 
                 if (r) {
                     /* Found the object */
@@ -503,7 +503,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* tmp = id_to_python(anObject);
         if (tmp == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (PyFrozenSet_CheckExact(value)) {
             PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenset");
@@ -528,12 +528,12 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* tmp = id_to_python(anObject);
         if (tmp == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (PyFrozenSet_CheckExact(value)) {
             PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenset");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         PyObject* args[3] = {NULL, value, tmp};
         PyObject* r       = PyObject_VectorcallMethod(PyObjCNM_add, args + 1,
@@ -541,7 +541,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_DECREF(tmp);
         if (r == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(r);
 
     PyObjC_END_WITH_GIL

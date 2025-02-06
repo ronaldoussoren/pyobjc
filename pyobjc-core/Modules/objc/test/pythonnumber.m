@@ -28,11 +28,11 @@ NSNumber ()
 
 + (const char*)objCTypeOf:(NSNumber*)number;
 + (NSComparisonResult)compareA:(NSNumber*)a andB:(NSNumber*)b;
-+ (BOOL)number:(NSNumber*)a isEqualTo:(NSNumber*)b;
 + (NSString*)numberDescription:(NSNumber*)number;
 + (NSString*)numberDescription:(NSNumber*)number withLocale:(id)aLocale;
++ (NSComparisonResult)compareA:(NSNumber*)a instanceOf:(Class)b;
 
-+ (bool)number:(NSNumber*)left isEquualTo:(NSNumber*)right;
++ (bool)number:(NSNumber*)left isEqualTo:(NSNumber*)right;
 + (bool)number:(NSNumber*)left isNotEqualTo:(NSNumber*)right;
 + (bool)number:(NSNumber*)left isGreaterThan:(NSNumber*)right;
 + (bool)number:(NSNumber*)left isGreaterThanOrEqualTo:(NSNumber*)right;
@@ -60,15 +60,20 @@ NSNumber ()
     return [a compare:b];
 }
 
-+ (BOOL)number:(NSNumber*)a isEqualTo:(NSNumber*)b
++ (NSComparisonResult)compareA:(NSNumber*)a instanceOf:(Class)b
 {
-    return [a isEqualToNumber:b];
+    id value = [[b alloc] init];
+    NSComparisonResult result =  [a compare:value];
+    [value release];
+    return result;
 }
+
 
 + (BOOL)number:(NSNumber*)a isEqualToValue:(NSNumber*)b
 {
     return [a isEqualToValue:b];
 }
+
 
 + (NSString*)numberDescription:(NSNumber*)number
 {
@@ -165,30 +170,78 @@ NSNumber ()
     return [number doubleValue];
 }
 
-+ (bool)number:(NSNumber*)left isEquualTo:(NSNumber*)right
++ (bool)number:(NSNumber*)a isEqualTo:(NSNumber*)b
 {
-    return [left isEqualTo:right];
+    return [a isEqualToNumber:b];
 }
++ (bool)number:(NSNumber*)a isEqualToInstanceOf:(Class)b
+{
+    id value = [[b alloc] init];
+    BOOL result = [a isEqualTo:value];
+    [value release];
+    return result;
+}
+
 + (bool)number:(NSNumber*)left isNotEqualTo:(NSNumber*)right
 {
     return [left isNotEqualTo:right];
 }
++ (BOOL)number:(NSNumber*)a isNotEqualToInstanceOf:(Class)b
+{
+    id value = [[b alloc] init];
+    BOOL result = [a isNotEqualTo:value];
+    [value release];
+    return result;
+}
+
 + (bool)number:(NSNumber*)left isGreaterThan:(NSNumber*)right
 {
     return [left isGreaterThan:right];
 }
++ (BOOL)number:(NSNumber*)a isGreaterThanInstanceOf:(Class)b
+{
+    id value = [[b alloc] init];
+    BOOL result = [a isGreaterThan:value];
+    [value release];
+    return result;
+}
+
 + (bool)number:(NSNumber*)left isGreaterThanOrEqualTo:(NSNumber*)right
 {
     return [left isGreaterThanOrEqualTo:right];
 }
++ (BOOL)number:(NSNumber*)a isGreaterThanOrEqualToInstanceOf:(Class)b
+{
+    id value = [[b alloc] init];
+    BOOL result = [a isGreaterThanOrEqualTo:value];
+    [value release];
+    return result;
+}
+
 + (bool)number:(NSNumber*)left isLessThan:(NSNumber*)right
 {
     return [left isLessThan:right];
 }
++ (BOOL)number:(NSNumber*)a isLessThanInstanceOf:(Class)b
+{
+    id value = [[b alloc] init];
+    BOOL result = [a isLessThan:value];
+    [value release];
+    return result;
+}
+
 + (bool)number:(NSNumber*)left isLessThanOrEqualTo:(NSNumber*)right
 {
     return [left isLessThanOrEqualTo:right];
 }
++ (BOOL)number:(NSNumber*)a isLessThanOrEqualToInstanceOf:(Class)b
+{
+    id value = [[b alloc] init];
+    BOOL result = [a isLessThanOrEqualTo:value];
+    [value release];
+    return result;
+}
+
 
 + (NSData*)getValueOf:(NSNumber*)value
 {

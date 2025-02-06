@@ -527,6 +527,11 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
     }
 }
 
+/* the __pyobjc_PythonTransient__ method is only used in the
+ * implementation of Python methods on a class. Those aren't
+ * supported for blocks.
+ */
+// LCOV_EXCL_START
 static PyObject* _Nullable pyobjc_PythonTransient(NSObject* self,
                                                   SEL  _sel __attribute__((__unused__)),
                                                   int* cookie)
@@ -542,6 +547,7 @@ static PyObject* _Nullable pyobjc_PythonTransient(NSObject* self,
     PyObject* result  = PyObjCObject_New(self, PyObjCObject_kDEFAULT, NO);
     return result;
 }
+// LCOV_EXCL_STOP
 
 int
 PyObjCBlock_Setup(PyObject* module __attribute__((__unused__)))

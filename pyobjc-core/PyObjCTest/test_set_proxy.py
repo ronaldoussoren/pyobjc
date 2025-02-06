@@ -5,6 +5,7 @@ Tests for the proxy of Python sets
 import objc
 from PyObjCTest.fnd import NSNull, NSObject, NSPredicate
 from PyObjCTest.pythonset import OC_TestSet
+from PyObjCTest.objectint import OC_NoPythonRepresentation
 from PyObjCTools.TestSupport import TestCase, pyobjc_options
 from PyObjCTest.test_object_proxy import NoObjectiveC
 
@@ -96,6 +97,9 @@ class BasicSetTests:
         s = self.setClass([1, None])
         self.assertTrue(OC_TestSet.set_containsObject_(s, NSNull.null()))
 
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_TestSet.set_containsInstanceOf_(s, OC_NoPythonRepresentation)
+
     def testFilteredSetUsingPredicate(self):
         s = self.setClass(range(10))
         p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
@@ -115,6 +119,9 @@ class BasicSetTests:
 
         o = OC_TestSet.set_member_(s, OC_TestElem(2))
         self.assertIs(o, o2)
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_TestSet.set_memberInstanceOf_(s, OC_NoPythonRepresentation)
 
     def testObjectEnumerator(self):
         s = self.setClass(range(10))
@@ -264,6 +271,9 @@ class TestMutableSet(TestCase, BasicSetTests):
         OC_TestSet.set_addObject_(s, 9)
         self.assertEqual(s, self.setClass([1, 2, 3, 9]))
 
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_TestSet.set_addInstanceOf_(s, OC_NoPythonRepresentation)
+
     def testAddObjectsFromArray(self):
         s = self.setClass([1, 2, 3])
 
@@ -281,6 +291,9 @@ class TestMutableSet(TestCase, BasicSetTests):
 
         OC_TestSet.set_removeObject_(s, 9)
         self.assertEqual(s, self.setClass([2, 3]))
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_TestSet.set_removeInstanceOf_(s, OC_NoPythonRepresentation)
 
     def testRemoveAllObjects(self):
         s = self.setClass([1, 2, 3])
@@ -396,6 +409,23 @@ class TestMisc(TestCase):
         s = set({NoObjectiveC()})
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             OC_TestSet.set_member_(s, "")
+
+        class Uncomparable:
+            def __init__(self, value):
+                self.value = value
+
+            def __eq__(self, other):
+                if self.value is None:
+                    raise RuntimeError("do not compare me")
+                return self.value == other
+
+            def __hash__(self):
+                return hash(self.value)
+
+        # XXX: This relies on the order of iteration of sets!
+        s = {Uncomparable(2), Uncomparable(None)}
+        with self.assertRaisesRegex(RuntimeError, "do not compare me"):
+            OC_TestSet.set_member_(s, 2)
 
     def test_clear_fails(self):
         class S(set):

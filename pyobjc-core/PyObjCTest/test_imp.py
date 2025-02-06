@@ -29,6 +29,9 @@ class TestBasicIMP(TestCase):
         )
         self.assertEqual(m.selector, b"alloc")
 
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            m()
+
         o = m(cls).init()
         self.assertIsInstance(o, cls)
 

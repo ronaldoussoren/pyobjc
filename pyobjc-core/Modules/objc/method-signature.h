@@ -82,12 +82,11 @@ extern PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* m
 
 #ifdef PyObjC_DEBUG
 
-/* XXX: Is this used? */
 static inline int
 PyObjCMethodSignature_Validate(PyObjCMethodSignature* methinfo)
 {
     PyObjC_Assert(methinfo->signature != NULL, -1);
-    for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) {
+    for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) { // LCOV_BR_EXCL_LINE
         PyObjC_Assert(methinfo->argtype[i] != NULL, -1);
         PyObjC_Assert(methinfo->argtype[i]->type != NULL, -1);
     }

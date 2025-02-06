@@ -51,6 +51,12 @@ PyObjC_InitSuperCallRegistry(void)
     return 0;
 }
 
+
+// LCOV_EXCL_START
+/* The code in this file only adds new values to
+ * the registry, but never clears them. Because of
+ * this the capsules are never released.
+ */
 static void
 memblock_capsule_cleanup(PyObject* ptr)
 {
@@ -63,6 +69,7 @@ memblock_capsule_cleanup(PyObject* ptr)
 
     PyMem_Free(mem);
 }
+// LCOV_EXCL_STOP
 
 /*
  * Add a custom mapping for a method in a class

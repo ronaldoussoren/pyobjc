@@ -275,7 +275,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     if (m != NULL) {
         /* A real Objective-C method */
         const char* typestr = method_getTypeEncoding(m);
-        if (typestr == NULL) { // LCOv_BR_EXCL_LINE
+        if (typestr == NULL) { // LCOV_BR_EXCL_LINE
             return nil;        // LCOV_EXCL_LINE
         }
         return [NSMethodSignature signatureWithObjCTypes:typestr];
@@ -296,8 +296,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             argcount = PyObjC_num_arguments(pymethod);
         }
         Py_DECREF(pymethod);
-        if (argcount < 0) {
-            PyObjC_GIL_FORWARD_EXC();
+        if (argcount < 0) { // LCOV_BR_EXCL_LINE
+            /* Cannot fail because get_method_for_selector
+             * will only return a method or function for which
+             * the number of arguments can be calculated.
+             */
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
 
         encoding = alloca(argcount + 4);
@@ -633,7 +637,6 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_END_WITH_GIL
     return pyObject;
 }
-// LCOV_EXCL_STOP
 
 + (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
@@ -646,6 +649,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
     return rval;
 }
+// LCOV_EXCL_STOP
 
 /*
  * Implementation for Key-Value Coding.
@@ -966,10 +970,16 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
          * of PyObjC, and in some error cases.
          */
         NSObject* temp;
-        if (depythonify_python_object(decoded, &temp) == -1) {
+        if (depythonify_python_object(decoded, &temp) == -1) { // LCOV_BR_EXCL_LINE
+            /* Cannot get here with testing, the decoder invokes
+             * 'setValue' above and that call has already depythonified
+             * the value.
+             */
+            // LCOV_EXCL_START
             Py_DECREF(decoded);
             PyObjC_GIL_FORWARD_EXC();
-        }
+            // LCOV_EXCL_STOP
+        } // LCOV_EXCL_LINE
 
         if (temp != (NSObject*)self) {
             [temp retain];

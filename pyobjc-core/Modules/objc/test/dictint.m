@@ -52,14 +52,43 @@
     return [dict objectForKey:key];
 }
 
++ (id)dict:(NSDictionary*)dict getItemInstanceOf:(Class)cls
+{
+    id key = [[cls alloc] init];
+    id result = [dict objectForKey:key];
+    [key release];
+    return result;
+}
+
 + (void)dict:(NSMutableDictionary*)dict set:(id)key value:(id)value
 {
     [dict setObject:value forKey:key];
 }
 
++ (void)dict:(NSMutableDictionary*)dict setInstanceOf:(Class)cls value:(id)value
+{
+    id key = [[cls alloc] init];
+    [dict setObject:value forKey:key];
+    [key release];
+}
+
++ (void)dict:(NSMutableDictionary*)dict set:(id)key valueInstanceOf:(Class)cls
+{
+    id value = [[cls alloc] init];
+    [dict setObject:value forKey:key];
+    [value release];
+}
+
 + (void)dict:(NSMutableDictionary*)dict remove:(id)key
 {
     [dict removeObjectForKey:key];
+}
+
++ (void)dict:(NSMutableDictionary*)dict removeInstanceOf:(Class)cls
+{
+    id key = [[cls alloc] init];
+    [dict removeObjectForKey:key];
+    [key release];
 }
 
 @end

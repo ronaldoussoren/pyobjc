@@ -286,7 +286,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_ssize_t size = PyTuple_Size(value);
 
         if ([coder allowsKeyedCoding]) {
-            if (size > INT_MAX) { // LCOV_BT_EXCL_LINE
+            if (size > INT_MAX) { // LCOV_BR_EXCL_LINE
                 /* Excluded from coverage tests because this would require creating
                  * rather huge tuples, with corresponding memory usage.
                  */
@@ -385,7 +385,7 @@ NS_ASSUME_NONNULL_BEGIN
                     PyTuple_SET_ITEM(value, i, NULL);
                     Py_DECREF(t);
                     // LCOV_EXCL_STOP
-                }
+                } // LCOV_EXCL_LINE
                 PyTuple_SET_ITEM(value, i, v);
             }
         } else {
@@ -461,7 +461,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     }
 
-    switch (code) {
+    switch (code) { // LCOV_BR_EXCL_LINE
     case 1:
         /* This code was used by some previous versions of PyObjC
          * (before 2.2) and is kept around for backward compatibility.
@@ -519,17 +519,13 @@ NS_ASSUME_NONNULL_BEGIN
             PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
             if (decoded == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             SET_FIELD(value, decoded);
 
             id actual = PyObjC_RegisterObjCProxy(value, self);
-            if (actual != self) {
-                [self release];
-                self = actual;
-            } else if (actual != nil) {
-                [actual release];
-            }
+            [self release];
+            self = actual;
 
         PyObjC_END_WITH_GIL
 
@@ -564,7 +560,7 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyTuple_New(size);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
 
@@ -608,8 +604,8 @@ NS_ASSUME_NONNULL_BEGIN
         PyObjC_END_WITH_GIL
         tmpVal = [super initWithCoder:coder];
         PyObjC_Assert(tmpVal == self, nil);
-        // LCOV_EXCL_STOP
         return tmpVal;
+        // LCOV_EXCL_STOP
 
     default:
         // LCOV_EXCL_START
@@ -661,9 +657,12 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         } // LCOV_EXCL_LINE
 
-        if (depythonify_python_object(copy, &result) == -1) {
+        if (depythonify_python_object(copy, &result) == -1) { // LCOV_BR_EXCL_LINE
+            /* Should never fail, 'copy' is an instance of PyList_Type */
+            // LCOV_EXCL_START
             Py_DECREF(copy);
             PyObjC_GIL_FORWARD_EXC();
+            // LCOV_EXCL_STOP
         } // LCOV_EXCL_LINE
 
         Py_DECREF(copy);

@@ -434,17 +434,17 @@ NS_ASSUME_NONNULL_BEGIN
             int       r;                                                                 \
             if (other == NULL) {                                                         \
                 PyObjC_GIL_FORWARD_EXC();                                                \
-            }                                                                            \
+            } /* LCOV_EXCL_LINE */                                                       \
                                                                                          \
             r = PyObject_RichCompareBool(value, other, OPERATOR);                        \
             Py_DECREF(other);                                                            \
             if (r == -1) {                                                               \
                 PyObjC_GIL_FORWARD_EXC();                                                \
-            }                                                                            \
+            }    /* LCOV_EXCL_LINE */                                                    \
                                                                                          \
             if (r) {                                                                     \
                 PyObjC_GIL_RETURN(YES);                                                  \
-            } else {                                                                     \
+            } else {  /* LCOV_EXCL_LINE */                                               \
                 PyObjC_GIL_RETURN(NO);                                                   \
             }                                                                            \
                                                                                          \

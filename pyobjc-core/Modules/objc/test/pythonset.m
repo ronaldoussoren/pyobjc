@@ -70,6 +70,14 @@ typedef unsigned int NSUInteger;
     return [set containsObject:anObject];
 }
 
++ (BOOL)set:(NSSet*)set containsInstanceOf:(Class)cls
+{
+    id anObject = [[cls alloc] init];
+    BOOL result = [set containsObject:anObject];
+    [anObject release];
+    return result;
+}
+
 + (NSUInteger)countOfSet:(NSSet*)set
 {
     return [set count];
@@ -120,6 +128,14 @@ typedef unsigned int NSUInteger;
     return [set member:anObject];
 }
 
++ (id)set:(NSSet*)set memberInstanceOf:(Class)cls
+{
+    id anObject = [[cls alloc] init];
+    id result = [set member:anObject];
+    [anObject release];
+    return result;
+}
+
 + (NSEnumerator*)objectEnumeratorOfSet:(NSSet*)set
 {
     return [set objectEnumerator];
@@ -157,6 +173,13 @@ typedef unsigned int NSUInteger;
     [set addObject:anObject];
 }
 
++ (void)set:(NSMutableSet*)set addInstanceOf:(Class)cls
+{
+    id anObject = [[cls alloc] init];
+    [set addObject:anObject];
+    [anObject release];
+}
+
 + (void)set:(NSMutableSet*)set addObjectsFromArray:(NSArray*)anArray
 {
     [set addObjectsFromArray:anArray];
@@ -185,6 +208,13 @@ typedef unsigned int NSUInteger;
 + (void)set:(NSMutableSet*)set removeObject:(id)anObject
 {
     [set removeObject:anObject];
+}
+
++ (void)set:(NSMutableSet*)set removeInstanceOf:(Class)cls
+{
+    id anObject = [[cls alloc] init];
+    [set removeObject:anObject];
+    [anObject release];
 }
 
 + (void)set:(NSMutableSet*)set setSet:(NSSet*)otherSet

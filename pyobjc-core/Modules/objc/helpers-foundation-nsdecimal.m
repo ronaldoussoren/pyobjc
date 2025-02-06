@@ -700,15 +700,15 @@ decimal_coerce_compare(PyObject** l, PyObject** r)
     if (PyFloat_Check(*l)) {
         NSDecimal tmp;
         PyObjC_number_to_decimal(*l, &tmp);
-        if (PyObjC_number_to_decimal(*r, &tmp) == -1) {
-            return 1;
+        if (PyObjC_number_to_decimal(*r, &tmp) == -1) { // LCOV_BR_EXCL_LINE
+            return 1; // LCOV_EXCL_LINE
         }
         *l = Decimal_New(&tmp);
     }
     if (PyFloat_Check(*r)) {
         NSDecimal tmp;
-        if (PyObjC_number_to_decimal(*r, &tmp) == -1) {
-            return 1;
+        if (PyObjC_number_to_decimal(*r, &tmp) == -1) { // LCOV_BR_EXCL_LINE
+            return 1; // LCOV_EXCL_LINE
         }
         *r = Decimal_New(&tmp);
     }
@@ -807,8 +807,8 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
         // LCOV_EXCL_STOP
     Py_END_ALLOW_THREADS
 
-    if (res == nil && PyErr_Occurred()) {
-        return NULL;
+    if (res == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     return id_to_python(res);
@@ -933,13 +933,13 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        me
                 &aDecimal, &super, PyObjCSelector_GetSelector(method));
 #endif
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     return Decimal_New(&aDecimal);

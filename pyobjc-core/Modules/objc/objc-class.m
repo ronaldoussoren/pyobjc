@@ -677,7 +677,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                 Py_DECREF(real_bases);
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
-            } // LCOV_EXCL_STOP
+                // LCOV_EXCL_STOP
+            } // LCOV_EXCL_LINE
         }
     }
 
@@ -686,14 +687,13 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         PyObject* r = PyObject_VectorcallMethod(PyObjCNM_extend, args + 1,
                                                 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (r == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
+        if (r == NULL) {
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
             return NULL;
-        } // LCOV_EXCL_STOP
+        }
         Py_DECREF(r);
     }
 

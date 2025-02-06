@@ -470,12 +470,17 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         return NULL;
     }
 
-    if (!PyObjCClass_Check(self)) {
+    if (!PyObjCClass_Check(self)) { // LCOV_BR_EXCL_LINE
+        /* AFAIK it is not possible to get an unbound objc.selector
+         * for a class method.
+         */
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_TypeError,
                      "Expecting instance of 'objc.objc_class' as 'self', "
                      "got '%s'",
                      Py_TYPE(self)->tp_name);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_BEGIN_ALLOW_THREADS
@@ -483,9 +488,9 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
             retval = ((IMP(*)(Class, SEL, SEL))objc_msgSend)(
                 PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method), selector);
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
-            retval = NULL;
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
+            retval = NULL; // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -569,9 +574,9 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
             retval = ((IMP(*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), selector);
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
-            retval = NULL;
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
+            retval = NULL; // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 

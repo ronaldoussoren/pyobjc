@@ -318,9 +318,11 @@ NS_ASSUME_NONNULL_BEGIN
 
         return self;
     } else {
+        // LCOV_EXCL_START
         @throw [NSException exceptionWithName:NSInvalidArgumentException
                                        reason:@"decoding Python objects is not supported"
                                      userInfo:nil];
+        // LCOV_EXCL_STOP
     }
 }
 

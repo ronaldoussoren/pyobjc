@@ -14,6 +14,7 @@ import objc
 from PyObjCTest.fnd import NSNumber, NSNumberFormatter
 from PyObjCTest.misc import OC_Misc
 from PyObjCTest.pythonnumber import OC_NumberInt
+from PyObjCTest.objectint import OC_ObjectInt
 from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
 from PyObjCTest.test_object_proxy import NoObjectiveC
 
@@ -438,6 +439,7 @@ class TestNSNumber(TestCase):
     def testDescription(self):
         v = OC_NumberInt.numberDescription_(NSNumber.numberWithInt_(0))
         self.assertIsInstance(v, str)
+
         self.assertEqual(v, "0")
 
         v = OC_NumberInt.numberDescription_(NSNumber.numberWithLongLong_(2**60))
@@ -760,6 +762,11 @@ class TestPyNumber(TestCase):
             NSOrderedAscending,
         )
 
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_NumberInt.compareA_instanceOf_(
+                1, objc.lookUpClass("OC_NoPythonRepresentation")
+            )
+
     def testNumberEqualToValue(self):
         self.assertFalse(OC_NumberInt.number_isEqualToValue_(0, 1))
         self.assertFalse(OC_NumberInt.number_isEqualToValue_(0, 2**64))
@@ -783,6 +790,18 @@ class TestPyNumber(TestCase):
 
         self.assertTrue(OC_NumberInt.number_isEqualTo_(0, 0))
         self.assertTrue(OC_NumberInt.number_isEqualTo_(0, 0.0))
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_NumberInt.number_isEqualToInstanceOf_(
+                1, objc.lookUpClass("OC_NoPythonRepresentation")
+            )
+
+        class FailingInt(int):
+            def __eq__(self, other):
+                raise RuntimeError("do not judge me")
+
+        with self.assertRaisesRegex(RuntimeError, "do not judge me"):
+            OC_NumberInt.number_isEqualTo_(0, FailingInt())
 
     def testDescription(self):
         v = OC_NumberInt.numberDescription_(0)
@@ -1089,6 +1108,23 @@ class TestComparsionMethods(TestCase):
             with self.subTest(func=check_method.__name__):
                 self.assertEqual(s, {True, False})
 
+        for test_method in [
+            OC_NumberInt.number_isEqualToInstanceOf_,
+            OC_NumberInt.number_isNotEqualToInstanceOf_,
+            OC_NumberInt.number_isGreaterThanInstanceOf_,
+            OC_NumberInt.number_isGreaterThanOrEqualToInstanceOf_,
+            OC_NumberInt.number_isLessThanInstanceOf_,
+            OC_NumberInt.number_isLessThanOrEqualToInstanceOf_,
+        ]:
+            for value in (1, 1.5, -2, -2.5):
+                with self.subTest(func=check_method.__name__, value=value):
+                    with self.assertRaisesRegex(
+                        ValueError, "cannot have Python representation"
+                    ):
+                        test_method(
+                            value, objc.lookUpClass("OC_NoPythonRepresentation")
+                        )
+
     def test_comparision_with_large_long(self):
         OC_NumberInt.number_isEqualTo_(2**63 + 10, 2**63 + 10)
         OC_NumberInt.number_isEqualTo_(2**63 + 10, as_nsnumber(2**63 + 10))
@@ -1160,3 +1196,20 @@ class TestComparsionMethods(TestCase):
 
         finally:
             objc.options._nsnumber_wrapper = orig
+
+    def test_number_copy(self):
+        v = 2**128
+        w = OC_ObjectInt.copyObject_(v)
+        self.assertIs(v, w)
+
+    def test_coding(self):
+        class myint(int):
+            pass
+
+        for value in (1, 1.5, myint(1.5)):
+            with self.subTest(value=value):
+                a = OC_ObjectInt.invokeSelector_of_("classForCoder", value)
+                b = OC_ObjectInt.invokeSelector_of_("classForArchiver", value)
+                c = OC_ObjectInt.invokeSelector_of_("classForKeyedArchiver", value)
+                self.assertIs(a, b)
+                self.assertIs(a, c)

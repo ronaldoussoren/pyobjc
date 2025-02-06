@@ -192,7 +192,7 @@ mkimp_NSObject_dealloc(PyObject*              callable,
           pyself = PyObjCObject_NewTransient(self, &cookie);
           if (pyself == NULL) { // LCOV_BR_EXCL_LINE
               PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-          }
+          } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, pyself};
           result            = PyObject_Vectorcall(callable, args + 1,
@@ -200,7 +200,7 @@ mkimp_NSObject_dealloc(PyObject*              callable,
           PyObjCObject_ReleaseTransient(pyself, cookie);
           if (result == NULL) {
               PyObjC_GIL_FORWARD_EXC();
-          } // LCOV_BR_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           if (unlikely(result != Py_None)) {
               PyErr_Format(PyExc_TypeError,
@@ -208,7 +208,7 @@ mkimp_NSObject_dealloc(PyObject*              callable,
                            " of %s",
                            Py_TYPE(result)->tp_name);
               PyObjC_GIL_FORWARD_EXC();
-          } // LCOV_BR_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           Py_DECREF(result);
 
@@ -351,7 +351,7 @@ mkimp_NSObject_release(PyObject*              callable,
           if (result == NULL) {
               PyObjCObject_ReleaseTransient(pyself, cookie);
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
 
           if (result != Py_None) {
@@ -360,7 +360,7 @@ mkimp_NSObject_release(PyObject*              callable,
                            " of %s",
                            Py_TYPE(result)->tp_name);
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
 
           Py_DECREF(result);
 
@@ -393,13 +393,13 @@ mkimp_NSObject_retain(PyObject*              callable,
           PyObjCObject_ReleaseTransient(pyself, cookie);
           if (result == NULL) {
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
 
           err = depythonify_python_object(result, &rv);
           Py_DECREF(result);
           if (err == -1) {
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
 
       PyObjC_END_WITH_GIL
       return rv;

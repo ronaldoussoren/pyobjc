@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import TestCase, pyobjc_options, cast_ulonglong
 from PyObjCTest.objectint import OC_ObjectInt
 import copy
+import types
 import objc
 import tempfile
 import os
@@ -20,6 +21,11 @@ NSOrderedDescending = 1
 NSNumber = objc.lookUpClass("NSNumber")
 
 
+class Callable:
+    def __call__(self):
+        return 42
+
+
 class SomeObject:
     def __init__(self, a, b):
         self.a = a
@@ -27,6 +33,8 @@ class SomeObject:
 
     def __repr__(self):
         return f"<SomeObject a={self.a!r} b={self.b!r}>"
+
+    fourtytwo = types.MethodType(Callable(), 42)
 
     def __hash__(self):
         return hash((self.a, self.b))
@@ -296,6 +304,9 @@ class TestPlainPythonMethods(TestCase):
         m = OC_ObjectInt.methodSignatureForSelector_classOf_(
             b"selectorDoesNotExist", value
         )
+        self.assertIs(m, None)
+
+        m = OC_ObjectInt.methodSignatureForSelector_of_(b"fourtytwo", SomeObject(1, 2))
         self.assertIs(m, None)
 
     def test_method_raises(self):
