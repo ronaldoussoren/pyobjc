@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 """
-    start socket based minimal readline exec server
+start socket based minimal readline exec server
 """
 import socket
 import sys

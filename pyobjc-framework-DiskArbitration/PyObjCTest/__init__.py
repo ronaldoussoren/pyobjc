@@ -1,1 +1,1 @@
-""" DiskArbitration tests """
+"""DiskArbitration tests"""

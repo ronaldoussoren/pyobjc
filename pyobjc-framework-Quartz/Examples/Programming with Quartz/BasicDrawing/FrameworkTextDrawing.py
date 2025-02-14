@@ -12,7 +12,7 @@ def getTextString():
     # Note: Create an NSString, because we'll use NSString-specific API's, otherwise
     # we could just have used a python unicode object
     return Cocoa.NSString.stringWithString_(
-        "\u0051\u0075\u0061\u0072\u0074\u007A\u266A\u2766\u265B\u3042\u304E"
+        "\u0051\u0075\u0061\u0072\u0074\u007a\u266a\u2766\u265b\u3042\u304e"
     )
 
 

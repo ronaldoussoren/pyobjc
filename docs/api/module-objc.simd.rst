@@ -158,7 +158,7 @@ does not support named accessors to elements.
 
    .. method:: __setitem__(index: int, value: float)
 
-      Replace element at *indx* with *value*.
+      Replace element at *index* with *value*.
 
    .. method:: __add__(self, other: vector_double4) -> vector_double4
 
