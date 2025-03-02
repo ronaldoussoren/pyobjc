@@ -4,6 +4,8 @@
 
 #import <VideoToolbox/VideoToolbox.h>
 
+#include "_VideoToolbox_protocols.m"
+
 static PyObject*
 m_VTCompressionSessionGetTimeRangesForNextPass(PyObject* self __attribute__((__unused__)),
                                                PyObject* args, PyObject* kwds)

@@ -2,7 +2,10 @@
  "definitions": {
   "typed_enum": {
    "NSFontWidth": { "type": "d" },
+   "NSPasteboardAccessBehavior": { "type": "q" },
    "NSTextHighlightStyle": { "type": "@", "type_name": "NSString" },
+   "NSPasteboardMetadataType": { "type": "@", "type_name": "NSString" },
+   "NSPasteboardDetectionPattern": { "type": "@", "type_name": "NSString" },
    "NSTextHighlightColorScheme": { "type": "@", "type_name": "NSString"  },
    "NSControlStateValue": { "type": "q" },
    "NSToolbarUserInfoKey": { "type": "@", "type_name": "NSString" },

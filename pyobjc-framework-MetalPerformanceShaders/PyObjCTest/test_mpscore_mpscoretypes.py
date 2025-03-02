@@ -73,6 +73,10 @@ class TestMPSCore_MPSCoreTypes(TestCase):
             MetalPerformanceShaders.MPSDataTypeSignedBit,
         )
         self.assertEqual(
+            MetalPerformanceShaders.MPSDataTypeInt2,
+            MetalPerformanceShaders.MPSDataTypeSignedBit | 2,
+        )
+        self.assertEqual(
             MetalPerformanceShaders.MPSDataTypeInt4,
             MetalPerformanceShaders.MPSDataTypeSignedBit | 4,
         )
@@ -92,6 +96,7 @@ class TestMPSCore_MPSCoreTypes(TestCase):
             MetalPerformanceShaders.MPSDataTypeInt64,
             MetalPerformanceShaders.MPSDataTypeSignedBit | 64,
         )
+        self.assertEqual(MetalPerformanceShaders.MPSDataTypeUInt2, 2)
         self.assertEqual(MetalPerformanceShaders.MPSDataTypeUInt4, 4)
         self.assertEqual(MetalPerformanceShaders.MPSDataTypeUInt8, 8)
         self.assertEqual(MetalPerformanceShaders.MPSDataTypeUInt16, 16)

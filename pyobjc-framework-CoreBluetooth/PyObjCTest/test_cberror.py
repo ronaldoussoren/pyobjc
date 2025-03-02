@@ -49,3 +49,5 @@ class TestCBAdvertisementData(TestCase):
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientEncryption, 0x0F)
         self.assertEqual(CoreBluetooth.CBATTErrorUnsupportedGroupType, 0x10)
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientResources, 0x11)
+        self.assertEqual(CoreBluetooth.CBATTErrorDatabaseOutOfSync, 0x12)
+        self.assertEqual(CoreBluetooth.CBATTErrorValueNotAllowed, 0x13)

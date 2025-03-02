@@ -50,6 +50,11 @@ class TestSecTrusted(TestCase):
     def test_constants10_12(self):
         self.assertIsInstance(Security.kSecTrustCertificateTransparencyWhiteList, str)
 
+    @min_os_level("15.4")
+    def test_constants15_4(self):
+        self.assertIsInstance(Security.kSecTrustQCStatements, str)
+        self.assertIsInstance(Security.kSecTrustQWACValidation, str)
+
     def test_functions(self):
         self.assertIsInstance(Security.SecTrustGetTypeID(), int)
 

@@ -1,0 +1,37 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "SFCertificatePresentation": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithTrust:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "trust"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "assign",
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "trust"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

@@ -654,6 +654,13 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMFormatDescriptionViewPackingKind_OverUnder, str
         )
 
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionProjectionKind_Equirectangular, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionProjectionKind_HalfEquirectangular, str
+        )
+
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()
         self.assertEqual(v.width, 0)

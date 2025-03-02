@@ -407,6 +407,7 @@ class TestSecBase(TestCase):
         self.assertEqual(Security.errSecCertificateValidityPeriodTooLong, -67901)
         self.assertEqual(Security.errSecCertificateIsCA, -67902)
         self.assertEqual(Security.errSecCertificateDuplicateExtension, -67903)
+        self.assertEqual(Security.errSecMissingQualifiedCertStatement, -67904)
 
         self.assertEqual(Security.errSSLProtocol, -9800)
         self.assertEqual(Security.errSSLNegotiation, -9801)

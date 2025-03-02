@@ -321,7 +321,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Foundation </apinotes/Foundation>`                                             | `pyobjc-framework-Cocoa`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| FSKit                                                                                | -                                                    | No public API (as of macOS 15.2)        |
+| :doc:`FSKit </apinotes/FSKit>`                                                       | `pyobjc-framework-FSKit`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | FWAUserLib                                                                           | -                                                    | Will not be wrapped, framework is       |
 |                                                                                      |                                                      | deprecated in macOS 10.12 and removed   |
@@ -594,6 +594,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`SecurityInterface </apinotes/SecurityInterface>`                               | `pyobjc-framework-SecurityInterface`_                |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`SecurityUI </apinotes/SecurityUI>`                                             | `pyobjc-framework-SecurityUI`_                       |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`SensitiveContentAnalysis </apinotes/SensitiveContentAnalysis>`                 | `pyobjc-framework-SensitiveContentAnalysis`_         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | SiriAudioIntentUtils                                                                 |                                                      | No public API on macOS.                 |
@@ -848,6 +850,7 @@ prioritizing work.
 .. _`pyobjc-framework-ScriptingBridge`: https://pypi.org/project/pyobjc-framework-ScriptingBridge/
 .. _`pyobjc-framework-SecurityFoundation`: https://pypi.org/project/pyobjc-framework-SecurityFoundation/
 .. _`pyobjc-framework-SecurityInterface`: https://pypi.org/project/pyobjc-framework-SecurityInterface/
+.. _`pyobjc-framework-SecurityUI`: https://pypi.org/project/pyobjc-framework-SecurityUI/
 .. _`pyobjc-framework-Security`: https://pypi.org/project/pyobjc-framework-Security/
 .. _`pyobjc-framework-ServiceManagement`: https://pypi.org/project/pyobjc-framework-ServiceManagement/
 .. _`pyobjc-framework-SharedWithYouCore`: https://pypi.org/project/pyobjc-framework-SharedWithYouCore/

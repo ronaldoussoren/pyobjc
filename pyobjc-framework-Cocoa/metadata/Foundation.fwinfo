@@ -2409,6 +2409,24 @@
      {
       "class_method": false,
       "retval": {
+       "c_array_delimited_by_null": true,
+       "c_array_length_in_arg": 0,
+       "type_override": "^v"
+      },
+      "selector": "decodeBytesWithMinimumLength:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "c_array_delimited_by_null": true,
+       "c_array_length_in_arg": 1,
+       "type_override": "^v"
+      },
+      "selector": "decodeBytesForKey:minimumLength:"
+     },
+     {
+      "class_method": false,
+      "retval": {
        "type_override": "Z"
       },
       "selector": "allowsKeyedCoding"

@@ -69,6 +69,16 @@ class TestNSTextField(TestCase):
             TestNSTextFieldHelper.textField_textView_shouldSelectCandidateAtIndex_
         )
 
+    @min_os_level("15.2")
+    def testMethods15_2(self):
+        self.assertResultIsBOOL(AppKit.NSTextField.allowsWritingTools)
+        self.assertArgIsBOOL(AppKit.NSTextField.setAllowsWritingTools_, 0)
+
+    @min_os_level("15.4")
+    def testMethods15_4(self):
+        self.assertResultIsBOOL(AppKit.NSTextField.allowsWritingToolsAffordance)
+        self.assertArgIsBOOL(AppKit.NSTextField.setAllowsWritingToolsAffordance_, 0)
+
     @min_sdk_level("10.6")
     def testProtocols(self):
         self.assertProtocolExists("NSTextFieldDelegate")

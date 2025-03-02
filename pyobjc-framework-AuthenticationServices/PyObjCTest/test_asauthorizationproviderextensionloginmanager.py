@@ -84,3 +84,16 @@ class TestASAuthorizationProviderExtensionLoginManager(TestCase):
             AuthenticationServices.ASAuthorizationProviderExtensionLoginManager.saveUserLoginConfiguration_error_,
             1,
         )
+
+    @min_os_level("15.4")
+    def test_methods15_4(self):
+        self.assertArgIsBlock(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginManager.attestKey_clientDataHash_completion_,
+            2,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginManager.attestPendingKey_clientDataHash_completion_,
+            2,
+            b"v@@",
+        )
