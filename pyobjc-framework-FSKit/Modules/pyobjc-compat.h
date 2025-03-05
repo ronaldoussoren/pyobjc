@@ -11,6 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#ifdef USE_STATIC_ANALYZER
+#define CLANG_SUPPRESS [[clang::suppress]]
+#else
+#define CLANG_SUPPRESS
+#endif
+
 /*
  *
  * Start of compiler definitions
@@ -173,7 +179,7 @@ extern const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object);
 
 static inline PyObject* _Nullable* _Nonnull PyTuple_ITEMS(PyObject* tuple)
 {
-    return &PyTuple_GET_ITEM(tuple, 0);
+    return &PyTuple_GET_ITEM(tuple, 0); // LCOV_BR_EXCL_LINE
 }
 
 /* This is a crude hack to disable a otherwise useful warning in the context of
@@ -192,7 +198,7 @@ _PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* _Nullable value)
 static inline PyObject*
 _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 {
-    return PyTuple_GET_ITEM(tuple, idx);
+    return PyTuple_GET_ITEM(tuple, idx); // LCOV_BR_EXCL_LINE
 }
 #undef PyTuple_GET_ITEM
 #define PyTuple_GET_ITEM(a, b) _PyObjCTuple_GetItem(a, b)
@@ -234,26 +240,43 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
         PyGILState_Release(_GILState);                                                   \
     } while (0)
 
-extern PyObject* _Nonnull PyObjC_get_tp_dict(PyTypeObject* _Nonnull tp);
+#if PY_VERSION_HEX < 0x030a0000
+
+static inline PyObject* Py_NewRef(PyObject* o)
+{
+    Py_INCREF(o);
+    return o;
+}
+
+static inline PyObject* Py_XNewRef(PyObject* o)
+{
+    Py_XINCREF(o);
+    return o;
+}
+
+#endif /* PY_VERSION_HEX < 0x030a0000 */
 
 #if PY_VERSION_HEX < 0x030d0000
-#define Py_BEGIN_CRITICAL_SECTION(value) {
+#define Py_BEGIN_CRITICAL_SECTION(value) { (void)(value);
 #define Py_END_CRITICAL_SECTION() }
 #define Py_EXIT_CRITICAL_SECTION() ((void)0)
 
-#define Py_BEGIN_CRITICAL_SECTION2(value1, value2) {
+#define Py_BEGIN_CRITICAL_SECTION2(value1, value2) { (void)(value1); (void)(value2);
 #define Py_END_CRITICAL_SECTION2() }
 #define Py_EXIT_CRITICAL_SECTION2() ((void)0)
 
+#define PyObjC_ATOMIC
 
 #else
 
-#if Py_GIL_DISABLED
+#ifdef Py_GIL_DISABLED
 #define Py_EXIT_CRITICAL_SECTION() PyCriticalSection_End(&_py_cs)
 #define Py_EXIT_CRITICAL_SECTION2() PyCriticalSection2_End(&_py_cs2)
+#define PyObjC_ATOMIC _Atomic
 #else
 #define Py_EXIT_CRITICAL_SECTION() ((void)0)
 #define Py_EXIT_CRITICAL_SECTION2() ((void)0)
+#define PyObjC_ATOMIC
 #endif
 
 #endif
@@ -282,6 +305,14 @@ static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
 }
 #endif
 
+#if PY_VERSION_HEX < 0x030c0000
+static inline PyObject* PyType_GetDict(PyTypeObject* type)
+{
+    PyObject* result = type->tp_dict;
+    Py_INCREF(result);
+    return result;
+}
+#endif
 
 
 NS_ASSUME_NONNULL_END

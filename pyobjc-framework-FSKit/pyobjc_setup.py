@@ -246,6 +246,7 @@ Programming Language :: Python :: 3.10
 Programming Language :: Python :: 3.11
 Programming Language :: Python :: 3.12
 Programming Language :: Python :: 3.13
+Programming Language :: Python :: 3.14
 Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
@@ -706,7 +707,6 @@ def setup(
         package_dir={"": "Lib", "PyObjCTest": "PyObjCTest"},
         dependency_links=[],
         package_data={"": ["*.bridgesupport"]},
-        test_suite="PyObjCTest",
         zip_safe=False,
         license="MIT License",
         classifiers=CLASSIFIERS,

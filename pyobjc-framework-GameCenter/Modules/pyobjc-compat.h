@@ -179,7 +179,7 @@ extern const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object);
 
 static inline PyObject* _Nullable* _Nonnull PyTuple_ITEMS(PyObject* tuple)
 {
-    return &PyTuple_GET_ITEM(tuple, 0);
+    return &PyTuple_GET_ITEM(tuple, 0); // LCOV_BR_EXCL_LINE
 }
 
 /* This is a crude hack to disable a otherwise useful warning in the context of
@@ -198,7 +198,7 @@ _PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* _Nullable value)
 static inline PyObject*
 _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 {
-    return PyTuple_GET_ITEM(tuple, idx);
+    return PyTuple_GET_ITEM(tuple, idx); // LCOV_BR_EXCL_LINE
 }
 #undef PyTuple_GET_ITEM
 #define PyTuple_GET_ITEM(a, b) _PyObjCTuple_GetItem(a, b)
