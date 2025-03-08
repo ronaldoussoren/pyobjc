@@ -59,6 +59,12 @@ else:
         def setWaitsForConnectivity_(self, v):
             pass
 
+        def usesClassicLoadingMode(self):
+            return 1
+
+        def setUsesClassicLoadingMode_(self, v):
+            pass
+
 
 class TestNSURLSessionHelper(Foundation.NSObject):
     def URLSession_didReceiveChallenge_completionHandler_(self, a, b, c):
@@ -273,6 +279,13 @@ class TestNSURLSession(TestCase):
         )
         self.assertArgIsBOOL(
             TestNSURLSessionConfigurationHelper.setHTTPShouldUsePipelining_, 0
+        )
+
+        self.assertResultIsBOOL(
+            TestNSURLSessionConfigurationHelper.usesClassicLoadingMode
+        )
+        self.assertArgIsBOOL(
+            TestNSURLSessionConfigurationHelper.setUsesClassicLoadingMode_, 0
         )
 
         self.assertResultIsBOOL(

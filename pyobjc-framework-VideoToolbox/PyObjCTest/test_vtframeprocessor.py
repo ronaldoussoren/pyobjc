@@ -24,8 +24,3 @@ class TestVTFrameProcessor(TestCase):
             1,
             b"v@@",
         )
-        self.assertArgIsBlock(
-            VideoToolbox.VTFrameProcessor.processWithCommandBuffer_parameters_completionHandler_,
-            2,
-            b"v@@",
-        )

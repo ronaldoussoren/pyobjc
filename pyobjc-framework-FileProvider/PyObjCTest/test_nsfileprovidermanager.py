@@ -173,6 +173,14 @@ class TestNSFileProviderManager(TestCase):
             3,
         )
 
+    @min_os_level("15.4")
+    def test_methods15_4(self):
+        self.assertArgIsBlock(
+            FileProvider.NSFileProviderManager.requestDiagnosticCollectionForItemWithIdentifier_errorReason_completionHandler_,
+            2,
+            b"@",
+        )
+
     @min_sdk_level("11.3")
     def test_protocols(self):
         self.assertProtocolExists("NSFileProviderPendingSetEnumerator")

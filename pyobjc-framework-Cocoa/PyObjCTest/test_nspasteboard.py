@@ -79,7 +79,6 @@ class TestNSPasteboard(TestCase):
         self.assertIsInstance(AppKit.NSPasteboardDetectionPatternFlightNumber, str)
         self.assertIsInstance(AppKit.NSPasteboardDetectionPatternMoneyAmount, str)
         self.assertIsInstance(AppKit.NSPasteboardMetadataTypeContentType, str)
-        self.assertIsInstance(AppKit.NSPasteboardMetadataTypeImageProperties, str)
 
     def testFunctions(self):
         tp = v = AppKit.NSCreateFilenamePboardType("test/jpeg")
@@ -157,8 +156,6 @@ class TestNSPasteboard(TestCase):
 
     @min_os_level("15.4")
     def testMethods15_4(self):
-        self.assertResultIsBOOL(AppKit.NSPasteboardImageProperties.hasAlpha)
-
         self.assertArgIsBlock(
             AppKit.NSPasteboard.detectPatternsForPatterns_completionHandler_, 1, b"v@@"
         )

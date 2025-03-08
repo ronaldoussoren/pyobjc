@@ -18,7 +18,9 @@ class TestNSPasteboardItem(TestCase):
             b"v@@",
         )
         self.assertArgIsBlock(
-            AppKit.NSPasteboardItem.detectValuesForPatterns_completionHandler, 1, b"v@@"
+            AppKit.NSPasteboardItem.detectValuesForPatterns_completionHandler_,
+            1,
+            b"v@@",
         )
         self.assertArgIsBlock(
             AppKit.NSPasteboardItem.detectMetadataForTypes_completionHandler, 1, b"v@@"

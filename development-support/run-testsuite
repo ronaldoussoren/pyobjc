@@ -171,7 +171,9 @@ def build_project(*, interpreter, py_ver, project, idx, count):
         shutil.rmtree(os.path.join(proj_dir, "dist"))
 
     # Actually build
-    print(f"{BOLD}[{idx}/{count}] Building {project} using {interpreter} ({py_ver}){RESET}")
+    print(
+        f"{BOLD}[{idx}/{count}] Building {project} using {interpreter} ({py_ver}){RESET}"
+    )
     status = subprocess.call(
         [interpreter, "-mpip", "install", "--no-deps", "--no-cache-dir", "."],
         cwd=proj_dir,
@@ -195,7 +197,9 @@ def build_project(*, interpreter, py_ver, project, idx, count):
     return True
 
 
-def run_tests(*, interpreter, arch, py_ver, project, state_dir, extra_py_args, idx, count):
+def run_tests(
+    *, interpreter, arch, py_ver, project, state_dir, extra_py_args, idx, count
+):
     proj_dir = os.path.join(TOP_DIR, project)
 
     print(
@@ -547,8 +551,11 @@ def main():
                 # Install packages into the virtualenv
                 for idx, project in enumerate(build_order):
                     build_project(
-                        interpreter=interpreter, py_ver=variant, project=project,
-                        idx=idx, count=len(build_order)
+                        interpreter=interpreter,
+                        py_ver=variant,
+                        project=project,
+                        idx=idx,
+                        count=len(build_order),
                     )
 
                 if py_ver == options.python_versions[0]:
@@ -575,7 +582,8 @@ def main():
                         project="pyobjc",
                         state_dir=os.path.join(osx_dir, f"{variant}-{arch}"),
                         extra_py_args=[],
-                        idx=0, count=len(build_order) + 1
+                        idx=0,
+                        count=len(build_order) + 1,
                     )
 
                 # Then run tests for all supported architectures
@@ -629,7 +637,8 @@ def main():
                                 project=project,
                                 state_dir=state_dir,
                                 extra_py_args=extra,
-                                idx=idx + 1, count=len(build_order) + 1
+                                idx=idx + 1,
+                                count=len(build_order) + 1,
                             )
 
     print(f"{BOLD}done{RESET}")

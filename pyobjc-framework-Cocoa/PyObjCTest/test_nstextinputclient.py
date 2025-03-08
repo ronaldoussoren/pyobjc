@@ -55,9 +55,6 @@ class TestNSTextInputClientHelper(AppKit.NSObject):
     def supportsAdaptiveImageGlyph(self):
         return 1
 
-    def allowsWritingToolsAffordance(self):
-        return 1
-
 
 class TestNSTextInputClient(TestCase):
     def test_constants(self):
@@ -174,6 +171,3 @@ class TestNSTextInputClient(TestCase):
             TestNSTextInputClientHelper.documentVisibleRect, AppKit.NSRect.__typestr__
         )
         self.assertResultIsBOOL(TestNSTextInputClientHelper.supportsAdaptiveImageGlyph)
-        self.assertResultIsBOOL(
-            TestNSTextInputClientHelper.allowsWritingToolsAffordance
-        )

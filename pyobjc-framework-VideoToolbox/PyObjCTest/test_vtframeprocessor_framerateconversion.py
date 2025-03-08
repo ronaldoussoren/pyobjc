@@ -15,6 +15,10 @@ class TestVTFrameProcessor_FrameRateConversion(TestCase):
             VideoToolbox.VTFrameRateConversionConfigurationQualityPrioritizationQuality,
             2,
         )
+        self.assertEqual(
+            VideoToolbox.VTFrameRateConversionParametersSubmissionModeSequentialReferencesUnchanged,
+            3,
+        )
 
         self.assertIsEnumType(VideoToolbox.VTFrameRateConversionConfigurationRevision)
         self.assertEqual(VideoToolbox.VTFrameRateConversionConfigurationRevision1, 1)

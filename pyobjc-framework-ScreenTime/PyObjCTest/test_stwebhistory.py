@@ -16,3 +16,13 @@ class TestSTWebHistory(TestCase):
         self.assertArgIsOut(
             ScreenTime.STWebHistory.initWithBundleIdentifier_profileIdentifier_error_, 2
         )
+
+        self.assertArgIsBlock(
+            ScreenTime.STWebHistory.fetchHistoryDuringInterval_completionHandler_,
+            1,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            ScreenTime.STWebHistory.fetchAllHistoryWithCompletionHandler_, 0, b"v@@"
+        )

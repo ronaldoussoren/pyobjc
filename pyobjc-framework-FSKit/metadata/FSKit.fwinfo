@@ -193,38 +193,6 @@
      }
     ]
    },
-   "FSEntityIdentifier": {
-    "methods": [
-     {
-      "args": {
-       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
-      },
-      "class_method": false,
-      "selector": "initWithUUID:byteQualifier:"
-     },
-     {
-      "args": {
-       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
-      },
-      "class_method": false,
-      "selector": "initWithUUID:longByteQualifier:"
-     },
-     {
-      "args": {
-       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
-      },
-      "class_method": true,
-      "selector": "identifierWithUUID:byteQualifier:"
-     },
-     {
-      "args": {
-       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
-      },
-      "class_method": true,
-      "selector": "identifierWithUUID:longByteQualifier:"
-     }
-    ]
-   },
    "FSFileDataBuffer": {
     "methods": [
      {

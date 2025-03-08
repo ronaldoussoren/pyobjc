@@ -36,9 +36,6 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def mountWithOptions_replyHandler_(self, a, b):
         pass
 
-    def mountWithParameters_replyHandler_(self, a, b):
-        pass
-
     def unmountWithReplyHandler_(self, a):
         pass
 
@@ -91,9 +88,6 @@ class TestFSVolumeHelper(FSKit.NSObject):
         pass
 
     def activateWithOptions_replyHandler_(self, a, b):
-        pass
-
-    def activateWithParameters_replyHandler_(self, a, b):
         pass
 
     def deactivateWithOptions_replyHandler_(self, a, b):
@@ -226,9 +220,9 @@ class TestFSVolume(TestCase):
 
         self.assertIsEnumType(FSKit.FSItemDeactivationOptions)
         self.assertEqual(FSKit.FSItemDeactivationNever, 0)
-        self.assertEqual(FSKit.FSItemDeactivationAlways, 1 << 0)
-        self.assertEqual(FSKit.FSItemDeactivationForRemovedItems, 1 << 1)
-        self.assertEqual(FSKit.FSItemDeactivationForPreallocatedItems, 1 << 2)
+        self.assertEqual(FSKit.FSItemDeactivationAlways, 0xFFFF_FFFF)
+        self.assertEqual(FSKit.FSItemDeactivationForRemovedItems, 1 << 0)
+        self.assertEqual(FSKit.FSItemDeactivationForPreallocatedItems, 1 << 1)
 
     def test_protocols(self):
         self.assertProtocolExists("FSVolumePathConfOperations")
@@ -261,10 +255,7 @@ class TestFSVolume(TestCase):
         # FSVolumeOperations
 
         self.assertArgIsBlock(
-            TestFSVolumeHelper.mountWithOptions_replyHandler_, 1, b"v@@"
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.mountWithParameters_replyHandler_, 1, b"v@@"
+            TestFSVolumeHelper.mountWithOptions_replyHandler_, 1, b"v@"
         )
         self.assertArgIsBlock(TestFSVolumeHelper.unmountWithReplyHandler_, 0, b"v")
 
@@ -347,9 +338,6 @@ class TestFSVolume(TestCase):
 
         self.assertArgIsBlock(
             TestFSVolumeHelper.activateWithOptions_replyHandler_, 1, b"v@@"
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.activateWithParameters_replyHandler_, 1, b"v@@"
         )
 
         self.assertArgIsBlock(
