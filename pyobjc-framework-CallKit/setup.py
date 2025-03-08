@@ -13,15 +13,27 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 
 
-from pyobjc_setup import setup  # noqa: E402
+from pyobjc_setup import setup, Extension  # noqa: E402
 
-VERSION = "11.0.1"
+VERSION = "11.1"
 
 setup(
     name="pyobjc-framework-CallKit",
     description="Wrappers for the framework CallKit on macOS",
     min_os_level="10.16",
     packages=["CallKit"],
+    ext_modules=[
+        Extension(
+            "CallKit._CallKit",
+            ["Modules/_CallKit.m"],
+            extra_link_args=["-framework", "CallKit"],
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_CallKit")
+            ],
+        ),
+    ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,

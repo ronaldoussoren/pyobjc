@@ -92,6 +92,7 @@ CFLAGS = [
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     # "--analyze",
     "-Werror",
+    "-Wno-cast-function-type-mismatch",
     "-I/usr/include/ffi",
     "-fvisibility=hidden",
     # "-O0",

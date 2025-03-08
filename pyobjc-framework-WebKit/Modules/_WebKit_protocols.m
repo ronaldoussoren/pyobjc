@@ -79,5 +79,4 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(WKWebExtensionWindow));
     Py_XDECREF(p);
 #endif
-#endif
 }

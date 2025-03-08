@@ -20,12 +20,12 @@ class TestWKWebExtensionController(TestCase):
         )
 
         self.assertArgIsBlock(
-            WebKit.WKWebExtensionController.fetchDataRecordsOfTypes_completionHander_,
+            WebKit.WKWebExtensionController.fetchDataRecordsOfTypes_completionHandler_,
             1,
             b"v@",
         )
         self.assertArgIsBlock(
-            WebKit.WKWebExtensionController.fetchDataRecordOfTypes_forExtensionContext_completionHander_,
+            WebKit.WKWebExtensionController.fetchDataRecordOfTypes_forExtensionContext_completionHandler_,
             2,
             b"v@",
         )
