@@ -88,10 +88,10 @@ class oc_egg_info(egg_info.egg_info):
 
     def write_build_info(self):
         macos_version = subprocess.check_output(
-            ["sw_vers", "-productversion"], text=True
+            ["sw_vers", "-productVersion"], text=True
         ).strip()
         macos_build = subprocess.check_output(
-            ["sw_vers", "-buildversion"], text=True
+            ["sw_vers", "-buildVersion"], text=True
         ).strip()
         clang_version = (
             subprocess.check_output(["clang", "--version"], text=True)
