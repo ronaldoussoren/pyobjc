@@ -37,6 +37,9 @@ class TestWKWebExtensionTabHelper(WebKit.NSObject):
     def zoomFactorForWebExtensionContext_(self, a):
         return 1
 
+    def setZoomFactor_forWebExtensionContext_completionHandler_(self, a, b, c):
+        pass
+
     def isLoadingCompleteForWebExtensionContext_(self, a):
         return 1
 
@@ -48,10 +51,10 @@ class TestWKWebExtensionTabHelper(WebKit.NSObject):
     ):
         pass
 
-    def loadURL_forWebExtensionContext_completionHandler_(self, a, b):
+    def loadURL_forWebExtensionContext_completionHandler_(self, a, b, c):
         pass
 
-    def reloadFromOrigin_forWebExtensionContext_completionHandler_(self, a, b):
+    def reloadFromOrigin_forWebExtensionContext_completionHandler_(self, a, b, c):
         pass
 
     def goBackForWebExtensionContext_completionHandler_(self, a, b):
@@ -246,11 +249,9 @@ class TestWKWebExtensionTab(TestCase):
             b"v@",
         )
 
-        self.assertArgIsBOOL(
-            TestWKWebExtensionTabHelper.shouldGrantPermissionsOnUserGestureForWebExtensionContext_,
-            0,
+        self.assertResultIsBOOL(
+            TestWKWebExtensionTabHelper.shouldGrantPermissionsOnUserGestureForWebExtensionContext_
         )
-        self.assertArgIsBOOL(
-            TestWKWebExtensionTabHelper.shouldBypassPermissionsForWebExtensionContext_,
-            0,
+        self.assertResultIsBOOL(
+            TestWKWebExtensionTabHelper.shouldBypassPermissionsForWebExtensionContext_
         )

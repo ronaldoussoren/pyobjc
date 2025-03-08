@@ -13,7 +13,7 @@ class TestWKWebExtensionControllerDelegateHelper(WebKit.NSObject):
     ):
         pass
 
-    def webExtensionController_openOptionsPageForExtensionContext_completionHanlder_(
+    def webExtensionController_openOptionsPageForExtensionContext_completionHandler_(
         self, a, b, c
     ):
         pass
@@ -33,17 +33,17 @@ class TestWKWebExtensionControllerDelegateHelper(WebKit.NSObject):
     ):
         pass
 
-    def webExtensionController_presentPopupForAction_forExtensionContext_copmletionHandler_(
+    def webExtensionController_presentPopupForAction_forExtensionContext_completionHandler_(
         self, a, b, c, d
     ):
         pass
 
-    def webExtensionController_sendMessage_toApplicationWithIdentifier_forExtensionContext_copmletionHandler_(
+    def webExtensionController_sendMessage_toApplicationWithIdentifier_forExtensionContext_replyHandler_(
         self, a, b, c, d, e
     ):
         pass
 
-    def webExtensionController_connectUsingMessagePort_forExtensionContext_copmletionHandler_(
+    def webExtensionController_connectUsingMessagePort_forExtensionContext_completionHandler_(
         self, a, b, c, d
     ):
         pass
@@ -66,7 +66,7 @@ class TestWKWebExtensionControllerDelegate(TestCase):
             b"v@@",
         )
         self.assertArgIsBlock(
-            TestWKWebExtensionControllerDelegateHelper.webExtensionController_openOptionsPageForExtensionContext_completionHanlder_,
+            TestWKWebExtensionControllerDelegateHelper.webExtensionController_openOptionsPageForExtensionContext_completionHandler_,
             2,
             b"v@",
         )
@@ -86,17 +86,17 @@ class TestWKWebExtensionControllerDelegate(TestCase):
             b"v@@",
         )
         self.assertArgIsBlock(
-            TestWKWebExtensionControllerDelegateHelper.webExtensionController_presentPopupForAction_forExtensionContext_copmletionHandler_,
+            TestWKWebExtensionControllerDelegateHelper.webExtensionController_presentPopupForAction_forExtensionContext_completionHandler_,
             3,
             b"v@",
         )
         self.assertArgIsBlock(
-            TestWKWebExtensionControllerDelegateHelper.webExtensionController_sendMessage_toApplicationWithIdentifier_forExtensionContext_copmletionHandler_,
+            TestWKWebExtensionControllerDelegateHelper.webExtensionController_sendMessage_toApplicationWithIdentifier_forExtensionContext_replyHandler_,
             4,
-            b"v@",
+            b"v@@",
         )
         self.assertArgIsBlock(
-            TestWKWebExtensionControllerDelegateHelper.webExtensionController_connectUsingMessagePort_forExtensionContext_copmletionHandler_,
+            TestWKWebExtensionControllerDelegateHelper.webExtensionController_connectUsingMessagePort_forExtensionContext_completionHandler_,
             3,
             b"v@",
         )

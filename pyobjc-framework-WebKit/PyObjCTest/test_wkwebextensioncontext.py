@@ -99,9 +99,6 @@ class TestWKWebExtensionContext(TestCase):
             b"v@",
         )
 
-        self.assertResultIsBOOL(
-            WebKit.WKWebExtensionContext.performCommandForKeyCommand_
-        )
         self.assertResultIsBOOL(WebKit.WKWebExtensionContext.performCommandForEvent_)
         self.assertResultIsBOOL(WebKit.WKWebExtensionContext.hasActiveUserGestureInTab_)
 

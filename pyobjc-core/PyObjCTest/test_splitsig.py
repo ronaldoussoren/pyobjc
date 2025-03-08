@@ -133,6 +133,7 @@ class SplitSignatureTest(TestCase):
                     continue
 
                 if sel.selector.split(b":", 1)[0] in (
+                    b"set",
                     b"fm",
                     b"_fm",
                     b"_ns",
