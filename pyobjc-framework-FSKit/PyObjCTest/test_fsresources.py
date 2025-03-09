@@ -20,11 +20,6 @@ class TestFSResource(TestCase):
         self.assertEqual(FSKit.FSMatchResultUsableButLimited, 2)
         self.assertEqual(FSKit.FSMatchResultUsable, 3)
 
-    def test_structs(self):
-        v = FSKit.FSMetadataReadahead()
-        self.assertIsInstance(v.offset, int)
-        self.assertIsInstance(v.length, int)
-
     def test_protocols(self):
         self.assertProtocolExists("FSManageableResourceMaintenanceOperations")
 
@@ -150,10 +145,10 @@ class TestFSResource(TestCase):
         )
 
         self.assertArgIsBOOL(
-            FSKit.FSBlockDeviceResource.metadataClear_withDelayedWrite_error_, 1
+            FSKit.FSBlockDeviceResource.metadataClear_withDelayedWrites_error_, 1
         )
         self.assertArgIsOut(
-            FSKit.FSBlockDeviceResource.metadataClear_withDelayedWrite_error_, 2
+            FSKit.FSBlockDeviceResource.metadataClear_withDelayedWrites_error_, 2
         )
 
         self.assertArgIsOut(FSKit.FSBlockDeviceResource.metadataPurge_error_, 1)

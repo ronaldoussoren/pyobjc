@@ -282,13 +282,6 @@ class TestNSURLSession(TestCase):
         )
 
         self.assertResultIsBOOL(
-            TestNSURLSessionConfigurationHelper.usesClassicLoadingMode
-        )
-        self.assertArgIsBOOL(
-            TestNSURLSessionConfigurationHelper.setUsesClassicLoadingMode_, 0
-        )
-
-        self.assertResultIsBOOL(
             TestNSURLSessionConfigurationHelper.HTTPShouldSetCookies
         )
         self.assertArgIsBOOL(
@@ -489,6 +482,15 @@ class TestNSURLSession(TestCase):
             Foundation.NSURLSessionDownloadTask.cancelByProducingResumeData_,
             0,
             b"v@",
+        )
+
+    @min_os_level("15.4")
+    def testMethods15_4(self):
+        self.assertResultIsBOOL(
+            Foundation.NSURLSessionConfiguration.usesClassicLoadingMode
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURLSessionConfiguration.setUsesClassicLoadingMode_, 0
         )
 
     @min_sdk_level("10.12")

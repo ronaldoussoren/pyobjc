@@ -94,7 +94,7 @@ class TestFSVolumeHelper(FSKit.NSObject):
         pass
 
     # FSVolumeXattrOperations
-    def areXattrOperationsInhibited(self):
+    def xattrOperationsInhibited(self):
         return 1
 
     def setXattrOperationsInhibited_(self, a):
@@ -156,7 +156,9 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def setPreallocateInhibited_(self, a):
         pass
 
-    def preallocateSpaceForItem_atOffset_length_flags_replyHandler(self, a, b, c, d, e):
+    def preallocateSpaceForItem_atOffset_length_flags_replyHandler_(
+        self, a, b, c, d, e
+    ):
         pass
 
     # FSVolumeItemDeactivation
@@ -171,7 +173,6 @@ class TestFSVolume(TestCase):
     def test_enum(self):
         self.assertIsInstance(FSKit.FSDirectoryCookieInitial, int)
         self.assertIsInstance(FSKit.FSDirectoryVerifierInitial, int)
-        self.assertIsInstance(FSKit.FSVolumeErrorDomain, str)
 
         self.assertIsEnumType(FSKit.FSSyncFlags)
         self.assertEqual(FSKit.FSSyncFlagsWait, 1)
@@ -220,7 +221,7 @@ class TestFSVolume(TestCase):
 
         self.assertIsEnumType(FSKit.FSItemDeactivationOptions)
         self.assertEqual(FSKit.FSItemDeactivationNever, 0)
-        self.assertEqual(FSKit.FSItemDeactivationAlways, 0xFFFF_FFFF)
+        self.assertEqual(FSKit.FSItemDeactivationAlways, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(FSKit.FSItemDeactivationForRemovedItems, 1 << 0)
         self.assertEqual(FSKit.FSItemDeactivationForPreallocatedItems, 1 << 1)
 
@@ -247,7 +248,7 @@ class TestFSVolume(TestCase):
         self.assertResultHasType(
             TestFSVolumeHelper.maximumXattrSizeInBits, objc._C_NSInteger
         )
-        self.assertResultHasType(TestFSVolumeHelper.maximumFileSize, objc._C_NSInteger)
+        self.assertResultHasType(TestFSVolumeHelper.maximumFileSize, objc._C_NSUInteger)
         self.assertResultHasType(
             TestFSVolumeHelper.maximumFileSizeInBits, objc._C_NSInteger
         )
@@ -327,11 +328,6 @@ class TestFSVolume(TestCase):
         )
         self.assertArgIsBlock(
             TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
-            4,
-            FSDirEntryPacker,
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
             5,
             b"vQ@",
         )
@@ -345,7 +341,7 @@ class TestFSVolume(TestCase):
         )
 
         # FSVolumeXattrOperations
-        self.assertResultIsBOOL(TestFSVolumeHelper.areXattrOperationsInhibited)
+        self.assertResultIsBOOL(TestFSVolumeHelper.xattrOperationsInhibited)
         self.assertArgIsBOOL(TestFSVolumeHelper.setXattrOperationsInhibited_, 0)
 
         self.assertArgIsBlock(
@@ -434,22 +430,22 @@ class TestFSVolume(TestCase):
         self.assertResultIsBOOL(TestFSVolumeHelper.isPreallocateInhibited)
         self.assertArgIsBOOL(TestFSVolumeHelper.setPreallocateInhibited_, 0)
         self.assertArgHasType(
-            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler,
+            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
             1,
             b"q",
         )
         self.assertArgHasType(
-            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler,
+            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
             2,
             b"Q",
         )
         self.assertArgHasType(
-            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler,
+            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
             3,
             b"Q",
         )
         self.assertArgIsBlock(
-            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler,
+            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
             4,
             b"vQ@",
         )

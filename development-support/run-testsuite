@@ -508,7 +508,7 @@ def main():
     )
 
     print(
-        f"{BOLD}running PyObjC tests on OSX {osx_release} with python versions {', '.join(options.python_versions)}{RESET}"
+        f"{BOLD}running PyObjC tests on macOS {osx_release} with python versions {', '.join(options.python_versions)}{RESET}"
     )
     osx_dir = os.path.join(options.state_dir, ".".join(osx_release.split(".")[:2]))
     if not os.path.exists(osx_dir):

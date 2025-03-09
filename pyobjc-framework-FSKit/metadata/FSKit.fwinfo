@@ -6,7 +6,7 @@
    "FSTaskParameterConstant":  { "type": "@", "type_name": "NSString" }
   },
   "externs": {
-   "xFSKitVersionString": { "ignore": true }
+   "FSKitVersionString": { "ignore": true }
   },
   "classes": {
    "NSObject": {
@@ -109,8 +109,41 @@
      }
     ]
    },
+   "FSModuleIdentity": {
+    "methods": [
+     {
+      "selector": "isSystem",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "FSBlockDeviceResource": {
     "methods": [
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "delayedMetadataWriteFrom:startingAt:length:error:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "metadataWriteFrom:startingAt:length:error:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "metadataReadInto:startingAt:length:error:",
+      "class_method": false
+     },
      {
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 2 },
@@ -190,6 +223,13 @@
       },
       "class_method": false,
       "selector": "delayedMetadataWriteFrom:startingAt:length:"
+     },
+     {
+      "args": {
+       "1": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "proxyResourceForBSDName:isWritable:"
      }
     ]
    },

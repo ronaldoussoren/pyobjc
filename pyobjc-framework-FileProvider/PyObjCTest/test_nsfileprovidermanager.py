@@ -178,7 +178,7 @@ class TestNSFileProviderManager(TestCase):
         self.assertArgIsBlock(
             FileProvider.NSFileProviderManager.requestDiagnosticCollectionForItemWithIdentifier_errorReason_completionHandler_,
             2,
-            b"@",
+            b"v@",
         )
 
     @min_sdk_level("11.3")

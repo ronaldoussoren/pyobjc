@@ -2,17 +2,15 @@ from PyObjCTools.TestSupport import TestCase
 
 import FSKit
 
-FSExtentPacker = b"Z@iQQI"
-
 
 class TestFSVolumeExtentHelper(FSKit.NSObject):
     # FSVolumeKernelOffloadedIOOperations
-    def blockmapFile_offset_length_flags_operationID_packer_replyNandler_(
+    def blockmapFile_offset_length_flags_operationID_packer_replyHandler_(
         self, a, b, c, d, e, f, g
     ):
         pass
 
-    def completeIOForFile_offset_length_status_flags_operationID_replyHandler(
+    def completeIOForFile_offset_length_status_flags_operationID_replyHandler_(
         self, a, b, c, d, e, f, g
     ):
         pass
@@ -64,17 +62,12 @@ class TestFSVolumeExtent(TestCase):
         self.assertArgHasType(
             TestFSVolumeExtentHelper.blockmapFile_offset_length_flags_operationID_packer_replyHandler_,
             3,
-            b"I",
+            b"Q",
         )
         self.assertArgHasType(
             TestFSVolumeExtentHelper.blockmapFile_offset_length_flags_operationID_packer_replyHandler_,
             4,
             b"Q",
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeExtentHelper.blockmapFile_offset_length_flags_operationID_packer_replyHandler_,
-            5,
-            FSExtentPacker,
         )
         self.assertArgIsBlock(
             TestFSVolumeExtentHelper.blockmapFile_offset_length_flags_operationID_packer_replyHandler_,
@@ -95,7 +88,7 @@ class TestFSVolumeExtent(TestCase):
         self.assertArgHasType(
             TestFSVolumeExtentHelper.completeIOForFile_offset_length_status_flags_operationID_replyHandler_,
             4,
-            b"I",
+            b"Q",
         )
         self.assertArgHasType(
             TestFSVolumeExtentHelper.completeIOForFile_offset_length_status_flags_operationID_replyHandler_,
@@ -110,20 +103,10 @@ class TestFSVolumeExtent(TestCase):
 
         self.assertArgIsBlock(
             TestFSVolumeExtentHelper.createFileNamed_inDirectory_attributes_packer_replyHandler_,
-            3,
-            FSExtentPacker,
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeExtentHelper.createFileNamed_inDirectory_attributes_packer_replyHandler_,
             4,
             b"v@@@",
         )
 
-        self.assertArgIsBlock(
-            TestFSVolumeExtentHelper.lookupItemNamed_inDirectory_packer_replyHandler_,
-            2,
-            FSExtentPacker,
-        )
         self.assertArgIsBlock(
             TestFSVolumeExtentHelper.lookupItemNamed_inDirectory_packer_replyHandler_,
             3,
@@ -131,27 +114,22 @@ class TestFSVolumeExtent(TestCase):
         )
 
         self.assertArgHasType(
-            TestFSVolumeExtentHelper.preallocateSpaceForFile_atOffset_length_flags_packer_replyHandler,
+            TestFSVolumeExtentHelper.preallocateSpaceForFile_atOffset_length_flags_packer_replyHandler_,
             1,
             b"q",
         )
         self.assertArgHasType(
-            TestFSVolumeExtentHelper.preallocateSpaceForFile_atOffset_length_flags_packer_replyHandler,
+            TestFSVolumeExtentHelper.preallocateSpaceForFile_atOffset_length_flags_packer_replyHandler_,
             2,
             b"Q",
         )
         self.assertArgHasType(
-            TestFSVolumeExtentHelper.preallocateSpaceForFile_atOffset_length_flags_packer_replyHandler,
+            TestFSVolumeExtentHelper.preallocateSpaceForFile_atOffset_length_flags_packer_replyHandler_,
             3,
             b"Q",
         )
         self.assertArgIsBlock(
-            TestFSVolumeExtentHelper.preallocateSpaceForFile_atOffset_length_flags_packer_replyHandler,
-            4,
-            FSExtentPacker,
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeExtentHelper.preallocateSpaceForFile_atOffset_length_flags_packer_replyHandler,
+            TestFSVolumeExtentHelper.preallocateSpaceForFile_atOffset_length_flags_packer_replyHandler_,
             5,
             b"vQ@",
         )

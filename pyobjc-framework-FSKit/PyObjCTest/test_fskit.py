@@ -6,7 +6,7 @@ import FSKit
 class TestFSKit(TestCase):
     def test_constants(self):
         self.assertIsInstance(FSKit.FSKitVersionNumber, float)
-        self.assertIsInstance(FSKit.FSKitVersionString, bytes)
+        self.assertNotHasAttr(FSKit, "FSKitVersionString")
 
 
 class TestCallableMetadata(TestCase):

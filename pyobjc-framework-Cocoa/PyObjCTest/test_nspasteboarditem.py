@@ -13,7 +13,7 @@ class TestNSPasteboardItem(TestCase):
     @min_os_level("15.4")
     def testMethods15_4(self):
         self.assertArgIsBlock(
-            AppKit.NSPasteboardItem.detectPatternsForPatterns_completionHandler,
+            AppKit.NSPasteboardItem.detectPatternsForPatterns_completionHandler_,
             1,
             b"v@@",
         )
@@ -23,7 +23,7 @@ class TestNSPasteboardItem(TestCase):
             b"v@@",
         )
         self.assertArgIsBlock(
-            AppKit.NSPasteboardItem.detectMetadataForTypes_completionHandler, 1, b"v@@"
+            AppKit.NSPasteboardItem.detectMetadataForTypes_completionHandler_, 1, b"v@@"
         )
 
     @min_sdk_level("10.6")
