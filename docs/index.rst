@@ -16,19 +16,20 @@ in pure Python. See our tutorial for an example of this.
 Release information
 -------------------
 
-PyObjC 10.3.1 was released on 2024-06-11. See the :doc:`changelog <changelog>` for more information. PyObjC 10 supports Python 3.8 and later.
+PyObjC 11.0 was released on 2025-01-14. See the :doc:`changelog <changelog>` for more information. PyObjC 11 supports Python 3.9 and later.
 
-PyObjC 9.2 is the last version supporting Python 3.7 PyObjC 8.5 is the last version supporting Python 3.6.
+PyObjC 10.3 is the last version supporting Python 3.8,
+PyObjC 9.2 is the last version supporting Python 3.7, PyObjC 8.5 is the last version supporting Python 3.6.
 PyObjC 5.3 is the last version supporting Python 2. These versions are
 no longer supported.
 
 Supported platforms
 -------------------
 
-PyObjC supports Python 3.7 or later and does not support Python 2.
+PyObjC supports Python 3.9 or later and does not support Python 2.
 PyObjC does not support other python implementation such as PyPy and Jython.
 
-PyObjC is regularly tested on macOS 10.14 and should work on macOS
+PyObjC is regularly tested on macOS 15 and should work on macOS
 10.9 or later for the i386 and x86_64 architectures.
 
 PyObjC only supports macOS, and is not supported on other platforms (iOS,
