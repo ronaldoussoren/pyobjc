@@ -27,6 +27,12 @@ class TestFSRef(TestCase):
         with self.assertRaisesRegex(OSError, r"MAC Error -\d+"):
             ref.as_pathname()
 
+        some_path = "/Library"
+        ref = o.fsrefForPath_(some_path)
+        ref_list = os.listdir(ref)
+        native_list = os.listdir(some_path)
+        self.assertEqual(ref_list, native_list)
+
     def testArg(self):
         # return  #
         o = OC_TestFSRefHelper.alloc().init()
@@ -82,7 +88,7 @@ class TestFSRef(TestCase):
             objc.FSRef.from_pathname(42)
 
         with self.assertRaisesRegex(UnicodeEncodeError, r".*surrogates not allowed"):
-            objc.FSRef.from_pathname("\uDC00")
+            objc.FSRef.from_pathname("\udc00")
 
         with self.assertRaisesRegex(OSError, r"MAC Error -\d+"):
             objc.FSRef.from_pathname("no-such-file.missing")

@@ -21,9 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
  * aref.as_pathname()
  *  # -> returns a Unicode string with the posix path
  *
- * aref.as_carbon()
- *  # -> return a Carbon.File.FSRef instance (only
- *  #    available when Carbon support is enabled in Python)
+ * aref.__fspath__()
+ *  # -> returns a Unicode string with the posix path
  *
  * aref.data
  *  # -> read-only property with the bytes in the FSRef
@@ -124,6 +123,10 @@ static PyGetSetDef fsref_getset[] = {{
 
 static PyMethodDef fsref_methods[] = {
     {.ml_name  = "as_pathname",
+     .ml_meth  = (PyCFunction)fsref_as_path,
+     .ml_flags = METH_NOARGS,
+     .ml_doc   = "as_pathname()\n" CLINIC_SEP "\nReturn POSIX path for this object"},
+    {.ml_name  = "__fspath__",
      .ml_meth  = (PyCFunction)fsref_as_path,
      .ml_flags = METH_NOARGS,
      .ml_doc   = "as_pathname()\n" CLINIC_SEP "\nReturn POSIX path for this object"},

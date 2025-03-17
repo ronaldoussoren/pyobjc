@@ -32,3 +32,12 @@ Support for ``FSRef``
     .. method:: as_pathname
 
         Returns the POSIX path for the ``FSRef`` object.
+
+    .. method:: __fspath__
+
+       Alias for :meth:`as_pathname`, which makes it possible
+       to use :class:`FSRef` instances as arguments to APIs
+       accepting an :class:`os.PathLike` object.
+
+
+       .. versionadded: 11.1
