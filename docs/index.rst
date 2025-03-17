@@ -146,16 +146,16 @@ PyObjC
 
       .. toctree::
          :caption: API Documentation
-         :maxdepth: 2
+         :maxdepth: 1
 
-         api/index
+         api/module-objc
+         api/module-objc.simd
+         api/module-PyObjCTools
          api/coregraphics-context-managers
          api/threading-helpers
          api/module-PyObjCTools.AppCategories
          api/module-PyObjCTools.FndCategories
-
-      - :ref:`modindex`
-      - :ref:`genindex`
+         apinotes
 
    .. grid-item-card::
 
