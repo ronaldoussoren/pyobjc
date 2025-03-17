@@ -175,6 +175,3 @@ PyObjC
 
          xcode
          notes/using-nsxpcinterface
-
-
-.. todolist::
