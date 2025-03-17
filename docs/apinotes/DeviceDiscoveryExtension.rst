@@ -13,3 +13,6 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 These bindings are accessed through the ``DeviceDiscoveryExtension`` package (that is, ``import DeviceDiscoveryExtension``).
 
 .. versionadded:: macOS 15.0
+
+API Notes
+---------

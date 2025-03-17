@@ -16,11 +16,6 @@ The module :mod:`objc` defines a number of functions whose names start with
 an underscore. Those functions are private and should not be used, they can
 be removed from release without warning.
 
-.. todo::
-
-   This document is currently mostly an exhaustive list of stuff and
-   needs to be reorganised once I've filled in the technical details.
-
 Bridge options
 ..............
 
@@ -411,8 +406,6 @@ Dynamic modification of classes
    when the class (or a superclass) has a class method with the same
    selector.
 
-   .. todo:: compare to implementation.
-
 .. function:: classAddMethod(cls, name, method)
 
    Adds function *method* as selector *name* to the given class. When *method*
@@ -486,7 +479,9 @@ in this section help in finetuning this behaviour.
         with autorelease_pool():
             pass
 
-   .. todo:: insert links to documentation explaining why you'd want to use this.
+   This context manager is used to control when autoreleased values are
+   released, and is mostly useful when accessing or calculating many values
+   without reentering a run loop.
 
 Test support
 ------------
@@ -670,7 +665,44 @@ Types
       Returns a copy of the metadata dictionary for the selector.  See the
       :doc:`metadata system documentation </metadata/manual>` for more information.
 
-   .. todo:: Check that this list is complete
+   .. attribute:: isHidden
+
+      True when the selector is hidden, and false otherwise.
+
+   .. attribute:: isRequired
+
+      True when the selector is required, and false otherwise. Only used for
+      conformance checking in protocols.
+
+   .. attribute:: isClassMethod
+
+      True when the selector is a class method, and false otherwise.
+
+   .. attribute:: definingClass
+
+      The class that defines this selector.
+
+
+    .. attribute:: __objclass__
+
+       Alias for *definingClass*.
+
+    .. attribute:: signature
+
+       Byte string with the Objective-C signature for the selector.
+
+    .. attribute:: native_signature
+
+       Byte string with the Objective-C signature for the selector, without post processing
+       or applying metadata.
+
+    .. attribute:: self
+
+       The *self* value for a bound selector.
+
+    .. attribute:: selector
+
+       Byte string with the Objective-C selector name.
 
 .. class:: objc_method(callable, *, selector=None, signature=None, isclass=None)
 
@@ -1765,12 +1797,6 @@ methods that mechanisms like Key-Value Coding use to interact with a class.
 PyObjC therefore has a number of property classes that allow you to define new
 properties that do interact fully with the Key-Value Coding and Observation
 frameworks.
-
-.. todo:: Implement method for enabling properties on existing classes and tell
-   why that is off by default and when it will be turned on by default.
-
-.. todo:: The description is way to minimal, even the design document contained
-   more information.
 
 .. class:: object_property(name=None, read_only=False, copy=False, dynamic=False, ivar=None, typestr=_C_ID, depends_on=None)
 
