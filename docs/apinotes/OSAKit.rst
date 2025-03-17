@@ -1,3 +1,7 @@
+.. module:: OSAKit
+   :platform: macOS
+   :synopsis: Bindings for the OSAKit framework
+
 API Notes: OSAKit framework
 ===========================
 
@@ -12,5 +16,3 @@ These bindings are accessed through the ``OSAKit`` package (that is, ``import OS
 
 API Notes
 ---------
-
-All APIs in this framework are available from Python.

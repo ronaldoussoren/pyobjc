@@ -8,13 +8,6 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``CoreServices`` package (that is, ``import CoreServices``).
 
-
-.. note::
-
-   The LaunchServices bindings are fairly new and are not yet fully complete,
-   there are likely problems with these bindings that are not described in this
-   file.
-
 API Notes
 ---------
 

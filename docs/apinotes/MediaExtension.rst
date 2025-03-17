@@ -1,3 +1,7 @@
+.. module:: MediaExtension
+   :platform: macOS 15+
+   :synopsis: Bindings for the MediaExtension framework
+
 API Notes: MediaExtension framework
 ===================================
 
@@ -8,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MediaExtension`` package (that is, ``import MediaExtension``).
 
-.. note::
-
-   This framework is available on macOS 15 and later
+.. versionadded: macOS 15
 
 API Notes
 ---------

@@ -1,3 +1,7 @@
+.. module:: Network
+   :platform: macOS 10.14+
+   :synopsis: Bindings for the Network framework
+
 API Notes: Network framework
 ============================
 
@@ -8,13 +12,11 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``Network`` package (that is, ``import Network``).
 
+.. versionadded:: macOS 10.14
 
 API Notes
 ---------
 
-.. note::
-
-   This framework is only available on macOS 10.14 and later.
 
 ``nw_framer_parse_input``
 .........................

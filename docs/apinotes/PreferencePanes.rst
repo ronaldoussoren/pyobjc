@@ -1,3 +1,7 @@
+.. module:: PreferencePanes
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the PreferencePanes framework
+
 API Notes: PreferencePanes framework
 ====================================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``PreferencePanes`` package (that is, ``
 
 API Notes
 ---------
-
-The PyObjC bindings for the PreferencePanes framework is complete.

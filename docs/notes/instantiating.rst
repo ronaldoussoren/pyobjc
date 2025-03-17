@@ -22,7 +22,7 @@ this is mirrored in the Python proxies:
 
 This looks very foreign in Python, therefore PyObjC
 also supports a condensed version of this by directly
-calling the class::
+calling the class:
 
 .. sourcecode:: python
 

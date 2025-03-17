@@ -1,8 +1,9 @@
-API Notes: CoreAudio framework
-=================================
+.. module:: CoreAudio
+   :platform: macOS
+   :synopsis: Bindings for the CoreAudio framework
 
-Apple documentation
--------------------
+API Notes: CoreAudio framework
+==============================
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).

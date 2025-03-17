@@ -1,3 +1,7 @@
+.. module:: xpc
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the xpc library
+
 API Notes: xpc library
 ===========================
 

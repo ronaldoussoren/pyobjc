@@ -1,3 +1,5 @@
+.. index:: pickle, nscoding
+
 Object-graph serialization
 ==========================
 
@@ -11,12 +13,12 @@ Introduction
 Both Python and Cocoa have a standard way to serialize
 more or less arbitrary object graphs. In Python this
 is done using the :mod:`pickle` module, in Cocoa this
-is done with an "NSArchiver" or "NSKeyedArchiver" (for
+is done with an :class:`NSArchiver` or :class:`NSKeyedArchiver` (for
 all objects that implemented the NSCoding protocol).
 
 There is currently only one way to serialize an object
 graph that contains both Python and Cocoa objects: using
-Cocoa's "NSKeyedArchiver" or "NSArchiver" classes (and
+Cocoa's :class:`NSKeyedArchiver` or :class:`NSArchiver` classes (and
 preferably the former). At this time it is not possible to
 encode Cocoa objects using the :mod:`pickle` module.
 
@@ -29,9 +31,9 @@ incompatibilities in the overall serialization mechanism when
 dealing with possibly circular data structures.
 
 It is possible to pickle a Python subclass of a Cocoa
-class when that Python class implements the "__reduce__"
-for "__reduce_ex__" hook (as documented in the documentation
-for the :mod:`pickle` module).
+class when that Python class implements the :meth:`__reduce__ <object.__reduce__>`
+or :meth:`__reduce_ex__ <object.__reduce_ex__>`  hooks (as documented in
+the documentation for the :mod:`pickle` module).
 
 
 NSCoding support for Python objects
@@ -43,9 +45,9 @@ buffers). During serialization and deserialization PyObjC will use
 the same hooks and mechanisms as the :mod:`pickle` module.
 
 Archiving instances of :class:`int`, :class:`float`, :class:`str`
-(:class:`unicode` in Python 2), :class:`bytes` (Python 3 only),
-:class:`list`, :class:`tuple`, :class:`set`, :class:`frozenset` and
-:class:`dict` (but not instances of subclasses of these types) with a plain,
+:class:`bytes`, :class:`list`, :class:`tuple`, :class:`set`,
+:class:`frozenset` and :class:`dict` (but not instances of subclasses
+of these types) with a plain,
 not keyed, archiver and will result in objects of the corresponding
 Cocoa type when reading them back, even when reading them back in Python. Programs
 than need high fidility when roundtripping object graphs therefore
@@ -61,8 +63,7 @@ state.
 
 .. note::
 
-   In macOS 10.8, an likely other OSX releases as well, the
-   Cocoa collection classes cannot properly archive and unarchive
+   The Cocoa collection classes cannot properly archive and unarchive
    object graphs with cycles between collections (like the
    code below).
 
@@ -71,9 +72,9 @@ state.
       a = []
       a.append(a)
 
-   Because of this serializing the graph below with an NSArchiver
+   Because of this serializing the graph below with an :class:`NSArchiver`
    will result in a grabled datastructure when read back. The
-   same will be true when archiving with NSKeyedArchiver and
+   same will be true when archiving with :class:`NSKeyedArchiver` and
    reading the archive back in pure Objective-C.
 
    This is an unfortunate limitation in Cocoa that PyObjC cannot
@@ -167,13 +168,12 @@ a way that they can be read back by pure Objective-C programs:
 
 * Instances of :class:`float`, :class:`bool`.
 
-* Instances of :class:`int` (or :class:`long` on Python 2) when the value
+* Instances of :class:`int` when the value
   can be represented as a 64-bit signed or unsigned integer.
 
-* Instances of unicode strings (:class:`str` on Python 3 and :class:`unicode` on
-  Python 2), but not instances of subclasses of the builtin unicode type.
+* Instances of :class:`str`.
 
-* Instances of :class:`bytes`, but only for Python 3
+* Instances of :class:`bytes`.
 
 * Instances of Cocoa objects that implement the NSCoding protocol.
 
@@ -195,5 +195,8 @@ The following classes support secure coding:
 * :class:`dict`
 * :class:`set`
 * :class:`frozenset`
-* :class:`datime.date` (as of PyObjC 8.3)
-* :class:`datime.datetime` (as of PyObjC 8.3)
+* :class:`datetime.date`
+* :class:`datetime.datetime`
+
+.. versionchanged:: 8.3
+   :class:`datetime.date` and :class:`datetime.datetime` support secure coding

@@ -1,3 +1,7 @@
+.. module:: CoreText
+   :platform: macOS
+   :synopsis: Bindings for the CoreText framework
+
 API Notes: CoreText framework
 =============================
 

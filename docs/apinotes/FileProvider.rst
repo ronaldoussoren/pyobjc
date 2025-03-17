@@ -1,3 +1,7 @@
+.. module:: FileProvider
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the FileProvider framework
+
 API Notes: FileProvider framework
 =================================
 
@@ -8,10 +12,8 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``FileProvider`` package (that is, ``import FileProvider``).
 
+.. versionadded:: macOS 10.15
+
 
 API Notes
 ---------
-
-.. note::
-
-   This framework is only available on macOS 10.15 and later.

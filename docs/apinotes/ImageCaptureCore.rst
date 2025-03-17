@@ -1,3 +1,7 @@
+.. module:: ImageCaptureCore
+   :platform: macOS
+   :synopsis: Bindings for the ImageCaptureCore framework
+
 API Notes: ImageCaptureCore framework
 =====================================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``ImageCaptureCore`` package (that is, `
 
 API Notes
 ---------
-
-The PyObjC bindings for the ImageCaptureCore framework are complete.

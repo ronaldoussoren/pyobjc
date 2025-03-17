@@ -1,3 +1,7 @@
+.. module:: VideoToolbox
+   :platform: macOS
+   :synopsis: Bindings for the VideoToolbox framework
+
 API Notes VideoToolbox framework
 =================================
 

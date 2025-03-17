@@ -1,3 +1,7 @@
+.. module:: DeviceDiscoveryExtension
+   :platform: macOS 15+
+   :synopsis: Bindings for the DeviceDiscoveryExtension framework
+
 API notes: DeviceDiscoveryExtension framework
 =============================================
 
@@ -8,10 +12,4 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``DeviceDiscoveryExtension`` package (that is, ``import DeviceDiscoveryExtension``).
 
-
-API Notes
----------
-
-.. note::
-
-   This framework is only available on macOS 15.0 and later.
+.. versionadded:: macOS 15.0

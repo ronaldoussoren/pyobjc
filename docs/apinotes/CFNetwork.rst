@@ -1,6 +1,9 @@
+.. module:: CFNetwork
+   :platform: macOS
+   :synopsis: Bindings for the CFNetwork framework
+
 API Notes: CFNetwork framework
 ==============================
-
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).

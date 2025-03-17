@@ -1,3 +1,7 @@
+.. module:: Carbon
+   :platform: macOS
+   :synopsis: Bindings for the Carbon framework
+
 API Notes: Carbon framework
 ===========================
 

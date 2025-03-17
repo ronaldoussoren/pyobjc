@@ -1,8 +1,9 @@
+.. module:: ApplicationServices
+   :platform: macOS
+   :synopsis: Bindings for the ApplicationServices
+
 API Notes: ApplicationServices framework
 ========================================
-
-Apple documentation
--------------------
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -75,8 +76,3 @@ The ApplicationServices framework is an unbrella framework containing a number o
  * *SpeechSynthesis*
 
    Definitions in the framework are not yet available in Python.
-
-
-.. note::
-
-   This framework is only available on macOS 10.9 and later.

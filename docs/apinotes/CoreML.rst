@@ -1,3 +1,7 @@
+.. module:: CoreML
+   :platform: macOS 10.13+
+   :synopsis: Bindings for the CoreML framework
+
 API Notes: CoreML framework
 ===========================
 
@@ -9,18 +13,11 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 .. __: https://developer.apple.com/documentation/coreml?language=objc
 
-These bindings are accessed through the ``ColorSync`` package (that is,
-``import ColorSync``).
+These bindings are accessed through the ``CoreML`` package (that is,
+``import CoreML``).
+
+.. versionadded:: macOS 10.13
 
 
 API Notes
 ---------
-
-.. note::
-
-   This framework is only available on macOS 10.13 and later.
-
-.. warning::
-
-   This frameworks make use of SIMD/vector types, and those are not yet
-   supported by PyObjC.

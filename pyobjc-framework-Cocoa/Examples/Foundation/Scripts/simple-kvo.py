@@ -1,4 +1,8 @@
 #!/usr/bin/python
+"""
+This script is a basic example of how to use Key Value Observation
+in Python
+"""
 
 import objc
 from Foundation import NSKeyValueChangeNewKey, NSKeyValueObservingOptionNew, NSObject

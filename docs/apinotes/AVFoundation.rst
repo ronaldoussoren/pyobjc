@@ -1,8 +1,9 @@
+.. module:: AVFoundation
+   :platform: macOS
+   :synopsis: Bindings for the AVFoundation framework
+
 API Notes: AVFoundation framework
 =================================
-
-Apple documentation
--------------------
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -11,13 +12,9 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``AVFoundation`` package (that is, ``import AVFoundation``).
 
-
 API Notes
 ---------
 
-.. note::
-
-   This framework is only available on macOS 10.7 and later.
 
 
 ``[AVAudioBuffer -floatChannelData]``

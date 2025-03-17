@@ -4,18 +4,17 @@
 
 .. module:: PyObjCTools.Signals
    :synopsis: Debug signal handling
-
-.. warning::
-
-   This module is deprecated and will be removed in PyObjC 9.
+   :deprecated:
 
 This module provides two functions that can be useful while investigating
 random crashes of a PyObjC program. These crashes are often caused by
 Objective-C style weak references or incorrectly implemented protocols.
 
+In general it is better to use Python's :mod:`faulthandler`.
+
 .. function:: dumpStackOnFatalSignal()
 
-    This function will install signal handlers that print a stack trace and
+    Install signal handlers that print a stack trace and
     then re-raise the signal.
 
 .. function:: resetFatalSignals()

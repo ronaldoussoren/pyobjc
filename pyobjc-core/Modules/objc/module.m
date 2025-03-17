@@ -216,7 +216,7 @@ static PyObject* _Nullable repythonify(PyObject* self __attribute__((__unused__)
 }
 
 PyDoc_STRVAR(macos_available_doc,
-             "macos_available(major, minor, patch=0)\n" CLINIC_SEP "\n"
+             "macos_available(major, minor=0, patch=0)\n" CLINIC_SEP "\n"
              "Return true if the current macOS release is "
              "at least the provided version");
 
@@ -226,10 +226,10 @@ static PyObject* _Nullable macos_available(PyObject* self __attribute__((__unuse
 {
     static char* keywords[] = {"major", "minor", "patch", NULL};
     long         major;
-    long         minor;
+    long         minor = 0;
     long         patch = 0;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "ll|l", keywords, &major, &minor,
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "l|ll", keywords, &major, &minor,
                                      &patch)) {
         return NULL;
     }

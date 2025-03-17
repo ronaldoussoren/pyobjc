@@ -1,3 +1,7 @@
+.. module:: MLCompute
+   :platform: macOS 11+
+   :synopsis: Bindings for the MLCompute framework
+
 API Notes: MLCompute framework
 ==============================
 
@@ -8,10 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MLCompute`` package (that is, ``import MLCompute``).
 
+.. versionadded:: macOS 11
 
 API Notes
 ---------
-
-.. note::
-
-   This framework is only available on macOS 11 and later.

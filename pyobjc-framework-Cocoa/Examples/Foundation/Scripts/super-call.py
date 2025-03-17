@@ -1,7 +1,8 @@
-#
-# Demonstrates that the super-class implementation of an overridden method
-# can be called in the same way as with normal objects.
-#
+"""
+Demonstrates that the super-class implementation of an overridden method
+can be called in the same way as with normal objects.
+"""
+
 from Foundation import NSObject
 from objc import super  # noqa: A004
 

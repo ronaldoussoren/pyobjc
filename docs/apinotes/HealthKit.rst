@@ -1,3 +1,7 @@
+.. module:: HealthKit
+   :platform: macOS 13+
+   :synopsis: Bindings for the HealthKit framework
+
 API Notes: HealthKit framework
 ==============================
 
@@ -11,13 +15,11 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``HealthKit`` package (that is, ``import HealthKit``).
 
-
-API Notes
----------
+.. versionadded:: macOS 13
 
 .. note::
 
-   This framework is only available on macOS 13 and later, and requires specific permissions
-   to use.
+   This framework requires a specific entitlement to use.
 
-The full API is available from Python.
+API Notes
+---------

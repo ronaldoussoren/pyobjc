@@ -2,10 +2,7 @@
 =========================================================
 
 .. module:: PyObjCTools.KeyValueCoding
-   :platform: MacOS X
    :synopsis: Key-Value Coding API
-
-.. moduleauthor:: Ronald Oussoren <ronaldoussoren@mac.com>
 
 Support for Key-Value Coding in Python. This provides a simple functional
 interface to Cocoa's Key-Value coding that also works for regular Python
@@ -25,7 +22,7 @@ Accessor functions
 
 .. function:: getKey(object, key)
 
-   Return the value of the attribute referenced by ``key``. The key
+   Return the value of the attribute referenced by *key*. The key
    is used to build the name of an accessor method or attribute name.
 
    The following methods are tried for regular Python objects:
@@ -40,7 +37,7 @@ Accessor functions
 
    * Attribute ``_key``
 
-   (In all of these "key" is replaced by the value of ``key``).
+   (In all of these "key" is replaced by the value of *key*).
 
    This function calls the regular Key-Value Coding methods for Cocoa objects,
    including those implemented in Python.

@@ -10,4 +10,4 @@ The full API is described in `Apple's documentation`__.
 
 These bindings are accessed through the ``Quartz`` package (that is, ``import Quartz``).
 
-.. note:: This framework is deprecated in macOS 10.15
+.. deprecated:: macOS 10.15

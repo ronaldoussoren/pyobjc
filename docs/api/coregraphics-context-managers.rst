@@ -2,20 +2,21 @@
 Context Managers for CoreGraphics
 =================================
 
+.. currentmodule:: Quartz
+
 The CoreGraphics bindings for PyObjC introduce a couple of context manager
 for use with the ``with`` statement. These are simple wrappers around the
 basic CoreGraphics/Quartz API's that make using the API more convenient and
 allow you to write easier to understand code.
 
-Note that you'll have to use ``from __future__ import with_statement`` to
-use the ``with``-statement in Python 2.5.
+.. function:: CGSavedGState(context)
 
-* ``CGSavedGState(context)``
+   Context manager that  wraps a block of code between :func:`CGContextSaveGState` and
+   :func:`CGContextRestoreGState`.
 
-  This wraps a block of code between ``CGContextSaveGState`` and
-  ``CGContextRestoreGState``.
+   Usage:
 
-  Usage::
+   .. sourcecode:: python
 
       with CGSavedGState(context):
          # Change context and use changed context
@@ -23,30 +24,44 @@ use the ``with``-statement in Python 2.5.
 
       # Context is restored to before the with-statement at this point.
 
-* ``CGTransparencyLayer(context, info, rect=None)``
+   :param CGContextRef context: CoreGraphics context value.
 
-  This wraps a block of code between ``CGContextBeginTransparencyLayer``
-  (or ``CGContextBeginTransparencyLayerWithRect`` if ``rect`` is not ``None``)
-  and ``CGContextEndTransparencyLayer``.
+.. function:: CGTransparencyLayer(context, info, rect=None)
 
-  Usage::
+   Context manager that  wraps a block of code between :func:`CGContextBeginTransparencyLayer`
+   (or :func:`CGContextBeginTransparencyLayerWithRect` if *rect* is not :data:`None`)
+   and :func:`CGContextEndTransparencyLayer`.
+
+   Usage:
+
+   .. sourcecode:: python
 
       with CGTransparancyLayer(context, None):
-         pass
+          pass
 
-  Or::
+   Or:
+
+   .. sourcecode:: python
 
       with CGTransparancyLayer(context, None, myRect):
          pass
 
-* ``CGContextPage``
+   :param CGContexRef context: A CoreGraphics context.
+   :param dict|None info: A directory with additional information, or :data:`None`.
+   :param CGRect rect: Bounds for the transparent layer.
 
- This wraps a block of code between calls to ``CGContextBeginPage`` and
- ``CGContextEndPage``).
+.. function:: GContextPage(context, mediaBox=None)
 
- Usage::
+   Context manager that  wraps a block of code between calls to :func:`CGContextBeginPage` and
+   :func:`CGContextEndPage`).
 
-      with CGContextPage(context [, mediaBox]):
-         pass
+   Usage:
 
-  __all__ = ('CGSavedGState', 'CGTransparencyLayer',  'CGContextPage')
+   .. sourcecode:: python
+
+      with CGContextPage(context):
+          pass
+
+   :param CGContextRef context: A CoreGraphics context.
+   :param CGRect|None mediaBox: Optional rectangle defining the bounds of the page.
+                                Defaults to the media box for *context*.

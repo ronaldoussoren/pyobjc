@@ -1,3 +1,7 @@
+.. module:: SecurityFoundation
+   :platform: macOS
+   :synopsis: Bindings for the SecurityFoundation framework
+
 API notes: SecurityFoundation framework
 =======================================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``SecurityFoundation`` package (that is,
 
 API Notes
 ---------
-
-The entire "SecurityFoundation" framework on macOS is available from Python.

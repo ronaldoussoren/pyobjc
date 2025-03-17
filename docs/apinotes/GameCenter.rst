@@ -1,3 +1,8 @@
+.. module:: GameCenter
+   :platform: macOS
+   :synopsis: Bindings for the GameCenter framework
+   :deprecated:
+
 API Notes: GameCenter framework
 ===============================
 
@@ -17,5 +22,3 @@ These bindings are accessed through the ``GameCenter`` package (that is, ``impor
 
 API Notes
 ---------
-
-The entire framework is available.

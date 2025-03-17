@@ -1,3 +1,7 @@
+.. module:: ServiceManagement
+   :platform: macOS
+   :synopsis: Bindings for the ServiceManagement framework
+
 API Notes: ServiceManagement framework
 ======================================
 
@@ -14,9 +18,5 @@ These bindings are accessed through the ``ServiceManagement`` package (that is, 
 
 API Notes
 ---------
-
-.. note::
-
-   This framework is only available on macOS 10.6 and later.
 
 The entire framework is available from Python.

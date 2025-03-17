@@ -1,3 +1,7 @@
+.. module:: CoreLocation
+   :platform: macOS
+   :synopsis: Bindings for the CoreLocation framework
+
 API Notes: CoreLocation framework
 =================================
 
@@ -11,12 +15,3 @@ These bindings are accessed through the ``CoreLocation`` package (that is, ``imp
 
 API Notes
 ---------
-
-The entire CoreLocation framework is supported
-
-* ``kCLErrorGeocodeFoundNoResult``, ``kCLErrorGeocodeCanceled``
-
-   These constants have different values in the macOS 10.7
-   and 10.8 SDKs. With PyObjC you get the value
-   corresponding to the macOS release you are running
-   on.

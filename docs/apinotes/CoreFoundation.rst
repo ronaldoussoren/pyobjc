@@ -1,3 +1,7 @@
+.. module:: CoreFoundation
+   :platform: macOS
+   :synopsis: Bindings for the CoreFoundation framework
+
 API Notes: CoreFoundation framework
 ===================================
 

@@ -74,7 +74,7 @@ The message dispatch, translated to PyObjC, looks like this:
 
       someObject.doSomething_withSomethingElse_(arg1, arg2)
 
-*Methods that take one argument will have a trailing underscore*.
+.. note:: Methods that take one argument will have a trailing underscore.
 
 It may take a little while to get used to, but PyObjC does not ever
 rename selectors.  The trailing underscore will seem strange at first,
@@ -129,6 +129,9 @@ initialization phase:
   .. sourcecode:: python
      :linenos:
 
+     from Foundation import NSObject
+     from objc import super
+
      class MyClass(NSObject):
 
         def init(self):
@@ -138,8 +141,9 @@ initialization phase:
             # ALWAYS call the super's designated initializer.
             # Also, make sure to re-bind "self" just in case it
             # returns something else, or even None!
-            self = objc.super(MyClass, self).init()
-	    if self is None: return None
+            self = super().init()
+	    if self is None:
+                return None
 
             self.myVariable = 10
 
@@ -154,8 +158,9 @@ initialization phase:
             """
             Designated initializer for MyOtherClass
             """
-            self = objc.super(MyOtherClass, self).init()
-	    if self is None: return None
+            self = super().init()
+	    if self is None:
+                return None
 
             self.otherVariable = otherVariable
             return self
@@ -183,9 +188,9 @@ instantiation for you in one step.  Several examples of this are:
 
     # This is equivalent to:
     #
-    #   myString = NSString.alloc().initWithString_(u'my string')
+    #   myString = NSString.alloc().initWithString_("my string")
     #
-    myString = NSString.stringWithString_(u'my string')
+    myString = NSString.stringWithString_("my string")
 
 Objective-C uses accessors everywhere
 .....................................
@@ -239,6 +244,31 @@ It's also possible to use `Key-Value Coding`_ in some cases, which eliminates
 the need for writing most accessors, but only in scenarios where the rest of
 the code is using it.
 
+Objectie-C also support properties as syntactic sugar building upon the accessor
+methods mentioned earlier in this section. In Objective-C these live in a separate
+namespace and use the '.' to access the value:
+
+.. sourcecode:: objective-c
+
+   NSLog(@"%@", [someValue value]); // Use accessor for reading a property
+   NSLog(@"%@", someValue.value);   // Use property syntax for reading
+
+   [someValue setValue:@"hello"];   // Set value using an accessor method
+   someValue.value = @"hello";      // Set value using property syntax
+
+   NSLog(@"%d", (int)[window isClosed]); // Read boolean using accessor
+   [window setClosed:YES];               // Write boolean using accessor
+
+   NSLog(@"%d", (int)window.closed); // Read boolean using property syntax
+   window.closed = YES;              // Write boolean using property syntax
+
+The boolean properties show that the naming for the access methods can be
+different from the name of the property.
+
+The property syntax is *not* supported in Python, you always have to use
+accessor methods. That's even true if there is no conflict between the property
+name and accessor methods (such as in the boolean example above).
+
 Objective-C for PyObjC users
 ----------------------------
 
@@ -281,7 +311,7 @@ Is equivalent in intent to the following in Python:
 
  .. sourcecode:: python
 
-    aList.append(u"constant string")
+    aList.append("constant string")
 
 Objective-C messages have three components: a target, a selector, and zero or
 more arguments.  The target, ``aMutableArray``, is the object or class

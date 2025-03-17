@@ -1,3 +1,7 @@
+.. module:: FSKit
+   :platform: macOS 15+
+   :synopsis: Bindings for the FSKit framework
+
 API Notes: FSKit framework
 =============================
 
@@ -8,9 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``FSKit`` package (that is, ``import FSKit``).
 
-.. note::
-
-   This framework is available on macOS 15 and later
+.. versionadded:: macOS 15.0
 
 API Notes
 ---------

@@ -448,7 +448,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MediaToolbox </apinotes/MediaToolbox>`                                         | `pyobjc-framework-MediaToolbox`_                     |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`Message </apinotes/Message>`                                                   | `pyobjc-framework-Message`_                          |                                         |
+| Message                                                                              | -                                                    | No longer available.                    |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Metal </apinotes/Metal>`                                                       | `pyobjc-framework-Metal`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -720,7 +720,7 @@ prioritizing work.
 
 .. _PyOpenGL: https://pypi.org/project/PyOpenGL
 
-.. _appscript: https://pypi.org/project/appscript
+.. _appscript: https://appscript.sourceforge.io/
 
 .. _gssapi: https://pypi.org/project/gssapi
 

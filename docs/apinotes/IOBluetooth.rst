@@ -1,3 +1,7 @@
+.. module:: IOBluetooth
+   :platform: macOS
+   :synopsis: Bindings for the IOBluetooth framework
+
 API Notes: IOBluetooth framework
 =================================
 

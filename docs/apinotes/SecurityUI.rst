@@ -1,3 +1,7 @@
+.. module:: SecurityUI
+   :platform: macOS 15
+   :synopsis: Bindings for the SecurityUI framework
+
 API notes: SecurityUI framework
 ===============================
 
@@ -8,10 +12,4 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``SecurityUI`` package (that is, ``import SecurityUI``).
 
-
-API Notes
----------
-
-.. note::
-
-   This framework is only available on macOS 15.4 and later.
+.. versionadded:: macOS 15.4

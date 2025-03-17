@@ -1,135 +1,180 @@
-Introduction
-============
+:layout: landing
+:description: PyObjC provides bindings for Objective-C frameworks on macOS
 
-The PyObjC project aims to provide a bridge between the Python and Objective-C
-programming languages on macOS. The bridge is intended to be fully bidirectional, allowing
-the Python programmer to take full advantage of the power provided by various
-Objective-C based toolkits and the Objective-C programmer transparent access
-to Python based functionality.
+PyObjC
+======
 
-PyObjC not only includes the basic bridge, but also bindings to most Apple
-frameworks on macOS.
+.. rst-class:: lead
 
-The most important usage of this is writing Cocoa GUI applications on macOS
-in pure Python. See our tutorial for an example of this.
+   PyObjC provides bindings to most Objective-C frameworks on macOS, build
+   upon a generic bidirectional bridge between Python and Objective-C.
 
-Release information
--------------------
+   PyObjC aims to get as close as possible to having Python and a first class
+   language for developing applications and scripts on macOS using Apple's high
+   level system APIs.
 
-PyObjC 11.0 was released on 2025-01-14. See the :doc:`changelog <changelog>` for more information. PyObjC 11 supports Python 3.9 and later.
+.. container:: buttons
 
-PyObjC 10.3 is the last version supporting Python 3.8,
-PyObjC 9.2 is the last version supporting Python 3.7, PyObjC 8.5 is the last version supporting Python 3.6.
-PyObjC 5.3 is the last version supporting Python 2. These versions are
-no longer supported.
+   `GitHub <https://github.com/ronaldoussoren/pyobjc>`_
 
-Supported platforms
--------------------
+.. tabs::
+   .. tab:: Python
 
-PyObjC supports Python 3.9 or later and does not support Python 2.
-PyObjC does not support other python implementation such as PyPy and Jython.
+      .. sourcecode:: Python
+         :caption: Cocoa class definition in Python
 
-PyObjC is regularly tested on macOS 15 and should work on macOS
-10.9 or later for the i386 and x86_64 architectures.
+         from Foundation import NSObject
+         from objc import super
 
-PyObjC only supports macOS, and is not supported on other platforms (iOS,
-Linux, ...).
+         class MyCocoaObject(NSObject):
+             def initWithX_y_(self, x, y):
+                 self = super().init()
+                 if self is None:
+                     return None
+                 self.x = x
+                 self.y = y
+                 return self
 
-General documentation
-=====================
+   .. tab:: Objective-C
+
+      .. sourcecode:: objective-c
+         :caption: Cocoa class definition in Objective-C
+
+         #import <Foundation/Foundation.h>
+
+         @interfae MyCocoaObject : NSObject {
+            int x, y;
+         }
+         -(instancetype)initWithX:(int)x y:(int)y;
+         @end
+
+         @implementation MyCocoaObject
+         -(instancetype)initWithX:(int)xValue y:(int)yValue
+         {
+            self = [super init];
+            if (!self) return nil;
+
+            x = xValue;
+            y = yValue;
+            return self;
+         }
+
+.. grid:: 1 1 2 3
+   :gutter: 2
+   :padding:  0
+   :class-row: surface
+
+   .. grid-item-card:: Release Info
+      :link: changelog
+      :link-type: doc
+
+      PyObjC 11.0 was released on 2025-01-14.  See the :doc:`changelog <changelog>` for more information.
+
+
+   .. grid-item-card:: Supported Platforms
+      :link: supported-platforms
+      :link-type: doc
+
+      - macOS 10.9 and later
+      - Python 3.9 and later
+      - x86_64 and arm64
+
+   .. grid-item-card:: Installing PyObjC
+      :link: install
+      :link-type: doc
+
+      .. sourcecode:: sh
+
+         $ python3 -mpip \
+           install -U pyobjc
+
 
 .. toctree::
-   :maxdepth: 1
+   :hidden:
 
    install
    changelog
-   core/intro
-   core/protocols
-   core/blocks
-   core/vector-types
-   core/typemapping
-   core/fsref-fsspec
-   core/type-wrapper
-   core/introspecting
-   core/serializing
-   core/kvo
-   core/super
-   metadata/index
-   tutorials/index
-   notes/exceptions
-   notes/instantiating
-   notes/quartz-vs-coregraphics
-   notes/using-nsxpcinterface
-   notes/ctypes
-   examples/index
-   notes/framework-wrappers.rst
-   notes/codesigning.rst
-   apinotes
-   deprecations
-   team
-   release-workflow
+   supported-platforms
 
 
-API documentation
-=================
+.. grid:: 1 1 2 2
+   :gutter: 2
 
-.. toctree::
-   :maxdepth: 2
+   .. grid-item-card::
 
-   api/index
-   api/coregraphics-context-managers
-   api/threading-helpers
-   api/module-PyObjCTools.AppCategories
-   api/module-PyObjCTools.FndCategories
+      .. toctree::
+         :caption: Introduction
+         :maxdepth: 1
 
+         core/intro
+         tutorials/index
+         notes/framework-wrappers.rst
+         apinotes
+         examples/index
+         core/introspecting
 
-Historical documents
-====================
+   .. grid-item-card::
 
-.. toctree::
-   :maxdepth: 1
+      .. toctree::
+         :caption: Technical Notes
+         :maxdepth: 1
 
-   xcode
-   core/objc-gc
+         notes/instantiating
+         core/super
+         notes/exceptions
+         notes/fsref
+         core/protocols
+         core/blocks
+         notes/ctypes
+         core/kvo
+         core/serializing
+         notes/codesigning
+         deprecations
 
+   .. grid-item-card::
 
-PyObjC Development
-===================
+      .. toctree::
+         :caption: Internals
+         :maxdepth: 2
 
-PyObjC development is hosted at GitHub, in particular at <https://github.com/ronaldoussoren/pyobjc/>.
-
-Important resources:
-
-* `Issue tracker <https://github.com/ronaldoussoren/pyobjc/issues>`_
-
-* `PyObjC-dev mailing list <https://sourceforge.net/projects/pyobjc/lists/pyobjc-dev>`_
-
-  A low-volume mailinglist for PyObjC development.
-
-* `Mailing list for the PythonMac SIG <https://www.python.org/community/sigs/current/pythonmac-sig/>`_
-
-  A mailing list for anyone developing with Python on macOS.
-
-* `Repository browser <https://github.com/ronaldoussoren/pyobjc>`_
-
-* Creating a checkout of the repository:
-
-  .. sourcecode:: sh
-
-     $ git clone https://github.com/ronaldoussoren/pyobjc
-
-  You can then use the "install.py" at the root of the checkout to
-  install this version of PyObjC.
-
-.. toctree::
-   :maxdepth: 1
-   :glob:
-
-   dev/*
+         metadata/index
+         core/typemapping
+         core/type-wrapper
 
 
-Indices and tables
-==================
+   .. grid-item-card::
 
-* :ref:`modindex`
-* :ref:`search`
+      .. toctree::
+         :caption: API Documentation
+         :maxdepth: 2
+
+         api/index
+         api/coregraphics-context-managers
+         api/threading-helpers
+         api/module-PyObjCTools.AppCategories
+         api/module-PyObjCTools.FndCategories
+
+      - :ref:`modindex`
+      - :ref:`genindex`
+
+   .. grid-item-card::
+
+      .. toctree::
+         :caption: Development
+         :maxdepth: 2
+
+         team
+         release-workflow
+         dev/index
+
+   .. grid-item-card::
+
+      .. toctree::
+         :caption: Historical
+         :maxdepth: 1
+
+         xcode
+         notes/using-nsxpcinterface
+
+
+.. todolist::

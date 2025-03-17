@@ -1,3 +1,7 @@
+.. module:: AppKit
+   :platform: macOS
+   :synopsis: Bindings for the AppKit framework
+
 API Notes: AppKit framework
 ===========================
 

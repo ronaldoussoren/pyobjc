@@ -1,3 +1,7 @@
+.. module:: AppTrackingTransparancy
+   :platform: macOS 11+
+   :synopsis: Bindings for the AppTrackingTransparancy framework
+
 API Notes: AppTrackingTransparency framework
 ============================================
 
@@ -8,10 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``AppTrackingTransparency`` package (that is, ``import AppTrackingTransparency``).
 
+.. versionadded:: macOS 11
 
 API Notes
 ---------
-
-.. note::
-
-   This framework is only available on macOS 11 and later.

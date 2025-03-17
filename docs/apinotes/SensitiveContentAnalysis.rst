@@ -1,3 +1,7 @@
+.. module:: SensitiveContentAnalysis
+   :platform: macOS 14+
+   :synopsis: Bindings for the SensitiveContentAnalysis framework
+
 API Notes: SensitiveContentAnalysis framework
 =============================================
 
@@ -11,10 +15,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``SensitiveContentAnalysis`` package (that is, ``import SensitiveContentAnalysis``).
 
+.. versionadded:: macOS 14
 
 API Notes
 ---------
-
-.. note::
-
-   This framework is only available on macOS 14.0 and later.

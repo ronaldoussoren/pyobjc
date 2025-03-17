@@ -1,3 +1,7 @@
+.. module:: InputMethodKit
+   :platform: macOS
+   :synopsis: Bindings for the InputMethodKit framework
+
 API Notes: InputMethodKit framework
 ===================================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``InputMethodKit`` package (that is, ``i
 
 API Notes
 ---------
-
-All API's in the InputMethodKit are wrapped by PyObjC.

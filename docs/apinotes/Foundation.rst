@@ -1,3 +1,7 @@
+.. module:: Foundation
+   :platform: macOS
+   :synopsis: Bindings for the Foundation framework
+
 API Notes: Foundation framework
 ===============================
 
@@ -27,7 +31,7 @@ machinery is not tested at all and probably doesn't work.
 Use the ScriptingBridge and/or the (deprecated) `appscript library`_ instead
 of this class.
 
-.. _`appscript library`: https://appscript.sourceforge.net/
+.. _`appscript library`: https://appscript.sourceforge.io/
 
 
 NSCoder
