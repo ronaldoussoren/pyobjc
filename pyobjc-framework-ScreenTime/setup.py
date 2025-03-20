@@ -20,7 +20,7 @@ VERSION = "11.1"
 setup(
     name="pyobjc-framework-ScreenTime",
     description="Wrappers for the framework ScreenTime on macOS",
-    min_os_level="10.16",
+    min_os_level="11.0",
     packages=["ScreenTime"],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],

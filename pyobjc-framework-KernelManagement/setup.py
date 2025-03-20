@@ -20,7 +20,7 @@ VERSION = "11.1"
 setup(
     name="pyobjc-framework-KernelManagement",
     description="Wrappers for the framework KernelManagement on macOS",
-    min_os_level="10.16",
+    min_os_level="11.0",
     packages=["KernelManagement"],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],

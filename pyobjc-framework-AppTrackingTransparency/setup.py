@@ -20,7 +20,7 @@ VERSION = "11.1"
 setup(
     name="pyobjc-framework-AppTrackingTransparency",
     description="Wrappers for the framework AppTrackingTransparency on macOS",
-    min_os_level="10.16",
+    min_os_level="11.0",
     packages=["AppTrackingTransparency"],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],

@@ -20,7 +20,7 @@ VERSION = "11.1"
 setup(
     name="pyobjc-framework-CallKit",
     description="Wrappers for the framework CallKit on macOS",
-    min_os_level="10.16",
+    min_os_level="11.0",
     packages=["CallKit"],
     ext_modules=[
         Extension(

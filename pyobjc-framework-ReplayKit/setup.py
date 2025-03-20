@@ -20,7 +20,7 @@ VERSION = "11.1"
 setup(
     name="pyobjc-framework-ReplayKit",
     description="Wrappers for the framework ReplayKit on macOS",
-    min_os_level="10.16",
+    min_os_level="11.0",
     packages=["ReplayKit"],
     ext_modules=[
         Extension(

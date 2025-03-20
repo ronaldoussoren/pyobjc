@@ -20,7 +20,7 @@ VERSION = "11.1"
 setup(
     name="pyobjc-framework-PassKit",
     description="Wrappers for the framework PassKit on macOS",
-    min_os_level="10.16",
+    min_os_level="11.0",
     packages=["PassKit"],
     ext_modules=[
         Extension(
