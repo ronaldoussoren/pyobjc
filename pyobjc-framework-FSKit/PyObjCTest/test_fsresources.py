@@ -4,7 +4,6 @@ import FSKit
 
 
 class TestFSResourceHelper(FSKit.NSObject):
-
     def startCheckWithTask_options_error_(self, a, b, c):
         pass
 

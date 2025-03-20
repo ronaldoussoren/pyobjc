@@ -16,6 +16,11 @@ class TestWKNavigationDelegateHelper(WebKit.NSObject):
     def webView_authenticationChallenge_shouldAllowDeprecatedTLS_(self, w, c, h):
         pass
 
+    def webView_shouldGoToBackForwardListItem_willUseInstantBack_completionHandler_(
+        self, a, b, c, d
+    ):
+        pass
+
 
 class TestWKNavigationDelegate(TestCase):
     def test_enum_types(self):
@@ -53,6 +58,16 @@ class TestWKNavigationDelegate(TestCase):
             TestWKNavigationDelegateHelper.webView_didReceiveAuthenticationChallenge_completionHandler_,  # noqa: B950
             2,
             objc._C_VOID + objc._C_NSInteger + objc._C_ID,
+        )
+
+        self.assertArgIsBOOL(
+            TestWKNavigationDelegateHelper.webView_shouldGoToBackForwardListItem_willUseInstantBack_completionHandler_,  # noqa: B950
+            2,
+        )
+        self.assertArgIsBlock(
+            TestWKNavigationDelegateHelper.webView_shouldGoToBackForwardListItem_willUseInstantBack_completionHandler_,  # noqa: B950
+            3,
+            objc._C_VOID + objc._C_NSBOOL,
         )
 
     @min_os_level("11.0")

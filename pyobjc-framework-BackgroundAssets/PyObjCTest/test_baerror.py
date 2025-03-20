@@ -24,6 +24,7 @@ class TestBAError(TestCase):
             BackgroundAssets.BAErrorCodeDownloadBackgroundActivityProhibited, 111
         )
         self.assertEqual(BackgroundAssets.BAErrorCodeDownloadWouldExceedAllowance, 112)
+        self.assertEqual(BackgroundAssets.BAErrorCodeDownloadDoesNotExist, 113)
         self.assertEqual(
             BackgroundAssets.BAErrorCodeSessionDownloadDisallowedByDomain, 202
         )
