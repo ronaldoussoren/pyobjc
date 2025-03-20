@@ -235,7 +235,6 @@ Development Status :: 5 - Production/Stable
 Environment :: Console
 Environment :: MacOS X :: Cocoa
 Intended Audience :: Developers
-License :: OSI Approved :: MIT License
 Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
@@ -708,7 +707,7 @@ def setup(
         dependency_links=[],
         package_data={"": ["*.bridgesupport"]},
         zip_safe=False,
-        license="MIT License",
+        license="MIT",
         classifiers=CLASSIFIERS,
         python_requires=">=3.9",
         keywords=["PyObjC"] + [p for p in k["packages"] if p not in ("PyObjCTools",)],
