@@ -272,7 +272,6 @@ Development Status :: 5 - Production/Stable
 Environment :: Console
 Environment :: MacOS X :: Cocoa
 Intended Audience :: Developers
-License :: OSI Approved :: MIT License
 Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
@@ -715,7 +714,7 @@ setup(
     python_requires=">=3.9",
     setup_requires=[],
     classifiers=CLASSIFIERS,
-    license="MIT License",
+    license="MIT",
     zip_safe=True,
     # workaround for setuptools 0.6b4 bug
     dependency_links=[],
