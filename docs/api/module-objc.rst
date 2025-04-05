@@ -19,7 +19,7 @@ be removed from release without warning.
 Bridge options
 ..............
 
-.. data:: options
+.. class:: options
 
    The object :data:`options` has attributes for reading and setting
    a number of configuration options for the bridge.
@@ -31,14 +31,14 @@ Bridge options
    .. versionadded:: 3.0
 
 
-   .. attribute:: objc.options.verbose
+   .. attribute:: verbose
 
       When the value is :const:`True` the bridge will log more information.
 
       This currently results in output on the standard error stream whenever
       an exception is translated from Python to Objective-C.
 
-   .. attribute:: objc.options.use_kvo
+   .. attribute:: use_kvo
 
       The default value for the *__useKVO__* attribute on
       classes.
@@ -47,14 +47,13 @@ Bridge options
       of the class will generate Key-Value Observation notifications when
       setting attributes from Python.
 
-
-   .. attribute:: objc.options.unknown_pointer_raises
+   .. attribute:: unknown_pointer_raises
 
       When True (the default) the bridge will raise an exception when
       it encounters a pointer value that cannot be converted to Python,
       otherwise it it creates instances of :class:`ObjCPointer`.
 
-   .. attribute:: objc.options.deprecation_warnings
+   .. attribute:: deprecation_warnings
 
       When ``"0.0"`` (the default) the bridge will not emit deprecation warnings,
       otherwise the value should be a platform version in the form
@@ -73,19 +72,19 @@ Bridge options
 
          The value for this option is now a string instead of an integer.
 
-  .. attribute:: objc.options.structs_indexable
+   .. attribute:: structs_indexable
 
-     When True (the default) PyObjC's wrappers for C structs can be indexed
-     as if they are (writable) tuples. When False this isn't possible.
+      When True (the default) PyObjC's wrappers for C structs can be indexed
+      as if they are (writable) tuples. When False this isn't possible.
 
-     .. note:: This is primarily an experimental option, that will likely be removed in a future version.
+      .. note:: This is primarily an experimental option.
 
-  .. attribute:: objc.options.structs_writable
+   .. attribute:: structs_writable
 
-     When True (the default) PyObjC's wrappers for C structs are writable,
-     otherwise they are read-only.
+      When True (the default) PyObjC's wrappers for C structs are writable,
+      otherwise they are read-only.
 
-     .. note:: This is an experimental option. I don't know yet if making structs read-only will be a better.
+     .. note:: This is an experimental option.
 
 
 Deprecated functions for changing options
@@ -596,8 +595,7 @@ Types
    .. note::
 
       The wrapper classes for the :class:`NSString` class cluster aren't subclasses
-      of :class:`objc_object`, but are subclasses of the builtin :class:`unicode` type
-      (:class:`str:` in Python 3).
+      of :class:`objc_object`, but are subclasses of the builtin :class:`str` type.
 
 .. class:: pyobjc_unicode
 
@@ -618,15 +616,15 @@ Types
 
       Instances of *NSString* can be mutable. Mutations to mutable Cocoa
       strings are not reflected in instances of :class:`pyobjc_unicode`, use
-      :meth:`nsstring` and explicit conversion to the built-in unicode type when
+      :meth:`nsstring` and explicit conversion to the built-in :class:`str` type when
       you work with mutable *NSString* values.
 
    .. note::
 
-      Cocoa strings are wrapped using a subclass of the built-in unicode string
+      Cocoa strings are wrapped using a subclass of the built-in :class:`str` type
       to get better interaction between Python and Cocoa. Because Cocoa strings are
-      instances of the built-in unicode type they can be passed to functions in
-      extension modules that expect unicode arguments (in particular the file
+      instances of the built-in :class:`str` type they can be passed to functions in
+      extension modules that expect string arguments (in particular the file
       system access APIs such as :func:`open`).
 
 
@@ -1768,18 +1766,6 @@ PyObjC provides an API that implements locking in the same way as the
       Release the object mutex
 
 
-Archiving Python and Objective-C objects
-----------------------------------------
-
-Python and Objective-C each provide a native object serialization method,
-the :mod:`pickle` module in Python and the *NSCoding* protocol in Objective-C.
-
-It is possible to use an *NSKeyedArchiver* to store any Python object that
-can be pickled in an Objective-C serialized data object.
-
-Due to technical details it is not possible to pickle an Objective-C object,
-unless someone explicitly implements the pickle protocol for such an object.
-
 Properties
 ----------
 
@@ -1892,8 +1878,7 @@ it cannot convert to normal Python values. When
 is false such pointer values are bridged as instances of :class:`ObjCPointer`.
 
 The bridge will unconditionally emit a warning before creating such instances,
-the reason for this is that the use of :class:`ObjCPointer` is unwanted
-(that's why the creation of such objects is disabled by default in PyObjC 3.0).
+the reason for this is that the use of :class:`ObjCPointer` is unwanted.
 
 .. class:: ObjCPointer
 
@@ -1910,6 +1895,11 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
 
 "FILE*" support
 ---------------
+
+PyObjC provides a limited wrapper for C's ``FILE*`` type. This wrapper
+is not a full replacement for the :mod:`io` module, but is only provided
+to make it easier to use a limited set of Cocoa APIs that use this
+C type.
 
 .. class:: FILE
 
@@ -1958,3 +1948,8 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
    .. method:: seek(offset, whence)
 
       Seek to the specified offset.
+
+   .. method:: fileno()
+
+      Returns the file descriptor associated with the ``FILE*``
+      value.

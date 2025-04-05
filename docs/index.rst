@@ -109,7 +109,6 @@ PyObjC
          core/intro
          tutorials/index
          notes/framework-wrappers.rst
-         apinotes
          examples/index
          core/introspecting
 

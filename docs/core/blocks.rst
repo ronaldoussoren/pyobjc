@@ -26,22 +26,23 @@ counts of blocks in your code.
 Limitations
 ...........
 
-It is not possible to call arbitrary blocks because PyObjC needs to store some
-additional metadata for a block. The framework bindings provide this additional
-metadata for all supported APIs.
+Ancient versions of the Apple Objective-C compiler did not include information
+to make blocks runtime introspectable. For those systems all APIs returning blocks
+need to be annotated with the Objective-C signatures of the returned block.
 
-This means it is only possible to call blocks where the bridge knows the call signature, which means:
+For all APIs that have a block as its argument the Objective-C signature for the
+block needs to be specified through the metadata system.
 
-* Block was returned from a method for which we know the signature of
-  returned blocks. PyObjC ships with metadata that covers all of the system frameworks
-  on macOS.
-
-* When a block is stored in a Cocoa datastructure, such as an NSArray, and that
-  is the only reference to the block PyObjC can loose the additional information
-  that is needed to call the block.
+The required annotations are shipped with PyObjC's bindings for system frameworks,
+that is block APIs "just work".
 
 It is possible to retrieve and set the call signature of a block using the
 ``__block_signature__`` attribute on blocks.
+
+.. versionchanged:: 2.5
+
+   PyObjC can use runtime introspection to retrieve the Objective-C signature
+   for a block.
 
 
 Implementing blocks in Python
@@ -61,8 +62,3 @@ Metadata for blocks
 The current implementation of blocks doesn't allow for full introspection,
 which means that PyObjC must be taught about the signatures of blocks.  This
 is done using the :doc:`metadata system </metadata/index>`.
-
-.. versionchanged:: 2.5
-
-   For basic blocks and (Objective-)C code compiled using a recent enough
-   compiler the bridge can extract the block signature from the runtime.

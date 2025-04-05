@@ -4,9 +4,7 @@ Key-Value Observing and Python
 Key-Value Coding and Key-Value Observing are supported by PyObjC. Key-Value
 Observing is only supported for Cocoa objects though, because it is technically
 impossible to generate the right events for pure python objects (such as
-``dict`` or ``list`` instances)[1].
-
-* _[1]: at least not without patching the Python interpreter itself.
+``dict`` or ``list`` instances).
 
 PyObjC will automatically call ``willChangeValueForKey:`` and
 ``didChangeValueForKey:`` when changing the attribute of an object that is

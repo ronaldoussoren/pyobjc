@@ -73,7 +73,7 @@ state.
       a.append(a)
 
    Because of this serializing the graph below with an :class:`NSArchiver`
-   will result in a grabled datastructure when read back. The
+   will result in a garbled datastructure when read back. The
    same will be true when archiving with :class:`NSKeyedArchiver` and
    reading the archive back in pure Objective-C.
 

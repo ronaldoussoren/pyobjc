@@ -57,7 +57,7 @@ the class are:
   are no equivalent using the ``alloc().init...(...)`` pattern.
 
 For classes in system frameworks the possibly init method are
-registered using frmaework data.
+registered using framework data.
 
 For classes implemented in Python the possible init methods
 are detected automatically, just implement one or more Objective-C
@@ -71,7 +71,7 @@ arguments, that is:
 .. sourcecode:: python
 
    class MyObject(NSObject):
-       init = None  # Calling MyOjbect() is not allowed
+       init = None  # Calling MyObject() is not allowed
 
        def initWithX_y_(self, x_value, y_value):
            self = super.init()

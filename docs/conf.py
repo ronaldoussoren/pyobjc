@@ -41,6 +41,7 @@ extensions = [
     "sphinx_togglebutton",
     "sphinxcontrib.mermaid",
     "sphinx_reredirects",
+    "sphinxext.opengraph",
 ]
 
 extlinks = {
@@ -62,7 +63,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "PyObjC - the Python to Objective-C bridge"
-copyright = "2017-2024, Ronald Oussoren"  # noqa: A001
+copyright = "2017-2025, Ronald Oussoren"  # noqa: A001
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -255,3 +256,8 @@ redirects = {
 
 todo_include_todos = True
 copybutton_exclude = ".linenos, .gp"
+
+ogp_site_url = "https://pyobjc.readthedocs.io/"
+ogp_image = "https://pyobjc.readthedocs.io/pyobjc-logo.jpg"
+ogp_type = "article"
+ogp_enable_meta_description = True

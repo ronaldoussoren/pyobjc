@@ -3,8 +3,70 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 11.1
+------------
+
+* Update framework bindings for the macOS 15.4 SDK
+
+* Added bindings for the ``SecurityUI`` framework
+
+* Restructure the PyObjC website
+
+  The theme of the PyObjC websites is now [shibuya](https://shibuya.lepture.com)
+  to give a more modern look and feel to the website.
+
+  The actual content is mostly still the same, with some minor restructuring
+  of pages. Restructuring will continue in future updates.
+
+
+* :class:`objc.FSRef` now implements :class:`os.PathLike`.
+
+* :issue:`642`: Fix concurrency issue when creating ``NSArray`` instances
+  using ``NSArray.alloc().init...``.
+
+  In previous versions the following would fail on recent versions of macOS:
+
+  .. sourcecode:: python
+
+    value1 = NSArray.alloc()
+    value2 = NSArray.alloc()
+
+    value1 = value1.init()
+    value2 = value2.init()
+
+  That's a unrealistic code pattern, but the same can be triggered using
+  ``NSArray.alloc().init()``  when run concurrently in multiple threads,
+  especially when using free-threading.
+
+* Fixing the previous issue required rearchitecting the way partially
+  initialized objects (e.g. the result of ``SomeClass.alloc()`` is handled,
+  and has some other user visible behaviour changes (none of which should
+  affect normal code):
+
+  * The proxied value of an :class:`objc.objc_object` instance will never
+    be ``nil``, all exceptions about accessing attributes or methods
+    of a NIL object are gone.
+
+  * It is now possible to call methods on a partially initialized object,
+    in previous versions that would often result in setting the proxied value
+    to ``nil``.
+
+  * It is now possible to call an ``init`` method multiple times an an
+    partially initialized value, e.g.:
+
+    .. sourcecode:: python
+
+       part = SomeClass.alloc()
+       value1 = part.init()
+       value2 = part.init()
+
+    Whether or not this is safe depends on the implementation of the
+    Objective-C class. In general it is advised to not use this pattern,
+    but always call ``SomeClass.alloc().init...()`` or the more pythonic
+    ``SomeClass(...)`` introduced in PyObjC 10.3.
+
 Version 11.0
------------------------------------------------------------
+------------
 
 The major change in this release is experimental support for free-threading
 (`PEP 703 <https://peps.python.org/pep-0703/>`_) which was introduced
@@ -598,7 +660,7 @@ Version 9.2
 * :issue:`549`: Document that ``objc.super`` must be used instead of
   ``builtin.super`` when calling superclass methods in a Cocoa subclass.
 
-  See :doc:`the documentation <core/super>` for more details.
+  See :func:`the documentation <objc.super>` for more details.
 
 * :issue:`550`: Add minimal ``pyproject.toml`` to all subprojects
 
