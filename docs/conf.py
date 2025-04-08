@@ -258,6 +258,6 @@ todo_include_todos = True
 copybutton_exclude = ".linenos, .gp"
 
 ogp_site_url = "https://pyobjc.readthedocs.io/"
-ogp_image = "https://pyobjc.readthedocs.io/pyobjc-logo.jpg"
+ogp_image = "https://pyobjc.readthedocs.io/en/latest/_static/pyobjc-logo.jpg"
 ogp_type = "article"
 ogp_enable_meta_description = True
