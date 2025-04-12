@@ -1951,15 +1951,17 @@ C type.
 
    This types provides a fairly limited file-like API for binary
    I/O. Instances of this type don't close the stream automatically and
-   don't implement a contextmanager.
+   do not implement a contextmanager.
 
    .. method:: at_eof()
 
-      Returns True iff the stream is at the EOF marker
+      :return: If the stream is at the EOF marker
+      :rtype: bool
 
    .. method:: has_errors()
 
-      Return True iff the stream has errors.
+      :return: If the stream has errors
+      :rtype: bool
 
    .. method:: close()
 
@@ -1973,27 +1975,34 @@ C type.
 
    .. method:: readline()
 
-      Read a single line from the stream.
+      :return: Next line in the file, or an empty string at the end of file
+      :rtype: bytes
 
    .. method:: read(buffer_size)
 
-      Read *buffer_size* bytes. This returns an empty bytes object
-      when the stream has reached end-of-file.
+      :param int buffer_size: Number of bytes to read
+      :return: The data that was read, which can be less than the requested amount
+               and will be an empty string at the enf of file.
+      :rtype: bytes
 
    .. method:: write(buffer)
 
-      Write *buffer* to the stream. Returns the number of bytes
-      that are actually written.
+      :param bytes buffer: Data to write.
+      :return: Amount of bytes that were written.
+      :rtype: int
 
    .. method:: tell()
 
-      Returns the current offset of the stream.
+      :return: the current offset of the stream.
+      :rtype: int
 
    .. method:: seek(offset, whence)
 
-      Seek to the specified offset.
+      :param int offset: Offset to seek to
+      :param int whence: Base for the offset (of one :data:`os.SEEK_SET`,
+                         :data:`os.SEEK_CUR`, :data:`os.SEEK_END`).
 
    .. method:: fileno()
 
-      Returns the file descriptor associated with the ``FILE*``
-      value.
+      :return: The file descriptor associated with the ``FILE`` object
+      :rtype: int
