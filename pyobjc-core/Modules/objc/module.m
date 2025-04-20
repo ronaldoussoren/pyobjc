@@ -418,7 +418,7 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
 }
 
 PyDoc_STRVAR(getClassList_doc,
-             "getClassList(ignore_invalid_identifiers=False)\n" CLINIC_SEP "\n"
+             "getClassList(ignore_invalid_identifiers=False, /)\n" CLINIC_SEP "\n"
              "Return a list with all Objective-C classes known to the runtime.\n");
 static PyObject* _Nullable getClassList(PyObject* self __attribute__((__unused__)),
                                         PyObject* args)
