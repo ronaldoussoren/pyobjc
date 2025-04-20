@@ -128,6 +128,7 @@ html_baseurl = "https://pyobjc.readthedocs.io/en/latest/"
 # documentation.
 html_theme_options = {
     "accent_color": "jade",
+    "color_mode": "auto",
     "nav_links": [
         {
             "title": "GitHub",
@@ -165,7 +166,6 @@ html_theme_options = {
         },
     ],
     "globaltoc_expand_depth": 1,
-    "twitter_url": "https://twitter.com/ronaldoussoren",
     "github_url": "https://github.com/ronaldoussoren/pyobjc",
     "mastodon_url": "https://blog.ronaldoussoren.com/@ronald",
 }
