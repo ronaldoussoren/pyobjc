@@ -14,3 +14,6 @@ These bindings are accessed through the ``CoreWLAN`` package (that is, ``import 
 
 API Notes
 ---------
+
+Code only gets access to privacy relevant when the binary is signed
+properly (not using an ad-hoc signature). This is a security feature in macOS.

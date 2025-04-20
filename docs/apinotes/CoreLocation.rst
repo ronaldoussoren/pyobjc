@@ -15,3 +15,6 @@ These bindings are accessed through the ``CoreLocation`` package (that is, ``imp
 
 API Notes
 ---------
+
+Code only gets access to location information when the binary is signed
+properly (not using an ad-hoc signature). This is a security feature in macOS.
