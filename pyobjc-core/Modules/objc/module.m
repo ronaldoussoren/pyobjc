@@ -799,7 +799,7 @@ PyDoc_STRVAR(PyObjC_loadBundleFunctions_doc,
              "The signature is the Objective-C type specifier for the function \n"
              "signature.");
 PyDoc_STRVAR(PyObjC_loadFunctionList_doc,
-             "loadFunctionList(list, module_globals, functionInfo, "
+             "loadFunctionList(function_list, module_globals, functionInfo, "
              "skip_undefined=True)\n" CLINIC_SEP "\n"
              "Load the specified functions. List should be a capsule object containing\n"
              "an array of { char*, function } structs.");
@@ -1163,7 +1163,7 @@ static PyObject* _Nullable registerCFSignature(PyObject* self __attribute__((__u
     CFTypeID     typeId;
     char*        tollfreeName = NULL;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "syO|s", keywords, &name, &encoding,
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "syO|z", keywords, &name, &encoding,
                                      &pTypeId, &tollfreeName)) {
         return NULL;
     }
