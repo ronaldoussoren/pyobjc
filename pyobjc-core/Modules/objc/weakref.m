@@ -137,6 +137,19 @@ static PyMemberDef weakref_members[] = {
     }};
 #endif
 
+#if PY_VERSION_HEX > 0x03090000
+static PyMethodDef weakref_methods[] = {
+                                          {.ml_name  = "__class_getitem__",
+                                           .ml_meth  = (PyCFunction)Py_GenericAlias,
+                                           .ml_flags = METH_O,
+                                           .ml_doc   = "See PEP 585"},
+                                          {
+                                              .ml_name = NULL /* SENTINEL */
+                                          }};
+#endif
+
+
+
 static PyType_Slot weakref_slots[] = {
     {.slot = Py_tp_dealloc, .pfunc = (void*)&weakref_dealloc},
     {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
@@ -145,6 +158,7 @@ static PyType_Slot weakref_slots[] = {
 #if PY_VERSION_HEX >= 0x03090000
     {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
     {.slot = Py_tp_members, .pfunc = (void*)&weakref_members},
+    {.slot = Py_tp_methods, .pfunc = (void*)&weakref_methods},
 #else
     {.slot = Py_tp_call, .pfunc = (void*)&weakref_call},
 #endif

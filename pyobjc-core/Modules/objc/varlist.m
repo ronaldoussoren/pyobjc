@@ -406,6 +406,12 @@ static PyMethodDef varlist_methods[] = {{.ml_name  = "as_tuple",
                                          .ml_meth  = (PyCFunction)varlist_as_buffer,
                                          .ml_flags = METH_VARARGS | METH_KEYWORDS,
                                          .ml_doc   = varlist_as_buffer_doc},
+#if PY_VERSION_HEX > 0x03090000
+                                          {.ml_name  = "__class_getitem__",
+                                           .ml_meth  = (PyCFunction)Py_GenericAlias,
+                                           .ml_flags = METH_O,
+                                           .ml_doc   = "See PEP 585"},
+#endif
                                         {
                                             .ml_name = NULL /* SENTINEL */
                                         }};
