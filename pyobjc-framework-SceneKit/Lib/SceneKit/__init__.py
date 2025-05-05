@@ -41,7 +41,6 @@ def _setup():
 
     import SceneKit as mod  # isort:skip
 
-    global SCNMatrix4Identity, SCNMatrix4MakeTranslation, SCNMatrix4MakeScale
     try:
         mod.SCNMatrix4Identity
     except AttributeError:
