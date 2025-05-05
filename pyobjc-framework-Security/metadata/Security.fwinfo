@@ -2010,6 +2010,20 @@
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
+   "sec_protocol_metadata_copy_server_name": {
+    "result": {
+     "free_result": true,
+     "c_array_delimited_by_null": true,
+     "type_override": "^t"
+    }
+   },
+   "sec_protocol_metadata_copy_negotiated_protocol": {
+    "result": {
+     "free_result": true,
+     "c_array_delimited_by_null": true,
+     "type_override": "^t"
+    }
+   },
    "sec_protocol_options_set_peer_authentication_optional": {
     "retval": { "typestr": "v" },
     "args": {

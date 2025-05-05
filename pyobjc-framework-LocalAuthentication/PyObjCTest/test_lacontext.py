@@ -79,10 +79,22 @@ class TestLAContext(TestCase):
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertEqual(LocalAuthentication.LAAccessControlOperationCreateItem, 0)
-        self.assertEqual(LocalAuthentication.LAAccessControlOperationUseItem, 1)
-        self.assertEqual(LocalAuthentication.LAAccessControlOperationCreateKey, 2)
-        self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeySign, 3)
+        self.assertEqual(
+            LocalAuthentication.LAAccessControlOperationCreateItem,
+            LocalAuthentication.kLAAccessControlOperationCreateItem,
+        )
+        self.assertEqual(
+            LocalAuthentication.LAAccessControlOperationUseItem,
+            LocalAuthentication.kLAAccessControlOperationUseItem,
+        )
+        self.assertEqual(
+            LocalAuthentication.LAAccessControlOperationCreateKey,
+            LocalAuthentication.kLAAccessControlOperationCreateKey,
+        )
+        self.assertEqual(
+            LocalAuthentication.LAAccessControlOperationUseKeySign,
+            LocalAuthentication.kLAAccessControlOperationUseKeySign,
+        )
 
     @min_os_level("10.15")
     def test_constants10_15(self):
@@ -93,9 +105,13 @@ class TestLAContext(TestCase):
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeyDecrypt, 4)
         self.assertEqual(
-            LocalAuthentication.LAAccessControlOperationUseKeyKeyExchange, 5
+            LocalAuthentication.LAAccessControlOperationUseKeyDecrypt,
+            LocalAuthentication.kLAAccessControlOperationUseKeyDecrypt,
+        )
+        self.assertEqual(
+            LocalAuthentication.LAAccessControlOperationUseKeyKeyExchange,
+            LocalAuthentication.kLAAccessControlOperationUseKeyKeyExchange,
         )
 
         self.assertIsInstance(
