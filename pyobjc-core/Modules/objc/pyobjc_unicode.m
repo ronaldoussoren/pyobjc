@@ -238,7 +238,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
     length = [value length];
 
-    characters = PyObject_Malloc(sizeof(unichar) * (length + 1));
+    characters = PyMem_Malloc(sizeof(unichar) * (length + 1));
     if (characters == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
@@ -261,21 +261,24 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     Py_END_ALLOW_THREADS
 
     if (have_exception) {
-        PyObject_Free(characters);
+        PyMem_Free(characters);
         characters = NULL;
 
         return NULL;
     }
 
-    result = PyObject_New(PyObjCUnicodeObject, (PyTypeObject*)PyObjCUnicode_Type);
+    // Using PyObject_Malloc instead of PyObject_New matches the
+    // implementation of PyUnicode_New
+    result = PyObject_Malloc(sizeof(PyObjCUnicodeObject));
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        PyObject_Free(characters);
+        PyMem_Free(characters);
         characters = NULL;
 
         return NULL;
         // LCOV_EXCL_STOP
     }
+    (void)PyObject_Init((PyObject*)result, (PyTypeObject*)PyObjCUnicode_Type);
 
     result->weakrefs = NULL;
     result->py_nsstr = NULL;
@@ -348,7 +351,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         Py_UCS1* latin1_cur;
 
         result->base.data.latin1 =
-            PyObject_MALLOC(sizeof(Py_UCS1) * (length + 1 - nr_surrogates));
+            PyMem_Malloc(sizeof(Py_UCS1) * (length + 1 - nr_surrogates));
         if (result->base.data.latin1 == NULL) // LCOV_BR_EXCL_LINE
             goto error;                       // LCOV_EXCL_LINE
 
@@ -390,7 +393,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
             Py_UCS2* ucs2_cur;
 
             result->base.data.ucs2 =
-                PyObject_MALLOC(sizeof(Py_UCS2) * (length + 1 - nr_surrogates));
+                PyMem_Malloc(sizeof(Py_UCS2) * (length + 1 - nr_surrogates));
             if (result->base.data.ucs2 == NULL) // LCOV_BR_EXCL_LINE
                 goto error;                     // LCOV_EXCL_LINE
 
@@ -415,7 +418,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         Py_UCS4* ucs4_cur;
 
         result->base.data.ucs4 =
-            PyObject_MALLOC(sizeof(Py_UCS4) * (length + 1 - nr_surrogates));
+            PyMem_Malloc(sizeof(Py_UCS4) * (length + 1 - nr_surrogates));
         if (result->base.data.ucs4 == NULL) { // LCOV_BR_EXCL_LINE
             goto error;                       // LCOV_EXCL_LINE
         }
@@ -458,7 +461,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     }
 
     if (characters != NULL) {
-        PyObject_Free(characters);
+        PyMem_Free(characters);
         characters = NULL;
     }
 
@@ -468,7 +471,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 error:
     // LCOV_EXCL_START
     Py_DECREF((PyObject*)result);
-    PyObject_Free(characters);
+    PyMem_Free(characters);
     characters = NULL;
     PyErr_NoMemory();
     return NULL;
