@@ -515,6 +515,7 @@ static PyObject* _Nullable decimal_result_to_python(NSCalculationError status,
 #define TRY_COERCE(left, right)                                                          \
     int r = decimal_coerce(&left, &right);                                               \
     if (r == 1) {                                                                        \
+        if (PyErr_Occurred()) PyErr_Clear();                                             \
         Py_RETURN_NOTIMPLEMENTED;                                                        \
     }
 
