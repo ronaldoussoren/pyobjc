@@ -1027,3 +1027,29 @@ class TestBytearrayInterface(TestBytesInterface):
 
         with self.assertRaisesRegex(IndexError, "index out of range"):
             py.pop(-22 * len(value))
+
+    def test_resize(self):
+        value = b"abcdefg"
+
+        oc = self.oc_cls.dataWithData_(value)
+        py = self.py_cls(value)
+
+        # XXX: The comparisons keep a temporary buffer alive until
+        # the current autorelease pool is poppped.
+        with objc.autorelease_pool():
+            self.assertEqual(oc, py)
+            self.assertEqual(bytes(oc), py)
+
+        oc.resize(20)
+        py.resize(20)
+
+        with objc.autorelease_pool():
+            self.assertEqual(oc, py)
+            self.assertEqual(bytes(oc), py)
+
+        oc.resize(2)
+        py.resize(2)
+
+        with objc.autorelease_pool():
+            self.assertEqual(oc, py)
+            self.assertEqual(bytes(oc), py)
