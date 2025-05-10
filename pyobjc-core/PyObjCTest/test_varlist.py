@@ -13,6 +13,10 @@ import objc
 
 
 class TestVarlistVarious(TestCase):
+    def test_generic(self):
+        t = objc.varlist[int]
+        self.assertIsGenericAlias(t, objc.varlist, (int,))
+
     def test_cannot_create(self):
         with self.assertRaisesRegex(
             TypeError, "cannot create 'objc.varlist' instances"

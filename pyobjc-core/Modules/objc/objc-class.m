@@ -2759,12 +2759,6 @@ static PyMethodDef metaclass_methods[] = {{.ml_name  = "__dir__",
                                            .ml_meth  = (PyCFunction)metaclass_dir,
                                            .ml_flags = METH_NOARGS,
                                            .ml_doc   = "dir() hook, don't call directly"},
-#if PY_VERSION_HEX > 0x03090000
-                                          {.ml_name  = "__class_getitem__",
-                                           .ml_meth  = (PyCFunction)Py_GenericAlias,
-                                           .ml_flags = METH_O,
-                                           .ml_doc   = "See PEP 585"},
-#endif
                                           {
                                               .ml_name = NULL /* SENTINEL */
                                           }};
@@ -2779,6 +2773,14 @@ static PyMethodDef class_methods[] = {
      .ml_flags = METH_O,
      .ml_doc   = "pyobjc_hiddenSelectors(classMethod)" CLINIC_SEP
                "Return copy of hidden selectors"},
+#if PY_VERSION_HEX > 0x03090000
+    {.ml_name  = "__class_getitem__",
+     .ml_meth  = (PyCFunction)Py_GenericAlias,
+     // This is not a METH_CLASS due the the parallel class tree
+     // for instance and class methods.
+     .ml_flags = METH_O,
+     .ml_doc   = "See PEP 585"},
+#endif
 
     {
         .ml_name = NULL /* SENTINEL */

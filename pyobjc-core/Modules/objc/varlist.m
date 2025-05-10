@@ -409,7 +409,7 @@ static PyMethodDef varlist_methods[] = {{.ml_name  = "as_tuple",
 #if PY_VERSION_HEX > 0x03090000
                                           {.ml_name  = "__class_getitem__",
                                            .ml_meth  = (PyCFunction)Py_GenericAlias,
-                                           .ml_flags = METH_O,
+                                           .ml_flags = METH_O|METH_CLASS,
                                            .ml_doc   = "See PEP 585"},
 #endif
                                         {

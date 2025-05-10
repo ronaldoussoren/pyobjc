@@ -348,3 +348,7 @@ class TestFunctions(TestCase):
 
         with self.assertRaisesRegex(TypeError, "Need 0 arguments, got 2"):
             getGetter(1, 2)
+
+    def test_function_type_subscript(self):
+        f = objc.function[2, 3]
+        self.assertIsGenericAlias(f, objc.function, (2, 3))

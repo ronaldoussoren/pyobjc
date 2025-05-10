@@ -54,6 +54,12 @@ static PyMethodDef func_methods[] = {
      .ml_meth  = (PyCFunction)func_metadata,
      .ml_flags = METH_NOARGS,
      .ml_doc   = "Return a dict that describes the metadata for this function."},
+#if PY_VERSION_HEX > 0x03090000
+    {.ml_name  = "__class_getitem__",
+     .ml_meth  = (PyCFunction)Py_GenericAlias,
+     .ml_flags = METH_O|METH_CLASS,
+     .ml_doc   = "See PEP 585"},
+#endif
     {
         .ml_name = NULL /* SENTINEL */
     }};

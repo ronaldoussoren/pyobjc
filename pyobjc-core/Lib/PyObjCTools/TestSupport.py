@@ -14,6 +14,7 @@ import sys as _sys
 import unittest as _unittest
 import subprocess as _subprocess
 import pickle as _pickle
+import types as _types
 from sysconfig import get_config_var as _get_config_var
 
 import objc
@@ -340,6 +341,11 @@ class TestCase(_unittest.TestCase):
     #
     # Primary reason for the new API is to ensure that all metadata overrides
     # are explicitly tested.
+
+    def assertIsGenericAlias(self, alias, base_type, args):
+        self.assertIsInstance(alias, _types.GenericAlias)
+        self.assertIs(alias.__origin__, base_type)
+        self.assertEqual(alias.__args__, args)
 
     def assertManualBinding(self, func):
         if hasattr(func, "__metadata__"):

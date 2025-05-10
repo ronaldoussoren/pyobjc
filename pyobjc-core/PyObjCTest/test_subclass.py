@@ -18,6 +18,13 @@ NSData = objc.lookUpClass("NSData")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
 
+class TestGenericAlias(TestCase):
+    def test_generic_class(self):
+        t = NSObject[3, 4]
+
+        self.assertIsGenericAlias(t, NSObject, (3, 4))
+
+
 class TestSubclassing(TestCase):
     def test_dont_inherit_from_objc_root(self):
         with self.assertRaises(TypeError):
@@ -608,7 +615,7 @@ class TestOverridingSpecials(TestCase):
         with self.assertRaisesRegex(UnicodeEncodeError, r".*surrogates not allowed"):
 
             class ClassWithInvalidNamedSlot(NSObject):
-                __slots__ = "\uDC00"
+                __slots__ = "\udc00"
 
     def test_dict_as_slots(self):
         # When __slots__ is a dict pydoc can use the

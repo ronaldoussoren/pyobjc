@@ -141,7 +141,7 @@ static PyMemberDef weakref_members[] = {
 static PyMethodDef weakref_methods[] = {
                                           {.ml_name  = "__class_getitem__",
                                            .ml_meth  = (PyCFunction)Py_GenericAlias,
-                                           .ml_flags = METH_O,
+                                           .ml_flags = METH_O|METH_CLASS,
                                            .ml_doc   = "See PEP 585"},
                                           {
                                               .ml_name = NULL /* SENTINEL */
