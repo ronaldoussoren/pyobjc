@@ -151,7 +151,6 @@ def registerABCForClass(classname, *abc_class):
     Register *classname* with the *abc_class*-es when
     the class becomes available.
     """
-    global CLASS_ABC
     try:
         CLASS_ABC[classname] += tuple(abc_class)
     except KeyError:

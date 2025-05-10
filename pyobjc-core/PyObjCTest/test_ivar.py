@@ -8,17 +8,6 @@ NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 NSArray = objc.lookUpClass("NSArray")
 
 
-# XXX: This type and instance should be in a  helper module
-class NilHelper(NSObject):
-    def init(self):
-        self.release()
-        return None
-
-
-nilObject = NilHelper.alloc()
-nilObject.init()
-
-
 class Base:
     def __init__(self, ondel):
         self.ondel = ondel
@@ -74,11 +63,6 @@ class TestInstanceVariables(TestCase):
 
         o = NSArray.alloc()
         o.init()
-
-        with self.assertRaisesRegex(
-            TypeError, "Cannot access Objective-C instance-variables of 'nil'"
-        ):
-            iv.__get__(o)
 
         with self.assertRaisesRegex(ValueError, "Invalid type encoding"):
             objc.ivar("iv", b"X")
@@ -332,11 +316,6 @@ class TestAllInstanceVariables(TestCase):
         with self.assertRaisesRegex(TypeError, "argument 2 must be str, not int"):
             getter(obj, 42)
 
-        with self.assertRaisesRegex(
-            ValueError, "Getting instance variable of a nil object"
-        ):
-            getter(nilObject, "isa")
-
     def testWriting(self):
         obj = ClassWithVariables.alloc().init()
 
@@ -419,11 +398,6 @@ class TestAllInstanceVariables(TestCase):
             r"(function missing required argument 'name' \(pos 2\))|(Required argument 'name' \(pos 2\) not found)",
         ):
             setter(obj)
-
-        with self.assertRaisesRegex(
-            ValueError, "Setting instance variable of a nil object"
-        ):
-            setter(nilObject, "isa", NSObject)
 
     def testClassMod(self):
         # It's scary as hell, but updating the class of an object does "work"

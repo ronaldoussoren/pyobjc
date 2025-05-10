@@ -250,7 +250,7 @@ class RaisingRelease(objc.lookUpClass("NSObject")):
         return self
 
     def release(self):
-        if self._raise:
+        if getattr(self, "_raise", False):
             self._raise = False
             objc.lookUpClass("NSException").exceptionWithName_reason_userInfo_(
                 "SomeException", "Reason", None

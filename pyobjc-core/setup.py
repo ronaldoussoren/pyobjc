@@ -396,7 +396,8 @@ class oc_egg_info(egg_info.egg_info):
         sdk_root = self.get_finalized_command("build_ext").sdk_root
         sdk_info = os.path.join(sdk_root, "SDKSettings.plist")
         if os.path.exists(sdk_info):
-            pl = plistlib.load(open(sdk_info, "rb"))
+            with open(sdk_info, "rb") as stream:
+                pl = plistlib.load(stream)
             sdk_version = pl["DisplayName"]
         else:
             sdk_version = os.path.basename(sdk_root)

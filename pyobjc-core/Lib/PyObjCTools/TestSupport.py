@@ -623,6 +623,38 @@ class TestCase(_unittest.TestCase):
         except (KeyError, IndexError):
             self.fail(message or f"Argument {argno} of {method!r} is not retained")
 
+    def assertIsInitializer(self, method, message=None):
+        if not isinstance(method, objc.selector):
+            return
+
+        info = method.__metadata__()
+        if not info.get("initializer", False):
+            self.fail(message or f"{method!r} is not an initializer")
+
+    def assertIsNotInitializer(self, method, message=None):
+        if not isinstance(method, objc.selector):
+            return
+
+        info = method.__metadata__()
+        if info.get("initializer", False):
+            self.fail(message or f"{method!r} is an initializer")
+
+    def assertDoesFreeResult(self, method, message=None):
+        if not isinstance(method, objc.selector):
+            return
+
+        info = method.__metadata__()
+        if not info.get("free_result", False):
+            self.fail(message or f"{method!r} does not call free(3) on the result")
+
+    def assertDoesNotFreeResult(self, method, message=None):
+        if not isinstance(method, objc.selector):
+            return
+
+        info = method.__metadata__()
+        if info.get("free_result", False):
+            self.fail(message or f"{method!r} calls free(3) on the result")
+
     def assertArgIsNotRetained(self, method, argno, message=None):
         if isinstance(method, objc.selector):
             offset = 2

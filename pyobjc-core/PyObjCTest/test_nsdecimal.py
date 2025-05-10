@@ -8,7 +8,7 @@ import warnings
 import objc
 from objc import super  # noqa: A004
 from PyObjCTest.decimal import OC_TestDecimal
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase, skipUnless
 
 
 class TestNSDecimalWrapper(TestCase):
@@ -387,7 +387,7 @@ class TestUsingNSDecimalNumber(TestCase):
             ):
                 cls.alloc().initWithDecimal_("42.5")
 
-    @expectedFailure
+    @skipUnless(False, "Test runs into platform bug")
     def test_subclassing(self):
         # At least on macOS 13 subclassing of NSDecimalNumber basically doesn't work,
         # leaving the test here as a reminder of that.
@@ -396,7 +396,7 @@ class TestUsingNSDecimalNumber(TestCase):
         class OC_DecimalNumberPlusOne(NSDecimalNumber):
             @objc.objc_method(signature=NSDecimalNumber.initWithDecimal_.signature)
             def initWithDecimal_(self, value):
-                return super().initWithDecimal_(value)
+                return NSDecimalNumber.initWithDecimal_(self, value)
 
             def decimalValue(self):
                 return super().decimalValue() + 1

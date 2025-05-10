@@ -56,6 +56,7 @@ struct _PyObjCMethodSignature {
     unsigned char            variadic : 1;
     unsigned char            null_terminated_array : 1;
     unsigned char            free_result : 1;
+    unsigned char            initializer : 1;
     unsigned char            shortcut_signature : 1;
     unsigned int             shortcut_argbuf_size : 10;
     unsigned int             shortcut_result_size : 8;

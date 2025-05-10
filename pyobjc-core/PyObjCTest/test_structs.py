@@ -73,7 +73,7 @@ class TestStructs(TestCase):
             tp(**{1: 2})
 
         with self.assertRaisesRegex(UnicodeEncodeError, r".*surrogates not allowed"):
-            tp(**{"\uDC00": 1})
+            tp(**{"\udc00": 1})
 
         with self.assertRaisesRegex(
             TypeError, r"FooStruct\(\) got multiple values for keyword argument 'a'"
@@ -103,7 +103,7 @@ class TestStructs(TestCase):
             objc.createStructType(
                 "FooStruct",
                 b"{_FooStruct=ffff}",
-                ["\U000fffff\uDBBB", "b", "c", "d"],
+                ["\U000fffff\udbbb", "b", "c", "d"],
             )
 
     def test_copy_copy(self):

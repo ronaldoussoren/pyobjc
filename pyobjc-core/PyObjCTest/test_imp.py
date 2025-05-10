@@ -48,11 +48,6 @@ class TestBasicIMP(TestCase):
         self.assertEqual(o2, [])
         self.assertIsInstance(o2, NSArray)
 
-        with self.assertRaisesRegex(
-            AttributeError, "cannot access attribute 'init' of NIL"
-        ):
-            o.init()
-
         o = NSObject.alloc().init()
         i = NSObject.methodForSelector_(b"alloc")
         o2 = i(o).init()
@@ -179,12 +174,6 @@ class TestBasicIMP(TestCase):
         p = imp(o, [1, 2])
         self.assertIsInstance(p, NSArray)
         self.assertIsNot(o, p)
-
-        # Make sure the pointer to ObjC is cleared:
-        with self.assertRaisesRegex(
-            AttributeError, "cannot access attribute '__c_void_p__' of NIL "
-        ):
-            o.__c_void_p__
 
     def test_imp_attributes(self):
         o = NSMutableArray.alloc().init()

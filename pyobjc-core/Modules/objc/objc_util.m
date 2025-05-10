@@ -11,7 +11,7 @@ NSNull* NSNull_null;
 PyObject* PyObjCExc_Error;
 PyObject* PyObjCExc_NoSuchClassError;
 PyObject* PyObjCExc_InternalError;
-PyObject* PyObjCExc_UnInitDeallocWarning;
+PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 12 */
 PyObject* PyObjCExc_ObjCRevivalWarning;
 PyObject* PyObjCExc_LockError;
 PyObject* PyObjCExc_BadPrototypeError;
@@ -64,6 +64,7 @@ PyObject* PyObjCNM_callable_retained;
 PyObject* PyObjCNM_deprecated;
 PyObject* PyObjCNM_deref_result_pointer;
 PyObject* PyObjCNM_free_result;
+PyObject* PyObjCNM_initializer;
 PyObject* PyObjCNM_full_signature;
 PyObject* PyObjCNM_null_accepted;
 PyObject* PyObjCNM_printf_format;
@@ -114,7 +115,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_EXC(PyObjCExc_Error, "error", NULL);
     NEW_EXC(PyObjCExc_NoSuchClassError, "nosuchclass_error", PyObjCExc_Error);
     NEW_EXC(PyObjCExc_InternalError, "internal_error", PyObjCExc_Error);
-    NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning);
+    NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning); /* XXX */
     NEW_EXC(PyObjCExc_ObjCRevivalWarning, "RevivedObjectiveCObjectWarning",
             PyExc_Warning);
     NEW_EXC(PyObjCExc_LockError, "LockError", PyObjCExc_Error);
@@ -177,6 +178,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_deprecated, "deprecated");
     NEW_STR(PyObjCNM_deref_result_pointer, "deref_result_pointer");
     NEW_STR(PyObjCNM_free_result, "free_result");
+    NEW_STR(PyObjCNM_initializer, "initializer");
     NEW_STR(PyObjCNM_full_signature, "full_signature");
     NEW_STR(PyObjCNM_null_accepted, "null_accepted");
     NEW_STR(PyObjCNM_printf_format, "printf_format");

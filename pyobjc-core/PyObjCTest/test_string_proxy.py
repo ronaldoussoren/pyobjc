@@ -154,6 +154,6 @@ class TestMisc(TestCase):
         self.assertEqual(OC_StringInt.getCharactersOn_(v), v)
 
         # UCS4 + single surrogate: cannot encode to UTF-8
-        v = "\U000fffff\uDBBB"
+        v = "\U000fffff\udbbb"
         with self.assertRaisesRegex(UnicodeEncodeError, "surrogates not allowed"):
             OC_StringInt.getCharactersOn_(v)

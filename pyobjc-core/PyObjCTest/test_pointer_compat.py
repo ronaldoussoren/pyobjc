@@ -30,14 +30,6 @@ class TestProxySupport(TestCase):
         ):
             objc.objc_object(cobject2=p)
 
-    def test_cobject_for_nil(self):
-        arr = objc.lookUpClass("NSArray").alloc()
-        arr.init()
-        with self.assertRaisesRegex(
-            AttributeError, "cannot access attribute '__cobject__' of NIL"
-        ):
-            self.assertIs(arr.__cobject__(), None)
-
     def test_no__new__(self):
         with self.assertRaisesRegex(
             TypeError, "Use class methods to instantiate new Objective-C objects"
@@ -77,15 +69,6 @@ class TestProxySupport(TestCase):
         b.value = "pointer"
         with self.assertRaisesRegex(ValueError, "c_void_p.value is not an integer"):
             objc.objc_object(c_void_p=b)
-
-    @skipUnless(ctypes is not None, "requires ctypes")
-    def test_voidp_for_nil(self):
-        arr = objc.lookUpClass("NSArray").alloc()
-        arr.init()
-        with self.assertRaisesRegex(
-            AttributeError, "cannot access attribute '__c_void_p__' of NIL"
-        ):
-            self.assertIs(arr.__c_void_p__(), None)
 
     @skipUnless(ctypes is not None, "requires ctypes")
     def test_voidp_using_ctypes(self):

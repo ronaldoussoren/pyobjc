@@ -1,7 +1,6 @@
 import objc
 from objc import super  # noqa: A004
 import gc
-from .test_ivar import nilObject, NilHelper
 from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 NSObject = objc.lookUpClass("NSObject")
@@ -40,17 +39,6 @@ class MethodAccessTest(TestCase):
 
         self.assertEqual(objc.objc_object.pyobjc_classMethods.__dict__, {})
         self.assertEqual(objc.objc_object.pyobjc_instanceMethods.__dict__, {})
-
-        with self.assertRaisesRegex(
-            AttributeError,
-            "cannot access attribute 'pyobjc_instanceMethods' of NIL 'NilHelper' object",
-        ):
-            nilObject.pyobjc_instanceMethods.__dict__
-
-        nil = NilHelper.alloc()
-        instanceMethods = nil.pyobjc_instanceMethods
-        nil.init()
-        self.assertEqual(instanceMethods.__dict__, {})
 
     def testNSProxyStuff(self):
         # NSProxy is incompatitble with pyobjc_{class,instance}Methods, but
@@ -240,7 +228,6 @@ class ClassAndInstanceMethods(TestCase):
         ):
             NSObject.new().alloc
 
-    @expectedFailure
     def testClassThroughInstance2(self):
         # Class methods are not accessible through instances.
         with self.assertRaisesRegex(

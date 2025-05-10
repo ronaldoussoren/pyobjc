@@ -486,6 +486,7 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
     retval->variadic              = NO;
     retval->null_terminated_array = NO;
     retval->free_result           = NO;
+    retval->initializer           = NO;
     retval->shortcut_signature    = NO;
     retval->shortcut_argbuf_size  = 0;
     retval->shortcut_result_size  = 0;
@@ -1485,6 +1486,7 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
     result->variadic              = NO;
     result->null_terminated_array = NO;
     result->free_result           = NO;
+    result->initializer           = NO;
     result->shortcut_signature    = NO;
     result->shortcut_argbuf_size  = 0;
     result->shortcut_result_size  = 0;
@@ -1715,6 +1717,7 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     methinfo->variadic              = metadata->variadic;
     methinfo->null_terminated_array = metadata->null_terminated_array;
     methinfo->free_result           = metadata->free_result;
+    methinfo->initializer           = metadata->initializer;
     methinfo->arrayArg              = metadata->arrayArg;
     methinfo->deprecated            = metadata->deprecated;
 
@@ -1824,6 +1827,7 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
         return NULL;
     }
 
+
     if (isClassMethod) {
         const char* nm = sel_getName(sel);
         if (strncmp(nm, "new", 3) == 0 && ((nm[3] == 0) || isupper(nm[3]))) {
@@ -1840,6 +1844,23 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
             methinfo->rettype->alreadyRetained = YES;
         }
     }
+
+    if (methinfo->rettype != NULL && methinfo->rettype->type != NULL && methinfo->rettype->type[0] == _C_ID) {
+        const char* nm = sel_getName(sel);
+        // The check below matches the calculation of the default objc_method_family in clang
+        // (other than the special casing of NSAutoreleasePool)
+        if (sel_isEqual(sel, @selector(init)) ||
+            ((strncmp(nm, "init", 4) == 0) && isupper(nm[4]))) {
+            /* Mark 'init' methods, except for NSAutoreleasePool
+             * which crashes when the reference count is manipulated
+             * manually.
+             */
+            if (cls != [NSAutoreleasePool class]) {
+                methinfo->initializer = YES;
+            }
+        }
+    }
+
 
 #ifdef PyObjC_DEBUG
     if (PyObjCMethodSignature_Validate(methinfo) == -1) // LCOV_BR_EXCL_LINE
@@ -2022,6 +2043,19 @@ PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo
         if (r == -1)    // LCOV_BR_EXCL_LINE
             goto error; // LCOV_EXCL_LINE
     }
+
+    if (methinfo->free_result) {
+        r = PyDict_SetItem(result, PyObjCNM_free_result, methinfo->free_result?Py_True:Py_False);
+        if (r == -1)    // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+    }
+
+    if (methinfo->initializer) {
+        r = PyDict_SetItem(result, PyObjCNM_initializer, methinfo->initializer?Py_True:Py_False);
+        if (r == -1)    // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+    }
+
     if (methinfo->variadic) {
         r = PyDict_SetItem(result, PyObjCNM_variadic, methinfo->variadic?Py_True:Py_False);
         if (r == -1)    // LCOV_BR_EXCL_LINE

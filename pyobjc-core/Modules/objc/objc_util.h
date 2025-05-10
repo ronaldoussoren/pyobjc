@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 extern NSNull* NSNull_null;
 extern PyObject* PyObjCExc_Error;
 extern PyObject* PyObjCExc_NoSuchClassError;
-extern PyObject* PyObjCExc_UnInitDeallocWarning;
+extern PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 12 */
 extern PyObject* PyObjCExc_ObjCRevivalWarning;
 extern PyObject* PyObjCExc_LockError;
 extern PyObject* PyObjCExc_BadPrototypeError;
@@ -147,6 +147,7 @@ extern PyObject* PyObjCNM_callable_retained;
 extern PyObject* PyObjCNM_deprecated;
 extern PyObject* PyObjCNM_deref_result_pointer;
 extern PyObject* PyObjCNM_free_result;
+extern PyObject* PyObjCNM_initializer;
 extern PyObject* PyObjCNM_full_signature;
 extern PyObject* PyObjCNM_null_accepted;
 extern PyObject* PyObjCNM_printf_format;

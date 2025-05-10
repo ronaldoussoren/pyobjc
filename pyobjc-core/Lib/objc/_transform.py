@@ -35,6 +35,8 @@ def _selectorToKeywords(selector):
         return ()
 
     parts = selector.split(":")[:-1]
+    if not parts:
+        return None
     if parts[0].startswith("With"):
         parts[0] = parts[0][4:]
     if len(parts[0]) == 1 or len(parts[0]) > 1 and not parts[0][1].isupper():

@@ -17,6 +17,7 @@ import objc
 from PyObjCTest.metadata import OC_MetaDataTest
 from PyObjCTools.TestSupport import TestCase
 from .fnd import NSArray, NSString, NSPredicate, NSObject
+from PyObjCTest.classes import OCTestClasses
 
 make_array = array.array
 
@@ -2330,3 +2331,17 @@ class TestMisc(TestCase):
         self.assertEqual(signature["arguments"][0]["type"], b"@?")
         self.assertEqual(signature["arguments"][1]["type"], b"i")
         self.assertEqual(signature["arguments"][2]["type"], b"f")
+
+
+class TestInitMethods(TestCase):
+    def test_standard(self):
+        self.assertIsInitializer(NSObject.init)
+        self.assertIsInitializer(NSString.initWithString_)
+
+        self.assertIsNotInitializer(NSObject.alloc)
+        self.assertIsNotInitializer(NSString.length)
+
+    def test_alternates(self):
+        self.assertIsInitializer(OCTestClasses.initMethod)
+        self.assertIsNotInitializer(OCTestClasses.initNot)
+        self.assertIsNotInitializer(OCTestClasses.initialValue)

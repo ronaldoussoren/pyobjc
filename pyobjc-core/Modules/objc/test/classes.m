@@ -15,6 +15,21 @@
     return object_getClass(object);
 }
 
+-(id)initMethod
+{
+    return [super init];
+}
+
+-(int)initNot
+{
+    return 42;
+}
+
+-(id)initialValue
+{
+    return @"hello";
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

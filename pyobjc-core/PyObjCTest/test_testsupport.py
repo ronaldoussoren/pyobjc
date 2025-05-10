@@ -654,6 +654,56 @@ class TestTestSupport(TestCase):
         ):
             self.assertArgIsNullTerminated(m, 3)
 
+    def test_selector_initializer(self):
+        m = Method(None, {}, selector=True)
+        self.assertIsNotInitializer(m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not an initializer",
+        ):
+            self.assertIsInitializer(m)
+
+        m._meta.update({"initializer": False})
+        self.assertIsNotInitializer(m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not an initializer",
+        ):
+            self.assertIsInitializer(m)
+
+        m._meta.update({"initializer": True})
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is an initializer",
+        ):
+            self.assertIsNotInitializer(m)
+        self.assertIsInitializer(m)
+
+    def test_free_result(self):
+        m = Method(None, {}, selector=True)
+        self.assertDoesNotFreeResult(m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"<.*> does not call free\(3\) on the result",
+        ):
+            self.assertDoesFreeResult(m)
+
+        m._meta.update({"free_result": False})
+        self.assertDoesNotFreeResult(m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"<.*> does not call free\(3\) on the result",
+        ):
+            self.assertDoesFreeResult(m)
+
+        m._meta.update({"free_result": True})
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"<.*> calls free\(3\) on the result",
+        ):
+            self.assertDoesNotFreeResult(m)
+        self.assertDoesFreeResult(m)
+
     def test_function_nullterminated(self):
         m = Method(None, {}, selector=False)
         m._meta.update({"variadic": True, "c_array_delimited_by_null": True})
