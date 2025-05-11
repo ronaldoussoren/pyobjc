@@ -18,6 +18,7 @@ from PyObjCTest.metadata import OC_MetaDataTest
 from PyObjCTools.TestSupport import TestCase
 from .fnd import NSArray, NSString, NSPredicate, NSObject
 from PyObjCTest.classes import OCTestClasses
+from objc import super  # noqa: A004
 
 make_array = array.array
 
@@ -2333,6 +2334,24 @@ class TestMisc(TestCase):
         self.assertEqual(signature["arguments"][2]["type"], b"f")
 
 
+class OCInitFamily(NSObject):
+    def initWithX_(self, x):
+        return super().init()
+
+    def initSelector(self):
+        return super().init()
+
+    @objc.objc_method(signature=b"i@:")
+    def initInteger(self):
+        return super().init()
+
+    def initialSize(self):
+        return 42
+
+    def size(self):
+        return 21
+
+
 class TestInitMethods(TestCase):
     def test_standard(self):
         self.assertIsInitializer(NSObject.init)
@@ -2341,7 +2360,18 @@ class TestInitMethods(TestCase):
         self.assertIsNotInitializer(NSObject.alloc)
         self.assertIsNotInitializer(NSString.length)
 
+    def test_standard_py(self):
+        self.assertIsInitializer(OCInitFamily.init)
+        self.assertIsInitializer(OCInitFamily.initWithX_)
+
+        self.assertIsNotInitializer(OCInitFamily.size)
+
     def test_alternates(self):
         self.assertIsInitializer(OCTestClasses.initMethod)
         self.assertIsNotInitializer(OCTestClasses.initNot)
         self.assertIsNotInitializer(OCTestClasses.initialValue)
+
+    def test_alternates_py(self):
+        self.assertIsInitializer(OCInitFamily.initSelector)
+        self.assertIsNotInitializer(OCInitFamily.initInteger)
+        self.assertIsNotInitializer(OCInitFamily.initialSize)
