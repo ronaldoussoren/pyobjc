@@ -356,13 +356,15 @@ static PyObject* _Nullable* _Nullable _get_dictptr(PyObject* obj)
     /* XXX: See above: should be safe with a free-threaded build
      */
     Py_ssize_t dictoffset;
-    id         obj_object;
+    id         objc_object;
     dictoffset = PyObjCClass_DictOffset((PyObject*)Py_TYPE(obj));
     if (dictoffset == 0)
         return NULL;
-    obj_object = PyObjCObject_OBJECT(obj);
-    PyObjC_Assert(obj_object != nil, NULL);
-    return (PyObject**)(((char*)obj_object) + dictoffset);
+    objc_object = PyObjCObject_OBJECT(obj);
+    if (objc_object == nil) {
+        return NULL;
+    }
+    return (PyObject**)(((char*)objc_object) + dictoffset);
 }
 
 /* returns a new reference */
@@ -1168,7 +1170,10 @@ static PyObject* _Nullable meth_dir(PyObject* self)
         PyObject* args[] = { NULL, result, *dictptr };
         PyObject* tmp = PyObject_VectorcallMethod(PyObjCNM_update, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_CLEAR(result);
+            return NULL;
+            // LCOV_EXCL_STOP
         }
         Py_CLEAR(tmp);
     }
