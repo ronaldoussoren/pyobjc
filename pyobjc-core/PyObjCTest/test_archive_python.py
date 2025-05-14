@@ -1420,30 +1420,30 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
                 u = self.loads(s)
                 self.assertIs(u, t)
 
-    @expectedFailure
-    def test_newobj_not_class(self):
-        # Exception handling in NSCoder is dodgy
-        test.pickletester.AbstractPickleTests.test_newobj_not_class(self)
+    # @expectedFailure
+    # def test_newobj_not_class(self):
+    #     # Exception handling in NSCoder is dodgy
+    #     test.pickletester.AbstractPickleTests.test_newobj_not_class(self)
 
-    @expectedFailure
-    def test_recursive_list_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_list_and_inst(self)
+    # @expectedFailure
+    # def test_recursive_list_and_inst(self):
+    #     test.pickletester.AbstractPickleTests.test_recursive_list_and_inst(self)
 
-    @expectedFailure
-    def test_recursive_tuple_and_list(self):
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_list(self)
+    # @expectedFailure
+    # def test_recursive_tuple_and_list(self):
+    #     test.pickletester.AbstractPickleTests.test_recursive_tuple_and_list(self)
 
-    @expectedFailure
-    def test_recursive_tuple_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_inst(self)
+    # @expectedFailure
+    # def test_recursive_tuple_and_inst(self):
+    #     test.pickletester.AbstractPickleTests.test_recursive_tuple_and_inst(self)
 
-    @expectedFailure
-    def test_recursive_dict_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_dict_and_inst(self)
+    # @expectedFailure
+    # def test_recursive_dict_and_inst(self):
+    #     test.pickletester.AbstractPickleTests.test_recursive_dict_and_inst(self)
 
-    @expectedFailure
-    def test_recursive_set_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_set_and_inst(self)
+    # @expectedFailure
+    # def test_recursive_set_and_inst(self):
+    #     test.pickletester.AbstractPickleTests.test_recursive_set_and_inst(self)
 
     @expectedFailure
     def test_recursive_set(self):
@@ -1454,11 +1454,11 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
     def test_recursive_frozenset_and_inst(self):
         test.pickletester.AbstractPickleTests.test_recursive_frozenset_and_inst(self)
 
-    @expectedFailure
-    def test_recursive_list_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(
-            self
-        )
+    # @expectedFailure
+    # def test_recursive_list_subclass_and_inst(self):
+    #    test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(
+    #        self
+    #    )
 
     @expectedFailure
     def test_recursive_tuple_subclass_and_inst(self):
@@ -1466,11 +1466,11 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
             self
         )
 
-    @expectedFailure
-    def test_recursive_dict_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(
-            self
-        )
+    # @expectedFailure
+    # def test_recursive_dict_subclass_and_inst(self):
+    #     test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(
+    #         self
+    #     )
 
     @expectedFailure
     def test_recursive_set_subclass_and_inst(self):
@@ -1797,11 +1797,11 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
     def test_recursive_frozenset_and_inst(self):
         test.pickletester.AbstractPickleTests.test_recursive_frozenset_and_inst(self)
 
-    @expectedFailure
-    def test_recursive_list_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(
-            self
-        )
+    # @expectedFailure
+    # def test_recursive_list_subclass_and_inst(self):
+    # test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(
+    # self
+    # )
 
     @expectedFailure
     def test_recursive_tuple_subclass_and_inst(self):
