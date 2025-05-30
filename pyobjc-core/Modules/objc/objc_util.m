@@ -7,6 +7,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 NSNull* NSNull_null;
+Class NSAutoreleasePool_class;
 
 PyObject* PyObjCExc_Error;
 PyObject* PyObjCExc_NoSuchClassError;
@@ -97,12 +98,14 @@ PyObject* PyObjCNM_pyobjcSetValue_;
 PyObject* PyObjCNM_tzinfo;
 PyObject* PyObjCNM_update;
 PyObject* PyObjCNM_co_consts;
+PyObject* PyObjCNM___call__;
 
 
 int
 PyObjCUtil_Init(PyObject* module)
 {
     NSNull_null = [[NSNull null] retain];
+    NSAutoreleasePool_class = [NSAutoreleasePool class];
 
 #define NEW_EXC(identifier, name, base_class)                                            \
     identifier = PyErr_NewException("objc." name, base_class, NULL);                     \
@@ -211,6 +214,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_tzinfo, "tzinfo");
     NEW_STR(PyObjCNM_update, "update");
     NEW_STR(PyObjCNM_co_consts, "co_consts");
+    NEW_STR(PyObjCNM___call__, "__call__");
 
 #undef NEW_STR
 

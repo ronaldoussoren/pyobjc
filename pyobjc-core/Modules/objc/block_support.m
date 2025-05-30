@@ -362,11 +362,11 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 
 #ifdef __arm64__
     retval = PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr,
-                                   byref_out_count, NULL, 0, values);
+                                   byref_out_count, values);
 #else
     retval =
         PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr, byref_out_count,
-                              NULL, 0, useStret ? values + 1 : values);
+                              useStret ? values + 1 : values);
 #endif
 
     if (variadicAllArgs) {
@@ -519,10 +519,14 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
 
     rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, NO);
     if (rval == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        [self release];
+        return NULL;
+        // LCOV_EXCL_STOP
     } else {
         PyObject* actual = PyObjC_RegisterPythonProxy(self, rval);
         Py_DECREF(rval);
+        [[clang::suppress]]
         return actual;
     }
 }
@@ -545,6 +549,11 @@ static PyObject* _Nullable pyobjc_PythonTransient(NSObject* self,
 
     *cookie = 1;
     PyObject* result  = PyObjCObject_New(self, PyObjCObject_kDEFAULT, NO);
+    if (result == NULL) {
+        [self release];
+        return NULL;
+    }
+    [[clang::suppress]]
     return result;
 }
 // LCOV_EXCL_STOP

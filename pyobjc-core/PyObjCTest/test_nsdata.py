@@ -1028,6 +1028,7 @@ class TestBytearrayInterface(TestBytesInterface):
         with self.assertRaisesRegex(IndexError, "index out of range"):
             py.pop(-22 * len(value))
 
+    @min_python_release("3.14")
     def test_resize(self):
         value = b"abcdefg"
 

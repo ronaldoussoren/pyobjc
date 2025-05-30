@@ -123,6 +123,11 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* 
         }
     }
 
+    if (*self_obj != nil && (*methinfo != NULL) && (*methinfo)->initializer) {
+        /* the called method will steal a reference to self */
+        [*self_obj retain];
+    }
+
     assert(*self_obj != nil);
     assert(*methinfo != NULL);
     assert(*isIMP || (*super_class != Nil));
@@ -131,37 +136,30 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* 
 }
 
 static PyObject* _Nullable
-adjust_retval(PyObjCMethodSignature* methinfo, PyObject* self, int flags,
-              PyObject* _Nullable result)
+adjust_retval(PyObjCMethodSignature* methinfo, id _Nullable retval)
 {
+    PyObject* result = id_to_python(retval);
     if (result == NULL) {
         PyObjC_Assert(PyErr_Occurred(), NULL);
         return NULL;
     }
     if (methinfo->rettype->alreadyRetained) {
-        if (PyObjCObject_Check(result)) {
-            /* pythonify_c_return_value has retained the object, but we already
-             * own a reference, therefore give the ref away again
-             */
-            [PyObjCObject_GetObject(result) release];
-        }
+        /* pythonify_c_return_value has retained the object, but we already
+         * own a reference, therefore give the ref away again
+         */
+        [retval release];
     }
 
     if (methinfo->rettype->alreadyCFRetained) {
-        if (PyObjCObject_Check(result)) {
-            /* pythonify_c_return_value has retained the object, but we already
-             * own a reference, therefore give the ref away again
-             */
-            CFRelease(PyObjCObject_GetObject(result));
-        }
+        /* pythonify_c_return_value has retained the object, but we already
+         * own a reference, therefore give the ref away again
+         */
+        CFRelease(retval);
     }
 
-    if (self != NULL && result != self && PyObjCObject_Check(self)
-        && PyObjCObject_Check(result) && !(flags & PyObjCSelector_kRETURNS_UNINITIALIZED)
-        && (((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
-
-        [PyObjCObject_GetObject(result) release]; /* XXX??? */
-        PyObjCObject_ClearObject(self);
+    if (methinfo->initializer) {
+        /* method returns +1 without being annotated as such */
+        [retval release];
     }
     return result;
 }
@@ -2267,7 +2265,7 @@ static PyObject* _Nullable call_id_v2d_id(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -2385,7 +2383,7 @@ static PyObject* _Nullable call_id_v2d_q(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -2498,7 +2496,7 @@ static PyObject* _Nullable call_id_v2f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -2621,7 +2619,7 @@ static PyObject* _Nullable call_id_v2f_v2I_q_id(PyObject* method, PyObject* self
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
         Py_CLEAR(methinfo);
         return result;
 }
@@ -2745,7 +2743,7 @@ static PyObject* _Nullable call_id_v2f_v2f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
         Py_CLEAR(methinfo);
         return result;
 }
@@ -2858,7 +2856,7 @@ static PyObject* _Nullable call_id_v2i(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject*  result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject*  result =  adjust_retval(methinfo, rv);
         Py_CLEAR(methinfo);
         return result;
 }
@@ -2981,7 +2979,7 @@ static PyObject* _Nullable call_id_v2i_i_i_Z(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
         Py_CLEAR(methinfo);
         return result;
 }
@@ -3120,7 +3118,7 @@ static PyObject* _Nullable call_id_v2i_i_i_Z_Class(PyObject* method, PyObject* s
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
         Py_CLEAR(methinfo);
         return result;
 }
@@ -3242,7 +3240,7 @@ static PyObject* _Nullable call_id_v3f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
         Py_CLEAR(methinfo);
         return result;
 }
@@ -3380,7 +3378,7 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_Z_q_id(PyObject* method, PyObject
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
         Py_CLEAR(methinfo);
         return result;
 }
@@ -3534,7 +3532,7 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_q_id(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
         Py_CLEAR(methinfo);
         return result;
 }
@@ -3680,7 +3678,7 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_q_id(PyObject* method, PyObject* se
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
         Py_CLEAR(methinfo);
         return result;
 }
@@ -3827,7 +3825,7 @@ static PyObject* _Nullable call_id_v3f_v2I_i_Z_q_id(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -3967,7 +3965,7 @@ static PyObject* _Nullable call_id_v3f_v2I_q_id(PyObject* method, PyObject* self
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -4106,7 +4104,7 @@ static PyObject* _Nullable call_id_v3f_v3I_Z_q_id(PyObject* method, PyObject* se
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -4249,7 +4247,7 @@ static PyObject* _Nullable call_id_v3f_v3I_q_Z_id(PyObject* method, PyObject* se
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -4402,7 +4400,7 @@ static PyObject* _Nullable call_id_v3f_Q_Q_q_Z_Z_id(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -4546,7 +4544,7 @@ static PyObject* _Nullable call_id_v3f_Z_q_id(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -4665,7 +4663,7 @@ static PyObject* _Nullable call_id_v4f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -4794,7 +4792,7 @@ static PyObject* _Nullable call_id_id_v2d_v2d_v2i_Z(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -4921,7 +4919,7 @@ static PyObject* _Nullable call_id_id_v2f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -5037,7 +5035,7 @@ static PyObject* _Nullable call_id_id_v3f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -5153,7 +5151,7 @@ static PyObject* _Nullable call_id_id_v4f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -5274,7 +5272,7 @@ static PyObject* _Nullable call_id_id_id_v2i(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -5404,7 +5402,7 @@ static PyObject* _Nullable call_id_id_id_v2i_f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -5533,7 +5531,7 @@ static PyObject* _Nullable call_id_id_Q_v2f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -5659,7 +5657,7 @@ static PyObject* _Nullable call_id_id_Q_v3f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -5785,7 +5783,7 @@ static PyObject* _Nullable call_id_id_Q_v4f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -5912,7 +5910,7 @@ static PyObject* _Nullable call_id_id_Q_simd_float4x4(PyObject* method, PyObject
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -6062,7 +6060,7 @@ static PyObject* _Nullable call_id_id_Z_id_v2i_q_Q_q_Z(PyObject* method, PyObjec
         return NULL;
     }
 
-    PyObject* result = adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -6224,7 +6222,7 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -6386,7 +6384,7 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f_f(PyObject* method, PyObject
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -6523,7 +6521,7 @@ static PyObject* _Nullable call_id_id_GKBox(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -6641,7 +6639,7 @@ static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -6768,7 +6766,7 @@ static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -6894,7 +6892,7 @@ static PyObject* _Nullable call_id_id_simd_float2x2(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -7013,7 +7011,7 @@ static PyObject* _Nullable call_id_id_simd_float3x3(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -7132,7 +7130,7 @@ static PyObject* _Nullable call_id_id_simd_float4x4(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -7250,7 +7248,7 @@ static PyObject* _Nullable call_id_id_simd_quatf(PyObject* method, PyObject* sel
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -7376,7 +7374,7 @@ static PyObject* _Nullable call_id_id_simd_quatf_id(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -7511,7 +7509,7 @@ static PyObject* _Nullable call_id_CGColor_CGColor_id_v2i(PyObject*        metho
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -7639,7 +7637,7 @@ static PyObject* _Nullable call_id_f_v2f_v2f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -7770,7 +7768,7 @@ static PyObject* _Nullable call_id_f_v2f_v2f_Class(PyObject* method, PyObject* s
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -7924,7 +7922,7 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_Q_q_Z_id(PyObject* method, PyObject
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -8088,7 +8086,7 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_q_Z_id(PyObject* method, PyObject* 
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -8242,7 +8240,7 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_Z(PyObject* method, PyObject* se
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -8396,7 +8394,7 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_CGColor_CGColor(
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -8539,7 +8537,7 @@ static PyObject* _Nullable call_id_f_id_v2i_q(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -8672,7 +8670,7 @@ static PyObject* _Nullable call_id_f_f_id_v2i(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -8792,7 +8790,7 @@ static PyObject* _Nullable call_id_GKBox(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -8907,7 +8905,7 @@ static PyObject* _Nullable call_id_GKBox_f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -9021,7 +9019,7 @@ static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -9138,7 +9136,7 @@ static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -9257,7 +9255,7 @@ static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObjec
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -9370,7 +9368,7 @@ static PyObject* _Nullable call_id_simd_float4x4(PyObject* method, PyObject* sel
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -9485,7 +9483,7 @@ static PyObject* _Nullable call_id_simd_float4x4_Z(PyObject* method, PyObject* s
         return NULL;
     }
 
-    PyObject* result =  adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result =  adjust_retval(methinfo, rv);
     Py_CLEAR(methinfo);
     return result;
 }
@@ -10029,7 +10027,7 @@ static PyObject* _Nullable call_CGColor_v3f(PyObject* method, PyObject* self,
         return NULL;
     }
 
-        Py_CLEAR(methinfo);
+    Py_CLEAR(methinfo);
     return pythonify_c_value("^{CGColor=}", &rv);
 }
 

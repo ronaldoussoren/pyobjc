@@ -34,7 +34,7 @@ PyAPI_FUNC(int)
 #else
 PyAPI_FUNC(int)
     PyArg_ParseTupleAndKeywords(PyObject* _Nullable, PyObject* _Nullable,
-                                const char* _Nullable, char* _Nullable* _Nullable, ...)
+                                const char* _Nullable, char* _Nullable* _Nullable, ...);
 #endif
 
 PyAPI_FUNC(PyObject* _Nullable) PyBool_FromLong(long) __attribute__((warn_unused_result));
@@ -474,6 +474,9 @@ PyAPI_FUNC(int) PyObject_HasAttrStringWithError(PyObject*, const char*) __attrib
 
 static inline Py_ALWAYS_INLINE  void (Py_INCREF)(PyObject * _Nonnull op);
 
+#if PY_VERSION_HEX >= 0x030e0000
+PyAPI_FUNC(int) PyUnstable_Object_IsUniquelyReferenced(PyObject*);
+#endif
 
 NS_ASSUME_NONNULL_END
 #endif /* USE_STATIC_ANALYZER */

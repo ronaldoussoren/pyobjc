@@ -88,8 +88,7 @@ class TestRegressions(TestCase):
             # coverage.py
             gc.collect()
 
-        self.assertTrue(len(w) == 1)
-        self.assertEqual(w[0].category, objc.UninitializedDeallocWarning)
+        self.assertTrue(len(w) == 0)
 
     def testOneWayMethods(self):
         # This one should be in test_methods*.py
@@ -716,10 +715,7 @@ class TestMagic(TestCase):
         o = NSArray.alloc()
         o.init()
 
-        with self.assertRaisesRegex(
-            AttributeError, "cannot access attribute '__pyobjc_magic_coookie__' of NIL"
-        ):
-            o.__pyobjc_magic_coookie__()
+        self.assertFalse(o.__pyobjc_magic_coookie__())
 
     def test_magic_normal(self):
         o = NSArray.alloc().init()
@@ -735,10 +731,7 @@ class TestISA(TestCase):
 
         o = NSArray.alloc()
         o.init()
-        with self.assertRaisesRegex(
-            AttributeError, "cannot access attribute 'pyobjc_ISA' of NIL"
-        ):
-            o.pyobjc_ISA
+        o.pyobjc_ISA
 
 
 class DeallocRevives(NSObject):
@@ -767,7 +760,7 @@ class TestDelRevives(TestCase):
             captured_stderr.getvalue(),
         )
 
-        self.assertEqual(repr(VALUE), "<DeallocRevives objective-c instance 0x0>")
+        self.assertEqual(repr(VALUE), "<null>")
 
 
 class TestConvertNegativeToUnsigedWarns(TestCase):

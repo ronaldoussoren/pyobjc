@@ -1,5 +1,6 @@
 import objc
 import inspect
+import warnings
 from PyObjCTools.TestSupport import TestCase
 from PyObjCTest.test_metadata import OC_MetaDataTest
 
@@ -181,7 +182,9 @@ class TestBasicIMP(TestCase):
         alloc_imp = NSMutableArray.methodForSelector_(b"alloc")
         cls_imp = NSMutableArray.methodForSelector_(b"array")
 
-        self.assertFalse(imp.isAlloc)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=objc.ApiDeprecationWarning)
+            self.assertFalse(imp.isAlloc)
         self.assertFalse(imp.isClassMethod)
         self.assertEqual(
             objc.splitSignature(imp.signature), objc.splitSignature(b"v@:@")
@@ -194,10 +197,14 @@ class TestBasicIMP(TestCase):
         self.assertIsInstance(sig, inspect.Signature)
         self.assertEqual(str(sig), "(arg0, arg1, /)")
 
-        self.assertFalse(cls_imp.isAlloc)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=objc.ApiDeprecationWarning)
+            self.assertFalse(cls_imp.isAlloc)
         self.assertTrue(cls_imp.isClassMethod)
 
-        self.assertTrue(alloc_imp.isAlloc)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=objc.ApiDeprecationWarning)
+            self.assertFalse(alloc_imp.isAlloc)
         self.assertTrue(alloc_imp.isClassMethod)
 
 

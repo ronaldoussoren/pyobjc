@@ -358,14 +358,16 @@ class TestOverridingSpecials(TestCase):
         o = ClassWithRetaining.alloc().init()
         v = o.retainCount()
         o.retain()
-        self.assertEqual(aList, ["retain"])
+        self.assertEqual(aList, ["retain", "release", "retain"])
         self.assertEqual(o.retainCount(), v + 1)
         o.release()
-        self.assertEqual(aList, ["retain", "release"])
+        self.assertEqual(aList, ["retain", "release", "retain", "release"])
         self.assertEqual(o.retainCount(), v)
         del o
 
-        self.assertEqual(aList, ["retain", "release", "release", "__del__"])
+        self.assertEqual(
+            aList, ["retain", "release", "retain", "release", "release", "__del__"]
+        )
 
         # Test again, now remove all python references and create one
         # again.
@@ -374,14 +376,16 @@ class TestOverridingSpecials(TestCase):
         o = ClassWithRetaining.alloc().init()
         v = NSArray.arrayWithArray_([o])
         del o
-        self.assertEqual(aList, ["retain"])
+        self.assertEqual(aList, ["retain", "release", "retain"])
         o = v[0]
-        self.assertEqual(aList, ["retain"])
+        self.assertEqual(aList, ["retain", "release", "retain"])
         del v
         del o
         del pool
 
-        self.assertEqual(aList, ["retain", "release", "release", "__del__"])
+        self.assertEqual(
+            aList, ["retain", "release", "retain", "release", "release", "__del__"]
+        )
 
         o = ClassWithRetaining.alloc().init()
         v = o.__del__
@@ -744,6 +748,7 @@ class TestOverridingSpecials(TestCase):
         self.assertIn("Exception ignored", captured_stderr.getvalue())
 
     def test_uninit_warn_as_error(self):
+        # XXX: TEst is no longer relevant
         o = NSObject.alloc()
 
         with warnings.catch_warnings():
@@ -758,11 +763,11 @@ class TestOverridingSpecials(TestCase):
             finally:
                 sys.stderr = orig_stderr
 
-        self.assertIn(
+        self.assertNotIn(
             "leaking an uninitialized object of type NSObject",
             captured_stderr.getvalue(),
         )
-        self.assertIn("Exception ignored", captured_stderr.getvalue())
+        self.assertNotIn("Exception ignored", captured_stderr.getvalue())
 
 
 class TestSelectorAttributes(TestCase):

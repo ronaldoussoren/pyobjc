@@ -77,7 +77,28 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
         Py_RETURN_NONE;
     }
 
-    return PyObjCObject_New(result, PyObjCObject_kUNINITIALIZED, NO);
+    PyObject* rval = PyObjC_FindPythonProxy(result);
+    if (rval != NULL) {
+        /* Found an existing proxy
+         * Compensate for the +1 retainCount from +alloc
+         */
+        if (object_getClass(result) != NSAutoreleasePool_class) {
+            [result release];
+        }
+        return rval;
+    }
+
+    /* The 'NO' ensures that the proxy object doesn't retain, which
+     * compensates for the +1 from +alloc
+     */
+    rval =  PyObjCObject_New(result, PyObjCObject_kDEFAULT, NO);
+    if (rval == NULL) {
+        return rval;
+    }
+
+    PyObject* actual = PyObjC_RegisterPythonProxy(result, rval);
+    Py_DECREF(rval);
+    return actual;
 }
 
 static IMP
@@ -119,7 +140,9 @@ mkimp_NSObject_alloc(PyObject*              callable,
           }
 
       PyObjC_END_WITH_GIL
-      return rv;
+
+      /* +alloc returns a +1 reference */
+      return [rv retain];
     };
     return imp_implementationWithBlock(block);
 }
@@ -169,7 +192,15 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
         Py_END_ALLOW_THREADS
     }
 
-    PyObjCObject_ClearObject(self);
+    /* After the call to dealloc the 'objc_object' value is garbage,
+     * ensure that there's still a valid reference until the proxy is
+     * deallocated.
+     */
+    PyObjC_UnregisterPythonProxy(((PyObjCObject*)self)->objc_object, self);
+    if (!(((PyObjCObject*)self)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) {
+        [NSNull_null retain];
+    }
+    ((PyObjCObject*)self)->objc_object = NSNull_null;
 
     if (unlikely(PyErr_Occurred())) {
         return NULL;

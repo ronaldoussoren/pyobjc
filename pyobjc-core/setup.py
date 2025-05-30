@@ -95,11 +95,11 @@ CFLAGS = [
     "-Wno-cast-function-type-mismatch",
     "-I/usr/include/ffi",
     "-fvisibility=hidden",
-    # "-O0",
+    # "-Og",
     "-g",
     # "-O0",
-    # "-O3",
-    # "-flto=thin",
+    "-O3",
+    "-flto=thin",
     # XXX: Use object_path_lto (during linking?)
     "-UNDEBUG",
 ]
@@ -118,10 +118,10 @@ OBJC_LDFLAGS = [
     "-lffi",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     "-fvisibility=hidden",
-    # "-O0",
+    # "-Og",
     "-g",
-    # "-O3",
-    # "-flto=thin",
+    "-O3",
+    "-flto=thin",
     "-fexceptions",
 ]
 

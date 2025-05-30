@@ -87,9 +87,6 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     PyObject*        pyself;
-    PyObjC_CallFunc  execute = NULL;
-    PyObject*        res;
-    PyObject*        pyres;
 
     if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
         return NULL;
@@ -110,37 +107,9 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
 
     pyself = args[0];
     PyObjC_Assert(pyself != NULL, NULL);
+    PyObjC_Assert(self->callfunc != NULL, NULL);
 
-    execute = self->callfunc;
-
-    pyres = res = execute((PyObject*)self, pyself, args + 1, nargsf - 1);
-
-    if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
-        && PyTuple_GET_ITEM(pyres, 0) == pyself) {
-        pyres = pyself;
-    } // LCOV_EXCL_LINE
-
-    if (PyObjCObject_Check(pyself)
-        && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
-        if (pyself != pyres && !PyErr_Occurred()) {
-            PyObjCObject_ClearObject(pyself);
-        } // LCOV_EXCL_LINE
-    } // LCOV_EXCL_LINE
-
-    if (pyres && PyObjCObject_Check(res)) {
-        if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
-
-        } else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags &= ~PyObjCObject_kUNINITIALIZED;
-            if (pyself && pyself != pyres && PyObjCObject_Check(pyself)
-                && !PyErr_Occurred()) {
-                PyObjCObject_ClearObject(pyself);
-            } // LCOV_EXCL_LINE
-        } // LCOV_EXCL_LINE
-    }
-
-    return res;
+    return self->callfunc((PyObject*)self, pyself, args + 1, nargsf - 1);
 }
 
 #if PY_VERSION_HEX >= 0x03090000
@@ -151,8 +120,6 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     PyObject*        pyself;
-    PyObject*        res;
-    PyObject*        pyres;
 
     PyObjC_Assert(self->signature->shortcut_signature, NULL);
 
@@ -177,34 +144,7 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
     pyself = args[0];
     PyObjC_Assert(pyself != NULL, NULL);
 
-    pyres = res = PyObjCFFI_Caller_Simple(_self, pyself, args + 1, nargsf - 1);
-
-    if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
-        && PyTuple_GET_ITEM(pyres, 0) == pyself) {
-        pyres = pyself;
-    } // LCOV_EXCL_LINE
-
-    if (PyObjCObject_Check(pyself)
-        && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
-        if (pyself != pyres && !PyErr_Occurred()) {
-            PyObjCObject_ClearObject(pyself);
-        }
-    }
-
-    if (pyres && PyObjCObject_Check(res)) {
-        if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
-
-        } else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags &= ~PyObjCObject_kUNINITIALIZED;
-            if (pyself && pyself != pyres && PyObjCObject_Check(pyself)
-                && !PyErr_Occurred()) {
-                PyObjCObject_ClearObject(pyself);
-            } // LCOV_EXCL_LINE
-        }
-    }
-
-    return res;
+    return PyObjCFFI_Caller_Simple(_self, pyself, args + 1, nargsf - 1);
 }
 #endif
 
@@ -280,15 +220,14 @@ PyDoc_STRVAR(
     "True if this is method returns a a freshly allocated object (uninitialized)\n"
     "\n"
     "NOTE: This field is used by the implementation.");
-static PyObject*
-imp_is_alloc(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable
+imp_is_alloc(PyObject* self __attribute__((__unused__)), void* closure __attribute__((__unused__)))
 {
-    PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    if ((self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) != 0) {
-        Py_RETURN_TRUE;
-    } else {
-        Py_RETURN_FALSE;
+    if (PyErr_Warn(PyObjCExc_DeprecationWarning, "isAlloc is always false") < 0) {
+        return NULL;
     }
+
+    Py_RETURN_FALSE;
 }
 
 static PyGetSetDef imp_getset[] = {{
@@ -344,14 +283,6 @@ static PyObject* _Nullable imp_metadata(PyObject* self)
     if (r == -1) {         // LCOV_BR_EXCL_LINE
         Py_DECREF(result); // LCOV_EXCL_LINE
         return NULL;       // LCOV_EXCL_LINE
-    }
-
-    if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-        r = PyDict_SetItem(result, PyObjCNM_return_unitialized_object, Py_True);
-        if (r == -1) {         // LCOV_BR_EXCL_LINE
-            Py_DECREF(result); // LCOV_EXCL_LINE
-            return NULL;       // LCOV_EXCL_LINE
-        }
     }
 
     return result;

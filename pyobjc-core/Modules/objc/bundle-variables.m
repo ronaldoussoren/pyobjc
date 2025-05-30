@@ -18,10 +18,9 @@ static const char gCharPtr[] = { _C_CHARPTR, 0 };
 
 static CFBundleRef _Nullable CreateCFBundleFromNSBundle(NSBundle* bundle)
 {
-    CFURLRef bundleURL;
-
-    bundleURL = (CFURLRef)[NSURL fileURLWithPath:[bundle bundlePath]];
-    return CFBundleCreate(kCFAllocatorDefault, bundleURL);
+    @autoreleasepool {
+        return CFBundleCreate(kCFAllocatorDefault, (CFURLRef)[bundle bundleURL]);
+    }
 }
 
 PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)),
@@ -43,6 +42,11 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
                                      PyObjCObject_Convert, &bundle, &PyDict_Type,
                                      &module_globals, &typeid, PyObjCObject_Convert,
                                      &name, &skip_undefined)) {
+        return NULL;
+    }
+
+    if ([bundle class] != [NSBundle class]) {
+        PyErr_SetString(PyObjCExc_Error, "bundle argument is not an NSBundle");
         return NULL;
     }
 
@@ -129,6 +133,11 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O!O|i", keywords,
                                      PyObjCObject_Convert, &bundle, &PyDict_Type,
                                      &module_globals, &variableInfo, &skip_undefined)) {
+        return NULL;
+    }
+
+    if ([bundle class] != [NSBundle class]) {
+        PyErr_SetString(PyObjCExc_Error, "bundle argument is not an NSBundle");
         return NULL;
     }
 
@@ -276,6 +285,11 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
     if (bundle == NULL) {
         cfBundle = NULL;
     } else {
+        if ([bundle class] != [NSBundle class]) {
+            PyErr_SetString(PyObjCExc_Error, "bundle argument is not an NSBundle");
+            return NULL;
+        }
+
         Py_BEGIN_ALLOW_THREADS
             @try {
                 cfBundle = CreateCFBundleFromNSBundle(bundle);

@@ -1,9 +1,6 @@
 /*
  * Implementation of objective-C object wrapper
  *
- * NOTE: We're using CFRetain and CFRelease to manage the retaincount of the Objective-C
- * objects because that will do the right thing when Garbage Collection is involved.
- *
  * XXX: Free-threading: Access to 'flags' is not yet thread safe, need to audit all
  *      paths that change flags.
  */
@@ -103,32 +100,27 @@ static PyObject* _Nullable object_repr(PyObject* _self)
         // LCOV_EXCL_STOP
     }
 
-    if ((flags & PyObjCObject_kUNINITIALIZED) == 0) {
-        /* Try to call the method 'description', which is the ObjC
-         * equivalent of __repr__. If that fails we'll fall back to
-         * the default repr.
-         * Don't call 'description' for uninitialized objects, that
-         * is undefined behaviour and will crash the interpreter sometimes.
-         *
-         * Free threaded: the UNINITIALIZED flags is never re-set once cleared.
-         */
-        PyObject* args[2] = {NULL, (PyObject*)self};
-        res               = PyObject_VectorcallMethod(PyObjCNM_description, args + 1,
-                                                      1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (res == NULL) {
-            PyErr_Clear();
-            /* Fall though to default */
-        } else if (res == Py_None) {
-            Py_DECREF(res);
-            /* Fall though to default */
-        } else {
-            return res;
-        }
+    /* Try to call the method 'description', which is the ObjC
+     * equivalent of __repr__. If that fails we'll fall back to
+     * the default repr.
+     * Don't call 'description' for uninitialized objects, that
+     * is undefined behaviour and will crash the interpreter sometimes.
+     *
+     * Free threaded: the UNINITIALIZED flags is never re-set once cleared.
+     */
+    PyObject* args[2] = {NULL, (PyObject*)self};
+    res               = PyObject_VectorcallMethod(PyObjCNM_description, args + 1,
+                                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    if (res == NULL) {
+        PyErr_Clear();
+    } else if (res == Py_None) {
+        Py_DECREF(res);
+    } else {
+        return res;
     }
-    Py_BEGIN_CRITICAL_SECTION(_self);
+
     res = PyUnicode_FromFormat("<%s objective-c instance %p>", Py_TYPE(self)->tp_name,
                                 self->objc_object);
-    Py_END_CRITICAL_SECTION();
 
     return res;
 }
@@ -169,36 +161,17 @@ object_dealloc(PyObject* obj)
         if ((((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) {
             /* pass */
 
-        } else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
-            /* Freeing of an uninitialized object, just leak because
-             * there is no reliable manner to free such objects.
-             *
-             * - [obj release] doesn't work because some classes
-             *   cause crashes for uninitialized objects
-             * - [[obj init] release] also doesn't work because
-             *   not all classes implement -init
-             * - [obj dealloc] doesn't work for class
-             *   clusters like NSArray.
-             */
-            char buf[256];
-            snprintf(buf, sizeof(buf), "leaking an uninitialized object of type %s",
-                     Py_TYPE(obj)->tp_name);
-            ((PyObjCObject*)obj)->objc_object = nil;
-            if (PyErr_Warn(PyObjCExc_UnInitDeallocWarning, buf) == -1) {
-                PyErr_WriteUnraisable((PyObject*)Py_TYPE(obj));
-            }
-
         } else {
             Py_BEGIN_ALLOW_THREADS
                 @try {
-                    CFRelease(((PyObjCObject*)obj)->objc_object);
+                    [((PyObjCObject*)obj)->objc_object release];;
 
                 } @catch (NSObject* localException) {
                     NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
                           localException);
                 }
             Py_END_ALLOW_THREADS;
-            ((PyObjCObject*)obj)->objc_object = nil;
+            ((PyObjCObject*)obj)->objc_object = (id _Nonnull)nil;
         }
     }
 
@@ -835,24 +808,22 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
 
     obj_name = nil;
     if (((PyObjCClassObject*)tp)->useKVO) {
-        if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
-            if (!PyObjC_is_ascii_prefix(name, "_", 1)) {
-                obj_name =
-                    [NSString stringWithUTF8String:(const char* _Nonnull)PyObjC_Unicode_Fast_Bytes(name)];
+        if (!PyObjC_is_ascii_prefix(name, "_", 1)) {
+            obj_name =
+                [NSString stringWithUTF8String:(const char* _Nonnull)PyObjC_Unicode_Fast_Bytes(name)];
 
-                if (obj_name == nil) {
-                    PyErr_SetString(PyObjCExc_Error, "Cannot convert attribute name to NSString");
-                    return -1;
-                }
+            if (obj_name == nil) {
+                PyErr_SetString(PyObjCExc_Error, "Cannot convert attribute name to NSString");
+                return -1;
+            }
 
-                @try {
-                    [(NSObject*)obj_inst willChangeValueForKey:obj_name];
-                } @catch (NSObject* localException) {
-                    PyObjCErr_FromObjC(localException);
-                }
-                if (PyErr_Occurred()) {
-                    return -1;
-                }
+            @try {
+                [(NSObject*)obj_inst willChangeValueForKey:obj_name];
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+            if (PyErr_Occurred()) {
+                return -1;
             }
         }
     }
@@ -1330,7 +1301,11 @@ PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object)
 void
 _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 {
+#if PY_VERSION_HEX >= 0x030e0000
+    if (PyUnstable_Object_IsUniquelyReferenced(obj) != 1) {
+#else
     if (Py_REFCNT(obj) != 1) {
+#endif
         /* Someone revived this object. Objective-C doesn't like
          * this at all, therefore warn the user about this and
          * zero out the instance.
@@ -1342,20 +1317,11 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 
         id objc_object = PyObjCObject_GetObject(obj);
         if (objc_object != nil) {
-
-            if (((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE) {
-                /* pass */
-
-            } else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
-                /* pass */
-
-            } else { // LCOV_EXCL_LINE
-                CFRelease(objc_object);
-            }
-
             PyObjC_UnregisterPythonProxy(objc_object, obj);
         }
-        ((PyObjCObject*)obj)->objc_object = nil;
+
+        /* Object is set to ``[NSNull null]`` to maintain the invariant */
+        ((PyObjCObject*)obj)->objc_object = NSNull_null;
 
         Py_DECREF(obj);
 
@@ -1422,9 +1388,9 @@ PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
     }
 
     if (retain) {
-        if (strcmp(object_getClassName(objc_object), "NSAutoreleasePool") != 0) {
+        if (object_getClass(objc_object) != NSAutoreleasePool_class) {
             /* NSAutoreleasePool doesn't like retain */
-            CFRetain(objc_object);
+            [objc_object retain];
         }
     }
 
@@ -1496,14 +1462,6 @@ PyObjCMethodSignature* _Nullable PyObjCObject_SetBlockSignature(PyObject* object
 }
 
 
-
-void
-PyObjCObject_ClearObject(PyObject* object)
-{
-    assert(PyObjCObject_Check(object));
-    PyObjC_UnregisterPythonProxy(((PyObjCObject*)object)->objc_object, object);
-    ((PyObjCObject*)object)->objc_object = nil;
-}
 
 PyObject* _Nullable PyObjCObject_GetAttr(PyObject* obj, PyObject* name)
 {

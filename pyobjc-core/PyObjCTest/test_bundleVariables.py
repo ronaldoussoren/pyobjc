@@ -81,8 +81,8 @@ class TestBundleVariables(TestCase):
             objc.loadBundleVariables(NoObjectiveC(), {}, [])
 
         with self.assertRaisesRegex(
-            ValueError,
-            r"NSInvalidArgumentException - -\[OC_BuiltinPythonUnicode bundlePath\]: unrecognized selector sent to instance",
+            objc.error,
+            "bundle argument is not an NSBundle",
         ):
             # This exception is suboptimal, but does show that the bridge doesn't crash when an incorrect value is passed.
             objc.loadBundleVariables("", {}, [])
@@ -157,8 +157,8 @@ class TestSpecialVariables(TestCase):
             objc.loadSpecialVar(NoObjectiveC(), {}, 42, "hello")
 
         with self.assertRaisesRegex(
-            ValueError,
-            r"NSInvalidArgumentException - -\[OC_BuiltinPythonUnicode bundlePath\]: unrecognized selector sent to instance",
+            objc.error,
+            "bundle argument is not an NSBundle",
         ):
             # This exception is suboptimal, but does show that the bridge doesn't crash when an incorrect value is passed.
             objc.loadSpecialVar("", {}, 42, "hello")

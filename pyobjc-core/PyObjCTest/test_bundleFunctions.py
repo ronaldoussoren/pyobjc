@@ -92,8 +92,8 @@ class TestBundleFunctions(TestCase):
             objc.loadBundleFunctions(NoObjectiveC(), {}, [])
 
         with self.assertRaisesRegex(
-            ValueError,
-            r"NSInvalidArgumentException - -\[OC_BuiltinPythonUnicode bundlePath\]: unrecognized selector sent to instance",
+            objc.error,
+            "bundle argument is not an NSBundle",
         ):
             # This exception is suboptimal, but does show that the bridge doesn't crash when an incorrect value is passed.
             objc.loadBundleFunctions("", {}, [])

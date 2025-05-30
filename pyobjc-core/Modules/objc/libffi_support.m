@@ -2241,6 +2241,17 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         PyObjCObject_ReleaseTransient(pyself, cookie);
     }
 
+    if (methinfo->initializer) {
+        /* 'init' methods steal a reference to self,
+         * and return a new reference.
+         */
+        if (*(id*)resp != *(id*)args[0]) {
+            /* We cannot forward ownership */
+            [*(id*)resp retain];
+            [*(id*)args[0] release];
+        }
+    }
+
     PyGILState_Release(state);
 
     return;
@@ -2329,6 +2340,24 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
         return result;
 
     } else {
+        /* Check if 'callable' is an object with an '__call__' method
+         * implemented in Python.
+         */
+        PyObject* call = PyObject_GetAttr(callable, PyObjCNM___call__);
+        if (call != NULL) {
+            if (PyObjC_is_pyfunction(call) || PyObjC_is_pymethod(call)) {
+                Py_ssize_t result = _argcount(call, haveVarArgs, haveVarKwds, haveKwOnly, defaultCount);
+                Py_CLEAR(call);
+                return result;
+            }
+            Py_CLEAR(call);
+        }
+
+        /* XXX: This is not ideal, maybe just assume arbitrary callables will
+         *      work (e.g. check for Py_TYPE(callable)->tp_call). We'll get an
+         *      exception when the function is called with an invalid argument
+         *      list anyway.
+         */
         PyErr_Format(PyExc_TypeError, "Sorry, cannot create IMP for instances of type %s",
                      Py_TYPE(callable)->tp_name);
         return -2;
@@ -2452,12 +2481,6 @@ validate_callable_signature(PyObject* callable, SEL sel, PyObjCMethodSignature* 
 
     } else if (((nargs - defaultCount) <= Py_SIZE(methinfo) - 1) && haveVarArgs) {
         /* OK */
-#if 0
-    } else if (haveVarArgs) {
-        /* OK */
-        printf("methinfo: %ld    nargs: %ld    defaultCount: %ld    haveVarArgs: %d   haveVarKwds: %d\n",
-                Py_SIZE(methinfo), nargs, defaultCount, (int)haveVarArgs, (int)haveVarKwds);
-#endif
     } else {
         /* Wrong number of arguments, raise an error */
         if (defaultCount) {
@@ -3846,7 +3869,6 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                           Py_ssize_t argOffset, void* pRetval,
                                           void** byref, struct byref_attr* byref_attr,
                                           Py_ssize_t byref_out_count,
-                                          PyObject* _Nullable self, int flags,
                                           void** argvalues)
 {
     PyObject*  result      = NULL;
@@ -4108,16 +4130,6 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
         objc_result = Py_None;
     }
 
-    /* XXX: This is for selectors only, need to change this !!!! */
-
-    if (self != NULL && objc_result != self && PyObjCObject_Check(self)
-        && PyObjCObject_Check(objc_result)
-        && !(flags & PyObjCSelector_kRETURNS_UNINITIALIZED)
-        && (((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
-        [PyObjCObject_GetObject(objc_result) release];
-        PyObjCObject_ClearObject(self);
-    }
-
     if (byref_out_count == 0) {
         return objc_result;
 
@@ -4347,8 +4359,7 @@ error_cleanup:
 
 #if PY_VERSION_HEX >= 0x03090000
 PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo,
-                                                 void* pRetval, PyObject* _Nullable self,
-                                                 int   flags)
+                                                 void* pRetval)
 /*
  * A variant of ParseArguments for "simple" functions (see method-signature.m for the
  * definition
@@ -4451,17 +4462,6 @@ PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo
         objc_result = Py_None;
     }
 
-    /* XXX: This is for selectors only, need to change this !!!! */
-    /* XXX restructure the if statement to put the most like to be false bit first */
-
-    if (unlikely(self != NULL && objc_result != self && PyObjCObject_Check(self)
-                 && PyObjCObject_Check(objc_result)
-                 && !(flags & PyObjCSelector_kRETURNS_UNINITIALIZED)
-                 && (((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED))) {
-        [PyObjCObject_GetObject(objc_result) release];
-        PyObjCObject_ClearObject(self);
-    }
-
     return objc_result;
 }
 
@@ -4550,7 +4550,6 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
 #endif
     int         flags;
     SEL         theSel;
-    int         isUninitialized;
     BOOL        variadicAllArgs = NO;
     const char* rettype;
 
@@ -4791,12 +4790,14 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
         goto error_cleanup;
     }
 
-    if (likely(PyObjCObject_Check(self))) {
-        isUninitialized = ((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED;
-        ((PyObjCObject*)self)->flags &= ~PyObjCObject_kUNINITIALIZED;
-    } else {
-        isUninitialized = NO;
+    /*
+     * Init methods steal a reference to self and return a new reference
+     */
+#if 1
+    if (methinfo->initializer) {
+        [self_obj retain];
     }
+#endif
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -4821,15 +4822,17 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (unlikely(isUninitialized && PyObjCObject_Check(self))) {
-        ((PyObjCObject*)self)->flags |= PyObjCObject_kUNINITIALIZED;
-    }
-
     if (PyErr_Occurred())
         goto error_cleanup;
 
     result = PyObjCFFI_BuildResult(methinfo, 2, msgResult, byref, byref_attr,
-                                   byref_out_count, self, flags, values);
+                                   byref_out_count, values);
+
+#if 1
+    if (methinfo->initializer && (*(id*)msgResult != nil)) {
+        [*(id*)msgResult release];
+    }
+#endif
 
     if (unlikely(variadicAllArgs)) {
         if (PyObjCFFI_FreeByRef(Py_SIZE(methinfo) + nargs, byref, byref_attr) < 0) {
@@ -4899,7 +4902,6 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
 #endif
     int      flags;
     SEL      theSel;
-    int      isUninitialized;
     ffi_cif* cif;
 
     if (PyObjCIMP_Check(aMeth)) {
@@ -5036,11 +5038,11 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
         goto error_cleanup;
     }
 
-    if (likely(PyObjCObject_Check(self))) {
-        isUninitialized = ((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED;
-        ((PyObjCObject*)self)->flags &= ~PyObjCObject_kUNINITIALIZED;
-    } else {
-        isUninitialized = NO;
+    /*
+     * Init methods steal a reference to self and return a new reference
+     */
+    if (methinfo->initializer) {
+        [self_obj retain];
     }
 
     Py_BEGIN_ALLOW_THREADS
@@ -5069,14 +5071,15 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (unlikely(isUninitialized && PyObjCObject_Check(self))) {
-        ((PyObjCObject*)self)->flags |= PyObjCObject_kUNINITIALIZED;
-    }
-
     if (PyErr_Occurred()) /* XXX: Should this before the previous check? */
         goto error_cleanup;
 
-    PyObject* result = PyObjCFFI_BuildResult_Simple(methinfo, msgResult, self, flags);
+    PyObject* result = PyObjCFFI_BuildResult_Simple(methinfo, msgResult);
+
+    if (methinfo->initializer && (*(id*)msgResult != nil)) {
+        [*(id*)msgResult release];
+    }
+
     Py_CLEAR(methinfo);
     return result;
 
@@ -5104,7 +5107,6 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
     int useStret;
 #endif
     int      flags;
-    int      isUninitialized = NO;
     ffi_cif* cif;
 
     /* Only called for 'native' selectors */
@@ -5177,8 +5179,6 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
         int err;
         if (likely(PyObjCObject_Check(self))) {
             self_obj        = PyObjCObject_GetObject(self);
-            isUninitialized = ((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED;
-            ((PyObjCObject*)self)->flags &= ~PyObjCObject_kUNINITIALIZED;
 
         } else {
             err = depythonify_c_value(@encode(id), self, &self_obj);
@@ -5219,6 +5219,15 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
         goto error_cleanup;
     }
 
+    /*
+     * Init methods steal a reference to self and return a new reference
+     */
+#if 1
+    if (methinfo->initializer) {
+        [self_obj retain];
+    }
+#endif
+
     Py_BEGIN_ALLOW_THREADS
         @try {
 #ifdef __arm64__
@@ -5240,14 +5249,18 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (unlikely(isUninitialized && PyObjCObject_Check(self))) {
-        ((PyObjCObject*)self)->flags |= PyObjCObject_kUNINITIALIZED;
-    }
-
     if (PyErr_Occurred()) /* XXX: Should this before the previous check? */
         goto error_cleanup;
 
-    return PyObjCFFI_BuildResult_Simple(methinfo, msgResult, self, flags);
+    PyObject* res =  PyObjCFFI_BuildResult_Simple(methinfo, msgResult);
+
+#if 1
+    if (methinfo->initializer && (*(id*)msgResult != nil)) {
+        [*(id*)msgResult release];
+    }
+#endif
+
+    return res;
 
 error_cleanup:
     return NULL;

@@ -9,7 +9,7 @@
 #define PyObjCSelector_kCLASS_METHOD 0x000001
 #define PyObjCSelector_kHIDDEN 0x000002
 #define PyObjCSelector_kREQUIRED 0x000004
-#define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010
+/* #define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010 */
 #define PyObjCSelector_kNATIVE 0x000020
 
 #include <ffi/ffi.h>

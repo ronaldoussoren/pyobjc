@@ -62,7 +62,7 @@ extern PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature*,
                                                  Py_ssize_t argOffset, void* pRetval,
                                                  void* _Nullable* _Nonnull,
                                                  struct byref_attr* byref_attr,
-                                                 Py_ssize_t, PyObject* _Nullable, int,
+                                                 Py_ssize_t,
                                                  void* _Nullable* _Nonnull);
 extern int PyObjCFFI_FreeByRef(Py_ssize_t, void* _Nullable* _Nonnull, struct byref_attr*);
 extern ffi_type* _Nullable PyObjCFFI_Typestr2FFI(const char*);
@@ -90,8 +90,7 @@ extern Py_ssize_t PyObjCFFI_ParseArguments_Simple(PyObjCMethodSignature*, Py_ssi
                                                   PyObject* _Nonnull const* _Nonnull,
                                                   size_t, Py_ssize_t, unsigned char*,
                                                   Py_ssize_t, void* _Nullable* _Nonnull);
-extern PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature*, void*,
-                                                        PyObject* _Nullable, int);
+extern PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature*, void*);
 #endif
 
 NS_ASSUME_NONNULL_END

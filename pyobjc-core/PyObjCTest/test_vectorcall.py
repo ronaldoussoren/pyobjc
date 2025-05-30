@@ -3489,6 +3489,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2d.isClassMethod)
+        self.assertIsNotInitializer(OC_VectorCall.v2d)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2d, b"<2d>")
 
@@ -7396,6 +7397,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2d_id_.isClassMethod)
+        self.assertIsNotInitializer(OC_VectorCall.idv2d_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2d_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2d_id_, 0, b"<2d>")
@@ -7594,6 +7596,7 @@ class TestVectorCall(TestCase):
             imp(42, objc.simd.vector_double2(0.0, 1.5), "hello")
 
     def test_imp_idv2d_id_(self):
+        self.assertIsNotInitializer(OC_VectorCallInstance.idv2d_id_)
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
         result = OC_VectorCallInvoke.idv2didOn_(value)

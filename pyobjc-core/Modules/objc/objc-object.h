@@ -4,7 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define PyObjCObject_kDEFAULT 0x00
-#define PyObjCObject_kUNINITIALIZED 0x01
+/* #define PyObjCObject_kUNINITIALIZED 0x01 */
 #define PyObjCObject_kDEALLOC_HELPER 0x04
 #define PyObjCObject_kSHOULD_NOT_RELEASE 0x08
 #define PyObjCObject_kMAGIC_COOKIE 0x10
@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef struct {
     PyObject_HEAD
 
-    __strong     id _Nullable objc_object;
+    __strong     id objc_object;
     unsigned int flags;
 } PyObjCObject;
 
@@ -31,8 +31,6 @@ extern PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retai
 extern PyObject* _Nullable PyObjCObject_FindSelector(PyObject* cls, SEL selector);
 extern id _Nullable PyObjCObject_GetObject(PyObject* object);
 extern unsigned int PyObjCObject_GetFlags(PyObject* object);
-
-extern void PyObjCObject_ClearObject(PyObject* object);
 
 extern void _PyObjCObject_FreeDeallocHelper(PyObject* obj);
 extern PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object);

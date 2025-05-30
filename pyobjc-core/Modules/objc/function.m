@@ -272,7 +272,7 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     }
 
     retval = PyObjCFFI_BuildResult(self->methinfo, 0, argbuf, byref, byref_attr,
-                                   byref_out_count, NULL, 0, values);
+                                   byref_out_count, values);
 
 error:
     if (variadicAllArgs) {
@@ -363,7 +363,7 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
         goto error;
     }
 
-    return PyObjCFFI_BuildResult_Simple(self->methinfo, argbuf, NULL, 0);
+    return PyObjCFFI_BuildResult_Simple(self->methinfo, argbuf);
 
 error:
     return NULL;
