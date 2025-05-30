@@ -69,7 +69,7 @@ c-coverage:
 	rm -rf build dist
 	mkdir build dist
 	python3 -mvenv build/cov-env
-	build/cov-env/bin/python -m pip install -U setuptools wheel
+	build/cov-env/bin/python -m pip install -U 'setuptools==79.0'  wheel
 	env ARCHFLAGS="-arch arm64" CFLAGS="-DCOVERAGE --coverage -fprofile-arcs -ftest-coverage -O1" LDFLAGS="--coverage -fprofile-arcs -ftest-coverage -O1" build/cov-env/bin/python3 setup.py build_ext -j 4 develop
 	#cd ../pyobjc-framework-Cocoa && ../pyobjc-core/build/cov-env/bin/python setup.py develop
 	#cd ../pyobjc-framework-Quartz && ../pyobjc-core/build/cov-env/bin/python setup.py develop
