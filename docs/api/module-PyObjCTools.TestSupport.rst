@@ -130,6 +130,11 @@ wrappers.
          used to environment variable :envvar:`PyOBJC_USE_LEAKS` as a trigger to enable the
          functionality.
 
+   .. method:: assertGenericAlias(self, value, origin, args)
+
+      Assert that *value* is a :class:`typing.GenericAlias` with
+      the specified *origin* and *args*.
+
    .. method:: assertStartswith(self, value, check[, message])
 
       Assert that *value* is a string that starts with *check*.
@@ -149,6 +154,35 @@ wrappers.
    .. method:: assertIsOpaquePointer(tp[, message)
 
       Asserts that *tp* is a wrapper class for an opaque pointer ("handle")
+
+   .. method:: assertIsInitializer(method[, message])
+
+      Assert that the selector is an initializer.
+
+      .. versionadded: 11.1
+
+   .. method:: assertIsNotInitializer(method[, message])
+
+      Assert that the selector is not an initializer.
+
+      .. versionadded: 11.1
+
+   .. method:: assertDoesFreeResult(method[, message])
+
+      Assert that the callable calls free(3) on the pointer
+      returned in Objective-C after converting the value
+      to Python.
+
+      .. versionadded: 11.1
+
+   .. method:: assertDoesNotFreeResult(method[, message])
+
+      Assert that the callable does not call free(3) on the pointer
+      returned in Objective-C after converting the value
+      to Python.
+
+      .. versionadded: 11.1
+
 
    .. method:: assertIsNullTerminated(method[, message])
 

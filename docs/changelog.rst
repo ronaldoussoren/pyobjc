@@ -6,7 +6,30 @@ An overview of the relevant changes in new, and older, releases.
 Version 11.1
 ------------
 
-* Update framework bindings for the macOS 15.4 SDK
+The major change in this release is aligning behaviour of the core bridge
+with `clang's documentation for automatic reference counting <https://clang.llvm.org/docs/AutomaticReferenceCounting.html>`_
+for initializer methods. In particular, PyObjC now correctly models
+that methods in the "init" family steal a reference to self and return
+a new reference.
+
+In previous version of PyObjC the proxy for ``[NSObject alloc]`` would be
+marked as 'partially initialized' and would be cleared when the ``-init`` method
+returns something else then ``self``.
+
+This has two problems:
+
+1. Behaviour is incorrect when ``+alloc`` returns a singleton whose
+   ``-init`` method(s) are factory methods (such as ``NSArray`` in
+   recent versions of macOS)
+
+2. The proxy for Objective-C objects needs to contain mutable state.
+   This in turn requires locking in the implementation to work
+   correctly with free-threading.
+
+This version drops the concept of "uninitialized" values and correctly models
+how reference counts are handled by ``-init`` methods.
+
+* Update framework bindings for the macOS 15.5 SDK
 
 * Added bindings for the ``SecurityUI`` framework
 
@@ -39,9 +62,15 @@ Version 11.1
   especially when using free-threading.
 
 * Fixing the previous issue required rearchitecting the way partially
-  initialized objects (e.g. the result of ``SomeClass.alloc()`` is handled,
+  initialized objects (e.g. the result of ``SomeClass.alloc()`` are handled,
   and has some other user visible behaviour changes (none of which should
   affect normal code):
+
+  * :class:`objc.UninitializedDeallocWarning` is now soft deprecated because
+    this warning will never be emitted.
+
+  * Bit ``0x1`` will never be set in the ``__flags__`` attribute of
+    Objective-C objects.
 
   * The proxied value of an :class:`objc.objc_object` instance will never
     be ``nil``, all exceptions about accessing attributes or methods
@@ -64,6 +93,53 @@ Version 11.1
     Objective-C class. In general it is advised to not use this pattern,
     but always call ``SomeClass.alloc().init...()`` or the more pythonic
     ``SomeClass(...)`` introduced in PyObjC 10.3.
+
+  * The following code accidentally worked in previous versions of PyObjC
+    and will now crash. Handling of partially initialized objects in previous
+    versions hides the reference counting bug in this code.
+
+    .. sourcecode:: python
+
+       class NilObject(NSObject):
+          def init(self):
+              self.release()
+              return None
+
+  * The ``isAlloc`` attribute of :class:`objc.selector` is deprecated and
+    will be removed in PyObjC 12.
+
+  * The bridge no longer uses ``CFRetain`` and ``CFRelease`` to maintain
+    the reference counts of Objective-C values. The original reason to do
+    this is no longer needed, there are edge cases where mixing native ObjC
+    retain count updates with these functions causes problems.
+
+* Python 3.14: Use ``PyUnstable_Object_IsUniquelyReferenced`` to check if the
+  dealloc helper is uniquely referenced when trying to release it instead of
+  manually checking the reference count.
+
+  This fixes an unlikely edge case in the free threading build where checking
+  the reference count like this is not correct.
+
+* Deprecated :attr:`objc.objc_object.pyobjc_ISA`.
+
+* Implement ``__class_getitem__`` for :class:`objc.function`,
+  :class:`objc.selector`.  :class:`objc.varlist`.  and
+  :class:`objc.WeakRef`
+
+  This allows for treating these classes a generic in type annotations.
+
+* Add some methods to :class:`PyObjCTools.TestSupport.TestCase`, in
+  particular
+  :meth:`assertIsInitializer <PyObjCTools.TestSupport.TestCase.assertIsInitializer`,
+  :meth:`assertIsNotInitializer <PyObjCTools.TestSupport.TestCase.assertIsNotInitializer`,
+  :meth:`assertDoesFreeResult <PyObjCTools.TestSupport.TestCase.assertDoesFreeResult`,
+  :meth:`assertDoesNotFreeResult <PyObjCTools.TestSupport.TestCase.assertDoesNotFreeResult`.
+
+* Add implementation for ``NSMutableData.resize`` to match :meth:`bytearray.resize` that
+  was introduced in Python 3.14.
+
+* Using a instance of a Python class with an ``__call__`` method as
+  an Objective-C block is now possible.
 
 Version 11.0
 ------------

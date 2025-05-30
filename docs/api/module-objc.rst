@@ -1153,6 +1153,8 @@ Types
       Read-only attribute that specifies if the IMP is an allocator (that is,
       the implementation of "+alloc" or one of its variant)
 
+      .. deprecated:: 11.1 Is always :data:`False` and will be removed in PyObjC 12.
+
    .. attribute:: isClassMethod
 
       Read-only attribute that specified if the IMP is for a class method.
