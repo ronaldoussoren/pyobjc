@@ -232,9 +232,10 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
                               PyObjCPointerWrapper_ToPythonFunc   pythonify,
                               PyObjCPointerWrapper_FromPythonFunc depythonify)
 {
-    PyObjC_Assert(signature, -1);
-    PyObjC_Assert(pythonify, -1);
-    PyObjC_Assert(depythonify, -1);
+    assert(signature);
+    assert(pythonify);
+    assert(depythonify);
+
     PyObjCPointerWrapper_ToPythonFunc cur_pythonify;
     PyObjCPointerWrapper_FromPythonFunc cur_depythonify;
 

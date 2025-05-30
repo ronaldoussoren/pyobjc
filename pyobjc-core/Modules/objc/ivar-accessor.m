@@ -36,7 +36,7 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    PyObjC_Assert(cur != NULL, NULL);
+    assert(cur != NULL);
 
     result = PyList_New(0);
     if (result == NULL) { // LCOV_BR_EXCL_LINE

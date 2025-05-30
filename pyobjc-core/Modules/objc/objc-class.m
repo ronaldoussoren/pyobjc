@@ -18,11 +18,11 @@ PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadat
 
     if (classMethod) {
         hidden = ((PyObjCClassObject*)tp)->hiddenClassSelectors;
-        PyObjC_Assert(hidden != NULL, -1);
+        assert(hidden != NULL);
 
     } else {
         hidden = ((PyObjCClassObject*)tp)->hiddenSelectors;
-        PyObjC_Assert(hidden != NULL, -1);
+        assert(hidden != NULL);
     }
 
     v = PyBytes_FromString(sel_getName(sel));
@@ -47,7 +47,7 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
         return NULL;   // LCOV_EXCL_LINE
     }
 
-    PyObjC_Assert(PyTuple_Check(mro), NULL);
+    assert(PyTuple_Check(mro));
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         PyObject* base = PyTuple_GET_ITEM(mro, i);
@@ -144,8 +144,8 @@ static NSMapTable* _Nullable metaclass_to_class = NULL;
 int
 PyObjCClass_Setup(PyObject* module __attribute__((__unused__)))
 {
-    PyObjC_Assert(class_registry == NULL, -1);
-    PyObjC_Assert(metaclass_to_class == NULL, -1);
+    assert(class_registry == NULL);
+    assert(metaclass_to_class == NULL);
 
     class_registry = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
                                       PyObjCUtil_PointerValueCallBacks,
@@ -183,7 +183,7 @@ PyObjCClass_Setup(PyObject* module __attribute__((__unused__)))
 static PyObject* _Nullable __attribute__((warn_unused_result))
 objc_class_register(Class objc_class, PyObject* py_class)
 {
-    PyObjC_Assert(class_registry != NULL, NULL);
+    assert(class_registry != NULL);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&registry_lock);
@@ -219,7 +219,7 @@ objc_class_register(Class objc_class, PyObject* py_class)
 static PyTypeObject* _Nullable __attribute__((warn_unused_result))
 objc_metaclass_register(PyTypeObject* meta_class, Class objc_class, Class objc_meta_class)
 {
-    PyObjC_Assert(metaclass_to_class != NULL, NULL);
+    assert(metaclass_to_class != NULL);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&classmap_lock);
@@ -513,9 +513,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                                      &arg_protocols, &final)) {
         return NULL;
     }
-    PyObjC_Assert(name != NULL, NULL);
-    PyObjC_Assert(bases != NULL, NULL);
-    PyObjC_Assert(dict != NULL, NULL);
+    assert(name != NULL);
+    assert(bases != NULL);
+    assert(dict != NULL);
 
     if (!PyTuple_Check(bases)) {
         PyErr_SetString(PyExc_TypeError, "'bases' must be tuple");
@@ -529,7 +529,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     py_super_class = PyTuple_GET_ITEM(bases, 0);
-    PyObjC_Assert(py_super_class != NULL, NULL);
+    assert(py_super_class != NULL);
 
     if (py_super_class == PyObjC_NSCFTypeClass) {
         /* A new subclass of NSCFType
@@ -560,7 +560,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
          * a Nil class and that's excluded above.
          */
         // LCOV_EXCL_START
-        PyObjC_Assert(PyErr_Occurred(), NULL);
+        assert(PyErr_Occurred());
         return NULL;
         // LCOV_EXCL_STOP
     }
@@ -658,7 +658,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
     for (i = 1; i < len; i++) {
         v = PyTuple_GET_ITEM(bases, i);
-        PyObjC_Assert(v != NULL, NULL);
+        assert(v != NULL);
 
         if (PyObjCClass_Check(v)) {
             Py_DECREF(protocols);
@@ -785,7 +785,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         py_super_class = PyObjCClass_New(super_class);
         if (py_super_class == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
-            PyObjC_Assert(objc_class != Nil, NULL);
+            assert(objc_class != Nil);
             (void)PyObjCClass_UnbuildClass(objc_class);
             Py_XDECREF(orig_slots);
             Py_DECREF(protocols);
@@ -798,7 +798,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         } else {
             if (PyObjCClass_CheckMethodList(py_super_class, 1) < 0) {
-                PyObjC_Assert(objc_class != Nil, NULL);
+                assert(objc_class != Nil);
                 (void)PyObjCClass_UnbuildClass(objc_class);
                 Py_XDECREF(orig_slots);
                 Py_DECREF(protocols);
@@ -812,7 +812,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
 
         if (PyList_SetItem(real_bases, 0, py_super_class) < 0) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
-            PyObjC_Assert(objc_class != Nil, NULL);
+            assert(objc_class != Nil);
             (void)PyObjCClass_UnbuildClass(objc_class);
             Py_XDECREF(orig_slots);
             Py_DECREF(protocols);
@@ -1229,7 +1229,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     /* This is an "extra" ref */
     Py_INCREF(res);
 
-    PyObjC_Assert(info->hasPythonImpl, NULL);
+    assert(info->hasPythonImpl);
 
     if (!has_dunder_new) {
         if (PyObjC_SetDunderNew(res) == -1) {
@@ -1314,7 +1314,7 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
     PyObjCClassObject* info;
     PyObject* _Nullable cls = start_cls;
 
-    PyObjC_Assert(PyObjCClass_Check(start_cls), -1);
+    assert(PyObjCClass_Check(start_cls));
 
     info = (PyObjCClassObject*)cls;
 
@@ -1414,7 +1414,7 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
          * proxy for the same class.
          */
         Py_DECREF(cls);
-        PyObjC_Assert(PyObjCClass_Check(cls), -1);
+        assert(PyObjCClass_Check(cls));
         info = (PyObjCClassObject*)cls;
     }
     return 0;
@@ -1528,7 +1528,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
-    PyObjC_Assert(PyTuple_Check(mro), NULL);
+    assert(PyTuple_Check(mro));
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
@@ -1554,7 +1554,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
             return NULL; // LCOV_EXCL_LINE
         }
 
-        PyObjC_Assert(dict && PyDict_Check(dict), NULL);
+        assert(dict && PyDict_Check(dict));
         int r = PyDict_GetItemRef(dict, name, &descr);
         Py_CLEAR(dict);
         if (r == 1) { // LCOV_BR_EXCL_LINE
@@ -1597,7 +1597,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
-    PyObjC_Assert(PyTuple_Check(mro), NULL);
+    assert(PyTuple_Check(mro));
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         Class        cls;
@@ -1605,7 +1605,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         unsigned int method_count, j;
 
         base = PyTuple_GET_ITEM(mro, i);
-        PyObjC_Assert(base != NULL, NULL);
+        assert(base != NULL);
 
         if (!PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
             continue;
@@ -1617,7 +1617,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         }
 
         cls = objc_metaclass_locate(base);
-        PyObjC_Assert(cls != Nil, NULL);
+        assert(cls != Nil);
 
         PyObject* class_for_base = PyObjCClass_ClassForMetaClass(base);
         if (class_for_base == NULL) { // LCOV_BR_EXCL_LINE
@@ -1703,8 +1703,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         free(methods);
     }
 
-    /* XXX: just checking... */
-    PyObjC_Assert(descr == NULL, NULL);
+    assert(descr == NULL);
     Py_CLEAR(mro);
     return NULL;
 }
@@ -1713,7 +1712,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name,
                                                        SEL sel)
 {
-    PyObjC_Assert(PyObjCClass_Check(base) || PyObjCMetaClass_Check(base) || base == (PyObject*)&PyObjCMetaClass_Type, NULL);
+    assert(PyObjCClass_Check(base) || PyObjCMetaClass_Check(base) || base == (PyObject*)&PyObjCMetaClass_Type);
     Class     cls;
     Method    m;
     PyObject* dict = ((PyTypeObject*)base)->tp_dict;
@@ -1813,7 +1812,7 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
-    PyObjC_Assert(PyTuple_Check(mro), NULL);
+    assert(PyTuple_Check(mro));
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
@@ -1930,7 +1929,7 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
-    PyObjC_Assert(PyTuple_Check(mro), NULL);
+    assert(PyTuple_Check(mro));
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         Class        cls;
@@ -2751,7 +2750,7 @@ static PyObject* _Nullable class_get_hidden(PyObject* _self, PyObject* classMeth
         }
     }
 
-    PyObjC_Assert(PyDict_Check(hidden), NULL);
+    assert(PyDict_Check(hidden));
     return PyDict_Copy(hidden);
 }
 
@@ -2845,7 +2844,7 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     PyTypeObject*      metaclass;
     const char*        className;
 
-    PyObjC_Assert(objc_class != Nil, NULL);
+    assert(objc_class != Nil);
 
     result = objc_class_locate(objc_class);
     if (result != NULL) {
@@ -3769,7 +3768,7 @@ cleanup_and_return_error:
 PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name,
                                                    SEL sel)
 {
-    PyObjC_Assert(PyObjCClass_Check(base), NULL);
+    assert(PyObjCClass_Check(base));
     Class cls = PyObjCClass_GetClass(base);
     if (cls == NULL) {
         return NULL;

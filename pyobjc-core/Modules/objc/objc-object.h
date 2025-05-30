@@ -29,7 +29,7 @@ extern PyObjCClassObject PyObjCObject_Type;
 
 extern PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain);
 extern PyObject* _Nullable PyObjCObject_FindSelector(PyObject* cls, SEL selector);
-extern id _Nullable PyObjCObject_GetObject(PyObject* object);
+extern id PyObjCObject_GetObject(PyObject* object);
 extern unsigned int PyObjCObject_GetFlags(PyObject* object);
 
 extern void _PyObjCObject_FreeDeallocHelper(PyObject* obj);

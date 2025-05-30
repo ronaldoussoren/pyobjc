@@ -75,7 +75,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
         mro       = starttype->tp_mro;
 
         if (mro != NULL) { // LCOV_BR_EXCL_LINE
-            PyObjC_Assert(PyTuple_Check(mro), NULL);
+            assert(PyTuple_Check(mro));
             n = PyTuple_GET_SIZE(mro);
         }
 
@@ -195,7 +195,7 @@ static PyObject* PyObjCSuper_Type;
 int
 PyObjCSuper_Setup(PyObject* module)
 {
-    PyObjC_Assert(sizeof(superobject) == PySuper_Type.tp_basicsize, -1);
+    assert(sizeof(superobject) == PySuper_Type.tp_basicsize);
 
     super_slots[1].pfunc = (void*)(PySuper_Type.tp_doc);
 

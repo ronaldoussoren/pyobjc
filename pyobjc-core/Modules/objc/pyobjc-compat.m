@@ -43,7 +43,7 @@ const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object)
     /* Having a unicode string is a precondition, checked manually
      * that callers check the type beforehand.
      */
-    PyObjC_Assert(PyUnicode_Check(object), NULL);
+    assert(PyUnicode_Check(object));
 
     if (!PyUnicode_IS_ASCII(object)) {
         /* The code below raises the correct error in a roundabout
@@ -59,7 +59,7 @@ const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object)
             // LCOV_EXCL_STOP
         }
 
-        PyObjC_Assert(r == NULL, NULL);
+        assert(r == NULL);
         return NULL;
     }
 
@@ -116,7 +116,7 @@ PyObject_VectorcallMethod(PyObject* name, PyObject* _Nonnull const* _Nonnull arg
         return NULL;
     }
     if (name == NULL) {
-        PyObjC_Assert(PyErr_Occurred(), NULL);
+        assert(PyErr_Occurred());
         return NULL;
     }
     if (PyVectorcall_NARGS(nargsf) == 0) {

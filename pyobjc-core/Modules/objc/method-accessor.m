@@ -47,12 +47,12 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         }
 
     } else {
-        PyObjC_Assert(PyObjCObject_Check(self), NULL);
+        assert(PyObjCObject_Check(self));
 
         /* Objective-C class methods cannot be accessed though the
          * instance, class_method will never be true
          */
-        PyObjC_Assert(!class_method, NULL);
+        assert(!class_method);
 
         class_object = (PyObject*)Py_TYPE(self);
 
@@ -209,8 +209,8 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
         }
 
     } else {
-        PyObjC_Assert(PyObjCObject_Check(self), NULL);
-        PyObjC_Assert(!class_method, NULL);
+        assert(PyObjCObject_Check(self));
+        assert(!class_method);
 
         id obj = PyObjCObject_GetObject(self);
 
@@ -378,7 +378,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
     PyObjCMethodAccessor* self   = (PyObjCMethodAccessor*)_self;
     PyObject*             result = NULL;
 
-    PyObjC_Assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base), NULL);
+    assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base));
 
     if (PyUnicode_Check(name)) {
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) { // LCOV_BR_EXCL_LINE
@@ -421,7 +421,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
     }
 
     if (self->class_method) {
-        PyObjC_Assert(PyObjCClass_Check(self->base), NULL);
+        assert(PyObjCClass_Check(self->base));
         result = PyObject_GetAttr(self->base, name);
 
     } else {
@@ -519,7 +519,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 
     if (!self->class_method && PyObjCClass_Check(self->base)) {
         /* Unbound instance method */
-        PyObjC_Assert(((PyObjCSelector*)result)->sel_self == NULL, NULL);
+        assert(((PyObjCSelector*)result)->sel_self == NULL);
         return result;
     } else {
         /* Bound instance or class method
@@ -602,9 +602,9 @@ static PyObject* PyObjCMethodAccessor_Type;
 PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method)
 {
     PyObjCMethodAccessor* result;
-    PyObjC_Assert(PyObjCObject_Check(base) || PyObjCClass_Check(base), NULL);
+    assert(PyObjCObject_Check(base) || PyObjCClass_Check(base));
     if (class_method) {
-        PyObjC_Assert(PyObjCClass_Check(base), NULL);
+        assert(PyObjCClass_Check(base));
     }
 
     result =

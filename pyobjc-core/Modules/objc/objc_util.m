@@ -387,7 +387,7 @@ static NSException* _Nullable python_exception_to_objc(void)
     NSException*         val;
     NSMutableDictionary* userInfo = nil;
 
-    PyObjC_Assert(PyErr_Occurred(), nil);
+    assert(PyErr_Occurred());
 
     PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
     if (exc_type == NULL) { // LCOV_BR_EXCL_LINE
@@ -483,9 +483,6 @@ static NSException* _Nullable python_exception_to_objc(void)
     userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
 
     /* XXX: For recent enough versions of Python we don't need to store all three */
-    // PyObjC_Assert(exc_type != NULL, nil);
-    // PyObjC_Assert(exc_value != NULL, nil);
-    // PyObjC_Assert(exc_traceback != NULL, nil);
     [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_type] autorelease]
                  forKey:@"__pyobjc_exc_type__"];
 
@@ -1466,7 +1463,7 @@ PyObject* _Nullable PyObjC_ImportName(const char* name)
     /* This function is only used to import names
      * in a module, not modules.
      */
-    PyObjC_Assert(c != NULL, NULL);
+    assert(c != NULL);
 
 #if 0
     if (c == NULL) {

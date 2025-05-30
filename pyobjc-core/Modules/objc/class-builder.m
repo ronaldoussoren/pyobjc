@@ -74,7 +74,7 @@ setup_gMethods_selectors(void)
 int
 PyObjCClass_FinishClass(Class objc_class)
 {
-    PyObjC_Assert(objc_class != nil, -1);
+    assert(objc_class != nil);
 
     objc_registerClassPair(objc_class);
     return 0;
@@ -89,8 +89,8 @@ PyObjCClass_FinishClass(Class objc_class)
 int
 PyObjCClass_UnbuildClass(Class objc_class __attribute__((__unused__)))
 {
-    PyObjC_Assert(objc_class != nil, -1);
-    PyObjC_Assert(objc_lookUpClass(class_getName(objc_class)) == nil, -1);
+    assert(objc_class != nil);
+    assert(objc_lookUpClass(class_getName(objc_class)) == nil);
 
     objc_disposeClassPair(objc_class);
     return 0;
@@ -131,7 +131,7 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
 #ifdef Py_GIL_DISABLED
         PyMutex_Unlock(&intermediate_mutex);
 #endif
-        PyObjC_Assert(class_getSuperclass(intermediate_class) == base_class, Nil);
+        assert(class_getSuperclass(intermediate_class) == base_class);
 
         return intermediate_class;
     }
@@ -279,9 +279,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     PyObject*  instance_methods   = NULL;
     PyObject*  class_methods      = NULL;
 
-    PyObjC_Assert(super_class != Nil, Nil);
-    PyObjC_Assert(PyList_Check(protocols), Nil);
-    PyObjC_Assert(PyDict_Check(class_dict), Nil);
+    assert(super_class != Nil);
+    assert(PyList_Check(protocols));
+    assert(PyDict_Check(class_dict));
 
     if (objc_lookUpClass(name) != NULL) {
         PyErr_Format(PyObjCExc_Error, "%s is overriding existing Objective-C class",
@@ -319,9 +319,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     Py_INCREF(class_methods);
     *has_dunder_new = PyObject_IsTrue(PyTuple_GET_ITEM(rv, 3));
     Py_DECREF(rv);
-    PyObjC_Assert(instance_variables != NULL, Nil);
-    PyObjC_Assert(instance_methods != NULL, Nil);
-    PyObjC_Assert(class_methods != NULL, Nil);
+    assert(instance_variables != NULL);
+    assert(instance_methods != NULL);
+    assert(class_methods != NULL);
     if (validate_tuple(instance_variables, is_ivar,
                        "invalid instance_variables in result of class dict transformer")
         == -1) {

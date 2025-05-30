@@ -482,7 +482,7 @@ NS_ASSUME_NONNULL_BEGIN
         if (tmpVal == nil) {
             return nil;
         }
-        PyObjC_Assert(tmpVal == self, nil);
+        assert(tmpVal == self);
         self = tmpVal;
 
         PyObjC_BEGIN_WITH_GIL
@@ -506,7 +506,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObjC_END_WITH_GIL
 
         tmpVal = [super initWithCoder:coder];
-        PyObjC_Assert(tmpVal == self, nil);
+        assert(tmpVal == self);
         return tmpVal;
 
     case 3:
@@ -565,7 +565,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObjC_END_WITH_GIL
 
         tmpVal = [super initWithCoder:coder];
-        PyObjC_Assert(tmpVal == self, nil);
+        assert(tmpVal == self);
         return tmpVal;
 
     case 5:
@@ -603,7 +603,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         PyObjC_END_WITH_GIL
         tmpVal = [super initWithCoder:coder];
-        PyObjC_Assert(tmpVal == self, nil);
+        assert(tmpVal == self);
         return tmpVal;
         // LCOV_EXCL_STOP
 

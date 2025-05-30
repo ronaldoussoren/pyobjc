@@ -365,7 +365,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             if (!PyArg_ParseTuple(item, "sy|UO:functionInfo", &c_name, &signature, &doc,
                                   &meta)) {
                 Py_DECREF(seq);
-                PyObjC_Assert(cfBundle == NULL, NULL);
+                assert(cfBundle == NULL);
                 return NULL;
             }
 

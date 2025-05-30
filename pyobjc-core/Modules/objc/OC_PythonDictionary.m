@@ -99,13 +99,13 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 + (instancetype _Nullable)dictionaryWithPythonObject:(PyObject*)v
 {
-    PyObjC_Assert(v != NULL, nil);
+    assert(v != NULL);
     return [[[self alloc] initWithPythonObject:v] autorelease];
 }
 
 - (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
-    PyObjC_Assert(v != NULL, nil);
+    assert(v != NULL);
     self = [super init];
     if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
         return nil;            // LCOV_EXCL_LINE

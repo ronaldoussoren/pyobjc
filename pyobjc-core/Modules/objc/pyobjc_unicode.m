@@ -365,7 +365,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
              * given that wer'e dealing with UCS1 text there cannot be
              * surrogates here (which have values > 256)
              */
-            PyObjC_Assert(!Py_UNICODE_IS_HIGH_SURROGATE(characters[i]), NULL);
+            assert(!Py_UNICODE_IS_HIGH_SURROGATE(characters[i]));
             *latin1_cur++ = (Py_UCS1)characters[i];
         }
 

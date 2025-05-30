@@ -593,7 +593,7 @@ PyObjCRT_SkipTypeQualifiers(const char* type)
 
 const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
 {
-    PyObjC_Assert(start_type != NULL, NULL);
+    assert(start_type != NULL);
     const char* type = start_type;
 
     type = PyObjCRT_SkipTypeQualifiers(type);
@@ -773,7 +773,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
 /* XXX: How is this different from SKipTypeSpec (prev. function) */
 const char* _Nullable PyObjCRT_NextField(const char* start_type)
 {
-    PyObjC_Assert(start_type != NULL, NULL);
+    assert(start_type != NULL);
 
     const char* type = start_type;
 
@@ -948,7 +948,7 @@ Py_ssize_t
 PyObjCRT_AlignOfType(const char* start_type)
 {
     const char* _Nullable type = start_type;
-    PyObjC_Assert(type != NULL, -1);
+    assert(type != NULL);
 
     switch (*type) {
     case _C_VOID:
@@ -1097,7 +1097,7 @@ The aligned size if the size rounded up to the nearest alignment.
 Py_ssize_t
 PyObjCRT_AlignedSize(const char* type)
 {
-    PyObjC_Assert(type != NULL, -1);
+    assert(type != NULL);
 
     Py_ssize_t size  = PyObjCRT_SizeOfType(type);
     Py_ssize_t align = PyObjCRT_AlignOfType(type);
@@ -1114,7 +1114,7 @@ return the size of an object specified by type
 Py_ssize_t
 PyObjCRT_SizeOfType(const char* start_type)
 {
-    PyObjC_Assert(start_type != NULL, -1);
+    assert(start_type != NULL);
 
     const char* _Nullable type = start_type;
 
@@ -1442,8 +1442,8 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, const voi
                                                      BOOL alreadyRetained,
                                                      BOOL alreadyCFRetained)
 {
-    PyObjC_Assert(type != NULL, NULL);
-    PyObjC_Assert(datum != NULL, NULL);
+    assert(type != NULL);
+    assert(datum != NULL);
 
     Py_ssize_t           count      = 0;
     Py_ssize_t           sizeofitem = PyObjCRT_SizeOfType(type);
@@ -1565,8 +1565,8 @@ PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, const voi
 of type @var{type} pointed by @var{datum}. */
 static PyObject* _Nullable pythonify_c_array(const char* type, const void* datum)
 {
-    PyObjC_Assert(type != NULL, NULL);
-    PyObjC_Assert(datum != NULL, NULL);
+    assert(type != NULL);
+    assert(datum != NULL);
 
     PyObject*            ret;
     Py_ssize_t           nitems, itemidx, sizeofitem;
@@ -1607,8 +1607,8 @@ static PyObject* _Nullable pythonify_c_array(const char* type, const void* datum
 of type @var{type} pointed by @var{datum}. */
 static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datum)
 {
-    PyObjC_Assert(type != NULL, NULL);
-    PyObjC_Assert(datum != NULL, NULL);
+    assert(type != NULL);
+    assert(datum != NULL);
 
     PyObject*   ret;
     Py_ssize_t  offset, itemidx;
@@ -1767,9 +1767,9 @@ depythonify_c_return_array_count(const char* rettype, Py_ssize_t count, PyObject
                                  void* resp, BOOL already_retained,
                                  BOOL already_cfretained)
 {
-    PyObjC_Assert(rettype != NULL, -1);
-    PyObjC_Assert(arg != NULL, -1);
-    PyObjC_Assert(resp != NULL, -1);
+    assert(rettype != NULL);
+    assert(arg != NULL);
+    assert(resp != NULL);
 
     /* Use an NSMutableData object to store the bytes, that way we can autorelease the
      * data because we cannot free it otherwise.
@@ -1797,9 +1797,9 @@ int
 depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, void* resp,
                                           BOOL already_retained, BOOL already_cfretained)
 {
-    PyObjC_Assert(rettype != NULL, -1);
-    PyObjC_Assert(arg != NULL, -1);
-    PyObjC_Assert(resp != NULL, -1);
+    assert(rettype != NULL);
+    assert(arg != NULL);
+    assert(resp != NULL);
 
     /* Use an NSMutableData object to store the bytes, that way we can autorelease the
      * data because we cannot free it otherwise.
@@ -1841,9 +1841,9 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
                           PyObject* value, void* datum, BOOL already_retained,
                           BOOL already_cfretained)
 {
-    PyObjC_Assert(type != NULL, -1);
-    PyObjC_Assert(value != NULL, -1);
-    PyObjC_Assert(datum != NULL, -1);
+    assert(type != NULL);
+    assert(value != NULL);
+    assert(datum != NULL);
 
     Py_ssize_t     itemidx, sizeofitem;
     unsigned char* curdatum;
@@ -1940,8 +1940,8 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
 Py_ssize_t
 c_array_nullterminated_size(PyObject* object, PyObject** seq)
 {
-    PyObjC_Assert(object != NULL, -1);
-    PyObjC_Assert(seq != NULL, -1);
+    assert(object != NULL);
+    assert(seq != NULL);
 
     *seq = PyObjCSequence_Tuple(object, "depythonifying array, got no sequence");
     if (*seq == NULL) {
@@ -1956,10 +1956,10 @@ depythonify_c_array_nullterminated(const char* type, Py_ssize_t count, PyObject*
                                    void* datum, BOOL already_retained,
                                    BOOL already_cfretained)
 {
-    PyObjC_Assert(count >= 0, -1);
-    PyObjC_Assert(type != NULL, -1);
-    PyObjC_Assert(value != NULL, -1);
-    PyObjC_Assert(datum != NULL, -1);
+    assert(count >= 0);
+    assert(type != NULL);
+    assert(value != NULL);
+    assert(datum != NULL);
 
     /* Ensure that the list will be NULL terminated */
     if (count > 0) {
@@ -1983,9 +1983,9 @@ NULL on success. */
 static int
 depythonify_c_array(const char* type, PyObject* arg, void* datum)
 {
-    PyObjC_Assert(type != NULL, -1);
-    PyObjC_Assert(arg != NULL, -1);
-    PyObjC_Assert(datum != NULL, -1);
+    assert(type != NULL);
+    assert(arg != NULL);
+    assert(datum != NULL);
 
     Py_ssize_t     nitems, itemidx, sizeofitem;
     unsigned char* curdatum;
@@ -2038,9 +2038,9 @@ NULL on success. */
 static int
 depythonify_c_struct(const char* types, PyObject* arg, void* datum)
 {
-    PyObjC_Assert(types != NULL, -1);
-    PyObjC_Assert(arg != NULL, -1);
-    PyObjC_Assert(datum != NULL, -1);
+    assert(types != NULL);
+    assert(arg != NULL);
+    assert(datum != NULL);
 
     Py_ssize_t  nitems, offset, itemidx;
     int         have_align = 0;
@@ -2164,8 +2164,8 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
 PyObject*
 pythonify_c_value(const char* type, const void* datum)
 {
-    PyObjC_Assert(type != NULL, NULL);
-    PyObjC_Assert(datum != NULL, NULL);
+    assert(type != NULL);
+    assert(datum != NULL);
 
     PyObject* retobject = NULL;
 
@@ -2399,7 +2399,7 @@ pythonify_c_value(const char* type, const void* datum)
 Py_ssize_t
 PyObjCRT_SizeOfReturnType(const char* type)
 {
-    PyObjC_Assert(type != NULL, -1);
+    assert(type != NULL);
 
 #if defined(__x86_64__) /* XXX */
     switch (*type) {
@@ -2428,9 +2428,9 @@ static int
 depythonify_unsigned_int_value(PyObject* argument, char* descr, unsigned long long* out,
                                unsigned long long max)
 {
-    PyObjC_Assert(argument != NULL, -1);
-    PyObjC_Assert(descr != NULL, -1);
-    PyObjC_Assert(out != NULL, -1);
+    assert(argument != NULL);
+    assert(descr != NULL);
+    assert(out != NULL);
 
     if (PyLong_Check(argument)) {
         *out = PyLong_AsUnsignedLongLong(argument);
@@ -2524,9 +2524,9 @@ static int
 depythonify_signed_int_value(PyObject* argument, char* descr, long long* out,
                              long long min, long long max)
 {
-    PyObjC_Assert(argument != NULL, -1);
-    PyObjC_Assert(descr != NULL, -1);
-    PyObjC_Assert(out != NULL, -1);
+    assert(argument != NULL);
+    assert(descr != NULL);
+    assert(out != NULL);
 
     if (PyLong_Check(argument)) {
         *out = PyLong_AsLongLong(argument);
@@ -2583,9 +2583,9 @@ depythonify_signed_int_value(PyObject* argument, char* descr, long long* out,
 int /* XXX: No longer necessary */
 depythonify_c_return_value(const char* type, PyObject* argument, void* datum)
 {
-    PyObjC_Assert(type != NULL, -1);
-    PyObjC_Assert(argument != NULL, -1);
-    PyObjC_Assert(datum != NULL, -1);
+    assert(type != NULL);
+    assert(argument != NULL);
+    assert(datum != NULL);
 
     return depythonify_c_value(type, argument, datum);
 }
@@ -2593,8 +2593,8 @@ depythonify_c_return_value(const char* type, PyObject* argument, void* datum)
 PyObject* _Nullable /*  XXX: No longer necessary */
     pythonify_c_return_value(const char* type, const void* datum) /* XXX */
 {
-    PyObjC_Assert(type != NULL, NULL);
-    PyObjC_Assert(datum != NULL, NULL);
+    assert(type != NULL);
+    assert(datum != NULL);
 
     return pythonify_c_value(type, datum);
 }
@@ -2781,7 +2781,7 @@ depythonify_python_object(PyObject* argument, id* datum)
         }
 
         if (*datum == nil) {
-            PyObjC_Assert(!PyObjCObject_Check(argument), -1);
+            assert(!PyObjCObject_Check(argument));
             *datum = [OC_PythonObject objectWithPythonObject:argument];
         }
     }
@@ -2807,9 +2807,9 @@ depythonify_python_object(PyObject* argument, id* datum)
 int
 depythonify_c_value(const char* type, PyObject* argument, void* datum)
 {
-    PyObjC_Assert(type != NULL, -1);
-    PyObjC_Assert(argument != NULL, -1);
-    PyObjC_Assert(datum != NULL, -1);
+    assert(type != NULL);
+    assert(argument != NULL);
+    assert(datum != NULL);
 
     /* Pass by reference output arguments are sometimes passed a NULL
      * pointer, this suppresses a core dump.
@@ -3298,8 +3298,8 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
 const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type)
 {
-    PyObjC_Assert(buf != NULL, NULL);
-    PyObjC_Assert(type != NULL, NULL);
+    assert(buf != NULL);
+    assert(type != NULL);
 
     const char* end;
     if (*type == '"') {

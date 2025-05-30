@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyErr_SetString(PyObjCExc_Error, "OC_PythonSet without a value");
         return NULL;
     }
-    PyObjC_Assert(value != NULL, ((PyObject* _Nonnull)NULL));
+    assert(value != NULL);
     Py_INCREF(value);
     return value;
 }

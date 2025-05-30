@@ -81,21 +81,19 @@ extern PyObject* _Nullable PyObjC_copyMetadataRegistry(void);
 
 extern PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
 
-#ifdef PyObjC_DEBUG
-
-static inline int
+#ifndef NDEBBUG
+static inline void
 PyObjCMethodSignature_Validate(PyObjCMethodSignature* methinfo)
 {
-    PyObjC_Assert(methinfo->signature != NULL, -1);
+    assert(methinfo->signature != NULL);
     for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) { // LCOV_BR_EXCL_LINE
-        PyObjC_Assert(methinfo->argtype[i] != NULL, -1);
-        PyObjC_Assert(methinfo->argtype[i]->type != NULL, -1);
+        assert(methinfo->argtype[i] != NULL);
+        assert(methinfo->argtype[i]->type != NULL);
     }
-    PyObjC_Assert(methinfo->rettype != NULL, -1);
-    PyObjC_Assert(methinfo->rettype->type != NULL, -1);
-    return 0;
+    assert(methinfo->rettype != NULL);
+    assert(methinfo->rettype->type != NULL);
 }
-#endif /* PyObjC_DEBUG */
+#endif /* NDEBUG */
 
 extern PyObjCMethodSignature* PyObjCMethodSignature_GetRegistered(Class cls, SEL sel);
 

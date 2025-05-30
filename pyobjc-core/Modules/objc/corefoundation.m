@@ -43,7 +43,7 @@ PyObject* _Nullable PyObjC_TryCreateCFProxy(NSObject* value)
 {
     PyObject* rval = NULL;
 
-    PyObjC_Assert(gTypeid2class != NULL, NULL);
+    assert(gTypeid2class != NULL);
 
     PyObject*     cfid;
     PyTypeObject* tp;
@@ -137,7 +137,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
          * XXX: Can we reproduce this in testing?
          */
         // LCOV_EXCL_START
-        PyObjC_Assert(PyObjC_NSCFTypeClass != NULL, NULL);
+        assert(PyObjC_NSCFTypeClass != NULL);
         Py_INCREF(PyObjC_NSCFTypeClass);
         return PyObjC_NSCFTypeClass;
         // LCOV_EXCL_STOP
@@ -389,7 +389,7 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
     PyObject* rval = NULL;
     int r;
 
-    PyObjC_Assert(gTypeid2class != NULL, NULL);
+    assert(gTypeid2class != NULL);
 
     PyObject*     cfid;
     PyTypeObject* tp;

@@ -26,7 +26,7 @@ typedef struct {
 void* _Nullable PyObjCPointer_Ptr(PyObject* obj)
 {
     /* The only caller checks the type as well */
-    PyObjC_Assert(PyObjCPointer_Check(obj), NULL);
+    assert(PyObjCPointer_Check(obj));
 
     return ((PyObjCPointer*)(obj))->ptr;
 }

@@ -17,7 +17,7 @@ typedef struct {
 
 ffi_cif* _Nullable PyObjCIMP_GetCIF(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
+    assert(PyObjCIMP_Check(self));
 
     ffi_cif* result;
     Py_BEGIN_CRITICAL_SECTION(self);
@@ -30,7 +30,7 @@ ffi_cif* _Nullable PyObjCIMP_GetCIF(PyObject* self)
 int
 PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), -1);
+    assert(PyObjCIMP_Check(self));
 
     Py_BEGIN_CRITICAL_SECTION(self);
     ((PyObjCIMPObject*)self)->cif = cif;
@@ -41,14 +41,14 @@ PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
 
 SEL _Nullable PyObjCIMP_GetSelector(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
+    assert(PyObjCIMP_Check(self));
 
     return ((PyObjCIMPObject*)self)->selector;
 }
 
 IMP _Nullable PyObjCIMP_GetIMP(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
+    assert(PyObjCIMP_Check(self));
 
     return ((PyObjCIMPObject*)self)->imp;
 }
@@ -56,14 +56,14 @@ IMP _Nullable PyObjCIMP_GetIMP(PyObject* self)
 int
 PyObjCIMP_GetFlags(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), -1);
+    assert(PyObjCIMP_Check(self));
 
     return ((PyObjCIMPObject*)self)->flags;
 }
 
 PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
+    assert(PyObjCIMP_Check(self));
 
     Py_INCREF(((PyObjCIMPObject*)self)->signature);
     return ((PyObjCIMPObject*)self)->signature;
@@ -103,11 +103,11 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
         PyErr_SetString(PyExc_TypeError, "Missing argument: self");
         return NULL;
     }
-    PyObjC_Assert(args != NULL, NULL);
+    assert(args != NULL);
 
     pyself = args[0];
-    PyObjC_Assert(pyself != NULL, NULL);
-    PyObjC_Assert(self->callfunc != NULL, NULL);
+    assert(pyself != NULL);
+    assert(self->callfunc != NULL);
 
     return self->callfunc((PyObject*)self, pyself, args + 1, nargsf - 1);
 }
@@ -121,7 +121,7 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     PyObject*        pyself;
 
-    PyObjC_Assert(self->signature->shortcut_signature, NULL);
+    assert(self->signature->shortcut_signature);
 
     if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
         return NULL;
@@ -139,10 +139,10 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
         return NULL;
     }
 
-    PyObjC_Assert(args != NULL, NULL);
+    assert(args != NULL);
 
     pyself = args[0];
-    PyObjC_Assert(pyself != NULL, NULL);
+    assert(pyself != NULL);
 
     return PyObjCFFI_Caller_Simple(_self, pyself, args + 1, nargsf - 1);
 }
@@ -187,8 +187,8 @@ static PyObject* _Nullable imp_signature(PyObject* _self,
                                          void*     closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    PyObjC_Assert(self->signature != NULL, NULL);
-    PyObjC_Assert(self->signature->signature != NULL, NULL);
+    assert(self->signature != NULL);
+    assert(self->signature->signature != NULL);
     return PyBytes_FromString(self->signature->signature);
 }
 
@@ -352,8 +352,8 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
 {
     PyObjCIMPObject* result;
 
-    PyObjC_Assert(callfunc != NULL, NULL);
-    PyObjC_Assert(signature != NULL, NULL);
+    assert(callfunc != NULL);
+    assert(signature != NULL);
 
     result = PyObject_New(PyObjCIMPObject, (PyTypeObject*)PyObjCIMP_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
@@ -370,7 +370,7 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
 
 #if PY_VERSION_HEX >= 0x03090000
     if (signature && signature->shortcut_signature && (callfunc == PyObjCFFI_Caller)) {
-        PyObjC_Assert(signature->shortcut_signature, NULL);
+        assert(signature->shortcut_signature);
         result->vectorcall = imp_vectorcall_simple;
     } else {
         result->vectorcall = imp_vectorcall;
@@ -393,7 +393,7 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    PyObjC_Assert(args != NULL, NULL);
+    assert(args != NULL);
 
     sel = args[0];
 
@@ -484,7 +484,7 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
-    PyObjC_Assert(args != NULL, NULL);
+    assert(args != NULL);
 
     sel = args[0];
 

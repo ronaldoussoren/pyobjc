@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
             return nil;
         }
     }
-    PyObjC_Assert(ts != NULL, nil);
+    assert(ts != NULL);
     if (depythonify_c_value(@encode(NSTimeInterval), ts, &timeSinceEpoch) == -1) {
         [self release];
         return nil;

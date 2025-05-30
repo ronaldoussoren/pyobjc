@@ -361,7 +361,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
         return NULL;   // LCOV_EXCL_LINE
     }
 
-    PyObjC_Assert(PyTuple_Check(mro), NULL);
+    assert(PyTuple_Check(mro));
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
@@ -409,7 +409,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
             // LCOV_EXCL_STOP
         }
 
-        PyObjC_Assert(dict && PyDict_Check(dict), NULL);
+        assert(dict && PyDict_Check(dict));
 
         int r = PyDict_GetItemRef(dict, name, &descr);
         Py_CLEAR(dict);
@@ -479,7 +479,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         return NULL;   // LCOV_EXCL_LINE
     }
 
-    PyObjC_Assert(PyTuple_Check(mro), NULL);
+    assert(PyTuple_Check(mro));
     n = PyTuple_GET_SIZE(mro);
 
     for (i = 0; i < n; i++) {
@@ -607,7 +607,7 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
     PyObject**    dictptr;
     const char*   namestr;
 
-    PyObjC_Assert(name != NULL, NULL);
+    assert(name != NULL);
 
     if (!PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
         /* Can only happen when someone calls the tp_getattro slot
@@ -1104,7 +1104,7 @@ meth_is_magic(PyObject* self)
 static PyObject* _Nullable as_cobject(PyObject* self)
 {
     id self_value = PyObjCObject_OBJECT(self);
-    PyObjC_Assert(self_value != nil, NULL);
+    assert(self_value != nil);
 
     return PyCapsule_New(self_value, "objc.__object__", NULL);
 }
@@ -1113,7 +1113,7 @@ static PyObject* _Nullable as_cobject(PyObject* self)
 static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 {
     id self_value = PyObjCObject_OBJECT(self);
-    PyObjC_Assert(self_value != nil, NULL);
+    assert(self_value != nil);
     return PyObjC_MakeCVoidP(self_value);
 }
 
@@ -1274,7 +1274,7 @@ PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object)
     PyObject*     res;
     PyTypeObject* cls_type;
 
-    PyObjC_Assert(objc_object != nil, NULL);
+    assert(objc_object != nil);
     cls_type =
         (PyTypeObject*)PyObjCClass_New((Class _Nonnull)object_getClass(objc_object));
     if (cls_type == NULL) { // LCOV_BR_EXCL_LINE
@@ -1336,7 +1336,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 
 PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
 {
-    PyObjC_Assert(objc_object != nil, NULL);
+    assert(objc_object != nil);
 
     /* object_getClass only returns Nil if its argument is nil */
     Class         cls = (Class _Nonnull)object_getClass(objc_object);
@@ -1412,34 +1412,32 @@ PyObject* _Nullable PyObjCObject_FindSelector(PyObject* object, SEL selector)
     return PyObjCClass_FindSelector((PyObject*)Py_TYPE(object), selector, NO);
 }
 
-id _Nullable PyObjCObject_GetObject(PyObject* object)
+id PyObjCObject_GetObject(PyObject* object)
 {
-    PyObjC_Assert(PyObjCObject_Check(object), nil);
     id result = PyObjCObject_OBJECT(object);
     return result;
 }
 
 unsigned int PyObjCObject_GetFlags(PyObject* object)
 {
-    PyObjC_Assert(PyObjCObject_Check(object), 0xffffffff);
     return PyObjCObject_FLAGS(object);
 }
 
 bool PyObjCObject_IsBlock(PyObject* object)
 {
-    PyObjC_Assert(PyObjCObject_Check(object), false);
+    assert(PyObjCObject_Check(object));
     return (PyObjCObject_FLAGS(object) & PyObjCObject_kBLOCK) != 0;
 }
 
 bool PyObjCObject_IsMagic(PyObject* object)
 {
-    PyObjC_Assert(PyObjCObject_Check(object), false);
+    assert(PyObjCObject_Check(object));
     return (PyObjCObject_FLAGS(object) & PyObjCObject_kMAGIC_COOKIE) != 0;
 }
 
 PyObjCMethodSignature* _Nullable PyObjCObject_GetBlockSignature(PyObject* object)
 {
-    PyObjC_Assert(PyObjCObject_IsBlock(object), NULL);
+    assert(PyObjCObject_IsBlock(object));
     PyObjCMethodSignature* result = (((PyObjCBlockObject*)(object))->signature);
     Py_XINCREF(result);
     return result;
@@ -1447,7 +1445,7 @@ PyObjCMethodSignature* _Nullable PyObjCObject_GetBlockSignature(PyObject* object
 
 PyObjCMethodSignature* _Nullable PyObjCObject_SetBlockSignature(PyObject* object, PyObjCMethodSignature* methinfo)
 {
-    PyObjC_Assert(PyObjCObject_IsBlock(object), NULL);
+    assert(PyObjCObject_IsBlock(object));
     PyObjCMethodSignature* result;
 
     Py_BEGIN_CRITICAL_SECTION(object);

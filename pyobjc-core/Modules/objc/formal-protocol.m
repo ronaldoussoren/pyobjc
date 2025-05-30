@@ -480,7 +480,7 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
 {
     PyObjCFormalProtocol* result;
 
-    PyObjC_Assert(protocol != NULL, NULL);
+    assert(protocol != NULL);
 
     result = (PyObjCFormalProtocol*)PyObject_New(
         PyObjCFormalProtocol, (PyTypeObject*)PyObjCFormalProtocol_Type);
@@ -498,7 +498,7 @@ Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject* object) NS_RETURN
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
 
-    PyObjC_Assert(PyObjCFormalProtocol_Check(self), NULL);
+    assert(PyObjCFormalProtocol_Check(self));
 
     return self->objc;
 }

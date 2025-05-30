@@ -309,7 +309,7 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
     unsigned char argbuf[SHORTCUT_MAX_ARGBUF];
     void*         values[MAX_ARGCOUNT_SIMPLE];
 
-    PyObjC_Assert(self->methinfo->shortcut_signature, NULL);
+    assert(self->methinfo->shortcut_signature);
 
     if (unlikely(kwnames != NULL
                  && (PyTuple_CheckExact(kwnames) && PyTuple_GET_SIZE(kwnames) != 0))) {
@@ -464,7 +464,7 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
 {
     func_object* result;
 
-    PyObjC_Assert(!name || PyUnicode_Check(name), NULL);
+    assert(!name || PyUnicode_Check(name));
 
     result = PyObject_NEW(func_object, (PyTypeObject*)PyObjCFunc_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
@@ -496,7 +496,7 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
 {
     func_object* result;
 
-    PyObjC_Assert(!name || PyUnicode_Check(name), NULL);
+    assert(!name || PyUnicode_Check(name));
     if (doc && PyUnicode_GetLength(doc) == 0) {
         /* Ignore empty docstring */
         doc = NULL;

@@ -23,7 +23,7 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
     /* XXX: No they don't, class methods can be accessed through
      *      instances for Python subclasses...
      */
-    // PyObjC_Assert(PyObjCClass_Check(self), NULL);
+    // assert(PyObjCClass_Check(self));
 
     if (unlikely(PyObjCIMP_Check(method))) {
         anIMP = PyObjCIMP_GetIMP(method);
@@ -161,7 +161,7 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
         return NULL;
 
     /* objc.selector and friends already check this */
-    PyObjC_Assert(PyObjCObject_Check(self), NULL);
+    assert(PyObjCObject_Check(self));
 
     if (unlikely(PyObjCIMP_Check(method))) {
         anIMP      = PyObjCIMP_GetIMP(method);
@@ -262,7 +262,7 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
         return NULL;
 
     /* objc.selector and friends already check this */
-    PyObjC_Assert(PyObjCObject_Check(self), NULL);
+    assert(PyObjCObject_Check(self));
 
     if (unlikely(PyObjCIMP_Check(method))) {
         anIMP      = PyObjCIMP_GetIMP(method);
@@ -315,7 +315,7 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
         return NULL;
 
     /* objc.selector and friends already check this */
-    PyObjC_Assert(PyObjCObject_Check(self), NULL);
+    assert(PyObjCObject_Check(self));
 
     /*
      * XXX:

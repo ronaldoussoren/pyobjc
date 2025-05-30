@@ -140,7 +140,7 @@ adjust_retval(PyObjCMethodSignature* methinfo, id _Nullable retval)
 {
     PyObject* result = id_to_python(retval);
     if (result == NULL) {
-        PyObjC_Assert(PyErr_Occurred(), NULL);
+        assert(PyErr_Occurred());
         return NULL;
     }
     if (methinfo->rettype->alreadyRetained) {

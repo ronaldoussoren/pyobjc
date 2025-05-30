@@ -141,6 +141,11 @@ how reference counts are handled by ``-init`` methods.
 * Using a instance of a Python class with an ``__call__`` method as
   an Objective-C block is now possible.
 
+* Change PyObjC's internal assertions in C code from ``PyObjC_Assert`` to ``assert``
+  (and only enable them using debug builds of CPython). This is slightly more efficient
+  and enables removing error return paths in a number of functions due to internal
+  APIs that could only fail due to assertion errors.
+
 Version 11.0
 ------------
 

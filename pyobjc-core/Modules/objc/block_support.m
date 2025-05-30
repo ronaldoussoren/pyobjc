@@ -443,7 +443,7 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* c
 {
     struct block_literal block = gLiteralTemplate;
 
-    PyObjC_Assert(gGlobalBlockClass, NULL);
+    assert(gGlobalBlockClass != Nil);
 
     block.descriptor_memory = PyBytes_FromStringAndSize(NULL, sizeof(struct block_descriptor));
     if (block.descriptor_memory == NULL) { // LCOV_BR_EXCL_LINE

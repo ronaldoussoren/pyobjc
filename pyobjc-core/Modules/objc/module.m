@@ -890,7 +890,7 @@ static PyObject* _Nullable protocolsForClass(PyObject* self __attribute__((__unu
     protocol_list = class_copyProtocolList(cls, &protocol_count);
 
     /* Documented API: the list will only be NULL if the count is 0 */
-    PyObjC_Assert(protocol_count == 0 || protocol_list != NULL, NULL);
+    assert(protocol_count == 0 || protocol_list != NULL);
 
     for (i = 0; i < protocol_count; i++) {
         PyObject* protocol = PyObjCFormalProtocol_ForProtocol(protocol_list[i]);
@@ -965,8 +965,8 @@ static PyObject* _Nullable registerMetaData(PyObject* self __attribute__((__unus
                                      &metadata)) {
         return NULL;
     }
-    PyObjC_Assert(PyBytes_Check(class_name), NULL);
-    PyObjC_Assert(PyBytes_Check(selector), NULL);
+    assert(PyBytes_Check(class_name));
+    assert(PyBytes_Check(selector));
 
     if (PyObjC_registerMetaData(class_name, selector, metadata) < 0) {
         return NULL;
@@ -1336,7 +1336,7 @@ static PyObject* _Nullable _makeClosure(PyObject* self __attribute__((__unused__
         methinfo = PyObjCSelector_GetMetadata(closureFor);
         if (methinfo == NULL) { // LCOV_BR_EXCL_LNE
             // LCOV_EXCL_START
-            PyObjC_Assert(PyErr_Occurred(), NULL);
+            assert(PyErr_Occurred());
             return NULL;
             // LCOV_EXCL_STOP
         }
@@ -1781,7 +1781,7 @@ static PyObject* _Nullable mod_registerVectorType(PyObject* _Nullable mod
     int r = PyObjCRT_RegisterVectorType(PyBytes_AsString(typestr), object);
     Py_DECREF(typestr);
     if (r == -1) {
-        PyObjC_Assert(PyErr_Occurred(), NULL);
+        assert(PyErr_Occurred());
         return NULL;
     } else {
         Py_RETURN_NONE;
@@ -1809,7 +1809,7 @@ static PyObject* _Nullable mod_registeredMetadataForSelector(PyObject* _Nullable
     Class cls = PyObjCClass_GetClass(class);
     if (cls == Nil) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        PyObjC_Assert(PyErr_Occurred(), NULL);
+        assert(PyErr_Occurred());
         return NULL;
         // LCOV_EXCL_STOP
     }

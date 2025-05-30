@@ -90,7 +90,7 @@ static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unuse
         fspath = NULL;
     }
 
-    PyObjC_Assert(PyBytes_Check(value), NULL);
+    assert(PyBytes_Check(value));
 
     rc = FSPathMakeRef((UInt8*)PyBytes_AsString(value), &result, &isDirectory);
     Py_DECREF(value);

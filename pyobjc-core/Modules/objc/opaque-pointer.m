@@ -24,7 +24,7 @@ static PyMemberDef opaque_members[] = {
 
 static PyObject* _Nullable as_cobject(PyObject* self)
 {
-    PyObjC_Assert(((OpaquePointerObject*)self)->pointer_value != NULL, NULL);
+    assert(((OpaquePointerObject*)self)->pointer_value != NULL);
 
     return PyCapsule_New(((OpaquePointerObject*)self)->pointer_value, "objc.__opaque__",
                          NULL);
@@ -32,7 +32,7 @@ static PyObject* _Nullable as_cobject(PyObject* self)
 
 static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 {
-    PyObjC_Assert(((OpaquePointerObject*)self)->pointer_value != NULL, NULL);
+    assert(((OpaquePointerObject*)self)->pointer_value != NULL);
     return PyObjC_MakeCVoidP(((OpaquePointerObject*)self)->pointer_value);
 }
 
@@ -87,7 +87,7 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
         p = PyCapsule_GetPointer(cobject, "objc.__opaque__");
         if (p == NULL) {
             /* The pointer in a capsule cannot be NULL */
-            PyObjC_Assert(PyErr_Occurred(), NULL);
+            assert(PyErr_Occurred());
             return NULL;
         }
 

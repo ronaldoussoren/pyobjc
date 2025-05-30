@@ -921,7 +921,7 @@ PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nulla
 
 int PyObjC_CallClassExtender(PyObject* cls)
 {
-    PyObjC_Assert(PyObjCClass_Check(cls), -1);
+    assert(PyObjCClass_Check(cls));
 
     LOCK(PyObjC_ClassExtender);
     PyObject* func = PyObjC_ClassExtender;
@@ -1132,7 +1132,7 @@ extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* c
         // LCOV_EXCL_STOP
     }
 
-    PyObjC_Assert(!PyErr_Occurred(), NULL);
+    assert(!PyErr_Occurred());
     PyObject* args[] = {NULL,      py_name, class_dict,      meta_dict,           py_superclass,
                         protocols, hiddenSelectors, hiddenClassSelectors};
     PyObject* rv     = PyObject_Vectorcall(func, args + 1,
@@ -1140,7 +1140,7 @@ extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* c
     Py_DECREF(func);
     Py_DECREF(py_name);
 
-    PyObjC_Assert(rv == NULL || !PyErr_Occurred(), NULL);
+    assert(rv == NULL || !PyErr_Occurred());
 
     return rv;
 }

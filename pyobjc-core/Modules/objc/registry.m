@@ -19,8 +19,8 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     int       result = 0;
     PyObject* sublist;
 
-    PyObjC_Assert(PyBytes_Check(class_name), -1);
-    PyObjC_Assert(PyBytes_Check(selector), -1);
+    assert(PyBytes_Check(class_name));
+    assert(PyBytes_Check(selector));
 
     switch(PyDict_GetItemRef(registry, selector, &sublist)) {
     case  -1:
@@ -78,8 +78,8 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
             // LCOV_EXCL_STOP
         }
 
-        PyObjC_Assert(PyTuple_CheckExact(item), -1);
-        PyObjC_Assert(PyTuple_GET_SIZE(item) == 2, -1);
+        assert(PyTuple_CheckExact(item));
+        assert(PyTuple_GET_SIZE(item) == 2);
 
         int r = PyObject_RichCompareBool(PyTuple_GET_ITEM(item, 0), class_name, Py_EQ);
         if (r == -1) {  // LCOV_BR_EXCL_LINE
@@ -135,7 +135,7 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
     PyObject*  found_value = NULL;
     PyObject*  sublist;
 
-    PyObjC_Assert(registry != NULL, NULL);
+    assert(registry != NULL);
 
     PyObject* k = PyBytes_FromString(sel_getName(selector));
 
@@ -157,11 +157,11 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
         Class cur_class;
 
         cur = PyList_GetItemRef(sublist, i);
-        PyObjC_Assert(cur != NULL, NULL);
-        PyObjC_Assert(PyTuple_CheckExact(cur), NULL);
+        assert(cur != NULL);
+        assert(PyTuple_CheckExact(cur));
 
         PyObject* nm = PyTuple_GET_ITEM(cur, 0);
-        PyObjC_Assert(PyBytes_Check(nm), NULL);
+        assert(PyBytes_Check(nm));
 
         cur_class = objc_lookUpClass(PyBytes_AsString(nm));
 

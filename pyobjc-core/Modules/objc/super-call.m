@@ -37,8 +37,8 @@ static PyObject* special_registry = (PyObject* _Nonnull)NULL;
 int
 PyObjC_InitSuperCallRegistry(void)
 {
-    PyObjC_Assert(signature_registry == NULL, -1);
-    PyObjC_Assert(special_registry == NULL, -1);
+    assert(signature_registry == NULL);
+    assert(special_registry == NULL);
 
     signature_registry = PyDict_New();
     if (signature_registry == NULL) // LCOV_BR_EXCL_LINE
@@ -86,9 +86,9 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     int r;
     int retval =  0;
 
-    PyObjC_Assert(special_registry != NULL, -1);
-    PyObjC_Assert(call_to_objc !=  NULL, -1);
-    PyObjC_Assert(make_call_to_python_block !=  NULL, -1);
+    assert(special_registry != NULL);
+    assert(call_to_objc !=  NULL);
+    assert(make_call_to_python_block !=  NULL);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&registry_mutex);
@@ -230,7 +230,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
     int              r;
     int              retval = 0;
 
-    PyObjC_Assert(signature_registry != NULL, -1);
+    assert(signature_registry != NULL);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&registry_mutex);
@@ -329,8 +329,8 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
     Py_ssize_t i;
     int r;
 
-    PyObjC_Assert(special_registry != NULL, NULL);
-    PyObjC_Assert(class != Nil, NULL);
+    assert(special_registry != NULL);
+    assert(class != Nil);
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&registry_mutex);
 #endif
@@ -441,7 +441,7 @@ static struct registry* _Nullable find_signature(const char* signature)
     int       res;
     struct registry* result = NULL;
 
-    PyObjC_Assert(signature_registry != NULL, NULL);
+    assert(signature_registry != NULL);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&registry_mutex);
@@ -484,7 +484,7 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
     struct registry* special;
     PyObjC_CallFunc result;
 
-    PyObjC_Assert(special_registry != NULL, NULL);
+    assert(special_registry != NULL);
 
     special = search_special(class, sel);
     if (special) {

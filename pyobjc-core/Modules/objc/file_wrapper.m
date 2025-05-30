@@ -382,7 +382,7 @@ FILE_create(FILE* fp)
 {
     struct file_object* self;
 
-    PyObjC_Assert(fp != NULL, NULL);
+    assert(fp != NULL);
 
     self     = PyObject_NEW(struct file_object, (PyTypeObject*)FILE_Type);
     self->fp = fp;

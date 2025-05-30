@@ -149,7 +149,7 @@ PyObjC_returns_value(PyObject* value)
     bool was_none = false;
 
 #if PY_VERSION_HEX >= 0x03060000
-    PyObjC_Assert(buf.len % 2 == 0, NULL);
+    assert(buf.len % 2 == 0);
 
     for (Py_ssize_t i = 0; i < buf.len; i += 2) {
         int op = ((unsigned char*)buf.buf)[i];
@@ -206,7 +206,7 @@ PyObjC_returns_value(PyObject* value)
 Py_ssize_t
 PyObjC_num_defaults(PyObject* value)
 {
-    PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
+    assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value));
 
     PyObject* defaults = PyObject_GetAttrString(value, "__defaults__");
     if (defaults == NULL) { // LCOV_BR_EXCL_LINE
@@ -232,7 +232,7 @@ PyObjC_num_defaults(PyObject* value)
 Py_ssize_t
 PyObjC_num_kwdefaults(PyObject* value)
 {
-    PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
+    assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value));
 
     PyObject* defaults = PyObject_GetAttrString(value, "__kwdefaults__");
     if (defaults == NULL) { // LCOV_BR_EXCL_LINE
@@ -259,7 +259,7 @@ PyObjC_num_kwdefaults(PyObject* value)
 Py_ssize_t
 PyObjC_num_arguments(PyObject* value)
 {
-    PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
+    assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value));
 
     PyCodeObject* func_code = PyObjC_get_code(value);
     if (func_code == NULL) {

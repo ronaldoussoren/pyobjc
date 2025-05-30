@@ -25,7 +25,7 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type, PyObject* _Nullable arg
 
 PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
 {
-    PyObjC_Assert(PyObjCSelector_Check(_self), NULL);
+    assert(PyObjCSelector_Check(_self));
 
     PyObjCSelector* self = (PyObjCSelector*)_self;
 
@@ -561,7 +561,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
         }
 
         pyself = args[0];
-        PyObjC_Assert(pyself != NULL, NULL);
+        assert(pyself != NULL);
 
         args   = args + 1;
         nargsf = PyVectorcall_NARGS(nargsf) - 1;
@@ -595,7 +595,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
          * Class methods should always be bound, therefore we only
          * have to validate the type of self for instance methods.
          */
-        PyObjC_Assert(self->base.sel_class != Nil, NULL);
+        assert(self->base.sel_class != Nil);
         PyObject* myClass = PyObjCClass_New(self->base.sel_class);
         if (myClass == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;       // LCOV_EXCL_LINE
@@ -681,7 +681,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
     if (self->sel_call_func) {
         execute = self->sel_call_func;
     } else {
-        PyObjC_Assert(self->base.sel_class != NULL, NULL);
+        assert(self->base.sel_class != NULL);
 
         execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector,
                                       self->base.sel_methinfo->signature);
@@ -705,7 +705,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
     } else {
         PyObject* myClass;
 
-        PyObjC_Assert(self->base.sel_class != Nil, NULL);
+        assert(self->base.sel_class != Nil);
 
         myClass = PyObjCClass_New(self->base.sel_class);
         if (myClass == NULL) { // LCOV_BR_EXCL_LINE
@@ -1080,7 +1080,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     PyObjCNativeSelector* result;
     const char*           native_signature = signature;
 
-    PyObjC_Assert(signature != NULL, NULL);
+    assert(signature != NULL);
 
     result = PyObject_New(PyObjCNativeSelector, (PyTypeObject*)PyObjCNativeSelector_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
@@ -1942,13 +1942,13 @@ static PyType_Spec pysel_spec = {
 
 const char* _Nullable PyObjCSelector_Signature(PyObject* obj)
 {
-    PyObjC_Assert(PyObjCSelector_Check(obj), NULL);
+    assert(PyObjCSelector_Check(obj));
     return ((PyObjCSelector*)obj)->sel_python_signature;
 }
 
 Class PyObjCSelector_GetClass(PyObject* sel)
 {
-    PyObjC_Assert(PyObjCSelector_Check(sel), (Class _Nonnull)Nil);
+    assert(PyObjCSelector_Check(sel));
 
     return ((PyObjCNativeSelector*)sel)->base.sel_class;
 }
@@ -1962,7 +1962,7 @@ PyObjCSelector_GetSelector(PyObject* sel)
 int
 PyObjCSelector_Required(PyObject* obj)
 {
-    PyObjC_Assert(PyObjCSelector_Check(obj), -1);
+    assert(PyObjCSelector_Check(obj));
 
     return (((PyObjCSelector*)obj)->sel_flags & PyObjCSelector_kREQUIRED) != 0;
 }
@@ -1970,7 +1970,7 @@ PyObjCSelector_Required(PyObject* obj)
 int
 PyObjCSelector_IsClassMethod(PyObject* obj)
 {
-    PyObjC_Assert(PyObjCSelector_Check(obj), -1);
+    assert(PyObjCSelector_Check(obj));
 
     return (PyObjCSelector_GetFlags(obj) & PyObjCSelector_kCLASS_METHOD) != 0;
 }
@@ -1978,7 +1978,7 @@ PyObjCSelector_IsClassMethod(PyObject* obj)
 int
 PyObjCSelector_IsHidden(PyObject* obj)
 {
-    PyObjC_Assert(PyObjCSelector_Check(obj), -1);
+    assert(PyObjCSelector_Check(obj));
 
     return (PyObjCSelector_GetFlags(obj) & PyObjCSelector_kHIDDEN) != 0;
 }
@@ -1986,7 +1986,7 @@ PyObjCSelector_IsHidden(PyObject* obj)
 int
 PyObjCSelector_GetFlags(PyObject* obj)
 {
-    PyObjC_Assert(PyObjCSelector_Check(obj), -1);
+    assert(PyObjCSelector_Check(obj));
 
     return ((PyObjCSelector*)obj)->sel_flags;
 }
