@@ -669,7 +669,9 @@ class oc_build_ext(build_ext.build_ext):
 
         for ext in self.extensions:
             if ext.name.startswith("PyObjCTest"):
-                ext.extra_compile_args += extra_compile_args(ext.sources[0])
+                ext.extra_compile_args = ext.extra_compile_args + extra_compile_args(
+                    ext.sources[0]
+                )
 
         build_ext.build_ext.run(self)
         extensions = self.extensions
