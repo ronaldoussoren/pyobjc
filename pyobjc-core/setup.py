@@ -667,6 +667,10 @@ class oc_build_ext(build_ext.build_ext):
             or any(cmd in sys.argv for cmd in ["develop", "test"])
         )
 
+        for ext in self.extensions:
+            if ext.name.startswith("PyObjCTest"):
+                ext.extra_compile_args += extra_compile_args(ext.sources[0])
+
         build_ext.build_ext.run(self)
         extensions = self.extensions
         self.extensions = [e for e in extensions if e.name.startswith("PyObjCTest")]
@@ -794,7 +798,7 @@ setup(
         Extension(
             "PyObjCTest." + os.path.splitext(os.path.basename(test_source))[0],
             [test_source],
-            extra_compile_args=EXT_CFLAGS + extra_compile_args(test_source),
+            extra_compile_args=EXT_CFLAGS,
             extra_link_args=OBJC_LDFLAGS,
         )
         for test_source in glob.glob(os.path.join("Modules", "objc", "test", "*.[mc]"))
