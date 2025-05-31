@@ -4,6 +4,7 @@
 
 import objc
 from PyObjCTest.block import OCTestBlock
+from PyObjCTest.block2 import OCTestBlock2
 from PyObjCTools.TestSupport import TestCase, min_os_level
 from .fnd import NSMutableArray, NSException
 from .test_metadata import NoObjCClass
@@ -1193,3 +1194,10 @@ class TestInvalidCalling(TestCase):
 
             with self.assertRaisesRegex(ValueError, "bla bla"):
                 obj.callOptionalBlock_withValue_(callback, None)
+
+    def test_without_signature(self):
+        block = OCTestBlock2().getObjectBlock()
+        self.assertIs(block.__block_signature__, None)
+
+        with self.assertRaisesRegex(TypeError, "cannot call block without a signature"):
+            block(1, 2)

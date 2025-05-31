@@ -750,6 +750,18 @@ def package_version():
     raise DistutilsSetupError("Version not found")
 
 
+def extra_compile_args(source):
+    result = []
+
+    with open(source) as stream:
+        for line in stream:
+            if "CFLAGS:" in line:
+                _, _, rest = line.partition("CFLAGS:")
+                result.extend(shlex.split(rest))
+
+    return result
+
+
 #
 # Actually call the setup function.
 #
@@ -782,7 +794,7 @@ setup(
         Extension(
             "PyObjCTest." + os.path.splitext(os.path.basename(test_source))[0],
             [test_source],
-            extra_compile_args=EXT_CFLAGS,
+            extra_compile_args=EXT_CFLAGS + extra_compile_args(test_source),
             extra_link_args=OBJC_LDFLAGS,
         )
         for test_source in glob.glob(os.path.join("Modules", "objc", "test", "*.[mc]"))
