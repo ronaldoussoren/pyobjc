@@ -9,6 +9,7 @@
 #include <stdarg.h>
 
 #import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 
 #if PyObjC_BUILD_RELEASE >= 1011
 #import <GameplayKit/GameplayKit.h>

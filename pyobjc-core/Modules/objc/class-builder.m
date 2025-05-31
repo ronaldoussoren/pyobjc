@@ -404,11 +404,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             continue;
         }
 
-        /* PyObjCFormalProtocol_GetProtocol() is nonnull because we've already type
-         * checked */
         if (!class_addProtocol( // LCOV_BR_EXCL_LINE
                 new_class,
-                (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+                PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
             // LCOV_EXCL_START
             Py_DECREF(wrapped_protocol);
             goto error_cleanup;

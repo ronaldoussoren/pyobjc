@@ -1465,35 +1465,19 @@ PyObject* _Nullable PyObjC_ImportName(const char* name)
      */
     assert(c != NULL);
 
-#if 0
-    if (c == NULL) {
-        /* Toplevel module */
-        py_name = PyUnicode_FromString(name);
-        if (py_name == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
-        }
-        mod     = PyImport_Import(py_name);
-        Py_DECREF(py_name);
-        return mod;
-
-    } else {
-#endif
-        py_name = PyUnicode_FromStringAndSize(name, c - name);
-        if (py_name == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
-        }
-        mod     = PyImport_Import(py_name);
-        Py_DECREF(py_name);
-        if (mod == NULL) {
-            return NULL;
-        }
-
-        PyObject* v = PyObject_GetAttrString(mod, c + 1);
-        Py_DECREF(mod);
-        return v;
-#if 0
+    py_name = PyUnicode_FromStringAndSize(name, c - name);
+    if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
-#endif
+    mod     = PyImport_Import(py_name);
+    Py_DECREF(py_name);
+    if (mod == NULL) {
+        return NULL;
+    }
+
+    PyObject* v = PyObject_GetAttrString(mod, c + 1);
+    Py_DECREF(mod);
+    return v;
 }
 
 PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object)

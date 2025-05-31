@@ -1940,7 +1940,7 @@ static PyType_Spec pysel_spec = {
     .slots = pysel_slots,
 };
 
-const char* _Nullable PyObjCSelector_Signature(PyObject* obj)
+const char* PyObjCSelector_Signature(PyObject* obj)
 {
     assert(PyObjCSelector_Check(obj));
     return ((PyObjCSelector*)obj)->sel_python_signature;
@@ -1956,39 +1956,41 @@ Class PyObjCSelector_GetClass(PyObject* sel)
 SEL
 PyObjCSelector_GetSelector(PyObject* sel)
 {
+    assert(PyObjCSelector_Check(sel));
+
     return ((PyObjCSelector*)sel)->sel_selector;
 }
 
 int
-PyObjCSelector_Required(PyObject* obj)
+PyObjCSelector_Required(PyObject* sel)
 {
-    assert(PyObjCSelector_Check(obj));
+    assert(PyObjCSelector_Check(sel));
 
-    return (((PyObjCSelector*)obj)->sel_flags & PyObjCSelector_kREQUIRED) != 0;
+    return (((PyObjCSelector*)sel)->sel_flags & PyObjCSelector_kREQUIRED) != 0;
 }
 
 int
-PyObjCSelector_IsClassMethod(PyObject* obj)
+PyObjCSelector_IsClassMethod(PyObject* sel)
 {
-    assert(PyObjCSelector_Check(obj));
+    assert(PyObjCSelector_Check(sel));
 
-    return (PyObjCSelector_GetFlags(obj) & PyObjCSelector_kCLASS_METHOD) != 0;
+    return (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0;
 }
 
 int
-PyObjCSelector_IsHidden(PyObject* obj)
+PyObjCSelector_IsHidden(PyObject* sel)
 {
-    assert(PyObjCSelector_Check(obj));
+    assert(PyObjCSelector_Check(sel));
 
-    return (PyObjCSelector_GetFlags(obj) & PyObjCSelector_kHIDDEN) != 0;
+    return (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kHIDDEN) != 0;
 }
 
 int
-PyObjCSelector_GetFlags(PyObject* obj)
+PyObjCSelector_GetFlags(PyObject* sel)
 {
-    assert(PyObjCSelector_Check(obj));
+    assert(PyObjCSelector_Check(sel));
 
-    return ((PyObjCSelector*)obj)->sel_flags;
+    return ((PyObjCSelector*)sel)->sel_flags;
 }
 
 int

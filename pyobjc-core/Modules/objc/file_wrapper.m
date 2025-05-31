@@ -38,6 +38,7 @@ static PyObject* _Nullable file_new(PyTypeObject* type __attribute__((__unused__
         return PyErr_SetFromErrno(PyExc_OSError);
     }
 
+    CLANG_SUPPRESS /* leaking 'fopen' result */
     return FILE_create(fp);
 }
 
@@ -377,7 +378,7 @@ static PyType_Spec file_spec = {
     .slots = file_slots,
 };
 
-PyObject*
+PyObject* _Nullable
 FILE_create(FILE* fp)
 {
     struct file_object* self;
@@ -385,6 +386,9 @@ FILE_create(FILE* fp)
     assert(fp != NULL);
 
     self     = PyObject_NEW(struct file_object, (PyTypeObject*)FILE_Type);
+    if (self == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
+    }
     self->fp = fp;
     return (PyObject*)self;
 }

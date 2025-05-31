@@ -3057,9 +3057,6 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
 
     } else if (PyObjCFormalProtocol_Check(aClass)) {
         proto = PyObjCFormalProtocol_GetProtocol(aClass);
-        if (proto == nil) {
-            return NULL;
-        }
 
     } else {
         PyErr_SetString(PyExc_TypeError,

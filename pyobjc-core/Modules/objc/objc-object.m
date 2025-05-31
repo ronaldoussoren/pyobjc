@@ -1014,7 +1014,6 @@ meth_is_magic(PyObject* self)
 
     assert(objc_value != nil);
 
-
     if (PyObjCObject_IsMagic(self)) {
         Py_RETURN_TRUE;
     } else {

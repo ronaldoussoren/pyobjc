@@ -130,7 +130,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
-        Py_CLEAR(value);
+        Py_DECREF(value);
 
     PyObjC_END_WITH_GIL
 
@@ -139,7 +139,8 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 - (PyObject*)__pyobjc_PythonObject__
 {
-    Py_XINCREF(value);
+    assert(value != NULL);
+    Py_INCREF(value);
     return value;
 }
 
@@ -150,8 +151,9 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
  */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
+    assert(value != NULL);
     *cookie = 0;
-    Py_XINCREF(value);
+    Py_INCREF(value);
     return value;
 }
 // LCOV_EXCL_STOP
@@ -443,7 +445,9 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = id_to_python(other);
 
-        SET_FIELD(value, v);
+        if (v != NULL) {
+            SET_FIELD(value, v);
+        }
     PyObjC_END_WITH_GIL
 }
 
