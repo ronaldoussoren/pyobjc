@@ -51,7 +51,7 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* 
 
     if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
         if (PyObjCObject_Check(self)) {
-            *self_obj = (id _Nonnull)PyObjCObject_GetObject(self);
+            *self_obj = PyObjCObject_GetObject(self);
             if (*self_obj == nil && PyErr_Occurred()) {
                 return -1;
             }
@@ -99,7 +99,7 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* 
             /* PyObjCObject_GetObject only returns NULL if 'self' is not an objc_object,
              * which cannot happen here.
              */
-            *self_obj = (id _Nonnull)PyObjCObject_GetObject(self);
+            *self_obj = PyObjCObject_GetObject(self);
             if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 return -1;                              // LCOV_EXCL_LINE
             }

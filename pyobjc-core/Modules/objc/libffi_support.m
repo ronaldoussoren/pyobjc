@@ -1555,7 +1555,9 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         Py_CLEAR(tmp);
 
                     } else {
-                        const char* signature = PyObjCBlock_GetSignature(PyObjCObject_OBJECT(v));
+                        id objc_object = PyObjCObject_OBJECT(v);
+                        assert(objc_object != nil);
+                        const char* signature = PyObjCBlock_GetSignature(objc_object);
                         if (signature != NULL) {
                             PyObjCMethodSignature* sig =
                                 PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
@@ -4666,9 +4668,8 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     if (flags & PyObjCSelector_kCLASS_METHOD) {
         if (PyObjCObject_Check(self)) {
             self_obj = PyObjCObject_GetObject(self);
-            if (self_obj != NULL) {
-                self_obj = object_getClass(self_obj);
-            }
+            assert(self_obj != nil);
+            self_obj = object_getClass(self_obj);
 
         } else if (PyObjCClass_Check(self)) {
             self_obj = PyObjCClass_GetClass(self);
@@ -4956,9 +4957,8 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
     if (flags & PyObjCSelector_kCLASS_METHOD) {
         if (PyObjCObject_Check(self)) {
             self_obj = PyObjCObject_GetObject(self);
-            if (self_obj != NULL) {
-                self_obj = object_getClass(self_obj);
-            }
+            assert(self_obj != nil);
+            self_obj = object_getClass(self_obj);
 
         } else if (PyObjCClass_Check(self)) {
             self_obj = PyObjCClass_GetClass(self);
@@ -5150,9 +5150,8 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
     if (flags & PyObjCSelector_kCLASS_METHOD) {
         if (PyObjCObject_Check(self)) {
             self_obj = PyObjCObject_GetObject(self);
-            if (self_obj != NULL) {
-                self_obj = object_getClass(self_obj);
-            }
+            assert(self_obj != nil);
+            self_obj = object_getClass(self_obj);
 
         } else if (PyObjCClass_Check(self)) {
             self_obj = PyObjCClass_GetClass(self);

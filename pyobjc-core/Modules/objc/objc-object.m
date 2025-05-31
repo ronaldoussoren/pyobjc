@@ -152,7 +152,7 @@ object_dealloc(PyObject* obj)
     }
 
     if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER
-        && PyObjCObject_GetObject(obj) != nil) {
+        && PyObjCObject_GetObject(obj) != nil) { /* XXX: GetObject cannot return nil */
         /* Release the proxied object, we don't have to do this when
          * there is no proxied object.
          */
@@ -187,13 +187,7 @@ object_verify_type(PyObject* obj)
     id obj_inst;
 
     obj_inst = PyObjCObject_OBJECT(obj);
-    if (unlikely(obj_inst == nil)) { // LCOV_BR_EXCL_LINE
-        /* the (currently sole) caller of this
-         * function already checked that obj_inst is
-         * not nil.
-         */
-        return 0; // LCOV_EXCL_LINE
-    }
+    assert(obj_inst != nil);
 
     if (PyObjCClass_IsCFWrapper(Py_TYPE(obj))) {
         /* Object is a CoreFoundation type, ISA swiffling doesn't
@@ -276,54 +270,6 @@ object_verify_type(PyObject* obj)
     return 0;
 }
 
-static int
-object_verify_not_nil(PyObject* obj, PyObject* name)
-{
-    /* XXX: This should be safe in a free-threaded build, the 'objc_object'
-     *      is only set to 'nil' when working with an uninitialized value
-     *      (either deallocating it, or when an init method returns a
-     *      value different than 'self'.
-     *
-     *      In either case the proxy should not be used in different threads
-     *      (e.g. ``x = [NSArray alloc]; [x init]; [x init]`` is buggy both
-     *      as written and when one of the init calls is in a different thread.
-     *
-     *      For UNINITIALIZED values there will always be a race between using
-     *      the value in one thread, and another thread invoking the initializer.
-     *      That's even true when the GIL is enabled because we release the GIL
-     *      when calling a method.
-     *
-     *      E.g.:
-     *
-     *              THREAD 1                     THREAD 2
-     *              --------                     --------
-     *
-     *              gValue = NSArray.alloc()
-     *
-     *              gValue.init()
-     *                                            gValue.init()
-     *                                            actually invoke [gValue init]
-     *                                            clear objc_object because the result
-     *                                               from init is not self.
-     *
-     *              actually invoke [gValue init]
-     *              BOOM!
-     *
-     *      The only way to avoid this is to lock 'self' when using an UNINITIALIZED
-     *      value.
-     *
-     *      This needs to be documented properly, but is otherwise in "don't do that then"
-     *      territory.
-     */
-    if (PyObjCObject_OBJECT(obj) == nil) {
-        PyErr_Format(PyExc_AttributeError,
-                     "cannot access attribute '%U' of NIL '%.50s' object", name,
-                     Py_TYPE(obj)->tp_name);
-        return -1;
-    }
-    return 0;
-}
-
 static PyObject* _Nullable* _Nullable _get_dictptr(PyObject* obj)
 {
     /* XXX: See above: should be safe with a free-threaded build
@@ -334,9 +280,7 @@ static PyObject* _Nullable* _Nullable _get_dictptr(PyObject* obj)
     if (dictoffset == 0)
         return NULL;
     objc_object = PyObjCObject_OBJECT(obj);
-    if (objc_object == nil) {
-        return NULL;
-    }
+    assert(objc_object != nil);
     return (PyObject**)(((char*)objc_object) + dictoffset);
 }
 
@@ -625,10 +569,6 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
         return NULL;       // LCOV_EXCL_LINE
     }
 
-    if (object_verify_not_nil(obj, name) == -1) {
-        goto done;
-    }
-
     if (object_verify_type(obj) == -1) {
         goto done;
     }
@@ -800,10 +740,6 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
         return -1;
     }
 
-    if (object_verify_not_nil(obj, name) == -1) {
-        return -1;
-    }
-
     obj_inst = PyObjCObject_GetObject(obj);
 
     obj_name = nil;
@@ -922,14 +858,8 @@ static PyObject* _Nullable objc_get_real_class(PyObject* self,
     id        objc_object;
     PyObject* ret;
 
-    /* XXX: free-threading: see earlier discussion about using PyObjCObject_OBJECT
-     *      without locking.
-     */
     objc_object = PyObjCObject_OBJECT(self);
-    if (objc_object == nil) {
-        PyErr_SetString(PyObjCExc_Error, "Cannot access ISA of nil");
-        return NULL;
-    }
+    assert(objc_object != nil);
 
     /* object_getClass only return Nil if its argument is nil */
     ret = PyObjCClass_New((Class _Nonnull)object_getClass(objc_object));
@@ -980,12 +910,8 @@ static PyObject* _Nullable obj_get_blocksignature(PyObject* self, void* closure
             return (PyObject*)v;
         } else {
             id objc_self = PyObjCObject_GetObject(self);
-            if (objc_self == nil) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                PyErr_SetString(PyObjCExc_Error, "Cannot get block signature of a 'nil' block");
-                return NULL;
-                // LCOV_EXCL_STOP
-            }
+            assert(objc_self != nil);
+
             const char* typestr = PyObjCBlock_GetSignature(objc_self);
             if (typestr != NULL) {
                 v = PyObjCMethodSignature_WithMetaData(typestr, NULL, YES);
@@ -1073,28 +999,23 @@ static PyObject* _Nullable meth_sizeof(PyObject* self __attribute__((__unused__)
      * This doesn't return the correct size for collections (such as NSArray),
      * but is better than the default implementation
      */
-    if (PyObjCObject_GetObject(self) == nil) {
-        return PyLong_FromSize_t(Py_TYPE(self)->tp_basicsize);
+    id objc_value = PyObjCObject_GetObject(self);
+    assert(objc_value != nil);
 
-    } else {
-        return PyLong_FromSize_t(
+    return PyLong_FromSize_t(
             Py_TYPE(self)->tp_basicsize
-            + class_getInstanceSize(object_getClass(PyObjCObject_GetObject(self))));
-    }
+            + class_getInstanceSize(object_getClass(objc_value)));
 }
 
 static PyObject*
 meth_is_magic(PyObject* self)
 {
-    int is_magic;
+    id objc_value = PyObjCObject_GetObject(self);
 
-    if (PyObjCObject_GetObject(self) == nil) { // LCOV_BR_EXCL_LINE
-        is_magic = 0; // LCOV_EXCL_LINE
-    } else { // LCOV_EXCL_LINE
-        is_magic = PyObjCObject_IsMagic(self);
-    }
+    assert(objc_value != nil);
 
-    if (is_magic) {
+
+    if (PyObjCObject_IsMagic(self)) {
         Py_RETURN_TRUE;
     } else {
         Py_RETURN_FALSE;
@@ -1316,9 +1237,9 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
                  Py_TYPE(obj)->tp_name);
 
         id objc_object = PyObjCObject_GetObject(obj);
-        if (objc_object != nil) {
-            PyObjC_UnregisterPythonProxy(objc_object, obj);
-        }
+        assert(objc_object != nil);
+
+        PyObjC_UnregisterPythonProxy(objc_object, obj);
 
         /* Object is set to ``[NSNull null]`` to maintain the invariant */
         ((PyObjCObject*)obj)->objc_object = NSNull_null;

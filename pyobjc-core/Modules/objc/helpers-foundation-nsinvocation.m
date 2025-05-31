@@ -68,7 +68,7 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
                     index);
             } else {
                 super.super_class = PyObjCSelector_GetClass(method);
-                super.receiver    = (id _Nonnull)PyObjCObject_GetObject(self);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), buf, index);
@@ -147,7 +147,7 @@ call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self,
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), buf);
             } else {
                 super.super_class = PyObjCSelector_GetClass(method);
-                super.receiver    = (id _Nonnull)PyObjCObject_GetObject(self);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, void*))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), buf);
@@ -233,7 +233,7 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
                     index);
             } else {
                 super.super_class = PyObjCSelector_GetClass(method);
-                super.receiver    = (id _Nonnull)PyObjCObject_GetObject(self);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), buf, index);
@@ -319,7 +319,7 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self,
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), buf);
             } else {
                 super.super_class = PyObjCSelector_GetClass(method);
-                super.receiver    = (id _Nonnull)PyObjCObject_GetObject(self);
+                super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, void*))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), buf);

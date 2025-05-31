@@ -79,11 +79,7 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     }
 
     objc = PyObjCObject_GetObject(obj);
-    if (objc == NULL) {
-        PyErr_SetString(PyExc_TypeError,
-                        "Cannot access Objective-C instance-variables of 'nil'");
-        return NULL;
-    }
+    assert(objc != nil);
 
     if (self->name == NULL) {
         PyErr_SetString(PyExc_TypeError, "Using unnamed instance variable");
@@ -160,11 +156,7 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
     }
 
     objc = PyObjCObject_GetObject(obj);
-    if (objc == NULL) {
-        PyErr_SetString(PyExc_TypeError,
-                        "Cannot access Objective-C instance-variables of NULL");
-        return -1;
-    }
+    assert(objc != nil);
 
     if (self->name == NULL) {
         PyErr_SetString(PyExc_TypeError, "Using unnamed instance variable");

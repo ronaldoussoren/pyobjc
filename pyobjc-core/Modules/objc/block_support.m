@@ -189,16 +189,8 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
     }
 
     block_ptr = PyObjCObject_GetObject(self);
-    if (block_ptr == nil) { // LCOV_BR_EXCL_LINE
-        /* There is no realistic way to get a 'nil' block here, the
-         * objc_object field is only set to 'nil' when an 'init' call
-         * fails and blocks are already initialized.
-         */
-        // LCOV_EXCL_START
-        PyErr_SetString(PyExc_ValueError, "Cannot call nil block");
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
+    assert(block_ptr != nil);
+
     call_func = PyObjCBlock_GetFunction(block_ptr);
 
     argbuf_len = PyObjCRT_SizeOfReturnType(signature->rettype->type);

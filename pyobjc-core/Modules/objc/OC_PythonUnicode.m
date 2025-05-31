@@ -85,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
             PyUnicode_GET_LENGTH(value);
         PyObjC_END_WITH_GIL
         // LCOV_EXCL_STOP
-    }
+    } // LCOV_EXCL_LINE
 #endif
 
     if (!realObject) {
@@ -300,7 +300,7 @@ NS_ASSUME_NONNULL_BEGIN
          */
         self = [super initWithCoder:coder];
         return self;
-    } else if (ver == 2) {
+    } else if (ver == 2) { // LCOV_BR_EXCL_LINE
 
         PyObjC_BEGIN_WITH_GIL
             PyObject* decoder = PyObjC_decodeWithCoder(coder, self);

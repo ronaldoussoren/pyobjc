@@ -1623,16 +1623,8 @@ static PyObject* _Nullable block_signature(PyObject* mod __attribute__((__unused
     }
 
     id objc_block = PyObjCObject_GetObject(block);
-    if (objc_block == nil) { // LCOV_BR_EXCL_LINE
-        /* There's no way to get a partially initialized block value,
-         * hence GetObject will not return nil.
-         */
+    assert(objc_block != nil);
 
-        // LCOV_EXCL_START
-        PyErr_SetString(PyObjCExc_Error, "Cannot get block signature of 'nil' block");
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
     const char* sig = PyObjCBlock_GetSignature(objc_block);
     if (sig == NULL) { // LCOV_BR_EXCL_LINE
         /* AFAIK it is not possible to get a block object

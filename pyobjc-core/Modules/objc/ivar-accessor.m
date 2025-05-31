@@ -26,7 +26,7 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
     int       r;
 
     if (PyObjCObject_Check(object)) {
-        cur = object_getClass((id)PyObjCObject_GetObject(object));
+        cur = object_getClass(PyObjCObject_GetObject(object));
 
     } else if (PyObjCClass_Check(object)) {
         cur = PyObjCClass_GetClass(object);
@@ -134,10 +134,7 @@ PyObject* _Nullable PyObjCIvar_Get(PyObject* self __attribute__((__unused__)),
     }
 
     objcValue = PyObjCObject_GetObject(anObject);
-    if (objcValue == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Getting instance variable of a nil object");
-        return NULL;
-    }
+    assert(objcValue != nil);
 
     /* Shortcut for isa, mostly due to Objective-C 2.0 weirdness */
     if (strcmp(name, "isa") == 0) {
@@ -193,10 +190,7 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
     }
 
     objcValue = PyObjCObject_GetObject(anObject);
-    if (objcValue == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Setting instance variable of a nil object");
-        return NULL;
-    }
+    assert(objcValue != nil);
 
     if (strcmp(name, "isa") == 0) {
         /*

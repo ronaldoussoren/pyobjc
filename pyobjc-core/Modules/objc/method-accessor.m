@@ -46,6 +46,12 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
             unbound_instance_method = 1;
         }
 
+        /* XXX: Check if PyObjCClass_GetClass can return Nil */
+        if (objc_object == nil) {
+            PyErr_Format(PyExc_AttributeError, "<nil> doesn't have attribute %s", name);
+            return NULL;
+        }
+
     } else {
         assert(PyObjCObject_Check(self));
 
@@ -57,12 +63,9 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         class_object = (PyObject*)Py_TYPE(self);
 
         objc_object = PyObjCObject_GetObject(self);
+        assert(objc_object != nil);
     }
 
-    if (objc_object == nil) {
-        PyErr_Format(PyExc_AttributeError, "<nil> doesn't have attribute %s", name);
-        return NULL;
-    }
 
     if (strcmp(object_getClassName(objc_object), "_NSZombie") == 0) { // LCOV_BR_EXCL_LINE
         /* Impossible to hit in regular testing */
@@ -213,10 +216,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
         assert(!class_method);
 
         id obj = PyObjCObject_GetObject(self);
-
-        if (obj == NULL) {
-            return PyDict_New();
-        }
+        assert(obj != nil);
 
         cls        = object_getClass(obj);
         objc_class = cls;
