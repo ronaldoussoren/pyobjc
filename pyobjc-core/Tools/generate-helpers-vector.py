@@ -4,40 +4,13 @@ Helper script for generating support code for vector types,
 including testcases and the supporting extension for that.
 
 The code currently is fairly gross, but works.
-
-XXX: There should be "imp" variants for signatures
-     used in protocols that are intended to be implemented
-     by API users, those should ``imp_implementationWithBlock``
-     as used in block-as-imp.m (and fold the mechanism used
-     in that file into registry.[hm])
-
-XXX: Use the Parse helpers to simplify the generated
-     implementation. Basically only the actual invocation
-     needs to be custom, the rest can be the same as in
-     the FFI caller.
-
-     But: check generated code size and only do this when
-     this reduces code size!
-
-XXX: Also use this for simple basic methods '-(id)method',
-     '-(void)method:arg', and '(void)method', but this also
-     needs the 'imp' variants.
-
-XXX: Use subtests
-
-XXX: Use jinja2 in code generation
-
-XXX: 'simd_' to 'vector_'
-
-XXX: 'GK..' types are only available on recentisch macOS
-     versions, add guards.
 """
 
 import objc
+import Quartz  # noqa: F401
 from objc import simd
 import typing
 import pathlib
-import Quartz  # noqa: F401
 from objc._callable_docstr import describe_type
 
 HELPER_FILE = (
@@ -54,6 +27,7 @@ CALL_PREFIX = "call"
 MKIMP_PREFIX = "mkimp"
 
 
+# XXX: The 'grep' command should be integrated into this script (but written in Python)
 # grep full_signature ../*/Lib/*/_metadata.py | sed 's@.*full_signature.: \([^ ]*\).*@\1@' | sort -u
 ALL_SIGNATURES = [
     b"<2d>@:",
@@ -220,22 +194,26 @@ HELPER_PREFIX = """\
 #define simd_uint3 vector_uint3
 #define simd_int2 vector_int2
 #define simd_int4 vector_int4
+#define simd_float2x2 matrix_float2x2
+#define simd_float3x3 matrix_float3x3
+#define simd_float4x4 matrix_float4x4
+#define simd_double4x4 matrix_double4x4
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 static inline int
-extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
-      Class* super_class, int* flags, PyObjCMethodSignature** methinfo)
+extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* self_obj,
+                    Class _Nonnull* super_class, int* flags, PyObjCMethodSignature** methinfo)
 {
     *isIMP = !!PyObjCIMP_Check(method);
 
     if (*isIMP) {
-        *flags = PyObjCIMP_GetFlags(method);
-        *methinfo = PyObjCIMP_GetSignature(method);
+        *flags    = PyObjCIMP_GetFlags(method);
+        *methinfo = (PyObjCMethodSignature* _Nonnull)PyObjCIMP_GetSignature(method);
     } else {
-        *flags = PyObjCSelector_GetFlags(method);
+        *flags    = PyObjCSelector_GetFlags(method);
         *methinfo = PyObjCSelector_GetMetadata(method);
     }
 
@@ -245,15 +223,14 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
             if (*self_obj == nil && PyErr_Occurred()) {
                 return -1;
             }
-            if (*self_obj != NULL) {
-                *self_obj = object_getClass(*self_obj);
-                if (*self_obj == nil && PyErr_Occurred()) {
-                    return -1;
-                }
+            if (*self_obj != (id _Nonnull)NULL) {
+                /* object_getClass never returns Nil for non-nil objects */
+                *self_obj = (id _Nonnull)object_getClass(*self_obj);
             }
 
         } else if (PyObjCClass_Check(self)) {
-            *self_obj = PyObjCClass_GetClass(self);
+            /* PyObjCClass_GetClass only returns Nil on internal errors */
+            *self_obj = (Class _Nonnull)PyObjCClass_GetClass(self);
             if (*self_obj == nil && PyErr_Occurred()) {
                 return -1;
             }
@@ -262,7 +239,12 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
                    && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
             PyObject* c = PyObjCClass_ClassForMetaClass(self);
             if (c == NULL) {
-                *self_obj = nil;
+                *self_obj = (Class _Nonnull)nil;
+                PyErr_Format(
+                    PyExc_TypeError,
+                    "Need Objective-C object or class as self, not an instance of '%s'",
+                   Py_TYPE(self)->tp_name);
+                return -1;
 
             } else {
                 *self_obj = PyObjCClass_GetClass(c);
@@ -282,6 +264,9 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
     } else {
         int err;
         if (PyObjCObject_Check(self)) {
+            /* PyObjCObject_GetObject only returns NULL if 'self' is not an objc_object,
+             * which cannot happen here.
+             */
             *self_obj = PyObjCObject_GetObject(self);
             if (*self_obj == nil && PyErr_Occurred()) {  // LCOV_BR_EXCL_LINE
                 return -1; // LCOV_EXCL_LINE
@@ -289,50 +274,62 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
 
         } else {
             err = depythonify_c_value(@encode(id), self, self_obj);
-            if (err == -1) return -1;
+            if (err == -1)
+                return -1;
         }
     }
 
     if (*isIMP) {
-        *super_class = nil;
+        /* _Nonnull is safe because of the IMP path doesn't use the super class */
+        *super_class = (Class _Nonnull)Nil;
     } else {
         if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
-            *super_class = object_getClass(PyObjCSelector_GetClass(method));
+            /* _Nonnull is safe because object_getClass will only return Nil when the
+             * class itself is Nil */
+            *super_class =
+                (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method));
         } else {
-            *super_class = PyObjCSelector_GetClass(method);
+            *super_class = (Class _Nonnull)PyObjCSelector_GetClass(method);
         }
     }
+
+    if (*self_obj != nil && (*methinfo != NULL) && (*methinfo)->initializer) {
+        /* the called method will steal a reference to self */
+        [*self_obj retain];
+    }
+
+    assert(*self_obj != nil);
+    assert(*methinfo != NULL);
+    assert(*isIMP || (*super_class != Nil));
 
     return 0;
 }
 
-static PyObject* adjust_retval(PyObjCMethodSignature* methinfo, PyObject* self, int flags, PyObject* result)
+static PyObject* _Nullable
+adjust_retval(PyObjCMethodSignature* methinfo, id _Nullable retval)
 {
+    PyObject* result = id_to_python(retval);
+    if (result == NULL) {
+        assert(PyErr_Occurred());
+        return NULL;
+    }
     if (methinfo->rettype->alreadyRetained) {
-        if (PyObjCObject_Check(result)) {
-            /* pythonify_c_return_value has retained the object, but we already
-             * own a reference, therefore give the ref away again
-             */
-            [PyObjCObject_GetObject(result) release];
-        }
+        /* pythonify_c_return_value has retained the object, but we already
+         * own a reference, therefore give the ref away again
+         */
+        [retval release];
     }
 
     if (methinfo->rettype->alreadyCFRetained) {
-        if (PyObjCObject_Check(result)) {
-            /* pythonify_c_return_value has retained the object, but we already
-             * own a reference, therefore give the ref away again
-             */
-            CFRelease(PyObjCObject_GetObject(result));
-        }
+        /* pythonify_c_return_value has retained the object, but we already
+         * own a reference, therefore give the ref away again
+         */
+        CFRelease(retval);
     }
 
-    if (self != NULL && result != self && PyObjCObject_Check(self)
-        && PyObjCObject_Check(result)
-        && !(flags & PyObjCSelector_kRETURNS_UNINITIALIZED)
-        && (((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
-
-        [PyObjCObject_GetObject(result) release]; /* XXX??? */
-        PyObjCObject_ClearObject(self);
+    if (methinfo->initializer) {
+        /* method returns +1 without being annotated as such */
+        [retval release];
     }
     return result;
 }
@@ -353,9 +350,34 @@ TESTEXT_PREFIX = """\
 
 #import <Foundation/Foundation.h>
 
+#import <AppKit/AppKit.h>
+
+#if PyObjC_BUILD_RELEASE >= 1011
 #import <GameplayKit/GameplayKit.h>
-#import <MetalPerformanceShaders/MetalPerformanceShaders.h>
 #import <ModelIO/ModelIO.h>
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+
+#if PyObjC_BUILD_RELEASE >= 1013
+#import <MetalPerformanceShaders/MetalPerformanceShaders.h>
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+
+#if PyObjC_BULD_RELEASE < 1013
+#define simd_uchar16 vector_uchar16
+#define simd_float2 vector_float2
+#define simd_float3 vector_float3
+#define simd_float4 vector_float4
+#define simd_double2 vector_double2
+#define simd_double3 vector_double3
+#define simd_double4 vector_double4
+#define simd_uint2 vector_uint2
+#define simd_uint3 vector_uint3
+#define simd_int2 vector_int2
+#define simd_int4 vector_int4
+#define simd_float2x2 matrix_float2x2
+#define simd_float3x3 matrix_float3x3
+#define simd_float4x4 matrix_float4x4
+#define simd_double4x4 matrix_double4x4
+#endif /*  PyObjC_BULD_RELEASE < 1013 */
 
 @interface OC_VectorCall : NSObject {
     PyObject* values;
@@ -441,30 +463,68 @@ TESTEXT_SUFFIX = """\
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
+static int mod_exec_module(PyObject* m)
+{
+    if (PyObjC_ImportAPI(m) < 0) {
+        return -1;
+    }
+
+    if (PyModule_AddObject(m, "OC_VectorCall", PyObjC_IdToPython([OC_VectorCall class]))
+        < 0) {
+        return -1;
+    }
+    if (PyModule_AddObject(m, "OC_VectorCallInvoke",
+                           PyObjC_IdToPython([OC_VectorCallInvoke class]))
+        < 0) {
+        return -1;
+    }
+    return 0;
+}
+
+static struct PyModuleDef_Slot mod_slots[] = {
+    {
+        .slot = Py_mod_exec,
+        .value = (void*)mod_exec_module
+    },
+#if PY_VERSION_HEX >= 0x030c0000
+    {
+        /* This extension does not use the CPython API other than initializing
+         * the module, hence is safe with subinterpreters and per-interpreter
+         * GILs
+         */
+        .slot = Py_mod_multiple_interpreters,
+        .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
+    },
+#endif
+#if PY_VERSION_HEX >= 0x030d0000
+    {
+        .slot = Py_mod_gil,
+        .value = Py_MOD_GIL_NOT_USED,
+    },
+#endif
+    {  /* Sentinel */
+        .slot = 0,
+        .value = 0
+    }
+};
+
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT, "vectorcall", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
+    .m_base = PyModuleDef_HEAD_INIT,
+    .m_name = "vectorcall",
+    .m_doc = NULL,
+    .m_size = 0,
+    .m_methods = mod_methods,
+    .m_slots = mod_slots,
+    .m_traverse = NULL,
+    .m_clear = NULL,
+    .m_free = NULL,
+};
 
 PyObject* PyInit_vectorcall(void);
 
-PyObject* __attribute__((__visibility__("default"))) PyInit_vectorcall(void)
+PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit_vectorcall(void)
 {
-    PyObject* m;
-
-    m = PyModule_Create(&mod_module);
-    if (!m) {
-        return NULL;
-    }
-
-    PyObjC_ImportAPI(m);
-
-    if (PyModule_AddObject(m, "OC_VectorCall", PyObjC_IdToPython([OC_VectorCall class])) < 0) {
-        return NULL;
-    }
-    if (PyModule_AddObject(m, "OC_VectorCallInvoke", PyObjC_IdToPython([OC_VectorCallInvoke class])) < 0) {
-        return NULL;
-    }
-
-    return m;
+    return PyModuleDef_Init(&mod_module);
 }
 """
 
@@ -474,15 +534,22 @@ TEST_PREFIX = """\
 #
 #    ** DO NOT EDIT **
 #
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 from functools import partial
 from objc import simd
 
-
-# Needs to be replaced by minimal definitions for
-# CGColor and CGColorSpace
-import Quartz # noqa: F401
+# Tests use CGColorRef and CGColorSpaceRef. Try to import Quartz
+# to get proper definitions for these types, otherwise fall back
+# to minimal definitions (those aren't 100% correct, but good enough
+# for these tests)
+try:
+    import Quartz  # noqa: F401
+except ImportError:
+    CGColorRef = objc.registerCFSignature("CGColorRef", b"^{CGColor=}", 0)
+    CGColorSpaceRef = objc.registerCFSignature(
+        "CGColorSpaceRef", b"^{CGColorSpace=}", 0
+    )
 
 from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
 
@@ -580,8 +647,6 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
     """
     Generate the function to call a selector with the specified signature
     """
-    # XXX: For methods returning an object check if self is uninitialized
-    #      (see FFI caller)
     signature_parts = objc.splitSignature(signature)
     rv_type = signature_parts[0]
     arg_types = signature_parts[3:]
@@ -631,16 +696,25 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
         arg_type_names = ""
         arg_names = ""
 
-    print("    bool isIMP;", file=stream)
-    print("    id self_obj;", file=stream)
-    print("    Class super_class;", file=stream)
-    print("    int flags;", file=stream)
-    print("    PyObjCMethodSignature* methinfo;", file=stream)
+    print("    bool                   isIMP;", file=stream)
+    print("    id                     self_obj;", file=stream)
+    print("    Class                  super_class;", file=stream)
+    print("    int                    flags;", file=stream)
+    print("    PyObjCMethodSignature* methinfo = NULL;", file=stream)
     print("", file=stream)
     print(
-        "    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags, &methinfo) == -1) {",
+        "    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,",
         file=stream,
     )
+    print(
+        "                            &methinfo)",
+        file=stream,
+    )
+    print(
+        "           == -1) {",
+        file=stream,
+    )
+    print("         Py_CLEAR(methinfo);", file=stream)
     print("         return NULL;", file=stream)
     print("    }", file=stream)
     print("    Py_BEGIN_ALLOW_THREADS", file=stream)
@@ -687,17 +761,18 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
     print("        Py_END_ALLOW_THREADS", file=stream)
     print("", file=stream)
     print("        if (PyErr_Occurred()) {", file=stream)
+    print("            Py_CLEAR(methinfo);", file=stream)
     print("            return NULL;", file=stream)
     print("        }", file=stream)
     print("", file=stream)
 
     if rv_type == objc._C_ID:
-        print(
-            f'    return adjust_retval(methinfo, self, flags, pythonify_c_value("{rv_type.decode()}", &rv));',
-            file=stream,
-        )
+        print("    PyObject* result = adjust_retval(methinfo, rv);", file=stream)
+        print("    Py_CLEAR(methinfo);", file=stream)
+        print("    return result;", file=stream)
 
     elif rv_type != objc._C_VOID:
+        print("    Py_CLEAR(methinfo);", file=stream)
         print(f'    return pythonify_c_value("{rv_type.decode()}", &rv);', file=stream)
     else:
         print("    Py_RETURN_NONE;", file=stream)
@@ -750,9 +825,9 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
         "        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);",
         file=stream,
     )
-    print("        if (pyself == NULL) {", file=stream)
-    print("            goto error;", file=stream)
-    print("        }", file=stream)
+    print("        if (pyself == NULL) { // LCOV_BR_EXCL_LINE", file=stream)
+    print("            goto error; // LCOV_EXCL_LINE", file=stream)
+    print("        } // LCOV_EXCL_LINE", file=stream)
     print("", file=stream)
     print("        args[1] = pyself;", file=stream)
     for idx, tp in enumerate(arg_types):
@@ -760,7 +835,8 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
             f'        args[{idx+2}] = pythonify_c_value("{tp.decode()}", &arg{idx});',
             file=stream,
         )
-        print(f"        if (args[{idx+2}] == NULL) goto error;", file=stream)
+        print(f"        if (args[{idx+2}] == NULL) // LCOV_BR_EXCL_LINE", file=stream)
+        print("            goto error; // LCOV_EXCL_LINE", file=stream)
     print("", file=stream)
     print(
         "        PyObject* result = PyObject_Vectorcall(callable, args + 1,",
@@ -792,9 +868,12 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
         print("         }", file=stream)
         print("", file=stream)
     print("        Py_DECREF(result);", file=stream)
-    print(f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream)
-    print("            Py_CLEAR(args[i]);", file=stream)
-    print("        }", file=stream)
+    if len(arg_types):
+        print(
+            f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream
+        )
+        print("            Py_CLEAR(args[i]);", file=stream)
+        print("        }", file=stream)
     print("", file=stream)
     print("        PyObjCObject_ReleaseTransient(pyself, cookie);", file=stream)
     print("        PyGILState_Release(state);", file=stream)
@@ -808,9 +887,12 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("            PyObjCObject_ReleaseTransient(pyself, cookie);", file=stream)
     print("        }", file=stream)
     print("", file=stream)
-    print(f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream)
-    print("            Py_CLEAR(args[i]);", file=stream)
-    print("        }", file=stream)
+    if len(arg_types):
+        print(
+            f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream
+        )
+        print("            Py_CLEAR(args[i]);", file=stream)
+        print("        }", file=stream)
     print("        PyObjCErr_ToObjCWithGILState(&state);", file=stream)
     print("    };", file=stream)
     print("", file=stream)
@@ -840,17 +922,60 @@ def BOOL_to_bool(signature: bytes) -> bytes:
     return b"".join(result)
 
 
+def print_macos_available(stream, signature):
+    if b"GKBox" in signature or b"GKTriangle" in signature or b"GKQuad" in signature:
+        print("    if objc.macos_available(10, 12):", file=stream)
+        return "    "
+    elif b"MDL" in signature:
+        print("    if objc.macos_available(10, 11):", file=stream)
+        return "    "
+    elif b"MPSAxisAlignedBoundingBox" in signature:
+        print("    if objc.macos_available(10, 14):", file=stream)
+        return "    "
+    elif b"MPS" in signature or b"simd_quat" in signature:
+        print("    if objc.macos_available(10, 13):", file=stream)
+        return "    "
+    return ""
+
+
+def print_min_os_level(stream, signature):
+    if b"GKBox" in signature or b"GKTriangle" in signature or b"GKQuad" in signature:
+        print('    @min_os_level("10.12")', file=stream)
+    elif b"MDL" in signature:
+        print('    @min_os_level("10.11")', file=stream)
+    elif b"MPSAxisAlignedBoundingBox" in signature:
+        print('    @min_os_level("10.14")', file=stream)
+    elif b"MPS" in signature or b"simd_quat" in signature:
+        print('    @min_os_level("10.13")', file=stream)
+
+
+def pre_lines(stream, signature):
+    if b"GKBox" in signature or b"GKTriangle" in signature or b"GKQuad" in signature:
+        print("#if PyObjC_BUILD_RELEASE >= 1012", file=stream)
+    elif b"MDL" in signature:
+        print("#if PyObjC_BUILD_RELEASE >= 1011", file=stream)
+    elif b"MPSAxisAlignedBoundingBox" in signature:
+        print("#if PyObjC_BUILD_RELEASE >= 1014", file=stream)
+    elif b"MPS" in signature or b"simd_quat" in signature:
+        print("#if PyObjC_BUILD_RELEASE >= 1013", file=stream)
+
+
+def post_lines(stream, signature):
+    if b"GKBox" in signature or b"GKTriangle" in signature or b"GKQuad" in signature:
+        print("#endif /* PyObjC_BUILD_RELEASE >= 1012 */", file=stream)
+    elif b"MDL" in signature:
+        print("#endif /* PyObjC_BUILD_RELEASE >= 1011 */", file=stream)
+    elif b"MPSAxisAlignedBoundingBox" in signature:
+        print("#endif /* PyObjC_BUILD_RELEASE >= 1014 */", file=stream)
+    elif b"MPS" in signature or b"simd_quat" in signature:
+        print("#endif /* PyObjC_BUILD_RELEASE >= 1013 */", file=stream)
+
+
 def generate_setup_function(stream: typing.IO[str]):
     """
     Generate the function that's used to register
     the generated functions with the core bridge.
     """
-    # XXX: Register the mkimp implementation "somewhere"
-    #      Preferable: drop the older PyObjCUnsupportedMethod_IMP
-    #       variant, mkimp is a better interface because this
-    #       matches the semantics of the FFI caller.
-    #
-    #       This requires wider changes..
     print("int", file=stream)
     print(
         "PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))", file=stream
@@ -860,12 +985,9 @@ def generate_setup_function(stream: typing.IO[str]):
     seen_call = {}
     seen_mkimp = {}
     for idx, signature in enumerate(ALL_SIGNATURES):
-        if b"GKBox" in signature:
-            print("#if PyObjC_BUILD_RELEASE >= 1012", file=stream)
-        if b"MDL" in signature:
-            print("#if PyObjC_BUILD_RELEASE >= 1011", file=stream)
-        if b"MPS" in signature:
-            print("#if PyObjC_BUILD_RELEASE >= 1013", file=stream)
+        print("", file=stream)
+        pre_lines(stream, signature)
+
         call_name = function_name(CALL_PREFIX, signature)
         mkimp_name = function_name(MKIMP_PREFIX, signature)
 
@@ -877,13 +999,13 @@ def generate_setup_function(stream: typing.IO[str]):
         seen_call[call_name] = idx
         seen_mkimp[mkimp_name] = idx
 
-        print("", file=stream)
         print(
             "    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE", file=stream
         )
-        print(f'        "{signature.decode()}",', file=stream)
-        print(f"        {call_name},", file=stream)
-        print(f"        {mkimp_name}) == -1) {{", file=stream)
+        print(
+            f'        "{signature.decode()}", {call_name}, {mkimp_name})', file=stream
+        )
+        print("       == -1) {", file=stream)
         print("            return -1; // LCOV_EXCL_LINE", file=stream)
         print("    }", file=stream)
 
@@ -896,18 +1018,15 @@ def generate_setup_function(stream: typing.IO[str]):
                 "    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE",
                 file=stream,
             )
-            print(f'        "{alt_signature.decode()}",', file=stream)
-            print(f"        {call_name},", file=stream)
-            print(f"        {mkimp_name}) == -1) {{", file=stream)
+            print(
+                f'        "{alt_signature.decode()}", {call_name}, {mkimp_name})',
+                file=stream,
+            )
+            print("       == -1) {", file=stream)
             print("            return -1; // LCOV_EXCL_LINE", file=stream)
             print("    }", file=stream)
 
-        if b"GKBox" in signature:
-            print("#endif /* PyObjC_BUILD_RELEASE >= 1012 */", file=stream)
-        if b"MDL" in signature:
-            print("#endif /* PyObjC_BUILD_RELEASE >= 1011 */", file=stream)
-        if b"MPS" in signature:
-            print("#endif /* PyObjC_BUILD_RELEASE >= 1013 */", file=stream)
+        post_lines(stream, signature)
 
     print("", file=stream)
     print("    return 0;", file=stream)
@@ -980,7 +1099,6 @@ def as_objc_literal(typestr, value):
 
 
 def generate_testext_callimp(stream, signature, instance=True):
-    # XXX: Add some kind of hook to raise an exception when the method is called.
     parts = objc.splitSignature(signature)
     sel = sel_for_signature(signature)
     if not instance:
@@ -1297,12 +1415,18 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         oc_sel = "cls" + oc_sel
     sel = oc_sel.replace(":", "_")
 
+    print_min_os_level(stream, signature)
     print(f"    def test_{sel}{'_imp' if imp else ''}(self):", file=stream)
     sigparts = objc.splitSignature(signature)
     print("        OC_VectorCall.clearRaise()", file=stream)
     print("        # Verify method type", file=stream)
     print(
         f"        self.assert{not instance}(OC_VectorCall.{sel}.isClassMethod)",
+        file=stream,
+    )
+    print("        # Verify that method is not an initializer", file=stream)
+    print(
+        f"        self.assertIsNotInitializer(OC_VectorCall.{sel})",
         file=stream,
     )
 
@@ -1444,21 +1568,24 @@ def generate_imp_testhelper(stream, signature, instance=True):
 
     arg_names = tuple(f"arg{idx}" for idx in range(len(signature_parts) - 3))
 
+    pfx = print_macos_available(stream, signature)
     if not instance:
-        print("    @classmethod", file=stream)
+        print(f"{pfx}    @classmethod", file=stream)
 
     if arg_names:
-        print(f"    def {sel}(self, {', '.join(arg_names)}):", file=stream)
-        print(f"        self.argvalues = ({', '.join(arg_names)},)", file=stream)
+        print(f"{pfx}    def {sel}(self, {', '.join(arg_names)}):", file=stream)
+        print(f"{pfx}        self.argvalues = ({', '.join(arg_names)},)", file=stream)
     else:
-        print(f"    def {sel}(self):", file=stream)
-        print("        self.argvalues = None", file=stream)
+        print(f"{pfx}    def {sel}(self):", file=stream)
+        print(f"{pfx}        self.argvalues = None", file=stream)
 
-    print("        if getattr(self, 'shouldRaise', False):", file=stream)
-    print("            raise RuntimeError('failure!')", file=stream)
+    print(f"{pfx}        if getattr(self, 'shouldRaise', False):", file=stream)
+    print(f"{pfx}            raise RuntimeError('failure!')", file=stream)
 
     if signature_parts[0] != objc._C_VOID:
-        print(f"        return {repr(valid_value(signature_parts[0]))}", file=stream)
+        print(
+            f"{pfx}        return {repr(valid_value(signature_parts[0]))}", file=stream
+        )
 
     print("", file=stream)
 
@@ -1468,6 +1595,7 @@ def generate_imp_testcase(stream, signature, instance=True):
     oc_sel = sel_for_signature(signature)
     sel = oc_sel.replace(":", "_")
 
+    print_min_os_level(stream, signature)
     print(
         f"    def test_imp_{sel}{'' if instance else '_cls'}(self):",
         file=stream,
@@ -1502,7 +1630,8 @@ def generate_imp_testcase(stream, signature, instance=True):
     print("        value.shouldRaise = True", file=stream)
     print("        try:", file=stream)
     print(
-        "            with self.assertRaisesRegex(RuntimeError, 'failure'):", file=stream
+        "            with self.assertRaisesRegex(RuntimeError, 'failure'):",
+        file=stream,
     )
     print(
         f"                OC_VectorCallInvoke.{oc_sel.replace(':', '')}On_(value)",
@@ -1519,30 +1648,37 @@ def main():
     with open(HELPER_FILE, "w") as stream:
         print(HELPER_PREFIX, file=stream)
         for signature in ALL_SIGNATURES:
-            if b"GKBox" in signature:
-                print("#if PyObjC_BUILD_RELEASE >= 1012", file=stream)
+            pre_lines(stream, signature)
 
             generate_call(stream, signature)
             generate_mkimp(stream, signature)
-            if b"GKBox" in signature:
-                print("#endif /* PyObjC_BUILD_RELEASE >= 1012 */", file=stream)
+
+            post_lines(stream, signature)
         generate_setup_function(stream)
         print("NS_ASSUME_NONNULL_END", file=stream)
+
+    # subprocess.run(["clang-format", "-i", "--style=file", HELPER_FILE])
 
     # Test extension for testing calling
     with open(TESTEXT_FILE, "w") as stream:
         print(TESTEXT_PREFIX, file=stream)
 
         for signature in ALL_SIGNATURES:
+            pre_lines(stream, signature)
             generate_testext_callimp(stream, signature)
             generate_testext_callimp(stream, signature, instance=False)
+            post_lines(stream, signature)
 
         print(TESTEXT_MID, file=stream)
 
         for signature in ALL_SIGNATURES:
+            pre_lines(stream, signature)
             generate_testext_callfromobjc(stream, signature)
+            post_lines(stream, signature)
 
         print(TESTEXT_SUFFIX, file=stream)
+
+    # subprocess.run(["clang-format", "-i", "--style=file", TESTEXT_FILE])
 
     # Test extension for testing implementing
     #  (or in same file?)

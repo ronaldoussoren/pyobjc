@@ -8,7 +8,6 @@ import objc
 from functools import partial
 from objc import simd
 
-
 # Tests use CGColorRef and CGColorSpaceRef. Try to import Quartz
 # to get proper definitions for these types, otherwise fall back
 # to minimal definitions (those aren't 100% correct, but good enough
@@ -3489,6 +3488,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2d.isClassMethod)
+        # Verify that method is not an initializer
         self.assertIsNotInitializer(OC_VectorCall.v2d)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2d, b"<2d>")
@@ -3521,6 +3521,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2d.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2d)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2d, b"<2d>")
 
@@ -3552,6 +3554,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2d.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2d)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2d, b"<2d>")
 
@@ -3596,6 +3600,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2d.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2d)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2d, b"<2d>")
 
@@ -3667,6 +3673,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2dd_, b"<2d>")
         self.assertArgHasType(OC_VectorCall.v2dd_, 0, b"d")
@@ -3708,6 +3716,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2dd_, b"<2d>")
         self.assertArgHasType(OC_VectorCall.clsv2dd_, 0, b"d")
@@ -3749,6 +3759,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2dd_, b"<2d>")
         self.assertArgHasType(OC_VectorCall.v2dd_, 0, b"d")
@@ -3799,6 +3811,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2dd_, b"<2d>")
         self.assertArgHasType(OC_VectorCall.clsv2dd_, 0, b"d")
@@ -3878,6 +3892,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2f, b"<2f>")
 
@@ -3909,6 +3925,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2f, b"<2f>")
 
@@ -3940,6 +3958,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2f, b"<2f>")
 
@@ -3984,6 +4004,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2f, b"<2f>")
 
@@ -4055,6 +4077,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2fQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2fQ_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.v2fQ_, 0, b"Q")
@@ -4096,6 +4120,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2fQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2fQ_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.clsv2fQ_, 0, b"Q")
@@ -4137,6 +4163,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2fQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2fQ_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.v2fQ_, 0, b"Q")
@@ -4187,6 +4215,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2fQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2fQ_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.clsv2fQ_, 0, b"Q")
@@ -4266,6 +4296,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2fd_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.v2fd_, 0, b"d")
@@ -4307,6 +4339,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2fd_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.clsv2fd_, 0, b"d")
@@ -4348,6 +4382,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2fd_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.v2fd_, 0, b"d")
@@ -4398,6 +4434,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2fd_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.clsv2fd_, 0, b"d")
@@ -4477,6 +4515,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fq_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2fq_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2fq_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.v2fq_, 0, b"q")
@@ -4518,6 +4558,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fq_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2fq_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2fq_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.clsv2fq_, 0, b"q")
@@ -4559,6 +4601,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fq_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2fq_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2fq_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.v2fq_, 0, b"q")
@@ -4609,6 +4653,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fq_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2fq_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2fq_, b"<2f>")
         self.assertArgHasType(OC_VectorCall.clsv2fq_, 0, b"q")
@@ -4688,6 +4734,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2i.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2i)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2i, b"<2i>")
 
@@ -4719,6 +4767,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2i.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2i)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2i, b"<2i>")
 
@@ -4750,6 +4800,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v2i.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v2i)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v2i, b"<2i>")
 
@@ -4794,6 +4846,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2i.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv2i)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv2i, b"<2i>")
 
@@ -4865,6 +4919,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3dd_, b"<3d>")
         self.assertArgHasType(OC_VectorCall.v3dd_, 0, b"d")
@@ -4906,6 +4962,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3dd_, b"<3d>")
         self.assertArgHasType(OC_VectorCall.clsv3dd_, 0, b"d")
@@ -4947,6 +5005,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3dd_, b"<3d>")
         self.assertArgHasType(OC_VectorCall.v3dd_, 0, b"d")
@@ -4997,6 +5057,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3dd_, b"<3d>")
         self.assertArgHasType(OC_VectorCall.clsv3dd_, 0, b"d")
@@ -5076,6 +5138,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3f, b"<3f>")
 
@@ -5107,6 +5171,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3f, b"<3f>")
 
@@ -5138,6 +5204,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3f, b"<3f>")
 
@@ -5182,6 +5250,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3f, b"<3f>")
 
@@ -5253,6 +5323,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv2i_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fv2i_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fv2i_v2i_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fv2i_v2i_, 0, b"<2i>")
@@ -5299,6 +5371,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv2i_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fv2i_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fv2i_v2i_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fv2i_v2i_, 0, b"<2i>")
@@ -5345,6 +5419,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv2i_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fv2i_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fv2i_v2i_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fv2i_v2i_, 0, b"<2i>")
@@ -5404,6 +5480,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv2i_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fv2i_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fv2i_v2i_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fv2i_v2i_, 0, b"<2i>")
@@ -5500,6 +5578,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fv3f_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fv3f_, 0, b"<3f>")
@@ -5541,6 +5621,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fv3f_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fv3f_, 0, b"<3f>")
@@ -5582,6 +5664,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fv3f_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fv3f_, 0, b"<3f>")
@@ -5632,6 +5716,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fv3f_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fv3f_, 0, b"<3f>")
@@ -5711,6 +5797,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv3f_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fv3f_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fv3f_id_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fv3f_id_, 0, b"<3f>")
@@ -5757,6 +5845,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv3f_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fv3f_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fv3f_id_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fv3f_id_, 0, b"<3f>")
@@ -5803,6 +5893,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv3f_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fv3f_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fv3f_id_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fv3f_id_, 0, b"<3f>")
@@ -5858,6 +5950,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv3f_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fv3f_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fv3f_id_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fv3f_id_, 0, b"<3f>")
@@ -5954,6 +6048,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fv4i_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fv4i_, 0, b"<4i>")
@@ -5995,6 +6091,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fv4i_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fv4i_, 0, b"<4i>")
@@ -6036,6 +6134,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fv4i_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fv4i_, 0, b"<4i>")
@@ -6086,6 +6186,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fv4i_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fv4i_, 0, b"<4i>")
@@ -6165,6 +6267,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fQ_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fQ_, 0, b"Q")
@@ -6206,6 +6310,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fQ_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fQ_, 0, b"Q")
@@ -6247,6 +6353,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fQ_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fQ_, 0, b"Q")
@@ -6297,6 +6405,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fQ_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fQ_, 0, b"Q")
@@ -6376,6 +6486,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fd_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fd_, 0, b"d")
@@ -6417,6 +6529,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fd_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fd_, 0, b"d")
@@ -6458,6 +6572,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v3fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v3fd_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.v3fd_, 0, b"d")
@@ -6508,6 +6624,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv3fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv3fd_, b"<3f>")
         self.assertArgHasType(OC_VectorCall.clsv3fd_, 0, b"d")
@@ -6587,6 +6705,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v4dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v4dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v4dd_, b"<4d>")
         self.assertArgHasType(OC_VectorCall.v4dd_, 0, b"d")
@@ -6628,6 +6748,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv4dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv4dd_, b"<4d>")
         self.assertArgHasType(OC_VectorCall.clsv4dd_, 0, b"d")
@@ -6669,6 +6791,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v4dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v4dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v4dd_, b"<4d>")
         self.assertArgHasType(OC_VectorCall.v4dd_, 0, b"d")
@@ -6719,6 +6843,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4dd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv4dd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv4dd_, b"<4d>")
         self.assertArgHasType(OC_VectorCall.clsv4dd_, 0, b"d")
@@ -6798,6 +6924,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v4f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v4f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v4f, b"<4f>")
 
@@ -6829,6 +6957,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv4f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv4f, b"<4f>")
 
@@ -6860,6 +6990,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v4f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v4f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v4f, b"<4f>")
 
@@ -6904,6 +7036,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4f.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv4f)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv4f, b"<4f>")
 
@@ -6975,6 +7109,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v4fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v4fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v4fd_, b"<4f>")
         self.assertArgHasType(OC_VectorCall.v4fd_, 0, b"d")
@@ -7016,6 +7152,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv4fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv4fd_, b"<4f>")
         self.assertArgHasType(OC_VectorCall.clsv4fd_, 0, b"d")
@@ -7057,6 +7195,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v4fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v4fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v4fd_, b"<4f>")
         self.assertArgHasType(OC_VectorCall.v4fd_, 0, b"d")
@@ -7107,6 +7247,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4fd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv4fd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv4fd_, b"<4f>")
         self.assertArgHasType(OC_VectorCall.clsv4fd_, 0, b"d")
@@ -7186,6 +7328,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v4iv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v4iv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v4iv3f_, b"<4i>")
         self.assertArgHasType(OC_VectorCall.v4iv3f_, 0, b"<3f>")
@@ -7227,6 +7371,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4iv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv4iv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv4iv3f_, b"<4i>")
         self.assertArgHasType(OC_VectorCall.clsv4iv3f_, 0, b"<3f>")
@@ -7268,6 +7414,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v4iv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v4iv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v4iv3f_, b"<4i>")
         self.assertArgHasType(OC_VectorCall.v4iv3f_, 0, b"<3f>")
@@ -7318,6 +7466,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4iv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv4iv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv4iv3f_, b"<4i>")
         self.assertArgHasType(OC_VectorCall.clsv4iv3f_, 0, b"<3f>")
@@ -7397,6 +7547,7 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2d_id_.isClassMethod)
+        # Verify that method is not an initializer
         self.assertIsNotInitializer(OC_VectorCall.idv2d_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2d_id_, b"@")
@@ -7444,6 +7595,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2d_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2d_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2d_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2d_id_, 0, b"<2d>")
@@ -7490,6 +7643,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2d_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2d_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2d_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2d_id_, 0, b"<2d>")
@@ -7545,6 +7700,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2d_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2d_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2d_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2d_id_, 0, b"<2d>")
@@ -7596,7 +7753,6 @@ class TestVectorCall(TestCase):
             imp(42, objc.simd.vector_double2(0.0, 1.5), "hello")
 
     def test_imp_idv2d_id_(self):
-        self.assertIsNotInitializer(OC_VectorCallInstance.idv2d_id_)
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
         result = OC_VectorCallInvoke.idv2didOn_(value)
@@ -7642,6 +7798,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2d_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2d_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2d_q_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2d_q_, 0, b"<2d>")
@@ -7688,6 +7846,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2d_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2d_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2d_q_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2d_q_, 0, b"<2d>")
@@ -7734,6 +7894,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2d_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2d_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2d_q_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2d_q_, 0, b"<2d>")
@@ -7789,6 +7951,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2d_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2d_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2d_q_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2d_q_, 0, b"<2d>")
@@ -7885,6 +8049,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2f_, 0, b"<2f>")
@@ -7926,6 +8092,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2f_, 0, b"<2f>")
@@ -7967,6 +8135,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2f_, 0, b"<2f>")
@@ -8017,6 +8187,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2f_, 0, b"<2f>")
@@ -8096,6 +8268,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_v2I_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2f_v2I_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2f_v2I_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2f_v2I_q_id_, 0, b"<2f>")
@@ -8182,6 +8356,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_v2I_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2f_v2I_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2f_v2I_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2f_v2I_q_id_, 0, b"<2f>")
@@ -8268,6 +8444,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_v2I_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2f_v2I_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2f_v2I_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2f_v2I_q_id_, 0, b"<2f>")
@@ -8375,6 +8553,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_v2I_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2f_v2I_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2f_v2I_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2f_v2I_q_id_, 0, b"<2f>")
@@ -8521,6 +8701,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2f_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2f_v2f_, 0, b"<2f>")
@@ -8573,6 +8755,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2f_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2f_v2f_, 0, b"<2f>")
@@ -8625,6 +8809,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2f_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2f_v2f_, 0, b"<2f>")
@@ -8692,6 +8878,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2f_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2f_v2f_, 0, b"<2f>")
@@ -8796,6 +8984,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2i_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2i_, 0, b"<2i>")
@@ -8837,6 +9027,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2i_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2i_, 0, b"<2i>")
@@ -8878,6 +9070,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2i_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2i_, 0, b"<2i>")
@@ -8928,6 +9122,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2i_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2i_, 0, b"<2i>")
@@ -9007,6 +9203,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_i_i_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2i_i_i_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2i_i_i_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_, 0, b"<2i>")
@@ -9063,6 +9261,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_i_i_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2i_i_i_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2i_i_i_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2i_i_i_Z_, 0, b"<2i>")
@@ -9119,6 +9319,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_i_i_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2i_i_i_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2i_i_i_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_, 0, b"<2i>")
@@ -9184,6 +9386,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_i_i_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2i_i_i_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2i_i_i_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2i_i_i_Z_, 0, b"<2i>")
@@ -9294,6 +9498,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_i_i_Z_Class_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2i_i_i_Z_Class_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2i_i_i_Z_Class_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_Class_, 0, b"<2i>")
@@ -9388,6 +9594,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_i_i_Z_Class_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2i_i_i_Z_Class_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2i_i_i_Z_Class_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2i_i_i_Z_Class_, 0, b"<2i>")
@@ -9482,6 +9690,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_i_i_Z_Class_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv2i_i_i_Z_Class_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv2i_i_i_Z_Class_, b"@")
         self.assertArgHasType(OC_VectorCall.idv2i_i_i_Z_Class_, 0, b"<2i>")
@@ -9599,6 +9809,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_i_i_Z_Class_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv2i_i_i_Z_Class_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv2i_i_i_Z_Class_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv2i_i_i_Z_Class_, 0, b"<2i>")
@@ -9756,6 +9968,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_, 0, b"<3f>")
@@ -9797,6 +10011,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_, 0, b"<3f>")
@@ -9838,6 +10054,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_, 0, b"<3f>")
@@ -9888,6 +10106,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_, 0, b"<3f>")
@@ -9967,6 +10187,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, 0, b"<3f>")
@@ -10126,6 +10348,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_, 0, b"<3f>")
@@ -10285,6 +10509,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_, 0, b"<3f>")
@@ -10471,6 +10697,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_, 0, b"<3f>")
@@ -10699,6 +10927,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_Z_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, 0, b"<3f>")
@@ -10835,6 +11065,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_, 0, b"<3f>")
@@ -10971,6 +11203,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_Z_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_Z_q_id_, 0, b"<3f>")
@@ -11132,6 +11366,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_, 0, b"<3f>")
@@ -11334,6 +11570,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, 0, b"<3f>")
@@ -11443,6 +11681,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_Z_q_id_, 0, b"<3f>")
@@ -11552,6 +11792,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_Z_q_id_, 0, b"<3f>")
@@ -11684,6 +11926,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_Z_q_id_, 0, b"<3f>")
@@ -11856,6 +12100,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_i_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_i_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, 0, b"<3f>")
@@ -11987,6 +12233,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_, 0, b"<3f>")
@@ -12118,6 +12366,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_i_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_i_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_i_Z_q_id_, 0, b"<3f>")
@@ -12274,6 +12524,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_, 0, b"<3f>")
@@ -12471,6 +12723,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_q_id_, 0, b"<3f>")
@@ -12559,6 +12813,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_q_id_, 0, b"<3f>")
@@ -12647,6 +12903,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v2I_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v2I_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v2I_q_id_, 0, b"<3f>")
@@ -12756,6 +13014,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v2I_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v2I_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v2I_q_id_, 0, b"<3f>")
@@ -12904,6 +13164,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v3I_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v3I_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, 0, b"<3f>")
@@ -13015,6 +13277,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v3I_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v3I_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v3I_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v3I_Z_q_id_, 0, b"<3f>")
@@ -13126,6 +13390,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v3I_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v3I_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v3I_Z_q_id_, 0, b"<3f>")
@@ -13260,6 +13526,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v3I_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v3I_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v3I_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v3I_Z_q_id_, 0, b"<3f>")
@@ -13434,6 +13702,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v3I_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v3I_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, 0, b"<3f>")
@@ -13545,6 +13815,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v3I_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v3I_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v3I_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v3I_q_Z_id_, 0, b"<3f>")
@@ -13656,6 +13928,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v3I_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_v3I_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_v3I_q_Z_id_, 0, b"<3f>")
@@ -13790,6 +14064,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v3I_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_v3I_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_v3I_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_v3I_q_Z_id_, 0, b"<3f>")
@@ -13964,6 +14240,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, 0, b"<3f>")
@@ -14123,6 +14401,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_, 0, b"<3f>")
@@ -14282,6 +14562,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_, 0, b"<3f>")
@@ -14468,6 +14750,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_, 0, b"<3f>")
@@ -14696,6 +14980,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_Z_q_id_, 0, b"<3f>")
@@ -14772,6 +15058,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_Z_q_id_, 0, b"<3f>")
@@ -14848,6 +15136,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv3f_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv3f_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idv3f_Z_q_id_, 0, b"<3f>")
@@ -14945,6 +15235,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_Z_q_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv3f_Z_q_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv3f_Z_q_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv3f_Z_q_id_, 0, b"<3f>")
@@ -15081,6 +15373,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv4f_, b"@")
         self.assertArgHasType(OC_VectorCall.idv4f_, 0, b"<4f>")
@@ -15122,6 +15416,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv4f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv4f_, 0, b"<4f>")
@@ -15163,6 +15459,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idv4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idv4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idv4f_, b"@")
         self.assertArgHasType(OC_VectorCall.idv4f_, 0, b"<4f>")
@@ -15213,6 +15511,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidv4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidv4f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidv4f_, 0, b"<4f>")
@@ -15296,6 +15596,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v2d_v2d_v2i_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_v2d_v2d_v2i_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, 0, b"@")
@@ -15411,6 +15713,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_, 0, b"@")
@@ -15526,6 +15830,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v2d_v2d_v2i_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_v2d_v2d_v2i_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_v2d_v2d_v2i_Z_, 0, b"@")
@@ -15664,6 +15970,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_, 0, b"@")
@@ -15842,6 +16150,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_v2f_, 0, b"@")
@@ -15888,6 +16198,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_v2f_, 0, b"@")
@@ -15934,6 +16246,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_v2f_, 0, b"@")
@@ -15989,6 +16303,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_v2f_, 0, b"@")
@@ -16085,6 +16401,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_v3f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_v3f_, 0, b"@")
@@ -16131,6 +16449,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_v3f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_v3f_, 0, b"@")
@@ -16177,6 +16497,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_v3f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_v3f_, 0, b"@")
@@ -16232,6 +16554,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_v3f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_v3f_, 0, b"@")
@@ -16328,6 +16652,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_v4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_v4f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_v4f_, 0, b"@")
@@ -16374,6 +16700,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_v4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_v4f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_v4f_, 0, b"@")
@@ -16420,6 +16748,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_v4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_v4f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_v4f_, 0, b"@")
@@ -16475,6 +16805,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_v4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_v4f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_v4f_, 0, b"@")
@@ -16571,6 +16903,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_id_v2i_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_id_v2i_, 0, b"@")
@@ -16622,6 +16956,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_id_v2i_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_id_v2i_, 0, b"@")
@@ -16673,6 +17009,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_id_v2i_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_id_v2i_, 0, b"@")
@@ -16733,6 +17071,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_id_v2i_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_id_v2i_, 0, b"@")
@@ -16836,6 +17176,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_id_v2i_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_id_v2i_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_id_v2i_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_id_v2i_f_, 0, b"@")
@@ -16896,6 +17238,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_id_v2i_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_id_v2i_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_id_v2i_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_id_v2i_f_, 0, b"@")
@@ -16956,6 +17300,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_id_v2i_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_id_v2i_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_id_v2i_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_id_v2i_f_, 0, b"@")
@@ -17031,6 +17377,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_id_v2i_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_id_v2i_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_id_v2i_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_id_v2i_f_, 0, b"@")
@@ -17145,6 +17493,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Q_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Q_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Q_v2f_, 0, b"@")
@@ -17196,6 +17546,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Q_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Q_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Q_v2f_, 0, b"@")
@@ -17247,6 +17599,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Q_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Q_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Q_v2f_, 0, b"@")
@@ -17312,6 +17666,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Q_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Q_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Q_v2f_, 0, b"@")
@@ -17415,6 +17771,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Q_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Q_v3f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Q_v3f_, 0, b"@")
@@ -17472,6 +17830,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Q_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Q_v3f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Q_v3f_, 0, b"@")
@@ -17529,6 +17889,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Q_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Q_v3f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Q_v3f_, 0, b"@")
@@ -17600,6 +17962,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Q_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Q_v3f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Q_v3f_, 0, b"@")
@@ -17709,6 +18073,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Q_v4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Q_v4f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Q_v4f_, 0, b"@")
@@ -17771,6 +18137,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Q_v4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Q_v4f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Q_v4f_, 0, b"@")
@@ -17833,6 +18201,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Q_v4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Q_v4f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Q_v4f_, 0, b"@")
@@ -17911,6 +18281,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Q_v4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Q_v4f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Q_v4f_, 0, b"@")
@@ -18027,6 +18399,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_simdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Q_simdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Q_simdfloat4x4_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Q_simdfloat4x4_, 0, b"@")
@@ -18146,6 +18520,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_simdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Q_simdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, 0, b"@")
@@ -18265,6 +18641,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_simdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Q_simdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Q_simdfloat4x4_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Q_simdfloat4x4_, 0, b"@")
@@ -18417,6 +18795,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_simdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Q_simdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Q_simdfloat4x4_, 0, b"@")
@@ -18614,6 +18994,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 0, b"@")
@@ -18798,6 +19180,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_, 0, b"@")
@@ -18982,6 +19366,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_, 0, b"@")
@@ -19195,6 +19581,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_, 0, b"@")
@@ -19451,6 +19839,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_q_v2i_f_f_f_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_q_v2i_f_f_f_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, 0, b"@")
@@ -19610,6 +20000,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_q_v2i_f_f_f_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_q_v2i_f_f_f_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_q_v2i_f_f_f_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_q_v2i_f_f_f_f_, 0, b"@")
@@ -19769,6 +20161,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_q_v2i_f_f_f_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_q_v2i_f_f_f_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_, 0, b"@")
@@ -19955,6 +20349,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_q_v2i_f_f_f_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_q_v2i_f_f_f_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_q_v2i_f_f_f_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_q_v2i_f_f_f_f_, 0, b"@")
@@ -20183,6 +20579,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_q_v2i_f_f_f_f_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_q_v2i_f_f_f_f_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 0, b"@")
@@ -20367,6 +20765,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_, 0, b"@")
@@ -20551,6 +20951,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_q_v2i_f_f_f_f_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_q_v2i_f_f_f_f_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_q_v2i_f_f_f_f_f_, 0, b"@")
@@ -20764,6 +21166,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_, 0, b"@")
@@ -21021,6 +21425,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_GKBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_GKBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_GKBox_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_GKBox_, 0, b"@")
@@ -21099,6 +21505,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_GKBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_GKBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_GKBox_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_GKBox_, 0, b"@")
@@ -21177,6 +21585,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_GKBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_GKBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_GKBox_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_GKBox_, 0, b"@")
@@ -21278,6 +21688,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_GKBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_GKBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_GKBox_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_GKBox_, 0, b"@")
@@ -21421,6 +21833,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_GKQuad_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_GKQuad_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_GKQuad_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_GKQuad_, 0, b"@")
@@ -21493,6 +21907,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_GKQuad_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_GKQuad_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_GKQuad_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_GKQuad_, 0, b"@")
@@ -21565,6 +21981,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_GKQuad_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_GKQuad_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_GKQuad_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_GKQuad_, 0, b"@")
@@ -21660,6 +22078,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_GKQuad_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_GKQuad_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_GKQuad_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_GKQuad_, 0, b"@")
@@ -21797,6 +22217,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_, 0, b"@")
@@ -21903,6 +22325,8 @@ class TestVectorCall(TestCase):
         self.assertTrue(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_.isClassMethod
         )
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, b"@"
@@ -22013,6 +22437,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_, 0, b"@")
@@ -22144,6 +22570,8 @@ class TestVectorCall(TestCase):
         self.assertTrue(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_.isClassMethod
         )
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, b"@"
@@ -22321,6 +22749,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat2x2_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdfloat2x2_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdfloat2x2_, 0, b"@")
@@ -22404,6 +22834,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat2x2_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdfloat2x2_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdfloat2x2_, 0, b"@")
@@ -22487,6 +22919,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat2x2_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdfloat2x2_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdfloat2x2_, 0, b"@")
@@ -22597,6 +23031,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat2x2_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdfloat2x2_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdfloat2x2_, 0, b"@")
@@ -22749,6 +23185,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat3x3_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdfloat3x3_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdfloat3x3_, 0, b"@")
@@ -22843,6 +23281,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat3x3_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdfloat3x3_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdfloat3x3_, 0, b"@")
@@ -22937,6 +23377,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat3x3_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdfloat3x3_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdfloat3x3_, 0, b"@")
@@ -23060,6 +23502,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat3x3_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdfloat3x3_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdfloat3x3_, 0, b"@")
@@ -23226,6 +23670,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdfloat4x4_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdfloat4x4_, 0, b"@")
@@ -23325,6 +23771,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdfloat4x4_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdfloat4x4_, 0, b"@")
@@ -23424,6 +23872,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdfloat4x4_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdfloat4x4_, 0, b"@")
@@ -23554,6 +24004,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdfloat4x4_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdfloat4x4_, 0, b"@")
@@ -23729,6 +24181,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdquatf_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdquatf_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdquatf_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdquatf_, 0, b"@")
@@ -23789,6 +24243,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdquatf_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdquatf_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdquatf_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_, 0, b"@")
@@ -23849,6 +24305,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdquatf_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdquatf_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdquatf_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdquatf_, 0, b"@")
@@ -23926,6 +24384,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdquatf_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdquatf_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdquatf_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_, 0, b"@")
@@ -24042,6 +24502,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdquatf_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdquatf_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdquatf_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdquatf_id_, 0, b"@")
@@ -24119,6 +24581,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdquatf_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdquatf_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdquatf_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_id_, 0, b"@")
@@ -24198,6 +24662,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdquatf_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idid_simdquatf_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idid_simdquatf_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idid_simdquatf_id_, 0, b"@")
@@ -24294,6 +24760,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdquatf_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidid_simdquatf_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidid_simdquatf_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidid_simdquatf_id_, 0, b"@")
@@ -24431,6 +24899,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idCGColor_CGColor_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idCGColor_CGColor_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, b"@")
         self.assertArgHasType(
@@ -24491,6 +24961,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidCGColor_CGColor_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidCGColor_CGColor_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidCGColor_CGColor_id_v2i_, b"@")
         self.assertArgHasType(
@@ -24551,6 +25023,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idCGColor_CGColor_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idCGColor_CGColor_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, b"@")
         self.assertArgHasType(
@@ -24626,6 +25100,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidCGColor_CGColor_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidCGColor_CGColor_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidCGColor_CGColor_id_v2i_, b"@")
         self.assertArgHasType(
@@ -24740,6 +25216,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_v2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_v2f_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_, 0, b"f")
@@ -24808,6 +25286,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_v2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_v2f_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_v2f_v2f_, 0, b"f")
@@ -24876,6 +25356,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_v2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_v2f_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_, 0, b"f")
@@ -24963,6 +25445,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_v2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_v2f_v2f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_v2f_v2f_, 0, b"f")
@@ -25088,6 +25572,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_v2f_Class_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_v2f_v2f_Class_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_v2f_v2f_Class_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_Class_, 0, b"f")
@@ -25184,6 +25670,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_v2f_Class_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_v2f_v2f_Class_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_v2f_v2f_Class_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_v2f_v2f_Class_, 0, b"f")
@@ -25280,6 +25768,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_v2f_Class_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_v2f_v2f_Class_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_v2f_v2f_Class_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_v2f_v2f_Class_, 0, b"f")
@@ -25397,6 +25887,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_v2f_Class_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_v2f_v2f_Class_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_v2f_v2f_Class_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_v2f_v2f_Class_, 0, b"f")
@@ -25553,6 +26045,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 0, b"f")
@@ -25737,6 +26231,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_, 0, b"f")
@@ -25921,6 +26417,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_, 0, b"f")
@@ -26134,6 +26632,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_, 0, b"f")
@@ -26390,6 +26890,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, 0, b"f")
@@ -26549,6 +27051,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_, 0, b"f")
@@ -26708,6 +27212,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_, 0, b"f")
@@ -26894,6 +27400,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_, 0, b"f")
@@ -27122,6 +27630,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_i_q_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_id_v2i_i_q_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, 0, b"f")
@@ -27235,6 +27745,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_i_q_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_id_v2i_i_q_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_id_v2i_i_q_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_id_v2i_i_q_Z_, 0, b"f")
@@ -27348,6 +27860,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_i_q_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_id_v2i_i_q_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_Z_, 0, b"f")
@@ -27486,6 +28000,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_i_q_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_id_v2i_i_q_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_id_v2i_i_q_Z_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_id_v2i_i_q_Z_, 0, b"f")
@@ -27665,6 +28181,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, 0, b"f")
@@ -27822,6 +28340,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_, 0, b"f")
@@ -27981,6 +28501,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_, 0, b"f")
@@ -28165,6 +28687,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_, 0, b"f")
@@ -28393,6 +28917,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_id_v2i_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_id_v2i_q_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_id_v2i_q_, 0, b"f")
@@ -28460,6 +28986,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_id_v2i_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_id_v2i_q_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_id_v2i_q_, 0, b"f")
@@ -28527,6 +29055,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_id_v2i_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_id_v2i_q_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_id_v2i_q_, 0, b"f")
@@ -28609,6 +29139,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_id_v2i_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_id_v2i_q_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_id_v2i_q_, 0, b"f")
@@ -28730,6 +29262,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_f_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_f_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_f_id_v2i_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_f_id_v2i_, 0, b"f")
@@ -28797,6 +29331,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_f_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_f_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_f_id_v2i_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_f_id_v2i_, 0, b"f")
@@ -28864,6 +29400,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_f_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idf_f_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idf_f_id_v2i_, b"@")
         self.assertArgHasType(OC_VectorCall.idf_f_id_v2i_, 0, b"f")
@@ -28946,6 +29484,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_f_id_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidf_f_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidf_f_id_v2i_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidf_f_id_v2i_, 0, b"f")
@@ -29068,6 +29608,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idGKBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idGKBox_, b"@")
         self.assertArgHasType(OC_VectorCall.idGKBox_, 0, b"{GKBox=<3f><3f>}")
@@ -29132,6 +29674,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidGKBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidGKBox_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidGKBox_, 0, b"{GKBox=<3f><3f>}")
@@ -29196,6 +29740,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idGKBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idGKBox_, b"@")
         self.assertArgHasType(OC_VectorCall.idGKBox_, 0, b"{GKBox=<3f><3f>}")
@@ -29281,6 +29827,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidGKBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidGKBox_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidGKBox_, 0, b"{GKBox=<3f><3f>}")
@@ -29407,6 +29955,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKBox_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idGKBox_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idGKBox_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idGKBox_f_, 0, b"{GKBox=<3f><3f>}")
@@ -29490,6 +30040,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKBox_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidGKBox_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidGKBox_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidGKBox_f_, 0, b"{GKBox=<3f><3f>}")
@@ -29573,6 +30125,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKBox_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idGKBox_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idGKBox_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idGKBox_f_, 0, b"{GKBox=<3f><3f>}")
@@ -29679,6 +30233,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKBox_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidGKBox_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidGKBox_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidGKBox_f_, 0, b"{GKBox=<3f><3f>}")
@@ -29827,6 +30383,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKQuad_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idGKQuad_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idGKQuad_, b"@")
         self.assertArgHasType(OC_VectorCall.idGKQuad_, 0, b"{GKQuad=<2f><2f>}")
@@ -29885,6 +30443,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKQuad_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidGKQuad_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidGKQuad_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidGKQuad_, 0, b"{GKQuad=<2f><2f>}")
@@ -29943,6 +30503,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKQuad_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idGKQuad_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idGKQuad_, b"@")
         self.assertArgHasType(OC_VectorCall.idGKQuad_, 0, b"{GKQuad=<2f><2f>}")
@@ -30022,6 +30584,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKQuad_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidGKQuad_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidGKQuad_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidGKQuad_, 0, b"{GKQuad=<2f><2f>}")
@@ -30142,6 +30706,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKQuad_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idGKQuad_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idGKQuad_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idGKQuad_f_, 0, b"{GKQuad=<2f><2f>}")
@@ -30219,6 +30785,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKQuad_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidGKQuad_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidGKQuad_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidGKQuad_f_, 0, b"{GKQuad=<2f><2f>}")
@@ -30296,6 +30864,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKQuad_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idGKQuad_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idGKQuad_f_, b"@")
         self.assertArgHasType(OC_VectorCall.idGKQuad_f_, 0, b"{GKQuad=<2f><2f>}")
@@ -30396,6 +30966,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKQuad_f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidGKQuad_f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidGKQuad_f_, b"@")
         self.assertArgHasType(OC_VectorCall.clsidGKQuad_f_, 0, b"{GKQuad=<2f><2f>}")
@@ -30538,6 +31110,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idMDLVoxelIndexExtent_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idMDLVoxelIndexExtent_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idMDLVoxelIndexExtent_, b"@")
         self.assertArgHasType(
@@ -30604,6 +31178,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidMDLVoxelIndexExtent_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidMDLVoxelIndexExtent_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidMDLVoxelIndexExtent_, b"@")
         self.assertArgHasType(
@@ -30672,6 +31248,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idMDLVoxelIndexExtent_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idMDLVoxelIndexExtent_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idMDLVoxelIndexExtent_, b"@")
         self.assertArgHasType(
@@ -30759,6 +31337,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidMDLVoxelIndexExtent_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidMDLVoxelIndexExtent_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidMDLVoxelIndexExtent_, b"@")
         self.assertArgHasType(
@@ -30888,6 +31468,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idsimdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idsimdfloat4x4_, b"@")
         self.assertArgHasType(
@@ -30969,6 +31551,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidsimdfloat4x4_, b"@")
         self.assertArgHasType(
@@ -31050,6 +31634,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idsimdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idsimdfloat4x4_, b"@")
         self.assertArgHasType(
@@ -31160,6 +31746,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidsimdfloat4x4_, b"@")
         self.assertArgHasType(
@@ -31313,6 +31901,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idsimdfloat4x4_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idsimdfloat4x4_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idsimdfloat4x4_Z_, b"@")
         self.assertArgHasType(
@@ -31421,6 +32011,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidsimdfloat4x4_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidsimdfloat4x4_Z_, b"@")
         self.assertArgHasType(
@@ -31529,6 +32121,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.idsimdfloat4x4_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.idsimdfloat4x4_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idsimdfloat4x4_Z_, b"@")
         self.assertArgHasType(
@@ -31668,6 +32262,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsidsimdfloat4x4_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsidsimdfloat4x4_Z_, b"@")
         self.assertArgHasType(
@@ -31851,6 +32447,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv2i_id_id_id_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.Zv2i_id_id_id_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.Zv2i_id_id_id_id_, b"Z")
         self.assertArgHasType(OC_VectorCall.Zv2i_id_id_id_id_, 0, b"<2i>")
@@ -31938,6 +32536,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv2i_id_id_id_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsZv2i_id_id_id_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsZv2i_id_id_id_id_, b"Z")
         self.assertArgHasType(OC_VectorCall.clsZv2i_id_id_id_id_, 0, b"<2i>")
@@ -32025,6 +32625,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv2i_id_id_id_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.Zv2i_id_id_id_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.Zv2i_id_id_id_id_, b"Z")
         self.assertArgHasType(OC_VectorCall.Zv2i_id_id_id_id_, 0, b"<2i>")
@@ -32128,6 +32730,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv2i_id_id_id_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsZv2i_id_id_id_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsZv2i_id_id_id_id_, b"Z")
         self.assertArgHasType(OC_VectorCall.clsZv2i_id_id_id_id_, 0, b"<2i>")
@@ -32271,6 +32875,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv2i_q_f_id_id_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.Zv2i_q_f_id_id_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, b"Z")
         self.assertArgHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, 0, b"<2i>")
@@ -32400,6 +33006,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv2i_q_f_id_id_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsZv2i_q_f_id_id_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsZv2i_q_f_id_id_id_, b"Z")
         self.assertArgHasType(OC_VectorCall.clsZv2i_q_f_id_id_id_, 0, b"<2i>")
@@ -32529,6 +33137,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv2i_q_f_id_id_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.Zv2i_q_f_id_id_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, b"Z")
         self.assertArgHasType(OC_VectorCall.Zv2i_q_f_id_id_id_, 0, b"<2i>")
@@ -32683,6 +33293,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv2i_q_f_id_id_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsZv2i_q_f_id_id_id_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsZv2i_q_f_id_id_id_, b"Z")
         self.assertArgHasType(OC_VectorCall.clsZv2i_q_f_id_id_id_, 0, b"<2i>")
@@ -32878,6 +33490,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv4i_Z_Z_Z_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.Zv4i_Z_Z_Z_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, b"Z")
         self.assertArgHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, 0, b"<4i>")
@@ -32941,6 +33555,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv4i_Z_Z_Z_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsZv4i_Z_Z_Z_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsZv4i_Z_Z_Z_Z_, b"Z")
         self.assertArgHasType(OC_VectorCall.clsZv4i_Z_Z_Z_Z_, 0, b"<4i>")
@@ -33004,6 +33620,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv4i_Z_Z_Z_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.Zv4i_Z_Z_Z_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, b"Z")
         self.assertArgHasType(OC_VectorCall.Zv4i_Z_Z_Z_Z_, 0, b"<4i>")
@@ -33083,6 +33701,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv4i_Z_Z_Z_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsZv4i_Z_Z_Z_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsZv4i_Z_Z_Z_Z_, b"Z")
         self.assertArgHasType(OC_VectorCall.clsZv4i_Z_Z_Z_Z_, 0, b"<4i>")
@@ -33202,6 +33822,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.CGColorv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.CGColorv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.CGColorv3f_, b"^{CGColor=}")
         self.assertArgHasType(OC_VectorCall.CGColorv3f_, 0, b"<3f>")
@@ -33243,6 +33865,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsCGColorv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsCGColorv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsCGColorv3f_, b"^{CGColor=}")
         self.assertArgHasType(OC_VectorCall.clsCGColorv3f_, 0, b"<3f>")
@@ -33284,6 +33908,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.CGColorv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.CGColorv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.CGColorv3f_, b"^{CGColor=}")
         self.assertArgHasType(OC_VectorCall.CGColorv3f_, 0, b"<3f>")
@@ -33334,6 +33960,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsCGColorv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsCGColorv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsCGColorv3f_, b"^{CGColor=}")
         self.assertArgHasType(OC_VectorCall.clsCGColorv3f_, 0, b"<3f>")
@@ -33413,6 +34041,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.CGColorv3f_CGColorSpace_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.CGColorv3f_CGColorSpace_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.CGColorv3f_CGColorSpace_, b"^{CGColor=}")
         self.assertArgHasType(OC_VectorCall.CGColorv3f_CGColorSpace_, 0, b"<3f>")
@@ -33461,6 +34091,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsCGColorv3f_CGColorSpace_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsCGColorv3f_CGColorSpace_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsCGColorv3f_CGColorSpace_, b"^{CGColor=}"
@@ -33511,6 +34143,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.CGColorv3f_CGColorSpace_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.CGColorv3f_CGColorSpace_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.CGColorv3f_CGColorSpace_, b"^{CGColor=}")
         self.assertArgHasType(OC_VectorCall.CGColorv3f_CGColorSpace_, 0, b"<3f>")
@@ -33570,6 +34204,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsCGColorv3f_CGColorSpace_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsCGColorv3f_CGColorSpace_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsCGColorv3f_CGColorSpace_, b"^{CGColor=}"
@@ -33670,6 +34306,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.fv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.fv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.fv2f_, b"f")
         self.assertArgHasType(OC_VectorCall.fv2f_, 0, b"<2f>")
@@ -33711,6 +34349,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsfv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsfv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsfv2f_, b"f")
         self.assertArgHasType(OC_VectorCall.clsfv2f_, 0, b"<2f>")
@@ -33752,6 +34392,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.fv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.fv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.fv2f_, b"f")
         self.assertArgHasType(OC_VectorCall.fv2f_, 0, b"<2f>")
@@ -33802,6 +34444,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsfv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsfv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsfv2f_, b"f")
         self.assertArgHasType(OC_VectorCall.clsfv2f_, 0, b"<2f>")
@@ -33881,6 +34525,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.fv2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.fv2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.fv2i_, b"f")
         self.assertArgHasType(OC_VectorCall.fv2i_, 0, b"<2i>")
@@ -33922,6 +34568,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsfv2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsfv2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsfv2i_, b"f")
         self.assertArgHasType(OC_VectorCall.clsfv2i_, 0, b"<2i>")
@@ -33963,6 +34611,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.fv2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.fv2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.fv2i_, b"f")
         self.assertArgHasType(OC_VectorCall.fv2i_, 0, b"<2i>")
@@ -34013,6 +34663,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsfv2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsfv2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsfv2i_, b"f")
         self.assertArgHasType(OC_VectorCall.clsfv2i_, 0, b"<2i>")
@@ -34092,6 +34744,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv2d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv2d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv2d_, 0, b"<2d>")
@@ -34133,6 +34787,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv2d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv2d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv2d_, 0, b"<2d>")
@@ -34174,6 +34830,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv2d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv2d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv2d_, 0, b"<2d>")
@@ -34224,6 +34882,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv2d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv2d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv2d_, 0, b"<2d>")
@@ -34303,6 +34963,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv2d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv2d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv2d_d_, 0, b"<2d>")
@@ -34349,6 +35011,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv2d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv2d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv2d_d_, 0, b"<2d>")
@@ -34395,6 +35059,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv2d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv2d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv2d_d_, 0, b"<2d>")
@@ -34450,6 +35116,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv2d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv2d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv2d_d_, 0, b"<2d>")
@@ -34546,6 +35214,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv2f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv2f_, 0, b"<2f>")
@@ -34587,6 +35257,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv2f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv2f_, 0, b"<2f>")
@@ -34628,6 +35300,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv2f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv2f_, 0, b"<2f>")
@@ -34678,6 +35352,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv2f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv2f_, 0, b"<2f>")
@@ -34757,6 +35433,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv2f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv2f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv2f_d_, 0, b"<2f>")
@@ -34803,6 +35481,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv2f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv2f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv2f_d_, 0, b"<2f>")
@@ -34849,6 +35529,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv2f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv2f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv2f_d_, 0, b"<2f>")
@@ -34904,6 +35586,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv2f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv2f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv2f_d_, 0, b"<2f>")
@@ -35000,6 +35684,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3d_, 0, b"<3d>")
@@ -35041,6 +35727,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3d_, 0, b"<3d>")
@@ -35082,6 +35770,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3d_, 0, b"<3d>")
@@ -35132,6 +35822,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3d_, 0, b"<3d>")
@@ -35211,6 +35903,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3d_d_, 0, b"<3d>")
@@ -35257,6 +35951,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3d_d_, 0, b"<3d>")
@@ -35303,6 +35999,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3d_d_, 0, b"<3d>")
@@ -35362,6 +36060,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3d_d_, 0, b"<3d>")
@@ -35458,6 +36158,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3f_, 0, b"<3f>")
@@ -35499,6 +36201,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3f_, 0, b"<3f>")
@@ -35540,6 +36244,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3f_, 0, b"<3f>")
@@ -35590,6 +36296,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3f_, 0, b"<3f>")
@@ -35669,6 +36377,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3f_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3f_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3f_v3f_, 0, b"<3f>")
@@ -35725,6 +36435,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3f_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3f_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3f_v3f_, 0, b"<3f>")
@@ -35781,6 +36493,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3f_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3f_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3f_v3f_, 0, b"<3f>")
@@ -35854,6 +36568,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3f_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3f_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3f_v3f_, 0, b"<3f>")
@@ -35964,6 +36680,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_v3f_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3f_v3f_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3f_v3f_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3f_v3f_v3f_, 0, b"<3f>")
@@ -36043,6 +36761,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_v3f_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3f_v3f_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3f_v3f_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3f_v3f_v3f_, 0, b"<3f>")
@@ -36122,6 +36842,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_v3f_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3f_v3f_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3f_v3f_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3f_v3f_v3f_, 0, b"<3f>")
@@ -36220,6 +36942,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_v3f_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3f_v3f_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3f_v3f_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3f_v3f_v3f_, 0, b"<3f>")
@@ -36356,6 +37080,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3f_d_, 0, b"<3f>")
@@ -36402,6 +37128,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3f_d_, 0, b"<3f>")
@@ -36448,6 +37176,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv3f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv3f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv3f_d_, 0, b"<3f>")
@@ -36507,6 +37237,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv3f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv3f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv3f_d_, 0, b"<3f>")
@@ -36603,6 +37335,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv4d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv4d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv4d_d_, 0, b"<4d>")
@@ -36651,6 +37385,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv4d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv4d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv4d_d_, 0, b"<4d>")
@@ -36699,6 +37435,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv4d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv4d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv4d_d_, 0, b"<4d>")
@@ -36760,6 +37498,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4d_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv4d_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv4d_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv4d_d_, 0, b"<4d>")
@@ -36858,6 +37598,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv4f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv4f_, 0, b"<4f>")
@@ -36899,6 +37641,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv4f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv4f_, 0, b"<4f>")
@@ -36940,6 +37684,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv4f_, b"v")
         self.assertArgHasType(OC_VectorCall.vv4f_, 0, b"<4f>")
@@ -36990,6 +37736,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv4f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv4f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv4f_, 0, b"<4f>")
@@ -37073,6 +37821,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv4f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv4f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv4f_d_, 0, b"<4f>")
@@ -37121,6 +37871,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv4f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv4f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv4f_d_, 0, b"<4f>")
@@ -37169,6 +37921,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv4f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv4f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vv4f_d_, 0, b"<4f>")
@@ -37230,6 +37984,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4f_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv4f_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv4f_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv4f_d_, 0, b"<4f>")
@@ -37328,6 +38084,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv4i_, b"v")
         self.assertArgHasType(OC_VectorCall.vv4i_, 0, b"<4i>")
@@ -37369,6 +38127,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv4i_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv4i_, 0, b"<4i>")
@@ -37410,6 +38170,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vv4i_, b"v")
         self.assertArgHasType(OC_VectorCall.vv4i_, 0, b"<4i>")
@@ -37460,6 +38222,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvv4i_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvv4i_, 0, b"<4i>")
@@ -37539,6 +38303,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vid_v2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vid_v2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vid_v2f_v2f_, b"v")
         self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_, 0, b"@")
@@ -37607,6 +38373,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvid_v2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvid_v2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvid_v2f_v2f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvid_v2f_v2f_, 0, b"@")
@@ -37675,6 +38443,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vid_v2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vid_v2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vid_v2f_v2f_, b"v")
         self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_, 0, b"@")
@@ -37762,6 +38532,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvid_v2f_v2f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvid_v2f_v2f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvid_v2f_v2f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvid_v2f_v2f_, 0, b"@")
@@ -37887,6 +38659,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vid_v2f_v2f_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vid_v2f_v2f_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vid_v2f_v2f_q_, b"v")
         self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_q_, 0, b"@")
@@ -37973,6 +38747,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvid_v2f_v2f_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvid_v2f_v2f_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvid_v2f_v2f_q_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvid_v2f_v2f_q_, 0, b"@")
@@ -38059,6 +38835,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vid_v2f_v2f_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vid_v2f_v2f_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vid_v2f_v2f_q_, b"v")
         self.assertArgHasType(OC_VectorCall.vid_v2f_v2f_q_, 0, b"@")
@@ -38166,6 +38944,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvid_v2f_v2f_q_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvid_v2f_v2f_q_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvid_v2f_v2f_q_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvid_v2f_v2f_q_, 0, b"@")
@@ -38312,6 +39092,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vf_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vf_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vf_v2i_, b"v")
         self.assertArgHasType(OC_VectorCall.vf_v2i_, 0, b"f")
@@ -38358,6 +39140,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvf_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvf_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvf_v2i_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvf_v2i_, 0, b"f")
@@ -38404,6 +39188,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vf_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vf_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vf_v2i_, b"v")
         self.assertArgHasType(OC_VectorCall.vf_v2i_, 0, b"f")
@@ -38459,6 +39245,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvf_v2i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvf_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvf_v2i_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvf_v2i_, 0, b"f")
@@ -38556,6 +39344,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vMDLAxisAlignedBoundingBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vMDLAxisAlignedBoundingBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vMDLAxisAlignedBoundingBox_, b"v")
         self.assertArgHasType(
@@ -38624,6 +39414,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_, b"v")
         self.assertArgHasType(
@@ -38692,6 +39484,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vMDLAxisAlignedBoundingBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vMDLAxisAlignedBoundingBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vMDLAxisAlignedBoundingBox_, b"v")
         self.assertArgHasType(
@@ -38781,6 +39575,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_, b"v")
         self.assertArgHasType(
@@ -38911,6 +39707,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_, b"v")
         self.assertArgHasType(
@@ -38998,6 +39796,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_, b"v")
         self.assertArgHasType(
@@ -39085,6 +39885,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_, b"v")
         self.assertArgHasType(
@@ -39195,6 +39997,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_, b"v")
         self.assertArgHasType(
@@ -39346,6 +40150,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimddouble4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimddouble4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimddouble4x4_, b"v")
         self.assertArgHasType(
@@ -39427,6 +40233,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimddouble4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimddouble4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimddouble4x4_, b"v")
         self.assertArgHasType(
@@ -39508,6 +40316,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimddouble4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimddouble4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimddouble4x4_, b"v")
         self.assertArgHasType(
@@ -39618,6 +40428,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimddouble4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimddouble4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimddouble4x4_, b"v")
         self.assertArgHasType(
@@ -39771,6 +40583,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimddouble4x4_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimddouble4x4_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimddouble4x4_d_, b"v")
         self.assertArgHasType(
@@ -39879,6 +40693,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimddouble4x4_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimddouble4x4_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimddouble4x4_d_, b"v")
         self.assertArgHasType(
@@ -39987,6 +40803,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimddouble4x4_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimddouble4x4_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimddouble4x4_d_, b"v")
         self.assertArgHasType(
@@ -40126,6 +40944,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimddouble4x4_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimddouble4x4_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimddouble4x4_d_, b"v")
         self.assertArgHasType(
@@ -40309,6 +41129,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat2x2_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat2x2_, b"v")
         self.assertArgHasType(
@@ -40376,6 +41198,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat2x2_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat2x2_, b"v")
         self.assertArgHasType(
@@ -40443,6 +41267,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat2x2_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat2x2_, b"v")
         self.assertArgHasType(
@@ -40535,6 +41361,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat2x2_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat2x2_, b"v")
         self.assertArgHasType(
@@ -40668,6 +41496,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat3x3_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat3x3_, b"v")
         self.assertArgHasType(
@@ -40745,6 +41575,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat3x3_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat3x3_, b"v")
         self.assertArgHasType(
@@ -40822,6 +41654,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat3x3_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat3x3_, b"v")
         self.assertArgHasType(
@@ -40926,6 +41760,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat3x3_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat3x3_, b"v")
         self.assertArgHasType(
@@ -41072,6 +41908,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_, b"v")
         self.assertArgHasType(
@@ -41153,6 +41991,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat4x4_, b"v")
         self.assertArgHasType(
@@ -41234,6 +42074,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_, b"v")
         self.assertArgHasType(
@@ -41344,6 +42186,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat4x4_, b"v")
         self.assertArgHasType(
@@ -41497,6 +42341,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat4x4_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdfloat4x4_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_d_, b"v")
         self.assertArgHasType(
@@ -41605,6 +42451,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdfloat4x4_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat4x4_d_, b"v")
         self.assertArgHasType(
@@ -41713,6 +42561,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat4x4_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdfloat4x4_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_d_, b"v")
         self.assertArgHasType(
@@ -41852,6 +42702,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdfloat4x4_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdfloat4x4_d_, b"v")
         self.assertArgHasType(
@@ -42036,6 +42888,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatd_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdquatd_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatd_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 0, b"{simd_quatd=<4d>}")
@@ -42095,6 +42949,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatd_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdquatd_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatd_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatd_d_, 0, b"{simd_quatd=<4d>}")
@@ -42154,6 +43010,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatd_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdquatd_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatd_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vsimdquatd_d_, 0, b"{simd_quatd=<4d>}")
@@ -42230,6 +43088,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatd_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdquatd_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatd_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatd_d_, 0, b"{simd_quatd=<4d>}")
@@ -42345,6 +43205,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdquatf_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_, b"v")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_, 0, b"{simd_quatf=<4f>}")
@@ -42391,6 +43253,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdquatf_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_, 0, b"{simd_quatf=<4f>}")
@@ -42437,6 +43301,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdquatf_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_, b"v")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_, 0, b"{simd_quatf=<4f>}")
@@ -42495,6 +43361,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdquatf_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_, 0, b"{simd_quatf=<4f>}")
@@ -42587,6 +43455,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdquatf_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 0, b"{simd_quatf=<4f>}")
@@ -42646,6 +43516,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdquatf_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_v3f_, 0, b"{simd_quatf=<4f>}")
@@ -42705,6 +43577,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdquatf_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_v3f_, 0, b"{simd_quatf=<4f>}")
@@ -42781,6 +43655,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_v3f_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdquatf_v3f_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_v3f_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_v3f_, 0, b"{simd_quatf=<4f>}")
@@ -42896,6 +43772,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdquatf_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 0, b"{simd_quatf=<4f>}")
@@ -42955,6 +43833,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdquatf_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_d_, 0, b"{simd_quatf=<4f>}")
@@ -43014,6 +43894,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.vsimdquatf_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdquatf_d_, b"v")
         self.assertArgHasType(OC_VectorCall.vsimdquatf_d_, 0, b"{simd_quatf=<4f>}")
@@ -43090,6 +43972,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsvsimdquatf_d_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsvsimdquatf_d_, b"v")
         self.assertArgHasType(OC_VectorCall.clsvsimdquatf_d_, 0, b"{simd_quatf=<4f>}")
@@ -43205,6 +44089,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.GKBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.GKBox)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.GKBox, b"{GKBox=<3f><3f>}")
 
@@ -43243,6 +44129,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsGKBox)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsGKBox, b"{GKBox=<3f><3f>}")
 
@@ -43281,6 +44169,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.GKBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.GKBox)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.GKBox, b"{GKBox=<3f><3f>}")
 
@@ -43332,6 +44222,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsGKBox)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsGKBox, b"{GKBox=<3f><3f>}")
 
@@ -43424,6 +44316,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.GKQuad.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.GKQuad)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.GKQuad, b"{GKQuad=<2f><2f>}")
 
@@ -43459,6 +44353,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKQuad.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsGKQuad)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsGKQuad, b"{GKQuad=<2f><2f>}")
 
@@ -43494,6 +44390,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.GKQuad.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.GKQuad)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.GKQuad, b"{GKQuad=<2f><2f>}")
 
@@ -43542,6 +44440,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKQuad.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsGKQuad)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsGKQuad, b"{GKQuad=<2f><2f>}")
 
@@ -43625,6 +44525,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.GKTriangleQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.GKTriangleQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.GKTriangleQ_, b"{GKTriangle=[3<3f>]}")
         self.assertArgHasType(OC_VectorCall.GKTriangleQ_, 0, b"Q")
@@ -43676,6 +44578,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKTriangleQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsGKTriangleQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsGKTriangleQ_, b"{GKTriangle=[3<3f>]}")
         self.assertArgHasType(OC_VectorCall.clsGKTriangleQ_, 0, b"Q")
@@ -43727,6 +44631,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.GKTriangleQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.GKTriangleQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.GKTriangleQ_, b"{GKTriangle=[3<3f>]}")
         self.assertArgHasType(OC_VectorCall.GKTriangleQ_, 0, b"Q")
@@ -43787,6 +44693,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKTriangleQ_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsGKTriangleQ_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsGKTriangleQ_, b"{GKTriangle=[3<3f>]}")
         self.assertArgHasType(OC_VectorCall.clsGKTriangleQ_, 0, b"Q")
@@ -43896,6 +44804,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MDLAxisAlignedBoundingBox)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBox,
@@ -43937,6 +44847,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMDLAxisAlignedBoundingBox)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBox,
@@ -43978,6 +44890,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MDLAxisAlignedBoundingBox)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBox,
@@ -44032,6 +44946,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMDLAxisAlignedBoundingBox)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBox,
@@ -44127,6 +45043,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_,
@@ -44178,6 +45096,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_,
@@ -44231,6 +45151,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_,
@@ -44291,6 +45213,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_,
@@ -44396,6 +45320,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBoxd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MDLAxisAlignedBoundingBoxd_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBoxd_,
@@ -44447,6 +45373,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_,
@@ -44498,6 +45426,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBoxd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MDLAxisAlignedBoundingBoxd_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLAxisAlignedBoundingBoxd_,
@@ -44558,6 +45488,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_,
@@ -44661,6 +45593,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLVoxelIndexExtent.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MDLVoxelIndexExtent)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLVoxelIndexExtent, b"{MDLVoxelIndexExtent=<4i><4i>}"
@@ -44701,6 +45635,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLVoxelIndexExtent.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMDLVoxelIndexExtent)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLVoxelIndexExtent, b"{MDLVoxelIndexExtent=<4i><4i>}"
@@ -44741,6 +45677,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLVoxelIndexExtent.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MDLVoxelIndexExtent)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MDLVoxelIndexExtent, b"{MDLVoxelIndexExtent=<4i><4i>}"
@@ -44794,6 +45732,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLVoxelIndexExtent.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMDLVoxelIndexExtent)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMDLVoxelIndexExtent, b"{MDLVoxelIndexExtent=<4i><4i>}"
@@ -44887,6 +45827,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simddouble4x4.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simddouble4x4)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simddouble4x4, b"{simd_double4x4=[4<4d>]}"
@@ -44930,6 +45872,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimddouble4x4.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimddouble4x4)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimddouble4x4, b"{simd_double4x4=[4<4d>]}"
@@ -44973,6 +45917,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simddouble4x4.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simddouble4x4)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simddouble4x4, b"{simd_double4x4=[4<4d>]}"
@@ -45029,6 +45975,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimddouble4x4.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimddouble4x4)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimddouble4x4, b"{simd_double4x4=[4<4d>]}"
@@ -45132,6 +46080,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simddouble4x4d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simddouble4x4d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simddouble4x4d_, b"{simd_double4x4=[4<4d>]}"
@@ -45185,6 +46135,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimddouble4x4d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimddouble4x4d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimddouble4x4d_, b"{simd_double4x4=[4<4d>]}"
@@ -45238,6 +46190,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simddouble4x4d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simddouble4x4d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simddouble4x4d_, b"{simd_double4x4=[4<4d>]}"
@@ -45300,6 +46254,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimddouble4x4d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimddouble4x4d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimddouble4x4d_, b"{simd_double4x4=[4<4d>]}"
@@ -45411,6 +46367,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat2x2.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat2x2)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdfloat2x2, b"{simd_float2x2=[2<2f>]}")
 
@@ -45447,6 +46405,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat2x2.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat2x2)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat2x2, b"{simd_float2x2=[2<2f>]}"
@@ -45485,6 +46445,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat2x2.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat2x2)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdfloat2x2, b"{simd_float2x2=[2<2f>]}")
 
@@ -45534,6 +46496,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat2x2.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat2x2)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat2x2, b"{simd_float2x2=[2<2f>]}"
@@ -45622,6 +46586,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat3x3.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat3x3)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdfloat3x3, b"{simd_float3x3=[3<3f>]}")
 
@@ -45662,6 +46628,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat3x3.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat3x3)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat3x3, b"{simd_float3x3=[3<3f>]}"
@@ -45704,6 +46672,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat3x3.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat3x3)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdfloat3x3, b"{simd_float3x3=[3<3f>]}")
 
@@ -45757,6 +46727,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat3x3.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat3x3)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat3x3, b"{simd_float3x3=[3<3f>]}"
@@ -45857,6 +46829,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdfloat4x4, b"{simd_float4x4=[4<4f>]}")
 
@@ -45898,6 +46872,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat4x4)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat4x4, b"{simd_float4x4=[4<4f>]}"
@@ -45941,6 +46917,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdfloat4x4, b"{simd_float4x4=[4<4f>]}")
 
@@ -45995,6 +46973,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat4x4)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat4x4, b"{simd_float4x4=[4<4f>]}"
@@ -46098,6 +47078,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4id_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4id_d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simdfloat4x4id_d_, b"{simd_float4x4=[4<4f>]}"
@@ -46156,6 +47138,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4id_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat4x4id_d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat4x4id_d_, b"{simd_float4x4=[4<4f>]}"
@@ -46214,6 +47198,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4id_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4id_d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simdfloat4x4id_d_, b"{simd_float4x4=[4<4f>]}"
@@ -46281,6 +47267,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4id_d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat4x4id_d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat4x4id_d_, b"{simd_float4x4=[4<4f>]}"
@@ -46409,6 +47397,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
@@ -46462,6 +47452,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat4x4d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
@@ -46515,6 +47507,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
@@ -46577,6 +47571,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4d_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat4x4d_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
@@ -46688,6 +47684,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4simdfloat4x4_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4simdfloat4x4_id_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simdfloat4x4simdfloat4x4_id_, b"{simd_float4x4=[4<4f>]}"
@@ -46808,6 +47806,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, b"{simd_float4x4=[4<4f>]}"
@@ -46928,6 +47928,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4simdfloat4x4_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4simdfloat4x4_id_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.simdfloat4x4simdfloat4x4_id_, b"{simd_float4x4=[4<4f>]}"
@@ -47079,6 +48081,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_, b"{simd_float4x4=[4<4f>]}"
@@ -47295,6 +48299,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatdd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdquatdd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdquatdd_, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.simdquatdd_, 0, b"d")
@@ -47339,6 +48345,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatdd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdquatdd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clssimdquatdd_, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.clssimdquatdd_, 0, b"d")
@@ -47383,6 +48391,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatdd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdquatdd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdquatdd_, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.simdquatdd_, 0, b"d")
@@ -47436,6 +48446,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatdd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdquatdd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clssimdquatdd_, b"{simd_quatd=<4d>}")
         self.assertArgHasType(OC_VectorCall.clssimdquatdd_, 0, b"d")
@@ -47524,6 +48536,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatf.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdquatf)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdquatf, b"{simd_quatf=<4f>}")
 
@@ -47558,6 +48572,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatf.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdquatf)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clssimdquatf, b"{simd_quatf=<4f>}")
 
@@ -47592,6 +48608,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatf.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdquatf)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdquatf, b"{simd_quatf=<4f>}")
 
@@ -47639,6 +48657,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatf.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdquatf)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clssimdquatf, b"{simd_quatf=<4f>}")
 
@@ -47719,6 +48739,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatfd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdquatfd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdquatfd_, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.simdquatfd_, 0, b"d")
@@ -47763,6 +48785,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatfd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdquatfd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clssimdquatfd_, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.clssimdquatfd_, 0, b"d")
@@ -47807,6 +48831,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatfd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.simdquatfd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.simdquatfd_, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.simdquatfd_, 0, b"d")
@@ -47860,6 +48886,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatfd_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clssimdquatfd_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clssimdquatfd_, b"{simd_quatf=<4f>}")
         self.assertArgHasType(OC_VectorCall.clssimdquatfd_, 0, b"d")
@@ -47947,6 +48975,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v16C.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v16C)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v16C, b"<16C>")
 
@@ -47983,6 +49013,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv16C.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv16C)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv16C, b"<16C>")
 
@@ -48019,6 +49051,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.v16C.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.v16C)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.v16C, b"<16C>")
 
@@ -48068,6 +49102,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv16C.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsv16C)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.clsv16C, b"<16C>")
 
@@ -48155,6 +49191,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MPSImageHistogramInfo.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MPSImageHistogramInfo)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MPSImageHistogramInfo, b"{MPSImageHistogramInfo=QZ<4f><4f>}"
@@ -48197,6 +49235,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMPSImageHistogramInfo.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMPSImageHistogramInfo)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMPSImageHistogramInfo,
@@ -48240,6 +49280,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MPSImageHistogramInfo.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MPSImageHistogramInfo)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MPSImageHistogramInfo, b"{MPSImageHistogramInfo=QZ<4f><4f>}"
@@ -48295,6 +49337,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMPSImageHistogramInfo.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMPSImageHistogramInfo)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMPSImageHistogramInfo,
@@ -48396,6 +49440,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MPSAxisAlignedBoundingBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MPSAxisAlignedBoundingBox)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MPSAxisAlignedBoundingBox,
@@ -48437,6 +49483,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMPSAxisAlignedBoundingBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMPSAxisAlignedBoundingBox)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMPSAxisAlignedBoundingBox,
@@ -48478,6 +49526,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertFalse(OC_VectorCall.MPSAxisAlignedBoundingBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MPSAxisAlignedBoundingBox)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.MPSAxisAlignedBoundingBox,
@@ -48532,6 +49582,8 @@ class TestVectorCall(TestCase):
         OC_VectorCall.clearRaise()
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMPSAxisAlignedBoundingBox.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMPSAxisAlignedBoundingBox)
         # Check that the signature is as expected
         self.assertResultHasType(
             OC_VectorCall.clsMPSAxisAlignedBoundingBox,
