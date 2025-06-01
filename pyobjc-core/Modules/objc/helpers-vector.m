@@ -53,20 +53,20 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* 
     if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
         if (PyObjCObject_Check(self)) {
             *self_obj = PyObjCObject_GetObject(self);
-            if (*self_obj == nil && PyErr_Occurred()) {
-                return -1;
+            if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                return -1; // LCOV_EXCL_LINE
             }
-            if (*self_obj != (id _Nonnull)NULL) {
+            if (*self_obj != (id _Nonnull)NULL) { // LCOV_BR_EXCL_LINE
                 /* object_getClass never returns Nil for non-nil objects */
-                *self_obj = (id _Nonnull)object_getClass(*self_obj);
+                *self_obj = (id _Nonnull)object_getClass(*self_obj); // LCOV_EXCL_LINE
             }
 
         } else if (PyObjCClass_Check(self)) {
             /* PyObjCClass_GetClass only returns Nil on internal errors */
             *self_obj = (Class _Nonnull)PyObjCClass_GetClass(self);
-            if (*self_obj == nil && PyErr_Occurred()) {
-                return -1;
-            }
+            if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                return -1; // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
 
         } else if (PyType_Check(self)
                    && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {

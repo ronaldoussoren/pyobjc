@@ -865,54 +865,72 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_double2(0.0, 1.5)
 
     def v2dd_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_double2(0.0, 1.5)
 
     def v2f(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float2(0.0, 1.5)
 
     def v2fQ_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float2(0.0, 1.5)
 
     def v2fd_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float2(0.0, 1.5)
 
     def v2fq_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float2(0.0, 1.5)
 
     def v2i(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_int2(0, 1)
 
     def v3dd_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_double3(0.0, 1.5, 3.0)
 
     def v3f(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fv2i_v2i_(self, arg0, arg1):
@@ -922,12 +940,16 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fv3f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fv3f_id_(self, arg0, arg1):
@@ -937,48 +959,64 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fv4i_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fQ_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fd_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v4dd_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)
 
     def v4f(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
 
     def v4fd_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
 
     def v4iv3f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_int4(0, 1, 2, 3)
 
     def idv2d_id_(self, arg0, arg1):
@@ -988,6 +1026,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv2d_q_(self, arg0, arg1):
@@ -997,12 +1037,16 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv2f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv2f_v2I_q_id_(self, arg0, arg1, arg2, arg3):
@@ -1014,6 +1058,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv2f_v2f_(self, arg0, arg1):
@@ -1023,12 +1069,16 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv2i_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv2i_i_i_Z_(self, arg0, arg1, arg2, arg3):
@@ -1040,6 +1090,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv2i_i_i_Z_Class_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1052,12 +1104,16 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_v2I_Z_Z_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1072,6 +1128,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_v2I_Z_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
@@ -1085,6 +1143,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_v2I_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1097,6 +1157,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_v2I_i_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
@@ -1110,6 +1172,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_v2I_q_id_(self, arg0, arg1, arg2, arg3):
@@ -1121,6 +1185,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_v3I_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1133,6 +1199,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_v3I_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1145,6 +1213,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_Q_Q_q_Z_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1159,6 +1229,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv3f_Z_q_id_(self, arg0, arg1, arg2, arg3):
@@ -1170,12 +1242,16 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idv4f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_v2d_v2d_v2i_Z_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1188,6 +1264,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_v2f_(self, arg0, arg1):
@@ -1197,6 +1275,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_v3f_(self, arg0, arg1):
@@ -1206,6 +1286,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_v4f_(self, arg0, arg1):
@@ -1215,6 +1297,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_id_v2i_(self, arg0, arg1, arg2):
@@ -1225,6 +1309,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_id_v2i_f_(self, arg0, arg1, arg2, arg3):
@@ -1236,6 +1322,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_Q_v2f_(self, arg0, arg1, arg2):
@@ -1246,6 +1334,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_Q_v3f_(self, arg0, arg1, arg2):
@@ -1256,6 +1346,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_Q_v4f_(self, arg0, arg1, arg2):
@@ -1266,6 +1358,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_Q_simdfloat4x4_(self, arg0, arg1, arg2):
@@ -1276,6 +1370,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_Z_id_v2i_q_Q_q_Z_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
@@ -1291,6 +1387,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_q_v2i_f_f_f_f_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1305,6 +1403,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_q_v2i_f_f_f_f_f_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
@@ -1320,6 +1420,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     if objc.macos_available(10, 12):
@@ -1331,6 +1433,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -1342,6 +1446,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 11):
@@ -1354,6 +1460,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     def idid_simdfloat2x2_(self, arg0, arg1):
@@ -1363,6 +1471,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_simdfloat3x3_(self, arg0, arg1):
@@ -1372,6 +1482,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idid_simdfloat4x4_(self, arg0, arg1):
@@ -1381,6 +1493,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     if objc.macos_available(10, 13):
@@ -1392,6 +1506,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 13):
@@ -1404,6 +1520,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     def idCGColor_CGColor_id_v2i_(self, arg0, arg1, arg2, arg3):
@@ -1415,6 +1533,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idf_v2f_v2f_(self, arg0, arg1, arg2):
@@ -1425,6 +1545,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idf_v2f_v2f_Class_(self, arg0, arg1, arg2, arg3):
@@ -1436,6 +1558,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idf_v2f_Q_Q_Q_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
@@ -1451,6 +1575,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idf_v2f_Q_Q_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1465,6 +1591,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idf_id_v2i_i_q_Z_(self, arg0, arg1, arg2, arg3, arg4, arg5):
@@ -1478,6 +1606,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idf_id_v2i_i_q_CGColor_CGColor_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1492,6 +1622,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idf_id_v2i_q_(self, arg0, arg1, arg2, arg3):
@@ -1503,6 +1635,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idf_f_id_v2i_(self, arg0, arg1, arg2, arg3):
@@ -1514,6 +1648,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     if objc.macos_available(10, 12):
@@ -1522,6 +1658,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -1533,6 +1671,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -1541,6 +1681,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -1552,6 +1694,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 11):
@@ -1560,12 +1704,16 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     def idsimdfloat4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def idsimdfloat4x4_Z_(self, arg0, arg1):
@@ -1575,6 +1723,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     def Zv2i_id_id_id_id_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1587,6 +1737,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return False
 
     def Zv2i_q_f_id_id_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
@@ -1600,6 +1752,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return False
 
     def Zv4i_Z_Z_Z_Z_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1612,12 +1766,16 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return False
 
     def CGColorv3f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "color!"
 
     def CGColorv3f_CGColorSpace_(self, arg0, arg1):
@@ -1627,18 +1785,24 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "color!"
 
     def fv2f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return 2500000000.0
 
     def fv2i_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return 2500000000.0
 
     def vv2d_(self, arg0):
@@ -1859,6 +2023,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -1870,6 +2036,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float2(9.0, 10.0),
                 objc.simd.vector_float2(11.0, 12.0),
@@ -1881,6 +2049,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 (
                     objc.simd.vector_float3(-18.5, -19.5, -110.5),
@@ -1895,6 +2065,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -1906,6 +2078,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -1917,6 +2091,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -1928,6 +2104,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_int4(100, 101, 102, 103),
                 objc.simd.vector_int4(-20, -21, -22, -23),
@@ -1937,6 +2115,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -1950,6 +2130,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -1963,6 +2145,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float2x2(
             (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         )
@@ -1971,6 +2155,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float3x3(
             (
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -1983,6 +2169,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -1999,6 +2187,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -2012,6 +2202,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -2028,6 +2220,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -2043,6 +2237,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
@@ -2051,6 +2247,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
@@ -2059,12 +2257,16 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def v16C(self):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_uchar16(
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
         )
@@ -2075,6 +2277,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 4398046511104,
                 True,
@@ -2088,6 +2292,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(1.5, 2.5, 3.5),
                 objc.simd.vector_float3(4.5, 5.5, 6.5),
@@ -2100,6 +2306,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_double2(0.0, 1.5)
 
     @classmethod
@@ -2107,6 +2315,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_double2(0.0, 1.5)
 
     @classmethod
@@ -2114,6 +2324,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float2(0.0, 1.5)
 
     @classmethod
@@ -2121,6 +2333,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float2(0.0, 1.5)
 
     @classmethod
@@ -2128,6 +2342,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float2(0.0, 1.5)
 
     @classmethod
@@ -2135,6 +2351,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float2(0.0, 1.5)
 
     @classmethod
@@ -2142,6 +2360,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_int2(0, 1)
 
     @classmethod
@@ -2149,6 +2369,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_double3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2156,6 +2378,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2166,6 +2390,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2173,6 +2399,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2183,6 +2411,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2190,6 +2420,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2197,6 +2429,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2204,6 +2438,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2211,6 +2447,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)
 
     @classmethod
@@ -2218,6 +2456,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
 
     @classmethod
@@ -2225,6 +2465,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
 
     @classmethod
@@ -2232,6 +2474,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_int4(0, 1, 2, 3)
 
     @classmethod
@@ -2242,6 +2486,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2252,6 +2498,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2259,6 +2507,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2271,6 +2521,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2281,6 +2533,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2288,6 +2542,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2300,6 +2556,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2313,6 +2571,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2320,6 +2580,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2335,6 +2597,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2349,6 +2613,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2362,6 +2628,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2376,6 +2644,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2388,6 +2658,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2401,6 +2673,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2414,6 +2688,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2429,6 +2705,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2441,6 +2719,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2448,6 +2728,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2461,6 +2743,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2471,6 +2755,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2481,6 +2767,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2491,6 +2779,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2502,6 +2792,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2514,6 +2806,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2525,6 +2819,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2536,6 +2832,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2547,6 +2845,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2558,6 +2858,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2574,6 +2876,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2589,6 +2893,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2605,6 +2911,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     if objc.macos_available(10, 12):
@@ -2617,6 +2925,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -2629,6 +2939,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 11):
@@ -2642,6 +2954,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     @classmethod
@@ -2652,6 +2966,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2662,6 +2978,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2672,6 +2990,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     if objc.macos_available(10, 13):
@@ -2684,6 +3004,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 13):
@@ -2697,6 +3019,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     @classmethod
@@ -2709,6 +3033,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2720,6 +3046,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2732,6 +3060,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2748,6 +3078,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2763,6 +3095,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2777,6 +3111,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2792,6 +3128,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2804,6 +3142,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2816,6 +3156,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     if objc.macos_available(10, 12):
@@ -2825,6 +3167,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -2837,6 +3181,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -2846,6 +3192,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -2858,6 +3206,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     if objc.macos_available(10, 11):
@@ -2867,6 +3217,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return "hello"
 
     @classmethod
@@ -2874,6 +3226,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2884,6 +3238,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "hello"
 
     @classmethod
@@ -2897,6 +3253,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return False
 
     @classmethod
@@ -2911,6 +3269,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return False
 
     @classmethod
@@ -2924,6 +3284,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return False
 
     @classmethod
@@ -2931,6 +3293,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "color!"
 
     @classmethod
@@ -2941,6 +3305,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return "color!"
 
     @classmethod
@@ -2948,6 +3314,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return 2500000000.0
 
     @classmethod
@@ -2955,6 +3323,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return 2500000000.0
 
     @classmethod
@@ -3205,6 +3575,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -3217,6 +3589,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float2(9.0, 10.0),
                 objc.simd.vector_float2(11.0, 12.0),
@@ -3229,6 +3603,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 (
                     objc.simd.vector_float3(-18.5, -19.5, -110.5),
@@ -3244,6 +3620,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -3256,6 +3634,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -3268,6 +3648,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -3280,6 +3662,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_int4(100, 101, 102, 103),
                 objc.simd.vector_int4(-20, -21, -22, -23),
@@ -3290,6 +3674,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -3304,6 +3690,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -3318,6 +3706,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float2x2(
             (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         )
@@ -3327,6 +3717,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float3x3(
             (
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -3340,6 +3732,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3357,6 +3751,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3371,6 +3767,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3388,6 +3786,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3404,6 +3804,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
@@ -3413,6 +3815,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
@@ -3422,6 +3826,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     @classmethod
@@ -3429,6 +3835,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = None
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return object
         return objc.simd.vector_uchar16(
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
         )
@@ -3440,6 +3848,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 4398046511104,
                 True,
@@ -3454,6 +3864,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = None
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return object
             return (
                 objc.simd.vector_float3(1.5, 2.5, 3.5),
                 objc.simd.vector_float3(4.5, 5.5, 6.5),
@@ -3654,6 +4066,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2dOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v2d_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -3668,6 +4087,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v2dOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2dOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v2dd_(self):
         OC_VectorCall.clearRaise()
@@ -3873,6 +4299,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2ddOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v2dd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -3887,6 +4320,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v2ddOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2ddOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v2f(self):
         OC_VectorCall.clearRaise()
@@ -4058,6 +4498,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v2f_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -4072,6 +4519,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v2fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v2fQ_(self):
         OC_VectorCall.clearRaise()
@@ -4277,6 +4731,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2fQOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v2fQ__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -4291,6 +4752,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v2fQOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2fQOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v2fd_(self):
         OC_VectorCall.clearRaise()
@@ -4496,6 +4964,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2fdOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v2fd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -4510,6 +4985,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v2fdOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2fdOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v2fq_(self):
         OC_VectorCall.clearRaise()
@@ -4715,6 +5197,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2fqOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v2fq__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -4729,6 +5218,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v2fqOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2fqOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v2i(self):
         OC_VectorCall.clearRaise()
@@ -4900,6 +5396,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v2i_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -4914,6 +5417,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v2iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v2iOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v3dd_(self):
         OC_VectorCall.clearRaise()
@@ -5119,6 +5629,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3ddOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v3dd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -5133,6 +5650,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v3ddOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3ddOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v3f(self):
         OC_VectorCall.clearRaise()
@@ -5304,6 +5828,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v3f_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -5318,6 +5849,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v3fv2i_v2i_(self):
         OC_VectorCall.clearRaise()
@@ -5553,6 +6091,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fv2iv2iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v3fv2i_v2i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -5573,6 +6118,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v3fv2iv2iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fv2iv2iOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v3fv3f_(self):
         OC_VectorCall.clearRaise()
@@ -5778,6 +6330,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fv3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v3fv3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -5792,6 +6351,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v3fv3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fv3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v3fv3f_id_(self):
         OC_VectorCall.clearRaise()
@@ -6023,6 +6589,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fv3fidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v3fv3f_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -6043,6 +6616,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v3fv3fidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fv3fidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v3fv4i_(self):
         OC_VectorCall.clearRaise()
@@ -6248,6 +6828,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fv4iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v3fv4i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -6262,6 +6849,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v3fv4iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fv4iOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v3fQ_(self):
         OC_VectorCall.clearRaise()
@@ -6467,6 +7061,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fQOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v3fQ__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -6481,6 +7082,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v3fQOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fQOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v3fd_(self):
         OC_VectorCall.clearRaise()
@@ -6686,6 +7294,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fdOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v3fd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -6700,6 +7315,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v3fdOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v3fdOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v4dd_(self):
         OC_VectorCall.clearRaise()
@@ -6905,6 +7527,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v4ddOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v4dd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -6919,6 +7548,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v4ddOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v4ddOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v4f(self):
         OC_VectorCall.clearRaise()
@@ -7090,6 +7726,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v4fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v4f_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -7104,6 +7747,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v4fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v4fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v4fd_(self):
         OC_VectorCall.clearRaise()
@@ -7309,6 +7959,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v4fdOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v4fd__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -7323,6 +7980,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v4fdOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v4fdOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v4iv3f_(self):
         OC_VectorCall.clearRaise()
@@ -7528,6 +8192,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v4iv3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v4iv3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -7542,6 +8213,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v4iv3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v4iv3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv2d_id_(self):
         OC_VectorCall.clearRaise()
@@ -34506,6 +35184,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.fv2fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_fv2f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -34520,6 +35205,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.fv2fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.fv2fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_fv2i_(self):
         OC_VectorCall.clearRaise()
@@ -34725,6 +35417,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.fv2iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_fv2i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -34739,6 +35438,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.fv2iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.fv2iOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv2d_(self):
         OC_VectorCall.clearRaise()
@@ -44289,6 +44995,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.GKBoxOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.12")
     def test_imp_GKBox_cls(self):
         value = OC_VectorCallClass
@@ -44310,6 +45023,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.GKBoxOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.GKBoxOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.12")
     def test_GKQuad(self):
@@ -44501,6 +45221,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.GKQuadOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.12")
     def test_imp_GKQuad_cls(self):
         value = OC_VectorCallClass
@@ -44519,6 +45246,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.GKQuadOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.GKQuadOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.12")
     def test_GKTriangleQ_(self):
@@ -44774,6 +45508,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.GKTriangleQOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.12")
     def test_imp_GKTriangleQ__cls(self):
         value = OC_VectorCallClass
@@ -44798,6 +45539,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.GKTriangleQOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.GKTriangleQOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.11")
     def test_MDLAxisAlignedBoundingBox(self):
@@ -45016,6 +45764,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.11")
     def test_imp_MDLAxisAlignedBoundingBox_cls(self):
         value = OC_VectorCallClass
@@ -45037,6 +45792,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.11")
     def test_MDLAxisAlignedBoundingBoxv4i_(self):
@@ -45293,6 +46055,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxv4iOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.11")
     def test_imp_MDLAxisAlignedBoundingBoxv4i__cls(self):
         value = OC_VectorCallClass
@@ -45314,6 +46083,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxv4iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxv4iOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.11")
     def test_MDLAxisAlignedBoundingBoxd_(self):
@@ -45566,6 +46342,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxdOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.11")
     def test_imp_MDLAxisAlignedBoundingBoxd__cls(self):
         value = OC_VectorCallClass
@@ -45587,6 +46370,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxdOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MDLAxisAlignedBoundingBoxdOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.11")
     def test_MDLVoxelIndexExtent(self):
@@ -45801,6 +46591,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MDLVoxelIndexExtentOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.11")
     def test_imp_MDLVoxelIndexExtent_cls(self):
         value = OC_VectorCallClass
@@ -45822,6 +46619,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.MDLVoxelIndexExtentOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MDLVoxelIndexExtentOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_simddouble4x4(self):
         OC_VectorCall.clearRaise()
@@ -46051,6 +46855,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simddouble4x4On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_simddouble4x4_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -46075,6 +46886,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simddouble4x4On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simddouble4x4On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_simddouble4x4d_(self):
         OC_VectorCall.clearRaise()
@@ -46338,6 +47156,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simddouble4x4dOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_simddouble4x4d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -46362,6 +47187,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simddouble4x4dOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simddouble4x4dOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_simdfloat2x2(self):
         OC_VectorCall.clearRaise()
@@ -46562,6 +47394,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat2x2On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_simdfloat2x2_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -46581,6 +47420,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simdfloat2x2On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat2x2On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_simdfloat3x3(self):
         OC_VectorCall.clearRaise()
@@ -46801,6 +47647,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat3x3On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_simdfloat3x3_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -46824,6 +47677,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simdfloat3x3On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat3x3On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_simdfloat4x4(self):
         OC_VectorCall.clearRaise()
@@ -47049,6 +47909,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_simdfloat4x4_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -47073,6 +47940,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simdfloat4x4On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_simdfloat4x4id_d_(self):
         OC_VectorCall.clearRaise()
@@ -47362,6 +48236,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat4x4iddOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_simdfloat4x4id_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -47392,6 +48273,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simdfloat4x4iddOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat4x4iddOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_simdfloat4x4d_(self):
         OC_VectorCall.clearRaise()
@@ -47655,6 +48543,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat4x4dOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_simdfloat4x4d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -47679,6 +48574,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simdfloat4x4dOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat4x4dOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_simdfloat4x4simdfloat4x4_id_(self):
         OC_VectorCall.clearRaise()
@@ -48256,6 +49158,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat4x4simdfloat4x4idOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_simdfloat4x4simdfloat4x4_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -48293,6 +49202,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simdfloat4x4simdfloat4x4idOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdfloat4x4simdfloat4x4idOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_simdquatdd_(self):
@@ -48513,6 +49429,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdquatddOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_simdquatdd__cls(self):
         value = OC_VectorCallClass
@@ -48530,6 +49453,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simdquatddOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdquatddOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_simdquatf(self):
@@ -48716,6 +49646,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdquatfOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_simdquatf_cls(self):
         value = OC_VectorCallClass
@@ -48733,6 +49670,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simdquatfOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdquatfOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_simdquatfd_(self):
@@ -48953,6 +49897,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdquatfdOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_simdquatfd__cls(self):
         value = OC_VectorCallClass
@@ -48970,6 +49921,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.simdquatfdOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.simdquatfdOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_v16C(self):
         OC_VectorCall.clearRaise()
@@ -49166,6 +50124,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v16COn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_v16C_cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -49185,6 +50150,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.v16COn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.v16COn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_MPSImageHistogramInfo(self):
@@ -49411,6 +50383,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_MPSImageHistogramInfo_cls(self):
         value = OC_VectorCallClass
@@ -49434,6 +50413,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MPSImageHistogramInfoOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.14")
     def test_MPSAxisAlignedBoundingBox(self):
@@ -49652,6 +50638,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.14")
     def test_imp_MPSAxisAlignedBoundingBox_cls(self):
         value = OC_VectorCallClass
@@ -49673,3 +50666,10 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MPSAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.returnInvalid
