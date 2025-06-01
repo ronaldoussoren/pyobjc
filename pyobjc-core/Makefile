@@ -23,7 +23,7 @@ test-no-gil:
 # sanitizer library is loaded.
 sanitize-test:
 	rm -rf build dist
-	env ASAN_OPTIONS=allocator_may_return_null=1 DYLD_INSERT_LIBRARIES=$(shell echo `xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/[0-9][0-9]/lib/darwin/libclang_rt.asan_osx_dynamic.dylib) CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" LDFLAGS="-fsanitize-thread-atomics  -fsanitize-thread-func-entry-exit -fsanitize-thread-memory-access" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/PythonT setup.py build_ext develop test -v
+	env ASAN_OPTIONS=allocator_may_return_null=1 DYLD_INSERT_LIBRARIES="$(shell echo `xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/[0-9][0-9]/lib/darwin/libclang_rt.asan_osx_dynamic.dylib)" CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" LDFLAGS="-fsanitize-thread-atomics  -fsanitize-thread-func-entry-exit -fsanitize-thread-memory-access" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/PythonTDev setup.py build_ext test -v
 
 clean:
 	rm -rf build dist

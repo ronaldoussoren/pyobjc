@@ -41,6 +41,12 @@ class ReturnAStruct(NSObject):
 
 
 class TestRegressions(TestCase):
+    def test_sizeof_objc_object(self):
+        array = NSArray.array()
+        size = sys.getsizeof(array)
+        self.assertIsInstance(size, int)
+        self.assertGreater(size, sys.getsizeof(object()))
+
     def testSetCompare(self):
         oc = objc.lookUpClass("NSSet").setWithArray_([None])
         oc2 = objc.lookUpClass("NSMutableSet").setWithArray_([None])

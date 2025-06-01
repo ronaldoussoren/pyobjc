@@ -7,7 +7,7 @@ import warnings
 import tempfile
 import builtins
 from PyObjCTest.testbndl import PyObjC_TestClass3
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 from .objectint import OC_ObjectInt
 from objc import super  # noqa: A004
 
@@ -1370,3 +1370,66 @@ class TestSubclassOptions(TestCase):
 
         finally:
             objc.options._processClassDict = orig
+
+    def test_invalid_keyword(self):
+        with self.assertRaisesRegex(
+            TypeError, "this function got an unexpected keyword argument 'foo'"
+        ):
+
+            class OC_SubClassKeywordInvalid(NSObject, foo=42):
+                pass
+
+    def test_class_extender_fails(self):
+        def extender(*args, **kwds):
+            raise RuntimeError("don't extend me")
+
+        with pyobjc_options(_class_extender=extender):
+            with self.assertRaisesRegex(RuntimeError, "don't extend me"):
+
+                class OC_SubClassingFails1(NSObject):
+                    pass
+
+    def test_invalid_protocols(self):
+        try:
+            NSObject.__pyobjc_protocols__ = 42
+
+            with self.assertRaisesRegex(
+                TypeError, "__pyobjc_protocols__ not a sequence"
+            ):
+
+                class OC_SubClassingFails2(NSObject):
+                    pass
+
+        finally:
+            del NSObject.__pyobjc_protocols__
+
+    def test_subclassing_with_protocols(self):
+        proto = objc.protocolNamed("NSObject")
+
+        class OC_BaseClass(NSObject, protocols=[proto]):
+            pass
+
+        self.assertEqual(OC_BaseClass.__pyobjc_protocols__, (proto,))
+
+        class OC_SubClassWithProtocols(OC_BaseClass):
+            pass
+
+        self.assertEqual(OC_SubClassWithProtocols.__pyobjc_protocols__, (proto,))
+
+    def test_class_version(self):
+        class OC_VersionedClass(NSObject):
+            pass
+
+        self.assertEqual(OC_VersionedClass.__version__, 0)
+
+        OC_VersionedClass.__version__ = 42.0
+
+        self.assertEqual(OC_VersionedClass.__version__, 42)
+
+        with self.assertRaisesRegex(ValueError, "'int'.* 'str"):
+            OC_VersionedClass.__version__ = "aap"
+
+        self.assertEqual(OC_VersionedClass.__version__, 42)
+
+        with self.assertRaisesRegex(TypeError, "Cannot delete __version__ attribute"):
+            del OC_VersionedClass.__version__

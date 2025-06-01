@@ -359,6 +359,13 @@ methacc_traverse(PyObject* _self, visitproc visit, void* _Nullable arg)
     return 0;
 }
 
+// LCOV_EXCL_START
+// Instances of this type cannot be part of a loop: This type has
+// references to an ObjC type of instance. Instances only have
+// references to their type, and ObjC types are immortal.
+//
+// Even when an ObjC class has (Python) attributes those are stored
+// on the actual ObjC object, not on the ``PyObjCObject*`` value.
 static int
 methacc_clear(PyObject* _self)
 {
@@ -372,6 +379,7 @@ methacc_clear(PyObject* _self)
 
     return 0;
 }
+// LCOV_EXCL_STOP
 
 static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 {
@@ -380,7 +388,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 
     assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base));
 
-    if (PyUnicode_Check(name)) {
+    if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;                               // LCOV_EXCL_LINE
         }
@@ -449,9 +457,11 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                 PyObject* v;
 
                 int r = PyDict_GetItemRef(dict, name, &v);
-                if (r == -1) {
+                if (r == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_CLEAR(dict);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 } else if (r == 1) {
                     if (PyObjCSelector_Check(v)) {
                         /* Found it, use the

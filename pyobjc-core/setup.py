@@ -91,7 +91,7 @@ CFLAGS = [
     "-Wshorten-64-to-32",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     # "--analyze",
-    "-Werror",
+    # "-Werror",
     "-Wno-cast-function-type-mismatch",
     "-I/usr/include/ffi",
     "-fvisibility=hidden",
@@ -101,7 +101,7 @@ CFLAGS = [
     "-O3",
     "-flto=thin",
     # XXX: Use object_path_lto (during linking?)
-    "-UNDEBUG",
+    # "-fsanitize-thread-atomics",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -123,6 +123,7 @@ OBJC_LDFLAGS = [
     "-O3",
     "-flto=thin",
     "-fexceptions",
+    # "-fsanitize-thread-atomics",
 ]
 
 

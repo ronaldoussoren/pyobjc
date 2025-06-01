@@ -74,7 +74,7 @@ typedef struct _PyObjCClassObject {
 #endif
 
     Py_ssize_t   dictoffset;
-    Py_ssize_t   generation;
+    PyObjC_ATOMIC Py_ssize_t   generation;
     unsigned int useKVO : 1;
     unsigned int hasPythonImpl : 1;
     unsigned int isCFWrapper : 1;

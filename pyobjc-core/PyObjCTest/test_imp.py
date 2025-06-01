@@ -205,6 +205,13 @@ class TestBasicIMP(TestCase):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=objc.ApiDeprecationWarning)
             self.assertFalse(alloc_imp.isAlloc)
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=objc.ApiDeprecationWarning)
+            with self.assertRaisesRegex(
+                objc.ApiDeprecationWarning, "isAlloc is always false"
+            ):
+                self.assertFalse(alloc_imp.isAlloc)
         self.assertTrue(alloc_imp.isClassMethod)
 
 

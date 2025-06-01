@@ -24,6 +24,16 @@ class OCTestWithAttributes(NSObject):
 
 
 class MethodAccessTest(TestCase):
+    def test_circular(self):
+        with objc.autorelease_pool():
+            o = OCTestWithAttributes.alloc().init()
+            methods = o.pyobjc_instanceMethods
+
+            o.attr = methods
+
+            del o
+            del methods
+
     def testObjCObject(self):
         # Trying to access the methods of objc.objc_object should not
         # crash the interpreter.
