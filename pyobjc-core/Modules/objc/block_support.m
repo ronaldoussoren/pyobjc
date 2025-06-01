@@ -64,7 +64,7 @@ const char* _Nullable PyObjCBlock_GetSignature(void* _block)
 {
     struct block_literal* block = (struct block_literal*)_block;
 
-    if (((intptr_t)(block->isa)) & 0x1) {
+    if (((intptr_t)(block->isa)) & 0x1) { // LCOV_BR_EXCL_LINE
         /* XXX: Hack to avoid a hard crash that I haven't been able
          * to pintpoint yet (test doesn't fail reliably, and I haven't
          * been able to trigger it with a unittest.
@@ -72,7 +72,7 @@ const char* _Nullable PyObjCBlock_GetSignature(void* _block)
          * Without this test the tests for blocks without metadata
          * sometimes crash due to invalid block pointers :-(
          */
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     }
 
     if ((block->flags & BLOCK_HAS_SIGNATURE) != 0) {

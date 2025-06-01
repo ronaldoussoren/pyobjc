@@ -863,6 +863,27 @@ static PyObject* _Nullable idSignatures(PyObject* self __attribute__((__unused__
     return PyObjCPointer_GetIDEncodings();
 }
 
+PyDoc_STRVAR(sizeOfType_doc,
+        "_sizeOfType(type, /)\n" CLINIC_SEP "\n"
+        "Returns the size of the type referred to by the encoding.");
+static PyObject* _Nullable sizeOfType(PyObject* self __attribute__((__unused__)), PyObject* _Nullable args)
+{
+    char* encoding;
+    Py_ssize_t size;
+
+    if (!PyArg_ParseTuple(args, "y", &encoding)) {
+        return NULL;
+    }
+
+    size = PyObjCRT_SizeOfType(encoding);
+    if (size == -1) {
+        return NULL;
+    }
+
+    return PyLong_FromSsize_t(size);
+}
+
+
 PyDoc_STRVAR(protocolsForClass_doc,
              "protocolsForClass(cls)\n" CLINIC_SEP "\n"
              "Returns a list of Protocol objects that the class claims\n"
@@ -1940,6 +1961,10 @@ static PyMethodDef mod_methods[] = {
      .ml_meth  = (PyCFunction)idSignatures,
      .ml_flags = METH_NOARGS,
      .ml_doc   = idSignatures_doc},
+    {.ml_name  = "_sizeOfType",
+     .ml_meth  = (PyCFunction)sizeOfType,
+     .ml_flags = METH_VARARGS,
+     .ml_doc   = sizeOfType_doc},
     {.ml_name  = "_updatingMetadata",
      .ml_meth  = (PyCFunction)_updatingMetadata,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,

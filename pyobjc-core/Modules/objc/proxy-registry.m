@@ -178,8 +178,7 @@ PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
 {
     PyObject* v;
 
-    if (original == nil)
-        return;
+    assert(original != nil);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&proxy_mutex);

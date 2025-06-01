@@ -118,10 +118,9 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
                                                  size_t nargsf,
                                                  PyObject* _Nullable kwnames)
 {
-    PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     PyObject*        pyself;
 
-    assert(self->signature->shortcut_signature);
+    assert(((PyObjCIMPObject*)_self)->signature->shortcut_signature);
 
     if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
         return NULL;

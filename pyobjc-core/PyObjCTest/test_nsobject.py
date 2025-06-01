@@ -20,12 +20,6 @@ class Py_AllocRaises(NSObject):
         raise SomeException("alloc")
 
 
-class Py_AllocPasses(NSObject):
-    @classmethod
-    def alloc(cls):
-        return super().alloc()
-
-
 class Py_RefCountRaises(NSObject):
     def init(self):
         self.scenario = 0
@@ -192,8 +186,18 @@ class TestNSObjectSupport(TestCase):
             Py_AllocRaises.alloc()
 
     def test_python_alloc(self):
+        count = 0
+
+        class Py_AllocPasses(NSObject):
+            @classmethod
+            def alloc(cls):
+                nonlocal count
+                count += 1
+                return super().alloc()
+
         v = Py_AllocPasses.alloc().init()
         self.assertIsInstance(v, Py_AllocPasses)
+        self.assertEqual(count, 1)
 
     # XXX: Test where alloc returns something that cannot be convered to ObjC
 

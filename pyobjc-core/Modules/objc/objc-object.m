@@ -1010,10 +1010,6 @@ static PyObject* _Nullable meth_sizeof(PyObject* self __attribute__((__unused__)
 static PyObject*
 meth_is_magic(PyObject* self)
 {
-    id objc_value = PyObjCObject_GetObject(self);
-
-    assert(objc_value != nil);
-
     if (PyObjCObject_IsMagic(self)) {
         Py_RETURN_TRUE;
     } else {

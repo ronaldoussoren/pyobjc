@@ -102,7 +102,7 @@ static PyObject* _Nullable struct_sq_slice(PyObject* self, Py_ssize_t ilow,
     PyObject*  result;
     Py_ssize_t i;
 
-#ifdef PyObjC_DEBUG
+#ifndef NDEBUG
     Py_ssize_t len = STRUCT_LENGTH(self);
 #endif
     assert(ilow >= 0);
@@ -173,7 +173,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
         return -1;
     }
 
-#ifdef PyObjC_DEBUG
+#ifndef NDEBUG
     Py_ssize_t len = STRUCT_LENGTH(self);
 #endif
     assert(ilow >= 0);

@@ -1292,13 +1292,8 @@ class_dealloc(PyObject* cls)
     }
 
     /*
-     * XXX: use class_replaceMethod to add a dummy implementation for methods
-     *      with a python implementation (again to avoid corrupt Objective-C runtime
-     *      state.
-     *
-     *      Note that this shouldn't actually be necessary as the only use-case for
-     *      deallocating instances of this class is recovering from a race condition
-     *      when creating the proxy for a pure Objective-C class in multiple threads.
+     * Proxies for "native" Objective-C classes can be deallocated when two threads race
+     * to create a proxy for the class.
      */
 
     CLANG_SUPPRESS

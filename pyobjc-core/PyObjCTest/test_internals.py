@@ -506,3 +506,16 @@ class TestRegisteredMetadata(TestCase):
 
         with self.assertRaisesRegex(TypeError, "a bytes-like object is required"):
             objc._registeredMetadataForSelector(objc.lookUpClass("NSObject"), "init")
+
+
+class TestSizeOfType(TestCase):
+    def test_sizeOfType(self):
+        self.assertEqual(objc._sizeOfType(objc._C_LNG_LNG), 8)
+
+        with self.assertRaisesRegex(
+            objc.internal_error, "PyObjCRT_SizeOfType: Unhandled type"
+        ):
+            objc._sizeOfType(b"xyz")
+
+        with self.assertRaisesRegex(TypeError, "a bytes-like object is required"):
+            objc._sizeOfType(42)
