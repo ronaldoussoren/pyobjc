@@ -2011,14 +2011,14 @@
     }
    },
    "sec_protocol_metadata_copy_server_name": {
-    "result": {
+    "retval": {
      "free_result": true,
      "c_array_delimited_by_null": true,
      "type_override": "^t"
     }
    },
    "sec_protocol_metadata_copy_negotiated_protocol": {
-    "result": {
+    "retval": {
      "free_result": true,
      "c_array_delimited_by_null": true,
      "type_override": "^t"
