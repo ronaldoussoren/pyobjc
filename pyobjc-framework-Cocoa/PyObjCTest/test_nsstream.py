@@ -98,7 +98,11 @@ class TestNSStreamUsage(TestCase):
         self.assertArgSizeInArg(Foundation.NSOutputStream.write_maxLength_, 0, 1)
         self.assertResultIsBOOL(Foundation.NSOutputStream.hasSpaceAvailable)
 
-        b = Foundation.NSOutputStream.alloc().initToMemory()
+        # XXX: FB17759654: The call to initToMemory crashes, this also happens
+        #      using similar code using -fobjc-arc due to what seems to be
+        #      incorrect reference count updates in NSOutputStream.
+        # b = Foundation.NSOutputStream.alloc().initToMemory()
+        b = Foundation.NSOutputStream.outputStreamToMemory()
         self.assertArgHasType(b.initToFileAtPath_append_, 1, objc._C_NSBOOL)
         self.assertArgHasType(
             Foundation.NSOutputStream.outputStreamToFileAtPath_append_,
@@ -126,11 +130,10 @@ class TestNSStreamUsage(TestCase):
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        b = Foundation.NSOutputStream.alloc()
-        try:
-            self.assertArgIsBOOL(b.initWithURL_append_, 1)
-        finally:
-            b = b.initToMemory()
+        # XXX: See above, this code used to create an uninitialsed NSOutputStream
+        #      by calling ``NSOutputStream.alloc()``. This crashed hard.
+        b = Foundation.NSOutputStream.outputStreamToMemory()
+        self.assertArgIsBOOL(b.initWithURL_append_, 1)
         self.assertArgIsBOOL(Foundation.NSOutputStream.outputStreamWithURL_append_, 1)
 
     @min_os_level("10.10")
