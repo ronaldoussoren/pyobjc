@@ -866,7 +866,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_double2(0.0, 1.5)
 
     def v2dd_(self, arg0):
@@ -874,7 +874,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_double2(0.0, 1.5)
 
     def v2f(self):
@@ -882,7 +882,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float2(0.0, 1.5)
 
     def v2fQ_(self, arg0):
@@ -890,7 +890,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float2(0.0, 1.5)
 
     def v2fd_(self, arg0):
@@ -898,7 +898,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float2(0.0, 1.5)
 
     def v2fq_(self, arg0):
@@ -906,7 +906,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float2(0.0, 1.5)
 
     def v2i(self):
@@ -914,7 +914,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_int2(0, 1)
 
     def v3dd_(self, arg0):
@@ -922,7 +922,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_double3(0.0, 1.5, 3.0)
 
     def v3f(self):
@@ -930,7 +930,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fv2i_v2i_(self, arg0, arg1):
@@ -941,7 +941,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fv3f_(self, arg0):
@@ -949,7 +949,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fv3f_id_(self, arg0, arg1):
@@ -960,7 +960,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fv4i_(self, arg0):
@@ -968,7 +968,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fQ_(self, arg0):
@@ -976,7 +976,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v3fd_(self, arg0):
@@ -984,7 +984,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     def v4dd_(self, arg0):
@@ -992,7 +992,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)
 
     def v4f(self):
@@ -1000,7 +1000,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
 
     def v4fd_(self, arg0):
@@ -1008,7 +1008,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
 
     def v4iv3f_(self, arg0):
@@ -1016,7 +1016,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_int4(0, 1, 2, 3)
 
     def idv2d_id_(self, arg0, arg1):
@@ -1027,7 +1027,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv2d_q_(self, arg0, arg1):
@@ -1038,7 +1038,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv2f_(self, arg0):
@@ -1046,7 +1046,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv2f_v2I_q_id_(self, arg0, arg1, arg2, arg3):
@@ -1059,7 +1059,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv2f_v2f_(self, arg0, arg1):
@@ -1070,7 +1070,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv2i_(self, arg0):
@@ -1078,7 +1078,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv2i_i_i_Z_(self, arg0, arg1, arg2, arg3):
@@ -1091,7 +1091,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv2i_i_i_Z_Class_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1105,7 +1105,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_(self, arg0):
@@ -1113,7 +1113,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_v2I_Z_Z_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1129,7 +1129,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_v2I_Z_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
@@ -1144,7 +1144,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_v2I_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1158,7 +1158,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_v2I_i_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
@@ -1173,7 +1173,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_v2I_q_id_(self, arg0, arg1, arg2, arg3):
@@ -1186,7 +1186,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_v3I_Z_q_id_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1200,7 +1200,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_v3I_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1214,7 +1214,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_Q_Q_q_Z_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1230,7 +1230,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv3f_Z_q_id_(self, arg0, arg1, arg2, arg3):
@@ -1243,7 +1243,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idv4f_(self, arg0):
@@ -1251,7 +1251,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_v2d_v2d_v2i_Z_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1265,7 +1265,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_v2f_(self, arg0, arg1):
@@ -1276,7 +1276,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_v3f_(self, arg0, arg1):
@@ -1287,7 +1287,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_v4f_(self, arg0, arg1):
@@ -1298,7 +1298,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_id_v2i_(self, arg0, arg1, arg2):
@@ -1310,7 +1310,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_id_v2i_f_(self, arg0, arg1, arg2, arg3):
@@ -1323,7 +1323,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_Q_v2f_(self, arg0, arg1, arg2):
@@ -1335,7 +1335,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_Q_v3f_(self, arg0, arg1, arg2):
@@ -1347,7 +1347,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_Q_v4f_(self, arg0, arg1, arg2):
@@ -1359,7 +1359,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_Q_simdfloat4x4_(self, arg0, arg1, arg2):
@@ -1371,7 +1371,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_Z_id_v2i_q_Q_q_Z_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
@@ -1388,7 +1388,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_q_v2i_f_f_f_f_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1404,7 +1404,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_q_v2i_f_f_f_f_f_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
@@ -1421,7 +1421,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     if objc.macos_available(10, 12):
@@ -1434,7 +1434,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -1447,7 +1447,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 11):
@@ -1461,7 +1461,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     def idid_simdfloat2x2_(self, arg0, arg1):
@@ -1472,7 +1472,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_simdfloat3x3_(self, arg0, arg1):
@@ -1483,7 +1483,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idid_simdfloat4x4_(self, arg0, arg1):
@@ -1494,7 +1494,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     if objc.macos_available(10, 13):
@@ -1507,7 +1507,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 13):
@@ -1521,7 +1521,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     def idCGColor_CGColor_id_v2i_(self, arg0, arg1, arg2, arg3):
@@ -1534,7 +1534,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idf_v2f_v2f_(self, arg0, arg1, arg2):
@@ -1546,7 +1546,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idf_v2f_v2f_Class_(self, arg0, arg1, arg2, arg3):
@@ -1559,7 +1559,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idf_v2f_Q_Q_Q_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7):
@@ -1576,7 +1576,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idf_v2f_Q_Q_q_Z_id_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1592,7 +1592,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idf_id_v2i_i_q_Z_(self, arg0, arg1, arg2, arg3, arg4, arg5):
@@ -1607,7 +1607,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idf_id_v2i_i_q_CGColor_CGColor_(self, arg0, arg1, arg2, arg3, arg4, arg5, arg6):
@@ -1623,7 +1623,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idf_id_v2i_q_(self, arg0, arg1, arg2, arg3):
@@ -1636,7 +1636,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idf_f_id_v2i_(self, arg0, arg1, arg2, arg3):
@@ -1649,7 +1649,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     if objc.macos_available(10, 12):
@@ -1659,7 +1659,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -1672,7 +1672,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -1682,7 +1682,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -1695,7 +1695,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 11):
@@ -1705,7 +1705,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     def idsimdfloat4x4_(self, arg0):
@@ -1713,7 +1713,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def idsimdfloat4x4_Z_(self, arg0, arg1):
@@ -1724,7 +1724,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     def Zv2i_id_id_id_id_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1738,7 +1738,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return False
 
     def Zv2i_q_f_id_id_id_(self, arg0, arg1, arg2, arg3, arg4, arg5):
@@ -1753,7 +1753,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return False
 
     def Zv4i_Z_Z_Z_Z_(self, arg0, arg1, arg2, arg3, arg4):
@@ -1767,7 +1767,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return False
 
     def CGColorv3f_(self, arg0):
@@ -1775,7 +1775,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "color!"
 
     def CGColorv3f_CGColorSpace_(self, arg0, arg1):
@@ -1786,7 +1786,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "color!"
 
     def fv2f_(self, arg0):
@@ -1794,7 +1794,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return 2500000000.0
 
     def fv2i_(self, arg0):
@@ -1802,13 +1802,15 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return 2500000000.0
 
     def vv2d_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv2d_d_(self, arg0, arg1):
         self.argvalues = (
@@ -1817,11 +1819,15 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv2f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv2f_d_(self, arg0, arg1):
         self.argvalues = (
@@ -1830,11 +1836,15 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv3d_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv3d_d_(self, arg0, arg1):
         self.argvalues = (
@@ -1843,11 +1853,15 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv3f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv3f_v3f_(self, arg0, arg1):
         self.argvalues = (
@@ -1856,6 +1870,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv3f_v3f_v3f_(self, arg0, arg1, arg2):
         self.argvalues = (
@@ -1865,6 +1881,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv3f_d_(self, arg0, arg1):
         self.argvalues = (
@@ -1873,6 +1891,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv4d_d_(self, arg0, arg1):
         self.argvalues = (
@@ -1881,11 +1901,15 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv4f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv4f_d_(self, arg0, arg1):
         self.argvalues = (
@@ -1894,11 +1918,15 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vv4i_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vid_v2f_v2f_(self, arg0, arg1, arg2):
         self.argvalues = (
@@ -1908,6 +1936,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vid_v2f_v2f_q_(self, arg0, arg1, arg2, arg3):
         self.argvalues = (
@@ -1918,6 +1948,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vf_v2i_(self, arg0, arg1):
         self.argvalues = (
@@ -1926,6 +1958,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     if objc.macos_available(10, 11):
 
@@ -1933,6 +1967,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 11):
 
@@ -1943,11 +1979,15 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     def vsimddouble4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vsimddouble4x4_d_(self, arg0, arg1):
         self.argvalues = (
@@ -1956,21 +1996,29 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vsimdfloat2x2_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vsimdfloat3x3_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vsimdfloat4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     def vsimdfloat4x4_d_(self, arg0, arg1):
         self.argvalues = (
@@ -1979,6 +2027,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     if objc.macos_available(10, 13):
 
@@ -1989,6 +2039,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 13):
 
@@ -1996,6 +2048,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 13):
 
@@ -2006,6 +2060,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 13):
 
@@ -2016,6 +2072,8 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 12):
 
@@ -2024,7 +2082,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -2037,7 +2095,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float2(9.0, 10.0),
                 objc.simd.vector_float2(11.0, 12.0),
@@ -2050,7 +2108,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 (
                     objc.simd.vector_float3(-18.5, -19.5, -110.5),
@@ -2066,7 +2124,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -2079,7 +2137,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -2092,7 +2150,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -2105,7 +2163,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_int4(100, 101, 102, 103),
                 objc.simd.vector_int4(-20, -21, -22, -23),
@@ -2116,7 +2174,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -2131,7 +2189,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -2146,7 +2204,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float2x2(
             (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         )
@@ -2156,7 +2214,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float3x3(
             (
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -2170,7 +2228,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -2188,7 +2246,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -2203,7 +2261,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -2221,7 +2279,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -2238,7 +2296,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
@@ -2248,7 +2306,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
@@ -2258,7 +2316,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def v16C(self):
@@ -2266,7 +2324,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_uchar16(
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
         )
@@ -2278,7 +2336,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 4398046511104,
                 True,
@@ -2293,7 +2351,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(1.5, 2.5, 3.5),
                 objc.simd.vector_float3(4.5, 5.5, 6.5),
@@ -2307,7 +2365,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_double2(0.0, 1.5)
 
     @classmethod
@@ -2316,7 +2374,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_double2(0.0, 1.5)
 
     @classmethod
@@ -2325,7 +2383,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float2(0.0, 1.5)
 
     @classmethod
@@ -2334,7 +2392,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float2(0.0, 1.5)
 
     @classmethod
@@ -2343,7 +2401,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float2(0.0, 1.5)
 
     @classmethod
@@ -2352,7 +2410,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float2(0.0, 1.5)
 
     @classmethod
@@ -2361,7 +2419,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_int2(0, 1)
 
     @classmethod
@@ -2370,7 +2428,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_double3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2379,7 +2437,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2391,7 +2449,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2400,7 +2458,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2412,7 +2470,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2421,7 +2479,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2430,7 +2488,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2439,7 +2497,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float3(0.0, 1.5, 3.0)
 
     @classmethod
@@ -2448,7 +2506,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)
 
     @classmethod
@@ -2457,7 +2515,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
 
     @classmethod
@@ -2466,7 +2524,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
 
     @classmethod
@@ -2475,7 +2533,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_int4(0, 1, 2, 3)
 
     @classmethod
@@ -2487,7 +2545,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2499,7 +2557,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2508,7 +2566,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2522,7 +2580,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2534,7 +2592,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2543,7 +2601,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2557,7 +2615,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2572,7 +2630,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2581,7 +2639,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2598,7 +2656,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2614,7 +2672,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2629,7 +2687,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2645,7 +2703,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2659,7 +2717,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2674,7 +2732,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2689,7 +2747,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2706,7 +2764,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2720,7 +2778,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2729,7 +2787,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2744,7 +2802,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2756,7 +2814,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2768,7 +2826,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2780,7 +2838,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2793,7 +2851,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2807,7 +2865,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2820,7 +2878,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2833,7 +2891,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2846,7 +2904,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2859,7 +2917,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2877,7 +2935,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2894,7 +2952,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2912,7 +2970,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     if objc.macos_available(10, 12):
@@ -2926,7 +2984,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -2940,7 +2998,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 11):
@@ -2955,7 +3013,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     @classmethod
@@ -2967,7 +3025,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2979,7 +3037,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -2991,7 +3049,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     if objc.macos_available(10, 13):
@@ -3005,7 +3063,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 13):
@@ -3020,7 +3078,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     @classmethod
@@ -3034,7 +3092,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3047,7 +3105,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3061,7 +3119,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3079,7 +3137,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3096,7 +3154,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3112,7 +3170,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3129,7 +3187,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3143,7 +3201,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3157,7 +3215,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     if objc.macos_available(10, 12):
@@ -3168,7 +3226,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -3182,7 +3240,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -3193,7 +3251,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 12):
@@ -3207,7 +3265,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     if objc.macos_available(10, 11):
@@ -3218,7 +3276,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return "hello"
 
     @classmethod
@@ -3227,7 +3285,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3239,7 +3297,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "hello"
 
     @classmethod
@@ -3254,7 +3312,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return False
 
     @classmethod
@@ -3270,7 +3328,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return False
 
     @classmethod
@@ -3285,7 +3343,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return False
 
     @classmethod
@@ -3294,7 +3352,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "color!"
 
     @classmethod
@@ -3306,7 +3364,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return "color!"
 
     @classmethod
@@ -3315,7 +3373,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return 2500000000.0
 
     @classmethod
@@ -3324,7 +3382,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return 2500000000.0
 
     @classmethod
@@ -3332,6 +3390,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv2d_d_(self, arg0, arg1):
@@ -3341,12 +3401,16 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv2f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv2f_d_(self, arg0, arg1):
@@ -3356,12 +3420,16 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv3d_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv3d_d_(self, arg0, arg1):
@@ -3371,12 +3439,16 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv3f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv3f_v3f_(self, arg0, arg1):
@@ -3386,6 +3458,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv3f_v3f_v3f_(self, arg0, arg1, arg2):
@@ -3396,6 +3470,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv3f_d_(self, arg0, arg1):
@@ -3405,6 +3481,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv4d_d_(self, arg0, arg1):
@@ -3414,12 +3492,16 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv4f_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv4f_d_(self, arg0, arg1):
@@ -3429,12 +3511,16 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vv4i_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vid_v2f_v2f_(self, arg0, arg1, arg2):
@@ -3445,6 +3531,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vid_v2f_v2f_q_(self, arg0, arg1, arg2, arg3):
@@ -3456,6 +3544,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vf_v2i_(self, arg0, arg1):
@@ -3465,6 +3555,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     if objc.macos_available(10, 11):
 
@@ -3473,6 +3565,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 11):
 
@@ -3484,12 +3578,16 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     @classmethod
     def vsimddouble4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vsimddouble4x4_d_(self, arg0, arg1):
@@ -3499,24 +3597,32 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vsimdfloat2x2_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vsimdfloat3x3_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vsimdfloat4x4_(self, arg0):
         self.argvalues = (arg0,)
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     @classmethod
     def vsimdfloat4x4_d_(self, arg0, arg1):
@@ -3526,6 +3632,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         )
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
+        if getattr(self, "returnInvalid", False):
+            return NoObjCClass()
 
     if objc.macos_available(10, 13):
 
@@ -3537,6 +3645,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 13):
 
@@ -3545,6 +3655,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             self.argvalues = (arg0,)
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 13):
 
@@ -3556,6 +3668,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 13):
 
@@ -3567,6 +3681,8 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             )
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
 
     if objc.macos_available(10, 12):
 
@@ -3576,7 +3692,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -3590,7 +3706,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float2(9.0, 10.0),
                 objc.simd.vector_float2(11.0, 12.0),
@@ -3604,7 +3720,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 (
                     objc.simd.vector_float3(-18.5, -19.5, -110.5),
@@ -3621,7 +3737,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -3635,7 +3751,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -3649,7 +3765,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -3663,7 +3779,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_int4(100, 101, 102, 103),
                 objc.simd.vector_int4(-20, -21, -22, -23),
@@ -3675,7 +3791,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -3691,7 +3807,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_double4x4(
             (
                 objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -3707,7 +3823,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float2x2(
             (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         )
@@ -3718,7 +3834,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float3x3(
             (
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -3733,7 +3849,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3752,7 +3868,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3768,7 +3884,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3787,7 +3903,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return simd.simd_float4x4(
             (
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -3805,7 +3921,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
@@ -3816,7 +3932,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     if objc.macos_available(10, 13):
@@ -3827,7 +3943,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     @classmethod
@@ -3836,7 +3952,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
         if getattr(self, "shouldRaise", False):
             raise RuntimeError("failure!")
         if getattr(self, "returnInvalid", False):
-            return object
+            return NoObjCClass()
         return objc.simd.vector_uchar16(
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
         )
@@ -3849,7 +3965,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 4398046511104,
                 True,
@@ -3865,7 +3981,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             if getattr(self, "shouldRaise", False):
                 raise RuntimeError("failure!")
             if getattr(self, "returnInvalid", False):
-                return object
+                return NoObjCClass()
             return (
                 objc.simd.vector_float3(1.5, 2.5, 3.5),
                 objc.simd.vector_float3(4.5, 5.5, 6.5),
@@ -4019,6 +4135,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -4028,6 +4145,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(rv, objc.simd.vector_double2(0.0, 1.5))
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(rv, objc.simd.vector_double2(0.0, 1.5))
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(rv, objc.simd.vector_double2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -4245,6 +4374,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -4254,6 +4384,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_double2(0.0, 1.5))
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_double2(0.0, 1.5))
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(rv, objc.simd.vector_double2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -4451,6 +4589,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -4460,6 +4599,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -4677,6 +4828,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -4686,6 +4838,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(35184372088832)
+        self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
+
+        # Valid call through instance
+        rv = imp(oc_inst, 35184372088832)
+        self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
+
+        # Valid call through meta
+        rv = imp(type(oc), 35184372088832)
         self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -4910,6 +5070,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -4919,6 +5080,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -5143,6 +5312,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -5152,6 +5322,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-17592186044416)
+        self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
+
+        # Valid call through instance
+        rv = imp(oc_inst, -17592186044416)
+        self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
+
+        # Valid call through meta
+        rv = imp(type(oc), -17592186044416)
         self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
 
         stored = oc.storedvalue()
@@ -5349,6 +5527,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -5358,6 +5537,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(rv, objc.simd.vector_int2(0, 1))
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(rv, objc.simd.vector_int2(0, 1))
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(rv, objc.simd.vector_int2(0, 1))
 
         stored = oc.storedvalue()
@@ -5575,6 +5766,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -5584,6 +5776,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_double3(0.0, 1.5, 3.0))
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_double3(0.0, 1.5, 3.0))
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(rv, objc.simd.vector_double3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -5781,6 +5981,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -5790,6 +5991,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -6027,6 +6240,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -6036,6 +6250,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -6276,6 +6498,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -6285,6 +6508,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -6525,6 +6756,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -6534,6 +6766,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -6774,6 +7014,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -6783,6 +7024,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_int4(0, 1, 2, 3))
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_int4(0, 1, 2, 3))
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_int4(0, 1, 2, 3))
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -7007,6 +7256,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -7016,6 +7266,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(35184372088832)
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through instance
+        rv = imp(oc_inst, 35184372088832)
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through meta
+        rv = imp(type(oc), 35184372088832)
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -7240,6 +7498,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -7249,6 +7508,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(rv, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
         stored = oc.storedvalue()
@@ -7473,6 +7740,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -7482,6 +7750,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(rv, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
 
         stored = oc.storedvalue()
@@ -7679,6 +7955,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -7688,6 +7965,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(rv, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(rv, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(rv, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
         stored = oc.storedvalue()
@@ -7905,6 +8194,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -7914,6 +8204,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(rv, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(rv, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
         stored = oc.storedvalue()
@@ -8138,6 +8436,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -8147,6 +8446,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, objc.simd.vector_int4(0, 1, 2, 3))
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, objc.simd.vector_int4(0, 1, 2, 3))
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, objc.simd.vector_int4(0, 1, 2, 3))
 
         stored = oc.storedvalue()
@@ -8387,6 +8694,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -8396,6 +8704,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_double2(0.0, 1.5), "hello")
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_double2(0.0, 1.5), "hello")
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -8451,6 +8767,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2didOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv2d_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -8471,6 +8794,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv2didOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2didOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv2d_q_(self):
         OC_VectorCall.clearRaise()
@@ -8638,6 +8968,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -8647,6 +8978,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_double2(0.0, 1.5), -17592186044416)
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -8702,6 +9041,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2dqOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv2d_q__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -8722,6 +9068,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv2dqOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2dqOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv2f_(self):
         OC_VectorCall.clearRaise()
@@ -8873,6 +9226,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -8882,6 +9236,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -8927,6 +9289,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv2f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -8941,6 +9310,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv2fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv2f_v2I_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -9242,6 +9618,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -9251,6 +9628,26 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_uint2(0, 1),
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_uint2(0, 1),
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_uint2(0, 1),
             -17592186044416,
@@ -9352,6 +9749,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2fv2IqidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv2f_v2I_q_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -9374,6 +9778,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv2fv2IqidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2fv2IqidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv2f_v2f_(self):
         OC_VectorCall.clearRaise()
@@ -9565,6 +9976,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -9575,6 +9987,22 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = caller(
             objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
         )
         self.assertEqual(rv, "hello")
 
@@ -9637,6 +10065,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2fv2fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv2f_v2f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -9657,6 +10092,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv2fv2fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2fv2fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv2i_(self):
         OC_VectorCall.clearRaise()
@@ -9808,6 +10250,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -9817,6 +10260,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_int2(0, 1))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -9862,6 +10313,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv2i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -9876,6 +10334,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv2iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2iOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv2i_i_i_Z_(self):
         OC_VectorCall.clearRaise()
@@ -10075,6 +10540,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -10084,6 +10550,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_int2(0, 1), -42, -42, False)
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_int2(0, 1), -42, -42, False)
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_int2(0, 1), -42, -42, False)
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -10149,6 +10623,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2iiiZOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv2i_i_i_Z__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -10171,6 +10652,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv2iiiZOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2iiiZOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv2i_i_i_Z_Class_(self):
         OC_VectorCall.clearRaise()
@@ -10499,6 +10987,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -10509,6 +10998,28 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = caller(
             objc.simd.vector_int2(0, 1), -42, -42, False, objc.lookUpClass("NSObject")
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_int2(0, 1),
+            -42,
+            -42,
+            False,
+            objc.lookUpClass("NSObject"),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            objc.simd.vector_int2(0, 1),
+            -42,
+            -42,
+            False,
+            objc.lookUpClass("NSObject"),
         )
         self.assertEqual(rv, "hello")
 
@@ -10618,6 +11129,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2iiiZClassOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv2i_i_i_Z_Class__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -10641,6 +11159,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv2iiiZClassOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv2iiiZClassOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_(self):
         OC_VectorCall.clearRaise()
@@ -10792,6 +11317,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -10801,6 +11327,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -10846,6 +11380,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -10860,6 +11401,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_v2I_Z_Z_Z_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -11389,6 +11937,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -11398,6 +11947,32 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            False,
+            False,
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            False,
+            False,
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             False,
@@ -11575,6 +12150,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IZZZqidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f_v2I_Z_Z_Z_q_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -11600,6 +12182,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fv2IZZZqidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IZZZqidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_v2I_Z_Z_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -12057,6 +12646,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -12066,6 +12656,30 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            False,
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            False,
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             False,
@@ -12219,6 +12833,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IZZqidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f_v2I_Z_Z_q_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -12243,6 +12864,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fv2IZZqidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IZZqidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_v2I_Z_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -12616,6 +13244,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -12625,6 +13254,28 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             False,
@@ -12750,6 +13401,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IZqidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f_v2I_Z_q_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -12773,6 +13431,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fv2IZqidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IZqidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_v2I_i_Z_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -13215,6 +13880,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -13224,6 +13890,30 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            -42,
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            -42,
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             -42,
@@ -13372,6 +14062,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IiZqidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f_v2I_i_Z_q_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -13396,6 +14093,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fv2IiZqidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IiZqidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_v2I_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -13703,6 +14407,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -13712,6 +14417,26 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint2(0, 1),
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint2(0, 1),
             -17592186044416,
@@ -13815,6 +14540,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IqidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f_v2I_q_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -13837,6 +14569,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fv2IqidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv2IqidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_v3I_Z_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -14216,6 +14955,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -14225,6 +14965,28 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint3(0, 1, 2),
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint3(0, 1, 2),
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint3(0, 1, 2),
             False,
@@ -14352,6 +15114,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv3IZqidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f_v3I_Z_q_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -14375,6 +15144,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fv3IZqidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv3IZqidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_v3I_q_Z_id_(self):
         OC_VectorCall.clearRaise()
@@ -14754,6 +15530,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -14763,6 +15540,28 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint3(0, 1, 2),
+            -17592186044416,
+            False,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_uint3(0, 1, 2),
+            -17592186044416,
+            False,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_uint3(0, 1, 2),
             -17592186044416,
@@ -14890,6 +15689,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv3IqZidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f_v3I_q_Z_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -14913,6 +15719,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fv3IqZidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fv3IqZidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_Q_Q_q_Z_Z_id_(self):
         OC_VectorCall.clearRaise()
@@ -15442,6 +16255,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -15451,6 +16265,32 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            35184372088832,
+            35184372088832,
+            -17592186044416,
+            False,
+            False,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            35184372088832,
+            35184372088832,
+            -17592186044416,
+            False,
+            False,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             35184372088832,
             35184372088832,
@@ -15628,6 +16468,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fQQqZZidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f_Q_Q_q_Z_Z_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -15653,6 +16500,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fQQqZZidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fQQqZZidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv3f_Z_q_id_(self):
         OC_VectorCall.clearRaise()
@@ -15924,6 +16778,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -15934,6 +16789,26 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = caller(
             objc.simd.vector_float3(0.0, 1.5, 3.0), False, -17592186044416, "hello"
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            False,
+            -17592186044416,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            False,
+            -17592186044416,
+            "hello",
         )
         self.assertEqual(rv, "hello")
 
@@ -16024,6 +16899,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fZqidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv3f_Z_q_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -16046,6 +16928,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv3fZqidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv3fZqidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idv4f_(self):
         OC_VectorCall.clearRaise()
@@ -16197,6 +17086,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -16206,6 +17096,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -16253,6 +17151,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv4fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idv4f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -16269,6 +17174,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idv4fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idv4fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_v2d_v2d_v2i_Z_(self):
         OC_VectorCall.clearRaise()
@@ -16660,6 +17572,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -16669,6 +17582,28 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            objc.simd.vector_double2(0.0, 1.5),
+            objc.simd.vector_double2(0.0, 1.5),
+            objc.simd.vector_int2(0, 1),
+            False,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            objc.simd.vector_double2(0.0, 1.5),
+            objc.simd.vector_double2(0.0, 1.5),
+            objc.simd.vector_int2(0, 1),
+            False,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             objc.simd.vector_double2(0.0, 1.5),
             objc.simd.vector_double2(0.0, 1.5),
@@ -16800,6 +17735,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididv2dv2dv2iZOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_v2d_v2d_v2i_Z__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -16823,6 +17765,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididv2dv2dv2iZOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididv2dv2dv2iZOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_v2f_(self):
         OC_VectorCall.clearRaise()
@@ -16990,6 +17939,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -16999,6 +17949,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller("hello", objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, "hello", objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), "hello", objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -17054,6 +18012,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididv2fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_v2f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -17074,6 +18039,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididv2fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididv2fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_v3f_(self):
         OC_VectorCall.clearRaise()
@@ -17241,6 +18213,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -17250,6 +18223,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller("hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, "hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), "hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -17305,6 +18286,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididv3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_v3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -17325,6 +18313,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididv3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididv3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_v4f_(self):
         OC_VectorCall.clearRaise()
@@ -17492,6 +18487,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -17501,6 +18497,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller("hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, "hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), "hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -17556,6 +18560,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididv4fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_v4f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -17576,6 +18587,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididv4fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididv4fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_id_v2i_(self):
         OC_VectorCall.clearRaise()
@@ -17759,6 +18777,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -17768,6 +18787,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller("hello", "hello", objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, "hello", "hello", objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), "hello", "hello", objc.simd.vector_int2(0, 1))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -17828,6 +18855,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idididv2iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_id_v2i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -17849,6 +18883,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idididv2iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idididv2iOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_id_v2i_f_(self):
         OC_VectorCall.clearRaise()
@@ -18066,6 +19107,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -18075,6 +19117,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller("hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, "hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), "hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -18144,6 +19194,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idididv2ifOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_id_v2i_f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -18166,6 +19223,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idididv2ifOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idididv2ifOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_Q_v2f_(self):
         OC_VectorCall.clearRaise()
@@ -18354,6 +19418,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -18363,6 +19428,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller("hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, "hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), "hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -18423,6 +19496,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididQv2fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_Q_v2f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -18444,6 +19524,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididQv2fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididQv2fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_Q_v3f_(self):
         OC_VectorCall.clearRaise()
@@ -18650,6 +19737,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -18659,6 +19747,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller("hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst, "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0)
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc), "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0)
+        )
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -18725,6 +19825,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididQv3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_Q_v3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -18746,6 +19853,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididQv3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididQv3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_Q_v4f_(self):
         OC_VectorCall.clearRaise()
@@ -18969,6 +20083,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -18979,6 +20094,24 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = caller(
             "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            35184372088832,
+            objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            "hello",
+            35184372088832,
+            objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
         )
         self.assertEqual(rv, "hello")
 
@@ -19051,6 +20184,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididQv4fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_Q_v4f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -19072,6 +20212,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididQv4fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididQv4fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_Q_simdfloat4x4_(self):
         OC_VectorCall.clearRaise()
@@ -19485,6 +20632,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -19494,6 +20642,38 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            35184372088832,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            35184372088832,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             35184372088832,
             simd.simd_float4x4(
@@ -19639,6 +20819,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididQsimdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_Q_simdfloat4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -19667,6 +20854,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididQsimdfloat4x4On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididQsimdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_Z_id_v2i_q_Q_q_Z_(self):
         OC_VectorCall.clearRaise()
@@ -20274,6 +21468,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -20283,6 +21478,34 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            False,
+            "hello",
+            objc.simd.vector_int2(0, 1),
+            -17592186044416,
+            35184372088832,
+            -17592186044416,
+            False,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            False,
+            "hello",
+            objc.simd.vector_int2(0, 1),
+            -17592186044416,
+            35184372088832,
+            -17592186044416,
+            False,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             False,
             "hello",
@@ -20486,6 +21709,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididZidv2iqQqZOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_Z_id_v2i_q_Q_q_Z__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -20512,6 +21742,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididZidv2iqQqZOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididZidv2iqQqZOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_q_v2i_f_f_f_f_(self):
         OC_VectorCall.clearRaise()
@@ -21041,6 +22278,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -21050,6 +22288,32 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            -17592186044416,
+            objc.simd.vector_int2(0, 1),
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            -17592186044416,
+            objc.simd.vector_int2(0, 1),
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             -17592186044416,
             objc.simd.vector_int2(0, 1),
@@ -21227,6 +22491,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididqv2iffffOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_q_v2i_f_f_f_f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -21252,6 +22523,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididqv2iffffOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididqv2iffffOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_q_v2i_f_f_f_f_f_(self):
         OC_VectorCall.clearRaise()
@@ -21859,6 +23137,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -21868,6 +23147,34 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            -17592186044416,
+            objc.simd.vector_int2(0, 1),
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            -17592186044416,
+            objc.simd.vector_int2(0, 1),
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             -17592186044416,
             objc.simd.vector_int2(0, 1),
@@ -22071,6 +23378,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididqv2ifffffOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_q_v2i_f_f_f_f_f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -22097,6 +23411,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididqv2ifffffOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididqv2ifffffOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.12")
     def test_idid_GKBox_(self):
@@ -22375,6 +23696,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -22384,6 +23706,28 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             (
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
@@ -22481,6 +23825,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididGKBoxOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.12")
     def test_imp_idid_GKBox__cls(self):
         value = OC_VectorCallClass
@@ -22505,6 +23856,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididGKBoxOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididGKBoxOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.12")
     def test_idid_GKQuad_(self):
@@ -22765,6 +24123,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -22774,6 +24133,22 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
         )
@@ -22865,6 +24240,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididGKQuadOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.12")
     def test_imp_idid_GKQuad__cls(self):
         value = OC_VectorCallClass
@@ -22889,6 +24271,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididGKQuadOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididGKQuadOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.11")
     def test_idid_MDLAxisAlignedBoundingBox_f_(self):
@@ -23268,6 +24657,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -23277,6 +24667,30 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
@@ -23397,6 +24811,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididMDLAxisAlignedBoundingBoxfOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.11")
     def test_imp_idid_MDLAxisAlignedBoundingBox_f__cls(self):
         value = OC_VectorCallClass
@@ -23422,6 +24843,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididMDLAxisAlignedBoundingBoxfOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididMDLAxisAlignedBoundingBoxfOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_simdfloat2x2_(self):
         OC_VectorCall.clearRaise()
@@ -23720,6 +25148,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -23729,6 +25158,26 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            simd.simd_float2x2(
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            simd.simd_float2x2(
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
@@ -23833,6 +25282,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdfloat2x2On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_simdfloat2x2__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -23858,6 +25314,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididsimdfloat2x2On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdfloat2x2On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_simdfloat3x3_(self):
         OC_VectorCall.clearRaise()
@@ -24191,6 +25654,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -24200,6 +25664,34 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            simd.simd_float3x3(
+                (
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                )
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            simd.simd_float3x3(
+                (
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                )
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             simd.simd_float3x3(
                 (
@@ -24317,6 +25809,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdfloat3x3On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_simdfloat3x3__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -24343,6 +25842,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididsimdfloat3x3On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdfloat3x3On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idid_simdfloat4x4_(self):
         OC_VectorCall.clearRaise()
@@ -24693,6 +26199,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -24702,6 +26209,36 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             simd.simd_float4x4(
                 (
@@ -24826,6 +26363,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idid_simdfloat4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -24853,6 +26397,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididsimdfloat4x4On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_idid_simdquatf_(self):
@@ -25071,6 +26622,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -25081,6 +26633,22 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = caller(
             "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            "hello",
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
         )
         self.assertEqual(rv, "hello")
 
@@ -25153,6 +26721,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdquatfOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_idid_simdquatf__cls(self):
         value = OC_VectorCallClass
@@ -25174,6 +26749,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididsimdquatfOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdquatfOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_idid_simdquatf_id_(self):
@@ -25450,6 +27032,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -25459,6 +27042,24 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
             "hello",
@@ -25550,6 +27151,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdquatfidOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_idid_simdquatf_id__cls(self):
         value = OC_VectorCallClass
@@ -25572,6 +27180,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.ididsimdquatfidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.ididsimdquatfidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idCGColor_CGColor_id_v2i_(self):
         OC_VectorCall.clearRaise()
@@ -25793,6 +27408,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -25802,6 +27418,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller("color!", "color!", "hello", objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(oc_inst, "color!", "color!", "hello", objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(type(oc), "color!", "color!", "hello", objc.simd.vector_int2(0, 1))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -25867,6 +27491,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idCGColorCGColoridv2iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idCGColor_CGColor_id_v2i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -25889,6 +27520,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idCGColorCGColoridv2iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idCGColorCGColoridv2iOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idf_v2f_v2f_(self):
         OC_VectorCall.clearRaise()
@@ -26133,6 +27771,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -26142,6 +27781,24 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            2500000000.0,
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            2500000000.0,
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             2500000000.0,
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_float2(0.0, 1.5),
@@ -26224,6 +27881,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfv2fv2fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idf_v2f_v2f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -26245,6 +27909,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idfv2fv2fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfv2fv2fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idf_v2f_v2f_Class_(self):
         OC_VectorCall.clearRaise()
@@ -26576,6 +28247,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -26585,6 +28257,26 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            2500000000.0,
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.lookUpClass("NSObject"),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            2500000000.0,
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.lookUpClass("NSObject"),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             2500000000.0,
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_float2(0.0, 1.5),
@@ -26696,6 +28388,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfv2fv2fClassOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idf_v2f_v2f_Class__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -26718,6 +28417,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idfv2fv2fClassOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfv2fv2fClassOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idf_v2f_Q_Q_Q_q_Z_id_(self):
         OC_VectorCall.clearRaise()
@@ -27325,6 +29031,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -27334,6 +29041,34 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            2500000000.0,
+            objc.simd.vector_float2(0.0, 1.5),
+            35184372088832,
+            35184372088832,
+            35184372088832,
+            -17592186044416,
+            False,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            2500000000.0,
+            objc.simd.vector_float2(0.0, 1.5),
+            35184372088832,
+            35184372088832,
+            35184372088832,
+            -17592186044416,
+            False,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             2500000000.0,
             objc.simd.vector_float2(0.0, 1.5),
             35184372088832,
@@ -27537,6 +29272,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfv2fQQQqZidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idf_v2f_Q_Q_Q_q_Z_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -27563,6 +29305,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idfv2fQQQqZidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfv2fQQQqZidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idf_v2f_Q_Q_q_Z_id_(self):
         OC_VectorCall.clearRaise()
@@ -28092,6 +29841,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -28101,6 +29851,32 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            2500000000.0,
+            objc.simd.vector_float2(0.0, 1.5),
+            35184372088832,
+            35184372088832,
+            -17592186044416,
+            False,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            2500000000.0,
+            objc.simd.vector_float2(0.0, 1.5),
+            35184372088832,
+            35184372088832,
+            -17592186044416,
+            False,
+            "hello",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             2500000000.0,
             objc.simd.vector_float2(0.0, 1.5),
             35184372088832,
@@ -28278,6 +30054,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfv2fQQqZidOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idf_v2f_Q_Q_q_Z_id__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -28303,6 +30086,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idfv2fQQqZidOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfv2fQQqZidOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idf_id_v2i_i_q_Z_(self):
         OC_VectorCall.clearRaise()
@@ -28691,6 +30481,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -28700,6 +30491,30 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            2500000000.0,
+            "hello",
+            objc.simd.vector_int2(0, 1),
+            -42,
+            -17592186044416,
+            False,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            2500000000.0,
+            "hello",
+            objc.simd.vector_int2(0, 1),
+            -42,
+            -17592186044416,
+            False,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             2500000000.0,
             "hello",
             objc.simd.vector_int2(0, 1),
@@ -28830,6 +30645,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfidv2iiqZOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idf_id_v2i_i_q_Z__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -28854,6 +30676,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idfidv2iiqZOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfidv2iiqZOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idf_id_v2i_i_q_CGColor_CGColor_(self):
         OC_VectorCall.clearRaise()
@@ -29385,6 +31214,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -29394,6 +31224,32 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            2500000000.0,
+            "hello",
+            objc.simd.vector_int2(0, 1),
+            -42,
+            -17592186044416,
+            "color!",
+            "color!",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            2500000000.0,
+            "hello",
+            objc.simd.vector_int2(0, 1),
+            -42,
+            -17592186044416,
+            "color!",
+            "color!",
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             2500000000.0,
             "hello",
             objc.simd.vector_int2(0, 1),
@@ -29565,6 +31421,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfidv2iiqCGColorCGColorOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idf_id_v2i_i_q_CGColor_CGColor__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -29590,6 +31453,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idfidv2iiqCGColorCGColorOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfidv2iiqCGColorCGColorOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idf_id_v2i_q_(self):
         OC_VectorCall.clearRaise()
@@ -29828,6 +31698,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -29837,6 +31708,22 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst, 2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            2500000000.0,
+            "hello",
+            objc.simd.vector_int2(0, 1),
+            -17592186044416,
+        )
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -29913,6 +31800,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfidv2iqOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idf_id_v2i_q__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -29935,6 +31829,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idfidv2iqOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idfidv2iqOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idf_f_id_v2i_(self):
         OC_VectorCall.clearRaise()
@@ -30173,6 +32074,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -30182,6 +32084,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst, 2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1)
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc), 2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1)
+        )
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -30258,6 +32172,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idffidv2iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idf_f_id_v2i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -30280,6 +32201,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idffidv2iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idffidv2iOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.12")
     def test_idGKBox_(self):
@@ -30513,6 +32441,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -30526,6 +32455,26 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
             )
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
         )
         self.assertEqual(rv, "hello")
 
@@ -30604,6 +32553,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idGKBoxOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.12")
     def test_imp_idGKBox__cls(self):
         value = OC_VectorCallClass
@@ -30627,6 +32583,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idGKBoxOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idGKBoxOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.12")
     def test_idGKBox_f_(self):
@@ -30920,6 +32883,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -30929,6 +32893,28 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             (
                 objc.simd.vector_float3(1.0, 2.0, 3.0),
                 objc.simd.vector_float3(4.0, 5.0, 6.0),
@@ -31031,6 +33017,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idGKBoxfOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.12")
     def test_imp_idGKBox_f__cls(self):
         value = OC_VectorCallClass
@@ -31055,6 +33048,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idGKBoxfOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idGKBoxfOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.12")
     def test_idGKQuad_(self):
@@ -31270,6 +33270,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -31280,6 +33281,20 @@ class TestVectorCall(TestCase):
         # Valid call
         rv = caller(
             (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0))
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
         )
         self.assertEqual(rv, "hello")
 
@@ -31355,6 +33370,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idGKQuadOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.12")
     def test_imp_idGKQuad__cls(self):
         value = OC_VectorCallClass
@@ -31378,6 +33400,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idGKQuadOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idGKQuadOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.12")
     def test_idGKQuad_f_(self):
@@ -31653,6 +33682,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -31662,6 +33692,22 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
+            2500000000.0,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
             2500000000.0,
         )
@@ -31758,6 +33804,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idGKQuadfOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.12")
     def test_imp_idGKQuad_f__cls(self):
         value = OC_VectorCallClass
@@ -31782,6 +33835,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idGKQuadfOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idGKQuadfOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.11")
     def test_idMDLVoxelIndexExtent_(self):
@@ -32027,6 +34087,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -32040,6 +34101,26 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_int4(100, 101, 102, 103),
                 objc.simd.vector_int4(-20, -21, -22, -23),
             )
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            (
+                objc.simd.vector_int4(100, 101, 102, 103),
+                objc.simd.vector_int4(-20, -21, -22, -23),
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            (
+                objc.simd.vector_int4(100, 101, 102, 103),
+                objc.simd.vector_int4(-20, -21, -22, -23),
+            ),
         )
         self.assertEqual(rv, "hello")
 
@@ -32118,6 +34199,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idMDLVoxelIndexExtentOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.11")
     def test_imp_idMDLVoxelIndexExtent__cls(self):
         value = OC_VectorCallClass
@@ -32141,6 +34229,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idMDLVoxelIndexExtentOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idMDLVoxelIndexExtentOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idsimdfloat4x4_(self):
         OC_VectorCall.clearRaise()
@@ -32434,6 +34529,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -32451,6 +34547,34 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                 )
             )
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
         )
         self.assertEqual(rv, "hello")
 
@@ -32548,6 +34672,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idsimdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idsimdfloat4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -32574,6 +34705,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idsimdfloat4x4On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idsimdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_idsimdfloat4x4_Z_(self):
         OC_VectorCall.clearRaise()
@@ -32951,6 +35089,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -32960,6 +35099,36 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            False,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            False,
+        )
+        self.assertEqual(rv, "hello")
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -33093,6 +35262,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idsimdfloat4x4ZOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_idsimdfloat4x4_Z__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -33120,6 +35296,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.idsimdfloat4x4ZOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.idsimdfloat4x4ZOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_Zv2i_id_id_id_id_(self):
         OC_VectorCall.clearRaise()
@@ -33420,6 +35603,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -33429,6 +35613,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
+        self.assertEqual(rv, False)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst, objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello"
+        )
+        self.assertEqual(rv, False)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc), objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello"
+        )
         self.assertEqual(rv, False)
 
         stored = oc.storedvalue()
@@ -33984,6 +36180,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -33993,6 +36190,30 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_int2(0, 1),
+            -17592186044416,
+            2500000000.0,
+            "hello",
+            "hello",
+            "hello",
+        )
+        self.assertEqual(rv, False)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_int2(0, 1),
+            -17592186044416,
+            2500000000.0,
+            "hello",
+            "hello",
+            "hello",
+        )
+        self.assertEqual(rv, False)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_int2(0, 1),
             -17592186044416,
             2500000000.0,
@@ -34391,6 +36612,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -34400,6 +36622,16 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
+        self.assertEqual(rv, False)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
+        self.assertEqual(rv, False)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc), objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False
+        )
         self.assertEqual(rv, False)
 
         stored = oc.storedvalue()
@@ -34646,6 +36878,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -34655,6 +36888,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, "color!")
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertEqual(rv, "color!")
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, "color!")
 
         stored = oc.storedvalue()
@@ -34895,6 +37136,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -34904,6 +37146,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
+        self.assertEqual(rv, "color!")
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
+        self.assertEqual(rv, "color!")
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
         self.assertEqual(rv, "color!")
 
         stored = oc.storedvalue()
@@ -35130,6 +37380,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -35139,6 +37390,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(rv, 2500000000.0)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float2(0.0, 1.5))
+        self.assertEqual(rv, 2500000000.0)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, 2500000000.0)
 
         stored = oc.storedvalue()
@@ -35363,6 +37622,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -35372,6 +37632,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, 2500000000.0)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_int2(0, 1))
+        self.assertEqual(rv, 2500000000.0)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_int2(0, 1))
         self.assertEqual(rv, 2500000000.0)
 
         stored = oc.storedvalue()
@@ -35596,6 +37864,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -35605,6 +37874,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_double2(0.0, 1.5))
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_double2(0.0, 1.5))
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_double2(0.0, 1.5))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -35650,6 +37927,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv2dOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv2d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -35664,6 +37948,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv2dOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv2dOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv2d_d_(self):
         OC_VectorCall.clearRaise()
@@ -35831,6 +38122,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -35840,6 +38132,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -35895,6 +38195,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv2ddOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv2d_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -35915,6 +38222,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv2ddOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv2ddOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv2f_(self):
         OC_VectorCall.clearRaise()
@@ -36066,6 +38380,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -36075,6 +38390,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float2(0.0, 1.5))
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float2(0.0, 1.5))
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float2(0.0, 1.5))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -36120,6 +38443,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv2fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv2f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -36134,6 +38464,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv2fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv2fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv2f_d_(self):
         OC_VectorCall.clearRaise()
@@ -36301,6 +38638,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -36310,6 +38648,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -36365,6 +38711,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv2fdOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv2f_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -36385,6 +38738,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv2fdOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv2fdOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv3d_(self):
         OC_VectorCall.clearRaise()
@@ -36536,6 +38896,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -36545,6 +38906,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_double3(0.0, 1.5, 3.0))
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_double3(0.0, 1.5, 3.0))
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_double3(0.0, 1.5, 3.0))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -36590,6 +38959,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3dOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv3d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -36604,6 +38980,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv3dOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3dOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv3d_d_(self):
         OC_VectorCall.clearRaise()
@@ -36775,6 +39158,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -36784,6 +39168,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -36839,6 +39231,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3ddOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv3d_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -36859,6 +39258,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv3ddOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3ddOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv3f_(self):
         OC_VectorCall.clearRaise()
@@ -37010,6 +39416,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -37019,6 +39426,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float3(0.0, 1.5, 3.0))
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -37064,6 +39479,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -37078,6 +39500,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv3f_v3f_(self):
         OC_VectorCall.clearRaise()
@@ -37283,6 +39712,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -37292,6 +39722,22 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
         )
@@ -37361,6 +39807,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3fv3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv3f_v3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -37381,6 +39834,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv3fv3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3fv3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv3f_v3f_v3f_(self):
         OC_VectorCall.clearRaise()
@@ -37658,6 +40118,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -37667,6 +40128,24 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
@@ -37760,6 +40239,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3fv3fv3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv3f_v3f_v3f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -37781,6 +40267,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv3fv3fv3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3fv3fv3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv3f_d_(self):
         OC_VectorCall.clearRaise()
@@ -37952,6 +40445,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -37961,6 +40455,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -38016,6 +40518,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3fdOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv3f_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -38036,6 +40545,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv3fdOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv3fdOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv4d_d_(self):
         OC_VectorCall.clearRaise()
@@ -38213,6 +40729,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -38222,6 +40739,16 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc), objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0
+        )
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -38279,6 +40806,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv4ddOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv4d_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -38299,6 +40833,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv4ddOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv4ddOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv4f_(self):
         OC_VectorCall.clearRaise()
@@ -38450,6 +40991,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -38459,6 +41001,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -38506,6 +41056,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv4fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv4f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -38522,6 +41079,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv4fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv4fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv4f_d_(self):
         OC_VectorCall.clearRaise()
@@ -38699,6 +41263,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -38708,6 +41273,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -38765,6 +41338,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv4fdOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv4f_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -38785,6 +41365,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv4fdOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv4fdOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vv4i_(self):
         OC_VectorCall.clearRaise()
@@ -38936,6 +41523,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -38945,6 +41533,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_int4(0, 1, 2, 3))
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_int4(0, 1, 2, 3))
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_int4(0, 1, 2, 3))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -38990,6 +41586,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv4iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vv4i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -39004,6 +41607,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vv4iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vv4iOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vid_v2f_v2f_(self):
         OC_VectorCall.clearRaise()
@@ -39248,6 +41858,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -39257,6 +41868,24 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_float2(0.0, 1.5),
@@ -39339,6 +41968,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vidv2fv2fOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vid_v2f_v2f__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -39360,6 +41996,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vidv2fv2fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vidv2fv2fOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vid_v2f_v2f_q_(self):
         OC_VectorCall.clearRaise()
@@ -39661,6 +42304,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -39670,6 +42314,26 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            "hello",
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
+            -17592186044416,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            "hello",
+            objc.simd.vector_float2(0.0, 1.5),
+            objc.simd.vector_float2(0.0, 1.5),
+            -17592186044416,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             "hello",
             objc.simd.vector_float2(0.0, 1.5),
             objc.simd.vector_float2(0.0, 1.5),
@@ -39771,6 +42435,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vidv2fv2fqOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vid_v2f_v2f_q__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -39793,6 +42464,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vidv2fv2fqOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vidv2fv2fqOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vf_v2i_(self):
         OC_VectorCall.clearRaise()
@@ -39960,6 +42638,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -39969,6 +42648,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(2500000000.0, objc.simd.vector_int2(0, 1))
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, 2500000000.0, objc.simd.vector_int2(0, 1))
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), 2500000000.0, objc.simd.vector_int2(0, 1))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -40024,6 +42711,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vfv2iOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vf_v2i__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -40044,6 +42738,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vfv2iOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vfv2iOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.11")
     def test_vMDLAxisAlignedBoundingBox_(self):
@@ -40293,6 +42994,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -40306,6 +43008,26 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
             )
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
         )
         self.assertIs(rv, None)
 
@@ -40384,6 +43106,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.11")
     def test_imp_vMDLAxisAlignedBoundingBox__cls(self):
         value = OC_VectorCallClass
@@ -40407,6 +43136,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.11")
     def test_vMDLAxisAlignedBoundingBox_Z_(self):
@@ -40716,6 +43452,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -40725,6 +43462,28 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+            False,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+            False,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             (
                 objc.simd.vector_float3(-8.0, -9.0, -10.0),
                 objc.simd.vector_float3(-11.0, -12.0, -13.0),
@@ -40827,6 +43586,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxZOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.11")
     def test_imp_vMDLAxisAlignedBoundingBox_Z__cls(self):
         value = OC_VectorCallClass
@@ -40851,6 +43617,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxZOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vMDLAxisAlignedBoundingBoxZOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vsimddouble4x4_(self):
         OC_VectorCall.clearRaise()
@@ -41144,6 +43917,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -41161,6 +43935,34 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                 )
             )
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            simd.simd_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
         )
         self.assertIs(rv, None)
 
@@ -41258,6 +44060,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimddouble4x4On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vsimddouble4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41284,6 +44093,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimddouble4x4On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimddouble4x4On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vsimddouble4x4_d_(self):
         OC_VectorCall.clearRaise()
@@ -41661,6 +44477,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -41670,6 +44487,36 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            simd.simd_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             simd.simd_double4x4(
                 (
                     objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
@@ -41803,6 +44650,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimddouble4x4dOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vsimddouble4x4_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -41830,6 +44684,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimddouble4x4dOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimddouble4x4dOn_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vsimdfloat2x2_(self):
         OC_VectorCall.clearRaise()
@@ -42077,6 +44938,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -42089,6 +44951,24 @@ class TestVectorCall(TestCase):
             simd.simd_float2x2(
                 (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
             )
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_float2x2(
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+            ),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            simd.simd_float2x2(
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+            ),
         )
         self.assertIs(rv, None)
 
@@ -42173,6 +45053,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdfloat2x2On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vsimdfloat2x2__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -42197,6 +45084,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimdfloat2x2On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdfloat2x2On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vsimdfloat3x3_(self):
         OC_VectorCall.clearRaise()
@@ -42476,6 +45370,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -42492,6 +45387,32 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float3(0.0, 1.5, 3.0),
                 )
             )
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_float3x3(
+                (
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                )
+            ),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            simd.simd_float3x3(
+                (
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                )
+            ),
         )
         self.assertIs(rv, None)
 
@@ -42584,6 +45505,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdfloat3x3On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vsimdfloat3x3__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -42609,6 +45537,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimdfloat3x3On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdfloat3x3On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vsimdfloat4x4_(self):
         OC_VectorCall.clearRaise()
@@ -42902,6 +45837,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -42919,6 +45855,34 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                 )
             )
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
         )
         self.assertIs(rv, None)
 
@@ -43016,6 +45980,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vsimdfloat4x4__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -43042,6 +46013,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimdfloat4x4On_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdfloat4x4On_(value)
+        finally:
+            del value.returnInvalid
 
     def test_vsimdfloat4x4_d_(self):
         OC_VectorCall.clearRaise()
@@ -43419,6 +46397,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -43428,6 +46407,36 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -43561,6 +46570,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdfloat4x4dOn_(value)
+        finally:
+            del value.returnInvalid
+
     def test_imp_vsimdfloat4x4_d__cls(self):
         value = OC_VectorCallClass
         value.argvalues = 1
@@ -43588,6 +46604,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimdfloat4x4dOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdfloat4x4dOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_vsimdquatd_d_(self):
@@ -43803,6 +46826,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -43812,6 +46836,22 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
             -557000000000.0,
         )
@@ -43884,6 +46924,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdquatddOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_vsimdquatd_d__cls(self):
         value = OC_VectorCallClass
@@ -43905,6 +46952,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimdquatddOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdquatddOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_vsimdquatf_(self):
@@ -44075,6 +47129,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -44084,6 +47139,14 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(oc_inst, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(type(oc), simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -44137,6 +47200,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdquatfOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_vsimdquatf__cls(self):
         value = OC_VectorCallClass
@@ -44155,6 +47225,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimdquatfOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdquatfOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_vsimdquatf_v3f_(self):
@@ -44370,6 +47447,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -44379,6 +47457,22 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            objc.simd.vector_float3(0.0, 1.5, 3.0),
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
             objc.simd.vector_float3(0.0, 1.5, 3.0),
         )
@@ -44451,6 +47545,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdquatfv3fOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_vsimdquatf_v3f__cls(self):
         value = OC_VectorCallClass
@@ -44472,6 +47573,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimdquatfv3fOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdquatfv3fOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.13")
     def test_vsimdquatf_d_(self):
@@ -44687,6 +47795,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -44696,6 +47805,22 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+            -557000000000.0,
+        )
+        self.assertIs(rv, None)
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
             -557000000000.0,
         )
@@ -44768,6 +47893,13 @@ class TestVectorCall(TestCase):
         finally:
             del value.shouldRaise
 
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdquatfdOn_(value)
+        finally:
+            del value.returnInvalid
+
     @min_os_level("10.13")
     def test_imp_vsimdquatf_d__cls(self):
         value = OC_VectorCallClass
@@ -44789,6 +47921,13 @@ class TestVectorCall(TestCase):
                 OC_VectorCallInvoke.vsimdquatfdOn_(value)
         finally:
             del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.vsimdquatfdOn_(value)
+        finally:
+            del value.returnInvalid
 
     @min_os_level("10.12")
     def test_GKBox(self):
@@ -44935,6 +48074,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -44944,6 +48084,30 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(1.0, 2.0, 3.0),
+                objc.simd.vector_float3(4.0, 5.0, 6.0),
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             (
@@ -45167,6 +48331,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -45176,6 +48341,24 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             (objc.simd.vector_float2(9.0, 10.0), objc.simd.vector_float2(11.0, 12.0)),
@@ -45435,6 +48618,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -45444,6 +48628,32 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(35184372088832)
+        self.assertEqual(
+            rv,
+            (
+                (
+                    objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                    objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                    objc.simd.vector_float3(-17.5, 11.5, 122.5),
+                ),
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(oc_inst, 35184372088832)
+        self.assertEqual(
+            rv,
+            (
+                (
+                    objc.simd.vector_float3(-18.5, -19.5, -110.5),
+                    objc.simd.vector_float3(-111.5, -112.5, -113.5),
+                    objc.simd.vector_float3(-17.5, 11.5, 122.5),
+                ),
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(type(oc), 35184372088832)
         self.assertEqual(
             rv,
             (
@@ -45704,6 +48914,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -45713,6 +48924,30 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             (
@@ -45988,6 +49223,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -45997,6 +49233,26 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(objc.simd.vector_int4(0, 1, 2, 3))
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(oc_inst, objc.simd.vector_int4(0, 1, 2, 3))
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(type(oc), objc.simd.vector_int4(0, 1, 2, 3))
         self.assertEqual(
             rv,
             (
@@ -46275,6 +49531,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -46284,6 +49541,26 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                objc.simd.vector_float3(-11.0, -12.0, -13.0),
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(
             rv,
             (
@@ -46531,6 +49808,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -46540,6 +49818,30 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_int4(100, 101, 102, 103),
+                objc.simd.vector_int4(-20, -21, -22, -23),
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_int4(100, 101, 102, 103),
+                objc.simd.vector_int4(-20, -21, -22, -23),
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             (
@@ -46788,6 +50090,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -46797,6 +50100,38 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            simd.simd_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            simd.simd_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             simd.simd_double4x4(
@@ -47082,6 +50417,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -47091,6 +50427,34 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_double4x4(
+                (
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(
             rv,
             simd.simd_double4x4(
@@ -47337,6 +50701,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -47346,6 +50711,28 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            simd.simd_float2x2(
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            simd.simd_float2x2(
+                (objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             simd.simd_float2x2(
@@ -47582,6 +50969,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -47591,6 +50979,36 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            simd.simd_float3x3(
+                (
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                )
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            simd.simd_float3x3(
+                (
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    objc.simd.vector_float3(0.0, 1.5, 3.0),
+                )
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             simd.simd_float3x3(
@@ -47842,6 +51260,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -47851,6 +51270,38 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             simd.simd_float4x4(
@@ -48152,6 +51603,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -48161,6 +51613,34 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller("hello", -557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(oc_inst, "hello", -557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(type(oc), "hello", -557000000000.0)
         self.assertEqual(
             rv,
             simd.simd_float4x4(
@@ -48469,6 +51949,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -48478,6 +51959,34 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(
             rv,
             simd.simd_float4x4(
@@ -48996,6 +52505,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -49005,6 +52515,56 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            "hello",
+        )
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+            "hello",
+        )
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
             simd.simd_float4x4(
                 (
                     objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -49370,6 +52930,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -49379,6 +52940,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(
+            rv, simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(
+            rv, simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(
             rv, simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5))
         )
@@ -49594,6 +53167,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -49603,6 +53177,22 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         )
@@ -49838,6 +53428,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -49847,6 +53438,18 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
+        self.assertEqual(
+            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Valid call through instance
+        rv = imp(oc_inst, -557000000000.0)
+        self.assertEqual(
+            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        )
+
+        # Valid call through meta
+        rv = imp(type(oc), -557000000000.0)
         self.assertEqual(
             rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         )
@@ -50067,6 +53670,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -50076,6 +53680,28 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            objc.simd.vector_uchar16(
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             objc.simd.vector_uchar16(
@@ -50319,6 +53945,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -50328,6 +53955,34 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            (
+                4398046511104,
+                True,
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             (
@@ -50578,6 +54233,7 @@ class TestVectorCall(TestCase):
 
         # Create test object
         oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
         self.assertIsNot(oc, None)
 
         # Set caller to the selector/IMP to call (With bound self)
@@ -50587,6 +54243,30 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float3(1.5, 2.5, 3.5),
+                objc.simd.vector_float3(4.5, 5.5, 6.5),
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+        )
         self.assertEqual(
             rv,
             (

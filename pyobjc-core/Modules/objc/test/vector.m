@@ -182,6 +182,23 @@ CALC_VALUE_VALUE(calcId, andFloat2, id, "@", simd_float2, "<2f>")
 CALC_VALUE_VALUE(calcId, andFloat3, id, "@", simd_float3, "<3f>")
 CALC_VALUE_VALUE(calcId, andFloat4, id, "@", simd_float4, "<4f>")
 
+-(id)initWithVectorFloat2:(simd_float2)value
+{
+    self = [super init];
+    [self setVectorFloat2:value];
+    return self;
+}
+
+-(id)stringWithVectorFloat2:(simd_float2)value
+{
+    return [[NSString stringWithFormat:@"vector<%.1f, %.1f>", value.x, value.y] retain];
+}
+
+-(CFStringRef)cfstringWithVectorFloat2:(simd_float2)value
+{
+    return CFStringCreateWithFormat(NULL, NULL, CFSTR("cfvector<%.1f; %.1f>"), value.x, value.y);
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

@@ -235,21 +235,23 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* 
                 return -1; // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
 
-        } else if (PyType_Check(self)
+        } else if (PyType_Check(self) // LCOV_BR_EXCL_LINE
                    && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
             PyObject* c = PyObjCClass_ClassForMetaClass(self);
-            if (c == NULL) {
+            if (c == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 *self_obj = (Class _Nonnull)nil;
                 PyErr_Format(
                     PyExc_TypeError,
                     "Need Objective-C object or class as self, not an instance of '%s'",
                    Py_TYPE(self)->tp_name);
                 return -1;
+                // LCOV_EXCL_STOP
 
-            } else {
+            } else { // LCOV_BR_EXCL_LINE
                 *self_obj = PyObjCClass_GetClass(c);
-                if (*self_obj == nil && PyErr_Occurred()) {
-                    return -1;
+                if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    return -1; // LCOV_EXCL_LINE
                 }
             }
 
@@ -309,9 +311,11 @@ static PyObject* _Nullable
 adjust_retval(PyObjCMethodSignature* methinfo, id _Nullable retval)
 {
     PyObject* result = id_to_python(retval);
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         assert(PyErr_Occurred());
         return NULL;
+        // LCOV_EXCL_STOP
     }
     if (methinfo->rettype->alreadyRetained) {
         /* pythonify_c_return_value has retained the object, but we already
@@ -720,6 +724,7 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
     print("    Py_BEGIN_ALLOW_THREADS", file=stream)
     print("    @try {", file=stream)
     print("        if (isIMP) {", file=stream)
+    print("            // LCOV_BR_EXCL_START", file=stream)
     print(
         f"            {'rv = ' if rv_type != objc._C_VOID else ''}(({describe_type(rv_type)}(*)(id, SEL{arg_type_names}))(PyObjCIMP_GetIMP(method)))(",  # noqa: B950
         file=stream,
@@ -728,11 +733,13 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
         f"                self_obj, PyObjCIMP_GetSelector(method){arg_names});",
         file=stream,
     )
+    print("            // LCOV_BR_EXCL_STOP", file=stream)
     print("", file=stream)
     print("        } else {", file=stream)
     print("            super.receiver    = self_obj;", file=stream)
     print("            super.super_class = super_class;", file=stream)
     print("", file=stream)
+    print("            // LCOV_BR_EXCL_START", file=stream)
     if use_stret(rv_type):
         print("#ifdef __x86_64__", file=stream)
         print(
@@ -751,13 +758,18 @@ def generate_call(stream: typing.IO[str], signature: bytes) -> None:
         f"                      &super, PyObjCSelector_GetSelector(method){arg_names});",
         file=stream,
     )
+    print("            // LCOV_BR_EXCL_STOP", file=stream)
     print("        }", file=stream)
     print("", file=stream)
     print(
-        "        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE", file=stream
+        "        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE",
+        file=stream,
     )
-    print("            PyObjCErr_FromObjC(localException);", file=stream)
-    print("        } // LCOV_EXCL_LINE", file=stream)
+    print(
+        "            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE",
+        file=stream,
+    )
+    print("        }", file=stream)
     print("        Py_END_ALLOW_THREADS", file=stream)
     print("", file=stream)
     print("        if (PyErr_Occurred()) {", file=stream)
@@ -859,12 +871,19 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
         print("        }", file=stream)
     else:
         print(f"        {describe_type(rv_type)} oc_result;", file=stream)
+
+        if rv_type in (objc._C_BOOL, objc._C_NSBOOL) or rv_type.startswith(objc._C_PTR):
+            lcov_br = " // LCOV_BR_EXCL_LINE"
+            lcov_ln = " // LCOV_EXCL_LINE"
+        else:
+            lcov_br = lcov_ln = ""
+
         print(
-            f'        if (depythonify_c_value("{rv_type.decode()}", result, &oc_result) == -1) {{',
+            f'        if (depythonify_c_value("{rv_type.decode()}", result, &oc_result) == -1) {{{lcov_br}',
             file=stream,
         )
-        print("            Py_DECREF(result);", file=stream)
-        print("            goto error;", file=stream)
+        print(f"            Py_DECREF(result);{lcov_ln}", file=stream)
+        print(f"            goto error;{lcov_ln}", file=stream)
         print("         }", file=stream)
         print("", file=stream)
     print("        Py_DECREF(result);", file=stream)
@@ -883,7 +902,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
         print("        return oc_result;", file=stream)
     print("", file=stream)
     print("    error:", file=stream)
-    print("        if (pyself) {", file=stream)
+    print("        if (pyself) { // LCOV_BR_EXCL_LINE", file=stream)
     print("            PyObjCObject_ReleaseTransient(pyself, cookie);", file=stream)
     print("        }", file=stream)
     print("", file=stream)
@@ -1446,6 +1465,8 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         print("        oc = OC_VectorCall.alloc().init()", file=stream)
     else:
         print("        oc = OC_VectorCall", file=stream)
+        if imp:
+            print("        oc_inst = OC_VectorCall.alloc().init()", file=stream)
     print("        self.assertIsNot(oc, None)", file=stream)
     print("", file=stream)
 
@@ -1472,6 +1493,35 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         print(
             f"        self.assertEqual(rv, {valid_value(sigparts[0])!r})", file=stream
         )
+
+    if imp and not instance:
+        print("", file=stream)
+        print("        # Valid call through instance", file=stream)
+        print(
+            f"        rv = imp(oc_inst, {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+            file=stream,
+        )
+        if sigparts[0] == objc._C_VOID:
+            print("        self.assertIs(rv, None)", file=stream)
+        else:
+            print(
+                f"        self.assertEqual(rv, {valid_value(sigparts[0])!r})",
+                file=stream,
+            )
+
+        print("", file=stream)
+        print("        # Valid call through meta", file=stream)
+        print(
+            f"        rv = imp(type(oc), {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+            file=stream,
+        )
+        if sigparts[0] == objc._C_VOID:
+            print("        self.assertIs(rv, None)", file=stream)
+        else:
+            print(
+                f"        self.assertEqual(rv, {valid_value(sigparts[0])!r})",
+                file=stream,
+            )
 
     print("", file=stream)
 
@@ -1582,11 +1632,12 @@ def generate_imp_testhelper(stream, signature, instance=True):
     print(f"{pfx}        if getattr(self, 'shouldRaise', False):", file=stream)
     print(f"{pfx}            raise RuntimeError('failure!')", file=stream)
 
+    print(
+        f"{pfx}        if getattr(self, 'returnInvalid', False): return NoObjCClass()",
+        file=stream,
+    )
+
     if signature_parts[0] != objc._C_VOID:
-        print(
-            f"{pfx}        if getattr(self, 'returnInvalid', False): return object",
-            file=stream,
-        )
         print(
             f"{pfx}        return {repr(valid_value(signature_parts[0]))}", file=stream
         )
@@ -1645,8 +1696,6 @@ def generate_imp_testcase(stream, signature, instance=True):
     print("            del value.shouldRaise", file=stream)
 
     if signature_parts[0] not in (
-        objc._C_ID,
-        objc._C_VOID,
         objc._C_BOOL,
         objc._C_NSBOOL,
     ) and not signature_parts[0].startswith(objc._C_PTR):

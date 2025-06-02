@@ -68,21 +68,23 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* 
                 return -1; // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
 
-        } else if (PyType_Check(self)
+        } else if (PyType_Check(self) // LCOV_BR_EXCL_LINE
                    && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
             PyObject* c = PyObjCClass_ClassForMetaClass(self);
-            if (c == NULL) {
+            if (c == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 *self_obj = (Class _Nonnull)nil;
                 PyErr_Format(
                     PyExc_TypeError,
                     "Need Objective-C object or class as self, not an instance of '%s'",
                    Py_TYPE(self)->tp_name);
                 return -1;
+                // LCOV_EXCL_STOP
 
-            } else {
+            } else { // LCOV_BR_EXCL_LINE
                 *self_obj = PyObjCClass_GetClass(c);
-                if (*self_obj == nil && PyErr_Occurred()) {
-                    return -1;
+                if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    return -1; // LCOV_EXCL_LINE
                 }
             }
 
@@ -142,9 +144,11 @@ static PyObject* _Nullable
 adjust_retval(PyObjCMethodSignature* methinfo, id _Nullable retval)
 {
     PyObject* result = id_to_python(retval);
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         assert(PyErr_Occurred());
         return NULL;
+        // LCOV_EXCL_STOP
     }
     if (methinfo->rettype->alreadyRetained) {
         /* pythonify_c_return_value has retained the object, but we already
@@ -196,20 +200,24 @@ call_v2d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_double2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_double2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -256,7 +264,7 @@ mkimp_v2d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -296,20 +304,24 @@ call_v2d_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_double2(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_double2(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -362,7 +374,7 @@ mkimp_v2d_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -401,20 +413,24 @@ call_v2f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -461,7 +477,7 @@ mkimp_v2f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -501,20 +517,24 @@ call_v2f_Q(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2(*)(id, SEL, unsigned long long))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2(*)(struct objc_super*, SEL, unsigned long long))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -567,7 +587,7 @@ mkimp_v2f_Q(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -610,20 +630,24 @@ call_v2f_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -676,7 +700,7 @@ mkimp_v2f_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -719,20 +743,24 @@ call_v2f_q(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2(*)(id, SEL, long long))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2(*)(struct objc_super*, SEL, long long))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -785,7 +813,7 @@ mkimp_v2f_q(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -824,20 +852,24 @@ call_v2i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_int2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_int2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -884,7 +916,7 @@ mkimp_v2i(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -924,20 +956,24 @@ call_v3d_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_double3(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_double3(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -990,7 +1026,7 @@ mkimp_v3d_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -1029,20 +1065,24 @@ call_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -1089,7 +1129,7 @@ mkimp_v3f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -1133,20 +1173,24 @@ call_v3f_v2i_v2i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(id, SEL, simd_int2, simd_int2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(struct objc_super*, SEL, simd_int2, simd_int2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -1202,7 +1246,7 @@ mkimp_v3f_v2i_v2i(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -1245,20 +1289,24 @@ call_v3f_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(struct objc_super*, SEL, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -1311,7 +1359,7 @@ mkimp_v3f_v3f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -1358,20 +1406,24 @@ call_v3f_v3f_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(id, SEL, simd_float3, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(struct objc_super*, SEL, simd_float3, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -1427,7 +1479,7 @@ mkimp_v3f_v3f_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -1470,20 +1522,24 @@ call_v3f_v4i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(id, SEL, simd_int4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(struct objc_super*, SEL, simd_int4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -1536,7 +1592,7 @@ mkimp_v3f_v4i(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -1579,20 +1635,24 @@ call_v3f_Q(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(id, SEL, unsigned long long))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(struct objc_super*, SEL, unsigned long long))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -1645,7 +1705,7 @@ mkimp_v3f_Q(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -1688,20 +1748,24 @@ call_v3f_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -1754,7 +1818,7 @@ mkimp_v3f_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -1797,20 +1861,24 @@ call_v4d_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_double4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_double4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -1863,7 +1931,7 @@ mkimp_v4d_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -1902,20 +1970,24 @@ call_v4f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -1962,7 +2034,7 @@ mkimp_v4f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -2002,20 +2074,24 @@ call_v4f_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -2068,7 +2144,7 @@ mkimp_v4f_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -2111,20 +2187,24 @@ call_v4i_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_int4(*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_int4(*)(struct objc_super*, SEL, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -2177,7 +2257,7 @@ mkimp_v4i_v3f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -2224,20 +2304,24 @@ call_id_v2d_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_double2, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_double2, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -2294,7 +2378,7 @@ mkimp_id_v2d_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -2341,20 +2425,24 @@ call_id_v2d_q(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_double2, long long))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_double2, long long))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -2411,7 +2499,7 @@ mkimp_id_v2d_q(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -2454,20 +2542,24 @@ call_id_v2f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -2521,7 +2613,7 @@ mkimp_id_v2f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -2576,20 +2668,24 @@ call_id_v2f_v2I_q_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float2, simd_uint2, long long, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float2, simd_uint2, long long, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -2652,7 +2748,7 @@ mkimp_id_v2f_v2I_q_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -2699,20 +2795,24 @@ call_id_v2f_v2f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float2, simd_float2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float2, simd_float2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -2769,7 +2869,7 @@ mkimp_id_v2f_v2f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -2812,20 +2912,24 @@ call_id_v2i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_int2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_int2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -2879,7 +2983,7 @@ mkimp_id_v2i(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -2934,20 +3038,24 @@ call_id_v2i_i_i_Z(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_int2, int, int, BOOL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_int2, int, int, BOOL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -3010,7 +3118,7 @@ mkimp_id_v2i_i_i_Z(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -3069,20 +3177,24 @@ call_id_v2i_i_i_Z_Class(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_int2, int, int, BOOL, Class))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_int2, int, int, BOOL, Class))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -3148,7 +3260,7 @@ mkimp_id_v2i_i_i_Z_Class(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -3191,20 +3303,24 @@ call_id_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -3258,7 +3374,7 @@ mkimp_id_v3f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -3325,20 +3441,24 @@ call_id_v3f_v2I_Z_Z_Z_q_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3, simd_uint2, BOOL, BOOL, BOOL, long long, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, BOOL, BOOL, BOOL, long long, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -3410,7 +3530,7 @@ mkimp_id_v3f_v2I_Z_Z_Z_q_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -3473,20 +3593,24 @@ call_id_v3f_v2I_Z_Z_q_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3, simd_uint2, BOOL, BOOL, long long, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, BOOL, BOOL, long long, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -3555,7 +3679,7 @@ mkimp_id_v3f_v2I_Z_Z_q_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -3614,20 +3738,24 @@ call_id_v3f_v2I_Z_q_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3, simd_uint2, BOOL, long long, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, BOOL, long long, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -3693,7 +3821,7 @@ mkimp_id_v3f_v2I_Z_q_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -3756,20 +3884,24 @@ call_id_v3f_v2I_i_Z_q_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3, simd_uint2, int, BOOL, long long, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, int, BOOL, long long, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -3838,7 +3970,7 @@ mkimp_id_v3f_v2I_i_Z_q_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -3893,20 +4025,24 @@ call_id_v3f_v2I_q_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3, simd_uint2, long long, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, long long, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -3969,7 +4105,7 @@ mkimp_id_v3f_v2I_q_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -4028,20 +4164,24 @@ call_id_v3f_v3I_Z_q_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3, simd_uint3, BOOL, long long, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint3, BOOL, long long, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -4107,7 +4247,7 @@ mkimp_id_v3f_v3I_Z_q_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -4166,20 +4306,24 @@ call_id_v3f_v3I_q_Z_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3, simd_uint3, long long, BOOL, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint3, long long, BOOL, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -4245,7 +4389,7 @@ mkimp_id_v3f_v3I_q_Z_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -4312,20 +4456,24 @@ call_id_v3f_Q_Q_q_Z_Z_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3, unsigned long long, unsigned long long, long long, BOOL, BOOL, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3, unsigned long long, unsigned long long, long long, BOOL, BOOL, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -4397,7 +4545,7 @@ mkimp_id_v3f_Q_Q_q_Z_Z_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -4452,20 +4600,24 @@ call_id_v3f_Z_q_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float3, BOOL, long long, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float3, BOOL, long long, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -4528,7 +4680,7 @@ mkimp_id_v3f_Z_q_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -4571,20 +4723,24 @@ call_id_v4f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -4638,7 +4794,7 @@ mkimp_id_v4f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -4697,20 +4853,24 @@ call_id_id_v2d_v2d_v2i_Z(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, simd_double2, simd_double2, simd_int2, BOOL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, simd_double2, simd_double2, simd_int2, BOOL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -4776,7 +4936,7 @@ mkimp_id_id_v2d_v2d_v2i_Z(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -4823,20 +4983,24 @@ call_id_id_v2f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, simd_float2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, simd_float2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -4893,7 +5057,7 @@ mkimp_id_id_v2f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -4940,20 +5104,24 @@ call_id_id_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -5010,7 +5178,7 @@ mkimp_id_id_v3f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -5057,20 +5225,24 @@ call_id_id_v4f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, simd_float4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, simd_float4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -5127,7 +5299,7 @@ mkimp_id_id_v4f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -5178,20 +5350,24 @@ call_id_id_id_v2i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, id, simd_int2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, id, simd_int2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -5251,7 +5427,7 @@ mkimp_id_id_id_v2i(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -5306,20 +5482,24 @@ call_id_id_id_v2i_f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, id, simd_int2, float))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, id, simd_int2, float))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -5382,7 +5562,7 @@ mkimp_id_id_id_v2i_f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -5433,20 +5613,24 @@ call_id_id_Q_v2f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, unsigned long long, simd_float2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, unsigned long long, simd_float2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -5506,7 +5690,7 @@ mkimp_id_id_Q_v2f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -5557,20 +5741,24 @@ call_id_id_Q_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, unsigned long long, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, unsigned long long, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -5630,7 +5818,7 @@ mkimp_id_id_Q_v3f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -5681,20 +5869,24 @@ call_id_id_Q_v4f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, unsigned long long, simd_float4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, unsigned long long, simd_float4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -5754,7 +5946,7 @@ mkimp_id_id_Q_v4f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -5805,20 +5997,24 @@ call_id_id_Q_simd_float4x4(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, unsigned long long, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, unsigned long long, simd_float4x4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -5878,7 +6074,7 @@ mkimp_id_id_Q_simd_float4x4(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -5949,20 +6145,24 @@ call_id_id_Z_id_v2i_q_Q_q_Z(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, BOOL, id, simd_int2, long long, unsigned long long, long long, BOOL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, BOOL, id, simd_int2, long long, unsigned long long, long long, BOOL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -6037,7 +6237,7 @@ mkimp_id_id_Z_id_v2i_q_Q_q_Z(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -6104,20 +6304,24 @@ call_id_id_q_v2i_f_f_f_f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, long long, simd_int2, float, float, float, float))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, long long, simd_int2, float, float, float, float))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -6189,7 +6393,7 @@ mkimp_id_id_q_v2i_f_f_f_f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -6260,20 +6464,24 @@ call_id_id_q_v2i_f_f_f_f_f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, long long, simd_int2, float, float, float, float, float))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, long long, simd_int2, float, float, float, float, float))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -6348,7 +6556,7 @@ mkimp_id_id_q_v2i_f_f_f_f_f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -6396,20 +6604,24 @@ call_id_id_GKBox(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, GKBox))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, GKBox))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -6466,7 +6678,7 @@ mkimp_id_id_GKBox(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -6515,20 +6727,24 @@ call_id_id_GKQuad(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, GKQuad))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, GKQuad))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -6585,7 +6801,7 @@ mkimp_id_id_GKQuad(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -6638,20 +6854,24 @@ call_id_id_MDLAxisAlignedBoundingBox_f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, MDLAxisAlignedBoundingBox, float))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, MDLAxisAlignedBoundingBox, float))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -6711,7 +6931,7 @@ mkimp_id_id_MDLAxisAlignedBoundingBox_f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -6759,20 +6979,24 @@ call_id_id_simd_float2x2(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, simd_float2x2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, simd_float2x2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -6829,7 +7053,7 @@ mkimp_id_id_simd_float2x2(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -6876,20 +7100,24 @@ call_id_id_simd_float3x3(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, simd_float3x3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, simd_float3x3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -6946,7 +7174,7 @@ mkimp_id_id_simd_float3x3(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -6993,20 +7221,24 @@ call_id_id_simd_float4x4(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, simd_float4x4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -7063,7 +7295,7 @@ mkimp_id_id_simd_float4x4(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -7111,20 +7343,24 @@ call_id_id_simd_quatf(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, simd_quatf))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, simd_quatf))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -7181,7 +7417,7 @@ mkimp_id_id_simd_quatf(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -7234,20 +7470,24 @@ call_id_id_simd_quatf_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, id, simd_quatf, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, id, simd_quatf, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -7307,7 +7547,7 @@ mkimp_id_id_simd_quatf_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -7363,20 +7603,24 @@ call_id_CGColor_CGColor_id_v2i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, CGColorRef, CGColorRef, id, simd_int2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, CGColorRef, CGColorRef, id, simd_int2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -7439,7 +7683,7 @@ mkimp_id_CGColor_CGColor_id_v2i(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -7490,20 +7734,24 @@ call_id_f_v2f_v2f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, float, simd_float2, simd_float2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, float, simd_float2, simd_float2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -7563,7 +7811,7 @@ mkimp_id_f_v2f_v2f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -7618,20 +7866,24 @@ call_id_f_v2f_v2f_Class(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, float, simd_float2, simd_float2, Class))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, float, simd_float2, simd_float2, Class))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -7694,7 +7946,7 @@ mkimp_id_f_v2f_v2f_Class(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -7765,20 +8017,24 @@ call_id_f_v2f_Q_Q_Q_q_Z_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, float, simd_float2, unsigned long long, unsigned long long, unsigned long long, long long, BOOL, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, float, simd_float2, unsigned long long, unsigned long long, unsigned long long, long long, BOOL, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -7853,7 +8109,7 @@ mkimp_id_f_v2f_Q_Q_Q_q_Z_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -7920,20 +8176,24 @@ call_id_f_v2f_Q_Q_q_Z_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, float, simd_float2, unsigned long long, unsigned long long, long long, BOOL, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, float, simd_float2, unsigned long long, unsigned long long, long long, BOOL, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -8005,7 +8265,7 @@ mkimp_id_f_v2f_Q_Q_q_Z_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -8068,20 +8328,24 @@ call_id_f_id_v2i_i_q_Z(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, float, id, simd_int2, int, long long, BOOL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, float, id, simd_int2, int, long long, BOOL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -8150,7 +8414,7 @@ mkimp_id_f_id_v2i_i_q_Z(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -8217,20 +8481,24 @@ call_id_f_id_v2i_i_q_CGColor_CGColor(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, float, id, simd_int2, int, long long, CGColorRef, CGColorRef))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, float, id, simd_int2, int, long long, CGColorRef, CGColorRef))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -8302,7 +8570,7 @@ mkimp_id_f_id_v2i_i_q_CGColor_CGColor(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -8357,20 +8625,24 @@ call_id_f_id_v2i_q(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, float, id, simd_int2, long long))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, float, id, simd_int2, long long))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -8433,7 +8705,7 @@ mkimp_id_f_id_v2i_q(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -8488,20 +8760,24 @@ call_id_f_f_id_v2i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, float, float, id, simd_int2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, float, float, id, simd_int2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -8564,7 +8840,7 @@ mkimp_id_f_f_id_v2i(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -8608,20 +8884,24 @@ call_id_GKBox(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, GKBox))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, GKBox))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -8675,7 +8955,7 @@ mkimp_id_GKBox(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -8724,20 +9004,24 @@ call_id_GKBox_f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, GKBox, float))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, GKBox, float))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -8794,7 +9078,7 @@ mkimp_id_GKBox_f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -8839,20 +9123,24 @@ call_id_GKQuad(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, GKQuad))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, GKQuad))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -8906,7 +9194,7 @@ mkimp_id_GKQuad(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -8955,20 +9243,24 @@ call_id_GKQuad_f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, GKQuad, float))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, GKQuad, float))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -9025,7 +9317,7 @@ mkimp_id_GKQuad_f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -9070,20 +9362,24 @@ call_id_MDLVoxelIndexExtent(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, MDLVoxelIndexExtent))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, MDLVoxelIndexExtent))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -9137,7 +9433,7 @@ mkimp_id_MDLVoxelIndexExtent(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -9181,20 +9477,24 @@ call_id_simd_float4x4(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float4x4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -9248,7 +9548,7 @@ mkimp_id_simd_float4x4(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -9295,20 +9595,24 @@ call_id_simd_float4x4_Z(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(id, SEL, simd_float4x4, BOOL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((id(*)(struct objc_super*, SEL, simd_float4x4, BOOL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -9365,7 +9669,7 @@ mkimp_id_simd_float4x4_Z(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -9424,20 +9728,24 @@ call_Z_v2i_id_id_id_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((BOOL(*)(id, SEL, simd_int2, id, id, id, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((BOOL(*)(struct objc_super*, SEL, simd_int2, id, id, id, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -9487,9 +9795,9 @@ mkimp_Z_v2i_id_id_id_id(
                                           6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (result == NULL) goto error;
         BOOL oc_result;
-        if (depythonify_c_value("Z", result, &oc_result) == -1) {
-            Py_DECREF(result);
-            goto error;
+        if (depythonify_c_value("Z", result, &oc_result) == -1) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(result); // LCOV_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
          }
 
         Py_DECREF(result);
@@ -9502,7 +9810,7 @@ mkimp_Z_v2i_id_id_id_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -9565,20 +9873,24 @@ call_Z_v2i_q_f_id_id_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((BOOL(*)(id, SEL, simd_int2, long long, float, id, id, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((BOOL(*)(struct objc_super*, SEL, simd_int2, long long, float, id, id, id))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4, arg5);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -9631,9 +9943,9 @@ mkimp_Z_v2i_q_f_id_id_id(
                                           7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (result == NULL) goto error;
         BOOL oc_result;
-        if (depythonify_c_value("Z", result, &oc_result) == -1) {
-            Py_DECREF(result);
-            goto error;
+        if (depythonify_c_value("Z", result, &oc_result) == -1) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(result); // LCOV_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
          }
 
         Py_DECREF(result);
@@ -9646,7 +9958,7 @@ mkimp_Z_v2i_q_f_id_id_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -9705,20 +10017,24 @@ call_Z_v4i_Z_Z_Z_Z(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((BOOL(*)(id, SEL, simd_int4, BOOL, BOOL, BOOL, BOOL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((BOOL(*)(struct objc_super*, SEL, simd_int4, BOOL, BOOL, BOOL, BOOL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3, arg4);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -9768,9 +10084,9 @@ mkimp_Z_v4i_Z_Z_Z_Z(
                                           6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (result == NULL) goto error;
         BOOL oc_result;
-        if (depythonify_c_value("Z", result, &oc_result) == -1) {
-            Py_DECREF(result);
-            goto error;
+        if (depythonify_c_value("Z", result, &oc_result) == -1) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(result); // LCOV_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
          }
 
         Py_DECREF(result);
@@ -9783,7 +10099,7 @@ mkimp_Z_v4i_Z_Z_Z_Z(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -9826,20 +10142,24 @@ call_CGColor_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((CGColorRef(*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((CGColorRef(*)(struct objc_super*, SEL, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -9877,9 +10197,9 @@ mkimp_CGColor_v3f(
                                           2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (result == NULL) goto error;
         CGColorRef oc_result;
-        if (depythonify_c_value("^{CGColor=}", result, &oc_result) == -1) {
-            Py_DECREF(result);
-            goto error;
+        if (depythonify_c_value("^{CGColor=}", result, &oc_result) == -1) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(result); // LCOV_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
          }
 
         Py_DECREF(result);
@@ -9892,7 +10212,7 @@ mkimp_CGColor_v3f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -9939,20 +10259,24 @@ call_CGColor_v3f_CGColorSpace(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((CGColorRef(*)(id, SEL, simd_float3, CGColorSpaceRef))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((CGColorRef(*)(struct objc_super*, SEL, simd_float3, CGColorSpaceRef))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -9993,9 +10317,9 @@ mkimp_CGColor_v3f_CGColorSpace(
                                           3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (result == NULL) goto error;
         CGColorRef oc_result;
-        if (depythonify_c_value("^{CGColor=}", result, &oc_result) == -1) {
-            Py_DECREF(result);
-            goto error;
+        if (depythonify_c_value("^{CGColor=}", result, &oc_result) == -1) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(result); // LCOV_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
          }
 
         Py_DECREF(result);
@@ -10008,7 +10332,7 @@ mkimp_CGColor_v3f_CGColorSpace(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -10051,20 +10375,24 @@ call_f_v2f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((float(*)(id, SEL, simd_float2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((float(*)(struct objc_super*, SEL, simd_float2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -10117,7 +10445,7 @@ mkimp_f_v2f(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -10160,20 +10488,24 @@ call_f_v2i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((float(*)(id, SEL, simd_int2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((float(*)(struct objc_super*, SEL, simd_int2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -10226,7 +10558,7 @@ mkimp_f_v2i(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -10268,20 +10600,24 @@ call_v_v2d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_double2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_double2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -10333,7 +10669,7 @@ mkimp_v_v2d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -10379,20 +10715,24 @@ call_v_v2d_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_double2, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_double2, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -10447,7 +10787,7 @@ mkimp_v_v2d_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -10489,20 +10829,24 @@ call_v_v2f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -10554,7 +10898,7 @@ mkimp_v_v2f(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -10600,20 +10944,24 @@ call_v_v2f_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float2, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float2, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -10668,7 +11016,7 @@ mkimp_v_v2f_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -10710,20 +11058,24 @@ call_v_v3d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_double3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_double3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -10775,7 +11127,7 @@ mkimp_v_v3d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -10821,20 +11173,24 @@ call_v_v3d_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_double3, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_double3, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -10889,7 +11245,7 @@ mkimp_v_v3d_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -10931,20 +11287,24 @@ call_v_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -10996,7 +11356,7 @@ mkimp_v_v3f(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -11042,20 +11402,24 @@ call_v_v3f_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float3, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float3, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -11110,7 +11474,7 @@ mkimp_v_v3f_v3f(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -11160,20 +11524,24 @@ call_v_v3f_v3f_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float3, simd_float3, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float3, simd_float3, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -11231,7 +11599,7 @@ mkimp_v_v3f_v3f_v3f(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -11277,20 +11645,24 @@ call_v_v3f_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float3, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float3, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -11345,7 +11717,7 @@ mkimp_v_v3f_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -11391,20 +11763,24 @@ call_v_v4d_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_double4, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_double4, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -11459,7 +11835,7 @@ mkimp_v_v4d_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -11501,20 +11877,24 @@ call_v_v4f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -11566,7 +11946,7 @@ mkimp_v_v4f(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -11612,20 +11992,24 @@ call_v_v4f_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float4, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float4, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -11680,7 +12064,7 @@ mkimp_v_v4f_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -11722,20 +12106,24 @@ call_v_v4i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_int4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_int4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -11787,7 +12175,7 @@ mkimp_v_v4i(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -11837,20 +12225,24 @@ call_v_id_v2f_v2f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, id, simd_float2, simd_float2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, id, simd_float2, simd_float2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -11908,7 +12300,7 @@ mkimp_v_id_v2f_v2f(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -11962,20 +12354,24 @@ call_v_id_v2f_v2f_q(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, id, simd_float2, simd_float2, long long))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, id, simd_float2, simd_float2, long long))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -12036,7 +12432,7 @@ mkimp_v_id_v2f_v2f_q(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -12082,20 +12478,24 @@ call_v_f_v2i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, float, simd_int2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, float, simd_int2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -12150,7 +12550,7 @@ mkimp_v_f_v2i(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -12193,20 +12593,24 @@ call_v_MDLAxisAlignedBoundingBox(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, MDLAxisAlignedBoundingBox))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, MDLAxisAlignedBoundingBox))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -12258,7 +12662,7 @@ mkimp_v_MDLAxisAlignedBoundingBox(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -12306,20 +12710,24 @@ call_v_MDLAxisAlignedBoundingBox_Z(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, MDLAxisAlignedBoundingBox, BOOL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, MDLAxisAlignedBoundingBox, BOOL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -12374,7 +12782,7 @@ mkimp_v_MDLAxisAlignedBoundingBox_Z(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -12417,20 +12825,24 @@ call_v_simd_double4x4(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_double4x4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_double4x4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -12482,7 +12894,7 @@ mkimp_v_simd_double4x4(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -12528,20 +12940,24 @@ call_v_simd_double4x4_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_double4x4, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_double4x4, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -12596,7 +13012,7 @@ mkimp_v_simd_double4x4_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -12638,20 +13054,24 @@ call_v_simd_float2x2(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float2x2))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float2x2))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -12703,7 +13123,7 @@ mkimp_v_simd_float2x2(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -12745,20 +13165,24 @@ call_v_simd_float3x3(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float3x3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float3x3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -12810,7 +13234,7 @@ mkimp_v_simd_float3x3(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -12852,20 +13276,24 @@ call_v_simd_float4x4(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float4x4))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -12917,7 +13345,7 @@ mkimp_v_simd_float4x4(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -12963,20 +13391,24 @@ call_v_simd_float4x4_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_float4x4, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_float4x4, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -13031,7 +13463,7 @@ mkimp_v_simd_float4x4_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -13078,20 +13510,24 @@ call_v_simd_quatd_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_quatd, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_quatd, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -13146,7 +13582,7 @@ mkimp_v_simd_quatd_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -13190,20 +13626,24 @@ call_v_simd_quatf(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_quatf))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_quatf))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -13255,7 +13695,7 @@ mkimp_v_simd_quatf(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -13303,20 +13743,24 @@ call_v_simd_quatf_v3f(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_quatf, simd_float3))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_quatf, simd_float3))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -13371,7 +13815,7 @@ mkimp_v_simd_quatf_v3f(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -13419,20 +13863,24 @@ call_v_simd_quatf_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             ((void(*)(id, SEL, simd_quatf, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             ((void(*)(struct objc_super*, SEL, simd_quatf, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -13487,7 +13935,7 @@ mkimp_v_simd_quatf_d(
         return;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -13528,24 +13976,28 @@ call_GKBox(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((GKBox(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((GKBox(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
             rv = ((GKBox(*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -13592,7 +14044,7 @@ mkimp_GKBox(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -13630,20 +14082,24 @@ call_GKQuad(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((GKQuad(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((GKQuad(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -13690,7 +14146,7 @@ mkimp_GKQuad(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -13732,24 +14188,28 @@ call_GKTriangle_Q(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((GKTriangle(*)(id, SEL, unsigned long long))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((GKTriangle(*)(struct objc_super*, SEL, unsigned long long))objc_msgSendSuper_stret)(
 #else
             rv = ((GKTriangle(*)(struct objc_super*, SEL, unsigned long long))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -13802,7 +14262,7 @@ mkimp_GKTriangle_Q(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -13843,24 +14303,28 @@ call_MDLAxisAlignedBoundingBox(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((MDLAxisAlignedBoundingBox(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
             rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -13907,7 +14371,7 @@ mkimp_MDLAxisAlignedBoundingBox(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -13949,24 +14413,28 @@ call_MDLAxisAlignedBoundingBox_v4i(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((MDLAxisAlignedBoundingBox(*)(id, SEL, simd_int4))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL, simd_int4))objc_msgSendSuper_stret)(
 #else
             rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL, simd_int4))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14019,7 +14487,7 @@ mkimp_MDLAxisAlignedBoundingBox_v4i(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -14064,24 +14532,28 @@ call_MDLAxisAlignedBoundingBox_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((MDLAxisAlignedBoundingBox(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL, double))objc_msgSendSuper_stret)(
 #else
             rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14134,7 +14606,7 @@ mkimp_MDLAxisAlignedBoundingBox_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -14175,24 +14647,28 @@ call_MDLVoxelIndexExtent(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((MDLVoxelIndexExtent(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((MDLVoxelIndexExtent(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
             rv = ((MDLVoxelIndexExtent(*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14239,7 +14715,7 @@ mkimp_MDLVoxelIndexExtent(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -14276,24 +14752,28 @@ call_simd_double4x4(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_double4x4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((simd_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
             rv = ((simd_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14340,7 +14820,7 @@ mkimp_simd_double4x4(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -14380,24 +14860,28 @@ call_simd_double4x4_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_double4x4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((simd_double4x4(*)(struct objc_super*, SEL, double))objc_msgSendSuper_stret)(
 #else
             rv = ((simd_double4x4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14450,7 +14934,7 @@ mkimp_simd_double4x4_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -14489,20 +14973,24 @@ call_simd_float2x2(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2x2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_float2x2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14549,7 +15037,7 @@ mkimp_simd_float2x2(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -14585,24 +15073,28 @@ call_simd_float3x3(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float3x3(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((simd_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
             rv = ((simd_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14649,7 +15141,7 @@ mkimp_simd_float3x3(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -14685,24 +15177,28 @@ call_simd_float4x4(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float4x4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
             rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14749,7 +15245,7 @@ mkimp_simd_float4x4(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -14793,24 +15289,28 @@ call_simd_float4x4_id_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float4x4(*)(id, SEL, id, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((simd_float4x4(*)(struct objc_super*, SEL, id, double))objc_msgSendSuper_stret)(
 #else
             rv = ((simd_float4x4(*)(struct objc_super*, SEL, id, double))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14866,7 +15366,7 @@ mkimp_simd_float4x4_id_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -14909,24 +15409,28 @@ call_simd_float4x4_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float4x4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((simd_float4x4(*)(struct objc_super*, SEL, double))objc_msgSendSuper_stret)(
 #else
             rv = ((simd_float4x4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -14979,7 +15483,7 @@ mkimp_simd_float4x4_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -15026,24 +15530,28 @@ call_simd_float4x4_simd_float4x4_id(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_float4x4(*)(id, SEL, simd_float4x4, id))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4, id))objc_msgSendSuper_stret)(
 #else
             rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4, id))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -15099,7 +15607,7 @@ mkimp_simd_float4x4_simd_float4x4_id(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -15143,24 +15651,28 @@ call_simd_quatd_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_quatd(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((simd_quatd(*)(struct objc_super*, SEL, double))objc_msgSendSuper_stret)(
 #else
             rv = ((simd_quatd(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -15213,7 +15725,7 @@ mkimp_simd_quatd_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -15254,20 +15766,24 @@ call_simd_quatf(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_quatf(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_quatf(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -15314,7 +15830,7 @@ mkimp_simd_quatf(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -15356,20 +15872,24 @@ call_simd_quatf_d(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_quatf(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_quatf(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method), arg0);
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -15422,7 +15942,7 @@ mkimp_simd_quatf_d(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -15462,20 +15982,24 @@ call_v16C(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((simd_uchar16(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
             rv = ((simd_uchar16(*)(struct objc_super*, SEL))objc_msgSendSuper)(
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -15522,7 +16046,7 @@ mkimp_v16C(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -15559,24 +16083,28 @@ call_MPSImageHistogramInfo(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((MPSImageHistogramInfo(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
             rv = ((MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -15623,7 +16151,7 @@ mkimp_MPSImageHistogramInfo(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
@@ -15661,24 +16189,28 @@ call_MPSAxisAlignedBoundingBox(
     Py_BEGIN_ALLOW_THREADS
     @try {
         if (isIMP) {
+            // LCOV_BR_EXCL_START
             rv = ((MPSAxisAlignedBoundingBox(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                 self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
 
         } else {
             super.receiver    = self_obj;
             super.super_class = super_class;
 
+            // LCOV_BR_EXCL_START
 #ifdef __x86_64__
             rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
             rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                       &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
         }
 
-        } @catch (NSObject * localException) {  // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
         Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
@@ -15725,7 +16257,7 @@ mkimp_MPSAxisAlignedBoundingBox(
         return oc_result;
 
     error:
-        if (pyself) {
+        if (pyself) { // LCOV_BR_EXCL_LINE
             PyObjCObject_ReleaseTransient(pyself, cookie);
         }
 
