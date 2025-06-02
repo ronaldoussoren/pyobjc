@@ -48,6 +48,7 @@ __all__ = (
     "matrix_double4x4",
     "simd_quatf",
     "simd_quatd",
+    "simd_float4x3",
     "simd_float4x4",
 )
 

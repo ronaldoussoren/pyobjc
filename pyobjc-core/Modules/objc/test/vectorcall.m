@@ -106,6 +106,34 @@ static BOOL shouldRaise = NO;
     return result;
 }
 
+- (simd_uchar16)v16C
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+         values = PyList_New(0);
+         if (values == NULL) PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+}
+
++ (simd_uchar16)clsv16C
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+         clsvalues = PyList_New(0);
+         if (clsvalues == NULL) PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+}
+
 - (simd_double2)v2d
 {
     if ([self shouldRaise]) {
@@ -5792,6 +5820,66 @@ static BOOL shouldRaise = NO;
 }
 
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 1013
+- (MPSImageHistogramInfo)MPSImageHistogramInfo
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+         values = PyList_New(0);
+         if (values == NULL) PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSImageHistogramInfo){4398046511104, YES, (vector_float4){1.0, 2.0, 3.0, 4.0}, (vector_float4){-1.0, -2.0, -3.0, -4.0}};
+}
+
++ (MPSImageHistogramInfo)clsMPSImageHistogramInfo
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+         clsvalues = PyList_New(0);
+         if (clsvalues == NULL) PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSImageHistogramInfo){4398046511104, YES, (vector_float4){1.0, 2.0, 3.0, 4.0}, (vector_float4){-1.0, -2.0, -3.0, -4.0}};
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#if PyObjC_BUILD_RELEASE >= 1014
+- (MPSAxisAlignedBoundingBox)MPSAxisAlignedBoundingBox
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+         values = PyList_New(0);
+         if (values == NULL) PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5}, (vector_float3){4.5, 5.5, 6.5}};
+}
+
++ (MPSAxisAlignedBoundingBox)clsMPSAxisAlignedBoundingBox
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+         clsvalues = PyList_New(0);
+         if (clsvalues == NULL) PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5}, (vector_float3){4.5, 5.5, 6.5}};
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 - (simd_double4x4)simddouble4x4
 {
     if ([self shouldRaise]) {
@@ -5914,6 +6002,34 @@ static BOOL shouldRaise = NO;
          if (clsvalues == NULL) PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
     return (simd_float3x3){{(vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}}};
+}
+
+- (simd_float4x3)simdfloat4x3
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+         values = PyList_New(0);
+         if (values == NULL) PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x3){{(vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}}};
+}
+
++ (simd_float4x3)clssimdfloat4x3
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+         clsvalues = PyList_New(0);
+         if (clsvalues == NULL) PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x3){{(vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}}};
 }
 
 - (simd_float4x4)simdfloat4x4
@@ -6190,94 +6306,6 @@ static BOOL shouldRaise = NO;
 }
 
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-- (simd_uchar16)v16C
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-         values = PyList_New(0);
-         if (values == NULL) PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-}
-
-+ (simd_uchar16)clsv16C
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-         clsvalues = PyList_New(0);
-         if (clsvalues == NULL) PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
-- (MPSImageHistogramInfo)MPSImageHistogramInfo
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-         values = PyList_New(0);
-         if (values == NULL) PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSImageHistogramInfo){4398046511104, YES, (vector_float4){1.0, 2.0, 3.0, 4.0}, (vector_float4){-1.0, -2.0, -3.0, -4.0}};
-}
-
-+ (MPSImageHistogramInfo)clsMPSImageHistogramInfo
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-         clsvalues = PyList_New(0);
-         if (clsvalues == NULL) PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSImageHistogramInfo){4398046511104, YES, (vector_float4){1.0, 2.0, 3.0, 4.0}, (vector_float4){-1.0, -2.0, -3.0, -4.0}};
-}
-
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-#if PyObjC_BUILD_RELEASE >= 1014
-- (MPSAxisAlignedBoundingBox)MPSAxisAlignedBoundingBox
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-         values = PyList_New(0);
-         if (values == NULL) PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5}, (vector_float3){4.5, 5.5, 6.5}};
-}
-
-+ (MPSAxisAlignedBoundingBox)clsMPSAxisAlignedBoundingBox
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-         clsvalues = PyList_New(0);
-         if (clsvalues == NULL) PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5}, (vector_float3){4.5, 5.5, 6.5}};
-}
-
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 @end
 
 @interface OC_VectorCallInvoke: NSObject {
@@ -6286,6 +6314,19 @@ static BOOL shouldRaise = NO;
 
 @implementation OC_VectorCallInvoke
 
+
++(id)v16COn:(OC_VectorCall*)value
+{
+     id cinter;
+    simd_uchar16 result = [value v16C];
+     PyObjC_BEGIN_WITH_GIL
+    PyObject* inter =  PyObjC_ObjCToPython("<16C>", &result);
+     if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+         PyObjC_GIL_FORWARD_EXC();
+     }
+     PyObjC_END_WITH_GIL
+     return cinter;
+}
 
 +(id)v2dOn:(OC_VectorCall*)value
 {
@@ -7635,6 +7676,36 @@ static BOOL shouldRaise = NO;
 }
 
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 1013
++(id)MPSImageHistogramInfoOn:(OC_VectorCall*)value
+{
+     id cinter;
+    MPSImageHistogramInfo result = [value MPSImageHistogramInfo];
+     PyObjC_BEGIN_WITH_GIL
+    PyObject* inter =  PyObjC_ObjCToPython("{MPSImageHistogramInfo=QZ<4f><4f>}", &result);
+     if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+         PyObjC_GIL_FORWARD_EXC();
+     }
+     PyObjC_END_WITH_GIL
+     return cinter;
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#if PyObjC_BUILD_RELEASE >= 1014
++(id)MPSAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
+{
+     id cinter;
+    MPSAxisAlignedBoundingBox result = [value MPSAxisAlignedBoundingBox];
+     PyObjC_BEGIN_WITH_GIL
+    PyObject* inter =  PyObjC_ObjCToPython("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &result);
+     if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+         PyObjC_GIL_FORWARD_EXC();
+     }
+     PyObjC_END_WITH_GIL
+     return cinter;
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 +(id)simddouble4x4On:(OC_VectorCall*)value
 {
      id cinter;
@@ -7680,6 +7751,19 @@ static BOOL shouldRaise = NO;
     simd_float3x3 result = [value simdfloat3x3];
      PyObjC_BEGIN_WITH_GIL
     PyObject* inter =  PyObjC_ObjCToPython("{simd_float3x3=[3<3f>]}", &result);
+     if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+         PyObjC_GIL_FORWARD_EXC();
+     }
+     PyObjC_END_WITH_GIL
+     return cinter;
+}
+
++(id)simdfloat4x3On:(OC_VectorCall*)value
+{
+     id cinter;
+    simd_float4x3 result = [value simdfloat4x3];
+     PyObjC_BEGIN_WITH_GIL
+    PyObject* inter =  PyObjC_ObjCToPython("{simd_float4x3=[4<3f>]}", &result);
      if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
          PyObjC_GIL_FORWARD_EXC();
      }
@@ -7784,49 +7868,6 @@ static BOOL shouldRaise = NO;
 }
 
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-+(id)v16COn:(OC_VectorCall*)value
-{
-     id cinter;
-    simd_uchar16 result = [value v16C];
-     PyObjC_BEGIN_WITH_GIL
-    PyObject* inter =  PyObjC_ObjCToPython("<16C>", &result);
-     if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-         PyObjC_GIL_FORWARD_EXC();
-     }
-     PyObjC_END_WITH_GIL
-     return cinter;
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
-+(id)MPSImageHistogramInfoOn:(OC_VectorCall*)value
-{
-     id cinter;
-    MPSImageHistogramInfo result = [value MPSImageHistogramInfo];
-     PyObjC_BEGIN_WITH_GIL
-    PyObject* inter =  PyObjC_ObjCToPython("{MPSImageHistogramInfo=QZ<4f><4f>}", &result);
-     if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-         PyObjC_GIL_FORWARD_EXC();
-     }
-     PyObjC_END_WITH_GIL
-     return cinter;
-}
-
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-#if PyObjC_BUILD_RELEASE >= 1014
-+(id)MPSAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
-{
-     id cinter;
-    MPSAxisAlignedBoundingBox result = [value MPSAxisAlignedBoundingBox];
-     PyObjC_BEGIN_WITH_GIL
-    PyObject* inter =  PyObjC_ObjCToPython("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &result);
-     if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-         PyObjC_GIL_FORWARD_EXC();
-     }
-     PyObjC_END_WITH_GIL
-     return cinter;
-}
-
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

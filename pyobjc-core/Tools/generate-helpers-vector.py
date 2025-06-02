@@ -29,7 +29,11 @@ MKIMP_PREFIX = "mkimp"
 
 # XXX: The 'grep' command should be integrated into this script (but written in Python)
 # grep full_signature ../*/Lib/*/_metadata.py | sed 's@.*full_signature.: \([^ ]*\).*@\1@' | sort -u
+#
+# XXX: The list below is censored, actually running the grep command will find a number of
+#      "pointer to" arguments which I've stripped for now.
 ALL_SIGNATURES = [
+    b"<16C>@:",
     b"<2d>@:",
     b"<2d>@:d",
     b"<2f>@:",
@@ -148,10 +152,13 @@ ALL_SIGNATURES = [
     b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>",
     b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:d",
     b"{MDLVoxelIndexExtent=<4i><4i>}@:",
+    b"{MPSImageHistogramInfo=QZ<4f><4f>}@:",
+    b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:",
     b"{simd_double4x4=[4<4d>]}@:",
     b"{simd_double4x4=[4<4d>]}@:d",
     b"{simd_float2x2=[2<2f>]}@:",
     b"{simd_float3x3=[3<3f>]}@:",
+    b"{simd_float4x3=[4<3f>]}@:",
     b"{simd_float4x4=[4<4f>]}@:",
     b"{simd_float4x4=[4<4f>]}@:@d",
     b"{simd_float4x4=[4<4f>]}@:d",
@@ -159,9 +166,6 @@ ALL_SIGNATURES = [
     b"{simd_quatd=<4d>}@:d",
     b"{simd_quatf=<4f>}@:",
     b"{simd_quatf=<4f>}@:d",
-    b"<16C>@:",
-    b"{MPSImageHistogramInfo=QZ<4f><4f>}@:",
-    b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:",
 ]
 
 HELPER_PREFIX = """\

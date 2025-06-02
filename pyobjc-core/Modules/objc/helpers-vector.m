@@ -175,6 +175,106 @@ adjust_retval(PyObjCMethodSignature* methinfo, id _Nullable retval)
 
 
 static PyObject* _Nullable
+call_v16C(
+    PyObject* method, PyObject* self, PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
+{
+    struct objc_super super;
+    simd_uchar16 rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo = NULL;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+           == -1) {
+         Py_CLEAR(methinfo);
+         return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+    @try {
+        if (isIMP) {
+            // LCOV_BR_EXCL_START
+            rv = ((simd_uchar16(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
+
+        } else {
+            super.receiver    = self_obj;
+            super.super_class = super_class;
+
+            // LCOV_BR_EXCL_START
+            rv = ((simd_uchar16(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                      &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
+        }
+
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+        Py_END_ALLOW_THREADS
+
+        if (PyErr_Occurred()) {
+            Py_CLEAR(methinfo);
+            return NULL;
+        }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("<16C>", &rv);
+}
+
+static IMP
+mkimp_v16C(
+    PyObject* callable,
+    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_uchar16 (^block)(id) = ^(id _Nullable self) {
+        PyGILState_STATE state = PyGILState_Ensure();
+
+        int       cookie;
+        PyObject* args[2] = {NULL};
+        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);
+        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
+
+        args[1] = pyself;
+
+        PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                          1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (result == NULL) goto error;
+        simd_uchar16 oc_result;
+        if (depythonify_c_value("<16C>", result, &oc_result) == -1) {
+            Py_DECREF(result);
+            goto error;
+         }
+
+        Py_DECREF(result);
+
+        PyObjCObject_ReleaseTransient(pyself, cookie);
+        PyGILState_Release(state);
+        return oc_result;
+
+    error:
+        if (pyself) { // LCOV_BR_EXCL_LINE
+            PyObjCObject_ReleaseTransient(pyself, cookie);
+        }
+
+        PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable
 call_v2d(
     PyObject* method, PyObject* self, PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
 {
@@ -14725,6 +14825,218 @@ mkimp_MDLVoxelIndexExtent(
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 1013
+
+static PyObject* _Nullable
+call_MPSImageHistogramInfo(
+    PyObject* method, PyObject* self, PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
+{
+    struct objc_super super;
+    MPSImageHistogramInfo rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo = NULL;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+           == -1) {
+         Py_CLEAR(methinfo);
+         return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+    @try {
+        if (isIMP) {
+            // LCOV_BR_EXCL_START
+            rv = ((MPSImageHistogramInfo(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
+
+        } else {
+            super.receiver    = self_obj;
+            super.super_class = super_class;
+
+            // LCOV_BR_EXCL_START
+#ifdef __x86_64__
+            rv = ((MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
+            rv = ((MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                      &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
+        }
+
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+        Py_END_ALLOW_THREADS
+
+        if (PyErr_Occurred()) {
+            Py_CLEAR(methinfo);
+            return NULL;
+        }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", &rv);
+}
+
+static IMP
+mkimp_MPSImageHistogramInfo(
+    PyObject* callable,
+    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    MPSImageHistogramInfo (^block)(id) = ^(id _Nullable self) {
+        PyGILState_STATE state = PyGILState_Ensure();
+
+        int       cookie;
+        PyObject* args[2] = {NULL};
+        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);
+        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
+
+        args[1] = pyself;
+
+        PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                          1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (result == NULL) goto error;
+        MPSImageHistogramInfo oc_result;
+        if (depythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", result, &oc_result) == -1) {
+            Py_DECREF(result);
+            goto error;
+         }
+
+        Py_DECREF(result);
+
+        PyObjCObject_ReleaseTransient(pyself, cookie);
+        PyGILState_Release(state);
+        return oc_result;
+
+    error:
+        if (pyself) { // LCOV_BR_EXCL_LINE
+            PyObjCObject_ReleaseTransient(pyself, cookie);
+        }
+
+        PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#if PyObjC_BUILD_RELEASE >= 1014
+
+static PyObject* _Nullable
+call_MPSAxisAlignedBoundingBox(
+    PyObject* method, PyObject* self, PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
+{
+    struct objc_super super;
+    MPSAxisAlignedBoundingBox rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo = NULL;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+           == -1) {
+         Py_CLEAR(methinfo);
+         return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+    @try {
+        if (isIMP) {
+            // LCOV_BR_EXCL_START
+            rv = ((MPSAxisAlignedBoundingBox(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
+
+        } else {
+            super.receiver    = self_obj;
+            super.super_class = super_class;
+
+            // LCOV_BR_EXCL_START
+#ifdef __x86_64__
+            rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
+            rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                      &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
+        }
+
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+        Py_END_ALLOW_THREADS
+
+        if (PyErr_Occurred()) {
+            Py_CLEAR(methinfo);
+            return NULL;
+        }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &rv);
+}
+
+static IMP
+mkimp_MPSAxisAlignedBoundingBox(
+    PyObject* callable,
+    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    MPSAxisAlignedBoundingBox (^block)(id) = ^(id _Nullable self) {
+        PyGILState_STATE state = PyGILState_Ensure();
+
+        int       cookie;
+        PyObject* args[2] = {NULL};
+        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);
+        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
+
+        args[1] = pyself;
+
+        PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                          1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (result == NULL) goto error;
+        MPSAxisAlignedBoundingBox oc_result;
+        if (depythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result) == -1) {
+            Py_DECREF(result);
+            goto error;
+         }
+
+        Py_DECREF(result);
+
+        PyObjCObject_ReleaseTransient(pyself, cookie);
+        PyGILState_Release(state);
+        return oc_result;
+
+    error:
+        if (pyself) { // LCOV_BR_EXCL_LINE
+            PyObjCObject_ReleaseTransient(pyself, cookie);
+        }
+
+        PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 
 static PyObject* _Nullable
 call_simd_double4x4(
@@ -15130,6 +15442,110 @@ mkimp_simd_float3x3(
         if (result == NULL) goto error;
         simd_float3x3 oc_result;
         if (depythonify_c_value("{simd_float3x3=[3<3f>]}", result, &oc_result) == -1) {
+            Py_DECREF(result);
+            goto error;
+         }
+
+        Py_DECREF(result);
+
+        PyObjCObject_ReleaseTransient(pyself, cookie);
+        PyGILState_Release(state);
+        return oc_result;
+
+    error:
+        if (pyself) { // LCOV_BR_EXCL_LINE
+            PyObjCObject_ReleaseTransient(pyself, cookie);
+        }
+
+        PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable
+call_simd_float4x3(
+    PyObject* method, PyObject* self, PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
+{
+    struct objc_super super;
+    simd_float4x3 rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo = NULL;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+           == -1) {
+         Py_CLEAR(methinfo);
+         return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+    @try {
+        if (isIMP) {
+            // LCOV_BR_EXCL_START
+            rv = ((simd_float4x3(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                self_obj, PyObjCIMP_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
+
+        } else {
+            super.receiver    = self_obj;
+            super.super_class = super_class;
+
+            // LCOV_BR_EXCL_START
+#ifdef __x86_64__
+            rv = ((simd_float4x3(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
+            rv = ((simd_float4x3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                      &super, PyObjCSelector_GetSelector(method));
+            // LCOV_BR_EXCL_STOP
+        }
+
+        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+        Py_END_ALLOW_THREADS
+
+        if (PyErr_Occurred()) {
+            Py_CLEAR(methinfo);
+            return NULL;
+        }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{simd_float4x3=[4<3f>]}", &rv);
+}
+
+static IMP
+mkimp_simd_float4x3(
+    PyObject* callable,
+    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_float4x3 (^block)(id) = ^(id _Nullable self) {
+        PyGILState_STATE state = PyGILState_Ensure();
+
+        int       cookie;
+        PyObject* args[2] = {NULL};
+        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);
+        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
+
+        args[1] = pyself;
+
+        PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                          1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (result == NULL) goto error;
+        simd_float4x3 oc_result;
+        if (depythonify_c_value("{simd_float4x3=[4<3f>]}", result, &oc_result) == -1) {
             Py_DECREF(result);
             goto error;
          }
@@ -15955,321 +16371,15 @@ mkimp_simd_quatf_d(
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-static PyObject* _Nullable
-call_v16C(
-    PyObject* method, PyObject* self, PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
-{
-    struct objc_super super;
-    simd_uchar16 rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo = NULL;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-           == -1) {
-         Py_CLEAR(methinfo);
-         return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-    @try {
-        if (isIMP) {
-            // LCOV_BR_EXCL_START
-            rv = ((simd_uchar16(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                self_obj, PyObjCIMP_GetSelector(method));
-            // LCOV_BR_EXCL_STOP
-
-        } else {
-            super.receiver    = self_obj;
-            super.super_class = super_class;
-
-            // LCOV_BR_EXCL_START
-            rv = ((simd_uchar16(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-                      &super, PyObjCSelector_GetSelector(method));
-            // LCOV_BR_EXCL_STOP
-        }
-
-        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
-        }
-        Py_END_ALLOW_THREADS
-
-        if (PyErr_Occurred()) {
-            Py_CLEAR(methinfo);
-            return NULL;
-        }
-
-    Py_CLEAR(methinfo);
-    return pythonify_c_value("<16C>", &rv);
-}
-
-static IMP
-mkimp_v16C(
-    PyObject* callable,
-    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    simd_uchar16 (^block)(id) = ^(id _Nullable self) {
-        PyGILState_STATE state = PyGILState_Ensure();
-
-        int       cookie;
-        PyObject* args[2] = {NULL};
-        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);
-        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-            goto error; // LCOV_EXCL_LINE
-        } // LCOV_EXCL_LINE
-
-        args[1] = pyself;
-
-        PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                          1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (result == NULL) goto error;
-        simd_uchar16 oc_result;
-        if (depythonify_c_value("<16C>", result, &oc_result) == -1) {
-            Py_DECREF(result);
-            goto error;
-         }
-
-        Py_DECREF(result);
-
-        PyObjCObject_ReleaseTransient(pyself, cookie);
-        PyGILState_Release(state);
-        return oc_result;
-
-    error:
-        if (pyself) { // LCOV_BR_EXCL_LINE
-            PyObjCObject_ReleaseTransient(pyself, cookie);
-        }
-
-        PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-#if PyObjC_BUILD_RELEASE >= 1013
-
-static PyObject* _Nullable
-call_MPSImageHistogramInfo(
-    PyObject* method, PyObject* self, PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
-{
-    struct objc_super super;
-    MPSImageHistogramInfo rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo = NULL;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-           == -1) {
-         Py_CLEAR(methinfo);
-         return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-    @try {
-        if (isIMP) {
-            // LCOV_BR_EXCL_START
-            rv = ((MPSImageHistogramInfo(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                self_obj, PyObjCIMP_GetSelector(method));
-            // LCOV_BR_EXCL_STOP
-
-        } else {
-            super.receiver    = self_obj;
-            super.super_class = super_class;
-
-            // LCOV_BR_EXCL_START
-#ifdef __x86_64__
-            rv = ((MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
-#else
-            rv = ((MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-#endif
-                      &super, PyObjCSelector_GetSelector(method));
-            // LCOV_BR_EXCL_STOP
-        }
-
-        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
-        }
-        Py_END_ALLOW_THREADS
-
-        if (PyErr_Occurred()) {
-            Py_CLEAR(methinfo);
-            return NULL;
-        }
-
-    Py_CLEAR(methinfo);
-    return pythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", &rv);
-}
-
-static IMP
-mkimp_MPSImageHistogramInfo(
-    PyObject* callable,
-    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    MPSImageHistogramInfo (^block)(id) = ^(id _Nullable self) {
-        PyGILState_STATE state = PyGILState_Ensure();
-
-        int       cookie;
-        PyObject* args[2] = {NULL};
-        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);
-        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-            goto error; // LCOV_EXCL_LINE
-        } // LCOV_EXCL_LINE
-
-        args[1] = pyself;
-
-        PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                          1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (result == NULL) goto error;
-        MPSImageHistogramInfo oc_result;
-        if (depythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", result, &oc_result) == -1) {
-            Py_DECREF(result);
-            goto error;
-         }
-
-        Py_DECREF(result);
-
-        PyObjCObject_ReleaseTransient(pyself, cookie);
-        PyGILState_Release(state);
-        return oc_result;
-
-    error:
-        if (pyself) { // LCOV_BR_EXCL_LINE
-            PyObjCObject_ReleaseTransient(pyself, cookie);
-        }
-
-        PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-#if PyObjC_BUILD_RELEASE >= 1014
-
-static PyObject* _Nullable
-call_MPSAxisAlignedBoundingBox(
-    PyObject* method, PyObject* self, PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
-{
-    struct objc_super super;
-    MPSAxisAlignedBoundingBox rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo = NULL;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-           == -1) {
-         Py_CLEAR(methinfo);
-         return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-    @try {
-        if (isIMP) {
-            // LCOV_BR_EXCL_START
-            rv = ((MPSAxisAlignedBoundingBox(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                self_obj, PyObjCIMP_GetSelector(method));
-            // LCOV_BR_EXCL_STOP
-
-        } else {
-            super.receiver    = self_obj;
-            super.super_class = super_class;
-
-            // LCOV_BR_EXCL_START
-#ifdef __x86_64__
-            rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
-#else
-            rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-#endif
-                      &super, PyObjCSelector_GetSelector(method));
-            // LCOV_BR_EXCL_STOP
-        }
-
-        } @catch (NSObject * localException) { // LCOV_BR_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
-        }
-        Py_END_ALLOW_THREADS
-
-        if (PyErr_Occurred()) {
-            Py_CLEAR(methinfo);
-            return NULL;
-        }
-
-    Py_CLEAR(methinfo);
-    return pythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &rv);
-}
-
-static IMP
-mkimp_MPSAxisAlignedBoundingBox(
-    PyObject* callable,
-    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    MPSAxisAlignedBoundingBox (^block)(id) = ^(id _Nullable self) {
-        PyGILState_STATE state = PyGILState_Ensure();
-
-        int       cookie;
-        PyObject* args[2] = {NULL};
-        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);
-        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-            goto error; // LCOV_EXCL_LINE
-        } // LCOV_EXCL_LINE
-
-        args[1] = pyself;
-
-        PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                          1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (result == NULL) goto error;
-        MPSAxisAlignedBoundingBox oc_result;
-        if (depythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result) == -1) {
-            Py_DECREF(result);
-            goto error;
-         }
-
-        Py_DECREF(result);
-
-        PyObjCObject_ReleaseTransient(pyself, cookie);
-        PyGILState_Release(state);
-        return oc_result;
-
-    error:
-        if (pyself) { // LCOV_BR_EXCL_LINE
-            PyObjCObject_ReleaseTransient(pyself, cookie);
-        }
-
-        PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 int
 PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 {
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+        "<16C>@:", call_v16C, mkimp_v16C)
+       == -1) {
+            return -1; // LCOV_EXCL_LINE
+    }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
         "<2d>@:", call_v2d, mkimp_v2d)
@@ -17145,6 +17255,28 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+        "{MPSImageHistogramInfo=QZ<4f><4f>}@:", call_MPSImageHistogramInfo, mkimp_MPSImageHistogramInfo)
+       == -1) {
+            return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+        "{MPSImageHistogramInfo=QB<4f><4f>}@:", call_MPSImageHistogramInfo, mkimp_MPSImageHistogramInfo)
+       == -1) {
+            return -1; // LCOV_EXCL_LINE
+    }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+
+#if PyObjC_BUILD_RELEASE >= 1014
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+        "{_MPSAxisAlignedBoundingBox=<3f><3f>}@:", call_MPSAxisAlignedBoundingBox, mkimp_MPSAxisAlignedBoundingBox)
+       == -1) {
+            return -1; // LCOV_EXCL_LINE
+    }
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
+
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
         "{simd_double4x4=[4<4d>]}@:", call_simd_double4x4, mkimp_simd_double4x4)
        == -1) {
@@ -17165,6 +17297,12 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
         "{simd_float3x3=[3<3f>]}@:", call_simd_float3x3, mkimp_simd_float3x3)
+       == -1) {
+            return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+        "{simd_float4x3=[4<3f>]}@:", call_simd_float4x3, mkimp_simd_float4x3)
        == -1) {
             return -1; // LCOV_EXCL_LINE
     }
@@ -17216,34 +17354,6 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
             return -1; // LCOV_EXCL_LINE
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-        "<16C>@:", call_v16C, mkimp_v16C)
-       == -1) {
-            return -1; // LCOV_EXCL_LINE
-    }
-
-#if PyObjC_BUILD_RELEASE >= 1013
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-        "{MPSImageHistogramInfo=QZ<4f><4f>}@:", call_MPSImageHistogramInfo, mkimp_MPSImageHistogramInfo)
-       == -1) {
-            return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-        "{MPSImageHistogramInfo=QB<4f><4f>}@:", call_MPSImageHistogramInfo, mkimp_MPSImageHistogramInfo)
-       == -1) {
-            return -1; // LCOV_EXCL_LINE
-    }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-#if PyObjC_BUILD_RELEASE >= 1014
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-        "{_MPSAxisAlignedBoundingBox=<3f><3f>}@:", call_MPSAxisAlignedBoundingBox, mkimp_MPSAxisAlignedBoundingBox)
-       == -1) {
-            return -1; // LCOV_EXCL_LINE
-    }
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 
     return 0;
 }
