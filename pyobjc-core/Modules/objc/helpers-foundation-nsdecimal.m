@@ -8,6 +8,9 @@
  *   NSDecimal objects support +, -, *, /, +=, -=, *= and /=, which directly
  *   correspond with NSDecimal* functions with the NSRoundPlain argument.
  *   They also support unary -, unary + and abs, with the obvious semantics.
+ *
+ * The helpers do not support subclassing NSDecimalNumber because subclassing
+ * this type doesn't work in Objective-C either on modern versions of macOS.
  */
 #include "pyobjc.h"
 
@@ -818,6 +821,11 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
 static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
     PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
+    /*
+     * NOTE: This helper does not implement the "init" family protocol (e.g.
+     *       stolen reference to self, new reference returned) because doing
+     *       that causes a hard crash on macOS 15.
+     */
     struct objc_super super;
     NSDecimal*        aDecimal;
     id                res;
@@ -840,6 +848,7 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
 
             res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), *aDecimal);
+
             // LCOV_EXCL_START
             // AFAIK the method won't raise.
         } @catch (NSObject* localException) {
@@ -856,58 +865,6 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
     return id_to_python(res);
 }
 
-static IMP
-mkimp_NSDecimalNumber_initWithDecimal_(PyObject* callable, PyObjCMethodSignature* methinfo
-                                       __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-    NSDecimalNumber* (^block)(NSDecimalNumber*, NSDecimal) =
-        ^(NSDecimalNumber* _Nullable self, NSDecimal aDecimal) {
-          NSDecimalNumber* rv;
-          PyObject*        result = NULL;
-          PyObject*        v      = NULL;
-          PyObject*        pyself = NULL;
-          int              cookie = 0;
-
-          PyGILState_STATE state = PyGILState_Ensure();
-
-          pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL)
-              goto error;
-
-          v = Decimal_New(&aDecimal);
-          if (v == NULL)
-              goto error;
-
-          PyObject* arglist[3] = {NULL, pyself, v};
-          result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                     2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-          Py_DECREF(v);
-          v = NULL;
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-          pyself = NULL;
-          if (result == NULL) {
-              goto error;
-          }
-
-          if (depythonify_python_object(result, &rv) == -1) {
-              Py_DECREF(result);
-              goto error;
-          }
-          Py_DECREF(result);
-          PyGILState_Release(state);
-          return rv;
-
-      error:
-          Py_XDECREF(v);
-          if (pyself) {
-              PyObjCObject_ReleaseTransient(pyself, cookie);
-          }
-          PyObjCErr_ToObjCWithGILState(&state);
-          return (NSDecimalNumber*)nil;
-        };
-    return imp_implementationWithBlock(block);
-}
 
 static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        method,
                                                              PyObject*        self,
@@ -946,99 +903,7 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        me
     return Decimal_New(&aDecimal);
 }
 
-static IMP
-mkimp_NSDecimalNumber_decimalNumberWithDecimal_(PyObject*              callable,
-                                                PyObjCMethodSignature* methinfo
-                                                __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-    NSDecimalNumber* (^block)(Class, NSDecimal) =
-        ^(Class _Nullable self, NSDecimal aDecimal) {
-          NSDecimalNumber* rv;
-          PyObject*        result = NULL;
-          PyObject*        v      = NULL;
-          PyObject*        pyself = NULL;
 
-          PyGILState_STATE state = PyGILState_Ensure();
-
-          pyself = PyObjCClass_New(self);
-          if (pyself == NULL)
-              goto error;
-
-          v = Decimal_New(&aDecimal);
-          if (v == NULL)
-              goto error;
-
-          PyObject* arglist[3] = {NULL, pyself, v};
-
-          result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                       2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-          Py_DECREF(v);
-          v = NULL;
-          Py_DECREF(pyself);
-          pyself = NULL;
-          if (result == NULL) {
-              goto error;
-          }
-
-          if (depythonify_python_object(result, &rv) == -1) {
-              Py_DECREF(result);
-              goto error;
-          }
-          Py_DECREF(result);
-          PyGILState_Release(state);
-          return rv;
-
-      error:
-          Py_XDECREF(v);
-          Py_XDECREF(pyself);
-          PyObjCErr_ToObjCWithGILState(&state);
-          return (NSDecimalNumber*)nil;
-        };
-    return imp_implementationWithBlock(block);
-}
-
-static IMP
-mkimp_NSDecimalNumber_decimalValue(PyObject* callable, PyObjCMethodSignature* methinfo
-                                   __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    NSDecimal (^block)(id) = ^(id _Nullable self) {
-      PyObject* result = NULL;
-      PyObject* v      = NULL;
-
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      v = id_to_python(self);
-      if (v == NULL)
-          goto error;
-
-      PyObject* arglist[2] = {NULL, v};
-      result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      Py_DECREF(v);
-      v = NULL;
-      if (result == NULL)
-          goto error;
-
-      NSDecimal res = Decimal_Value(result);
-
-      Py_DECREF(result);
-      PyGILState_Release(state);
-      return res;
-
-  error:
-      Py_XDECREF(v);
-      PyObjCErr_ToObjCWithGILState(&state);
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunreachable-code"
-
-      __builtin_unreachable(); // LCOV_EXCL_LINE
-#pragma clang diagnostic pop
-    };
-    return imp_implementationWithBlock(block);
-}
 
 int
 PyObjC_setup_nsdecimal(PyObject* m)
@@ -1066,7 +931,7 @@ PyObjC_setup_nsdecimal(PyObject* m)
 
     if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
             classNSDecimalNumber, @selector(initWithDecimal:),
-            call_NSDecimalNumber_initWithDecimal_, mkimp_NSDecimalNumber_initWithDecimal_)
+            call_NSDecimalNumber_initWithDecimal_, PyObjCUnsupportedMethod_IMP)
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
@@ -1077,7 +942,7 @@ PyObjC_setup_nsdecimal(PyObject* m)
         if (PyObjC_RegisterMethodMapping(classNSDecimalNumberPlaceholder,
                                          @selector(initWithDecimal:),
                                          call_NSDecimalNumber_initWithDecimal_,
-                                         mkimp_NSDecimalNumber_initWithDecimal_)
+                                         PyObjCUnsupportedMethod_IMP)
             < 0) {
 
             return -1; // LCOV_EXCL_LINE
@@ -1087,14 +952,14 @@ PyObjC_setup_nsdecimal(PyObject* m)
     if (PyObjC_RegisterMethodMapping(classNSDecimalNumber, // LCOV_BR_EXCL_LINE
                                      @selector(decimalNumberWithDecimal:),
                                      call_NSDecimalNumber_decimalNumberWithDecimal_,
-                                     mkimp_NSDecimalNumber_decimalNumberWithDecimal_)
+                                     PyObjCUnsupportedMethod_IMP)
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
             classNSNumber, @selector(decimalValue), call_NSDecimalNumber_decimalValue,
-            mkimp_NSDecimalNumber_decimalValue)
+            PyObjCUnsupportedMethod_IMP)
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
