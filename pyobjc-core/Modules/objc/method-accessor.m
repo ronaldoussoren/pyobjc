@@ -88,9 +88,9 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (unbound_instance_method) {
-                methsig = [objc_object instanceMethodSignatureForSelector:sel];
+                methsig = [objc_object instanceMethodSignatureForSelector:sel]; // LCOV_BR_EXCL_LINE
             } else {
-                methsig = [objc_object methodSignatureForSelector:sel];
+                methsig = [objc_object methodSignatureForSelector:sel]; // LCOV_BR_EXCL_LINE
             }
 
         } @catch (NSObject* localException) { // LCOV_EXCL_LINE
@@ -163,9 +163,11 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                     return meta;
                 } else {
                     methinfo = PyObjCSelector_GetMetadata(meta);
-                    if (methinfo == NULL) {
+                    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+                        // LCOV_EXCL_START
                         Py_DECREF(meta);
                         return NULL;
+                        // LCOV_EXCL_STOP
                     }
                     flattened = (char*)methinfo->signature;
 
@@ -187,8 +189,10 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
          * the NSMethodSignature is invalid, or if the encoded
          * signature would not fit buffer.
          */
+        // LCOV_EXCL_START
         Py_CLEAR(methinfo);
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_CLEAR(methinfo);

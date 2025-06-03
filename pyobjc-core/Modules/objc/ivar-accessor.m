@@ -99,7 +99,7 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
                 return NULL;
                 // LCOV_EXCL_STOP
             }
-        }
+        } // LCOV_BR_EXCL_LINE
 
         free(ivarList);
 

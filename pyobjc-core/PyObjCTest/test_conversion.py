@@ -430,7 +430,9 @@ class TestCArray(TestCase):
 
     def test_array_typecodes(self):
         # key the needle in sync with objc_util.m:code_compatible()
-        code_compatible_codes = "bBuwhHiIlLqQfd"
+        code_compatible_codes = "bBuhHiIlLqQfd"
+        if sys.version_info[:2] >= (3, 13):
+            code_compatible_codes += "w"
         self.assertEqual(set(code_compatible_codes), set(array.typecodes))
 
     def test_byte_array(self):
@@ -452,9 +454,10 @@ class TestCArray(TestCase):
         res = carrayMaker(objc._C_INT, a, None)
         self.assertEqual(res, tuple(map(ord, "hello")))
 
-        a = array.array("w", "world")
-        res = carrayMaker(objc._C_INT, a, None)
-        self.assertEqual(res, tuple(map(ord, "world")))
+        if sys.version_info[:2] >= (3, 13):
+            a = array.array("w", "world")
+            res = carrayMaker(objc._C_INT, a, None)
+            self.assertEqual(res, tuple(map(ord, "world")))
 
     def testShortTuple(self):
         arr = (1, 2, 3, 4, 5)

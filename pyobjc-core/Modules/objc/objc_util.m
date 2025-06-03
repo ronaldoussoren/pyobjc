@@ -357,7 +357,7 @@ PyObjCErr_FromObjC(NSObject* localException)
             if (reason != NULL) {
                 PyErr_Format(exception, "%s - %s", name ? name : "<null>", reason);
             } else {
-                PyErr_Format(exception, name ? name : "<null>");
+                PyErr_SetString(exception, name ? name : "<null>"); // LCOV_BR_EXCL_LINE
             }
             PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
             PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
@@ -805,7 +805,9 @@ code_compatible(char array_code, char type_code)
         } // LCOV_EXCL_LINE
 
     case 'u':
+#if PY_VERSION_HEX >= 0x030d0000
     case 'w':
+#endif
         return type_code == _C_INT;
 
     case 'h':
@@ -1837,7 +1839,7 @@ PyObject* _Nullable PyObjC_get_c_void_p(void)
 #ifdef Py_GIL_DISABLED
         PyMutex_Unlock(&c_void_p_mutex);
 #endif
-    }
+    } // LCOV_BR_EXCL_LINE
     return c_void_p;
 }
 

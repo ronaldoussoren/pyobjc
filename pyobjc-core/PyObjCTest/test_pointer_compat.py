@@ -4,6 +4,7 @@ except ImportError:
     ctypes = None
 
 import objc
+import sys
 import types
 from PyObjCTest.pointersupport import object_capsule, opaque_capsule, OC_PointerSupport
 from PyObjCTools.TestSupport import TestCase, skipUnless
@@ -212,7 +213,10 @@ class TestMiscTypes(TestCase):
         self.assertResultHasType(OC_PointerSupport.getUnion, b"^(test_union=if)")
         self.assertArgHasType(OC_PointerSupport.intFromUnion_, 0, b"^(test_union=if)")
         v1 = OC_PointerSupport.getUnion()
-        self.assertIsInstance(v1, types.CapsuleType)
+        if sys.version_info[:2] >= (3, 13):
+            self.assertIsInstance(v1, types.CapsuleType)
+        else:
+            self.assertEqual(type(v1).__name__, "PyCapsule")
         self.assertIn('"__union__"', str(v1))
         v2 = OC_PointerSupport.intFromUnion_(v1)
         self.assertEqual(v2, 99)

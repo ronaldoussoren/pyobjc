@@ -17,6 +17,23 @@ NS_ASSUME_NONNULL_BEGIN
                                    reason:@"Some Reason"
                                  userInfo:nil];
 }
+
++ (instancetype)invokeAlloc:(Class)cls
+{
+    return [cls alloc];
+}
+
++(void)invoke:(SEL)sel on:(NSObject*)object
+{
+    if (sel_isEqual(sel, @selector(retain))) {
+        (void)[object retain];
+    } else if (sel_isEqual(sel, @selector(release))) {
+        (void)[object release];
+    } else if (sel_isEqual(sel, @selector(dealloc))) {
+        (void)[object dealloc];
+    }
+}
+
 @end
 
 @interface OC_RefcountRaises : NSObject {

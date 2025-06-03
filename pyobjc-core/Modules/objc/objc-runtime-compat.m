@@ -50,7 +50,7 @@ PyObjC_class_addMethodList(Class cls, struct PyObjC_method* list, unsigned int c
         if (!r) {
             m = class_getInstanceMethod(cls, list[i].name);
 
-            if (m != NULL) {
+            if (m != NULL) { // LCOV_BR_EXCL_LINE
                 method_setImplementation(m, list[i].imp);
 
             } else { // LCOV_BR_EXCL_LINE

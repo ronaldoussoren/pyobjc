@@ -1373,7 +1373,8 @@ class TestSubclassOptions(TestCase):
 
     def test_invalid_keyword(self):
         with self.assertRaisesRegex(
-            TypeError, "this function got an unexpected keyword argument 'foo'"
+            TypeError,
+            r"(this function got an unexpected keyword argument 'foo')|('foo' is an invalid keyword argument for this function)",
         ):
 
             class OC_SubClassKeywordInvalid(NSObject, foo=42):

@@ -302,6 +302,15 @@ class TestMutableSet(TestCase, BasicSetTests):
         self.assertEqual(s, self.setClass())
 
 
+class TestMutableUserSet(TestCase, BasicSetTests):
+    class setClass(set):
+        pass
+
+    def testProxyClass(self):
+        # Ensure that the right class is used to proxy sets
+        self.assertIs(OC_TestSet.classOf_(self.setClass()), OC_PythonSet)
+
+
 class TestMisc(TestCase):
     def test_no_copy_helper(self):
         s = {1, 2, 3}
@@ -405,6 +414,25 @@ class TestMisc(TestCase):
         s = S({1, 2})
         with self.assertRaisesRegex(TypeError, "no iter"):
             OC_TestSet.set_member_(s, 1)
+
+        class S(set):
+            def __contains__(self, v):
+                return True
+
+        s = S({1, 2})
+        self.assertIs(OC_TestSet.set_member_(s, 99), None)
+
+        class S(set):
+            def __contains__(self, v):
+                return True
+
+            def __iter__(self):
+                yield 1
+                raise RuntimeError("whoops")
+
+        s = S({1, 2})
+        with self.assertRaisesRegex(RuntimeError, "whoops"):
+            self.assertIs(OC_TestSet.set_member_(s, 99), None)
 
         s = set({NoObjectiveC()})
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):

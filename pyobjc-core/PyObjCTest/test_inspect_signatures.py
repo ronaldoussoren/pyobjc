@@ -51,6 +51,7 @@ class TestInspectSignatures(TestCase):
                     "__init_subclass__",
                     "__annotations__",
                     "__annotate__",
+                    "__class_getitem__",
                 ):
                     continue
                 with self.subTest(classname=cls.__name__, attr=nm):

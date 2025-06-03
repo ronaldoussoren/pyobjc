@@ -43,8 +43,8 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
             self->sel_selector, self->sel_python_signature,
             PyObjCNativeSelector_Check(self));
 
-        if (methinfo == NULL)
-            return NULL;
+        if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
 
         Py_BEGIN_CRITICAL_SECTION(self);
 #ifdef Py_GIL_DISABLED
@@ -94,8 +94,8 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
 {
     int                    r;
     PyObjCMethodSignature* mi = PyObjCSelector_GetMetadata(self);
-    if (mi == NULL) {
-        return NULL;
+    if (mi == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     PyObject* result = PyObjCMethodSignature_AsDict(mi);
@@ -162,8 +162,8 @@ static PyObject* _Nullable base_signature(PyObject* self,
                                           void*     closure __attribute__((__unused__)))
 {
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(self);
-    if (methinfo == NULL) {
-        return NULL;
+    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     PyObject* result = PyBytes_FromString(methinfo->signature);
@@ -569,8 +569,8 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
 
     {
         PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-        if (methinfo == NULL) {
-            return NULL;
+        if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
 
         if (version_is_deprecated(methinfo->deprecated)) {
@@ -654,8 +654,8 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
 
     {
         PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-        if (methinfo == NULL) {
-            return NULL;
+        if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
         }
 
         if (version_is_deprecated(methinfo->deprecated)) {
@@ -1134,8 +1134,8 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     }
     result->base.sel_methinfo = NULL;
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
-    if (methinfo == NULL) {
-        Py_DECREF(result);
+    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(result); // LCOV_EXCL_LINE
         return NULL;
     } else {
         Py_CLEAR(methinfo);
@@ -1485,9 +1485,11 @@ static PyObject* _Nullable
              */
             PyObject** temp_args =
                 malloc((PyVectorcall_NARGS(nargsf) + 2) * sizeof(PyObject*));
-            if (temp_args == NULL) {
+            if (temp_args == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_NoMemory();
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             temp_args[0] = Py_None;
             temp_args[1] = self->base.sel_self;
@@ -1498,7 +1500,7 @@ static PyObject* _Nullable
                                              | PY_VECTORCALL_ARGUMENTS_OFFSET,
                                          kwnames);
             free(temp_args);
-        }
+        } // LCOV_BR_EXCL_LINE
 #endif
     }
 
@@ -2002,8 +2004,8 @@ PyObjCSelector_Setup(PyObject* module)
     }
     PyObjCSelector_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "selector", PyObjCSelector_Type) == -1) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "selector", PyObjCSelector_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCSelector_Type);
@@ -2031,8 +2033,8 @@ PyObjCSelector_Setup(PyObject* module)
     }
     PyObjCPythonSelector_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "python_selector", PyObjCPythonSelector_Type) == -1) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "python_selector", PyObjCPythonSelector_Type) == -1) {
 #if PY_VERSION_HEX <= 0x03090000
         Py_CLEAR(bases);
 #endif
@@ -2052,8 +2054,8 @@ PyObjCSelector_Setup(PyObject* module)
     }
     PyObjCNativeSelector_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "native_selector", PyObjCNativeSelector_Type) == -1) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "native_selector", PyObjCNativeSelector_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCNativeSelector_Type);

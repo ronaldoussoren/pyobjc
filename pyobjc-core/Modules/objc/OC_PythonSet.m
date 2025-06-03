@@ -70,10 +70,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (Class)classForCoder
 {
-    if (PyFrozenSet_CheckExact(value)) {
-        return [NSSet class];
-    } else if (PyAnySet_CheckExact(value)) {
-        return [NSMutableSet class];
+    if (PyAnySet_CheckExact(value)) {
+        if (PyFrozenSet_CheckExact(value)) {
+            return [NSSet class];
+        } else {
+            return [NSMutableSet class];
+        }
     } else {
         return [OC_PythonSet class];
     }
@@ -446,6 +448,7 @@ NS_ASSUME_NONNULL_BEGIN
             while ((v = PyIter_Next(tmp)) != NULL) {
                 r = PyObject_RichCompareBool(v, tmpMember, Py_EQ);
                 if (r == -1) {
+                    Py_DECREF(v);
                     Py_DECREF(tmp);
                     Py_DECREF(tmpMember);
                     PyObjC_GIL_FORWARD_EXC();
@@ -462,12 +465,15 @@ NS_ASSUME_NONNULL_BEGIN
                             PyObjC_GIL_FORWARD_EXC();
                         } // LCOV_EXCL_LINE
                     }
+                    Py_DECREF(v);
                     break;
                 }
             }
-
             Py_DECREF(tmp);
             Py_DECREF(tmpMember);
+            if (PyErr_Occurred()) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
         }
 
     PyObjC_END_WITH_GIL

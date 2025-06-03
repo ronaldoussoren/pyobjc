@@ -769,7 +769,7 @@ free_ivars(id self, PyObject* cls)
             cur_cls = PyTuple_GET_ITEM(o, 0);
             if (cur_cls == (PyObject*)&PyObjCClass_Type) { // LCOV_BR_EXCL_LINE
                 cur_cls = NULL; // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
             Py_DECREF(o);
         } // LCOV_EXCL_LINE
     }
@@ -1182,7 +1182,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
             }
             PyGILState_Release(state);
         } else {
-            @throw;
+            @throw; // LCOV_EXCL_LINE
         }
     }
 }
