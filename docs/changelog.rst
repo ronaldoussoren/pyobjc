@@ -146,6 +146,17 @@ how reference counts are handled by ``-init`` methods.
   and enables removing error return paths in a number of functions due to internal
   APIs that could only fail due to assertion errors.
 
+* Removed some helper code that was used when subclassing a number of ``NSDecimalNumber``
+  methods. This should have no effect because overriding these methods is effectifly
+  impossible anyway on recent versions of macOS.
+
+* Fix some free-threaded race conditions
+
+  Some of these fixes use new APIs introduced in Python 3.14, there are
+  some race conditions left for Python 3.13 when the python proxy for
+  an Objective-C is retrieved in one thread while freeing it in another
+  one.
+
 Version 11.0
 ------------
 
