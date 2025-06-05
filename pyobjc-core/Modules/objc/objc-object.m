@@ -134,6 +134,31 @@ object_del(PyObject* obj __attribute__((__unused__)))
 // LCOV_EXCL_STOP
 
 static void
+object_dealloc_helper(PyObject* obj)
+{
+    if ((((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) {
+        /* pass */
+
+    } else {
+        id objc_object = ((PyObjCObject*)obj)->objc_object;
+        ((PyObjCObject*)obj)->objc_object = NSNull_null;
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                [objc_object release];
+
+            } @catch (NSObject* localException) {
+                NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
+                      localException);
+            }
+        Py_END_ALLOW_THREADS;
+    }
+    if (PyObjCObject_IsBlock(obj)) {
+        SET_FIELD(((PyObjCBlockObject*)obj)->signature, NULL);
+    }
+    Py_TYPE(obj)->tp_free(obj);
+}
+
+static void
 object_dealloc(PyObject* obj)
 {
     /*
@@ -146,36 +171,14 @@ object_dealloc(PyObject* obj)
     PyObject *ptype, *pvalue, *ptraceback;
     PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
-
-    if (PyObjCObject_IsBlock(obj)) {
-        SET_FIELD(((PyObjCBlockObject*)obj)->signature, NULL);
-    }
-
-    if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER
-        && PyObjCObject_GetObject(obj) != nil) { /* XXX: GetObject cannot return nil */
+    if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER) {
         /* Release the proxied object, we don't have to do this when
          * there is no proxied object.
          */
-        PyObjC_UnregisterPythonProxy(PyObjCObject_GetObject(obj), obj);
-
-        if ((((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) {
-            /* pass */
-
-        } else {
-            Py_BEGIN_ALLOW_THREADS
-                @try {
-                    [((PyObjCObject*)obj)->objc_object release];;
-
-                } @catch (NSObject* localException) {
-                    NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
-                          localException);
-                }
-            Py_END_ALLOW_THREADS;
-            ((PyObjCObject*)obj)->objc_object = (id _Nonnull)nil;
-        }
+        PyObjC_UnregisterPythonProxy(PyObjCObject_GetObject(obj), obj, object_dealloc_helper);
+    } else {
+        Py_TYPE(obj)->tp_free(obj);
     }
-
-    Py_TYPE(obj)->tp_free(obj);
 
     PyErr_Restore(ptype, pvalue, ptraceback);
 }
@@ -1214,6 +1217,11 @@ PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object)
     return res;
 }
 
+static void
+no_dealloc(PyObject* obj __attribute__((__unused__)))
+{
+}
+
 void
 _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 {
@@ -1234,7 +1242,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
         id objc_object = PyObjCObject_GetObject(obj);
         assert(objc_object != nil);
 
-        PyObjC_UnregisterPythonProxy(objc_object, obj);
+        PyObjC_UnregisterPythonProxy(objc_object, obj, no_dealloc);
 
         /* Object is set to ``[NSNull null]`` to maintain the invariant */
         ((PyObjCObject*)obj)->objc_object = NSNull_null;

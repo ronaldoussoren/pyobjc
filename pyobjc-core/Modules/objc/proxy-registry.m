@@ -174,7 +174,7 @@ PyObjC_RegisterObjCProxy(PyObject* original, id proxy)
 }
 
 void
-PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
+PyObjC_UnregisterPythonProxy(id original, PyObject* proxy, void (*dealloc)(PyObject* value))
 {
     PyObject* v;
 
@@ -192,6 +192,10 @@ PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
 #ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&proxy_mutex);
 #endif
+
+    if (Py_REFCNT(proxy) == 0) {
+        dealloc(proxy);
+    }
 
 } // LCOV_BR_EXCL_LINE
 
