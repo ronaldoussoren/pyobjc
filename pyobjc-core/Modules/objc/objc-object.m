@@ -168,8 +168,8 @@ object_dealloc(PyObject* obj)
      * free-threaded: the dealloc method can only be called when there
      * are no references to `obj` left, hence no need to use locking here.
      */
-    PyObject *ptype, *pvalue, *ptraceback;
-    PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+    //PyObject *ptype, *pvalue, *ptraceback;
+    //PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
     if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER) {
         /* Release the proxied object, we don't have to do this when
@@ -180,7 +180,7 @@ object_dealloc(PyObject* obj)
         Py_TYPE(obj)->tp_free(obj);
     }
 
-    PyErr_Restore(ptype, pvalue, ptraceback);
+    //PyErr_Restore(ptype, pvalue, ptraceback);
 }
 
 static int

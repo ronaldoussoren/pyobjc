@@ -476,6 +476,8 @@ static inline Py_ALWAYS_INLINE  void (Py_INCREF)(PyObject * _Nonnull op);
 
 #if PY_VERSION_HEX >= 0x030e0000
 PyAPI_FUNC(int) PyUnstable_Object_IsUniquelyReferenced(PyObject*);
+PyAPI_FUNC(int) PyUnstable_EnableTryIncRef(PyObject* obj);
+PyAPI_FUNC(void) PyUnstable_TryIncRef(PyObject* obj);
 #endif
 
 NS_ASSUME_NONNULL_END

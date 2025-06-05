@@ -126,6 +126,9 @@ PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
         Py_INCREF(current);
         proxy = current;
     } else {
+#if PY_VERSION_HEX >= 0x030e0000
+        PyUnstable_EnableTryIncRef(proxy);
+#endif
         NSMapInsert(python_proxies, original, proxy);
         Py_INCREF(proxy);
     }
@@ -193,9 +196,17 @@ PyObjC_UnregisterPythonProxy(id original, PyObject* proxy, void (*dealloc)(PyObj
     PyMutex_Unlock(&proxy_mutex);
 #endif
 
+#if PY_VERSION_HEX >= 0x030e0000
+    if (!PyUnstable_TryIncRef(v)) {
+        dealloc(proxy);
+    } else {
+        Py_DECREF(proxy);
+    }
+#else
     if (Py_REFCNT(proxy) == 0) {
         dealloc(proxy);
     }
+#endif
 
 } // LCOV_BR_EXCL_LINE
 
@@ -236,7 +247,15 @@ PyObject* _Nullable PyObjC_FindPythonProxy(id original)
 #endif
 
     v = NSMapGet(python_proxies, original);
-    Py_XINCREF(v);
+    if (v) {
+#if PY_VERSION_HEX >= 0x030e0000
+        if (!PyUnstable_TryIncRef(v)) {
+            v = NULL;
+        }
+#else
+        Py_INCREF(v);
+#endif
+    }
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&proxy_mutex);
