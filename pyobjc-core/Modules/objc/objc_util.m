@@ -286,6 +286,9 @@ PyObjCErr_FromObjC(NSObject* localException)
 
                 val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
                 if (val) {
+                    /* XXX: Error handling in this block is wrongl
+                     *      That said, AFAIK errors should never happen in 'normal' code.
+                     */
                     id temp;
                     exc_type = id_to_python(val);
 
@@ -296,6 +299,9 @@ PyObjCErr_FromObjC(NSObject* localException)
 
                     if (exc_type != NULL) {
                         PyErr_Restore(exc_type, exc_value, exc_traceback);
+                    } else {
+                        Py_CLEAR(exc_value);
+                        Py_CLEAR(exc_traceback);
                     }
 
                     PyObjC_GIL_RETURNVOID;

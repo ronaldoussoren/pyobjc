@@ -576,12 +576,12 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"returnPointerToFree",
-        {"retval": {"c_array_of_fixed_length": 4, "free_result": True}},
+        {"retval": {"c_array_of_fixed_length": 4}, "free_result": True},
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"returnPointerToFreeVariadic",
-        {"retval": {"c_array_of_variable_length": True, "free_result": True}},
+        {"retval": {"c_array_of_variable_length": True}, "free_result": True},
     )
 
     objc.registerMetaDataForSelector(
@@ -1678,12 +1678,14 @@ class TestPointerResultNative(TestCase):
     def test_fixed_free(self):
         obj = OC_MetaDataTest()
 
+        self.assertDoesFreeResult(obj.returnPointerToFree)
         v = obj.returnPointerToFree()
         self.assertEqual(v, (0, 1, 2, 3))
 
     def test_fixed_variadic(self):
         obj = OC_MetaDataTest()
 
+        self.assertDoesFreeResult(obj.returnPointerToFreeVariadic)
         v = obj.returnPointerToFreeVariadic()
         # XXX: This should be an error, we cannot return a pointer
         #      to a buffer that should be freed!

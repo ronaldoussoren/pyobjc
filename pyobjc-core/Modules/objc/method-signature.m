@@ -651,14 +651,8 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta != NULL && !PyDict_Check(meta)) {
-        PyObject* r = PyObject_Repr(meta);
-        if (r == NULL) {
-            return -1;
-        }
-
-        PyErr_Format(PyExc_TypeError, "metadata of type %s: %U", Py_TYPE(meta)->tp_name,
-                     r);
-        Py_DECREF(r);
+        PyErr_Format(PyExc_TypeError, "metadata of type %s: %R", Py_TYPE(meta)->tp_name,
+                     meta);
 
         return -1;
     }
@@ -667,9 +661,9 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     assert(descr == NULL || descr->allowNULL);
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_null_accepted, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_null_accepted, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
-            return -1;
+            return -1; // LCOV_EXCL_LINE
         /* case 0: pass */
        case 1:
             if (!PyObject_IsTrue(d)) {
@@ -684,16 +678,16 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_already_retained, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_already_retained, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
-            return -1;
+            return -1; // LCOV_EXCL_LINE
         case 0:
             if (descr == NULL || (descr->tmpl && descr->alreadyRetained))
                 return -2;
             // descr may be loaded into read-only memory, so only
             // write if truly necessary
-            if (descr->alreadyRetained)
-                descr->alreadyRetained = NO;
+            if (descr->alreadyRetained) // LCOV_BR_EXCL_LINE
+                descr->alreadyRetained = NO; // LCOV_EXCL_LINE
             break;
         case 1:
             if (PyObject_IsTrue(d)) {
@@ -713,7 +707,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
     assert(descr == NULL || !descr->alreadyCFRetained);
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_already_cfretained, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_already_cfretained, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
 
@@ -732,7 +726,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
     assert(descr == NULL || !descr->callableRetained);
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_callable_retained, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_callable_retained, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -750,7 +744,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
     assert(descr == NULL || descr->sel_type == NULL);
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_sel_of_type, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_sel_of_type, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -792,7 +786,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_callable, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_callable, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -809,7 +803,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             PyObject* a = NULL;
             Py_ssize_t i, len;
 
-            switch (PyDict_GetItemRef(d, PyObjCNM_arguments, &a)) {
+            switch (PyDict_GetItemRef(d, PyObjCNM_arguments, &a)) { // LCOV_BR_EXCL_LINE
             case -1:
                 Py_DECREF(d);
                 return -1;                       // LCOV_EXCL_LINE
@@ -851,7 +845,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
     assert(descr == NULL || !descr->arraySizeInRetval);
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_length_in_result, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_length_in_result, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -870,7 +864,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
     assert(descr == NULL || !descr->printfFormat);
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_printf_format, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_printf_format, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /*case 0: pass */
@@ -888,7 +882,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_delimited_by_null, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_delimited_by_null, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -906,7 +900,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_of_fixed_length, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_of_fixed_length, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -930,7 +924,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_of_variable_length, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_of_variable_length, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -950,7 +944,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_deref_result_pointer, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_deref_result_pointer, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -970,7 +964,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_length_in_arg, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_c_array_length_in_arg, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1044,7 +1038,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_type_modifier, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_type_modifier, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1079,7 +1073,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
     }
 
     if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_type, &d)) {
+        switch (PyDict_GetItemRef(meta, PyObjCNM_type, &d)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1222,7 +1216,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
         PyObject* av;
         int r;
 
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_retval, &retval)) {
+        switch (PyDict_GetItemRef(metadata, PyObjCNM_retval, &retval)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                            // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1246,10 +1240,12 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                 assert(r != -2);
             }
 
-            switch (PyDict_GetItemRef(metadata, PyObjCNM_free_result, &av)) {
+            switch (PyDict_GetItemRef(metadata, PyObjCNM_free_result, &av)) { // LCOV_BR_EXCL_LINE
             case -1:
+                // LCOV_EXCL_START
                 Py_DECREF(retval);
-                return -1;                        // LCOV_EXCL_LINE
+                return -1;
+                // LCOV_EXCL_STOP
             /* case 0: pass */
             case 1:
                 if (PyObject_IsTrue(av)) {
@@ -1264,7 +1260,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
     if (metadata) {
         PyObject* args;
 
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_arguments, &args)) {
+        switch (PyDict_GetItemRef(metadata, PyObjCNM_arguments, &args)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                          // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1280,7 +1276,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                 int       r;
 
                 if (args) {
-                    switch(PyDict_GetItemRef(args, k, &d)) {
+                    switch(PyDict_GetItemRef(args, k, &d)) { // LCOV_BR_EXCL_LINE
                     case -1:
                         // LCOV_EXCL_START
                         Py_DECREF(k);
@@ -1327,7 +1323,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
         }
         Py_CLEAR(args);
 
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_suggestion, &v)) {
+        switch (PyDict_GetItemRef(metadata, PyObjCNM_suggestion, &v)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1336,7 +1332,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
             v = NULL;
         }
 
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_deprecated, &v)) {
+        switch (PyDict_GetItemRef(metadata, PyObjCNM_deprecated, &v)) { // LCOV_BR_EXCL_LINE
         case -1:;
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1351,7 +1347,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
         }
 
         methinfo->null_terminated_array = NO;
-        switch(PyDict_GetItemRef(metadata, PyObjCNM_c_array_delimited_by_null, &v)) {
+        switch(PyDict_GetItemRef(metadata, PyObjCNM_c_array_delimited_by_null, &v)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /*case 0: pass */
@@ -1363,7 +1359,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
         }
 
         methinfo->arrayArg = -1;
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_c_array_length_in_arg, &v)) {
+        switch (PyDict_GetItemRef(metadata, PyObjCNM_c_array_length_in_arg, &v)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1380,7 +1376,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
 
         methinfo->variadic = NO;
 
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_variadic, &v)) {
+        switch (PyDict_GetItemRef(metadata, PyObjCNM_variadic, &v)) { // LCOV_BR_EXCL_LINE
         case -1:
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1433,7 +1429,7 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
     assert(PyDict_Check(metadata));
 
     PyObject* arguments;
-    switch (PyDict_GetItemRef(metadata, PyObjCNM_arguments, &arguments)) {
+    switch (PyDict_GetItemRef(metadata, PyObjCNM_arguments, &arguments)) { // LCOV_BR_EXCL_LINE
     case -1:
         return NULL;                             // LCOV_EXCL_LINE
     case 0:
@@ -1998,9 +1994,6 @@ static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
         r = PyDict_SetItem(result, PyObjCNM_null_accepted, descr->allowNULL?Py_True:Py_False);
         if (r == -1)    // LCOV_BR_EXCL_LINE
             goto error; // LCOV_EXCL_LINE
-    } else if (PyErr_Occurred()) {
-        /* Invalid metadata, XXX don't like this pattern */
-        goto error;
     }
 
     return result;

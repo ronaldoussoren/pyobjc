@@ -427,9 +427,11 @@ static PyObject* _Nullable class_call(PyObject* self, PyObject* _Nullable args, 
     }
 
     PyObject* new = PyObject_GetAttr((PyObject*)type, PyObjCNM___new__);
-    if (new == NULL) { /* Shouldn't happen */
+    if (new == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     int r = PyObjC_IsGenericNew(new);

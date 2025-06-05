@@ -24,6 +24,7 @@ with objc.autorelease_pool():
     e.add(objc.pyobjc_id(arr[1]))
 
 signal.alarm(5)
+
 r = set()
 run_in_threads(f, (arr, r))
 assert r == e, f"{r=} != {e=}"
