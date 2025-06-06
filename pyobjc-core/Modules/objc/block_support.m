@@ -362,16 +362,10 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 #endif
 
     if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref, // LCOV_BR_EXCL_LINE
-                                byref_attr)
-            < 0) {
-            goto error; // LCOV_EXCL_LINE
-        }
+        PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref, byref_attr);
 
     } else {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr) < 0) { // LCOV_BR_EXCL_LINE
-            goto error; // LCOV_EXCL_LINE
-        }
+        PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr);
     }
 
     PyMem_Free(argbuf);

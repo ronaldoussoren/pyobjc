@@ -11,6 +11,7 @@ import operator
 import struct
 
 import objc
+from objc import super  # noqa: A004
 from PyObjCTest.fnd import NSNumber, NSNumberFormatter
 from PyObjCTest.misc import OC_Misc
 from PyObjCTest.pythonnumber import OC_NumberInt
@@ -1213,3 +1214,28 @@ class TestComparsionMethods(TestCase):
                 c = OC_ObjectInt.invokeSelector_of_("classForKeyedArchiver", value)
                 self.assertIs(a, b)
                 self.assertIs(a, c)
+
+
+class TestNumberSubclass(TestCase):
+    def test_nsnumber_subclass(self):
+        class MyObject(NSNumber):
+            def init(self):
+                self = super().init()
+                return self
+
+            def objCType(self):
+                return b"i"
+
+            def intValue(self):
+                return 42
+
+            def getValue_(self, buf):
+                return self.intValue()
+
+        o = MyObject()
+        self.assertIsInstance(o, MyObject)
+
+        self.assertEqual(o.intValue(), 42)
+        self.assertEqual(o, 42)
+
+        self.assertEqual(o.description(), "42")

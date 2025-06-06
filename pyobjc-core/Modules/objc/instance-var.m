@@ -105,7 +105,8 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
         res = *(PyObject**)(((char*)objc) + ivar_getOffset(var));
 
         if (res == NULL) {
-            PyErr_Format(PyExc_AttributeError, "No attribute %s\n", ivar_getName(var));
+            PyErr_Format(PyExc_AttributeError, "'%s' object has no attribute '%s'",
+                    class_getName(object_getClass(objc)), ivar_getName(var));
         } else {
             Py_INCREF(res);
         }
@@ -113,9 +114,12 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     } else {
         const char* encoding = ivar_getTypeEncoding(var);
 
-        if (encoding == NULL) {
+        if (encoding == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            // Guards against invalid data in the ObjC runtime
             PyErr_SetString(PyObjCExc_Error, "Cannot extract type encoding from ivar");
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         if (encoding[0] == _C_ID) {
@@ -125,8 +129,8 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
         } else {
             res = pythonify_c_value(encoding, ((char*)objc) + ivar_getOffset(var));
         }
-    }
-    Py_END_CRITICAL_SECTION();
+    } // LCOV_BR_EXCL_LINE
+    Py_END_CRITICAL_SECTION(); // LCOV_BR_EXCL_LINE
     return res;
 }
 
@@ -224,10 +228,13 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
             old_value = object_getIvar(objc, var);
             @try {
                 [new_value retain];
+
+            // LCOV_EXCL_START
             } @catch (NSObject* localException) {
                 NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
                       localException);
             }
+            // LCOV_EXCL_STOP
         }
 
         object_setIvar(objc, var, new_value);
@@ -238,25 +245,22 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
              */
             @try {
                 [old_value release];
+            // LCOV_EXCL_START
             } @catch (NSObject* localException) {
                 NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
                       localException);
             }
+            // LCOV_EXCL_STOP
         }
 
         return 0;
     }
 
     Py_BEGIN_CRITICAL_SECTION(obj);
-    size = PyObjCRT_SizeOfType((const char* _Nonnull)ivar_getTypeEncoding(var));
-    if (size == -1) {
-        // [objc didChangeValueForKey:ocName];
-        return -1;
-    }
     res = depythonify_c_value((const char* _Nonnull)ivar_getTypeEncoding(var), value,
                               (void*)(((char*)objc) + ivar_getOffset(var)));
     Py_END_CRITICAL_SECTION();
-    if (res == -1) {
+    if (res == -1) { // LCOV_BR_EXCL_LINE
         // [objc didChangeValueForKey:ocName];
         return -1;
     }
@@ -386,7 +390,7 @@ ivar_hash(PyObject* o)
 
     if (result == -1) { // LCOV_BR_EXCL_LINE
         result = -2; // LCOV_EXCL_LINE
-    }
+    } // LCOV_EXCL_LINE
 
     return result;
 }
@@ -579,13 +583,13 @@ int
 PyObjCInstanceVariable_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&ivar_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     PyObjCInstanceVariable_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "ivar", PyObjCInstanceVariable_Type) == -1) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "ivar", PyObjCInstanceVariable_Type) == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 

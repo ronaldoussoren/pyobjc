@@ -175,8 +175,8 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     argbuf_len = align(argbuf_len, sizeof(void*));
     r = PyObjCFFI_CountArguments(self->methinfo, 0, &byref_in_count, &byref_out_count,
                                  &plain_count, &argbuf_len, &variadicAllArgs);
-    if (r == -1) {
-        return NULL;
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     variadicAllArgs |=
@@ -248,9 +248,11 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
 #pragma clang diagnostic pop
 #endif
 
-        if (r != FFI_OK) {
+        if (r != FFI_OK) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
             goto error;
+            // LCOV_EXCL_STOP
         }
         cifptr = &cif;
 
@@ -276,15 +278,10 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
 
 error:
     if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + nargsf, byref, byref_attr)
-            < 0) {
-            Py_CLEAR(retval);
-        }
+        PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + nargsf, byref, byref_attr);
 
     } else {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr) < 0) {
-            Py_CLEAR(retval);
-        }
+        PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr);
     }
 
     if (argbuf) {
@@ -345,7 +342,7 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
                      self->methinfo, 0, args, nargsf,
                      align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type),
                            sizeof(void*)),
-                     argbuf, sizeof(argbuf), /*arglist,*/ values)
+                     argbuf, sizeof(argbuf), values)
                  == -1)) {
 
         goto error;

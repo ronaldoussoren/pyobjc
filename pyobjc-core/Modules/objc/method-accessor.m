@@ -315,7 +315,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
 
             Py_CLEAR(py_name);
             Py_DECREF(v);
-        }
+        } // LCOV_BR_EXCL_LINE
 
         free(methods);
     }

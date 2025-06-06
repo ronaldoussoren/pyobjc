@@ -1,6 +1,7 @@
 import objc
 from PyObjCTest.instanceVariables import ClassWithVariables
 from PyObjCTools.TestSupport import TestCase
+from .test_metadata import NoObjCClass
 
 
 NSObject = objc.lookUpClass("NSObject")
@@ -95,6 +96,7 @@ class TestInstanceVariables(TestCase):
         self.assertFalse(ivar_a == ivar_nameless)
         self.assertFalse(ivar_a == 42)
 
+        self.assertFalse(ivar_a != ivar_a)
         self.assertFalse(ivar_a != ivar_a2)
         self.assertTrue(ivar_a != ivar_a3)
         self.assertTrue(ivar_a != ivar_b)
@@ -187,6 +189,14 @@ class TestInstanceVariables(TestCase):
 
         self.object.idVar = "hello"
         self.assertEqual(self.object.idVar, "hello")
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            self.object.idVar = NoObjCClass()
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot set Objective-C instance-variables through class"
+        ):
+            type(self.object).idVar.__set__(type(self.object), 42)
 
     def testInt(self):
         # Check that we can set and query attributes of type 'int'

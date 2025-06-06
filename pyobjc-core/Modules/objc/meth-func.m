@@ -238,10 +238,12 @@ PyObjC_num_kwdefaults(PyObject* value)
     if (defaults == NULL) { // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
-    if (PyDict_Check(defaults)) {
+    if (PyDict_Check(defaults)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_ssize_t num = PyDict_Size(defaults);
         Py_DECREF(defaults);
         return num;
+        // LCOV_EXCL_STOP
     } else if (defaults != Py_None) { // LCOV_BR_EXCL_LINE
         /* This cannot happen without poking into CPython internals */
         // LCOV_EXCL_START

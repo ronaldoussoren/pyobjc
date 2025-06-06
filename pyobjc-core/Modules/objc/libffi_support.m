@@ -4469,7 +4469,7 @@ PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo
 
 #endif
 
-int
+void
 PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_attr)
 {
     Py_ssize_t i;
@@ -4496,8 +4496,6 @@ PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_
             }
         }
     }
-
-    return 0;
 }
 
 #ifndef __arm64__
@@ -4836,14 +4834,10 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
 #endif
 
     if (unlikely(variadicAllArgs)) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(methinfo) + nargs, byref, byref_attr) < 0) {
-            goto error_cleanup;
-        }
+        PyObjCFFI_FreeByRef(Py_SIZE(methinfo) + nargs, byref, byref_attr);
 
     } else {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr) < 0) {
-            goto error_cleanup;
-        }
+        PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr);
     }
 
     Py_CLEAR(methinfo);

@@ -602,6 +602,37 @@ class TestOverridingSpecials(TestCase):
 
         self.assertEqual(values, {"key": 42})
 
+    def test_class_with_slots(self):
+        class ClassWithSlots(NSObject):
+            __slots__ = ("slot",)
+
+        value = ClassWithSlots.alloc().init()
+
+        with self.assertRaisesRegex(
+            AttributeError, "'ClassWithSlots' object has no attribute 'slot'"
+        ):
+            value.slot
+
+        with self.assertRaisesRegex(
+            AttributeError, "'ClassWithSlots' object has no attribute 'slotb'"
+        ):
+            value.slotb
+
+        value.slot = 42
+        self.assertEqual(value.slot, 42)
+
+        with self.assertRaisesRegex(
+            AttributeError, "'ClassWithSlots' object has no attribute 'slotb'"
+        ):
+            value.slotb = 42
+
+        del value.slot
+
+        with self.assertRaisesRegex(
+            AttributeError, "'ClassWithSlots' object has no attribute 'slot'"
+        ):
+            value.slot
+
     def test_invalid_slots(self):
         with self.assertRaisesRegex(TypeError, "not iterable"):
 

@@ -67,6 +67,11 @@ nil = None
 YES = True
 NO = False
 
+# Subclassing a number of classes won't work
+# without major changes to the bridge:
+for _cls in ("NSString", "NSMutableString"):
+    _objc.lookUpClass(_cls).__objc_final__ = True
+
 
 class autorelease_pool:
     """

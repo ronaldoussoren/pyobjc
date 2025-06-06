@@ -240,6 +240,33 @@ class TestFunctions(TestCase):
         with self.assertRaisesRegex(TypeError, "Don't use this function"):
             NSCountFrames()  # noqa: F821
 
+    def test_invalid_signature(self):
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
+            objc.loadBundleFunctions(
+                bundle,
+                globals(),
+                [
+                    ("NSFrameAddress", b".Q", ""),
+                ],
+                False,
+            )
+
+    def test_too_long_signature(self):
+        gl = {}
+        objc.loadBundleFunctions(
+            bundle,
+            gl,
+            [
+                ("NSFrameAddress", b"Q" * 600, ""),
+            ],
+            True,
+        )
+        with self.assertRaisesRegex(
+            objc.error,
+            r"wrapping a function with 599 arguments, at most \d+ are supported",
+        ):
+            gl["NSFrameAddress"](*(1,) * 599)
+
     def test_deprecations(self):
         NSClassFromString("NSObject")  # noqa: F821
 

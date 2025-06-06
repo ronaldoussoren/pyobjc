@@ -45,8 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  *      hardcoding the result (including the various OC_.. classes
  *      leads to faster code)
  */
-@interface
-NSObject (PyObjCSupport)
+@interface NSObject (PyObjCSupport)
 - (PyObject* _Nullable)__pyobjc_PythonObject__;
 + (PyObject* _Nullable)__pyobjc_PythonObject__;
 
@@ -54,8 +53,7 @@ NSObject (PyObjCSupport)
 + (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
-@implementation
-NSObject (PyObjCSupport)
+@implementation NSObject (PyObjCSupport)
 
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
@@ -106,8 +104,7 @@ NSObject (PyObjCSupport)
 
 @end /* PyObjCSupport */
 
-@interface
-NSProxy (PyObjCSupport)
+@interface NSProxy (PyObjCSupport)
 - (PyObject* _Nullable)__pyobjc_PythonObject__;
 + (PyObject* _Nullable)__pyobjc_PythonObject__;
 
@@ -115,8 +112,7 @@ NSProxy (PyObjCSupport)
 + (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
-@implementation
-NSProxy (PyObjCSupport)
+@implementation NSProxy (PyObjCSupport)
 
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
@@ -164,14 +160,12 @@ NSProxy (PyObjCSupport)
 }
 @end /* PyObjCSupport */
 
-@interface
-Protocol (PyObjCSupport)
+@interface Protocol (PyObjCSupport)
 - (PyObject* _Nullable)__pyobjc_PythonObject__;
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
-@implementation
-Protocol (PyObjCSupport)
+@implementation Protocol (PyObjCSupport)
 
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
@@ -184,28 +178,25 @@ Protocol (PyObjCSupport)
     return rval;
 }
 
+// LCOV_EXCL_START
+//
+// This method will never be called because subclassing
+// Protocol is not useful.
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
-    PyObject* rval;
-
     *cookie = 0;
-    rval    = PyObjC_FindPythonProxy(self);
-    if (rval == NULL) {
-        rval = PyObjCFormalProtocol_ForProtocol(self);
-    }
-    return rval;
+    return [self __pyobjc_PythonObject__];
 }
+// LCOV_EXCL_STOP
 
 @end /* PyObjCSupport */
 
-@interface
-NSString (PyObjCSupport)
+@interface NSString (PyObjCSupport)
 - (PyObject* _Nullable)__pyobjc_PythonObject__;
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSString (PyObjCSupport) */
 
-@implementation
-NSString (PyObjCSupport)
+@implementation NSString (PyObjCSupport)
 
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
@@ -223,22 +214,26 @@ NSString (PyObjCSupport)
     return (PyObject*)PyObjCUnicode_New(self);
 }
 
+// LOV_EXCL_START
+// The NSString class cluster cannot be subclassed in Python.
+//
+// Doing this would currently cause crashes that are hard
+// to avoid due to the special handling of Cocoa strings.
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     return (PyObject*)PyObjCUnicode_New(self);
 }
+// LOV_EXCL_STOP
 
 @end /* NSString (PyObjCSupport) */
 
-@interface
-NSNumber (PyObjCSupport)
+@interface NSNumber (PyObjCSupport)
 - (PyObject* _Nullable)__pyobjc_PythonObject__;
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSNumber (PyObjCSupport) */
 
-@implementation
-NSNumber (PyObjCSupport)
+@implementation NSNumber (PyObjCSupport)
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval;
@@ -265,14 +260,12 @@ NSNumber (PyObjCSupport)
 }
 @end
 
-@interface
-NSDecimalNumber (PyObjCSupport)
+@interface NSDecimalNumber (PyObjCSupport)
 - (PyObject* _Nullable)__pyobjc_PythonObject__;
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSDecimalNumber (PyObjCSupport) */
 
-@implementation
-NSDecimalNumber (PyObjCSupport)
+@implementation NSDecimalNumber (PyObjCSupport)
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval;
@@ -992,12 +985,11 @@ PyObjCRT_AlignOfType(const char* start_type)
         return __alignof__(double);
     case _C_LNG_DBL:
         return __alignof__(long double);
-    case _C_CHARPTR:
-        return __alignof__(char*);
 #ifdef _C_ATOM
     case _C_ATOM:
-        return __alignof__(char*);
 #endif
+    case _C_CHARPTR:
+        return __alignof__(char*);
     case _C_PTR:
         return __alignof__(void*);
 
@@ -1817,7 +1809,7 @@ depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, vo
             *(void**)resp       = [data mutableBytes];
             return 0;
         }
-    }
+    } // LCOV_EXCL_LINE
 
     PyObject* seq = PyObjCSequence_Tuple(arg, "Sequence required");
     if (seq == NULL) {
@@ -2061,14 +2053,16 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
     /* Extract struck packing value, need better way to fetch this */
     pack = -1;
     if (!PyList_Check(arg) && !PyTuple_Check(arg)) {
-        seq = PyObject_GetAttrString(arg, "__struct_pack__");
+        seq = PyObject_GetAttr(arg, PyObjCNM___struct_pack__);
         if (seq == NULL) {
             PyErr_Clear();
 
         } else {
             pack = PyNumber_AsSsize_t(seq, NULL);
-            if (PyErr_Occurred()) {
-                return -1;
+            if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                // The attribute will always be an int unless
+                // someone pokes directly into the interpreter.
+                return -1; // LCOV_EXCL_LINE
             }
             Py_DECREF(seq);
         }
@@ -2363,10 +2357,12 @@ pythonify_c_value(const char* type, const void* datum)
         retobject = pythonify_c_array(type, datum);
         break;
 
+    // LCOV_EXCL_START
     case _C_VOID:
         retobject = Py_None;
         Py_INCREF(retobject);
         break;
+    // LCOV_EXCL_STOP
 
     case _C_VECTOR_B: {
         struct vector_info* info = vector_lookup(type);
@@ -2818,8 +2814,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
     unsigned long long utemp;
     int                r;
 
-    if (!datum)
-        return 0;
+    assert(datum != NULL);
 
     type = PyObjCRT_SkipTypeQualifiers(type);
 
