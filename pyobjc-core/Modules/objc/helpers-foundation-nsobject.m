@@ -149,11 +149,6 @@ mkimp_NSObject_alloc(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 
-static void
-dealloc_helper(PyObject* obj __attribute__((__unused__)))
-{
-}
-
 static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* self,
                                                  PyObject* const* arguments
                                                  __attribute__((__unused__)),
@@ -203,7 +198,7 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
      * ensure that there's still a valid reference until the proxy is
      * deallocated.
      */
-    PyObjC_UnregisterPythonProxy(((PyObjCObject*)self)->objc_object, self, dealloc_helper);
+    PyObjC_UnregisterPythonProxy(((PyObjCObject*)self)->objc_object, self);
     if (!(((PyObjCObject*)self)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) {
         [NSNull_null retain];
     }

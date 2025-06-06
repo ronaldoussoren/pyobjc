@@ -21,20 +21,15 @@ typedef struct {
 PyObject* PyObjCFormalProtocol_Type;
 
 static void
-proto_dealloc_helper(PyObject* object)
+proto_dealloc(PyObject* object)
 {
+    PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
+    PyObjC_UnregisterPythonProxy(self->objc, object);
     PyTypeObject* tp = Py_TYPE(object);
     tp->tp_free(object);
 #if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
 #endif
-}
-
-static void
-proto_dealloc(PyObject* object)
-{
-    PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
-    PyObjC_UnregisterPythonProxy(self->objc, object, proto_dealloc_helper);
 }
 
 

@@ -152,11 +152,6 @@ how reference counts are handled by ``-init`` methods.
 
 * Fix some free-threaded race conditions
 
-  Some of these fixes use new APIs introduced in Python 3.14, there are
-  some race conditions left for Python 3.13 when the python proxy for
-  an Objective-C is retrieved in one thread while freeing it in another
-  one.
-
 Version 11.0
 ------------
 

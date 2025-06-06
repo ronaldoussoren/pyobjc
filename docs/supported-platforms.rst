@@ -12,9 +12,7 @@ and will add new versions of Python when they come available.
 
 Currently PyObjC supports Python 3.9 upto and including 3.13.
 
-Free-threading as introduced in Python 3.13 is supported experimentally, mostly
-because of limited testing. Free-threading support for PyObjC works better in
-Python 3.14 due to some new CPython APIs that enable fixing a race condition.
+Free-threading as introduced in Python 3.13 is supported experimentally.
 
 
 .. admonition:: Old Python versions

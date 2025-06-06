@@ -189,12 +189,12 @@ CALC_VALUE_VALUE(calcId, andFloat4, id, "@", simd_float4, "<4f>")
     return self;
 }
 
--(id)stringWithVectorFloat2:(simd_float2)value
+-(id)stringWithVectorFloat2:(simd_float2)value NS_RETURNS_RETAINED
 {
     return [[NSString stringWithFormat:@"vector<%.1f, %.1f>", value.x, value.y] retain];
 }
 
--(CFStringRef)cfstringWithVectorFloat2:(simd_float2)value
+-(CFStringRef)cfstringWithVectorFloat2:(simd_float2)value CF_RETURNS_RETAINED
 {
     return CFStringCreateWithFormat(NULL, NULL, CFSTR("cfvector<%.1f; %.1f>"), value.x, value.y);
 }

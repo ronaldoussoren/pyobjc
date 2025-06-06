@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
                                  userInfo:nil];
 }
 
-+ (instancetype)invokeAlloc:(Class)cls
++ (instancetype)invokeAlloc:(Class)cls  NS_RETURNS_RETAINED
 {
     return [cls alloc];
 }

@@ -35,9 +35,12 @@ PyDoc_STRVAR(unic_doc, "objc.pyobjc_unicode\n"
                        "the value of the NSString changes.");
 
 static void
-unic_dealloc_helper(PyObject* obj)
+unic_dealloc(PyObject* obj)
 {
+
     PyObjCUnicodeObject* uobj     = (PyObjCUnicodeObject*)obj;
+    PyObjC_UnregisterPythonProxy(uobj->nsstr, obj);
+
     PyObject*            weakrefs = uobj->weakrefs;
     PyObject*            py_nsstr = uobj->py_nsstr;
 
@@ -58,12 +61,6 @@ unic_dealloc_helper(PyObject* obj)
 #endif
 }
 
-static void
-unic_dealloc(PyObject* obj)
-{
-    PyObjCUnicodeObject* uobj     = (PyObjCUnicodeObject*)obj;
-    PyObjC_UnregisterPythonProxy(uobj->nsstr, obj, unic_dealloc_helper);
-}
 
 static PyObject* _Nullable unic_nsstring(PyObject* self)
 {

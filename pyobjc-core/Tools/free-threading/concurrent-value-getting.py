@@ -1,6 +1,5 @@
 from _tools import run_in_threads
 import objc
-import signal
 
 NSArray = objc.lookUpClass("NSArray")
 NSObject = objc.lookUpClass("NSObject")
@@ -22,8 +21,6 @@ with objc.autorelease_pool():
     arr = NSArray.arrayWithArray_([NSObject.alloc().init(), NSObject.alloc().init()])
     e.add(objc.pyobjc_id(arr[0]))
     e.add(objc.pyobjc_id(arr[1]))
-
-signal.alarm(5)
 
 r = set()
 run_in_threads(f, (arr, r))
