@@ -56,8 +56,6 @@ extern int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_st
 extern int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string,
                                   size_t n) __attribute__((__pure__));
 
-extern PyObject* _Nullable PyObjC_ImportName(const char* name);
-
 extern PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object);
 
 extern int PyObjCRT_SignaturesEqual(const char*, const char*) __attribute__((__pure__));

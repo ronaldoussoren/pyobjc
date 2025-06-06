@@ -250,8 +250,8 @@ PyObjCErr_FromObjC(NSObject* localException)
     PyObject*     exception;
     PyObject*     v;
     PyObject*     exc_type;
-    PyObject*     exc_value;
-    PyObject*     exc_traceback;
+    PyObject*     exc_value = NULL;
+    PyObject*     exc_traceback = NULL;
     PyObject*     c_localException_name;
     PyObject*     c_localException_reason;
 
@@ -286,23 +286,36 @@ PyObjCErr_FromObjC(NSObject* localException)
 
                 val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
                 if (val) {
-                    /* XXX: Error handling in this block is wrongl
-                     *      That said, AFAIK errors should never happen in 'normal' code.
-                     */
                     id temp;
                     exc_type = id_to_python(val);
-
-                    temp          = [userInfo objectForKey:@"__pyobjc_exc_value__"];
-                    exc_value     = temp != NULL ? id_to_python(temp) : NULL;
-                    temp          = [userInfo objectForKey:@"__pyobjc_exc_traceback__"];
-                    exc_traceback = temp != NULL ? id_to_python(temp) : NULL;
-
-                    if (exc_type != NULL) {
-                        PyErr_Restore(exc_type, exc_value, exc_traceback);
-                    } else {
-                        Py_CLEAR(exc_value);
-                        Py_CLEAR(exc_traceback);
+                    if (exc_type == NULL) { // LCOV_BR_EXCL_LINE
+                        PyObjC_GIL_RETURNVOID; // LCOV_EXCL_LINE
                     }
+
+                    temp = [userInfo objectForKey:@"__pyobjc_exc_value__"];
+                    if (temp != nil) {
+                        exc_value     = id_to_python(temp);
+                        if (exc_value == NULL) { // LCOV_BR_EXCL_LINE
+                            // LCOV_EXCL_START
+                            Py_CLEAR(exc_type);
+                            PyObjC_GIL_RETURNVOID;
+                            // LCOV_EXCL_STOP
+                        }
+                    }
+
+                    temp = [userInfo objectForKey:@"__pyobjc_exc_traceback__"];
+                    if (temp != nil) {
+                        exc_traceback     = id_to_python(temp);
+                        if (exc_traceback == NULL) { // LCOV_BR_EXCL_LINE
+                            // LCOV_EXCL_START
+                            Py_CLEAR(exc_type);
+                            Py_CLEAR(exc_value);
+                            PyObjC_GIL_RETURNVOID;
+                            // LCOV_EXCL_STOP
+                        }
+                    }
+
+                    PyErr_Restore(exc_type, exc_value, exc_traceback);
 
                     PyObjC_GIL_RETURNVOID;
                 } // LCOV_EXCL_LINE
@@ -594,21 +607,6 @@ PyObjC_FreeCArray(int code, Py_buffer* view)
     }
 }
 
-static inline PyTypeObject* _Nullable fetch_array_type(void)
-{
-    static PyTypeObject* array_type = NULL;
-
-    if (array_type != NULL) {
-        return array_type;
-
-    } else {
-        array_type = (PyTypeObject*)PyObjC_ImportName("array.ArrayType");
-        return array_type;
-    }
-}
-
-#define array_check(obj) PyObject_TypeCheck(obj, fetch_array_type())
-
 static char struct_elem_code(const char* typestr);
 
 static char
@@ -626,7 +624,7 @@ array_typestr(PyObject* array)
         return '\0'; // LCOV_EXCL_LINE
     }
 
-    if (PyUnicode_Check(typecode)) {
+    if (PyUnicode_Check(typecode)) { // LCOV_BR_EXCL_LINE
         bytes = PyUnicode_AsEncodedString(typecode, NULL, NULL);
         if (bytes == NULL) { // LCOV_BR_EXCL_LINE
             /* Should not happen: array.array typecode is an
@@ -846,7 +844,7 @@ code_compatible(char array_code, char type_code)
         case _C_ULNG:
         case _C_ULNG_LNG:
             return YES;
-        }
+        } // LCOV_EXCL_LINE
 
     case 'f':
         return type_code == _C_FLT;
@@ -1065,7 +1063,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
          */
     }
 
-    if (array_check(pythonList)) {
+    if (PyObjC_ArrayTypeCheck(pythonList)) {
         /* An array.array. Only convert if the typestr describes an
          * simple type of the same type as the array, or a struct/array
          * containing only elements of the type of the array.
@@ -1252,8 +1250,8 @@ PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, const void* a
     Py_ssize_t eltsize;
 
     eltsize = PyObjCRT_SizeOfType(elementType);
-    if (eltsize == -1) {
-        return NULL;
+    if (eltsize == -1) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     if (eltsize == 1 || eltsize == 0) {
@@ -1266,7 +1264,7 @@ PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, const void* a
             /* Special case for buffer-like objects */
             return PyBytes_FromStringAndSize(array, size);
         }
-    }
+    } // LCOV_EXCL_LINE
 
     if (*elementType == _C_UNICHAR) {
         int byteorder = 0;
@@ -1357,12 +1355,13 @@ PyObject* _Nullable PyObjC_CArrayToPython2(const char* elementType, const void* 
     Py_ssize_t eltsize;
 
     if (size == -1) {
+        /* XXX: Can this happen? */
         size = 0;
     }
 
     eltsize = PyObjCRT_SizeOfType(elementType);
-    if (eltsize == -1) {
-        return NULL;
+    if (eltsize == -1) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     if (eltsize == 1 || eltsize == 0) {
@@ -1429,7 +1428,7 @@ PyObjCClass_Convert(PyObject* object, void* pvar)
     }
 
     *(Class*)pvar = PyObjCClass_GetClass(object);
-    if (*(Class*)pvar == NULL) // LCOC_BR_EXCL_LINE
+    if (*(Class*)pvar == NULL) // LCOV_BR_EXCL_LINE
         return 0; // LCOV_EXCL_LINE
     return 1;
 }
@@ -1460,32 +1459,6 @@ PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_
     }
 
     return strncmp((const char*)(PyUnicode_DATA(unicode_string)), ascii_string, n) == 0;
-}
-
-PyObject* _Nullable PyObjC_ImportName(const char* name)
-{
-    PyObject* py_name;
-    PyObject* mod;
-    char*     c = strrchr(name, '.');
-
-    /* This function is only used to import names
-     * in a module, not modules.
-     */
-    assert(c != NULL);
-
-    py_name = PyUnicode_FromStringAndSize(name, c - name);
-    if (py_name == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
-    }
-    mod     = PyImport_Import(py_name);
-    Py_DECREF(py_name);
-    if (mod == NULL) {
-        return NULL;
-    }
-
-    PyObject* v = PyObject_GetAttrString(mod, c + 1);
-    Py_DECREF(mod);
-    return v;
 }
 
 PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object)

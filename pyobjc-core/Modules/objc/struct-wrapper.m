@@ -305,65 +305,46 @@ static PyObject* _Nullable struct__deepcopy__(PyObject* self, PyObject* args, Py
     PyObject*    memo;
     PyObject*    result;
     PyMemberDef* member = Py_TYPE(self)->tp_members;
-    PyObject*    deepcopy;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &memo)) {
         return NULL;
     }
 
-    deepcopy= PyObjC_ImportName("copy.deepcopy");
-    if (deepcopy == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
-    }
-
     result = PyObject_GC_New(PyObject, Py_TYPE(self));
     if (result == NULL) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(deepcopy); // LCOV_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
 
-    Py_BEGIN_CRITICAL_SECTION(self);
     while (member && member->name) {
+        PyObject* t;
         assert(member->type == T_OBJECT);
         *((PyObject**)(((char*)result) + member->offset)) = NULL;
-        PyObject* t = GET_STRUCT_FIELD(self, member);
-        assert(t != NULL);
 
-        if (t != NULL) {
+        Py_BEGIN_CRITICAL_SECTION(self);
+            t = GET_STRUCT_FIELD(self, member);
+            assert(t != NULL);
             Py_INCREF(t);
-            PyObject* args[3] = {NULL, t, memo};
-            PyObject* v       = PyObject_Vectorcall(
-                    deepcopy, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            if (v == NULL) {
-                Py_DECREF(result);
-                Py_DECREF(deepcopy);
-                Py_EXIT_CRITICAL_SECTION();
-                return NULL;
-            }
-            SET_STRUCT_FIELD(result, member, v);
-            Py_DECREF(v);
+        Py_END_CRITICAL_SECTION();
+
+        PyObject* v = PyObjC_deepcopy(t, memo);
+        Py_DECREF(t);
+        if (v == NULL) {
+            Py_DECREF(result);
+            return NULL;
         }
+        SET_STRUCT_FIELD(result, member, v);
+        Py_DECREF(v);
 
         member++;
     }
-    Py_END_CRITICAL_SECTION();
 
     PyObject_GC_Track(result);
-    Py_DECREF(deepcopy);
     return result;
 }
 
 static PyObject* _Nullable struct_deepcopy(PyObject* self)
 {
-    PyObject* deepcopy= PyObjC_ImportName("copy.deepcopy");
-    if (deepcopy == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
-    }
-    PyObject* args[2] = {NULL, self};
-    PyObject* result       = PyObject_Vectorcall(
-            deepcopy, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(deepcopy);
-    return result;
+    return PyObjC_deepcopy(self, NULL);
 }
 
 

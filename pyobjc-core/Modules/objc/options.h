@@ -41,7 +41,8 @@ extern int PyObjC_IsGenericNew(PyObject* value) __attribute__((warn_unused_resul
 
 extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* class_dict,      PyObject* meta_dict,           PyObject* py_superclass,
                         PyObject* protocols, PyObject* hiddenSelectors, PyObject* hiddenClassSelectors) __attribute__((warn_unused_result));
-
+extern PyObject* _Nullable PyObjC_deepcopy(PyObject* value, PyObject* _Nullable memo);
+extern int PyObjC_ArrayTypeCheck(PyObject* value);
 NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_OPTION_H */

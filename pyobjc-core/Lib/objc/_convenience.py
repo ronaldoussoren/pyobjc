@@ -15,6 +15,8 @@ from objc._objc import (
 import PyObjCTools.KeyValueCoding as kvc
 from objc._new import make_generic_new, NEW_MAP
 from objc._transform import _selectorToKeywords
+import array
+import copy
 
 __all__ = (
     "addConvenienceForClass",
@@ -32,6 +34,8 @@ options._getKey = kvc.getKey
 options._setKey = kvc.setKey
 options._getKeyPath = kvc.getKeyPath
 options._setKeyPath = kvc.setKeyPath
+options._ArrayType = array.ArrayType
+options._deepcopy = copy.deepcopy
 
 del kvc
 

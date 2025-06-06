@@ -140,7 +140,6 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     Ivar                    var;
     id                      objc;
-    Py_ssize_t              size;
     int                     res;
 
     if (value == NULL && !self->isSlot) {

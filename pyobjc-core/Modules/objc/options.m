@@ -222,6 +222,8 @@ OBJECT_PROP_STATIC(_transformAttribute, PyObjC_transformAttribute)
 OBJECT_PROP_STATIC(_processClassDict, PyObjC_processClassDict)
 OBJECT_PROP_STATIC(_setDunderNew, PyObjC_setDunderNew)
 OBJECT_PROP_STATIC(_genericNewClass, PyObjC_genericNewClass)
+OBJECT_PROP_STATIC(_ArrayType, PyObjC_ArrayType)
+OBJECT_PROP_STATIC(_deepcopy, PyObjC_deepcopyFunc)
 
 static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
@@ -367,6 +369,10 @@ static PyGetSetDef options_getset[] = {
            "Private helper used for setting __new__ of a new Python subclass"),
     GETSET(_genericNewClass,
            "Class of the generic __new__ implementation"),
+    GETSET(_ArrayType,
+           "set to array.ArrayType"),
+    GETSET(_deepcopy,
+           "set to copy.deepcopy"),
     {
         .name = "deprecation_warnings",
         .get  = deprecation_warnings_get,
@@ -1104,6 +1110,49 @@ int PyObjC_IsGenericNew(PyObject* value)
     int r = PyObject_TypeCheck(value, (PyTypeObject*)type);
     Py_DECREF(type);
     return r;
+}
+
+int PyObjC_ArrayTypeCheck(PyObject* value)
+{
+    LOCK(PyObjC_genericNewClass);
+    PyObject* type = PyObjC_ArrayType;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_genericNewClass);
+
+    if (type == Py_None) {
+        return 0;
+    }
+
+    int r = PyObject_TypeCheck(value, (PyTypeObject*)type);
+    Py_DECREF(type);
+    if (r == -1) {
+        PyErr_Clear();
+        return 0;
+    }
+    return r;
+}
+
+
+
+PyObject* _Nullable PyObjC_deepcopy(PyObject* value, PyObject* _Nullable memo)
+{
+    PyObject* func;
+    LOCK(PyObjC_deepcopyFunc);
+    func = PyObjC_deepcopyFunc;
+    Py_INCREF(func);
+    UNLOCK(PyObjC_deepcopyFunc);
+
+    if (func == Py_None) {
+        PyErr_SetString(PyObjCExc_Error, "options._deepcopy is not set");
+        Py_DECREF(func);
+        return NULL;
+    }
+
+    PyObject* args[3] = {NULL, value, memo};
+    PyObject* result       = PyObject_Vectorcall(
+            func, args + 1, (memo?2:1) | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(func);
+    return result;
 }
 
 extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* class_dict,

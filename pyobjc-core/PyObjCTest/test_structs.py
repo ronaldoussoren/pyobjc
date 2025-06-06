@@ -1223,3 +1223,22 @@ class TestInternals(TestCase):
             objc.internal_error, "PyObjCRT_SkipTypeSpec: Unhandled type"
         ):
             objc.repythonify(pt, b"(_StructPoint=l^{f=)]")
+
+    def test_without_deepcopy(self):
+        with pyobjc_options(_deepcopy=None):
+            v = GlobalType(1, 2)
+
+            with self.assertRaisesRegex(objc.error, "options._deepcopy is not set"):
+                v._replace(a=3)
+
+        def deepcopy(value, memo=None):
+            raise RuntimeError("cannot copy")
+
+        with pyobjc_options(_deepcopy=deepcopy):
+            v = GlobalType(1, 2)
+
+            with self.assertRaisesRegex(RuntimeError, "cannot copy"):
+                v._replace(b=5)
+
+        with self.assertRaisesRegex(AttributeError, "Cannot delete option '_deepcopy'"):
+            del objc.options._deepcopy
