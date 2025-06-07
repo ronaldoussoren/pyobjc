@@ -2208,7 +2208,6 @@ static setup_function _Nullable setup_functions[] = {
     PyObjCCFType_Setup,
     PyObjCBlock_Setup,
     PyObjCFSRef_Setup,
-    PyObjC_SockAddr_Setup,
 
     PyObjCAPI_Register, /* Must be last */
     NULL};

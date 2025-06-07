@@ -8,6 +8,9 @@
  */
 #include "pyobjc.h"
 
+#include <netdb.h>
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 /*
@@ -224,6 +227,9 @@ OBJECT_PROP_STATIC(_setDunderNew, PyObjC_setDunderNew)
 OBJECT_PROP_STATIC(_genericNewClass, PyObjC_genericNewClass)
 OBJECT_PROP_STATIC(_ArrayType, PyObjC_ArrayType)
 OBJECT_PROP_STATIC(_deepcopy, PyObjC_deepcopyFunc)
+OBJECT_PROP_STATIC(_socket_error, PyObjC_socket_error)
+OBJECT_PROP_STATIC(_socket_gaierror, PyObjC_socket_gaierror)
+OBJECT_PROP_STATIC(_c_void_p, PyObjC_c_void_p)
 
 static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
@@ -373,6 +379,12 @@ static PyGetSetDef options_getset[] = {
            "set to array.ArrayType"),
     GETSET(_deepcopy,
            "set to copy.deepcopy"),
+    GETSET(_socket_error,
+           "set to socket.error"),
+    GETSET(_socket_gaierror,
+           "set to socket.gaierror"),
+    GETSET(_c_void_p,
+           "set to ctypes.c_void_p"),
     {
         .name = "deprecation_warnings",
         .get  = deprecation_warnings_get,
@@ -994,6 +1006,53 @@ int PyObjC_CallClassExtender(PyObject* cls)
     return 0;
 }
 
+void PyObjCErr_SetGAIError(int error)
+{
+    PyObject* type;
+
+    if (error == EAI_SYSTEM) { // LCOV_BR_EXCL_LINE
+        /* This can happen, but haven't found a way to trigger
+         * this in testing.
+         */
+        // LCOV_EXCL_START
+        LOCK(PyObjC_socket_error);
+        type = PyObjC_socket_error;
+        Py_INCREF(type);
+        UNLOCK(PyObjC_socket_error);
+        PyErr_SetFromErrno(type);
+        Py_DECREF(type);
+        return;
+        // LCOV_EXCL_STOP
+    }
+
+    LOCK(PyObjC_socket_gaierror);
+    type = PyObjC_socket_gaierror;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_socket_gaierror);
+
+    PyObject* v = Py_BuildValue("is", error, gai_strerror(error));
+    if (v != NULL) { // LCOV_BR_EXCL_LINE
+        PyErr_SetObject(type, v);
+        Py_DECREF(v);
+    }
+    Py_DECREF(type);
+}
+
+PyObject* _Nullable PyObjCErr_SetSocketError(const char* message)
+{
+    PyObject* type;
+    LOCK(PyObjC_socket_error);
+    type = PyObjC_socket_error;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_socket_error);
+
+    PyErr_SetString(type, message);
+    Py_DECREF(type);
+    return NULL;
+}
+
+
+
 /*
  * Returns NULL without setting an exception when
  * the option is not set.
@@ -1134,7 +1193,26 @@ int PyObjC_ArrayTypeCheck(PyObject* value)
     return r;
 }
 
+PyObject* _Nullable PyObjC_MakeCVoidP(void* ptr)
+{
+    PyObject* type;
 
+    LOCK(PyObjC_c_void_p);
+    type = PyObjC_c_void_p;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_c_void_p);
+
+    PyObject* pyptr = PyLong_FromVoidPtr(ptr);
+    if (pyptr == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
+    }
+    PyObject* args[2] = {NULL, pyptr};
+    PyObject* res =
+        PyObject_Vectorcall(type, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(pyptr);
+    Py_DECREF(type);
+    return res;
+}
 
 PyObject* _Nullable PyObjC_deepcopy(PyObject* value, PyObject* _Nullable memo)
 {
@@ -1289,6 +1367,12 @@ PyObjC_SetupOptions(PyObject* m)
     INIT(PyObjC_processClassDict);
     INIT(PyObjC_setDunderNew);
     INIT(PyObjC_genericNewClass);
+    INIT(PyObjC_genericNewClass);
+    INIT(PyObjC_ArrayType);
+    INIT(PyObjC_deepcopyFunc);
+    INIT(PyObjC_socket_error);
+    INIT(PyObjC_socket_gaierror);
+    INIT(PyObjC_c_void_p);
 #undef INIT
 
     // LCOV_BR_EXCL_START

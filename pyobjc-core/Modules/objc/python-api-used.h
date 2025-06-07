@@ -146,9 +146,9 @@ PyAPI_FUNC(PyObject* _Nullable) PyFunction_GetCode(PyObject*)
 PyAPI_FUNC(PyGILState_STATE) PyGILState_Ensure(void) __attribute__((warn_unused_result));
 PyAPI_FUNC(void) PyGILState_Release(PyGILState_STATE);
 PyAPI_FUNC(PyObject* _Nullable) PyImport_Import(PyObject* name)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(PyObject* _Nullable) PyImport_ImportModule(const char* name)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(int) PyIndex_Check(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyIter_Next(PyObject*)
     __attribute__((warn_unused_result));

@@ -290,7 +290,7 @@ PyObjCErr_FromObjC(NSObject* localException)
                     exc_type = id_to_python(val);
                     if (exc_type == NULL) { // LCOV_BR_EXCL_LINE
                         PyObjC_GIL_RETURNVOID; // LCOV_EXCL_LINE
-                    }
+                    } // LCOV_EXCL_LINE
 
                     temp = [userInfo objectForKey:@"__pyobjc_exc_value__"];
                     if (temp != nil) {
@@ -300,7 +300,7 @@ PyObjCErr_FromObjC(NSObject* localException)
                             Py_CLEAR(exc_type);
                             PyObjC_GIL_RETURNVOID;
                             // LCOV_EXCL_STOP
-                        }
+                        } // LCOV_EXCL_LINE
                     }
 
                     temp = [userInfo objectForKey:@"__pyobjc_exc_traceback__"];
@@ -312,7 +312,7 @@ PyObjCErr_FromObjC(NSObject* localException)
                             Py_CLEAR(exc_value);
                             PyObjC_GIL_RETURNVOID;
                             // LCOV_EXCL_STOP
-                        }
+                        } // LCOV_EXCL_LINE
                     }
 
                     PyErr_Restore(exc_type, exc_value, exc_traceback);
@@ -1588,24 +1588,6 @@ PyObjC_CheckNoKwnames(PyObject* callable, PyObject* _Nullable kwnames)
     return -1;
 }
 
-PyObject* _Nullable PyObjC_MakeCVoidP(void* ptr)
-{
-    PyObject* c_void_p = PyObjC_get_c_void_p();
-    if (c_void_p == NULL) {
-        return NULL;
-    }
-
-    PyObject* pyptr = PyLong_FromVoidPtr(ptr);
-    if (pyptr == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
-    }
-    PyObject* args[2] = {NULL, pyptr};
-    PyObject* res =
-        PyObject_Vectorcall(c_void_p, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(pyptr);
-    return res;
-}
-
 bool
 version_is_deprecated(int version)
 {
@@ -1776,50 +1758,5 @@ PyObjCSequence_Tuple(PyObject* value, const char* context)
     return result;
 }
 
-/*
- * XXX: Make this a static variable set during module init
- */
-PyObject* _Nullable PyObjC_get_c_void_p(void)
-{
-#ifdef Py_GIL_DISABLED
-    static PyMutex c_void_p_mutex = { 0 };
-#endif
-    static PyObject* c_void_p = NULL;
-    if (c_void_p == NULL) {
-#ifdef Py_GIL_DISABLED
-        PyMutex_Lock(&c_void_p_mutex);
-        if (c_void_p != NULL) {
-            PyMutex_Unlock(&c_void_p_mutex);
-            return c_void_p;
-        }
-#endif
-        PyObject* mod_ctypes = PyImport_ImportModule("ctypes");
-        if (mod_ctypes == NULL) { // LCOV_BR_EXCL_LINE
-            /* ctypes is not available */
-            // LCOV_EXCL_START
-#ifdef Py_GIL_DISABLED
-            PyMutex_Unlock(&c_void_p_mutex);
-#endif
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-
-        c_void_p = PyObject_GetAttrString(mod_ctypes, "c_void_p");
-        Py_DECREF(mod_ctypes);
-        if (c_void_p == NULL) { // LCOV_BR_EXCL_LINE
-            /* invalid or incomplete module */
-            // LCOV_EXCL_START
-#ifdef Py_GIL_DISABLED
-            PyMutex_Unlock(&c_void_p_mutex);
-#endif
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-#ifdef Py_GIL_DISABLED
-        PyMutex_Unlock(&c_void_p_mutex);
-#endif
-    } // LCOV_BR_EXCL_LINE
-    return c_void_p;
-}
 
 NS_ASSUME_NONNULL_END

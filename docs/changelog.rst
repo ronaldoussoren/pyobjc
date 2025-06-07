@@ -158,6 +158,13 @@ how reference counts are handled by ``-init`` methods.
   Reason for this is that Cocoa strings have special handling in PyObjC
   and trying to subclass these classes in Python will result in crashes.
 
+* The ``objc._objc`` extension no longer performs imports from native code,
+  all external dependencies are passed in as (private) options from Python
+  code.
+
+  This simplifies PyObjC's code, and avoids having imports that are hidden
+  from analysis tools.
+
 Version 11.0
 ------------
 

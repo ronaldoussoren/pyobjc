@@ -17,6 +17,8 @@ from objc._new import make_generic_new, NEW_MAP
 from objc._transform import _selectorToKeywords
 import array
 import copy
+import ctypes
+import socket
 
 __all__ = (
     "addConvenienceForClass",
@@ -36,6 +38,9 @@ options._getKeyPath = kvc.getKeyPath
 options._setKeyPath = kvc.setKeyPath
 options._ArrayType = array.ArrayType
 options._deepcopy = copy.deepcopy
+options._c_void_p = ctypes.c_void_p
+options._socket_error = socket.error
+options._socket_gaierror = socket.gaierror
 
 del kvc
 
