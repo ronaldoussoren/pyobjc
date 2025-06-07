@@ -23230,27 +23230,31 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "PyObjC_TestClass1",
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "PyObjC_TestClass1",
                            PyObjC_IdToPython([PyObjC_TestClass1 class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "PyObjC_TestClass2",
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "PyObjC_TestClass2",
                            PyObjC_IdToPython([PyObjC_TestClass2 class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 #ifdef HAVE_BOOL
-    if (PyModule_AddIntConstant(m, "HAVE_BOOL", 1) < 0) {
-        return -1;
+    if (PyModule_AddIntConstant(m, // LCOV_EXCL_LINE
+                "HAVE_BOOL", 1) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
 #else
-    if (PyModule_AddIntConstant(m, "HAVE_BOOL", 0) < 0) {
-        return -1;
+    if (PyModule_AddIntConstant(m, // LCOV_EXCL_LINE
+                "HAVE_BOOL", 0) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
 #endif
 

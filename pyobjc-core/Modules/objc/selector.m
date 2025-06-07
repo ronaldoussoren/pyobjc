@@ -647,8 +647,9 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         }
 
         pyself = args[0];
-        if (pyself == NULL) {
-            return NULL;
+        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+            // Guard against invalid input data
+            return NULL; // LCOV_EXCL_LINE
         }
     }
 
@@ -1135,8 +1136,10 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     result->base.sel_methinfo = NULL;
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
     if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(result); // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     } else {
         Py_CLEAR(methinfo);
     }
@@ -1210,9 +1213,11 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     result->base.sel_vectorcall = pysel_vectorcall;
 #endif
 
-    if (PyObjC_RemoveInternalTypeCodes((char*)result->base.sel_native_signature) == -1) {
+    if (PyObjC_RemoveInternalTypeCodes((char*)result->base.sel_native_signature) == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (PyObjCPythonSelector_Check(callable)) {

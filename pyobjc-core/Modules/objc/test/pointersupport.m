@@ -52,8 +52,8 @@ union test_union {
 
 + (id)className:(Class)class
 {
-    if (class == Nil) {
-        return @"No class given";
+    if (class == Nil) { // LCOV_BR_EXCL_LINE
+        return @"No class given"; // LCOV_EXCL_LINE
     }
     return [NSString
         stringWithUTF8String:(const char* _Nonnull)class_getName((Class) class)];
@@ -114,14 +114,15 @@ static PyMethodDef mod_methods[] = {{
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_PointerSupport",
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_PointerSupport",
                            PyObjC_IdToPython([OC_PointerSupport class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     int r = PyObjCPointerWrapper_Register("union_test", @encode(union test_union*), union_new,

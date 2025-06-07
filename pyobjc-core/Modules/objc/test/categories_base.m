@@ -5533,728 +5533,908 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
- if (PyModule_AddObject(m, "OC_Category_GP0", PyObjC_IdToPython([OC_Category_GP0 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP0", PyObjC_IdToPython([OC_Category_GP0 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P0", PyObjC_IdToPython([OC_Category_P0 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P0", PyObjC_IdToPython([OC_Category_P0 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C0", PyObjC_IdToPython([OC_Category_C0 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C0", PyObjC_IdToPython([OC_Category_C0 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP1", PyObjC_IdToPython([OC_Category_GP1 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP1", PyObjC_IdToPython([OC_Category_GP1 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P1", PyObjC_IdToPython([OC_Category_P1 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P1", PyObjC_IdToPython([OC_Category_P1 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C1", PyObjC_IdToPython([OC_Category_C1 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C1", PyObjC_IdToPython([OC_Category_C1 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP2", PyObjC_IdToPython([OC_Category_GP2 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP2", PyObjC_IdToPython([OC_Category_GP2 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P2", PyObjC_IdToPython([OC_Category_P2 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P2", PyObjC_IdToPython([OC_Category_P2 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C2", PyObjC_IdToPython([OC_Category_C2 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C2", PyObjC_IdToPython([OC_Category_C2 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP3", PyObjC_IdToPython([OC_Category_GP3 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP3", PyObjC_IdToPython([OC_Category_GP3 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P3", PyObjC_IdToPython([OC_Category_P3 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P3", PyObjC_IdToPython([OC_Category_P3 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C3", PyObjC_IdToPython([OC_Category_C3 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C3", PyObjC_IdToPython([OC_Category_C3 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP4", PyObjC_IdToPython([OC_Category_GP4 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP4", PyObjC_IdToPython([OC_Category_GP4 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P4", PyObjC_IdToPython([OC_Category_P4 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P4", PyObjC_IdToPython([OC_Category_P4 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C4", PyObjC_IdToPython([OC_Category_C4 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C4", PyObjC_IdToPython([OC_Category_C4 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP5", PyObjC_IdToPython([OC_Category_GP5 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP5", PyObjC_IdToPython([OC_Category_GP5 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P5", PyObjC_IdToPython([OC_Category_P5 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P5", PyObjC_IdToPython([OC_Category_P5 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C5", PyObjC_IdToPython([OC_Category_C5 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C5", PyObjC_IdToPython([OC_Category_C5 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP6", PyObjC_IdToPython([OC_Category_GP6 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP6", PyObjC_IdToPython([OC_Category_GP6 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P6", PyObjC_IdToPython([OC_Category_P6 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P6", PyObjC_IdToPython([OC_Category_P6 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C6", PyObjC_IdToPython([OC_Category_C6 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C6", PyObjC_IdToPython([OC_Category_C6 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP7", PyObjC_IdToPython([OC_Category_GP7 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP7", PyObjC_IdToPython([OC_Category_GP7 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P7", PyObjC_IdToPython([OC_Category_P7 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P7", PyObjC_IdToPython([OC_Category_P7 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C7", PyObjC_IdToPython([OC_Category_C7 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C7", PyObjC_IdToPython([OC_Category_C7 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP8", PyObjC_IdToPython([OC_Category_GP8 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP8", PyObjC_IdToPython([OC_Category_GP8 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P8", PyObjC_IdToPython([OC_Category_P8 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P8", PyObjC_IdToPython([OC_Category_P8 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C8", PyObjC_IdToPython([OC_Category_C8 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C8", PyObjC_IdToPython([OC_Category_C8 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP9", PyObjC_IdToPython([OC_Category_GP9 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP9", PyObjC_IdToPython([OC_Category_GP9 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P9", PyObjC_IdToPython([OC_Category_P9 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P9", PyObjC_IdToPython([OC_Category_P9 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C9", PyObjC_IdToPython([OC_Category_C9 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C9", PyObjC_IdToPython([OC_Category_C9 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP10", PyObjC_IdToPython([OC_Category_GP10 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP10", PyObjC_IdToPython([OC_Category_GP10 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P10", PyObjC_IdToPython([OC_Category_P10 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P10", PyObjC_IdToPython([OC_Category_P10 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C10", PyObjC_IdToPython([OC_Category_C10 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C10", PyObjC_IdToPython([OC_Category_C10 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP11", PyObjC_IdToPython([OC_Category_GP11 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP11", PyObjC_IdToPython([OC_Category_GP11 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P11", PyObjC_IdToPython([OC_Category_P11 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P11", PyObjC_IdToPython([OC_Category_P11 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C11", PyObjC_IdToPython([OC_Category_C11 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C11", PyObjC_IdToPython([OC_Category_C11 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP12", PyObjC_IdToPython([OC_Category_GP12 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP12", PyObjC_IdToPython([OC_Category_GP12 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P12", PyObjC_IdToPython([OC_Category_P12 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P12", PyObjC_IdToPython([OC_Category_P12 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C12", PyObjC_IdToPython([OC_Category_C12 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C12", PyObjC_IdToPython([OC_Category_C12 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP13", PyObjC_IdToPython([OC_Category_GP13 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP13", PyObjC_IdToPython([OC_Category_GP13 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P13", PyObjC_IdToPython([OC_Category_P13 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P13", PyObjC_IdToPython([OC_Category_P13 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C13", PyObjC_IdToPython([OC_Category_C13 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C13", PyObjC_IdToPython([OC_Category_C13 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP14", PyObjC_IdToPython([OC_Category_GP14 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP14", PyObjC_IdToPython([OC_Category_GP14 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P14", PyObjC_IdToPython([OC_Category_P14 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P14", PyObjC_IdToPython([OC_Category_P14 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C14", PyObjC_IdToPython([OC_Category_C14 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C14", PyObjC_IdToPython([OC_Category_C14 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP15", PyObjC_IdToPython([OC_Category_GP15 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP15", PyObjC_IdToPython([OC_Category_GP15 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P15", PyObjC_IdToPython([OC_Category_P15 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P15", PyObjC_IdToPython([OC_Category_P15 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C15", PyObjC_IdToPython([OC_Category_C15 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C15", PyObjC_IdToPython([OC_Category_C15 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP16", PyObjC_IdToPython([OC_Category_GP16 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP16", PyObjC_IdToPython([OC_Category_GP16 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P16", PyObjC_IdToPython([OC_Category_P16 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P16", PyObjC_IdToPython([OC_Category_P16 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C16", PyObjC_IdToPython([OC_Category_C16 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C16", PyObjC_IdToPython([OC_Category_C16 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP17", PyObjC_IdToPython([OC_Category_GP17 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP17", PyObjC_IdToPython([OC_Category_GP17 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P17", PyObjC_IdToPython([OC_Category_P17 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P17", PyObjC_IdToPython([OC_Category_P17 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C17", PyObjC_IdToPython([OC_Category_C17 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C17", PyObjC_IdToPython([OC_Category_C17 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP18", PyObjC_IdToPython([OC_Category_GP18 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP18", PyObjC_IdToPython([OC_Category_GP18 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P18", PyObjC_IdToPython([OC_Category_P18 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P18", PyObjC_IdToPython([OC_Category_P18 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C18", PyObjC_IdToPython([OC_Category_C18 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C18", PyObjC_IdToPython([OC_Category_C18 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP19", PyObjC_IdToPython([OC_Category_GP19 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP19", PyObjC_IdToPython([OC_Category_GP19 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P19", PyObjC_IdToPython([OC_Category_P19 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P19", PyObjC_IdToPython([OC_Category_P19 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C19", PyObjC_IdToPython([OC_Category_C19 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C19", PyObjC_IdToPython([OC_Category_C19 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP20", PyObjC_IdToPython([OC_Category_GP20 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP20", PyObjC_IdToPython([OC_Category_GP20 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P20", PyObjC_IdToPython([OC_Category_P20 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P20", PyObjC_IdToPython([OC_Category_P20 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C20", PyObjC_IdToPython([OC_Category_C20 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C20", PyObjC_IdToPython([OC_Category_C20 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP21", PyObjC_IdToPython([OC_Category_GP21 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP21", PyObjC_IdToPython([OC_Category_GP21 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P21", PyObjC_IdToPython([OC_Category_P21 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P21", PyObjC_IdToPython([OC_Category_P21 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C21", PyObjC_IdToPython([OC_Category_C21 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C21", PyObjC_IdToPython([OC_Category_C21 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP22", PyObjC_IdToPython([OC_Category_GP22 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP22", PyObjC_IdToPython([OC_Category_GP22 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P22", PyObjC_IdToPython([OC_Category_P22 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P22", PyObjC_IdToPython([OC_Category_P22 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C22", PyObjC_IdToPython([OC_Category_C22 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C22", PyObjC_IdToPython([OC_Category_C22 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP23", PyObjC_IdToPython([OC_Category_GP23 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP23", PyObjC_IdToPython([OC_Category_GP23 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P23", PyObjC_IdToPython([OC_Category_P23 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P23", PyObjC_IdToPython([OC_Category_P23 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C23", PyObjC_IdToPython([OC_Category_C23 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C23", PyObjC_IdToPython([OC_Category_C23 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP24", PyObjC_IdToPython([OC_Category_GP24 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP24", PyObjC_IdToPython([OC_Category_GP24 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P24", PyObjC_IdToPython([OC_Category_P24 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P24", PyObjC_IdToPython([OC_Category_P24 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C24", PyObjC_IdToPython([OC_Category_C24 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C24", PyObjC_IdToPython([OC_Category_C24 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP25", PyObjC_IdToPython([OC_Category_GP25 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP25", PyObjC_IdToPython([OC_Category_GP25 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P25", PyObjC_IdToPython([OC_Category_P25 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P25", PyObjC_IdToPython([OC_Category_P25 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C25", PyObjC_IdToPython([OC_Category_C25 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C25", PyObjC_IdToPython([OC_Category_C25 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP26", PyObjC_IdToPython([OC_Category_GP26 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP26", PyObjC_IdToPython([OC_Category_GP26 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P26", PyObjC_IdToPython([OC_Category_P26 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P26", PyObjC_IdToPython([OC_Category_P26 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C26", PyObjC_IdToPython([OC_Category_C26 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C26", PyObjC_IdToPython([OC_Category_C26 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP27", PyObjC_IdToPython([OC_Category_GP27 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP27", PyObjC_IdToPython([OC_Category_GP27 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P27", PyObjC_IdToPython([OC_Category_P27 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P27", PyObjC_IdToPython([OC_Category_P27 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C27", PyObjC_IdToPython([OC_Category_C27 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C27", PyObjC_IdToPython([OC_Category_C27 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP28", PyObjC_IdToPython([OC_Category_GP28 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP28", PyObjC_IdToPython([OC_Category_GP28 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P28", PyObjC_IdToPython([OC_Category_P28 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P28", PyObjC_IdToPython([OC_Category_P28 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C28", PyObjC_IdToPython([OC_Category_C28 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C28", PyObjC_IdToPython([OC_Category_C28 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP29", PyObjC_IdToPython([OC_Category_GP29 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP29", PyObjC_IdToPython([OC_Category_GP29 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P29", PyObjC_IdToPython([OC_Category_P29 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P29", PyObjC_IdToPython([OC_Category_P29 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C29", PyObjC_IdToPython([OC_Category_C29 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C29", PyObjC_IdToPython([OC_Category_C29 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP30", PyObjC_IdToPython([OC_Category_GP30 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP30", PyObjC_IdToPython([OC_Category_GP30 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P30", PyObjC_IdToPython([OC_Category_P30 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P30", PyObjC_IdToPython([OC_Category_P30 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C30", PyObjC_IdToPython([OC_Category_C30 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C30", PyObjC_IdToPython([OC_Category_C30 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP31", PyObjC_IdToPython([OC_Category_GP31 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP31", PyObjC_IdToPython([OC_Category_GP31 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P31", PyObjC_IdToPython([OC_Category_P31 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P31", PyObjC_IdToPython([OC_Category_P31 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C31", PyObjC_IdToPython([OC_Category_C31 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C31", PyObjC_IdToPython([OC_Category_C31 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP32", PyObjC_IdToPython([OC_Category_GP32 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP32", PyObjC_IdToPython([OC_Category_GP32 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P32", PyObjC_IdToPython([OC_Category_P32 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P32", PyObjC_IdToPython([OC_Category_P32 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C32", PyObjC_IdToPython([OC_Category_C32 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C32", PyObjC_IdToPython([OC_Category_C32 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP33", PyObjC_IdToPython([OC_Category_GP33 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP33", PyObjC_IdToPython([OC_Category_GP33 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P33", PyObjC_IdToPython([OC_Category_P33 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P33", PyObjC_IdToPython([OC_Category_P33 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C33", PyObjC_IdToPython([OC_Category_C33 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C33", PyObjC_IdToPython([OC_Category_C33 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP34", PyObjC_IdToPython([OC_Category_GP34 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP34", PyObjC_IdToPython([OC_Category_GP34 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P34", PyObjC_IdToPython([OC_Category_P34 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P34", PyObjC_IdToPython([OC_Category_P34 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C34", PyObjC_IdToPython([OC_Category_C34 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C34", PyObjC_IdToPython([OC_Category_C34 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP35", PyObjC_IdToPython([OC_Category_GP35 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP35", PyObjC_IdToPython([OC_Category_GP35 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P35", PyObjC_IdToPython([OC_Category_P35 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P35", PyObjC_IdToPython([OC_Category_P35 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C35", PyObjC_IdToPython([OC_Category_C35 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C35", PyObjC_IdToPython([OC_Category_C35 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP36", PyObjC_IdToPython([OC_Category_GP36 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP36", PyObjC_IdToPython([OC_Category_GP36 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P36", PyObjC_IdToPython([OC_Category_P36 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P36", PyObjC_IdToPython([OC_Category_P36 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C36", PyObjC_IdToPython([OC_Category_C36 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C36", PyObjC_IdToPython([OC_Category_C36 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP37", PyObjC_IdToPython([OC_Category_GP37 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP37", PyObjC_IdToPython([OC_Category_GP37 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P37", PyObjC_IdToPython([OC_Category_P37 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P37", PyObjC_IdToPython([OC_Category_P37 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C37", PyObjC_IdToPython([OC_Category_C37 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C37", PyObjC_IdToPython([OC_Category_C37 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP38", PyObjC_IdToPython([OC_Category_GP38 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP38", PyObjC_IdToPython([OC_Category_GP38 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P38", PyObjC_IdToPython([OC_Category_P38 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P38", PyObjC_IdToPython([OC_Category_P38 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C38", PyObjC_IdToPython([OC_Category_C38 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C38", PyObjC_IdToPython([OC_Category_C38 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP39", PyObjC_IdToPython([OC_Category_GP39 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP39", PyObjC_IdToPython([OC_Category_GP39 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P39", PyObjC_IdToPython([OC_Category_P39 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P39", PyObjC_IdToPython([OC_Category_P39 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C39", PyObjC_IdToPython([OC_Category_C39 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C39", PyObjC_IdToPython([OC_Category_C39 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP40", PyObjC_IdToPython([OC_Category_GP40 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP40", PyObjC_IdToPython([OC_Category_GP40 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P40", PyObjC_IdToPython([OC_Category_P40 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P40", PyObjC_IdToPython([OC_Category_P40 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C40", PyObjC_IdToPython([OC_Category_C40 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C40", PyObjC_IdToPython([OC_Category_C40 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP41", PyObjC_IdToPython([OC_Category_GP41 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP41", PyObjC_IdToPython([OC_Category_GP41 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P41", PyObjC_IdToPython([OC_Category_P41 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P41", PyObjC_IdToPython([OC_Category_P41 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C41", PyObjC_IdToPython([OC_Category_C41 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C41", PyObjC_IdToPython([OC_Category_C41 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP42", PyObjC_IdToPython([OC_Category_GP42 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP42", PyObjC_IdToPython([OC_Category_GP42 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P42", PyObjC_IdToPython([OC_Category_P42 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P42", PyObjC_IdToPython([OC_Category_P42 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C42", PyObjC_IdToPython([OC_Category_C42 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C42", PyObjC_IdToPython([OC_Category_C42 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP43", PyObjC_IdToPython([OC_Category_GP43 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP43", PyObjC_IdToPython([OC_Category_GP43 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P43", PyObjC_IdToPython([OC_Category_P43 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P43", PyObjC_IdToPython([OC_Category_P43 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C43", PyObjC_IdToPython([OC_Category_C43 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C43", PyObjC_IdToPython([OC_Category_C43 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP44", PyObjC_IdToPython([OC_Category_GP44 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP44", PyObjC_IdToPython([OC_Category_GP44 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P44", PyObjC_IdToPython([OC_Category_P44 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P44", PyObjC_IdToPython([OC_Category_P44 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C44", PyObjC_IdToPython([OC_Category_C44 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C44", PyObjC_IdToPython([OC_Category_C44 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP45", PyObjC_IdToPython([OC_Category_GP45 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP45", PyObjC_IdToPython([OC_Category_GP45 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P45", PyObjC_IdToPython([OC_Category_P45 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P45", PyObjC_IdToPython([OC_Category_P45 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C45", PyObjC_IdToPython([OC_Category_C45 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C45", PyObjC_IdToPython([OC_Category_C45 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP46", PyObjC_IdToPython([OC_Category_GP46 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP46", PyObjC_IdToPython([OC_Category_GP46 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P46", PyObjC_IdToPython([OC_Category_P46 class]))
-     < 0) {
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P46", PyObjC_IdToPython([OC_Category_P46 class]))
+     < 0) { // LCOV_EXCL_LINE
      return -1;
  }
- if (PyModule_AddObject(m, "OC_Category_C46", PyObjC_IdToPython([OC_Category_C46 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C46", PyObjC_IdToPython([OC_Category_C46 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP47", PyObjC_IdToPython([OC_Category_GP47 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP47", PyObjC_IdToPython([OC_Category_GP47 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P47", PyObjC_IdToPython([OC_Category_P47 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P47", PyObjC_IdToPython([OC_Category_P47 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C47", PyObjC_IdToPython([OC_Category_C47 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C47", PyObjC_IdToPython([OC_Category_C47 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP48", PyObjC_IdToPython([OC_Category_GP48 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP48", PyObjC_IdToPython([OC_Category_GP48 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P48", PyObjC_IdToPython([OC_Category_P48 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P48", PyObjC_IdToPython([OC_Category_P48 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C48", PyObjC_IdToPython([OC_Category_C48 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C48", PyObjC_IdToPython([OC_Category_C48 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP49", PyObjC_IdToPython([OC_Category_GP49 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP49", PyObjC_IdToPython([OC_Category_GP49 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P49", PyObjC_IdToPython([OC_Category_P49 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P49", PyObjC_IdToPython([OC_Category_P49 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C49", PyObjC_IdToPython([OC_Category_C49 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C49", PyObjC_IdToPython([OC_Category_C49 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP50", PyObjC_IdToPython([OC_Category_GP50 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP50", PyObjC_IdToPython([OC_Category_GP50 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P50", PyObjC_IdToPython([OC_Category_P50 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P50", PyObjC_IdToPython([OC_Category_P50 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C50", PyObjC_IdToPython([OC_Category_C50 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C50", PyObjC_IdToPython([OC_Category_C50 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP51", PyObjC_IdToPython([OC_Category_GP51 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP51", PyObjC_IdToPython([OC_Category_GP51 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P51", PyObjC_IdToPython([OC_Category_P51 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P51", PyObjC_IdToPython([OC_Category_P51 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C51", PyObjC_IdToPython([OC_Category_C51 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C51", PyObjC_IdToPython([OC_Category_C51 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP52", PyObjC_IdToPython([OC_Category_GP52 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP52", PyObjC_IdToPython([OC_Category_GP52 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P52", PyObjC_IdToPython([OC_Category_P52 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P52", PyObjC_IdToPython([OC_Category_P52 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C52", PyObjC_IdToPython([OC_Category_C52 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C52", PyObjC_IdToPython([OC_Category_C52 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP53", PyObjC_IdToPython([OC_Category_GP53 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP53", PyObjC_IdToPython([OC_Category_GP53 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P53", PyObjC_IdToPython([OC_Category_P53 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P53", PyObjC_IdToPython([OC_Category_P53 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C53", PyObjC_IdToPython([OC_Category_C53 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C53", PyObjC_IdToPython([OC_Category_C53 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP54", PyObjC_IdToPython([OC_Category_GP54 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP54", PyObjC_IdToPython([OC_Category_GP54 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P54", PyObjC_IdToPython([OC_Category_P54 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P54", PyObjC_IdToPython([OC_Category_P54 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C54", PyObjC_IdToPython([OC_Category_C54 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C54", PyObjC_IdToPython([OC_Category_C54 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP55", PyObjC_IdToPython([OC_Category_GP55 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP55", PyObjC_IdToPython([OC_Category_GP55 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P55", PyObjC_IdToPython([OC_Category_P55 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P55", PyObjC_IdToPython([OC_Category_P55 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C55", PyObjC_IdToPython([OC_Category_C55 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C55", PyObjC_IdToPython([OC_Category_C55 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP56", PyObjC_IdToPython([OC_Category_GP56 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP56", PyObjC_IdToPython([OC_Category_GP56 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P56", PyObjC_IdToPython([OC_Category_P56 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P56", PyObjC_IdToPython([OC_Category_P56 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C56", PyObjC_IdToPython([OC_Category_C56 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C56", PyObjC_IdToPython([OC_Category_C56 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP57", PyObjC_IdToPython([OC_Category_GP57 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP57", PyObjC_IdToPython([OC_Category_GP57 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P57", PyObjC_IdToPython([OC_Category_P57 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P57", PyObjC_IdToPython([OC_Category_P57 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C57", PyObjC_IdToPython([OC_Category_C57 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C57", PyObjC_IdToPython([OC_Category_C57 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP58", PyObjC_IdToPython([OC_Category_GP58 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP58", PyObjC_IdToPython([OC_Category_GP58 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P58", PyObjC_IdToPython([OC_Category_P58 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P58", PyObjC_IdToPython([OC_Category_P58 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C58", PyObjC_IdToPython([OC_Category_C58 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C58", PyObjC_IdToPython([OC_Category_C58 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_GP59", PyObjC_IdToPython([OC_Category_GP59 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_GP59", PyObjC_IdToPython([OC_Category_GP59 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
 }
- if (PyModule_AddObject(m, "OC_Category_P59", PyObjC_IdToPython([OC_Category_P59 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_P59", PyObjC_IdToPython([OC_Category_P59 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
- if (PyModule_AddObject(m, "OC_Category_C59", PyObjC_IdToPython([OC_Category_C59 class]))
+ if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+             "OC_Category_C59", PyObjC_IdToPython([OC_Category_C59 class]))
      < 0) {
-     return -1;
+     return -1; // LCOV_EXCL_LINE
  }
 
 

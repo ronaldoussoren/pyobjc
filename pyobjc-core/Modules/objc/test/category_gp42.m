@@ -62,7 +62,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_category_gp42(void)
         return NULL;
     }
 
-    PyObjC_ImportAPI(m);
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
+    }
 
     return m;
 }

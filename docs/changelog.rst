@@ -152,6 +152,12 @@ how reference counts are handled by ``-init`` methods.
 
 * Fix some free-threaded race conditions
 
+* Classes ``NSString`` and ``NSMutableString`` are marked as "final", which
+  means these classes can no longer be subclassed.
+
+  Reason for this is that Cocoa strings have special handling in PyObjC
+  and trying to subclass these classes in Python will result in crashes.
+
 Version 11.0
 ------------
 

@@ -10,30 +10,6 @@
 @end
 
 @implementation OC_ArrayInt
-+ (id)arrayWithInstancesOfClass:(Class)aClass count:(NSUInteger)count
-{
-    NSUInteger      i;
-    NSInvocation*   inv;
-    NSMutableArray* array = [[NSMutableArray alloc] init];
-
-    inv = [NSInvocation
-        invocationWithMethodSignature:[NSObject
-                                          methodSignatureForSelector:@selector(new)]];
-    if (inv == nil) {
-        [array release];
-        return nil;
-    }
-    inv.target   = aClass;
-    inv.selector = @selector(new);
-
-    for (i = 0; i < count; i++) {
-        id value;
-        [inv invoke];
-        [inv getReturnValue:&value];
-        [array addObject:value];
-    }
-    return [array autorelease];
-}
 
 + (id)getNthElement:(NSArray*)array offset:(NSUInteger)offset
 {
@@ -48,8 +24,8 @@
 {
     static id buf[100];
 
-    if (range.length > 100) {
-        return @"too many items";
+    if (range.length > 100) { // LCOV_BR_EXCL_LINE
+        return @"too many items"; // LCOV_EXCL_LINE
     }
 
     [array getObjects:buf range:range];
@@ -157,13 +133,14 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_ArrayInt", PyObjC_IdToPython([OC_ArrayInt class]))
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+                m, "OC_ArrayInt", PyObjC_IdToPython([OC_ArrayInt class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

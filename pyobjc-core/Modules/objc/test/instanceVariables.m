@@ -24,8 +24,8 @@
 - (instancetype)init
 {
     self = [super init];
-    if (self == nil)
-        return nil;
+    if (self == nil) // LCOV_BR_EXCL_LINE
+        return nil; // LCOV_EXCL_LINE
 
     intValue   = 42;
     floatValue = -10.055;
@@ -57,14 +57,15 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "ClassWithVariables",
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "ClassWithVariables",
                            PyObjC_IdToPython([ClassWithVariables class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

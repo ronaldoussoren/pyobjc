@@ -1067,7 +1067,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
             // LCOV_EXCL_STOP
         }
         Py_CLEAR(tmp);
-    }
+    } // LCOV_BR_EXCL_LINE
 
     if (PyObjCObject_IsMagic(self)) {
         /* "magic cookie" objects don't have Objective-C methods */

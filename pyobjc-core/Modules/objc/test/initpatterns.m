@@ -132,36 +132,42 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_InitReturnsSelf", PyObjC_IdToPython([OC_InitReturnsSelf class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_InitReturnsSelf", PyObjC_IdToPython([OC_InitReturnsSelf class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_InitReturnsNil", PyObjC_IdToPython([OC_InitReturnsNil class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_InitReturnsNil", PyObjC_IdToPython([OC_InitReturnsNil class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_InitReturnsOther", PyObjC_IdToPython([OC_InitReturnsOther class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_InitReturnsOther", PyObjC_IdToPython([OC_InitReturnsOther class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_AllocSingleton", PyObjC_IdToPython([OC_AllocSingleton class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_AllocSingleton", PyObjC_IdToPython([OC_AllocSingleton class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "OC_AllocSingletonInitNil", PyObjC_IdToPython([OC_AllocSingletonInitNil class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_AllocSingletonInitNil", PyObjC_IdToPython([OC_AllocSingletonInitNil class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "OC_InitPatterns", PyObjC_IdToPython([OC_InitPatterns class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_InitPatterns", PyObjC_IdToPython([OC_InitPatterns class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

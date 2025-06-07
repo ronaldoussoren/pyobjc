@@ -37,8 +37,8 @@
 - (instancetype)init
 {
     self = [super init];
-    if (self == nil) {
-        return nil;
+    if (self == nil) { // LCOV_BR_EXCL_LINE
+        return nil; // LCOV_EXCL_LINE
     }
     values = NULL;
     return self;
@@ -205,12 +205,13 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_Vector", PyObjC_IdToPython([OC_Vector class])) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_EXCL_LINE
+                "OC_Vector", PyObjC_IdToPython([OC_Vector class])) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

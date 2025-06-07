@@ -1891,8 +1891,8 @@ NSObject (IKnowWhatImDoing)
 - (instancetype)initWithInstanceOfClass:(Class)cls withKey:(NSString*)aKey
 {
     self = [super init];
-    if (self == nil)
-        return nil;
+    if (self == nil) // LCOV_BR_EXCL_LINE
+        return nil; // LCOV_EXCL_LINE
     value    = nil;
     observed = nil;
 
@@ -2036,154 +2036,195 @@ static PyMethodDef mod_methods[] = {
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_TestClass1", PyObjC_IdToPython([OC_TestClass1 class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_TestClass1", PyObjC_IdToPython([OC_TestClass1 class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "OC_TestClass2", PyObjC_IdToPython([OC_TestClass2 class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_TestClass2", PyObjC_IdToPython([OC_TestClass2 class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "PyObjC_TestClass3",
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "PyObjC_TestClass3",
                            PyObjC_IdToPython([PyObjC_TestClass3 class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "PyObjC_TestClass4",
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "PyObjC_TestClass4",
                            PyObjC_IdToPython([PyObjC_TestClass4 class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "PyObjCTest_KVBaseClass",
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "PyObjCTest_KVBaseClass",
                            PyObjC_IdToPython([PyObjCTest_KVBaseClass class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "PyObjCTest_KVPathClass",
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "PyObjCTest_KVPathClass",
                            PyObjC_IdToPython([PyObjCTest_KVPathClass class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver",
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "PyObjCTest_KeyValueObserver",
                            PyObjC_IdToPython([PyObjCTest_KeyValueObserver class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "DO_VALUEFORKEY", PyLong_FromLong(0)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_VALUEFORKEY", PyLong_FromLong(0)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "DO_VALUEFORKEYPATH", PyLong_FromLong(1)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_VALUEFORKEYPATH", PyLong_FromLong(1)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "DO_STOREDVALUEFORKEY", PyLong_FromLong(2)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_STOREDVALUEFORKEY", PyLong_FromLong(2)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "DO_VALUESFORKEYS", PyLong_FromLong(3)) < 0) {
-        return -1;
-    }
-
-    if (PyModule_AddObject(m, "DO_TAKEVALUE_FORKEY", PyLong_FromLong(0)) < 0) {
-        return -1;
-    }
-    if (PyModule_AddObject(m, "DO_TAKEVALUE_FORKEYPATH", PyLong_FromLong(1)) < 0) {
-        return -1;
-    }
-    if (PyModule_AddObject(m, "DO_TAKESTOREDVALUE_FORKEY", PyLong_FromLong(2)) < 0) {
-        return -1;
-    }
-    if (PyModule_AddObject(m, "DO_TAKEVALUESFROMDICT", PyLong_FromLong(3)) < 0) {
-        return -1;
-    }
-    if (PyModule_AddObject(m, "DO_SETVALUE_FORKEY", PyLong_FromLong(4)) < 0) {
-        return -1;
-    }
-    if (PyModule_AddObject(m, "DO_SETVALUE_FORKEYPATH", PyLong_FromLong(5)) < 0) {
-        return -1;
-    }
-    if (PyModule_AddObject(m, "DO_SETVALUESFORKEYSFROMDICT", PyLong_FromLong(6)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_VALUESFORKEYS", PyLong_FromLong(3)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "UCHAR_MAX", PyLong_FromLong(UCHAR_MAX)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_TAKEVALUE_FORKEY", PyLong_FromLong(0)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "SCHAR_MAX", PyLong_FromLong(SCHAR_MAX)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_TAKEVALUE_FORKEYPATH", PyLong_FromLong(1)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "SCHAR_MIN", PyLong_FromLong(SCHAR_MIN)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_TAKESTOREDVALUE_FORKEY", PyLong_FromLong(2)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "CHAR_MAX", PyLong_FromLong(CHAR_MAX)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_TAKEVALUESFROMDICT", PyLong_FromLong(3)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "CHAR_MIN", PyLong_FromLong(CHAR_MIN)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_SETVALUE_FORKEY", PyLong_FromLong(4)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-
-    if (PyModule_AddObject(m, "USHRT_MAX", PyLong_FromLong(USHRT_MAX)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_SETVALUE_FORKEYPATH", PyLong_FromLong(5)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "SHRT_MAX", PyLong_FromLong(SHRT_MAX)) < 0) {
-        return -1;
-    }
-    if (PyModule_AddObject(m, "SHRT_MIN", PyLong_FromLong(SHRT_MIN)) < 0) {
-        return -1;
-    }
-
-    if (PyModule_AddObject(m, "UINT_MAX", PyLong_FromUnsignedLongLong(UINT_MAX)) < 0) {
-        return -1;
-    }
-    if (PyModule_AddObject(m, "INT_MAX", PyLong_FromLong(INT_MAX)) < 0) {
-        return -1;
-    }
-    if (PyModule_AddObject(m, "INT_MIN", PyLong_FromLong(INT_MIN)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DO_SETVALUESFORKEYSFROMDICT", PyLong_FromLong(6)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "ULONG_MAX", PyLong_FromUnsignedLongLong(ULONG_MAX)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "UCHAR_MAX", PyLong_FromLong(UCHAR_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "LONG_MAX", PyLong_FromLong(LONG_MAX)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "SCHAR_MAX", PyLong_FromLong(SCHAR_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "LONG_MIN", PyLong_FromLong(LONG_MIN)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "SCHAR_MIN", PyLong_FromLong(SCHAR_MIN)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "CHAR_MAX", PyLong_FromLong(CHAR_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "CHAR_MIN", PyLong_FromLong(CHAR_MIN)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "USHRT_MAX", PyLong_FromLong(USHRT_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "SHRT_MAX", PyLong_FromLong(SHRT_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "SHRT_MIN", PyLong_FromLong(SHRT_MIN)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "UINT_MAX", PyLong_FromUnsignedLongLong(UINT_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "INT_MAX", PyLong_FromLong(INT_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "INT_MIN", PyLong_FromLong(INT_MIN)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "ULONG_MAX", PyLong_FromUnsignedLongLong(ULONG_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "LONG_MAX", PyLong_FromLong(LONG_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "LONG_MIN", PyLong_FromLong(LONG_MIN)) < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "LLONG_MAX", PyLong_FromLongLong(LLONG_MAX)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "LLONG_MAX", PyLong_FromLongLong(LLONG_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "LLONG_MIN", PyLong_FromLongLong(LLONG_MIN)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "LLONG_MIN", PyLong_FromLongLong(LLONG_MIN)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "DBL_MAX", PyFloat_FromDouble(DBL_MAX)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DBL_MAX", PyFloat_FromDouble(DBL_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "DBL_MIN", PyFloat_FromDouble(DBL_MIN)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DBL_MIN", PyFloat_FromDouble(DBL_MIN)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "DBL_EPSILON", PyFloat_FromDouble(DBL_EPSILON)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "DBL_EPSILON", PyFloat_FromDouble(DBL_EPSILON)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "FLT_MAX", PyFloat_FromDouble(FLT_MAX)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "FLT_MAX", PyFloat_FromDouble(FLT_MAX)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "FLT_MIN", PyFloat_FromDouble(FLT_MIN)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "FLT_MIN", PyFloat_FromDouble(FLT_MIN)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "FLT_EPSILON", PyFloat_FromDouble(FLT_EPSILON)) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "FLT_EPSILON", PyFloat_FromDouble(FLT_EPSILON)) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

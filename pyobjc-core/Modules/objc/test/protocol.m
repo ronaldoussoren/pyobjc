@@ -39,8 +39,8 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     Protocol* p              = @protocol(OC_TestProtocol);
@@ -49,8 +49,9 @@ static int mod_exec_module(PyObject* m)
         return -1;
     }
 
-    if (PyModule_AddObject(m, "OC_TestProtocol", prot) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_TestProtocol", prot) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
 
     p    = @protocol(OC_NSObjectBased);
@@ -58,8 +59,9 @@ static int mod_exec_module(PyObject* m)
     if (!prot) {
         return -1;
     }
-    if (PyModule_AddObject(m, "OC_NSObjectBased", prot) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_NSObjectBased", prot) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
 
     p    = @protocol(OC_TestProtocolT1);
@@ -67,8 +69,9 @@ static int mod_exec_module(PyObject* m)
     if (!prot) {
         return -1;
     }
-    if (PyModule_AddObject(m, "OC_TestProtocolT1", prot) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_TestProtocolT1", prot) < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

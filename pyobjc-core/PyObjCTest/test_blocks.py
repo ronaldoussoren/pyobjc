@@ -1075,6 +1075,11 @@ class TestInvalidCalling(TestCase):
 
         self.assertIs(obj.__block_signature__, None)
 
+        with self.assertRaisesRegex(
+            TypeError, "'__block_signature__' can only be set on Block objects"
+        ):
+            obj.__block_signature__ = 42
+
         with self.assertRaisesRegex(TypeError, "not a block"):
             mod._block_call(42, block.__block_signature__, (), {})
 
@@ -1201,3 +1206,19 @@ class TestInvalidCalling(TestCase):
 
         with self.assertRaisesRegex(TypeError, "cannot call block without a signature"):
             block(1, 2)
+
+        obj = OCTestBlock.alloc().init()
+        block2 = obj.getIntBlock()
+        self.assertIs(block.__block_signature__, None)
+
+        with self.assertRaisesRegex(TypeError, "New value must be a method signature"):
+            block.__block_signature__ = 42
+
+        block.__block_signature__ = block2.__block_signature__
+        self.assertIs(block.__block_signature__, block2.__block_signature__)
+
+        with self.assertRaisesRegex(TypeError, "Cannot delete '__block_signature__'"):
+            del block.__block_signature__
+
+        with self.assertRaisesRegex(TypeError, "New value must be a method signature"):
+            block.__block_signature__ = None

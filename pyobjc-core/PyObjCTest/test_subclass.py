@@ -800,6 +800,24 @@ class TestOverridingSpecials(TestCase):
         )
         self.assertNotIn("Exception ignored", captured_stderr.getvalue())
 
+    def test_selector_kwonly(self):
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "has 1 keyword-only arguments without a default"
+        ):
+
+            class OC_KwonlySelector(NSObject):
+                def method(self, *, arg):
+                    pass
+
+    def test_selector_too_few_defaults(self):
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "has between 2 and 4 positional arguments"
+        ):
+
+            class OC_TooFewDefaults(NSObject):
+                def method_(self, arg, arg1, arg2=3, arg3=4):
+                    pass
+
 
 class TestSelectorAttributes(TestCase):
     # XXX: These should be moved to a different file and

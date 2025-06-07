@@ -1125,9 +1125,11 @@ int PyObjC_ArrayTypeCheck(PyObject* value)
 
     int r = PyObject_TypeCheck(value, (PyTypeObject*)type);
     Py_DECREF(type);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Clear();
         return 0;
+        // LCOV_EXCL_STOP
     }
     return r;
 }

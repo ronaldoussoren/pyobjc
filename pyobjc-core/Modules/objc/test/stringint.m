@@ -67,8 +67,8 @@
 {
     unichar buffer[1024];
 
-    if ([value length] > 1023) {
-        return nil;
+    if ([value length] > 1023) { // LCOV_BR_EXCL_LINE
+        return nil; // LCOV_EXCL_LINE
     }
 
     [value getCharacters:buffer];
@@ -81,17 +81,19 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_StringInt", PyObjC_IdToPython([OC_StringInt class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_StringInt", PyObjC_IdToPython([OC_StringInt class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "OC_BadString", PyObjC_IdToPython([OC_BadString class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                "OC_BadString", PyObjC_IdToPython([OC_BadString class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

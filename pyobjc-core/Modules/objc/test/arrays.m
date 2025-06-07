@@ -201,13 +201,14 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_ArrayTest", PyObjC_IdToPython([OC_ArrayTest class]))
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_ArrayTest", PyObjC_IdToPython([OC_ArrayTest class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;
