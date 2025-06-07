@@ -1216,7 +1216,6 @@ class TestInvalidCalling(TestCase):
 
         block.__block_signature__ = block2.__block_signature__
         self.assertIs(block.__block_signature__, block2.__block_signature__)
-
         with self.assertRaisesRegex(TypeError, "Cannot delete '__block_signature__'"):
             del block.__block_signature__
 

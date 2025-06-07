@@ -911,6 +911,7 @@ static PyObject* _Nullable obj_get_blocksignature(PyObject* self, void* closure
     if (PyObjCObject_IsBlock(self)) {
         PyObjCMethodSignature* v = PyObjCObject_GetBlockSignature(self);
         if (v != NULL) {
+            Py_INCREF(v);
             return (PyObject*)v;
         } else {
             id objc_self = PyObjCObject_GetObject(self);
@@ -1353,9 +1354,12 @@ bool PyObjCObject_IsMagic(PyObject* object)
 
 PyObjCMethodSignature* _Nullable PyObjCObject_GetBlockSignature(PyObject* object)
 {
+    PyObjCMethodSignature* result;
     assert(PyObjCObject_IsBlock(object));
-    PyObjCMethodSignature* result = (((PyObjCBlockObject*)(object))->signature);
+    Py_BEGIN_CRITICAL_SECTION(object);
+    result = (((PyObjCBlockObject*)(object))->signature);
     Py_XINCREF(result);
+    Py_END_CRITICAL_SECTION();
     return result;
 }
 
