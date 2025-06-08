@@ -11,12 +11,11 @@ To change this file:
 
 __all__ = ("setup", "Extension", "Command")
 
+import importlib
 import os
-import pkg_resources
 import plistlib
 import re
 import shlex
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -138,10 +137,6 @@ class oc_test(Command):
             self.verbosity = int(self.verbosity)
 
     def cleanup_environment(self):
-        from pkg_resources import add_activation_listener
-
-        add_activation_listener(lambda dist: dist.activate())
-
         ei_cmd = self.get_finalized_command("egg_info")
         egg_name = ei_cmd.egg_name.replace("-", "_")
 
@@ -155,12 +150,9 @@ class oc_test(Command):
             log.info(f"removing installed {dirname!r} from sys.path before testing")
             sys.path.remove(dirname)
 
-        pkg_resources.working_set.__init__()
+        importlib.invalidate_caches()
 
     def add_project_to_sys_path(self):
-        from pkg_resources import normalize_path, add_activation_listener
-        from pkg_resources import working_set, require
-
         self.reinitialize_command("egg_info")
         self.run_command("egg_info")
         self.reinitialize_command("build_ext", inplace=1)
@@ -173,20 +165,16 @@ class oc_test(Command):
             del sys.modules["PyObjCTools"]
 
         ei_cmd = self.get_finalized_command("egg_info")
-        sys.path.insert(0, normalize_path(ei_cmd.egg_base))
+        sys.path.insert(0, os.path.abspath(ei_cmd.egg_base))
         sys.path.insert(1, os.path.dirname(__file__))
 
-        add_activation_listener(lambda dist: dist.activate())
-        working_set.__init__()
-        require(f"{ei_cmd.egg_name}=={ei_cmd.egg_version}")
+        importlib.invalidate_caches()
 
     def remove_from_sys_path(self):
-        from pkg_resources import working_set
-
         sys.path[:] = self.__old_path
         sys.modules.clear()
         sys.modules.update(self.__old_modules)
-        working_set.__init__()
+        importlib.invalidate_caches()
 
     def run(self):
         self.cleanup_environment()
@@ -449,28 +437,7 @@ class pyobjc_build_ext(build_ext.build_ext):
         # in 2.3 and later the headers are in the egg,
         # before that we ship a copy.
         if os.path.exists("Modules") and not os.path.isfile("Modules/pyobjc-api.h"):
-            (dist,) = pkg_resources.require("pyobjc-core")
-
-            include_root = os.path.join(self.build_temp, "pyobjc-include")
-            if os.path.exists(include_root):
-                shutil.rmtree(include_root)
-
-            os.makedirs(include_root)
-            if dist.has_metadata("include"):
-                for fn in dist.metadata_listdir("include"):
-                    data = dist.get_metadata(f"include/{fn}")
-                    fp = open(os.path.join(include_root, fn), "w")
-                    try:
-                        fp.write(data)
-                    finally:
-                        fp.close()
-
-            else:
-                raise SystemExit("pyobjc-core egg-info does not include header files")
-
-            for e in self.extensions:
-                if include_root not in e.include_dirs:
-                    e.include_dirs.append(include_root)
+            raise DistutilsError("pyobjc-api.h not included")
 
         # Run the actual build
         build_ext.build_ext.run(self)

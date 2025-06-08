@@ -1,4 +1,5 @@
 import glob
+import importlib
 import os
 import re
 import plistlib
@@ -14,8 +15,6 @@ from distutils import log
 from distutils.errors import DistutilsError, DistutilsPlatformError, DistutilsSetupError
 from distutils.sysconfig import get_config_var as _get_config_var
 from distutils.sysconfig import get_config_vars
-
-from pkg_resources import add_activation_listener, normalize_path, require, working_set
 
 
 def get_config_var(var):
@@ -228,8 +227,6 @@ class oc_test(Command):
             self.verbosity = int(self.verbosity)
 
     def cleanup_environment(self):
-        add_activation_listener(lambda dist: dist.activate())
-
         ei_cmd = self.get_finalized_command("egg_info")
         egg_name = ei_cmd.egg_name.replace("-", "_")
 
@@ -243,11 +240,9 @@ class oc_test(Command):
             log.info(f"removing installed {dirname!r} from sys.path before testing")
             sys.path.remove(dirname)
 
-        working_set.__init__(sys.path)
+        importlib.invalidate_caches()
 
     def add_project_to_sys_path(self):
-        from pkg_resources import working_set
-
         self.reinitialize_command("egg_info")
         self.run_command("egg_info")
         self.reinitialize_command("build_ext", inplace=1)
@@ -260,12 +255,10 @@ class oc_test(Command):
             del sys.modules["PyObjCTools"]
 
         ei_cmd = self.get_finalized_command("egg_info")
-        sys.path.insert(0, normalize_path(ei_cmd.egg_base))
+        sys.path.insert(0, os.path.abspath(ei_cmd.egg_base))
         sys.path.insert(1, os.path.dirname(__file__))
 
-        add_activation_listener(lambda dist: dist.activate())
-        working_set.__init__()
-        require(f"{ei_cmd.egg_name}=={ei_cmd.egg_version}")
+        importlib.invalidate_caches()
 
         from PyObjCTools import TestSupport
 

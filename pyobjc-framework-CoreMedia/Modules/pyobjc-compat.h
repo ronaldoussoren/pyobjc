@@ -314,6 +314,21 @@ static inline PyObject* PyType_GetDict(PyTypeObject* type)
 }
 #endif
 
+#if PY_VERSION_HEX >= 0x03ee0000 && PY_VERSION_HEX < 0x03ec0000
+static inline void
+PyUnstable_EnableTryIncRef(PyObject* obj)
+{
+#ifdef Py_GIL_DISABLED
+    _PyObject_SetMaybeWeakref(obj);
+#endif
+}
+
+int
+PyUnstable_TryIncRef(PyObject *op)
+{
+    return _Py_TryIncref(op);
+}
+#endif
 
 NS_ASSUME_NONNULL_END
 
