@@ -44,7 +44,7 @@ typedef struct {
 
 typedef struct {
     PyObjCSelector base;
-    PyObjC_CallFunc _Nullable sel_call_func;
+    PyObjC_ATOMIC PyObjC_CallFunc _Nullable sel_call_func;
     ffi_cif* _Nullable sel_cif;
 } PyObjCNativeSelector;
 

@@ -679,10 +679,8 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         Py_CLEAR(methinfo);
     }
 
-    if (self->sel_call_func) {
-        Py_BEGIN_CRITICAL_SECTION(self);
-            execute = self->sel_call_func;
-        Py_END_CRITICAL_SECTION();
+    if (self->sel_call_func != NULL) {
+        execute = self->sel_call_func;
     } else {
         assert(self->base.sel_class != NULL);
 
@@ -692,20 +690,18 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
             return NULL;
         }
 
-        Py_BEGIN_CRITICAL_SECTION(self);
-            if (self->sel_call_func == NULL) {
-                self->sel_call_func = execute;
+        if (self->sel_call_func == NULL) {
+            self->sel_call_func = execute;
 #if PY_VERSION_HEX >= 0x03090000
-                /* Update the vectorcall slot when a faster call is possible */
-                if (self->base.sel_methinfo->shortcut_signature && execute == PyObjCFFI_Caller) {
-                    self->base.sel_vectorcall = objcsel_vectorcall_simple;
-                }
-#endif
-            } else {
-                Py_CLEAR(execute);
-                execute = self->sel_call_func;
+            /* Update the vectorcall slot when a faster call is possible */
+            if (self->base.sel_methinfo->shortcut_signature && execute == PyObjCFFI_Caller) {
+                self->base.sel_vectorcall = objcsel_vectorcall_simple;
             }
-        Py_END_CRITICAL_SECTION();
+#endif
+        } else {
+            Py_CLEAR(execute);
+            execute = self->sel_call_func;
+        }
     }
 
     /* XXX: The if statement below can be simplified, both cases are mostly the same */
@@ -796,9 +792,7 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     result->base.sel_vectorcall = objcsel_vectorcall;
 #endif
 
-    Py_BEGIN_CRITICAL_SECTION(meth);
     result->sel_call_func = meth->sel_call_func;
-    Py_END_CRITICAL_SECTION();
 
     const char* tmp = PyObjCUtil_Strdup(meth->base.sel_python_signature);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
@@ -842,13 +836,11 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
                         meth->base.sel_methinfo->signature);
 
 #ifdef Py_GIL_DISABLED
-            Py_BEGIN_CRITICAL_SECTION(meth);
                 if (meth->sel_call_func == NULL) {
 #endif
                     meth->sel_call_func = func;
 #ifdef Py_GIL_DISABLED
                 }
-            Py_END_CRITICAL_SECTION();
 #endif
 
             Py_CLEAR(class_obj);
@@ -858,20 +850,14 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
                                     meth->base.sel_methinfo->signature);
 
 #ifdef Py_GIL_DISABLED
-            Py_BEGIN_CRITICAL_SECTION(meth);
-                if (meth->sel_call_func == NULL) {
+            if (meth->sel_call_func == NULL) {
 #endif
-                    meth->sel_call_func = func;
+                meth->sel_call_func = func;
 #ifdef Py_GIL_DISABLED
-                }
-            Py_END_CRITICAL_SECTION();
+            }
 #endif
         }
-        bool call_func_is_null;
-        Py_BEGIN_CRITICAL_SECTION(meth);
-            call_func_is_null = (meth->sel_call_func == NULL);
-        Py_END_CRITICAL_SECTION();
-        if (call_func_is_null) {
+        if (meth->sel_call_func == NULL) {
             Py_DECREF(result);
             return NULL;
         }
