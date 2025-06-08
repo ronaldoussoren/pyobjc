@@ -11,8 +11,8 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
 {
     PyObject* result    = NULL;
     Class*    buffer    = NULL;
-    int       bufferLen = 0;
-    int       i;
+    unsigned int       bufferLen = 0;
+    unsigned int       i;
 
     result = PyList_New(0);
     if (result == NULL) { // LCOV_BR_EXCL_LINE

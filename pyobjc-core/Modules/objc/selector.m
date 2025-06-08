@@ -680,7 +680,9 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
     }
 
     if (self->sel_call_func) {
-        execute = self->sel_call_func;
+        Py_BEGIN_CRITICAL_SECTION(self);
+            execute = self->sel_call_func;
+        Py_END_CRITICAL_SECTION();
     } else {
         assert(self->base.sel_class != NULL);
 
@@ -689,13 +691,21 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         if (execute == NULL) {
             return NULL;
         }
-        self->sel_call_func = execute;
+
+        Py_BEGIN_CRITICAL_SECTION(self);
+            if (self->sel_call_func == NULL) {
+                self->sel_call_func = execute;
 #if PY_VERSION_HEX >= 0x03090000
-        /* Update the vectorcall slot when a faster call is possible */
-        if (self->base.sel_methinfo->shortcut_signature && execute == PyObjCFFI_Caller) {
-            self->base.sel_vectorcall = objcsel_vectorcall_simple;
-        }
+                /* Update the vectorcall slot when a faster call is possible */
+                if (self->base.sel_methinfo->shortcut_signature && execute == PyObjCFFI_Caller) {
+                    self->base.sel_vectorcall = objcsel_vectorcall_simple;
+                }
 #endif
+            } else {
+                Py_CLEAR(execute);
+                execute = self->sel_call_func;
+            }
+        Py_END_CRITICAL_SECTION();
     }
 
     /* XXX: The if statement below can be simplified, both cases are mostly the same */
@@ -785,7 +795,10 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
 #if PY_VERSION_HEX >= 0x03090000
     result->base.sel_vectorcall = objcsel_vectorcall;
 #endif
+
+    Py_BEGIN_CRITICAL_SECTION(meth);
     result->sel_call_func = meth->sel_call_func;
+    Py_END_CRITICAL_SECTION();
 
     const char* tmp = PyObjCUtil_Strdup(meth->base.sel_python_signature);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
@@ -824,17 +837,41 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
 
             /* PyObjCClass_ClassForMetaClass will only return a class proxy for a non-Nil
              * class */
-            meth->sel_call_func = PyObjC_FindCallFunc(
-                (Class _Nonnull)PyObjCClass_GetClass(class_obj), meth->base.sel_selector,
-                meth->base.sel_methinfo->signature);
+            PyObjC_CallFunc func = PyObjC_FindCallFunc(
+                        (Class _Nonnull)PyObjCClass_GetClass(class_obj), meth->base.sel_selector,
+                        meth->base.sel_methinfo->signature);
+
+#ifdef Py_GIL_DISABLED
+            Py_BEGIN_CRITICAL_SECTION(meth);
+                if (meth->sel_call_func == NULL) {
+#endif
+                    meth->sel_call_func = func;
+#ifdef Py_GIL_DISABLED
+                }
+            Py_END_CRITICAL_SECTION();
+#endif
+
             Py_CLEAR(class_obj);
 
         } else {
-            meth->sel_call_func =
-                PyObjC_FindCallFunc(meth->base.sel_class, meth->base.sel_selector,
+            PyObjC_CallFunc func =  PyObjC_FindCallFunc(meth->base.sel_class, meth->base.sel_selector,
                                     meth->base.sel_methinfo->signature);
+
+#ifdef Py_GIL_DISABLED
+            Py_BEGIN_CRITICAL_SECTION(meth);
+                if (meth->sel_call_func == NULL) {
+#endif
+                    meth->sel_call_func = func;
+#ifdef Py_GIL_DISABLED
+                }
+            Py_END_CRITICAL_SECTION();
+#endif
         }
-        if (meth->sel_call_func == NULL) {
+        bool call_func_is_null;
+        Py_BEGIN_CRITICAL_SECTION(meth);
+            call_func_is_null = (meth->sel_call_func == NULL);
+        Py_END_CRITICAL_SECTION();
+        if (call_func_is_null) {
             Py_DECREF(result);
             return NULL;
         }

@@ -3398,9 +3398,14 @@ PyObject* _Nullable PyObjCObject_NewTransient(id objc_object, int* cookie)
 void
 PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 {
-    if (cookie && Py_REFCNT(proxy) != 1) {
+#ifdef Py_GIL_DISABLED
+    if (cookie && PyUnstable_Object_IsUniquelyReferenced(proxy))
+#else
+    if (cookie && Py_REFCNT(proxy) != 1)
+#endif
+    {
         Py_BEGIN_ALLOW_THREADS
-            CFRetain(PyObjCObject_GetObject(proxy));
+            [PyObjCObject_GetObject(proxy) retain];
         Py_END_ALLOW_THREADS
     }
     Py_DECREF(proxy);

@@ -619,7 +619,7 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
 
         if (PyObjC_is_ascii_string(name, "__dict__")) {
 
-            res = *dictptr;
+            res = *(PyObject* PyObjC_ATOMIC *)dictptr;
             if (res == NULL) {
                 res = PyDict_New();
 
@@ -629,11 +629,11 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
                  */
                 PyObject* to_clear = NULL;
                 Py_BEGIN_CRITICAL_SECTION(obj);
-                if (*dictptr == NULL) {
-                    *dictptr = res;
+                if (*(PyObject* PyObjC_ATOMIC *)dictptr == NULL) {
+                    *(PyObject* PyObjC_ATOMIC *)dictptr = res;
                 } else {
                     to_clear = res;
-                    res = *dictptr;
+                    res = *(PyObject* PyObjC_ATOMIC *)dictptr;
                 }
                 Py_END_CRITICAL_SECTION();
                 Py_CLEAR(to_clear);
