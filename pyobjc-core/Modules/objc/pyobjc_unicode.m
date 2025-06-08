@@ -302,13 +302,13 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 #endif
     ascii->state.interned = SSTATE_NOT_INTERNED;
 
-#if PY_VERSION_HEX >= 0x030C000
+#if PY_VERSION_HEX >= 0x030c0000
     ascii->state.statically_allocated = 0;
 #endif
 
     compact->utf8_length = 0;
     compact->utf8        = NULL;
-#if PY_VERSION_HEX < 0x030C0000
+#if PY_VERSION_HEX < 0x030c0000
     compact->wstr_length = 0;
 #endif
 

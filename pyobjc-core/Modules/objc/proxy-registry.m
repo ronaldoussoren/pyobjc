@@ -122,8 +122,8 @@ PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
 #endif
 
     PyObject* current = NSMapInsertIfAbsent(python_proxies, original, proxy);
-    if (current != NULL) {
 #ifdef Py_GIL_DISABLED
+    if (current != NULL) {
         if (PyUnstable_TryIncRef(current)) {
             PyMutex_Unlock(&proxy_mutex);
             return current;
