@@ -5,6 +5,14 @@
   "classes": {},
   "formal_protocols": {},
   "enum": {
+   "kLSInitializeDefaults": { "value": 1 },
+   "kLSLaunchReserved2": { "value": 4 },
+   "kLSLaunchReserved3": { "value": 8 },
+   "kLSLaunchReserved4": { "value": 16 },
+   "kLSLaunchReserved5": { "value": 32 },
+   "kLSMinCatInfoBitmap": { "value": 6154 },
+   "kLSSharedFileListDoNotMountVolumes": { "value": 2 },
+   "kLSSharedFileListNoUserInteraction": { "value": 1 },
    "kLSLaunchFailedBecauseLaunchConstraintsWereViolatedErr": { "value": -10350},
    "kLSTemplateApplicationIsCorruptErr": { "value": -10401},
    "kLSTemplateApplicationDataVaultIsCorruptErr": { "value": -10402},
@@ -42,17 +50,186 @@
     "LSSharedFileListRef": { "typestr": "^{OpaqueLSSharedFileListRef=}", "gettypeid_func": "LSSharedFileListGetTypeID" }
   },
   "externs": {
-     "kUTTypeSwiftSource": { "typestr": "@" },
-     "kLSSharedFileListItemBeforeFirst": {
-        "magic_cookie": true,
-	"indirect": true
-     },
-     "kLSSharedFileListItemLast": {
-        "magic_cookie": true,
-	"indirect": true
-     }
+   "kLSSharedFileListFavoriteItems": { "typestr": "@" },
+   "kLSSharedFileListFavoriteVolumes": { "typestr": "@" },
+   "kLSSharedFileListGlobalLoginItems": { "typestr": "@" },
+   "kLSSharedFileListItemHidden": { "typestr": "@" },
+   "kLSSharedFileListLoginItemHidden": { "typestr": "@" },
+   "kLSSharedFileListRecentApplicationItems": { "typestr": "@" },
+   "kLSSharedFileListRecentDocumentItems": { "typestr": "@" },
+   "kLSSharedFileListRecentItemsMaxAmount": { "typestr": "@" },
+   "kLSSharedFileListRecentServerItems": { "typestr": "@" },
+   "kLSSharedFileListSessionLoginItems": { "typestr": "@" },
+   "kLSSharedFileListVolumesComputerVisible": { "typestr": "@" },
+   "kLSSharedFileListVolumesIDiskVisible": { "typestr": "@" },
+   "kLSSharedFileListVolumesNetworkVisible": { "typestr": "@" },
+   "kUTTypeSwiftSource": { "typestr": "@" },
+   "kLSSharedFileListItemBeforeFirst": {
+    "magic_cookie": true,
+    "indirect": true,
+    "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+   },
+   "kLSSharedFileListItemLast": {
+    "magic_cookie": true,
+    "indirect": true,
+    "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+   }
   },
   "functions": {
+   "LSSharedFileListItemCopyIconRef": {
+    "args": {
+     "0": {
+      "name": "inItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "^{OpaqueIconRef=}"
+    }
+   },
+   "LSSharedFileListItemCopyDisplayName": {
+    "args": {
+     "0": {
+      "name": "inItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "^{__CFString=}"
+    }
+   },
+   "LSSharedFileListInsertItemURL": {
+    "args": {
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "insertAfterThisItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     },
+     "2": {
+      "name": "inDisplayName",
+      "typestr": "^{__CFString=}"
+     },
+     "3": {
+      "name": "inIconRef",
+      "typestr": "^{OpaqueIconRef=}"
+     },
+     "4": {
+      "name": "inURL",
+      "typestr": "^{__CFURL=}"
+     },
+     "5": {
+      "name": "inPropertiesToSet",
+      "typestr": "^{__CFDictionary=}"
+     },
+     "6": {
+      "name": "inPropertiesToClear",
+      "typestr": "^{__CFArray=}"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+    }
+   },
+   "LSSharedFileListInsertItemFSRef": {
+    "args": {
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "insertAfterThisItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     },
+     "2": {
+      "name": "inDisplayName",
+      "typestr": "^{__CFString=}"
+     },
+     "3": {
+      "name": "inIconRef",
+      "typestr": "^{OpaqueIconRef=}"
+     },
+     "4": {
+      "name": "inFSRef",
+      "type_modifier": "n",
+      "typestr": "^{FSRef=[80C]}"
+     },
+     "5": {
+      "name": "inPropertiesToSet",
+      "typestr": "^{__CFDictionary=}"
+     },
+     "6": {
+      "name": "inPropertiesToClear",
+      "typestr": "^{__CFArray=}"
+     }
+    },
+    "retval": {
+     "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+    }
+   },
+   "LSSharedFileListGetSeedValue": {
+    "args": {
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     }
+    },
+    "retval": {
+     "typestr": "I"
+    }
+   },
+   "LSSharedFileListGetTypeID": {
+    "args": [
+     {
+      "name": null,
+      "typestr": "v"
+     }
+    ],
+    "retval": {
+     "typestr": "Q"
+    }
+   },
+   "LSSharedFileListCreate": {
+    "args": {
+     "0": {
+      "name": "inAllocator",
+      "typestr": "^{__CFAllocator=}"
+     },
+     "1": {
+      "name": "inListType",
+      "typestr": "^{__CFString=}"
+     },
+     "2": {
+      "name": "listOptions",
+      "typestr": "@"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "^{OpaqueLSSharedFileListRef=}"
+    }
+   },
+   "LSSharedFileListCopySnapshot": {
+    "args": {
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "outSnapshotSeed",
+      "typestr": "^I", "type_modifier": "o"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "^{__CFArray=}"
+    }
+   },
 	"LSSharedFileListItemGetTypeID": {
 		"args": [
 		],
@@ -250,8 +427,24 @@
    },
    "LSCopyItemInfoForRef": {
     "args": {
-     "0": { "type_modifier": "n" },
-     "2": { "type_modifier": "o" }
+     "0": {
+      "name": "inItemRef",
+      "typestr": "^{FSRef=[80C]}",
+      "type_modifier": "n"
+     },
+     "1": {
+      "name": "inWhichInfo",
+      "typestr": "I"
+     },
+     "2": {
+      "name": "outItemInfo",
+      "type_modifier": "o",
+      "typestr": "^{LSItemInfoRecord=III^{__CFString=}}"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "i"
     }
    },
    "LSCopyItemInfoForURL": {
@@ -416,9 +609,18 @@
    },
    "LSSharedFileListAddObserver": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "inRunloop",
+      "typestr": "^{__CFRunLoop=}"
+     },
+     "2": {
+      "name": "inRunloopMode",
+      "typestr": "^{__CFString=}"
+     },
      "3": {
       "callable_retained": true,
       "function": {
@@ -433,155 +635,247 @@
        "retval": {
         "typestr": "v"
        }
-      }
+      },
+      "name": "callback",
+      "typestr": "^?"
      },
-     "4": {}
+     "4": {
+      "name": "context",
+      "typestr": "^v"
+     }
+    },
+    "retval": {
+     "typestr": "v"
     }
    },
    "LSSharedFileListCopyProperty": {
     "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "LSSharedFileListCopySnapshot": {
-    "args": {
-     "0": {},
-     "1": { "type_modifier": "o" }
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "inPropertyName",
+      "typestr": "^{__CFString=}"
+     }
     },
     "retval": {
-     "already_cfretained": true
+     "already_cfretained": true,
+     "typestr": "@"
     }
    },
-   "LSSharedFileListCreate": {
+   "LSSharedFileListItemCopyResolvedURL": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": {
+      "name": "inItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     },
+     "1": {
+      "name": "inFlags",
+      "typestr": "I"
+     },
+     "2": {
+      "already_cfretained": true,
+      "name": "outError",
+      "null_accepted": true,
+      "type_modifier": "o",
+      "typestr": "^^{__CFError=}"
+     }
     },
     "retval": {
-     "already_cfretained": true
-    }
-   },
-   "LSSharedFileListGetSeedValue": {
-    "args": {
-     "0": {}
-    }
-   },
-   "LSSharedFileListInsertItemFSRef": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": { "type_modifier": "n" },
-     "5": {},
-     "6": {}
-    },
-    "retval": {}
-   },
-   "LSSharedFileListInsertItemURL": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {},
-     "5": {},
-     "6": {}
-    },
-    "retval": { "already_cfretained": true }
-   },
-   "LSSharedFileListItemCopyDisplayName": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "LSSharedFileListItemCopyIconRef": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
+     "already_cfretained": true,
+     "typestr": "^{__CFURL=}"
     }
    },
    "LSSharedFileListItemCopyProperty": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": {
+      "name": "inItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     },
+     "1": {
+      "name": "inPropertyName",
+      "typestr": "^{__CFString=}"
+     }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "@"
     }
    },
    "LSSharedFileListItemGetID": {
     "args": {
-     "0": {}
+     "0": {
+      "name": "inItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     }
+    },
+    "retval": {
+     "typestr": "I"
     }
    },
    "LSSharedFileListItemMove": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "inItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     },
+     "2": {
+      "name": "inMoveAfterItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     }
+    },
+    "retval": {
+     "typestr": "i"
     }
    },
    "LSSharedFileListItemRemove": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "inItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     }
+    },
+    "retval": {
+     "typestr": "i"
     }
    },
    "LSSharedFileListItemResolve": {
     "args": {
-     "0": {},
-     "2": { "type_modifier": "o", "already_cfretained": true },
-     "3": { "type_modifier": "o" }
+     "0": {
+      "name": "inItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     },
+     "1": {
+      "name": "inFlags",
+      "typestr": "I"
+     },
+     "2": {
+      "name": "outURL",
+      "type_modifier": "o", "already_cfretained": true,
+      "typestr": "^^{__CFURL=}"
+     },
+     "3": {
+      "name": "outRef",
+      "type_modifier": "o",
+      "typestr": "^{FSRef=[80C]}"
+     }
+    },
+    "retval": {
+     "typestr": "i"
     }
    },
    "LSSharedFileListItemSetProperty": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": {
+      "name": "inItem",
+      "typestr": "^{OpaqueLSSharedFileListItemRef=}"
+     },
+     "1": {
+      "name": "inPropertyName",
+      "typestr": "^{__CFString=}"
+     },
+     "2": {
+      "name": "inPropertyData",
+      "typestr": "@"
+     }
+    },
+    "retval": {
+     "typestr": "i"
     }
    },
    "LSSharedFileListRemoveAllItems": {
     "args": {
-     "0": {}
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     }
+    },
+    "retval": {
+     "typestr": "i"
     }
    },
    "LSSharedFileListRemoveObserver": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "inRunloop",
+      "typestr": "^{__CFRunLoop=}"
+     },
+     "2": {
+      "name": "inRunloopMode",
+      "typestr": "^{__CFString=}"
+     },
      "3": {
       "function": {
-       "args": [
-        {
+       "args": {
+        "0": {
          "typestr": "^{OpaqueLSSharedFileListRef=}"
         },
-        {
+        "1": {
          "typestr": "^v"
         }
-       ],
+       },
        "retval": {
         "typestr": "v"
        }
-      }
+      },
+      "name": "callback",
+      "typestr": "^?"
      },
-     "4": {}
+     "4": {
+      "name": "context",
+      "typestr": "^v"
+     }
+    },
+    "retval": {
+     "typestr": "v"
     }
    },
+
    "LSSharedFileListSetAuthorization": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "inAuthorization",
+      "typestr": "^{AuthorizationOpaqueRef=}"
+     }
+    },
+    "retval": {
+     "typestr": "i"
     }
    },
    "LSSharedFileListSetProperty": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": {
+      "name": "inList",
+      "typestr": "^{OpaqueLSSharedFileListRef=}"
+     },
+     "1": {
+      "name": "inPropertyName",
+      "typestr": "^{__CFString=}"
+     },
+     "2": {
+      "name": "inPropertyData",
+      "typestr": "@"
+     }
+    },
+    "retval": {
+     "typestr": "i"
     }
    },
    "OverrideIconRef": {
@@ -671,10 +965,14 @@
    },
    "UTTypeCopyDeclaringBundleURL": {
     "args": {
-     "0": {}
+     "0": {
+      "name": "inUTI",
+      "typestr": "^{__CFString=}"
+     }
     },
     "retval": {
-     "already_cfretained": true
+     "already_cfretained": true,
+     "typestr": "^{__CFURL=}"
     }
    },
    "UTTypeCopyDescription": {

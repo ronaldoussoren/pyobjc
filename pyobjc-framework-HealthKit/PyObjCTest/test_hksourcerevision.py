@@ -11,3 +11,14 @@ class TestHKSourceRevision(TestCase):
             HealthKit.HKSourceRevisionAnyOperatingSystem,
             HealthKit.NSOperatingSystemVersion,
         )
+
+    def test_methods(self):
+        self.assertArgHasType(
+            HealthKit.HKSourceRevision.initWithSource_version_productType_operatingSystemVersion_,
+            3,
+            HealthKit.NSOperatingSystemVersion.__typestr__,
+        )
+        self.assertResultHasType(
+            HealthKit.HKSourceRevision.operatingSystemVersion,
+            HealthKit.NSOperatingSystemVersion.__typestr__,
+        )

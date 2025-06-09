@@ -2,43 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "typed_enum": {
-   "CBConnectionEventMatchingOption": { "type": "@", "type_name": "NSString" }
-  },
-  "enum": {
-   "CBErrorPeerRemovedPairingInformation": { "value": 14 },
-   "CBErrorEncryptionTimedOut": { "value": 15 },
-   "CBPeripheralManagerAuthorizationStatusNotDetermined": { "value": 0 },
-   "CBPeripheralManagerAuthorizationStatusRestricted": { "value": 1 },
-   "CBPeripheralManagerAuthorizationStatusDenied": { "value": 2 },
-   "CBPeripheralManagerAuthorizationStatusAuthorized": { "value": 3 },
-   "CBManagerStateUnknown": { "value": 0 },
-   "CBManagerStateResetting": { "value": 1 },
-   "CBManagerStateUnsupported": { "value": 2 },
-   "CBManagerStateUnauthorized": { "value": 3 },
-   "CBManagerStatePoweredOff": { "value": 4 },
-   "CBManagerStatePoweredOn": { "value": 5 },
-   "CBErrorConnectionFailed": { "value": 10 },
-   "CBPeripheralStateDisconnecting": { "value": 3 },
-   "CBErrorConnectionLimitReached": { "value": 11 },
-   "CBErrorUnkownDevice": { "value": 12 },
-   "CBErrorUnknownDevice": { "value": 12 },
-   "CBErrorOperationNotSupported": { "value": 13 }
-  },
-  "externs": {
-   "CBConnectPeripheralOptionStartDelayKey": { "typestr": "@" },
-   "CBUUIDCharacteristicValidRangeString": { "typestr": "@" },
-   "CBUUIDL2CAPPSMCharacteristicString": { "typestr": "@" },
-   "CBPeripheralManagerOptionRestoreIdentifierKey": { "typestr": "@" },
-   "CBPeripheralManagerRestoredStateServicesKey": { "typestr": "@" },
-   "CBPeripheralManagerRestoredStateAdvertisementDataKey": { "typestr": "@" },
-   "CBCentralManagerRestoredStateScanOptionsKey": { "typestr": "@" },
-   "CBCentralManagerRestoredStateScanServicesKey": { "typestr": "@" },
-   "CBCentralManagerRestoredStatePeripheralsKey": { "typestr": "@" },
-   "CBConnectPeripheralOptionNotifyOnNotificationKey": { "typestr": "@" },
-   "CBCentralManagerOptionRestoreIdentifierKey": { "typestr": "@" },
-   "CBConnectPeripheralOptionNotifyOnConnectionKey": { "typestr": "@" }
-  },
   "classes": {
    "CBCentral": {
     "methods": [
@@ -61,8 +24,10 @@
    "CBCentralManager": {
     "methods": [
      {
-      "retval": { "type_override": "Z" },
       "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "isScanning"
      },
      {
@@ -85,7 +50,9 @@
     "methods": [
      {
       "class_method": false,
-      "retval": { "type_override": "Z" },
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "canSendWriteWithoutResponse"
      },
      {
@@ -122,7 +89,9 @@
      },
      {
       "args": {
-       "0": { "type_override": "Z" }
+       "0": {
+        "type_override": "Z"
+       }
       },
       "class_method": false,
       "selector": "publishL2CAPChannelWithEncryption:"
@@ -143,31 +112,149 @@
    "NSObject": {
     "methods": [
      {
-      "class_method": false,
-      "selector": "peripheralManager:didPublishL2CAPChannel:error:",
       "args": {
-       "1": { "type_override": "S" }
-      }
+       "1": {
+        "type_override": "S"
+       }
+      },
+      "class_method": false,
+      "selector": "peripheralManager:didPublishL2CAPChannel:error:"
      },
      {
-      "class_method": false,
-      "selector": "peripheralManager:didOpenL2CAPChannel:error:",
       "args": {
-       "1": { "type_override": "S" }
-      }
+       "1": {
+        "type_override": "S"
+       }
+      },
+      "class_method": false,
+      "selector": "peripheralManager:didOpenL2CAPChannel:error:"
      },
      {
-      "class_method": false,
-      "selector": "peripheralManager:didUnpublishL2CAPChannel:error:",
       "args": {
-       "1": { "type_override": "S" }
-      }
+       "1": {
+        "type_override": "S"
+       }
+      },
+      "class_method": false,
+      "selector": "peripheralManager:didUnpublishL2CAPChannel:error:"
      }
     ]
    }
   },
+  "enum": {
+   "CBPeripheralAuthorizationStatusAuthorized": { "value": 3, "deprecated": 1009 },
+   "CBPeripheralAuthorizationStatusDenied": { "value": 2, "deprecated": 1009 },
+   "CBPeripheralAuthorizationStatusNotDetermined": { "value": 0, "deprecated": 1009 },
+   "CBPeripheralAuthorizationStatusRestricted": { "value": 1, "deprecated": 1009 },
+   "CBErrorConnectionFailed": {
+    "value": 10
+   },
+   "CBErrorConnectionLimitReached": {
+    "value": 11
+   },
+   "CBErrorEncryptionTimedOut": {
+    "value": 15
+   },
+   "CBErrorOperationNotSupported": {
+    "value": 13
+   },
+   "CBErrorPeerRemovedPairingInformation": {
+    "value": 14
+   },
+   "CBErrorUnknownDevice": {
+    "value": 12
+   },
+   "CBErrorUnkownDevice": {
+    "value": 12
+   },
+   "CBManagerStatePoweredOff": {
+    "value": 4
+   },
+   "CBManagerStatePoweredOn": {
+    "value": 5
+   },
+   "CBManagerStateResetting": {
+    "value": 1
+   },
+   "CBManagerStateUnauthorized": {
+    "value": 3
+   },
+   "CBManagerStateUnknown": {
+    "value": 0
+   },
+   "CBManagerStateUnsupported": {
+    "value": 2
+   },
+   "CBPeripheralManagerAuthorizationStatusAuthorized": {
+    "value": 3
+   },
+   "CBPeripheralManagerAuthorizationStatusDenied": {
+    "value": 2
+   },
+   "CBPeripheralManagerAuthorizationStatusNotDetermined": {
+    "value": 0
+   },
+   "CBPeripheralManagerAuthorizationStatusRestricted": {
+    "value": 1
+   },
+   "CBPeripheralStateDisconnecting": {
+    "value": 3
+   }
+  },
+  "externs": {
+   "CBUUIDAppearanceString": { "typestr": "@", "deprecated": 1009 },
+   "CBUUIDDeviceNameString": { "typestr": "@", "deprecated": 1009 },
+   "CBUUIDGenericAccessProfileString": { "typestr": "@", "deprecated": 1009 },
+   "CBUUIDGenericAttributeProfileString": { "typestr": "@", "deprecated": 1009 },
+   "CBUUIDPeripheralPreferredConnectionParametersString": { "typestr": "@", "deprecated": 1009 },
+   "CBUUIDPeripheralPrivacyFlagString": { "typestr": "@", "deprecated": 1009 },
+   "CBUUIDReconnectionAddressString": { "typestr": "@", "deprecated": 1009 },
+   "CBUUIDServiceChangedString": { "typestr": "@", "deprecated": 1009 },
+   "CBCentralManagerOptionRestoreIdentifierKey": {
+    "typestr": "@"
+   },
+   "CBCentralManagerRestoredStatePeripheralsKey": {
+    "typestr": "@"
+   },
+   "CBCentralManagerRestoredStateScanOptionsKey": {
+    "typestr": "@"
+   },
+   "CBCentralManagerRestoredStateScanServicesKey": {
+    "typestr": "@"
+   },
+   "CBConnectPeripheralOptionNotifyOnConnectionKey": {
+    "typestr": "@"
+   },
+   "CBConnectPeripheralOptionNotifyOnNotificationKey": {
+    "typestr": "@"
+   },
+   "CBConnectPeripheralOptionStartDelayKey": {
+    "typestr": "@"
+   },
+   "CBPeripheralManagerOptionRestoreIdentifierKey": {
+    "typestr": "@"
+   },
+   "CBPeripheralManagerRestoredStateAdvertisementDataKey": {
+    "typestr": "@"
+   },
+   "CBPeripheralManagerRestoredStateServicesKey": {
+    "typestr": "@"
+   },
+   "CBUUIDCharacteristicValidRangeString": {
+    "typestr": "@"
+   },
+   "CBUUIDL2CAPPSMCharacteristicString": {
+    "typestr": "@"
+   }
+  },
   "formal_protocols": {},
   "functions": {},
-  "informal_protocols": {}
+  "informal_protocols": {},
+  "typed_enum": {
+   "CBConnectionEventMatchingOption": {
+    "type": "@",
+    "type_name": "NSString"
+   }
+  }
  }
 }

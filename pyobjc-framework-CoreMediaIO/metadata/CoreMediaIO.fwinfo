@@ -6,6 +6,59 @@
    "CMIOExtensionProperty": { "type": "@", "type_name": "NSString" }
   },
   "classes": {
+   "CMIOExtensionStreamCustomClockConfiguration": {
+    "methods": [
+     {
+      "selector": "getTimeCallMinimumInterval",
+      "class_method": false,
+      "retval": { "type_override": "{CMTime=qiIq}" }
+     },
+     {
+      "selector": "initWithClockName:sourceIdentifier:getTimeCallMinimumInterval:numberOfEventsForRateSmoothing:numberOfAveragesForRateSmoothing:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "{CMTime=qiIq}" }
+      }
+     },
+     {
+      "selector": "customClockConfigurationWithClockName:sourceIdentifier:getTimeCallMinimumInterval:numberOfEventsForRateSmoothing:numberOfAveragesForRateSmoothing:",
+      "class_method": true,
+      "args": {
+       "2": { "type_override": "{CMTime=qiIq}" }
+      }
+     }
+    ]
+   },
+   "CMIOExtensionStreamFormat": {
+    "methods": [
+     {
+      "selector": "initWithFormatDescription:maxFrameDuration:minFrameDuration:validFrameDurations:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "{CMTime=qiIq}" },
+       "2": { "type_override": "{CMTime=qiIq}" }
+      }
+     },
+     {
+      "selector": "minFrameDuration",
+      "class_method": false,
+      "retval": { "type_override": "{CMTime=qiIq}" }
+     },
+     {
+      "selector": "maxFrameDuration",
+      "class_method": false,
+      "retval": { "type_override": "{CMTime=qiIq}" }
+     },
+     {
+      "selector": "streamFormatWithFormatDescription:maxFrameDuration:minFrameDuration:validFrameDurations:",
+      "class_method": true,
+      "args": {
+       "1": { "type_override": "{CMTime=qiIq}" },
+       "2": { "type_override": "{CMTime=qiIq}" }
+      }
+     }
+    ]
+   },
    "CMIOExtensionProvider": {
     "methods": [
      {

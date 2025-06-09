@@ -7,6 +7,54 @@
     "kCLAuthorizationStatusAuthorizedAlways": { "value": 3 }
   },
   "classes": {
+   "CLRegion": {
+    "methods": [
+     {
+      "selector": "center",
+      "class_method": false,
+      "retval": {"type_override": "{CLLocationCoordinate2D=dd}"}
+     },
+     {
+      "selector": "containsCoordinate:",
+      "class_method": false,
+      "retval": {"type_override": "Z"},
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     },
+     {
+      "selector": "initCircularRegionWithCenter:radius:identifier:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     }
+    ]
+   },
+   "CLCircularRegion": {
+    "methods": [
+     {
+      "selector": "center",
+      "class_method": false,
+      "retval": { "type_override": "{CLLocationCoordinate2D=dd}"}
+     },
+     {
+      "selector": "containsCoordinate:",
+      "class_method": false,
+      "retval": {"type_override": "Z"},
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     },
+     {
+      "selector": "initWithCenter:radius:identifier:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     }
+    ]
+   },
    "CLMonitorConfiguration": {
     "methods": [
      {
@@ -175,6 +223,13 @@
    },
    "CLLocation": {
     "methods": [
+     {
+      "selector": "initWithCoordinate:altitude:horizontalAccuracy:verticalAccuracy:course:speed:timestamp:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     },
      {
       "args": {
        "0": {

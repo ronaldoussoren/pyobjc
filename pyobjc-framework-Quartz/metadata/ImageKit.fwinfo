@@ -2,7 +2,49 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "aliases": {
+   "IKImagePickerShowEffectsKey": { "alias": "IKPictureTakerShowEffectsKey" },
+   "IKImagePickerOutputImageMaxSizeKey": { "alias": "IKPictureTakerOutputImageMaxSizeKey" },
+   "IKImagePickerImageTransformsKey": { "alias": "IKPictureTakerImageTransformsKey" },
+   "IKImagePickerAllowsFileChoosingKey": { "alias": "IKPictureTakerAllowsFileChoosingKey" },
+   "IKImagePickerAllowsEditingKey": { "alias": "IKPictureTakerAllowsEditingKey" },
+   "IKImagePickerInformationalTextKey": { "alias": "IKPictureTakerInformationalTextKey" },
+   "IKImagePickerCropAreaSizeKey": { "alias": "IKPictureTakerCropAreaSizeKey" },
+   "IKImagePickerAllowsVideoCaptureKey": { "alias": "IKPictureTakerAllowsVideoCaptureKey" },
+   "IKImagePickerUpdateRecentPictureKey": { "alias": "IKPictureTakerUpdateRecentPictureKey" },
+   "IKImagePickerShowRecentPictureKey": { "alias": "IKPictureTakerShowRecentPictureKey" }
+  },
+  "externs": {
+   "IKImageBrowserCellLayerTypeBackground": { "typestr": "@" },
+   "IKImageBrowserCellLayerTypeForeground": { "typestr": "@" },
+   "IKImageBrowserCellLayerTypePlaceHolder": { "typestr": "@" },
+   "IKImageBrowserCellLayerTypeSelection": { "typestr": "@" }
+  },
   "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "numberOfCellsInImageBrowser:",
+      "class_method": false,
+      "retval": { "type_override": "L" }
+     },
+     {
+      "selector": "imageBrowser:cellAtIndex:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "L" }
+      }
+     },
+     {
+      "selector": "imageBrowser:moveCellsAtIndexes:toIndex:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_override": "L" }
+      }
+     }
+    ]
+   },
    "IKFilterBrowserPanel": {
     "methods": [
      {

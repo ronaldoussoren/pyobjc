@@ -3,7 +3,6 @@ from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
     min_sdk_level,
-    os_level_between,
 )
 
 
@@ -56,10 +55,6 @@ class TestICCameraDevice(TestCase):
     @min_os_level("11.0")
     def testConstants11_0(self):
         self.assertIsInstance(ImageCaptureCore.ICTruncateAfterSuccessfulDownload, str)
-
-    @os_level_between("10.11", "10.11")
-    def testConstants10_11(self):
-        self.assertIsInstance(ImageCaptureCore.ICCameraDeviceSupportsFastPTP, str)
 
     def testProtocolObjects(self):
         self.assertProtocolExists("ICCameraDeviceDelegate")

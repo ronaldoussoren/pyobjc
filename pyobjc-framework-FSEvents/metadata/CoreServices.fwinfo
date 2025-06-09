@@ -48,7 +48,6 @@
      }
     },
     "retval": {
-     "already_retained": true,
      "type_override": "^{__CFString=}"
     }
    },
@@ -259,7 +258,6 @@
    },
    "FSEventsCopyUUIDForDevice": {
     "retval": {
-     "already_retained": true,
      "type_override": "^{__CFUUID=}"
     }
    }

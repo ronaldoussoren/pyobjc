@@ -1,0 +1,790 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "AVAudioApplication": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setInputMuted:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setInputMuteStateChangeHandler:error:"
+     }
+    ]
+   },
+   "AVAudioBuffer": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "audioBufferList"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "mutableAudioBufferList"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "audioBufferList"
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "mutableAudioBufferList"
+     }
+    ]
+   },
+   "AVAudioChannelLayout": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithLayout:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "layoutWithLayout:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "layout"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "layout"
+     }
+    ]
+   },
+   "AVAudioCompressedBuffer": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "data"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "packetDescriptions"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "data"
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "packetDescriptions"
+     }
+    ]
+   },
+   "AVAudioConverter": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "convertToBuffer:fromBuffer:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "convertToBuffer:error:withInputFromBlock:"
+     }
+    ]
+   },
+   "AVAudioEngine": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "startAndReturnError:"
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "enableManualRenderingMode:format:maximumFrameCount:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "renderOffline:toBuffer:error:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "musicSequence"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setMusicSequence:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "musicSequence"
+     }
+    ]
+   },
+   "AVAudioFile": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initForReading:error:"
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initForReading:commonFormat:interleaved:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initForWriting:settings:error:"
+     },
+     {
+      "args": {
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "initForWriting:settings:commonFormat:interleaved:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "readIntoBuffer:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "readIntoBuffer:frameCount:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "writeFromBuffer:error:"
+     }
+    ]
+   },
+   "AVAudioFormat": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithStreamDescription:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithStreamDescription:channelLayout:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithCMAudioFormatDescription:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "streamDescription"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "formatDescription"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "streamDescription"
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "formatDescription"
+     }
+    ]
+   },
+   "AVAudioIONode": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setVoiceProcessingEnabled:error:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "audioUnit"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "audioUnit"
+     }
+    ]
+   },
+   "AVAudioPCMBuffer": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithPCMFormat:bufferListNoCopy:deallocator:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "floatChannelData"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "int16ChannelData"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "int32ChannelData"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "floatChannelData"
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "int16ChannelData"
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "int32ChannelData"
+     }
+    ]
+   },
+   "AVAudioPlayer": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithContentsOfURL:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithData:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithContentsOfURL:fileTypeHint:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithData:fileTypeHint:error:"
+     }
+    ]
+   },
+   "AVAudioRecorder": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithURL:settings:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithURL:format:error:"
+     }
+    ]
+   },
+   "AVAudioSequencer": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "loadFromURL:options:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "loadFromData:options:error:"
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "writeToURL:SMPTEResolution:replaceExisting:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "dataWithSMPTEResolution:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "hostTimeForBeats:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "beatsForHostTime:error:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "startAndReturnError:"
+     }
+    ]
+   },
+   "AVAudioSession": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setCategory:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "setCategory:withOptions:error:"
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "setCategory:mode:options:error:"
+     },
+     {
+      "args": {
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "setCategory:mode:routeSharingPolicy:options:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setMode:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setAllowHapticsAndSystemSoundsDuringRecording:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "overrideOutputAudioPort:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredInput:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPrefersNoInterruptionsFromSystemAlerts:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "setPrefersEchoCancelledInput:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setActive:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "setActive:withOptions:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredSampleRate:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredIOBufferDuration:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredInputNumberOfChannels:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredOutputNumberOfChannels:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredInputOrientation:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setInputGain:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setInputDataSource:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setOutputDataSource:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setAggregatedIOPreference:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setSupportsMultichannelContent:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPrefersInterruptionOnRouteDisconnect:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredMicrophoneInjectionMode:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "setActive:withFlags:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredHardwareSampleRate:error:"
+     }
+    ]
+   },
+   "AVAudioSessionDataSourceDescription": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredPolarPattern:error:"
+     }
+    ]
+   },
+   "AVAudioSessionPortDescription": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setPreferredDataSource:error:"
+     }
+    ]
+   },
+   "AVAudioTime": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithAudioTimeStamp:sampleRate:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "timeWithAudioTimeStamp:sampleRate:"
+     }
+    ]
+   },
+   "AVAudioUnit": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "loadAudioUnitPresetAtURL:error:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "audioUnit"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "audioUnit"
+     }
+    ]
+   },
+   "AVAudioUnitComponent": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "audioComponent"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "audioComponent"
+     }
+    ]
+   },
+   "AVAudioUnitMIDIInstrument": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "sendMIDIEventList:"
+     }
+    ]
+   },
+   "AVAudioUnitSampler": {
+    "methods": [
+     {
+      "args": {
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "loadSoundBankInstrumentAtURL:program:bankMSB:bankLSB:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "loadInstrumentAtURL:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "loadAudioFilesAtURLs:error:"
+     }
+    ]
+   },
+   "AVMIDIPlayer": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithContentsOfURL:soundBankURL:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithData:soundBankURL:error:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

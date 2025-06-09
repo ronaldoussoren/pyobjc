@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 import MapKit
+import CoreLocation
 
 
 class TestMKMapViewHelper(MapKit.NSObject):
@@ -87,6 +88,32 @@ class TestMKMapView(TestCase):
 
         self.assertResultIsBOOL(MapKit.MKMapView.showsCompass)
         self.assertArgIsBOOL(MapKit.MKMapView.setShowsCompass_, 0)
+
+        self.assertArgHasType(
+            MapKit.MKMapView.annotationsInMapRect_, 0, MapKit.MKMapRect.__typestr__
+        )
+
+        self.assertArgHasType(
+            MapKit.MKMapView.convertCoordinate_toPointToView_,
+            0,
+            CoreLocation.CLLocationCoordinate2D.__typestr__,
+        )
+
+        self.assertResultHasType(
+            MapKit.MKMapView.convertPoint_toCoordinateFromView_,
+            CoreLocation.CLLocationCoordinate2D.__typestr__,
+        )
+
+        self.assertResultHasType(
+            MapKit.MKMapView.convertRect_toRegionFromView_,
+            MapKit.MKCoordinateRegion.__typestr__,
+        )
+
+        self.assertArgHasType(
+            MapKit.MKMapView.convertRegion_toRectToView_,
+            0,
+            MapKit.MKCoordinateRegion.__typestr__,
+        )
 
     @min_os_level("10.10")
     def testClasses10_10(self):

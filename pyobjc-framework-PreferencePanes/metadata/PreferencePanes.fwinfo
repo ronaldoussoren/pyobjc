@@ -2,6 +2,11 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "literals": {
+   "kNSPrefPaneHelpMenuAnchorKey": { "unicode": true, "value": "anchor" },
+   "kNSPrefPaneHelpMenuTitleKey": { "unicode": true, "value": "title" },
+   "kNSPrefPaneHelpMenuInfoPListKey": { "unicode": true, "value": "NSPrefPaneHelpAnchors" }
+  },
   "externs": {
    "NSPreferencePaneSwitchToPaneNotification": { "typestr": "@" },
    "NSPreferencePrefPaneIsAvailableNotification": { "typestr": "@" },

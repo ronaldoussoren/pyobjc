@@ -49,3 +49,42 @@ class TestGCMotion(TestCase):
         self.assertResultIsBOOL(GameController.GCMotion.hasRotationRate)
 
         self.assertResultIsBOOL(GameController.GCMotion.hasGravityAndUserAcceleration)
+
+        self.assertResultHasType(
+            GameController.GCMotion.acceleration,
+            GameController.GCAcceleration.__typestr__,
+        )
+        self.assertArgHasType(
+            GameController.GCMotion.setAcceleration_,
+            0,
+            GameController.GCAcceleration.__typestr__,
+        )
+
+        self.assertResultHasType(
+            GameController.GCMotion.gravity, GameController.GCAcceleration.__typestr__
+        )
+        self.assertArgHasType(
+            GameController.GCMotion.setGravity_,
+            0,
+            GameController.GCAcceleration.__typestr__,
+        )
+
+        self.assertResultHasType(
+            GameController.GCMotion.rotationRate,
+            GameController.GCRotationRate.__typestr__,
+        )
+        self.assertArgHasType(
+            GameController.GCMotion.setRotationRate_,
+            0,
+            GameController.GCRotationRate.__typestr__,
+        )
+
+        self.assertResultHasType(
+            GameController.GCMotion.userAcceleration,
+            GameController.GCAcceleration.__typestr__,
+        )
+        self.assertArgHasType(
+            GameController.GCMotion.setUserAcceleration_,
+            0,
+            GameController.GCAcceleration.__typestr__,
+        )

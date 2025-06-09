@@ -113,13 +113,6 @@ class TestTKSmartCard(TestCase):
         self.assertEqual(CryptoTokenKit.TKSmartCardPINConfirmationNew, 1 << 0)
         self.assertEqual(CryptoTokenKit.TKSmartCardPINConfirmationCurrent, 1 << 1)
 
-        # Deprecated:
-        self.assertEqual(CryptoTokenKit.TKSmartCardNoSlot, 0)
-        self.assertEqual(CryptoTokenKit.TKSmartCardSlotEmpty, 1)
-        self.assertEqual(CryptoTokenKit.TKSmartCardSlotProbing, 2)
-        self.assertEqual(CryptoTokenKit.TKSmartCardSlotMuteCard, 3)
-        self.assertEqual(CryptoTokenKit.TKSmartCardSlotValidCard, 4)
-
     @min_os_level("10.11")
     def testProtocols(self):
         self.assertProtocolExists("TKSmartCardUserInteractionDelegate")

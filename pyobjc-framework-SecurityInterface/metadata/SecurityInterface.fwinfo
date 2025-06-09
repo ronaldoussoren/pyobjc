@@ -33,18 +33,6 @@
       },
       "class_method": false,
       "selector": "setString:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setAuthorizationRights:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "authorizationRights"
      }
     ]
    },

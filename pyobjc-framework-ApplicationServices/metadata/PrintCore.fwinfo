@@ -2,6 +2,9 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "structs": {
+   "PMPaperMargins": { "fieldnames": ["top", "left", "bottom", "right"] }
+  },
   "aliases": {
    "kPMDontWantData": { "alias": "objc.NULL" },
    "kPMNoData": { "alias": "objc.NULL" },
@@ -11,6 +14,9 @@
    "kPMDontWantSize": { "alias": "objc.NULL" },
    "kPMDontWantData": { "alias": "objc.NULL" },
    "kPMDontWantBoolean": { "alias": "objc.NULL" }
+  },
+  "enum": {
+   "kPMLockIgnored": { "value": -30878 }
   },
   "expressions": {
    "kPMOutputOrderKey": { "value": "kPMOutputOrderStr.decode('utf-8')" },

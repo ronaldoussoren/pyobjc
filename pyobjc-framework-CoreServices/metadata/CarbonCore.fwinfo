@@ -5899,6 +5899,8 @@
    "MACE6Type": { "ignore": true }
   },
   "structs": {
+   "NumFormatStringRec": { "fieldnames": ["fLength", "fVersion", "data"] },
+   "Nanoseconds": { "fieldnames": ["lo", "hi"] },
    "decimal": { "ignore": true },
    "decform": { "ignore": true },
    "UCKeyStateRecord": { "ignore": true },

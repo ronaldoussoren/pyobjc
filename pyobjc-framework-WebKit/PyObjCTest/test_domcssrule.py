@@ -11,7 +11,6 @@ class TestDOMCSSRule(TestCase):
         self.assertEqual(WebKit.DOM_MEDIA_RULE, 4)
         self.assertEqual(WebKit.DOM_FONT_FACE_RULE, 5)
         self.assertEqual(WebKit.DOM_PAGE_RULE, 6)
-        self.assertEqual(WebKit.DOM_VARIABLES_RULE, 7)  # Removed in 10.10(?)
         self.assertEqual(WebKit.DOM_KEYFRAMES_RULE, 7)
         self.assertEqual(WebKit.DOM_WEBKIT_KEYFRAMES_RULE, 7)
         self.assertEqual(WebKit.DOM_WEBKIT_KEYFRAME_RULE, 8)

@@ -27,7 +27,9 @@ class TestAVAudioTypes(TestCase):
     @min_os_level("10.10")
     def testFunctions(self):
         v = AVFoundation.AVAudioMake3DPoint(1.5, 2.5, 3.5)
-        self.assertIsInstance(v, AVFoundation.AVAudio3DPoint)
+        self.assertIsInstance(
+            v, (AVFoundation.AVAudio3DPoint, AVFoundation.AVAudio3DVector)
+        )
         self.assertEqual(v.x, 1.5)
         self.assertEqual(v.y, 2.5)
         self.assertEqual(v.z, 3.5)

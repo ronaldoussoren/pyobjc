@@ -22,8 +22,13 @@ setup(
     name="pyobjc-framework-AVFoundation",
     description="Wrappers for the framework AVFoundation on macOS",
     min_os_level="10.7",
-    packages=["AVFoundation"],
+    packages=["AVFoundation", "AVFAudio"],
     ext_modules=[
+        Extension(
+            "AVFAudio._inlines",
+            ["Modules/_AVFAudio_inlines.m"],
+            extra_link_args=["-framework", "AVFAudio"],
+        ),
         Extension(
             "AVFoundation._inlines",
             ["Modules/_AVFoundation_inlines.m"],

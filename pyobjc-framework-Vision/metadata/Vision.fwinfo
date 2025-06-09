@@ -132,6 +132,35 @@
    "VNGenerateObjectnessBasedSaliencyImageRequestRevision2": { "value": 2 }
   },
   "classes": {
+    "VNDetectTrajectoriesRequest": {
+     "methods": [
+      {
+       "selector": "targetFrameTime",
+       "class_method": false,
+       "retval": {
+        "type_override": "{CMTime=qiIq}"
+       }
+      },
+      {
+       "selector": "setTargetFrameTime:",
+       "class_method": false,
+       "args": {
+        "0": {"type_override": "{CMTime=qiIq}" }
+       }
+      }
+     ]
+    },
+    "VNStatefulRequest": {
+     "methods": [
+      {
+       "selector": "initWithFrameAnalysisSpacing:completionHandler:",
+       "class_method": false,
+       "args": {
+        "0": {"type_override": "{CMTime=qiIq}" }
+       }
+      }
+     ]
+    },
     "VNHumanBodyPose3DObservation": {
      "methods": [
       {

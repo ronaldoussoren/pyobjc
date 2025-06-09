@@ -747,6 +747,20 @@
    "PHLivePhotoEditingContext": {
     "methods": [
      {
+      "selector": "photoTime",
+      "class_method": false,
+      "retval": {
+       "type_override": "{CMTime=qiIq}"
+      }
+     },
+     {
+      "selector": "duration",
+      "class_method": false,
+      "retval": {
+       "type_override": "{CMTime=qiIq}"
+      }
+     },
+     {
       "selector": "frameProcessor",
       "class_method": false,
       "retval": {

@@ -17,6 +17,42 @@ class TestMPSImage_MPSImageKernel(TestCase):
             MPSCopyAllocator,
         )
 
+        self.assertResultHasType(
+            MetalPerformanceShaders.MPSBinaryImageKernel.clipRect,
+            MetalPerformanceShaders.MTLRegion.__typestr__,
+        )
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSBinaryImageKernel.setClipRect_,
+            0,
+            MetalPerformanceShaders.MTLRegion.__typestr__,
+        )
+        self.assertResultHasType(
+            MetalPerformanceShaders.MPSBinaryImageKernel.primaryOffset,
+            MetalPerformanceShaders.MTLOffset.__typestr__,
+        )
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSBinaryImageKernel.setPrimaryOffset_,
+            0,
+            MetalPerformanceShaders.MTLOffset.__typestr__,
+        )
+        self.assertResultHasType(
+            MetalPerformanceShaders.MPSBinaryImageKernel.secondaryOffset,
+            MetalPerformanceShaders.MTLOffset.__typestr__,
+        )
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSBinaryImageKernel.setSecondaryOffset_,
+            0,
+            MetalPerformanceShaders.MTLOffset.__typestr__,
+        )
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSBinaryImageKernel.primarySourceRegionForDestinationSize_,
+            MetalPerformanceShaders.MTLSize.__typestr__,
+        )
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSBinaryImageKernel.secondarySourceRegionForDestinationSize_,
+            MetalPerformanceShaders.MTLSize.__typestr__,
+        )
+
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSBinaryImageKernel.encodeToCommandBuffer_primaryTexture_inPlaceSecondaryTexture_fallbackCopyAllocator_  # noqa: B950
         )

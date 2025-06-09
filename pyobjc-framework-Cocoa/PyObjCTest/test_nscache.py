@@ -18,6 +18,7 @@ class TestNSCache(TestCase):
         key = "key"
         value = Foundation.NSObject.alloc().init()
         c = Foundation.NSCache.alloc().init()
+        c.setCountLimit_(1000)
         c.setObject_forKey_(value, key)
         self.assertEqual(c.objectForKey_(key), value)
         self.assertEqual(c.objectForKey_(key), value)

@@ -2,6 +2,9 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "literals": {
+   "ICRunLoopMode": { "value": "com.apple.ImageCaptureCore", "unicode": true, "deprecated": 1015 }
+  },
   "typed_enum": {
    "ICUploadOption": { "type": "@", "type_name": "NSString" },
    "ICDeleteResult": { "type": "@", "type_name": "NSString" },

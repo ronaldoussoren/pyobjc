@@ -1026,6 +1026,12 @@
    "ICServices": { "ignore": true }
   },
   "enum": {
+   "kAXValueAXErrorType": { "deprecated": 1010, "value": 5 },
+   "kAXValueCFRangeType": { "deprecated": 1010, "value": 4 },
+   "kAXValueCGPointType": { "deprecated": 1010, "value": 1 },
+   "kAXValueCGRectType": { "deprecated": 1010, "value": 3 },
+   "kAXValueCGSizeType": { "deprecated": 1010, "value": 2 },
+   "kAXValueIllegalType": { "deprecated": 1010, "value": 0 },
    "icPrefNotFoundErr": { "ignore": true },
    "icPermErr": { "ignore": true },
    "icPrefDataErr": { "ignore": true },

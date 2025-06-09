@@ -37,39 +37,15 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
-      "selector": "backgroundColor"
+      "retval": { "type_override": "{CMTime=qiIq}"},
+      "selector": "minimumFrameInterval"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_override": "{CMTime=qiIq}"}
       },
       "class_method": false,
-      "selector": "setBackgroundColor:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "colorMatrix"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setColorMatrix:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "colorSpaceName"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setColorSpaceName:"
+      "selector": "setMinimumFrameInterval:"
      }
     ],
     "properties": [

@@ -12,6 +12,7 @@ def _setup():
     import CoreAudio
     import CoreMedia
     import Foundation
+    import AVFAudio
     import objc
     from . import _AVFoundation, _metadata
     from ._inlines import _inline_list_
@@ -24,7 +25,7 @@ def _setup():
         ),
         globals_dict=globals(),
         inline_list=_inline_list_,
-        parents=(_AVFoundation, CoreAudio, CoreMedia, Foundation),
+        parents=(_AVFoundation, AVFAudio, CoreAudio, CoreMedia, Foundation),
         metadict=_metadata.__dict__,
     )
 

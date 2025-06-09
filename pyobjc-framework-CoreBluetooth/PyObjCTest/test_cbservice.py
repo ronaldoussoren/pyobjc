@@ -13,4 +13,5 @@ class TestCBService(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(CoreBluetooth.CBService.isPrimary)
         self.assertResultIsBOOL(CoreBluetooth.CBMutableService.isPrimary)
+        self.assertArgIsBOOL(CoreBluetooth.CBMutableService.setIsPrimary_, 0)
         self.assertArgIsBOOL(CoreBluetooth.CBMutableService.initWithType_primary_, 1)

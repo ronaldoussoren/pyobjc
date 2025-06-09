@@ -17,7 +17,14 @@
    "MTLBufferLayoutStrideDynamic": { "value": "NSUIntegerMax" },
    "MTLAttributeStrideStatic": { "value": "NSUIntegerMax" }
   },
+  "enum_type": {
+   "MTLArgumentAccess": { "typestr": "Q" }
+  },
   "enum": {
+   "MTLMaxBlitPassSampleBuffers": { "value": 4, "deprecated": 1016 },
+   "MTLMaxComputePassSampleBuffers": { "value": 4, "deprecated": 1016 },
+   "MTLMaxRenderPassSampleBuffers": { "value": 4, "deprecated": 1016 },
+   "MTLStitchedLibraryOptionStoreLibraryInMetalScript": { "value": 2, "deprecated": 1016 },
    "MTLSparseTextureMappingModeMap": { "value": 0 },
    "MTLSparseTextureMappingModeUnmap": { "value": 1 },
    "MTLCounterSampleBufferErrorInternal": { "value": 2 },
@@ -67,7 +74,13 @@
    "MTLCounterDontSample": { "value": 18446744073709551615 }
   },
   "structs": {
-    "MTLMapIndirectArguments": {
+    "MTLCoordinate2D": {
+    "fieldnames": [
+     "x",
+     "y"
+    ]
+   },
+   "MTLMapIndirectArguments": {
     "fieldnames": [
      "regionOriginX",
      "regionOriginY",

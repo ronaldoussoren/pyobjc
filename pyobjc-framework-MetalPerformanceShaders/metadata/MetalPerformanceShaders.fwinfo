@@ -2,31 +2,7 @@
 // for information on how to update this file.
 {
  "definitions": {
- "structs": {
-   "MPSPackedFloat3": {
-    "fieldnames" : [ "x", "y", "z" ],
-    "typestr": "{_MPSPackedFloat3=fff}"
-   }
-  },
   "classes": {
-   "MPSNDArrayIdentity": {
-    "methods": [
-     {
-      "args": {
-       "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      },
-      "class_method": false,
-      "selector": "reshapeWithCommandBuffer:sourceArray:dimensionCount:dimensionSizes:destinationArray:"
-     },
-     {
-      "args": {
-       "4": { "type_modifier": "n", "c_array_length_in_arg": 3 }
-      },
-      "class_method": false,
-      "selector": "reshapeWithCommandEncoder:commandBuffer:sourceArray:dimensionCount:dimensionSizes:destinationArray:"
-     }
-    ]
-   },
    "MPSAccelerationStructure": {
     "methods": [
      {
@@ -998,8 +974,14 @@
     "methods": [
      {
       "args": {
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 0 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 0 }
+       "1": {
+        "c_array_length_in_arg": 0,
+        "type_modifier": "n"
+       },
+       "2": {
+        "c_array_length_in_arg": 0,
+        "type_modifier": "n"
+       }
       },
       "class_method": false,
       "selector": "arrayViewWithDimensionCount:dimensionSizes:strides:"
@@ -1069,14 +1051,20 @@
     "methods": [
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_of_variable_length": true }
+       "0": {
+        "c_array_of_variable_length": true,
+        "type_modifier": "n"
+       }
       },
       "class_method": true,
       "selector": "permuteWithDimensionOrder:"
      },
      {
       "args": {
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+       "2": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n"
+       }
       },
       "class_method": true,
       "selector": "descriptorWithDataType:dimensionCount:dimensionSizes:"
@@ -1096,6 +1084,30 @@
       },
       "class_method": false,
       "selector": "reshapeWithDimensionCount:dimensionSizes:"
+     }
+    ]
+   },
+   "MPSNDArrayIdentity": {
+    "methods": [
+     {
+      "args": {
+       "3": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n"
+       }
+      },
+      "class_method": false,
+      "selector": "reshapeWithCommandBuffer:sourceArray:dimensionCount:dimensionSizes:destinationArray:"
+     },
+     {
+      "args": {
+       "4": {
+        "c_array_length_in_arg": 3,
+        "type_modifier": "n"
+       }
+      },
+      "class_method": false,
+      "selector": "reshapeWithCommandEncoder:commandBuffer:sourceArray:dimensionCount:dimensionSizes:destinationArray:"
      }
     ]
    },
@@ -1404,11 +1416,11 @@
    }
   },
   "enum": {
-   "MPSDeviceCapsLast": {
-    "ignore": true
-   },
    "MPSDeviceCapsIndex": {
     "value": 127
+   },
+   "MPSDeviceCapsLast": {
+    "ignore": true
    },
    "MPSFunctionConstantNone": {
     "value": -1
@@ -1421,23 +1433,20 @@
    "MPSFunctionConstantIndex": {
     "value": "MPSDeviceCapsIndex-1"
    },
-   "MPSNDArrayConstantMultiDestIndex": {
-    "value": "MPSDeviceCapsIndex-7"
-   },
-   "MPSTextureLinkingConstantIndex": {
-    "value": "MPSDeviceCapsIndex-6"
-   },
    "MPSFunctionConstantIndexReserved": {
     "value": "MPSDeviceCapsIndex-5"
+   },
+   "MPSFunctionConstantNoneArray": {
+    "value": "(-1, -1)"
    },
    "MPSNDArrayConstantIndex": {
     "value": "MPSDeviceCapsIndex-4"
    },
-   "MPSNDArrayConstantMultiDestSrcAddressingIndex": {
-    "value": "MPSDeviceCapsIndex-8"
-   },
    "MPSNDArrayConstantMultiDestDstAddressingIndex": {
     "value": "MPSDeviceCapsIndex-11"
+   },
+   "MPSNDArrayConstantMultiDestIndex": {
+    "value": "MPSDeviceCapsIndex-7"
    },
    "MPSNDArrayConstantMultiDestIndex0": {
     "value": "MPSDeviceCapsIndex-8"
@@ -1448,16 +1457,15 @@
    "MPSNDArrayConstantMultiDestSrcAddressingIndex": {
     "value": "MPSDeviceCapsIndex-10"
    },
+   "MPSTextureLinkingConstantIndex": {
+    "value": "MPSDeviceCapsIndex-6"
+   },
    "MPSUserAvailableFunctionConstantStartIndex": {
     "value": "MPSDeviceCapsIndex-12"
    },
    "MPSUserConstantIndex": {
     "value": "MPSDeviceCapsIndex-3"
-   },
-   "MPSFunctionConstantNoneArray": {
-    "value": "(-1, -1)"
    }
-
   },
   "formal_protocols": {
    "MPSCNNBatchNormalizationDataSource": {
@@ -1597,6 +1605,16 @@
     }
    }
   },
-  "informal_protocols": {}
+  "informal_protocols": {},
+  "structs": {
+   "MPSPackedFloat3": {
+    "fieldnames": [
+     "x",
+     "y",
+     "z"
+    ],
+    "typestr": "{_MPSPackedFloat3=fff}"
+   }
+  }
  }
 }

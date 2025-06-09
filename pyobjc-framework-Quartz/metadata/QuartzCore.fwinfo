@@ -46,6 +46,166 @@
    "CIRenderDestinationAlphaUnpremultiplied": { "value": 2 }
   },
   "externs": {
+   "CIDetectorAccuracy": { "typestr": "@" },
+   "CIDetectorAccuracyHigh": { "typestr": "@" },
+   "CIDetectorAccuracyLow": { "typestr": "@" },
+   "CIDetectorAspectRatio": { "typestr": "@" },
+   "CIDetectorEyeBlink": { "typestr": "@" },
+   "CIDetectorFocalLength": { "typestr": "@" },
+   "CIDetectorImageOrientation": { "typestr": "@" },
+   "CIDetectorMinFeatureSize": { "typestr": "@" },
+   "CIDetectorSmile": { "typestr": "@" },
+   "CIDetectorTracking": { "typestr": "@" },
+   "CIDetectorTypeFace": { "typestr": "@" },
+   "CIDetectorTypeQRCode": { "typestr": "@" },
+   "CIDetectorTypeRectangle": { "typestr": "@" },
+   "CIFeatureTypeFace": { "typestr": "@" },
+   "CIFeatureTypeRectangle": { "typestr": "@" },
+   "kCAEmitterBehaviorAlignToMotion": { "typestr": "@" },
+   "kCAEmitterBehaviorAttractor": { "typestr": "@" },
+   "kCAEmitterBehaviorColorOverLife": { "typestr": "@" },
+   "kCAEmitterBehaviorDrag": { "typestr": "@" },
+   "kCAEmitterBehaviorLight": { "typestr": "@" },
+   "kCAEmitterBehaviorValueOverLife": { "typestr": "@" },
+   "kCAEmitterBehaviorWave": { "typestr": "@" },
+   "kCAFillModeFrozen": { "typestr": "@" },
+   "kCIActiveKeys": { "typestr": "@" },
+   "kCIApplyOptionColorSpace": { "typestr": "@" },
+   "kCIApplyOptionDefinition": { "typestr": "@" },
+   "kCIApplyOptionExtent": { "typestr": "@" },
+   "kCIApplyOptionUserInfo": { "typestr": "@" },
+   "kCIAttributeClass": { "typestr": "@" },
+   "kCIAttributeDefault": { "typestr": "@" },
+   "kCIAttributeDescription": { "typestr": "@" },
+   "kCIAttributeDisplayName": { "typestr": "@" },
+   "kCIAttributeFilterCategories": { "typestr": "@" },
+   "kCIAttributeFilterDisplayName": { "typestr": "@" },
+   "kCIAttributeFilterName": { "typestr": "@" },
+   "kCIAttributeIdentity": { "typestr": "@" },
+   "kCIAttributeMax": { "typestr": "@" },
+   "kCIAttributeMin": { "typestr": "@" },
+   "kCIAttributeName": { "typestr": "@" },
+   "kCIAttributeReferenceDocumentation": { "typestr": "@" },
+   "kCIAttributeSliderMax": { "typestr": "@" },
+   "kCIAttributeSliderMin": { "typestr": "@" },
+   "kCIAttributeType": { "typestr": "@" },
+   "kCIAttributeTypeAngle": { "typestr": "@" },
+   "kCIAttributeTypeBoolean": { "typestr": "@" },
+   "kCIAttributeTypeCount": { "typestr": "@" },
+   "kCIAttributeTypeDistance": { "typestr": "@" },
+   "kCIAttributeTypeGradient": { "typestr": "@" },
+   "kCIAttributeTypeInteger": { "typestr": "@" },
+   "kCIAttributeTypeOffset": { "typestr": "@" },
+   "kCIAttributeTypeOpaqueColor": { "typestr": "@" },
+   "kCIAttributeTypePosition": { "typestr": "@" },
+   "kCIAttributeTypePosition3": { "typestr": "@" },
+   "kCIAttributeTypeRectangle": { "typestr": "@" },
+   "kCIAttributeTypeScalar": { "typestr": "@" },
+   "kCIAttributeTypeTime": { "typestr": "@" },
+   "kCICategoryBlur": { "typestr": "@" },
+   "kCICategoryBuiltIn": { "typestr": "@" },
+   "kCICategoryColorAdjustment": { "typestr": "@" },
+   "kCICategoryColorEffect": { "typestr": "@" },
+   "kCICategoryCompositeOperation": { "typestr": "@" },
+   "kCICategoryDistortionEffect": { "typestr": "@" },
+   "kCICategoryFilterGenerator": { "typestr": "@" },
+   "kCICategoryGenerator": { "typestr": "@" },
+   "kCICategoryGeometryAdjustment": { "typestr": "@" },
+   "kCICategoryGradient": { "typestr": "@" },
+   "kCICategoryHalftoneEffect": { "typestr": "@" },
+   "kCICategoryHighDynamicRange": { "typestr": "@" },
+   "kCICategoryInterlaced": { "typestr": "@" },
+   "kCICategoryNonSquarePixels": { "typestr": "@" },
+   "kCICategoryReduction": { "typestr": "@" },
+   "kCICategorySharpen": { "typestr": "@" },
+   "kCICategoryStillImage": { "typestr": "@" },
+   "kCICategoryStylize": { "typestr": "@" },
+   "kCICategoryTileEffect": { "typestr": "@" },
+   "kCICategoryTransition": { "typestr": "@" },
+   "kCICategoryVideo": { "typestr": "@" },
+   "kCIContextOutputColorSpace": { "typestr": "@" },
+   "kCIContextUseSoftwareRenderer": { "typestr": "@" },
+   "kCIContextWorkingColorSpace": { "typestr": "@" },
+   "kCIFilterGeneratorExportedKey": { "typestr": "@" },
+   "kCIFilterGeneratorExportedKeyName": { "typestr": "@" },
+   "kCIFilterGeneratorExportedKeyTargetObject": { "typestr": "@" },
+   "kCIFormatARGB8": { "typestr": "i" },
+   "kCIFormatRGBA16": { "typestr": "i" },
+   "kCIFormatRGBAf": { "typestr": "i" },
+   "kCIFormatRGBAh": { "typestr": "i" },
+   "kCIImageAutoAdjustCrop": { "typestr": "@" },
+   "kCIImageAutoAdjustEnhance": { "typestr": "@" },
+   "kCIImageAutoAdjustFeatures": { "typestr": "@" },
+   "kCIImageAutoAdjustLevel": { "typestr": "@" },
+   "kCIImageAutoAdjustRedEye": { "typestr": "@" },
+   "kCIImageColorSpace": { "typestr": "@" },
+   "kCIImageProperties": { "typestr": "@" },
+   "kCIImageProviderTileSize": { "typestr": "@" },
+   "kCIImageProviderUserInfo": { "typestr": "@" },
+   "kCIImageTextureFormat": { "typestr": "@" },
+   "kCIImageTextureTarget": { "typestr": "@" },
+   "kCIInputAllowDraftModeKey": { "typestr": "@" },
+   "kCIInputAngleKey": { "typestr": "@" },
+   "kCIInputAspectRatioKey": { "typestr": "@" },
+   "kCIInputBackgroundImageKey": { "typestr": "@" },
+   "kCIInputBiasKey": { "typestr": "@" },
+   "kCIInputBoostKey": { "typestr": "@" },
+   "kCIInputBoostShadowAmountKey": { "typestr": "@" },
+   "kCIInputBrightnessKey": { "typestr": "@" },
+   "kCIInputCenterKey": { "typestr": "@" },
+   "kCIInputColorKey": { "typestr": "@" },
+   "kCIInputColorNoiseReductionAmountKey": { "typestr": "@" },
+   "kCIInputContrastKey": { "typestr": "@" },
+   "kCIInputDecoderVersionKey": { "typestr": "@" },
+   "kCIInputEVKey": { "typestr": "@" },
+   "kCIInputEnableChromaticNoiseTrackingKey": { "typestr": "@" },
+   "kCIInputEnableSharpeningKey": { "typestr": "@" },
+   "kCIInputEnableVendorLensCorrectionKey": { "typestr": "@" },
+   "kCIInputExtentKey": { "typestr": "@" },
+   "kCIInputGradientImageKey": { "typestr": "@" },
+   "kCIInputIgnoreImageOrientationKey": { "typestr": "@" },
+   "kCIInputImageKey": { "typestr": "@" },
+   "kCIInputImageOrientationKey": { "typestr": "@" },
+   "kCIInputIntensityKey": { "typestr": "@" },
+   "kCIInputLinearSpaceFilter": { "typestr": "@" },
+   "kCIInputLuminanceNoiseReductionAmountKey": { "typestr": "@" },
+   "kCIInputMaskImageKey": { "typestr": "@" },
+   "kCIInputNeutralChromaticityXKey": { "typestr": "@" },
+   "kCIInputNeutralChromaticityYKey": { "typestr": "@" },
+   "kCIInputNeutralLocationKey": { "typestr": "@" },
+   "kCIInputNeutralTemperatureKey": { "typestr": "@" },
+   "kCIInputNeutralTintKey": { "typestr": "@" },
+   "kCIInputNoiseReductionAmountKey": { "typestr": "@" },
+   "kCIInputNoiseReductionContrastAmountKey": { "typestr": "@" },
+   "kCIInputNoiseReductionDetailAmountKey": { "typestr": "@" },
+   "kCIInputNoiseReductionSharpnessAmountKey": { "typestr": "@" },
+   "kCIInputRadiusKey": { "typestr": "@" },
+   "kCIInputRefractionKey": { "typestr": "@" },
+   "kCIInputSaturationKey": { "typestr": "@" },
+   "kCIInputScaleFactorKey": { "typestr": "@" },
+   "kCIInputScaleKey": { "typestr": "@" },
+   "kCIInputShadingImageKey": { "typestr": "@" },
+   "kCIInputSharpnessKey": { "typestr": "@" },
+   "kCIInputTargetImageKey": { "typestr": "@" },
+   "kCIInputTimeKey": { "typestr": "@" },
+   "kCIInputTransformKey": { "typestr": "@" },
+   "kCIInputWidthKey": { "typestr": "@" },
+   "kCIOutputImageKey": { "typestr": "@" },
+   "kCIOutputNativeSizeKey": { "typestr": "@" },
+   "kCISamplerAffineMatrix": { "typestr": "@" },
+   "kCISamplerColorSpace": { "typestr": "@" },
+   "kCISamplerFilterLinear": { "typestr": "@" },
+   "kCISamplerFilterMode": { "typestr": "@" },
+   "kCISamplerFilterNearest": { "typestr": "@" },
+   "kCISamplerWrapBlack": { "typestr": "@" },
+   "kCISamplerWrapClamp": { "typestr": "@" },
+   "kCISamplerWrapMode": { "typestr": "@" },
+   "kCISupportedDecoderVersionsKey": { "typestr": "@" },
+   "kCIUIParameterSet": { "typestr": "@" },
+   "kCIUISetAdvanced": { "typestr": "@" },
+   "kCIUISetBasic": { "typestr": "@" },
+   "kCIUISetDevelopment": { "typestr": "@" },
+   "kCIUISetIntermediate": { "typestr": "@" },
    "CIRAWDecoderVersionNone": { "typestr": "@" },
    "CIRAWDecoderVersion8": { "typestr": "@" },
    "CIRAWDecoderVersion8DNG": { "typestr": "@" },
@@ -142,6 +302,71 @@
    "kCIFormatRGf": { "typestr": "i" }
   },
   "classes": {
+   "CIFaceFeature": {
+    "methods": [
+     {
+      "selector": "hasFaceAngle",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "hasLeftEyePosition",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "hasMouthPosition",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "hasRightEyePosition",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "hasSmile",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "hasTrackingFrameCount",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "hasTrackingID",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "leftEyeClosed",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "rightEyeClosed",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "CAEmitterBehavior": {
+    "methods": [
+     {
+      "selector": "isEnabled",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEnabled:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "CIRAWFilter": {
     "methods": [
      {
@@ -474,7 +699,7 @@
        "0": {},
        "1": {},
        "3": {
-        "type_modifier": "n"
+        "type_modifier": "n", "type_override": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
        }
       },
       "class_method": false,
@@ -485,7 +710,7 @@
        "0": {},
        "1": {},
        "3": {
-        "type_modifier": "n"
+        "type_modifier": "n", "type_override": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
        }
       },
       "class_method": false,
@@ -534,7 +759,7 @@
      {
       "args": {
        "1": {
-        "type_modifier": "n"
+        "type_modifier": "n", "type_override": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
        }
       },
       "class_method": false,
@@ -930,8 +1155,43 @@
      }
     ]
    },
+   "CIFilterShape": {
+    "methods": [
+     {
+      "selector": "transformBy:interior:",
+      "class_method": true,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "CIFilterGenerator": {
+    "methods": [
+     {
+      "selector": "writeToURL:atomically",
+      "class_method": true,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "CIFilter": {
     "methods": [
+     {
+      "selector": "isEnabled",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setEnabled:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
      {
       "selector": "filterArrayFromSerializedXMP:inputImageExtent:error:",
       "class_method": false,
@@ -1028,7 +1288,14 @@
      },
      {
       "args": {
-       "3": {}
+       "2": { "type_override": "Z"}
+      },
+      "class_method": true,
+      "selector": "imageWithTexture:size:flipped:options:"
+     },
+     {
+      "args": {
+       "2": { "type_override": "Z"}
       },
       "class_method": true,
       "selector": "imageWithTexture:size:flipped:colorSpace:"
@@ -1098,7 +1365,14 @@
      },
      {
       "args": {
-       "3": {}
+       "2": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "initWithTexture:size:flipped:options:"
+     },
+     {
+      "args": {
+       "2": { "type_override": "Z" }
       },
       "class_method": false,
       "selector": "initWithTexture:size:flipped:colorSpace:"
@@ -1417,9 +1691,16 @@
      {
       "args": {
        "0": {
+        "type_override": "^v",
         "c_array_of_variable_length": true,
         "type_modifier": "o"
-       }
+       },
+       "1": { "type_override": "Q" },
+       "2": { "type_override": "Q" },
+       "3": { "type_override": "Q" },
+       "4": { "type_override": "Q" },
+       "5": { "type_override": "Q" },
+       "6": { "type_override": "@" }
       },
       "class_method": false,
       "selector": "provideImageData:bytesPerRow:origin::size::userInfo:"
@@ -2992,20 +3273,27 @@
       }
      }
     ]
-   }
-  },
-  "formal_protocols": {
-   "CIPlugInRegistration": {
+   },
+   "CIPlugIn": {
     "methods": [
      {
       "args": {
-       "0": {}
+       "1": { "type_override": "Z"}
       },
       "class_method": false,
-      "selector": "load:"
+      "selector": "loadPlugIn:allowExecutableCode:"
+     },
+     {
+      "args": {
+       "1": { "type_override": "Z"}
+      },
+      "class_method": false,
+      "selector": "loadPlugIn:allowNonExecutable:"
      }
     ]
    }
+  },
+  "formal_protocols": {
   },
   "functions": {},
   "informal_protocols": {

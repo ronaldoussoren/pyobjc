@@ -36,3 +36,8 @@ class TestNSItemProvider_UTType(TestCase):
             2,
             b"v@Z@",
         )
+        self.assertArgIsBlock(
+            UniformTypeIdentifiers.NSItemProvider.registerFileRepresentationForContentType_visibility_openInPlace_loadHandler_,
+            3,
+            b"@@?",
+        )

@@ -66,7 +66,14 @@ repos:
     - id: check-python-used
       name: check-python-used
       language: python
+      always_run: true
       entry: ./development-support/check-pyobjc-core-python-used
+    - id: check-num-metadata-versions
+      name: check-num-metadata-versions
+      language: python
+      pass_filenames: false
+      always_run: true
+      entry: ./development-support/check-num-metadata-versions
 
 #  - repo: https://github.com/pre-commit/mirrors-clang-format
 #    rev: 'v13.0.0'

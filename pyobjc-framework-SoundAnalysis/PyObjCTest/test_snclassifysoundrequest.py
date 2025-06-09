@@ -1,4 +1,5 @@
 import SoundAnalysis
+import CoreMedia
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -7,6 +8,15 @@ class TestSNClassifySoundRequest(TestCase):
     def test_methods10_15(self):
         self.assertArgIsOut(
             SoundAnalysis.SNClassifySoundRequest.initWithMLModel_error_, 1
+        )
+        self.assertResultHasType(
+            SoundAnalysis.SNClassifySoundRequest.windowDuration,
+            CoreMedia.CMTime.__typestr__,
+        )
+        self.assertArgHasType(
+            SoundAnalysis.SNClassifySoundRequest.setWindowDuration_,
+            0,
+            CoreMedia.CMTime.__typestr__,
         )
 
     @min_os_level("12.0")

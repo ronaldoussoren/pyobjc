@@ -7,20 +7,6 @@
    "INPersonHandleLabel": { "type": "@", "type_name": "NSString" }
   },
   "classes": {
-   "null": {
-    "methods": [
-     {
-      "class_method": true,
-      "selector": "deferredLocalizedIntentsStringWithFormat:",
-      "variadic": true
-     },
-     {
-      "class_method": true,
-      "selector": "deferredLocalizedIntentsStringWithFormat:fromTable:",
-      "variadic": true
-     }
-    ]
-   },
    "INInteraction": {
     "methods": [
      {
@@ -914,6 +900,18 @@
    }
   },
   "enum": {
+   "INSendMessageIntentResponseCodeFailureMessageAttachmentError": { "value": 7 },
+   "INSendMessageIntentResponseCodeFailureMessageLocationNotAllowed": { "value": 8 },
+   "INChargingConnectorTypeOptionCCS1":  { "value": 4 },
+   "INChargingConnectorTypeOptionCCS2":  { "value": 8 },
+   "INChargingConnectorTypeOptionCHAdeMO":  { "value": 16 },
+   "INChargingConnectorTypeOptionGBTAC":  { "value": 32 },
+   "INChargingConnectorTypeOptionGBTDC":  { "value": 64 },
+   "INChargingConnectorTypeOptionJ1772":  { "value": 2 },
+   "INChargingConnectorTypeOptionMennekes":  { "value": 256 },
+   "INChargingConnectorTypeOptionNone":  { "value": 1 },
+   "INChargingConnectorTypeOptionTesla":  { "value": 128 },
+   "INShortcutAvailabilityOptionSleepPrepareForTomorrow":  { "value": 32 },
    "INIntentErrorMissingInformation": {
     "value": 3002
    },

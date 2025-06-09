@@ -3,28 +3,39 @@
 {
  "definitions": {
   "externs": {
-   "KernelManagementVersionString": { "type_override": "*" }
+   "KernelManagementVersionString": { "type_override": "*" },
+   "OSKernelManagementErrorDomain": { "type_override": "@", "deprecated": 1100 }
+  },
+  "enum": {
+   "OSKMErrorUnknown": { "value": 1, "deprecated": 1100 },
+   "OSKMErrorNotApproved": { "value": 2, "deprecated": 1100 }
   },
   "classes": {
    "KernelManagementClient": {
     "methods": [
      {
+      "deprecated": 1100,
+      "retval": { "type_override": "Z" },
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "loadExtensionsWithPaths:withError:"
      },
      {
+      "deprecated": 1100,
+      "retval": { "type_override": "Z" },
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" },
+       "3": { "type_override": "Z"}
       },
       "class_method": false,
       "selector": "loadExtensionsWithPaths:withNoAuth:withError:"
      },
      {
+      "deprecated": 1100,
       "args": {
-       "4": {}
+       "4": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "loadExtensionsWithPaths:withIdentifiers:withPersonalityNames:withNoAuth:withError:"

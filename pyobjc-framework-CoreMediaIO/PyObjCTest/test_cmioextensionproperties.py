@@ -1,4 +1,5 @@
 import CoreMediaIO
+import CoreMedia
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
@@ -58,3 +59,55 @@ class TestCMIOExtensionProperties(TestCase):
             3,
         )
         self.assertResultIsBOOL(CoreMediaIO.CMIOExtensionPropertyAttributes.isReadOnly)
+
+        self.assertArgHasType(
+            CoreMediaIO.CMIOExtensionStreamCustomClockConfiguration.initWithClockName_sourceIdentifier_getTimeCallMinimumInterval_numberOfEventsForRateSmoothing_numberOfAveragesForRateSmoothing_,
+            2,
+            CoreMedia.CMTime.__typestr__,
+        )
+        self.assertArgHasType(
+            CoreMediaIO.CMIOExtensionStreamCustomClockConfiguration.customClockConfigurationWithClockName_sourceIdentifier_getTimeCallMinimumInterval_numberOfEventsForRateSmoothing_numberOfAveragesForRateSmoothing_,
+            2,
+            CoreMedia.CMTime.__typestr__,
+        )
+
+        self.assertResultHasType(
+            CoreMediaIO.CMIOExtensionStreamCustomClockConfiguration.getTimeCallMinimumInterval,
+            CoreMedia.CMTime.__typestr__,
+        )
+
+        self.assertArgHasType(
+            CoreMediaIO.CMIOExtensionStreamCustomClockConfiguration.initWithClockName_sourceIdentifier_getTimeCallMinimumInterval_numberOfEventsForRateSmoothing_numberOfAveragesForRateSmoothing_,
+            2,
+            CoreMedia.CMTime.__typestr__,
+        )
+
+        self.assertArgHasType(
+            CoreMediaIO.CMIOExtensionStreamFormat.initWithFormatDescription_maxFrameDuration_minFrameDuration_validFrameDurations_,
+            1,
+            CoreMedia.CMTime.__typestr__,
+        )
+        self.assertArgHasType(
+            CoreMediaIO.CMIOExtensionStreamFormat.initWithFormatDescription_maxFrameDuration_minFrameDuration_validFrameDurations_,
+            2,
+            CoreMedia.CMTime.__typestr__,
+        )
+        self.assertArgHasType(
+            CoreMediaIO.CMIOExtensionStreamFormat.streamFormatWithFormatDescription_maxFrameDuration_minFrameDuration_validFrameDurations_,
+            1,
+            CoreMedia.CMTime.__typestr__,
+        )
+        self.assertArgHasType(
+            CoreMediaIO.CMIOExtensionStreamFormat.streamFormatWithFormatDescription_maxFrameDuration_minFrameDuration_validFrameDurations_,
+            2,
+            CoreMedia.CMTime.__typestr__,
+        )
+
+        self.assertResultHasType(
+            CoreMediaIO.CMIOExtensionStreamFormat.maxFrameDuration,
+            CoreMedia.CMTime.__typestr__,
+        )
+        self.assertResultHasType(
+            CoreMediaIO.CMIOExtensionStreamFormat.minFrameDuration,
+            CoreMedia.CMTime.__typestr__,
+        )

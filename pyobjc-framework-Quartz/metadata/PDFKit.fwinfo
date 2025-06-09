@@ -16,7 +16,9 @@
    "PDFDocumentWriteOption": { "type": "@", "type_name": "NSString" }
   },
   "aliases": {
-   "kPDFImageArea": { "alias": "FLT_MX" }
+   "kPDFImageArea": { "alias": "FLT_MX" },
+   "PDFKitTextContentType": { "alias": "NSTextContentType" },
+   "kPDFDestinationUnspecifiedValue": { "alias": "FLT_MX" }
   },
   "enum": {
    "kPDFImageArea": { "value": 256 },
@@ -224,6 +226,33 @@
       "selector": "isSignature",
       "class_method": false,
       "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "PDFAnnotationButtonWidget": {
+    "methods": [
+     {
+      "selector": "setHighlighted:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "PDFAnnotationButtonWidget": {
+    "methods": [
+     {
+      "selector": "isHighlighted",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setHighlighted:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
      }
     ]
    },

@@ -7,6 +7,10 @@ class TestVZMacOSRestoreImage(TestCase):
     @min_os_level("12.0")
     @arch_only("arm64")
     def test_methods(self):
+        self.assertResultHasType(
+            Virtualization.VZMacOSRestoreImage.operatingSystemVersion,
+            Virtualization.NSOperatingSystemVersion.__typestr__,
+        )
         self.assertArgIsBlock(
             Virtualization.VZMacOSRestoreImage.loadFileURL_completionHandler_,
             1,

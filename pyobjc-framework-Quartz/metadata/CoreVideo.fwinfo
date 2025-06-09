@@ -870,6 +870,9 @@
   },
   "informal_protocols": {},
   "structs": {
+   "CVPlanarPixelBufferInfo_YCbCrBiPlanar": {
+    "fieldnames": ["componentInfoY", "componentInfoCbCr"]
+   },
    "CVFillExtendedPixelsCallBackData": {
     "ignore": true
    },

@@ -2,469 +2,46 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "typed_enum": {
-   "GCHapticsLocality": { "type": "@", "type_name": "NSString" },
-   "GCInputAxisName": { "type": "@", "type_name": "NSString" },
-   "GCInputElementName": { "type": "@", "type_name": "NSString" },
-   "GCInputButtonName": { "type": "@", "type_name": "NSString" },
-   "GCInputDirectionPadName": { "type": "@", "type_name": "NSString" },
-   "GCKeyCode": { "type": "Q" }
-  },
   "classes": {
-   "NSObject": {
+   "GCDualSenseAdaptiveTrigger": {
     "methods": [
      {
-      "selector": "inputStateAvailableHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "type": "^v" },
-	 "1": { "type": "@" }
-	},
-	"retval": { "type": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setInputStateAvailableHandler:",
       "class_method": false,
       "args": {
        "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
-	 },
-	  "retval": { "type": "v" }
-        }
+         "type_override": "{GCDualSenseAdaptiveTriggerPositionalResistiveStrengths=[10f]}"
        }
-      }
+      },
+      "selector": "setModeFeedbackWithResistiveStrengths:"
      },
      {
-      "selector": "positionDidChangeHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" },
-	 "3": { "typestr": "q" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setPositionDidChangeHandler:",
       "class_method": false,
       "args": {
        "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	 "2": { "typestr": "@" },
-	 "3": { "typestr": "q" }
-	 },
-	  "retval": { "typestr": "v" }
-        }
+         "type_override": "{GCDualSenseAdaptiveTriggerPositionalAmplitudes=[10f]}"
        }
-      }
-     },
-     {
-      "selector": "elementValueDidChangeHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setElementValueDidChangeHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-	 },
-	  "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "touchedDidChangeHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" },
-	 "3": { "typestr": "Z" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setTouchedDidChangeHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "Z" }
-	 },
-	  "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "pressedDidChangeHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "type": "^v" },
-	 "1": { "type": "@" },
-	 "2": { "type": "@" },
-	 "3": { "type": "Z" }
-	},
-	"retval": { "type": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setPressedDidChangeHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "Z" }
-	 },
-	  "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "deltaDidChangeHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" },
-	 "3": { "typestr": "f" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setDeltaDidChangeHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "f" }
-	 },
-	  "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "valueDidChangeHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" },
-	 "3": { "typestr": "f" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setValueDidChangeHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "f" }
-	 },
-	  "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "GCPhysicalInputProfile": {
-    "methods": [
-     {
-      "selector": "hasRemappedElements",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "valueDidChangeHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setValueDidChangeHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-      }
-     }
-    ]
-   },
-   "GCKeyboardInput": {
-    "methods": [
-     {
-      "selector": "keyChangedHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" },
-	 "3": { "typestr": "q" },
-	 "4": { "typestr": "Z" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setKeyChangedHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" },
-	 "3": { "typestr": "q" },
-	 "4": { "typestr": "Z" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-      }
-     }
-    ]
-   },
-   "GCControllerTouchpad": {
-    "methods": [
-     {
-      "selector": "touchUp",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "f" },
-	 "2": { "typestr": "f" },
-	 "3": { "typestr": "f" },
-	 "4": { "typestr": "Z" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setTouchUp:",
-      "class_method": false,
-      "args": {
-       "0": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "f" },
-	 "2": { "typestr": "f" },
-	 "3": { "typestr": "f" },
-	 "4": { "typestr": "Z" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-      }
-     },
-     {
-      "selector": "touchMoved",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "f" },
-	 "2": { "typestr": "f" },
-	 "3": { "typestr": "f" },
-	 "4": { "typestr": "Z" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setTouchMoved:",
-      "class_method": false,
-      "args": {
-       "0": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "f" },
-	 "2": { "typestr": "f" },
-	 "3": { "typestr": "f" },
-	 "4": { "typestr": "Z" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-      }
-     },
-     {
-      "selector": "touchDown",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "f" },
-	 "2": { "typestr": "f" },
-	 "3": { "typestr": "f" },
-	 "4": { "typestr": "Z" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setTouchDown:",
-      "class_method": false,
-      "args": {
-       "0": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "f" },
-	 "2": { "typestr": "f" },
-	 "3": { "typestr": "f" },
-	 "4": { "typestr": "Z" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-      }
-     }
-    ]
-   },
-   "GCMouseInput": {
-    "methods": [
-     {
-      "selector": "mouseMovedHandler",
-      "class_method": false,
-      "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "f" },
-	 "3": { "typestr": "f" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
-     },
-     {
-      "selector": "setMouseMovedHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "f" },
-	 "3": { "typestr": "f" }
-	},
-	"retval": { "typestr": "v" }
-       }
-       }
-      }
+      },
+      "selector": "setModeVibrationWithAmplitudes:frequency:"
      }
     ]
    },
    "GCController": {
     "methods": [
      {
-      "selector": "shouldMonitorBackgroundEvents",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "shouldMonitorBackgroundEvents"
      },
      {
-      "selector": "setShouldMonitorBackgroundEvents",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setShouldMonitorBackgroundEvents"
      },
      {
       "args": {
@@ -523,6 +100,13 @@
       },
       "class_method": false,
       "selector": "setControllerPausedHandler:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "supportsHIDDevice:"
      }
     ]
    },
@@ -798,6 +382,184 @@
      }
     ]
    },
+   "GCControllerTouchpad": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "f"
+         },
+         "2": {
+          "typestr": "f"
+         },
+         "3": {
+          "typestr": "f"
+         },
+         "4": {
+          "typestr": "Z"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "touchUp"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          },
+          "2": {
+           "typestr": "f"
+          },
+          "3": {
+           "typestr": "f"
+          },
+          "4": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setTouchUp:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "f"
+         },
+         "2": {
+          "typestr": "f"
+         },
+         "3": {
+          "typestr": "f"
+         },
+         "4": {
+          "typestr": "Z"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "touchMoved"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          },
+          "2": {
+           "typestr": "f"
+          },
+          "3": {
+           "typestr": "f"
+          },
+          "4": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setTouchMoved:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "f"
+         },
+         "2": {
+          "typestr": "f"
+         },
+         "3": {
+          "typestr": "f"
+         },
+         "4": {
+          "typestr": "Z"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "touchDown"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          },
+          "2": {
+           "typestr": "f"
+          },
+          "3": {
+           "typestr": "f"
+          },
+          "4": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setTouchDown:"
+     }
+    ]
+   },
    "GCEventViewController": {
     "methods": [
      {
@@ -918,6 +680,68 @@
      }
     ]
    },
+   "GCKeyboardInput": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "@"
+         },
+         "3": {
+          "typestr": "q"
+         },
+         "4": {
+          "typestr": "Z"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "keyChangedHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "q"
+          },
+          "4": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setKeyChangedHandler:"
+     }
+    ]
+   },
    "GCMicroGamepad": {
     "methods": [
      {
@@ -1005,6 +829,62 @@
      {
       "class_method": false,
       "retval": {
+       "type_override": "{GCAcceleration=ddd}"
+      },
+      "selector": "userAcceleration"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "{GCRotationRate=ddd}"
+      },
+      "selector": "rotationRate"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "{GCAcceleration=ddd}"
+      },
+      "selector": "gravity"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "{GCAcceleration=ddd}"
+      },
+      "selector": "acceleration"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{GCAcceleration=ddd}" }
+      },
+      "selector": "setUserAcceleration:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{GCRotationRate=ddd}" }
+      },
+      "selector": "setRotationRate:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{GCAcceleration=ddd}" }
+      },
+      "selector": "setGravity:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{GCAcceleration=ddd}" }
+      },
+      "selector": "setAcceleration:"
+     },
+     {
+      "class_method": false,
+      "retval": {
        "type_override": "Z"
       },
       "selector": "hasGravityAndUserAcceleration"
@@ -1057,58 +937,554 @@
       "selector": "setValueChangedHandler:"
      }
     ]
+   },
+   "GCMouseInput": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "f"
+         },
+         "3": {
+          "typestr": "f"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "mouseMovedHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "f"
+          },
+          "3": {
+           "typestr": "f"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setMouseMovedHandler:"
+     }
+    ]
+   },
+   "GCPhysicalInputProfile": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hasRemappedElements"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "@"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "valueDidChangeHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setValueDidChangeHandler:"
+     }
+    ]
+   },
+   "GCRacingWheel": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "acquireDeviceWithError:"
+     }
+    ]
+   },
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "type": "^v"
+         },
+         "1": {
+          "type": "@"
+         }
+        },
+        "retval": {
+         "type": "v"
+        }
+       }
+      },
+      "selector": "inputStateAvailableHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setInputStateAvailableHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "@"
+         },
+         "3": {
+          "typestr": "q"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "positionDidChangeHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "q"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setPositionDidChangeHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "@"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "elementValueDidChangeHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setElementValueDidChangeHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "@"
+         },
+         "3": {
+          "typestr": "Z"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "touchedDidChangeHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setTouchedDidChangeHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "type": "^v"
+         },
+         "1": {
+          "type": "@"
+         },
+         "2": {
+          "type": "@"
+         },
+         "3": {
+          "type": "Z"
+         }
+        },
+        "retval": {
+         "type": "v"
+        }
+       }
+      },
+      "selector": "pressedDidChangeHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setPressedDidChangeHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "@"
+         },
+         "3": {
+          "typestr": "f"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "deltaDidChangeHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "f"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setDeltaDidChangeHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "@"
+         },
+         "3": {
+          "typestr": "f"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "valueDidChangeHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "f"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setValueDidChangeHandler:"
+     }
+    ]
    }
   },
   "formal_protocols": {},
   "functions": {
    "GCExtendedGamepadSnapShotDataV100FromNSData": {
     "args": {
-     "0": { "type_modifier": "o" }
+     "0": {
+      "type_modifier": "o"
+     }
     }
    },
    "GCExtendedGamepadSnapshotDataFromNSData": {
     "args": {
-     "0": { "type_modifier": "o" }
+     "0": {
+      "type_modifier": "o"
+     }
     }
    },
    "GCGamepadSnapShotDataV100FromNSData": {
     "args": {
-     "0": { "type_modifier": "o" }
+     "0": {
+      "type_modifier": "o"
+     }
     }
    },
    "GCMicroGamepadSnapShotDataV100FromNSData": {
     "args": {
-     "0": { "type_modifier": "o" }
+     "0": {
+      "type_modifier": "o"
+     }
     }
    },
    "GCMicroGamepadSnapshotDataFromNSData": {
     "args": {
-     "0": { "type_modifier": "o" }
+     "0": {
+      "type_modifier": "o"
+     }
     }
    },
    "NSDataFromGCExtendedGamepadSnapShotDataV100": {
     "args": {
-     "0": { "type_modifier": "n"}
+     "0": {
+      "type_modifier": "n"
+     }
     }
    },
    "NSDataFromGCExtendedGamepadSnapshotData": {
     "args": {
-     "0": { "type_modifier": "n" }
+     "0": {
+      "type_modifier": "n"
+     }
     }
    },
    "NSDataFromGCGamepadSnapShotDataV100": {
     "args": {
-     "0": { "type_modifier": "n" }
+     "0": {
+      "type_modifier": "n"
+     }
     }
    },
    "NSDataFromGCMicroGamepadSnapShotDataV100": {
     "args": {
-     "0": { "type_modifier": "n" }
+     "0": {
+      "type_modifier": "n"
+     }
     }
    },
    "NSDataFromGCMicroGamepadSnapshotData": {
     "args": {
-     "0": { "type_modifier": "n" }
+     "0": {
+      "type_modifier": "n"
+     }
     }
    }
   },
@@ -1136,11 +1512,41 @@
     "typestr": "{GCMicroGamepadSnapShotDataV100=SSffff}"
    },
    "GCMicroGamepadSnapshotData": {
-    "pack": 1,
     "fieldnames": [
-     "version", "size", "dpadX", "dpadY", "buttonA", "buttonX"
+     "version",
+     "size",
+     "dpadX",
+     "dpadY",
+     "buttonA",
+     "buttonX"
     ],
+    "pack": 1,
     "typestr": "{GCMicroGamepadSnapshotData=SSffff}"
+   }
+  },
+  "typed_enum": {
+   "GCHapticsLocality": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "GCInputAxisName": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "GCInputButtonName": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "GCInputDirectionPadName": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "GCInputElementName": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "GCKeyCode": {
+    "type": "Q"
    }
   }
  }

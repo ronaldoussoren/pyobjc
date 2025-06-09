@@ -28,6 +28,13 @@ class TestMTKView(TestCase):
         self.assertResultIsBOOL(MetalKit.MTKView.isPaused)
         self.assertArgIsBOOL(MetalKit.MTKView.setPaused_, 0)
 
+        self.assertResultHasType(
+            MetalKit.MTKView.clearColor, MetalKit.MTLClearColor.__typestr__
+        )
+        self.assertArgHasType(
+            MetalKit.MTKView.setClearColor_, 0, MetalKit.MTLClearColor.__typestr__
+        )
+
     @min_sdk_level("10.15")
     def test_protocols(self):
         self.assertProtocolExists("MTKViewDelegate")
