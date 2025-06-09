@@ -277,12 +277,10 @@ class oc_test(Command):
             raise DistutilsError("Setting up test environment failed for 'objc'")
 
     def remove_from_sys_path(self):
-        from pkg_resources import working_set
-
         sys.path[:] = self.__old_path
         sys.modules.clear()
         sys.modules.update(self.__old_modules)
-        working_set.__init__()
+        importlib.invalidate_caches()
 
     def run(self):
         verify_platform()

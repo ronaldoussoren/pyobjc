@@ -165,6 +165,11 @@ how reference counts are handled by ``-init`` methods.
   This simplifies PyObjC's code, and avoids having imports that are hidden
   from analysis tools.
 
+* Remove usage of ``pkg_resources`` in PyObjC's setup.py files.
+
+  This is needed because this library is deprecated in setuptools and will
+  be removed.
+
 Version 11.0
 ------------
 
