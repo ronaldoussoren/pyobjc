@@ -3,6 +3,12 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 12.0 (alpha)
+--------------------
+
+* Drop support for Python 3.9, which will go out of support
+  before PyObjC 3.12 is released.
+
 Version 11.1
 ------------
 

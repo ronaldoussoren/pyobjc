@@ -32,10 +32,10 @@ for idx, nm in enumerate(all_frameworks):
             continue
         print()
         if len(all_sections) == 1:
-            print(f"{BOLD}[{idx+1}/{len(all_frameworks)}] Processing {nm}{RESET}")
+            print(f"{BOLD}[{idx + 1}/{len(all_frameworks)}] Processing {nm}{RESET}")
         else:
             print(
-                f"{BOLD}[{idx+1}/{len(all_frameworks)}; {sec_idx+1}/{len(all_sections)}] Processing {nm} - {section}{RESET}"
+                f"{BOLD}[{idx + 1}/{len(all_frameworks)}; {sec_idx + 1}/{len(all_sections)}] Processing {nm} - {section}{RESET}"
             )
         print()
         overrides = nm / "metadata" / (cfg[section]["framework"] + ".fwinfo")

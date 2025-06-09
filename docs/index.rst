@@ -76,7 +76,7 @@ PyObjC
       :link-type: doc
 
       - macOS 10.9 and later
-      - Python 3.9 and later
+      - Python 3.10 and later
       - x86_64 and arm64
 
    .. grid-item-card:: Installing PyObjC

@@ -62,7 +62,7 @@ def is_usable_release(ver: str, *, include_alpha: bool = False) -> bool:
     return True
 
 
-def detect_pyversions(*, include_alpha: bool = False) -> typing.List[str]:
+def detect_pyversions(*, include_alpha: bool = False) -> list[str]:
     global _detected_versions
     if _detected_versions is not None:
         return _detected_versions
@@ -204,7 +204,7 @@ def virtualenv(interpreter: str, silent: bool = True) -> typing.Iterator[str]:
 def variants(
     ver: str,
     permitted_variants: typing.Sequence[str] = ("universal2", "x86_64", "arm64"),
-) -> typing.List[str]:
+) -> list[str]:
     if ver.endswith("t"):
         fwk_path = "/Library/Frameworks/PythonT.framework/Versions"
     else:
@@ -246,7 +246,7 @@ def setup_variant(ver: str, variant: str) -> None:
     os.symlink(variant, tgt)
 
 
-def sort_framework_wrappers() -> typing.List[str]:
+def sort_framework_wrappers() -> list[str]:
     """
     Returns a list of framework wrappers in the order they should
     be build in.

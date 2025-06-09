@@ -24,8 +24,8 @@ TOPDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def topological_sort(
-    items: typing.Sequence[str], partial_order: typing.Sequence[typing.Tuple[str, str]]
-) -> typing.List[str] | None:
+    items: typing.Sequence[str], partial_order: typing.Sequence[tuple[str, str]]
+) -> list[str] | None:
     """
     Perform topological sort.
     items is a list of items to be sorted.
@@ -37,7 +37,7 @@ def topological_sort(
 
     class GraphNode:
         numincoming: int
-        outgoing: typing.List[str]
+        outgoing: list[str]
 
         def __init__(self):
             self.numincoming = 0
@@ -67,7 +67,7 @@ def topological_sort(
     # Note that our representation does not contain reference loops to
     # cause GC problems even when the represented graph contains loops,
     # because we keep the node names rather than references to the nodes.
-    graph: typing.Dict[str, GraphNode] = {}
+    graph: dict[str, GraphNode] = {}
     for v in items:
         add_node(graph, v)
     for a, b in partial_order:
@@ -175,7 +175,7 @@ def build_project(project: str, extra_arg: str | None) -> bool:
     return True
 
 
-def version_key(version: str) -> typing.Tuple[int, ...]:
+def version_key(version: str) -> tuple[int, ...]:
     return tuple(int(x) for x in version.split("."))
 
 
@@ -191,7 +191,9 @@ def main(extra_arg: str | None = None) -> None:
     all_projects = ["pyobjc-core"] + sort_framework_wrappers()
     for idx, project in enumerate(all_projects):
         print()
-        print(f"{BOLD}{idx+1}/{len(all_projects)}: Building project {project!r}{RESET}")
+        print(
+            f"{BOLD}{idx + 1}/{len(all_projects)}: Building project {project!r}{RESET}"
+        )
         print()
         if not build_project(project, extra_arg):
             print(f"{RED}Cannot build one of the projects, bailing out{RESET}")

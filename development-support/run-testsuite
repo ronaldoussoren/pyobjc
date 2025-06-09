@@ -291,7 +291,7 @@ def test_summary(fp_out, state_dir):
     width = max(len(x) for x in keys)
 
     maxlen = max(len(s) for s in results)
-    fmt = f"%{maxlen+2}s" + (" | %%%ds" % width) * len(keys)
+    fmt = f"%{maxlen + 2}s" + (" | %%%ds" % width) * len(keys)
     print(file=fp_out)
     print()
     print(fmt % (("Project",) + keys), file=fp_out)

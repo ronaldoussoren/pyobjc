@@ -836,7 +836,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("        PyGILState_STATE state = PyGILState_Ensure();", file=stream)
     print("", file=stream)
     print("        int       cookie;", file=stream)
-    print(f"        PyObject* args[{len(arg_types)+2}] = {{NULL}};", file=stream)
+    print(f"        PyObject* args[{len(arg_types) + 2}] = {{NULL}};", file=stream)
     print(
         "        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);",
         file=stream,
@@ -848,10 +848,10 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("        args[1] = pyself;", file=stream)
     for idx, tp in enumerate(arg_types):
         print(
-            f'        args[{idx+2}] = pythonify_c_value("{tp.decode()}", &arg{idx});',
+            f'        args[{idx + 2}] = pythonify_c_value("{tp.decode()}", &arg{idx});',
             file=stream,
         )
-        print(f"        if (args[{idx+2}] == NULL) // LCOV_BR_EXCL_LINE", file=stream)
+        print(f"        if (args[{idx + 2}] == NULL) // LCOV_BR_EXCL_LINE", file=stream)
         print("            goto error; // LCOV_EXCL_LINE", file=stream)
     print("", file=stream)
     print(
@@ -859,7 +859,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
         file=stream,
     )
     print(
-        f"                                          {len(arg_types)+1} | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);",
+        f"                                          {len(arg_types) + 1} | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);",
         file=stream,
     )
     print("        if (result == NULL) goto error;", file=stream)
@@ -893,7 +893,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("        Py_DECREF(result);", file=stream)
     if len(arg_types):
         print(
-            f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream
+            f"        for (size_t i = 2; i < {len(arg_types) + 2}; i++) {{", file=stream
         )
         print("            Py_CLEAR(args[i]);", file=stream)
         print("        }", file=stream)
@@ -912,7 +912,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("", file=stream)
     if len(arg_types):
         print(
-            f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream
+            f"        for (size_t i = 2; i < {len(arg_types) + 2}; i++) {{", file=stream
         )
         print("            Py_CLEAR(args[i]);", file=stream)
         print("        }", file=stream)
@@ -1164,7 +1164,7 @@ def generate_testext_callimp(stream, signature, instance=True):
     )
     for idx, selpart in enumerate(sel.split(":")[:-1]):
         print(
-            f"{selpart}:({describe_type(parts[idx+3])})arg{idx}", end=" ", file=stream
+            f"{selpart}:({describe_type(parts[idx + 3])})arg{idx}", end=" ", file=stream
         )
     print("\n{", file=stream)
     print("    PyObject* items;", file=stream)
@@ -1188,7 +1188,7 @@ def generate_testext_callimp(stream, signature, instance=True):
 
     for idx, _selpart in enumerate(sel.split(":")[:-1]):
         print(
-            f'        tmp = PyObjC_ObjCToPython("{parts[idx+3].decode()}", &arg{idx});',
+            f'        tmp = PyObjC_ObjCToPython("{parts[idx + 3].decode()}", &arg{idx});',
             file=stream,
         )
         print("        if (tmp == NULL) PyObjC_GIL_FORWARD_EXC();", file=stream)
@@ -1250,7 +1250,7 @@ def generate_testext_callfromobjc(stream, signature):
     print("[value ", end="", file=stream)
     for idx, selpart in enumerate(sel.split(":")[:-1]):
         print(
-            f"{selpart}:{as_objc_literal(parts[idx+3], valid_value(parts[idx+3]))} ",
+            f"{selpart}:{as_objc_literal(parts[idx + 3], valid_value(parts[idx + 3]))} ",
             end=" ",
             file=stream,
         )
@@ -1294,7 +1294,7 @@ def generate_register(stream, signature):
 
 
 class LiteralRepr:
-    def __init__(self, value: str, objc_value: typing.Optional[str] = None) -> None:
+    def __init__(self, value: str, objc_value: str | None = None) -> None:
         self._value = value
 
         if objc_value is not None:
@@ -1488,7 +1488,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
     print("", file=stream)
     print("        # Valid call", file=stream)
     print(
-        f"        rv = caller({', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+        f"        rv = caller({', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
         file=stream,
     )
     if sigparts[0] == objc._C_VOID:
@@ -1502,7 +1502,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         print("", file=stream)
         print("        # Valid call through instance", file=stream)
         print(
-            f"        rv = imp(oc_inst, {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+            f"        rv = imp(oc_inst, {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
             file=stream,
         )
         if sigparts[0] == objc._C_VOID:
@@ -1516,7 +1516,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         print("", file=stream)
         print("        # Valid call through meta", file=stream)
         print(
-            f"        rv = imp(type(oc), {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+            f"        rv = imp(type(oc), {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
             file=stream,
         )
         if sigparts[0] == objc._C_VOID:
@@ -1531,7 +1531,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
 
     print("        stored = oc.storedvalue()", file=stream)
     print("        self.assertIsInstance(stored, (list, tuple))", file=stream)
-    print(f"        self.assertEqual(len(stored), {len(sigparts)-3})", file=stream)
+    print(f"        self.assertEqual(len(stored), {len(sigparts) - 3})", file=stream)
     for i, s in enumerate(sigparts[3:]):
         print(f"        self.assertEqual(stored[{i}], {valid_value(s)!r})", file=stream)
     print("", file=stream)
@@ -1543,7 +1543,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
             file=stream,
         )
         print(
-            f"            caller({', '.join(repr(valid_value(s))  for s in sigparts[3:-1])})",
+            f"            caller({', '.join(repr(valid_value(s)) for s in sigparts[3:-1])})",
             file=stream,
         )
     print("", file=stream)
@@ -1553,7 +1553,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         file=stream,
     )
     print(
-        f"            caller({', '.join(repr(valid_value(s))  for s in sigparts[3:] + (sigparts[1],))})",
+        f"            caller({', '.join(repr(valid_value(s)) for s in sigparts[3:] + (sigparts[1],))})",
         file=stream,
     )
     print("", file=stream)
@@ -1575,7 +1575,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         file=stream,
     )
     print(
-        f"            caller({', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+        f"            caller({', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
         file=stream,
     )
 
@@ -1593,7 +1593,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
                 file=stream,
             )
         print(
-            f"            imp(42, {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+            f"            imp(42, {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
             file=stream,
         )
         if instance:
@@ -1603,7 +1603,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
                 file=stream,
             )
             print(
-                f"            imp(NoObjCValueObject, {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+                f"            imp(NoObjCValueObject, {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
                 file=stream,
             )
 
