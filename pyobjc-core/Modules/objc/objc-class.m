@@ -1173,8 +1173,14 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         info->useKVO = PyObjC_UseKVO;
         break;
     case 1:
-        info->useKVO = PyObject_IsTrue(useKVOObj);
-        Py_CLEAR(useKVOObj);
+        {
+            int useKVO = PyObject_IsTrue(useKVOObj);
+            if (useKVO == -1) {
+                return NULL;
+            }
+            info->useKVO = useKVO;
+            Py_CLEAR(useKVOObj);
+        }
     }
 
     if (isCFProxyClass) {
@@ -2582,8 +2588,12 @@ cls_set_useKVO(PyObject* self, PyObject* _Nullable newVal,
         return -1;
     }
 
+    int useKVO = PyObject_IsTrue(newVal);
+    if  (useKVO == -1) {
+        return -1;
+    }
     /* XXX: Need to use atomic operations accessing the value */
-    ((PyObjCClassObject*)self)->useKVO = PyObject_IsTrue(newVal);
+    ((PyObjCClassObject*)self)->useKVO = useKVO;
     return 0;
 }
 
@@ -2606,8 +2616,12 @@ cls_set_final(PyObject* self, PyObject* _Nullable newVal,
         return -1;
     }
 
+    int isFinal = PyObject_IsTrue(newVal);
+    if (isFinal == -1) {
+        return -1;
+    }
     /* XXX: Need to use atomic operations accessing the value */
-    ((PyObjCClassObject*)self)->isFinal = PyObject_IsTrue(newVal);
+    ((PyObjCClassObject*)self)->isFinal = isFinal;
     return 0;
 }
 
@@ -2751,8 +2765,13 @@ static PyObject* _Nullable class_get_hidden(PyObject* _self, PyObject* classMeth
 {
     PyObjCClassObject* self = ((PyObjCClassObject*)_self);
     PyObject*          hidden;
+    int isClassMethod;
 
-    if (PyObject_IsTrue(classMethod)) {
+    isClassMethod = PyObject_IsTrue(classMethod);
+    if (isClassMethod == -1) {
+        return NULL;
+    }
+    if (isClassMethod) {
         hidden = self->hiddenClassSelectors;
         if (hidden == NULL) {
             return PyDict_New();

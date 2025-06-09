@@ -79,7 +79,7 @@ static PyObject* PyObjCOptions_Type;
     }
 
 #define INT_PROP(NAME, VAR, DFLT)                                                        \
-    PyObjC_ATOMIC int VAR = DFLT;                                                                      \
+    PyObjC_ATOMIC int VAR = DFLT;                                                        \
     MUTEX_FOR(VAR)                                                                       \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
@@ -108,7 +108,7 @@ static PyObject* PyObjCOptions_Type;
     }
 
 #define BOOL_PROP(NAME, VAR, DFLT)                                                       \
-    PyObjC_ATOMIC BOOL VAR = DFLT;                                                                     \
+    PyObjC_ATOMIC BOOL VAR = DFLT;                                                       \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
                                 void*     c __attribute__((__unused__)))                 \
@@ -128,7 +128,11 @@ static PyObject* PyObjCOptions_Type;
                             "Cannot delete option '" STR(NAME) "'");                     \
             return -1;                                                                   \
         }                                                                                \
-        VAR = PyObject_IsTrue(newVal) ? YES : NO;                                        \
+        int b = PyObject_IsTrue(newVal);                                                 \
+        if (b == -1) {                                                                   \
+            return -1;                                                                   \
+        }                                                                                \
+        VAR = b ? YES : NO;                                                              \
         return 0;                                                                        \
     }
 
@@ -1027,7 +1031,7 @@ int PyObjC_CallClassExtender(PyObject* cls)
                     PyErr_Clear();
                 }
 #ifdef Py_GIL_DISABLED
-            case 1:
+            /* case 1: */
                 /* pass */
             }
             Py_CLEAR(c);

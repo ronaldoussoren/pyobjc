@@ -644,6 +644,7 @@ static int
 setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_native)
 {
     PyObject* d;
+    int r;
     char      typeModifier = 0;
 
     if (meta == Py_None) {
@@ -666,7 +667,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             return -1; // LCOV_EXCL_LINE
         /* case 0: pass */
        case 1:
-            if (!PyObject_IsTrue(d)) {
+            r = PyObject_IsTrue(d);
+            if (r == -1) {
+                return -1;
+            }
+            if (!r) {
                 if (descr == NULL || descr->tmpl)  {
                     Py_DECREF(d);
                     return -2;
@@ -690,7 +695,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
                 descr->alreadyRetained = NO; // LCOV_EXCL_LINE
             break;
         case 1:
-            if (PyObject_IsTrue(d)) {
+            r = PyObject_IsTrue(d);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 if (descr == NULL || (descr->tmpl && !descr->alreadyRetained)) {
                     Py_DECREF(d);
                     return -2;
@@ -713,7 +722,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
         /* case 0: pass */
         case 1:
-            if (PyObject_IsTrue(d)) {
+            r = PyObject_IsTrue(d);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 if (descr == NULL || descr->tmpl) {
                     Py_DECREF(d);
                     return -2;
@@ -731,7 +744,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
        case 1:
-            if (PyObject_IsTrue(d)) {
+            r = PyObject_IsTrue(d);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 if (descr == NULL || descr->tmpl) {
                     Py_DECREF(d);
                     return -2;
@@ -850,7 +867,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
         case 1:
-            if (PyObject_IsTrue(d)) {
+            r = PyObject_IsTrue(d);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 if (descr == NULL || descr->tmpl) {
                     Py_DECREF(d);
                     return -2;
@@ -869,7 +890,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             return -1;                       // LCOV_EXCL_LINE
         /*case 0: pass */
         case 1:
-            if (PyObject_IsTrue(d)) {
+            r = PyObject_IsTrue(d);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 if (descr == NULL || descr->tmpl) {
                     Py_DECREF(d);
                     return -2;
@@ -887,7 +912,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
         case 1:
-            if (PyObject_IsTrue(d)) {
+            r = PyObject_IsTrue(d);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 if (descr == NULL || descr->tmpl) {
                     Py_DECREF(d);
                     return -2;
@@ -929,7 +958,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
         case 1:
-            if (PyObject_IsTrue(d)) {
+            r = PyObject_IsTrue(d);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 if (descr == NULL || descr->tmpl) {
                     Py_DECREF(d);
                     return -2;
@@ -949,7 +982,11 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
         case 1:
-            if (PyObject_IsTrue(d)) {
+            r = PyObject_IsTrue(d);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 if (descr == NULL || descr->tmpl) {
                     Py_DECREF(d);
                     return -2;
@@ -1203,6 +1240,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                       BOOL                   is_native)
 {
     PyObject* v;
+    int r;
 
     if (metadata != NULL && !PyDict_Check(metadata)) {
         PyErr_Format(PyExc_TypeError,
@@ -1248,7 +1286,11 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                 // LCOV_EXCL_STOP
             /* case 0: pass */
             case 1:
-                if (PyObject_IsTrue(av)) {
+                r = PyObject_IsTrue(av);
+                if (r == -1) {
+                    return -1;
+                }
+                if (r) {
                     methinfo->free_result = YES;
                 }
                 Py_CLEAR(av);
@@ -1352,7 +1394,11 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
             return -1;                       // LCOV_EXCL_LINE
         /*case 0: pass */
         case 1:
-            if (PyObject_IsTrue(v)) {
+            r = PyObject_IsTrue(v);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 methinfo->null_terminated_array = YES;
             }
             Py_CLEAR(v);
@@ -1381,7 +1427,11 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
             return -1;                       // LCOV_EXCL_LINE
         /* case 0: pass */
         case 1:
-            if (PyObject_IsTrue(v)) {
+            r = PyObject_IsTrue(v);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
                 methinfo->variadic = YES;
 
                 if ((methinfo->suggestion == NULL) && (!methinfo->null_terminated_array)

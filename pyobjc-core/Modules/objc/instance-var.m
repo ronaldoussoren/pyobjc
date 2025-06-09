@@ -309,14 +309,22 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
     }
     self->type = type_copy;
     if (isOutletObj) {
-        self->isOutlet = PyObject_IsTrue(isOutletObj);
+        int r = PyObject_IsTrue(isOutletObj);
+        if (r == -1) {
+            return -1;
+        }
+        self->isOutlet = r;
 
     } else {
         self->isOutlet = 0;
     }
 
     if (isSlotObj) {
-        self->isSlot = PyObject_IsTrue(isSlotObj);
+        int r = PyObject_IsTrue(isSlotObj);
+        if (r == -1) {
+            return -1;
+        }
+        self->isSlot = r;
 
     } else {
         self->isSlot = 0;

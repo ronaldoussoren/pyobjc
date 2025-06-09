@@ -528,8 +528,15 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
      * when possible.
      */
 
-    if (scanClasses != NULL && !PyObject_IsTrue(scanClasses)) {
-        return pythonify_c_value(@encode(NSBundle*), &bundle);
+    if (scanClasses != NULL) {
+        int r =  PyObject_IsTrue(scanClasses);
+        if (r == -1) {
+            return NULL;
+        }
+
+        if (!r) {
+            return pythonify_c_value(@encode(NSBundle*), &bundle);
+        }
     }
 
     class_list = PyObjC_GetClassList(1);
@@ -1248,13 +1255,13 @@ static PyObject* _Nullable _updatingMetadata(PyObject* self __attribute__((__unu
                                              PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"flag", NULL};
-    PyObject*    flag;
+    int    flag;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &flag)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "p", keywords, &flag)) {
         return NULL;
     }
 
-    if (PyObject_IsTrue(flag)) {
+    if (flag) {
         PyObjC_UpdatingMetaData = YES;
 
     } else {

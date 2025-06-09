@@ -337,7 +337,7 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
     PyObject*          pyMantissa;
     PyObject*          pyExponent;
     PyObject*          pyNegative;
-    BOOL               negative;
+    int                negative;
     unsigned long long mantissa;
     short int          exponent;
 
@@ -385,6 +385,9 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
     }
 
     negative = PyObject_IsTrue(pyNegative);
+    if (negative == -1) {
+        return -1;
+    }
     if (depythonify_c_value(@encode(short int), pyExponent, &exponent) == -1) {
         return -1;
     }
@@ -393,7 +396,7 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
         return -1;
     }
 
-    DecimalFromComponents(&Decimal_Value(self), mantissa, exponent, negative);
+    DecimalFromComponents(&Decimal_Value(self), mantissa, exponent, negative?YES:NO);
 
     return 0;
 }

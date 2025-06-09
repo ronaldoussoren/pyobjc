@@ -259,7 +259,11 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
             return NULL;
         }
 
-        if (PyObject_IsTrue(updateRefCounts)) {
+        int update = PyObject_IsTrue(updateRefCounts);
+        if (update == -1) {
+            return NULL;
+        }
+        if (update) {
             [tmpValue retain];
 
             id v = object_getIvar(objcValue, ivar);

@@ -318,6 +318,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     class_methods = PyTuple_GET_ITEM(rv, 2);
     Py_INCREF(class_methods);
     *has_dunder_new = PyObject_IsTrue(PyTuple_GET_ITEM(rv, 3));
+    if (*has_dunder_new == -1) {
+        goto error_cleanup;
+    }
     Py_DECREF(rv);
     assert(instance_variables != NULL);
     assert(instance_methods != NULL);
