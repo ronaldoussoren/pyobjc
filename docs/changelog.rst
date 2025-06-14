@@ -170,6 +170,9 @@ how reference counts are handled by ``-init`` methods.
   This is needed because this library is deprecated in setuptools and will
   be removed.
 
+* :issue:`651`: Fix build issue on macOS 10.12 by changing the invocation
+  of sw_vers(1).
+
 Version 11.0
 ------------
 
