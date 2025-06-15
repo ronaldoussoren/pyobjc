@@ -146,3 +146,15 @@ class TestLoadBundle(TestCase):
 
         with self.assertRaisesRegex(TypeError, "bundle_identifier is not a string"):
             objc.loadBundle("foo", {}, bundle_identifier=42)
+
+        class NotBool:
+            def __bool__(self):
+                raise RuntimeError("foo")
+
+        with self.assertRaisesRegex(RuntimeError, "foo"):
+            objc.loadBundle(
+                "foo",
+                {},
+                bundle_identifier="com.apple.Foundation",
+                scan_classes=NotBool(),
+            )

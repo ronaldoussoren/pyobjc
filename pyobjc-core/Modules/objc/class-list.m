@@ -20,8 +20,11 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
     }
 
     buffer = objc_copyClassList(&bufferLen);
-    if (buffer == NULL) {
+    if (buffer == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_SetString(PyObjCExc_Error, "getting class list failed");
         return result;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < bufferLen; i++) {

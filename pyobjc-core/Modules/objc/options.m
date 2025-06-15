@@ -1017,7 +1017,7 @@ int PyObjC_CallClassExtender(PyObject* cls)
             if (c == NULL) {
                 r = 0;
             } else {
-                r = PyObject_RichCompareBool(c, v, Py_EQ);
+                r = PyObject_RichCompareBool(v, c, Py_EQ);
             }
             switch (r) {
             case -1:

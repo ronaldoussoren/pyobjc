@@ -3828,7 +3828,6 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
     return Py_SIZE(methinfo);
 }
 
-#if PY_VERSION_HEX >= 0x03090000
 Py_ssize_t
 PyObjCFFI_ParseArguments_Simple(
     PyObjCMethodSignature* methinfo, Py_ssize_t argOffset, PyObject* const* args,
@@ -3865,7 +3864,6 @@ PyObjCFFI_ParseArguments_Simple(
 
     return 0;
 }
-#endif
 
 PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                           Py_ssize_t argOffset, void* pRetval,
@@ -4359,7 +4357,6 @@ error_cleanup:
     return NULL;
 }
 
-#if PY_VERSION_HEX >= 0x03090000
 PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo,
                                                  void* pRetval)
 /*
@@ -4466,8 +4463,6 @@ PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo
 
     return objc_result;
 }
-
-#endif
 
 void
 PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_attr)
@@ -4876,7 +4871,6 @@ error_cleanup:
     return NULL;
 }
 
-#if PY_VERSION_HEX >= 0x03090000
 PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
                                             PyObject* const* args, size_t nargs)
 {
@@ -5258,7 +5252,6 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
 error_cleanup:
     return NULL;
 }
-#endif /* PY_VERSION_HEX >= 0x03090000 */
 
 /*
  * PyObjCFFI_CIFForSignature - Create CIF for a method signature

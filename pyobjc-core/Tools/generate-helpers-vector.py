@@ -1488,7 +1488,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
     print("", file=stream)
     print("        # Valid call", file=stream)
     print(
-        f"        rv = caller({', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+        f"        rv = caller({', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
         file=stream,
     )
     if sigparts[0] == objc._C_VOID:
@@ -1502,7 +1502,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         print("", file=stream)
         print("        # Valid call through instance", file=stream)
         print(
-            f"        rv = imp(oc_inst, {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+            f"        rv = imp(oc_inst, {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
             file=stream,
         )
         if sigparts[0] == objc._C_VOID:
@@ -1516,7 +1516,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         print("", file=stream)
         print("        # Valid call through meta", file=stream)
         print(
-            f"        rv = imp(type(oc), {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+            f"        rv = imp(type(oc), {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
             file=stream,
         )
         if sigparts[0] == objc._C_VOID:
@@ -1531,7 +1531,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
 
     print("        stored = oc.storedvalue()", file=stream)
     print("        self.assertIsInstance(stored, (list, tuple))", file=stream)
-    print(f"        self.assertEqual(len(stored), {len(sigparts)-3})", file=stream)
+    print(f"        self.assertEqual(len(stored), {len(sigparts) - 3})", file=stream)
     for i, s in enumerate(sigparts[3:]):
         print(f"        self.assertEqual(stored[{i}], {valid_value(s)!r})", file=stream)
     print("", file=stream)
@@ -1543,7 +1543,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
             file=stream,
         )
         print(
-            f"            caller({', '.join(repr(valid_value(s))  for s in sigparts[3:-1])})",
+            f"            caller({', '.join(repr(valid_value(s)) for s in sigparts[3:-1])})",
             file=stream,
         )
     print("", file=stream)
@@ -1553,7 +1553,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         file=stream,
     )
     print(
-        f"            caller({', '.join(repr(valid_value(s))  for s in sigparts[3:] + (sigparts[1],))})",
+        f"            caller({', '.join(repr(valid_value(s)) for s in sigparts[3:] + (sigparts[1],))})",
         file=stream,
     )
     print("", file=stream)
@@ -1575,7 +1575,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
         file=stream,
     )
     print(
-        f"            caller({', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+        f"            caller({', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
         file=stream,
     )
 
@@ -1593,7 +1593,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
                 file=stream,
             )
         print(
-            f"            imp(42, {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+            f"            imp(42, {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
             file=stream,
         )
         if instance:
@@ -1603,7 +1603,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
                 file=stream,
             )
             print(
-                f"            imp(NoObjCValueObject, {', '.join(repr(valid_value(s))  for s in sigparts[3:])})",
+                f"            imp(NoObjCValueObject, {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
                 file=stream,
             )
 

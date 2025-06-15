@@ -3,6 +3,31 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 11.1.1
+--------------
+
+The focus of this release is increasing test coverage and fixing issues
+found while doing this.
+
+* Fix a number of edge cases in handling of both calling and implementing
+  ``NSCoder`` methods. Issues found while increasing test coverage.
+
+* Fix error handling for a possible ``NULL`` result from ``objc_copyClassList()``
+  (should not happen in practice, but the API is annotated as nullable).
+
+* Fix race condition in recalculating the internal ``sel_methinfo`` of
+  selector objects.
+
+* ``NSCoder.encodeBytes_length_forKey_`` now accepts three arguments (
+  matching PyObjC's regular pattern for binding Objective-C APIs). The older
+  interface still works, but is deprecated and will be removed in PyObjC 13.
+
+* Implementing the same method now requires following the PyObjC convention,
+  that is the implementation must have 3 arguments.
+
+* Drop some code paths from pyobjc-core's extension module that supported
+  Python 3.8.
+
 Version 11.1
 ------------
 

@@ -90,7 +90,7 @@ CFLAGS = [
     "-Wshorten-64-to-32",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     # "--analyze",
-    # "-Werror",
+    "-Werror",
     "-Wno-cast-function-type-mismatch",
     "-I/usr/include/ffi",
     "-fvisibility=hidden",

@@ -152,11 +152,13 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                  */
                 if (PyObjCObject_Check(self)) {
                     cur_imp = [PyObjCObject_GetObject(self) methodForSelector:sel];
-                } else if (PyObjCClass_Check(self)) {
+                } else if (PyObjCClass_Check(self)) { // LCOV_BR_EXCL_LINE
                     cur_imp = [PyObjCClass_GetClass(self) methodForSelector:sel];
                 } else {
+                    // LCOV_EXCL_START
                     PyErr_SetString(PyObjCExc_Error, "Unsupported case for find_selector");
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 if (sel_imp == cur_imp) {

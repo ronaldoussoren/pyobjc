@@ -787,3 +787,9 @@ class TestConvertNegativeToUnsigedWarns(TestCase):
                 DeprecationWarning, "converting negative value to unsigned integer"
             ):
                 objc.repythonify(Number(), b"I")
+
+
+class TestKeywordArgumentsForSelect(TestCase):
+    def test_kwargs_not_allowed(self):
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            NSArray.arrayWithArray_(a=4)

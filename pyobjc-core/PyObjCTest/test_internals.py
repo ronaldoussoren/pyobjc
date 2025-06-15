@@ -183,6 +183,39 @@ class TestRescanClass(TestCase):
             self.assertIn(2001, cls.__dict__)
             self.assertNotEqual(cls.init, 42)
 
+        objc._updatingMetadata(True)
+        objc._updatingMetadata(False)
+
+        class NoCompare:
+            def __eq__(self, other):
+                raise TypeError("cannot compare")
+
+        no_compare = NoCompare()
+
+        def dummy_extender(klass, class_dict):
+            class_dict["foo"] = no_compare
+
+        cls.foo = objc.python_method(lambda self: 99)
+        try:
+            with pyobjc_options(_class_extender=dummy_extender):
+                objc._updatingMetadata(True)
+                objc._updatingMetadata(False)
+
+                with self.assertRaisesRegex(TypeError, "cannot compare"):
+                    objc._rescanClass("NSURLSession")
+
+        finally:
+            del cls.foo
+
+        objc._updatingMetadata(True)
+        objc._updatingMetadata(False)
+
+        info1 = cls.downloadTaskWithURL_completionHandler_.__metadata__()
+        objc._updatingMetadata(True)
+        objc._updatingMetadata(False)
+        info2 = cls.downloadTaskWithURL_completionHandler_.__metadata__()
+        self.assertEqual(info1, info2)
+
         for attr in ("__dict__", "__bases__", "__slots__", "__mro__"):
 
             def dummy_extender(klass, class_dict, attr=attr):

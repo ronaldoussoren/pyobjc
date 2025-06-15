@@ -22,6 +22,17 @@ class OCTestWithAttributes(NSObject):
     # Attribute used in test_category_overides_attribute
     pyobjcTestMethod = 42
 
+    def method(self):
+        return 21
+
+    @classmethod
+    def clsmethod(cls):
+        return 99
+
+
+OCTestWithAttributes.method = -21
+type(OCTestWithAttributes).clsmethod = -99
+
 
 class MethodAccessTest(TestCase):
     def test_circular(self):
@@ -49,6 +60,20 @@ class MethodAccessTest(TestCase):
 
         self.assertEqual(objc.objc_object.pyobjc_classMethods.__dict__, {})
         self.assertEqual(objc.objc_object.pyobjc_instanceMethods.__dict__, {})
+
+    def test_access_replaced_method(self):
+        o = OCTestWithAttributes.alloc().init()
+        self.assertEqual(o.method, -21)
+
+        self.assertEqual(o.pyobjc_instanceMethods.method(), 21)
+
+    def test_access_replaced_method_through_class(self):
+        self.assertEqual(OCTestWithAttributes.clsmethod, -99)
+        self.assertEqual(OCTestWithAttributes.pyobjc_classMethods.clsmethod(), 99)
+
+        # XXX: This test fails, but shouldn't.
+        o = OCTestWithAttributes.alloc().init()
+        self.assertEqual(OCTestWithAttributes.pyobjc_instanceMethods.method(o), 21)
 
     def testNSProxyStuff(self):
         # NSProxy is incompatitble with pyobjc_{class,instance}Methods, but

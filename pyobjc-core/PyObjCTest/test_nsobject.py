@@ -257,3 +257,33 @@ class TestNSObjectSupport(TestCase):
 
         self.assertIn("Exception during dealloc of proxy: ", capture)
         self.assertIn("PyObjCTest.test_nsobject.SomeException", capture)
+
+
+class MemoryManagedThroughIMPs(TestCase):
+    def test_retain_release(self):
+        value = NSObject.alloc().init()
+
+        imp_retain = NSObject.instanceMethodForSelector_(b"retain")
+        imp_release = NSObject.instanceMethodForSelector_(b"release")
+
+        self.assertEqual(value.retainCount(), 1)
+        imp_retain(value)
+        self.assertEqual(value.retainCount(), 2)
+        imp_release(value)
+        self.assertEqual(value.retainCount(), 1)
+
+        del value
+
+    def test_dealloc(self):
+        imp_dealloc = NSObject.instanceMethodForSelector_(b"dealloc")
+
+        class OC_SuperThroughIMP(NSObject):
+            def dealloc(self):
+                nonlocal cnt
+                cnt += 1
+                imp_dealloc(self)
+
+        cnt = 0
+        v = OC_SuperThroughIMP.alloc().init()
+        del v
+        self.assertEqual(cnt, 1)

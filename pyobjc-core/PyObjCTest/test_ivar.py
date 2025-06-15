@@ -35,9 +35,21 @@ class TestClass(NSObject):
     shortVar = objc.ivar.short("shortVar2")
 
 
+class NoBool:
+    def __bool__(self):
+        raise RuntimeError("no bool")
+
+
 class TestInstanceVariables(TestCase):
     def setUp(self):
         self.object = TestClass.alloc().init()
+
+    def test_invalid_outlet(self):
+        with self.assertRaisesRegex(RuntimeError, "no bool"):
+            objc.ivar("name", isOutlet=NoBool())
+
+        with self.assertRaisesRegex(RuntimeError, "no bool"):
+            objc.ivar("name", isSlot=NoBool())
 
     def test_class_setup(self):
         v = objc.ivar()
@@ -359,6 +371,16 @@ class TestAllInstanceVariables(TestCase):
             "Instance variable is an object, updateRefCounts argument is required",
         ):
             setter(obj, "objValue", o)
+
+        class NotBool:
+            def __bool__(self):
+                raise RuntimeError("no bool")
+
+        with self.assertRaisesRegex(
+            RuntimeError,
+            "no bool",
+        ):
+            setter(obj, "objValue", o, NotBool())
 
         self.assertIsNot(getter(obj, "objValue"), o)
         setter(obj, "objValue", o, True)

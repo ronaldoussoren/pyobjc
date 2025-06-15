@@ -25,9 +25,7 @@ typedef struct {
     PyObject* _Nullable doc;
     PyObject* _Nullable name;
     PyObject* _Nullable module;
-#if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc vectorcall;
-#endif
 } func_object;
 
 static PyObject* _Nullable func_metadata(PyObject* _self)
@@ -54,12 +52,10 @@ static PyMethodDef func_methods[] = {
      .ml_meth  = (PyCFunction)func_metadata,
      .ml_flags = METH_NOARGS,
      .ml_doc   = "Return a dict that describes the metadata for this function."},
-#if PY_VERSION_HEX > 0x03090000
     {.ml_name  = "__class_getitem__",
      .ml_meth  = (PyCFunction)Py_GenericAlias,
      .ml_flags = METH_O|METH_CLASS,
      .ml_doc   = "See PEP 585"},
-#endif
     {
         .ml_name = NULL /* SENTINEL */
     }};
@@ -89,14 +85,12 @@ static PyMemberDef func_members[] = {{
                                          .type   = T_OBJECT,
                                          .offset = offsetof(func_object, module),
                                      },
-#if PY_VERSION_HEX >= 0x03090000
                                      {
                                          .name   = "__vectorcalloffset__",
                                          .type   = T_PYSSIZET,
                                          .offset = offsetof(func_object, vectorcall),
                                          .flags  = READONLY,
                                      },
-#endif
                                      {
                                          .name = NULL /* SENTINEL */
                                      }};
@@ -291,7 +285,6 @@ error:
     return retval;
 }
 
-#if PY_VERSION_HEX >= 0x03090000
 /*
  * A variant of func_vectorcall that only handles "simple" functions. This allows
  * for a number of simplifications that significantly speed up functions calls
@@ -365,20 +358,7 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
 error:
     return NULL;
 }
-#endif
 
-#if PY_VERSION_HEX < 0x03090000
-static PyObject* _Nullable func_call(PyObject* s, PyObject* _Nullable args,
-                                     PyObject* _Nullable kwds)
-{
-    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
-        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
-        return NULL;
-    }
-
-    return func_vectorcall(s, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
-}
-#endif
 
 static void
 func_dealloc(PyObject* s)
@@ -431,11 +411,7 @@ static PyType_Slot func_slots[] = {
 #if PY_VERSION_HEX < 0x030a0000
     {.slot = Py_tp_new, .pfunc = (void*)&func_new},
 #endif
-#if PY_VERSION_HEX >= 0x03090000
     {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
-#else
-    {.slot = Py_tp_call, .pfunc = (void*)&func_call},
-#endif
 
     {0, NULL} /* sentinel */
 };
@@ -447,11 +423,8 @@ static PyType_Spec func_spec = {
 #if PY_VERSION_HEX >= 0x030a0000
     .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#elif PY_VERSION_HEX >= 0x03090000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_HEAPTYPE,
-
 #else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_HEAPTYPE,
 #endif
     .slots = func_slots,
 };
@@ -467,9 +440,7 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
-#if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = func_vectorcall;
-#endif
     result->function = func;
     result->doc      = NULL;
     result->name     = name;
@@ -503,9 +474,7 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
-#if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = func_vectorcall;
-#endif
     result->function = func;
 
     /* set later in this function */
@@ -523,11 +492,9 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     }
     result->methinfo = methinfo;
 
-#if PY_VERSION_HEX >= 0x03090000
     if (result->methinfo->shortcut_signature) {
         result->vectorcall = func_vectorcall_simple;
     }
-#endif
 
     SET_FIELD_INCREF(result->doc, doc);
     SET_FIELD_INCREF(result->name, name);

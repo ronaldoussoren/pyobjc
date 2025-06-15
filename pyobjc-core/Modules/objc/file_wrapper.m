@@ -73,7 +73,7 @@ static PyObject* _Nullable file_close(PyObject* _self)
     }
 
     if (fclose(fp) < 0) {
-    /* This is very unlikely, restore previous value */
+        /* This is very unlikely, restore previous value */
         Py_BEGIN_CRITICAL_SECTION(_self);
         self->fp = fp;
         Py_END_CRITICAL_SECTION();
