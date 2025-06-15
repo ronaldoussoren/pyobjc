@@ -198,7 +198,10 @@ _PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* _Nullable value)
 static inline PyObject*
 _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 {
-    return PyTuple_GET_ITEM(tuple, idx); // LCOV_BR_EXCL_LINE
+    /* The protocol for tuples is that they are full initialized
+     * before handing them over to other code.
+     */
+    return (PyObject* _Nonnull)PyTuple_GET_ITEM(tuple, idx); // LCOV_BR_EXCL_LINE
 }
 #undef PyTuple_GET_ITEM
 #define PyTuple_GET_ITEM(a, b) _PyObjCTuple_GetItem(a, b)
