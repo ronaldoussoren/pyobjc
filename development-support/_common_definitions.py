@@ -128,7 +128,7 @@ def py_version(ver: str) -> str:
 
 
 def system_report(
-    path: str | os.PathLike[str], py_versions: typing.Sequence[str]
+    path: typing.Union[str, os.PathLike[str]], py_versions: typing.Sequence[str]
 ) -> None:
     with open(path, "w") as fp:
         fp.write(f"Build at:           {time.ctime()}\n")
@@ -289,5 +289,4 @@ def sort_framework_wrappers() -> typing.List[str]:
         for dep in requires:
             partial_order.append((dep, subdir))
 
-    frameworks = topological_sort(frameworks, partial_order)
-    return frameworks
+    return topological_sort(frameworks, partial_order)

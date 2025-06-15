@@ -3,6 +3,7 @@ import subprocess
 import pathlib
 import configparser
 import glob
+import typing
 
 from _common_definitions import RED, BOLD, RESET
 
@@ -19,98 +20,103 @@ SDK_VERSION = subprocess.check_output(
     ["xcrun", "-sdk", "macosx", "--show-sdk-version"]
 ).decode()
 
-scan_failed = []
-compile_failed = []
-all_frameworks = sorted(BASE.glob("pyobjc-framework-*"))
-for idx, nm in enumerate(all_frameworks):
-    cfg = configparser.RawConfigParser()
-    cfg.read(nm / "metadata" / "metadata.ini")
 
-    all_sections = sorted(cfg.sections())
-    for sec_idx, section in enumerate(all_sections):
-        if section in IGNORE:
-            continue
-        print()
-        if len(all_sections) == 1:
-            print(f"{BOLD}[{idx+1}/{len(all_frameworks)}] Processing {nm}{RESET}")
-        else:
-            print(
-                f"{BOLD}[{idx+1}/{len(all_frameworks)}; {sec_idx+1}/{len(all_sections)}] Processing {nm} - {section}{RESET}"
-            )
-        print()
-        overrides = nm / "metadata" / (cfg[section]["framework"] + ".fwinfo")
+def main() -> None:
+    scan_failed: typing.List[typing.Tuple[str, str]] = []
+    compile_failed: typing.List[typing.Tuple[str, str]] = []
+    all_frameworks = sorted(BASE.glob("pyobjc-framework-*"))
+    for idx, nm in enumerate(all_frameworks):
+        cfg = configparser.RawConfigParser()
+        cfg.read(nm / "metadata" / "metadata.ini")
 
-        try:
-            print(f"   scanning in {nm}")
-            subprocess.check_call(
-                [
-                    "objective-metadata-tool",
-                    f"--ini-section={section}",
-                    "scan",
-                    "--arch=x86_64,arm64",
-                    f"--sdk={SDK_VERSION}",
-                ],
-                cwd=nm,
-            )
-
-        except subprocess.CalledProcessError:
-            print(f"    {RED}Scanning failed!{RESET}")
-            scan_failed.append((nm.name, section))
-            continue
-
-        subprocess.call(["git", "checkout", overrides])
-
-        # Only keep the latest version of the scanned headers for
-        # every major release of macOS (starting at 11.0)
-        for fn in glob.glob(f"{nm}/metadata.*/*-{SDK_VERSION.split('.')[0]}.*"):
-            if SDK_VERSION in fn:
-                subprocess.call(["git", "add", fn])
+        all_sections = sorted(cfg.sections())
+        for sec_idx, section in enumerate(all_sections):
+            if section in IGNORE:
+                continue
+            print()
+            if len(all_sections) == 1:
+                print(f"{BOLD}[{idx + 1}/{len(all_frameworks)}] Processing {nm}{RESET}")
             else:
-                subprocess.call(["git", "rm", fn])
-
-        try:
-            print(f"   compiling in {nm}")
-            subprocess.check_call(
-                ["objective-metadata-tool", f"--ini-section={section}", "compile"],
-                cwd=nm,
-            )
-        except subprocess.CalledProcessError:
-            print(f"    {RED}Compilation failed!{RESET}")
-            compile_failed.append((nm.name, section))
-
-            # Undo the compile attempt
-            if "python-package" in cfg[section]:
-                subprocess.call(
-                    [
-                        "git",
-                        "checkout",
-                        nm
-                        / "Lib"
-                        / cfg[section]["python-package"].replace(".", "/")
-                        / "_metadata.py",
-                    ]
+                print(
+                    f"{BOLD}[{idx + 1}/{len(all_frameworks)}; {sec_idx + 1}/{len(all_sections)}] Processing {nm} - {section}{RESET}"
                 )
-            else:
-                subprocess.call(
+            print()
+            overrides = nm / "metadata" / (cfg[section]["framework"] + ".fwinfo")
+
+            try:
+                print(f"   scanning in {nm}")
+                subprocess.check_call(
                     [
-                        "git",
-                        "checkout",
-                        nm / "Lib" / cfg[section]["framework"] / "_metadata.py",
-                    ]
+                        "objective-metadata-tool",
+                        f"--ini-section={section}",
+                        "scan",
+                        "--arch=x86_64,arm64",
+                        f"--sdk={SDK_VERSION}",
+                    ],
+                    cwd=nm,
                 )
-            continue
+
+            except subprocess.CalledProcessError:
+                print(f"    {RED}Scanning failed!{RESET}")
+                scan_failed.append((nm.name, section))
+                continue
+
+            subprocess.call(["git", "checkout", overrides])
+
+            # Only keep the latest version of the scanned headers for
+            # every major release of macOS (starting at 11.0)
+            for fn in glob.glob(f"{nm}/metadata.*/*-{SDK_VERSION.split('.')[0]}.*"):
+                if SDK_VERSION in fn:
+                    subprocess.call(["git", "add", fn])
+                else:
+                    subprocess.call(["git", "rm", fn])
+
+            try:
+                print(f"   compiling in {nm}")
+                subprocess.check_call(
+                    ["objective-metadata-tool", f"--ini-section={section}", "compile"],
+                    cwd=nm,
+                )
+            except subprocess.CalledProcessError:
+                print(f"    {RED}Compilation failed!{RESET}")
+                compile_failed.append((nm.name, section))
+
+                # Undo the compile attempt
+                if "python-package" in cfg[section]:
+                    subprocess.call(
+                        [
+                            "git",
+                            "checkout",
+                            nm
+                            / "Lib"
+                            / cfg[section]["python-package"].replace(".", "/")
+                            / "_metadata.py",
+                        ]
+                    )
+                else:
+                    subprocess.call(
+                        [
+                            "git",
+                            "checkout",
+                            nm / "Lib" / cfg[section]["framework"] / "_metadata.py",
+                        ]
+                    )
+                continue
+
+    if scan_failed:
+        print(f"{RED}Scanning failed for:{RESET}")
+        for wrapper, section in scan_failed:
+            print(f"{RED}* {wrapper} - {section}{RESET}")
+        print("")
+
+    if compile_failed:
+        print(f"{RED}Compiling failed for:{RESET}")
+        for wrapper, section in compile_failed:
+            print(f"{RED}* {wrapper} - {section}{RESET}")
+        print("")
+
+    print(f"{BOLD}DONE{RESET}")
 
 
-if scan_failed:
-    print(f"{RED}Scanning failed for:{RESET}")
-    for wrapper, section in scan_failed:
-        print(f"{RED}* {wrapper} - {section}{RESET}")
-    print("")
-
-if compile_failed:
-    print(f"{RED}Compiling failed for:{RESET}")
-    for wrapper, section in compile_failed:
-        print(f"{RED}* {wrapper} - {section}{RESET}")
-    print("")
-
-print(f"{BOLD}DONE{RESET}")
+if __name__ == "__main__":
+    main()
