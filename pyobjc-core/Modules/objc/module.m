@@ -1005,6 +1005,17 @@ static PyObject* _Nullable registerMetaData(PyObject* self __attribute__((__unus
     }
 }
 
+PyDoc_STRVAR(dropStructType_doc,
+        "_dropStructType(typestr)\n" CLINIC_SEP "\n"
+        "Drop the struct type for 'typestr' from the lookup table.");
+static PyObject* _Nullable dropStructType(PyObject* self __attribute__((__unused__)), PyObject* arg)
+{
+    if (PyObjC_DropRegisteredStruct(arg) == -1) {
+        return NULL;
+    }
+    Py_RETURN_NONE;
+}
+
 PyDoc_STRVAR(registerStructAlias_doc,
              "registerStructAlias(typestr, structType)\n" CLINIC_SEP "\n"
              "Registers 'typestr' as a type that should be mapped onto 'structType'\n"
@@ -1952,6 +1963,10 @@ static PyMethodDef mod_methods[] = {
      .ml_meth  = (PyCFunction)createStructType,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
      .ml_doc   = createStructType_doc},
+    {.ml_name  = "_dropStructType",
+     .ml_meth  = (PyCFunction)dropStructType,
+     .ml_flags = METH_O,
+     .ml_doc   = dropStructType_doc},
     {.ml_name  = "registerStructAlias",
      .ml_meth  = (PyCFunction)registerStructAlias,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,

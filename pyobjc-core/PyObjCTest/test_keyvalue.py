@@ -7,6 +7,7 @@ in PyObjCTools.test.test_keyvalue and Foundation.test.test_keyvalue.
 
 import os
 import sys
+from objc import super  # noqa: A004
 
 import objc
 from PyObjCTest.fnd import (
@@ -43,6 +44,7 @@ from PyObjCTest.keyvaluehelper import (
     PyObjCTest_KVBaseClass,
 )
 from .objectint import OC_ObjectInt
+from .test_metadata import NoObjCClass
 
 # Native code is needed to access the python class from Objective-C, otherwise
 # the Key-Value support cannot be tested.
@@ -1004,3 +1006,68 @@ class TestWithoutHelper(TestCase):
 
         finally:
             objc.options._setKeyPath = orig
+
+
+class OC_KeyValueTestHelperWithSlots(NSObject):
+    __slots__ = ("a", "_b")
+
+    def init(self):
+        self = super().init()
+        if self is None:
+            return None
+
+        return self
+
+
+class TestKeyValueObjC(TestCase):
+    def test_setting(self):
+        o = OC_KeyValueTestHelperWithSlots.alloc().init()
+
+        self.assertNotHasAttr(o, "a")
+        self.assertNotHasAttr(o, "b")
+        self.assertNotHasAttr(o, "_a")
+        self.assertNotHasAttr(o, "_b")
+
+        with self.assertRaisesRegex(
+            KeyError, "this class is not key value coding-compliant for the key b."
+        ):
+            OC_ObjectInt.setValue_forKey_of_("BB", "b", o)
+
+        o._b = "bb"
+        OC_ObjectInt.setValue_forKey_of_("AA", "a", o)
+        OC_ObjectInt.setValue_forKey_of_("BB", "b", o)
+
+        self.assertNotHasAttr(o, "_a")
+        self.assertNotHasAttr(o, "b")
+        self.assertEqual(o.a, "AA")
+        self.assertEqual(o._b, "BB")
+
+    def test_getting(self):
+        o = OC_KeyValueTestHelperWithSlots.alloc().init()
+        o.a = "Aa"
+        o._b = "Bb"
+
+        v = OC_ObjectInt.valueForKey_of_("a", o)
+        self.assertEqual(v, "Aa")
+        v = OC_ObjectInt.valueForKey_of_("b", o)
+        self.assertEqual(v, "Bb")
+
+        # XXX: This is not ideal, but protects against returning a bound method
+        #      (not an attribute whose's value happens to be a bound method)
+        o._b = o.description
+        with self.assertRaisesRegex(
+            KeyError, "this class is not key value coding-compliant for the key b."
+        ):
+            OC_ObjectInt.valueForKey_of_("b", o)
+
+        o.a = NoObjCClass()
+        with self.assertRaisesRegex(
+            KeyError, "this class is not key value coding-compliant for the key a."
+        ):
+            OC_ObjectInt.valueForKey_of_("a", o)
+
+        del o._b
+        with self.assertRaisesRegex(
+            KeyError, "this class is not key value coding-compliant for the key b."
+        ):
+            OC_ObjectInt.valueForKey_of_("b", o)

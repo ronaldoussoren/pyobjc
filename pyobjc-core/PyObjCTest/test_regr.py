@@ -793,3 +793,49 @@ class TestKeywordArgumentsForSelect(TestCase):
     def test_kwargs_not_allowed(self):
         with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
             NSArray.arrayWithArray_(a=4)
+
+
+class TestInvokingMethods(TestCase):
+    def invokeDescriptionOf(self, value):
+        signature = value.methodSignatureForSelector_(b"description")
+        inv = NSInvocation.invocationWithMethodSignature_(signature)
+        inv.setTarget_(value)
+        inv.setSelector_(b"description")
+        value.forwardInvocation_(inv)
+        return inv.getReturnValue_(None)
+
+    def test_nsobject(self):
+        v = NSObject.alloc().init()
+        with self.assertRaisesRegex(
+            ValueError, "unrecognized selector sent to instance"
+        ):
+            self.invokeDescriptionOf(v)
+
+    def test_pyobject(self):
+        v = OCTestRegrWithGetItem.alloc().init()
+        with self.assertRaisesRegex(
+            ValueError, "unrecognized selector sent to instance"
+        ):
+            self.invokeDescriptionOf(v)
+
+    def test_pyobject_with_descr(self):
+        class OC_ObjectWithDescription(NSObject):
+            def description(self):
+                return "<an object>"
+
+        v = OC_ObjectWithDescription.alloc().init()
+        self.assertEqual(v.description(), "<an object>")
+        self.assertEqual(self.invokeDescriptionOf(v), "<an object>")
+
+    def test_forward_invalid(self):
+        value = OCTestRegrWithGetItem.alloc().init()
+
+        signature = value.methodSignatureForSelector_(b"description")
+        inv = NSInvocation.invocationWithMethodSignature_(signature)
+        inv.setTarget_(value)
+        inv.setSelector_(b"descriptions")
+
+        with self.assertRaisesRegex(
+            ValueError, "unrecognized selector sent to instance"
+        ):
+            value.forwardInvocation_(inv)

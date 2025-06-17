@@ -1392,7 +1392,7 @@ mkimp_NSCoder_encodeBytes_length_forKey_(PyObject*              callable,
 
           pyself = PyObjCObject_NewTransient(self, &cookie);
           if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-              // LCOV_EXLC_START
+              // LCOV_EXCL_START
               PyObjCErr_ToObjCWithGILState(&state);
               return;
               // LCOV_EXCL_STOP

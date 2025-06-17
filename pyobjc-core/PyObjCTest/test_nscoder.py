@@ -781,6 +781,13 @@ class MyCoderNotNone(NSCoder):
         elif self.scenario == -3:
             raise RuntimeError("error!")
 
+    def encodeBytes_length_forKey_(self, value, length, key):
+        self.coded.append(("bytes", value, length, key))
+        if self.scenario == 40:
+            return 42
+        elif self.scenario == -40:
+            raise RuntimeError("error!")
+
     def decodeValueOfObjCType_at_(self, tp, at):
         if self.scenario == -4:
             raise RuntimeError("error!")
@@ -844,7 +851,7 @@ class TestPythonCoder(TestCase):
     def testNotNone(self):
         o = PyObjC_TestCodingClass.alloc().init()
 
-        for scenario in (1, 2, 3):
+        for scenario in (1, 2, 3, 40):
             coder = MyCoderNotNone.alloc().initWithScenario_(scenario)
             with self.assertRaisesRegex(TypeError, "did not return None"):
                 o.encodeWithCoder_(coder)
@@ -852,7 +859,7 @@ class TestPythonCoder(TestCase):
     def testRaises(self):
         o = PyObjC_TestCodingClass.alloc().init()
 
-        for scenario in (-1, -2, -3):
+        for scenario in (-1, -2, -3, -40):
             coder = MyCoderNotNone.alloc().initWithScenario_(scenario)
             with self.assertRaisesRegex(RuntimeError, "error!"):
                 o.encodeWithCoder_(coder)

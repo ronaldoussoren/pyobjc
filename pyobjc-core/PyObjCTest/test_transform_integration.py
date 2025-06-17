@@ -247,3 +247,25 @@ class TestTransformerIntegrationErrors(TestCase):
                 class OC_TransformIntegrationErrorNoPD(NSObject):
                     def method(self):
                         pass
+
+    def test_generic_new_invalid(self):
+        class NotBool:
+            def __bool__(self):
+                raise RuntimeError("bool")
+
+        def helper(
+            class_name,
+            class_dict,
+            meta_dict,
+            class_object,
+            protocols,
+            hidden_instance_methods,
+            hidden_class_methods,
+        ):
+            return (), (), (), NotBool()  # noqa: B023
+
+        with patch(helper):
+            with self.assertRaisesRegex(RuntimeError, "bool"):
+                name = "OC_TransformIntegrationErrorNN1"
+
+                type(name, (NSObject,), {})

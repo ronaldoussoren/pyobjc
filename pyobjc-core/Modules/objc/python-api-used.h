@@ -162,6 +162,7 @@ PyAPI_FUNC(PyObject* _Nullable) PyList_New(Py_ssize_t size)
 PyAPI_FUNC(Py_ssize_t) PyList_Size(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(double) PyLong_AsDouble(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(long) PyLong_AsLong(PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(size_t) PyLong_AsSize_t(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(long long) PyLong_AsLongLong(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(Py_ssize_t) PyLong_AsSsize_t(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(unsigned long) PyLong_AsUnsignedLong(PyObject*)

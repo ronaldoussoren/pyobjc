@@ -57,7 +57,7 @@ coverage:
 	mkdir build dist
 	python3 -mvenv build/cov-env
 	build/cov-env/bin/python3 -mpip install -U wheel pip setuptools coverage
-	build/cov-env/bin/python3 setup.py develop
+	build/cov-env/bin/python3 -mpip install -e .
 	#cd ../pyobjc-framework-Cocoa && ../pyobjc-core/build/cov-env/bin/python setup.py develop
 	#cd ../pyobjc-framework-Quartz && ../pyobjc-core/build/cov-env/bin/python setup.py develop
 	-build/cov-env/bin/python3 -mcoverage run --branch setup.py test -v

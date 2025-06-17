@@ -1424,6 +1424,19 @@ PyMutex registry_mutex = { 0 };
 #endif
 static PyObject* _Nonnull structRegistry = (PyObject* _Nonnull)NULL;
 
+int PyObjC_DropRegisteredStruct(PyObject* key)
+{
+    int r;
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&registry_mutex);
+#endif
+    r =  PyDict_DelItem(structRegistry, key);
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&registry_mutex);
+#endif
+    return r;
+}
+
 PyObject* _Nullable PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
 {
     PyObject* type;
