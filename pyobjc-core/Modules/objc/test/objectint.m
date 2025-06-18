@@ -57,6 +57,17 @@ NSObject (TestMethods)
 
 @implementation OC_ObjectInt
 
+-(id*)unpythonicObjects
+{
+    static id buffer[4] = { nil, nil, nil, nil };
+    if (buffer[0] == nil) {
+        buffer[0] = [[OC_NoPythonRepresentation alloc] init];
+        buffer[1] = [[OC_NoPythonRepresentation alloc] init];
+        buffer[2] = [[OC_NoPythonRepresentation alloc] init];
+    }
+    return buffer;
+}
+
 + (id)invokeSelector:(SEL)sel of:(NSObject*)object
 {
     return ((id(*)(id, SEL))objc_msgSend)(object, sel);

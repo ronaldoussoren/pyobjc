@@ -728,6 +728,36 @@ class TestBlocks(TestCase):
         ):
             obj.callIntBlock_withValue_(callback, 42)
 
+    def test_kwonly(self):
+        value = None
+
+        def callback(a, *, k):
+            nonlocal value
+            value = (a, k)
+
+        obj = OCTestBlock.alloc().init()
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "has keyword-only arguments without defaults"
+        ):
+            obj.callIntBlock_withValue_(callback, 42)
+
+        def callback(a, *, k=4):
+            nonlocal value
+            value = (a, k)
+
+        obj.callIntBlock_withValue_(callback, 42)
+        self.assertEqual(value, (42, 4))
+
+        def callback():
+            pass
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError,
+            "Objective-C expects 1 arguments, Python argument has 0 arguments ",
+        ):
+            obj.callIntBlock_withValue_(callback, 42)
+
     @min_os_level("10.6")
     def test_block_with_varargs(self):
         obj = OCTestBlock.alloc().init()

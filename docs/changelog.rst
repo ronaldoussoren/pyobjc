@@ -28,6 +28,12 @@ found while doing this.
 * Drop some code paths from pyobjc-core's extension module that supported
   Python 3.8.
 
+* Fix some error messages in incorrect invocations of ``objc.function``
+  instances.
+
+* Fix crash when a callable returns a C function with a signature that's not
+  compatible with libffi (such as a function using a SIMD argument or return type).
+
 Version 11.1
 ------------
 

@@ -180,14 +180,14 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     if (variadicAllArgs) {
         if (byref_in_count != 0 || byref_out_count != 0) {
             PyErr_Format(PyExc_TypeError,
-                         "Sorry, printf format with by-ref args not supported");
+                         "variadic with by-ref args not supported");
             return NULL;
         }
 
         if (nargsf < (size_t)Py_SIZE(self->methinfo)) {
             PyErr_Format(PyExc_TypeError,
-                         "Need %" PY_FORMAT_SIZE_T "d arguments, got %zu",
-                         Py_SIZE(self->methinfo) - 2, nargsf);
+                         "Need at least %" PY_FORMAT_SIZE_T "d arguments, got %zu",
+                         Py_SIZE(self->methinfo), nargsf);
             return NULL;
         }
 
@@ -448,6 +448,10 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
     result->module   = NULL;
     result->methinfo = methinfo;
     Py_XINCREF(methinfo);
+    if (result->methinfo->shortcut_signature) {
+        result->vectorcall = func_vectorcall_simple;
+    }
+    result->cif = NULL;
 
     ffi_cif* cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (cif == NULL) {

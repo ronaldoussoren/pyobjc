@@ -28,9 +28,12 @@ typedef struct ArrayStruct struct_array_t[4];
 + (NSObject*)callArrayOf4IntsOut:(OC_ArrayTest*)object;
 + (NSObject*)callArrayOf4Structs:(OC_ArrayTest*)object;
 + (NSObject*)callArrayOf4StructsOut:(OC_ArrayTest*)object;
+
+
 @end
 
 @implementation OC_ArrayTest
+
 
 - (NSObject*)arrayOf4Ints:(int_array_t)array
 {
@@ -194,6 +197,21 @@ typedef struct ArrayStruct struct_array_t[4];
                                               nil],
                          nil];
 }
+
++(unichar*)uniarrayOf12
+{
+    static unichar buffer[13] = { 'h', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '\0' };
+
+    return buffer;
+}
++(unichar*)baduniarrayOf12
+{
+    /* Text with lone surrogate */
+    static unichar buffer[13] = { 'h', 'e', 'l', 'l', 'o', 0xD800, ' ', 'w', 'o', 'r', 'l', 'd', '\0' };
+
+    return buffer;
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
