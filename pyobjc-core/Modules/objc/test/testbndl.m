@@ -1748,7 +1748,7 @@ NSObject (IKnowWhatImDoing)
 + (int)fetchInt:(NSCoder*)coder
 {
     int i;
-    [[clang::suppress]]
+    CLANG_SUPPRESS
     [coder decodeValueOfObjCType:@encode(int) at:&i];
 
     return i;
@@ -1757,7 +1757,7 @@ NSObject (IKnowWhatImDoing)
 + (double)fetchDouble:(NSCoder*)coder
 {
     double i;
-    [[clang::suppress]]
+    CLANG_SUPPRESS
     [coder decodeValueOfObjCType:@encode(double) at:&i];
     return i;
 }
