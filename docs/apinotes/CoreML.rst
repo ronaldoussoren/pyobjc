@@ -16,7 +16,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 These bindings are accessed through the ``CoreML`` package (that is,
 ``import CoreML``).
 
-.. versionadded:: macOS 10.13
+.. macosadded:: 10.13
 
 
 API Notes

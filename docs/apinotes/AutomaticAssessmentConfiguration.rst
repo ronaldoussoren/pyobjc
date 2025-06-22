@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``AutomaticAssessmentConfiguration`` package (that is, ``import AutomaticAssessmentConfiguration``).
 
-.. versionadded:: macOS 10.15.4
+.. macosadded:: 10.15.4
 
 API Notes
 ---------

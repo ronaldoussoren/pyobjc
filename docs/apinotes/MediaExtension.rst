@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MediaExtension`` package (that is, ``import MediaExtension``).
 
-.. versionadded: macOS 15
+.. macosadded:: 15
 
 API Notes
 ---------

@@ -10,7 +10,7 @@ on Apple's developer website.
 
 These bindings are accessed through the ``BusinessChat`` package (that is, ``import BusinessChat``).
 
-.. versionadded:: macOS 10.13.4
+.. macosadded:: 10.13.4
 
 
 API Notes

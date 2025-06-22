@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``CoreHaptics`` package (that is, ``import CoreHaptics``).
 
-.. versionadded:: macOS 10.15
+.. macosadded:: 10.15
 
 
 API Notes

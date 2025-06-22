@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``BrowserEngineKit`` package (that is, ``import BrowserEngineKit``).
 
-.. versionadded:: macOS 14.4
+.. macosadded:: 14.4
 
 API Notes
 ---------

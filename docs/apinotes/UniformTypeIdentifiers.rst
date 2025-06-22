@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``UniformTypeIdentifiers`` package (that is, ``import UniformTypeIdentifiers``).
 
-.. versionadded:: macOS 11
+.. macosadded:: 11
 
 API Notes
 ---------

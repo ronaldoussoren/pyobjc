@@ -1,0 +1,111 @@
+@import "shibuya.css";
+
+div.macosadded {
+  --color-1: var(--versionadded-1);
+  --color-2: var(--versionadded-2);
+  --icon-url: var(--versionadded-icon);
+}
+div.macoschanged {
+  --color-1: var(--versionchanged-1);
+  --color-2: var(--versionchanged-2);
+  --icon-url: var(--versionchanged-icon);
+}
+div.macosdeprecated {
+  --color-1: var(--deprecated-1);
+  --color-2: var(--deprecated-2);
+  --icon-url: var(--deprecated-icon);
+}
+div.macosremoved {
+  --color-1: var(--versionremoved-1);
+  --color-2: var(--versionremoved-2);
+  --icon-url: var(--versionremoved-icon);
+}
+
+div.pythonadded {
+  --color-1: var(--versionadded-1);
+  --color-2: var(--versionadded-2);
+  --icon-url: var(--versionadded-icon);
+}
+div.pythonchanged {
+  --color-1: var(--versionchanged-1);
+  --color-2: var(--versionchanged-2);
+  --icon-url: var(--versionchanged-icon);
+}
+div.pythondeprecated {
+  --color-1: var(--deprecated-1);
+  --color-2: var(--deprecate-2);
+  --icon-url: var(--deprecated-icon);
+}
+div.pythonremoved {
+  --color-1: var(--versionremoved-1);
+  --color-2: var(--versionremoved-2);
+  --icon-url: var(--versionremoved-icon);
+}
+
+div.macosadded > p,
+div.macoschanged > p,
+div.macosdeprecated > p,
+div.macosremoved > p,
+div.pythonadded > p,
+div.pythonchanged > p,
+div.pythondeprecated > p,
+div.pythonremoved > p {
+  margin: 0;
+}
+
+div.macosadded,
+div.macoschanged,
+div.macosdeprecated,
+div.macosremoved,
+div.pythonadded,
+div.pythonchanged,
+div.pythondeprecated,
+div.pythonremoved {
+  position: relative;
+  padding: 6px 1rem;
+  margin: 1rem 0;
+  border-left: 4px solid var(--color-2);
+  background-color: var(--color-1);
+  line-height: 1.72;
+}
+
+div.macosadded:before,
+div.macoschanged:before,
+div.macosdeprecated:before,
+div.macosremoved:before,
+div.pythonadded:before,
+div.pythonchanged:before,
+div.pythondeprecated:before,
+div.pythonremoved:before {
+  position: absolute;
+  content: '';
+  top: 10px;
+  left: -12px;
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: var(--color-2);
+  text-align: center;
+  font: normal bold 14px/20px var(--sy-f-mono);
+}
+
+div.macosadded:after,
+div.macoschanged:after,
+div.macosdeprecated:after,
+div.macosremoved:after,
+div.pythonadded:after,
+div.pythonchanged:after,
+div.pythondeprecated:after,
+div.pythonremoved:after {
+  position: absolute;
+  content: '';
+  top: 14px;
+  left: -8px;
+  mask: var(--icon-url) no-repeat;
+  mask-size: 100% 100%;
+  font-style: normal;
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+}

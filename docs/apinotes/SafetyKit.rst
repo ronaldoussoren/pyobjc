@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``SafetyKit`` package (that is, ``import SafetyKit``).
 
-.. versionadded:: macOS 13
+.. macosadded:: 13
 
 API Notes
 ---------

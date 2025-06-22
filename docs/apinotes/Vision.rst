@@ -15,7 +15,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``Vision`` package (that is, ``import Vision``).
 
-.. versionadded:: macOS 10.13
+.. macosadded:: 10.13
 
 API Notes
 ---------

@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``LocalAuthenticationEmbeddedUI`` package (that is, ``import LocalAuthenticationEmbeddedUI``).
 
-.. versionadded:: macOS 12
+.. macosadded:: 12
 
 API Notes
 ---------

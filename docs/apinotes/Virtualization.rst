@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``Virtualization`` package (that is, ``import Virtualization``).
 
-.. versionadded:: macOS 11 (but only for Apple Silicon)
+.. macosadded:: 11
 
 API Notes
 ---------
