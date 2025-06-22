@@ -19,3 +19,5 @@ These bindings are accessed through the ``SensitiveContentAnalysis`` package (th
 
 API Notes
 ---------
+
+* Using this framework requires the app to have the `com.apple.developer.sensitivecontentanalysis.client <https://developer.apple.com/documentation/BundleResources/Entitlements/com.apple.developer.sensitivecontentanalysis.client?language=objc>`_ entitlement.
