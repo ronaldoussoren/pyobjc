@@ -10,6 +10,8 @@ import warnings
 
 import objc
 from PyObjCTools.TestSupport import TestCase, pyobjc_options
+from .arrays import OC_ArrayTest
+from .objectint import OC_ObjectInt
 
 from .testbndl import (
     CHAR_MAX,
@@ -36,6 +38,21 @@ from .testbndl import (
     USHRT_MAX,
     carrayMaker,
     pyObjCPy,
+)
+
+
+objc.registerMetaDataForSelector(
+    b"OC_ArrayTest",
+    b"uniarrayOf12",
+    {"retval": {"c_array_of_fixed_length": 12, "type": objc._C_PTR + objc._C_UNICHAR}},
+)
+objc.registerMetaDataForSelector(
+    b"OC_ArrayTest",
+    b"baduniarrayOf12",
+    {"retval": {"c_array_of_fixed_length": 12, "type": objc._C_PTR + objc._C_UNICHAR}},
+)
+objc.registerMetaDataForSelector(
+    b"OC_ObjectInt", b"unpythonicObjects", {"retval": {"c_array_of_fixed_length": 4}}
 )
 
 
@@ -673,6 +690,18 @@ class TestCArray(TestCase):
 
         with self.assertRaisesRegex(
             ValueError,
+            r"type mismatch between array.array of f and and C array of \[2\[2<2f",
+        ):
+            carrayMaker(b"[2[2<2f>]]", arr, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of {Point=<2f",
+        ):
+            carrayMaker(b"{Point=<2f>}", arr, None)
+
+        with self.assertRaisesRegex(
+            ValueError,
             r"type mismatch between array.array of f and and C array of \[2f",
         ):
             carrayMaker(b"[2f", arr, None)
@@ -900,6 +929,30 @@ class TestCArray(TestCase):
             "type mismatch between array.array of f and and C array of {M=fi{S=f#}}",
         ):
             carrayMaker(b"{M=fi{S=f#}}", arr, None)
+
+    def test_bool_array(self):
+        a = array.array("B", [1, 2, 3, 4, 5, 6])
+        v = carrayMaker(b"[2" + objc._C_UCHR + b"]", a, None)
+        self.assertEqual(v, ((1, 2), (3, 4), (5, 6)))
+
+        v = carrayMaker(b"[2" + objc._C_CHAR_AS_TEXT + b"]", a, None)
+        self.assertEqual(
+            v, ((b"\x01", b"\x02"), (b"\x03", b"\x04"), (b"\x05", b"\x06"))
+        )
+
+        v = carrayMaker(objc._C_CHAR_AS_INT, a, None)
+        self.assertEqual(v, (1, 2, 3, 4, 5, 6))
+
+    def test_unichararray(self):
+        result = OC_ArrayTest.uniarrayOf12()
+        self.assertEqual(result, "hello, world")
+
+        with self.assertRaisesRegex(UnicodeDecodeError, "illegal UTF-16 surrogate"):
+            OC_ArrayTest.baduniarrayOf12()
+
+    def test_invalidobjects(self):
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_ObjectInt.new().unpythonicObjects()
 
 
 class PyOCTestTypeStr(TestCase):

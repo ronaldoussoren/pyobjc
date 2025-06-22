@@ -1,4 +1,4 @@
-#!/usr/bin/env python3 -B
+#!/usr/bin/env python3.12 -B
 """
 Script for collecting distribution archives needed for doing a release.
 
@@ -29,16 +29,16 @@ from _common_definitions import (
 WHEEL_BUILD_FAILURE_IS_ERROR = True
 
 
-def files_matching(pattern, dirname):
+def files_matching(pattern: str, dirname: str) -> list[str]:
     result = set(fnmatch.filter(os.listdir(dirname), pattern))
     result.update(fnmatch.filter(os.listdir(dirname), pattern.lower()))
     return sorted(result)
 
 
-_latest_version = None
+_latest_version: str | None = None
 
 
-def latest_version():
+def latest_version() -> str:
     global _latest_version
     if _latest_version is not None:
         return _latest_version
@@ -52,7 +52,7 @@ def latest_version():
     raise RuntimeError("Cannot find latest version")
 
 
-def has_extensions(source_root):
+def has_extensions(source_root: str) -> bool:
     """
     Return True if the project at ``source_root`` has
     a C extension
@@ -63,7 +63,7 @@ def has_extensions(source_root):
     return False
 
 
-def uses_limited_api(source_root):
+def uses_limited_api(source_root: str) -> bool:
     """
     Return True if the project at ``source_root``
     uses the limited API/stable ABI
@@ -78,7 +78,7 @@ def uses_limited_api(source_root):
     return False
 
 
-def main():
+def main() -> None:
     if os.path.exists(DIST_DIR):
         shutil.rmtree(DIST_DIR)
     os.mkdir(DIST_DIR)

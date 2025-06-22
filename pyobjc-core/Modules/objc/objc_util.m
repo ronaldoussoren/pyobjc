@@ -293,7 +293,7 @@ PyObjCErr_FromObjC(NSObject* localException)
                     } // LCOV_EXCL_LINE
 
                     temp = [userInfo objectForKey:@"__pyobjc_exc_value__"];
-                    if (temp != nil) {
+                    if (temp != nil) { // LCOV_BR_EXCL_LINE
                         exc_value     = id_to_python(temp);
                         if (exc_value == NULL) { // LCOV_BR_EXCL_LINE
                             // LCOV_EXCL_START
@@ -497,15 +497,13 @@ static NSException* _Nullable python_exception_to_objc(void)
         }
     }
 
-    repr     = PyObject_Str(exc_value);
-    typerepr = PyObject_Str(exc_type);
     userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
 
     /* XXX: For recent enough versions of Python we don't need to store all three */
     [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_type] autorelease]
                  forKey:@"__pyobjc_exc_type__"];
 
-    if (exc_value != NULL) {
+    if (exc_value != NULL) { // LCOV_BR_EXCL_LINE
         [userInfo
             setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_value] autorelease]
                forKey:@"__pyobjc_exc_value__"];
@@ -520,13 +518,16 @@ static NSException* _Nullable python_exception_to_objc(void)
     NSObject* oc_typerepr = nil;
     NSObject* oc_repr     = nil;
 
-    if (typerepr) {
+    typerepr = PyObject_Str(exc_type);
+    if (typerepr) { // LCOV_BR_EXCL_LINE
         if (depythonify_python_object(typerepr, &oc_typerepr) == -1) { // LCOV_BR_EXCL_LINE
             /* Ignore errors in conversion */
             PyErr_Clear(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
     }
-    if (repr) {
+
+    repr     = PyObject_Str(exc_value);
+    if (repr) { // LCOV_BR_EXCL_LINE
         if (depythonify_python_object(repr, &oc_repr) == -1) { // LCOV_BR_EXCL_LINE
             /* Ignore errors in conversion */
             PyErr_Clear(); // LCOV_EXCL_LINE

@@ -62,6 +62,13 @@ class TestNSDecimalWrapper(TestCase):
         ):
             objc.NSDecimal(500, -6, True, False)
 
+        class NotBool:
+            def __bool__(self):
+                raise RuntimeError("no bool")
+
+        with self.assertRaisesRegex(RuntimeError, "no bool"):
+            objc.NSDecimal(500, -6, NotBool())
+
         with self.assertRaisesRegex(
             TypeError, "cannot convert instance of NSObject to NSDecimal"
         ):

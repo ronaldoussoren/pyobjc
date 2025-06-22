@@ -45,7 +45,6 @@ extern PyObjCMethodSignature* _Nullable  PyObjCObject_SetBlockSignature(PyObject
 #define PyObjCObject_FLAGS(object) (((PyObjCObject*)(object))->flags)
 #define PyObjCObject_OBJECT(object) (((PyObjCObject*)(object))->objc_object)
 
-extern PyObject* _Nullable PyObjCObject_GetAttr(PyObject* object, PyObject* key);
 extern PyObject* _Nullable PyObjCObject_GetAttrString(PyObject* object, char* key);
 extern PyObject* _Nullable PyObjCObject_NewTransient(id objc_object, int* cookie);
 extern void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie);

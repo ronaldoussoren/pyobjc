@@ -45,6 +45,8 @@ PyObjC_class_addMethodList(Class cls, struct PyObjC_method* list, unsigned int c
          * because the method already exists in the class.
          * Strictly speaking this isn't correct, but this is the best
          * we can do through the 2.0 API (see 4809039 in RADAR)
+         *
+         * XXX: Use class_replaceMethod instead
          */
         r = class_addMethod(cls, list[i].name, list[i].imp, list[i].type);
         if (!r) {

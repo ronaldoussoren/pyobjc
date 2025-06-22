@@ -214,7 +214,7 @@ NS_ASSUME_NONNULL_BEGIN
     return (PyObject*)PyObjCUnicode_New(self);
 }
 
-// LOV_EXCL_START
+// LCOV_EXCL_START
 // The NSString class cluster cannot be subclassed in Python.
 //
 // Doing this would currently cause crashes that are hard
@@ -224,7 +224,7 @@ NS_ASSUME_NONNULL_BEGIN
     *cookie = 0;
     return (PyObject*)PyObjCUnicode_New(self);
 }
-// LOV_EXCL_STOP
+// LCOV_EXCL_STOP
 
 @end /* NSString (PyObjCSupport) */
 
@@ -283,11 +283,16 @@ NS_ASSUME_NONNULL_BEGIN
     return rval;
 }
 
+// LCOV_EXCL_START
+// The NSecimal class cannot be subclassed in Python.
+//
+// Doing this runs into platform bugs on macOS 13 and later.
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     return [self __pyobjc_PythonObject__];
 }
+// LCOV_EXCL_STOP
 @end
 
 #ifdef MAX

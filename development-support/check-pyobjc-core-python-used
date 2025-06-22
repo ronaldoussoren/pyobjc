@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.12
 """
 Pre-commit hook to check that all CPython APIs used
 by pyobjc-core are in its 'python-api-used.h' header
@@ -6,8 +6,8 @@ by pyobjc-core are in its 'python-api-used.h' header
 """
 import pathlib
 import re
-import os
 import sys
+import typing
 
 PY_NAME = re.compile(r"[^_A-Za-z0-9](Py[A-Za-z0-9_]*)[()]")
 
@@ -38,7 +38,7 @@ IGNORE_NAMES = {
 }
 
 
-def _process_file(stream, symbols):
+def _process_file(stream: typing.TextIO, symbols: typing.Set[str]) -> None:
     for line in stream:
         for nm in PY_NAME.findall(line):
             if nm.partition("_")[2].isupper():
@@ -71,11 +71,11 @@ def _process_file(stream, symbols):
             symbols.add(nm)
 
 
-def _get_py_symbols(source_root):
-    api_used = set()
-    symbols = set()
-    for dirpath, dirs, files in os.walk(source_root):
-        dirpath = pathlib.Path(dirpath)
+def _get_py_symbols(source_root: pathlib.Path) -> typing.Tuple[typing.Set[str], typing.Set[str]]:
+    api_used : typing.Set[str] = set()
+    symbols : typing.Set[str] = set()
+
+    for dirpath, dirs, files in source_root.walk():
         if "test" in dirs:
             dirs.remove("test")
         for fn in files:
@@ -91,7 +91,7 @@ def _get_py_symbols(source_root):
     return symbols, api_used
 
 
-def test_api_used():
+def test_api_used() -> None:
     symbols, api_used = _get_py_symbols(
         pathlib.Path(__file__).resolve().parent.parent / "pyobjc-core" / "Modules"
     )

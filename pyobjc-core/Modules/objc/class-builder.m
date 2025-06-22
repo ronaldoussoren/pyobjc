@@ -1113,7 +1113,7 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
             }
             PyGILState_Release(state);
         } else {
-            @throw;
+            @throw; // LCOV_EXCL_LINE
         }
     }
 }
@@ -1153,11 +1153,13 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
 
             PyGILState_STATE state = PyGILState_Ensure();
             PyObject*        val   = id_to_python(value);
-            if (val == NULL) {
+            if (val == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_Clear();
                 PyGILState_Release(state);
 
                 @throw;
+                // LCOV_EXCL_STOP
             }
             PyObject* res     = NULL;
             PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
@@ -1170,7 +1172,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
                     if (r != -1) {
                         break;
                     }
-                }
+                } // LCOV_EXCL_LINE
                 PyErr_Clear();
                 rawkey = (char*)[key UTF8String];
                 r      = PyObject_SetAttrString(selfObj, rawkey, val);

@@ -216,6 +216,36 @@ Version 12.0a0
     ``WebDownloadDelegate``, ``WebResourceLoadDelegate``, ``WebFrameLoadDelegate``,
     and ``WebJavaPlugIn``.
 
+Version 11.1.1
+--------------
+
+The focus of this release is increasing test coverage and fixing issues
+found while doing this.
+
+* Fix a number of edge cases in handling of both calling and implementing
+  ``NSCoder`` methods. Issues found while increasing test coverage.
+
+* Fix error handling for a possible ``NULL`` result from ``objc_copyClassList()``
+  (should not happen in practice, but the API is annotated as nullable).
+
+* Fix race condition in recalculating the internal ``sel_methinfo`` of
+  selector objects.
+
+* ``NSCoder.encodeBytes_length_forKey_`` now accepts three arguments (
+  matching PyObjC's regular pattern for binding Objective-C APIs). The older
+  interface still works, but is deprecated and will be removed in PyObjC 13.
+
+* Implementing the same method now requires following the PyObjC convention,
+  that is the implementation must have 3 arguments.
+
+* Drop some code paths from pyobjc-core's extension module that supported
+  Python 3.8.
+
+* Fix some error messages in incorrect invocations of ``objc.function``
+  instances.
+
+* Fix crash when a callable returns a C function with a signature that's not
+  compatible with libffi (such as a function using a SIMD argument or return type).
 
 Version 11.1
 ------------
@@ -383,6 +413,9 @@ how reference counts are handled by ``-init`` methods.
 
   This is needed because this library is deprecated in setuptools and will
   be removed.
+
+* :issue:`651`: Fix build issue on macOS 10.12 by changing the invocation
+  of sw_vers(1).
 
 Version 11.0
 ------------

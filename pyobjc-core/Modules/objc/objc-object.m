@@ -1372,12 +1372,6 @@ PyObjCMethodSignature* _Nullable PyObjCObject_SetBlockSignature(PyObject* object
 }
 
 
-
-PyObject* _Nullable PyObjCObject_GetAttr(PyObject* obj, PyObject* name)
-{
-    return object_getattro(obj, name);
-}
-
 PyObject* _Nullable PyObjCObject_GetAttrString(PyObject* obj, char* name)
 {
     PyObject* pyname = PyUnicode_FromString(name);

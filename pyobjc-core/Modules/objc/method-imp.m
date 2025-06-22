@@ -9,9 +9,7 @@ typedef struct {
     PyObjCMethodSignature* signature;
     SEL                    selector;
     int                    flags;
-#if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc vectorcall;
-#endif
     ffi_cif* _Nullable cif;
 } PyObjCIMPObject;
 
@@ -112,7 +110,6 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
     return self->callfunc((PyObject*)self, pyself, args + 1, nargsf - 1);
 }
 
-#if PY_VERSION_HEX >= 0x03090000
 static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
                                                  PyObject* const* _Nullable args,
                                                  size_t nargsf,
@@ -145,19 +142,6 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
 
     return PyObjCFFI_Caller_Simple(_self, pyself, args + 1, nargsf - 1);
 }
-#endif
-
-#if PY_VERSION_HEX < 0x03090000
-static PyObject* _Nullable imp_call(PyObject* _self, PyObject* _Nullable args,
-                                    PyObject* _Nullable kwds)
-{
-    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
-        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
-        return NULL;
-    }
-    return imp_vectorcall(_self, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
-}
-#endif
 
 static PyObject* _Nullable imp_repr(PyObject* _self)
 {
@@ -297,7 +281,6 @@ static PyMethodDef imp_methods[] = {{
                                         .ml_name = NULL /* SENTINEL */
                                     }};
 
-#if PY_VERSION_HEX >= 0x03090000
 static PyMemberDef imp_members[] = {{
                                         .name   = "__vectorcalloffset__",
                                         .type   = T_PYSSIZET,
@@ -308,7 +291,6 @@ static PyMemberDef imp_members[] = {{
                                         .name = NULL /* SENTINEL */
                                     }};
 
-#endif
 
 static PyType_Slot imp_slots[] = {
     {.slot = Py_tp_repr, .pfunc = (void*)&imp_repr},
@@ -316,12 +298,9 @@ static PyType_Slot imp_slots[] = {
     {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
     {.slot = Py_tp_getset, .pfunc = (void*)&imp_getset},
     {.slot = Py_tp_methods, .pfunc = (void*)&imp_methods},
-#if PY_VERSION_HEX >= 0x03090000
     {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
     {.slot = Py_tp_members, .pfunc = (void*)&imp_members},
-#else
-    {.slot = Py_tp_call, .pfunc = (void*)&imp_call},
-#endif
+
 #if PY_VERSION_HEX < 0x030a0000
     {.slot = Py_tp_new, .pfunc = (void*)&imp_new},
 #endif
@@ -336,10 +315,8 @@ static PyType_Spec imp_spec = {
 #if PY_VERSION_HEX >= 0x030a0000
     .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION | Py_TPFLAGS_HAVE_VECTORCALL,
-#elif PY_VERSION_HEX >= 0x03090000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
 #else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
 #endif
     .slots = imp_slots,
 };
@@ -367,14 +344,12 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
 
     result->flags = flags;
 
-#if PY_VERSION_HEX >= 0x03090000
     if (signature && signature->shortcut_signature && (callfunc == PyObjCFFI_Caller)) { // LCOV_BR_EXCL_LINE
         assert(signature->shortcut_signature);
         result->vectorcall = imp_vectorcall_simple;
     } else {
         result->vectorcall = imp_vectorcall;
     }
-#endif
     return (PyObject*)result;
 }
 

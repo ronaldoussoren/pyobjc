@@ -289,5 +289,4 @@ def sort_framework_wrappers() -> list[str]:
         for dep in requires:
             partial_order.append((dep, subdir))
 
-    frameworks = topological_sort(frameworks, partial_order)
-    return frameworks
+    return topological_sort(frameworks, partial_order)

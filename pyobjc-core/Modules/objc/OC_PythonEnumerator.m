@@ -47,17 +47,13 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
 
-        Py_BEGIN_CRITICAL_SECTION(value);
-
         PyObject* object = PyIter_Next(value);
         if (object == NULL) {
             if (!PyErr_Occurred()) {
                 valid = NO;
                 PyErr_Clear();
-                Py_EXIT_CRITICAL_SECTION();
                 PyObjC_GIL_RETURN(nil);
             } else { // LCOV_EXCL_LINE
-                Py_EXIT_CRITICAL_SECTION();
                 PyObjC_GIL_FORWARD_EXC();
             }
         } // LCOV_EXCL_LINE
@@ -66,13 +62,10 @@ NS_ASSUME_NONNULL_BEGIN
             result = NSNull_null;
         } else {
             if (depythonify_python_object(object, &result) == -1) {
-                Py_EXIT_CRITICAL_SECTION();
                 PyObjC_GIL_FORWARD_EXC();
             } // LCOV_EXCL_LINE
         }
         Py_DECREF(object);
-
-        Py_END_CRITICAL_SECTION();
 
     PyObjC_END_WITH_GIL
 

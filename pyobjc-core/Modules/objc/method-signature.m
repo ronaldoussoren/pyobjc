@@ -227,11 +227,6 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     methinfo->shortcut_argbuf_size = 0;
     methinfo->shortcut_result_size = 0;
 
-#if PY_VERSION_HEX < 0x03090000
-    /* Shortcut not used in older python versions */
-    return 0;
-
-#else /*  PY_VERSION_HEX >= 0x03090000 */
     Py_ssize_t byref_in_count = 0, byref_out_count = 0, plain_count = 0, argbuf_len = 0;
     BOOL       variadic_args = NO;
 
@@ -312,7 +307,6 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     methinfo->shortcut_argbuf_size = (unsigned int)argbuf_len;
     methinfo->shortcut_result_size = (unsigned int)result_size;
     return 0;
-#endif /* PY_VERSION_HEX >= 0x03090000 */
 }
 
 static struct _PyObjC_ArgDescr* _Nullable alloc_descr(

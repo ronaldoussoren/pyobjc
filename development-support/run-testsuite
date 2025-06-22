@@ -48,6 +48,7 @@ HTML_PREFIX = textwrap.dedent(
           .fails:before { content:" Fails: "}
           .fails:after { content:" "}
           .crash { background-color: red; color: white; border-radius: 5px }
+          .skip { background-color: light-green; color: white; border-radius: 5px }
           .ok { background-color: green; color: white; border-radius: 5px }
           .ok:before { content:" "}
           .ok:after { content:" "}
@@ -287,7 +288,10 @@ def test_summary(fp_out, state_dir):
             with open(os.path.join(sd, fn)) as fp:
                 results[proj][nm] = json.load(fp)
 
-    keys = tuple(sorted(results[next(iter(results))].keys()))
+    keys = set()
+    for v in results.values():
+        keys.update(v.keys())
+    keys = tuple(sorted(keys))
     width = max(len(x) for x in keys)
 
     maxlen = max(len(s) for s in results)
@@ -306,7 +310,11 @@ def test_summary(fp_out, state_dir):
         # ignore errors w.r.t. reporting if there were problems in the test run.
         row = [proj]
         for k in keys:
-            info = results[proj][k]
+            if k not in results[proj]:
+                row.append("skip")
+                continue
+            else:
+                info = results[proj][k]
             if info.get("errors"):
                 row.append(f"E:{info['errors']}")
             elif info.get("fails"):
@@ -377,7 +385,10 @@ def test_summary_html(fp_out, state_dir):
             with open(os.path.join(sd, fn)) as fp:
                 results[proj][nm] = json.load(fp)
 
-    keys = tuple(sorted(results[next(iter(results))].keys()))
+    keys = set()
+    for v in results.values():
+        keys.update(v.keys())
+    keys = tuple(sorted(keys))
 
     print("  <h1>Test Results</h1>", file=fp_out)
     print("  <table>", file=fp_out)
@@ -393,7 +404,14 @@ def test_summary_html(fp_out, state_dir):
         print("    <tr>", file=fp_out)
         print(f"      <td>{proj}</td>", file=fp_out)
         for k in keys:
-            info = results[proj][k]
+            if k not in results[proj]:
+                print(
+                    "      <td><span class=\"skip\"></span></td>",
+                    file=fp_out,
+                )
+                continue
+            else:
+                info = results[proj][k]
             errors = info.get("errors", 0)
             fails = info.get("fails", 0)
             oks = info.get("count", 0)
@@ -424,8 +442,6 @@ def test_summary_html(fp_out, state_dir):
 
 
 def system_supports_arch(interpreter, arch):
-    assert supports_arch(interpreter, arch)
-
     try:
         subprocess.check_output(["/usr/bin/arch", f"-{arch}", interpreter, "-c", ""])
     except subprocess.CalledProcessError:

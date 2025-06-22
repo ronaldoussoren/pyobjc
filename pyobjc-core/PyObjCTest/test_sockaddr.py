@@ -2,7 +2,7 @@ import objc
 import socket
 import os
 from PyObjCTest.sockaddr import PyObjCTestSockAddr
-from PyObjCTools.TestSupport import TestCase, skipUnless
+from PyObjCTools.TestSupport import TestCase, skipUnless, pyobjc_options
 
 FUNCTION_LIST = [
     (
@@ -65,6 +65,22 @@ objc.registerMetaDataForSelector(
 
 
 class TestSockAddrSupport(TestCase):
+    def test_bad_option(self):
+        o = PyObjCTestSockAddr
+        with pyobjc_options(_socket_error=None):
+            with self.assertRaises(SystemError):
+                o.sockAddrToValue_(("<broadcast>", 99, 0))
+
+        with pyobjc_options(_socket_gaierror=None):
+            with self.assertRaises(SystemError):
+                o.sockAddrToValue_(("nosuchhost.python.org", 99))
+
+        with self.assertRaisesRegex(AttributeError, "Cannot delete option"):
+            del objc.options._socket_error
+
+        with self.assertRaisesRegex(AttributeError, "Cannot delete option"):
+            del objc.options._socket_gaierror
+
     def testToObjC(self):
         o = PyObjCTestSockAddr
 

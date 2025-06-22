@@ -128,6 +128,8 @@ extern PyTypeObject StructBase_Type;
 
 extern int PyObjCStruct_Init(PyObject* module);
 
+extern int PyObjC_DropRegisteredStruct(PyObject* key);
+
 NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_STRUCT_MEMBER */

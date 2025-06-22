@@ -10,6 +10,7 @@ from PyObjCTest.testbndl import PyObjC_TestClass3
 from PyObjCTools.TestSupport import TestCase, pyobjc_options
 from .objectint import OC_ObjectInt
 from objc import super  # noqa: A004
+from .copying import OC_CopyBase
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
@@ -246,6 +247,20 @@ class TestCopying(TestCase):
 
         self.assertIsInstance(c, MyCopyClass)
         self.assertEqual(c.foobar, 2)
+
+    def test_copy_with_slots(self):
+        class OC_CopyWithSlots(OC_CopyBase):
+            __slots__ = ("a", "b")
+
+            def copyWithZone_(self, z):
+                return super().copyWithZone_(z)
+
+        value = OC_CopyWithSlots.alloc().init()
+        value.a = [1, 2]
+
+        copied = PyObjC_TestClass3.copyValue_(value)
+        self.assertIsInstance(copied, OC_CopyWithSlots)
+        self.assertIs(copied.a, value.a)
 
     def testMultipleInheritance1(self):
         # New-style class mixin
@@ -1113,6 +1128,31 @@ class TestSelectorEdgeCases(TestCase):
     #
     # Note: all these tests have two variant: one for the "simple" caller
     #       and one for the regular caller.
+
+    def test_kwonly(self):
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "has 1 keyword-only arguments without a default"
+        ):
+
+            class OC_KwOnlyClass1(NSObject):
+                def method(self, *, kwonly):
+                    pass
+
+        class OC_KwOnlyClass2(NSObject):
+            def method(self, *, kwonly=4):
+                return kwonly
+
+        o = OC_KwOnlyClass2.alloc().init()
+        self.assertEqual(o.method(), 4)
+
+    def test_mismatch_with_defaults(self):
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "has between 1 and 2 positional arguments"
+        ):
+
+            class OC_MismatchWithDefaults(NSObject):
+                def method_x_y_z_(self, a, b=3):
+                    pass
 
     def test_no_keywords(self):
         with self.assertRaisesRegex(

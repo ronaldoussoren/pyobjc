@@ -9,45 +9,46 @@ import functools
 import platform
 import traceback
 import sys
+import typing
 
 # Reconfigure stdout/stderr to be line buffered,
 # that # makes it easier to redirect output to a
 # file, # including stderr.
 try:
-    sys.stdout.reconfigure(line_buffering=True)
-    sys.stderr.reconfigure(line_buffering=True)
+    sys.stdout.reconfigure(line_buffering=True)  # type: ignore
+    sys.stderr.reconfigure(line_buffering=True)  # type: ignore
 except AttributeError:
     pass
 
 
 @functools.total_ordering
 class MacVersion:
-    def __init__(self, version_string):
+    def __init__(self, version_string: str) -> None:
         self.version_string = version_string
         self.version_tuple = tuple(int(x) for x in version_string.split("."))
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, MacVersion):
             return False
 
         return self.version_tuple == other.version_tuple
 
-    def __lt__(self, other):
+    def __lt__(self, other: object) -> bool:
         if not isinstance(other, MacVersion):
             raise TypeError
 
         return self.version_tuple < other.version_tuple
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"<MacVersion {self.version_tuple}>"
 
 
 sys_version = MacVersion(platform.mac_ver()[0])
 
 
-def flatten_list(list_value, setup_ast):
+def flatten_list(list_value: str, setup_ast: ast.AST) -> list[str]:
     if isinstance(list_value, ast.List):
-        return [node.value for node in list_value.elts]
+        return [node.value for node in list_value.elts]  # type: ignore
 
     elif isinstance(list_value, ast.BinOp):
         assert isinstance(list_value.left, ast.List)
@@ -57,13 +58,15 @@ def flatten_list(list_value, setup_ast):
         # In pyobjc the right is always "subpackages" and
         # "from main import *" will also import all symbols
         # in the subpackage.
-        return [node.value for node in list_value.left.elts]
+        return [node.value for node in list_value.left.elts]  # type: ignore
 
     else:
         raise RuntimeError("Don't know how to handle {ast.dump(list_value)}")
 
 
-def get_info(project):
+def get_info(
+    project: str,
+) -> typing.Tuple[typing.Optional[str], typing.Optional[str], list[str]]:
     setup_py = os.path.join(TOP_DIR, project, "setup.py")
 
     with open(setup_py) as stream:
@@ -75,28 +78,30 @@ def get_info(project):
 
     assert isinstance(node, ast.Expr)
     assert isinstance(node.value, ast.Call)
-    assert node.value.func.id == "setup"
+    assert node.value.func.id == "setup"  # type: ignore
 
-    min_os_level = None
-    max_os_level = None
-    packages = []
-    modules = []
+    min_os_level: typing.Optional[str] = None
+    max_os_level: typing.Optional[str] = None
+    packages: typing.List[str] = []
+    modules: typing.List[str] = []
 
     for keyword in node.value.keywords:
         if keyword.arg == "min_os_level":
-            min_os_level = keyword.value.value
+            min_os_level: str = keyword.value.value  # type: ignore
         elif keyword.arg == "max_os_level":
-            max_os_level = keyword.value.value
+            max_os_level: str = keyword.value.value  # type: ignore
         elif keyword.arg == "packages":
+            assert isinstance(keyword.value, str)
             packages = flatten_list(keyword.value, setup_ast)
 
         elif keyword.arg == "modules":
+            assert isinstance(keyword.value, str)
             modules = flatten_list(keyword.value, setup_ast)
 
     return min_os_level, max_os_level, packages + modules
 
 
-def main():
+def main() -> None:
     for project in sort_framework_wrappers():
         print(f"Checking '{project}'")
         min_os_level, max_os_level, to_import = get_info(project)
@@ -133,7 +138,7 @@ def main():
 
         print()
 
-    import PyObjCTools
+    import PyObjCTools  # type: ignore
 
     print("Checking namespace package PyObjCTools")
     for dname in PyObjCTools.__path__:

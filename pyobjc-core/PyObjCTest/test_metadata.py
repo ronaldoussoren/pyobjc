@@ -15,7 +15,7 @@ import sys
 
 import objc
 from PyObjCTest.metadata import OC_MetaDataTest
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, expectedFailureIf
 from .fnd import NSArray, NSString, NSPredicate, NSObject
 from PyObjCTest.classes import OCTestClasses
 from objc import super  # noqa: A004
@@ -1122,6 +1122,8 @@ class TestArraysIn(TestCase):
         v = o.make4Tuple_(a)
         self.assertEqual(list(v), [2.5, 3.5, 4.5, 5.5])
 
+    @expectedFailureIf(objc.arch == "x86_64")
+    def testFixedSizeSubclass(self):
         class OC_MetaDataTestArrayArg(OC_MetaDataTest):
             def make8Tuple_(self, a):
                 return [a]

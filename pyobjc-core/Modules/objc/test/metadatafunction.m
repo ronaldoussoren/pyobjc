@@ -397,6 +397,25 @@ makeArrayWithFormat_(NSString* fmt, ...)
     return [NSArray arrayWithObjects:fmt, [NSString stringWithUTF8String:buffer], NULL];
 }
 
+static NSArray* __attribute__((__format__(__NSString__, 2, 3)))
+makeCountArrayWithFormat_(size_t* count, NSString* fmt, ...)
+{
+    va_list ap;
+    char    buffer[2048];
+
+    va_start(ap, fmt);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
+    vsnprintf(buffer, sizeof(buffer), [fmt UTF8String], ap);
+#pragma clang diagnostic pop
+    va_end(ap);
+
+    NSArray* result =  [NSArray arrayWithObjects:fmt, [NSString stringWithUTF8String:buffer], NULL];
+    *count = (size_t)[result count];
+    return result;
+}
+
 #pragma GCC diagnostic   push
 #pragma clang diagnostic push
 #pragma GCC diagnostic   ignored "-Wformat-nonliteral"
@@ -425,6 +444,46 @@ makeArrayWithCFormat_(char* fmt, ...)
 
 #pragma GCC diagnostic   pop
 #pragma clang diagnostic pop
+
+static NSArray* _Nullable makeCountArrayWithObjects_(size_t* count, ...)
+{
+    NSMutableArray* result = [NSMutableArray array];
+    va_list   ap;
+    id item;
+
+    va_start(ap, count);
+
+    item = va_arg(ap, id);
+    while (item != nil) {
+        [result addObject:item];
+        item = va_arg(ap, id);
+    }
+    va_end(ap);
+    *count = [result count];
+    return  result;
+}
+
+static NSArray* _Nullable makeArrayWithObjects_(id first, ...)
+{
+    NSMutableArray* result = [NSMutableArray array];
+    va_list   ap;
+    id item;
+
+    if (first != nil) {
+        [result addObject:first];
+    }
+
+    va_start(ap, first);
+
+    item = va_arg(ap, id);
+    while (item != nil) {
+        [result addObject:item];
+        item = va_arg(ap, id);
+    }
+    va_end(ap);
+    return  result;
+}
+
 
 static int
 maybeFillArray_(int* data)
@@ -557,6 +616,7 @@ static struct function {
                     {"reverseArray_uptoCount_", (F)reverseArray_uptoCount_},
                     {"maybeReverseArray_", (F)maybeReverseArray_},
                     {"makeArrayWithFormat_", (F)makeArrayWithFormat_},
+                    {"makeCountArrayWithFormat_", (F)makeCountArrayWithFormat_},
                     {"makeArrayWithCFormat_", (F)makeArrayWithCFormat_},
                     {"maybeFillArray_", (F)maybeFillArray_},
                     {"getDoubleFunc", (F)getDoubleFunc},
@@ -570,6 +630,8 @@ static struct function {
                     {"returnUnionArray", (F)returnUnionArray},
                     {"returnPointerArray", (F)returnPointerArray},
                     {"return2ndPointerArray", (F)returnPointerArray},
+                    {"makeCountArrayWithObjects_", (F)makeCountArrayWithObjects_},
+                    {"makeArrayWithObjects_", (F)makeArrayWithObjects_},
 
                     {NULL, NULL}};
 

@@ -40,8 +40,8 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
             @try {
                 result = ((id(*)(Class, SEL))anIMP)(aClass, aSel);
 
-            } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
-                PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+            } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
                 result = nil;
             }
         Py_END_ALLOW_THREADS
@@ -62,8 +62,8 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
             @try {
                 result = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-            } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
-                PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+            } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
                 result = nil;
             }
         Py_END_ALLOW_THREADS
@@ -174,8 +174,8 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
             @try {
                 ((void (*)(id, SEL))anIMP)(anInstance, aSel); // LCOV_BR_EXCL_LINE
 
-            } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
-                PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+            } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
 
@@ -188,8 +188,8 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
             @try {
                 ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-            } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
-                PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+            } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
     }
@@ -199,13 +199,13 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
      * deallocated.
      */
     PyObjC_UnregisterPythonProxy(((PyObjCObject*)self)->objc_object, self);
-    if (!(((PyObjCObject*)self)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) {
-        [NSNull_null retain];
-    }
+    if (!(((PyObjCObject*)self)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) { // LCOV_BR_EXCL_LINE
+        [NSNull_null retain]; // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
     ((PyObjCObject*)self)->objc_object = NSNull_null;
 
-    if (unlikely(PyErr_Occurred())) {
-        return NULL;
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     Py_RETURN_NONE;
@@ -275,8 +275,8 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
             @try {
                 ((void (*)(id, SEL))anIMP)(anInstance, aSel);
 
-            } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
-                PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+            } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
 
@@ -289,8 +289,8 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
             @try {
                 ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-            } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
-                PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+            } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
     }
@@ -335,8 +335,8 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
         @try {
             retval = ((id(*)(id, SEL))anIMP)(anInstance, aSel);
 
-        } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
         // Py_END_ALLOW_THREADS
 
@@ -349,14 +349,14 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
         @try {
             retval = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-        } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
         // Py_END_ALLOW_THREADS
     }
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     return id_to_python(retval);

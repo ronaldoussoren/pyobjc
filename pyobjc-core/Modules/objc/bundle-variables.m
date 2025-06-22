@@ -18,9 +18,30 @@ static const char gCharPtr[] = { _C_CHARPTR, 0 };
 
 static CFBundleRef _Nullable CreateCFBundleFromNSBundle(NSBundle* bundle)
 {
+    CFBundleRef result = NULL;
+
+    Py_BEGIN_ALLOW_THREADS
     @autoreleasepool {
-        return CFBundleCreate(kCFAllocatorDefault, (CFURLRef)[bundle bundleURL]);
+        @try {
+            result = CFBundleCreate(kCFAllocatorDefault, (CFURLRef)[bundle bundleURL]);
+            // LCOV_EXCL_START
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            // LCOV_EXCL_STOP
+        }
     }
+    Py_END_ALLOW_THREADS
+
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        if (PyErr_Occurred()) {
+            return NULL;
+        }
+        PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+    return result;
 }
 
 PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)),
@@ -50,24 +71,9 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
         return NULL;
     }
 
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            cfBundle = CreateCFBundleFromNSBundle(bundle);
-
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
-            cfBundle = NULL;
-        }
-    Py_END_ALLOW_THREADS
-
-    if (cfBundle == NULL) {
-        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return NULL;
-        }
-        // LCOV_EXCL_START
-        PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
-        return NULL;
-        // LCOV_EXCL_STOP
+    cfBundle = CreateCFBundleFromNSBundle(bundle);
+    if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     if (![name isKindOfClass:[NSString class]]) {
@@ -141,24 +147,9 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
         return NULL;
     }
 
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            cfBundle = CreateCFBundleFromNSBundle(bundle);
-
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
-            cfBundle = NULL;
-        }
-    Py_END_ALLOW_THREADS
-
-    if (cfBundle == NULL) {
-        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return NULL;
-        }
-        // LCOV_EXCL_START
-        PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
-        return NULL;
-        // LCOV_EXCL_STOP
+    cfBundle = CreateCFBundleFromNSBundle(bundle);
+    if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     seq = PyObjCSequence_Tuple(variableInfo, "variableInfo not a sequence");
@@ -289,26 +280,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             PyErr_SetString(PyObjCExc_Error, "bundle argument is not an NSBundle");
             return NULL;
         }
-
-        Py_BEGIN_ALLOW_THREADS
-            @try {
-                cfBundle = CreateCFBundleFromNSBundle(bundle);
-
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
-                cfBundle = NULL;
-            }
-        Py_END_ALLOW_THREADS
-
-        if (cfBundle == NULL && PyErr_Occurred()) {
-            return NULL;
-        }
-
+        cfBundle = CreateCFBundleFromNSBundle(bundle);
         if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
-            return NULL;
-            // LCOV_EXCL_STOP
+            return NULL; // LCOV_EXCL_LINE
         }
     }
 

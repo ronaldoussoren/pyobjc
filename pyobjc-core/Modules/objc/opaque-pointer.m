@@ -155,16 +155,12 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
 static void
 opaque_dealloc(PyObject* self)
 {
-#if PY_VERSION_HEX >= 0x03090000
     PyTypeObject* tp = Py_TYPE(self);
-#endif
 
     PyObject_GC_UnTrack(self);
     PyObject_GC_Del(self);
 
-#if PY_VERSION_HEX >= 0x03090000
     Py_DECREF(tp);
-#endif /* PY_VERSION_HEX >= 0x03090000 */
 }
 
 static int
@@ -172,9 +168,7 @@ opaque_traverse(PyObject* self __attribute__((__unused__)),
                 visitproc visit __attribute__((__unused__)),
                 void*     arg __attribute__((__unused__)))
 {
-#if PY_VERSION_HEX >= 0x03090000
     Py_VISIT(Py_TYPE(self));
-#endif /* PY_VERSION_HEX >= 0x03090000 */
     return 0;
 }
 

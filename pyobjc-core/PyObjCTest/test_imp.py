@@ -10,6 +10,11 @@ NSMutableArray = objc.lookUpClass("NSMutableArray")
 NSArray = objc.lookUpClass("NSArray")
 
 
+class OC_InstanceMethod(NSObject):
+    def instanceMethod(self):
+        return 42
+
+
 class TestBasicIMP(TestCase):
     # Test the basic functionality of IMP's. Imp's are basically unbound
     # selectors if you look at the interface. The implementation refers to
@@ -242,3 +247,23 @@ class TestGettingIMPs(TestCase):
 
         with self.assertRaisesRegex(ValueError, "depythonifying 'SEL', got 'int'"):
             NSMutableArray.instanceMethodForSelector_(42)
+
+    def test_not_found(self):
+        o = NSMutableArray.alloc().init()
+        with self.assertRaisesRegex(AttributeError, "No selector doesnotexist"):
+            o.methodForSelector_(b"doesnotexist")
+
+        with self.assertRaisesRegex(AttributeError, "No selector doesnotexist"):
+            NSMutableArray.instanceMethodForSelector_(b"doesnotexist")
+
+    def test_python_selector(self):
+        o = OC_InstanceMethod.alloc().init()
+        with self.assertRaisesRegex(
+            TypeError, "Cannot locate Python representation of instanceMethod"
+        ):
+            o.methodForSelector_(b"instanceMethod")
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot locate Python representation of instanceMethod"
+        ):
+            OC_InstanceMethod.instanceMethodForSelector_(b"instanceMethod")

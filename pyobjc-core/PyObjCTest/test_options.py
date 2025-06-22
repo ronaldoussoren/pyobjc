@@ -1,12 +1,17 @@
 import objc
 import warnings
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 from .fnd import NSMutableArray
 from .objectint import OC_ObjectInt
 from .test_blocks import OCTestBlock
 import datetime
 import sys
 import io
+
+
+class NoBool:
+    def __bool__(self):
+        raise RuntimeError("no bool")
 
 
 class TestOptions(TestCase):
@@ -19,6 +24,9 @@ class TestOptions(TestCase):
 
             objc.options.verbose = ""
             self.assertIs(objc.options.verbose, False)
+
+            with self.assertRaisesRegex(RuntimeError, "no bool"):
+                objc.options.verbose = NoBool()
 
             with self.assertRaisesRegex(
                 AttributeError, "Cannot delete option 'verbose'"
@@ -64,6 +72,9 @@ class TestOptions(TestCase):
             objc.options.use_kvo = ""
             self.assertIs(objc.options.use_kvo, False)
 
+            with self.assertRaisesRegex(RuntimeError, "no bool"):
+                objc.options.use_kvo = NoBool()
+
             with self.assertRaisesRegex(
                 AttributeError, "Cannot delete option 'use_kvo'"
             ):
@@ -78,6 +89,9 @@ class TestOptions(TestCase):
         try:
             objc.options.unknown_pointer_raises = 1
             self.assertIs(objc.options.unknown_pointer_raises, True)
+
+            with self.assertRaisesRegex(RuntimeError, "no bool"):
+                objc.options.unknown_pointer_raises = NoBool()
 
             objc.options.unknown_pointer_raises = ""
             self.assertIs(objc.options.unknown_pointer_raises, False)
@@ -100,6 +114,9 @@ class TestOptions(TestCase):
             objc.options.structs_indexable = ""
             self.assertIs(objc.options.structs_indexable, False)
 
+            with self.assertRaisesRegex(RuntimeError, "no bool"):
+                objc.options.structs_indexable = NoBool()
+
             with self.assertRaisesRegex(
                 AttributeError, "Cannot delete option 'structs_indexable'"
             ):
@@ -117,6 +134,9 @@ class TestOptions(TestCase):
 
             objc.options.structs_writable = ""
             self.assertIs(objc.options.structs_writable, False)
+
+            with self.assertRaisesRegex(RuntimeError, "no bool"):
+                objc.options.structs_writable = NoBool()
 
             with self.assertRaisesRegex(
                 AttributeError, "Cannot delete option 'structs_writable'"
@@ -613,3 +633,13 @@ class TestOptions(TestCase):
             objc.options._datetime_date_type = orig_date
             objc.options._datetime_datetime_type = orig_datetime
             objc.options._date_types = orig_date_types
+
+    def test_c_void_p(self):
+        with pyobjc_options(_c_void_p=42):
+            self.assertEqual(objc.options._c_void_p, 42)
+
+            with self.assertRaisesRegex(TypeError, "'int' object is not callable"):
+                objc.lookUpClass("NSObject").alloc().init().__c_void_p__()
+
+        with self.assertRaisesRegex(AttributeError, "Cannot delete option '_c_void_p'"):
+            del objc.options._c_void_p
