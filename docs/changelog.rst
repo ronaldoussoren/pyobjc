@@ -77,11 +77,11 @@ Version 12.0a0
 
   - CryptoTokenKit: The following constants are no longer available. Use the modern
     names instead: ``TKSmartCardNoSlot``, ``TKSmartCardSlotEmpty``,
-  ``TKSmartCardSlotProbing``, ``TKSmartCardSlotMuteCard``, and ``TKSmartCardSlotValidCard``.
+    ``TKSmartCardSlotProbing``, ``TKSmartCardSlotMuteCard``, and ``TKSmartCardSlotValidCard``.
 
   - DiscRecording: The following constants are no longer available:
-   ``DRCDTextEncodingASCII``, ``kDRCDTextEncodingASCII``,
-   ``DRCDTextEncodingISOLatin1Modified``, and ``kDRCDTextEncodingISOLatin1Modified``.
+    ``DRCDTextEncodingASCII``, ``kDRCDTextEncodingASCII``,
+    ``DRCDTextEncodingISOLatin1Modified``, and ``kDRCDTextEncodingISOLatin1Modified``.
 
   - DiskArbitration: The following constants are no longer available:
     ``kDADiskOptionEjectUponLogout``, ``kDADiskOptionMountAutomatic``,
@@ -102,8 +102,8 @@ Version 12.0a0
     sender, recipients, groupName, serviceName, messageType, referencedMessage, reaction, aggregatedReactions)``
     and
     ``(identifier, conversationIdentifier, content, dateSent, sender, recipients, groupName,
-     serviceName, messageType, referencedMessage, sticker, reaction, aggregatedReactions)``. It
-     does accept these keyword sets without the ``aggregatedReactions`` keyword though.
+    serviceName, messageType, referencedMessage, sticker, reaction, aggregatedReactions)``. It
+    does accept these keyword sets without the ``aggregatedReactions`` keyword though.
 
   - Intents: The ``INColor`` class no longer accepts the keyword set ``(read, green, blue)``.
 
