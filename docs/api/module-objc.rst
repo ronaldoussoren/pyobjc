@@ -694,9 +694,6 @@ Types
 
       .. versionadded:: 3.0
 
-      .. note::
-
-         Only available for Python 3.3 or later.
 
    .. method:: __metadata__
 
@@ -1128,10 +1125,6 @@ Types
 
       .. versionadded:: 3.0
 
-      .. note::
-
-         Only available for Python 3.3 or later.
-
    .. method:: __metadata__
 
       Returns a copy of the metadata dictionary for the selector.  See the
@@ -1173,10 +1166,6 @@ Types
       An :class:`inspect.Signature` for the object
 
       .. versionadded:: 3.0
-
-      .. note::
-
-         Only available for Python 3.3 or later.
 
    .. method:: __metadata__
 

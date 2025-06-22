@@ -9,10 +9,9 @@ due to the rich library Python has.
 
 To follow the tutorial you need:
 
- * PyObjC 1.3.1
+ * PyObjC
  * py2app 0.2 or later (included in the binary installer for PyObjC)
- * Python 2.3 or later (note: PyObjC is NOT compatible with MacPython-OS9)
- * macOS 10.3 or later
+ * macOS 10.9 or later
  * Xcode Tools
 
 If you do not have a ``/Developer`` folder, then you do not have Xcode Tools

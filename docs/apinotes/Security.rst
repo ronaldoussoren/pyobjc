@@ -195,6 +195,3 @@ This function is automatically called as needed by PyObjC and is not exposed to 
 ......................................
 
 The argument *arguments* should be a sequence of byte strings. PyObjC automatically adds a *NULL* value to the end of the array.
-
-The function cannot be used with Python 3 at the moment, because there is no Python type corresponding to a ``FILE*``. This
-will be fixed in a later version.

@@ -16,9 +16,8 @@ the different bits to PyObjC from Objective-C.
 
 To follow the tutorial you need:
 
- * PyObjC 1.3.1
+ * PyObjC
  * py2app 0.2 or later (included in the binary installer for PyObjC)
- * Python 2.3 or later (note: PyObjC is NOT compatible with MacPython-OS9)
  * macOS 10.2 or later
  * Xcode Tools (was Developer Tools for macOS 10.2)
 

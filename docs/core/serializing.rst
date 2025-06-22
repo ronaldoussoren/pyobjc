@@ -106,8 +106,7 @@ versions of PyObjC can read back newer archives.
   |           |                    |                    | support in PyObjC was broken for a   |
   |           |                    |                    | number of edge cases.                |
   +-----------+--------------------+--------------------+--------------------------------------+
-  | 2.5.1     | Yes                | Yes                | Instances of :class:`unicode`        |
-  |           |                    |                    | (or :class:`str` in Python 3) or now |
+  | 2.5.1     | Yes                | Yes                | Instances of :class:`str` are now    |
   |           |                    |                    | archived as instances of NSString.   |
   |           |                    |                    | These archives can be read back by   |
   |           |                    |                    | pure Objective-C code, and when using|
@@ -125,7 +124,7 @@ versions of PyObjC can read back newer archives.
   |           |                    |                    | These archives can now be read back  |
   |           |                    |                    | by pure Objective-C programs when    |
   |           |                    |                    | the python object has type           |
-  |           |                    |                    | :class:`bytes` (only for Python 3)   |
+  |           |                    |                    | :class:`bytes`.                      |
   +-----------+--------------------+--------------------+--------------------------------------+
   | 3.0       | Yes                | Yes                | Changes in encoding of keyed         |
   |           |                    |                    | archives for OC_PythonArray.         |

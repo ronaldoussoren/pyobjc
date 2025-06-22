@@ -682,7 +682,7 @@ normally used like this:
 
 		someMethod_ = objc.selector(someMethod_, signature='v@:f')
 
-In Python 2.4 or later there is a decorator for this purpose:
+Using a decorator is more convenient though:
 
  .. sourcecode:: python
     :linenos:
