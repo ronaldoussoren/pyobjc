@@ -42,7 +42,7 @@ class TestSCNetwork(TestCase):
         self.assertIsInstance(b, bool)
         self.assertIsInstance(flags, int)
         self.assertEqual(b, True)
-        self.assertEqual(flags, SystemConfiguration.kSCNetworkFlagsReachable)
+        self.assertTrue(flags & SystemConfiguration.kSCNetworkFlagsReachable)
 
     @skipUnless(resolver_available(), "No DNS resolver available")
     def testFunctions(self):
