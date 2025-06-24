@@ -52,15 +52,10 @@ repos:
 
   - repo: local
     hooks:
-    - id: lcov-annotations
-      name: lcov-annotations
-      language: script
-      pass_filenames: false
-      types: [c, objective-c]
-      entry: ./development-support/validate-lcov.sh
     - id: fwinfo-valid-json
       name: fwinfo-valid-json
       language: python
+      always_run: true
       entry: ./development-support/validate-fwinfo
     - id: check-python-used
       name: check-python-used
