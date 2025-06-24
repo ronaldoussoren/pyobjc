@@ -67,7 +67,7 @@ static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
                     &super, PyObjCSelector_GetSelector(method), view.buf, buf);
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
             PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
@@ -76,7 +76,7 @@ static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
     PyBuffer_Release(&view);
 
     if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     Py_RETURN_NONE;
@@ -118,7 +118,6 @@ mkimp_NSCoder_encodeValueOfObjCType_at_(PyObject*              callable,
                                                      3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           Py_CLEAR(v1);
           Py_CLEAR(v2);
-
 
           if (result == NULL)
               goto error;
@@ -192,7 +191,7 @@ static PyObject* _Nullable call_NSCoder_encodeArrayOfObjCType_count_at_(
     }
 
     PyObject* seq = PyObjCSequence_Tuple(value, "need sequence of objects");
-    if (seq == NULL)  {
+    if (seq == NULL) {
         PyBuffer_Release(&view);
         PyMem_Free(buf);
         return NULL;
@@ -290,11 +289,11 @@ mkimp_NSCoder_encodeArrayOfObjCType_count_at_(PyObject*              callable,
 
           values = PyTuple_New(count);
           if (values == NULL) // LCOV_BR_EXCL_LINE
-              goto error; // LCOV_EXCL_LINE
+              goto error;     // LCOV_EXCL_LINE
 
           for (i = 0; i < count; i++) {
               PyObject* v = pythonify_c_value(typestr, ((char*)buf) + (i * size));
-              if (v == NULL) // LCOV_BR_EXCL_LINE
+              if (v == NULL)  // LCOV_BR_EXCL_LINE
                   goto error; // LCOV_EXCL_LINE
               PyTuple_SET_ITEM(values, i, v);
           } // LCOV_BR_EXCL_LINE
@@ -409,7 +408,7 @@ static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_(
     PyMem_Free(buf);
     PyBuffer_Release(&view);
     if (value == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;     // LCOV_EXCL_LINE
     }
 
     return value;
@@ -440,7 +439,7 @@ mkimp_NSCoder_decodeValueOfObjCType_at_(PyObject*              callable,
           }
 
           v = PyBytes_FromString(typestr);
-          if (v == NULL) // LCOV_BR_EXCL_LINE
+          if (v == NULL)  // LCOV_BR_EXCL_LINE
               goto error; // LCOV_EXCL_LINE
 
           PyObject* arglist[4] = {NULL, pyself, v, Py_None};
@@ -453,7 +452,7 @@ mkimp_NSCoder_decodeValueOfObjCType_at_(PyObject*              callable,
 
           err = depythonify_c_value(typestr, result, buf);
           Py_DECREF(result);
-          if (err == -1) // LCOV_BR_EXCL_LINE
+          if (err == -1)  // LCOV_BR_EXCL_LINE
               goto error; // LCOV_EXCL_LINE
 
           PyObjCObject_ReleaseTransient(pyself, cookie);
@@ -558,72 +557,72 @@ mkimp_NSCoder_decodeValueOfObjCType_at_size_(PyObject*              callable,
                                              __attribute__((__unused__)))
 {
     Py_INCREF(callable);
-    void (^block)(id, const char*, void*, NSUInteger) =
-        ^(id _Nullable self, const char* typestr, void* buf, NSUInteger size) {
-          PyObject* result = NULL;
-          PyObject* v1     = NULL;
-          PyObject* v2     = NULL;
-          int       err;
-          PyObject* pyself = NULL;
-          int       cookie = 0;
+    void (^block)(id, const char*, void*, NSUInteger) = ^(
+        id _Nullable self, const char* typestr, void* buf, NSUInteger size) {
+      PyObject* result = NULL;
+      PyObject* v1     = NULL;
+      PyObject* v2     = NULL;
+      int       err;
+      PyObject* pyself = NULL;
+      int       cookie = 0;
 
-          PyGILState_STATE state = PyGILState_Ensure();
+      PyGILState_STATE state = PyGILState_Ensure();
 
-          Py_ssize_t actual_size = PyObjCRT_SizeOfType(typestr);
-          if (actual_size == -1) { // LCOV_BR_EXCL_LINE
-              // LCOV_EXCL_START
-              PyObjCErr_ToObjCWithGILState(&state);
-              return;
-              // LCOV_EXCL_STOP
-          } else if ((NSUInteger)actual_size > size) {
-              PyErr_Format(PyExc_ValueError, "provided size %lu is less than actual size %ld",
-                      size, actual_size);
-              PyObjCErr_ToObjCWithGILState(&state);
-              return;
-          }
-
-          pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-              // LCOV_EXCL_START
-              PyObjCErr_ToObjCWithGILState(&state);
-              return;
-              // LCOV_EXCL_STOP
-          }
-
-          v1 = PyBytes_FromString(typestr);
-          if (v1 == NULL) // LCOV_BR_EXCL_LINE
-              goto error; // LCOV_EXCL_LINE
-
-          v2 = PyLong_FromLong(size);
-          if (v2 == NULL) // LCOV_BR_EXCL_LINE
-              goto error; // LCOV_EXCL_LINE
-
-          PyObject* arglist[5] = {NULL, pyself, v1, Py_None, v2};
-
-          result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                       4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-          Py_CLEAR(v1);
-          Py_CLEAR(v2);
-          if (result == NULL)
-              goto error;
-
-          err = depythonify_c_value(typestr, result, buf);
-          Py_DECREF(result);
-          if (err == -1)
-              goto error;
-
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-          PyGILState_Release(state);
-          return;
-
-      error:
-          Py_XDECREF(v1);
-          Py_XDECREF(v2);
-          assert(pyself != NULL);
-          PyObjCObject_ReleaseTransient(pyself, cookie);
+      Py_ssize_t actual_size = PyObjCRT_SizeOfType(typestr);
+      if (actual_size == -1) { // LCOV_BR_EXCL_LINE
+          // LCOV_EXCL_START
           PyObjCErr_ToObjCWithGILState(&state);
           return;
-        };
+          // LCOV_EXCL_STOP
+      } else if ((NSUInteger)actual_size > size) {
+          PyErr_Format(PyExc_ValueError, "provided size %lu is less than actual size %ld",
+                       size, actual_size);
+          PyObjCErr_ToObjCWithGILState(&state);
+          return;
+      }
+
+      pyself = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          // LCOV_EXCL_START
+          PyObjCErr_ToObjCWithGILState(&state);
+          return;
+          // LCOV_EXCL_STOP
+      }
+
+      v1 = PyBytes_FromString(typestr);
+      if (v1 == NULL) // LCOV_BR_EXCL_LINE
+          goto error; // LCOV_EXCL_LINE
+
+      v2 = PyLong_FromLong(size);
+      if (v2 == NULL) // LCOV_BR_EXCL_LINE
+          goto error; // LCOV_EXCL_LINE
+
+      PyObject* arglist[5] = {NULL, pyself, v1, Py_None, v2};
+
+      result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                   4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      Py_CLEAR(v1);
+      Py_CLEAR(v2);
+      if (result == NULL)
+          goto error;
+
+      err = depythonify_c_value(typestr, result, buf);
+      Py_DECREF(result);
+      if (err == -1)
+          goto error;
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return;
+
+  error:
+      Py_XDECREF(v1);
+      Py_XDECREF(v2);
+      assert(pyself != NULL);
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyObjCErr_ToObjCWithGILState(&state);
+      return;
+    };
     return imp_implementationWithBlock(block);
 }
 
@@ -796,7 +795,7 @@ mkimp_NSCoder_decodeArrayOfObjCType_count_at_(PyObject*              callable,
           for (i = 0; i < count; i++) {
               res = depythonify_c_value(typestr, PyTuple_GET_ITEM(seq, i),
                                         ((char*)buf) + (i * size));
-              if (res == -1) // LCOV_BR_EXCL_LINE
+              if (res == -1)  // LCOV_BR_EXCL_LINE
                   goto error; // LCOV_EXCL_LINE
           }
           Py_DECREF(seq);
@@ -820,7 +819,7 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_(PyObject*        met
                                                             PyObject* const* arguments,
                                                             size_t           nargs)
 {
-    bool release_view = false;
+    bool       release_view = false;
     NSUInteger length;
     Py_buffer  view;
 
@@ -989,7 +988,7 @@ static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
 
         result = PyTuple_New(2);
         if (result == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         }
 
         PyTuple_SET_ITEM(result, 0, Py_None);
@@ -1008,7 +1007,7 @@ static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
 
     result = PyTuple_New(2);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     v = PyBytes_FromStringAndSize((char*)bytes, size);
@@ -1040,9 +1039,9 @@ mkimp_NSCoder_decodeBytesWithReturnedLength_(PyObject*              callable,
 {
     Py_INCREF(callable);
     void* (^block)(id, NSUInteger*) = ^(id _Nullable self, NSUInteger* length) {
-      PyObject* result;
-      PyObject* pyself = NULL;
-      int       cookie = 0;
+      PyObject*  result;
+      PyObject*  pyself = NULL;
+      int        cookie = 0;
       NSUInteger tempLen;
 
       PyGILState_STATE state = PyGILState_Ensure();
@@ -1067,7 +1066,8 @@ mkimp_NSCoder_decodeBytesWithReturnedLength_(PyObject*              callable,
           goto error;
       }
 
-      if (depythonify_c_value(@encode(NSUInteger), PyTuple_GET_ITEM(result, 1), &tempLen) == -1) {
+      if (depythonify_c_value(@encode(NSUInteger), PyTuple_GET_ITEM(result, 1), &tempLen)
+          == -1) {
           Py_DECREF(result);
           goto error;
       }
@@ -1088,8 +1088,9 @@ mkimp_NSCoder_decodeBytesWithReturnedLength_(PyObject*              callable,
       }
 
       if (tempLen > [temp length]) {
-          PyErr_Format(PyExc_ValueError, "Buffer length %ld is less than returned length %lu",
-                  [temp length], tempLen);
+          PyErr_Format(PyExc_ValueError,
+                       "Buffer length %ld is less than returned length %lu",
+                       [temp length], tempLen);
           [temp release];
           goto error;
       }
@@ -1162,7 +1163,7 @@ static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
 
         result = PyTuple_New(2);
         if (result == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         }
 
         PyTuple_SET_ITEM(result, 0, Py_None);
@@ -1181,7 +1182,7 @@ static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
 
     result = PyTuple_New(2);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     v = PyBytes_FromStringAndSize(bytes, size);
@@ -1240,8 +1241,8 @@ mkimp_NSCoder_decodeBytesForKey_returnedLength_(PyObject*              callable,
               goto error; // LCOV_EXCL_LINE
 
           PyObject* arglist[] = {NULL, v1, v2, Py_None};
-          result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                     3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          result              = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                                    3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           Py_CLEAR(v1);
           Py_CLEAR(v2);
           if (result == NULL)
@@ -1253,7 +1254,8 @@ mkimp_NSCoder_decodeBytesForKey_returnedLength_(PyObject*              callable,
               goto error;
           }
 
-          if (depythonify_c_value(@encode(NSUInteger), PyTuple_GET_ITEM(result, 1), &len) == -1) {
+          if (depythonify_c_value(@encode(NSUInteger), PyTuple_GET_ITEM(result, 1), &len)
+              == -1) {
               Py_DECREF(result);
               goto error;
           }
@@ -1276,8 +1278,9 @@ mkimp_NSCoder_decodeBytesForKey_returnedLength_(PyObject*              callable,
           [tmp autorelease];
 
           if ([tmp length] < len) {
-              PyErr_Format(PyExc_ValueError, "Buffer length %ld is less than returned length %lu",
-                      [tmp length], len);
+              PyErr_Format(PyExc_ValueError,
+                           "Buffer length %ld is less than returned length %lu",
+                           [tmp length], len);
               goto error;
           }
 
@@ -1318,8 +1321,9 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_forKey_(
             return NULL;
         }
         if (count > (NSUInteger)view.len) {
-            PyErr_Format(PyExc_ValueError, "passed in count %lu is larger than input size %ld",
-                    count, view.len);
+            PyErr_Format(PyExc_ValueError,
+                         "passed in count %lu is larger than input size %ld", count,
+                         view.len);
             PyBuffer_Release(&view);
             return NULL;
         }
@@ -1330,7 +1334,9 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_forKey_(
     } else {
         /* XXX: Remove in PyObjC 13 */
         if (PyErr_Warn(PyExc_DeprecationWarning,
-                    "using two arguments for 'encodeBytes_length_forKey_' will be removed in PyObjC 13") == -1) {
+                       "using two arguments for 'encodeBytes_length_forKey_' will be "
+                       "removed in PyObjC 13")
+            == -1) {
             return NULL;
         }
         if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
@@ -1355,9 +1361,8 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_forKey_(
                 super.receiver    = PyObjCObject_GetObject(self);
 
                 ((void (*)(struct objc_super*, SEL, void*, NSUInteger,
-                           id))objc_msgSendSuper)(&super,
-                                                  PyObjCSelector_GetSelector(method),
-                                                  view.buf, count, key);
+                           id))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), view.buf, count, key);
             }
 
         } @catch (NSObject* localException) {
@@ -1455,7 +1460,7 @@ PyObjC_setup_nscoder(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
-                                    @selector(encodeValueOfObjCType:at:),
+                                     @selector(encodeValueOfObjCType:at:),
                                      call_NSCoder_encodeValueOfObjCType_at_,
                                      mkimp_NSCoder_encodeValueOfObjCType_at_)
         < 0) {
@@ -1471,7 +1476,7 @@ PyObjC_setup_nscoder(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
-                                    @selector(decodeValueOfObjCType:at:),
+                                     @selector(decodeValueOfObjCType:at:),
                                      call_NSCoder_decodeValueOfObjCType_at_,
                                      mkimp_NSCoder_decodeValueOfObjCType_at_)
         < 0) {
@@ -1487,7 +1492,7 @@ PyObjC_setup_nscoder(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
-                                    @selector(encodeBytes:length:),
+                                     @selector(encodeBytes:length:),
                                      call_NSCoder_encodeBytes_length_,
                                      mkimp_NSCoder_encodeBytes_length_)
         < 0) {
@@ -1495,7 +1500,7 @@ PyObjC_setup_nscoder(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
-                                    @selector(encodeBytes:length:forKey:),
+                                     @selector(encodeBytes:length:forKey:),
                                      call_NSCoder_encodeBytes_length_forKey_,
                                      mkimp_NSCoder_encodeBytes_length_forKey_)
         < 0) {
@@ -1519,15 +1524,7 @@ PyObjC_setup_nscoder(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
-                                    @selector(decodeBytesWithoutReturnedLength),
-                                    PyObjCUnsupportedMethod_Caller,
-                                    PyObjCUnsupportedMethod_IMP)
-        < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
-                                    @selector(encodeValuesOfObjCTypes:),
+                                     @selector(decodeBytesWithoutReturnedLength),
                                      PyObjCUnsupportedMethod_Caller,
                                      PyObjCUnsupportedMethod_IMP)
         < 0) {
@@ -1535,7 +1532,15 @@ PyObjC_setup_nscoder(PyObject* module __attribute__((__unused__)))
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
-                                    @selector(decodeValuesOfObjCTypes:),
+                                     @selector(encodeValuesOfObjCTypes:),
+                                     PyObjCUnsupportedMethod_Caller,
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterMethodMapping(classNSCoder, // LCOV_BR_EXCL_LINE
+                                     @selector(decodeValuesOfObjCTypes:),
                                      PyObjCUnsupportedMethod_Caller,
                                      PyObjCUnsupportedMethod_IMP)
         < 0) {

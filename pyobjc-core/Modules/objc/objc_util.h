@@ -3,8 +3,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSNull* NSNull_null;
-extern Class NSAutoreleasePool_class;
+extern NSNull*   NSNull_null;
+extern Class     NSAutoreleasePool_class;
 extern PyObject* PyObjCExc_Error;
 extern PyObject* PyObjCExc_NoSuchClassError;
 extern PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 12 */
@@ -93,7 +93,7 @@ align(Py_ssize_t offset, Py_ssize_t alignment)
  */
 #define SET_FIELD_INCREF(op, value)                                                      \
     do {                                                                                 \
-        __typeof__(op) _py_tmp = (op);                                                   \
+        __typeof__(op)    _py_tmp = (op);                                                \
         __typeof__(value) _py_val = (value);                                             \
         Py_XINCREF(_py_val);                                                             \
         (op) = _py_val;                                                                  \
@@ -184,7 +184,6 @@ extern int PyObjC_RemoveInternalTypeCodes(char*);
 extern PyObject* _Nullable PyObjCSequence_Tuple(PyObject* value, const char* context);
 
 extern PyObject* _Nullable PyObjC_get_c_void_p(void);
-
 
 NS_ASSUME_NONNULL_END
 

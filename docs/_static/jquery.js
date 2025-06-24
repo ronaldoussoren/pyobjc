@@ -742,11 +742,9 @@ p
        proxy : function(a, c) {
            var           d, e, f;
            return typeof c == "string" && (d = a[c], c = a, a = d),
-                  p.isFunction(a) ? (
-                      e = k.call(arguments, 2),
-                      f = function() { return a.apply(c, e.concat(k.call(arguments))) },
-                      f.guid = a.guid = a.guid || p.guid++, f)
-                                  : b
+                  p.isFunction(a) ? (e = k.call(arguments, 2), f = function() {
+                      return a.apply(c, e.concat(k.call(arguments)))
+                  }, f.guid = a.guid = a.guid || p.guid++, f) : b
        },
        access : function(a, c, d, e, f, g, h) {
            var i, j = d == null, k = 0, l = a.length;
@@ -1235,8 +1233,9 @@ p.fn.extend({
     toggleClass : function(a, b) {
         var c = typeof a, d = typeof b == "boolean";
         return p.isFunction(a)
-                   ? this.each(function(
-                       c) { p(this).toggleClass(a.call(this, c, this.className, b), b) })
+                   ? this.each(function(c) {
+                         p(this).toggleClass(a.call(this, c, this.className, b), b)
+                     })
                    : this.each(function() {
                          if (c === "string") {
                              var e, f = 0, g = p(this), h = b, i = a.split(s);
@@ -1661,7 +1660,7 @@ bz
               return a === b
                          ? p.text(this)
                          : this.empty().append(
-                             (this[0] && this[0].ownerDocument || e).createTextNode(a))
+                               (this[0] && this[0].ownerDocument || e).createTextNode(a))
           }, null, a, arguments.length)
       },
       wrapAll : function(a) {
@@ -1810,18 +1809,17 @@ bz
                              i === h ? g : p.clone(g, !0, !0))
               }
               g = f = null, k.length && p.each(k, function(a, b) {
-                  b.src
-                      ? p.ajax ? p.ajax({
-                            url : b.src,
-                            type : "GET",
-                            dataType : "script",
-                            async : !1,
-                            global : !1,
-                            "throws" : !0
-                        })
-                               : p.error("no ajax")
-                      : p.globalEval(
-                          (b.text || b.textContent || b.innerHTML || "").replace(by, "")),
+                  b.src ? p.ajax ? p.ajax({
+                      url : b.src,
+                      type : "GET",
+                      dataType : "script",
+                      async : !1,
+                      global : !1,
+                      "throws" : !0
+                  })
+                                 : p.error("no ajax")
+                        : p.globalEval((b.text || b.textContent || b.innerHTML || "")
+                                           .replace(by, "")),
                       b.parentNode && b.parentNode.removeChild(b)
               })
           }
@@ -2264,9 +2262,8 @@ cj = ct.exec(ck.toLowerCase()) || [],
                     type : f,
                     dataType : "html",
                     data : c,
-                    complete : function(a, b) {
-                        d && h.each(d, g || [ a.responseText, b, a ])
-                    }
+                    complete : function(
+                        a, b) { d && h.each(d, g || [ a.responseText, b, a ]) }
                 }).done(function(a) {
                    g = arguments,
                    h.html(e ? p("<div>").append(a.replace(cr, "")).find(e) : a)

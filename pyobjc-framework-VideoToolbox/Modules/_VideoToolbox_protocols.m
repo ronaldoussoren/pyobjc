@@ -4,11 +4,14 @@
  * Last update: Sun Mar  2 11:21:54 2025
  */
 
-static void __attribute__((__used__)) use_protocols(void)
+static void __attribute__((__used__))
+use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
 #if PyObjC_BUILD_RELEASE >= 1504
-    p = PyObjC_IdToPython(@protocol(VTFrameProcessorConfiguration)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(VTFrameProcessorParameters)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(VTFrameProcessorConfiguration));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(VTFrameProcessorParameters));
+    Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1504 */
 }

@@ -14,22 +14,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static const char gCharPtr[] = { _C_CHARPTR, 0 };
+static const char gCharPtr[] = {_C_CHARPTR, 0};
 
 static CFBundleRef _Nullable CreateCFBundleFromNSBundle(NSBundle* bundle)
 {
     CFBundleRef result = NULL;
 
     Py_BEGIN_ALLOW_THREADS
-    @autoreleasepool {
-        @try {
-            result = CFBundleCreate(kCFAllocatorDefault, (CFURLRef)[bundle bundleURL]);
-            // LCOV_EXCL_START
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
-            // LCOV_EXCL_STOP
+        @autoreleasepool {
+            @try {
+                result =
+                    CFBundleCreate(kCFAllocatorDefault, (CFURLRef)[bundle bundleURL]);
+                // LCOV_EXCL_START
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+                // LCOV_EXCL_STOP
+            }
         }
-    }
     Py_END_ALLOW_THREADS
 
     if (result == NULL) { // LCOV_BR_EXCL_LINE
@@ -73,7 +74,7 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
 
     cfBundle = CreateCFBundleFromNSBundle(bundle);
     if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     if (![name isKindOfClass:[NSString class]]) {
@@ -99,7 +100,7 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
             return NULL; // LCOV_EXCL_LINE
         }
 
-        PyObject*  py_name = id_to_python(name);
+        PyObject* py_name = id_to_python(name);
         if (py_name == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(py_val);
@@ -108,7 +109,8 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
         }
 
         if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                    module_globals, py_name, py_val) == -1) {
+                module_globals, py_name, py_val)
+            == -1) {
             // LCOV_EXCL_START
             Py_DECREF(py_val);
             Py_DECREF(py_name);
@@ -149,7 +151,7 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
 
     cfBundle = CreateCFBundleFromNSBundle(bundle);
     if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     seq = PyObjCSequence_Tuple(variableInfo, "variableInfo not a sequence");
@@ -171,19 +173,22 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                          "item %" PY_FORMAT_SIZE_T "d has type %s not tuple", i,
                          Py_TYPE(item)->tp_name);
             Py_DECREF(seq);
-            if (cfBundle != NULL) CFRelease(cfBundle);
+            if (cfBundle != NULL)
+                CFRelease(cfBundle);
             return NULL;
         }
 
         if (!PyArg_ParseTuple(item, "O!y:variableInfo", &PyUnicode_Type, &py_name,
                               &signature)) {
             Py_DECREF(seq);
-            if (cfBundle != NULL) CFRelease(cfBundle);
+            if (cfBundle != NULL)
+                CFRelease(cfBundle);
             return NULL;
         }
 
         if (depythonify_python_object(py_name, &name) == -1) {
-            if (cfBundle != NULL) CFRelease(cfBundle);
+            if (cfBundle != NULL)
+                CFRelease(cfBundle);
             return NULL;
         }
 
@@ -195,14 +200,16 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
             if (!skip_undefined) {
                 PyErr_SetString(PyObjCExc_Error, "cannot find a variable");
                 Py_DECREF(seq);
-                if (cfBundle != NULL) CFRelease(cfBundle);
+                if (cfBundle != NULL)
+                    CFRelease(cfBundle);
                 return NULL;
             }
 
         } else {
             PyObject* py_val;
 
-            if (*signature == _C_CHARPTR || (signature[0] == _C_PTR && signature[1] == _C_CHR)) {
+            if (*signature == _C_CHARPTR
+                || (signature[0] == _C_PTR && signature[1] == _C_CHR)) {
                 /* Load C string variable. Special handling for the signature and value to
                  * get the correct behaviour: Load a null terminated C string (as bytes)
                  *
@@ -214,7 +221,8 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                 py_val = pythonify_c_value(signature, value);
             }
             if (py_val == NULL) {
-                if (cfBundle != NULL) CFRelease(cfBundle);
+                if (cfBundle != NULL)
+                    CFRelease(cfBundle);
                 Py_DECREF(seq);
                 return NULL;
             }
@@ -222,19 +230,20 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
             PyObject* py_name = id_to_python(name);
             if (py_name == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
-                if (cfBundle != NULL) CFRelease(cfBundle);
+                if (cfBundle != NULL)
+                    CFRelease(cfBundle);
                 Py_DECREF(seq);
                 Py_DECREF(py_val);
                 return NULL;
                 // LCOV_EXCL_STOP
             }
 
-
             if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
                     module_globals, py_name, py_val)
                 == -1) {
                 // LCOV_EXCL_START
-                if (cfBundle != NULL) CFRelease(cfBundle);
+                if (cfBundle != NULL)
+                    CFRelease(cfBundle);
                 Py_DECREF(seq);
                 Py_DECREF(py_val);
                 Py_DECREF(py_name);
@@ -282,7 +291,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
         }
         cfBundle = CreateCFBundleFromNSBundle(bundle);
         if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
     }
 

@@ -222,6 +222,32 @@ class MethodAccessTest(TestCase):
             OC_UnusedClass.pyobjc_classMethods.someClassMethod, objc.selector
         )
 
+    def test_various_methods(self):
+        value = OCTestWithAttributes.alloc().init()
+        NSObject.alloca = objc.python_method(OCTestWithAttributes.alloc)
+        for cls in type(value).__mro__:
+            try:
+                cls.__dict__["alloca"]
+            except KeyError:
+                pass
+        with self.assertRaisesRegex(AttributeError, "alloca"):
+            value.pyobjc_instanceMethods.alloca
+
+        # XXX: 'del' won't work, hence accept that this
+        #      pollutes the test environment a little.
+        # del NSObject.alloca
+
+        class OCTestWithGetAttr(NSObject):
+            def __getattr__(self, key):
+                raise AttributeError(f"no -- {key} --")
+
+        value = OCTestWithGetAttr.alloc().init()
+        with self.assertRaisesRegex(AttributeError, "no -- method --"):
+            value.method
+
+        with self.assertRaisesRegex(AttributeError, "No selector method"):
+            value.pyobjc_instanceMethods.method
+
     @expectedFailure
     def test_cycle(self):
         cleared = False

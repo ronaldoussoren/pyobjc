@@ -19,10 +19,9 @@ struct registry {
     PyObjC_MakeIMPBlockFunc make_call_to_python_block;
 };
 
-
 #ifdef Py_GIL_DISABLED
 /* XXX: Consider using two mutexes */
-static PyMutex registry_mutex = { 0 };
+static PyMutex registry_mutex = {0};
 #endif
 
 /* Dict mapping from signature-string to a 'struct registry' */
@@ -50,7 +49,6 @@ PyObjC_InitSuperCallRegistry(void)
 
     return 0;
 }
-
 
 // LCOV_EXCL_START
 /* The code in this file only adds new values to
@@ -83,12 +81,12 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     PyObject*        entry;
     PyObject*        lst;
     PyObject*        py_selname;
-    int r;
-    int retval =  0;
+    int              r;
+    int              retval = 0;
 
     assert(special_registry != NULL);
-    assert(call_to_objc !=  NULL);
-    assert(make_call_to_python_block !=  NULL);
+    assert(call_to_objc != NULL);
+    assert(make_call_to_python_block != NULL);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&registry_mutex);
@@ -197,7 +195,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
         }
         Py_DECREF(py_selname);
 
-    /* case 1: fallthrough */
+        /* case 1: fallthrough */
     }
 
     if (PyList_Append(lst, entry) < 0) { // LCOV_BR_EXCL_LINE
@@ -218,7 +216,6 @@ exit:
     PyMutex_Unlock(&registry_mutex);
 #endif
     return retval;
-
 }
 
 int
@@ -324,10 +321,10 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
     PyObject*  result        = NULL;
     PyObject*  special_class = NULL;
     PyObject*  search_class  = NULL;
-    PyObject*  py_selname = NULL;
+    PyObject*  py_selname    = NULL;
     PyObject*  lst;
     Py_ssize_t i;
-    int r;
+    int        r;
 
     assert(special_registry != NULL);
     assert(class != Nil);
@@ -337,7 +334,7 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
 
     py_selname = PyUnicode_FromString(sel_getName(sel));
     if (py_selname == NULL) { // LCOV_BR_EXCL_LINE
-        goto error; // LCOV_EXCL_LINE
+        goto error;           // LCOV_EXCL_LINE
     }
 
     search_class = PyObjCClass_New(class);
@@ -350,7 +347,7 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
         goto error; // LCOV_EXCL_LINE
     case 0:
         goto error;
-    /* case 1: fallthrough */
+        /* case 1: fallthrough */
     }
 
     /*
@@ -364,15 +361,15 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
      */
     Py_ssize_t len = PyList_Size(lst);
     for (i = 0; i < len; i++) {
-        PyObject* entry   = PyList_GetItemRef(lst, i);
+        PyObject* entry = PyList_GetItemRef(lst, i);
         if (entry == NULL) { // LCOV_BR_EXCL_LINE
-            goto error; // LCOV_EXCL_LINE
+            goto error;      // LCOV_EXCL_LINE
         }
         PyObject* pyclass = PyTuple_GET_ITEM(entry, 0);
 
         if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
-            Py_DECREF(entry); // LCOV_EXCL_LINE
-            continue;        // LCOV_EXCL_LINE
+            Py_DECREF(entry);  // LCOV_EXCL_LINE
+            continue;          // LCOV_EXCL_LINE
         }
         if (pyclass != Py_None
             && !PyType_IsSubtype((PyTypeObject*)search_class, (PyTypeObject*)pyclass)) {
@@ -418,27 +415,27 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
     Py_CLEAR(search_class);
     Py_CLEAR(py_selname);
 
-     struct registry* rv = PyCapsule_GetPointer(result, "objc.__memblock__");
-     Py_DECREF(result);
+    struct registry* rv = PyCapsule_GetPointer(result, "objc.__memblock__");
+    Py_DECREF(result);
 #ifdef Py_GIL_DISABLED
-     PyMutex_Unlock(&registry_mutex);
+    PyMutex_Unlock(&registry_mutex);
 #endif
-     return rv;
+    return rv;
 
 error:
-     Py_CLEAR(special_class);
-     Py_CLEAR(py_selname);
-     Py_CLEAR(search_class);
+    Py_CLEAR(special_class);
+    Py_CLEAR(py_selname);
+    Py_CLEAR(search_class);
 #ifdef Py_GIL_DISABLED
-     PyMutex_Unlock(&registry_mutex);
+    PyMutex_Unlock(&registry_mutex);
 #endif
-     return NULL;
+    return NULL;
 }
 
 static struct registry* _Nullable find_signature(const char* signature)
 {
-    PyObject* o = NULL;
-    int       res;
+    PyObject*        o = NULL;
+    int              res;
     struct registry* result = NULL;
 
     assert(signature_registry != NULL);
@@ -448,7 +445,7 @@ static struct registry* _Nullable find_signature(const char* signature)
 #endif
     PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
     if (key == NULL) { // LCOV_BR_EXCL_LINE
-        goto exit; // LCOV_EXCL_LINE
+        goto exit;     // LCOV_EXCL_LINE
     }
 
     res = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
@@ -482,7 +479,7 @@ exit:
 PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* signature)
 {
     struct registry* special;
-    PyObjC_CallFunc result;
+    PyObjC_CallFunc  result;
 
     assert(special_registry != NULL);
 
@@ -490,14 +487,14 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
     if (special) {
         result = special->call_to_objc;
     } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        result = NULL;               // LCOV_EXCL_LINE
+        result = NULL;             // LCOV_EXCL_LINE
     } else {
         special = find_signature(signature);
         if (special) {
             result = special->call_to_objc;
         } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            result = NULL;               // LCOV_EXCL_LINE
-        } else { // LCOV_EXCL_LINE
+            result = NULL;             // LCOV_EXCL_LINE
+        } else {                       // LCOV_EXCL_LINE
             result = PyObjCFFI_Caller;
         }
     }
@@ -524,7 +521,7 @@ PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_cl
 
     methinfo = PyObjCSelector_GetMetadata(sel);
     if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     if (super_class != nil) {

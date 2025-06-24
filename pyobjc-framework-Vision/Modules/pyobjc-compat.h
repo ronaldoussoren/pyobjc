@@ -245,13 +245,15 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 #if PY_VERSION_HEX < 0x030a0000
 
-static inline PyObject* Py_NewRef(PyObject* o)
+static inline PyObject*
+Py_NewRef(PyObject* o)
 {
     Py_INCREF(o);
     return o;
 }
 
-static inline PyObject* Py_XNewRef(PyObject* o)
+static inline PyObject*
+Py_XNewRef(PyObject* o)
 {
     Py_XINCREF(o);
     return o;
@@ -260,11 +262,16 @@ static inline PyObject* Py_XNewRef(PyObject* o)
 #endif /* PY_VERSION_HEX < 0x030a0000 */
 
 #if PY_VERSION_HEX < 0x030d0000
-#define Py_BEGIN_CRITICAL_SECTION(value) { (void)(value);
+#define Py_BEGIN_CRITICAL_SECTION(value)                                                 \
+    {                                                                                    \
+        (void)(value);
 #define Py_END_CRITICAL_SECTION() }
 #define Py_EXIT_CRITICAL_SECTION() ((void)0)
 
-#define Py_BEGIN_CRITICAL_SECTION2(value1, value2) { (void)(value1); (void)(value2);
+#define Py_BEGIN_CRITICAL_SECTION2(value1, value2)                                       \
+    {                                                                                    \
+        (void)(value1);                                                                  \
+        (void)(value2);
 #define Py_END_CRITICAL_SECTION2() }
 #define Py_EXIT_CRITICAL_SECTION2() ((void)0)
 
@@ -285,7 +292,8 @@ static inline PyObject* Py_XNewRef(PyObject* o)
 #endif
 
 #if PY_VERSION_HEX < 0x030d0000
-static inline int PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonnull* _Nullable result)
+static inline int
+PyDict_GetItemRef(PyObject* p, PyObject* key, PyObject* _Nonnull* _Nullable result)
 {
     *result = PyDict_GetItemWithError(p, key);
     if (*result == NULL) {
@@ -309,7 +317,8 @@ static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
 #endif
 
 #if PY_VERSION_HEX < 0x030c0000
-static inline PyObject* PyType_GetDict(PyTypeObject* type)
+static inline PyObject*
+PyType_GetDict(PyTypeObject* type)
 {
     PyObject* result = type->tp_dict;
     Py_INCREF(result);
@@ -322,12 +331,13 @@ static inline PyObject* PyType_GetDict(PyTypeObject* type)
  * These are available in 3.14 and above, the definitions below
  * mirror the private implementation in 3.13.
  */
-static inline int PyUnstable_Object_IsUniquelyReferenced(PyObject* ob)
+static inline int
+PyUnstable_Object_IsUniquelyReferenced(PyObject* ob)
 {
 #ifdef Py_GIL_DISABLED
-    return (_Py_IsOwnedByCurrentThread(ob) &&
-            _Py_atomic_load_uint32_relaxed(&ob->ob_ref_local) == 1 &&
-            _Py_atomic_load_ssize_relaxed(&ob->ob_ref_shared) == 0);
+    return (_Py_IsOwnedByCurrentThread(ob)
+            && _Py_atomic_load_uint32_relaxed(&ob->ob_ref_local) == 1
+            && _Py_atomic_load_ssize_relaxed(&ob->ob_ref_shared) == 0);
 #else
     return Py_REFCNT(ob) == 1;
 #endif
@@ -343,8 +353,8 @@ PyUnstable_EnableTryIncRef(PyObject* op __attribute__((__unused__)))
             // Nothing to do if it's in WEAKREFS, QUEUED, or MERGED states.
             return;
         }
-        if (_Py_atomic_compare_exchange_ssize(
-                &op->ob_ref_shared, &shared, shared | _Py_REF_MAYBE_WEAKREF)) {
+        if (_Py_atomic_compare_exchange_ssize(&op->ob_ref_shared, &shared,
+                                              shared | _Py_REF_MAYBE_WEAKREF)) {
             return;
         }
     }
@@ -353,7 +363,8 @@ PyUnstable_EnableTryIncRef(PyObject* op __attribute__((__unused__)))
 
 #ifdef Py_GIL_DISABLED
 static inline int
-_Py_TryIncrefFast(PyObject *op) {
+_Py_TryIncrefFast(PyObject* op)
+{
     uint32_t local = _Py_atomic_load_uint32_relaxed(&op->ob_ref_local);
     local += 1;
     if (local == 0) {
@@ -372,7 +383,7 @@ _Py_TryIncrefFast(PyObject *op) {
 }
 
 static inline int
-_Py_TryIncRefShared(PyObject *op)
+_Py_TryIncRefShared(PyObject* op)
 {
     Py_ssize_t shared = _Py_atomic_load_ssize_relaxed(&op->ob_ref_shared);
     for (;;) {
@@ -382,10 +393,8 @@ _Py_TryIncRefShared(PyObject *op)
             return 0;
         }
 
-        if (_Py_atomic_compare_exchange_ssize(
-                &op->ob_ref_shared,
-                &shared,
-                shared + (1 << _Py_REF_SHARED_SHIFT))) {
+        if (_Py_atomic_compare_exchange_ssize(&op->ob_ref_shared, &shared,
+                                              shared + (1 << _Py_REF_SHARED_SHIFT))) {
 #ifdef Py_REF_DEBUG
             _Py_IncRefTotal(_PyThreadState_GET());
 #endif
@@ -397,7 +406,7 @@ _Py_TryIncRefShared(PyObject *op)
 #endif
 
 static inline int
-PyUnstable_TryIncRef(PyObject *op __attribute__((__unused__)))
+PyUnstable_TryIncRef(PyObject* op __attribute__((__unused__)))
 {
 #ifdef Py_GIL_DISABLED
     return _Py_TryIncrefFast(op) || _Py_TryIncRefShared(op);

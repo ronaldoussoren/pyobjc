@@ -51,7 +51,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 - (id _Nullable)nextObject
 {
-    id        key   = nil;
+    id        key = nil;
     int       rv;
     PyObject* pykey = NULL;
 
@@ -162,7 +162,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 {
     Py_ssize_t result;
     if (value == NULL) { // LCOV_BR_EXCL_LINE
-        return 0; // LCOV_EXCL_LINE
+        return 0;        // LCOV_EXCL_LINE
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -190,7 +190,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     id        result;
 
     if (value == NULL) { // LCOV_BR_EXCL_LINE
-        return nil; // LCOV_EXCL_LINE
+        return nil;      // LCOV_EXCL_LINE
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -209,7 +209,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             int r = PyDict_GetItemRef(value, k, &v);
             switch (r) {
             case -1:
-                PyObjC_GIL_FORWARD_EXC();        // LCOV_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             case 0:
                 PyObjC_GIL_RETURN(nil);
             case 1:
@@ -457,7 +457,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     if ([coder allowsKeyedCoding]) {
         code = [coder decodeInt32ForKey:@"pytype"];
     } else {
-#if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
         /* Old deployment target, modern SDK */
         if (@available(macOS 10.13, *)) {
             [coder decodeValueOfObjCType:@encode(int) at:&code size:sizeof(code)];
@@ -472,7 +472,6 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&code];
 #endif
-
     }
 
     switch (code) { // LCOV_BR_EXCL_LINE

@@ -17,14 +17,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef    PyObject* _Nullable (*pythonify_func)(void*);
-typedef    int (*depythonify_func)(PyObject*, void*);
+typedef PyObject* _Nullable (*pythonify_func)(void*);
+typedef int (*depythonify_func)(PyObject*, void*);
 
 struct wrapper {
-    const char* name;
-    const char* signature;
-    size_t      offset;
-    pythonify_func pythonify;
+    const char*      name;
+    const char*      signature;
+    size_t           offset;
+    pythonify_func   pythonify;
     depythonify_func depythonify;
 };
 
@@ -41,7 +41,6 @@ static Py_ssize_t      item_count = 0;
  */
 static PyMutex items_mutex = {0};
 #endif
-
 
 /*
  * If signature is a pointer to a structure return the index of the character
@@ -79,7 +78,9 @@ find_end_of_structname(const char* signature)
  * 1. Return 'struct wrapper' (e.g. a copy of the found entry)
  * 2. Add variants returning the fields used by other parts of this file
  */
-static int FindWrapper(const char* signature, pythonify_func* _Nullable pythonify, depythonify_func* _Nullable depythonify, const char**_Nullable name)
+static int
+FindWrapper(const char* signature, pythonify_func* _Nullable pythonify,
+            depythonify_func* _Nullable depythonify, const char** _Nullable name)
 {
     /* XXX: This is a linear search, find better way to do this! */
     Py_ssize_t i;
@@ -91,7 +92,7 @@ static int FindWrapper(const char* signature, pythonify_func* _Nullable pythonif
         if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
             /* See comment just above find_end_of_structname */
             if ((signature[1] == _C_CONST && signature[2] == _C_STRUCT_B)
-                    || (signature[1] == _C_STRUCT_B)) {
+                || (signature[1] == _C_STRUCT_B)) {
 
                 char ch = signature[items[i].offset];
                 if (ch == '=' || ch == _C_STRUCT_E) {
@@ -183,7 +184,7 @@ PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
     Py_ssize_t i;
     PyObject*  result = PyList_New(0);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&items_mutex);
@@ -236,7 +237,7 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     assert(pythonify);
     assert(depythonify);
 
-    PyObjCPointerWrapper_ToPythonFunc cur_pythonify;
+    PyObjCPointerWrapper_ToPythonFunc   cur_pythonify;
     PyObjCPointerWrapper_FromPythonFunc cur_depythonify;
 
 #if 0
@@ -257,10 +258,13 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     }
 #else
     if (FindWrapper(signature, &cur_pythonify, &cur_depythonify, NULL) == 0) {
-        if (cur_pythonify != pythonify || cur_depythonify != depythonify) { // LCOV_BR_EXCL_LINE
-            /* Hitting this would be a bug in PyObjC (aka, this is a fancy spelling of  PyObjC_Assert) */
+        if (cur_pythonify != pythonify
+            || cur_depythonify != depythonify) { // LCOV_BR_EXCL_LINE
+            /* Hitting this would be a bug in PyObjC (aka, this is a fancy spelling of
+             * PyObjC_Assert) */
             // LCOV_EXCL_START
-            PyErr_Format(PyObjCExc_Error, "already have registration for signature '%s'", signature);
+            PyErr_Format(PyObjCExc_Error, "already have registration for signature '%s'",
+                         signature);
             return -1;
             // LCOV_EXCL_STOP
         }
@@ -314,9 +318,8 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
 
 PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char* type, const void* datum)
 {
-    PyObject*       result;
-    pythonify_func  pythonify;
-
+    PyObject*      result;
+    pythonify_func pythonify;
 
     if (FindWrapper(type, &pythonify, NULL, NULL) == -1) {
         return NULL;
@@ -340,7 +343,7 @@ PyObjCPointerWrapper_FromPython(const char* type, PyObject* value, void* datum)
         return -1;
     }
 
-    return depythonify(value, datum)==0?0:-1;
+    return depythonify(value, datum) == 0 ? 0 : -1;
 }
 
 int

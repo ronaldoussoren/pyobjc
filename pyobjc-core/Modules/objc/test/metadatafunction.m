@@ -411,14 +411,15 @@ makeCountArrayWithFormat_(size_t* count, NSString* fmt, ...)
 #pragma clang diagnostic pop
     va_end(ap);
 
-    NSArray* result =  [NSArray arrayWithObjects:fmt, [NSString stringWithUTF8String:buffer], NULL];
+    NSArray* result =
+        [NSArray arrayWithObjects:fmt, [NSString stringWithUTF8String:buffer], NULL];
     *count = (size_t)[result count];
     return result;
 }
 
-#pragma GCC diagnostic   push
+#pragma GCC diagnostic push
 #pragma clang diagnostic push
-#pragma GCC diagnostic   ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 
 static NSArray* _Nullable __attribute__((__format__(__printf__, 1, 2)))
@@ -442,14 +443,14 @@ makeArrayWithCFormat_(char* fmt, ...)
     return [NSArray arrayWithObjects:a1, a2, NULL];
 }
 
-#pragma GCC diagnostic   pop
+#pragma GCC diagnostic pop
 #pragma clang diagnostic pop
 
 static NSArray* _Nullable makeCountArrayWithObjects_(size_t* count, ...)
 {
     NSMutableArray* result = [NSMutableArray array];
-    va_list   ap;
-    id item;
+    va_list         ap;
+    id              item;
 
     va_start(ap, count);
 
@@ -460,14 +461,14 @@ static NSArray* _Nullable makeCountArrayWithObjects_(size_t* count, ...)
     }
     va_end(ap);
     *count = [result count];
-    return  result;
+    return result;
 }
 
 static NSArray* _Nullable makeArrayWithObjects_(id first, ...)
 {
     NSMutableArray* result = [NSMutableArray array];
-    va_list   ap;
-    id item;
+    va_list         ap;
+    id              item;
 
     if (first != nil) {
         [result addObject:first];
@@ -481,9 +482,8 @@ static NSArray* _Nullable makeArrayWithObjects_(id first, ...)
         item = va_arg(ap, id);
     }
     va_end(ap);
-    return  result;
+    return result;
 }
-
 
 static int
 maybeFillArray_(int* data)
@@ -637,10 +637,11 @@ static struct function {
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static int mod_exec_module(PyObject* m)
+static int
+mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
     PyObject* v = PyCapsule_New(gFunctionMap, "objc.__inline__", NULL);
@@ -649,7 +650,8 @@ static int mod_exec_module(PyObject* m)
     }
 
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "function_list", v) == -1) {
+                           "function_list", v)
+        == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddStringConstant(m, "union_SomeUnion", @encode(union SomeUnion))
@@ -660,47 +662,43 @@ static int mod_exec_module(PyObject* m)
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* This extension does not use the CPython API other than initializing
          * the module, hence is safe with subinterpreters and per-interpreter
          * GILs
          */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "metadatafunction",
-    .m_doc = NULL,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "metadatafunction",
+    .m_doc      = NULL,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit_metadatafunction(void);
 
-PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit_metadatafunction(void)
+PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit_metadatafunction(
+    void)
 {
     return PyModuleDef_Init(&mod_module);
 }

@@ -318,7 +318,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
             goto error_cleanup;
         }
         strcpy(buf, "objc.");
-        strlcpy(buf + 5, name, sizeof(buf)-5);
+        strlcpy(buf + 5, name, sizeof(buf) - 5);
     }
 
     PyType_Spec opaque_spec = {
@@ -332,7 +332,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 
     if (opaque_spec.name == NULL) { // LCOV_BR_EXCL_LINE
         goto error_cleanup;         // LCOV_EXCL_LINE
-    }                               // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 
     newType = PyType_FromSpec(&opaque_spec);
     if (newType == NULL) {                   // LCOV_BR_EXCL_LINE
@@ -420,11 +420,11 @@ error_cleanup:
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
     if (cl_to_c) {                 // LCOV_BR_EXCL_LINE
         ffi_closure_free(cl_to_c); // LCOV_EXCL_LINE
-    }                              // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 
     if (cl_from_c) {                 // LCOV_BR_EXCL_LINE
         ffi_closure_free(cl_from_c); // LCOV_EXCL_LINE
-    }                                // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 #pragma clang diagnostic pop
 #endif
     Py_XDECREF(newType);

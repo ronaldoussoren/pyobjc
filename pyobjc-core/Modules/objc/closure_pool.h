@@ -23,7 +23,6 @@
 #define _Nonnull
 #endif /* !NS_ASSUME_NONNULL_BEGIN */
 
-
 NS_ASSUME_NONNULL_BEGIN
 
 #define HAVE_CLOSURE_POOL 1

@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma GCC diagnostic   ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 /*
@@ -86,7 +86,7 @@ static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unuse
         /* PyOS_FSPath guarantees that the result is
          * a string of byte string
          */
-        value = fspath;
+        value  = fspath;
         fspath = NULL;
     }
 
@@ -206,8 +206,9 @@ PyObjCFSRef_Setup(PyObject* module)
     }
     PyObjCFSRef_Type = tmp;
 
-    if ( PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "FSRef", PyObjCFSRef_Type) == -1) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "FSRef", PyObjCFSRef_Type)
+        == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFSRef_Type);

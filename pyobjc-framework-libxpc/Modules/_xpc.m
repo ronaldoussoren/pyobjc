@@ -177,8 +177,8 @@ static struct int64_constants {
 
 #pragma clang diagnostic pop
 
-
-static int mod_exec_module(PyObject* module)
+static int
+mod_exec_module(PyObject* module)
 {
     if (PyObjC_ImportAPI(module) == -1)
         return -1;
@@ -233,16 +233,19 @@ static int mod_exec_module(PyObject* module)
     xpc_object_t d;
 
     d = XPC_ERROR_CONNECTION_INTERRUPTED;
-    if (add_constant(module, "XPC_ERROR_CONNECTION_INTERRUPTED", @encode(xpc_object_t), &d)
+    if (add_constant(module, "XPC_ERROR_CONNECTION_INTERRUPTED", @encode(xpc_object_t),
+                     &d)
         != 0)
         goto error;
 
     d = XPC_ERROR_CONNECTION_INVALID;
-    if (add_constant(module, "XPC_ERROR_CONNECTION_INVALID", @encode(xpc_object_t), &d) != 0)
+    if (add_constant(module, "XPC_ERROR_CONNECTION_INVALID", @encode(xpc_object_t), &d)
+        != 0)
         goto error;
 
     d = XPC_ERROR_TERMINATION_IMMINENT;
-    if (add_constant(module, "XPC_ERROR_TERMINATION_IMMINENT", @encode(xpc_object_t), &d) != 0)
+    if (add_constant(module, "XPC_ERROR_TERMINATION_IMMINENT", @encode(xpc_object_t), &d)
+        != 0)
         goto error;
 
 #if PyObjC_BUILD_RELEASE >= 1200
@@ -337,45 +340,41 @@ error:
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* Subinterpreters are not yet supported because of PyObjC_API */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_MULTIPLE_INTERPRETERS_NOT_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
         /* The code in this extension should be safe to use without the GIL */
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "_xpc",
-    .m_doc = NULL,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "_xpc",
+    .m_doc      = NULL,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit__xpc(void);
 
-PyObject* __attribute__((__visibility__("default"))) PyInit__xpc(void)
+PyObject* __attribute__((__visibility__("default")))
+PyInit__xpc(void)
 {
     return PyModuleDef_Init(&mod_module);
 }

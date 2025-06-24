@@ -362,7 +362,8 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        if (PyTuple_CheckExact(value) && (NSUInteger)PyTuple_Size(value) == count) { // LCOV_BR_EXCL_LINE
+        if (PyTuple_CheckExact(value)
+            && (NSUInteger)PyTuple_Size(value) == count) { // LCOV_BR_EXCL_LINE
             for (i = 0; i < count; i++) {
                 PyObject* v;
 
@@ -443,7 +444,7 @@ NS_ASSUME_NONNULL_BEGIN
         code = [coder decodeInt32ForKey:@"pytype"];
 
     } else {
-        #if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
         /* Old deployment target, modern SDK */
         if (@available(macOS 10.13, *)) {
             [coder decodeValueOfObjCType:@encode(int) at:&code size:sizeof(code)];
@@ -458,7 +459,6 @@ NS_ASSUME_NONNULL_BEGIN
         /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&code];
 #endif
-
     }
 
     switch (code) { // LCOV_BR_EXCL_LINE
@@ -538,7 +538,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         } else {
             int isize;
-#if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
             /* Old deployment target, modern SDK */
             if (@available(macOS 10.13, *)) {
                 [coder decodeValueOfObjCType:@encode(int) at:&isize size:sizeof(isize)];
@@ -577,10 +577,12 @@ NS_ASSUME_NONNULL_BEGIN
         if ([coder allowsKeyedCoding]) {
             size = [coder decodeInt64ForKey:@"pylength"];
         } else {
-#if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
             /* Old deployment target, modern SDK */
             if (@available(macOS 10.13, *)) {
-                [coder decodeValueOfObjCType:@encode(long long) at:&size size:sizeof(size)];
+                [coder decodeValueOfObjCType:@encode(long long)
+                                          at:&size
+                                        size:sizeof(size)];
             } else {
                 CLANG_SUPPRESS
                 [coder decodeValueOfObjCType:@encode(long long) at:&size];
@@ -592,7 +594,6 @@ NS_ASSUME_NONNULL_BEGIN
             /* Deployment target is ancient and SDK is old */
             [coder decodeValueOfObjCType:@encode(long long) at:&size];
 #endif
-
         }
 
         PyObjC_BEGIN_WITH_GIL
@@ -646,7 +647,6 @@ NS_ASSUME_NONNULL_BEGIN
     [result retain];
     return result;
 }
-
 
 - (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {

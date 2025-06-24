@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     const char* utf8;
-    Py_ssize_t utf8_size;
+    Py_ssize_t  utf8_size;
 
     utf8 = PyUnicode_AsUTF8AndSize(fspath, &utf8_size);
     if (utf8 == NULL) { // LCOV_BR_EXCL_LINE
@@ -91,7 +91,6 @@ NS_ASSUME_NONNULL_BEGIN
     return [NSURL class];
 }
 
-
 - (PyObject*)__pyobjc_PythonObject__
 {
     Py_XINCREF(value);
@@ -111,7 +110,5 @@ NS_ASSUME_NONNULL_BEGIN
 }
 // LCOV_EXCL_STOP
 @end
-
-
 
 NS_ASSUME_NONNULL_END

@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     /* XXX: Can value ever be NULL? */
     if (value == NULL) { // LCOV_BR_EXCL_LINE
-        Py_RETURN_NONE; // LCOV_EXCL_LINE
+        Py_RETURN_NONE;  // LCOV_EXCL_LINE
     }
     Py_INCREF(value);
     return value;
@@ -168,7 +168,7 @@ NS_ASSUME_NONNULL_BEGIN
     /* XXX: Call super? */
     self = [super init];
     if (self == nil) { // LCOV_BR_EXCL_LINE
-        return nil; // LCOV_EXCL_LINE
+        return nil;    // LCOV_EXCL_LINE
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -208,7 +208,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (encoding == NSUTF8StringEncoding) {
         PyObjC_BEGIN_WITH_GIL
             value = PyUnicode_DecodeUTF8(bytes, length, NULL);
-            if (value == NULL) { // LCOV_BR_EXCL_LINE
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
@@ -278,7 +278,7 @@ NS_ASSUME_NONNULL_BEGIN
     if ([coder allowsKeyedCoding]) {
         ver = [coder decodeInt32ForKey:@"pytype"];
     } else {
-#if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
         /* Old deployment target, modern SDK */
         if (@available(macOS 10.13, *)) {
             [coder decodeValueOfObjCType:@encode(int) at:&ver size:sizeof(ver)];
@@ -355,13 +355,13 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSObject* _Nullable)replacementObjectForArchiver:
-    (NSArchiver*)__attribute__((__unused__))archiver
+    (NSArchiver*)__attribute__((__unused__)) archiver
 {
     return self;
 }
 
 - (NSObject* _Nullable)replacementObjectForKeyedArchiver:
-    (NSKeyedArchiver*)__attribute__((__unused__))archiver
+    (NSKeyedArchiver*)__attribute__((__unused__)) archiver
 {
     return self;
 }
@@ -373,7 +373,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSObject* _Nullable)replacementObjectForPortCoder:
-    (NSPortCoder*)__attribute__((__unused__))archiver
+    (NSPortCoder*)__attribute__((__unused__)) archiver
 {
     return self;
 }

@@ -106,7 +106,7 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
 
         if (res == NULL) {
             PyErr_Format(PyExc_AttributeError, "'%s' object has no attribute '%s'",
-                    class_getName(object_getClass(objc)), ivar_getName(var));
+                         class_getName(object_getClass(objc)), ivar_getName(var));
         } else {
             Py_INCREF(res);
         }
@@ -193,7 +193,7 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
         PyObject** slotval = (PyObject**)(((char*)objc) + ivar_getOffset(var));
         Py_XINCREF(value);
         PyObject* old_value = *slotval;
-        *slotval = value;
+        *slotval            = value;
         Py_XDECREF(old_value);
         Py_END_CRITICAL_SECTION();
 
@@ -228,7 +228,7 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
             @try {
                 [new_value retain];
 
-            // LCOV_EXCL_START
+                // LCOV_EXCL_START
             } @catch (NSObject* localException) {
                 NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
                       localException);
@@ -244,7 +244,7 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
              */
             @try {
                 [old_value release];
-            // LCOV_EXCL_START
+                // LCOV_EXCL_START
             } @catch (NSObject* localException) {
                 NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
                       localException);
@@ -291,7 +291,7 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
     if (name) {
         self->name = PyObjCUtil_Strdup(name);
         if (self->name == NULL) { // LCOV_BR_EXCL_LINE
-            return -1; // LCOV_EXCL_LINE
+            return -1;            // LCOV_EXCL_LINE
         }
 
     } else {
@@ -396,7 +396,7 @@ ivar_hash(PyObject* o)
     }
 
     if (result == -1) { // LCOV_BR_EXCL_LINE
-        result = -2; // LCOV_EXCL_LINE
+        result = -2;    // LCOV_EXCL_LINE
     } // LCOV_EXCL_LINE
 
     return result;
@@ -515,7 +515,7 @@ PyDoc_STRVAR(ivar_isOutlet_doc, "True if the instance variable is an IBOutlet");
 static PyObject* _Nullable ivar_get_isOutlet(PyObject* _self, void* _Nullable closure
                                              __attribute__((__unused__)))
 {
-    PyObjCInstanceVariable* self   = (PyObjCInstanceVariable*)_self;
+    PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
 
     if (self->isOutlet) {
         Py_RETURN_TRUE;
@@ -528,7 +528,7 @@ PyDoc_STRVAR(ivar_isSlot_doc, "True if the instance variable is a Python slot");
 static PyObject* _Nullable ivar_get_isSlot(PyObject* _self, void* _Nullable closure
                                            __attribute__((__unused__)))
 {
-    PyObjCInstanceVariable* self   = (PyObjCInstanceVariable*)_self;
+    PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     if (self->isSlot) {
         Py_RETURN_TRUE;
     } else {
@@ -591,12 +591,13 @@ PyObjCInstanceVariable_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&ivar_spec);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
     PyObjCInstanceVariable_Type = tmp;
 
     if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "ivar", PyObjCInstanceVariable_Type) == -1) {
+            module, "ivar", PyObjCInstanceVariable_Type)
+        == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 

@@ -8,8 +8,7 @@
 #include <stdio.h>
 
 #if PyObjC_BUILD_RELEASE < 1014
-@interface
-NSKeyedUnarchiver (PyObjCCompat)
+@interface NSKeyedUnarchiver (PyObjCCompat)
 + (id)unarchivedObjectOfClasses:(NSSet*)classes
                        fromData:(NSData*)data
                           error:(NSError**)error;

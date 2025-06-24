@@ -14,38 +14,57 @@ extern PyObjC_ATOMIC Py_ssize_t PyObjC_MappingCount;
 
 extern int PyObjC_SetupOptions(PyObject* m);
 
-extern int PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder) __attribute__((warn_unused_result));
-extern PyObject* _Nullable  PyObjC_decodeWithCoder(NSCoder* coder, id self) __attribute__((warn_unused_result));
+extern int PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
+    __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_decodeWithCoder(NSCoder* coder, id self)
+    __attribute__((warn_unused_result));
 extern PyObject* _Nullable PyObjC_Copy(PyObject* arg) __attribute__((warn_unused_result));
-extern int PyObjC_GetKey(PyObject* object, id key, id _Nullable *_Nonnull value) __attribute__((warn_unused_result));
-extern int PyObjC_SetKey(PyObject* object, id key, id value) __attribute__((warn_unused_result));
-extern int PyObjC_GetKeyPath(PyObject* object, id keypath, id _Nullable* _Nonnull value) __attribute__((warn_unused_result));
-extern int PyObjC_SetKeyPath(PyObject* object, id keypath, id value) __attribute__((warn_unused_result));
+extern int PyObjC_GetKey(PyObject* object, id key, id _Nullable* _Nonnull value)
+    __attribute__((warn_unused_result));
+extern int PyObjC_SetKey(PyObject* object, id key, id value)
+    __attribute__((warn_unused_result));
+extern int PyObjC_GetKeyPath(PyObject* object, id keypath, id _Nullable* _Nonnull value)
+    __attribute__((warn_unused_result));
+extern int PyObjC_SetKeyPath(PyObject* object, id keypath, id value)
+    __attribute__((warn_unused_result));
 extern bool PyObjC_IsBuiltinDate(PyObject* object);
 extern bool PyObjC_IsBuiltinDatetime(PyObject* object);
-extern int PyObjC_IsDictLike(PyObject* object);
-extern int PyObjC_IsListLike(PyObject* object);
-extern int PyObjC_IsSetLike(PyObject* object);
-extern int PyObjC_IsDateLike(PyObject* object);
-extern int PyObjC_IsPathLike(PyObject* object);
-extern PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp) __attribute__((warn_unused_result));
-extern PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id _Nullable tzinfo) __attribute__((warn_unused_result));
-extern PyObject* _Nullable PyObjC_GetCallableDocString(PyObject* callable, void* _Nullable closure) __attribute__((warn_unused_result));
-extern PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nullable closure) __attribute__((warn_unused_result));
+extern int  PyObjC_IsDictLike(PyObject* object);
+extern int  PyObjC_IsListLike(PyObject* object);
+extern int  PyObjC_IsSetLike(PyObject* object);
+extern int  PyObjC_IsDateLike(PyObject* object);
+extern int  PyObjC_IsPathLike(PyObject* object);
+extern PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp)
+    __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp,
+                                                        id _Nullable tzinfo)
+    __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_GetCallableDocString(PyObject* callable,
+                                                       void* _Nullable closure)
+    __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable,
+                                                       void* _Nullable closure)
+    __attribute__((warn_unused_result));
 extern int PyObjC_CallClassExtender(PyObject* cls) __attribute__((warn_unused_result));
-extern PyObject* _Nullable PyObjC_GetBundleForClassMethod(void) __attribute__((warn_unused_result));
-extern PyObject* _Nullable PyObjC_CreateNSNumberProxy(NSNumber* value) __attribute__((warn_unused_result));
-extern PyObject* _Nullable PyObjC_TransformAttribute(PyObject*, PyObject*, PyObject*, PyObject*) __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_GetBundleForClassMethod(void)
+    __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_CreateNSNumberProxy(NSNumber* value)
+    __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_TransformAttribute(PyObject*, PyObject*, PyObject*,
+                                                     PyObject*)
+    __attribute__((warn_unused_result));
 extern int PyObjC_SetDunderNew(PyObject* value) __attribute__((warn_unused_result));
 extern int PyObjC_IsGenericNew(PyObject* value) __attribute__((warn_unused_result));
 
-extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* class_dict,      PyObject* meta_dict,           PyObject* py_superclass,
-                        PyObject* protocols, PyObject* hiddenSelectors, PyObject* hiddenClassSelectors) __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_ProcessClassDict(
+    const char* name, PyObject* class_dict, PyObject* meta_dict, PyObject* py_superclass,
+    PyObject* protocols, PyObject* hiddenSelectors, PyObject* hiddenClassSelectors)
+    __attribute__((warn_unused_result));
 extern PyObject* _Nullable PyObjC_deepcopy(PyObject* value, PyObject* _Nullable memo);
 extern int PyObjC_ArrayTypeCheck(PyObject* value);
 extern PyObject* _Nullable PyObjC_MakeCVoidP(void* ptr);
 extern void PyObjCErr_SetGAIError(int error);
-extern PyObject* _Nullable  PyObjCErr_SetSocketError(const char* message);
+extern PyObject* _Nullable PyObjCErr_SetSocketError(const char* message);
 
 NS_ASSUME_NONNULL_END
 

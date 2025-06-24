@@ -18,8 +18,7 @@ __attribute__((__visibility__("default")))
 }
 @end
 
-@implementation
-OC_Category_GP45 (Cat)
+@implementation OC_Category_GP45 (Cat)
 - (id)gpMethod1
 {
     return @"GP45 - gpMethod1 - GP45(Cat)";
@@ -53,7 +52,8 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_category_gp45(void);
 
-PyObject* __attribute__((__visibility__("default"))) PyInit_category_gp45(void)
+PyObject* __attribute__((__visibility__("default")))
+PyInit_category_gp45(void)
 {
     PyObject* m;
 
@@ -63,7 +63,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_category_gp45(void)
     }
 
     if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;               // LCOV_EXCL_LINE
     }
 
     return m;

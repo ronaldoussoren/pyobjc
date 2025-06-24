@@ -27,10 +27,10 @@ PyAPI_FUNC(int) PyArg_Parse(PyObject*, const char*, ...)
 PyAPI_FUNC(int) PyArg_ParseTuple(PyObject* _Nullable, const char*, ...)
     __attribute__((warn_unused_result));
 #if PY_VERSION_HEX >= 0x030d0000
-PyAPI_FUNC(int)
-    PyArg_ParseTupleAndKeywords(PyObject* _Nullable, PyObject* _Nullable,
-                                const char* _Nullable, char* _Nullable const* _Nullable, ...)
-        __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyArg_ParseTupleAndKeywords(PyObject* _Nullable, PyObject* _Nullable,
+                                            const char* _Nullable,
+                                            char* _Nullable const* _Nullable, ...)
+    __attribute__((warn_unused_result));
 #else
 PyAPI_FUNC(int)
     PyArg_ParseTupleAndKeywords(PyObject* _Nullable, PyObject* _Nullable,
@@ -51,8 +51,7 @@ PyAPI_FUNC(int) PyByteArray_Resize(PyObject*, Py_ssize_t)
 PyAPI_FUNC(Py_ssize_t) PyByteArray_Size(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(char* _Nullable) PyBytes_AsString(PyObject*)
     __attribute__((warn_unused_result));
-PyAPI_FUNC(Py_ssize_t) PyBytes_Size(PyObject*)
-    __attribute__((warn_unused_result));
+PyAPI_FUNC(Py_ssize_t) PyBytes_Size(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyBytes_AsStringAndSize(PyObject*   obj, char* _Nullable* _Nonnull buffer,
                                         Py_ssize_t* _Nullablelength)
     __attribute__((warn_unused_result));
@@ -405,75 +404,108 @@ PyAPI_FUNC(Py_ssize_t) PySlice_AdjustIndices(Py_ssize_t length, Py_ssize_t* star
                                              Py_ssize_t* stop, Py_ssize_t step)
     __attribute__((warn_unused_result));
 
-PyAPI_FUNC(void* _Nullable) PyCapsule_Import(const char*, int) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyCode_GetCode(PyCodeObject *) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject * _Nullable) PyUnicode_New(Py_ssize_t, Py_UCS4) __attribute__((warn_unused_result));
-PyAPI_FUNC(int) PyUnicode_WriteChar(PyObject*, Py_ssize_t, Py_UCS4) __attribute__((warn_unused_result));
-PyAPI_FUNC(int) PyDict_Merge(PyObject*, PyObject*, int) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyErr_GetRaisedException(void) __attribute__((warn_unused_result));
+PyAPI_FUNC(void* _Nullable) PyCapsule_Import(const char*, int)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyCode_GetCode(PyCodeObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyUnicode_New(Py_ssize_t, Py_UCS4)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyUnicode_WriteChar(PyObject*, Py_ssize_t, Py_UCS4)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyDict_Merge(PyObject*, PyObject*, int)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyErr_GetRaisedException(void)
+    __attribute__((warn_unused_result));
 PyAPI_FUNC(void) PyErr_SetRaisedException(PyObject*);
-PyAPI_FUNC(int) PyErr_WarnEx(PyObject*, const char*, Py_ssize_t) __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyErr_WarnEx(PyObject*, const char*, Py_ssize_t)
+    __attribute__((warn_unused_result));
 
-PyAPI_FUNC(PyObject* _Nullable) PyUnicode_InternFromString(const char*) __attribute__((warn_unused_result));
-PyAPI_FUNC(const char* _Nullable) PyUnicode_AsUTF8AndSize(PyObject*, Py_ssize_t* _Nullable) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyUnicode_AsUTF16String(PyObject*) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyUnicode_AsASCIIString(PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyUnicode_InternFromString(const char*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(const char* _Nullable)
+    PyUnicode_AsUTF8AndSize(PyObject*, Py_ssize_t* _Nullable)
+        __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyUnicode_AsUTF16String(PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyUnicode_AsASCIIString(PyObject*)
+    __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyType_Ready(PyTypeObject*) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyType_GetDict(PyTypeObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyType_GetDict(PyTypeObject*)
+    __attribute__((warn_unused_result));
 
-PyAPI_FUNC(PyObject* _Nullable) PyTuple_Pack(Py_ssize_t n, ...) __attribute__((warn_unused_result)); /* clang doesn't have an attribute that can be used to validate the argument count */
+PyAPI_FUNC(PyObject* _Nullable) PyTuple_Pack(Py_ssize_t n, ...)
+    __attribute__((warn_unused_result)); /* clang doesn't have an attribute that can be
+                                            used to validate the argument count */
 
-PyAPI_FUNC(void) PySys_WriteStderr(const char *, ...) __attribute__ ((format (printf, 1, 2)));
-PyAPI_FUNC(PyObject* _Nullable) PySlice_New(PyObject*, PyObject*, PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(void) PySys_WriteStderr(const char*, ...)
+    __attribute__((format(printf, 1, 2)));
+PyAPI_FUNC(PyObject* _Nullable) PySlice_New(PyObject*, PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
 
-PyAPI_FUNC(PyObject* _Nullable) PyObject_Vectorcall(PyObject*, PyObject * const _Nullable * _Nonnull, size_t nargsf, PyObject * _Nullable) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable)
+    PyObject_Vectorcall(PyObject*, PyObject* const _Nullable* _Nonnull, size_t nargsf,
+                        PyObject* _Nullable) __attribute__((warn_unused_result));
 
 PyAPI_FUNC(Py_ssize_t) PyObject_Hash(PyObject*) __attribute__((warn_unused_result));
 
-PyAPI_FUNC(int) PyObject_HasAttrString(PyObject*, const char*) __attribute__((warn_unused_result))
+PyAPI_FUNC(int) PyObject_HasAttrString(PyObject*, const char*)
+    __attribute__((warn_unused_result))
 #if PY_VERSION_HEX >= 0x030d0000
     __attribute__((unavailable))
 #endif
     ;
 
-PyAPI_FUNC(int) PyObject_HasAttr(PyObject*, PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyObject_HasAttr(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
 
 PyAPI_FUNC(PyObject*) PyObject_GetIter(PyObject*) __attribute__((warn_unused_result));
 
-PyAPI_FUNC(PyObject* _Nullable) PyObject_GetItem(PyObject*, PyObject*) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyObject_GetAttrString(PyObject*, const char*) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyObject_GetAttr(PyObject*, PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyObject_GetItem(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyObject_GetAttrString(PyObject*, const char*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyObject_GetAttr(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
 
 PyAPI_FUNC(void) PyObject_Del(void*);
 PyAPI_FUNC(void) PyMem_Free(void*);
 PyAPI_FUNC(void) PyObject_ClearWeakRefs(PyObject*);
 PyAPI_FUNC(int) PyObject_CheckBuffer(PyObject*) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyObject_CallOneArg(PyObject*, PyObject*) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyObject_CallObject(PyObject*, PyObject* _Nullable) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyOS_FSPath(PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyObject_CallOneArg(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyObject_CallObject(PyObject*, PyObject* _Nullable)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyOS_FSPath(PyObject*)
+    __attribute__((warn_unused_result));
 
+PyAPI_FUNC(PyObject* _Nullable) PyModuleDef_Init(PyModuleDef*)
+    __attribute__((warn_unused_result));
 
-PyAPI_FUNC(PyObject* _Nullable) PyModuleDef_Init(PyModuleDef*) __attribute__((warn_unused_result));
-
-PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromMemory(char*, Py_ssize_t, int) __attribute__((warn_unused_result));
-PyAPI_FUNC(int) PyList_SetItem(PyObject*, Py_ssize_t, PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromMemory(char*, Py_ssize_t, int)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyList_SetItem(PyObject*, Py_ssize_t, PyObject*)
+    __attribute__((warn_unused_result));
 
 PyAPI_FUNC(PyHash_FuncDef*) PyHash_GetFuncDef(void) __attribute__((warn_unused_result));
-PyAPI_FUNC(PyObject* _Nullable) PyFloat_FromString(PyObject*) __attribute__((warn_unused_result));
-PyAPI_FUNC(int) PyException_SetTraceback(PyObject*, PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyFloat_FromString(PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyException_SetTraceback(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
 PyAPI_FUNC(void) PyException_SetCause(PyObject*, PyObject*);
-
 
 #if PY_VERSION_HEX >= 0x030d0000
 
 PyAPI_FUNC(PyObject* _Nullable) PyList_GetItemRef(PyObject*, Py_ssize_t)
     __attribute__((warn_unused_result));
-PyAPI_FUNC(int) PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonnull* _Nullable result) __attribute__((warn_unused_result));
-PyAPI_FUNC(int) PyObject_HasAttrStringWithError(PyObject*, const char*) __attribute__((warn_unused_result));
+PyAPI_FUNC(int)
+    PyDict_GetItemRef(PyObject* p, PyObject* key, PyObject* _Nonnull* _Nullable result)
+        __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyObject_HasAttrStringWithError(PyObject*, const char*)
+    __attribute__((warn_unused_result));
 
 #endif
 
-static inline Py_ALWAYS_INLINE  void (Py_INCREF)(PyObject * _Nonnull op);
+static inline Py_ALWAYS_INLINE void(Py_INCREF)(PyObject* _Nonnull op);
 
 #if PY_VERSION_HEX >= 0x030e0000
 PyAPI_FUNC(int) PyUnstable_Object_IsUniquelyReferenced(PyObject*);

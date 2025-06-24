@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)boolValue
 {
-    int         r;
+    int r;
     PyObjC_BEGIN_WITH_GIL
         r = PyObject_IsTrue(value);
         if (r == -1) {
@@ -194,19 +194,19 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (long long)longLongValue
-  /* Disable float-cast-overflow checking when running
-   * with undefined behaviour sanitizer. The float cast
-   * below can result in undefined behaviour but is
-   * necessary to match Cocoa semantics.
-   */
-  __attribute__((no_sanitize("float-cast-overflow")))
+    /* Disable float-cast-overflow checking when running
+     * with undefined behaviour sanitizer. The float cast
+     * below can result in undefined behaviour but is
+     * necessary to match Cocoa semantics.
+     */
+    __attribute__((no_sanitize("float-cast-overflow")))
 {
     long long result;
 
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
             double float_result = PyFloat_AsDouble(value);
-            result = (long long)float_result;
+            result              = (long long)float_result;
             PyObjC_GIL_RETURN(result);
         } else {
             result = PyLong_AsUnsignedLongLongMask(value);
@@ -223,12 +223,12 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (unsigned long long)unsignedLongLongValue
-  /* Disable float-cast-overflow checking when running
-   * with undefined behaviour sanitizer. The float cast
-   * below can result in undefined behaviour but is
-   * necessary to match Cocoa semantics.
-   */
-  __attribute__((no_sanitize("float-cast-overflow")))
+    /* Disable float-cast-overflow checking when running
+     * with undefined behaviour sanitizer. The float cast
+     * below can result in undefined behaviour but is
+     * necessary to match Cocoa semantics.
+     */
+    __attribute__((no_sanitize("float-cast-overflow")))
 {
     unsigned long long result;
 
@@ -440,11 +440,11 @@ NS_ASSUME_NONNULL_BEGIN
             Py_DECREF(other);                                                            \
             if (r == -1) {                                                               \
                 PyObjC_GIL_FORWARD_EXC();                                                \
-            }    /* LCOV_EXCL_LINE */                                                    \
+            } /* LCOV_EXCL_LINE */                                                       \
                                                                                          \
             if (r) {                                                                     \
                 PyObjC_GIL_RETURN(YES);                                                  \
-            } else {  /* LCOV_EXCL_LINE */                                               \
+            } else { /* LCOV_EXCL_LINE */                                                \
                 PyObjC_GIL_RETURN(NO);                                                   \
             }                                                                            \
                                                                                          \
@@ -523,7 +523,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
     return [self copyWithZone:NULL];
 }
 
-- (id)copyWithZone:(NSZone* _Nullable)__attribute__((__unused__))zone
+- (id)copyWithZone:(NSZone* _Nullable)__attribute__((__unused__)) zone
 {
     /* XXX: This is ok if value is a python builtin
      *      but not for arbitrary python objects.

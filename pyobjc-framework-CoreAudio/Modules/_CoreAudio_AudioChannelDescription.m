@@ -31,7 +31,7 @@ static PyObject*
 acd_get_mChannelLabel(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
-    PyObject* result;
+    PyObject*                         result;
 
     Py_BEGIN_CRITICAL_SECTION(self);
     result = Py_BuildValue("I", self->acd_description->mChannelLabel);
@@ -44,7 +44,7 @@ acd_set_mChannelLabel(PyObject* _self, PyObject* value,
                       void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
-    int result;
+    int                               result;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_ValueError, "Cannot delete 'mChannelLabel'");
@@ -53,7 +53,7 @@ acd_set_mChannelLabel(PyObject* _self, PyObject* value,
 
     Py_BEGIN_CRITICAL_SECTION(self);
     result = PyObjC_PythonToObjC(@encode(unsigned int), value,
-                               &self->acd_description->mChannelLabel);
+                                 &self->acd_description->mChannelLabel);
     Py_END_CRITICAL_SECTION();
     return result;
 }
@@ -62,7 +62,7 @@ static PyObject*
 acd_get_mChannelFlags(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
-    PyObject* result;
+    PyObject*                         result;
 
     Py_BEGIN_CRITICAL_SECTION(self);
     result = Py_BuildValue("I", self->acd_description->mChannelFlags);
@@ -75,7 +75,7 @@ acd_set_mChannelFlags(PyObject* _self, PyObject* value,
                       void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
-    int result;
+    int                               result;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_ValueError, "Cannot delete 'mChannelFlags'");
@@ -84,7 +84,7 @@ acd_set_mChannelFlags(PyObject* _self, PyObject* value,
 
     Py_BEGIN_CRITICAL_SECTION(self);
     result = PyObjC_PythonToObjC(@encode(unsigned int), value,
-                               &self->acd_description->mChannelFlags);
+                                 &self->acd_description->mChannelFlags);
     Py_END_CRITICAL_SECTION();
     return result;
 }
@@ -93,12 +93,12 @@ static PyObject*
 acd_get_mCoordinates(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
-    PyObject* result;
+    PyObject*                         result;
 
     Py_BEGIN_CRITICAL_SECTION(self);
     result = Py_BuildValue("fff", self->acd_description->mCoordinates[0],
-                         self->acd_description->mCoordinates[1],
-                         self->acd_description->mCoordinates[2]);
+                           self->acd_description->mCoordinates[1],
+                           self->acd_description->mCoordinates[2]);
     Py_END_CRITICAL_SECTION();
     return result;
 }
@@ -108,7 +108,7 @@ acd_set_mCoordinates(PyObject* _self, PyObject* value,
                      void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
-    int result;
+    int                               result;
 
     if (value == NULL) {
         PyErr_SetString(PyExc_ValueError, "Cannot delete 'mCoordinates'");
@@ -117,9 +117,9 @@ acd_set_mCoordinates(PyObject* _self, PyObject* value,
 
     Py_BEGIN_CRITICAL_SECTION(self);
     result = PyArg_ParseTuple(value, "fff:mCoordinates",
-                            self->acd_description->mChannelFlags + 0,
-                            self->acd_description->mChannelFlags + 1,
-                            self->acd_description->mChannelFlags + 2);
+                              self->acd_description->mChannelFlags + 0,
+                              self->acd_description->mChannelFlags + 1,
+                              self->acd_description->mChannelFlags + 2);
     Py_END_CRITICAL_SECTION();
     return result;
 }
