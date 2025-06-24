@@ -10,3 +10,6 @@ class TestCallableMetadata(TestCase):
     @min_os_level("10.13")
     def test_functions(self):
         ColorSync.ColorSyncAPIVersion
+
+    def test_not_exposed(self):
+        self.assertNotHasAttr(ColorSync, "COLORSYNC_API_VERSION")
