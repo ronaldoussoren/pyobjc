@@ -1,11 +1,11 @@
 #include "pyobjc.h"
 
-#include <objc/runtime.h>
 #include <objc/objc.h>
+#include <objc/runtime.h>
 
-extern id objc_loadWeakRetained(id* value);
+extern id   objc_loadWeakRetained(id* value);
 extern void objc_release(id value);
-extern id objc_retain(id value);
+extern id   objc_retain(id value);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
  * - Investigate another data structure
  * - Consider using two locks for the two maps.
  */
-static PyMutex proxy_mutex = { 0 };
+static PyMutex proxy_mutex = {0};
 #endif
 
 static NSMapTable* _Nonnull python_proxies;
@@ -39,14 +39,17 @@ struct weak_value {
     id _Nullable value;
 };
 
-static void weak_value_retain(NSMapTable* table __attribute__((__unused__)), const void* _Nonnull _value)
+static void
+weak_value_retain(NSMapTable* table __attribute__((__unused__)),
+                  const void* _Nonnull _value)
 {
     struct weak_value* value = (struct weak_value*)_value;
 
     value->refcnt++;
 }
 
-static void weak_value_release(NSMapTable* table __attribute__((__unused__)), void* _value)
+static void
+weak_value_release(NSMapTable* table __attribute__((__unused__)), void* _value)
 {
     struct weak_value* value = (struct weak_value*)_value;
 
@@ -58,12 +61,15 @@ static void weak_value_release(NSMapTable* table __attribute__((__unused__)), vo
 
 // LCOV_EXCL_START
 /* Only used for debugging, won't be used in normal operation */
-static NSString* _Nullable weak_value_describe(NSMapTable* table __attribute__((__unused__)), const void* _value)
+static NSString* _Nullable weak_value_describe(NSMapTable* table
+                                               __attribute__((__unused__)),
+                                               const void* _value)
 {
     struct weak_value* value = (struct weak_value*)_value;
-    id ptr = objc_loadWeakRetained(&value->value);
+    id                 ptr   = objc_loadWeakRetained(&value->value);
 
-    NSString* result =  [NSString stringWithFormat:@"<weak_value %p refcnt %d>", ptr, value->refcnt];
+    NSString* result =
+        [NSString stringWithFormat:@"<weak_value %p refcnt %d>", ptr, value->refcnt];
     objc_release(ptr);
     return result;
 }
@@ -73,21 +79,19 @@ static struct weak_value* _Nullable weak_value_alloc(id value)
 {
     struct weak_value* result = malloc(sizeof(struct weak_value));
     if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
     result->refcnt = 1;
-    result->value = nil;
+    result->value  = nil;
     objc_storeWeak(&result->value, value);
     return result;
 }
 
 static NSMapTableValueCallBacks weak_value_callbacks = {
     .describe = weak_value_describe,
-    .retain = weak_value_retain,
-    .release = weak_value_release,
+    .retain   = weak_value_retain,
+    .release  = weak_value_release,
 };
-
-
 
 int
 PyObjC_InitProxyRegistry(PyObject* module __attribute__((__unused__)))
@@ -103,8 +107,8 @@ PyObjC_InitProxyRegistry(PyObject* module __attribute__((__unused__)))
         // LCOV_EXCL_STOP
     }
 
-    objc_proxies = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
-                                    weak_value_callbacks, 0);
+    objc_proxies =
+        NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks, weak_value_callbacks, 0);
     if (objc_proxies == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_SetString(PyExc_RuntimeError, "Cannot create NSMapTable for objc_proxies");
@@ -141,7 +145,7 @@ PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
         PyMutex_Unlock(&proxy_mutex);
         return proxy;
     }
-#else /* ! Py_GIL_DISABLED */
+#else  /* ! Py_GIL_DISABLED */
     if (current != NULL) {
         Py_INCREF(current);
         return current;
@@ -152,28 +156,37 @@ PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
 #endif /* ! Py_GIL_DISABLED */
 }
 
-id NS_RETURNS_RETAINED _Nullable
-PyObjC_RegisterObjCProxy(PyObject* original, id proxy)
+id NS_RETURNS_RETAINED _Nullable PyObjC_RegisterObjCProxy(PyObject* original, id proxy)
 {
     id _Nullable result;
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&proxy_mutex);
 #endif
     struct weak_value* weak = NSMapGet(objc_proxies, original);
-   if (weak != NULL) {
+    if (weak != NULL) {
         id current = objc_loadWeakRetained(&weak->value);
-        if (current != nil) {
+        if (current != nil) { // LCOV_BR_EXCL_LINE
             result = current;
         } else {
+            // LCOV_EXCL_START
+            //
+            // XXX: Spent more time on trying to hit this path.
+            //
+            // Regular code pattern is PyObjC_FindObjCProxy is
+            // used before creating a proxy and calling this
+            // function.
+            //
+            // There still is a race, but it is very small.
             objc_retain(proxy);
             objc_storeWeak(&weak->value, proxy);
             result = proxy;
+            // LCOV_EXCL_STOP
         }
     } else {
         weak = weak_value_alloc(proxy);
         if (weak == NULL) { // LCOV_BR_EXCL_LINE
-            result = nil; // LCOV_EXCL_LINE
-        } else { // LCOV_EXCL_LINE
+            result = nil;   // LCOV_EXCL_LINE
+        } else {            // LCOV_EXCL_LINE
             NSMapInsert(objc_proxies, original, weak);
             objc_retain(proxy);
             weak_value_release(objc_proxies, weak);
@@ -213,7 +226,7 @@ void
 PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
 {
     struct weak_value* record;
-    id v;
+    id                 v;
 
     if (original == NULL)
         return;
@@ -227,7 +240,7 @@ PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
         if (v == proxy || v == nil) {
             NSMapRemove(objc_proxies, original);
         }
-     }
+    }
 #ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&proxy_mutex);
 #endif
@@ -254,7 +267,7 @@ PyObject* _Nullable PyObjC_FindPythonProxy(id original)
     }
 
 #ifdef Py_GIL_DISABLED
-    if (PyUnstable_TryIncRef(current))  {
+    if (PyUnstable_TryIncRef(current)) {
         PyMutex_Unlock(&proxy_mutex);
         return current;
     }
@@ -266,7 +279,8 @@ PyObject* _Nullable PyObjC_FindPythonProxy(id original)
 #endif
 }
 
-id _Nullable NS_RETURNS_RETAINED PyObjC_FindObjCProxy(PyObject* original)
+id _Nullable NS_RETURNS_RETAINED
+PyObjC_FindObjCProxy(PyObject* original)
 {
     id result;
 
@@ -277,11 +291,11 @@ id _Nullable NS_RETURNS_RETAINED PyObjC_FindObjCProxy(PyObject* original)
     PyMutex_Lock(&proxy_mutex);
 #endif
 
-    struct weak_value* record  = NSMapGet(objc_proxies, original);
+    struct weak_value* record = NSMapGet(objc_proxies, original);
     if (record == NULL) {
-        result = nil ;
+        result = nil;
     } else {
-        result =  objc_loadWeakRetained(&record->value);
+        result = objc_loadWeakRetained(&record->value);
     }
 #ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&proxy_mutex);

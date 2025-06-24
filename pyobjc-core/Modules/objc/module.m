@@ -37,7 +37,7 @@ PyObject* _Nullable PyObjCClass_DefaultModule;
 PyObject* _Nullable PyObjC_TypeStr2CFTypeID;
 
 #ifdef Py_GIL_DISABLED
-static PyMutex global_release_pool_lock = { 0 };
+static PyMutex global_release_pool_lock = {0};
 #endif
 static NSAutoreleasePool* _Nullable global_release_pool;
 
@@ -69,7 +69,8 @@ static void
 calc_current_version(void)
 {
 #if PyObjC_BUILD_RELEASE >= 1010
-    if ([NSProcessInfo instancesRespondToSelector:@selector(operatingSystemVersion)]) { // LCOV_BR_EXCL_LINE
+    if ([NSProcessInfo instancesRespondToSelector:@selector
+                       (operatingSystemVersion)]) { // LCOV_BR_EXCL_LINE
         NSAutoreleasePool* pool;
 
         pool           = [[NSAutoreleasePool alloc] init];
@@ -111,7 +112,7 @@ calc_current_version(void)
 
         [pool release];
         // LCOV_EXCL_STOP
-    }  // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 }
 
 PyObjC_FINAL_CLASS @interface OC_NSAutoreleasePoolCollector : NSObject
@@ -304,8 +305,8 @@ static PyObject* _Nullable classAddMethods(PyObject* self __attribute__((__unuse
         return NULL;
     }
 
-    methodsArray = PyObjCSequence_Tuple(methodsArray,
-                                   "Argument 'methodsArray' (pos 2) must be a sequence");
+    methodsArray = PyObjCSequence_Tuple(
+        methodsArray, "Argument 'methodsArray' (pos 2) must be a sequence");
     if (methodsArray == NULL)
         return NULL;
 
@@ -392,12 +393,12 @@ static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
              * do if draining fails with an exception.
              */
 #ifdef Py_GIL_DISABLED
-    PyMutex_Lock(&global_release_pool_lock);
+            PyMutex_Lock(&global_release_pool_lock);
 #endif
             pool                = global_release_pool;
             global_release_pool = nil;
 #ifdef Py_GIL_DISABLED
-    PyMutex_Unlock(&global_release_pool_lock);
+            PyMutex_Unlock(&global_release_pool_lock);
 #endif
             [pool release];
 
@@ -529,7 +530,7 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
      */
 
     if (scanClasses != NULL) {
-        int r =  PyObject_IsTrue(scanClasses);
+        int r = PyObject_IsTrue(scanClasses);
         if (r == -1) {
             return NULL;
         }
@@ -541,7 +542,7 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
 
     class_list = PyObjC_GetClassList(1);
     if (class_list == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
 
     len = PyTuple_GET_SIZE(class_list);
@@ -568,8 +569,8 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
                 // LCOV_EXCL_STOP
             }
             if (PyDict_SetItem(module_globals, py_nm, // LCOV_BR_EXCL_LINE
-                                        item)
-                       == -1) {
+                               item)
+                == -1) {
                 // LCOV_EXCL_START
                 Py_DECREF(class_list);
                 Py_DECREF(py_nm);
@@ -681,9 +682,10 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
             PyErr_SetString(PyExc_ValueError, "value is not a complete struct signature");
             return NULL;
         }
-        structname = PyUnicode_FromStringAndSize(signature, end - signature - (end[-1]=='='));
+        structname =
+            PyUnicode_FromStringAndSize(signature, end - signature - (end[-1] == '='));
         if (structname == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;          // LCOV_EXCL_LINE
         }
     }
 
@@ -734,7 +736,6 @@ static PyObject* _Nullable objc_splitStructSignature(PyObject* self
             t--;
         }
         t++;
-
 
         str = PyBytes_FromStringAndSize(signature, t - signature);
         if (str == NULL) { // LCOV_BR_EXCL_LINE
@@ -829,7 +830,7 @@ static PyObject* _Nullable protocolsForProcess(PyObject* self __attribute__((__u
 
     protlist = objc_copyProtocolList(&protCount);
     if (protlist == NULL) { // LCOV_BR_EXXCL_LINE
-        Py_RETURN_NONE; // LCOV_EXCL_LINE
+        Py_RETURN_NONE;     // LCOV_EXCL_LINE
     }
 
     protocols = PyList_New(0);
@@ -870,12 +871,12 @@ static PyObject* _Nullable idSignatures(PyObject* self __attribute__((__unused__
     return PyObjCPointer_GetIDEncodings();
 }
 
-PyDoc_STRVAR(sizeOfType_doc,
-        "_sizeOfType(type, /)\n" CLINIC_SEP "\n"
-        "Returns the size of the type referred to by the encoding.");
-static PyObject* _Nullable sizeOfType(PyObject* self __attribute__((__unused__)), PyObject* _Nullable args)
+PyDoc_STRVAR(sizeOfType_doc, "_sizeOfType(type, /)\n" CLINIC_SEP "\n"
+                             "Returns the size of the type referred to by the encoding.");
+static PyObject* _Nullable sizeOfType(PyObject* self __attribute__((__unused__)),
+                                      PyObject* _Nullable args)
 {
-    char* encoding;
+    char*      encoding;
     Py_ssize_t size;
 
     if (!PyArg_ParseTuple(args, "y", &encoding)) {
@@ -889,7 +890,6 @@ static PyObject* _Nullable sizeOfType(PyObject* self __attribute__((__unused__))
 
     return PyLong_FromSsize_t(size);
 }
-
 
 PyDoc_STRVAR(protocolsForClass_doc,
              "protocolsForClass(cls)\n" CLINIC_SEP "\n"
@@ -1006,9 +1006,10 @@ static PyObject* _Nullable registerMetaData(PyObject* self __attribute__((__unus
 }
 
 PyDoc_STRVAR(dropStructType_doc,
-        "_dropStructType(typestr)\n" CLINIC_SEP "\n"
-        "Drop the struct type for 'typestr' from the lookup table.");
-static PyObject* _Nullable dropStructType(PyObject* self __attribute__((__unused__)), PyObject* arg)
+             "_dropStructType(typestr)\n" CLINIC_SEP "\n"
+             "Drop the struct type for 'typestr' from the lookup table.");
+static PyObject* _Nullable dropStructType(PyObject* self __attribute__((__unused__)),
+                                          PyObject* arg)
 {
     if (PyObjC_DropRegisteredStruct(arg) == -1) {
         return NULL;
@@ -1095,8 +1096,8 @@ static PyObject* _Nullable createStructType(PyObject* self __attribute__((__unus
     }
 
     if (pyfieldnames != Py_None) {
-        pyfieldnames =
-            PyObjCSequence_Tuple(pyfieldnames, "fieldnames must be a sequence of strings");
+        pyfieldnames = PyObjCSequence_Tuple(pyfieldnames,
+                                            "fieldnames must be a sequence of strings");
 
         if (pyfieldnames == NULL)
             goto error_cleanup;
@@ -1224,8 +1225,8 @@ static PyObject* _Nullable registerCFSignature(PyObject* self __attribute__((__u
         }
 
         PyObject* py_encoding = PyUnicode_FromString(encoding);
-        if (py_encoding == NULL) {   // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+        if (py_encoding == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;           // LCOV_EXCL_LINE
         }
 
         int r = PyDict_SetItem(PyObjC_TypeStr2CFTypeID, py_encoding, v);
@@ -1245,7 +1246,7 @@ static PyObject* _Nullable registerCFSignature(PyObject* self __attribute__((__u
         }
 
         if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;                                             // LCOV_EXCL_LINE
         }
 
         /* Don't have to do anything with the cfTypeId: because
@@ -1266,7 +1267,7 @@ static PyObject* _Nullable _updatingMetadata(PyObject* self __attribute__((__unu
                                              PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"flag", NULL};
-    int    flag;
+    int          flag;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "p", keywords, &flag)) {
         return NULL;
@@ -1368,7 +1369,7 @@ static PyObject* _Nullable _makeClosure(PyObject* self __attribute__((__unused__
     if (PyObjCFunction_Check(closureFor)) {
         methinfo = (PyObjCMethodSignature*)PyObjCFunc_GetMethodSignature(closureFor);
         if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
 
     } else if (PyObjCSelector_Check(closureFor)) {
@@ -1426,7 +1427,8 @@ static PyObject* _Nullable _makeClosure(PyObject* self __attribute__((__unused__
         return NULL;
     }
 
-    PyObject* capsule = PyCapsule_New((void*)closure_func, "objc.__imp__", _callback_cleanup);
+    PyObject* capsule =
+        PyCapsule_New((void*)closure_func, "objc.__imp__", _callback_cleanup);
     if (capsule == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyObjCFFI_FreeIMP((IMP)closure_func);
@@ -1499,13 +1501,13 @@ static PyObject* _Nullable PyObjC_setAssociatedObject(PyObject* self
         @try {
             objc_setAssociatedObject(object, (void*)key, value, policy);
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
             PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_RETURN_NONE;
 }
@@ -1534,14 +1536,14 @@ static PyObject* _Nullable PyObjC_getAssociatedObject(PyObject* self
         @try {
             value = objc_getAssociatedObject(object, (void*)key);
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            value = nil; // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+            value = nil;                        // LCOV_EXCL_LINE
             PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     return id_to_python(value);
 }
@@ -1570,13 +1572,13 @@ static PyObject* _Nullable PyObjC_removeAssociatedObjects(PyObject* self
         @try {
             objc_removeAssociatedObjects(object);
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
             PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_RETURN_NONE;
 }
@@ -1750,7 +1752,7 @@ static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
     static bool (*contains_func)(const char*) = NULL;
     static bool resolved_func                 = 0;
 #ifdef Py_GIL_DISABLED
-    static PyMutex resolve_lock = { 0 };
+    static PyMutex resolve_lock = {0};
 #endif
 
     if (!resolved_func) {
@@ -2241,11 +2243,11 @@ static setup_function _Nullable setup_functions[] = {
         for (; cur->name != NULL; cur++) {                                               \
             PyObject* t = item_creator(cur->value);                                      \
             if (t == NULL) { /* LCOV_BR_EXCL_LINE */                                     \
-                return -1; /* LCOV_EXCL_LINE */                                        \
+                return -1;   /* LCOV_EXCL_LINE */                                        \
             }                                                                            \
             if (PyModule_AddObject((module), cur->name, t)) { /* LCOV_BR_EXCL_LINE */    \
                 Py_DECREF(t);                                 /* LCOV_EXCL_LINE */       \
-                return -1;                                  /* LCOV_EXCL_LINE */       \
+                return -1;                                    /* LCOV_EXCL_LINE */       \
             }                                                                            \
         }                                                                                \
     } while (0)
@@ -2256,8 +2258,8 @@ bytes_from_char(char ch)
     return PyBytes_FromStringAndSize(&ch, 1);
 }
 
-
-static int mod_exec_module(PyObject* m)
+static int
+mod_exec_module(PyObject* m)
 {
     _Static_assert(sizeof(BOOL) == sizeof(bool), "BOOL and bool should have same size");
 
@@ -2272,7 +2274,7 @@ static int mod_exec_module(PyObject* m)
     calc_current_version();
 
     if (PyObjC_InitSuperCallRegistry() == -1) { // LCOV_BR_EXCL_LINE
-        return -1;                            // LCOV_EXCL_LINE
+        return -1;                              // LCOV_EXCL_LINE
     }
 
     /* Create a temporary release pool for handling values autoreleased during
@@ -2285,41 +2287,42 @@ static int mod_exec_module(PyObject* m)
 
     PyObjCClass_DefaultModule = PyUnicode_FromString("objc");
     if (PyObjCClass_DefaultModule == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                         // LCOV_EXCL_LINE
+        return -1;                           // LCOV_EXCL_LINE
     }
 
     PyObjC_TypeStr2CFTypeID = PyDict_New();
     if (PyObjC_TypeStr2CFTypeID == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                       // LCOV_EXCL_LINE
+        return -1;                         // LCOV_EXCL_LINE
     }
 
     /* XXX: Move these to setup functions as well */
     if (PyType_Ready(&PyObjCMetaClass_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return -1;                               // LCOV_EXCL_LINE
+        return -1;                                 // LCOV_EXCL_LINE
     }
     if (PyType_Ready(&PyObjCClass_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return -1;                           // LCOV_EXCL_LINE
+        return -1;                             // LCOV_EXCL_LINE
     }
     if (PyType_Ready((PyTypeObject*)&PyObjCObject_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return -1;                                           // LCOV_EXCL_LINE
+        return -1;                                             // LCOV_EXCL_LINE
     }
 
     if (PyType_Ready(&StructBase_Type) < 0) { // LCOV_BR_EXCL_LINE
-        return -1;                          // LCOV_EXCL_LINE
+        return -1;                            // LCOV_EXCL_LINE
     }
 
     for (setup_function* cur = setup_functions; *cur != NULL; cur++) {
         if ((*cur)(m) < 0) { // LCOV_BR_EXCL_LINE
-            return -1;     // LCOV_EXCL_LINE
+            return -1;       // LCOV_EXCL_LINE
         }
         if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return -1; // LCOV_EXCL_LINE
+            return -1;          // LCOV_EXCL_LINE
         }
     }
 
     /* XXX: Move these to setup functions as well */
     if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            m, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
+            m, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type)
+        < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF((PyObject*)&PyObjCMetaClass_Type);
@@ -2388,42 +2391,37 @@ static int mod_exec_module(PyObject* m)
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* This extension does not use the CPython API other than initializing
          * the module, hence is safe with subinterpreters and per-interpreter
          * GILs
          */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_MULTIPLE_INTERPRETERS_NOT_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "_objc",
-    .m_doc = NULL,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "_objc",
+    .m_doc      = NULL,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit__objc(void);
@@ -2432,6 +2430,5 @@ PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit__objc(void
 {
     return PyModuleDef_Init(&mod_module);
 }
-
 
 NS_ASSUME_NONNULL_END

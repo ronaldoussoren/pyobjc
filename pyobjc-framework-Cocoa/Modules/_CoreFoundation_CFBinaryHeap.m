@@ -2,8 +2,7 @@
  * Manual wrappers for CFBinaryHeap
  */
 
-@interface
-NSObject (OC_Comparison)
+@interface NSObject (OC_Comparison)
 - (NSComparisonResult)compare:(NSObject*)other;
 @end
 

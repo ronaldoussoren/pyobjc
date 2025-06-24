@@ -18,8 +18,7 @@
 + (NSArray*)fetchArray:(NSCoder*)coder;
 @end
 
-@interface
-NSObject (IKnowWhatImDoing)
+@interface NSObject (IKnowWhatImDoing)
 - (id)call;
 @end
 
@@ -55,8 +54,7 @@ NSObject (IKnowWhatImDoing)
 + (int)fetchInt:(NSCoder*)coder
 {
     int i;
-    [[clang::suppress]]
-    [coder decodeValueOfObjCType:@encode(int) at:&i];
+    [[clang::suppress]] [coder decodeValueOfObjCType:@encode(int) at:&i];
     return i;
 }
 
@@ -65,11 +63,9 @@ NSObject (IKnowWhatImDoing)
     int i;
 
     if (@available(macOS 10.13, *)) {
-        [[clang::suppress]]
-        [coder decodeValueOfObjCType:@encode(int) at:&i size:size];
+        [[clang::suppress]] [coder decodeValueOfObjCType:@encode(int) at:&i size:size];
     } else {
-        [[clang::suppress]]
-        [coder decodeValueOfObjCType:@encode(int) at:&i];
+        [[clang::suppress]] [coder decodeValueOfObjCType:@encode(int) at:&i];
     }
     return i;
 }
@@ -77,15 +73,14 @@ NSObject (IKnowWhatImDoing)
 + (double)fetchDouble:(NSCoder*)coder
 {
     double i;
-    [[clang::suppress]]
-    [coder decodeValueOfObjCType:@encode(double) at:&i];
+    [[clang::suppress]] [coder decodeValueOfObjCType:@encode(double) at:&i];
     return i;
 }
 
 + (NSObject*)fetchData:(NSCoder*)coder forKey:(NSString*)key
 {
-    const void*      data;
-    NSUInteger length;
+    const void* data;
+    NSUInteger  length;
 
     data = [coder decodeBytesForKey:key returnedLength:&length];
     if (data == NULL) {
@@ -135,66 +130,62 @@ NSObject (IKnowWhatImDoing)
 @end
 
 @implementation OC_RaisingCoder
-- (void) encodeArrayOfObjCType:(const char *) type
-                         count:(NSUInteger) count
-                            at:(const void *) array
+- (void)encodeArrayOfObjCType:(const char*)type
+                        count:(NSUInteger)count
+                           at:(const void*)array
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (void) encodeBytes:(const void *) byteaddr
-              length:(NSUInteger) length
+- (void)encodeBytes:(const void*)byteaddr length:(NSUInteger)length
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (void) encodeBytes:(const uint8_t *) bytes
-              length:(NSUInteger) length
-              forKey:(NSString *) key
+- (void)encodeBytes:(const uint8_t*)bytes length:(NSUInteger)length forKey:(NSString*)key
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (void) encodeValueOfObjCType:(const char *) type
-                            at:(const void *) addr
+- (void)encodeValueOfObjCType:(const char*)type at:(const void*)addr
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (void) encodeValuesOfObjCTypes:(const char *) types, ...
+- (void)encodeValuesOfObjCTypes:(const char*)types, ...
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (void)decodeValueOfObjCType:(const char *)type
-                           at:(void *)data
+- (void)decodeValueOfObjCType:(const char*)type at:(void*)data
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (void)decodeValueOfObjCType:(const char *)type
-                           at:(void *)data
-                         size:(NSUInteger)size
+- (void)decodeValueOfObjCType:(const char*)type at:(void*)data size:(NSUInteger)size
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (void)decodeValuesOfObjCTypes:(const char *)types, ...
+- (void)decodeValuesOfObjCTypes:(const char*)types, ...
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (void)decodeArrayOfObjCType:(const char *)itemType count:(NSUInteger)count at:(void *)array
+- (void)decodeArrayOfObjCType:(const char*)itemType
+                        count:(NSUInteger)count
+                           at:(void*)array
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (nullable void *)decodeBytesWithReturnedLength:(NSUInteger *)lengthp
+- (nullable void*)decodeBytesWithReturnedLength:(NSUInteger*)lengthp
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
 
-- (nullable const uint8_t *)decodeBytesForKey:(NSString *)key returnedLength:(nullable NSUInteger *)lengthp
+- (nullable const uint8_t*)decodeBytesForKey:(NSString*)key
+                              returnedLength:(nullable NSUInteger*)lengthp
 {
     @throw [NSException exceptionWithName:@"raising coder" reason:nil userInfo:nil];
 }
@@ -205,13 +196,14 @@ NSObject (IKnowWhatImDoing)
 @end
 
 @implementation OC_NilBytes
-- (nullable void *)decodeBytesWithReturnedLength:(NSUInteger *)lengthp
+- (nullable void*)decodeBytesWithReturnedLength:(NSUInteger*)lengthp
 {
     *lengthp = 42;
     return NULL;
 }
 
-- (nullable const uint8_t *)decodeBytesForKey:(NSString *)key returnedLength:(nullable NSUInteger *)lengthp
+- (nullable const uint8_t*)decodeBytesForKey:(NSString*)key
+                              returnedLength:(nullable NSUInteger*)lengthp
 {
     *lengthp = 21;
     return NULL;
@@ -220,27 +212,26 @@ NSObject (IKnowWhatImDoing)
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static int mod_exec_module(PyObject* m)
+static int
+mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "PyObjC_TestCodingClass",
+                           "PyObjC_TestCodingClass",
                            PyObjC_IdToPython([PyObjC_TestCodingClass class]))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "OC_RaisingCoder",
-                           PyObjC_IdToPython([OC_RaisingCoder class]))
+                           "OC_RaisingCoder", PyObjC_IdToPython([OC_RaisingCoder class]))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "OC_NilBytes",
-                           PyObjC_IdToPython([OC_NilBytes class]))
+                           "OC_NilBytes", PyObjC_IdToPython([OC_NilBytes class]))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
@@ -248,42 +239,37 @@ static int mod_exec_module(PyObject* m)
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* This extension does not use the CPython API other than initializing
          * the module, hence is safe with subinterpreters and per-interpreter
          * GILs
          */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "coding",
-    .m_doc = NULL,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "coding",
+    .m_doc      = NULL,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit_coding(void);

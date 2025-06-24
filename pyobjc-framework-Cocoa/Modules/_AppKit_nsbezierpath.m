@@ -36,16 +36,16 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* s
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (PyObjCIMP_Check(method)) {
-                res = ((NSBezierPathElement(*)(id, SEL, NSInteger,
-                                               NSPoint*))PyObjCIMP_GetIMP(method))(
+                res = ((NSBezierPathElement (*)(id, SEL, NSInteger,
+                                                NSPoint*))PyObjCIMP_GetIMP(method))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), idx,
                     points);
             } else {
                 super.super_class = PyObjCSelector_GetClass(method);
                 super.receiver    = PyObjCObject_GetObject(self);
 
-                res = ((NSBezierPathElement(*)(struct objc_super*, SEL, NSInteger,
-                                               NSPoint*))objc_msgSendSuper)(
+                res = ((NSBezierPathElement (*)(struct objc_super*, SEL, NSInteger,
+                                                NSPoint*))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), idx, points);
             }
         } @catch (NSException* localException) {
@@ -137,8 +137,8 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
     }
 
     for (i = 0; i < len; i++) {
-        int err = PyObjC_PythonToObjC(@encode(NSPoint), PyTuple_GET_ITEM(seq, i),
-                                      points + i);
+        int err =
+            PyObjC_PythonToObjC(@encode(NSPoint), PyTuple_GET_ITEM(seq, i), points + i);
         if (err == -1) {
             return NULL;
         }
@@ -180,117 +180,116 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
                                                     PyObject* methodsignature)
 {
     Py_INCREF(callable);
-    NSBezierPathElement (^block)(NSBezierPath*, NSInteger, NSPointArray) =
-        ^(NSBezierPath* self, NSInteger idx, NSPointArray points) {
-          PyObject*           result;
-          PyObject*           seq     = NULL;
-          PyObject*           arglist = NULL;
-          PyObject*           v;
-          int                 err;
-          int                 pointCount;
-          int                 i;
-          PyObject*           pyself = NULL;
-          int                 cookie = 0;
-          NSBezierPathElement element;
+    NSBezierPathElement (^block)(NSBezierPath*, NSInteger, NSPointArray) = ^(
+        NSBezierPath* self, NSInteger idx, NSPointArray points) {
+      PyObject*           result;
+      PyObject*           seq     = NULL;
+      PyObject*           arglist = NULL;
+      PyObject*           v;
+      int                 err;
+      int                 pointCount;
+      int                 i;
+      PyObject*           pyself = NULL;
+      int                 cookie = 0;
+      NSBezierPathElement element;
 
-          PyGILState_STATE state = PyGILState_Ensure();
+      PyGILState_STATE state = PyGILState_Ensure();
 
-          arglist = PyTuple_New(2);
-          if (arglist == NULL)
-              goto error;
+      arglist = PyTuple_New(2);
+      if (arglist == NULL)
+          goto error;
 
-          pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL)
-              goto error;
-          PyTuple_SetItem(arglist, 0, pyself);
-          Py_INCREF(pyself);
+      pyself = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL)
+          goto error;
+      PyTuple_SetItem(arglist, 0, pyself);
+      Py_INCREF(pyself);
 
-          v = PyLong_FromLong(idx);
-          if (v == NULL)
-              goto error;
-          PyTuple_SetItem(arglist, 1, v);
+      v = PyLong_FromLong(idx);
+      if (v == NULL)
+          goto error;
+      PyTuple_SetItem(arglist, 1, v);
 
-          result = PyObject_Call((PyObject*)callable, arglist, NULL);
-          Py_DECREF(arglist);
-          arglist = NULL;
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-          pyself = NULL;
-          if (result == NULL)
-              goto error;
+      result = PyObject_Call((PyObject*)callable, arglist, NULL);
+      Py_DECREF(arglist);
+      arglist = NULL;
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      pyself = NULL;
+      if (result == NULL)
+          goto error;
 
-          seq = PySequence_Tuple(result);
-          Py_DECREF(result);
-          if (seq == NULL)
-              goto error;
+      seq = PySequence_Tuple(result);
+      Py_DECREF(result);
+      if (seq == NULL)
+          goto error;
 
-          if (PyTuple_GET_SIZE(seq) != 2) {
-              PyErr_SetString(PyExc_ValueError, "should return tuple of length 2");
-              goto error;
-          }
+      if (PyTuple_GET_SIZE(seq) != 2) {
+          PyErr_SetString(PyExc_ValueError, "should return tuple of length 2");
+          goto error;
+      }
 
-          v = PyTuple_GET_ITEM(seq, 0);
+      v = PyTuple_GET_ITEM(seq, 0);
 
-          err = PyObjC_PythonToObjC(@encode(NSBezierPathElement), v, &element);
-          if (err == -1)
-              goto error;
+      err = PyObjC_PythonToObjC(@encode(NSBezierPathElement), v, &element);
+      if (err == -1)
+          goto error;
 
-          v = PySequence_Tuple(PyTuple_GET_ITEM(seq, 1));
-          if (v == NULL)
-              goto error;
+      v = PySequence_Tuple(PyTuple_GET_ITEM(seq, 1));
+      if (v == NULL)
+          goto error;
 
-          switch (element) {
-          case NSBezierPathElementMoveTo:
-              pointCount = 1;
-              break;
-          case NSBezierPathElementLineTo:
-              pointCount = 1;
-              break;
-          case NSBezierPathElementCubicCurveTo:
-              pointCount = 3;
-              break;
+      switch (element) {
+      case NSBezierPathElementMoveTo:
+          pointCount = 1;
+          break;
+      case NSBezierPathElementLineTo:
+          pointCount = 1;
+          break;
+      case NSBezierPathElementCubicCurveTo:
+          pointCount = 3;
+          break;
 #if PyObjC_BUILD_RELEASE >= 1400
-          case NSBezierPathElementQuadraticCurveTo:
-              pointCount = 1;
-              break;
+      case NSBezierPathElementQuadraticCurveTo:
+          pointCount = 1;
+          break;
 #endif
-          case NSBezierPathElementClosePath:
-              pointCount = 0;
-              break;
-          default:
-              PyErr_SetString(PyExc_ValueError, "Return[0] should be NS{*}PathElement");
-              Py_DECREF(v);
-              goto error;
-          }
-
-          if (PyTuple_GET_SIZE(v) != pointCount) {
-              PyErr_SetString(PyExc_ValueError, "wrong number of points");
-              Py_DECREF(v);
-              goto error;
-          }
-
-          for (i = 0; i < pointCount; i++) {
-              err = PyObjC_PythonToObjC(@encode(NSPoint), PyTuple_GET_ITEM(v, i),
-                                        points + i);
-              if (err == -1) {
-                  Py_DECREF(v);
-                  goto error;
-              }
-          }
-
+      case NSBezierPathElementClosePath:
+          pointCount = 0;
+          break;
+      default:
+          PyErr_SetString(PyExc_ValueError, "Return[0] should be NS{*}PathElement");
           Py_DECREF(v);
-          Py_DECREF(seq);
-          PyGILState_Release(state);
-          return element;
+          goto error;
+      }
 
-      error:
-          Py_XDECREF(arglist);
-          if (pyself) {
-              PyObjCObject_ReleaseTransient(pyself, cookie);
+      if (PyTuple_GET_SIZE(v) != pointCount) {
+          PyErr_SetString(PyExc_ValueError, "wrong number of points");
+          Py_DECREF(v);
+          goto error;
+      }
+
+      for (i = 0; i < pointCount; i++) {
+          err = PyObjC_PythonToObjC(@encode(NSPoint), PyTuple_GET_ITEM(v, i), points + i);
+          if (err == -1) {
+              Py_DECREF(v);
+              goto error;
           }
-          Py_XDECREF(seq);
-          PyObjCErr_ToObjCWithGILState(&state);
-          __builtin_unreachable();
-        };
+      }
+
+      Py_DECREF(v);
+      Py_DECREF(seq);
+      PyGILState_Release(state);
+      return element;
+
+  error:
+      Py_XDECREF(arglist);
+      if (pyself) {
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+      Py_XDECREF(seq);
+      PyObjCErr_ToObjCWithGILState(&state);
+      __builtin_unreachable();
+    };
     return imp_implementationWithBlock(block);
 }
 

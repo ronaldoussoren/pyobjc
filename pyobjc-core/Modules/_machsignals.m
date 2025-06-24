@@ -37,16 +37,16 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
     PyObjC_BEGIN_WITH_GIL
         PyObject* result;
         PyObject* py_signum = PyLong_FromLong((long)signum);
-        if (py_signum == NULL) {            // LCOV_BR_EXCL_LINE
+        if (py_signum == NULL) {      // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-        } else { // LCOV_EXCL_LINE
+        } else {                      // LCOV_EXCL_LINE
             r = PyDict_GetItemRef(signalmapping, py_signum, &callable);
-            switch(r) { // LCOV_BR_EXCL_LINE
+            switch (r) { // LCOV_BR_EXCL_LINE
             case 0:
                 Py_DECREF(py_signum);
                 PyObjC_GIL_RETURNVOID;
             case -1:
-                Py_DECREF(py_signum); // LCOV_EXCL_LINE
+                Py_DECREF(py_signum);     // LCOV_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             case 1:
 #if PY_VERSION_HEX >= 0x03090000
@@ -58,11 +58,11 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
                 Py_DECREF(callable);
                 if (result == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
-                } else {  // LCOV_EXCL_LINE
+                } else { // LCOV_EXCL_LINE
                     Py_DECREF(result);
                 }
             }
-        }  // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 }
 
@@ -112,23 +112,24 @@ static PyMethodDef mod_methods[] = {
      machsignals_handleSignal_doc},
     {0, 0, 0, 0}};
 
-static int mod_exec_module(PyObject* m)
+static int
+mod_exec_module(PyObject* m)
 {
     CFMachPortRef      e_port;
     CFRunLoopSourceRef e_rls;
 
     if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
-        return -1;               // LCOV_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
     signalmapping = PyDict_New();
     if (!signalmapping) { // LCOV_BR_EXCL_LINE
-        return -1;      // LCOV_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
     }
 
     if (PyModule_AddObject(m, "_signalmapping", signalmapping) // LCOV_BR_EXCL_LINE
         == -1) {                                               // LCOV_BR_EXCL_LINE
-        return -1;                                           // LCOV_EXCL_LINE
+        return -1;                                             // LCOV_EXCL_LINE
     }
 
     e_port      = CFMachPortCreate(NULL, SIGCallback, NULL, NULL);
@@ -140,50 +141,45 @@ static int mod_exec_module(PyObject* m)
     return 0;
 }
 
-
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* This extension does not use the CPython API other than initializing
          * the module, hence is safe with subinterpreters and per-interpreter
          * GILs
          */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_MULTIPLE_INTERPRETERS_NOT_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
         /* The code in this extension should be safe to use without the GIL */
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "_machsignals",
-    .m_doc = machsignals_doc,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "_machsignals",
+    .m_doc      = machsignals_doc,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit__machsignals(void);
 
-PyObject* __attribute__((__visibility__("default"))) PyInit__machsignals(void)
+PyObject* __attribute__((__visibility__("default")))
+PyInit__machsignals(void)
 {
     return PyModuleDef_Init(&mod_module);
 }

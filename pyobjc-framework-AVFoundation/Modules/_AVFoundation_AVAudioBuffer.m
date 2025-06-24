@@ -83,14 +83,14 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (PyObjCIMP_Check(method)) {
-                res = ((int16_t * *(*)(id, SEL)) PyObjCIMP_GetIMP(method))(
+                res = ((int16_t** (*)(id, SEL))PyObjCIMP_GetIMP(method))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
             } else {
                 super.super_class = PyObjCSelector_GetClass(method);
                 super.receiver    = PyObjCObject_GetObject(self);
 
-                res = ((int16_t * *(*)(struct objc_super*, SEL))
-                           objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
+                res = ((int16_t** (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method));
             }
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
@@ -145,14 +145,14 @@ call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (PyObjCIMP_Check(method)) {
-                res = ((int32_t * *(*)(id, SEL)) PyObjCIMP_GetIMP(method))(
+                res = ((int32_t** (*)(id, SEL))PyObjCIMP_GetIMP(method))(
                     PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method));
             } else {
                 super.super_class = PyObjCSelector_GetClass(method);
                 super.receiver    = PyObjCObject_GetObject(self);
 
-                res = ((int32_t * *(*)(struct objc_super*, SEL))
-                           objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
+                res = ((int32_t** (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method));
             }
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);

@@ -109,9 +109,8 @@ PyObjCClass_UnbuildClass(Class objc_class __attribute__((__unused__)))
  * against creating the same intermedia class twice in the free threaded
  * build.
  */
-static PyMutex intermediate_mutex = { 0 };
+static PyMutex intermediate_mutex = {0};
 #endif
-
 
 static Class _Nullable build_intermediate_class(Class base_class, char* name)
 {
@@ -233,7 +232,7 @@ is_class_method(PyObject* value)
 {
     // XXX: 'bytes' values are ignored???
     if (PyBytes_Check(value)) { // LCOV_BR_EXCL_LINE
-        return 1; // LCOV_EXCL_LINE
+        return 1;               // LCOV_EXCL_LINE
     }
     if (!PyObjCSelector_Check(value)) {
         return 0;
@@ -267,7 +266,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                                        PyObject* class_dict, PyObject* meta_dict,
                                        PyObject* hiddenSelectors,
                                        PyObject* hiddenClassSelectors,
-                                       int* has_dunder_new)
+                                       int*      has_dunder_new)
 {
     PyObject*  value = NULL;
     Py_ssize_t i;
@@ -299,8 +298,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         return Nil;              // LCOV_EXCL_LINE
     }
 
-    PyObject* rv = PyObjC_ProcessClassDict(name, class_dict, meta_dict, py_superclass,
-                        protocols, hiddenSelectors, hiddenClassSelectors);
+    PyObject* rv =
+        PyObjC_ProcessClassDict(name, class_dict, meta_dict, py_superclass, protocols,
+                                hiddenSelectors, hiddenClassSelectors);
     if (rv == NULL) {
         goto error_cleanup;
     }
@@ -400,7 +400,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         PyObject* wrapped_protocol;
         wrapped_protocol = PyList_GetItemRef(protocols, i);
         if (wrapped_protocol == NULL) { // LCOV_BR_EXCL_LINE
-            goto error_cleanup; // LCOV_EXCL_LINE
+            goto error_cleanup;         // LCOV_EXCL_LINE
         }
         if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
             Py_DECREF(wrapped_protocol);
@@ -408,8 +408,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         }
 
         if (!class_addProtocol( // LCOV_BR_EXCL_LINE
-                new_class,
-                PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+                new_class, PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
             // LCOV_EXCL_START
             Py_DECREF(wrapped_protocol);
             goto error_cleanup;
@@ -637,7 +636,7 @@ static void
 free_ivars(id self, PyObject* cls)
 {
     /* Free all instance variables introduced through python */
-    Ivar var;
+    Ivar      var;
     PyObject* cur_cls;
 
     var = class_getInstanceVariable(PyObjCClass_GetClass(cls), "__dict__");
@@ -734,8 +733,9 @@ free_ivars(id self, PyObject* cls)
                     @try {
                         [*(id*)(((char*)self) + ivar_getOffset(var)) autorelease];
 
-                    } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-                        NSLog(@"ignoring exception %@ in destructor", localException); // LCOV_EXCL_LINE
+                    } @catch (NSObject* localException) {             // LCOV_EXCL_LINE
+                        NSLog(@"ignoring exception %@ in destructor", // LCOV_EXCL_LINE
+                              localException);                        // LCOV_EXCL_LINE
                     }
                 Py_END_ALLOW_THREADS
                 *(id*)(((char*)self) + ivar_getOffset(var)) = nil;
@@ -771,7 +771,7 @@ free_ivars(id self, PyObject* cls)
         } else { // LCOV_EXCL_LINE
             cur_cls = PyTuple_GET_ITEM(o, 0);
             if (cur_cls == (PyObject*)&PyObjCClass_Type) { // LCOV_BR_EXCL_LINE
-                cur_cls = NULL; // LCOV_EXCL_LINE
+                cur_cls = NULL;                            // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
             Py_DECREF(o);
         } // LCOV_EXCL_LINE
@@ -850,7 +850,7 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
     spr.super_class = super_cls = (Class _Nonnull)class_getSuperclass((Class)userdata);
     spr.receiver                = self;
     copy =
-        ((id(*)(struct objc_super*, SEL, NSZone*))objc_msgSendSuper)(&spr, _meth, zone);
+        ((id (*)(struct objc_super*, SEL, NSZone*))objc_msgSendSuper)(&spr, _meth, zone);
 
     if (copy == nil) {
         *(id*)resp = nil;
@@ -974,7 +974,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
 
     @try {
         theSelector = [invocation selector];
-    // LCOV_EXCL_START
+        // LCOV_EXCL_START
     } @catch (NSObject* localException) {
         Py_DECREF(pyself);
         PyGILState_Release(state);
@@ -1060,7 +1060,7 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
     @try {
         spr.super_class = (Class _Nonnull)class_getSuperclass((Class _Nonnull)userdata);
         spr.receiver    = self;
-        *((id*)retval)  = ((id(*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(
+        *((id*)retval)  = ((id (*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(
             &spr, _meth, key);
     } @catch (NSObject* localException) {
 

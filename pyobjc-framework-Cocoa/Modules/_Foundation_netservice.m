@@ -94,8 +94,8 @@ call_NSNetService_addresses(PyObject* method, PyObject* self, PyObject* const* a
             super.super_class = PyObjCSelector_GetClass(method);
             super.receiver    = PyObjCObject_GetObject(self);
 
-            res = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super, @selector
-                                                                      (addresses));
+            res = ((id (*)(struct objc_super*, SEL))objc_msgSendSuper)(&super, @selector
+                                                                       (addresses));
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
             res = nil;

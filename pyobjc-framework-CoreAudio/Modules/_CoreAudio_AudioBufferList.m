@@ -38,7 +38,7 @@ abl_length(PyObject* self)
     if ((((struct audio_buffer_list*)self)->abl_list) == NULL) {
         result = 0;
     } else {
-        result =  ((struct audio_buffer_list*)self)->abl_list->mNumberBuffers;
+        result = ((struct audio_buffer_list*)self)->abl_list->mNumberBuffers;
     }
     Py_END_CRITICAL_SECTION();
     return result;
@@ -47,7 +47,7 @@ abl_length(PyObject* self)
 static PyObject*
 abl_get_item(PyObject* _self, Py_ssize_t idx)
 {
-    struct audio_buffer_list* self = ((struct audio_buffer_list*)_self);
+    struct audio_buffer_list* self   = ((struct audio_buffer_list*)_self);
     PyObject*                 result = NULL;
 
     Py_BEGIN_CRITICAL_SECTION(self);
@@ -90,7 +90,8 @@ abl_get_item(PyObject* _self, Py_ssize_t idx)
         PyTuple_SET_ITEM(self->abl_items, idx, result);
         Py_INCREF(result);
     }
-end:(void)0;
+end:
+    (void)0;
     Py_END_CRITICAL_SECTION();
     return result;
 }

@@ -9,7 +9,7 @@ typedef struct {
     PyObjCMethodSignature* signature;
     SEL                    selector;
     int                    flags;
-    vectorcallfunc vectorcall;
+    vectorcallfunc         vectorcall;
     ffi_cif* _Nullable cif;
 } PyObjCIMPObject;
 
@@ -115,7 +115,7 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
                                                  size_t nargsf,
                                                  PyObject* _Nullable kwnames)
 {
-    PyObject*        pyself;
+    PyObject* pyself;
 
     assert(((PyObjCIMPObject*)_self)->signature->shortcut_signature);
 
@@ -203,8 +203,8 @@ PyDoc_STRVAR(
     "True if this is method returns a a freshly allocated object (uninitialized)\n"
     "\n"
     "NOTE: This field is used by the implementation.");
-static PyObject* _Nullable
-imp_is_alloc(PyObject* self __attribute__((__unused__)), void* closure __attribute__((__unused__)))
+static PyObject* _Nullable imp_is_alloc(PyObject* self __attribute__((__unused__)),
+                                        void*     closure __attribute__((__unused__)))
 {
     if (PyErr_Warn(PyObjCExc_DeprecationWarning, "isAlloc is always false") < 0) {
         return NULL;
@@ -291,7 +291,6 @@ static PyMemberDef imp_members[] = {{
                                         .name = NULL /* SENTINEL */
                                     }};
 
-
 static PyType_Slot imp_slots[] = {
     {.slot = Py_tp_repr, .pfunc = (void*)&imp_repr},
     {.slot = Py_tp_dealloc, .pfunc = (void*)&imp_dealloc},
@@ -344,7 +343,8 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
 
     result->flags = flags;
 
-    if (signature && signature->shortcut_signature && (callfunc == PyObjCFFI_Caller)) { // LCOV_BR_EXCL_LINE
+    if (signature && signature->shortcut_signature
+        && (callfunc == PyObjCFFI_Caller)) { // LCOV_BR_EXCL_LINE
         assert(signature->shortcut_signature);
         result->vectorcall = imp_vectorcall_simple;
     } else {
@@ -390,12 +390,13 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            retval = ((IMP(*)(Class, SEL, SEL))objc_msgSend)( // LCOV_BR_EXCL_LINE
-                PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method), selector); // LCOV_BR_EXCL_LINE
+            retval = ((IMP (*)(Class, SEL, SEL))objc_msgSend)( // LCOV_BR_EXCL_LINE
+                PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method),
+                selector); // LCOV_BR_EXCL_LINE
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
             PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-            retval = NULL; // LCOV_EXCL_LINE
+            retval = NULL;                      // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -437,7 +438,7 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
     if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
@@ -479,12 +480,14 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            retval = ((IMP(*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
-                &super, PyObjCSelector_GetSelector(method), selector); // LCOV_BR_EXCL_LINE
+            retval = ((IMP (*)(struct objc_super*, SEL,
+                               SEL))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
+                &super, PyObjCSelector_GetSelector(method),
+                selector); // LCOV_BR_EXCL_LINE
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
             PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
-            retval = NULL; // LCOV_EXCL_LINE
+            retval = NULL;                      // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 

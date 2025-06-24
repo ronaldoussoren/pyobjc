@@ -202,7 +202,7 @@ NS_ASSUME_NONNULL_BEGIN
         pytype = [coder decodeInt32ForKey:@"pytype"];
 
     } else {
-#if  MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
         /* Old deployment target, modern SDK */
         if (@available(macOS 10.13, *)) {
             [coder decodeValueOfObjCType:@encode(int) at:&pytype size:sizeof(pytype)];
@@ -217,7 +217,6 @@ NS_ASSUME_NONNULL_BEGIN
         /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&pytype];
 #endif
-
     }
 
     self = [super init];
@@ -229,11 +228,11 @@ NS_ASSUME_NONNULL_BEGIN
     switch (pytype) {
     case 1: {
         PyObjC_BEGIN_WITH_GIL
-            NSDate*   temp    = [[NSDate alloc] initWithCoder:coder];
+            NSDate* temp = [[NSDate alloc] initWithCoder:coder];
 
             value = PyObjC_DateFromTimestamp([temp timeIntervalSince1970]);
             [temp release];
-            if (value == NULL) { // LCOV_BR_EXCL_LINE
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
@@ -242,12 +241,12 @@ NS_ASSUME_NONNULL_BEGIN
     case 2: {
         PyObjC_BEGIN_WITH_GIL
 
-            id        c_info = [coder decodeObjectForKey:@"py_tzinfo"];
-            NSDate*   temp   = [[NSDate alloc] initWithCoder:coder];
+            id      c_info = [coder decodeObjectForKey:@"py_tzinfo"];
+            NSDate* temp   = [[NSDate alloc] initWithCoder:coder];
 
             value = PyObjC_DatetimeFromTimestamp([temp timeIntervalSince1970], c_info);
             [temp release];
-            if (value == NULL) { // LCOV_BR_EXCL_LINE
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL

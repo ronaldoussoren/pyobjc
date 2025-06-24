@@ -10,7 +10,6 @@
 
 #include <netdb.h>
 
-
 NS_ASSUME_NONNULL_BEGIN
 
 /*
@@ -41,13 +40,17 @@ static PyObject* PyObjCOptions_Type;
 #define STR(v) _STR(v)
 
 #ifdef Py_GIL_DISABLED
-#   define MUTEX_FOR(VAR)        static PyMutex VAR##_lock = { 0 };
-#   define LOCK(VAR)             PyMutex_Lock(&VAR##_lock)
-#   define UNLOCK(VAR)           PyMutex_Unlock(&VAR##_lock)
+#define MUTEX_FOR(VAR) static PyMutex VAR##_lock = {0};
+#define LOCK(VAR) PyMutex_Lock(&VAR##_lock)
+#define UNLOCK(VAR) PyMutex_Unlock(&VAR##_lock)
 #else
-#   define MUTEX_FOR(VAR)
-#   define LOCK(VAR) do {} while(0)
-#   define UNLOCK(VAR) do {} while(0)
+#define MUTEX_FOR(VAR)
+#define LOCK(VAR)                                                                        \
+    do {                                                                                 \
+    } while (0)
+#define UNLOCK(VAR)                                                                      \
+    do {                                                                                 \
+    } while (0)
 #endif
 
 #define SSIZE_T_PROP(NAME, VAR, DFLT)                                                    \
@@ -192,7 +195,10 @@ static PyObject* PyObjCOptions_Type;
 
 #define GETSET(NAME, DOC)                                                                \
     {                                                                                    \
-        .name = STR(NAME), .get = NAME##_get, .set = NAME##_set, .doc = DOC,             \
+        .name = STR(NAME),                                                               \
+        .get  = NAME##_get,                                                              \
+        .set  = NAME##_set,                                                              \
+        .doc  = DOC,                                                                     \
     }
 
 /* Public properties */
@@ -241,7 +247,7 @@ bundle_hack_get(PyObject* s __attribute__((__unused__)),
 {
     /* XXX: Need to test on a 10.9 VM to check if this option is still needed... */
     if ([OC_NSBundleHack bundleHackUsed]) { // LCOV_BR_EXCL_LINE
-        Py_RETURN_TRUE; // LCOV_EXCL_LINE
+        Py_RETURN_TRUE;                     // LCOV_EXCL_LINE
     } else {
         Py_RETURN_FALSE;
     }
@@ -287,7 +293,7 @@ deprecation_warnings_set(PyObject* s __attribute__((__unused__)), PyObject* newV
          */
         char* text = (char*)PyUnicode_AsUTF8(newVal);
         if (text == NULL) { // LCOV_BR_EXCL_LINE
-            return -1; // LCOV_EXCL_LINE
+            return -1;      // LCOV_EXCL_LINE
         }
 
         unsigned long major = 0;
@@ -377,18 +383,12 @@ static PyGetSetDef options_getset[] = {
            "Private helper used for splitting a class dict into parts"),
     GETSET(_setDunderNew,
            "Private helper used for setting __new__ of a new Python subclass"),
-    GETSET(_genericNewClass,
-           "Class of the generic __new__ implementation"),
-    GETSET(_ArrayType,
-           "set to array.ArrayType"),
-    GETSET(_deepcopy,
-           "set to copy.deepcopy"),
-    GETSET(_socket_error,
-           "set to socket.error"),
-    GETSET(_socket_gaierror,
-           "set to socket.gaierror"),
-    GETSET(_c_void_p,
-           "set to ctypes.c_void_p"),
+    GETSET(_genericNewClass, "Class of the generic __new__ implementation"),
+    GETSET(_ArrayType, "set to array.ArrayType"),
+    GETSET(_deepcopy, "set to copy.deepcopy"),
+    GETSET(_socket_error, "set to socket.error"),
+    GETSET(_socket_gaierror, "set to socket.gaierror"),
+    GETSET(_c_void_p, "set to ctypes.c_void_p"),
     {
         .name = "deprecation_warnings",
         .get  = deprecation_warnings_get,
@@ -403,7 +403,6 @@ static PyGetSetDef options_getset[] = {
 
     {0, 0, 0, 0, 0} /* Sentinel */
 };
-
 
 /*
  * Helper for calling 'options._nscoder_encoder'.
@@ -420,20 +419,20 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
     UNLOCK(PyObjC_Encoder);
 
     if (encoder != Py_None) {
-            PyObject* cdr = id_to_python(coder);
-            if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
-                return -1; // LCOV_EXCL_LINE
-            }
+        PyObject* cdr = id_to_python(coder);
+        if (cdr == NULL) { // LCOV_BR_EXCL_LINE
+            return -1;     // LCOV_EXCL_LINE
+        }
 
-            PyObject* args[3] = {NULL, pyObject, cdr};
+        PyObject* args[3] = {NULL, pyObject, cdr};
 
-            PyObject* r = PyObject_Vectorcall(encoder, args + 1,
-                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            Py_DECREF(cdr);
-            Py_XDECREF(r);
-            Py_DECREF(encoder);
+        PyObject* r = PyObject_Vectorcall(encoder, args + 1,
+                                          2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        Py_DECREF(cdr);
+        Py_XDECREF(r);
+        Py_DECREF(encoder);
 
-            return r == NULL?-1:0;
+        return r == NULL ? -1 : 0;
     } else {
         PyErr_SetString(PyExc_ValueError, "encoding Python objects is not supported");
         Py_DECREF(encoder);
@@ -446,7 +445,7 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
  *
  * GIL must be held when calling.
  */
-PyObject* _Nullable  PyObjC_decodeWithCoder(NSCoder* coder, id self)
+PyObject* _Nullable PyObjC_decodeWithCoder(NSCoder* coder, id self)
 {
     PyObject* decoder;
 
@@ -465,7 +464,7 @@ PyObject* _Nullable  PyObjC_decodeWithCoder(NSCoder* coder, id self)
         }
 
         PyObject* self_as_python = PyObjCObject_New(self, 0, YES);
-        if (self_as_python == NULL) {   // LCOV_BR_EXCL_LINE
+        if (self_as_python == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(cdr);
             Py_DECREF(decoder);
@@ -473,7 +472,8 @@ PyObject* _Nullable  PyObjC_decodeWithCoder(NSCoder* coder, id self)
             // LCOV_EXCL_STOP
         }
 
-        PyObject* setvalue_method = PyObject_GetAttr(self_as_python, PyObjCNM_pyobjcSetValue_);
+        PyObject* setvalue_method =
+            PyObject_GetAttr(self_as_python, PyObjCNM_pyobjcSetValue_);
         Py_CLEAR(self_as_python);
         if (setvalue_method == NULL) { // LCOV_BR_EXCL_LINE
             /* Cannot fail with the classes we use this function in */
@@ -487,7 +487,7 @@ PyObject* _Nullable  PyObjC_decodeWithCoder(NSCoder* coder, id self)
         PyObject* args[3] = {NULL, cdr, setvalue_method};
 
         PyObject* result = PyObject_Vectorcall(decoder, args + 1,
-                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
         Py_DECREF(cdr);
         Py_DECREF(decoder);
@@ -514,8 +514,8 @@ PyObject* _Nullable PyObjC_Copy(PyObject* arg)
     if (copy != Py_None) {
         PyObject* args[2] = {NULL, arg};
 
-        PyObject* result = PyObject_Vectorcall(copy, args + 1,
-                                   1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* result =
+            PyObject_Vectorcall(copy, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(copy);
         return result;
     } else {
@@ -526,7 +526,8 @@ PyObject* _Nullable PyObjC_Copy(PyObject* arg)
     }
 }
 
-int PyObjC_GetKey(PyObject* object, id key, id* value)
+int
+PyObjC_GetKey(PyObject* object, id key, id* value)
 {
     PyObject* func;
 
@@ -542,7 +543,7 @@ int PyObjC_GetKey(PyObject* object, id key, id* value)
     }
 
     PyObject* keyName = id_to_python(key);
-    if (keyName == NULL) { //LCOV_BR_EXCL_LINE
+    if (keyName == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(func);
         return -1;
@@ -551,8 +552,8 @@ int PyObjC_GetKey(PyObject* object, id key, id* value)
 
     PyObject* args[3] = {NULL, object, keyName};
 
-    PyObject* val = PyObject_Vectorcall(func, args + 1,
-                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* val =
+        PyObject_Vectorcall(func, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(keyName);
     Py_DECREF(func);
 
@@ -565,7 +566,8 @@ int PyObjC_GetKey(PyObject* object, id key, id* value)
     return result;
 }
 
-int PyObjC_GetKeyPath(PyObject* object, id keypath, id* value)
+int
+PyObjC_GetKeyPath(PyObject* object, id keypath, id* value)
 {
     PyObject* func;
 
@@ -590,8 +592,8 @@ int PyObjC_GetKeyPath(PyObject* object, id keypath, id* value)
 
     PyObject* args[3] = {NULL, object, keyName};
 
-    PyObject* val = PyObject_Vectorcall(func, args + 1,
-                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* val =
+        PyObject_Vectorcall(func, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(keyName);
     Py_DECREF(func);
 
@@ -604,7 +606,8 @@ int PyObjC_GetKeyPath(PyObject* object, id keypath, id* value)
     return result;
 }
 
-int PyObjC_SetKey(PyObject* object, id key, id value)
+int
+PyObjC_SetKey(PyObject* object, id key, id value)
 {
     PyObject* func;
 
@@ -638,8 +641,8 @@ int PyObjC_SetKey(PyObject* object, id key, id value)
 
     PyObject* args[4] = {NULL, object, keyName, pyValue};
 
-    PyObject* val = PyObject_Vectorcall(func, args + 1,
-                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* val =
+        PyObject_Vectorcall(func, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(keyName);
     Py_DECREF(pyValue);
     Py_DECREF(func);
@@ -652,8 +655,8 @@ int PyObjC_SetKey(PyObject* object, id key, id value)
     }
 }
 
-
-int PyObjC_SetKeyPath(PyObject* object, id keypath, id value)
+int
+PyObjC_SetKeyPath(PyObject* object, id keypath, id value)
 {
     PyObject* func;
 
@@ -687,8 +690,8 @@ int PyObjC_SetKeyPath(PyObject* object, id keypath, id value)
 
     PyObject* args[4] = {NULL, object, keyName, pyValue};
 
-    PyObject* val = PyObject_Vectorcall(func, args + 1,
-                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* val =
+        PyObject_Vectorcall(func, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(keyName);
     Py_DECREF(pyValue);
     Py_DECREF(func);
@@ -715,7 +718,7 @@ PyObjC_IsBuiltinDate(PyObject* object)
         Py_DECREF(type);
         return false;
     }
-    bool result =  ((PyObject*)Py_TYPE(object) == type);
+    bool result = ((PyObject*)Py_TYPE(object) == type);
     Py_DECREF(type);
     return result;
 }
@@ -742,12 +745,11 @@ PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp)
     }
 
     PyObject* value = PyObject_VectorcallMethod(PyObjCNM_fromtimestamp, args + 1,
-                                      2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                                2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_CLEAR(args[2]);
     Py_DECREF(type);
     return value;
 }
-
 
 bool
 PyObjC_IsBuiltinDatetime(PyObject* object)
@@ -763,7 +765,7 @@ PyObjC_IsBuiltinDatetime(PyObject* object)
         Py_DECREF(type);
         return false;
     }
-    bool result =  ((PyObject*)Py_TYPE(object) == type);
+    bool result = ((PyObject*)Py_TYPE(object) == type);
     Py_DECREF(type);
     return result;
 }
@@ -801,15 +803,17 @@ PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id _Nullable 
         // LCOV_EXCL_STOP
     }
 
-    PyObject* value = PyObject_VectorcallMethod(PyObjCNM_fromtimestamp, args + 1,
-                                      (2 + (tzinfo != NULL)) | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* value = PyObject_VectorcallMethod(
+        PyObjCNM_fromtimestamp, args + 1,
+        (2 + (tzinfo != NULL)) | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_CLEAR(args[2]);
     Py_DECREF(type);
     Py_CLEAR(tzinfo);
     return value;
 }
 
-int PyObjC_IsDictLike(PyObject* object)
+int
+PyObjC_IsDictLike(PyObject* object)
 {
     PyObject* type;
 
@@ -822,12 +826,13 @@ int PyObjC_IsDictLike(PyObject* object)
         Py_DECREF(type);
         return 0;
     }
-    int result =  PyObject_IsInstance(object, type);
+    int result = PyObject_IsInstance(object, type);
     Py_DECREF(type);
     return result;
 }
 
-int PyObjC_IsListLike(PyObject* object)
+int
+PyObjC_IsListLike(PyObject* object)
 {
     PyObject* type;
 
@@ -840,12 +845,13 @@ int PyObjC_IsListLike(PyObject* object)
         Py_DECREF(type);
         return 0;
     }
-    int result =  PyObject_IsInstance(object, type);
+    int result = PyObject_IsInstance(object, type);
     Py_DECREF(type);
     return result;
 }
 
-int PyObjC_IsSetLike(PyObject* object)
+int
+PyObjC_IsSetLike(PyObject* object)
 {
     PyObject* type;
 
@@ -858,12 +864,13 @@ int PyObjC_IsSetLike(PyObject* object)
         Py_DECREF(type);
         return 0;
     }
-    int result =  PyObject_IsInstance(object, type);
+    int result = PyObject_IsInstance(object, type);
     Py_DECREF(type);
     return result;
 }
 
-int PyObjC_IsDateLike(PyObject* object)
+int
+PyObjC_IsDateLike(PyObject* object)
 {
     PyObject* type;
 
@@ -876,12 +883,13 @@ int PyObjC_IsDateLike(PyObject* object)
         Py_DECREF(type);
         return 0;
     }
-    int result =  PyObject_IsInstance(object, type);
+    int result = PyObject_IsInstance(object, type);
     Py_DECREF(type);
     return result;
 }
 
-int PyObjC_IsPathLike(PyObject* object)
+int
+PyObjC_IsPathLike(PyObject* object)
 {
     PyObject* type;
 
@@ -894,13 +902,14 @@ int PyObjC_IsPathLike(PyObject* object)
         Py_DECREF(type);
         return 0;
     }
-    int result =  PyObject_IsInstance(object, type);
+    int result = PyObject_IsInstance(object, type);
     Py_DECREF(type);
     return result;
 }
 
-
-PyObject* _Nullable PyObjC_GetCallableDocString(PyObject* callable, void* _Nullable closure __attribute__((__unused__)))
+PyObject* _Nullable PyObjC_GetCallableDocString(PyObject* callable,
+                                                void* _Nullable closure
+                                                __attribute__((__unused__)))
 {
     PyObject* func;
 
@@ -915,13 +924,15 @@ PyObject* _Nullable PyObjC_GetCallableDocString(PyObject* callable, void* _Nulla
     }
 
     PyObject* args[2] = {NULL, callable};
-    PyObject* result = PyObject_Vectorcall(func, args + 1,
-                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* result =
+        PyObject_Vectorcall(func, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     return result;
 }
 
-PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nullable closure __attribute__((__unused__)))
+PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable,
+                                                void* _Nullable closure
+                                                __attribute__((__unused__)))
 {
     PyObject* func;
 
@@ -935,13 +946,14 @@ PyObject* _Nullable PyObjC_GetCallableSignature(PyObject* callable, void* _Nulla
         Py_RETURN_NONE;
     }
     PyObject* args[2] = {NULL, callable};
-    PyObject* result = PyObject_Vectorcall(func, args + 1,
-                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* result =
+        PyObject_Vectorcall(func, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     return result;
 }
 
-int PyObjC_CallClassExtender(PyObject* cls)
+int
+PyObjC_CallClassExtender(PyObject* cls)
 {
     assert(PyObjCClass_Check(cls));
 
@@ -956,15 +968,15 @@ int PyObjC_CallClassExtender(PyObject* cls)
     }
 
     PyObject* dict = PyDict_New();
-    if (dict == NULL) { // LCOV_BR_EXCL_LINE
+    if (dict == NULL) {  // LCOV_BR_EXCL_LINE
         Py_DECREF(func); // LCOV_EXCL_LINE
-        return -1;      // LCOV_EXCL_LINE
+        return -1;       // LCOV_EXCL_LINE
     }
 
     PyObject* args[3] = {NULL, cls, dict};
 
-    PyObject* res = PyObject_Vectorcall(func, args + 1,
-                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* res =
+        PyObject_Vectorcall(func, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     if (res == NULL) {
         Py_DECREF(dict);
@@ -972,8 +984,8 @@ int PyObjC_CallClassExtender(PyObject* cls)
     }
     Py_DECREF(res);
 
-    PyObject*  k = NULL;
-    PyObject*  v = NULL;
+    PyObject*  k   = NULL;
+    PyObject*  v   = NULL;
     Py_ssize_t pos = 0;
 
     while (PyDict_Next(dict, &pos, &k, &v)) {
@@ -1004,7 +1016,7 @@ int PyObjC_CallClassExtender(PyObject* cls)
              * slots expensive, making it important to avoid spurious updates.
              */
             PyObject* c;
-            int r = PyDict_GetItemRef(((PyTypeObject*)cls)->tp_dict, k, &c);
+            int       r = PyDict_GetItemRef(((PyTypeObject*)cls)->tp_dict, k, &c);
             if (r == -1) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_CLEAR(k);
@@ -1031,7 +1043,7 @@ int PyObjC_CallClassExtender(PyObject* cls)
                     PyErr_Clear();
                 }
 #ifdef Py_GIL_DISABLED
-            /* case 1: */
+                /* case 1: */
                 /* pass */
             }
             Py_CLEAR(c);
@@ -1043,7 +1055,8 @@ int PyObjC_CallClassExtender(PyObject* cls)
             /* 'cls' is known to be an PyObjCClass instance, hence the tp_dict
              * slot is usable directly.
              */
-            if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v) == -1) { // LCOV_BR_EXCL_LINE
+            if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v)
+                == -1) {       // LCOV_BR_EXCL_LINE
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         }
@@ -1052,7 +1065,8 @@ int PyObjC_CallClassExtender(PyObject* cls)
     return 0;
 }
 
-void PyObjCErr_SetGAIError(int error)
+void
+PyObjCErr_SetGAIError(int error)
 {
     PyObject* type;
 
@@ -1097,8 +1111,6 @@ PyObject* _Nullable PyObjCErr_SetSocketError(const char* message)
     return NULL;
 }
 
-
-
 /*
  * Returns NULL without setting an exception when
  * the option is not set.
@@ -1117,8 +1129,8 @@ PyObject* _Nullable PyObjC_GetBundleForClassMethod(void)
 
     PyObject* args[1] = {NULL};
 
-    PyObject* m = PyObject_Vectorcall(func, args + 1,
-                                  0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* m =
+        PyObject_Vectorcall(func, args + 1, 0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
     Py_DECREF(func);
     if (m == NULL) {
@@ -1137,7 +1149,7 @@ PyObject* _Nullable PyObjC_CreateNSNumberProxy(NSNumber* value)
 {
     PyObject* rval = PyObjCObject_New(value, PyObjCObject_kDEFAULT, YES);
     if (rval == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
 
     LOCK(PyObjC_NSNumberWrapper);
@@ -1150,10 +1162,9 @@ PyObject* _Nullable PyObjC_CreateNSNumberProxy(NSNumber* value)
         return rval;
     }
 
-
     PyObject* args[2] = {NULL, rval};
     rval              = PyObject_Vectorcall(PyObjC_NSNumberWrapper, args + 1,
-                                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                            1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     Py_DECREF(args[1]);
 
@@ -1175,13 +1186,14 @@ PyObject* _Nullable PyObjC_TransformAttribute(PyObject* name, PyObject* value,
     }
 
     PyObject* args[5] = {NULL, name, value, class_object, protocols};
-    PyObject* result = PyObject_Vectorcall(PyObjC_transformAttribute, args + 1,
-                               4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* result  = PyObject_Vectorcall(PyObjC_transformAttribute, args + 1,
+                                            4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     return result;
 }
 
-int PyObjC_SetDunderNew(PyObject* value)
+int
+PyObjC_SetDunderNew(PyObject* value)
 {
     LOCK(PyObjC_setDunderNew);
     PyObject* func = PyObjC_setDunderNew;
@@ -1195,8 +1207,8 @@ int PyObjC_SetDunderNew(PyObject* value)
 
     PyObject* args[2] = {NULL, value};
 
-    PyObject* rv = PyObject_Vectorcall(func, args + 1,
-                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* rv =
+        PyObject_Vectorcall(func, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     if (rv == NULL) {
         return -1;
@@ -1205,7 +1217,8 @@ int PyObjC_SetDunderNew(PyObject* value)
     return 0;
 }
 
-int PyObjC_IsGenericNew(PyObject* value)
+int
+PyObjC_IsGenericNew(PyObject* value)
 {
     LOCK(PyObjC_genericNewClass);
     PyObject* type = PyObjC_genericNewClass;
@@ -1217,7 +1230,8 @@ int PyObjC_IsGenericNew(PyObject* value)
     return r;
 }
 
-int PyObjC_ArrayTypeCheck(PyObject* value)
+int
+PyObjC_ArrayTypeCheck(PyObject* value)
 {
     LOCK(PyObjC_genericNewClass);
     PyObject* type = PyObjC_ArrayType;
@@ -1250,7 +1264,7 @@ PyObject* _Nullable PyObjC_MakeCVoidP(void* ptr)
 
     PyObject* pyptr = PyLong_FromVoidPtr(ptr);
     if (pyptr == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;     // LCOV_EXCL_LINE
     }
     PyObject* args[2] = {NULL, pyptr};
     PyObject* res =
@@ -1275,16 +1289,15 @@ PyObject* _Nullable PyObjC_deepcopy(PyObject* value, PyObject* _Nullable memo)
     }
 
     PyObject* args[3] = {NULL, value, memo};
-    PyObject* result       = PyObject_Vectorcall(
-            func, args + 1, (memo?2:1) | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* result  = PyObject_Vectorcall(
+        func, args + 1, (memo ? 2 : 1) | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     return result;
 }
 
-extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* class_dict,
-                                                   PyObject* meta_dict, PyObject* py_superclass,
-                                                   PyObject* protocols, PyObject* hiddenSelectors,
-                                                   PyObject* hiddenClassSelectors)
+extern PyObject* _Nullable PyObjC_ProcessClassDict(
+    const char* name, PyObject* class_dict, PyObject* meta_dict, PyObject* py_superclass,
+    PyObject* protocols, PyObject* hiddenSelectors, PyObject* hiddenClassSelectors)
 {
     LOCK(PyObjC_processClassDict);
     PyObject* func = PyObjC_processClassDict;
@@ -1308,10 +1321,10 @@ extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* c
     }
 
     assert(!PyErr_Occurred());
-    PyObject* args[] = {NULL,      py_name, class_dict,      meta_dict,           py_superclass,
-                        protocols, hiddenSelectors, hiddenClassSelectors};
-    PyObject* rv     = PyObject_Vectorcall(func, args + 1,
-                                           7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* args[] = {NULL,          py_name,   class_dict,      meta_dict,
+                        py_superclass, protocols, hiddenSelectors, hiddenClassSelectors};
+    PyObject* rv =
+        PyObject_Vectorcall(func, args + 1, 7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(func);
     Py_DECREF(py_name);
 
@@ -1319,7 +1332,6 @@ extern PyObject* _Nullable PyObjC_ProcessClassDict(const char* name, PyObject* c
 
     return rv;
 }
-
 
 #if PY_VERSION_HEX < 0x030a0000
 static PyObject* _Nullable options_new(PyTypeObject* tp __attribute__((__unused__)),
@@ -1394,7 +1406,11 @@ PyObjC_SetupOptions(PyObject* m)
         return -1;   // LCOV_EXCL_LINE
     }
 
-#   define INIT(VAR) do { VAR = Py_None; Py_INCREF(Py_None); } while(0)
+#define INIT(VAR)                                                                        \
+    do {                                                                                 \
+        VAR = Py_None;                                                                   \
+        Py_INCREF(Py_None);                                                              \
+    } while (0)
     INIT(PyObjC_Encoder);
     INIT(PyObjC_Decoder);
     INIT(PyObjC_CopyFunc);
@@ -1424,23 +1440,23 @@ PyObjC_SetupOptions(PyObject* m)
     // LCOV_BR_EXCL_START
     PyObjC_DictLikeTypes = PyTuple_New(0);
     if (PyObjC_DictLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
     }
     PyObjC_ListLikeTypes = PyTuple_New(0);
     if (PyObjC_ListLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
     }
     PyObjC_SetLikeTypes = PyTuple_New(0);
     if (PyObjC_SetLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;                     // LCOV_EXCL_LINE
     }
     PyObjC_DateLikeTypes = PyTuple_New(0);
     if (PyObjC_DateLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
     }
     PyObjC_PathLikeTypes = PyTuple_New(0);
     if (PyObjC_DictLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
     }
 
     return PyModule_AddObject(m, "options", o);

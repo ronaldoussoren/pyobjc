@@ -40,8 +40,8 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
         if (PyObjC_is_pyfunction(func)) {
             PyObject* code = PyObject_GetAttrString(func, "__code__");
             Py_DECREF(func);
-            if (code == NULL) { // LCOV_BR_EXCL_LINE
-                return NULL;    // LCOV_EXCL_LINE
+            if (code == NULL) {               // LCOV_BR_EXCL_LINE
+                return NULL;                  // LCOV_EXCL_LINE
             } else if (!PyCode_Check(code)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_Format(PyExc_ValueError,
@@ -102,7 +102,6 @@ PyObjC_returns_value(PyObject* value)
     }
 #endif /* PY_VERSION_HEX >= 0x030e0000 */
 
-
     if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
             co, &buf, PyBUF_CONTIG_RO)
         == -1) {
@@ -132,7 +131,7 @@ PyObjC_returns_value(PyObject* value)
         // LCOV_EXCL_START
         Py_DECREF(func_code);
 #if PY_VERSION_HEX >= 0x030e0000
-    Py_DECREF(consts);
+        Py_DECREF(consts);
 #endif
         return NULL;
         // LCOV_EXCL_STOP
@@ -154,7 +153,8 @@ PyObjC_returns_value(PyObject* value)
     for (Py_ssize_t i = 0; i < buf.len; i += 2) {
         int op = ((unsigned char*)buf.buf)[i];
 #if PY_VERSION_HEX >= 0x030e0000
-        if (op == LOAD_CONST && PyTuple_GET_ITEM(consts, ((unsigned char*)buf.buf)[i + 1]) == Py_None) {
+        if (op == LOAD_CONST
+            && PyTuple_GET_ITEM(consts, ((unsigned char*)buf.buf)[i + 1]) == Py_None) {
 #else
         if (op == LOAD_CONST && ((unsigned char*)buf.buf)[i + 1] == 0) {
 #endif
@@ -236,7 +236,7 @@ PyObjC_num_kwdefaults(PyObject* value)
 
     PyObject* defaults = PyObject_GetAttrString(value, "__kwdefaults__");
     if (defaults == NULL) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;          // LCOV_EXCL_LINE
     }
     if (PyDict_Check(defaults)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START

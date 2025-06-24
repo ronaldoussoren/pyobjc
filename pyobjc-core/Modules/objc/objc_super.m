@@ -113,7 +113,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                 continue; // LCOV_EXCL_LINE
             }
 
-            switch(PyDict_GetItemRef(dict, name, &res)) { // LCOV_BR_EXCL_LINE
+            switch (PyDict_GetItemRef(dict, name, &res)) { // LCOV_BR_EXCL_LINE
             case -1:
                 // LCOV_EXCL_START
                 Py_CLEAR(dict);
@@ -165,7 +165,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                     return res;
 
                 } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                    Py_CLEAR(dict);             // LCOV_EXCL_LINE
+                    Py_CLEAR(dict);            // LCOV_EXCL_LINE
                     return NULL;               // LCOV_EXCL_LINE
                 }
             }
