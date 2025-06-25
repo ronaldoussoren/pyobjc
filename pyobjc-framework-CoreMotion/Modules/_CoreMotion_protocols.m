@@ -1,4 +1,5 @@
-static void __attribute__((__used__)) use_protocols(void)
+static void __attribute__((__used__))
+use_protocols(void)
 {
 #if PyObjC_BUILD_RELEASE >= 1300
     PyObject* p;

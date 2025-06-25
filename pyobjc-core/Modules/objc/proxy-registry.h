@@ -74,14 +74,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern int PyObjC_InitProxyRegistry(PyObject*);
 
-extern PyObject* PyObjC_RegisterPythonProxy(id original, PyObject* proxy) __attribute__((warn_unused_result));
-extern id NS_RETURNS_RETAINED _Nullable PyObjC_RegisterObjCProxy(PyObject* original, id proxy) __attribute__((warn_unused_result));
+extern PyObject* PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
+    __attribute__((warn_unused_result));
+extern id NS_RETURNS_RETAINED _Nullable PyObjC_RegisterObjCProxy(PyObject* original,
+                                                                 id        proxy)
+    __attribute__((warn_unused_result));
 
 extern void PyObjC_UnregisterPythonProxy(id original, PyObject* proxy);
 extern void PyObjC_UnregisterObjCProxy(PyObject* original, id proxy);
 
-extern id _Nullable NS_RETURNS_RETAINED PyObjC_FindObjCProxy(PyObject* original) __attribute__((warn_unused_result));
-extern PyObject* _Nullable PyObjC_FindPythonProxy(id original) __attribute__((warn_unused_result));
+extern id _Nullable NS_RETURNS_RETAINED PyObjC_FindObjCProxy(PyObject* original)
+    __attribute__((warn_unused_result));
+extern PyObject* _Nullable PyObjC_FindPythonProxy(id original)
+    __attribute__((warn_unused_result));
 
 NS_ASSUME_NONNULL_END
 

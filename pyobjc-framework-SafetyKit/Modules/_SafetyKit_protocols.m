@@ -1,4 +1,5 @@
-static void __attribute__((__used__)) use_protocols(void)
+static void __attribute__((__used__))
+use_protocols(void)
 {
     PyObject* p;
     p = PyObjC_IdToPython(@protocol(SACrashDetectionDelegate));

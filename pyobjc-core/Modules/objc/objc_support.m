@@ -319,15 +319,15 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
 #define VECTOR_TO_PYTHON(ctype, elemcount, convertelem)                                  \
     static PyObject* _Nullable ctype##_as_tuple(const void* _pvalue)                     \
     {                                                                                    \
-        const ctype value;                                     \
-        memcpy((void*)&value, _pvalue, sizeof(ctype)); \
-        PyObject*    rv     = PyTuple_New(elemcount);                                    \
-        if (rv == NULL) {   /* LCOV_BR_EXCL_LINE */                                      \
-            return NULL;    /* LCOV_EXCL_LINE */                                         \
+        const ctype value;                                                               \
+        memcpy((void*)&value, _pvalue, sizeof(ctype));                                   \
+        PyObject* rv = PyTuple_New(elemcount);                                           \
+        if (rv == NULL) { /* LCOV_BR_EXCL_LINE */                                        \
+            return NULL;  /* LCOV_EXCL_LINE */                                           \
         }                                                                                \
                                                                                          \
         for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
-            PyObject* elem = convertelem(value[i]);                                  \
+            PyObject* elem = convertelem(value[i]);                                      \
             if (elem == NULL) {                                                          \
                 Py_DECREF(rv);                                                           \
                 return NULL;                                                             \
@@ -341,7 +341,7 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
 #define VECTOR_FROM_PYTHON(ctype, elemcount, convertelem)                                \
     static int ctype##_from_python(PyObject* py, void* _pvalue)                          \
     {                                                                                    \
-        ctype value;                                                 \
+        ctype value;                                                                     \
                                                                                          \
         if (!PySequence_Check(py) || PySequence_Length(py) != elemcount) {               \
             PyErr_SetString(PyExc_ValueError,                                            \
@@ -352,15 +352,15 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
         for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
             PyObject* e = PySequence_GetItem(py, i);                                     \
             if (e == NULL) { /* LCOV_BR_EXCL_LINE */                                     \
-                return -1;  /* LCOV_EXCL_LINE */                                         \
+                return -1;   /* LCOV_EXCL_LINE */                                        \
             }                                                                            \
-            value[i] = convertelem(e);                                               \
+            value[i] = convertelem(e);                                                   \
             Py_DECREF(e);                                                                \
             if (PyErr_Occurred()) {                                                      \
                 return -1;                                                               \
             }                                                                            \
         }                                                                                \
-        memcpy(_pvalue, (void*)&value, sizeof(ctype)); \
+        memcpy(_pvalue, (void*)&value, sizeof(ctype));                                   \
         return 0;                                                                        \
     }
 
@@ -1039,7 +1039,7 @@ PyObjCRT_AlignOfType(const char* start_type)
             return align;
 
         } else {
-            return __alignof__(struct empty {});
+            return __alignof__(struct empty{});
         }
     }
 
@@ -2216,87 +2216,67 @@ pythonify_c_value(const char* type, const void* datum)
         retobject = (PyObject*)PyBool_FromLong(*(bool*)datum);
         break;
 
-    case _C_INT:
-        {
-            int v;
-            memcpy((void*)&v, datum, sizeof(int));
-            retobject = (PyObject*)PyLong_FromLong(v);
-        }
-        break;
+    case _C_INT: {
+        int v;
+        memcpy((void*)&v, datum, sizeof(int));
+        retobject = (PyObject*)PyLong_FromLong(v);
+    } break;
 
-    case _C_UINT:
-        {
-            unsigned int v;
-            memcpy((void*)&v, datum, sizeof(unsigned int));
-            retobject = (PyObject*)PyLong_FromLong(v);
-        }
-        break;
+    case _C_UINT: {
+        unsigned int v;
+        memcpy((void*)&v, datum, sizeof(unsigned int));
+        retobject = (PyObject*)PyLong_FromLong(v);
+    } break;
 
-    case _C_SHT:
-        {
-            short v;
-            memcpy((void*)&v, datum, sizeof(short));
-            retobject = (PyObject*)PyLong_FromLong(v);
-        }
-        break;
+    case _C_SHT: {
+        short v;
+        memcpy((void*)&v, datum, sizeof(short));
+        retobject = (PyObject*)PyLong_FromLong(v);
+    } break;
 
-    case _C_USHT:
-        {
-            unsigned short v;
-            memcpy((void*)&v, datum, sizeof(unsigned short));
-            retobject = (PyObject*)PyLong_FromLong(v);
-        }
-        break;
+    case _C_USHT: {
+        unsigned short v;
+        memcpy((void*)&v, datum, sizeof(unsigned short));
+        retobject = (PyObject*)PyLong_FromLong(v);
+    } break;
 
     case _C_LNG_LNG:
-    case _C_LNG:
-        {
-            long v;
-            memcpy((void*)&v, datum, sizeof(long));
-            retobject = (PyObject*)PyLong_FromLong(v);
-        }
-        break;
+    case _C_LNG: {
+        long v;
+        memcpy((void*)&v, datum, sizeof(long));
+        retobject = (PyObject*)PyLong_FromLong(v);
+    } break;
 
     case _C_ULNG_LNG:
-    case _C_ULNG:
-        {
-            unsigned long v;
-            memcpy((void*)&v, datum, sizeof(unsigned long));
-            retobject = (PyObject*)PyLong_FromUnsignedLong(v);
-        }
-        break;
+    case _C_ULNG: {
+        unsigned long v;
+        memcpy((void*)&v, datum, sizeof(unsigned long));
+        retobject = (PyObject*)PyLong_FromUnsignedLong(v);
+    } break;
 
-    case _C_FLT:
-        {
-            float v;
-            memcpy((void*)&v, datum, sizeof(float));
-            retobject = (PyObject*)PyFloat_FromDouble(v);
-        }
-        break;
+    case _C_FLT: {
+        float v;
+        memcpy((void*)&v, datum, sizeof(float));
+        retobject = (PyObject*)PyFloat_FromDouble(v);
+    } break;
 
-    case _C_DBL:
-        {
-            double v;
-            memcpy((void*)&v, datum, sizeof(double));
-            retobject = (PyObject*)PyFloat_FromDouble(v);
-        }
-        break;
+    case _C_DBL: {
+        double v;
+        memcpy((void*)&v, datum, sizeof(double));
+        retobject = (PyObject*)PyFloat_FromDouble(v);
+    } break;
 
-    case _C_LNG_DBL:
-        {
-            long double v;
-            memcpy((void*)&v, datum, sizeof(long double));
-            retobject = (PyObject*)PyFloat_FromDouble((double)v);
-        }
-        break;
+    case _C_LNG_DBL: {
+        long double v;
+        memcpy((void*)&v, datum, sizeof(long double));
+        retobject = (PyObject*)PyFloat_FromDouble((double)v);
+    } break;
 
-    case _C_ID:
-        {
-            id v;
-            memcpy((void*)&v, datum, sizeof(id));
-            retobject = id_to_python(v);
-        }
-        break;
+    case _C_ID: {
+        id v;
+        memcpy((void*)&v, datum, sizeof(id));
+        retobject = id_to_python(v);
+    } break;
 
     case _C_SEL:
         if (*(SEL*)datum == NULL) {
@@ -2324,8 +2304,7 @@ pythonify_c_value(const char* type, const void* datum)
         break;
     }
 
-    case _C_PTR:
-     {
+    case _C_PTR: {
         void* v;
         memcpy((void*)&v, datum, sizeof(void*));
 
@@ -2343,8 +2322,7 @@ pythonify_c_value(const char* type, const void* datum)
                 retobject = (PyObject*)PyObjCPointer_New(v, type);
             }
         }
-     }
-     break;
+    } break;
 
     case _C_UNION_B: {
         Py_ssize_t size = PyObjCRT_SizeOfType(type);
@@ -2367,7 +2345,7 @@ pythonify_c_value(const char* type, const void* datum)
         retobject = Py_None;
         Py_INCREF(retobject);
         break;
-    // LCOV_EXCL_STOP
+        // LCOV_EXCL_STOP
 
     case _C_VECTOR_B: {
         struct vector_info* info = vector_lookup(type);
@@ -2469,9 +2447,8 @@ depythonify_unsigned_int_value(PyObject* argument, char* descr, unsigned long lo
     } else {
         PyObject* tmp;
 
-        if (PyBytes_Check(argument) ||
-            PyByteArray_Check(argument) ||
-            PyUnicode_Check(argument)) {
+        if (PyBytes_Check(argument) || PyByteArray_Check(argument)
+            || PyUnicode_Check(argument)) {
 
             PyErr_Format(PyExc_ValueError, "depythonifying '%s', got '%s'", descr,
                          Py_TYPE(argument)->tp_name);
@@ -2551,9 +2528,8 @@ depythonify_signed_int_value(PyObject* argument, char* descr, long long* out,
     } else {
         PyObject* tmp;
 
-        if (PyBytes_Check(argument) ||
-            PyByteArray_Check(argument) ||
-            PyUnicode_Check(argument)) {
+        if (PyBytes_Check(argument) || PyByteArray_Check(argument)
+            || PyUnicode_Check(argument)) {
 
             PyErr_Format(PyExc_ValueError,
                          "depythonifying '%s', got '%s' of %" PY_FORMAT_SIZE_T "d", descr,
@@ -2700,7 +2676,7 @@ depythonify_python_object(PyObject* argument, id* datum)
             if (r) {
                 *datum = [OC_PythonArray arrayWithPythonObject:argument];
                 if (*datum == nil) { // LCOV_BR_EXCL_LINE
-                    return -1; // LCOV_EXCL_LINE
+                    return -1;       // LCOV_EXCL_LINE
                 }
             }
         }
@@ -2714,8 +2690,8 @@ depythonify_python_object(PyObject* argument, id* datum)
 
             if (r) {
                 *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
-                if (*datum == nil) {  // LCOV_BR_EXCL_LINE
-                    return -1; // LCOV_EXCL_LINE
+                if (*datum == nil) { // LCOV_BR_EXCL_LINE
+                    return -1;       // LCOV_EXCL_LINE
                 }
             }
         }
@@ -2729,7 +2705,7 @@ depythonify_python_object(PyObject* argument, id* datum)
             if (r) {
                 *datum = [OC_PythonSet setWithPythonObject:argument];
                 if (*datum == nil) { // LCOV_BR_EXCL_LINE
-                    return -1; // LCOV_EXCL_LINE
+                    return -1;       // LCOV_EXCL_LINE
                 }
             }
         }
@@ -2737,14 +2713,14 @@ depythonify_python_object(PyObject* argument, id* datum)
         if (*datum == nil && PyObjC_IsBuiltinDate(argument)) {
             *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
             if (*datum == nil) { // LCOV_BR_EXCL_LINE
-                return -1; // LCOV_EXCL_LINE
+                return -1;       // LCOV_EXCL_LINE
             }
         }
 
         if (*datum == nil && PyObjC_IsBuiltinDatetime(argument)) {
             *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
             if (*datum == nil) { // LCOV_BR_EXCL_LINE
-                return -1; // LCOV_EXCL_LINE
+                return -1;       // LCOV_EXCL_LINE
             }
         }
 
@@ -2774,7 +2750,8 @@ depythonify_python_object(PyObject* argument, id* datum)
                 *datum = [OC_PythonURL URLWithPythonObject:argument];
                 if (*datum == nil) {
                     if (!PyErr_Occurred()) {
-                        PyErr_SetString(PyObjCExc_Error, "Cannot convert path-like to URL");
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "Cannot convert path-like to URL");
                     }
                     return -1;
                 }
@@ -3005,13 +2982,12 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
         }
         return r;
 
-    case _C_ID:
-        {
-            id v;
-            r = depythonify_python_object(argument, &v);
-            memcpy(datum, (void*)&v, sizeof(id));
-            return r;
-        }
+    case _C_ID: {
+        id v;
+        r = depythonify_python_object(argument, &v);
+        memcpy(datum, (void*)&v, sizeof(id));
+        return r;
+    }
 
     case _C_CLASS:
         if (PyObjCClass_Check(argument)) {
@@ -3158,9 +3134,8 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             }
             memcpy(datum, (void*)&v, sizeof(float));
 
-        } else if (PyBytes_Check(argument) ||
-                   PyByteArray_Check(argument) ||
-                   PyUnicode_Check(argument)) {
+        } else if (PyBytes_Check(argument) || PyByteArray_Check(argument)
+                   || PyUnicode_Check(argument)) {
             PyErr_Format(PyExc_ValueError, "depythonifying 'float', got '%s'",
                          Py_TYPE(argument)->tp_name);
             return -1;
@@ -3192,9 +3167,8 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             }
             memcpy(datum, (void*)&v, sizeof(double));
 
-        } else if (PyBytes_Check(argument) ||
-                   PyByteArray_Check(argument) ||
-                   PyUnicode_Check(argument)) {
+        } else if (PyBytes_Check(argument) || PyByteArray_Check(argument)
+                   || PyUnicode_Check(argument)) {
             PyErr_Format(PyExc_ValueError, "depythonifying 'double', got '%s'",
                          Py_TYPE(argument)->tp_name);
             return -1;
@@ -3226,9 +3200,8 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             }
             memcpy(datum, (void*)&v, sizeof(long double));
 
-        } else if (PyBytes_Check(argument) ||
-                   PyByteArray_Check(argument) ||
-                   PyUnicode_Check(argument)) {
+        } else if (PyBytes_Check(argument) || PyByteArray_Check(argument)
+                   || PyUnicode_Check(argument)) {
             PyErr_Format(PyExc_ValueError, "depythonifying 'long double', got '%s'",
                          Py_TYPE(argument)->tp_name);
             return -1;
@@ -3419,7 +3392,7 @@ PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 BOOL
 PyObjC_signatures_compatible(const char* type1, const char* type2)
 {
-static const char CHAR[] = { _C_CHR, 0 };
+    static const char CHAR[] = {_C_CHR, 0};
 
     /* Ignore type modifiers */
     type1 = PyObjCRT_SkipTypeQualifiers(type1);
@@ -3491,14 +3464,14 @@ static const char CHAR[] = { _C_CHR, 0 };
         }
 
         if (*type2 == _C_CHARPTR) {
-            return PyObjC_signatures_compatible(type1+1, CHAR);
+            return PyObjC_signatures_compatible(type1 + 1, CHAR);
         }
 
         if (*type2 == _C_ARY_B) {
             type2++;
             while (isdigit(*type2))
                 type2++;
-            return PyObjC_signatures_compatible(type1+1, type2);
+            return PyObjC_signatures_compatible(type1 + 1, type2);
         }
 
         if (*type2 != _C_PTR) {

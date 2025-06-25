@@ -22,8 +22,7 @@ PyObjC_class_isSubclassOf(Class child, Class parent)
 
 /* XXX: Is this not needed for arm64? */
 
-@implementation
-Protocol (NSObjectCompat)
+@implementation Protocol (NSObjectCompat)
 - (id)self
 {
     return self;

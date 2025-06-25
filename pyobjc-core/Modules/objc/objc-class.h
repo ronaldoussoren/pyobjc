@@ -73,12 +73,12 @@ typedef struct _PyObjCClassObject {
     PyObject* _Nullable lookup_cache;
 #endif
 
-    Py_ssize_t   dictoffset;
-    PyObjC_ATOMIC Py_ssize_t   generation;
-    unsigned int useKVO : 1;
-    unsigned int hasPythonImpl : 1;
-    unsigned int isCFWrapper : 1;
-    unsigned int isFinal : 1;
+    Py_ssize_t               dictoffset;
+    PyObjC_ATOMIC Py_ssize_t generation;
+    unsigned int             useKVO : 1;
+    unsigned int             hasPythonImpl : 1;
+    unsigned int             isCFWrapper : 1;
+    unsigned int             isFinal : 1;
 } PyObjCClassObject;
 
 extern PyObject* _Nullable PyObjCClass_DefaultModule;
@@ -91,7 +91,7 @@ extern int        ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
 extern int        PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
 extern Py_ssize_t PyObjCClass_DictOffset(PyObject* cls);
 extern PyObject* _Nullable PyObjCClass_GetDelMethod(PyObject* cls);
-extern int  PyObjCClass_HasPythonImplementation(PyObject* cls);
+extern int PyObjCClass_HasPythonImplementation(PyObject* cls);
 extern PyObject* _Nullable PyObjCClass_ClassForMetaClass(PyObject* meta);
 extern PyObject* _Nullable PyObjCClass_HiddenSelector(
     PyObject* tp, SEL sel, BOOL classMethod); /* returns borrowed */
@@ -110,7 +110,7 @@ extern PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base,
 #ifdef PyObjC_ENABLE_LOOKUP_CACHE
 static inline PyObject* _Nullable PyObjCClass_GetLookupCache(PyTypeObject* tp)
 {
-    PyObject* result =  ((PyObjCClassObject*)tp)->lookup_cache;
+    PyObject* result = ((PyObjCClassObject*)tp)->lookup_cache;
     Py_XINCREF(result);
     return result;
 }

@@ -54,7 +54,7 @@ static PyMethodDef func_methods[] = {
      .ml_doc   = "Return a dict that describes the metadata for this function."},
     {.ml_name  = "__class_getitem__",
      .ml_meth  = (PyCFunction)Py_GenericAlias,
-     .ml_flags = METH_O|METH_CLASS,
+     .ml_flags = METH_O | METH_CLASS,
      .ml_doc   = "See PEP 585"},
     {
         .ml_name = NULL /* SENTINEL */
@@ -169,7 +169,7 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     argbuf_len = align(argbuf_len, sizeof(void*));
     r = PyObjCFFI_CountArguments(self->methinfo, 0, &byref_in_count, &byref_out_count,
                                  &plain_count, &argbuf_len, &variadicAllArgs);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (r == -1) {   // LCOV_BR_EXCL_LINE
         return NULL; // LCOV_EXCL_LINE
     }
 
@@ -179,15 +179,14 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
 
     if (variadicAllArgs) {
         if (byref_in_count != 0 || byref_out_count != 0) {
-            PyErr_Format(PyExc_TypeError,
-                         "Sorry, printf format with by-ref args not supported");
+            PyErr_Format(PyExc_TypeError, "variadic with by-ref args not supported");
             return NULL;
         }
 
         if (nargsf < (size_t)Py_SIZE(self->methinfo)) {
             PyErr_Format(PyExc_TypeError,
-                         "Need %" PY_FORMAT_SIZE_T "d arguments, got %zu",
-                         Py_SIZE(self->methinfo) - 2, nargsf);
+                         "Need at least %" PY_FORMAT_SIZE_T "d arguments, got %zu",
+                         Py_SIZE(self->methinfo), nargsf);
             return NULL;
         }
 
@@ -359,7 +358,6 @@ error:
     return NULL;
 }
 
-
 static void
 func_dealloc(PyObject* s)
 {
@@ -441,13 +439,17 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
         return NULL;    // LCOV_EXCL_LINE
 
     result->vectorcall = func_vectorcall;
-    result->function = func;
-    result->doc      = NULL;
-    result->name     = name;
+    result->function   = func;
+    result->doc        = NULL;
+    result->name       = name;
     Py_XINCREF(name);
     result->module   = NULL;
     result->methinfo = methinfo;
     Py_XINCREF(methinfo);
+    if (result->methinfo->shortcut_signature) {
+        result->vectorcall = func_vectorcall_simple;
+    }
+    result->cif = NULL;
 
     ffi_cif* cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (cif == NULL) {
@@ -475,7 +477,7 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
         return NULL;    // LCOV_EXCL_LINE
 
     result->vectorcall = func_vectorcall;
-    result->function = func;
+    result->function   = func;
 
     /* set later in this function */
     result->doc      = (PyObject* _Nonnull)NULL;
@@ -523,7 +525,8 @@ PyObjCFunc_Setup(PyObject* module)
     }
 
     if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "function", PyObjCFunc_Type) == -1) {
+            module, "function", PyObjCFunc_Type)
+        == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFunc_Type);

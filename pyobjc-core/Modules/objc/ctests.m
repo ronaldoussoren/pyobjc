@@ -1019,7 +1019,6 @@ PyErr_Clear();
 
 END_UNITTEST
 
-
 BEGIN_UNITTEST(MethodSignatureString)
 PyObjCMethodSignature* sig = PyObjCMethodSignature_WithMetaData("@@:d", NULL, NO);
 FAIL_IF(sig == NULL);
@@ -1064,7 +1063,8 @@ FAIL_IF(PyObjCRT_IsValidEncoding("{a=\"f\"i}", 8));
 
 END_UNITTEST
 
-static int exception_text_matches(const char* text)
+static int
+exception_text_matches(const char* text)
 {
     PyObject* type;
     PyObject* value;
@@ -1116,91 +1116,94 @@ static int exception_text_matches(const char* text)
 }
 
 BEGIN_UNITTEST(CheckArgCount)
-    /* C test because it hitting the error paths in regular tests
-     * is not possible.
-     *
-     * Also: currently only the core only * uses the this to check
-     * the number of arguments in functions with a fixed number
-     * of arguments.
-     */
-    int r;
-    PyObject* callable = Py_None;
+/* C test because it hitting the error paths in regular tests
+ * is not possible.
+ *
+ * Also: currently only the core only * uses the this to check
+ * the number of arguments in functions with a fixed number
+ * of arguments.
+ */
+int       r;
+PyObject* callable = Py_None;
 
-    r = PyObjC_CheckArgCount(callable, 1, 1, 1);
-    FAIL_IF(r == -1);
-    FAIL_IF(PyErr_Occurred());
+r = PyObjC_CheckArgCount(callable, 1, 1, 1);
+FAIL_IF(r == -1);
+FAIL_IF(PyErr_Occurred());
 
-    r = PyObjC_CheckArgCount(callable, 1, 3, 2);
-    FAIL_IF(r == -1);
-    FAIL_IF(PyErr_Occurred());
+r = PyObjC_CheckArgCount(callable, 1, 3, 2);
+FAIL_IF(r == -1);
+FAIL_IF(PyErr_Occurred());
 
-    r = PyObjC_CheckArgCount(callable, 1, 1, 2);
-    FAIL_IF(r != -1);
-    FAIL_IF(!exception_text_matches("TypeError('None expected 1 arguments, got 2')"));
+r = PyObjC_CheckArgCount(callable, 1, 1, 2);
+FAIL_IF(r != -1);
+FAIL_IF(!exception_text_matches("TypeError('None expected 1 arguments, got 2')"));
 
-    r = PyObjC_CheckArgCount(callable, 1, 3, 4);
-    FAIL_IF(r != -1);
-    FAIL_IF(!exception_text_matches("TypeError('None expected between 1 and 3 arguments, got 4')"));
+r = PyObjC_CheckArgCount(callable, 1, 3, 4);
+FAIL_IF(r != -1);
+FAIL_IF(!exception_text_matches(
+    "TypeError('None expected between 1 and 3 arguments, got 4')"));
 
 END_UNITTEST
 
 BEGIN_UNITTEST(NoKwNames)
-    /* C test because it hitting the error paths in regular tests
-     * is not possible.
-     */
-    int r;
-    PyObject* callable = Py_None;
-    PyObject* kwnames;
+/* C test because it hitting the error paths in regular tests
+ * is not possible.
+ */
+int       r;
+PyObject* callable = Py_None;
+PyObject* kwnames;
 
-    r = PyObjC_CheckNoKwnames(callable, NULL);
-    FAIL_IF(r == -1);
-    FAIL_IF(PyErr_Occurred());
+r = PyObjC_CheckNoKwnames(callable, NULL);
+FAIL_IF(r == -1);
+FAIL_IF(PyErr_Occurred());
 
-    kwnames = PyList_New(0);
-    if(kwnames == NULL) {
-        goto error;
-    }
+kwnames = PyList_New(0);
+if (kwnames == NULL) {
+    goto error;
+}
 
-    r = PyObjC_CheckNoKwnames(callable, kwnames);
-    Py_CLEAR(kwnames);
-    FAIL_IF(r == -1);
-    FAIL_IF(PyErr_Occurred());
+r = PyObjC_CheckNoKwnames(callable, kwnames);
+Py_CLEAR(kwnames);
+FAIL_IF(r == -1);
+FAIL_IF(PyErr_Occurred());
 
-    kwnames = PyList_New(0);
-    if(kwnames == NULL) {
-        goto error;
-    }
-    if (PyList_Append(kwnames, Py_None) == -1) {
-        goto error;
-    }
+kwnames = PyList_New(0);
+if (kwnames == NULL) {
+    goto error;
+}
+if (PyList_Append(kwnames, Py_None) == -1) {
+    goto error;
+}
 
-    r = PyObjC_CheckNoKwnames(callable, kwnames);
-    Py_CLEAR(kwnames);
-    FAIL_IF(r != -1);
-    FAIL_IF(!exception_text_matches("TypeError('None does not accept keyword arguments')"));
+r = PyObjC_CheckNoKwnames(callable, kwnames);
+Py_CLEAR(kwnames);
+FAIL_IF(r != -1);
+FAIL_IF(!exception_text_matches("TypeError('None does not accept keyword arguments')"));
 
-    r = PyObjC_CheckNoKwnames(callable, callable);
-    Py_CLEAR(kwnames);
-    FAIL_IF(r != -1);
-    PyErr_Clear();
+r = PyObjC_CheckNoKwnames(callable, callable);
+Py_CLEAR(kwnames);
+FAIL_IF(r != -1);
+PyErr_Clear();
 
 END_UNITTEST
 
 BEGIN_UNITTEST(PyObjC_NSMethodSignatureToTypeString_Errors)
-    char buffer[2048];
-    char* result;
-    NSMethodSignature* sig = [NSURL instanceMethodSignatureForSelector:@selector(initByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:)];
-    ASSERT(sig != nil);
+char               buffer[2048];
+char*              result;
+NSMethodSignature* sig = [NSURL
+    instanceMethodSignatureForSelector:@selector
+    (initByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:)];
+ASSERT(sig != nil);
 
-    result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 0);
-    ASSERT(result == NULL);
-    ASSERT(PyErr_Occurred());
-    PyErr_Clear();
+result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 0);
+ASSERT(result == NULL);
+ASSERT(PyErr_Occurred());
+PyErr_Clear();
 
-    result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 4);
-    ASSERT(result == NULL);
-    ASSERT(PyErr_Occurred());
-    PyErr_Clear();
+result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 4);
+ASSERT(result == NULL);
+ASSERT(PyErr_Occurred());
+PyErr_Clear();
 
 END_UNITTEST
 
@@ -1258,22 +1261,22 @@ PyObjC_init_ctests(PyObject* m)
     PyMethodDef* cur;
     for (cur = mod_methods; cur->ml_name != NULL; cur++) {
         PyObject* meth = PyCFunction_NewEx(cur, NULL, NULL);
-        if (meth == NULL) {  // LCOV_BR_EXCL_LINE
-            Py_DECREF(d); // LCOV_EXCL_LINE
-            return -1;    // LCOV_EXCL_LINE
+        if (meth == NULL) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(d);   // LCOV_EXCL_LINE
+            return -1;      // LCOV_EXCL_LINE
         }
 
         PyObject* key = PyUnicode_FromString(cur->ml_name);
-        if (key == NULL) {  // LCOV_BR_EXCL_LINE
+        if (key == NULL) {   // LCOV_BR_EXCL_LINE
             Py_DECREF(d);    // LCOV_EXCL_LINE
             Py_DECREF(meth); // LCOV_EXCL_LINE
             return -1;
         }
-        if (PyDict_SetItem(d, key, meth) < 0) {  // LCOV_BR_EXCL_LINE
-            Py_DECREF(d);    // LCOV_EXCL_LINE
-            Py_DECREF(meth); // LCOV_EXCL_LINE
-            Py_DECREF(key); // LCOV_EXCL_LINE
-            return -1;       // LCOV_EXCL_LINE
+        if (PyDict_SetItem(d, key, meth) < 0) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(d);                       // LCOV_EXCL_LINE
+            Py_DECREF(meth);                    // LCOV_EXCL_LINE
+            Py_DECREF(key);                     // LCOV_EXCL_LINE
+            return -1;                          // LCOV_EXCL_LINE
         }
         Py_DECREF(meth);
         Py_DECREF(key);

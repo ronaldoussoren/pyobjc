@@ -11,7 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 // LCOV_EXCL_START
 //
 
-
 static void
 nsmaptable_objc_retain(NSMapTable* table __attribute__((__unused__)), const void* datum)
 {
@@ -62,8 +61,8 @@ static id (*bundleForClassIMP)(id, SEL, Class) = nil;
 
         if (unlikely(!bundleCache)) {
             bundleCache =
-                NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks, PyObjC_ObjCValueCallBacks,
-                                 PYOBJC_EXPECTED_CLASS_COUNT);
+                NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
+                                 PyObjC_ObjCValueCallBacks, PYOBJC_EXPECTED_CLASS_COUNT);
         }
 
         if (!aClass) {
@@ -114,7 +113,7 @@ static const char BUNDLE_FOR_CLASS_SIGNATURE[] = {_C_ID, _C_ID, _C_SEL, _C_CLASS
     }
 
     bundleForClassIMP =
-        (id(*)(id, SEL, Class))[NSBundle methodForSelector:@selector(bundleForClass:)];
+        (id (*)(id, SEL, Class))[NSBundle methodForSelector:@selector(bundleForClass:)];
 
     Method method = class_getInstanceMethod(object_getClass([NSBundle class]),
                                             @selector(bundleForClass:));

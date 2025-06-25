@@ -150,9 +150,9 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
             super.super_class = PyObjCSelector_GetClass(method);
             super.receiver    = PyObjCObject_GetObject(self);
 
-            newImageRep = ((id(*)(struct objc_super*, SEL, const void**, NSInteger,
-                                  NSInteger, NSInteger, NSInteger, BOOL, BOOL, id,
-                                  NSInteger, NSInteger))objc_msgSendSuper)(
+            newImageRep = ((id (*)(struct objc_super*, SEL, const void**, NSInteger,
+                                   NSInteger, NSInteger, NSInteger, BOOL, BOOL, id,
+                                   NSInteger, NSInteger))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), dataPlanes, width, height,
                 bps, spp, hasAlpha, isPlanar, colorSpaceNameString, bpr, bpp);
 
@@ -174,7 +174,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
 
     return PyObjC_IdToPython(newImageRep);
 
-error_cleanup : {
+error_cleanup: {
     int j = i;
     for (i = 0; i < j; i++) {
         if (planeBuffers[i].buf != NULL) {
@@ -274,9 +274,9 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
             super.receiver    = PyObjCObject_GetObject(self);
 
             newImageRep =
-                ((id(*)(struct objc_super*, SEL, const void**, NSInteger, NSInteger,
-                        NSInteger, NSInteger, BOOL, BOOL, id, NSBitmapFormat, NSInteger,
-                        NSInteger))objc_msgSendSuper)(
+                ((id (*)(struct objc_super*, SEL, const void**, NSInteger, NSInteger,
+                         NSInteger, NSInteger, BOOL, BOOL, id, NSBitmapFormat, NSInteger,
+                         NSInteger))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), dataPlanes, width, height,
                     bps, spp, hasAlpha, isPlanar, colorSpaceNameString,
                     (NSBitmapFormat)format, bpr, bpp);

@@ -1,7 +1,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
-PyObjC_FINAL_CLASS
-@interface OC_PythonURL : NSURL {
+PyObjC_FINAL_CLASS @interface OC_PythonURL : NSURL {
     PyObject* value;
 }
 

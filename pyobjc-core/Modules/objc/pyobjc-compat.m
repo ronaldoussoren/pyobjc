@@ -66,5 +66,4 @@ const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object)
     return (const char*)(PyUnicode_DATA(object));
 }
 
-
 NS_ASSUME_NONNULL_END

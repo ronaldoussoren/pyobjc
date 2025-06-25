@@ -21,7 +21,7 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
             super.receiver    = PyObjCObject_GetObject(self);
             bytes             = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method));
-            bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+            bytes_len = ((NSUInteger (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, @selector(length));
 
         } @catch (NSObject* localException) {
@@ -64,7 +64,7 @@ mkimp_NSData_bytes(PyObject*              callable,
 
       pyself = PyObjCObject_NewTransient(self, &cookie);
       if (pyself == NULL) // LCOV_BR_EXCL_LINE
-          goto error; // LCOV_EXCL_LINE
+          goto error;     // LCOV_EXCL_LINE
 
       PyObject* arglist[2] = {NULL, pyself};
 
@@ -119,7 +119,7 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
 
             bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method));
-            bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+            bytes_len = ((NSUInteger (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, @selector(length));
 
         } @catch (NSObject* localException) {
@@ -169,7 +169,7 @@ mkimp_NSMutableData_mutableBytes(PyObject* callable, PyObjCMethodSignature* meth
 
       pyself = PyObjCObject_NewTransient(self, &cookie);
       if (pyself == NULL) // LCOV_BR_EXCL_LINE
-          goto error; // LCOV_EXCL_LINE
+          goto error;     // LCOV_EXCL_LINE
 
       PyObject* arglist[2] = {NULL, pyself};
       result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,

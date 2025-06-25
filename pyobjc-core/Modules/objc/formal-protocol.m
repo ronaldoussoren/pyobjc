@@ -32,7 +32,6 @@ proto_dealloc(PyObject* object)
 #endif
 }
 
-
 static PyObject* _Nullable proto_repr(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
@@ -214,9 +213,9 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
         return NULL;      // LCOV_EXCL_LINE
     }
 
-    result->objc = theProtocol;
+    result->objc     = theProtocol;
     PyObject* actual = PyObjC_RegisterPythonProxy( // LCOV_BR_EXCL_LINE
-            result->objc, (PyObject*)result);
+        result->objc, (PyObject*)result);
     Py_DECREF(result);
     return actual;
 
@@ -489,13 +488,14 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
         return NULL;      // LCOV_EXCL_LINE
     }
 
-    result->objc = protocol;
+    result->objc     = protocol;
     PyObject* actual = PyObjC_RegisterPythonProxy(result->objc, (PyObject*)result);
     Py_DECREF(result);
     return actual;
 }
 
-Protocol* PyObjCFormalProtocol_GetProtocol(PyObject* object) NS_RETURNS_NOT_RETAINED
+Protocol*
+PyObjCFormalProtocol_GetProtocol(PyObject* object) NS_RETURNS_NOT_RETAINED
 {
     assert(PyObjCFormalProtocol_Check(object));
 

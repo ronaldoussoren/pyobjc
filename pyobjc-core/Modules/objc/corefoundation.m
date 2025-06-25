@@ -47,7 +47,7 @@ PyObject* _Nullable PyObjC_TryCreateCFProxy(NSObject* value)
 
     PyObject*     cfid;
     PyTypeObject* tp;
-    int r;
+    int           r;
 
     cfid = PyLong_FromLong(CFGetTypeID((CFTypeRef)value));
     if (cfid == NULL) { // LCOV_BR_EXCL_LINE
@@ -70,7 +70,7 @@ PyObject* _Nullable PyObjC_TryCreateCFProxy(NSObject* value)
         }
 
         ((PyObjCObject*)rval)->objc_object = value;
-        ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
+        ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
         CFRetain(value);
 
         return rval;
@@ -122,7 +122,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     PyObject*          result;
     PyObject*          bases;
     PyObjCClassObject* info;
-    int r;
+    int                r;
 
     if (encoding[0] != _C_ID) {
         if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) { // LCOV_BR_EXCL_LINE
@@ -154,7 +154,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     }
 
     r = PyDict_GetItemRef(gTypeid2class, cf, &result);
-    switch (r) { //LCOV_BR_EXCL_LINE
+    switch (r) { // LCOV_BR_EXCL_LINE
     case -1:
         // LCOV_EXCL_START
         Py_DECREF(cf);
@@ -166,7 +166,6 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
          */
         Py_DECREF(cf);
         return result;
-
     }
     /* case 0: */
     dict = PyDict_New();
@@ -349,7 +348,7 @@ PyObject* _Nullable PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* dat
     PyObject* v;
     PyObject* typestr_obj = PyUnicode_FromString(typestr);
     if (typestr_obj == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;           // LCOV_EXCL_LINE
     }
     int r = PyDict_GetItemRef(PyObjC_TypeStr2CFTypeID, typestr_obj, &v);
     Py_DECREF(typestr_obj);
@@ -387,7 +386,7 @@ PyObject*
 PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
 {
     PyObject* rval = NULL;
-    int r;
+    int       r;
 
     assert(gTypeid2class != NULL);
 
@@ -395,7 +394,7 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
     PyTypeObject* tp;
 
     cfid = PyLong_FromLong(typeid);
-    r = PyDict_GetItemRef(gTypeid2class, cfid, (PyObject**)&tp);
+    r    = PyDict_GetItemRef(gTypeid2class, cfid, (PyObject**)&tp);
     Py_DECREF(cfid);
     switch (r) { // LCOV_BR_EXCL_LINE
     case -1:

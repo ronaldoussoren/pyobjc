@@ -38,11 +38,11 @@ static void
 unic_dealloc(PyObject* obj)
 {
 
-    PyObjCUnicodeObject* uobj     = (PyObjCUnicodeObject*)obj;
+    PyObjCUnicodeObject* uobj = (PyObjCUnicodeObject*)obj;
     PyObjC_UnregisterPythonProxy(uobj->nsstr, obj);
 
-    PyObject*            weakrefs = uobj->weakrefs;
-    PyObject*            py_nsstr = uobj->py_nsstr;
+    PyObject* weakrefs = uobj->weakrefs;
+    PyObject* py_nsstr = uobj->py_nsstr;
 
     Py_CLEAR(py_nsstr);
 
@@ -60,7 +60,6 @@ unic_dealloc(PyObject* obj)
     Py_DECREF(tp);
 #endif
 }
-
 
 static PyObject* _Nullable unic_nsstring(PyObject* self)
 {
@@ -283,7 +282,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
     result->weakrefs = NULL;
     result->py_nsstr = NULL;
-    result->nsstr = [value retain];
+    result->nsstr    = [value retain];
 
     ascii   = (PyASCIIObject*)result;
     compact = (PyCompactUnicodeObject*)result;
@@ -469,7 +468,6 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         PyMem_Free(characters);
         characters = NULL;
     }
-
 
     return (PyObject*)result;
 

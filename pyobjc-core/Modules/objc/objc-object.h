@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef struct {
     PyObject_HEAD
 
-    __strong     id objc_object;
+    __strong id  objc_object;
     unsigned int flags;
 } PyObjCObject;
 
@@ -29,7 +29,7 @@ extern PyObjCClassObject PyObjCObject_Type;
 
 extern PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain);
 extern PyObject* _Nullable PyObjCObject_FindSelector(PyObject* cls, SEL selector);
-extern id PyObjCObject_GetObject(PyObject* object);
+extern id           PyObjCObject_GetObject(PyObject* object);
 extern unsigned int PyObjCObject_GetFlags(PyObject* object);
 
 extern void _PyObjCObject_FreeDeallocHelper(PyObject* obj);
@@ -37,7 +37,8 @@ extern PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object);
 extern bool PyObjCObject_IsBlock(PyObject* object);
 extern bool PyObjCObject_IsMagic(PyObject* object);
 extern PyObjCMethodSignature* _Nullable PyObjCObject_GetBlockSignature(PyObject* object);
-extern PyObjCMethodSignature* _Nullable  PyObjCObject_SetBlockSignature(PyObject* object, PyObjCMethodSignature* methinfo);
+extern PyObjCMethodSignature* _Nullable PyObjCObject_SetBlockSignature(
+    PyObject* object, PyObjCMethodSignature* methinfo);
 
 /*
  * XXX: these defines should be in the .m file

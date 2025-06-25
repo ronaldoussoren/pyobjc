@@ -182,25 +182,25 @@ typedef NSObject<NSObject> ObjectClass;
 
 @implementation OC_TestClass1
 #if __has_feature(c_atomic)
-static _Atomic size_t             g_idx          = 0;
+static _Atomic size_t g_idx = 0;
 #else
-static size_t             g_idx          = 0;
+static size_t g_idx = 0;
 #endif
 
 #define ARRAYSIZE(a) (sizeof(a) / sizeof(a[0]))
-static unsigned long long g_ulonglongs[] = {0, 42, (1LL << 63)};
-static unsigned long      g_ulongs[]     = {0, 42, (1 << 30)};
-static long long          g_longlongs[]  = {-(1LL << 60), -42, 0, 42, (1LL << 60)};
-static long               g_longs[]      = {-(1 << 30), -42, 0, 42, (1 << 30)};
-static int                g_ints[]       = {-(1 << 30), -42, 0, 42, (1 << 30)};
-static unsigned int       g_uints[]      = {0, 42, 1 << 30};
-static short              g_shorts[]     = {-(1 << 14), -42, 0, 42, (1 << 14)};
-static unsigned short     g_ushorts[]    = {0, 42, 1 << 14};
-static char               g_chars[]      = {-128, 0, 127};
-static unsigned char      g_uchars[]     = {0, 128, 255};
-static float              g_floats[]     = {0.128, 1.0, 42.0, 1e10};
-static double             g_doubles[]    = {0.128, 1.0, 42.0, 1e10};
-static long double        g_longdoubles[]= {0.128, 1.0, 42.0, 1e10};
+static unsigned long long g_ulonglongs[]  = {0, 42, (1LL << 63)};
+static unsigned long      g_ulongs[]      = {0, 42, (1 << 30)};
+static long long          g_longlongs[]   = {-(1LL << 60), -42, 0, 42, (1LL << 60)};
+static long               g_longs[]       = {-(1 << 30), -42, 0, 42, (1 << 30)};
+static int                g_ints[]        = {-(1 << 30), -42, 0, 42, (1 << 30)};
+static unsigned int       g_uints[]       = {0, 42, 1 << 30};
+static short              g_shorts[]      = {-(1 << 14), -42, 0, 42, (1 << 14)};
+static unsigned short     g_ushorts[]     = {0, 42, 1 << 14};
+static char               g_chars[]       = {-128, 0, 127};
+static unsigned char      g_uchars[]      = {0, 128, 255};
+static float              g_floats[]      = {0.128, 1.0, 42.0, 1e10};
+static double             g_doubles[]     = {0.128, 1.0, 42.0, 1e10};
+static long double        g_longdoubles[] = {0.128, 1.0, 42.0, 1e10};
 
 static char* g_charps[] = {"hello", "world", "foobar"};
 
@@ -1339,7 +1339,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (long double)invokeInstanceLongDoubleFuncOf:(OC_TestClass1*)arg
 {
-    long double        res;
+    long double   res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(longdoubleFunc));
@@ -1557,7 +1557,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (long double)invokeInstanceLongDoubleArg:(long double)arg on:(OC_TestClass1*)obj
 {
-    long double        res;
+    long double   res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(longdoubleArg:));
@@ -1712,8 +1712,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 + (NSArray*)fetchArray:(NSCoder*)coder;
 @end
 
-@interface
-NSObject (IKnowWhatImDoing)
+@interface NSObject (IKnowWhatImDoing)
 - (id)call;
 @end
 
@@ -1748,8 +1747,7 @@ NSObject (IKnowWhatImDoing)
 + (int)fetchInt:(NSCoder*)coder
 {
     int i;
-    CLANG_SUPPRESS
-    [coder decodeValueOfObjCType:@encode(int) at:&i];
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(int) at:&i];
 
     return i;
 }
@@ -1757,8 +1755,7 @@ NSObject (IKnowWhatImDoing)
 + (double)fetchDouble:(NSCoder*)coder
 {
     double i;
-    CLANG_SUPPRESS
-    [coder decodeValueOfObjCType:@encode(double) at:&i];
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(double) at:&i];
     return i;
 }
 
@@ -1892,7 +1889,7 @@ NSObject (IKnowWhatImDoing)
 {
     self = [super init];
     if (self == nil) // LCOV_BR_EXCL_LINE
-        return nil; // LCOV_EXCL_LINE
+        return nil;  // LCOV_EXCL_LINE
     value    = nil;
     observed = nil;
 
@@ -2005,7 +2002,8 @@ carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
         }
     }
 
-    r = PyObjC_PythonToCArray(writable?YES:NO, NO, signature, o1, (void**)&buf, &buflen, &v, &view);
+    r = PyObjC_PythonToCArray(writable ? YES : NO, NO, signature, o1, (void**)&buf,
+                              &buflen, &v, &view);
     Py_XDECREF(v);
     if (r == -1) {
         return NULL;
@@ -2034,238 +2032,267 @@ static PyMethodDef mod_methods[] = {
 
     {0, 0, 0, 0}};
 
-static int mod_exec_module(PyObject* m)
+static int
+mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "OC_TestClass1", PyObjC_IdToPython([OC_TestClass1 class]))
+                           "OC_TestClass1", PyObjC_IdToPython([OC_TestClass1 class]))
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "OC_TestClass2", PyObjC_IdToPython([OC_TestClass2 class]))
+                           "OC_TestClass2", PyObjC_IdToPython([OC_TestClass2 class]))
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "PyObjC_TestClass3",
+                           "PyObjC_TestClass3",
                            PyObjC_IdToPython([PyObjC_TestClass3 class]))
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "PyObjC_TestClass4",
+                           "PyObjC_TestClass4",
                            PyObjC_IdToPython([PyObjC_TestClass4 class]))
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "PyObjCTest_KVBaseClass",
+                           "PyObjCTest_KVBaseClass",
                            PyObjC_IdToPython([PyObjCTest_KVBaseClass class]))
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "PyObjCTest_KVPathClass",
+                           "PyObjCTest_KVPathClass",
                            PyObjC_IdToPython([PyObjCTest_KVPathClass class]))
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "PyObjCTest_KeyValueObserver",
+                           "PyObjCTest_KeyValueObserver",
                            PyObjC_IdToPython([PyObjCTest_KeyValueObserver class]))
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_VALUEFORKEY", PyLong_FromLong(0)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_VALUEFORKEYPATH", PyLong_FromLong(1)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_STOREDVALUEFORKEY", PyLong_FromLong(2)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_VALUESFORKEYS", PyLong_FromLong(3)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_TAKEVALUE_FORKEY", PyLong_FromLong(0)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_TAKEVALUE_FORKEYPATH", PyLong_FromLong(1)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_TAKESTOREDVALUE_FORKEY", PyLong_FromLong(2)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_TAKEVALUESFROMDICT", PyLong_FromLong(3)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_SETVALUE_FORKEY", PyLong_FromLong(4)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_SETVALUE_FORKEYPATH", PyLong_FromLong(5)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DO_SETVALUESFORKEYSFROMDICT", PyLong_FromLong(6)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "UCHAR_MAX", PyLong_FromLong(UCHAR_MAX)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "SCHAR_MAX", PyLong_FromLong(SCHAR_MAX)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "SCHAR_MIN", PyLong_FromLong(SCHAR_MIN)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "CHAR_MAX", PyLong_FromLong(CHAR_MAX)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "CHAR_MIN", PyLong_FromLong(CHAR_MIN)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "USHRT_MAX", PyLong_FromLong(USHRT_MAX)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "SHRT_MAX", PyLong_FromLong(SHRT_MAX)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "SHRT_MIN", PyLong_FromLong(SHRT_MIN)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "UINT_MAX", PyLong_FromUnsignedLongLong(UINT_MAX)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "INT_MAX", PyLong_FromLong(INT_MAX)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "INT_MIN", PyLong_FromLong(INT_MIN)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "ULONG_MAX", PyLong_FromUnsignedLongLong(ULONG_MAX)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "LONG_MAX", PyLong_FromLong(LONG_MAX)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "LONG_MIN", PyLong_FromLong(LONG_MIN)) < 0) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX))
+                           "DO_VALUEFORKEY", PyLong_FromLong(0))
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "LLONG_MAX", PyLong_FromLongLong(LLONG_MAX)) < 0) {
+                           "DO_VALUEFORKEYPATH", PyLong_FromLong(1))
+        < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "LLONG_MIN", PyLong_FromLongLong(LLONG_MIN)) < 0) {
+                           "DO_STOREDVALUEFORKEY", PyLong_FromLong(2))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "DO_VALUESFORKEYS", PyLong_FromLong(3))
+        < 0) {
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DBL_MAX", PyFloat_FromDouble(DBL_MAX)) < 0) {
+                           "DO_TAKEVALUE_FORKEY", PyLong_FromLong(0))
+        < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DBL_MIN", PyFloat_FromDouble(DBL_MIN)) < 0) {
+                           "DO_TAKEVALUE_FORKEYPATH", PyLong_FromLong(1))
+        < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "DBL_EPSILON", PyFloat_FromDouble(DBL_EPSILON)) < 0) {
+                           "DO_TAKESTOREDVALUE_FORKEY", PyLong_FromLong(2))
+        < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "FLT_MAX", PyFloat_FromDouble(FLT_MAX)) < 0) {
+                           "DO_TAKEVALUESFROMDICT", PyLong_FromLong(3))
+        < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "FLT_MIN", PyFloat_FromDouble(FLT_MIN)) < 0) {
+                           "DO_SETVALUE_FORKEY", PyLong_FromLong(4))
+        < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
-                "FLT_EPSILON", PyFloat_FromDouble(FLT_EPSILON)) < 0) {
+                           "DO_SETVALUE_FORKEYPATH", PyLong_FromLong(5))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "DO_SETVALUESFORKEYSFROMDICT", PyLong_FromLong(6))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "UCHAR_MAX", PyLong_FromLong(UCHAR_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "SCHAR_MAX", PyLong_FromLong(SCHAR_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "SCHAR_MIN", PyLong_FromLong(SCHAR_MIN))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "CHAR_MAX", PyLong_FromLong(CHAR_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "CHAR_MIN", PyLong_FromLong(CHAR_MIN))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "USHRT_MAX", PyLong_FromLong(USHRT_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "SHRT_MAX", PyLong_FromLong(SHRT_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "SHRT_MIN", PyLong_FromLong(SHRT_MIN))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "UINT_MAX", PyLong_FromUnsignedLongLong(UINT_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "INT_MAX", PyLong_FromLong(INT_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "INT_MIN", PyLong_FromLong(INT_MIN))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "ULONG_MAX", PyLong_FromUnsignedLongLong(ULONG_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "LONG_MAX", PyLong_FromLong(LONG_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "LONG_MIN", PyLong_FromLong(LONG_MIN))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "LLONG_MAX", PyLong_FromLongLong(LLONG_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "LLONG_MIN", PyLong_FromLongLong(LLONG_MIN))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "DBL_MAX", PyFloat_FromDouble(DBL_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "DBL_MIN", PyFloat_FromDouble(DBL_MIN))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "DBL_EPSILON", PyFloat_FromDouble(DBL_EPSILON))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "FLT_MAX", PyFloat_FromDouble(FLT_MAX))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "FLT_MIN", PyFloat_FromDouble(FLT_MIN))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "FLT_EPSILON", PyFloat_FromDouble(FLT_EPSILON))
+        < 0) {
         return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* This extension does not use the CPython API other than initializing
          * the module, hence is safe with subinterpreters and per-interpreter
          * GILs
          */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "testbndl",
-    .m_doc = NULL,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "testbndl",
+    .m_doc      = NULL,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit_testbndl(void);

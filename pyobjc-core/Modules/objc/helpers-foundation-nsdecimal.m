@@ -186,7 +186,7 @@ decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable 
 
     memset(&self->value, 0, sizeof(self->value));
     self->objc_value = nil;
-    if ((args == NULL || PyTuple_Size(args) == 0) // LCOV_BR_EXCL_LINE
+    if ((args == NULL || PyTuple_Size(args) == 0)      // LCOV_BR_EXCL_LINE
         && (kwds == NULL || PyDict_Size(kwds) == 0)) { // LCOV_BR_EXCL_LINE
         DecimalFromComponents(&self->value, 0, 0, 0);
         return (PyObject*)self;
@@ -364,7 +364,8 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
             }
             Py_BEGIN_ALLOW_THREADS
                 @try {
-                    DecimalFromString(&Decimal_Value(self), stringVal, NULL); // LCOV_BR_EXCL_LINE
+                    DecimalFromString(&Decimal_Value(self), stringVal,
+                                      NULL); // LCOV_BR_EXCL_LINE
 
                     // LCOV_EXCL_START
                     // DecimalFromString does not raise, but returns a NaN on
@@ -396,7 +397,7 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
         return -1;
     }
 
-    DecimalFromComponents(&Decimal_Value(self), mantissa, exponent, negative?YES:NO);
+    DecimalFromComponents(&Decimal_Value(self), mantissa, exponent, negative ? YES : NO);
 
     return 0;
 }
@@ -419,7 +420,7 @@ static PyObject*
 decimal_richcompare(PyObject* self, PyObject* other, int type)
 {
     NSComparisonResult res;
-    int r = decimal_coerce_compare(&self, &other);
+    int                r = decimal_coerce_compare(&self, &other);
     if (r == 1) {
         PyErr_Clear();
     }
@@ -441,17 +442,41 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
 
     switch (type) { // LCOV_BR_EXCL_LINE
     case Py_LT:
-        if(res == NSOrderedAscending) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
+        if (res == NSOrderedAscending) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        };
     case Py_LE:
-        if(res != NSOrderedDescending) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
+        if (res != NSOrderedDescending) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        };
     case Py_EQ:
-        if(res == NSOrderedSame) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
+        if (res == NSOrderedSame) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        };
     case Py_NE:
-        if(res != NSOrderedSame) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
+        if (res != NSOrderedSame) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        };
     case Py_GE:
-        if(res != NSOrderedAscending) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
+        if (res != NSOrderedAscending) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        };
     case Py_GT:
-        if(res == NSOrderedDescending) { Py_RETURN_TRUE; } else { Py_RETURN_FALSE; };
+        if (res == NSOrderedDescending) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        };
     default:
         // LCOV_EXCL_START
         PyErr_SetString(PyExc_TypeError, "Bad comparison arg");
@@ -521,7 +546,8 @@ static PyObject* _Nullable decimal_result_to_python(NSCalculationError status,
 #define TRY_COERCE(left, right)                                                          \
     int r = decimal_coerce(&left, &right);                                               \
     if (r == 1) {                                                                        \
-        if (PyErr_Occurred()) PyErr_Clear();                                             \
+        if (PyErr_Occurred())                                                            \
+            PyErr_Clear();                                                               \
         Py_RETURN_NOTIMPLEMENTED;                                                        \
     }
 
@@ -648,8 +674,8 @@ decimal_coerce(PyObject** l, PyObject** r)
             goto error;   // LCOV_EXCL_LINE
 
         args = PyTuple_Pack(1, *l);
-        if (args == NULL)                // LCOV_BR_EXCL_LINE
-            goto error;                  // LCOV_EXCL_LINE
+        if (args == NULL) // LCOV_BR_EXCL_LINE
+            goto error;   // LCOV_EXCL_LINE
 
         res = decimal_init(left, args, NULL);
         if (res == -1)
@@ -669,8 +695,8 @@ decimal_coerce(PyObject** l, PyObject** r)
             goto error;    // LCOV_EXCL_LINE
 
         args = PyTuple_Pack(1, *r);
-        if (args == NULL)                // LCOV_BR_EXCL_LINE
-            goto error;                  // LCOV_EXCL_LINE
+        if (args == NULL) // LCOV_BR_EXCL_LINE
+            goto error;   // LCOV_EXCL_LINE
 
         res = decimal_init(right, args, NULL);
         if (res == -1)
@@ -708,7 +734,7 @@ decimal_coerce_compare(PyObject** l, PyObject** r)
     if (PyFloat_Check(*r)) {
         NSDecimal tmp;
         if (PyObjC_number_to_decimal(*r, &tmp) == -1) { // LCOV_BR_EXCL_LINE
-            return 1; // LCOV_EXCL_LINE
+            return 1;                                   // LCOV_EXCL_LINE
         }
         *r = Decimal_New(&tmp);
     }
@@ -727,7 +753,6 @@ decimal_repr(PyObject* self)
     Py_XDECREF(tmp);
     return repr;
 }
-
 
 static PyObject*
 Decimal_New(const NSDecimal* aDecimal)
@@ -793,11 +818,15 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            super.super_class = (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method)); // LCOV_BR_EXCL_LINE
-            super.receiver    = (id _Nonnull)object_getClass(PyObjCClass_GetClass(self)); // LCOV_BR_EXCL_LINE
+            super.super_class = (Class _Nonnull)object_getClass(
+                PyObjCSelector_GetClass(method)); // LCOV_BR_EXCL_LINE
+            super.receiver = (id _Nonnull)object_getClass(
+                PyObjCClass_GetClass(self)); // LCOV_BR_EXCL_LINE
 
-            res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
-                &super, PyObjCSelector_GetSelector(method), *aDecimal); // LCOV_BR_EXCL_LINE
+            res = ((id (*)(struct objc_super*, SEL,
+                           NSDecimal))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
+                &super, PyObjCSelector_GetSelector(method),
+                *aDecimal); // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             // AFAIK the method won't raise.
         } @catch (NSObject* localException) {
@@ -808,7 +837,7 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
     Py_END_ALLOW_THREADS
 
     if (res == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;                      // LCOV_EXCL_LINE
     }
 
     return id_to_python(res);
@@ -840,10 +869,12 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
     Py_BEGIN_ALLOW_THREADS
         @try {
             super.super_class = PyObjCSelector_GetClass(method); // LCOV_BR_EXCL_LINE
-            super.receiver    = PyObjCObject_GetObject(self); // LCOV_BR_EXCL_LINE
+            super.receiver    = PyObjCObject_GetObject(self);    // LCOV_BR_EXCL_LINE
 
-            res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
-                &super, PyObjCSelector_GetSelector(method), *aDecimal); // LCOV_BR_EXCL_LINE
+            res = ((id (*)(struct objc_super*, SEL,
+                           NSDecimal))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
+                &super, PyObjCSelector_GetSelector(method),
+                *aDecimal); // LCOV_BR_EXCL_LINE
 
             // LCOV_EXCL_START
             // AFAIK the method won't raise.
@@ -855,12 +886,11 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
     Py_END_ALLOW_THREADS
 
     if (res == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;                      // LCOV_EXCL_LINE
     }
 
     return id_to_python(res);
 }
-
 
 static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        method,
                                                              PyObject*        self,
@@ -877,29 +907,30 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        me
     Py_BEGIN_ALLOW_THREADS
         @try {
             super.super_class = PyObjCSelector_GetClass(method); // LCOV_BR_EXCL_LINE
-            super.receiver    = PyObjCObject_GetObject(self); // LCOV_BR_EXCL_LINE
+            super.receiver    = PyObjCObject_GetObject(self);    // LCOV_BR_EXCL_LINE
 
 #if defined(__arm64__)
-            aDecimal = ((NSDecimal(*)(struct objc_super*, SEL))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
-                &super, PyObjCSelector_GetSelector(method)); // LCOV_BR_EXCL_LINE
+            aDecimal = ((NSDecimal (*)(struct objc_super*,
+                                       SEL))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
+                &super, PyObjCSelector_GetSelector(method));    // LCOV_BR_EXCL_LINE
 #else
-            ((void (*)(void*, struct objc_super*, SEL))objc_msgSendSuper_stret)( // LCOV_BR_EXCL_LINE
-                &aDecimal, &super, PyObjCSelector_GetSelector(method)); // LCOV_BR_EXCL_LINE
+            ((void (*)(void*, struct objc_super*,
+                       SEL))objc_msgSendSuper_stret)( // LCOV_BR_EXCL_LINE
+                &aDecimal, &super,
+                PyObjCSelector_GetSelector(method)); // LCOV_BR_EXCL_LINE
 #endif
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
             PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     return Decimal_New(&aDecimal);
 }
-
-
 
 int
 PyObjC_setup_nsdecimal(PyObject* m)
@@ -935,11 +966,9 @@ PyObjC_setup_nsdecimal(PyObject* m)
     Class classNSDecimalNumberPlaceholder =
         objc_lookUpClass("NSDecimalNumberPlaceholder");
     if (classNSDecimalNumberPlaceholder != Nil) { // LCOV_BR_EXCL_LINE
-        if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
-                     classNSDecimalNumberPlaceholder,
-                     @selector(initWithDecimal:),
-                     call_NSDecimalNumber_initWithDecimal_,
-                     PyObjCUnsupportedMethod_IMP)
+        if (PyObjC_RegisterMethodMapping(         // LCOV_BR_EXCL_LINE
+                classNSDecimalNumberPlaceholder, @selector(initWithDecimal:),
+                call_NSDecimalNumber_initWithDecimal_, PyObjCUnsupportedMethod_IMP)
             < 0) {
 
             return -1; // LCOV_EXCL_LINE

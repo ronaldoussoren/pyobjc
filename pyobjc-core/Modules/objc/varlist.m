@@ -169,9 +169,10 @@ static PyObject* _Nullable varlist__getslice__(PyObject* _self, Py_ssize_t start
 }
 
 static int
-varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject* _Nullable newval)
+varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop,
+                    PyObject* _Nullable newval)
 {
-    int result;
+    int            result;
     PyObjCVarList* self = (PyObjCVarList*)_self;
     Py_ssize_t     idx;
     PyObject*      seq;
@@ -238,7 +239,7 @@ varlist__setitem__(PyObject* _self, Py_ssize_t idx, PyObject* _Nullable value)
     int result;
     Py_BEGIN_CRITICAL_SECTION(self);
     result = depythonify_c_value(self->typestr, value,
-                               ((unsigned char*)self->array) + (idx * self->itemsize));
+                                 ((unsigned char*)self->array) + (idx * self->itemsize));
     Py_END_CRITICAL_SECTION();
     return result;
 }
@@ -406,10 +407,10 @@ static PyMethodDef varlist_methods[] = {{.ml_name  = "as_tuple",
                                          .ml_meth  = (PyCFunction)varlist_as_buffer,
                                          .ml_flags = METH_VARARGS | METH_KEYWORDS,
                                          .ml_doc   = varlist_as_buffer_doc},
-                                          {.ml_name  = "__class_getitem__",
-                                           .ml_meth  = (PyCFunction)Py_GenericAlias,
-                                           .ml_flags = METH_O|METH_CLASS,
-                                           .ml_doc   = "See PEP 585"},
+                                        {.ml_name  = "__class_getitem__",
+                                         .ml_meth  = (PyCFunction)Py_GenericAlias,
+                                         .ml_flags = METH_O | METH_CLASS,
+                                         .ml_doc   = "See PEP 585"},
                                         {
                                             .ml_name = NULL /* SENTINEL */
                                         }};

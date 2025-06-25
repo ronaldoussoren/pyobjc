@@ -13,6 +13,7 @@ from PyObjCTest.test_metadata_function import (
     oldDoubleFunc,
     getGetter,
     get2ndGetter,
+    function_list,
 )
 from PyObjCTest.test_deprecations import deprecation_warnings
 
@@ -379,3 +380,49 @@ class TestFunctions(TestCase):
     def test_function_type_subscript(self):
         f = objc.function[2, 3]
         self.assertIsGenericAlias(f, objc.function, (2, 3))
+
+    def test_vector_function_fails(self):
+        m = {}
+
+        with self.assertRaisesRegex(
+            NotImplementedError, "Vector types not supported by libffi caller"
+        ):
+            objc.loadBundleFunctions(bundle, m, [("NSCountFrames", b"<2I>", "", {})])
+
+        objc.loadFunctionList(
+            function_list,
+            m,
+            [
+                (
+                    "getDoubleFunc",
+                    b"^?",
+                    "",
+                    {
+                        "retval": {
+                            "callable": {
+                                "retval": {"type": b"<2i>"},
+                                "arguments": {
+                                    0: {"type": objc._C_INT},
+                                },
+                            }
+                        }
+                    },
+                ),
+            ],
+        )
+
+        with self.assertRaisesRegex(
+            NotImplementedError, "Vector types not supported by libffi caller"
+        ):
+            m["getDoubleFunc"]()
+
+    def test_bad_argument(self):
+        m = {}
+
+        objc.loadBundleFunctions(bundle, m, [("NSFrameAddress", b"QQ", "", {})])
+
+        NSFrameAddress = m["NSFrameAddress"]
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            NSFrameAddress("a")

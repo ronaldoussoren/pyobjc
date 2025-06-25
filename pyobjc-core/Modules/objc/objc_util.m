@@ -7,7 +7,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 NSNull* NSNull_null;
-Class NSAutoreleasePool_class;
+Class   NSAutoreleasePool_class;
 
 PyObject* PyObjCExc_Error;
 PyObject* PyObjCExc_NoSuchClassError;
@@ -100,11 +100,10 @@ PyObject* PyObjCNM_update;
 PyObject* PyObjCNM_co_consts;
 PyObject* PyObjCNM___call__;
 
-
 int
 PyObjCUtil_Init(PyObject* module)
 {
-    NSNull_null = [[NSNull null] retain];
+    NSNull_null             = [[NSNull null] retain];
     NSAutoreleasePool_class = [NSAutoreleasePool class];
 
 #define NEW_EXC(identifier, name, base_class)                                            \
@@ -118,7 +117,8 @@ PyObjCUtil_Init(PyObject* module)
     NEW_EXC(PyObjCExc_Error, "error", NULL);
     NEW_EXC(PyObjCExc_NoSuchClassError, "nosuchclass_error", PyObjCExc_Error);
     NEW_EXC(PyObjCExc_InternalError, "internal_error", PyObjCExc_Error);
-    NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning); /* XXX */
+    NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning",
+            PyExc_Warning); /* XXX */
     NEW_EXC(PyObjCExc_ObjCRevivalWarning, "RevivedObjectiveCObjectWarning",
             PyExc_Warning);
     NEW_EXC(PyObjCExc_LockError, "LockError", PyObjCExc_Error);
@@ -131,11 +131,12 @@ PyObjCUtil_Init(PyObject* module)
 
 #undef NEW_EXC
 
-#define NEW_STR(identifier, strvalue) do {                                               \
-    identifier = PyUnicode_InternFromString(strvalue);                                   \
-    if (identifier == NULL)                                                              \
-        return -1;                                                                       \
-    } while(0)
+#define NEW_STR(identifier, strvalue)                                                    \
+    do {                                                                                 \
+        identifier = PyUnicode_InternFromString(strvalue);                               \
+        if (identifier == NULL)                                                          \
+            return -1;                                                                   \
+    } while (0)
 
     NEW_STR(PyObjCNM_insert, "insert");
     NEW_STR(PyObjCNM_readonly, "readonly");
@@ -165,7 +166,8 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM___new__, "__new__");
     NEW_STR(PyObjCNM_reason, "reason");
     NEW_STR(PyObjCNM_name, "name");
-    NEW_STR(PyObjCNM_userInfo, "userInfo");;
+    NEW_STR(PyObjCNM_userInfo, "userInfo");
+    ;
     NEW_STR(PyObjCNM__pyobjc_info_, "_pyobjc_info_");
     NEW_STR(PyObjCNM__template, "_template");
     NEW_STR(PyObjCNM_already_cfretained, "already_cfretained");
@@ -250,7 +252,7 @@ PyObjCErr_FromObjC(NSObject* localException)
     PyObject*     exception;
     PyObject*     v;
     PyObject*     exc_type;
-    PyObject*     exc_value = NULL;
+    PyObject*     exc_value     = NULL;
     PyObject*     exc_traceback = NULL;
     PyObject*     c_localException_name;
     PyObject*     c_localException_reason;
@@ -266,11 +268,12 @@ PyObjCErr_FromObjC(NSObject* localException)
             PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
             PyObject* exc = id_to_python(localException);
-            if (exc == NULL) { // LCOV_BR_EXCL_LINE
-                PyErr_Clear(); // LCOV_EXCL_LINE
-            } else { // LCOV_EXCL_LINE
+            if (exc == NULL) {              // LCOV_BR_EXCL_LINE
+                PyErr_Clear();              // LCOV_EXCL_LINE
+            } else {                        // LCOV_EXCL_LINE
                 if (PyObject_SetAttrString( // LCOV_BR_EXCL_LINE
-                        exc_value, "_pyobjc_exc_", exc) == -1) {
+                        exc_value, "_pyobjc_exc_", exc)
+                    == -1) {
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 } // LCOV_EXCL_LINE
             }
@@ -288,13 +291,13 @@ PyObjCErr_FromObjC(NSObject* localException)
                 if (val) {
                     id temp;
                     exc_type = id_to_python(val);
-                    if (exc_type == NULL) { // LCOV_BR_EXCL_LINE
+                    if (exc_type == NULL) {    // LCOV_BR_EXCL_LINE
                         PyObjC_GIL_RETURNVOID; // LCOV_EXCL_LINE
                     } // LCOV_EXCL_LINE
 
                     temp = [userInfo objectForKey:@"__pyobjc_exc_value__"];
-                    if (temp != nil) {
-                        exc_value     = id_to_python(temp);
+                    if (temp != nil) { // LCOV_BR_EXCL_LINE
+                        exc_value = id_to_python(temp);
                         if (exc_value == NULL) { // LCOV_BR_EXCL_LINE
                             // LCOV_EXCL_START
                             Py_CLEAR(exc_type);
@@ -305,7 +308,7 @@ PyObjCErr_FromObjC(NSObject* localException)
 
                     temp = [userInfo objectForKey:@"__pyobjc_exc_traceback__"];
                     if (temp != nil) {
-                        exc_traceback     = id_to_python(temp);
+                        exc_traceback = id_to_python(temp);
                         if (exc_traceback == NULL) { // LCOV_BR_EXCL_LINE
                             // LCOV_EXCL_START
                             Py_CLEAR(exc_type);
@@ -342,22 +345,25 @@ PyObjCErr_FromObjC(NSObject* localException)
             /* Ignore errors in setting up ``dict``, the exception state
              * will be replaced later.
              */
-            if ( PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                    dict, PyObjCNM_name, c_localException_name) == -1) {
+            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    dict, PyObjCNM_name, c_localException_name)
+                == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
             Py_DECREF(c_localException_name);
 
-            if ( PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                    dict, PyObjCNM_reason, c_localException_reason) == -1) {
+            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    dict, PyObjCNM_reason, c_localException_reason)
+                == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
             Py_DECREF(c_localException_reason);
             if (userInfo) {
                 v = id_to_python(userInfo);
                 if (v != NULL) {
-                    if ( PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                            dict, PyObjCNM_userInfo, v) == -1) {
+                    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                            dict, PyObjCNM_userInfo, v)
+                        == -1) {
                         PyErr_Clear(); // LCOV_EXCL_LINE
                     } // LCOV_EXCL_LINE
                     Py_DECREF(v);
@@ -365,8 +371,9 @@ PyObjCErr_FromObjC(NSObject* localException)
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 }
             } else {
-                if ( PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                        dict, PyObjCNM_userInfo, Py_None) == -1) {
+                if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                        dict, PyObjCNM_userInfo, Py_None)
+                    == -1) {
                     PyErr_Clear(); // LCOV_EXCL_LINE
                 } // LCOV_EXCL_LINE
             }
@@ -381,13 +388,15 @@ PyObjCErr_FromObjC(NSObject* localException)
             PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
             PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
-            if ( PyObject_SetAttr( // LCOV_BR_EXCL_LINE
-                    exc_value, PyObjCNM__pyobjc_info_, dict) == -1) {
+            if (PyObject_SetAttr( // LCOV_BR_EXCL_LINE
+                    exc_value, PyObjCNM__pyobjc_info_, dict)
+                == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
             Py_CLEAR(dict);
-            if ( PyObject_SetAttr( // LCOV_BR_EXCL_LINE
-                    exc_value, PyObjCNM_name, c_localException_name) == -1) {
+            if (PyObject_SetAttr( // LCOV_BR_EXCL_LINE
+                    exc_value, PyObjCNM_name, c_localException_name)
+                == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
             PyErr_Restore(exc_type, exc_value, exc_traceback);
@@ -439,7 +448,7 @@ static NSException* _Nullable python_exception_to_objc(void)
          * Objective-C code.
          */
         PyObject* v;
-        int r;
+        int       r;
         NSString* reason = nil;
         NSString* name   = nil;
 
@@ -485,7 +494,6 @@ static NSException* _Nullable python_exception_to_objc(void)
             Py_DECREF(v);
         }
 
-
         if (name && reason) {
             val = [NSException exceptionWithName:name reason:reason userInfo:userInfo];
             Py_DECREF(args);
@@ -497,15 +505,13 @@ static NSException* _Nullable python_exception_to_objc(void)
         }
     }
 
-    repr     = PyObject_Str(exc_value);
-    typerepr = PyObject_Str(exc_type);
     userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
 
     /* XXX: For recent enough versions of Python we don't need to store all three */
     [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_type] autorelease]
                  forKey:@"__pyobjc_exc_type__"];
 
-    if (exc_value != NULL) {
+    if (exc_value != NULL) { // LCOV_BR_EXCL_LINE
         [userInfo
             setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_value] autorelease]
                forKey:@"__pyobjc_exc_value__"];
@@ -520,13 +526,17 @@ static NSException* _Nullable python_exception_to_objc(void)
     NSObject* oc_typerepr = nil;
     NSObject* oc_repr     = nil;
 
-    if (typerepr) {
-        if (depythonify_python_object(typerepr, &oc_typerepr) == -1) { // LCOV_BR_EXCL_LINE
+    typerepr = PyObject_Str(exc_type);
+    if (typerepr) { // LCOV_BR_EXCL_LINE
+        if (depythonify_python_object(typerepr, &oc_typerepr)
+            == -1) { // LCOV_BR_EXCL_LINE
             /* Ignore errors in conversion */
             PyErr_Clear(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
     }
-    if (repr) {
+
+    repr = PyObject_Str(exc_value);
+    if (repr) {                                                // LCOV_BR_EXCL_LINE
         if (depythonify_python_object(repr, &oc_repr) == -1) { // LCOV_BR_EXCL_LINE
             /* Ignore errors in conversion */
             PyErr_Clear(); // LCOV_EXCL_LINE
@@ -661,7 +671,7 @@ array_elem_code(const char* typestr)
         typestr++;
 
     if (*typestr == _C_ARY_E) { // LCOV_BR_EXCL_LINE
-        return '\0'; // LCOV_EXCL_LINE
+        return '\0';            // LCOV_EXCL_LINE
     }
 
     switch (*typestr) {
@@ -690,10 +700,10 @@ array_elem_code(const char* typestr)
 
     const char* next = PyObjCRT_SkipTypeSpec(typestr);
     if (next == NULL) { // LCOV_BR_EXCL_LINE
-        return '\0'; // LCOV_EXCL_LINE
+        return '\0';    // LCOV_EXCL_LINE
     }
     if (*next++ != _C_ARY_E) {
-        return  '\0';
+        return '\0';
     }
     return res;
 }
@@ -816,8 +826,8 @@ code_compatible(char array_code, char type_code)
 
     case 'h':
         switch (type_code) {
-        case  _C_SHT:
-        case  _C_UNICHAR:
+        case _C_SHT:
+        case _C_UNICHAR:
             return YES;
         }
 
@@ -851,7 +861,6 @@ code_compatible(char array_code, char type_code)
 
     case 'd':
         return type_code == _C_DBL;
-
     }
 
     /* Should not get here, the switch
@@ -887,7 +896,6 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         PyErr_Format(PyExc_ValueError, "0 sized struct or array: %s", elementType);
         return -1;
     }
-
 
     if ((eltsize == 1 || eltsize == 0)
         && !(*elementType == _C_NSBOOL || *elementType == _C_BOOL
@@ -941,10 +949,11 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                 PyBuffer_Release(view);
 
                 if (byte_array == NULL) { // LCOV_BR_EXCL_LINE
-                    return -1; // LCOV_EXCL_LINE
+                    return -1;            // LCOV_EXCL_LINE
                 }
 
-                if (PyObject_GetBuffer(byte_array, view, PyBUF_CONTIG) == -1) { // LCOV_BR_EXCL_LINE
+                if (PyObject_GetBuffer(byte_array, view, PyBUF_CONTIG)
+                    == -1) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_DECREF(byte_array);
                     return -1;
@@ -1202,7 +1211,8 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         }
 
         if (PyByteArray_Resize( // LCOV_BR_EXCL_LINE
-                    bytes_array, eltsize * pycount) == -1) {
+                bytes_array, eltsize * pycount)
+            == -1) {
             // LCOV_EXCL_START
             Py_DECREF(bytes_array);
             Py_DECREF(seq);
@@ -1211,7 +1221,8 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         }
 
         if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
-                    bytes_array, view, PyBUF_CONTIG) == -1) {
+                bytes_array, view, PyBUF_CONTIG)
+            == -1) {
             // LCOV_EXCL_START
             Py_DECREF(bytes_array);
             Py_DECREF(seq);
@@ -1251,7 +1262,7 @@ PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, const void* a
 
     eltsize = PyObjCRT_SizeOfType(elementType);
     if (eltsize == -1) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;     // LCOV_EXCL_LINE
     }
 
     if (eltsize == 1 || eltsize == 0) {
@@ -1274,7 +1285,7 @@ PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, const void* a
 
     result = PyTuple_New(size);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < size; i++) {
@@ -1361,7 +1372,7 @@ PyObject* _Nullable PyObjC_CArrayToPython2(const char* elementType, const void* 
 
     eltsize = PyObjCRT_SizeOfType(elementType);
     if (eltsize == -1) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;     // LCOV_EXCL_LINE
     }
 
     if (eltsize == 1 || eltsize == 0) {
@@ -1383,7 +1394,7 @@ PyObject* _Nullable PyObjC_CArrayToPython2(const char* elementType, const void* 
 
     result = PyTuple_New(size);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < size; i++) {
@@ -1429,7 +1440,7 @@ PyObjCClass_Convert(PyObject* object, void* pvar)
 
     *(Class*)pvar = PyObjCClass_GetClass(object);
     if (*(Class*)pvar == NULL) // LCOV_BR_EXCL_LINE
-        return 0; // LCOV_EXCL_LINE
+        return 0;              // LCOV_EXCL_LINE
     return 1;
 }
 
@@ -1526,8 +1537,8 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
 
 PyObject* _Nullable PyObjC_SELToPythonName(SEL sel)
 {
-    const char*  selname = sel_getName(sel);
-    size_t selname_len = strlen(selname);
+    const char* selname     = sel_getName(sel);
+    size_t      selname_len = strlen(selname);
 
     if (PyObjC_IsPythonKeyword(selname)) {
         return PyUnicode_FromFormat("%s__", selname);
@@ -1535,11 +1546,11 @@ PyObject* _Nullable PyObjC_SELToPythonName(SEL sel)
     } else {
         PyObject* result = PyUnicode_New(selname_len, 127);
         if (result == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         }
 
         for (Py_ssize_t idx = 0; *selname != '\0'; selname++, idx++) {
-            int r = PyUnicode_WriteChar(result, idx, *selname == ':'?'_':*selname);
+            int r = PyUnicode_WriteChar(result, idx, *selname == ':' ? '_' : *selname);
             if (r == -1) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_CLEAR(result);
@@ -1713,8 +1724,7 @@ PyObjC_RemoveInternalTypeCodes(char* buf)
     return 0;
 }
 
-PyObject* _Nullable
-PyObjCSequence_Tuple(PyObject* value, const char* context)
+PyObject* _Nullable PyObjCSequence_Tuple(PyObject* value, const char* context)
 {
     PyObject* result = PySequence_Tuple(value);
     if (result == NULL) {
@@ -1726,7 +1736,7 @@ PyObjCSequence_Tuple(PyObject* value, const char* context)
         PyObject* exc = PyErr_GetRaisedException();
         PyException_SetCause(exc, cause);
         PyErr_SetRaisedException(exc);
-#else /* PY_VERSION_HEX < 0x030c0000 */
+#else  /* PY_VERSION_HEX < 0x030c0000 */
         PyObject *type, *cause, *traceback;
         PyErr_Fetch(&type, &cause, &traceback);
         PyErr_NormalizeException(&type, &cause, &traceback);
@@ -1757,6 +1767,5 @@ PyObjCSequence_Tuple(PyObject* value, const char* context)
 
     return result;
 }
-
 
 NS_ASSUME_NONNULL_END

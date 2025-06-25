@@ -29,13 +29,13 @@ PyObject* _Nullable pythonify_authorizationitem(const void* _value)
     PyObject*                   t;
     int                         r;
 
-    result = PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}", 27, NULL,
-                                           &pack);
+    result =
+        PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}", 27, NULL, &pack);
     if (result == NULL) {
         have_tuple = 1;
         result     = PyTuple_New(4);
         if (result == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         }
     }
 
@@ -190,7 +190,8 @@ depythonify_authorizationitem(PyObject* value, void* _out)
 
     } else if (PyBytes_Check(PyTuple_GET_ITEM(seq, 2))) {
         Py_ssize_t len;
-        if (PyBytes_AsStringAndSize(PyTuple_GET_ITEM(seq, 2), (char**)&out->value, // LCOV_BR_EXCL_LINE
+        if (PyBytes_AsStringAndSize(PyTuple_GET_ITEM(seq, 2),
+                                    (char**)&out->value, // LCOV_BR_EXCL_LINE
                                     &len)
             == -1) {
             // LCOV_EXCL_START

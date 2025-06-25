@@ -146,7 +146,7 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
     if (PyObjC_is_pyfunction(pymethod)) {
         func_code = (PyCodeObject*)PyObjC_get_code(pymethod);
         if (func_code == NULL) { // LCOV_BR_EXCL_LINE
-            return -1; // LCOV_EXCL_LINE
+            return -1;           // LCOV_EXCL_LINE
         }
         if (argcount == func_code->co_argcount) {
             Py_DECREF(func_code);
@@ -157,7 +157,7 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
     } else if (PyObjC_is_pymethod(pymethod)) {
         func_code = PyObjC_get_code(pymethod);
         if (func_code == NULL) { // LCOV_BR_EXCL_LINE
-            return -1; // LCOV_EXCL_LINE
+            return -1;           // LCOV_EXCL_LINE
         }
         if (argcount == func_code->co_argcount - 1) {
             Py_DECREF(func_code);
@@ -195,8 +195,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
     }
 
-    PyObject* py_meth_name =
-        PyObjC_SELToPythonName(aSelector);
+    PyObject* py_meth_name = PyObjC_SELToPythonName(aSelector);
     if (py_meth_name == NULL) { // LCOV_BR_EXCL_LINE
         /* Can only fail due to memory errors */
         return NULL; // LCOV_EXCL_LINE
@@ -671,7 +670,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (id)valueForKey:(NSString*)key
 {
-    id        res = nil;
+    id res = nil;
 
     PyObjC_BEGIN_WITH_GIL
         if (PyObjC_GetKey(pyObject, key, &res) == -1) {
@@ -727,7 +726,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (id _Nullable)valueForKeyPath:(NSString*)keyPath
 {
-    id        res = nil;
+    id res = nil;
 
     PyObjC_BEGIN_WITH_GIL
         if (PyObjC_GetKeyPath(pyObject, keyPath, &res) == -1) {
@@ -788,8 +787,6 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     [self setValue:value forUndefinedKey:key];
 }
 // LCOV_EXCL_STOP
-
-
 
 // LCOV_EXCL_START
 /* These are defined for NSObject, but are only invoked by
@@ -993,7 +990,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     return self;
 }
 
-- (id _Nullable)awakeAfterUsingCoder:(NSCoder*)__attribute__((__unused__))coder
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder*)__attribute__((__unused__)) coder
 {
     return self;
 }
@@ -1001,7 +998,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-- (NSObject*)replacementObjectForArchiver:(NSArchiver*)__attribute__((__unused__))archiver
+- (NSObject*)replacementObjectForArchiver:(NSArchiver*)__attribute__((__unused__))
+                                          archiver
 {
     return (NSObject*)self;
 }
@@ -1014,12 +1012,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 #pragma clang diagnostic pop
 
 - (NSObject*)replacementObjectForKeyedArchiver:
-    (NSKeyedArchiver*)__attribute__((__unused__))archiver
+    (NSKeyedArchiver*)__attribute__((__unused__)) archiver
 {
     return (NSObject*)self;
 }
 
-- (NSObject*)replacementObjectForCoder:(NSCoder*)__attribute__((__unused__))archiver
+- (NSObject*)replacementObjectForCoder:(NSCoder*)__attribute__((__unused__)) archiver
 {
     return (NSObject*)self;
 }
@@ -1124,6 +1122,5 @@ static PyObjC_ATOMIC CFTypeID _NSObjectTypeID;
 }
 
 @end /* OC_PythonObject class implementation */
-
 
 NS_ASSUME_NONNULL_END

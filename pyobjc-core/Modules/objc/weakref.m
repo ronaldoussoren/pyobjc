@@ -98,7 +98,7 @@ static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unuse
         return NULL;                // LCOV_EXCL_LINE
     }
 
-    result->object = nil;
+    result->object     = nil;
     result->vectorcall = weakref_vectorcall;
     objc_storeWeak(&result->object, PyObjCObject_GetObject(tmp));
 
@@ -116,16 +116,13 @@ static PyMemberDef weakref_members[] = {
         .name = NULL /* SENTINEL */
     }};
 
-static PyMethodDef weakref_methods[] = {
-                                          {.ml_name  = "__class_getitem__",
-                                           .ml_meth  = (PyCFunction)Py_GenericAlias,
-                                           .ml_flags = METH_O|METH_CLASS,
-                                           .ml_doc   = "See PEP 585"},
-                                          {
-                                              .ml_name = NULL /* SENTINEL */
-                                          }};
-
-
+static PyMethodDef weakref_methods[] = {{.ml_name  = "__class_getitem__",
+                                         .ml_meth  = (PyCFunction)Py_GenericAlias,
+                                         .ml_flags = METH_O | METH_CLASS,
+                                         .ml_doc   = "See PEP 585"},
+                                        {
+                                            .ml_name = NULL /* SENTINEL */
+                                        }};
 
 static PyType_Slot weakref_slots[] = {
     {.slot = Py_tp_dealloc, .pfunc = (void*)&weakref_dealloc},

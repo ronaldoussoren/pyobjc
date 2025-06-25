@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
  *    this function will not copy them.
  */
 PyObject* _Nullable PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
-                                          Py_ssize_t numFields,
+                                          Py_ssize_t  numFields,
                                           const char* _Nonnull* _Nonnull fieldnames,
                                           const char* typestr, Py_ssize_t pack);
 

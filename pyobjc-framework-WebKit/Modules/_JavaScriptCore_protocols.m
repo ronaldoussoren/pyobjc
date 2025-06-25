@@ -4,7 +4,8 @@
  * Last update: Sun Dec 28 14:22:11 2014
  */
 
-static void __attribute__((__used__)) use_protocols(void)
+static void __attribute__((__used__))
+use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
     p = PyObjC_IdToPython(@protocol(JSExport));

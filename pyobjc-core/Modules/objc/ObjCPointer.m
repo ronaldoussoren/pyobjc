@@ -118,7 +118,7 @@ PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
     //
     // The loop is left in just in case...
     while (isdigit(typeend[-1])) { // LCOV_BR_EXCL_LINE
-        typeend--; // LCOV_EXCL_LINE
+        typeend--;                 // LCOV_EXCL_LINE
     }
     PyObjCPointer* self;
 

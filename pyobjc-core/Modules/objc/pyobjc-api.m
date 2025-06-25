@@ -27,7 +27,7 @@ struct pyobjc_api objc_api = {
     .sel_get_class             = PyObjCSelector_GetClass,
     .sel_get_sel               = PyObjCSelector_GetSelector,
     .register_pointer_wrapper  = PyObjCPointerWrapper_Register,
-    .unsupported_method_imp    = (IMP _Nullable(*)(
+    .unsupported_method_imp    = (IMP _Nullable (*)(
         PyObject* _Nonnull, PyObject* _Nonnull))PyObjCUnsupportedMethod_IMP,
     .unsupported_method_caller = PyObjCUnsupportedMethod_Caller,
     .err_python_to_objc_gil    = PyObjCErr_ToObjCWithGILState,
