@@ -921,7 +921,9 @@ class TestCase(_unittest.TestCase):
         if st != sel_type and _typemap(st) != _typemap(sel_type):
             self.fail(
                 message
-                or "result of %s doesn't have sel_type %r but %r" % (method, sel_type, st)
+                or "result of {} doesn't have sel_type {!r} but {!r}".format(
+                    method, sel_type, st
+                )
             )
 
     def assertArgIsSEL(self, method, argno, sel_type, message=None):

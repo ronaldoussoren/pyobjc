@@ -15,7 +15,9 @@ iface = CoreWLAN.CWInterface.interface()
 ok, error = iface.setPower_error_(not iface.powerOn(), None)
 if ok:
     print(
-        "Toggled WLAN power, current state is %s" % ("on" if iface.powerOn() else "off",)
+        "Toggled WLAN power, current state is {}".format(
+            "on" if iface.powerOn() else "off"
+        )
     )
 
     sys.exit(0)
