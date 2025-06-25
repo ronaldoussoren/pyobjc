@@ -15,9 +15,7 @@ class TestAVCaptureSession(TestCase):
 
     @min_os_level("10.7")
     def testConstants(self):
-        self.assertIsInstance(
-            AVFoundation.AVCaptureSessionRuntimeErrorNotification, str
-        )
+        self.assertIsInstance(AVFoundation.AVCaptureSessionRuntimeErrorNotification, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionErrorKey, str)
         self.assertIsInstance(
             AVFoundation.AVCaptureSessionDidStartRunningNotification, str
@@ -103,9 +101,7 @@ class TestAVCaptureSession(TestCase):
 
     @min_os_level("12.0")
     def test_methodsTundra(self):
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureSession_Tundra.canSetSessionPreset_
-        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureSession_Tundra.canSetSessionPreset_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession_Tundra.canAddInput_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession_Tundra.canAddOutput_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession_Tundra.canAddConnection_)

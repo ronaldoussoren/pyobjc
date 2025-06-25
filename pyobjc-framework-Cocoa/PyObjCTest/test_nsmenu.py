@@ -30,9 +30,7 @@ class TestNSMenu(TestCase):
 
     def testProtocol(self):
         self.assertResultIsBOOL(TestNSMenuHelper.validateMenuItem_)
-        self.assertResultHasType(
-            TestNSMenuHelper.numberOfItemsInMenu_, objc._C_NSInteger
-        )
+        self.assertResultHasType(TestNSMenuHelper.numberOfItemsInMenu_, objc._C_NSInteger)
         self.assertResultIsBOOL(TestNSMenuHelper.menu_updateItem_atIndex_shouldCancel_)
         self.assertArgHasType(
             TestNSMenuHelper.menu_updateItem_atIndex_shouldCancel_, 2, objc._C_NSInteger
@@ -86,9 +84,7 @@ class TestNSMenu(TestCase):
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(
-            AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_
-        )
+        self.assertResultIsBOOL(AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_)
         self.assertArgHasType(
             AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_,
             1,

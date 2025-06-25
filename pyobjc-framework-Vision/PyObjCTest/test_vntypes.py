@@ -91,12 +91,8 @@ class TestVNTypes(TestCase):
         self.assertIsInstance(Vision.VNComputeStagePostProcessing, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyMSIPlessey, str)
 
-        self.assertIsInstance(
-            Vision.VNAnimalBodyPoseObservationJointNameLeftEarTop, str
-        )
-        self.assertIsInstance(
-            Vision.VNAnimalBodyPoseObservationJointNameRightEarTop, str
-        )
+        self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointNameLeftEarTop, str)
+        self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointNameRightEarTop, str)
         self.assertIsInstance(
             Vision.VNAnimalBodyPoseObservationJointNameLeftEarMiddle, str
         )
@@ -143,77 +139,47 @@ class TestVNTypes(TestCase):
         self.assertIsInstance(
             Vision.VNAnimalBodyPoseObservationJointNameRightBackKnee, str
         )
-        self.assertIsInstance(
-            Vision.VNAnimalBodyPoseObservationJointNameLeftBackPaw, str
-        )
+        self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointNameLeftBackPaw, str)
         self.assertIsInstance(
             Vision.VNAnimalBodyPoseObservationJointNameRightBackPaw, str
         )
         self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointNameTailTop, str)
-        self.assertIsInstance(
-            Vision.VNAnimalBodyPoseObservationJointNameTailMiddle, str
-        )
-        self.assertIsInstance(
-            Vision.VNAnimalBodyPoseObservationJointNameTailBottom, str
-        )
-        self.assertIsInstance(
-            Vision.VNAnimalBodyPoseObservationJointsGroupNameHead, str
-        )
-        self.assertIsInstance(
-            Vision.VNAnimalBodyPoseObservationJointsGroupNameTrunk, str
-        )
+        self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointNameTailMiddle, str)
+        self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointNameTailBottom, str)
+        self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointsGroupNameHead, str)
+        self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointsGroupNameTrunk, str)
         self.assertIsInstance(
             Vision.VNAnimalBodyPoseObservationJointsGroupNameForelegs, str
         )
         self.assertIsInstance(
             Vision.VNAnimalBodyPoseObservationJointsGroupNameHindlegs, str
         )
-        self.assertIsInstance(
-            Vision.VNAnimalBodyPoseObservationJointsGroupNameTail, str
-        )
+        self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointsGroupNameTail, str)
         self.assertIsInstance(Vision.VNAnimalBodyPoseObservationJointsGroupNameAll, str)
         self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameRoot, str)
         self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameRightHip, str)
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointNameRightKnee, str
-        )
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointNameRightAnkle, str
-        )
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameRightKnee, str)
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameRightAnkle, str)
         self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameLeftHip, str)
         self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameLeftKnee, str)
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointNameLeftAnkle, str
-        )
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameLeftAnkle, str)
         self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameSpine, str)
         self.assertIsInstance(
             Vision.VNHumanBodyPose3DObservationJointNameCenterShoulder, str
         )
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointNameCenterHead, str
-        )
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameCenterHead, str)
         self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameTopHead, str)
         self.assertIsInstance(
             Vision.VNHumanBodyPose3DObservationJointNameLeftShoulder, str
         )
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointNameLeftElbow, str
-        )
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointNameLeftWrist, str
-        )
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameLeftElbow, str)
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameLeftWrist, str)
         self.assertIsInstance(
             Vision.VNHumanBodyPose3DObservationJointNameRightShoulder, str
         )
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointNameRightElbow, str
-        )
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointNameRightWrist, str
-        )
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointsGroupNameHead, str
-        )
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameRightElbow, str)
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointNameRightWrist, str)
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointsGroupNameHead, str)
         self.assertIsInstance(
             Vision.VNHumanBodyPose3DObservationJointsGroupNameTorso, str
         )
@@ -229,6 +195,4 @@ class TestVNTypes(TestCase):
         self.assertIsInstance(
             Vision.VNHumanBodyPose3DObservationJointsGroupNameRightLeg, str
         )
-        self.assertIsInstance(
-            Vision.VNHumanBodyPose3DObservationJointsGroupNameAll, str
-        )
+        self.assertIsInstance(Vision.VNHumanBodyPose3DObservationJointsGroupNameAll, str)

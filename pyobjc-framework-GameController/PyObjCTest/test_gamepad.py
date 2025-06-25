@@ -12,6 +12,4 @@ class TestGCGamePad(TestCase):
     @min_os_level("10.9")
     def testMethods(self):
         self.assertResultIsBlock(GameController.GCGamepad.valueChangedHandler, b"v@@")
-        self.assertArgIsBlock(
-            GameController.GCGamepad.setValueChangedHandler_, 0, b"v@@"
-        )
+        self.assertArgIsBlock(GameController.GCGamepad.setValueChangedHandler_, 0, b"v@@")

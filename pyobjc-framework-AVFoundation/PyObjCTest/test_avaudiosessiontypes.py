@@ -55,16 +55,10 @@ class TestAVAudioSessionTypes(TestCase):
         )
 
         self.assertEqual(AVFoundation.AVAudioSessionInterruptionReasonDefault, 0)
-        self.assertEqual(
-            AVFoundation.AVAudioSessionInterruptionReasonAppWasSuspended, 1
-        )
-        self.assertEqual(
-            AVFoundation.AVAudioSessionInterruptionReasonBuiltInMicMuted, 2
-        )
+        self.assertEqual(AVFoundation.AVAudioSessionInterruptionReasonAppWasSuspended, 1)
+        self.assertEqual(AVFoundation.AVAudioSessionInterruptionReasonBuiltInMicMuted, 2)
 
-        self.assertEqual(
-            AVFoundation.AVAudioSessionSilenceSecondaryAudioHintTypeBegin, 1
-        )
+        self.assertEqual(AVFoundation.AVAudioSessionSilenceSecondaryAudioHintTypeBegin, 1)
         self.assertEqual(AVFoundation.AVAudioSessionSilenceSecondaryAudioHintTypeEnd, 0)
 
         self.assertEqual(AVFoundation.AVAudioSessionIOTypeNotSpecified, 0)
@@ -104,6 +98,4 @@ class TestAVAudioSessionTypes(TestCase):
 
         self.assertIsEnumType(AVFoundation.AVAudioSessionMicrophoneInjectionMode)
         self.assertEqual(AVFoundation.AVAudioSessionMicrophoneInjectionModeNone, 0)
-        self.assertEqual(
-            AVFoundation.AVAudioSessionMicrophoneInjectionModeSpokenAudio, 1
-        )
+        self.assertEqual(AVFoundation.AVAudioSessionMicrophoneInjectionModeSpokenAudio, 1)

@@ -36,7 +36,6 @@ class TestFromPython(TestCase):
                 pass
 
     def testNaming(self):
-
         self.assertIsInstance(BarHandle, type)
         self.assertEqual(BarHandle.__module__, "Mod")
         self.assertEqual(BarHandle.__name__, "BarHandle")
@@ -147,9 +146,7 @@ class TestFromC(TestCase):
             FooHandle(c_void_p=Pointer())
 
         f = OC_OpaqueTest.createFoo_(99)
-        with self.assertRaisesRegex(
-            TypeError, "pass 'cobject' or 'c_void_p', not both"
-        ):
+        with self.assertRaisesRegex(TypeError, "pass 'cobject' or 'c_void_p', not both"):
             FooHandle(cobject=f.__cobject__(), c_void_p=f.__c_void_p__())
 
         with self.assertRaisesRegex(TypeError, "Cannot create objc.FooHandle objects"):

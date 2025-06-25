@@ -7,9 +7,7 @@ class TestAXActionConstants(TestCase):
         self.assertEqual(
             HIServices.kAXHorizontalOrientationValue, "AXHorizontalOrientation"
         )
-        self.assertEqual(
-            HIServices.kAXVerticalOrientationValue, "AXVerticalOrientation"
-        )
+        self.assertEqual(HIServices.kAXVerticalOrientationValue, "AXVerticalOrientation")
         self.assertEqual(HIServices.kAXUnknownOrientationValue, "AXUnknownOrientation")
         self.assertEqual(
             HIServices.kAXAscendingSortDirectionValue, "AXAscendingSortDirection"

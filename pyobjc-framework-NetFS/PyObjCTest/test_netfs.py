@@ -6,9 +6,7 @@ class TestNetFS(TestCase):
     def testConstants(self):
         self.assertEqual(NetFS.kNetFSAuthenticationInfoKey, "AuthenticationInfo")
         self.assertEqual(NetFS.kNetFSServerDisplayNameKey, "ServerDisplayName")
-        self.assertEqual(
-            NetFS.kNetFSSupportsChangePasswordKey, "SupportsChangePassword"
-        )
+        self.assertEqual(NetFS.kNetFSSupportsChangePasswordKey, "SupportsChangePassword")
         self.assertEqual(NetFS.kNetFSSupportsGuestKey, "SupportsGuest")
         self.assertEqual(NetFS.kNetFSSupportsKerberosKey, "SupportsKerberos")
         self.assertEqual(NetFS.kNetFSGuestOnlyKey, "GuestOnly")

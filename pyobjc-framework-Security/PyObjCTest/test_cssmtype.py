@@ -689,9 +689,7 @@ class Testcssmtype(TestCase):
         self.assertFalse(hasattr(Security, "CSSM_TP_CERTCHANGE_REASON_KEYCOMPROMISE"))
         self.assertFalse(hasattr(Security, "CSSM_TP_CERTCHANGE_REASON_CACOMPROMISE"))
         self.assertFalse(hasattr(Security, "CSSM_TP_CERTCHANGE_REASON_CEASEOPERATION"))
-        self.assertFalse(
-            hasattr(Security, "CSSM_TP_CERTCHANGE_REASON_AFFILIATIONCHANGE")
-        )
+        self.assertFalse(hasattr(Security, "CSSM_TP_CERTCHANGE_REASON_AFFILIATIONCHANGE"))
         self.assertFalse(hasattr(Security, "CSSM_TP_CERTCHANGE_REASON_SUPERCEDED"))
         self.assertFalse(
             hasattr(Security, "CSSM_TP_CERTCHANGE_REASON_SUSPECTEDCOMPROMISE")

@@ -14,19 +14,11 @@ class TestAVAudioPlayerNode(TestCase):
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAudioPlayerNodeBufferLoops, 1 << 0)
         self.assertEqual(AVFoundation.AVAudioPlayerNodeBufferInterrupts, 1 << 1)
-        self.assertEqual(
-            AVFoundation.AVAudioPlayerNodeBufferInterruptsAtLoop, 1 << 2
-        )  # noqa: B950
+        self.assertEqual(AVFoundation.AVAudioPlayerNodeBufferInterruptsAtLoop, 1 << 2)  # noqa: B950
 
-        self.assertEqual(
-            AVFoundation.AVAudioPlayerNodeCompletionDataConsumed, 0
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioPlayerNodeCompletionDataRendered, 1
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioPlayerNodeCompletionDataPlayedBack, 2
-        )  # noqa: B950
+        self.assertEqual(AVFoundation.AVAudioPlayerNodeCompletionDataConsumed, 0)  # noqa: B950
+        self.assertEqual(AVFoundation.AVAudioPlayerNodeCompletionDataRendered, 1)  # noqa: B950
+        self.assertEqual(AVFoundation.AVAudioPlayerNodeCompletionDataPlayedBack, 2)  # noqa: B950
 
     @min_os_level("10.10")
     def testMethods10_10(self):

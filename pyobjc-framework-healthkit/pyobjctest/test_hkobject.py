@@ -14,6 +14,4 @@ class TestHKObject(TestCase):
 
     @min_os_level("15.0")
     def test_constants15_0(self):
-        self.assertIsInstance(
-            HealthKit.HKPredicateKeyPathWorkoutEffortRelationship, str
-        )
+        self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutEffortRelationship, str)

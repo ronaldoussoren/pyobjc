@@ -8,9 +8,7 @@ class TestVZMACAddress(TestCase):
         self.assertResultIsBOOL(Virtualization.VZMACAddress.isBroadcastAddress)
         self.assertResultIsBOOL(Virtualization.VZMACAddress.isMulticastAddress)
         self.assertResultIsBOOL(Virtualization.VZMACAddress.isUnicastAddress)
-        self.assertResultIsBOOL(
-            Virtualization.VZMACAddress.isLocallyAdministeredAddress
-        )
+        self.assertResultIsBOOL(Virtualization.VZMACAddress.isLocallyAdministeredAddress)
         self.assertResultIsBOOL(
             Virtualization.VZMACAddress.isUniversallyAdministeredAddress
         )

@@ -46,9 +46,7 @@ class TestSCNMaterialProperty(TestCase):
 
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertArgIsBlock(
-            SceneKit.SCNNode.enumerateHierarchyUsingBlock_, 0, b"v@o^Z"
-        )
+        self.assertArgIsBlock(SceneKit.SCNNode.enumerateHierarchyUsingBlock_, 0, b"v@o^Z")
 
     @min_os_level("10.13")
     def testMethods10_13(self):
@@ -67,9 +65,7 @@ class TestSCNMaterialProperty(TestCase):
         self.assertResultHasType(
             SceneKit.SCNNode.simdEulerAngles, simd.simd_float3.__typestr__
         )
-        self.assertResultHasType(
-            SceneKit.SCNNode.simdScale, simd.simd_float3.__typestr__
-        )
+        self.assertResultHasType(SceneKit.SCNNode.simdScale, simd.simd_float3.__typestr__)
         self.assertResultHasType(
             SceneKit.SCNNode.simdPivot, simd.simd_float4x4.__typestr__
         )

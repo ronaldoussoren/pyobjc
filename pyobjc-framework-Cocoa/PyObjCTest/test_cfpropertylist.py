@@ -73,9 +73,7 @@ class TestPropertyList(TestCase):
     def testConstants(self):
         self.assertEqual(CoreFoundation.kCFPropertyListImmutable, 0)
         self.assertEqual(CoreFoundation.kCFPropertyListMutableContainers, 1 << 0)
-        self.assertEqual(
-            CoreFoundation.kCFPropertyListMutableContainersAndLeaves, 1 << 1
-        )
+        self.assertEqual(CoreFoundation.kCFPropertyListMutableContainersAndLeaves, 1 << 1)
 
         self.assertEqual(CoreFoundation.kCFPropertyListOpenStepFormat, 1)
         self.assertEqual(CoreFoundation.kCFPropertyListXMLFormat_v1_0, 100)

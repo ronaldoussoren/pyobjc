@@ -150,9 +150,7 @@ def _setup():
         ),
     )
 
-    objc.addConvenienceForClass(
-        "NSIndexPath", (("__len__", lambda self: self.count()),)
-    )
+    objc.addConvenienceForClass("NSIndexPath", (("__len__", lambda self: self.count()),))
 
     if sys.maxsize > 2**32:
         NSNotFound = 0x7FFFFFFFFFFFFFFF

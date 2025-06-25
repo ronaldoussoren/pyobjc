@@ -70,9 +70,7 @@ class TestNSObjectFunctions(TestCase):
 
 class TestNSObjectInteraction(TestCase):
     def testCallingInstanceMethodWithClassSelf(self):
-        self.assertRaises(
-            TypeError, Foundation.NSObject.description, Foundation.NSObject
-        )
+        self.assertRaises(TypeError, Foundation.NSObject.description, Foundation.NSObject)
         self.assertRaises(TypeError, Foundation.NSObject.description, "hello")
 
     def testNSObjectClassMethod(self):
@@ -84,9 +82,7 @@ class TestNSObjectInteraction(TestCase):
         self.assertTrue(o.class__() is o.__class__)
 
         self.assertTrue(hasattr(Foundation.NSObject, "class"))
-        self.assertTrue(
-            isinstance(getattr(Foundation.NSObject, "class"), objc.selector)
-        )
+        self.assertTrue(isinstance(getattr(Foundation.NSObject, "class"), objc.selector))
         self.assertTrue(getattr(o, "class")() is o.__class__)
 
     def testNSObjectClass(self):

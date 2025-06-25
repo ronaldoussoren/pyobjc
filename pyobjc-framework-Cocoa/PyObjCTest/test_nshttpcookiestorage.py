@@ -9,9 +9,7 @@ class TestNSHTTPCookieStorage(TestCase):
     def testConstants(self):
         self.assertEqual(Foundation.NSHTTPCookieAcceptPolicyAlways, 0)
         self.assertEqual(Foundation.NSHTTPCookieAcceptPolicyNever, 1)
-        self.assertEqual(
-            Foundation.NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain, 2
-        )
+        self.assertEqual(Foundation.NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain, 2)
 
         self.assertIsInstance(
             Foundation.NSHTTPCookieManagerAcceptPolicyChangedNotification, str

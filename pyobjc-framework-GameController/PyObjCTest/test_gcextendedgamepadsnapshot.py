@@ -26,13 +26,9 @@ class TestGCExtendedGamepadSnapshot(TestCase):
         self.assertResultIsBOOL(
             GameController.GCExtendedGamepadSnapShotDataV100FromNSData
         )
-        self.assertArgIsOut(
-            GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0
-        )
+        self.assertArgIsOut(GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0)
 
-        self.assertArgIsOut(
-            GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0
-        )
+        self.assertArgIsOut(GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0)
 
     @min_os_level("10.9")
     def test_structs(self):
@@ -62,9 +58,7 @@ class TestGCExtendedGamepadSnapshot(TestCase):
     @min_os_level("10.14.1")
     def test_structs_10_14_1(self):
         # XXX: Introduced in the 10.14.4 SDK
-        self.assertEqual(
-            GameController.GCExtendedGamepadSnapshotData.__struct_pack__, 1
-        )
+        self.assertEqual(GameController.GCExtendedGamepadSnapshotData.__struct_pack__, 1)
 
         v = GameController.GCExtendedGamepadSnapshotData()
         self.assertIsInstance(v.version, int)

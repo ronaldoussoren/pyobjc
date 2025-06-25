@@ -19,9 +19,7 @@ class TestAVB17221EntityDiscoveryDelegate(TestCase):
         self.assertEqual(
             AudioVideoBridging.AVB17221EntityPropertyChangedTimeToLive, 0x00000001
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221EntityPropertyChangedGUID, 0x00000002
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221EntityPropertyChangedGUID, 0x00000002)
         self.assertEqual(
             AudioVideoBridging.AVB17221EntityPropertyChangedEntityID, 0x00000002
         )

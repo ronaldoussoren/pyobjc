@@ -8,9 +8,7 @@ class TestWKWebExtensionDataRecord(TestCase):
         self.assertEqual(WebKit.WKWebExtensionDataRecordErrorUnknown, 1)
         self.assertEqual(WebKit.WKWebExtensionDataRecordErrorLocalStorageFailed, 2)
         self.assertEqual(WebKit.WKWebExtensionDataRecordErrorSessionStorageFailed, 3)
-        self.assertEqual(
-            WebKit.WKWebExtensionDataRecordErrorSynchronizedStorageFailed, 4
-        )
+        self.assertEqual(WebKit.WKWebExtensionDataRecordErrorSynchronizedStorageFailed, 4)
 
     @min_os_level("15.4")
     def test_constants15_4(self):

@@ -13,9 +13,7 @@ class TestXMLDocument(TestCase):
         self.assertEqual(Foundation.NSXMLDocumentTextKind, 3)
 
     def testOutputArgs(self):
-        self.assertArgIsOut(
-            Foundation.NSXMLDocument.initWithXMLString_options_error_, 2
-        )
+        self.assertArgIsOut(Foundation.NSXMLDocument.initWithXMLString_options_error_, 2)
         self.assertArgIsOut(
             Foundation.NSXMLDocument.initWithContentsOfURL_options_error_, 2
         )

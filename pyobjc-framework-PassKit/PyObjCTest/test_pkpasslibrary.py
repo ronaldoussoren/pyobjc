@@ -23,9 +23,7 @@ class TestPKPassLibrary(TestCase):
             PassKit.PKAutomaticPassPresentationSuppressionResultAlreadyPresenting, 1
         )
         self.assertEqual(PassKit.PKAutomaticPassPresentationSuppressionResultDenied, 2)
-        self.assertEqual(
-            PassKit.PKAutomaticPassPresentationSuppressionResultCancelled, 3
-        )
+        self.assertEqual(PassKit.PKAutomaticPassPresentationSuppressionResultCancelled, 3)
         self.assertEqual(PassKit.PKAutomaticPassPresentationSuppressionResultSuccess, 4)
 
         self.assertIsInstance(PassKit.PKPassLibraryDidChangeNotification, str)

@@ -6,9 +6,7 @@ class TestNSArrayControler(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSArrayController.automaticallyRearrangesObjects)
 
-        self.assertResultIsBOOL(
-            AppKit.NSArrayController.clearsFilterPredicateOnInsertion
-        )
+        self.assertResultIsBOOL(AppKit.NSArrayController.clearsFilterPredicateOnInsertion)
         self.assertArgIsBOOL(
             AppKit.NSArrayController.setClearsFilterPredicateOnInsertion_, 0
         )

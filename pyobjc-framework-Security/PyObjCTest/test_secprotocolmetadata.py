@@ -85,9 +85,7 @@ class TestSecProtocolMetadata(TestCase):
     def test_functions10_14_missing(self):
         Security.sec_protocol_metadata_get_negotiated_tls_ciphersuite
 
-        self.assertResultIsNullTerminated(
-            Security.sec_protocol_metadata_get_server_name
-        )
+        self.assertResultIsNullTerminated(Security.sec_protocol_metadata_get_server_name)
         self.assertResultHasType(Security.sec_protocol_metadata_get_server_name, b"^t")
 
     @min_os_level("10.15")
@@ -113,6 +111,4 @@ class TestSecProtocolMetadata(TestCase):
             Security.sec_protocol_metadata_copy_server_name,
             objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
-        self.assertResultIsNullTerminated(
-            Security.sec_protocol_metadata_copy_server_name
-        )
+        self.assertResultIsNullTerminated(Security.sec_protocol_metadata_copy_server_name)

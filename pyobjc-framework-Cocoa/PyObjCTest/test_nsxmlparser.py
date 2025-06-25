@@ -53,9 +53,7 @@ class TestNSXMLParser(TestCase):
         self.assertEqual(Foundation.NSXMLParserLiteralNotFinishedError, 44)
         self.assertEqual(Foundation.NSXMLParserCommentNotFinishedError, 45)
         self.assertEqual(Foundation.NSXMLParserProcessingInstructionNotStartedError, 46)
-        self.assertEqual(
-            Foundation.NSXMLParserProcessingInstructionNotFinishedError, 47
-        )
+        self.assertEqual(Foundation.NSXMLParserProcessingInstructionNotFinishedError, 47)
         self.assertEqual(Foundation.NSXMLParserNotationNotStartedError, 48)
         self.assertEqual(Foundation.NSXMLParserNotationNotFinishedError, 49)
         self.assertEqual(Foundation.NSXMLParserAttributeListNotStartedError, 50)
@@ -113,12 +111,8 @@ class TestNSXMLParser(TestCase):
 
     def testMethods(self):
         self.assertArgIsBOOL(Foundation.NSXMLParser.setShouldProcessNamespaces_, 0)
-        self.assertArgIsBOOL(
-            Foundation.NSXMLParser.setShouldReportNamespacePrefixes_, 0
-        )
-        self.assertArgIsBOOL(
-            Foundation.NSXMLParser.setShouldResolveExternalEntities_, 0
-        )
+        self.assertArgIsBOOL(Foundation.NSXMLParser.setShouldReportNamespacePrefixes_, 0)
+        self.assertArgIsBOOL(Foundation.NSXMLParser.setShouldResolveExternalEntities_, 0)
         self.assertResultIsBOOL(Foundation.NSXMLParser.shouldProcessNamespaces)
         self.assertResultIsBOOL(Foundation.NSXMLParser.shouldReportNamespacePrefixes)
         self.assertResultIsBOOL(Foundation.NSXMLParser.shouldResolveExternalEntities)

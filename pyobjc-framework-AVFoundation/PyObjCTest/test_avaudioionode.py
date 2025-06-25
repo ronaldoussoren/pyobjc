@@ -14,15 +14,9 @@ class TestAVAudioIONode(TestCase):
         self.assertEqual(
             AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingLevelDefault, 0
         )
-        self.assertEqual(
-            AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingLevelMin, 10
-        )
-        self.assertEqual(
-            AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingLevelMid, 20
-        )
-        self.assertEqual(
-            AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingLevelMax, 30
-        )
+        self.assertEqual(AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingLevelMin, 10)
+        self.assertEqual(AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingLevelMid, 20)
+        self.assertEqual(AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingLevelMax, 30)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
@@ -59,6 +53,4 @@ class TestAVAudioIONode(TestCase):
         )
 
         self.assertResultIsBOOL(AVFoundation.AVAudioInputNode.isVoiceProcessingBypassed)
-        self.assertArgIsBOOL(
-            AVFoundation.AVAudioInputNode.setVoiceProcessingBypassed_, 0
-        )
+        self.assertArgIsBOOL(AVFoundation.AVAudioInputNode.setVoiceProcessingBypassed_, 0)

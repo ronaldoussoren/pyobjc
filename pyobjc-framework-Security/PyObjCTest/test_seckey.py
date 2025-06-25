@@ -83,9 +83,7 @@ class TestSecKey(TestCase):
     @min_os_level("10.12")
     def test_constants_10_12(self):
         self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureRaw, str)
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw, str
-        )
+        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw, str)
         self.assertIsInstance(
             Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1, str
         )
@@ -118,9 +116,7 @@ class TestSecKey(TestCase):
         )
         self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureRFC4754, str)
         self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestX962, str)
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA1, str
-        )
+        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA1, str)
         self.assertIsInstance(
             Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA224, str
         )
@@ -133,9 +129,7 @@ class TestSecKey(TestCase):
         self.assertIsInstance(
             Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA512, str
         )
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA1, str
-        )
+        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA1, str)
         self.assertIsInstance(
             Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA224, str
         )
@@ -156,18 +150,10 @@ class TestSecKey(TestCase):
         self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA384, str)
         self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA512, str)
         self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA1AESGCM, str)
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA224AESGCM, str
-        )
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA256AESGCM, str
-        )
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA384AESGCM, str
-        )
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA512AESGCM, str
-        )
+        self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA224AESGCM, str)
+        self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA256AESGCM, str)
+        self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA384AESGCM, str)
+        self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA512AESGCM, str)
         self.assertIsInstance(
             Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA1AESGCM, str
         )
@@ -242,18 +228,10 @@ class TestSecKey(TestCase):
         self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA384, str)
         self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA512, str)
         self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA1, str)
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA224, str
-        )
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA256, str
-        )
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA384, str
-        )
-        self.assertIsInstance(
-            Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA512, str
-        )
+        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA224, str)
+        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA256, str)
+        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA384, str)
+        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA512, str)
         self.assertIsInstance(
             Security.kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA224AESGCM,
             str,

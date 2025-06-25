@@ -47,9 +47,7 @@ class TestCFHost(TestCase):
         # w = CFNetwork.CFHostCreateCopy(None, v)
         # self.assertIsInstance(w, type(v))
 
-        self.assertArgHasType(
-            CFNetwork.CFHostGetReachability, 1, b"o^" + objc._C_NSBOOL
-        )
+        self.assertArgHasType(CFNetwork.CFHostGetReachability, 1, b"o^" + objc._C_NSBOOL)
         lst, ok = CFNetwork.CFHostGetReachability(v, None)
         self.assertIsInstance(lst, (CFNetwork.CFDataRef, type(None)))
         self.assertIsInstance(ok, bool)

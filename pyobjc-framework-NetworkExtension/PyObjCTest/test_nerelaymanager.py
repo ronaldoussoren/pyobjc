@@ -16,18 +16,10 @@ class TestNERelayManager(TestCase):
         self.assertEqual(NetworkExtension.NERelayManagerClientErrorNone, 1)
         self.assertEqual(NetworkExtension.NERelayManagerClientErrorDNSFailed, 2)
         self.assertEqual(NetworkExtension.NERelayManagerClientErrorServerUnreachable, 3)
-        self.assertEqual(
-            NetworkExtension.NERelayManagerClientErrorServerDisconnected, 4
-        )
-        self.assertEqual(
-            NetworkExtension.NERelayManagerClientErrorCertificateMissing, 5
-        )
-        self.assertEqual(
-            NetworkExtension.NERelayManagerClientErrorCertificateInvalid, 6
-        )
-        self.assertEqual(
-            NetworkExtension.NERelayManagerClientErrorCertificateExpired, 7
-        )
+        self.assertEqual(NetworkExtension.NERelayManagerClientErrorServerDisconnected, 4)
+        self.assertEqual(NetworkExtension.NERelayManagerClientErrorCertificateMissing, 5)
+        self.assertEqual(NetworkExtension.NERelayManagerClientErrorCertificateInvalid, 6)
+        self.assertEqual(NetworkExtension.NERelayManagerClientErrorCertificateExpired, 7)
         self.assertEqual(
             NetworkExtension.NERelayManagerClientErrorServerCertificateInvalid, 8
         )

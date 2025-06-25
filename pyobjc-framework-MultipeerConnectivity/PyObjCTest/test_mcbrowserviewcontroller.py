@@ -4,9 +4,7 @@ import MultipeerConnectivity
 
 
 class TestMCBrowserViewControllerHelper(MultipeerConnectivity.NSObject):
-    def browserViewController_shouldPresentNearbyPeer_withDiscoveryInfo_(
-        self, vc, p, i
-    ):
+    def browserViewController_shouldPresentNearbyPeer_withDiscoveryInfo_(self, vc, p, i):
         return 1
 
 

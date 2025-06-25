@@ -46,9 +46,7 @@ class TestLaunchServices(TestCase):
         )
 
         self.assertTrue(hasattr(CoreServices, "_LSCopyAllApplicationURLs"))
-        self.assertTrue(
-            isinstance(CoreServices._LSCopyAllApplicationURLs, objc.function)
-        )
+        self.assertTrue(isinstance(CoreServices._LSCopyAllApplicationURLs, objc.function))
 
         fn = CoreServices.LSGetExtensionInfo
         self.assertEqual(fn(10, "hello.text", None), (0, 6))

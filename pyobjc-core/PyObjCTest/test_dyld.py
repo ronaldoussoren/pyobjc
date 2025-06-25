@@ -75,9 +75,7 @@ class TestDyld(TestCase):
 
     @min_os_level("11.0")
     def test_contains_path_new_os(self):
-        self.assertTrue(
-            objc._dyld_shared_cache_contains_path("/usr/lib/libSystem.dylib")
-        )
+        self.assertTrue(objc._dyld_shared_cache_contains_path("/usr/lib/libSystem.dylib"))
 
         if os.path.exists("/Library/Frameworks/Python.framework"):
             self.assertFalse(
@@ -114,9 +112,7 @@ class TestDyld(TestCase):
 
             lst = []
             with self.assertRaises(ValueError):
-                result = dyld.dyld_library(
-                    "/usr/lib/libSystem.dylib", "libXSystem.dylib"
-                )
+                result = dyld.dyld_library("/usr/lib/libSystem.dylib", "libXSystem.dylib")
                 print("Found", result)
             self.assertEqual(
                 lst,
@@ -223,9 +219,7 @@ class TestDyld(TestCase):
 
         finally:
             os.path.exists = orig_exists
-            dyld._dyld_shared_cache_contains_path = (
-                orig__dyld_shared_cache_contains_path
-            )
+            dyld._dyld_shared_cache_contains_path = orig__dyld_shared_cache_contains_path
 
         self.assertEqual(
             dyld.dyld_library("/usr/lib/libSystem.dylib", "libXSystem.dylib"),
@@ -412,9 +406,7 @@ class TestDyld(TestCase):
         if os.path.exists("/Library/Frameworks/Python.framework"):
             py_ver = ".".join(map(str, sys.version_info[:2]))
             self.assertEqual(
-                dyld.dyld_framework(
-                    "/Library/Python.framework/Python", "Python", py_ver
-                ),
+                dyld.dyld_framework("/Library/Python.framework/Python", "Python", py_ver),
                 f"/Library/Frameworks/Python.framework/Versions/{py_ver}/Python",
             )
 

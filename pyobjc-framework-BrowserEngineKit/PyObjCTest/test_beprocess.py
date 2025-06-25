@@ -21,9 +21,7 @@ class TestBEProcess(TestCase):
         self.assertArgIsOut(
             BrowserEngineKit.BEWebContentProcess.grantCapability_error_, 1
         )
-        self.assertArgIsOut(
-            BrowserEngineKit.BERenderingProcess.grantCapability_error_, 1
-        )
+        self.assertArgIsOut(BrowserEngineKit.BERenderingProcess.grantCapability_error_, 1)
         self.assertArgIsOut(
             BrowserEngineKit.BENetworkingProcess.grantCapability_error_, 1
         )

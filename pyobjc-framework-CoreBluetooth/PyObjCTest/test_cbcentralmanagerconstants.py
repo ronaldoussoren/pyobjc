@@ -8,9 +8,7 @@ class TestCBCentral(TestCase):
 
     @min_os_level("10.9")
     def testConstants(self):
-        self.assertIsInstance(
-            CoreBluetooth.CBCentralManagerOptionShowPowerAlertKey, str
-        )
+        self.assertIsInstance(CoreBluetooth.CBCentralManagerOptionShowPowerAlertKey, str)
         self.assertIsInstance(
             CoreBluetooth.CBCentralManagerScanOptionAllowDuplicatesKey, str
         )

@@ -21,9 +21,7 @@ class TestSCError(TestCase):
         )
         self.assertEqual(ScreenCaptureKit.SCStreamErrorAttemptToStartStreamState, -3807)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorAttemptToStopStreamState, -3808)
-        self.assertEqual(
-            ScreenCaptureKit.SCStreamErrorAttemptToUpdateFilterState, -3809
-        )
+        self.assertEqual(ScreenCaptureKit.SCStreamErrorAttemptToUpdateFilterState, -3809)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorAttemptToConfigState, -3810)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorInternalError, -3811)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorInvalidParameter, -3812)

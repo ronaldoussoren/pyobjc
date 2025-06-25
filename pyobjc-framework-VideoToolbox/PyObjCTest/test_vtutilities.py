@@ -31,11 +31,7 @@ class TestVTUtilities(TestCase):
     @min_os_level("15.0")
     def test_functions15_0(self):
         self.assertArgIsOut(VideoToolbox.VTCopyRAWProcessorExtensionProperties, 1)
-        self.assertArgIsCFRetained(
-            VideoToolbox.VTCopyRAWProcessorExtensionProperties, 1
-        )
+        self.assertArgIsCFRetained(VideoToolbox.VTCopyRAWProcessorExtensionProperties, 1)
 
         self.assertArgIsOut(VideoToolbox.VTCopyVideoDecoderExtensionProperties, 1)
-        self.assertArgIsCFRetained(
-            VideoToolbox.VTCopyVideoDecoderExtensionProperties, 1
-        )
+        self.assertArgIsCFRetained(VideoToolbox.VTCopyVideoDecoderExtensionProperties, 1)

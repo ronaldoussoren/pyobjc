@@ -15,9 +15,7 @@ class TestNSDistributedNotificationCenter(TestCase):
         self.assertEqual(Foundation.NSNotificationSuspensionBehaviorDrop, 1)
         self.assertEqual(Foundation.NSNotificationSuspensionBehaviorCoalesce, 2)
         self.assertEqual(Foundation.NSNotificationSuspensionBehaviorHold, 3)
-        self.assertEqual(
-            Foundation.NSNotificationSuspensionBehaviorDeliverImmediately, 4
-        )
+        self.assertEqual(Foundation.NSNotificationSuspensionBehaviorDeliverImmediately, 4)
 
         self.assertEqual(Foundation.NSNotificationDeliverImmediately, 1)
         self.assertEqual(Foundation.NSNotificationPostToAllSessions, 2)
@@ -41,7 +39,5 @@ class TestNSDistributedNotificationCenter(TestCase):
             Foundation.NSDistributedNotificationCenter.postNotificationName_object_userInfo_deliverImmediately_,  # noqa: B950
             3,
         )
-        self.assertArgIsBOOL(
-            Foundation.NSDistributedNotificationCenter.setSuspended_, 0
-        )
+        self.assertArgIsBOOL(Foundation.NSDistributedNotificationCenter.setSuspended_, 0)
         self.assertResultIsBOOL(Foundation.NSDistributedNotificationCenter.suspended)

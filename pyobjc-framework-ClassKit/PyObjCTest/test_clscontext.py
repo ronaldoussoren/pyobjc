@@ -37,9 +37,7 @@ class TestCLSContext(TestCase):
         self.assertIsInstance(ClassKit.CLSContextTopicLiteracyAndWriting, str)
         self.assertIsInstance(ClassKit.CLSContextTopicWorldLanguage, str)
         self.assertIsInstance(ClassKit.CLSContextTopicSocialScience, str)
-        self.assertIsInstance(
-            ClassKit.CLSContextTopicComputerScienceAndEngineering, str
-        )
+        self.assertIsInstance(ClassKit.CLSContextTopicComputerScienceAndEngineering, str)
         self.assertIsInstance(ClassKit.CLSContextTopicArtsAndMusic, str)
         self.assertIsInstance(ClassKit.CLSContextTopicHealthAndFitness, str)
 

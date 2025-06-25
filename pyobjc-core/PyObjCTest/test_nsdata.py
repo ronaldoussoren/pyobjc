@@ -521,15 +521,9 @@ class TestBytesInterface(TestCase):
             self.assertIs(oc.startswith(py_needle, 1), oc.startswith(oc_needle, 1))
             self.assertIs(py.startswith(py_needle, 1), oc.startswith(oc_needle, 1))
 
-            self.assertIs(
-                oc.startswith(py_needle, 1, 3), py.startswith(py_needle, 1, 3)
-            )
-            self.assertIs(
-                oc.startswith(py_needle, 1, 3), oc.startswith(oc_needle, 1, 3)
-            )
-            self.assertIs(
-                py.startswith(py_needle, 1, 3), oc.startswith(oc_needle, 1, 3)
-            )
+            self.assertIs(oc.startswith(py_needle, 1, 3), py.startswith(py_needle, 1, 3))
+            self.assertIs(oc.startswith(py_needle, 1, 3), oc.startswith(oc_needle, 1, 3))
+            self.assertIs(py.startswith(py_needle, 1, 3), oc.startswith(oc_needle, 1, 3))
 
     def test_endswith(self):
         value = b"hello world"

@@ -24,18 +24,14 @@ class TestAXAttributeConstants(TestCase):
         self.assertEqual(HIServices.kAXSelectedChildrenAttribute, "AXSelectedChildren")
         self.assertEqual(HIServices.kAXVisibleChildrenAttribute, "AXVisibleChildren")
         self.assertEqual(HIServices.kAXWindowAttribute, "AXWindow")
-        self.assertEqual(
-            HIServices.kAXTopLevelUIElementAttribute, "AXTopLevelUIElement"
-        )
+        self.assertEqual(HIServices.kAXTopLevelUIElementAttribute, "AXTopLevelUIElement")
         self.assertEqual(HIServices.kAXPositionAttribute, "AXPosition")
         self.assertEqual(HIServices.kAXSizeAttribute, "AXSize")
         self.assertEqual(HIServices.kAXOrientationAttribute, "AXOrientation")
         self.assertEqual(HIServices.kAXDescriptionAttribute, "AXDescription")
         self.assertEqual(HIServices.kAXDescription, "AXDescription")
         self.assertEqual(HIServices.kAXSelectedTextAttribute, "AXSelectedText")
-        self.assertEqual(
-            HIServices.kAXSelectedTextRangeAttribute, "AXSelectedTextRange"
-        )
+        self.assertEqual(HIServices.kAXSelectedTextRangeAttribute, "AXSelectedTextRange")
         self.assertEqual(
             HIServices.kAXSelectedTextRangesAttribute, "AXSelectedTextRanges"
         )
@@ -99,9 +95,7 @@ class TestAXAttributeConstants(TestCase):
         self.assertEqual(
             HIServices.kAXHorizontalScrollBarAttribute, "AXHorizontalScrollBar"
         )
-        self.assertEqual(
-            HIServices.kAXVerticalScrollBarAttribute, "AXVerticalScrollBar"
-        )
+        self.assertEqual(HIServices.kAXVerticalScrollBarAttribute, "AXVerticalScrollBar")
         self.assertEqual(HIServices.kAXOverflowButtonAttribute, "AXOverflowButton")
         self.assertEqual(HIServices.kAXFilenameAttribute, "AXFilename")
         self.assertEqual(HIServices.kAXExpandedAttribute, "AXExpanded")
@@ -215,9 +209,7 @@ class TestAXAttributeConstants(TestCase):
         self.assertEqual(
             HIServices.kAXBoundsForRangeParameterizedAttribute, "AXBoundsForRange"
         )
-        self.assertEqual(
-            HIServices.kAXRTFForRangeParameterizedAttribute, "AXRTFForRange"
-        )
+        self.assertEqual(HIServices.kAXRTFForRangeParameterizedAttribute, "AXRTFForRange")
         self.assertEqual(
             HIServices.kAXAttributedStringForRangeParameterizedAttribute,
             "AXAttributedStringForRange",

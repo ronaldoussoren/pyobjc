@@ -426,9 +426,7 @@ class TestReplaceMethod(TestCase):
 
         # In some applications it is useful to replace an Objective-C method
         # by a property definition, like so:
-        NSAppleScript.source = property(
-            lambda self: self.pyobjc_instanceMethods.source()
-        )
+        NSAppleScript.source = property(lambda self: self.pyobjc_instanceMethods.source())
 
         v2 = o.source
         self.assertIsInstance(v, str)
@@ -806,16 +804,12 @@ class TestInvokingMethods(TestCase):
 
     def test_nsobject(self):
         v = NSObject.alloc().init()
-        with self.assertRaisesRegex(
-            ValueError, "unrecognized selector sent to instance"
-        ):
+        with self.assertRaisesRegex(ValueError, "unrecognized selector sent to instance"):
             self.invokeDescriptionOf(v)
 
     def test_pyobject(self):
         v = OCTestRegrWithGetItem.alloc().init()
-        with self.assertRaisesRegex(
-            ValueError, "unrecognized selector sent to instance"
-        ):
+        with self.assertRaisesRegex(ValueError, "unrecognized selector sent to instance"):
             self.invokeDescriptionOf(v)
 
     def test_pyobject_with_descr(self):
@@ -835,7 +829,5 @@ class TestInvokingMethods(TestCase):
         inv.setTarget_(value)
         inv.setSelector_(b"descriptions")
 
-        with self.assertRaisesRegex(
-            ValueError, "unrecognized selector sent to instance"
-        ):
+        with self.assertRaisesRegex(ValueError, "unrecognized selector sent to instance"):
             value.forwardInvocation_(inv)

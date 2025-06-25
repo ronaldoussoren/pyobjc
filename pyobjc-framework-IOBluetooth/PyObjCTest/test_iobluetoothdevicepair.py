@@ -50,6 +50,4 @@ class TestIOBluetoothDevicePair(TestCase):
     def test_methods(self):
         self.assertArgIsIn(IOBluetooth.IOBluetoothDevicePair.replyPINCode_PINCode_, 1)
 
-        self.assertArgIsBOOL(
-            IOBluetooth.IOBluetoothDevicePair.replyUserConfirmation_, 0
-        )
+        self.assertArgIsBOOL(IOBluetooth.IOBluetoothDevicePair.replyUserConfirmation_, 0)

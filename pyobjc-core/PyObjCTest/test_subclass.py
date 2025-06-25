@@ -171,9 +171,7 @@ class TestSubclassing(TestCase):
             "signature that is not compatible with super-class",
         ):
 
-            class OC_SubClassingMethodSignatureChild2(
-                OC_SubClassingMethodSignatureBase
-            ):
+            class OC_SubClassingMethodSignatureChild2(OC_SubClassingMethodSignatureBase):
                 @objc.objc_method(signature=b"d@:", isclass=True)
                 def alloc(self):
                     pass
@@ -548,9 +546,7 @@ class TestOverridingSpecials(TestCase):
             def froobnicate__(self, a, b):
                 pass
 
-        self.assertEqual(
-            MethodNamesClass.someName_andArg_.selector, b"someName:andArg:"
-        )
+        self.assertEqual(MethodNamesClass.someName_andArg_.selector, b"someName:andArg:")
         self.assertEqual(
             MethodNamesClass._someName_andArg_.selector, b"_someName:andArg:"
         )
@@ -1483,9 +1479,7 @@ class TestSubclassOptions(TestCase):
         try:
             NSObject.__pyobjc_protocols__ = 42
 
-            with self.assertRaisesRegex(
-                TypeError, "__pyobjc_protocols__ not a sequence"
-            ):
+            with self.assertRaisesRegex(TypeError, "__pyobjc_protocols__ not a sequence"):
 
                 class OC_SubClassingFails2(NSObject):
                     pass

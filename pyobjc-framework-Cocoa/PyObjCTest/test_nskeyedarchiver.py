@@ -87,9 +87,7 @@ class TestNSKeyedArchiver(TestCase):
             2,
         )
 
-        self.assertArgIsOut(
-            Foundation.NSKeyedUnarchiver.initForReadingFromData_error_, 1
-        )
+        self.assertArgIsOut(Foundation.NSKeyedUnarchiver.initForReadingFromData_error_, 1)
         self.assertArgIsOut(
             Foundation.NSKeyedUnarchiver.unarchivedObjectOfClass_fromData_error_, 2
         )

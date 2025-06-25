@@ -17,9 +17,7 @@ class TestCNChangeHistoryFetchRequest(TestCase):
         self.assertResultIsBOOL(Contacts.CNChangeHistoryFetchRequest.mutableObjects)
         self.assertArgIsBOOL(Contacts.CNChangeHistoryFetchRequest.setMutableObjects_, 0)
 
-        self.assertResultIsBOOL(
-            Contacts.CNChangeHistoryFetchRequest.includeGroupChanges
-        )
+        self.assertResultIsBOOL(Contacts.CNChangeHistoryFetchRequest.includeGroupChanges)
         self.assertArgIsBOOL(
             Contacts.CNChangeHistoryFetchRequest.setIncludeGroupChanges_, 0
         )

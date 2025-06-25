@@ -24,9 +24,7 @@ class TestNSCell(TestCase):
         self.assertIsEnumType(AppKit.NSImageScaling)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "doesn't work on 10.13, 10.14",
     )
     @skipUnless(
@@ -40,9 +38,7 @@ class TestNSCell(TestCase):
         self.assertEqual(cell.stringValue(), u)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "doesn't work on 10.13, 10.14",
     )
     @skipUnless(
@@ -56,9 +52,7 @@ class TestNSCell(TestCase):
         self.assertEqual(cell.intValue(), i)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "doesn't work on 10.13, 10.14",
     )
     @skipUnless(

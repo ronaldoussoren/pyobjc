@@ -70,16 +70,10 @@ class TestNSURLError(TestCase):
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(
-            Foundation.NSURLErrorBackgroundTaskCancelledReasonKey, str
-        )
+        self.assertIsInstance(Foundation.NSURLErrorBackgroundTaskCancelledReasonKey, str)
 
-        self.assertEqual(
-            Foundation.NSURLErrorCancelledReasonUserForceQuitApplication, 0
-        )
-        self.assertEqual(
-            Foundation.NSURLErrorCancelledReasonBackgroundUpdatesDisabled, 1
-        )
+        self.assertEqual(Foundation.NSURLErrorCancelledReasonUserForceQuitApplication, 0)
+        self.assertEqual(Foundation.NSURLErrorCancelledReasonBackgroundUpdatesDisabled, 1)
         self.assertEqual(
             Foundation.NSURLErrorCancelledReasonInsufficientSystemResources, 2
         )

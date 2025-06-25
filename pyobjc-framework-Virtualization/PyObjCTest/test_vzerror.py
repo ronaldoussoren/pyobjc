@@ -25,9 +25,7 @@ class TestVZError(TestCase):
         self.assertEqual(Virtualization.VZErrorInvalidRestoreImage, 10005)
         self.assertEqual(Virtualization.VZErrorInstallationRequiresUpdate, 10006)
         self.assertEqual(Virtualization.VZErrorInstallationFailed, 10007)
-        self.assertEqual(
-            Virtualization.VZErrorNetworkBlockDeviceNegotiationFailed, 20001
-        )
+        self.assertEqual(Virtualization.VZErrorNetworkBlockDeviceNegotiationFailed, 20001)
         self.assertEqual(Virtualization.VZErrorNetworkBlockDeviceDisconnected, 20002)
 
         self.assertEqual(Virtualization.VZErrorUSBControllerNotFound, 30001)

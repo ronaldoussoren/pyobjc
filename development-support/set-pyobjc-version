@@ -9,6 +9,7 @@ Usage::
 
 Run tests aftwards before doing a commit.
 """
+
 import os
 import re
 import sys

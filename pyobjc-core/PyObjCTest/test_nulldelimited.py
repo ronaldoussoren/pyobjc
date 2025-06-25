@@ -103,18 +103,14 @@ class TestNullDelimitedResult(TestCase):
                 )
 
         self.assertResultHasType(OC_NullDelimitedResult.chars, objc._C_CHARPTR)
-        self.assertResultHasType(
-            OC_NullDelimitedResult.chars2, objc._C_PTR + objc._C_CHR
-        )
+        self.assertResultHasType(OC_NullDelimitedResult.chars2, objc._C_PTR + objc._C_CHR)
 
         self.assertResultHasType(OC_NullDelimitedResult.uchars, objc._C_CHARPTR)
         self.assertResultHasType(
             OC_NullDelimitedResult.uchars2, objc._C_PTR + objc._C_UCHR
         )
 
-        self.assertResultHasType(
-            OC_NullDelimitedResult.longs, objc._C_PTR + objc._C_LNG
-        )
+        self.assertResultHasType(OC_NullDelimitedResult.longs, objc._C_PTR + objc._C_LNG)
         self.assertResultHasType(
             OC_NullDelimitedResult.ulongs, objc._C_PTR + objc._C_ULNG
         )

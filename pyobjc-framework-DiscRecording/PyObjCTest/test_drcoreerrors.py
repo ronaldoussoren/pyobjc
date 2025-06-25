@@ -29,9 +29,7 @@ class TestDRCoreErrors(TestCase):
         self.assertEqual(DiscRecording.kDRFunctionNotSupportedErr, 0x80020067)
         self.assertEqual(DiscRecording.kDRSpeedTestAlreadyRunningErr, 0x80020068)
         self.assertEqual(DiscRecording.kDRInvalidIndexPointsErr, 0x80020069)
-        self.assertEqual(
-            DiscRecording.kDRDoubleLayerL0DataZoneBlocksParamErr, 0x8002006A
-        )
+        self.assertEqual(DiscRecording.kDRDoubleLayerL0DataZoneBlocksParamErr, 0x8002006A)
         self.assertEqual(DiscRecording.kDRDoubleLayerL0AlreadySpecifiedErr, 0x8002006B)
         self.assertEqual(DiscRecording.kDRAudioFileNotSupportedErr, 0x8002006C)
         self.assertEqual(DiscRecording.kDRBurnPowerCalibrationErr, 0x8002006D)

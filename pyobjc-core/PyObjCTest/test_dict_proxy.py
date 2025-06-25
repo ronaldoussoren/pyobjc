@@ -61,7 +61,6 @@ class TestDictionary(TestCase):
             return Fake()
 
         with pyobjc_options(_copy=copy_func):
-
             with self.assertRaisesRegex(TypeError, "Cannot proxy"):
                 OC_TestSet.set_copyWithZone_(s, None)
 

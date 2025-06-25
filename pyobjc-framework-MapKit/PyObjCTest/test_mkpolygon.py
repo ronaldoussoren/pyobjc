@@ -15,9 +15,7 @@ class TestMKPolygon(TestCase):
         self.assertArgSizeInArg(
             MapKit.MKPolygon.polygonWithPoints_count_interiorPolygons_, 0, 1
         )
-        self.assertArgIsIn(
-            MapKit.MKPolygon.polygonWithPoints_count_interiorPolygons_, 0
-        )
+        self.assertArgIsIn(MapKit.MKPolygon.polygonWithPoints_count_interiorPolygons_, 0)
 
         self.assertArgSizeInArg(MapKit.MKPolygon.polygonWithCoordinates_count_, 0, 1)
         self.assertArgIsIn(MapKit.MKPolygon.polygonWithCoordinates_count_, 0)

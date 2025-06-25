@@ -44,9 +44,7 @@ class TesNSScrollView(TestCase):
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertArgIsBOOL(
-            AppKit.NSScrollView.setAutomaticallyAdjustsContentInsets_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSScrollView.setAutomaticallyAdjustsContentInsets_, 0)
         self.assertResultIsBOOL(AppKit.NSScrollView.automaticallyAdjustsContentInsets)
 
     @min_os_level("10.9")

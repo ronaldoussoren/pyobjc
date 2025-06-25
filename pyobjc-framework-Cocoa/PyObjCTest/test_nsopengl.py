@@ -113,9 +113,7 @@ class TestNSOpenGL(TestCase):
         AppKit.NSOpenGLSetOption(AppKit.NSOpenGLGOFormatCacheSize, v)
 
     def testMethods(self):
-        self.assertArgIsNullTerminated(
-            AppKit.NSOpenGLPixelFormat.initWithAttributes_, 0
-        )
+        self.assertArgIsNullTerminated(AppKit.NSOpenGLPixelFormat.initWithAttributes_, 0)
         self.assertArgIsIn(AppKit.NSOpenGLPixelFormat.initWithAttributes_, 0)
 
         o = AppKit.NSOpenGLPixelFormat.alloc().initWithAttributes_(
@@ -151,9 +149,7 @@ class TestNSOpenGL(TestCase):
         self.assertArgIsIn(AppKit.NSOpenGLContext.setValues_forParameter_, 0)
         self.assertArgIsVariableSize(AppKit.NSOpenGLContext.setValues_forParameter_, 0)
 
-        self.assertArgIsIn(
-            AppKit.NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0
-        )
+        self.assertArgIsIn(AppKit.NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0)
         self.assertArgIsVariableSize(
             AppKit.NSOpenGLContext.setOffScreen_width_height_rowbytes_, 0
         )

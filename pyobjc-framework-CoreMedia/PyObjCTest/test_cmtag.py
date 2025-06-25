@@ -45,9 +45,7 @@ class TestCMTag(TestCase):
         self.assertIsEnumType(CoreMedia.CMProjectionType)
         self.assertEqual(CoreMedia.kCMProjectionType_Rectangular, fourcc(b"rect"))
         self.assertEqual(CoreMedia.kCMProjectionType_Equirectangular, fourcc(b"equi"))
-        self.assertEqual(
-            CoreMedia.kCMProjectionType_HalfEquirectangular, fourcc(b"hequ")
-        )
+        self.assertEqual(CoreMedia.kCMProjectionType_HalfEquirectangular, fourcc(b"hequ"))
         self.assertEqual(CoreMedia.kCMProjectionType_Fisheye, fourcc(b"fish"))
 
         self.assertIsEnumType(CoreMedia.CMPackingType)
@@ -69,9 +67,7 @@ class TestCMTag(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMTagStereoInterpretationOrderReversed, CoreMedia.CMTag
         )
-        self.assertIsInstance(
-            CoreMedia.kCMTagProjectionTypeRectangular, CoreMedia.CMTag
-        )
+        self.assertIsInstance(CoreMedia.kCMTagProjectionTypeRectangular, CoreMedia.CMTag)
         self.assertIsInstance(
             CoreMedia.kCMTagProjectionTypeEquirectangular, CoreMedia.CMTag
         )

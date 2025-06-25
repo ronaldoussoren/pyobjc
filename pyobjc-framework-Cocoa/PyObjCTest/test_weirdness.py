@@ -33,9 +33,7 @@ class TestWeirdness(TestCase):
         self.assertEqual(after.definingClass, c)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.14")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.14")),
         "crash on 10.13",
     )
     @max_sdk_level("10.14")
@@ -43,9 +41,7 @@ class TestWeirdness(TestCase):
         self.doWeirdness("NSButtonCell", "setEnabled_")
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.14")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.14")),
         "crash on 10.13",
     )
     @max_sdk_level("10.14")

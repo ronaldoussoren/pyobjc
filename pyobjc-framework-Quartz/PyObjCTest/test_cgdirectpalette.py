@@ -35,9 +35,7 @@ class TestCGDirectPalette(TestCase):
         self.assertIsInstance(v, Quartz.CGDirectPaletteRef)
 
         self.assertResultIsCFRetained(Quartz.CGPaletteCreateWithSamples)
-        v = Quartz.CGPaletteCreateWithSamples(
-            [(0, 0, 0), (0.5, 0.5, 0.5), (1, 1, 1)], 3
-        )
+        v = Quartz.CGPaletteCreateWithSamples([(0, 0, 0), (0.5, 0.5, 0.5), (1, 1, 1)], 3)
         self.assertIsInstance(v, Quartz.CGDirectPaletteRef)
 
         self.assertResultIsCFRetained(Quartz.CGPaletteCreateWithByteSamples)

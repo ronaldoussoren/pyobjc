@@ -16,9 +16,7 @@ class TestNSLockProtocols(TestCase):
         self.assertResultIsBOOL(Foundation.NSConditionLock.tryLock)
         self.assertResultIsBOOL(Foundation.NSConditionLock.tryLockWhenCondition_)
         self.assertResultIsBOOL(Foundation.NSConditionLock.lockBeforeDate_)
-        self.assertResultIsBOOL(
-            Foundation.NSConditionLock.lockWhenCondition_beforeDate_
-        )
+        self.assertResultIsBOOL(Foundation.NSConditionLock.lockWhenCondition_beforeDate_)
 
         self.assertResultIsBOOL(Foundation.NSRecursiveLock.tryLock)
         self.assertResultIsBOOL(Foundation.NSRecursiveLock.lockBeforeDate_)

@@ -15,16 +15,12 @@ class TestAVCaptureFileOutputHelper(AVFoundation.NSObject):
 class TestAVCaptureFileOutput(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput.isRecording)
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureFileOutput.isRecordingPaused
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput.isRecordingPaused)  # noqa: B950
 
     @min_os_level("12.0")
     def test_methodsTundra(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput_Tundra.isRecording)
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureFileOutput_Tundra.isRecordingPaused
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput_Tundra.isRecordingPaused)  # noqa: B950
 
     def testProtocols(self):
         self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate")

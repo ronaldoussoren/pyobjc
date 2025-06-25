@@ -59,9 +59,7 @@ class TestNSOperation(TestCase):
         self.assertArgIsBOOL(
             Foundation.NSOperationQueue.addOperations_waitUntilFinished_, 1
         )
-        self.assertArgIsBlock(
-            Foundation.NSOperationQueue.addOperationWithBlock_, 0, b"v"
-        )
+        self.assertArgIsBlock(Foundation.NSOperationQueue.addOperationWithBlock_, 0, b"v")
 
     @min_os_level("10.8")
     def testMethods10_8(self):

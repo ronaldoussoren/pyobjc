@@ -120,9 +120,7 @@ class GraphicsView(NSView):
 
     def unbind_(self, bindingName):
         if bindingName == "graphics":
-            self.graphicsContainer.removeObserver_forKeyPath_(
-                self, self.graphicsKeyPath
-            )
+            self.graphicsContainer.removeObserver_forKeyPath_(self, self.graphicsKeyPath)
             self.graphicsContainer = None
             self.graphicsKeyPath = None
         if bindingName == "selectionIndexes":

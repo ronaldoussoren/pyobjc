@@ -15,23 +15,13 @@ class TestAVAssetExportSession(TestCase):
         self.assertIsInstance(AVFoundation.AVAssetExportPreset1920x1080, str)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4A, str)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetPassthrough, str)
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetAppleM4VCellular, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4VCellular, str)  # noqa: B950
         self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4ViPod, str)
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetAppleM4V480pSD, str
-        )  # noqa: B950
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetAppleM4VAppleTV, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4V480pSD, str)  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4VAppleTV, str)  # noqa: B950
         self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4VWiFi, str)
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetAppleM4V720pHD, str
-        )  # noqa: B950
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetAppleProRes422LPCM, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4V720pHD, str)  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleProRes422LPCM, str)  # noqa: B950
 
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusWaiting, 1)
@@ -51,9 +41,7 @@ class TestAVAssetExportSession(TestCase):
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetAppleM4V1080pHD, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4V1080pHD, str)  # noqa: B950
 
     @min_os_level("10.10")
     def testConstants10_10(self):
@@ -62,32 +50,20 @@ class TestAVAssetExportSession(TestCase):
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(AVFoundation.AVAssetExportPresetLowQuality, str)
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetMediumQuality, str
-        )  # noqa: B950
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetHighestQuality, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetMediumQuality, str)  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetHighestQuality, str)  # noqa: B950
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetHEVCHighestQuality, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVCHighestQuality, str)  # noqa: B950
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC1920x1080, str)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC3840x2160, str)
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetHEVC1920x1080WithAlpha, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetHEVC3840x2160WithAlpha, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVAssetExportPresetAppleProRes4444LPCM, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC1920x1080WithAlpha, str)
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC3840x2160WithAlpha, str)
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleProRes4444LPCM, str)  # noqa: B950
 
     @min_os_level("12.1")
     def testConstants12_1(self):

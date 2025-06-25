@@ -274,9 +274,7 @@ class TestClassAsignments(TestCase):
         with self.assertRaisesRegex(
             (ValueError, TypeError), "selector object without callable"
         ):
-            MEClass.fuzzyMethod = objc.selector(
-                None, selector=b"fuzzy", signature=b"@@:"
-            )
+            MEClass.fuzzyMethod = objc.selector(None, selector=b"fuzzy", signature=b"@@:")
 
     def testRemovingMethods(self):
         theClass = NSObject

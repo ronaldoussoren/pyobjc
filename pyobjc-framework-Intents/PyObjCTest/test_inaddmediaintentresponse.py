@@ -13,6 +13,4 @@ class TestINAddMediaIntentResponse(TestCase):
         self.assertEqual(Intents.INAddMediaIntentResponseCodeSuccess, 3)
         self.assertEqual(Intents.INAddMediaIntentResponseCodeHandleInApp, 4)
         self.assertEqual(Intents.INAddMediaIntentResponseCodeFailure, 5)
-        self.assertEqual(
-            Intents.INAddMediaIntentResponseCodeFailureRequiringAppLaunch, 6
-        )
+        self.assertEqual(Intents.INAddMediaIntentResponseCodeFailureRequiringAppLaunch, 6)

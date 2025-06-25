@@ -15,9 +15,7 @@ class TestCMTagCollection(TestCase):
         self.assertEqual(
             CoreMedia.kCMTagCollectionError_InvalidTagCollectionDictionary, -15744
         )
-        self.assertEqual(
-            CoreMedia.kCMTagCollectionError_InvalidTagCollectionData, -15745
-        )
+        self.assertEqual(CoreMedia.kCMTagCollectionError_InvalidTagCollectionData, -15745)
         self.assertEqual(CoreMedia.kCMTagCollectionError_TagNotFound, -15746)
         self.assertEqual(
             CoreMedia.kCMTagCollectionError_InvalidTagCollectionDataVersion, -15747

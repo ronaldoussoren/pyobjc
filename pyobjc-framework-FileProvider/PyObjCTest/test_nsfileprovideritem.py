@@ -65,12 +65,8 @@ class TestNSFileProviderItem(TestCase):
         self.assertPickleRoundTrips(v)
 
     def test_constants(self):
-        self.assertEqual(
-            FileProvider.NSFileProviderItemCapabilitiesAllowsReading, 1 << 0
-        )
-        self.assertEqual(
-            FileProvider.NSFileProviderItemCapabilitiesAllowsWriting, 1 << 1
-        )
+        self.assertEqual(FileProvider.NSFileProviderItemCapabilitiesAllowsReading, 1 << 0)
+        self.assertEqual(FileProvider.NSFileProviderItemCapabilitiesAllowsWriting, 1 << 1)
         self.assertEqual(
             FileProvider.NSFileProviderItemCapabilitiesAllowsReparenting, 1 << 2
         )
@@ -111,13 +107,9 @@ class TestNSFileProviderItem(TestCase):
         self.assertEqual(FileProvider.NSFileProviderFileSystemUserReadable, 1 << 1)
         self.assertEqual(FileProvider.NSFileProviderFileSystemUserWritable, 1 << 2)
         self.assertEqual(FileProvider.NSFileProviderFileSystemHidden, 1 << 3)
-        self.assertEqual(
-            FileProvider.NSFileProviderFileSystemPathExtensionHidden, 1 << 4
-        )
+        self.assertEqual(FileProvider.NSFileProviderFileSystemPathExtensionHidden, 1 << 4)
 
-        self.assertIsInstance(
-            FileProvider.NSFileProviderRootContainerItemIdentifier, str
-        )
+        self.assertIsInstance(FileProvider.NSFileProviderRootContainerItemIdentifier, str)
         self.assertIsInstance(
             FileProvider.NSFileProviderWorkingSetContainerItemIdentifier, str
         )

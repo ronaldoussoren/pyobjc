@@ -31,12 +31,8 @@ class TestMPNowPlayingInfoCenter(TestCase):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyDefaultPlaybackRate, str
         )
-        self.assertIsInstance(
-            MediaPlayer.MPNowPlayingInfoPropertyPlaybackQueueIndex, str
-        )
-        self.assertIsInstance(
-            MediaPlayer.MPNowPlayingInfoPropertyPlaybackQueueCount, str
-        )
+        self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyPlaybackQueueIndex, str)
+        self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyPlaybackQueueCount, str)
         self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyChapterNumber, str)
         self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyChapterCount, str)
         self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyIsLiveStream, str)
@@ -62,9 +58,7 @@ class TestMPNowPlayingInfoCenter(TestCase):
         os_level_key(os_release()) < os_level_key("10.14")
     )  # Documented for 10.13, but doesn't work there
     def testConstants10_13(self):
-        self.assertIsInstance(
-            MediaPlayer.MPNowPlayingInfoPropertyServiceIdentifier, str
-        )
+        self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyServiceIdentifier, str)
 
     @min_os_level("10.13.1")
     def testConstants10_13_1(self):

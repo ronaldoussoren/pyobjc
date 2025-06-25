@@ -46,9 +46,7 @@ class TestNSTextField(TestCase):
         self.assertResultIsBOOL(AppKit.NSTextField.isAutomaticTextCompletionEnabled)
         self.assertArgIsBOOL(AppKit.NSTextField.setAutomaticTextCompletionEnabled_, 0)
         self.assertResultIsBOOL(AppKit.NSTextField.allowsCharacterPickerTouchBarItem)
-        self.assertArgIsBOOL(
-            AppKit.NSTextField.setAllowsCharacterPickerTouchBarItem_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSTextField.setAllowsCharacterPickerTouchBarItem_, 0)
 
         self.assertArgHasType(
             TestNSTextFieldHelper.textField_textView_candidatesForSelectedRange_,

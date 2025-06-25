@@ -11,9 +11,7 @@ class TestCoreDataErrors(TestCase):
 
         self.assertEqual(CoreData.NSPersistentHistoryTokenExpiredError, 134301)
         self.assertEqual(CoreData.NSManagedObjectModelReferenceNotFoundError, 134504)
-        self.assertEqual(
-            CoreData.NSStagedMigrationFrameworkVersionMismatchError, 134505
-        )
+        self.assertEqual(CoreData.NSStagedMigrationFrameworkVersionMismatchError, 134505)
         self.assertEqual(CoreData.NSStagedMigrationBackwardMigrationError, 134506)
 
     @min_os_level("10.5")
@@ -25,9 +23,7 @@ class TestCoreDataErrors(TestCase):
         self.assertEqual(CoreData.NSPersistentStoreOpenError, 134_080)
         self.assertEqual(CoreData.NSPersistentStoreTimeoutError, 134_090)
         self.assertEqual(CoreData.NSPersistentStoreUnsupportedRequestTypeError, 134_091)
-        self.assertEqual(
-            CoreData.NSPersistentStoreIncompatibleVersionHashError, 134_100
-        )
+        self.assertEqual(CoreData.NSPersistentStoreIncompatibleVersionHashError, 134_100)
         self.assertEqual(CoreData.NSMigrationError, 134_110)
         self.assertEqual(CoreData.NSMigrationConstraintViolationError, 134_111)
         self.assertEqual(CoreData.NSMigrationCancelledError, 134_120)
@@ -52,9 +48,7 @@ class TestCoreDataErrors(TestCase):
         self.assertEqual(CoreData.NSValidationMultipleErrorsError, 1560)
         self.assertEqual(CoreData.NSValidationMissingMandatoryPropertyError, 1570)
         self.assertEqual(CoreData.NSValidationRelationshipLacksMinimumCountError, 1580)
-        self.assertEqual(
-            CoreData.NSValidationRelationshipExceedsMaximumCountError, 1590
-        )
+        self.assertEqual(CoreData.NSValidationRelationshipExceedsMaximumCountError, 1590)
         self.assertEqual(CoreData.NSValidationRelationshipDeniedDeleteError, 1600)
         self.assertEqual(CoreData.NSValidationNumberTooLargeError, 1610)
         self.assertEqual(CoreData.NSValidationNumberTooSmallError, 1620)

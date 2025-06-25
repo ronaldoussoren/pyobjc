@@ -39,9 +39,7 @@ class TestNSLocale(TestCase):
         self.assertIsInstance(Foundation.NSLocaleCollatorIdentifier, str)
         self.assertIsInstance(Foundation.NSLocaleQuotationBeginDelimiterKey, str)
         self.assertIsInstance(Foundation.NSLocaleQuotationEndDelimiterKey, str)
-        self.assertIsInstance(
-            Foundation.NSLocaleAlternateQuotationBeginDelimiterKey, str
-        )
+        self.assertIsInstance(Foundation.NSLocaleAlternateQuotationBeginDelimiterKey, str)
         self.assertIsInstance(Foundation.NSLocaleAlternateQuotationEndDelimiterKey, str)
         self.assertIsInstance(Foundation.NSRepublicOfChinaCalendar, str)
         self.assertIsInstance(Foundation.NSPersianCalendar, str)

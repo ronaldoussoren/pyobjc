@@ -18,21 +18,15 @@ class TestLSSharedFileList(TestCase):
     def testConstants10_5(self):
         self.assertIsInstance(LaunchServices.kLSSharedFileListFavoriteVolumes, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListFavoriteItems, str)
-        self.assertIsInstance(
-            LaunchServices.kLSSharedFileListRecentApplicationItems, str
-        )
+        self.assertIsInstance(LaunchServices.kLSSharedFileListRecentApplicationItems, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListRecentDocumentItems, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListRecentServerItems, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListSessionLoginItems, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListGlobalLoginItems, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListRecentItemsMaxAmount, str)
-        self.assertIsInstance(
-            LaunchServices.kLSSharedFileListVolumesComputerVisible, str
-        )
+        self.assertIsInstance(LaunchServices.kLSSharedFileListVolumesComputerVisible, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListVolumesIDiskVisible, str)
-        self.assertIsInstance(
-            LaunchServices.kLSSharedFileListVolumesNetworkVisible, str
-        )
+        self.assertIsInstance(LaunchServices.kLSSharedFileListVolumesNetworkVisible, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListItemHidden, str)
 
     @min_os_level("10.6")
@@ -130,18 +124,14 @@ class TestLSSharedFileList(TestCase):
         if v is not None:
             self.assertIsInstance(v, LaunchServices.IconRef)
 
-        self.assertResultIsCFRetained(
-            LaunchServices.LSSharedFileListItemCopyDisplayName
-        )
+        self.assertResultIsCFRetained(LaunchServices.LSSharedFileListItemCopyDisplayName)
         v = LaunchServices.LSSharedFileListItemCopyDisplayName(item)
         self.assertIsInstance(v, str)
 
         self.assertArgIsOut(LaunchServices.LSSharedFileListItemResolve, 2)
         self.assertArgIsOut(LaunchServices.LSSharedFileListItemResolve, 3)
         self.assertArgIsCFRetained(LaunchServices.LSSharedFileListItemResolve, 2)
-        v, url, ref = LaunchServices.LSSharedFileListItemResolve(
-            item, 0, None, objc.NULL
-        )
+        v, url, ref = LaunchServices.LSSharedFileListItemResolve(item, 0, None, objc.NULL)
         self.assertIsInstance(v, int)
         if url is not None:
             self.assertIsInstance(url, LaunchServices.CFURLRef)
@@ -176,7 +166,5 @@ class TestLSSharedFileList(TestCase):
 
     @min_os_level("10.10")
     def testFunctions10_10(self):
-        self.assertResultIsCFRetained(
-            LaunchServices.LSSharedFileListItemCopyResolvedURL
-        )
+        self.assertResultIsCFRetained(LaunchServices.LSSharedFileListItemCopyResolvedURL)
         self.assertArgIsOut(LaunchServices.LSSharedFileListItemCopyResolvedURL, 2)

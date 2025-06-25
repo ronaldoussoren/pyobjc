@@ -49,9 +49,7 @@ class TestNSWindowHelper(AppKit.NSObject):
     def window_shouldDragDocumentWithEvent_from_withPasteboard_(self, w, a, b, c):
         return 1
 
-    def window_startCustomAnimationToEnterFullScreenOnScreen_withDuration_(
-        self, w, a, d
-    ):
+    def window_startCustomAnimationToEnterFullScreenOnScreen_withDuration_(self, w, a, d):
         pass
 
 
@@ -201,9 +199,7 @@ class TestNSWindow(TestCase):
         self.assertEqual(AppKit.NSWindowDocumentVersionsButton, 6)
         self.assertEqual(AppKit.NSWindowFullScreenButton, 7)
 
-        self.assertIsInstance(
-            AppKit.NSWindowDidChangeBackingPropertiesNotification, str
-        )
+        self.assertIsInstance(AppKit.NSWindowDidChangeBackingPropertiesNotification, str)
         self.assertIsInstance(AppKit.NSBackingPropertyOldScaleFactorKey, str)
         self.assertIsInstance(AppKit.NSBackingPropertyOldColorSpaceKey, str)
         self.assertIsInstance(AppKit.NSWindowWillEnterFullScreenNotification, str)
@@ -233,17 +229,13 @@ class TestNSWindow(TestCase):
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertEqual(
-            AppKit.NSWindowCollectionBehaviorFullScreenAllowsTiling, 1 << 11
-        )
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorFullScreenAllowsTiling, 1 << 11)
         self.assertEqual(
             AppKit.NSWindowCollectionBehaviorFullScreenDisallowsTiling, 1 << 12
         )
         self.assertEqual(AppKit.NSWindowCollectionBehaviorPrimary, 1 << 16)
         self.assertEqual(AppKit.NSWindowCollectionBehaviorAuxiliary, 1 << 17)
-        self.assertEqual(
-            AppKit.NSWindowCollectionBehaviorCanJoinAllApplications, 1 << 18
-        )
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorCanJoinAllApplications, 1 << 18)
 
     @skipUnless(Quartz is not None, "test requires Quartz")
     def testMagicConstants(self):
@@ -256,9 +248,7 @@ class TestNSWindow(TestCase):
         self.assertEqual(AppKit.NSMainMenuWindowLevel, Quartz.kCGMainMenuWindowLevel)
         self.assertEqual(AppKit.NSStatusWindowLevel, Quartz.kCGStatusWindowLevel)
         self.assertEqual(AppKit.NSDockWindowLevel, Quartz.kCGDockWindowLevel)
-        self.assertEqual(
-            AppKit.NSModalPanelWindowLevel, Quartz.kCGModalPanelWindowLevel
-        )
+        self.assertEqual(AppKit.NSModalPanelWindowLevel, Quartz.kCGModalPanelWindowLevel)
         self.assertEqual(AppKit.NSPopUpMenuWindowLevel, Quartz.kCGPopUpMenuWindowLevel)
         self.assertEqual(
             AppKit.NSScreenSaverWindowLevel, Quartz.kCGScreenSaverWindowLevel

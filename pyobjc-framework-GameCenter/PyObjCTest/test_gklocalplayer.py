@@ -43,9 +43,7 @@ class TestGKLocalPlayer(TestCase):
     @min_os_level("10.9")
     def testMethods10_9(self):
         self.assertResultIsBlock(GameCenter.GKLocalPlayer.authenticateHandler, b"v@@")
-        self.assertArgIsBlock(
-            GameCenter.GKLocalPlayer.setAuthenticateHandler_, 0, b"v@@"
-        )
+        self.assertArgIsBlock(GameCenter.GKLocalPlayer.setAuthenticateHandler_, 0, b"v@@")
 
     @min_os_level("10.10")
     def testMethods10_10(self):

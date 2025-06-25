@@ -148,10 +148,15 @@ objc.loadBundleFunctions(
 )
 
 objc.registerCFSignature(
-    "CFStringRef", b"^{__CFString=}", CFStringGetTypeID(), "NSString"  # noqa: F821
+    "CFStringRef",
+    b"^{__CFString=}",
+    CFStringGetTypeID(),
+    "NSString",  # noqa: F821
 )
 objc.registerCFSignature(
-    "CFAllocatorRef", b"^{__CFAllocator=}", CFAllocatorGetTypeID()  # noqa: F821
+    "CFAllocatorRef",
+    b"^{__CFAllocator=}",
+    CFAllocatorGetTypeID(),  # noqa: F821
 )
 
 objc.registerMetaDataForSelector(

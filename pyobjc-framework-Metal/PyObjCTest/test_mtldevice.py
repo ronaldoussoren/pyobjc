@@ -146,9 +146,7 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newRenderPipelineStateWithDescriptor_error_(self, a, b):
         return 1
 
-    def newRenderPipelineStateWithDescriptor_options_reflection_error_(
-        self, a, b, c, d
-    ):
+    def newRenderPipelineStateWithDescriptor_options_reflection_error_(self, a, b, c, d):
         return 1
 
     def newRenderPipelineStateWithDescriptor_completionHandler_(self, a, b):
@@ -169,9 +167,7 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newComputePipelineStateWithFunction_options_completionHandler_(self, a, b, c):
         return 1
 
-    def newComputePipelineStateWithDescriptor_options_reflection_error_(
-        self, a, b, c, d
-    ):
+    def newComputePipelineStateWithDescriptor_options_reflection_error_(self, a, b, c, d):
         return 1
 
     def newComputePipelineStateWithDescriptor_options_completionHandler_(self, a, b, c):
@@ -501,9 +497,7 @@ class TestMTLDevice(TestCase):
         self.assertResultHasType(TestMTLDeviceHelper.location, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLDeviceHelper.locationNumber, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLDeviceHelper.maxTransferRate, objc._C_ULNGLNG)
-        self.assertResultIsBOOL(
-            TestMTLDeviceHelper.isDepth24Stencil8PixelFormatSupported
-        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.isDepth24Stencil8PixelFormatSupported)
         self.assertResultHasType(
             TestMTLDeviceHelper.readWriteTextureSupport, objc._C_NSUInteger
         )
@@ -516,9 +510,7 @@ class TestMTLDevice(TestCase):
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsQueryTextureLOD)
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsBCTextureCompression)
         self.assertResultIsBOOL(TestMTLDeviceHelper.areBarycentricCoordsSupported)
-        self.assertResultIsBOOL(
-            TestMTLDeviceHelper.supportsShaderBarycentricCoordinates
-        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsShaderBarycentricCoordinates)
         self.assertResultHasType(
             TestMTLDeviceHelper.currentAllocatedSize, objc._C_NSUInteger
         )
@@ -783,9 +775,7 @@ class TestMTLDevice(TestCase):
         self.assertResultHasType(TestMTLDeviceHelper.peerGroupID, objc._C_ULNGLNG)
         self.assertResultHasType(TestMTLDeviceHelper.peerIndex, objc._C_UINT)
         self.assertResultHasType(TestMTLDeviceHelper.peerCount, objc._C_UINT)
-        self.assertResultHasType(
-            TestMTLDeviceHelper.maxBufferLength, objc._C_NSUInteger
-        )
+        self.assertResultHasType(TestMTLDeviceHelper.maxBufferLength, objc._C_NSUInteger)
         self.assertArgHasType(
             TestMTLDeviceHelper.newCounterSampleBufferWithDescriptor_error_, 1, b"o^@"
         )
@@ -800,9 +790,7 @@ class TestMTLDevice(TestCase):
             b"o^" + objc._C_NSUInteger,
         )
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsPullModelInterpolation)
-        self.assertResultIsBOOL(
-            TestMTLDeviceHelper.supportsShaderBarycentricCoordinates
-        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsShaderBarycentricCoordinates)
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsCounterSampling_)
         self.assertArgHasType(
             TestMTLDeviceHelper.supportsCounterSampling_, 0, objc._C_NSUInteger

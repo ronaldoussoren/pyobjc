@@ -4,9 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCWWifiClientHelper(CoreWLAN.NSObject):
-    def linkQualityDidChangeForWiFiInterfaceWithName_rssi_transmitRate_(
-        self, nm, rs, tr
-    ):
+    def linkQualityDidChangeForWiFiInterfaceWithName_rssi_transmitRate_(self, nm, rs, tr):
         pass
 
 
@@ -25,16 +23,10 @@ class TestCWWiFiClient(TestCase):
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(
-            CoreWLAN.CWWiFiClient.startMonitoringEventWithType_error_
-        )
-        self.assertArgIsOut(
-            CoreWLAN.CWWiFiClient.startMonitoringEventWithType_error_, 1
-        )
+        self.assertResultIsBOOL(CoreWLAN.CWWiFiClient.startMonitoringEventWithType_error_)
+        self.assertArgIsOut(CoreWLAN.CWWiFiClient.startMonitoringEventWithType_error_, 1)
 
-        self.assertResultIsBOOL(
-            CoreWLAN.CWWiFiClient.stopMonitoringEventWithType_error_
-        )
+        self.assertResultIsBOOL(CoreWLAN.CWWiFiClient.stopMonitoringEventWithType_error_)
         self.assertArgIsOut(CoreWLAN.CWWiFiClient.stopMonitoringEventWithType_error_, 1)
 
         self.assertResultIsBOOL(

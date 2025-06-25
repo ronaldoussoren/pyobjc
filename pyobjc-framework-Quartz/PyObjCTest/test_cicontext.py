@@ -35,9 +35,7 @@ class TestCIContext(TestCase):
     @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(Quartz.kCIImageRepresentationAVPortraitEffectsMatte, str)
-        self.assertIsInstance(
-            Quartz.kCIImageRepresentationPortraitEffectsMatteImage, str
-        )
+        self.assertIsInstance(Quartz.kCIImageRepresentationPortraitEffectsMatteImage, str)
         self.assertIsInstance(Quartz.kCIContextName, str)
 
     @min_os_level("10.15")

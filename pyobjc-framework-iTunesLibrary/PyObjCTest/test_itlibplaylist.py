@@ -29,9 +29,7 @@ class TestITLibPlaylist(TestCase):
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindiTunesU, 26)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKind90sMusic, 42)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindMyTopRated, 43)
-        self.assertEqual(
-            iTunesLibrary.ITLibDistinguishedPlaylistKindTop25MostPlayed, 44
-        )
+        self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindTop25MostPlayed, 44)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindRecentlyPlayed, 45)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindRecentlyAdded, 46)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindMusicVideos, 47)
@@ -55,9 +53,7 @@ class TestITLibPlaylist(TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyAllItemsPlaylist, str)
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyDistinguisedKind, str)
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyMaster, str)
-        self.assertIsInstance(
-            iTunesLibrary.ITLibPlaylistPropertyParentPersistentID, str
-        )
+        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyParentPersistentID, str)
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyVisible, str)
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyItems, str)
 

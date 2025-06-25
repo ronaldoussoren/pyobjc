@@ -20,9 +20,7 @@ class TestNSFont(TestCase):
             self.assertEqual(v1, v2)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "Crash on 10.13, 10.14??",
     )
     @skipUnless(
@@ -104,9 +102,7 @@ class TestNSFont(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSFont.isFixedPitch)
         self.assertArgIsOut(AppKit.NSFont.getBoundingRects_forGlyphs_count_, 0)
-        self.assertArgHasType(
-            AppKit.NSFont.getBoundingRects_forGlyphs_count_, 1, b"n^I"
-        )
+        self.assertArgHasType(AppKit.NSFont.getBoundingRects_forGlyphs_count_, 1, b"n^I")
         self.assertArgSizeInArg(AppKit.NSFont.getBoundingRects_forGlyphs_count_, 0, 2)
         self.assertArgSizeInArg(AppKit.NSFont.getBoundingRects_forGlyphs_count_, 1, 2)
         self.assertArgIsOut(AppKit.NSFont.getAdvancements_forGlyphs_count_, 0)

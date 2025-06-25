@@ -154,9 +154,7 @@ class TestCMSDecoder(TestCase):
             2,
             objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
-        self.assertArgIsCFRetained(
-            Security.CMSDecoderCopySignerTimestampCertificates, 2
-        )
+        self.assertArgIsCFRetained(Security.CMSDecoderCopySignerTimestampCertificates, 2)
 
     @min_os_level("10.10")
     def test_functions_10_10(self):

@@ -76,9 +76,7 @@ class TestNSItemProvider(TestCase):
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(
-            AppKit.NSItemProvider.hasItemConformingToTypeIdentifier_
-        )
+        self.assertResultIsBOOL(AppKit.NSItemProvider.hasItemConformingToTypeIdentifier_)
         self.assertArgIsBlock(
             AppKit.NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_,
             2,

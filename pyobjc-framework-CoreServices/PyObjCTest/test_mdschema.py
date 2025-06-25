@@ -5,9 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestMDSchema(TestCase):
     def test_functions(self):
         self.assertResultIsCFRetained(CoreServices.MDSchemaCopyAttributesForContentType)
-        self.assertResultIsCFRetained(
-            CoreServices.MDSchemaCopyMetaAttributesForAttribute
-        )
+        self.assertResultIsCFRetained(CoreServices.MDSchemaCopyMetaAttributesForAttribute)
         self.assertResultIsCFRetained(CoreServices.MDSchemaCopyAllAttributes)
         self.assertResultIsCFRetained(CoreServices.MDSchemaCopyDisplayNameForAttribute)
         self.assertResultIsCFRetained(

@@ -45,6 +45,4 @@ class TestNSSplitViewController(TestCase):
             AppKit.NSSplitViewItemCollapseBehaviorPreferResizingSiblingsWithFixedSplitView,
             2,
         )
-        self.assertEqual(
-            AppKit.NSSplitViewItemCollapseBehaviorUseConstraints, 3
-        )  # noqa: B950
+        self.assertEqual(AppKit.NSSplitViewItemCollapseBehaviorUseConstraints, 3)  # noqa: B950

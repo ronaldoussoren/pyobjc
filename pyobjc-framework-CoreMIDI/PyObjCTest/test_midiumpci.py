@@ -10,9 +10,7 @@ class TestMIDIUMPCI(TestCase):
         self.assertEqual(
             CoreMIDI.kMIDICICategoryOptionsProfileConfigurationSupported, 1 << 2
         )
-        self.assertEqual(
-            CoreMIDI.kMIDICICategoryOptionsPropertyExchangeSupported, 1 << 3
-        )
+        self.assertEqual(CoreMIDI.kMIDICICategoryOptionsPropertyExchangeSupported, 1 << 3)
         self.assertEqual(CoreMIDI.kMIDICICategoryOptionsProcessInquirySupported, 1 << 4)
 
         self.assertIsEnumType(CoreMIDI.MIDICIDeviceType)

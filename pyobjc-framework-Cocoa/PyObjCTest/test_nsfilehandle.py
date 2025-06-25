@@ -9,9 +9,7 @@ class TestNSFileHandle(TestCase):
         self.assertIsInstance(
             Foundation.NSFileHandleReadToEndOfFileCompletionNotification, str
         )
-        self.assertIsInstance(
-            Foundation.NSFileHandleConnectionAcceptedNotification, str
-        )
+        self.assertIsInstance(Foundation.NSFileHandleConnectionAcceptedNotification, str)
         self.assertIsInstance(Foundation.NSFileHandleDataAvailableNotification, str)
         self.assertIsInstance(Foundation.NSFileHandleNotificationDataItem, str)
         self.assertIsInstance(Foundation.NSFileHandleNotificationFileHandleItem, str)
@@ -25,9 +23,7 @@ class TestNSFileHandle(TestCase):
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertArgIsOut(
-            Foundation.NSFileHandle.fileHandleForReadingFromURL_error_, 1
-        )
+        self.assertArgIsOut(Foundation.NSFileHandle.fileHandleForReadingFromURL_error_, 1)
         self.assertArgIsOut(Foundation.NSFileHandle.fileHandleForWritingToURL_error_, 1)
         self.assertArgIsOut(Foundation.NSFileHandle.fileHandleForUpdatingURL_error_, 1)
 
@@ -40,9 +36,7 @@ class TestNSFileHandle(TestCase):
 
     @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertArgIsOut(
-            Foundation.NSFileHandle.readDataToEndOfFileAndReturnError_, 0
-        )
+        self.assertArgIsOut(Foundation.NSFileHandle.readDataToEndOfFileAndReturnError_, 0)
         self.assertArgIsOut(Foundation.NSFileHandle.readDataUpToLength_error_, 1)
 
         self.assertResultIsBOOL(Foundation.NSFileHandle.writeData_error_)

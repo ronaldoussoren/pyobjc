@@ -23,9 +23,7 @@ class TestAVPlayerItemProtectedContentAdditions(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayerItem.isApplicationAuthorizedForPlayback
         )
-        self.assertResultIsBOOL(
-            AVFoundation.AVPlayerItem.isContentAuthorizedForPlayback
-        )
+        self.assertResultIsBOOL(AVFoundation.AVPlayerItem.isContentAuthorizedForPlayback)
         self.assertArgIsBlock(
             AVFoundation.AVPlayerItem.requestContentAuthorizationAsynchronouslyWithTimeoutInterval_completionHandler_,  # noqa: B950
             1,

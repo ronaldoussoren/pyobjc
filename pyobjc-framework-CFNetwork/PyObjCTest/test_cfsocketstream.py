@@ -5,9 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, os_release, os_level
 class TestCFSocketStream(TestCase):
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(
-            CFNetwork.kCFStreamPropertyAllowExpensiveNetworkAccess, str
-        )
+        self.assertIsInstance(CFNetwork.kCFStreamPropertyAllowExpensiveNetworkAccess, str)
         self.assertIsInstance(CFNetwork.kCFStreamPropertyConnectionIsExpensive, str)
         self.assertIsInstance(
             CFNetwork.kCFStreamPropertyAllowConstrainedNetworkAccess, str
@@ -132,12 +130,8 @@ class TestCFSocketStream(TestCase):
             )
             self.assertIsInstance(v, bool)
 
-        self.assertArgIsCFRetained(
-            CFNetwork.CFStreamCreatePairWithSocketToNetService, 2
-        )
-        self.assertArgIsCFRetained(
-            CFNetwork.CFStreamCreatePairWithSocketToNetService, 3
-        )
+        self.assertArgIsCFRetained(CFNetwork.CFStreamCreatePairWithSocketToNetService, 2)
+        self.assertArgIsCFRetained(CFNetwork.CFStreamCreatePairWithSocketToNetService, 3)
         self.assertArgIsOut(CFNetwork.CFStreamCreatePairWithSocketToNetService, 2)
         self.assertArgIsOut(CFNetwork.CFStreamCreatePairWithSocketToNetService, 3)
         service = CFNetwork.CFNetServiceCreate(

@@ -116,17 +116,13 @@ class TestSCStream(TestCase):
             ScreenCaptureKit.SCStream.addStreamOutput_type_sampleHandlerQueue_error_, 3
         )
 
-        self.assertResultIsBOOL(
-            ScreenCaptureKit.SCStream.removeStreamOutput_type_error_
-        )
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStream.removeStreamOutput_type_error_)
         self.assertArgIsOut(ScreenCaptureKit.SCStream.removeStreamOutput_type_error_, 2)
 
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.capturesAudio)
-        self.assertArgIsBOOL(
-            ScreenCaptureKit.SCStreamConfiguration.setCapturesAudio_, 0
-        )
+        self.assertArgIsBOOL(ScreenCaptureKit.SCStreamConfiguration.setCapturesAudio_, 0)
 
         self.assertResultIsBOOL(
             ScreenCaptureKit.SCStreamConfiguration.excludesCurrentProcessAudio
@@ -166,9 +162,7 @@ class TestSCStream(TestCase):
         )
 
         self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.shouldBeOpaque)
-        self.assertArgIsBOOL(
-            ScreenCaptureKit.SCStreamConfiguration.setShouldBeOpaque_, 0
-        )
+        self.assertArgIsBOOL(ScreenCaptureKit.SCStreamConfiguration.setShouldBeOpaque_, 0)
 
         self.assertResultIsBOOL(
             ScreenCaptureKit.SCStreamConfiguration.ignoreGlobalClipDisplay
@@ -203,9 +197,7 @@ class TestSCStream(TestCase):
             ScreenCaptureKit.SCStreamConfiguration.setShowMouseClicks_, 0
         )
 
-        self.assertResultIsBOOL(
-            ScreenCaptureKit.SCStreamConfiguration.captureMicrophone
-        )
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.captureMicrophone)
         self.assertArgIsBOOL(
             ScreenCaptureKit.SCStreamConfiguration.setCaptureMicrophone_, 0
         )

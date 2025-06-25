@@ -20,9 +20,7 @@ class TestAVAssetDownloadTask(TestCase):
         self.assertIsInstance(
             AVFoundation.AVAssetDownloadTaskMinimumRequiredMediaBitrateKey, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVAssetDownloadTaskMediaSelectionKey, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAssetDownloadTaskMediaSelectionKey, str)  # noqa: B950
         self.assertIsInstance(
             AVFoundation.AVAssetDownloadTaskMediaSelectionPrefersMultichannelKey,
             str,  # noqa: B950

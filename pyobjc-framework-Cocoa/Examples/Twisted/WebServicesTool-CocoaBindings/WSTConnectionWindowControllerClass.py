@@ -250,9 +250,7 @@ class WSTConnectionWindowController(AppKit.NSWindowController):
         forces the fileld's contents to be redisplayed.
         """
         if not aMessage:
-            aMessage = "Displaying information about %d methods." % (
-                len(self.k_methods),
-            )
+            aMessage = "Displaying information about %d methods." % (len(self.k_methods),)
         self.statusTextField.setStringValue_(aMessage)
 
     setStatusTextFieldMessage_ = objc.accessor(setStatusTextFieldMessage_)
@@ -323,7 +321,7 @@ class WSTConnectionWindowController(AppKit.NSWindowController):
         self.k_server = None
         self.k_methodPrefix = None
         self.setStatusTextFieldMessage_(
-            ("Server failed to respond to %s.  " "See below for more information.")
+            ("Server failed to respond to %s.  See below for more information.")
             % (method,)
         )
         # log.err(why)

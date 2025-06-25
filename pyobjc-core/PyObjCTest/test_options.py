@@ -28,9 +28,7 @@ class TestOptions(TestCase):
             with self.assertRaisesRegex(RuntimeError, "no bool"):
                 objc.options.verbose = NoBool()
 
-            with self.assertRaisesRegex(
-                AttributeError, "Cannot delete option 'verbose'"
-            ):
+            with self.assertRaisesRegex(AttributeError, "Cannot delete option 'verbose'"):
                 del objc.options.verbose
 
             obj = OCTestBlock.alloc().init()
@@ -52,9 +50,7 @@ class TestOptions(TestCase):
 
                 stderr = captured_stderr.getvalue()
                 if verbose:
-                    self.assertIn(
-                        "PyObjC: Converting exception to Objective-C:", stderr
-                    )
+                    self.assertIn("PyObjC: Converting exception to Objective-C:", stderr)
                     self.assertIn("ValueError: foo", stderr)
                 else:
                     self.assertEqual(stderr, "")
@@ -75,9 +71,7 @@ class TestOptions(TestCase):
             with self.assertRaisesRegex(RuntimeError, "no bool"):
                 objc.options.use_kvo = NoBool()
 
-            with self.assertRaisesRegex(
-                AttributeError, "Cannot delete option 'use_kvo'"
-            ):
+            with self.assertRaisesRegex(AttributeError, "Cannot delete option 'use_kvo'"):
                 del objc.options.use_kvo
 
         finally:
@@ -445,9 +439,7 @@ class TestOptions(TestCase):
             objc.options._getKey = value
             self.assertIs(objc.options._getKey, value)
 
-            with self.assertRaisesRegex(
-                AttributeError, "Cannot delete option '_getKey'"
-            ):
+            with self.assertRaisesRegex(AttributeError, "Cannot delete option '_getKey'"):
                 del objc.options._getKey
 
         finally:
@@ -460,9 +452,7 @@ class TestOptions(TestCase):
             objc.options._setKey = value
             self.assertIs(objc.options._setKey, value)
 
-            with self.assertRaisesRegex(
-                AttributeError, "Cannot delete option '_setKey'"
-            ):
+            with self.assertRaisesRegex(AttributeError, "Cannot delete option '_setKey'"):
                 del objc.options._setKey
 
         finally:
@@ -574,7 +564,6 @@ class TestOptions(TestCase):
             objc.options._genericNewClass = orig
 
     def test_proxy_without_options(self):
-
         orig_mapping_types = objc.options._mapping_types
         orig_sequence_types = objc.options._sequence_types
         orig_set_types = objc.options._set_types

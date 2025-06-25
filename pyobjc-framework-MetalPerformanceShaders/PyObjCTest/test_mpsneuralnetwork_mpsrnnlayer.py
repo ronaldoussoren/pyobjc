@@ -25,9 +25,7 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
             MetalPerformanceShaders.MPSRNNBidirectionalCombineModeConcatenate, 2
         )
 
-        self.assertEqual(
-            MetalPerformanceShaders.MPSRNNMatrixIdSingleGateInputWeights, 0
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSRNNMatrixIdSingleGateInputWeights, 0)
         self.assertEqual(
             MetalPerformanceShaders.MPSRNNMatrixIdSingleGateRecurrentWeights, 1
         )
@@ -41,9 +39,7 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
         self.assertEqual(
             MetalPerformanceShaders.MPSRNNMatrixIdLSTMInputGateMemoryWeights, 5
         )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSRNNMatrixIdLSTMInputGateBiasTerms, 6
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSRNNMatrixIdLSTMInputGateBiasTerms, 6)
         self.assertEqual(
             MetalPerformanceShaders.MPSRNNMatrixIdLSTMForgetGateInputWeights, 7
         )
@@ -86,9 +82,7 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
         self.assertEqual(
             MetalPerformanceShaders.MPSRNNMatrixIdGRUInputGateRecurrentWeights, 20
         )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSRNNMatrixIdGRUInputGateBiasTerms, 21
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSRNNMatrixIdGRUInputGateBiasTerms, 21)
         self.assertEqual(
             MetalPerformanceShaders.MPSRNNMatrixIdGRURecurrentGateInputWeights, 22
         )
@@ -107,9 +101,7 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
         self.assertEqual(
             MetalPerformanceShaders.MPSRNNMatrixIdGRUOutputGateInputGateWeights, 27
         )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSRNNMatrixIdGRUOutputGateBiasTerms, 28
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSRNNMatrixIdGRUOutputGateBiasTerms, 28)
 
     @min_os_level("10.13")
     def test_methods10_13(self):
@@ -128,9 +120,7 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
             MetalPerformanceShaders.MPSRNNDescriptor.setUseFloat32Weights_, 0
         )
 
-        self.assertResultIsBOOL(
-            MetalPerformanceShaders.MPSGRUDescriptor.flipOutputGates
-        )
+        self.assertResultIsBOOL(MetalPerformanceShaders.MPSGRUDescriptor.flipOutputGates)
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSGRUDescriptor.setFlipOutputGates_, 0
         )

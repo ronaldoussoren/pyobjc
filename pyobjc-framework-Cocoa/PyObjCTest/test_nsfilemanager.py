@@ -127,9 +127,7 @@ class TestNSFileManager(TestCase):
         self.assertEqual(
             Foundation.NSDirectoryEnumerationSkipsSubdirectoryDescendants, 1 << 0
         )
-        self.assertEqual(
-            Foundation.NSDirectoryEnumerationSkipsPackageDescendants, 1 << 1
-        )
+        self.assertEqual(Foundation.NSDirectoryEnumerationSkipsPackageDescendants, 1 << 1)
         self.assertEqual(Foundation.NSDirectoryEnumerationSkipsHiddenFiles, 1 << 2)
 
         self.assertEqual(
@@ -151,9 +149,7 @@ class TestNSFileManager(TestCase):
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertEqual(
-            Foundation.NSFileManagerUnmountAllPartitionsAndEjectDisk, 1 << 0
-        )
+        self.assertEqual(Foundation.NSFileManagerUnmountAllPartitionsAndEjectDisk, 1 << 0)
         self.assertEqual(Foundation.NSFileManagerUnmountWithoutUI, 1 << 1)
 
         self.assertIsInstance(
@@ -263,9 +259,7 @@ class TestNSFileManager(TestCase):
             Foundation.NSFileManager.startDownloadingUbiquitousItemAtURL_error_, 1
         )
 
-        self.assertResultIsBOOL(
-            Foundation.NSFileManager.evictUbiquitousItemAtURL_error_
-        )
+        self.assertResultIsBOOL(Foundation.NSFileManager.evictUbiquitousItemAtURL_error_)
         self.assertArgIsOut(Foundation.NSFileManager.evictUbiquitousItemAtURL_error_, 1)
 
         self.assertArgIsOut(
@@ -397,21 +391,15 @@ class TestNSFileManager(TestCase):
         obj = FileManagerTest1.alloc().init()
         m = obj.fileManager_shouldCopyItemAtPath_toPath_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"Z")
-        m = (
-            obj.fileManager_shouldProceedAfterError_copyingItemAtPath_toPath_.__metadata__()
-        )
+        m = obj.fileManager_shouldProceedAfterError_copyingItemAtPath_toPath_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"Z")
         m = obj.fileManager_shouldMoveItemAtPath_toPath_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"Z")
-        m = (
-            obj.fileManager_shouldProceedAfterError_movingItemAtPath_toPath_.__metadata__()
-        )
+        m = obj.fileManager_shouldProceedAfterError_movingItemAtPath_toPath_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"Z")
         m = obj.fileManager_shouldLinkItemAtPath_toPath_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"Z")
-        m = (
-            obj.fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_.__metadata__()
-        )
+        m = obj.fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"Z")
         m = obj.fileManager_shouldRemoveItemAtPath_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"Z")
@@ -423,9 +411,7 @@ class TestNSFileManager(TestCase):
         self.assertResultIsBOOL(
             Foundation.NSFileManager.setAttributes_ofItemAtPath_error_
         )
-        self.assertArgIsOut(
-            Foundation.NSFileManager.setAttributes_ofItemAtPath_error_, 2
-        )
+        self.assertArgIsOut(Foundation.NSFileManager.setAttributes_ofItemAtPath_error_, 2)
 
         self.assertResultIsBOOL(
             Foundation.NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_  # noqa: B950
@@ -439,12 +425,8 @@ class TestNSFileManager(TestCase):
             3,
         )
 
-        self.assertArgIsOut(
-            Foundation.NSFileManager.contentsOfDirectoryAtPath_error_, 1
-        )
-        self.assertArgIsOut(
-            Foundation.NSFileManager.subpathsOfDirectoryAtPath_error_, 1
-        )
+        self.assertArgIsOut(Foundation.NSFileManager.contentsOfDirectoryAtPath_error_, 1)
+        self.assertArgIsOut(Foundation.NSFileManager.subpathsOfDirectoryAtPath_error_, 1)
         self.assertArgIsOut(Foundation.NSFileManager.attributesOfItemAtPath_error_, 1)
         self.assertArgIsOut(
             Foundation.NSFileManager.attributesOfFileSystemForPath_error_, 1

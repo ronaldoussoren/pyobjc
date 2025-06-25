@@ -38,9 +38,7 @@ class TestCHHapticParameter(TestCase):
         self.assertIsInstance(
             CoreHaptics.CHHapticDynamicParameterIDAudioVolumeControl, str
         )
-        self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDAudioPanControl, str
-        )
+        self.assertIsInstance(CoreHaptics.CHHapticDynamicParameterIDAudioPanControl, str)
         self.assertIsInstance(
             CoreHaptics.CHHapticDynamicParameterIDAudioBrightnessControl, str
         )

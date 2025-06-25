@@ -615,9 +615,7 @@ class TestTransformer(TestCase):
             def pyvalue(self, *, kw):
                 pass
 
-            with self.assertRaisesRegex(
-                objc.BadPrototypeError, "keyword-only arguments"
-            ):
+            with self.assertRaisesRegex(objc.BadPrototypeError, "keyword-only arguments"):
                 self.transformer("pyvalue", pyvalue, NSObject, [])
 
         with self.subTest("keyword only with default"):
@@ -1410,7 +1408,6 @@ class TestClassDictProcessor(TestCase):
         self.assertEqual(len(hidden_class_methods), 0)
 
     def test_objc_super_warning(self):
-
         with self.subTest("mod.super is objc.super"):
             with warnings.catch_warnings():
                 warnings.simplefilter("error", category=objc.ObjCSuperWarning)

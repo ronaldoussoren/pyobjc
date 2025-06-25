@@ -67,9 +67,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         self.assertIsInstance(v.instanceIndex, int)
         self.assertPickleRoundTrips(v)
 
-        v = (
-            MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates()
-        )
+        v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates()
         self.assertEqual(
             v.__typestr__,
             b"{MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates=fII<2f>}",
@@ -85,9 +83,7 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         self.assertIsInstance(v.bufferIndex, int)
         self.assertPickleRoundTrips(v)
 
-        v = (
-            MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates()
-        )
+        v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates()
         self.assertEqual(
             v.__typestr__,
             b"{MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates=fII<2f>}",
@@ -97,17 +93,13 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
         self.assertIsInstance(v.bufferIndex, int)
         self.assertIs(v.coordinates, None)
 
-        v = (
-            MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndex()
-        )
+        v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndex()
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
         self.assertIsInstance(v.instanceIndex, int)
         self.assertPickleRoundTrips(v)
 
-        v = (
-            MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates()
-        )
+        v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates()
         self.assertEqual(
             v.__typestr__,
             b"{MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates=fIII<2f>}",

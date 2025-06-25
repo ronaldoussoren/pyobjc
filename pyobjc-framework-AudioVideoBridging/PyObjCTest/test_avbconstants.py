@@ -185,12 +185,8 @@ class TestAVBConstants(TestCase):
         self.assertEqual(
             AudioVideoBridging.AVB17221AECPMessageTypeAddressAccessResponse, 0x3
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AECPMessageTypeLegacyAVCCommand, 0x4
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AECPMessageTypeLegacyAVCResponse, 0x5
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AECPMessageTypeLegacyAVCCommand, 0x4)
+        self.assertEqual(AudioVideoBridging.AVB17221AECPMessageTypeLegacyAVCResponse, 0x5)
         self.assertEqual(
             AudioVideoBridging.AVB17221AECPMessageTypeVendorUniqueCommand, 0x6
         )
@@ -233,39 +229,27 @@ class TestAVBConstants(TestCase):
         )
         self.assertEqual(AudioVideoBridging.AVB17221AECPStatusAVCFailure, 0x02)
 
-        self.assertEqual(
-            AudioVideoBridging.AVB17221ACMPMessageTypeConnectTXCommand, 0x0
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221ACMPMessageTypeConnectTXResponse, 0x1
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221ACMPMessageTypeConnectTXCommand, 0x0)
+        self.assertEqual(AudioVideoBridging.AVB17221ACMPMessageTypeConnectTXResponse, 0x1)
         self.assertEqual(
             AudioVideoBridging.AVB17221ACMPMessageTypeDisconnectTXCommand, 0x2
         )
         self.assertEqual(
             AudioVideoBridging.AVB17221ACMPMessageTypeDisconnectTXResponse, 0x3
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221ACMPMessageTypeGetTXStateCommand, 0x4
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221ACMPMessageTypeGetTXStateCommand, 0x4)
         self.assertEqual(
             AudioVideoBridging.AVB17221ACMPMessageTypeGetTXStateResponse, 0x5
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221ACMPMessageTypeConnectRXCommand, 0x6
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221ACMPMessageTypeConnectRXResponse, 0x7
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221ACMPMessageTypeConnectRXCommand, 0x6)
+        self.assertEqual(AudioVideoBridging.AVB17221ACMPMessageTypeConnectRXResponse, 0x7)
         self.assertEqual(
             AudioVideoBridging.AVB17221ACMPMessageTypeDisconnectRXCommand, 0x8
         )
         self.assertEqual(
             AudioVideoBridging.AVB17221ACMPMessageTypeDisconnectRXResponse, 0x9
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221ACMPMessageTypeGetRXStateCommand, 0xA
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221ACMPMessageTypeGetRXStateCommand, 0xA)
         self.assertEqual(
             AudioVideoBridging.AVB17221ACMPMessageTypeGetRXStateResponse, 0xB
         )
@@ -283,9 +267,7 @@ class TestAVBConstants(TestCase):
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusTalkerNoStreamIndex, 0x04)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusTalkerNoBandwidth, 0x05)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusTalkerExclusive, 0x06)
-        self.assertEqual(
-            AudioVideoBridging.AVB17221ACMPStatusListenerTalkerTimeout, 0x07
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusListenerTalkerTimeout, 0x07)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusListenerExclusive, 0x08)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusStateUnavailable, 0x09)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusNotConnected, 0x0A)
@@ -327,42 +309,24 @@ class TestAVBConstants(TestCase):
 
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeAcquireEntity, 0x0000)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeLockEntity, 0x0001)
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeEntityAvailable, 0x0002
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeEntityAvailable, 0x0002)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeControllerAvailable, 0x0003
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeReadDescriptor, 0x0004
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeWriteDescriptor, 0x0005
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeReadDescriptor, 0x0004)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeWriteDescriptor, 0x0005)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeSetConfiguration, 0x0006
         )
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeGetConfiguration, 0x0007
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeSetStreamFormat, 0x0008
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeGetStreamFormat, 0x0009
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeSetVideoFormat, 0x000A
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeGetVideoFormat, 0x000B
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeSetSensorFormat, 0x000C
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeGetSensorFormat, 0x000D
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetStreamFormat, 0x0008)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetStreamFormat, 0x0009)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetVideoFormat, 0x000A)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetVideoFormat, 0x000B)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetSensorFormat, 0x000C)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetSensorFormat, 0x000D)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetStreamInfo, 0x000E)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetStreamInfo, 0x000F)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetName, 0x0010)
@@ -373,18 +337,10 @@ class TestAVBConstants(TestCase):
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeGetAssociationID, 0x0013
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeSetSamplingRate, 0x0014
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeGetSamplingRate, 0x0015
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeSetClockSource, 0x0016
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeGetClockSource, 0x0017
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetSamplingRate, 0x0014)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetSamplingRate, 0x0015)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetClockSource, 0x0016)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetClockSource, 0x0017)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetControl, 0x0018)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetControl, 0x0019)
         self.assertEqual(
@@ -403,9 +359,7 @@ class TestAVBConstants(TestCase):
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetMixer, 0x001F)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetMatrix, 0x0020)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetMatrix, 0x0021)
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeStartStreaming, 0x0022
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeStartStreaming, 0x0022)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeStopStreaming, 0x0023)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeRegisterUnsolicitedNotification,
@@ -423,16 +377,12 @@ class TestAVBConstants(TestCase):
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetCounters, 0x0029)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeReboot, 0x002A)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetAudioMap, 0x002B)
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeAddAudioMapping, 0x002C
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeAddAudioMapping, 0x002C)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeRemoveAudioMapping, 0x002D
         )
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetVideoMap, 0x002E)
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeAddVideoMapping, 0x002F
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeAddVideoMapping, 0x002F)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeRemoveVideoMapping, 0x0030
         )
@@ -443,15 +393,9 @@ class TestAVBConstants(TestCase):
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeRemoveSensorMapping, 0x0033
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeStartOperation, 0x0034
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeAbortOperation, 0x0035
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeOperationStatus, 0x0036
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeStartOperation, 0x0034)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeAbortOperation, 0x0035)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeOperationStatus, 0x0036)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticateAddKey, 0x0037
         )
@@ -516,9 +460,7 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationDeleteToken, 0x0040
         )
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeAuthenticate, 0x0041)
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeDeauthenticate, 0x0042
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeDeauthenticate, 0x0042)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeEnableTransportSecurity, 0x0043
         )
@@ -537,16 +479,10 @@ class TestAVBConstants(TestCase):
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeGetMemoryObjectLength, 0x0048
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeSetStreamBackup, 0x0049
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeGetStreamBackup, 0x004A
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetStreamBackup, 0x0049)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetStreamBackup, 0x004A)
 
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeGetDynamicInfo, 0x004B
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetDynamicInfo, 0x004B)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeSetMaxTransitTime, 0x004C
         )
@@ -601,12 +537,8 @@ class TestAVBConstants(TestCase):
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeGetPTPPortRemoteIntervals, 0x005D
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeSetPTPPortInfo, 0x005E
-        )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeGetPTPPortInfo, 0x005F
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeSetPTPPortInfo, 0x005E)
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetPTPPortInfo, 0x005F)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeSetPTPPortOverrides, 0x0060
         )
@@ -629,9 +561,7 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221AEMCommandTypeGetPTPPortPerformanceMonitoringRecord,
             0x0065,
         )
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AEMCommandTypeGetPathLatency, 0x0066
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeGetPathLatency, 0x0066)
         self.assertEqual(
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationGetNonce, 0x0067
         )
@@ -641,8 +571,6 @@ class TestAVBConstants(TestCase):
 
         self.assertEqual(AudioVideoBridging.AVB17221AECPAddressAccessTLVModeRead, 0x00)
         self.assertEqual(AudioVideoBridging.AVB17221AECPAddressAccessTLVModeWrite, 0x01)
-        self.assertEqual(
-            AudioVideoBridging.AVB17221AECPAddressAccessTLVModeExecute, 0x02
-        )
+        self.assertEqual(AudioVideoBridging.AVB17221AECPAddressAccessTLVModeExecute, 0x02)
 
         self.assertEqual(AudioVideoBridging.AVB17221ACMPIPFlagNone, 0x0000)

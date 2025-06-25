@@ -39,6 +39,4 @@ class TestNSMergePolicy(TestCase):
         )
 
         self.assertArgIsOut(CoreData.NSMergePolicy.resolveConstraintConflicts_error_, 1)
-        self.assertResultIsBOOL(
-            CoreData.NSMergePolicy.resolveConstraintConflicts_error_
-        )
+        self.assertResultIsBOOL(CoreData.NSMergePolicy.resolveConstraintConflicts_error_)

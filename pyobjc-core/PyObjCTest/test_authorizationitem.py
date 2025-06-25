@@ -195,9 +195,7 @@ class TestAuthorizationItemTuple(TestCase):
         ):
             OC_Authorization.dictWithAuthorizationItem_(x)
 
-        with self.assertRaisesRegex(
-            TypeError, "depythonifying struct, got no sequence"
-        ):
+        with self.assertRaisesRegex(TypeError, "depythonifying struct, got no sequence"):
             OC_Authorization.dictWithAuthorizationItem_(object())
 
     def test_from_objc(self):

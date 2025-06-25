@@ -29,9 +29,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothKeyTypeUnauthenticatedCombinationP256, 0x07
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothKeyTypeAuthenticatedCombinationP256, 0x08
-        )
+        self.assertEqual(IOBluetooth.kBluetoothKeyTypeAuthenticatedCombinationP256, 0x08)
 
         self.assertIsEnumType(IOBluetooth.BluetoothPacketType)
         self.assertEqual(IOBluetooth.kBluetoothPacketTypeReserved1, 0x0001)
@@ -57,24 +55,12 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothSynchronousConnectionPacketTypeNone, 0x0000
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSynchronousConnectionPacketTypeHV1, 0x0001
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSynchronousConnectionPacketTypeHV2, 0x0002
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSynchronousConnectionPacketTypeHV3, 0x0004
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSynchronousConnectionPacketTypeEV3, 0x0008
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSynchronousConnectionPacketTypeEV4, 0x0010
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSynchronousConnectionPacketTypeEV5, 0x0020
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSynchronousConnectionPacketTypeHV1, 0x0001)
+        self.assertEqual(IOBluetooth.kBluetoothSynchronousConnectionPacketTypeHV2, 0x0002)
+        self.assertEqual(IOBluetooth.kBluetoothSynchronousConnectionPacketTypeHV3, 0x0004)
+        self.assertEqual(IOBluetooth.kBluetoothSynchronousConnectionPacketTypeEV3, 0x0008)
+        self.assertEqual(IOBluetooth.kBluetoothSynchronousConnectionPacketTypeEV4, 0x0010)
+        self.assertEqual(IOBluetooth.kBluetoothSynchronousConnectionPacketTypeEV5, 0x0020)
         self.assertEqual(
             IOBluetooth.kBluetoothSynchronousConnectionPacketType2EV3Omit, 0x0040
         )
@@ -90,22 +76,14 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothSynchronousConnectionPacketTypeFutureUse, 0xFC00
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSynchronousConnectionPacketTypeAll, 0xFFFF
-        )
-        self.assertNotHasAttr(
-            IOBluetooth, "kBluetoothSynchronousConnectionPacketTypeEnd"
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSynchronousConnectionPacketTypeAll, 0xFFFF)
+        self.assertNotHasAttr(IOBluetooth, "kBluetoothSynchronousConnectionPacketTypeEnd")
 
         self.assertIsEnumType(IOBluetooth.BluetoothLAP)
         self.assertEqual(IOBluetooth.kBluetoothGeneralInquiryAccessCodeIndex, 0)
-        self.assertEqual(
-            IOBluetooth.kBluetoothGeneralInquiryAccessCodeLAPValue, 0x9E8B33
-        )
+        self.assertEqual(IOBluetooth.kBluetoothGeneralInquiryAccessCodeLAPValue, 0x9E8B33)
         self.assertEqual(IOBluetooth.kBluetoothLimitedInquiryAccessCodeIndex, 1)
-        self.assertEqual(
-            IOBluetooth.kBluetoothLimitedInquiryAccessCodeLAPValue, 0x9E8B00
-        )
+        self.assertEqual(IOBluetooth.kBluetoothLimitedInquiryAccessCodeLAPValue, 0x9E8B00)
         self.assertNotHasAttr(IOBluetooth, "kBluetoothLimitedInquiryAccessCodeEnd")
 
         self.assertIsEnumType(IOBluetooth.BluetoothPageScanRepetitionMode)
@@ -137,9 +115,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCIErroneousDataReportingReservedStart, 0x02
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIErroneousDataReportingReservedEnd, 0xFF
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIErroneousDataReportingReservedEnd, 0xFF)
 
         self.assertEqual(IOBluetooth.kBluetoothDeviceNameMaxLength, 248)
 
@@ -192,28 +168,20 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeConnectionResponse, 0x03)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeConfigureRequest, 0x04)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeConfigureResponse, 0x05)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPCommandCodeDisconnectionRequest, 0x06
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeDisconnectionRequest, 0x06)
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPCommandCodeDisconnectionResponse, 0x07
         )
         self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeEchoRequest, 0x08)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeEchoResponse, 0x09)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeInformationRequest, 0x0A)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPCommandCodeInformationResponse, 0x0B
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPCommandCodeCreateChannelRequest, 0x0C
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeInformationResponse, 0x0B)
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeCreateChannelRequest, 0x0C)
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPCommandCodeCreateChannelResponse, 0x0D
         )
         self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeMoveChannelRequest, 0x0E)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPCommandCodeMoveChannelResponse, 0x0F
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeMoveChannelResponse, 0x0F)
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPCommandCodeMoveChannelConfirmation, 0x10
         )
@@ -233,9 +201,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPCommandCodeLECreditBasedConnectionResponse, 0x15
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPCommandCodeLEFlowControlCredit, 0x16
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPCommandCodeLEFlowControlCredit, 0x16)
 
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPCommandRejectReasonCommandNotUnderstood, 0x0000
@@ -319,9 +285,7 @@ class TestBluetooth(TestCase):
         self.assertIsEnumType(IOBluetooth.BluetoothL2CAPConfigurationResult)
 
         self.assertEqual(IOBluetooth.kBluetoothL2CAPConfigurationOptionMTU, 0x01)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPConfigurationOptionFlushTimeout, 0x02
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPConfigurationOptionFlushTimeout, 0x02)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPConfigurationOptionQoS, 0x03)
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPConfigurationOptionRetransmissionAndFlowControl,
@@ -349,9 +313,7 @@ class TestBluetooth(TestCase):
             9,
         )
 
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPConfigurationBasicL2CAPModeFlag, 0x00
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPConfigurationBasicL2CAPModeFlag, 0x00)
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPConfigurationRetransmissionModeFlag, 0x01
         )
@@ -378,9 +340,7 @@ class TestBluetooth(TestCase):
         self.assertIsEnumType(IOBluetooth.BluetoothL2CAPInformationType)
 
         self.assertEqual(IOBluetooth.kBluetoothL2CAPInformationResultSuccess, 0x0000)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPInformationResultNotSupported, 0x0001
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPInformationResultNotSupported, 0x0001)
         self.assertIsEnumType(IOBluetooth.BluetoothL2CAPInformationResult)
 
         self.assertEqual(
@@ -398,16 +358,12 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPInformationEnhancedRetransmissionMode, 0x00000008
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPInformationStreamingMode, 0x00000010
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPInformationStreamingMode, 0x00000010)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPInformationFCSOption, 0x00000020)
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPInformationExtendedFlowSpecification, 0x00000040
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPInformationFixedChannels, 0x00000080
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPInformationFixedChannels, 0x00000080)
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPInformationExtendedWindowSize, 0x00000100
         )
@@ -463,14 +419,10 @@ class TestBluetooth(TestCase):
             IOBluetooth.kBluetoothL2CAPQoSTypeBestEffort,
         )
         self.assertEqual(IOBluetooth.kBluetoothL2CAPQoSTokenRateDefault, 0x00000000)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPQoSTokenBucketSizeDefault, 0x00000000
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPQoSTokenBucketSizeDefault, 0x00000000)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPQoSPeakBandwidthDefault, 0x00000000)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPQoSLatencyDefault, 0xFFFFFFFF)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPQoSDelayVariationDefault, 0xFFFFFFFF
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPQoSDelayVariationDefault, 0xFFFFFFFF)
 
         self.assertEqual(IOBluetooth.kBluetoothLEMaxTXTimeMin, 0x0148)
         self.assertEqual(
@@ -492,9 +444,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothLESecurityManagerSignKey, 1 << 2)
         self.assertEqual(IOBluetooth.kBluetoothLESecurityManagerLinkKey, 1 << 3)
 
-        self.assertEqual(
-            IOBluetooth.kBluetoothLESecurityManagerCommandCodeReserved, 0x00
-        )
+        self.assertEqual(IOBluetooth.kBluetoothLESecurityManagerCommandCodeReserved, 0x00)
         self.assertEqual(
             IOBluetooth.kBluetoothLESecurityManagerCommandCodePairingRequest, 0x01
         )
@@ -564,9 +514,7 @@ class TestBluetooth(TestCase):
             IOBluetooth.kBluetoothLESecurityManagerUserOutputCapabilityNumericOutput,
             0x02,
         )
-        self.assertIsEnumType(
-            IOBluetooth.BluetoothLESecurityManagerUserOutputCapability
-        )
+        self.assertIsEnumType(IOBluetooth.BluetoothLESecurityManagerUserOutputCapability)
 
         self.assertEqual(
             IOBluetooth.kBluetoothLESecurityManagerIOCapabilityDisplayOnly, 0x00
@@ -600,9 +548,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothLESecurityManagerOOBDataReservedStart, 0x02
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothLESecurityManagerOOBDataReservedEnd, 0xFF
-        )
+        self.assertEqual(IOBluetooth.kBluetoothLESecurityManagerOOBDataReservedEnd, 0xFF)
         self.assertIsEnumType(IOBluetooth.BluetoothLESecurityManagerOOBData)
 
         self.assertEqual(IOBluetooth.kBluetoothLESecurityManagerNoBonding, 0)
@@ -610,9 +556,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothLESecurityManagerReservedStart, 2)
         self.assertEqual(IOBluetooth.kBluetoothLESecurityManagerReservedEnd, 3)
 
-        self.assertEqual(
-            IOBluetooth.kBluetoothLESecurityManagerReasonCodeReserved, 0x00
-        )
+        self.assertEqual(IOBluetooth.kBluetoothLESecurityManagerReasonCodeReserved, 0x00)
         self.assertEqual(
             IOBluetooth.kBluetoothLESecurityManagerReasonCodePasskeyEntryFailed, 0x01
         )
@@ -826,19 +770,13 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCICommandInquiry, 0x0001)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandInquiryCancel, 0x0002)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandPeriodicInquiryMode, 0x0003)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandExitPeriodicInquiryMode, 0x0004
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandExitPeriodicInquiryMode, 0x0004)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandCreateConnection, 0x0005)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandDisconnect, 0x0006)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandAddSCOConnection, 0x0007)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandCreateConnectionCancel, 0x0008)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandAcceptConnectionRequest, 0x0009
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandRejectConnectionRequest, 0x000A
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandAcceptConnectionRequest, 0x0009)
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandRejectConnectionRequest, 0x000A)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLinkKeyRequestReply, 0x000B)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandLinkKeyRequestNegativeReply, 0x000C
@@ -850,15 +788,9 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandChangeConnectionPacketType, 0x000F
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandAuthenticationRequested, 0x0011
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandSetConnectionEncryption, 0x0013
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandChangeConnectionLinkKey, 0x0015
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandAuthenticationRequested, 0x0011)
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandSetConnectionEncryption, 0x0013)
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandChangeConnectionLinkKey, 0x0015)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandMasterLinkKey, 0x0017)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandRemoteNameRequest, 0x0019)
         self.assertEqual(
@@ -871,9 +803,7 @@ class TestBluetooth(TestCase):
             IOBluetooth.kBluetoothHCICommandReadRemoteVersionInformation, 0x001D
         )
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadClockOffset, 0x001F)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandRemoteNameRequestCancel, 0x001A
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandRemoteNameRequestCancel, 0x001A)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadLMPHandle, 0x0020)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandSetupSynchronousConnection, 0x0028
@@ -884,18 +814,14 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandRejectSynchronousConnectionRequest, 0x002A
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandIOCapabilityRequestReply, 0x002B
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandIOCapabilityRequestReply, 0x002B)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandUserConfirmationRequestReply, 0x002C
         )
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandUserConfirmationRequestNegativeReply, 0x002D
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandUserPasskeyRequestReply, 0x002E
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandUserPasskeyRequestReply, 0x002E)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandUserPasskeyRequestNegativeReply, 0x002F
         )
@@ -952,9 +878,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCICommandRoleDiscovery, 0x0009)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandSwitchRole, 0x000B)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadLinkPolicySettings, 0x000C)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandWriteLinkPolicySettings, 0x000D
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandWriteLinkPolicySettings, 0x000D)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandReadDefaultLinkPolicySettings, 0x000E
         )
@@ -991,15 +915,9 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCICommandWriteScanEnable, 0x001A)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadPageScanActivity, 0x001B)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandWritePageScanActivity, 0x001C)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandReadInquiryScanActivity, 0x001D
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandWriteInquiryScanActivity, 0x001E
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandReadAuthenticationEnable, 0x001F
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandReadInquiryScanActivity, 0x001D)
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandWriteInquiryScanActivity, 0x001E)
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandReadAuthenticationEnable, 0x001F)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandWriteAuthenticationEnable, 0x0020
         )
@@ -1025,9 +943,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadHoldModeActivity, 0x002B)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandWriteHoldModeActivity, 0x002C)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadTransmitPowerLevel, 0x002D)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandReadSCOFlowControlEnable, 0x002E
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandReadSCOFlowControlEnable, 0x002E)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandWriteSCOFlowControlEnable, 0x002F
         )
@@ -1044,15 +960,11 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandWriteLinkSupervisionTimeout, 0x0037
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandReadNumberOfSupportedIAC, 0x0038
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandReadNumberOfSupportedIAC, 0x0038)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadCurrentIACLAP, 0x0039)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandWriteCurrentIACLAP, 0x003A)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadPageScanPeriodMode, 0x003B)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandWritePageScanPeriodMode, 0x003C
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandWritePageScanPeriodMode, 0x003C)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadPageScanMode, 0x003D)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandWritePageScanMode, 0x003E)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandSetAFHClassification, 0x003F)
@@ -1084,9 +996,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandWriteInquiryResponseTransmitPower, 0x0059
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandSendKeypressNotification, 0x0060
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandSendKeypressNotification, 0x0060)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandReadDefaultErroneousDataReporting, 0x005A
         )
@@ -1117,17 +1027,13 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCICommandShortRangeMode, 0x006B)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadLEHostSupported, 0x006C)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandWriteLEHostSupported, 0x006D)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandSetMWSChannelParameters, 0x006E
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandSetMWSChannelParameters, 0x006E)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandSetExternalFrameConfiguration, 0x006F
         )
         self.assertEqual(IOBluetooth.kBluetoothHCICommandSetMWSSignaling, 0x0070)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandSetMWSTransportLayer, 0x0071)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandSetMWSScanFrequencyTable, 0x0072
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandSetMWSScanFrequencyTable, 0x0072)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandSetMWSPATTERNConfiguration, 0x0073
         )
@@ -1155,15 +1061,9 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandWriteAuthenticatedPayloadTimeout, 0x007C
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandReadLocalOOBExtendedData, 0x007D
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandReadExtendedPageTimeout, 0x007E
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandWriteExtendedPageTimeout, 0x007F
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandReadLocalOOBExtendedData, 0x007D)
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandReadExtendedPageTimeout, 0x007E)
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandWriteExtendedPageTimeout, 0x007F)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandReadExtendedInquiryLength, 0x0080
         )
@@ -1192,14 +1092,10 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadCountryCode, 0x0007)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadDeviceAddress, 0x0009)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadDataBlockSize, 0x000A)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandReadLocalSupportedCodecs, 0x000B
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandReadLocalSupportedCodecs, 0x000B)
 
         self.assertEqual(IOBluetooth.kBluetoothHCICommandGroupStatus, 0x05)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandReadFailedContactCounter, 0x0001
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandReadFailedContactCounter, 0x0001)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandResetFailedContactCounter, 0x0002
         )
@@ -1214,9 +1110,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandGetMWSTransportLayerConfiguration, 0x000C
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandSetTriggeredClockCapture, 0x000D
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandSetTriggeredClockCapture, 0x000D)
 
         self.assertEqual(IOBluetooth.kBluetoothHCICommandGroupTesting, 0x06)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandReadLoopbackMode, 0x0001)
@@ -1227,9 +1121,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandWriteSimplePairingDebugMode, 0x0004
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandEnableAMPReceiverReports, 0x0007
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandEnableAMPReceiverReports, 0x0007)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandAMPTestEnd, 0x0008)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandAMPTest, 0x0009)
 
@@ -1252,9 +1144,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLESetScanParameters, 0x000B)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLESetScanEnable, 0x000C)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLECreateConnection, 0x000D)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandLECreateConnectionCancel, 0x000E
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandLECreateConnectionCancel, 0x000E)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEReadWhiteListSize, 0x000F)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEClearWhiteList, 0x0010)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEAddDeviceToWhiteList, 0x0011)
@@ -1266,9 +1156,7 @@ class TestBluetooth(TestCase):
             IOBluetooth.kBluetoothHCICommandLESetHostChannelClassification, 0x0014
         )
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEReadChannelMap, 0x0015)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandLEReadRemoteUsedFeatures, 0x0016
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandLEReadRemoteUsedFeatures, 0x0016)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEEncrypt, 0x0017)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLERand, 0x0018)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEStartEncryption, 0x0019)
@@ -1297,9 +1185,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandLEWriteSuggestedDefaultDataLength, 0x0024
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandLEReadLocalP256PublicKey, 0x0025
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandLEReadLocalP256PublicKey, 0x0025)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEGenerateDHKey, 0x0026)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandLEAddDeviceToResolvingList, 0x0027
@@ -1308,9 +1194,7 @@ class TestBluetooth(TestCase):
             IOBluetooth.kBluetoothHCICommandLERemoveDeviceFromResolvingList, 0x0028
         )
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEClearResolvingList, 0x0029)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandLEReadResolvingListSize, 0x002A
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandLEReadResolvingListSize, 0x002A)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandLEReadPeerResolvableAddress, 0x002B
         )
@@ -1323,9 +1207,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandLESetResolvablePrivateAddressTimeout, 0x002E
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandLEReadMaximumDataLength, 0x002F
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandLEReadMaximumDataLength, 0x002F)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEReadPhy, 0x0030)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLESetDefaultPhy, 0x0031)
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLESetPhy, 0x0032)
@@ -1370,9 +1252,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandLESetExtendedScanParameters, 0x0041
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandLESetExtendedScanEnable, 0x0042
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandLESetExtendedScanEnable, 0x0042)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandLEExtendedCreateConnection, 0x0043
         )
@@ -1400,9 +1280,7 @@ class TestBluetooth(TestCase):
             IOBluetooth.kBluetoothHCICommandLEReadPeriodicAdvertiserListSize, 0x004A
         )
         self.assertEqual(IOBluetooth.kBluetoothHCICommandLEReadTransmitPower, 0x004B)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCICommandLEReadRFPathCompensation, 0x004C
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCICommandLEReadRFPathCompensation, 0x004C)
         self.assertEqual(
             IOBluetooth.kBluetoothHCICommandLEWriteRFPathCompensation, 0x004D
         )
@@ -1427,9 +1305,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothLEFeatureConnectionParamsRequestProcedure, 1 << 1
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothLEFeatureExtendedRejectIndication, 1 << 2
-        )
+        self.assertEqual(IOBluetooth.kBluetoothLEFeatureExtendedRejectIndication, 1 << 2)
         self.assertEqual(
             IOBluetooth.kBluetoothLEFeaturePeripheralInitiatedFeaturesExchange, 1 << 3
         )
@@ -1488,9 +1364,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothFeatureEV5Packets, 1 << 1)
         self.assertEqual(IOBluetooth.kBluetoothFeatureAbsenceMasks, 1 << 2)
         self.assertEqual(IOBluetooth.kBluetoothFeatureAFHCapablePeripheral, 1 << 3)
-        self.assertEqual(
-            IOBluetooth.kBluetoothFeatureAFHClassificationPeripheral, 1 << 4
-        )
+        self.assertEqual(IOBluetooth.kBluetoothFeatureAFHClassificationPeripheral, 1 << 4)
         self.assertEqual(IOBluetooth.kBluetoothFeatureAliasAuhentication, 1 << 5)
         self.assertEqual(IOBluetooth.kBluetoothFeatureLESupportedController, 1 << 6)
         self.assertEqual(
@@ -1537,9 +1411,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothExtendedFeatureSimpleSecurePairingHostMode, 1 << 0
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothExtendedFeatureLESupportedHostMode, 1 << 1
-        )
+        self.assertEqual(IOBluetooth.kBluetoothExtendedFeatureLESupportedHostMode, 1 << 1)
         self.assertEqual(
             IOBluetooth.kBluetoothExtendedFeatureLEAndBREDRToSameDeviceHostMode, 1 << 2
         )
@@ -1750,9 +1622,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothKeypressNotificationTypePasskeyDigitErased, 2
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothKeypressNotificationTypePasskeyCleared, 3
-        )
+        self.assertEqual(IOBluetooth.kBluetoothKeypressNotificationTypePasskeyCleared, 3)
         self.assertEqual(
             IOBluetooth.kBluetoothKeypressNotificationTypePasskeyEntryCompleted, 4
         )
@@ -1807,9 +1677,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothVoiceSettingInputDataFormatSignMagnitude, 0x080
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothVoiceSettingInputDataFormatUnsigned, 0x0C0
-        )
+        self.assertEqual(IOBluetooth.kBluetoothVoiceSettingInputDataFormatUnsigned, 0x0C0)
 
         self.assertEqual(IOBluetooth.kBluetoothVoiceSettingInputSampleSizeMask, 0x020)
         self.assertEqual(IOBluetooth.kBluetoothVoiceSettingInputSampleSize8Bit, 0x000)
@@ -1879,9 +1747,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCIEventConnectionPacketType, 0x1D)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventQoSViolation, 0x1E)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventPageScanModeChange, 0x1F)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventPageScanRepetitionModeChange, 0x20
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventPageScanRepetitionModeChange, 0x20)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventFlowSpecificationComplete, 0x21)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventInquiryResultWithRSSI, 0x22)
         self.assertEqual(
@@ -1890,14 +1756,10 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCIEventSynchronousConnectionComplete, 0x2C
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventSynchronousConnectionChanged, 0x2D
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventSynchronousConnectionChanged, 0x2D)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventSniffSubrating, 0x2E)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventExtendedInquiryResult, 0x2F)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventEncryptionKeyRefreshComplete, 0x30
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventEncryptionKeyRefreshComplete, 0x30)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventIOCapabilityRequest, 0x31)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventIOCapabilityResponse, 0x32)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventUserConfirmationRequest, 0x33)
@@ -1934,9 +1796,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCISubEventLEEnhancedConnectionComplete, 0x0A
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCISubEventLEDirectAdvertisingReport, 0x0B
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCISubEventLEDirectAdvertisingReport, 0x0B)
         self.assertEqual(IOBluetooth.kBluetoothHCISubEventLEPhyUpdateComplete, 0x0C)
         self.assertEqual(IOBluetooth.kBluetoothHCISubEventLEExtendedAdvertising, 0x0D)
         self.assertEqual(
@@ -1961,21 +1821,15 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCIEventDisconnectionPhysicalLinkComplete, 0x42
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventPhysicalLinkLossEarlyWarning, 0x43
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventPhysicalLinkLossEarlyWarning, 0x43)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventPhysicalLinkRecovery, 0x44)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventLogicalLinkComplete, 0x45)
         self.assertEqual(
             IOBluetooth.kBluetoothHCIEventDisconnectionLogicalLinkComplete, 0x46
         )
         self.assertEqual(IOBluetooth.kBluetoothHCIEventFlowSpecModifyComplete, 0x47)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventNumberOfCompletedDataBlocks, 0x48
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventShortRangeModeChangeComplete, 0x4C
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventNumberOfCompletedDataBlocks, 0x48)
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventShortRangeModeChangeComplete, 0x4C)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventAMPStatusChange, 0x4D)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventAMPStartTest, 0x49)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventAMPTestEnd, 0x4A)
@@ -2083,12 +1937,8 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskNone, 0x00000000)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskInquiryComplete, 0x00000001)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskInquiryResult, 0x00000002)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventMaskConnectionComplete, 0x00000004
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventMaskConnectionRequest, 0x00000008
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskConnectionComplete, 0x00000004)
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskConnectionRequest, 0x00000008)
         self.assertEqual(
             IOBluetooth.kBluetoothHCIEventMaskDisconnectionComplete, 0x00000010
         )
@@ -2131,9 +1981,7 @@ class TestBluetooth(TestCase):
             IOBluetooth.kBluetoothHCIEventMaskLinkKeyNotification, 0x00800000
         )
         self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskLoopbackCommand, 0x01000000)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventMaskDataBufferOverflow, 0x02000000
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskDataBufferOverflow, 0x02000000)
         self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskMaxSlotsChange, 0x04000000)
         self.assertEqual(
             IOBluetooth.kBluetoothHCIEventMaskReadClockOffsetComplete, 0x08000000
@@ -2142,9 +1990,7 @@ class TestBluetooth(TestCase):
             IOBluetooth.kBluetoothHCIEventMaskConnectionPacketTypeChanged, 0x10000000
         )
         self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskQoSViolation, 0x20000000)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIEventMaskPageScanModeChange, 0x40000000
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIEventMaskPageScanModeChange, 0x40000000)
         self.assertEqual(
             IOBluetooth.kBluetoothHCIEventMaskPageScanRepetitionModeChange, 0x80000000
         )
@@ -2169,12 +2015,8 @@ class TestBluetooth(TestCase):
         )
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorACLConnectionAlreadyExists, 0x0B)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorCommandDisallowed, 0x0C)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIErrorHostRejectedLimitedResources, 0x0D
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIErrorHostRejectedSecurityReasons, 0x0E
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIErrorHostRejectedLimitedResources, 0x0D)
+        self.assertEqual(IOBluetooth.kBluetoothHCIErrorHostRejectedSecurityReasons, 0x0E)
         self.assertEqual(
             IOBluetooth.kBluetoothHCIErrorHostRejectedRemoteDeviceIsPersonal, 0x0F
         )
@@ -2182,9 +2024,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothHCIErrorUnsupportedFeatureOrParameterValue, 0x11
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIErrorInvalidHCICommandParameters, 0x12
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIErrorInvalidHCICommandParameters, 0x12)
         self.assertEqual(
             IOBluetooth.kBluetoothHCIErrorOtherEndTerminatedConnectionUserEnded, 0x13
         )
@@ -2207,18 +2047,12 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorSCOAirModeRejected, 0x1D)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorInvalidLMPParameters, 0x1E)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorUnspecifiedError, 0x1F)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIErrorUnsupportedLMPParameterValue, 0x20
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIErrorUnsupportedLMPParameterValue, 0x20)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorRoleChangeNotAllowed, 0x21)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorLMPResponseTimeout, 0x22)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIErrorLMPErrorTransactionCollision, 0x23
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIErrorLMPErrorTransactionCollision, 0x23)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorLMPPDUNotAllowed, 0x24)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIErrorEncryptionModeNotAcceptable, 0x25
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIErrorEncryptionModeNotAcceptable, 0x25)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorUnitKeyUsed, 0x26)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorQoSNotSupported, 0x27)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorInstantPassed, 0x28)
@@ -2237,9 +2071,7 @@ class TestBluetooth(TestCase):
             IOBluetooth.kBluetoothHCIErrorChannelClassificationNotSupported, 0x2E
         )
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorInsufficientSecurity, 0x2F)
-        self.assertEqual(
-            IOBluetooth.kBluetoothHCIErrorParameterOutOfMandatoryRange, 0x30
-        )
+        self.assertEqual(IOBluetooth.kBluetoothHCIErrorParameterOutOfMandatoryRange, 0x30)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorRoleSwitchPending, 0x31)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorReservedSlotViolation, 0x34)
         self.assertEqual(IOBluetooth.kBluetoothHCIErrorRoleSwitchFailed, 0x35)
@@ -2289,24 +2121,18 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCIEventIDL2CA_ConnectInd, 0x01)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCIEventIDL2CA_ConfigInd, 0x02)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCIEventIDL2CA_DisconnectInd, 0x03)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPTCIEventIDL2CA_QoSViolationInd, 0x04
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPTCIEventIDL2CA_QoSViolationInd, 0x04)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCIEventIDL2CA_TimeOutInd, 0x05)
 
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandReserved, 0x0000)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_ConnectReq, 0x0001)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPTCICommandL2CA_DisconnectReq, 0x0002
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_DisconnectReq, 0x0002)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_ConfigReq, 0x0003)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_DisableCLT, 0x0004)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_EnableCLT, 0x0005)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_GroupCreate, 0x0006)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_GroupClose, 0x0007)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPTCICommandL2CA_GroupAddMember, 0x0008
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_GroupAddMember, 0x0008)
         self.assertEqual(
             IOBluetooth.kBluetoothL2CAPTCICommandL2CA_GroupRemoveMember, 0x0009
         )
@@ -2320,9 +2146,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_Reserved1, 0x000F)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_Reserved2, 0x0010)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_ConnectResp, 0x0011)
-        self.assertEqual(
-            IOBluetooth.kBluetoothL2CAPTCICommandL2CA_DisconnectResp, 0x0012
-        )
+        self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_DisconnectResp, 0x0012)
         self.assertEqual(IOBluetooth.kBluetoothL2CAPTCICommandL2CA_ConfigResp, 0x0013)
 
         self.assertEqual(IOBluetooth.kMaxChannelIDPerSide, 31)
@@ -2348,9 +2172,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothSDPPDUIDServiceAttributeRequest, 4)
         self.assertEqual(IOBluetooth.kBluetoothSDPPDUIDServiceAttributeResponse, 5)
         self.assertEqual(IOBluetooth.kBluetoothSDPPDUIDServiceSearchAttributeRequest, 6)
-        self.assertEqual(
-            IOBluetooth.kBluetoothSDPPDUIDServiceSearchAttributeResponse, 7
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSDPPDUIDServiceSearchAttributeResponse, 7)
 
         self.assertIsEnumType(IOBluetooth.BluetoothSDPErrorCode)
         self.assertEqual(IOBluetooth.kBluetoothSDPErrorCodeSuccess, 0x0000)
@@ -2364,9 +2186,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothSDPErrorCodeInvalidContinuationState, 0x0005
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSDPErrorCodeInsufficientResources, 0x0006
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSDPErrorCodeInsufficientResources, 0x0006)
 
         self.assertEqual(IOBluetooth.kBluetoothSDPErrorCodeReservedStart, 0x0007)
         self.assertEqual(IOBluetooth.kBluetoothSDPErrorCodeReservedEnd, 0xFFFF)
@@ -2416,9 +2236,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(
             IOBluetooth.BluetoothLEAdvertisingTypeConnectableUndirected, 0x00
         )
-        self.assertEqual(
-            IOBluetooth.BluetoothLEAdvertisingTypeConnectableDirected, 0x01
-        )
+        self.assertEqual(IOBluetooth.BluetoothLEAdvertisingTypeConnectableDirected, 0x01)
         self.assertEqual(
             IOBluetooth.BluetoothLEAdvertisingTypeDiscoverableUndirected, 0x02
         )
@@ -2851,9 +2669,7 @@ class TestBluetooth(TestCase):
 
         v = IOBluetooth.BluetoothHCIEventReadSupportedFeaturesResults()
         self.assertEqual(v.connectionHandle, 0)
-        self.assertEqual(
-            v.supportedFeatures, IOBluetooth.BluetoothHCISupportedFeatures()
-        )
+        self.assertEqual(v.supportedFeatures, IOBluetooth.BluetoothHCISupportedFeatures())
 
         v = IOBluetooth.BluetoothHCIEventReadExtendedFeaturesResults()
         self.assertEqual(v.connectionHandle, 0)
@@ -3060,9 +2876,7 @@ class TestBluetooth(TestCase):
         )
 
         self.assertTrue(
-            IOBluetooth.IS_REQUEST_PDU(
-                IOBluetooth.kBluetoothSDPPDUIDServiceSearchRequest
-            )
+            IOBluetooth.IS_REQUEST_PDU(IOBluetooth.kBluetoothSDPPDUIDServiceSearchRequest)
         )
         self.assertTrue(
             IOBluetooth.IS_RESPONSE_PDU(

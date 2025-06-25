@@ -12,9 +12,7 @@ class TestQCCompositionPickerView(TestCase):
     @min_os_level("10.5")
     def testMethods(self):
         self.assertResultIsBOOL(Quartz.QCCompositionPickerView.showsCompositionNames)
-        self.assertArgIsBOOL(
-            Quartz.QCCompositionPickerView.setShowsCompositionNames_, 0
-        )
+        self.assertArgIsBOOL(Quartz.QCCompositionPickerView.setShowsCompositionNames_, 0)
 
         self.assertResultIsBOOL(Quartz.QCCompositionPickerView.allowsEmptySelection)
         self.assertArgIsBOOL(Quartz.QCCompositionPickerView.setAllowsEmptySelection_, 0)

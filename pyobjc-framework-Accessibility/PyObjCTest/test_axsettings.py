@@ -35,8 +35,6 @@ class TestAXSettings(TestCase):
     @min_os_level("15.0")
     def test_functions15_0(self):
         self.assertResultIsBOOL(Accessibility.AXAssistiveAccessEnabled)
-        self.assertResultIsBOOL(
-            Accessibility.AXPrefersNonBlinkingTextInsertionIndicator
-        )
+        self.assertResultIsBOOL(Accessibility.AXPrefersNonBlinkingTextInsertionIndicator)
 
         self.assertArgIsBlock(Accessibility.AXOpenSettingsFeature, 1, b"v@")

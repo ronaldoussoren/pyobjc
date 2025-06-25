@@ -8,9 +8,7 @@ class TestPHPicker(TestCase):
         self.assertEqual(
             PhotosUI.PHPickerConfigurationAssetRepresentationModeAutomatic, 0
         )
-        self.assertEqual(
-            PhotosUI.PHPickerConfigurationAssetRepresentationModeCurrent, 1
-        )
+        self.assertEqual(PhotosUI.PHPickerConfigurationAssetRepresentationModeCurrent, 1)
         self.assertEqual(
             PhotosUI.PHPickerConfigurationAssetRepresentationModeCompatible, 2
         )

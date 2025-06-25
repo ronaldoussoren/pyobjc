@@ -56,9 +56,7 @@ class TestConnectionReport(TestCase):
             nw_report_protocol_enumerator_t,
         )
 
-        self.assertResultIsRetained(
-            Network.nw_connection_create_new_data_transfer_report
-        )
+        self.assertResultIsRetained(Network.nw_connection_create_new_data_transfer_report)
 
         Network.nw_data_transfer_report_get_state
 
@@ -90,12 +88,8 @@ class TestConnectionReport(TestCase):
         Network.nw_resolution_report_get_source
         Network.nw_resolution_report_get_milliseconds
         Network.nw_resolution_report_get_endpoint_count
-        self.assertResultIsRetained(
-            Network.nw_resolution_report_copy_successful_endpoint
-        )
-        self.assertResultIsRetained(
-            Network.nw_resolution_report_copy_preferred_endpoint
-        )
+        self.assertResultIsRetained(Network.nw_resolution_report_copy_successful_endpoint)
+        self.assertResultIsRetained(Network.nw_resolution_report_copy_preferred_endpoint)
         self.assertResultIsRetained(Network.nw_resolution_report_get_protocol)
 
         nw_report_resolution_report_enumerator_t = b"B@"

@@ -43,9 +43,7 @@ class TestCKFetchDatabaseChangesOperation(TestCase):
             b"v@Z@",
         )
 
-        self.assertResultIsBOOL(
-            CloudKit.CKFetchDatabaseChangesOperation.fetchAllChanges
-        )
+        self.assertResultIsBOOL(CloudKit.CKFetchDatabaseChangesOperation.fetchAllChanges)
         self.assertArgIsBOOL(
             CloudKit.CKFetchDatabaseChangesOperation.setFetchAllChanges_, 0
         )

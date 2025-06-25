@@ -22,9 +22,7 @@ class TestCMIOExtensionDevice(TestCase):
             b"o^@",
         )
 
-        self.assertResultIsBOOL(
-            TestCMIOExtensionDeviceHelper.setDeviceProperties_error_
-        )
+        self.assertResultIsBOOL(TestCMIOExtensionDeviceHelper.setDeviceProperties_error_)
         self.assertArgHasType(
             TestCMIOExtensionDeviceHelper.setDeviceProperties_error_, 1, b"o^@"
         )

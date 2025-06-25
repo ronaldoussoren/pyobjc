@@ -86,9 +86,7 @@ class TestCTFontDescriptor(TestCase):
         self.assertIsInstance(CoreText.kCTFontDescriptorMatchingResult, str)
         self.assertIsInstance(CoreText.kCTFontDescriptorMatchingPercentage, str)
         self.assertIsInstance(CoreText.kCTFontDescriptorMatchingCurrentAssetSize, str)
-        self.assertIsInstance(
-            CoreText.kCTFontDescriptorMatchingTotalDownloadedSize, str
-        )
+        self.assertIsInstance(CoreText.kCTFontDescriptorMatchingTotalDownloadedSize, str)
         self.assertIsInstance(CoreText.kCTFontDescriptorMatchingTotalAssetSize, str)
         self.assertIsInstance(CoreText.kCTFontDescriptorMatchingError, str)
 

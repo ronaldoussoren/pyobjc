@@ -374,9 +374,7 @@ def myCreateThumbnailFromImageSource(url):
 
 def imageHasFloatingPointSamples(image):
     if hasattr(Quartz, "CGImageGetBitmapInfo"):
-        return (
-            Quartz.kCGBitmapFloatComponents & Quartz.CGImageGetBitmapInfo(image)
-        ) != 0
+        return (Quartz.kCGBitmapFloatComponents & Quartz.CGImageGetBitmapInfo(image)) != 0
     return False
 
 
@@ -563,9 +561,7 @@ def createCGImageWithQuickTimeFromURL(url):
     imageRef = None
 
     err = 0
-    result, dataRef, dataRefType = Quartz.QTNewDataReferenceFromCFURL(
-        url, 0, None, None
-    )
+    result, dataRef, dataRefType = Quartz.QTNewDataReferenceFromCFURL(url, 0, None, None)
     if dataRef is not None:
         err, gi = Quartz.GetGraphicsImporterForDataRefWithFlags(
             dataRef, dataRefType, None, 0
@@ -876,9 +872,7 @@ def exportCGImageToJPEGFile(imageRef, url):
     # This doesn't actually work due to lame Python Quicktime bindings...
     return
 
-    result, dataRef, dataRefType = Quartz.QTNewDataReferenceFromCFURL(
-        url, 0, None, None
-    )
+    result, dataRef, dataRefType = Quartz.QTNewDataReferenceFromCFURL(url, 0, None, None)
     if result == 0:
         result, graphicsExporter = Quartz.OpenADefaultComponent(
             Quartz.GraphicsExporterComponentType, Quartz.kQTFileTypeJPEG

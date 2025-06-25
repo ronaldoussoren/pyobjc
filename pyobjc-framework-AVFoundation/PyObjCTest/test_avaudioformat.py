@@ -16,9 +16,7 @@ class TestAVAudioFormat(TestCase):
 
     @min_os_level("10.10")
     def testMethods(self):
-        self.assertArgIsIn(
-            AVFoundation.AVAudioFormat.initWithStreamDescription_, 0
-        )  # noqa: B950
+        self.assertArgIsIn(AVFoundation.AVAudioFormat.initWithStreamDescription_, 0)  # noqa: B950
         self.assertArgIsIn(
             AVFoundation.AVAudioFormat.initWithStreamDescription_channelLayout_,
             0,  # noqa: B950
@@ -39,6 +37,4 @@ class TestAVAudioFormat(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioFormat.isStandard)
         self.assertResultIsBOOL(AVFoundation.AVAudioFormat.isInterleaved)
 
-        self.assertResultIsFixedSize(
-            AVFoundation.AVAudioFormat.streamDescription, 1
-        )  # noqa: B950
+        self.assertResultIsFixedSize(AVFoundation.AVAudioFormat.streamDescription, 1)  # noqa: B950

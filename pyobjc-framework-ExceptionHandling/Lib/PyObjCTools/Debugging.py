@@ -163,9 +163,7 @@ class PyObjCDebuggingDelegate(NSObject):
             else:
                 return False
         except:  # noqa: B001, E722
-            print(
-                "*** Exception occurred during exception handler ***", file=sys.stderr
-            )
+            print("*** Exception occurred during exception handler ***", file=sys.stderr)
             traceback.print_exc(sys.stderr)
             return True
 

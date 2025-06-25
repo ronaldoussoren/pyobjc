@@ -25,7 +25,6 @@ class TestUnicodeProxy(TestCase):
         self.assertEqual(o.stringByAppendingString_("foo %d"), "hellofoo %d")
 
     def test_wide_string(self):
-
         # UCS4 + single surrogate: cannot encode to UTF-8
         strval = "\U000fffff\udbbb"
 
@@ -90,16 +89,12 @@ class TestUnicodeProxy(TestCase):
     def test_correctsurrogate(self):
         o = OC_StringInt.getCorrectPair()
         self.assertEqual(len(o), 1)
-        self.assertEqual(
-            ord(o), 0x10000 + ((0xDB0B & 0x03FF) << 10) + (0xDC0B & 0x03FF)
-        )
+        self.assertEqual(ord(o), 0x10000 + ((0xDB0B & 0x03FF) << 10) + (0xDC0B & 0x03FF))
 
     def test_extremepair(self):
         o = OC_StringInt.getExtremePair()
         self.assertEqual(len(o), 1)
-        self.assertEqual(
-            ord(o), 0x10000 + ((0xDBFF & 0x03FF) << 10) + (0xDFFF & 0x03FF)
-        )
+        self.assertEqual(ord(o), 0x10000 + ((0xDBFF & 0x03FF) << 10) + (0xDFFF & 0x03FF))
 
     def test_raising_conversion(self):
         with self.assertRaisesRegex(objc.error, "SomeException - Some Reason"):

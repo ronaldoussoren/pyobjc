@@ -75,15 +75,9 @@ class TestCIImage(TestCase):
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(
-            Quartz.kCIImageAuxiliarySemanticSegmentationSkinMatte, str
-        )
-        self.assertIsInstance(
-            Quartz.kCIImageAuxiliarySemanticSegmentationHairMatte, str
-        )
-        self.assertIsInstance(
-            Quartz.kCIImageAuxiliarySemanticSegmentationTeethMatte, str
-        )
+        self.assertIsInstance(Quartz.kCIImageAuxiliarySemanticSegmentationSkinMatte, str)
+        self.assertIsInstance(Quartz.kCIImageAuxiliarySemanticSegmentationHairMatte, str)
+        self.assertIsInstance(Quartz.kCIImageAuxiliarySemanticSegmentationTeethMatte, str)
 
     @min_os_level("11.0")
     def testConstants11_0(self):
@@ -112,9 +106,7 @@ class TestCIImage(TestCase):
         self.assertIsInstance(Quartz.kCIImageContentHeadroom, str)
 
     def testMethods(self):
-        self.assertArgIsBOOL(
-            Quartz.CIImage.imageWithTexture_size_flipped_colorSpace_, 2
-        )
+        self.assertArgIsBOOL(Quartz.CIImage.imageWithTexture_size_flipped_colorSpace_, 2)
         self.assertArgIsBOOL(Quartz.CIImage.initWithTexture_size_flipped_colorSpace_, 2)
 
     @min_os_level("10.9")

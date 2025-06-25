@@ -5,6 +5,7 @@ from a console application.
 
 BUNDLES ARE RECOMMENDED, USE THIS AT YOUR OWN RISK!!
 """
+
 import os
 import sys
 
@@ -38,9 +39,7 @@ def WMEnable(name="Python"):
     if mainBundle.bundlePath() == bPath:
         return True
     bndl = NSBundle.bundleWithPath_(
-        objc.pathForFramework(
-            "/System/Library/Frameworks/ApplicationServices.framework"
-        )
+        objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework")
     )
     if bndl is None:
         print("ApplicationServices missing", file=sys.stderr)

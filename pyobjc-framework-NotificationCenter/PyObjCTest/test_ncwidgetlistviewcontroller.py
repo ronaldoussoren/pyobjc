@@ -36,9 +36,7 @@ class TestNCWidgetListViewController(TestCase):
         )
 
         self.assertResultIsBOOL(NotificationCenter.NCWidgetListViewController.editing)
-        self.assertArgIsBOOL(
-            NotificationCenter.NCWidgetListViewController.setEditing_, 0
-        )
+        self.assertArgIsBOOL(NotificationCenter.NCWidgetListViewController.setEditing_, 0)
 
         self.assertResultIsBOOL(
             NotificationCenter.NCWidgetListViewController.showsAddButtonWhenEditing

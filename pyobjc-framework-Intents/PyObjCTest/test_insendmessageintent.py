@@ -24,9 +24,7 @@ class TestINSendMessageIntentHelper(Intents.NSObject):
     def resolveSenderForSendMessage_withCompletion_(self, intent, completion):
         pass
 
-    def resolveSpeakableGroupNameForSendMessage_withCompletion_(
-        self, intent, completion
-    ):
+    def resolveSpeakableGroupNameForSendMessage_withCompletion_(self, intent, completion):
         pass
 
     def resolveRecipientsForSendMessage_completion_(self, intent, completion):

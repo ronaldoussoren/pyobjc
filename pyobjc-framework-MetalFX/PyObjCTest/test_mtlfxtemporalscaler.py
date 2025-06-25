@@ -120,12 +120,8 @@ class TestMTLFXTemporalScaler(TestCase):
             TestMTLFXTemporalScalerHelper.setInputContentHeight_, 0, objc._C_NSUInteger
         )
 
-        self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.jitterOffsetX, objc._C_FLT
-        )
-        self.assertResultHasType(
-            TestMTLFXTemporalScalerHelper.jitterOffsetY, objc._C_FLT
-        )
+        self.assertResultHasType(TestMTLFXTemporalScalerHelper.jitterOffsetX, objc._C_FLT)
+        self.assertResultHasType(TestMTLFXTemporalScalerHelper.jitterOffsetY, objc._C_FLT)
         self.assertArgHasType(
             TestMTLFXTemporalScalerHelper.setJitterOffsetX_, 0, objc._C_FLT
         )

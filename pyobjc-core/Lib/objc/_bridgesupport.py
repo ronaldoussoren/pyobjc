@@ -594,7 +594,11 @@ _libraries = []
 
 
 def parseBridgeSupport(
-    xmldata, globals, frameworkName, dylib_path=None, inlineTab=None  # noqa: A002
+    xmldata,
+    globals,
+    frameworkName,
+    dylib_path=None,
+    inlineTab=None,  # noqa: A002
 ):
     warnings.warn(
         "This function will be removed in PyObjC 10, switch to the modern metadata system",
@@ -789,9 +793,7 @@ def initFrameworkWrapper(
 
         # Check if we have additional metadata bundled with PyObjC
         if resource_exists(frameworkResourceName, "PyObjCOverrides.bridgesupport"):
-            data = resource_string(
-                frameworkResourceName, "PyObjCOverrides.bridgesupport"
-            )
+            data = resource_string(frameworkResourceName, "PyObjCOverrides.bridgesupport")
             _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
         return bundle

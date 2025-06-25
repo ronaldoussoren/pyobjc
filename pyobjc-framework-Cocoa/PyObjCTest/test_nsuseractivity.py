@@ -18,9 +18,7 @@ class TestNSUserActivity(TestCase):
         self.assertArgIsBOOL(Foundation.NSUserActivity.setNeedsSave_, 0)
 
         self.assertResultIsBOOL(Foundation.NSUserActivity.supportsContinuationStreams)
-        self.assertArgIsBOOL(
-            Foundation.NSUserActivity.setSupportsContinuationStreams_, 0
-        )
+        self.assertArgIsBOOL(Foundation.NSUserActivity.setSupportsContinuationStreams_, 0)
 
         self.assertArgIsBlock(
             Foundation.NSUserActivity.getContinuationStreamsWithCompletionHandler_,

@@ -165,9 +165,7 @@ class TestNSKeyValueBinding(TestCase):
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertResultIsBOOL(
-            TestNSKeyValueBindingHelper.commitEditingAndReturnError_
-        )
+        self.assertResultIsBOOL(TestNSKeyValueBindingHelper.commitEditingAndReturnError_)
         self.assertArgIsOut(TestNSKeyValueBindingHelper.commitEditingAndReturnError_, 0)
 
     @min_sdk_level("10.14")

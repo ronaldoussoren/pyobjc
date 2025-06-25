@@ -20,9 +20,7 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(
             AVFoundation.AVVideoPixelAspectRatioHorizontalSpacingKey, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVVideoPixelAspectRatioVerticalSpacingKey, str
-        )
+        self.assertIsInstance(AVFoundation.AVVideoPixelAspectRatioVerticalSpacingKey, str)
         self.assertIsInstance(AVFoundation.AVVideoCleanApertureKey, str)
         self.assertIsInstance(AVFoundation.AVVideoCleanApertureWidthKey, str)
         self.assertIsInstance(AVFoundation.AVVideoCleanApertureHeightKey, str)
@@ -63,9 +61,7 @@ class TestAVVideoSettings(TestCase):
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(
-            AVFoundation.AVVideoProfileLevelH264BaselineAutoLevel, str
-        )
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264BaselineAutoLevel, str)
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264MainAutoLevel, str)
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264High40, str)
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264High41, str)
@@ -95,9 +91,7 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes4444, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422, str)
         self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_ITU_R_2020, str)
-        self.assertIsInstance(
-            AVFoundation.AVVideoTransferFunction_SMPTE_ST_2084_PQ, str
-        )
+        self.assertIsInstance(AVFoundation.AVVideoTransferFunction_SMPTE_ST_2084_PQ, str)
         self.assertIsInstance(AVFoundation.AVVideoTransferFunction_ITU_R_2100_HLG, str)
         self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_ITU_R_2020, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecHEVC, str)

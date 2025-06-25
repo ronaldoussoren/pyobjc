@@ -12,9 +12,7 @@ class TestINStartAudioCallIntentHelper(Intents.NSObject):
     def resolveContactsForStartAudioCall_withCompletion_(self, intent, completion):
         pass
 
-    def resolveDestinationTypeForStartAudioCall_withCompletion_(
-        self, intent, completion
-    ):
+    def resolveDestinationTypeForStartAudioCall_withCompletion_(self, intent, completion):
         pass
 
 

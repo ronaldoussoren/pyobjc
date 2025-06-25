@@ -360,9 +360,7 @@ def createFrameworkDirAndGetattr(
                     return d[name]
 
                 if inline_list is not None:
-                    objc.loadFunctionList(
-                        inline_list, d, func_list, skip_undefined=True
-                    )
+                    objc.loadFunctionList(inline_list, d, func_list, skip_undefined=True)
                     if name in d:
                         return d[name]
 

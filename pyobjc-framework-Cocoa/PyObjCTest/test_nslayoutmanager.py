@@ -509,9 +509,7 @@ class TestNSLayoutManager(TestCase):
             AppKit.NSLayoutManager.setDrawsOutsideLineFragment_forGlyphAtIndex_, 0
         )
 
-        self.assertResultIsBOOL(
-            AppKit.NSLayoutManager.notShownAttributeForGlyphAtIndex_
-        )
+        self.assertResultIsBOOL(AppKit.NSLayoutManager.notShownAttributeForGlyphAtIndex_)
         self.assertResultIsBOOL(
             AppKit.NSLayoutManager.drawsOutsideLineFragmentForGlyphAtIndex_
         )

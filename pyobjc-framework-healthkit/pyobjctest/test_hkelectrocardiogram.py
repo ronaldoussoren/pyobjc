@@ -10,9 +10,7 @@ class TestHKElectrocardiogram(TestCase):
         self.assertIsEnumType(HealthKit.HKElectrocardiogramClassification)
         self.assertEqual(HealthKit.HKElectrocardiogramClassificationNotSet, 0)
         self.assertEqual(HealthKit.HKElectrocardiogramClassificationSinusRhythm, 1)
-        self.assertEqual(
-            HealthKit.HKElectrocardiogramClassificationAtrialFibrillation, 2
-        )
+        self.assertEqual(HealthKit.HKElectrocardiogramClassificationAtrialFibrillation, 2)
         self.assertEqual(
             HealthKit.HKElectrocardiogramClassificationInconclusiveLowHeartRate, 3
         )
@@ -22,9 +20,7 @@ class TestHKElectrocardiogram(TestCase):
         self.assertEqual(
             HealthKit.HKElectrocardiogramClassificationInconclusivePoorReading, 5
         )
-        self.assertEqual(
-            HealthKit.HKElectrocardiogramClassificationInconclusiveOther, 6
-        )
+        self.assertEqual(HealthKit.HKElectrocardiogramClassificationInconclusiveOther, 6)
         self.assertEqual(HealthKit.HKElectrocardiogramClassificationUnrecognized, 100)
 
         self.assertIsEnumType(HealthKit.HKElectrocardiogramSymptomsStatus)

@@ -27,15 +27,9 @@ class TestSecProtocolTypes(TestCase):
         self.assertEqual(
             Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, 0xC00A
         )
-        self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, 0xC012
-        )
-        self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA, 0xC013
-        )
-        self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA, 0xC014
-        )
+        self.assertEqual(Security.tls_ciphersuite_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, 0xC012)
+        self.assertEqual(Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA, 0xC013)
+        self.assertEqual(Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA, 0xC014)
         self.assertEqual(
             Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, 0xC023
         )

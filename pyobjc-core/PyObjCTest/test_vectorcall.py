@@ -16,9 +16,7 @@ try:
     import Quartz  # noqa: F401
 except ImportError:
     CGColorRef = objc.registerCFSignature("CGColorRef", b"^{CGColor=}", 0)
-    CGColorSpaceRef = objc.registerCFSignature(
-        "CGColorSpaceRef", b"^{CGColorSpace=}", 0
-    )
+    CGColorSpaceRef = objc.registerCFSignature("CGColorSpaceRef", b"^{CGColorSpace=}", 0)
 
 from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
 
@@ -39,35 +37,23 @@ NoObjCValueObject = NoObjCClass()
 # Register full signatures for the helper methods
 
 objc.registerMetaDataForSelector(b"NSObject", b"v16C", {"full_signature": b"<16C>@:"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv16C", {"full_signature": b"<16C>@:"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv16C", {"full_signature": b"<16C>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"v2d", {"full_signature": b"<2d>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"clsv2d", {"full_signature": b"<2d>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"v2dd:", {"full_signature": b"<2d>@:d"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv2dd:", {"full_signature": b"<2d>@:d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv2dd:", {"full_signature": b"<2d>@:d"})
 objc.registerMetaDataForSelector(b"NSObject", b"v2f", {"full_signature": b"<2f>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"clsv2f", {"full_signature": b"<2f>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"v2fQ:", {"full_signature": b"<2f>@:Q"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv2fQ:", {"full_signature": b"<2f>@:Q"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv2fQ:", {"full_signature": b"<2f>@:Q"})
 objc.registerMetaDataForSelector(b"NSObject", b"v2fd:", {"full_signature": b"<2f>@:d"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv2fd:", {"full_signature": b"<2f>@:d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv2fd:", {"full_signature": b"<2f>@:d"})
 objc.registerMetaDataForSelector(b"NSObject", b"v2fq:", {"full_signature": b"<2f>@:q"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv2fq:", {"full_signature": b"<2f>@:q"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv2fq:", {"full_signature": b"<2f>@:q"})
 objc.registerMetaDataForSelector(b"NSObject", b"v2i", {"full_signature": b"<2i>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"clsv2i", {"full_signature": b"<2i>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"v3dd:", {"full_signature": b"<3d>@:d"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv3dd:", {"full_signature": b"<3d>@:d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv3dd:", {"full_signature": b"<3d>@:d"})
 objc.registerMetaDataForSelector(b"NSObject", b"v3f", {"full_signature": b"<3f>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"clsv3f", {"full_signature": b"<3f>@:"})
 objc.registerMetaDataForSelector(
@@ -95,23 +81,15 @@ objc.registerMetaDataForSelector(
     b"NSObject", b"clsv3fv4i:", {"full_signature": b"<3f>@:<4i>"}
 )
 objc.registerMetaDataForSelector(b"NSObject", b"v3fQ:", {"full_signature": b"<3f>@:Q"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv3fQ:", {"full_signature": b"<3f>@:Q"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv3fQ:", {"full_signature": b"<3f>@:Q"})
 objc.registerMetaDataForSelector(b"NSObject", b"v3fd:", {"full_signature": b"<3f>@:d"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv3fd:", {"full_signature": b"<3f>@:d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv3fd:", {"full_signature": b"<3f>@:d"})
 objc.registerMetaDataForSelector(b"NSObject", b"v4dd:", {"full_signature": b"<4d>@:d"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv4dd:", {"full_signature": b"<4d>@:d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv4dd:", {"full_signature": b"<4d>@:d"})
 objc.registerMetaDataForSelector(b"NSObject", b"v4f", {"full_signature": b"<4f>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"clsv4f", {"full_signature": b"<4f>@:"})
 objc.registerMetaDataForSelector(b"NSObject", b"v4fd:", {"full_signature": b"<4f>@:d"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsv4fd:", {"full_signature": b"<4f>@:d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsv4fd:", {"full_signature": b"<4f>@:d"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"v4iv3f:", {"full_signature": b"<4i>@:<3f>"}
 )
@@ -519,47 +497,29 @@ objc.registerMetaDataForSelector(
     {"full_signature": b"^{CGColor=}@:<3f>^{CGColorSpace=}"},
 )
 objc.registerMetaDataForSelector(b"NSObject", b"fv2f:", {"full_signature": b"f@:<2f>"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsfv2f:", {"full_signature": b"f@:<2f>"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsfv2f:", {"full_signature": b"f@:<2f>"})
 objc.registerMetaDataForSelector(b"NSObject", b"fv2i:", {"full_signature": b"f@:<2i>"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsfv2i:", {"full_signature": b"f@:<2i>"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsfv2i:", {"full_signature": b"f@:<2i>"})
 objc.registerMetaDataForSelector(b"NSObject", b"vv2d:", {"full_signature": b"v@:<2d>"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvv2d:", {"full_signature": b"v@:<2d>"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vv2d:d:", {"full_signature": b"v@:<2d>d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsvv2d:", {"full_signature": b"v@:<2d>"})
+objc.registerMetaDataForSelector(b"NSObject", b"vv2d:d:", {"full_signature": b"v@:<2d>d"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvv2d:d:", {"full_signature": b"v@:<2d>d"}
 )
 objc.registerMetaDataForSelector(b"NSObject", b"vv2f:", {"full_signature": b"v@:<2f>"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvv2f:", {"full_signature": b"v@:<2f>"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vv2f:d:", {"full_signature": b"v@:<2f>d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsvv2f:", {"full_signature": b"v@:<2f>"})
+objc.registerMetaDataForSelector(b"NSObject", b"vv2f:d:", {"full_signature": b"v@:<2f>d"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvv2f:d:", {"full_signature": b"v@:<2f>d"}
 )
 objc.registerMetaDataForSelector(b"NSObject", b"vv3d:", {"full_signature": b"v@:<3d>"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvv3d:", {"full_signature": b"v@:<3d>"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vv3d:d:", {"full_signature": b"v@:<3d>d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsvv3d:", {"full_signature": b"v@:<3d>"})
+objc.registerMetaDataForSelector(b"NSObject", b"vv3d:d:", {"full_signature": b"v@:<3d>d"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvv3d:d:", {"full_signature": b"v@:<3d>d"}
 )
 objc.registerMetaDataForSelector(b"NSObject", b"vv3f:", {"full_signature": b"v@:<3f>"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvv3f:", {"full_signature": b"v@:<3f>"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsvv3f:", {"full_signature": b"v@:<3f>"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"vv3f:v3f:", {"full_signature": b"v@:<3f><3f>"}
 )
@@ -572,32 +532,22 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvv3f:v3f:v3f:", {"full_signature": b"v@:<3f><3f><3f>"}
 )
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vv3f:d:", {"full_signature": b"v@:<3f>d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"vv3f:d:", {"full_signature": b"v@:<3f>d"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvv3f:d:", {"full_signature": b"v@:<3f>d"}
 )
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vv4d:d:", {"full_signature": b"v@:<4d>d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"vv4d:d:", {"full_signature": b"v@:<4d>d"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvv4d:d:", {"full_signature": b"v@:<4d>d"}
 )
 objc.registerMetaDataForSelector(b"NSObject", b"vv4f:", {"full_signature": b"v@:<4f>"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvv4f:", {"full_signature": b"v@:<4f>"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vv4f:d:", {"full_signature": b"v@:<4f>d"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsvv4f:", {"full_signature": b"v@:<4f>"})
+objc.registerMetaDataForSelector(b"NSObject", b"vv4f:d:", {"full_signature": b"v@:<4f>d"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvv4f:d:", {"full_signature": b"v@:<4f>d"}
 )
 objc.registerMetaDataForSelector(b"NSObject", b"vv4i:", {"full_signature": b"v@:<4i>"})
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvv4i:", {"full_signature": b"v@:<4i>"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"clsvv4i:", {"full_signature": b"v@:<4i>"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"vid:v2f:v2f:", {"full_signature": b"v@:@<2f><2f>"}
 )
@@ -610,9 +560,7 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvid:v2f:v2f:q:", {"full_signature": b"v@:@<2f><2f>q"}
 )
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vf:v2i:", {"full_signature": b"v@:f<2i>"}
-)
+objc.registerMetaDataForSelector(b"NSObject", b"vf:v2i:", {"full_signature": b"v@:f<2i>"})
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvf:v2i:", {"full_signature": b"v@:f<2i>"}
 )
@@ -10094,9 +10042,7 @@ class TestVectorCall(TestCase):
         caller = oc.idv2f_v2f_
 
         # Valid call
-        rv = caller(
-            objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
-        )
+        rv = caller(objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -10148,9 +10094,7 @@ class TestVectorCall(TestCase):
         caller = oc.clsidv2f_v2f_
 
         # Valid call
-        rv = caller(
-            objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
-        )
+        rv = caller(objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -10204,9 +10148,7 @@ class TestVectorCall(TestCase):
         caller = partial(imp, oc)
 
         # Valid call
-        rv = caller(
-            objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
-        )
+        rv = caller(objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -10241,9 +10183,7 @@ class TestVectorCall(TestCase):
 
         # Call with invalid type for self
         with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42, objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
-            )
+            imp(42, objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
@@ -10274,9 +10214,7 @@ class TestVectorCall(TestCase):
         caller = partial(imp, oc)
 
         # Valid call
-        rv = caller(
-            objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
-        )
+        rv = caller(objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
         self.assertEqual(rv, "hello")
 
         # Valid call through instance
@@ -10329,9 +10267,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(
             TypeError, "Need Objective-C object or class as self"
         ):
-            imp(
-                42, objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
-            )
+            imp(42, objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
 
     def test_imp_idv2f_v2f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -14450,9 +14386,7 @@ class TestVectorCall(TestCase):
             caller(None, objc.simd.vector_uint2(0, 1), -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello"
-            )
+            caller(objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -14540,9 +14474,7 @@ class TestVectorCall(TestCase):
             caller(None, objc.simd.vector_uint2(0, 1), -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello"
-            )
+            caller(objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -14632,9 +14564,7 @@ class TestVectorCall(TestCase):
             caller(None, objc.simd.vector_uint2(0, 1), -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello"
-            )
+            caller(objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -14764,9 +14694,7 @@ class TestVectorCall(TestCase):
             caller(None, objc.simd.vector_uint2(0, 1), -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello"
-            )
+            caller(objc.simd.vector_float3(0.0, 1.5, 3.0), None, -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -14928,9 +14856,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                None, objc.simd.vector_uint3(0, 1, 2), False, -17592186044416, "hello"
-            )
+            caller(None, objc.simd.vector_uint3(0, 1, 2), False, -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -15041,9 +14967,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                None, objc.simd.vector_uint3(0, 1, 2), False, -17592186044416, "hello"
-            )
+            caller(None, objc.simd.vector_uint3(0, 1, 2), False, -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -15156,9 +15080,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                None, objc.simd.vector_uint3(0, 1, 2), False, -17592186044416, "hello"
-            )
+            caller(None, objc.simd.vector_uint3(0, 1, 2), False, -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -15315,9 +15237,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                None, objc.simd.vector_uint3(0, 1, 2), False, -17592186044416, "hello"
-            )
+            caller(None, objc.simd.vector_uint3(0, 1, 2), False, -17592186044416, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -15503,9 +15423,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                None, objc.simd.vector_uint3(0, 1, 2), -17592186044416, False, "hello"
-            )
+            caller(None, objc.simd.vector_uint3(0, 1, 2), -17592186044416, False, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -15616,9 +15534,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                None, objc.simd.vector_uint3(0, 1, 2), -17592186044416, False, "hello"
-            )
+            caller(None, objc.simd.vector_uint3(0, 1, 2), -17592186044416, False, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -15731,9 +15647,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                None, objc.simd.vector_uint3(0, 1, 2), -17592186044416, False, "hello"
-            )
+            caller(None, objc.simd.vector_uint3(0, 1, 2), -17592186044416, False, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -15890,9 +15804,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                None, objc.simd.vector_uint3(0, 1, 2), -17592186044416, False, "hello"
-            )
+            caller(None, objc.simd.vector_uint3(0, 1, 2), -17592186044416, False, "hello")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -17428,9 +17340,7 @@ class TestVectorCall(TestCase):
         value.argvalues = 1
         result = OC_VectorCallInvoke.idv4fOn_(value)
         self.assertEqual(result, "hello")
-        self.assertEqual(
-            value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
-        )
+        self.assertEqual(value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),))
 
         # Test raising an exception
         value.shouldRaise = True
@@ -17452,9 +17362,7 @@ class TestVectorCall(TestCase):
         value.argvalues = 1
         result = OC_VectorCallInvoke.idv4fOn_(value)
         self.assertEqual(result, "hello")
-        self.assertEqual(
-            value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
-        )
+        self.assertEqual(value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),))
 
         # Test raising an exception
         value.shouldRaise = True
@@ -19222,14 +19130,10 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1), 2500000000.0
-            )
+            caller(NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                "hello", NoObjCValueObject, objc.simd.vector_int2(0, 1), 2500000000.0
-            )
+            caller("hello", NoObjCValueObject, objc.simd.vector_int2(0, 1), 2500000000.0)
 
         with self.assertRaises((TypeError, ValueError)):
             caller("hello", "hello", None, 2500000000.0)
@@ -19284,14 +19188,10 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1), 2500000000.0
-            )
+            caller(NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                "hello", NoObjCValueObject, objc.simd.vector_int2(0, 1), 2500000000.0
-            )
+            caller("hello", NoObjCValueObject, objc.simd.vector_int2(0, 1), 2500000000.0)
 
         with self.assertRaises((TypeError, ValueError)):
             caller("hello", "hello", None, 2500000000.0)
@@ -19348,14 +19248,10 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1), 2500000000.0
-            )
+            caller(NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                "hello", NoObjCValueObject, objc.simd.vector_int2(0, 1), 2500000000.0
-            )
+            caller("hello", NoObjCValueObject, objc.simd.vector_int2(0, 1), 2500000000.0)
 
         with self.assertRaises((TypeError, ValueError)):
             caller("hello", "hello", None, 2500000000.0)
@@ -19434,14 +19330,10 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1), 2500000000.0
-            )
+            caller(NoObjCValueObject, "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                "hello", NoObjCValueObject, objc.simd.vector_int2(0, 1), 2500000000.0
-            )
+            caller("hello", NoObjCValueObject, objc.simd.vector_int2(0, 1), 2500000000.0)
 
         with self.assertRaises((TypeError, ValueError)):
             caller("hello", "hello", None, 2500000000.0)
@@ -20039,9 +19931,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(rv, "hello")
 
         # Valid call through instance
-        rv = imp(
-            oc_inst, "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0)
-        )
+        rv = imp(oc_inst, "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
         self.assertEqual(rv, "hello")
 
         # Valid call through meta
@@ -20170,9 +20060,7 @@ class TestVectorCall(TestCase):
         caller = oc.idid_Q_v4f_
 
         # Valid call
-        rv = caller(
-            "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-        )
+        rv = caller("hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -20234,9 +20122,7 @@ class TestVectorCall(TestCase):
         caller = oc.clsidid_Q_v4f_
 
         # Valid call
-        rv = caller(
-            "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-        )
+        rv = caller("hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -20300,9 +20186,7 @@ class TestVectorCall(TestCase):
         caller = partial(imp, oc)
 
         # Valid call
-        rv = caller(
-            "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-        )
+        rv = caller("hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -20346,9 +20230,7 @@ class TestVectorCall(TestCase):
 
         # Call with invalid type for self
         with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42, "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-            )
+            imp(42, "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
@@ -20381,9 +20263,7 @@ class TestVectorCall(TestCase):
         caller = partial(imp, oc)
 
         # Valid call
-        rv = caller(
-            "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-        )
+        rv = caller("hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
         self.assertEqual(rv, "hello")
 
         # Valid call through instance
@@ -20447,9 +20327,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(
             TypeError, "Need Objective-C object or class as self"
         ):
-            imp(
-                42, "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-            )
+            imp(42, "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_imp_idid_Q_v4f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -24678,26 +24556,18 @@ class TestVectorCall(TestCase):
     def test_clsidid_MDLAxisAlignedBoundingBox_f_(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(
-            OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_.isClassMethod
-        )
+        self.assertTrue(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_.isClassMethod)
         # Verify that method is not an initializer
         self.assertIsNotInitializer(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, b"@"
-        )
-        self.assertArgHasType(
-            OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 0, b"@"
-        )
+        self.assertResultHasType(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 0, b"@")
         self.assertArgHasType(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_,
             1,
             b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
-        self.assertArgHasType(
-            OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 2, b"f"
-        )
+        self.assertArgHasType(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 2, b"f")
 
         # Create test object
         oc = OC_VectorCall
@@ -24923,26 +24793,18 @@ class TestVectorCall(TestCase):
     def test_clsidid_MDLAxisAlignedBoundingBox_f__imp(self):
         OC_VectorCall.clearRaise()
         # Verify method type
-        self.assertTrue(
-            OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_.isClassMethod
-        )
+        self.assertTrue(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_.isClassMethod)
         # Verify that method is not an initializer
         self.assertIsNotInitializer(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, b"@"
-        )
-        self.assertArgHasType(
-            OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 0, b"@"
-        )
+        self.assertResultHasType(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, b"@")
+        self.assertArgHasType(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 0, b"@")
         self.assertArgHasType(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_,
             1,
             b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
-        self.assertArgHasType(
-            OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 2, b"f"
-        )
+        self.assertArgHasType(OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_, 2, b"f")
 
         # Create test object
         oc = OC_VectorCall
@@ -26714,9 +26576,7 @@ class TestVectorCall(TestCase):
         caller = oc.idid_simdquatf_
 
         # Valid call
-        rv = caller(
-            "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        rv = caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -26752,9 +26612,7 @@ class TestVectorCall(TestCase):
         # Exception handling
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-            )
+            caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
     @min_os_level("10.13")
     def test_clsidid_simdquatf_(self):
@@ -26776,9 +26634,7 @@ class TestVectorCall(TestCase):
         caller = oc.clsidid_simdquatf_
 
         # Valid call
-        rv = caller(
-            "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        rv = caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -26814,9 +26670,7 @@ class TestVectorCall(TestCase):
         # Exception handling
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-            )
+            caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
     @min_os_level("10.13")
     def test_idid_simdquatf__imp(self):
@@ -26840,9 +26694,7 @@ class TestVectorCall(TestCase):
         caller = partial(imp, oc)
 
         # Valid call
-        rv = caller(
-            "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        rv = caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
         self.assertEqual(rv, "hello")
 
         stored = oc.storedvalue()
@@ -26878,9 +26730,7 @@ class TestVectorCall(TestCase):
         # Exception handling
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-            )
+            caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Call with invalid type for self
         with self.assertRaisesRegex(ValueError, "unrecognized selector"):
@@ -26920,9 +26770,7 @@ class TestVectorCall(TestCase):
         caller = partial(imp, oc)
 
         # Valid call
-        rv = caller(
-            "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        rv = caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
         self.assertEqual(rv, "hello")
 
         # Valid call through instance
@@ -26974,9 +26822,7 @@ class TestVectorCall(TestCase):
         # Exception handling
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller(
-                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-            )
+            caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Call with invalid type for self
         with self.assertRaisesRegex(
@@ -27085,9 +26931,7 @@ class TestVectorCall(TestCase):
 
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-            )
+            caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -27166,9 +27010,7 @@ class TestVectorCall(TestCase):
 
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-            )
+            caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -27247,9 +27089,7 @@ class TestVectorCall(TestCase):
 
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-            )
+            caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -27366,9 +27206,7 @@ class TestVectorCall(TestCase):
 
         # Too few arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-            )
+            caller("hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
@@ -27485,12 +27323,8 @@ class TestVectorCall(TestCase):
         self.assertIsNotInitializer(OC_VectorCall.idCGColor_CGColor_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, b"@")
-        self.assertArgHasType(
-            OC_VectorCall.idCGColor_CGColor_id_v2i_, 0, b"^{CGColor=}"
-        )
-        self.assertArgHasType(
-            OC_VectorCall.idCGColor_CGColor_id_v2i_, 1, b"^{CGColor=}"
-        )
+        self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 0, b"^{CGColor=}")
+        self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 1, b"^{CGColor=}")
         self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 2, b"@")
         self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 3, b"<2i>")
 
@@ -27609,12 +27443,8 @@ class TestVectorCall(TestCase):
         self.assertIsNotInitializer(OC_VectorCall.idCGColor_CGColor_id_v2i_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, b"@")
-        self.assertArgHasType(
-            OC_VectorCall.idCGColor_CGColor_id_v2i_, 0, b"^{CGColor=}"
-        )
-        self.assertArgHasType(
-            OC_VectorCall.idCGColor_CGColor_id_v2i_, 1, b"^{CGColor=}"
-        )
+        self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 0, b"^{CGColor=}")
+        self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 1, b"^{CGColor=}")
         self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 2, b"@")
         self.assertArgHasType(OC_VectorCall.idCGColor_CGColor_id_v2i_, 3, b"<2i>")
 
@@ -31071,9 +30901,7 @@ class TestVectorCall(TestCase):
             )
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                2500000000.0, "hello", None, -42, -17592186044416, "color!", "color!"
-            )
+            caller(2500000000.0, "hello", None, -42, -17592186044416, "color!", "color!")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -31232,9 +31060,7 @@ class TestVectorCall(TestCase):
             )
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                2500000000.0, "hello", None, -42, -17592186044416, "color!", "color!"
-            )
+            caller(2500000000.0, "hello", None, -42, -17592186044416, "color!", "color!")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -31393,9 +31219,7 @@ class TestVectorCall(TestCase):
             )
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                2500000000.0, "hello", None, -42, -17592186044416, "color!", "color!"
-            )
+            caller(2500000000.0, "hello", None, -42, -17592186044416, "color!", "color!")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -31608,9 +31432,7 @@ class TestVectorCall(TestCase):
             )
 
         with self.assertRaises((TypeError, ValueError)):
-            caller(
-                2500000000.0, "hello", None, -42, -17592186044416, "color!", "color!"
-            )
+            caller(2500000000.0, "hello", None, -42, -17592186044416, "color!", "color!")
 
         with self.assertRaises((TypeError, ValueError)):
             caller(
@@ -35905,9 +35727,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(rv, False)
 
         # Valid call through instance
-        rv = imp(
-            oc_inst, objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello"
-        )
+        rv = imp(oc_inst, objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
         self.assertEqual(rv, False)
 
         # Valid call through meta
@@ -36714,9 +36534,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False, "hello"
-            )
+            caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -36779,9 +36597,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False, "hello"
-            )
+            caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -36846,9 +36662,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False, "hello"
-            )
+            caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -36918,9 +36732,7 @@ class TestVectorCall(TestCase):
         self.assertEqual(rv, False)
 
         # Valid call through meta
-        rv = imp(
-            type(oc), objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False
-        )
+        rv = imp(type(oc), objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
         self.assertEqual(rv, False)
 
         stored = oc.storedvalue()
@@ -36938,9 +36750,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False, "hello"
-            )
+            caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -37404,9 +37214,7 @@ class TestVectorCall(TestCase):
             imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            imp(
-                NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!"
-            )
+            imp(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
     def test_clsCGColorv3f_CGColorSpace__imp(self):
         OC_VectorCall.clearRaise()
@@ -40876,9 +40684,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
-            )
+            caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -40926,9 +40732,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
-            )
+            caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -40978,9 +40782,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
-            )
+            caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -41035,9 +40837,7 @@ class TestVectorCall(TestCase):
         self.assertIs(rv, None)
 
         # Valid call through meta
-        rv = imp(
-            type(oc), objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0
-        )
+        rv = imp(type(oc), objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
         self.assertIs(rv, None)
 
         stored = oc.storedvalue()
@@ -41052,9 +40852,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
-            )
+            caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -41333,9 +41131,7 @@ class TestVectorCall(TestCase):
         value.argvalues = 1
         result = OC_VectorCallInvoke.vv4fOn_(value)
         self.assertIs(result, None)
-        self.assertEqual(
-            value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
-        )
+        self.assertEqual(value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),))
 
         # Test raising an exception
         value.shouldRaise = True
@@ -41357,9 +41153,7 @@ class TestVectorCall(TestCase):
         value.argvalues = 1
         result = OC_VectorCallInvoke.vv4fOn_(value)
         self.assertIs(result, None)
-        self.assertEqual(
-            value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),)
-        )
+        self.assertEqual(value.argvalues, (objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),))
 
         # Test raising an exception
         value.shouldRaise = True
@@ -41410,9 +41204,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
-            )
+            caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -41460,9 +41252,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
-            )
+            caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -41512,9 +41302,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
-            )
+            caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -41584,9 +41372,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello"
-            )
+            caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0, "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -44989,9 +44775,7 @@ class TestVectorCall(TestCase):
         self.assertIsNotInitializer(OC_VectorCall.vsimdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat2x2_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vsimdfloat2x2_, 0, b"{simd_float2x2=[2<2f>]}"
-        )
+        self.assertArgHasType(OC_VectorCall.vsimdfloat2x2_, 0, b"{simd_float2x2=[2<2f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -45127,9 +44911,7 @@ class TestVectorCall(TestCase):
         self.assertIsNotInitializer(OC_VectorCall.vsimdfloat2x2_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat2x2_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vsimdfloat2x2_, 0, b"{simd_float2x2=[2<2f>]}"
-        )
+        self.assertArgHasType(OC_VectorCall.vsimdfloat2x2_, 0, b"{simd_float2x2=[2<2f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -45389,9 +45171,7 @@ class TestVectorCall(TestCase):
         self.assertIsNotInitializer(OC_VectorCall.vsimdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat3x3_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vsimdfloat3x3_, 0, b"{simd_float3x3=[3<3f>]}"
-        )
+        self.assertArgHasType(OC_VectorCall.vsimdfloat3x3_, 0, b"{simd_float3x3=[3<3f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -45547,9 +45327,7 @@ class TestVectorCall(TestCase):
         self.assertIsNotInitializer(OC_VectorCall.vsimdfloat3x3_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat3x3_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vsimdfloat3x3_, 0, b"{simd_float3x3=[3<3f>]}"
-        )
+        self.assertArgHasType(OC_VectorCall.vsimdfloat3x3_, 0, b"{simd_float3x3=[3<3f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -45842,9 +45620,7 @@ class TestVectorCall(TestCase):
         self.assertIsNotInitializer(OC_VectorCall.vsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
-        )
+        self.assertArgHasType(OC_VectorCall.vsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -46008,9 +45784,7 @@ class TestVectorCall(TestCase):
         self.assertIsNotInitializer(OC_VectorCall.vsimdfloat4x4_)
         # Check that the signature is as expected
         self.assertResultHasType(OC_VectorCall.vsimdfloat4x4_, b"v")
-        self.assertArgHasType(
-            OC_VectorCall.vsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}"
-        )
+        self.assertArgHasType(OC_VectorCall.vsimdfloat4x4_, 0, b"{simd_float4x4=[4<4f>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -47284,9 +47058,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), "hello"
-            )
+            caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -47332,9 +47104,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), "hello"
-            )
+            caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -47382,9 +47152,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), "hello"
-            )
+            caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -47451,9 +47219,7 @@ class TestVectorCall(TestCase):
 
         # Too many arguments call
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller(
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), "hello"
-            )
+            caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)), "hello")
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
@@ -49389,9 +49155,7 @@ class TestVectorCall(TestCase):
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_,
             b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
-        self.assertArgHasType(
-            OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_, 0, b"<4i>"
-        )
+        self.assertArgHasType(OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_, 0, b"<4i>")
 
         # Create test object
         oc = OC_VectorCall
@@ -49506,9 +49270,7 @@ class TestVectorCall(TestCase):
             OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_,
             b"{MDLAxisAlignedBoundingBox=<3f><3f>}",
         )
-        self.assertArgHasType(
-            OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_, 0, b"<4i>"
-        )
+        self.assertArgHasType(OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_, 0, b"<4i>")
 
         # Create test object
         oc = OC_VectorCall
@@ -50795,9 +50557,7 @@ class TestVectorCall(TestCase):
         # Verify that method is not an initializer
         self.assertIsNotInitializer(OC_VectorCall.simddouble4x4)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.simddouble4x4, b"{simd_double4x4=[4<4d>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simddouble4x4, b"{simd_double4x4=[4<4d>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -50885,9 +50645,7 @@ class TestVectorCall(TestCase):
         # Verify that method is not an initializer
         self.assertIsNotInitializer(OC_VectorCall.simddouble4x4)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.simddouble4x4, b"{simd_double4x4=[4<4d>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simddouble4x4, b"{simd_double4x4=[4<4d>]}")
 
         # Create test object
         oc = OC_VectorCall.alloc().init()
@@ -52923,9 +52681,7 @@ class TestVectorCall(TestCase):
         # Verify that method is not an initializer
         self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4d_)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.simdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simdfloat4x4d_, b"{simd_float4x4=[4<4f>]}")
         self.assertArgHasType(OC_VectorCall.simdfloat4x4d_, 0, b"d")
 
         # Create test object
@@ -53033,9 +52789,7 @@ class TestVectorCall(TestCase):
         # Verify that method is not an initializer
         self.assertIsNotInitializer(OC_VectorCall.simdfloat4x4d_)
         # Check that the signature is as expected
-        self.assertResultHasType(
-            OC_VectorCall.simdfloat4x4d_, b"{simd_float4x4=[4<4f>]}"
-        )
+        self.assertResultHasType(OC_VectorCall.simdfloat4x4d_, b"{simd_float4x4=[4<4f>]}")
         self.assertArgHasType(OC_VectorCall.simdfloat4x4d_, 0, b"d")
 
         # Create test object
@@ -54208,9 +53962,7 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
@@ -54244,9 +53996,7 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
@@ -54282,9 +54032,7 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
@@ -54332,25 +54080,19 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller()
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Valid call through instance
         rv = imp(
             oc_inst,
         )
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Valid call through meta
         rv = imp(
             type(oc),
         )
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
@@ -54443,9 +54185,7 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
@@ -54489,9 +54229,7 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
@@ -54537,9 +54275,7 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))
@@ -54593,21 +54329,15 @@ class TestVectorCall(TestCase):
 
         # Valid call
         rv = caller(-557000000000.0)
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Valid call through instance
         rv = imp(oc_inst, -557000000000.0)
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         # Valid call through meta
         rv = imp(type(oc), -557000000000.0)
-        self.assertEqual(
-            rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-        )
+        self.assertEqual(rv, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
         stored = oc.storedvalue()
         self.assertIsInstance(stored, (list, tuple))

@@ -204,8 +204,7 @@ def processClassDict(
         instance_methods,
         class_methods,
         # Either __new__ in this class, or a custom new in a parent class
-        ("__new__" in class_dict)
-        or type(class_object.__new__) == type(lambda: 1),  # noqa: E721
+        ("__new__" in class_dict) or type(class_object.__new__) == type(lambda: 1),  # noqa: E721
     )
 
 
@@ -409,9 +408,7 @@ def transformAttribute(name, value, class_object, protocols):
         #
         # Assume this is meant to be a regular python method.
         if not isinstance(name, str):
-            raise TypeError(
-                f"method name is of type {type(name).__name__}, not a string"
-            )
+            raise TypeError(f"method name is of type {type(name).__name__}, not a string")
         if isclass:
             return classmethod(value)
         return value
@@ -532,12 +529,12 @@ def transformAttribute(name, value, class_object, protocols):
             if pos_default:
                 raise objc.BadPrototypeError(
                     f"{selname.decode()!r} expects {argcount} arguments, "
-                    f"{value!r} has between {pos-pos_default-1} and {pos-1} positional arguments"
+                    f"{value!r} has between {pos - pos_default - 1} and {pos - 1} positional arguments"
                 )
             else:
                 raise objc.BadPrototypeError(
                     f"{selname.decode()!r} expects {argcount} arguments, "
-                    f"{value!r} has {pos-1} positional arguments"
+                    f"{value!r} has {pos - 1} positional arguments"
                 )
 
     # XXX: This is needed because SomeClass.pyobjc_instanceMethods.hiddenSelector.isHidden

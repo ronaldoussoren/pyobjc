@@ -67,18 +67,16 @@ class KeyValueClass1Explicit(Foundation.NSObject):
 
     def addMultiple(self):
         self._values["multiple"] = KeyValueClass1Explicit.alloc().init()
-        self._values["multiple"]._values[
-            "level2"
-        ] = KeyValueClass1Explicit.alloc().init()
-        self._values["multiple"]._values["level2"]._values[
-            "level3"
-        ] = KeyValueClass1Explicit.alloc().init()
-        self._values["multiple"]._values["level2"]._values["level3"]._values[
-            "keyA"
-        ] = "hello"
-        self._values["multiple"]._values["level2"]._values["level3"]._values[
-            "keyB"
-        ] = "world"
+        self._values["multiple"]._values["level2"] = KeyValueClass1Explicit.alloc().init()
+        self._values["multiple"]._values["level2"]._values["level3"] = (
+            KeyValueClass1Explicit.alloc().init()
+        )
+        self._values["multiple"]._values["level2"]._values["level3"]._values["keyA"] = (
+            "hello"
+        )
+        self._values["multiple"]._values["level2"]._values["level3"]._values["keyB"] = (
+            "world"
+        )
 
     def valueForKey_(self, key):
         if key == "key1":
@@ -368,9 +366,7 @@ class PyKeyValueCoding(TestCase):
         )
         self.assertEqual(o.multiple.level2.level3.keyA, "KeyAValue")
 
-        STUB.setKeyValue_forObject_key_value_(
-            1, o, "multiple.level2.level3.keyB", 9.999
-        )
+        STUB.setKeyValue_forObject_key_value_(1, o, "multiple.level2.level3.keyB", 9.999)
         self.assertEqual(o.multiple.level2.level3.keyB, 9.999)
 
     if hasattr(Foundation.NSObject, "willChangeValueForKey_"):
@@ -589,9 +585,7 @@ class PyKeyValueCodingExplicit(TestCase):
             "KeyAValue",
         )
 
-        STUB.setKeyValue_forObject_key_value_(
-            1, o, "multiple.level2.level3.keyB", 9.999
-        )
+        STUB.setKeyValue_forObject_key_value_(1, o, "multiple.level2.level3.keyB", 9.999)
         self.assertEqual(
             o._values["multiple"]._values["level2"]._values["level3"]._values["keyB"],
             9.999,

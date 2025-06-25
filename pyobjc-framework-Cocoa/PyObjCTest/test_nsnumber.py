@@ -19,9 +19,7 @@ PLIST = b"""\
 \t<integer>1</integer>
 </dict>
 </plist>
-""".decode(
-    "latin1"
-)
+""".decode("latin1")
 
 
 def stripDocType(val):
@@ -71,9 +69,7 @@ class TestNSNumber(TestCase):
         # Foundation.NSNumber stores unsigned numbers as signed numbers
         # This is a bug in Cocoa... (RADAR #4007594), fixed in 10.5
         if sdkForPython() is not None and sdkForPython() < (10, 5):
-            self.assertEqual(
-                Foundation.NSNumber.numberWithUnsignedInt_(2**31), -(2**31)
-            )
+            self.assertEqual(Foundation.NSNumber.numberWithUnsignedInt_(2**31), -(2**31))
         else:
             self.assertEqual(Foundation.NSNumber.numberWithUnsignedInt_(2**31), (2**31))
 

@@ -5,12 +5,8 @@ import Quartz
 class TestCGWindow(TestCase):
     def testConstants(self):
         self.assertEqual(Quartz.kCGWindowIDCFNumberType, Quartz.kCFNumberSInt32Type)
-        self.assertEqual(
-            Quartz.kCGWindowSharingCFNumberType, Quartz.kCFNumberSInt32Type
-        )
-        self.assertEqual(
-            Quartz.kCGWindowBackingCFNumberType, Quartz.kCFNumberSInt32Type
-        )
+        self.assertEqual(Quartz.kCGWindowSharingCFNumberType, Quartz.kCFNumberSInt32Type)
+        self.assertEqual(Quartz.kCGWindowBackingCFNumberType, Quartz.kCFNumberSInt32Type)
         self.assertEqual(Quartz.kCGNullWindowID, 0)
         self.assertEqual(Quartz.kCGWindowSharingNone, 0)
         self.assertEqual(Quartz.kCGWindowSharingReadOnly, 1)
@@ -78,9 +74,7 @@ class TestCGWindow(TestCase):
             # function requires specific permissions on macOS 15
             self.assertIsInstance(v, Quartz.CGImageRef)
 
-        v = Quartz.CGWindowListCreateImageFromArray(
-            ((0, 0), (100, 100)), windowArray, 0
-        )
+        v = Quartz.CGWindowListCreateImageFromArray(((0, 0), (100, 100)), windowArray, 0)
         self.assertIsInstance(v, (Quartz.CGImageRef, type(None)))
 
     @min_os_level("11.0")

@@ -262,6 +262,4 @@ class TestNSWritingToolsCoordinator(TestCase):
 
     @min_os_level("15.2")
     def test_methods(self):
-        self.assertResultIsBOOL(
-            AppKit.NSWritingToolsCoordinator.isWritingToolsAvailable
-        )
+        self.assertResultIsBOOL(AppKit.NSWritingToolsCoordinator.isWritingToolsAvailable)

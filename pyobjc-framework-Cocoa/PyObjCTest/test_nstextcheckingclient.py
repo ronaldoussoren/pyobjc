@@ -87,7 +87,6 @@ class TestNSTextCheckingClientHelper(AppKit.NSObject):
 
 
 class TestNSTextCheckingClient(TestCase):
-
     def test_constants(self):
         self.assertIsEnumType(AppKit.NSTextInputTraitType)
         self.assertEqual(AppKit.NSTextInputTraitTypeDefault, 0)

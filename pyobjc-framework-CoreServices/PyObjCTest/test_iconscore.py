@@ -60,9 +60,7 @@ class TestIconsCore(TestCase):
         self.assertEqual(
             CoreServices.floppyIconResource, CoreServices.kFloppyIconResource
         )
-        self.assertEqual(
-            CoreServices.trashIconResource, CoreServices.kTrashIconResource
-        )
+        self.assertEqual(CoreServices.trashIconResource, CoreServices.kTrashIconResource)
         self.assertEqual(
             CoreServices.genericRAMDiskIconResource,
             CoreServices.kGenericRAMDiskIconResource,
@@ -219,9 +217,7 @@ class TestIconsCore(TestCase):
         self.assertEqual(CoreServices.kInternetLocationHTTPIcon, fourcc(b"ilht"))
         self.assertEqual(CoreServices.kInternetLocationFTPIcon, fourcc(b"ilft"))
         self.assertEqual(CoreServices.kInternetLocationAppleShareIcon, fourcc(b"ilaf"))
-        self.assertEqual(
-            CoreServices.kInternetLocationAppleTalkZoneIcon, fourcc(b"ilat")
-        )
+        self.assertEqual(CoreServices.kInternetLocationAppleTalkZoneIcon, fourcc(b"ilat"))
         self.assertEqual(CoreServices.kInternetLocationFileIcon, fourcc(b"ilfi"))
         self.assertEqual(CoreServices.kInternetLocationMailIcon, fourcc(b"ilma"))
         self.assertEqual(CoreServices.kInternetLocationNewsIcon, fourcc(b"ilnw"))
@@ -279,9 +275,7 @@ class TestIconsCore(TestCase):
         self.assertEqual(CoreServices.kRecentApplicationsFolderIcon, fourcc(b"rapp"))
         self.assertEqual(CoreServices.kRecentDocumentsFolderIcon, fourcc(b"rdoc"))
         self.assertEqual(CoreServices.kRecentServersFolderIcon, fourcc(b"rsrv"))
-        self.assertEqual(
-            CoreServices.kScriptingAdditionsFolderIcon, cast_int(0xC4736372)
-        )
+        self.assertEqual(CoreServices.kScriptingAdditionsFolderIcon, cast_int(0xC4736372))
         self.assertEqual(CoreServices.kSharedLibrariesFolderIcon, cast_int(0xC46C6962))
         self.assertEqual(CoreServices.kScriptsFolderIcon, cast_int(0x736372C4))
         self.assertEqual(CoreServices.kShutdownItemsDisabledFolderIcon, fourcc(b"shdD"))
@@ -289,9 +283,7 @@ class TestIconsCore(TestCase):
         self.assertEqual(CoreServices.kSpeakableItemsFolder, fourcc(b"spki"))
         self.assertEqual(CoreServices.kStartupItemsDisabledFolderIcon, fourcc(b"strD"))
         self.assertEqual(CoreServices.kStartupItemsFolderIcon, fourcc(b"strt"))
-        self.assertEqual(
-            CoreServices.kSystemExtensionDisabledFolderIcon, fourcc(b"macD")
-        )
+        self.assertEqual(CoreServices.kSystemExtensionDisabledFolderIcon, fourcc(b"macD"))
         self.assertEqual(CoreServices.kSystemFolderIcon, fourcc(b"macs"))
         self.assertEqual(CoreServices.kTextEncodingsFolderIcon, cast_int(0xC4746578))
         self.assertEqual(CoreServices.kUsersFolderIcon, cast_int(0x757372C4))

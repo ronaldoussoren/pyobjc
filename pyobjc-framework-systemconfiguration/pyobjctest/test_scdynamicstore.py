@@ -24,9 +24,7 @@ class TestSCDynamicStore(TestCase):
         def callback(store, changedKeys, info):
             lst.append((store, changedKeys, info))
 
-        st = SystemConfiguration.SCDynamicStoreCreate(
-            None, "pyobjc.test", callback, info
-        )
+        st = SystemConfiguration.SCDynamicStoreCreate(None, "pyobjc.test", callback, info)
         self.assertTrue(isinstance(st, SystemConfiguration.SCDynamicStoreRef))
 
         st = SystemConfiguration.SCDynamicStoreCreateWithOptions(

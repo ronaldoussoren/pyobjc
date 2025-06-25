@@ -123,9 +123,7 @@ class TestAuthorization(TestCase):
 
         # Not sure how to test this without increased privileges....
         self.assertFalse(isinstance(Security.AuthorizationCopyRights, objc.function))
-        self.assertFalse(
-            isinstance(Security.AuthorizationCopyRightsAsync, objc.function)
-        )
+        self.assertFalse(isinstance(Security.AuthorizationCopyRightsAsync, objc.function))
         self.assertFalse(
             isinstance(Security.AuthorizationExecuteWithPrivileges, objc.function)
         )

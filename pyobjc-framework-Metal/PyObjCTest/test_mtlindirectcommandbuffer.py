@@ -79,9 +79,7 @@ class TestMTLIndirectCommandBuffer(TestCase):
             Metal.MTLIndirectCommandBufferDescriptor.alloc().init().supportRayTracing
         )
         self.assertArgIsBOOL(
-            Metal.MTLIndirectCommandBufferDescriptor.alloc()
-            .init()
-            .setSupportRayTracing_,
+            Metal.MTLIndirectCommandBufferDescriptor.alloc().init().setSupportRayTracing_,
             0,
         )
 

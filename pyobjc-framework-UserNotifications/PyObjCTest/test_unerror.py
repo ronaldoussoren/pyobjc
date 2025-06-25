@@ -17,9 +17,7 @@ class TestUNError(TestCase):
         )
         self.assertEqual(UserNotifications.UNErrorCodeAttachmentCorrupt, 105)
         self.assertEqual(UserNotifications.UNErrorCodeNotificationInvalidNoDate, 1400)
-        self.assertEqual(
-            UserNotifications.UNErrorCodeNotificationInvalidNoContent, 1401
-        )
+        self.assertEqual(UserNotifications.UNErrorCodeNotificationInvalidNoContent, 1401)
         self.assertEqual(
             UserNotifications.UNErrorCodeContentProvidingObjectNotAllowed, 1500
         )

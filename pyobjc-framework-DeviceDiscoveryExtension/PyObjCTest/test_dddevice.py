@@ -6,9 +6,7 @@ import DeviceDiscoveryExtension
 class TestDDDevice(TestCase):
     def test_constants(self):
         self.assertIsTypedEnum(DeviceDiscoveryExtension.DDDeviceProtocolString, str)
-        self.assertIsInstance(
-            DeviceDiscoveryExtension.DDDeviceProtocolStringInvalid, str
-        )
+        self.assertIsInstance(DeviceDiscoveryExtension.DDDeviceProtocolStringInvalid, str)
         self.assertIsInstance(DeviceDiscoveryExtension.DDDeviceProtocolStringDIAL, str)
 
         self.assertIsEnumType(DeviceDiscoveryExtension.DDDeviceProtocol)
@@ -17,9 +15,7 @@ class TestDDDevice(TestCase):
 
         self.assertIsEnumType(DeviceDiscoveryExtension.DDDeviceCategory)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceCategoryHiFiSpeaker, 0)
-        self.assertEqual(
-            DeviceDiscoveryExtension.DDDeviceCategoryHiFiSpeakerMultiple, 1
-        )
+        self.assertEqual(DeviceDiscoveryExtension.DDDeviceCategoryHiFiSpeakerMultiple, 1)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceCategoryTVWithMediaBox, 2)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceCategoryTV, 3)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceCategoryLaptopComputer, 4)
@@ -34,9 +30,7 @@ class TestDDDevice(TestCase):
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceStateInvalidating, 30)
 
         self.assertIsEnumType(DeviceDiscoveryExtension.DDDeviceMediaPlaybackState)
-        self.assertEqual(
-            DeviceDiscoveryExtension.DDDeviceMediaPlaybackStateNoContent, 0
-        )
+        self.assertEqual(DeviceDiscoveryExtension.DDDeviceMediaPlaybackStateNoContent, 0)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceMediaPlaybackStatePaused, 1)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceMediaPlaybackStatePlaying, 2)
 

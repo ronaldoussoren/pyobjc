@@ -26,9 +26,7 @@ class TestUserNotification(TestCase):
         }
 
         self.assertArgIsOut(CoreFoundation.CFUserNotificationCreate, 3)
-        ref, error = CoreFoundation.CFUserNotificationCreate(
-            None, 3.0, 0, None, infoDict
-        )
+        ref, error = CoreFoundation.CFUserNotificationCreate(None, 3.0, 0, None, infoDict)
         self.assertEqual(error, 0)
         self.assertIsInstance(ref, CoreFoundation.CFUserNotificationRef)
         values = []
@@ -44,9 +42,7 @@ class TestUserNotification(TestCase):
             b"v^{__CFUserNotification=}" + objc._C_NSInteger,
             True,
         )
-        rls = CoreFoundation.CFUserNotificationCreateRunLoopSource(
-            None, ref, callout, 1
-        )
+        rls = CoreFoundation.CFUserNotificationCreateRunLoopSource(None, ref, callout, 1)
         self.assertIsInstance(rls, CoreFoundation.CFRunLoopSourceRef)
         CoreFoundation.CFRunLoopAddSource(rl, rls, runloop_mode)
         CoreFoundation.CFRunLoopRunInMode(runloop_mode, 5.0, True)
@@ -112,12 +108,8 @@ class TestUserNotification(TestCase):
         self.assertEqual(CoreFoundation.kCFUserNotificationAlternateResponse, 1)
         self.assertEqual(CoreFoundation.kCFUserNotificationOtherResponse, 2)
         self.assertEqual(CoreFoundation.kCFUserNotificationCancelResponse, 3)
-        self.assertEqual(
-            CoreFoundation.kCFUserNotificationNoDefaultButtonFlag, (1 << 5)
-        )
-        self.assertEqual(
-            CoreFoundation.kCFUserNotificationUseRadioButtonsFlag, (1 << 6)
-        )
+        self.assertEqual(CoreFoundation.kCFUserNotificationNoDefaultButtonFlag, (1 << 5))
+        self.assertEqual(CoreFoundation.kCFUserNotificationUseRadioButtonsFlag, (1 << 6))
         self.assertIsInstance(CoreFoundation.kCFUserNotificationIconURLKey, str)
         self.assertIsInstance(CoreFoundation.kCFUserNotificationSoundURLKey, str)
         self.assertIsInstance(CoreFoundation.kCFUserNotificationLocalizationURLKey, str)
@@ -129,9 +121,7 @@ class TestUserNotification(TestCase):
         self.assertIsInstance(
             CoreFoundation.kCFUserNotificationAlternateButtonTitleKey, str
         )
-        self.assertIsInstance(
-            CoreFoundation.kCFUserNotificationOtherButtonTitleKey, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFUserNotificationOtherButtonTitleKey, str)
         self.assertIsInstance(
             CoreFoundation.kCFUserNotificationProgressIndicatorValueKey, str
         )

@@ -261,9 +261,7 @@ class TestCGContext(TestCase):
                 8,
             )
 
-            Quartz.CGContextAddLines(
-                context, [(0, 10), (50, 7), (50, 90), (90.5, 8)], 4
-            )
+            Quartz.CGContextAddLines(context, [(0, 10), (50, 7), (50, 90), (90.5, 8)], 4)
             self.assertRaises(
                 ValueError,
                 Quartz.CGContextAddLines,
@@ -392,9 +390,7 @@ class TestCGContext(TestCase):
             v = Quartz.CGContextGetInterpolationQuality(context)
             self.assertIsInstance(v, int)
 
-            Quartz.CGContextSetInterpolationQuality(
-                context, Quartz.kCGInterpolationHigh
-            )
+            Quartz.CGContextSetInterpolationQuality(context, Quartz.kCGInterpolationHigh)
 
             color = Quartz.CGColorCreate(
                 Quartz.CGColorSpaceCreateDeviceRGB(), (1, 1, 1, 1)
@@ -434,17 +430,13 @@ class TestCGContext(TestCase):
             self.assertArgHasType(Quartz.CGContextSetShouldAntialias, 1, objc._C_BOOL)
             Quartz.CGContextSetShouldAntialias(context, True)
 
-            self.assertArgHasType(
-                Quartz.CGContextSetAllowsAntialiasing, 1, objc._C_BOOL
-            )
+            self.assertArgHasType(Quartz.CGContextSetAllowsAntialiasing, 1, objc._C_BOOL)
             Quartz.CGContextSetAllowsAntialiasing(context, True)
 
             self.assertArgHasType(Quartz.CGContextSetShouldSmoothFonts, 1, objc._C_BOOL)
             Quartz.CGContextSetShouldSmoothFonts(context, True)
 
-            self.assertArgHasType(
-                Quartz.CGContextSetAllowsFontSmoothing, 1, objc._C_BOOL
-            )
+            self.assertArgHasType(Quartz.CGContextSetAllowsFontSmoothing, 1, objc._C_BOOL)
             Quartz.CGContextSetAllowsFontSmoothing(context, True)
 
             self.assertArgHasType(

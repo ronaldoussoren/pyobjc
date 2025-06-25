@@ -17,9 +17,7 @@ class TestCBAdvertisementData(TestCase):
     def testConstants(self):
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyBroadcast, 0x01)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyRead, 0x02)
-        self.assertEqual(
-            CoreBluetooth.CBCharacteristicPropertyWriteWithoutResponse, 0x04
-        )
+        self.assertEqual(CoreBluetooth.CBCharacteristicPropertyWriteWithoutResponse, 0x04)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyWrite, 0x08)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyNotify, 0x10)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyIndicate, 0x20)
@@ -36,9 +34,7 @@ class TestCBAdvertisementData(TestCase):
 
         self.assertEqual(CoreBluetooth.CBAttributePermissionsReadable, 0x01)
         self.assertEqual(CoreBluetooth.CBAttributePermissionsWriteable, 0x02)
-        self.assertEqual(
-            CoreBluetooth.CBAttributePermissionsReadEncryptionRequired, 0x04
-        )
+        self.assertEqual(CoreBluetooth.CBAttributePermissionsReadEncryptionRequired, 0x04)
         self.assertEqual(
             CoreBluetooth.CBAttributePermissionsWriteEncryptionRequired, 0x08
         )

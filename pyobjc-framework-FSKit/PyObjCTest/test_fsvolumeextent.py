@@ -15,9 +15,7 @@ class TestFSVolumeExtentHelper(FSKit.NSObject):
     ):
         pass
 
-    def createFileNamed_inDirectory_attributes_packer_replyHandler_(
-        self, a, b, c, d, e
-    ):
+    def createFileNamed_inDirectory_attributes_packer_replyHandler_(self, a, b, c, d, e):
         pass
 
     def lookupItemNamed_inDirectory_packer_replyHandler_(self, a, b, c, d):

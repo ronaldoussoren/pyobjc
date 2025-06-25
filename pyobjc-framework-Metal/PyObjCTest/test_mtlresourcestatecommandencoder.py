@@ -12,9 +12,7 @@ class TestMTLResourceStateCommandEncoderHelper(Metal.NSObject):
     def updateTextureMapping_mode_region_mipLevel_slice_(self, a, b, c, d, e):
         pass
 
-    def updateTextureMapping_mode_indirectBuffer_indirectBufferOffset_(
-        self, a, b, c, d
-    ):
+    def updateTextureMapping_mode_indirectBuffer_indirectBufferOffset_(self, a, b, c, d):
         pass
 
 

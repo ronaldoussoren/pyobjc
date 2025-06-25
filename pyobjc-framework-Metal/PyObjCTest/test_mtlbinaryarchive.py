@@ -81,9 +81,7 @@ class TestMTLBinaryArchive(TestCase):
             1,
             b"o^@",
         )
-        self.assertArgHasType(
-            TestMTLBinaryArchiveHelper.serializeToURL_error_, 1, b"o^@"
-        )
+        self.assertArgHasType(TestMTLBinaryArchiveHelper.serializeToURL_error_, 1, b"o^@")
         self.assertResultIsBOOL(
             TestMTLBinaryArchiveHelper.addFunctionWithDescriptor_library_error_
         )

@@ -29,9 +29,7 @@ class TestCTTypesetter(TestCase):
             CoreText.CTTypesetterCreateWithAttributedStringAndOptions
         )
         options = {"key": "value"}
-        ref = CoreText.CTTypesetterCreateWithAttributedStringAndOptions(
-            astring, options
-        )
+        ref = CoreText.CTTypesetterCreateWithAttributedStringAndOptions(astring, options)
         self.assertIsInstance(ref, CoreText.CTTypesetterRef)
 
         line = CoreText.CTTypesetterCreateLine(ref, CoreText.CFRange(0, 5))

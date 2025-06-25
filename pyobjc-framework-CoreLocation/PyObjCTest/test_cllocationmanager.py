@@ -50,9 +50,7 @@ class TestCLLocationManager(TestCase):
         self.assertResultIsBOOL(
             CoreLocation.CLLocationManager.significantLocationChangeMonitoringAvailable
         )
-        self.assertResultIsBOOL(
-            CoreLocation.CLLocationManager.regionMonitoringAvailable
-        )
+        self.assertResultIsBOOL(CoreLocation.CLLocationManager.regionMonitoringAvailable)
         self.assertResultIsBOOL(CoreLocation.CLLocationManager.regionMonitoringEnabled)
 
     @min_os_level("10.9")

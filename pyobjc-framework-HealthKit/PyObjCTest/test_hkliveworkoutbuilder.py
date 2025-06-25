@@ -7,9 +7,7 @@ class TestHKActivitySummary(TestCase):
         self.assertProtocolExists("HKLiveWorkoutBuilderDelegate")
 
     def test_methods(self):
-        self.assertResultIsBOOL(
-            HealthKit.HKLiveWorkoutBuilder.shouldCollectWorkoutEvents
-        )
+        self.assertResultIsBOOL(HealthKit.HKLiveWorkoutBuilder.shouldCollectWorkoutEvents)
         self.assertArgIsBOOL(
             HealthKit.HKLiveWorkoutBuilder.setShouldCollectWorkoutEvents_, 0
         )

@@ -46,9 +46,7 @@ class TestNSException(TestCase):
         self.assertIsInstance(Foundation.NSAssertionHandlerKey, str)
 
     def testUncaughtExceptionHandler(self):
-        self.assertArgIsFunction(
-            Foundation.NSSetUncaughtExceptionHandler, 0, b"v@", True
-        )
+        self.assertArgIsFunction(Foundation.NSSetUncaughtExceptionHandler, 0, b"v@", True)
         self.assertResultIsFunction(Foundation.NSGetUncaughtExceptionHandler, b"v@")
 
     def testNoAssert(self):

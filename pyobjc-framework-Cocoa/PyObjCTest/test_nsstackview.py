@@ -22,9 +22,7 @@ class TestNSStackView(TestCase):
         self.assertEqual(AppKit.NSStackViewGravityTrailing, 3)
 
         self.assertEqual(AppKit.NSStackViewVisibilityPriorityMustHold, 1000.0)
-        self.assertEqual(
-            AppKit.NSStackViewVisibilityPriorityDetachOnlyIfNecessary, 900.0
-        )
+        self.assertEqual(AppKit.NSStackViewVisibilityPriorityDetachOnlyIfNecessary, 900.0)
         self.assertEqual(AppKit.NSStackViewVisibilityPriorityNotVisible, 0.0)
 
         self.assertIsInstance(AppKit.NSStackViewSpacingUseDefault, float)

@@ -25,9 +25,7 @@ class TestNSTextViewHelper(AppKit.NSObject):
     def textView_writeCell_atIndex_toPasteboard_type_(self, tv, a, b, c, d):
         return 1
 
-    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(
-        self, tv, a, b
-    ):
+    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(self, tv, a, b):
         return 1
 
     def textView_shouldChangeTextInRanges_replacementStrings_(self, tv, a, b):
@@ -36,9 +34,7 @@ class TestNSTextViewHelper(AppKit.NSObject):
     def textView_willDisplayToolTip_forCharacterAtIndex_(self, tv, a, b):
         return 1
 
-    def textView_completions_forPartialWordRange_indexOfSelectedItem_(
-        self, tv, a, b, c
-    ):
+    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, tv, a, b, c):
         return 1
 
     def textView_shouldChangeTextInRange_replacementString_(self, tv, a, b):
@@ -131,9 +127,7 @@ class TestNSTextView(TestCase):
             AppKit.NSTextViewWillChangeNotifyingTextViewNotification, str
         )
         self.assertIsInstance(AppKit.NSTextViewDidChangeSelectionNotification, str)
-        self.assertIsInstance(
-            AppKit.NSTextViewDidChangeTypingAttributesNotification, str
-        )
+        self.assertIsInstance(AppKit.NSTextViewDidChangeTypingAttributesNotification, str)
 
     @min_os_level("10.12")
     def testConstants10_12(self):
@@ -208,9 +202,7 @@ class TestNSTextView(TestCase):
         self.assertResultIsBOOL(AppKit.NSTextView.usesFindPanel)
         self.assertArgIsBOOL(AppKit.NSTextView.setUsesFindPanel_, 0)
         self.assertResultIsBOOL(AppKit.NSTextView.allowsDocumentBackgroundColorChange)
-        self.assertArgIsBOOL(
-            AppKit.NSTextView.setAllowsDocumentBackgroundColorChange_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSTextView.setAllowsDocumentBackgroundColorChange_, 0)
         self.assertResultIsBOOL(AppKit.NSTextView.allowsUndo)
         self.assertArgIsBOOL(AppKit.NSTextView.setAllowsUndo_, 0)
         self.assertResultIsBOOL(AppKit.NSTextView.allowsImageEditing)
@@ -402,9 +394,7 @@ class TestNSTextView(TestCase):
         self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticDashSubstitutionEnabled)
         self.assertArgIsBOOL(AppKit.NSTextView.setAutomaticTextReplacementEnabled_, 0)
         self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticTextReplacementEnabled)
-        self.assertArgIsBOOL(
-            AppKit.NSTextView.setAutomaticSpellingCorrectionEnabled_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSTextView.setAutomaticSpellingCorrectionEnabled_, 0)
         self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticSpellingCorrectionEnabled)
 
         self.assertArgHasType(

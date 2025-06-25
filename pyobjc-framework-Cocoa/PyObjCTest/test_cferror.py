@@ -98,9 +98,7 @@ class TestError(TestCase):
         self.assertIsInstance(CoreFoundation.kCFErrorDomainCocoa, str)
         self.assertIsInstance(CoreFoundation.kCFErrorLocalizedDescriptionKey, str)
         self.assertIsInstance(CoreFoundation.kCFErrorLocalizedFailureReasonKey, str)
-        self.assertIsInstance(
-            CoreFoundation.kCFErrorLocalizedRecoverySuggestionKey, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFErrorLocalizedRecoverySuggestionKey, str)
         self.assertIsInstance(CoreFoundation.kCFErrorDescriptionKey, str)
         self.assertIsInstance(CoreFoundation.kCFErrorUnderlyingErrorKey, str)
 

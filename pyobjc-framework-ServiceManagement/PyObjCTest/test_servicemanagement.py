@@ -24,12 +24,8 @@ class TestServiceManagement(TestCase):
         self.assertResultHasType(
             ServiceManagement.SMJobCopyDictionary, b"^{__CFDictionary=}"
         )
-        self.assertArgHasType(
-            ServiceManagement.SMJobCopyDictionary, 0, b"^{__CFString=}"
-        )
-        self.assertArgHasType(
-            ServiceManagement.SMJobCopyDictionary, 1, b"^{__CFString=}"
-        )
+        self.assertArgHasType(ServiceManagement.SMJobCopyDictionary, 0, b"^{__CFString=}")
+        self.assertArgHasType(ServiceManagement.SMJobCopyDictionary, 1, b"^{__CFString=}")
         self.assertResultIsCFRetained(ServiceManagement.SMJobCopyDictionary)
         v = ServiceManagement.SMJobCopyDictionary(
             ServiceManagement.kSMDomainUserLaunchd, "com.apple.Dock.agent"

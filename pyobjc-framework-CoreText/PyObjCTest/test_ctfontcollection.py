@@ -13,9 +13,7 @@ class TestCTFontCollection(TestCase):
     @min_os_level("10.7")
     def testConstants10_10(self):
         self.assertIsInstance(CoreText.kCTFontCollectionIncludeDisabledFontsOption, str)
-        self.assertIsInstance(
-            CoreText.kCTFontCollectionDisallowAutoActivationOption, str
-        )
+        self.assertIsInstance(CoreText.kCTFontCollectionDisallowAutoActivationOption, str)
 
         self.assertEqual(CoreText.kCTFontCollectionCopyDefaultOptions, 0)
         self.assertEqual(CoreText.kCTFontCollectionCopyUnique, 1 << 0)

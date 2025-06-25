@@ -136,12 +136,8 @@ class TestSKSearch(TestCase):
 
         self.assertArgIsIn(CoreServices.SKIndexCopyDocumentRefsForDocumentIDs, 2)
         self.assertArgIsOut(CoreServices.SKIndexCopyDocumentRefsForDocumentIDs, 3)
-        self.assertArgSizeInArg(
-            CoreServices.SKIndexCopyDocumentRefsForDocumentIDs, 2, 1
-        )
-        self.assertArgSizeInArg(
-            CoreServices.SKIndexCopyDocumentRefsForDocumentIDs, 3, 1
-        )
+        self.assertArgSizeInArg(CoreServices.SKIndexCopyDocumentRefsForDocumentIDs, 2, 1)
+        self.assertArgSizeInArg(CoreServices.SKIndexCopyDocumentRefsForDocumentIDs, 3, 1)
         v = CoreServices.SKIndexCopyDocumentRefsForDocumentIDs(index, o3, o1, None)
         self.assertIsInstance(v, tuple)
         if v:

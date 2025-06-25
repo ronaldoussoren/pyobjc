@@ -36,9 +36,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates.__typestr__,
             b"{MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates=fII<2f>}",
         )
-        v = (
-            MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates()
-        )
+        v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates()
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
         self.assertIsInstance(v.bufferIndex, int)
@@ -48,9 +46,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates.__typestr__,
             b"{MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates=fII<2f>}",
         )
-        v = (
-            MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates()
-        )
+        v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates()
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
         self.assertIsInstance(v.instanceIndex, int)
@@ -60,9 +56,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
             MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates.__typestr__,
             b"{MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates=fIII<2f>}",
         )
-        v = (
-            MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates()
-        )
+        v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates()
         self.assertIsInstance(v.distance, float)
         self.assertIsInstance(v.primitiveIndex, int)
         self.assertIsInstance(v.bufferIndex, int)
@@ -86,9 +80,7 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
             MetalPerformanceShaders.MPSAccelerationStructureUsagePreferCPUBuild, 8
         )
 
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAccelerationStructureStatusUnbuilt, 0
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureStatusUnbuilt, 0)
         self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureStatusBuilt, 1)
 
     @min_os_level("10.14")

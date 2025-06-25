@@ -17,12 +17,8 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferMicrosoft, 6)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferLucent, 7)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferMotorola, 8)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferInfineonTechnologiesAG, 9
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferCambridgeSiliconRadio, 10
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferInfineonTechnologiesAG, 9)
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferCambridgeSiliconRadio, 10)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferSiliconWave, 11)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferDigianswerAS, 12)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferTexasInstruments, 13)
@@ -56,9 +52,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferHitachi, 41)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferSymbolTechnologies, 42)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferTenovis, 43)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferMacronixInternational, 44
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferMacronixInternational, 44)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferGCTSemiconductor, 45)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferNorwoodSystems, 46)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferMewTelTechnology, 47)
@@ -89,23 +83,17 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferCONWISETechnology, 66)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferParrotSA, 67)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferSocketCommunications, 68)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferAtherosCommunications, 69
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferAtherosCommunications, 69)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferMediaTek, 70)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferBluegiga, 71)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferMarvellTechnologyGroup, 72
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferMarvellTechnologyGroup, 72)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentifer3DSP, 73)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferAccelSemiconductor, 74)
         self.assertEqual(
             IOBluetooth.kBluetoothCompanyIdentiferContinentialAutomotiveSystems, 75
         )
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferApple, 76)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferStaccatoCommunications, 77
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferStaccatoCommunications, 77)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferAvagoTechnologies, 78)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferAPT, 79)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferSiRFTechnology, 80)
@@ -120,9 +108,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferHarmonInternational, 87)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferVisio, 88)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferNordicSemiconductor, 89)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferEMMicroElectronicMarin, 90
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferEMMicroElectronicMarin, 90)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferRalinkTechnology, 91)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferBelkinInternational, 92)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferRealtekSemiconductor, 93)
@@ -238,9 +224,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferPassifSemiconductor, 176)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferSarisCyclingGroup, 177)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferBekey, 178)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferClarinoxTechnologies, 179
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferClarinoxTechnologies, 179)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferBDETechnology, 180)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferSwirlNetworks, 181)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferMesoInternational, 182)
@@ -276,17 +260,13 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferDexcom, 208)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferPolarElectroEurope, 209)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferDialogSemiconductor, 210)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferTaixingbangTechnology, 211
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferTaixingbangTechnology, 211)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferKawantech, 212)
         self.assertEqual(
             IOBluetooth.kBluetoothCompanyIdentiferAustcoCommunicationsSystems, 213
         )
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferTimexGroup, 214)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferQualcommTechnologies, 215
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferQualcommTechnologies, 215)
         self.assertEqual(
             IOBluetooth.kBluetoothCompanyIdentiferQualcommConnectedExperiences, 216
         )
@@ -311,13 +291,9 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferVtrackSystems, 233)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferNielsenKellerman, 234)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferServerTechnology, 235)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferBioResearchAssociates, 236
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferBioResearchAssociates, 236)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferJollyLogic, 237)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferAboveAverageOutcomes, 238
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferAboveAverageOutcomes, 238)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferBitsplitters, 239)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferPayPal, 240)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferWitronTechnology, 241)
@@ -333,9 +309,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferKOUKAMM, 251)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferDelphi, 252)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferValenceTech, 253)
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferStanleyBlackAndDecker, 254
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferStanleyBlackAndDecker, 254)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferTypeProducts, 255)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferTomTomInternational, 256)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferFuGoo, 257)
@@ -348,9 +322,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothCompanyIdentiferInnovativeYachtterSolutions, 262
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothCompanyIdentiferWilliamDemantHolding, 263
-        )
+        self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferWilliamDemantHolding, 263)
         self.assertEqual(IOBluetooth.kBluetoothCompanyIdentiferInteropIdentifier, 65535)
 
         self.assertEqual(
@@ -385,9 +357,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMajorNone, fourcc(b"none"))
         self.assertNotHasAttr(IOBluetooth, "kBluetoothDeviceClassMajorEnd")
 
-        self.assertEqual(
-            IOBluetooth.kBluetoothDeviceClassMinorComputerUnclassified, 0x00
-        )
+        self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorComputerUnclassified, 0x00)
         self.assertEqual(
             IOBluetooth.kBluetoothDeviceClassMinorComputerDesktopWorkstation, 0x01
         )
@@ -431,20 +401,14 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorAudioReserved2, 0x11)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorAudioGamingToy, 0x12)
 
-        self.assertEqual(
-            IOBluetooth.kBluetoothDeviceClassMinorPeripheral1Keyboard, 0x10
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothDeviceClassMinorPeripheral1Pointing, 0x20
-        )
+        self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorPeripheral1Keyboard, 0x10)
+        self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorPeripheral1Pointing, 0x20)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorPeripheral1Combo, 0x30)
 
         self.assertEqual(
             IOBluetooth.kBluetoothDeviceClassMinorPeripheral2Unclassified, 0x00
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothDeviceClassMinorPeripheral2Joystick, 0x01
-        )
+        self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorPeripheral2Joystick, 0x01)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorPeripheral2Gamepad, 0x02)
         self.assertEqual(
             IOBluetooth.kBluetoothDeviceClassMinorPeripheral2RemoteControl, 0x03
@@ -477,9 +441,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorImaging1Scanner, 0x10)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorImaging1Printer, 0x20)
 
-        self.assertEqual(
-            IOBluetooth.kBluetoothDeviceClassMinorImaging2Unclassified, 0x00
-        )
+        self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorImaging2Unclassified, 0x00)
 
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorWearablePager, 0x02)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorWearableJacket, 0x03)
@@ -488,9 +450,7 @@ class TestBluetoothAssignedNumbers(TestCase):
 
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorToyRobot, 0x01)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorToyVehicle, 0x02)
-        self.assertEqual(
-            IOBluetooth.kBluetoothDeviceClassMinorToyDollActionFigure, 0x03
-        )
+        self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorToyDollActionFigure, 0x03)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorToyController, 0x04)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorToyGame, 0x05)
 
@@ -501,9 +461,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorHealthThermometer, 0x02)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorHealthScale, 0x03)
         self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorHealthGlucoseMeter, 0x04)
-        self.assertEqual(
-            IOBluetooth.kBluetoothDeviceClassMinorHealthPulseOximeter, 0x05
-        )
+        self.assertEqual(IOBluetooth.kBluetoothDeviceClassMinorHealthPulseOximeter, 0x05)
         self.assertEqual(
             IOBluetooth.kBluetoothDeviceClassMinorHealthHeartRateMonitor, 0x06
         )
@@ -688,9 +646,7 @@ class TestBluetoothAssignedNumbers(TestCase):
             0x1120,
         )
         self.assertEqual(IOBluetooth.kBluetoothSDPUUID16ServiceClassReflectedUI, 0x1121)
-        self.assertEqual(
-            IOBluetooth.kBluetoothSDPUUID16ServiceClassBasicPrinting, 0x1122
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSDPUUID16ServiceClassBasicPrinting, 0x1122)
         self.assertEqual(
             IOBluetooth.kBluetoothSDPUUID16ServiceClassPrintingStatus, 0x1123
         )
@@ -749,9 +705,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothSDPUUID16ServiceClassGenericFileTransfer, 0x1202
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSDPUUID16ServiceClassGenericAudio, 0x1203
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSDPUUID16ServiceClassGenericAudio, 0x1203)
         self.assertEqual(
             IOBluetooth.kBluetoothSDPUUID16ServiceClassGenericTelephony, 0x1204
         )
@@ -760,9 +714,7 @@ class TestBluetoothAssignedNumbers(TestCase):
         self.assertEqual(
             IOBluetooth.kBluetoothSDPUUID16ServiceClassVideoDistribution, 0x1305
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSDPUUID16ServiceClassHealthDevice, 0x1400
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSDPUUID16ServiceClassHealthDevice, 0x1400)
         self.assertEqual(
             IOBluetooth.kBluetoothSDPUUID16ServiceClassHealthDeviceSource, 0x1401
         )
@@ -904,12 +856,8 @@ class TestBluetoothAssignedNumbers(TestCase):
             IOBluetooth.kBluetoothSDPAttributeIdentifierNetworkAddress, 0x0306
         )
         self.assertEqual(IOBluetooth.kBluetoothSDPAttributeIdentifierWAPGateway, 0x0307)
-        self.assertEqual(
-            IOBluetooth.kBluetoothSDPAttributeIdentifierHomepageURL, 0x0308
-        )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSDPAttributeIdentifierWAPStackType, 0x0309
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSDPAttributeIdentifierHomepageURL, 0x0308)
+        self.assertEqual(IOBluetooth.kBluetoothSDPAttributeIdentifierWAPStackType, 0x0309)
         self.assertEqual(
             IOBluetooth.kBluetoothSDPAttributeIdentifierSecurityDescription, 0x030A
         )
@@ -932,15 +880,11 @@ class TestBluetoothAssignedNumbers(TestCase):
             IOBluetooth.kBluetoothSDPAttributeIdentifierTotalImagingDataCapacity, 0x0313
         )
 
-        self.assertEqual(
-            IOBluetooth.kBluetoothSDPAttributeIdentifierServiceName, 0x0000
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSDPAttributeIdentifierServiceName, 0x0000)
         self.assertEqual(
             IOBluetooth.kBluetoothSDPAttributeIdentifierServiceDescription, 0x0001
         )
-        self.assertEqual(
-            IOBluetooth.kBluetoothSDPAttributeIdentifierProviderName, 0x0002
-        )
+        self.assertEqual(IOBluetooth.kBluetoothSDPAttributeIdentifierProviderName, 0x0002)
 
         self.assertIsEnumType(IOBluetooth.SDPAttributeDeviceIdentificationRecord)
         self.assertEqual(

@@ -9,9 +9,7 @@ MPSGraphExecutableScheduledHandler = b"v@@"
 class TestMPSGraphExecutable(TestCase):
     def test_constants(self):
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphDeploymentPlatform)
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphDeploymentPlatformMacOS, 0
-        )
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphDeploymentPlatformMacOS, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphDeploymentPlatformIOS, 1)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphDeploymentPlatformTvOS, 2)
         self.assertEqual(

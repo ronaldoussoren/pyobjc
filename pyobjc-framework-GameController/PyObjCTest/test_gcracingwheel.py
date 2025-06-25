@@ -9,9 +9,7 @@ class TestGCRacingWheel(TestCase):
     @min_os_level("13.0")
     def test_constants13_0(self):
         self.assertIsInstance(GameController.GCRacingWheelDidConnectNotification, str)
-        self.assertIsInstance(
-            GameController.GCRacingWheelDidDisconnectNotification, str
-        )
+        self.assertIsInstance(GameController.GCRacingWheelDidDisconnectNotification, str)
 
     @min_os_level("13.0")
     def test_methods13_0(self):

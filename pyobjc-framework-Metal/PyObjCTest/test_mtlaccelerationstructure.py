@@ -83,9 +83,7 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeDefault, 0)
         self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeUserID, 1)
         self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeMotion, 2)
-        self.assertEqual(
-            Metal.MTLAccelerationStructureInstanceDescriptorTypeIndirect, 3
-        )
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeIndirect, 3)
         self.assertEqual(
             Metal.MTLAccelerationStructureInstanceDescriptorTypeIndirectMotion, 4
         )

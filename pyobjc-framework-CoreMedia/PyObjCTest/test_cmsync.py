@@ -35,9 +35,7 @@ class TestCMSync(TestCase):
 
     @min_os_level("10.8")
     def test_constants10_8(self):
-        self.assertIsInstance(
-            CoreMedia.kCMTimebaseNotification_EffectiveRateChanged, str
-        )
+        self.assertIsInstance(CoreMedia.kCMTimebaseNotification_EffectiveRateChanged, str)
         self.assertIsInstance(CoreMedia.kCMTimebaseNotification_TimeJumped, str)
 
     @min_os_level("10.9")

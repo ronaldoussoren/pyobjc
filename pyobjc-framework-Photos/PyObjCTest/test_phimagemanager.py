@@ -75,9 +75,7 @@ class TestPHImageManager(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(Photos.PHLivePhotoRequestOptions.isNetworkAccessAllowed)
-        self.assertArgIsBOOL(
-            Photos.PHLivePhotoRequestOptions.setNetworkAccessAllowed_, 0
-        )
+        self.assertArgIsBOOL(Photos.PHLivePhotoRequestOptions.setNetworkAccessAllowed_, 0)
 
         self.assertResultIsBlock(
             Photos.PHLivePhotoRequestOptions.progressHandler,
@@ -129,9 +127,7 @@ class TestPHImageManager(TestCase):
 
     @min_os_level("14.0")
     def testMethods14_0(self):
-        self.assertResultIsBOOL(
-            Photos.PHImageRequestOptions.allowSecondaryDegradedImage
-        )
+        self.assertResultIsBOOL(Photos.PHImageRequestOptions.allowSecondaryDegradedImage)
         self.assertArgIsBOOL(
             Photos.PHImageRequestOptions.setAllowSecondaryDegradedImage_, 0
         )

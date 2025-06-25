@@ -255,9 +255,7 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
                     continue
 
                 if info.get("c_array_delimited_by_null"):
-                    result.append(
-                        "arg%d: array (will be NULL terminated in C)" % (idx,)
-                    )
+                    result.append("arg%d: array (will be NULL terminated in C)" % (idx,))
                     continue
 
                 result.append(

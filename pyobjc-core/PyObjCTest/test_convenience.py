@@ -675,9 +675,7 @@ class TestRegisterKeywords(TestCase):
         objc.registerNewKeywords("OC_Keyword2", ("a", "b"), "keywordWithValue1_value2_")
         self.assertIn("OC_Keyword2", NEW_MAP)
         self.assertEqual(len(NEW_MAP["OC_Keyword2"]), 1)
-        self.assertEqual(
-            NEW_MAP["OC_Keyword2"][("a", "b")], "keywordWithValue1_value2_"
-        )
+        self.assertEqual(NEW_MAP["OC_Keyword2"][("a", "b")], "keywordWithValue1_value2_")
 
         objc.registerNewKeywords("OC_Keyword2", (), "keyword")
         self.assertEqual(len(NEW_MAP["OC_Keyword2"]), 2)

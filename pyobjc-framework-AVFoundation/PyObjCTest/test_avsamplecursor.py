@@ -29,15 +29,11 @@ class TestAVSampleCursor(TestCase):
         self.assertPickleRoundTrips(v)
 
         v = AVFoundation.AVSampleCursorDependencyInfo()
-        self.assertIsInstance(
-            v.sampleIndicatesWhetherItHasDependentSamples, bool
-        )  # noqa: B950
+        self.assertIsInstance(v.sampleIndicatesWhetherItHasDependentSamples, bool)  # noqa: B950
         self.assertIsInstance(v.sampleHasDependentSamples, bool)
         self.assertIsInstance(v.sampleIndicatesWhetherItDependsOnOthers, bool)
         self.assertIsInstance(v.sampleDependsOnOthers, bool)
-        self.assertIsInstance(
-            v.sampleIndicatesWhetherItHasRedundantCoding, bool
-        )  # noqa: B950
+        self.assertIsInstance(v.sampleIndicatesWhetherItHasRedundantCoding, bool)  # noqa: B950
         self.assertIsInstance(v.sampleHasRedundantCoding, bool)
         self.assertPickleRoundTrips(v)
 

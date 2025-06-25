@@ -9,9 +9,7 @@ class TestNSMapTable(TestCase):
             Foundation.NSMapTableZeroingWeakMemory,
             Foundation.NSPointerFunctionsZeroingWeakMemory,
         )
-        self.assertEqual(
-            Foundation.NSMapTableCopyIn, Foundation.NSPointerFunctionsCopyIn
-        )
+        self.assertEqual(Foundation.NSMapTableCopyIn, Foundation.NSPointerFunctionsCopyIn)
         self.assertEqual(
             Foundation.NSMapTableObjectPointerPersonality,
             Foundation.NSPointerFunctionsObjectPointerPersonality,

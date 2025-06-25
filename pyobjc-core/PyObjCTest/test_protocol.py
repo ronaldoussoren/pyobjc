@@ -347,9 +347,7 @@ class TestFormalProtocols(TestCase):
             def yetAnother_(self, a):
                 pass
 
-        self.assertEqual(
-            MyClassImplementingMyOtherProtocol.protoMethod.signature, b"I@:"
-        )
+        self.assertEqual(MyClassImplementingMyOtherProtocol.protoMethod.signature, b"I@:")
         self.assertEqual(
             MyClassImplementingMyOtherProtocol.anotherProto_with_.signature, b"v@:ii"
         )
@@ -452,9 +450,7 @@ class TestFormalProtocols(TestCase):
             (b"protoMethod", b"I@:"),
         )
 
-        self.assertEqual(
-            MyProtocol.descriptionForInstanceMethod_(b"nosuchmethod"), None
-        )
+        self.assertEqual(MyProtocol.descriptionForInstanceMethod_(b"nosuchmethod"), None)
 
         self.assertEqual(
             MyClassProtocol.classMethods(),
@@ -485,9 +481,7 @@ class TestFormalProtocols(TestCase):
             "no implementation for instance method 'protoMethod'",
         ):
 
-            class ClassWithClassMethod(
-                ClassWithClassMethodBase1, protocols=[MyProtocol]
-            ):
+            class ClassWithClassMethod(ClassWithClassMethodBase1, protocols=[MyProtocol]):
                 def anotherProto_with_(self, a, b):
                     pass
 
@@ -637,11 +631,7 @@ MyClassProtocol3 = objc.formal_protocol(
 MyProtocol4 = objc.formal_protocol(
     "MyProtocol4",
     None,
-    (
-        objc.selector(
-            None, selector=b"proto4Method", signature=b"I@:", isRequired=False
-        ),
-    ),
+    (objc.selector(None, selector=b"proto4Method", signature=b"I@:", isRequired=False),),
 )
 
 
@@ -866,9 +856,7 @@ class TestFormalProtocols2(TestCase):
             (b"protoMethod", b"I@:"),
         )
 
-        self.assertEqual(
-            MyProtocol3.descriptionForInstanceMethod_(b"nosuchmethod"), None
-        )
+        self.assertEqual(MyProtocol3.descriptionForInstanceMethod_(b"nosuchmethod"), None)
 
         self.assertEqual(
             MyClassProtocol3.classMethods(),
@@ -915,7 +903,5 @@ class TestFormalProtocols2(TestCase):
             v.conformsTo_()
 
     def test_protocol_subclassing_nsobject(self):
-        class OC_EmptyClass(
-            NSObject, protocols=[objc.protocolNamed("OC_NSObjectBased")]
-        ):
+        class OC_EmptyClass(NSObject, protocols=[objc.protocolNamed("OC_NSObjectBased")]):
             pass

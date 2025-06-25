@@ -9,13 +9,9 @@ class TestCWConfiguration(TestCase):
         self.assertResultIsBOOL(CoreWLAN.CWConfiguration.requireAdminForPowerChange)
         self.assertResultIsBOOL(CoreWLAN.CWConfiguration.requireAdminForIBSSCreation)
 
-        self.assertArgIsBOOL(
-            CoreWLAN.CWConfiguration.setRequireAdminForNetworkChange_, 0
-        )
+        self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setRequireAdminForNetworkChange_, 0)
         self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setRequireAdminForPowerChange_, 0)
-        self.assertArgIsBOOL(
-            CoreWLAN.CWConfiguration.setRequireAdminForIBSSCreation_, 0
-        )
+        self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setRequireAdminForIBSSCreation_, 0)
 
         self.assertResultIsBOOL(CoreWLAN.CWConfiguration.alwaysRememberNetworks)
         self.assertArgIsBOOL(CoreWLAN.CWConfiguration.setAlwaysRememberNetworks_, 0)
@@ -29,9 +25,7 @@ class TestCWConfiguration(TestCase):
             CoreWLAN.CWConfiguration.requireAdministratorForAssociation
         )
         self.assertResultIsBOOL(CoreWLAN.CWConfiguration.requireAdministratorForPower)
-        self.assertResultIsBOOL(
-            CoreWLAN.CWConfiguration.requireAdministratorForIBSSMode
-        )
+        self.assertResultIsBOOL(CoreWLAN.CWConfiguration.requireAdministratorForIBSSMode)
         self.assertResultIsBOOL(CoreWLAN.CWConfiguration.rememberJoinedNetworks)
         self.assertResultIsBOOL(CoreWLAN.CWConfiguration.isEqualToConfiguration_)
 

@@ -744,8 +744,7 @@ class TestBridgeSupportParser(TestCase):
             },
             (b"MyClass3", b"method15", False): {
                 "arguments": {
-                    2
-                    + 1: {
+                    2 + 1: {
                         "null_accepted": False,
                         "already_retained": True,
                         "c_array_length_in_result": True,
@@ -754,8 +753,7 @@ class TestBridgeSupportParser(TestCase):
             },
             (b"MyClass3", b"method16", False): {
                 "arguments": {
-                    2
-                    + 1: {
+                    2 + 1: {
                         "c_array_delimited_by_null": True,
                         "c_array_of_variable_length": True,
                         "printf_format": True,
@@ -775,8 +773,7 @@ class TestBridgeSupportParser(TestCase):
             },
             (b"MyClass3", b"method21", False): {
                 "arguments": {
-                    2
-                    + 1: {
+                    2 + 1: {
                         "callable_retained": False,
                         "callable": {
                             "retval": {"type": b"v"},
@@ -787,8 +784,7 @@ class TestBridgeSupportParser(TestCase):
             },
             (b"MyClass3", b"method22", False): {
                 "arguments": {
-                    2
-                    + 1: {
+                    2 + 1: {
                         "callable_retained": False,
                         "callable": {
                             "retval": {"type": b"v"},
@@ -803,8 +799,7 @@ class TestBridgeSupportParser(TestCase):
             },
             (b"MyClass3", b"method23", False): {
                 "arguments": {
-                    2
-                    + 1: {
+                    2 + 1: {
                         "callable_retained": True,
                         "callable": {
                             "retval": {"type": b"v"},
@@ -815,8 +810,7 @@ class TestBridgeSupportParser(TestCase):
             },
             (b"MyClass3", b"method24", True): {
                 "arguments": {
-                    2
-                    + 1: {
+                    2 + 1: {
                         "callable_retained": True,
                         "callable": {
                             "retval": {"type": b"v"},
@@ -1332,9 +1326,7 @@ class TestBridgeSupportParser(TestCase):
             if key in meta["retval"]:
                 if isinstance(meta["retval"][key], tuple):
                     self.assertEqual(len(meta["retval"][key]), 2)
-                    self.assertTrue(
-                        all(isinstance(x, int) for x in meta["retval"][key])
-                    )
+                    self.assertTrue(all(isinstance(x, int) for x in meta["retval"][key]))
                 else:
                     self.assertIsInstance(meta["retval"][key], int)
 
@@ -1550,9 +1542,7 @@ class TestBridgeSupportParser(TestCase):
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
         for name in prs.values:
-            self.assertIsInstance(
-                prs.values[name], (str, int, float, bytes, type(None))
-            )
+            self.assertIsInstance(prs.values[name], (str, int, float, bytes, type(None)))
 
         return prs
 
@@ -1803,9 +1793,7 @@ class TestParseBridgeSupport(TestCase):
                 metadata_registry,
                 {
                     (b"class1", b"sel1:"): {
-                        "arguments": {
-                            2: {"null_accepted": False, "type_modifier": b"o"}
-                        }
+                        "arguments": {2: {"null_accepted": False, "type_modifier": b"o"}}
                     }
                 },
             )
@@ -1913,9 +1901,7 @@ class TestParseBridgeSupport(TestCase):
             )
             self.assertEqual(len(orig_libraries) + 1, len(bridgesupport._libraries))
             self.assertIsInstance(bridgesupport._libraries[-1], ctypes.CDLL)
-            self.assertEqual(
-                bridgesupport._libraries[-1]._name, "/usr/lib/libxml2.dylib"
-            )
+            self.assertEqual(bridgesupport._libraries[-1]._name, "/usr/lib/libxml2.dylib")
 
 
 class TestInitFrameworkWrapper(TestCase):
@@ -2080,7 +2066,11 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
 
             def parseBridgeSupport(
-                xml, globals, framework, dylib_path=None, inlineTab=None  # noqa: A002
+                xml,
+                globals,
+                framework,
+                dylib_path=None,
+                inlineTab=None,  # noqa: A002
             ):
                 parse_calls.append((xml, globals, framework, dylib_path, inlineTab))
 
@@ -2493,9 +2483,7 @@ class TestInitFrameworkWrapper(TestCase):
                 ("Test", "bridgesupport"): os.path.join(
                     helper_dir, "bundle_data", "Test.bridgesupport"
                 ),
-                ("Test", "dylib"): os.path.join(
-                    helper_dir, "bundle_data", "Test.dylib"
-                ),
+                ("Test", "dylib"): os.path.join(helper_dir, "bundle_data", "Test.dylib"),
             }
             TEST_BRIDGESUPPORT_DIRECTORIES[:] = [os.path.join(helper_dir, "with_data")]
 
@@ -2887,9 +2875,7 @@ class TestMisc(TestCase):
     def test_resource_stubs(self):
         self.assertTrue(bridgesupport.resource_exists("objc", "__init__.py"))
         self.assertFalse(bridgesupport.resource_exists("objc", "no-such-file"))
-        self.assertFalse(
-            bridgesupport.resource_exists("no-such-package", "no-such-file")
-        )
+        self.assertFalse(bridgesupport.resource_exists("no-such-package", "no-such-file"))
 
         data = bridgesupport.resource_string("objc", "__init__.py")
         self.assertIsInstance(data, str)

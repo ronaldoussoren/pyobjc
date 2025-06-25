@@ -160,21 +160,11 @@ class TestNSAttributedString(TestCase):
             AppKit.NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2
         )
 
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithPath_documentAttributes_, 1
-        )
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithURL_documentAttributes_, 1
-        )
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithRTF_documentAttributes_, 1
-        )
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithRTFD_documentAttributes_, 1
-        )
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithHTML_documentAttributes_, 1
-        )
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithPath_documentAttributes_, 1)
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithURL_documentAttributes_, 1)
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithRTF_documentAttributes_, 1)
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithRTFD_documentAttributes_, 1)
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithHTML_documentAttributes_, 1)
         self.assertArgIsOut(
             AppKit.NSAttributedString.initWithHTML_baseURL_documentAttributes_, 2
         )

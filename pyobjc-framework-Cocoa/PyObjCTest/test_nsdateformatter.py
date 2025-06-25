@@ -80,6 +80,4 @@ class TestNSDateFormatter(TestCase):
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(Foundation.NSDateFormatter.doesRelativeDateFormatting)
-        self.assertArgIsBOOL(
-            Foundation.NSDateFormatter.setDoesRelativeDateFormatting_, 0
-        )
+        self.assertArgIsBOOL(Foundation.NSDateFormatter.setDoesRelativeDateFormatting_, 0)

@@ -39,13 +39,9 @@ class TestRPError(TestCase):
         self.assertEqual(ReplayKit.RPRecordingErrorFailedAssetWriterInWrongState, -5825)
         self.assertEqual(ReplayKit.RPRecordingErrorFailedAssetWriterExportFailed, -5826)
         self.assertEqual(ReplayKit.RPRecordingErrorFailedToRemoveFile, -5827)
-        self.assertEqual(
-            ReplayKit.RPRecordingErrorFailedAssetWriterExportCanceled, -5828
-        )
+        self.assertEqual(ReplayKit.RPRecordingErrorFailedAssetWriterExportCanceled, -5828)
         self.assertEqual(ReplayKit.RPRecordingErrorAttemptToStopNonRecording, -5829)
-        self.assertEqual(
-            ReplayKit.RPRecordingErrorAttemptToStartInRecordingState, -5830
-        )
+        self.assertEqual(ReplayKit.RPRecordingErrorAttemptToStartInRecordingState, -5830)
         self.assertEqual(ReplayKit.RPRecordingErrorPhotoFailure, -5831)
         self.assertEqual(ReplayKit.RPRecordingErrorRecordingInvalidSession, -5832)
         self.assertEqual(ReplayKit.RPRecordingErrorFailedToStartCaptureStack, -5833)

@@ -16,18 +16,14 @@ class TestCVImageBuffer(TestCase):
         self.assertIsInstance(Quartz.kCVImageBufferCleanApertureKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferCleanApertureWidthKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferCleanApertureHeightKey, str)
-        self.assertIsInstance(
-            Quartz.kCVImageBufferCleanApertureHorizontalOffsetKey, str
-        )
+        self.assertIsInstance(Quartz.kCVImageBufferCleanApertureHorizontalOffsetKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferCleanApertureVerticalOffsetKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferPreferredCleanApertureKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferFieldCountKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferFieldDetailKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferFieldDetailTemporalTopFirst, str)
         self.assertIsInstance(Quartz.kCVImageBufferFieldDetailTemporalBottomFirst, str)
-        self.assertIsInstance(
-            Quartz.kCVImageBufferFieldDetailSpatialFirstLineEarly, str
-        )
+        self.assertIsInstance(Quartz.kCVImageBufferFieldDetailSpatialFirstLineEarly, str)
         self.assertIsInstance(Quartz.kCVImageBufferFieldDetailSpatialFirstLineLate, str)
         self.assertIsInstance(Quartz.kCVImageBufferPixelAspectRatioKey, str)
         self.assertIsInstance(
@@ -72,9 +68,7 @@ class TestCVImageBuffer(TestCase):
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(Quartz.kCVImageBufferICCProfileKey, str)
-        self.assertIsInstance(
-            Quartz.kCVImageBufferTransferFunction_SMPTE_240M_1995, str
-        )
+        self.assertIsInstance(Quartz.kCVImageBufferTransferFunction_SMPTE_240M_1995, str)
         self.assertIsInstance(Quartz.kCVImageBufferTransferFunction_UseGamma, str)
         self.assertIsInstance(Quartz.kCVImageBufferTransferFunction_EBU_3213, str)
         self.assertIsInstance(Quartz.kCVImageBufferTransferFunction_SMPTE_C, str)
@@ -103,9 +97,7 @@ class TestCVImageBuffer(TestCase):
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(
-            Quartz.kCVImageBufferTransferFunction_SMPTE_ST_2084_PQ, str
-        )
+        self.assertIsInstance(Quartz.kCVImageBufferTransferFunction_SMPTE_ST_2084_PQ, str)
         self.assertIsInstance(Quartz.kCVImageBufferTransferFunction_ITU_R_2100_HLG, str)
         self.assertIsInstance(Quartz.kCVImageBufferMasteringDisplayColorVolumeKey, str)
         self.assertIsInstance(Quartz.kCVImageBufferContentLightLevelInfoKey, str)
@@ -158,9 +150,7 @@ class TestCVImageBuffer(TestCase):
 
     @min_os_level("10.8")
     def testFunctions10_8(self):
-        self.assertResultIsCFRetained(
-            Quartz.CVImageBufferCreateColorSpaceFromAttachments
-        )
+        self.assertResultIsCFRetained(Quartz.CVImageBufferCreateColorSpaceFromAttachments)
 
     @min_os_level("10.13")
     def testFunctions10_13(self):

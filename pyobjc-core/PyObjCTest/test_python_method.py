@@ -77,9 +77,7 @@ class TestPythonMethod(TestCase):
         self.assertEqual(o.args(b=1, a=2), (2, 1))
 
     def test_create_alias(self):
-        NSMutableArray.ocInitWithArray = objc.python_method(
-            NSMutableArray.initWithArray_
-        )
+        NSMutableArray.ocInitWithArray = objc.python_method(NSMutableArray.initWithArray_)
 
         o = NSMutableArray.alloc().ocInitWithArray([1, 2])
         self.assertIsInstance(o, NSMutableArray)

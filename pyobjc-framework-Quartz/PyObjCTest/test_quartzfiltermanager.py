@@ -10,15 +10,9 @@ class TestQuartzFilterManager(TestCase):
     @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(Quartz.kQuartzFilterManagerDidAddFilterNotification, str)
-        self.assertIsInstance(
-            Quartz.kQuartzFilterManagerDidRemoveFilterNotification, str
-        )
-        self.assertIsInstance(
-            Quartz.kQuartzFilterManagerDidModifyFilterNotification, str
-        )
-        self.assertIsInstance(
-            Quartz.kQuartzFilterManagerDidSelectFilterNotification, str
-        )
+        self.assertIsInstance(Quartz.kQuartzFilterManagerDidRemoveFilterNotification, str)
+        self.assertIsInstance(Quartz.kQuartzFilterManagerDidModifyFilterNotification, str)
+        self.assertIsInstance(Quartz.kQuartzFilterManagerDidSelectFilterNotification, str)
 
     @min_os_level("10.15")
     def testConstants10_6(self):

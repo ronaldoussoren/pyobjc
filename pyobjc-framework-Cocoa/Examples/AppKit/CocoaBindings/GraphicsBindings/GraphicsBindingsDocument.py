@@ -35,9 +35,7 @@ class GraphicsBindingsDocument(NSDocument):
         self, key, fromObject, toObject, withKeyPath, options
     ):
         self.bindings.append((fromObject, key))
-        fromObject.bind_toObject_withKeyPath_options_(
-            key, toObject, withKeyPath, options
-        )
+        fromObject.bind_toObject_withKeyPath_options_(key, toObject, withKeyPath, options)
 
     def windowControllerDidLoadNib_(self, controller):
         super().windowControllerDidLoadNib_(controller)

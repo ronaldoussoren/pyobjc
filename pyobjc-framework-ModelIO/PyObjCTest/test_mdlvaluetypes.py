@@ -21,9 +21,7 @@ class TestMDLValueTypes(TestCase):
             0,
             b"n^" + simd.simd_double4x4.__typestr__,
         )
-        self.assertArgSizeInArg(
-            ModelIO.MDLMatrix4x4Array.setDouble4x4Array_count_, 0, 1
-        )
+        self.assertArgSizeInArg(ModelIO.MDLMatrix4x4Array.setDouble4x4Array_count_, 0, 1)
         self.assertArgIsIn(ModelIO.MDLMatrix4x4Array.setDouble4x4Array_count_, 0)
 
         self.assertArgHasType(

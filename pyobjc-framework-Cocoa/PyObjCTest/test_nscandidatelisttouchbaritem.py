@@ -36,9 +36,7 @@ class TestNSCandidateListTouchBarItem(TestCase):
         self.assertResultIsBOOL(AppKit.NSCandidateListTouchBarItem.allowsCollapsing)
         self.assertArgIsBOOL(AppKit.NSCandidateListTouchBarItem.setAllowsCollapsing_, 0)
 
-        self.assertResultIsBOOL(
-            AppKit.NSCandidateListTouchBarItem.isCandidateListVisible
-        )
+        self.assertResultIsBOOL(AppKit.NSCandidateListTouchBarItem.isCandidateListVisible)
         # self.assertArgIsBOOL(AppKit.NSCandidateListTouchBarItem.setCandidateListVisible_, 0)
 
         self.assertArgIsBOOL(

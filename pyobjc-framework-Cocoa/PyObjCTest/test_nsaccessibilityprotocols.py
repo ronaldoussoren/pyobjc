@@ -325,9 +325,7 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertProtocolExists("NSAccessibilityElementLoading")
 
     def testProtocols(self):
-        self.assertResultIsBOOL(
-            TestNSAccessibilityProtocolsHelper.isAccessibilityFocused
-        )
+        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityFocused)
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityFrame,
             AppKit.NSRect.__typestr__,
@@ -427,9 +425,7 @@ class TestNSAccessibilityProtocols(TestCase):
             AppKit.NSRect.__typestr__,
         )
 
-        self.assertResultIsBOOL(
-            TestNSAccessibilityProtocolsHelper.isAccessibilityElement
-        )
+        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityElement)
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityElement_, 0
         )
@@ -442,9 +438,7 @@ class TestNSAccessibilityProtocols(TestCase):
             0,
             AppKit.NSRect.__typestr__,
         )
-        self.assertResultIsBOOL(
-            TestNSAccessibilityProtocolsHelper.isAccessibilityFocused
-        )
+        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityFocused)
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityFocused_, 0
         )
@@ -478,15 +472,11 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityExpanded_, 0
         )
-        self.assertResultIsBOOL(
-            TestNSAccessibilityProtocolsHelper.isAccessibilityEdited
-        )
+        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityEdited)
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityEdited_, 0
         )
-        self.assertResultIsBOOL(
-            TestNSAccessibilityProtocolsHelper.isAccessibilityEnabled
-        )
+        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityEnabled)
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityEnabled_, 0
         )
@@ -502,9 +492,7 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityAlternateUIVisible_, 0
         )
-        self.assertResultIsBOOL(
-            TestNSAccessibilityProtocolsHelper.isAccessibilityHidden
-        )
+        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityHidden)
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityHidden_, 0
         )
@@ -800,13 +788,9 @@ class TestNSAccessibilityProtocols(TestCase):
             objc._C_NSInteger,
         )
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityModal)
-        self.assertArgIsBOOL(
-            TestNSAccessibilityProtocolsHelper.setAccessibilityModal_, 0
-        )
+        self.assertArgIsBOOL(TestNSAccessibilityProtocolsHelper.setAccessibilityModal_, 0)
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityMain)
-        self.assertArgIsBOOL(
-            TestNSAccessibilityProtocolsHelper.setAccessibilityMain_, 0
-        )
+        self.assertArgIsBOOL(TestNSAccessibilityProtocolsHelper.setAccessibilityMain_, 0)
         self.assertResultIsBOOL(
             TestNSAccessibilityProtocolsHelper.isAccessibilityMinimized
         )

@@ -53,13 +53,9 @@ class TestABAddressBookC(TestCase):
         self.assertEqual(name, "ABPerson")
 
         self.assertResultHasType(AddressBook.ABAddPropertiesAndTypes, objc._C_CFIndex)
-        self.assertArgHasType(
-            AddressBook.ABAddPropertiesAndTypes, 0, _C_ABAddressBookRef
-        )
+        self.assertArgHasType(AddressBook.ABAddPropertiesAndTypes, 0, _C_ABAddressBookRef)
         self.assertArgHasType(AddressBook.ABAddPropertiesAndTypes, 1, _C_CFStringRef)
-        self.assertArgHasType(
-            AddressBook.ABAddPropertiesAndTypes, 2, _C_CFDictionaryRef
-        )
+        self.assertArgHasType(AddressBook.ABAddPropertiesAndTypes, 2, _C_CFDictionaryRef)
 
         self.assertResultHasType(AddressBook.ABRemoveProperties, objc._C_CFIndex)
         self.assertArgHasType(AddressBook.ABRemoveProperties, 0, _C_ABAddressBookRef)
@@ -75,9 +71,7 @@ class TestABAddressBookC(TestCase):
         v = AddressBook.ABTypeOfProperty(ref, "ABPersion", v[0])
         self.assertIsInstance(v, int)
 
-        v = AddressBook.ABCopyRecordForUniqueId(
-            ref, AddressBook.ABRecordCopyUniqueId(me)
-        )
+        v = AddressBook.ABCopyRecordForUniqueId(ref, AddressBook.ABRecordCopyUniqueId(me))
         self.assertResultIsCFRetained(AddressBook.ABCopyRecordForUniqueId)
         self.assertIsInstance(v, AddressBook.ABPersonRef)
 
@@ -139,28 +133,16 @@ class TestABAddressBookC(TestCase):
         self.assertResultHasType(
             AddressBook.ABPersonCreateSearchElement, _C_ABSearchElementRef
         )
-        self.assertArgHasType(
-            AddressBook.ABPersonCreateSearchElement, 0, _C_CFStringRef
-        )
-        self.assertArgHasType(
-            AddressBook.ABPersonCreateSearchElement, 1, _C_CFStringRef
-        )
-        self.assertArgHasType(
-            AddressBook.ABPersonCreateSearchElement, 2, _C_CFStringRef
-        )
+        self.assertArgHasType(AddressBook.ABPersonCreateSearchElement, 0, _C_CFStringRef)
+        self.assertArgHasType(AddressBook.ABPersonCreateSearchElement, 1, _C_CFStringRef)
+        self.assertArgHasType(AddressBook.ABPersonCreateSearchElement, 2, _C_CFStringRef)
         self.assertArgHasType(AddressBook.ABPersonCreateSearchElement, 3, objc._C_ID)
-        self.assertArgHasType(
-            AddressBook.ABPersonCreateSearchElement, 4, objc._C_CFIndex
-        )
+        self.assertArgHasType(AddressBook.ABPersonCreateSearchElement, 4, objc._C_CFIndex)
 
         self.assertResultHasType(AddressBook.ABGroupCreate, _C_ABGroupRef)
 
-        self.assertResultHasType(
-            AddressBook.ABGroupCopyArrayOfAllMembers, _C_CFArrayRef
-        )
-        self.assertArgHasType(
-            AddressBook.ABGroupCopyArrayOfAllMembers, 0, _C_ABGroupRef
-        )
+        self.assertResultHasType(AddressBook.ABGroupCopyArrayOfAllMembers, _C_CFArrayRef)
+        self.assertArgHasType(AddressBook.ABGroupCopyArrayOfAllMembers, 0, _C_ABGroupRef)
 
         self.assertResultHasType(AddressBook.ABGroupAddMember, objc._C_BOOL)
         self.assertArgHasType(AddressBook.ABGroupAddMember, 0, _C_ABGroupRef)
@@ -224,9 +206,7 @@ class TestABAddressBookC(TestCase):
         self.assertArgHasType(AddressBook.ABGroupCreateSearchElement, 1, _C_CFStringRef)
         self.assertArgHasType(AddressBook.ABGroupCreateSearchElement, 2, _C_CFStringRef)
         self.assertArgHasType(AddressBook.ABGroupCreateSearchElement, 3, objc._C_ID)
-        self.assertArgHasType(
-            AddressBook.ABGroupCreateSearchElement, 4, objc._C_CFIndex
-        )
+        self.assertArgHasType(AddressBook.ABGroupCreateSearchElement, 4, objc._C_CFIndex)
 
         self.assertResultHasType(
             AddressBook.ABSearchElementCreateWithConjunction, _C_ABSearchElementRef
@@ -257,9 +237,7 @@ class TestABAddressBookC(TestCase):
             AddressBook.ABMultiValueCopyValueAtIndex, 1, objc._C_CFIndex
         )
 
-        self.assertResultHasType(
-            AddressBook.ABMultiValueCopyLabelAtIndex, _C_CFStringRef
-        )
+        self.assertResultHasType(AddressBook.ABMultiValueCopyLabelAtIndex, _C_CFStringRef)
         self.assertArgHasType(
             AddressBook.ABMultiValueCopyLabelAtIndex, 0, _C_ABMultiValueRef
         )
@@ -295,9 +273,7 @@ class TestABAddressBookC(TestCase):
         )
 
         self.assertResultHasType(AddressBook.ABMultiValuePropertyType, objc._C_CFIndex)
-        self.assertArgHasType(
-            AddressBook.ABMultiValuePropertyType, 0, _C_ABMultiValueRef
-        )
+        self.assertArgHasType(AddressBook.ABMultiValuePropertyType, 0, _C_ABMultiValueRef)
 
         self.assertResultHasType(AddressBook.ABMultiValueCreateCopy, _C_ABMultiValueRef)
         self.assertArgHasType(AddressBook.ABMultiValueCreateCopy, 0, _C_ABMultiValueRef)
@@ -328,16 +304,12 @@ class TestABAddressBookC(TestCase):
         self.assertArgHasType(AddressBook.ABMultiValueRemove, 1, objc._C_CFIndex)
 
         self.assertResultHasType(AddressBook.ABMultiValueReplaceValue, objc._C_BOOL)
-        self.assertArgHasType(
-            AddressBook.ABMultiValueReplaceValue, 0, _C_ABMultiValueRef
-        )
+        self.assertArgHasType(AddressBook.ABMultiValueReplaceValue, 0, _C_ABMultiValueRef)
         self.assertArgHasType(AddressBook.ABMultiValueReplaceValue, 1, objc._C_ID)
         self.assertArgHasType(AddressBook.ABMultiValueReplaceValue, 2, objc._C_CFIndex)
 
         self.assertResultHasType(AddressBook.ABMultiValueReplaceLabel, objc._C_BOOL)
-        self.assertArgHasType(
-            AddressBook.ABMultiValueReplaceLabel, 0, _C_ABMultiValueRef
-        )
+        self.assertArgHasType(AddressBook.ABMultiValueReplaceLabel, 0, _C_ABMultiValueRef)
         self.assertArgHasType(AddressBook.ABMultiValueReplaceLabel, 1, _C_CFStringRef)
         self.assertArgHasType(AddressBook.ABMultiValueReplaceLabel, 2, objc._C_CFIndex)
 

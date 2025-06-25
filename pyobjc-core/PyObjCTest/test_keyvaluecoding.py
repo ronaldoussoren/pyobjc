@@ -97,9 +97,7 @@ class TestArrayOperators(TestCase):
 
         values = [{"a": {"b": 1}}, {"a": {"b": 1}}, {"a": {"b": 2}}, {"a": {"b": 3}}]
 
-        self.assertEqual(
-            arrayOperators.unionOfObjects(values, ("a", "b")), [1, 1, 2, 3]
-        )
+        self.assertEqual(arrayOperators.unionOfObjects(values, ("a", "b")), [1, 1, 2, 3])
         self.assertEqual(
             KeyValueCoding.getKeyPath(values, "@unionOfObjects.a.b"), [1, 1, 2, 3]
         )

@@ -10,9 +10,7 @@ class TestAVAssetResourceLoaderHelper(AVFoundation.NSObject):
     def resourceLoader_shouldWaitForRenewalOfRequestedResource_(self, rl, r):
         return 1
 
-    def resourceLoader_shouldWaitForResponseToAuthenticationChallenge_(
-        self, rl, r
-    ):  # noqa: B950
+    def resourceLoader_shouldWaitForResponseToAuthenticationChallenge_(self, rl, r):  # noqa: B950
         return 1
 
 
@@ -47,13 +45,9 @@ class TestAVAssetResourceLoader(TestCase):
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertResultIsBOOL(
-            AVFoundation.AVAssetResourceLoadingRequest.isFinished
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoadingRequest.isFinished)  # noqa: B950
 
-        self.assertResultIsBOOL(
-            AVFoundation.AVAssetResourceLoadingRequest.isCancelled
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVAssetResourceLoadingRequest.isCancelled)  # noqa: B950
 
         self.assertResultIsBOOL(
             AVFoundation.AVAssetResourceLoadingContentInformationRequest.isByteRangeAccessSupported  # noqa: B950

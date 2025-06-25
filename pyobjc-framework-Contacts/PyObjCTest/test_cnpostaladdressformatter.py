@@ -10,6 +10,4 @@ class TestCNPostalAddressFormatter(TestCase):
     def testConstants(self):
         self.assertEqual(Contacts.CNPostalAddressFormatterStyleMailingAddress, 0)
         self.assertIsInstance(Contacts.CNPostalAddressPropertyAttribute, str)
-        self.assertIsInstance(
-            Contacts.CNPostalAddressLocalizedPropertyNameAttribute, str
-        )
+        self.assertIsInstance(Contacts.CNPostalAddressLocalizedPropertyNameAttribute, str)

@@ -72,9 +72,7 @@ class TestMDLAsset(TestCase):
             ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndexing_error_, 3
         )
 
-        self.assertResultHasType(
-            ModelIO.MDLAsset.upAxis, simd.vector_float3.__typestr__
-        )
+        self.assertResultHasType(ModelIO.MDLAsset.upAxis, simd.vector_float3.__typestr__)
         self.assertArgHasType(
             ModelIO.MDLAsset.setUpAxis_, 0, simd.vector_float3.__typestr__
         )

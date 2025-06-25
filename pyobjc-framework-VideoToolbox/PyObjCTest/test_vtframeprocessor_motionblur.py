@@ -4,9 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestVTFrameProcessor_MotionBlur(TestCase):
     def test_constants(self):
-        self.assertIsEnumType(
-            VideoToolbox.VTMotionBlurConfigurationQualityPrioritization
-        )
+        self.assertIsEnumType(VideoToolbox.VTMotionBlurConfigurationQualityPrioritization)
         self.assertEqual(
             VideoToolbox.VTMotionBlurConfigurationQualityPrioritizationNormal, 1
         )
@@ -23,9 +21,5 @@ class TestVTFrameProcessor_MotionBlur(TestCase):
 
     @min_os_level("15.4")
     def test_methods(self):
-        self.assertResultIsBOOL(
-            VideoToolbox.VTMotionBlurConfiguration.usePrecomputedFlow
-        )
-        self.assertResultIsBOOL(
-            VideoToolbox.VTMotionBlurConfiguration.processorSupported
-        )
+        self.assertResultIsBOOL(VideoToolbox.VTMotionBlurConfiguration.usePrecomputedFlow)
+        self.assertResultIsBOOL(VideoToolbox.VTMotionBlurConfiguration.processorSupported)

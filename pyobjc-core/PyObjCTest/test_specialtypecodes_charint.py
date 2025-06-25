@@ -191,9 +191,7 @@ class TestTypeCode_int8(TestCase):
         v = o.int8Arg_andint8Arg_(ord("a"), ord("b"))
         self.assertEqual(v, (ord("a"), ord("b")))
 
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'char', got 'str' of 1"
-        ):
+        with self.assertRaisesRegex(ValueError, "depythonifying 'char', got 'str' of 1"):
             o.int8Arg_andint8Arg_("a", "b")
         with self.assertRaisesRegex(
             ValueError, "depythonifying 'char', got 'bytes' of 1"
@@ -210,16 +208,12 @@ class TestTypeCode_int8(TestCase):
         v = o.int8StringArg_(b"hello")
         self.assertEqual(v, [ord("h"), ord("e"), ord("l"), ord("l"), ord("o")])
 
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'char', got 'str' of 1"
-        ):
+        with self.assertRaisesRegex(ValueError, "depythonifying 'char', got 'str' of 1"):
             o.int8StringArg_("abc")
 
         # The message is fairly confusing because the generic code dealing with
         # C arrays unpacks the list argument and converts item by item.
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'char', got 'str' of 1"
-        ):
+        with self.assertRaisesRegex(ValueError, "depythonifying 'char', got 'str' of 1"):
             o.int8StringArg_(["a", "b"])
         with self.assertRaisesRegex(
             ValueError, "depythonifying 'char', got 'bytes' of 1"

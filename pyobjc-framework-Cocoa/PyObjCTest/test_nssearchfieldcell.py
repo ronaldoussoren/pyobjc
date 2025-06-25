@@ -13,6 +13,4 @@ class TestNSSearchFieldCell(TestCase):
         self.assertResultIsBOOL(AppKit.NSSearchFieldCell.sendsWholeSearchString)
         self.assertArgIsBOOL(AppKit.NSSearchFieldCell.setSendsWholeSearchString_, 0)
         self.assertResultIsBOOL(AppKit.NSSearchFieldCell.sendsSearchStringImmediately)
-        self.assertArgIsBOOL(
-            AppKit.NSSearchFieldCell.setSendsSearchStringImmediately_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSSearchFieldCell.setSendsSearchStringImmediately_, 0)

@@ -75,9 +75,7 @@ class TestWSOptions(TestCase):
 
         Network.nw_ws_response_get_status
 
-        self.assertResultIsNullTerminated(
-            Network.nw_ws_response_get_selected_subprotocol
-        )
+        self.assertResultIsNullTerminated(Network.nw_ws_response_get_selected_subprotocol)
         self.assertResultHasType(Network.nw_ws_response_get_selected_subprotocol, b"^t")
 
         self.assertArgHasType(Network.nw_ws_response_add_additional_header, 1, b"n^t")

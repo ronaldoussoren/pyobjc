@@ -111,9 +111,7 @@ class TestNumberFormatter(TestCase):
             CoreFoundation.kCFNumberFormatterAlwaysShowDecimalSeparator, str
         )
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterGroupingSeparator, str)
-        self.assertIsInstance(
-            CoreFoundation.kCFNumberFormatterUseGroupingSeparator, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterUseGroupingSeparator, str)
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterPercentSymbol, str)
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterZeroSymbol, str)
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterNaNSymbol, str)
@@ -127,9 +125,7 @@ class TestNumberFormatter(TestCase):
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterMinFractionDigits, str)
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterMaxFractionDigits, str)
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterGroupingSize, str)
-        self.assertIsInstance(
-            CoreFoundation.kCFNumberFormatterSecondaryGroupingSize, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterSecondaryGroupingSize, str)
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterRoundingMode, str)
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterRoundingIncrement, str)
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterFormatWidth, str)
@@ -152,15 +148,9 @@ class TestNumberFormatter(TestCase):
             CoreFoundation.kCFNumberFormatterCurrencyGroupingSeparator, str
         )
         self.assertIsInstance(CoreFoundation.kCFNumberFormatterIsLenient, str)
-        self.assertIsInstance(
-            CoreFoundation.kCFNumberFormatterUseSignificantDigits, str
-        )
-        self.assertIsInstance(
-            CoreFoundation.kCFNumberFormatterMinSignificantDigits, str
-        )
-        self.assertIsInstance(
-            CoreFoundation.kCFNumberFormatterMaxSignificantDigits, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterUseSignificantDigits, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterMinSignificantDigits, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterMaxSignificantDigits, str)
 
     @min_os_level("10.11")
     def testConstants10_11(self):

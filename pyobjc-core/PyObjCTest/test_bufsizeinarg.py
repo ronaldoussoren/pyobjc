@@ -4,11 +4,12 @@ import objc
 
 NSArray = objc.lookUpClass("NSArray")
 
-objc.loadBundleFunctions(
-    None, globals(), [("CFArrayGetTypeID", objc._C_NSUInteger, "")]
-)
+objc.loadBundleFunctions(None, globals(), [("CFArrayGetTypeID", objc._C_NSUInteger, "")])
 CFArrayRef = objc.registerCFSignature(
-    "CFArrayRef", b"^{__CFArray=}", CFArrayGetTypeID(), "NSArray"  # noqa: F821
+    "CFArrayRef",
+    b"^{__CFArray=}",
+    CFArrayGetTypeID(),
+    "NSArray",  # noqa: F821
 )
 
 for tp in (
@@ -22,8 +23,7 @@ for tp in (
             f"{pfx}{tp}:array:".encode(),
             {
                 "arguments": {
-                    2
-                    + 1: {
+                    2 + 1: {
                         "type_modifier": objc._C_IN,
                         "c_array_length_in_arg": 2 + 0,
                         "null_accepted": False,
@@ -42,8 +42,7 @@ for tp in (
                 {
                     "arguments": {
                         2 + 0: {"type_modifier": objc._C_IN, "type": "^C"},
-                        2
-                        + 1: {
+                        2 + 1: {
                             "type_modifier": objc._C_IN,
                             "c_array_length_in_arg": 2 + 0,
                             "null_accepted": False,
@@ -58,8 +57,7 @@ for tp in (
                 {
                     "arguments": {
                         2 + 0: {"type_modifier": objc._C_IN},
-                        2
-                        + 1: {
+                        2 + 1: {
                             "type_modifier": objc._C_IN,
                             "c_array_length_in_arg": 2 + 0,
                             "null_accepted": False,
@@ -74,8 +72,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_LNG},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -89,8 +86,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_ULNG},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -104,8 +100,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_LNGLNG},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -119,8 +114,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_ULNGLNG},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -135,8 +129,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_PTR + objc._C_LNG, "type_modifier": "n"},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -150,8 +143,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_PTR + objc._C_ULNG, "type_modifier": "n"},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -165,8 +157,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_PTR + objc._C_LNGLNG, "type_modifier": "n"},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -180,8 +171,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_PTR + objc._C_ULNGLNG, "type_modifier": "n"},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -196,8 +186,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_CHAR_AS_INT},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -211,13 +200,11 @@ objc.registerMetaDataForSelector(
     b"pintchar:array:",
     {
         "arguments": {
-            2
-            + 0: {
+            2 + 0: {
                 "type": objc._C_PTR + objc._C_CHAR_AS_INT,
                 "type_modifier": objc._C_IN,
             },
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -232,8 +219,7 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2 + 0: {"type": objc._C_PTR + objc._C_CHR, "type_modifier": objc._C_IN},
-            2
-            + 1: {
+            2 + 1: {
                 "type_modifier": objc._C_IN,
                 "c_array_length_in_arg": 2 + 0,
                 "null_accepted": False,
@@ -248,8 +234,7 @@ for tp in ("id", "cfarray", "nsrange", "cfrange", "float"):
         f"{tp}:array:".encode(),
         {
             "arguments": {
-                2
-                + 1: {
+                2 + 1: {
                     "type_modifier": objc._C_IN,
                     "c_array_length_in_arg": 2 + 0,
                     "null_accepted": False,
@@ -263,12 +248,10 @@ for tp in ("id", "cfarray", "nsrange", "cfrange", "float"):
         f"p{tp}:array:".encode(),
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_IN,
                 },
-                2
-                + 1: {
+                2 + 1: {
                     "type_modifier": objc._C_IN,
                     "c_array_length_in_arg": 2 + 0,
                     "null_accepted": False,

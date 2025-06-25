@@ -12,9 +12,7 @@ class TestSecTrustSettings(TestCase):
         self.assertEqual(
             Security.kSecTrustSettingsPolicyString, "kSecTrustSettingsPolicyString"
         )
-        self.assertEqual(
-            Security.kSecTrustSettingsKeyUsage, "kSecTrustSettingsKeyUsage"
-        )
+        self.assertEqual(Security.kSecTrustSettingsKeyUsage, "kSecTrustSettingsKeyUsage")
         self.assertEqual(
             Security.kSecTrustSettingsAllowedError, "kSecTrustSettingsAllowedError"
         )
@@ -41,13 +39,9 @@ class TestSecTrustSettings(TestCase):
         self.assertEqual(Security.kSecTrustSettingsDefaultRootCertSetting, -1)
 
     def test_functions(self):
-        self.assertResultHasType(
-            Security.SecTrustSettingsCopyTrustSettings, objc._C_INT
-        )
+        self.assertResultHasType(Security.SecTrustSettingsCopyTrustSettings, objc._C_INT)
         self.assertArgHasType(Security.SecTrustSettingsCopyTrustSettings, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecTrustSettingsCopyTrustSettings, 1, objc._C_UINT
-        )
+        self.assertArgHasType(Security.SecTrustSettingsCopyTrustSettings, 1, objc._C_UINT)
         self.assertArgHasType(
             Security.SecTrustSettingsCopyTrustSettings,
             2,
@@ -57,25 +51,19 @@ class TestSecTrustSettings(TestCase):
 
         self.assertResultHasType(Security.SecTrustSettingsSetTrustSettings, objc._C_INT)
         self.assertArgHasType(Security.SecTrustSettingsSetTrustSettings, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecTrustSettingsSetTrustSettings, 1, objc._C_UINT
-        )
+        self.assertArgHasType(Security.SecTrustSettingsSetTrustSettings, 1, objc._C_UINT)
         self.assertArgHasType(Security.SecTrustSettingsSetTrustSettings, 2, objc._C_ID)
 
         self.assertResultHasType(
             Security.SecTrustSettingsRemoveTrustSettings, objc._C_INT
         )
-        self.assertArgHasType(
-            Security.SecTrustSettingsRemoveTrustSettings, 0, objc._C_ID
-        )
+        self.assertArgHasType(Security.SecTrustSettingsRemoveTrustSettings, 0, objc._C_ID)
         self.assertArgHasType(
             Security.SecTrustSettingsRemoveTrustSettings, 1, objc._C_UINT
         )
 
         self.assertResultHasType(Security.SecTrustSettingsCopyCertificates, objc._C_INT)
-        self.assertArgHasType(
-            Security.SecTrustSettingsCopyCertificates, 0, objc._C_UINT
-        )
+        self.assertArgHasType(Security.SecTrustSettingsCopyCertificates, 0, objc._C_UINT)
         self.assertArgHasType(
             Security.SecTrustSettingsCopyCertificates,
             1,

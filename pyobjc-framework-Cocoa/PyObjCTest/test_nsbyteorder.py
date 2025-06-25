@@ -38,9 +38,7 @@ class TestNSByteOrder(TestCase):
             CoreFoundation.CFSwapInt64HostToLittle(350),
         )
 
-        self.assertEqual(
-            Foundation.NSSwapLongLong(350), CoreFoundation.CFSwapInt64(350)
-        )
+        self.assertEqual(Foundation.NSSwapLongLong(350), CoreFoundation.CFSwapInt64(350))
         self.assertEqual(
             Foundation.NSSwapBigShortToHost(350),
             CoreFoundation.CFSwapInt16BigToHost(350),

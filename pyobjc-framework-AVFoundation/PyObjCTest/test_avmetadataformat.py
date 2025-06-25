@@ -45,22 +45,16 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeUserDataKeyCreationDate, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataQuickTimeUserDataKeyDescription, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyDescription, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyDirector, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataQuickTimeUserDataKeyDisclaimer, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyDisclaimer, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyEncodedBy, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyFullName, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyGenre, str)
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeUserDataKeyHostComputer, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataQuickTimeUserDataKeyInformation, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyInformation, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyKeywords, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyMake, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyModel, str)
@@ -73,9 +67,7 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeUserDataKeyOriginalSource, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataQuickTimeUserDataKeyPerformers, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyPerformers, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyProducer, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyPublisher, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeUserDataKeyProduct, str)
@@ -113,21 +105,15 @@ class TestAVMetadataFormat(TestCase):
             AVFoundation.AVMetadataQuickTimeMetadataKeyCreationDate, str
         )
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyDirector, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataQuickTimeMetadataKeyDisplayName, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataQuickTimeMetadataKeyInformation, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyDisplayName, str)
+        self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyInformation, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyKeywords, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyProducer, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyPublisher, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyAlbum, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyArtist, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyArtwork, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataQuickTimeMetadataKeyDescription, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyDescription, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeySoftware, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyYear, str)
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyGenre, str)
@@ -158,9 +144,7 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeMetadataKeyCollectionUser, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataQuickTimeMetadataKeyRatingUser, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyRatingUser, str)
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeMetadataKeyLocationName, str
         )
@@ -196,9 +180,7 @@ class TestAVMetadataFormat(TestCase):
         )
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyUserGenre, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeySongName, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataiTunesMetadataKeyTrackSubTitle, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyTrackSubTitle, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyEncodingTool, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyComposer, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyAlbumArtist, str)
@@ -213,9 +195,7 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyGenreID, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyGrouping, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyPlaylistID, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataiTunesMetadataKeyContentRating, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyContentRating, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyBeatsPerMin, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyTrackNumber, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyArtDirector, str)
@@ -230,21 +210,15 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyDirector, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyEQ, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyLinerNotes, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataiTunesMetadataKeyRecordCompany, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataiTunesMetadataKeyOriginalArtist, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyRecordCompany, str)
+        self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyOriginalArtist, str)
         self.assertIsInstance(
             AVFoundation.AVMetadataiTunesMetadataKeyPhonogramRights, str
         )
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyProducer, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyPerformer, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyPublisher, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataiTunesMetadataKeySoundEngineer, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeySoundEngineer, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeySoloist, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyCredits, str)
         self.assertIsInstance(AVFoundation.AVMetadataiTunesMetadataKeyThanks, str)
@@ -262,9 +236,7 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyEncryption, str)
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyEqualization, str)
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyEqualization2, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataID3MetadataKeyEventTimingCodes, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyEventTimingCodes, str)
         self.assertIsInstance(
             AVFoundation.AVMetadataID3MetadataKeyGeneralEncapsulatedObject, str
         )
@@ -273,9 +245,7 @@ class TestAVMetadataFormat(TestCase):
             AVFoundation.AVMetadataID3MetadataKeyInvolvedPeopleList_v23, str
         )
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyLink, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataID3MetadataKeyMusicCDIdentifier, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyMusicCDIdentifier, str)
         self.assertIsInstance(
             AVFoundation.AVMetadataID3MetadataKeyMPEGLocationLookupTable, str
         )
@@ -298,9 +268,7 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyReverb, str)
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeySeek, str)
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeySignature, str)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataID3MetadataKeySynchronizedLyric, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeySynchronizedLyric, str)
         self.assertIsInstance(
             AVFoundation.AVMetadataID3MetadataKeySynchronizedTempoCodes, str
         )
@@ -328,9 +296,7 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataID3MetadataKeyContentGroupDescription, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataID3MetadataKeyTitleDescription, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyTitleDescription, str)
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeySubTitle, str)
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyInitialKey, str)
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyLanguage, str)
@@ -343,12 +309,8 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataID3MetadataKeyOriginalAlbumTitle, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataID3MetadataKeyOriginalFilename, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataID3MetadataKeyOriginalLyricist, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyOriginalFilename, str)
+        self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyOriginalLyricist, str)
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyOriginalArtist, str)
         self.assertIsInstance(
             AVFoundation.AVMetadataID3MetadataKeyOriginalReleaseYear, str

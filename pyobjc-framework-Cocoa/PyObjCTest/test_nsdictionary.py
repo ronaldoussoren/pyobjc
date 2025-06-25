@@ -275,9 +275,7 @@ class TestVariadic(TestCase):
         self.assertEqual(o, {"a": 42, "b": 43})
         self.assertIsInstance(o, Foundation.NSDictionary)
 
-        o = Foundation.NSMutableDictionary.dictionaryWithObjectsAndKeys_(
-            42, "a", 43, "b"
-        )
+        o = Foundation.NSMutableDictionary.dictionaryWithObjectsAndKeys_(42, "a", 43, "b")
         self.assertEqual(o, {"a": 42, "b": 43})
         self.assertIsInstance(o, Foundation.NSMutableDictionary)
 
@@ -330,9 +328,7 @@ class TestNSDictionary(TestCase):
         self.assertArgIsBOOL(Foundation.NSDictionary.initWithDictionary_copyItems_, 1)
 
         self.assertIsNullTerminated(Foundation.NSDictionary.initWithObjectsAndKeys_)
-        self.assertIsNullTerminated(
-            Foundation.NSDictionary.dictionaryWithObjectsAndKeys_
-        )
+        self.assertIsNullTerminated(Foundation.NSDictionary.dictionaryWithObjectsAndKeys_)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
@@ -372,6 +368,4 @@ class TestNSDictionary(TestCase):
         self.assertResultIsBOOL(Foundation.NSDictionary.writeToURL_error_)
 
         self.assertArgIsOut(Foundation.NSDictionary.initWithContentsOfURL_error_, 1)
-        self.assertArgIsOut(
-            Foundation.NSDictionary.dictionaryWithContentsOfURL_error_, 1
-        )
+        self.assertArgIsOut(Foundation.NSDictionary.dictionaryWithContentsOfURL_error_, 1)

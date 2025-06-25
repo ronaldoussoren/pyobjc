@@ -6,9 +6,7 @@ class TestSFCertificateView(TestCase):
     @expectedFailure
     def test_constants(self):
         # Constant is not present on 10.12
-        self.assertHasAttr(
-            SecurityInterface, "SFCertificateViewDisclosureStateDidChange"
-        )
+        self.assertHasAttr(SecurityInterface, "SFCertificateViewDisclosureStateDidChange")
         self.assertIsInstance(
             SecurityInterface.SFCertificateViewDisclosureStateDidChange, str
         )
@@ -23,11 +21,7 @@ class TestSFCertificateView(TestCase):
         self.assertResultIsBOOL(SecurityInterface.SFCertificateView.isTrustDisplayed)
         self.assertArgIsBOOL(SecurityInterface.SFCertificateView.setDisplayDetails_, 0)
         self.assertResultIsBOOL(SecurityInterface.SFCertificateView.detailsDisplayed)
-        self.assertArgIsBOOL(
-            SecurityInterface.SFCertificateView.setDetailsDisclosed_, 0
-        )
+        self.assertArgIsBOOL(SecurityInterface.SFCertificateView.setDetailsDisclosed_, 0)
         self.assertResultIsBOOL(SecurityInterface.SFCertificateView.detailsDisclosed)
-        self.assertArgIsBOOL(
-            SecurityInterface.SFCertificateView.setPoliciesDisclosed_, 0
-        )
+        self.assertArgIsBOOL(SecurityInterface.SFCertificateView.setPoliciesDisclosed_, 0)
         self.assertResultIsBOOL(SecurityInterface.SFCertificateView.policiesDisclosed)

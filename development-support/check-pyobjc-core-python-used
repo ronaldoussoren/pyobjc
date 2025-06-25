@@ -4,6 +4,7 @@ Pre-commit hook to check that all CPython APIs used
 by pyobjc-core are in its 'python-api-used.h' header
 (used with clang's static analyzer)
 """
+
 import pathlib
 import re
 import sys
@@ -71,9 +72,11 @@ def _process_file(stream: typing.TextIO, symbols: typing.Set[str]) -> None:
             symbols.add(nm)
 
 
-def _get_py_symbols(source_root: pathlib.Path) -> typing.Tuple[typing.Set[str], typing.Set[str]]:
-    api_used : typing.Set[str] = set()
-    symbols : typing.Set[str] = set()
+def _get_py_symbols(
+    source_root: pathlib.Path,
+) -> typing.Tuple[typing.Set[str], typing.Set[str]]:
+    api_used: typing.Set[str] = set()
+    symbols: typing.Set[str] = set()
 
     for dirpath, dirs, files in source_root.walk():
         if "test" in dirs:

@@ -22,13 +22,9 @@ class TestAVContentKeySession(TestCase):
 
     @min_os_level("10.12.4")
     def testConstants10_12_4(self):
-        self.assertIsInstance(
-            AVFoundation.AVContentKeySystemFairPlayStreaming, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVContentKeySystemFairPlayStreaming, str)  # noqa: B950
 
-        self.assertIsInstance(
-            AVFoundation.AVContentKeyRequestRetryReasonTimedOut, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVContentKeyRequestRetryReasonTimedOut, str)  # noqa: B950
         self.assertIsInstance(
             AVFoundation.AVContentKeyRequestRetryReasonReceivedResponseWithExpiredLease,  # noqa: B950
             str,
@@ -38,20 +34,14 @@ class TestAVContentKeySession(TestCase):
             str,  # noqa: B950
         )
 
-        self.assertEqual(
-            AVFoundation.AVContentKeyRequestStatusRequestingResponse, 0
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVContentKeyRequestStatusReceivedResponse, 1
-        )  # noqa: B950
+        self.assertEqual(AVFoundation.AVContentKeyRequestStatusRequestingResponse, 0)  # noqa: B950
+        self.assertEqual(AVFoundation.AVContentKeyRequestStatusReceivedResponse, 1)  # noqa: B950
         self.assertEqual(AVFoundation.AVContentKeyRequestStatusRenewed, 2)
         self.assertEqual(AVFoundation.AVContentKeyRequestStatusRetried, 3)
         self.assertEqual(AVFoundation.AVContentKeyRequestStatusCancelled, 4)
         self.assertEqual(AVFoundation.AVContentKeyRequestStatusFailed, 5)
 
-        self.assertIsInstance(
-            AVFoundation.AVContentKeyRequestProtocolVersionsKey, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVContentKeyRequestProtocolVersionsKey, str)  # noqa: B950
 
         self.assertEqual(AVFoundation.AVExternalContentProtectionStatusPending, 0)
         self.assertEqual(AVFoundation.AVExternalContentProtectionStatusSufficient, 1)
@@ -63,9 +53,7 @@ class TestAVContentKeySession(TestCase):
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(
-            AVFoundation.AVContentKeySystemAuthorizationToken, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVContentKeySystemAuthorizationToken, str)  # noqa: B950
         self.assertIsInstance(
             AVFoundation.AVContentKeySessionServerPlaybackContextOptionProtocolVersions,  # noqa: B950
             str,

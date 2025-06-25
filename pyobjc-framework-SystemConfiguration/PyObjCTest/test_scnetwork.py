@@ -19,9 +19,7 @@ class TestSCNetwork(TestCase):
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsReachable, 1 << 1)
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsConnectionRequired, 1 << 2)
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsConnectionAutomatic, 1 << 3)
-        self.assertEqual(
-            SystemConfiguration.kSCNetworkFlagsInterventionRequired, 1 << 4
-        )
+        self.assertEqual(SystemConfiguration.kSCNetworkFlagsInterventionRequired, 1 << 4)
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsIsLocalAddress, 1 << 16)
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsIsDirect, 1 << 17)
 

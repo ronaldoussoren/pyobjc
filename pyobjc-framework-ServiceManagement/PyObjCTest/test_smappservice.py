@@ -19,9 +19,7 @@ class TestSMAppService(TestCase):
         self.assertResultIsBOOL(ServiceManagement.SMAppService.registerAndReturnError_)
         self.assertArgIsOut(ServiceManagement.SMAppService.registerAndReturnError_, 0)
 
-        self.assertResultIsBOOL(
-            ServiceManagement.SMAppService.unregisterAndReturnError_
-        )
+        self.assertResultIsBOOL(ServiceManagement.SMAppService.unregisterAndReturnError_)
         self.assertArgIsOut(ServiceManagement.SMAppService.unregisterAndReturnError_, 0)
 
         self.assertArgIsBlock(

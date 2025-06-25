@@ -35,9 +35,7 @@ class TestHKWorkout(TestCase):
         self.assertEqual(HealthKit.HKWorkoutActivityTypeLacrosse, 27)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeMartialArts, 28)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeMindAndBody, 29)
-        self.assertEqual(
-            HealthKit.HKWorkoutActivityTypeMixedMetabolicCardioTraining, 30
-        )
+        self.assertEqual(HealthKit.HKWorkoutActivityTypeMixedMetabolicCardioTraining, 30)
         self.assertEqual(HealthKit.HKWorkoutActivityTypePaddleSports, 31)
         self.assertEqual(HealthKit.HKWorkoutActivityTypePlay, 32)
         self.assertEqual(HealthKit.HKWorkoutActivityTypePreparationAndRecovery, 33)
@@ -70,9 +68,7 @@ class TestHKWorkout(TestCase):
         self.assertEqual(HealthKit.HKWorkoutActivityTypeCrossCountrySkiing, 60)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeDownhillSkiing, 61)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeFlexibility, 62)
-        self.assertEqual(
-            HealthKit.HKWorkoutActivityTypeHighIntensityIntervalTraining, 63
-        )
+        self.assertEqual(HealthKit.HKWorkoutActivityTypeHighIntensityIntervalTraining, 63)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeJumpRope, 64)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeKickboxing, 65)
         self.assertEqual(HealthKit.HKWorkoutActivityTypePilates, 66)
@@ -112,9 +108,7 @@ class TestHKWorkout(TestCase):
         self.assertIsInstance(
             HealthKit.HKPredicateKeyPathWorkoutTotalSwimmingStrokeCount, str
         )
-        self.assertIsInstance(
-            HealthKit.HKPredicateKeyPathWorkoutTotalFlightsClimbed, str
-        )
+        self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutTotalFlightsClimbed, str)
         self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutSumQuantity, str)
         self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutMinimumQuantity, str)
         self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutMaximumQuantity, str)

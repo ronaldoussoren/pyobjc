@@ -66,9 +66,7 @@ class TestMTLHeap(TestCase):
     def test_methods(self):
         self.assertResultHasType(TestMTLHeapHelper.storageMode, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLHeapHelper.cpuCacheMode, objc._C_NSUInteger)
-        self.assertResultHasType(
-            TestMTLHeapHelper.hazardTrackingMode, objc._C_NSUInteger
-        )
+        self.assertResultHasType(TestMTLHeapHelper.hazardTrackingMode, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLHeapHelper.resourceOptions, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLHeapHelper.size, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLHeapHelper.usedSize, objc._C_NSUInteger)
@@ -87,12 +85,8 @@ class TestMTLHeap(TestCase):
             TestMTLHeapHelper.newBufferWithLength_options_, 1, objc._C_NSUInteger
         )
 
-        self.assertResultHasType(
-            TestMTLHeapHelper.setPurgeableState_, objc._C_NSUInteger
-        )
-        self.assertArgHasType(
-            TestMTLHeapHelper.setPurgeableState_, 0, objc._C_NSUInteger
-        )
+        self.assertResultHasType(TestMTLHeapHelper.setPurgeableState_, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLHeapHelper.setPurgeableState_, 0, objc._C_NSUInteger)
 
         self.assertResultHasType(TestMTLHeapHelper.type, objc._C_NSInteger)
 

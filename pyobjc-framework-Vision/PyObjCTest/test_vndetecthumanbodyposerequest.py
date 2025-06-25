@@ -40,9 +40,7 @@ class TestVNDetectHumanBodyPoseRequest(TestCase):
         self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightEye, str)
         self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameLeftEar, str)
         self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightEar, str)
-        self.assertIsInstance(
-            Vision.VNHumanBodyPoseObservationJointNameLeftShoulder, str
-        )
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameLeftShoulder, str)
         self.assertIsInstance(
             Vision.VNHumanBodyPoseObservationJointNameRightShoulder, str
         )
@@ -60,9 +58,7 @@ class TestVNDetectHumanBodyPoseRequest(TestCase):
         self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightAnkle, str)
 
         self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointsGroupNameFace, str)
-        self.assertIsInstance(
-            Vision.VNHumanBodyPoseObservationJointsGroupNameTorso, str
-        )
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointsGroupNameTorso, str)
         self.assertIsInstance(
             Vision.VNHumanBodyPoseObservationJointsGroupNameLeftArm, str
         )

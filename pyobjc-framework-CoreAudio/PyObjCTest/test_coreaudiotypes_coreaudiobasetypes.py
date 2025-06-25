@@ -383,9 +383,7 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertEqual(
             CoreAudio.kAudioChannelLayoutTag_UseChannelDescriptions, (0 << 16) | 0
         )
-        self.assertEqual(
-            CoreAudio.kAudioChannelLayoutTag_UseChannelBitmap, (1 << 16) | 0
-        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_UseChannelBitmap, (1 << 16) | 0)
 
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Mono, (100 << 16) | 1)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Stereo, (101 << 16) | 2)
@@ -554,12 +552,8 @@ class TestCoreAudioBaseTypes(TestCase):
             CoreAudio.kAudioChannelLayoutTag_AudioUnit_5_0,
             CoreAudio.kAudioChannelLayoutTag_MPEG_5_0_B,
         )
-        self.assertEqual(
-            CoreAudio.kAudioChannelLayoutTag_AudioUnit_6_0, (139 << 16) | 6
-        )
-        self.assertEqual(
-            CoreAudio.kAudioChannelLayoutTag_AudioUnit_7_0, (140 << 16) | 7
-        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_6_0, (139 << 16) | 6)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AudioUnit_7_0, (140 << 16) | 7)
         self.assertEqual(
             CoreAudio.kAudioChannelLayoutTag_AudioUnit_7_0_Front, (148 << 16) | 7
         )
@@ -609,16 +603,10 @@ class TestCoreAudioBaseTypes(TestCase):
         )
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AAC_7_1_B, (183 << 16) | 8)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AAC_7_1_C, (184 << 16) | 8)
-        self.assertEqual(
-            CoreAudio.kAudioChannelLayoutTag_AAC_Octagonal, (144 << 16) | 8
-        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AAC_Octagonal, (144 << 16) | 8)
 
-        self.assertEqual(
-            CoreAudio.kAudioChannelLayoutTag_TMH_10_2_std, (145 << 16) | 16
-        )
-        self.assertEqual(
-            CoreAudio.kAudioChannelLayoutTag_TMH_10_2_full, (146 << 16) | 21
-        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_TMH_10_2_std, (145 << 16) | 16)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_TMH_10_2_full, (146 << 16) | 21)
 
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AC3_1_0_1, (149 << 16) | 2)
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_AC3_3_0, (150 << 16) | 3)

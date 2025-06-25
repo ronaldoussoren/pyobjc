@@ -21,9 +21,7 @@ class TestSCNShadableHelper(SceneKit.NSObject):
     def program_bindValueForSymbol_atLocation_programID_renderer_(self, p, s, x, pp, r):
         return 1
 
-    def program_unbindValueForSymbol_atLocation_programID_renderer_(
-        self, p, s, x, pp, r
-    ):
+    def program_unbindValueForSymbol_atLocation_programID_renderer_(self, p, s, x, pp, r):
         return 1
 
     def programIsOpaque_(self, p):

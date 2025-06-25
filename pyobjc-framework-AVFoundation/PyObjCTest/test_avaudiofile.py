@@ -16,9 +16,7 @@ class TestAVAudioFile(TestCase):
             3,  # noqa: B950
         )
 
-        self.assertArgIsOut(
-            AVFoundation.AVAudioFile.initForWriting_settings_error_, 2
-        )  # noqa: B950
+        self.assertArgIsOut(AVFoundation.AVAudioFile.initForWriting_settings_error_, 2)  # noqa: B950
 
         self.assertArgIsBOOL(
             AVFoundation.AVAudioFile.initForWriting_settings_commonFormat_interleaved_error_,  # noqa: B950
@@ -32,12 +30,8 @@ class TestAVAudioFile(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioFile.readIntoBuffer_error_)
         self.assertArgIsOut(AVFoundation.AVAudioFile.readIntoBuffer_error_, 1)
 
-        self.assertResultIsBOOL(
-            AVFoundation.AVAudioFile.readIntoBuffer_frameCount_error_
-        )
-        self.assertArgIsOut(
-            AVFoundation.AVAudioFile.readIntoBuffer_frameCount_error_, 2
-        )
+        self.assertResultIsBOOL(AVFoundation.AVAudioFile.readIntoBuffer_frameCount_error_)
+        self.assertArgIsOut(AVFoundation.AVAudioFile.readIntoBuffer_frameCount_error_, 2)
 
         self.assertResultIsBOOL(AVFoundation.AVAudioFile.writeFromBuffer_error_)
         self.assertArgIsOut(AVFoundation.AVAudioFile.writeFromBuffer_error_, 1)

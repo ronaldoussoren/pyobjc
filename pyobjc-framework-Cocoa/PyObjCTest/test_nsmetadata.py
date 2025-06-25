@@ -46,9 +46,7 @@ class TestNSMetaData(TestCase):
         self.assertIsInstance(
             Foundation.NSMetadataUbiquitousItemPercentDownloadedKey, str
         )
-        self.assertIsInstance(
-            Foundation.NSMetadataUbiquitousItemPercentUploadedKey, str
-        )
+        self.assertIsInstance(Foundation.NSMetadataUbiquitousItemPercentUploadedKey, str)
 
     @min_os_level("10.9")
     def testConstants10_9(self):

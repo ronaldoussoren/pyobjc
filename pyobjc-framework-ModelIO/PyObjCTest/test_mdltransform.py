@@ -56,16 +56,12 @@ class TestMDLTransform(TestCase):
         self.assertResultIsBOOL(ModelIO.TestMDLTransformHelper.resetsTransform)
         self.assertArgIsBOOL(ModelIO.TestMDLTransformHelper.setResetsTransform_, 0)
 
-        self.assertResultHasType(
-            ModelIO.TestMDLTransformHelper.minimumTime, objc._C_DBL
-        )
+        self.assertResultHasType(ModelIO.TestMDLTransformHelper.minimumTime, objc._C_DBL)
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.setMinimumTime_, 0, objc._C_DBL
         )
 
-        self.assertResultHasType(
-            ModelIO.TestMDLTransformHelper.maximumTime, objc._C_DBL
-        )
+        self.assertResultHasType(ModelIO.TestMDLTransformHelper.maximumTime, objc._C_DBL)
         self.assertArgHasType(
             ModelIO.TestMDLTransformHelper.setMaximumTime_, 0, objc._C_DBL
         )

@@ -22,9 +22,7 @@ class TestVNRecognizeTextRequest(TestCase):
         )
 
         self.assertResultIsBOOL(Vision.VNRecognizeTextRequest.usesLanguageCorrection)
-        self.assertArgIsBOOL(
-            Vision.VNRecognizeTextRequest.setUsesLanguageCorrection_, 0
-        )
+        self.assertArgIsBOOL(Vision.VNRecognizeTextRequest.setUsesLanguageCorrection_, 0)
 
     @min_os_level("12.0")
     def test_methods12_0(self):

@@ -12,9 +12,7 @@ class TestMPSGraphRNNOps(TestCase):
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphRNNActivationRelu, 1)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphRNNActivationTanh, 2)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphRNNActivationSigmoid, 3)
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphRNNActivationHardSigmoid, 4
-        )
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphRNNActivationHardSigmoid, 4)
 
     @min_os_level("12.3")
     def test_methods12_3(self):
@@ -112,9 +110,7 @@ class TestMPSGraphRNNOps(TestCase):
             MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setResetGateFirst_, 0
         )
 
-        self.assertResultIsBOOL(
-            MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.flipZ
-        )
+        self.assertResultIsBOOL(MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.flipZ)
         self.assertArgIsBOOL(
             MetalPerformanceShadersGraph.MPSGraphGRUDescriptor.setFlipZ_, 0
         )

@@ -11,9 +11,7 @@ class TestNSPreferencePane(TestCase):
         self.assertEqual(PreferencePanes.NSUnselectNow, 1)
         self.assertEqual(PreferencePanes.NSUnselectLater, 2)
 
-        self.assertIsInstance(
-            PreferencePanes.NSPreferencePaneDoUnselectNotification, str
-        )
+        self.assertIsInstance(PreferencePanes.NSPreferencePaneDoUnselectNotification, str)
         self.assertIsInstance(
             PreferencePanes.NSPreferencePaneCancelUnselectNotification, str
         )

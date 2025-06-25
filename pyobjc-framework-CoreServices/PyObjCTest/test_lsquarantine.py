@@ -11,12 +11,8 @@ class TestLSQuarantine(TestCase):
         self.assertIsInstance(CoreServices.kLSQuarantineTypeWebDownload, str)
         self.assertIsInstance(CoreServices.kLSQuarantineTypeOtherDownload, str)
         self.assertIsInstance(CoreServices.kLSQuarantineTypeEmailAttachment, str)
-        self.assertIsInstance(
-            CoreServices.kLSQuarantineTypeInstantMessageAttachment, str
-        )
-        self.assertIsInstance(
-            CoreServices.kLSQuarantineTypeCalendarEventAttachment, str
-        )
+        self.assertIsInstance(CoreServices.kLSQuarantineTypeInstantMessageAttachment, str)
+        self.assertIsInstance(CoreServices.kLSQuarantineTypeCalendarEventAttachment, str)
         self.assertIsInstance(CoreServices.kLSQuarantineTypeOtherAttachment, str)
         self.assertIsInstance(CoreServices.kLSQuarantineOriginURLKey, str)
         self.assertIsInstance(CoreServices.kLSQuarantineDataURLKey, str)

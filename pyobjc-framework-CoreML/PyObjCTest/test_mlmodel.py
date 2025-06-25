@@ -11,9 +11,7 @@ class TestMLModel(TestCase):
 
     @min_os_level("10.14")
     def testMethods10_14(self):
-        self.assertArgIsOut(
-            CoreML.MLModel.modelWithContentsOfURL_configuration_error_, 2
-        )
+        self.assertArgIsOut(CoreML.MLModel.modelWithContentsOfURL_configuration_error_, 2)
         self.assertArgIsOut(CoreML.MLModel.predictionsFromBatch_options_error_, 2)
 
     @min_os_level("10.15")

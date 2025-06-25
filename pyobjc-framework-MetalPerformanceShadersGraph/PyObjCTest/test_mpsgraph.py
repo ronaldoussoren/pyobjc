@@ -31,9 +31,7 @@ class TestMPSGraph(TestCase):
             MetalPerformanceShadersGraph.MPSGraphOptimizationProfilePowerEfficiency, 1
         )
 
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphExecutionStageCompleted, 0
-        )
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphExecutionStageCompleted, 0)
 
     @min_os_level("11.0")
     def test_methods(self):

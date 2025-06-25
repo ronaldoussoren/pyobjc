@@ -16,9 +16,7 @@ def _setup():
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="PHASE",
         frameworkIdentifier="com.apple.audio.PHASE",
-        frameworkPath=objc.pathForFramework(
-            "/System/Library/Frameworks/PHASE.framework"
-        ),
+        frameworkPath=objc.pathForFramework("/System/Library/Frameworks/PHASE.framework"),
         globals_dict=globals(),
         inline_list=None,
         parents=(AVFoundation,),

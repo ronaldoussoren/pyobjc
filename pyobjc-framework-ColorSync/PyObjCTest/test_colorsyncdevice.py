@@ -30,9 +30,7 @@ class TestColorSyncDevice(TestCase):
         self.assertIsInstance(ColorSync.kColorSyncDeviceRegisteredNotification, str)
         self.assertIsInstance(ColorSync.kColorSyncDeviceUnregisteredNotification, str)
         self.assertIsInstance(ColorSync.kColorSyncDeviceProfilesNotification, str)
-        self.assertIsInstance(
-            ColorSync.kColorSyncDisplayDeviceProfilesNotification, str
-        )
+        self.assertIsInstance(ColorSync.kColorSyncDisplayDeviceProfilesNotification, str)
         self.assertIsInstance(
             ColorSync.kColorSyncProfileRepositoryChangeNotification, str
         )

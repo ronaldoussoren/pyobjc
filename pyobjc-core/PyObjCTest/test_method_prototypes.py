@@ -429,9 +429,7 @@ class TestImplicitSignature(TestCase):
             def simplemethod(self):
                 pass
 
-        self.assertEqual(
-            OC_ImplProto_ColonMatch1.simplemethod.selector, b"simplemethod"
-        )
+        self.assertEqual(OC_ImplProto_ColonMatch1.simplemethod.selector, b"simplemethod")
         self.assertEqual(OC_ImplProto_ColonMatch1.simplemethod.signature, b"v@:")
 
         class OC_ImplProto_ColonMatch2(NSObject):
@@ -441,9 +439,7 @@ class TestImplicitSignature(TestCase):
         self.assertEqual(
             OC_ImplProto_ColonMatch2.simplemethod_arg2_.selector, b"simplemethod:arg2:"
         )
-        self.assertEqual(
-            OC_ImplProto_ColonMatch2.simplemethod_arg2_.signature, b"@@:@@"
-        )
+        self.assertEqual(OC_ImplProto_ColonMatch2.simplemethod_arg2_.signature, b"@@:@@")
 
     def testTooFewColons(self):
         # OK: the number of implied colons is smaller than the actual number of
@@ -554,9 +550,7 @@ class TestImplicitSignature(TestCase):
             OC_ImplProto_Variations.method_with_embedded_underscores, objc.selector
         )
         self.assertNotIsInstance(OC_ImplProto_Variations.__magic__, objc.selector)
-        self.assertEqual(
-            OC_ImplProto_Variations._leadingColon.selector, b"_leadingColon"
-        )
+        self.assertEqual(OC_ImplProto_Variations._leadingColon.selector, b"_leadingColon")
         self.assertEqual(
             OC_ImplProto_Variations._leadingColon_.selector, b"_leadingColon:"
         )

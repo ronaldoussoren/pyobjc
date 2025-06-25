@@ -18,9 +18,7 @@ class TestSecCustomTransform(TestCase):
         self.assertEqual(Security.kSecTransformMetaAttributeName, 1)
         self.assertEqual(Security.kSecTransformMetaAttributeRef, 2)
         self.assertEqual(Security.kSecTransformMetaAttributeRequired, 3)
-        self.assertEqual(
-            Security.kSecTransformMetaAttributeRequiresOutboundConnection, 4
-        )
+        self.assertEqual(Security.kSecTransformMetaAttributeRequiresOutboundConnection, 4)
         self.assertEqual(Security.kSecTransformMetaAttributeDeferred, 5)
         self.assertEqual(Security.kSecTransformMetaAttributeStream, 6)
         self.assertEqual(Security.kSecTransformMetaAttributeCanCycle, 7)

@@ -5,12 +5,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestAVSampleBufferAudioRenderer(TestCase):
     @min_os_level("10.13")
     def testMethods(self):
-        self.assertResultIsBOOL(
-            AVFoundation.AVSampleBufferAudioRenderer.isMuted
-        )  # noqa: B950
-        self.assertArgIsBOOL(
-            AVFoundation.AVSampleBufferAudioRenderer.setMuted_, 0
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVSampleBufferAudioRenderer.isMuted)  # noqa: B950
+        self.assertArgIsBOOL(AVFoundation.AVSampleBufferAudioRenderer.setMuted_, 0)  # noqa: B950
 
         self.assertArgIsBlock(
             AVFoundation.AVSampleBufferAudioRenderer.flushFromSourceTime_completionHandler_,  # noqa: B950
@@ -24,9 +20,7 @@ class TestAVSampleBufferAudioRenderer(TestCase):
             AVFoundation.AVSampleBufferAudioRendererWasFlushedAutomaticallyNotification,  # noqa: B950
             str,
         )
-        self.assertIsInstance(
-            AVFoundation.AVSampleBufferAudioRendererFlushTimeKey, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVSampleBufferAudioRendererFlushTimeKey, str)  # noqa: B950
 
     @min_os_level("12.0")
     def testConstants12_0(self):

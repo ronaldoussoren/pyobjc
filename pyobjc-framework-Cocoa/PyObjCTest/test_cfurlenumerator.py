@@ -50,9 +50,7 @@ class TestCFURLEnumerator(TestCase):
         self.assertEqual(CoreFoundation.kCFURLEnumeratorDefaultBehavior, 0)
         self.assertEqual(CoreFoundation.kCFURLEnumeratorDescendRecursively, 1 << 0)
         self.assertEqual(CoreFoundation.kCFURLEnumeratorSkipInvisibles, 1 << 1)
-        self.assertEqual(
-            CoreFoundation.kCFURLEnumeratorGenerateFileReferenceURLs, 1 << 2
-        )
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorGenerateFileReferenceURLs, 1 << 2)
         self.assertEqual(CoreFoundation.kCFURLEnumeratorSkipPackageContents, 1 << 3)
         self.assertEqual(
             CoreFoundation.kCFURLEnumeratorIncludeDirectoriesPreOrder, 1 << 4
@@ -60,9 +58,7 @@ class TestCFURLEnumerator(TestCase):
         self.assertEqual(
             CoreFoundation.kCFURLEnumeratorIncludeDirectoriesPostOrder, 1 << 5
         )
-        self.assertEqual(
-            CoreFoundation.kCFURLEnumeratorGenerateRelativePathURLs, 1 << 6
-        )
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorGenerateRelativePathURLs, 1 << 6)
         self.assertEqual(CoreFoundation.kCFURLEnumeratorSuccess, 1)
         self.assertEqual(CoreFoundation.kCFURLEnumeratorEnd, 2)
         self.assertEqual(CoreFoundation.kCFURLEnumeratorError, 3)

@@ -37,9 +37,7 @@ class TestCGEventSource(TestCase):
         v = Quartz.CGEventSourceFlagsState(0)
         self.assertIsInstance(v, int)
 
-        v = Quartz.CGEventSourceSecondsSinceLastEventType(
-            0, Quartz.kCGEventLeftMouseDown
-        )
+        v = Quartz.CGEventSourceSecondsSinceLastEventType(0, Quartz.kCGEventLeftMouseDown)
         self.assertIsInstance(v, float)
 
         v = Quartz.CGEventSourceCounterForEventType(0, Quartz.kCGEventLeftMouseDown)

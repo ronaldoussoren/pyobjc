@@ -13,9 +13,7 @@ class TestMPSNeuralNetwork_MPSCNNTypes(TestCase):
         self.assertEqual(MetalPerformanceShaders.MPSCNNLossTypeMeanSquaredError, 1)
         self.assertEqual(MetalPerformanceShaders.MPSCNNLossTypeSoftMaxCrossEntropy, 2)
         self.assertEqual(MetalPerformanceShaders.MPSCNNLossTypeSigmoidCrossEntropy, 3)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSCNNLossTypeCategoricalCrossEntropy, 4
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSCNNLossTypeCategoricalCrossEntropy, 4)
         self.assertEqual(MetalPerformanceShaders.MPSCNNLossTypeHinge, 5)
         self.assertEqual(MetalPerformanceShaders.MPSCNNLossTypeHuber, 6)
         self.assertEqual(MetalPerformanceShaders.MPSCNNLossTypeCosineDistance, 7)

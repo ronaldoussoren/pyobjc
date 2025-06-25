@@ -9,12 +9,8 @@ class TestNEAppProxyFlow(TestCase):
 
     @min_os_level("10.11")
     def testConstants(self):
-        self.assertEqual(
-            NetworkExtension.NETunnelProviderErrorNetworkSettingsInvalid, 1
-        )
-        self.assertEqual(
-            NetworkExtension.NETunnelProviderErrorNetworkSettingsCanceled, 2
-        )
+        self.assertEqual(NetworkExtension.NETunnelProviderErrorNetworkSettingsInvalid, 1)
+        self.assertEqual(NetworkExtension.NETunnelProviderErrorNetworkSettingsCanceled, 2)
         self.assertEqual(NetworkExtension.NETunnelProviderErrorNetworkSettingsFailed, 3)
 
         self.assertEqual(NetworkExtension.NETunnelProviderRoutingMethodDestinationIP, 1)

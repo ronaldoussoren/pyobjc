@@ -34,13 +34,9 @@ class TestNSXPCConnection(TestCase):
             Foundation.NSXPCConnection.remoteObjectProxyWithErrorHandler_, 0, b"v@"
         )
         self.assertResultIsBlock(Foundation.NSXPCConnection.interruptionHandler, b"v")
-        self.assertArgIsBlock(
-            Foundation.NSXPCConnection.setInterruptionHandler_, 0, b"v"
-        )
+        self.assertArgIsBlock(Foundation.NSXPCConnection.setInterruptionHandler_, 0, b"v")
         self.assertResultIsBlock(Foundation.NSXPCConnection.invalidationHandler, b"v")
-        self.assertArgIsBlock(
-            Foundation.NSXPCConnection.setInvalidationHandler_, 0, b"v"
-        )
+        self.assertArgIsBlock(Foundation.NSXPCConnection.setInvalidationHandler_, 0, b"v")
 
         self.assertArgIsBOOL(
             Foundation.NSXPCInterface.setClasses_forSelector_argumentIndex_ofReply_, 3

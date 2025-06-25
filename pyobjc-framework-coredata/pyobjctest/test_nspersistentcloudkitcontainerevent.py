@@ -16,6 +16,4 @@ class TestNSPersistentCloudKitContainerEvent(TestCase):
         self.assertIsInstance(
             CoreData.NSPersistentCloudKitContainerEventChangedNotification, str
         )
-        self.assertIsInstance(
-            CoreData.NSPersistentCloudKitContainerEventUserInfoKey, str
-        )
+        self.assertIsInstance(CoreData.NSPersistentCloudKitContainerEventUserInfoKey, str)

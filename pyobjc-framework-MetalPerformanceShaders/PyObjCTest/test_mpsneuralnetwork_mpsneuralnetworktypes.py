@@ -3,9 +3,7 @@ import objc
 import MetalPerformanceShaders
 
 
-class TestMPSNeuralNetwork_MPSNeuralNetworkTypesHelper(
-    MetalPerformanceShaders.NSObject
-):
+class TestMPSNeuralNetwork_MPSNeuralNetworkTypesHelper(MetalPerformanceShaders.NSObject):
     def paddingMethod(self):
         return 1
 
@@ -54,9 +52,7 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
         self.assertEqual(MetalPerformanceShaders.MPSNNTrainingStyleUpdateDeviceCPU, 1)
         self.assertEqual(MetalPerformanceShaders.MPSNNTrainingStyleUpdateDeviceGPU, 2)
 
-        self.assertEqual(
-            MetalPerformanceShaders.MPSCNNBatchNormalizationFlagsDefault, 0
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSCNNBatchNormalizationFlagsDefault, 0)
         self.assertEqual(
             MetalPerformanceShaders.MPSCNNBatchNormalizationFlagsCalculateStatisticsAutomatic,
             MetalPerformanceShaders.MPSCNNBatchNormalizationFlagsDefault,
@@ -101,9 +97,7 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodSizeValidOnly, 0)
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodSizeSame, 1 << 4)
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodSizeFull, 2 << 4)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSNNPaddingMethodSize_reserved, 3 << 4
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodSize_reserved, 3 << 4)
         self.assertEqual(
             MetalPerformanceShaders.MPSNNPaddingMethodCustomWhitelistForNodeFusion,
             1 << 13,
@@ -114,9 +108,7 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
         )
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodCustom, 1 << 14)
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodSizeMask, 0x7F0)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSNNPaddingMethodExcludeEdges, 1 << 15
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodExcludeEdges, 1 << 15)
 
     def test_protocols(self):
         self.assertProtocolExists("MPSNNPadding")

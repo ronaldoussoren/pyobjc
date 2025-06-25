@@ -77,9 +77,7 @@ class TestCALayer(TestCase):
         self.assertArgIsBOOL(Quartz.CALayer.setGeometryFlipped_, 0)
         self.assertResultIsBOOL(Quartz.CALayer.contentsAreFlipped)
 
-        self.assertResultHasType(
-            Quartz.CALayer.contentsCenter, Quartz.CGRect.__typestr__
-        )
+        self.assertResultHasType(Quartz.CALayer.contentsCenter, Quartz.CGRect.__typestr__)
         self.assertArgHasType(
             Quartz.CALayer.setContentsCenter_, 0, Quartz.CGRect.__typestr__
         )

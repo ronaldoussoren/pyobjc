@@ -57,9 +57,7 @@ class TestPreferences(TestCase):
 
         v = CoreFoundation.CFPreferencesCopyAppValue("PyObjCTestValue", "PyObjCTest")
         self.assertIs(v, None)
-        CoreFoundation.CFPreferencesSetAppValue(
-            "PyObjCTestValue", "value1", "PyObjCTest"
-        )
+        CoreFoundation.CFPreferencesSetAppValue("PyObjCTestValue", "value1", "PyObjCTest")
         v = CoreFoundation.CFPreferencesCopyAppValue("PyObjCTestValue", "PyObjCTest")
         self.assertEqual(v, "value1")
         CoreFoundation.CFPreferencesSetAppValue("PyObjCTestValue", None, "PyObjCTest")

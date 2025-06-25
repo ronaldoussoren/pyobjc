@@ -9,6 +9,7 @@ The script is part of an article at MacDevCenter:
 Usage:
     python autoreadme.py
 """
+
 import os
 import re
 

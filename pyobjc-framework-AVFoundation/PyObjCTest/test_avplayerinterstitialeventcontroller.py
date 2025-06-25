@@ -109,6 +109,4 @@ class TestAVPlayerInterstitialEventController(TestCase):
             AVFoundation.AVPlayerInterstitialEvent.setSupplementsPrimaryContent_, 0
         )
         self.assertResultIsBOOL(AVFoundation.AVPlayerInterstitialEvent.contentMayVary)
-        self.assertArgIsBOOL(
-            AVFoundation.AVPlayerInterstitialEvent.setContentMayVary_, 0
-        )
+        self.assertArgIsBOOL(AVFoundation.AVPlayerInterstitialEvent.setContentMayVary_, 0)

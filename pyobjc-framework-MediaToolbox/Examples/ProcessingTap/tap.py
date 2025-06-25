@@ -79,8 +79,10 @@ def main():
 
     print("Creating tap", err, tap)
 
-    inputParams = AVFoundation.AVMutableAudioMixInputParameters.audioMixInputParametersWithTrack_(  # noqa: B950
-        asset.tracks()[0]
+    inputParams = (
+        AVFoundation.AVMutableAudioMixInputParameters.audioMixInputParametersWithTrack_(  # noqa: B950
+            asset.tracks()[0]
+        )
     )
     inputParams.setAudioTapProcessor_(tap)
 

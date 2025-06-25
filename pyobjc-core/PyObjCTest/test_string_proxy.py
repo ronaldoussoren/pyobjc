@@ -102,9 +102,7 @@ class TestMisc(TestCase):
         self.assertIsInstance(value, objc.pyobjc_unicode)
         self.assertEqual(value, "hello world")
 
-        value = OC_StringInt.createNonUTF8WithClass_(
-            objc.lookUpClass("OC_PythonUnicode")
-        )
+        value = OC_StringInt.createNonUTF8WithClass_(objc.lookUpClass("OC_PythonUnicode"))
         self.assertIs(type(value), str)
         self.assertEqual(value, "hello world")
 

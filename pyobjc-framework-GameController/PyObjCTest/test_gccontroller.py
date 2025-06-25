@@ -48,9 +48,7 @@ class TestGCController(TestCase):
 
     @min_os_level("11.3")
     def testMethods11_3(self):
-        self.assertResultIsBOOL(
-            GameController.GCController.shouldMonitorBackgroundEvents
-        )
+        self.assertResultIsBOOL(GameController.GCController.shouldMonitorBackgroundEvents)
         self.assertArgIsBOOL(
             GameController.GCController.setShouldMonitorBackgroundEvents_, 0
         )

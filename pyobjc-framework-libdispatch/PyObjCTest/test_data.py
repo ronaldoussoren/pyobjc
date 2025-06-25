@@ -15,9 +15,7 @@ class TestDataAPI(TestCase):
 
     @min_os_level("10.9")
     def test_constants10_9(self):
-        self.assertIsInstance(
-            dispatch.DISPATCH_DATA_DESTRUCTOR_MUNMAP, objc.objc_object
-        )
+        self.assertIsInstance(dispatch.DISPATCH_DATA_DESTRUCTOR_MUNMAP, objc.objc_object)
 
     @min_os_level("10.7")
     def test_functions(self):

@@ -9,6 +9,4 @@ class TestAVPlayerLayer(TestCase):
 
     @min_os_level("13.0")
     def test_methods13_0(self):
-        self.assertResultIsCFRetained(
-            AVFoundation.AVPlayerLayer.copyDisplayedPixelBuffer
-        )
+        self.assertResultIsCFRetained(AVFoundation.AVPlayerLayer.copyDisplayedPixelBuffer)

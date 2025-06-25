@@ -7,9 +7,7 @@ class TestHKAnchoredObjectQuery(TestCase):
         self.assertEqual(HealthKit.HKAnchoredObjectQueryNoAnchor, 0)
 
     def test_methods(self):
-        self.assertResultIsBlock(
-            HealthKit.HKAnchoredObjectQuery.updateHandler, b"v@@@@@"
-        )
+        self.assertResultIsBlock(HealthKit.HKAnchoredObjectQuery.updateHandler, b"v@@@@@")
         self.assertArgIsBlock(
             HealthKit.HKAnchoredObjectQuery.setUpdateHandler_, 0, b"v@@@@@"
         )

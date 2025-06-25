@@ -20,9 +20,7 @@ class TestCGAffineTransform(TestCase):
         self.assertIsInstance(v.translation, Quartz.CGVector)
 
     def testConstants(self):
-        self.assertIsInstance(
-            Quartz.CGAffineTransformIdentity, Quartz.CGAffineTransform
-        )
+        self.assertIsInstance(Quartz.CGAffineTransformIdentity, Quartz.CGAffineTransform)
         self.assertIsInstance(Quartz.CGAffineTransformIdentity.a, float)
         self.assertIsInstance(Quartz.CGAffineTransformIdentity.b, float)
         self.assertIsInstance(Quartz.CGAffineTransformIdentity.c, float)

@@ -36,19 +36,11 @@ class TestUNUserNotificationCenter(TestCase):
         self.assertEqual(UserNotifications.UNAuthorizationOptionProvisional, 1 << 6)
         self.assertEqual(UserNotifications.UNAuthorizationOptionNone, 0)
 
-        self.assertEqual(
-            UserNotifications.UNNotificationPresentationOptionBadge, 1 << 0
-        )
-        self.assertEqual(
-            UserNotifications.UNNotificationPresentationOptionSound, 1 << 1
-        )
-        self.assertEqual(
-            UserNotifications.UNNotificationPresentationOptionAlert, 1 << 2
-        )
+        self.assertEqual(UserNotifications.UNNotificationPresentationOptionBadge, 1 << 0)
+        self.assertEqual(UserNotifications.UNNotificationPresentationOptionSound, 1 << 1)
+        self.assertEqual(UserNotifications.UNNotificationPresentationOptionAlert, 1 << 2)
         self.assertEqual(UserNotifications.UNNotificationPresentationOptionList, 1 << 3)
-        self.assertEqual(
-            UserNotifications.UNNotificationPresentationOptionBanner, 1 << 4
-        )
+        self.assertEqual(UserNotifications.UNNotificationPresentationOptionBanner, 1 << 4)
         self.assertEqual(UserNotifications.UNNotificationPresentationOptionNone, 0)
 
     def test_methods(self):

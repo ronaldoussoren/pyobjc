@@ -43,9 +43,7 @@ class TestAVB17221AECPInterface(TestCase):
         )
 
         self.assertResultIsBOOL(AudioVideoBridging.AVB17221AECPAEMMessage.isUnsolicited)
-        self.assertArgIsBOOL(
-            AudioVideoBridging.AVB17221AECPAEMMessage.setUnsolicited_, 0
-        )
+        self.assertArgIsBOOL(AudioVideoBridging.AVB17221AECPAEMMessage.setUnsolicited_, 0)
 
         self.assertResultIsBOOL(
             AudioVideoBridging.AVB17221AECPAEMMessage.isControllerRequest

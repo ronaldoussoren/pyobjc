@@ -136,9 +136,7 @@ class TestNSBrowser(TestCase):
         self.assertResultIsBOOL(
             AppKit.NSBrowser.canDragRowsWithIndexes_inColumn_withEvent_
         )
-        self.assertArgIsBOOL(
-            AppKit.NSBrowser.setDraggingSourceOperationMask_forLocal_, 1
-        )
+        self.assertArgIsBOOL(AppKit.NSBrowser.setDraggingSourceOperationMask_forLocal_, 1)
         self.assertResultIsBOOL(AppKit.NSBrowser.allowsTypeSelect)
         self.assertArgIsBOOL(AppKit.NSBrowser.setAllowsTypeSelect_, 0)
 

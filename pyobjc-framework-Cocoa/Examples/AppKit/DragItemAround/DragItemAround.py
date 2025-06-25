@@ -59,9 +59,7 @@ class DraggableItemView(Cocoa.NSView):
     def mouseDragged_(self, event):
         """."""
         if self.dragging:
-            newDragLocation = self.convertPoint_fromView_(
-                event.locationInWindow(), None
-            )
+            newDragLocation = self.convertPoint_fromView_(event.locationInWindow(), None)
             self.offsetLocationByX_andY_(
                 newDragLocation.x - self.lastDragLocation.x,
                 newDragLocation.y - self.lastDragLocation.y,

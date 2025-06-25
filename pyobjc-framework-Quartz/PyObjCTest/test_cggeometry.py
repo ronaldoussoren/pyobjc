@@ -167,9 +167,7 @@ class TestCGGeometry(TestCase):
         self.assertEqual(p.width, 10)
         self.assertEqual(p.height, 5)
 
-        d = Quartz.CGRectCreateDictionaryRepresentation(
-            Quartz.CGRectMake(0, 10, 20, 30)
-        )
+        d = Quartz.CGRectCreateDictionaryRepresentation(Quartz.CGRectMake(0, 10, 20, 30))
         self.assertIsInstance(d, Quartz.CFDictionaryRef)
 
         ok, p = Quartz.CGRectMakeWithDictionaryRepresentation(d, None)

@@ -7,9 +7,7 @@ class TestNSSplitViewHelper(AppKit.NSObject):
     def splitView_canCollapseSubview_(self, sp, sv):
         return 1
 
-    def splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_(
-        self, sp, sv, i
-    ):
+    def splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_(self, sp, sv, i):
         return 1
 
     def splitView_constrainMinCoordinate_ofSubviewAt_(self, sv, c, i):
@@ -134,9 +132,7 @@ class TestNSSplitView(TestCase):
 
     @min_os_level("10.5")
     def testProtocol10_5(self):
-        self.assertResultIsBOOL(
-            TestNSSplitViewHelper.splitView_shouldHideDividerAtIndex_
-        )
+        self.assertResultIsBOOL(TestNSSplitViewHelper.splitView_shouldHideDividerAtIndex_)
         self.assertArgHasType(
             TestNSSplitViewHelper.splitView_shouldHideDividerAtIndex_,
             1,

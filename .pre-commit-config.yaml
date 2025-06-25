@@ -6,14 +6,10 @@ repos:
     -   id: pyupgrade
         args: ['--py38-plus']
 
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.0
     hooks:
-      - id: black
-        language_version: python3.10
-        # override until resolved: https://github.com/ambv/black/issues/402
-        files: \.pyi?$
-        types: []
+      - id: ruff-format
 
   - repo: https://github.com/PyCQA/flake8
     rev: 7.3.0

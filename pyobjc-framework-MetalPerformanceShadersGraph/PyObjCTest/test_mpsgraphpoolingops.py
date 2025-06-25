@@ -10,9 +10,7 @@ class TestMPSGraphPoolingOps(TestCase):
         )
 
     def test_constants(self):
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphPoolingReturnIndicesNone, 0
-        )
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPoolingReturnIndicesNone, 0)
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphPoolingReturnIndicesGlobalFlatten1D, 1
         )

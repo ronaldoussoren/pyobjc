@@ -626,9 +626,7 @@ def function_name(prefix: str, signature: bytes) -> str:
         elif part.startswith(objc._C_PTR + objc._C_STRUCT_B):
             label, fields = objc.splitStructSignature(part[1:])
             if fields:
-                raise RuntimeError(
-                    f"Don't know how to handle {part!r} in {signature!r}"
-                )
+                raise RuntimeError(f"Don't know how to handle {part!r} in {signature!r}")
 
             # Likely a CFType
             name.append(label.lstrip("_"))
@@ -823,9 +821,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("static IMP", file=stream)
     print(f"{function_name(MKIMP_PREFIX, signature)}(", file=stream)
     print("    PyObject* callable,", file=stream)
-    print(
-        "    PyObjCMethodSignature* methinfo __attribute__((__unused__)))", file=stream
-    )
+    print("    PyObjCMethodSignature* methinfo __attribute__((__unused__)))", file=stream)
     print("{", file=stream)
     print("    Py_INCREF(callable);", file=stream)
     print("", file=stream)
@@ -836,7 +832,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("        PyGILState_STATE state = PyGILState_Ensure();", file=stream)
     print("", file=stream)
     print("        int       cookie;", file=stream)
-    print(f"        PyObject* args[{len(arg_types)+2}] = {{NULL}};", file=stream)
+    print(f"        PyObject* args[{len(arg_types) + 2}] = {{NULL}};", file=stream)
     print(
         "        PyObject* pyself = PyObjCObject_NewTransient(self, &cookie);",
         file=stream,
@@ -848,10 +844,10 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("        args[1] = pyself;", file=stream)
     for idx, tp in enumerate(arg_types):
         print(
-            f'        args[{idx+2}] = pythonify_c_value("{tp.decode()}", &arg{idx});',
+            f'        args[{idx + 2}] = pythonify_c_value("{tp.decode()}", &arg{idx});',
             file=stream,
         )
-        print(f"        if (args[{idx+2}] == NULL) // LCOV_BR_EXCL_LINE", file=stream)
+        print(f"        if (args[{idx + 2}] == NULL) // LCOV_BR_EXCL_LINE", file=stream)
         print("            goto error; // LCOV_EXCL_LINE", file=stream)
     print("", file=stream)
     print(
@@ -859,7 +855,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
         file=stream,
     )
     print(
-        f"                                          {len(arg_types)+1} | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);",
+        f"                                          {len(arg_types) + 1} | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);",
         file=stream,
     )
     print("        if (result == NULL) goto error;", file=stream)
@@ -893,7 +889,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("        Py_DECREF(result);", file=stream)
     if len(arg_types):
         print(
-            f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream
+            f"        for (size_t i = 2; i < {len(arg_types) + 2}; i++) {{", file=stream
         )
         print("            Py_CLEAR(args[i]);", file=stream)
         print("        }", file=stream)
@@ -912,7 +908,7 @@ def generate_mkimp(stream: typing.IO[str], signature: bytes) -> None:
     print("", file=stream)
     if len(arg_types):
         print(
-            f"        for (size_t i = 2; i < {len(arg_types)+2}; i++) {{", file=stream
+            f"        for (size_t i = 2; i < {len(arg_types) + 2}; i++) {{", file=stream
         )
         print("            Py_CLEAR(args[i]);", file=stream)
         print("        }", file=stream)
@@ -1000,9 +996,7 @@ def generate_setup_function(stream: typing.IO[str]):
     the generated functions with the core bridge.
     """
     print("int", file=stream)
-    print(
-        "PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))", file=stream
-    )
+    print("PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))", file=stream)
     print("{", file=stream)
 
     seen_call = {}
@@ -1025,9 +1019,7 @@ def generate_setup_function(stream: typing.IO[str]):
         print(
             "    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE", file=stream
         )
-        print(
-            f'        "{signature.decode()}", {call_name}, {mkimp_name})', file=stream
-        )
+        print(f'        "{signature.decode()}", {call_name}, {mkimp_name})', file=stream)
         print("       == -1) {", file=stream)
         print("            return -1; // LCOV_EXCL_LINE", file=stream)
         print("    }", file=stream)
@@ -1076,9 +1068,7 @@ def sel_for_signature(signature):
         elif part.startswith(objc._C_PTR + objc._C_STRUCT_B):
             label, fields = objc.splitStructSignature(part[1:])
             if fields:
-                raise RuntimeError(
-                    f"Don't know how to handle {part!r} in {signature!r}"
-                )
+                raise RuntimeError(f"Don't know how to handle {part!r} in {signature!r}")
 
             # Likely a CFType
             name.append(label.lstrip("_"))
@@ -1128,9 +1118,7 @@ def generate_testext_callimp(stream, signature, instance=True):
         sel = "cls" + sel
 
     if ":" not in sel:
-        print(
-            f"{'-' if instance else '+'} ({describe_type(parts[0])}){sel}", file=stream
-        )
+        print(f"{'-' if instance else '+'} ({describe_type(parts[0])}){sel}", file=stream)
         print("{", file=stream)
         print("    if ([self shouldRaise]) {", file=stream)
         print("        shouldRaise = NO;", file=stream)
@@ -1159,12 +1147,10 @@ def generate_testext_callimp(stream, signature, instance=True):
         print("", file=stream)
         return
 
-    print(
-        f"{'-' if instance else '+'} ({describe_type(parts[0])})", end="", file=stream
-    )
+    print(f"{'-' if instance else '+'} ({describe_type(parts[0])})", end="", file=stream)
     for idx, selpart in enumerate(sel.split(":")[:-1]):
         print(
-            f"{selpart}:({describe_type(parts[idx+3])})arg{idx}", end=" ", file=stream
+            f"{selpart}:({describe_type(parts[idx + 3])})arg{idx}", end=" ", file=stream
         )
     print("\n{", file=stream)
     print("    PyObject* items;", file=stream)
@@ -1188,7 +1174,7 @@ def generate_testext_callimp(stream, signature, instance=True):
 
     for idx, _selpart in enumerate(sel.split(":")[:-1]):
         print(
-            f'        tmp = PyObjC_ObjCToPython("{parts[idx+3].decode()}", &arg{idx});',
+            f'        tmp = PyObjC_ObjCToPython("{parts[idx + 3].decode()}", &arg{idx});',
             file=stream,
         )
         print("        if (tmp == NULL) PyObjC_GIL_FORWARD_EXC();", file=stream)
@@ -1250,7 +1236,7 @@ def generate_testext_callfromobjc(stream, signature):
     print("[value ", end="", file=stream)
     for idx, selpart in enumerate(sel.split(":")[:-1]):
         print(
-            f"{selpart}:{as_objc_literal(parts[idx+3], valid_value(parts[idx+3]))} ",
+            f"{selpart}:{as_objc_literal(parts[idx + 3], valid_value(parts[idx + 3]))} ",
             end=" ",
             file=stream,
         )
@@ -1494,9 +1480,7 @@ def generate_call_testcase(stream, signature, *, instance=True, imp=False):
     if sigparts[0] == objc._C_VOID:
         print("        self.assertIs(rv, None)", file=stream)
     else:
-        print(
-            f"        self.assertEqual(rv, {valid_value(sigparts[0])!r})", file=stream
-        )
+        print(f"        self.assertEqual(rv, {valid_value(sigparts[0])!r})", file=stream)
 
     if imp and not instance:
         print("", file=stream)
@@ -1642,9 +1626,7 @@ def generate_imp_testhelper(stream, signature, instance=True):
     )
 
     if signature_parts[0] != objc._C_VOID:
-        print(
-            f"{pfx}        return {repr(valid_value(signature_parts[0]))}", file=stream
-        )
+        print(f"{pfx}        return {repr(valid_value(signature_parts[0]))}", file=stream)
 
     print("", file=stream)
 

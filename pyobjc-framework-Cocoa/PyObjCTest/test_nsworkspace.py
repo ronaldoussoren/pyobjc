@@ -43,12 +43,8 @@ class TestNSWorkspace(TestCase):
 
         self.assertIsInstance(AppKit.NSWorkspaceDidLaunchApplicationNotification, str)
         self.assertIsInstance(AppKit.NSWorkspaceDidMountNotification, str)
-        self.assertIsInstance(
-            AppKit.NSWorkspaceDidPerformFileOperationNotification, str
-        )
-        self.assertIsInstance(
-            AppKit.NSWorkspaceDidTerminateApplicationNotification, str
-        )
+        self.assertIsInstance(AppKit.NSWorkspaceDidPerformFileOperationNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDidTerminateApplicationNotification, str)
         self.assertIsInstance(AppKit.NSWorkspaceDidUnmountNotification, str)
         self.assertIsInstance(AppKit.NSWorkspaceWillLaunchApplicationNotification, str)
         self.assertIsInstance(AppKit.NSWorkspaceWillPowerOffNotification, str)
@@ -86,9 +82,7 @@ class TestNSWorkspace(TestCase):
         self.assertIsInstance(AppKit.NSWorkspaceDidHideApplicationNotification, str)
         self.assertIsInstance(AppKit.NSWorkspaceDidUnhideApplicationNotification, str)
         self.assertIsInstance(AppKit.NSWorkspaceDidActivateApplicationNotification, str)
-        self.assertIsInstance(
-            AppKit.NSWorkspaceDidDeactivateApplicationNotification, str
-        )
+        self.assertIsInstance(AppKit.NSWorkspaceDidDeactivateApplicationNotification, str)
         self.assertIsInstance(AppKit.NSWorkspaceVolumeLocalizedNameKey, str)
         self.assertIsInstance(AppKit.NSWorkspaceVolumeURLKey, str)
         self.assertIsInstance(AppKit.NSWorkspaceVolumeOldLocalizedNameKey, str)
@@ -116,15 +110,9 @@ class TestNSWorkspace(TestCase):
         self.assertResultIsBOOL(AppKit.NSWorkspace.openFile_fromImage_at_inView_)
         self.assertResultIsBOOL(AppKit.NSWorkspace.openURL_)
         self.assertResultIsBOOL(AppKit.NSWorkspace.launchApplication_)
-        self.assertResultIsBOOL(
-            AppKit.NSWorkspace.launchApplication_showIcon_autolaunch_
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSWorkspace.launchApplication_showIcon_autolaunch_, 1
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSWorkspace.launchApplication_showIcon_autolaunch_, 2
-        )
+        self.assertResultIsBOOL(AppKit.NSWorkspace.launchApplication_showIcon_autolaunch_)
+        self.assertArgIsBOOL(AppKit.NSWorkspace.launchApplication_showIcon_autolaunch_, 1)
+        self.assertArgIsBOOL(AppKit.NSWorkspace.launchApplication_showIcon_autolaunch_, 2)
         self.assertResultIsBOOL(AppKit.NSWorkspace.selectFile_inFileViewerRootedAtPath_)
         self.assertResultIsBOOL(AppKit.NSWorkspace.fileSystemChanged)
         self.assertResultIsBOOL(AppKit.NSWorkspace.userDefaultsChanged)
@@ -267,9 +255,7 @@ class TestNSWorkspace(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSWorkspaceOpenConfiguration.setPromptsUserIfNeeded_, 0
         )
-        self.assertArgIsBOOL(
-            AppKit.NSWorkspaceOpenConfiguration.setAddsToRecentItems_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSWorkspaceOpenConfiguration.setAddsToRecentItems_, 0)
         self.assertArgIsBOOL(AppKit.NSWorkspaceOpenConfiguration.setActivates_, 0)
         self.assertArgIsBOOL(AppKit.NSWorkspaceOpenConfiguration.setHides_, 0)
         self.assertArgIsBOOL(AppKit.NSWorkspaceOpenConfiguration.setHidesOthers_, 0)

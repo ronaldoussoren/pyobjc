@@ -34,9 +34,7 @@ class TestJSObjectRef(TestCase):
         self.assertArgHasType(
             JavaScriptCore.JSObjectMake, 1, JavaScriptCore.JSClassRef.__typestr__
         )
-        self.assertArgHasType(
-            JavaScriptCore.JSObjectMake, 2, objc._C_PTR + objc._C_VOID
-        )
+        self.assertArgHasType(JavaScriptCore.JSObjectMake, 2, objc._C_PTR + objc._C_VOID)
 
         self.assertResultHasType(
             JavaScriptCore.JSObjectMakeArray, JavaScriptCore.JSObjectRef.__typestr__
@@ -280,18 +278,14 @@ class TestJSObjectRef(TestCase):
             1,
             JavaScriptCore.JSObjectRef.__typestr__,
         )
-        self.assertArgHasType(
-            JavaScriptCore.JSObjectGetPropertyAtIndex, 2, objc._C_UINT
-        )
+        self.assertArgHasType(JavaScriptCore.JSObjectGetPropertyAtIndex, 2, objc._C_UINT)
         self.assertArgHasType(
             JavaScriptCore.JSObjectGetPropertyAtIndex,
             3,
             b"o^" + JavaScriptCore.JSObjectRef.__typestr__,
         )
 
-        self.assertResultHasType(
-            JavaScriptCore.JSObjectSetPropertyAtIndex, objc._C_VOID
-        )
+        self.assertResultHasType(JavaScriptCore.JSObjectSetPropertyAtIndex, objc._C_VOID)
         self.assertArgHasType(
             JavaScriptCore.JSObjectSetPropertyAtIndex,
             0,
@@ -302,9 +296,7 @@ class TestJSObjectRef(TestCase):
             1,
             JavaScriptCore.JSObjectRef.__typestr__,
         )
-        self.assertArgHasType(
-            JavaScriptCore.JSObjectSetPropertyAtIndex, 2, objc._C_UINT
-        )
+        self.assertArgHasType(JavaScriptCore.JSObjectSetPropertyAtIndex, 2, objc._C_UINT)
         self.assertArgHasType(
             JavaScriptCore.JSObjectSetPropertyAtIndex,
             3,
@@ -402,9 +394,7 @@ class TestJSObjectRef(TestCase):
             0,
             JavaScriptCore.JSPropertyNameArrayRef.__typestr__,
         )
-        self.assertArgHasType(
-            JavaScriptCore.JSPropertyNameArrayGetNameAtIndex, 1, SIZE_T
-        )
+        self.assertArgHasType(JavaScriptCore.JSPropertyNameArrayGetNameAtIndex, 1, SIZE_T)
 
         self.assertArgHasType(
             JavaScriptCore.JSPropertyNameAccumulatorAddName,

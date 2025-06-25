@@ -11,9 +11,7 @@ class TestPHASEObject(TestCase):
 
         self.assertResultHasType(PHASE.PHASEObject.right, simd.simd_float3.__typestr__)
         self.assertResultHasType(PHASE.PHASEObject.up, simd.simd_float3.__typestr__)
-        self.assertResultHasType(
-            PHASE.PHASEObject.forward, simd.simd_float3.__typestr__
-        )
+        self.assertResultHasType(PHASE.PHASEObject.forward, simd.simd_float3.__typestr__)
 
         self.assertResultHasType(
             PHASE.PHASEObject.transform, simd.simd_float4x4.__typestr__

@@ -51,6 +51,4 @@ class TestNSAttributeDescription(TestCase):
     @min_os_level("12.0")
     def testMethods12_0(self):
         self.assertResultIsBOOL(CoreData.NSAttributeDescription.allowsCloudEncryption)
-        self.assertArgIsBOOL(
-            CoreData.NSAttributeDescription.setAllowsCloudEncryption_, 0
-        )
+        self.assertArgIsBOOL(CoreData.NSAttributeDescription.setAllowsCloudEncryption_, 0)

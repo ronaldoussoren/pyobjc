@@ -59,9 +59,7 @@ class MyHazeFilter(Quartz.CIFilter):
 
         if _hazeRemovalKernel is None:
             bundle = Cocoa.NSBundle.bundleForClass_(type(self))
-            with open(
-                bundle.pathForResource_ofType_("MyHazeRemoval", "cikernel")
-            ) as fp:
+            with open(bundle.pathForResource_ofType_("MyHazeRemoval", "cikernel")) as fp:
                 code = fp.read()
             kernels = Quartz.CIKernel.kernelsWithString_(code)
             _hazeRemovalKernel = kernels[0]

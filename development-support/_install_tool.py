@@ -104,9 +104,7 @@ def main(extra_arg: str | None = None) -> None:
     all_projects = ["pyobjc-core"] + sort_framework_wrappers()
     for idx, project in enumerate(all_projects):
         print()
-        print(
-            f"{BOLD}{idx + 1}/{len(all_projects)}: Building project {project!r}{RESET}"
-        )
+        print(f"{BOLD}{idx + 1}/{len(all_projects)}: Building project {project!r}{RESET}")
         print()
         if not build_project(project, extra_arg):
             print(f"{RED}Cannot build one of the projects, bailing out{RESET}")

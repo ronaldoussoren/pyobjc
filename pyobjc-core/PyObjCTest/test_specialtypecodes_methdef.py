@@ -76,18 +76,14 @@ class TestTypeCodeLeaks(TestCase):
         self.assertEqual(pysig[0], objc._C_CHAR_AS_TEXT)
         self.assertEqual(csig[0], objc._C_CHR)
 
-        pysig = objc.splitSignature(
-            OC_TestTypeCodeLeaks_Result.myUniCharResult.signature
-        )
+        pysig = objc.splitSignature(OC_TestTypeCodeLeaks_Result.myUniCharResult.signature)
         csig = objc.splitSignature(
             OC_TestTypeCodeLeaks_Result.myUniCharResult.native_signature
         )
         self.assertEqual(pysig[0], objc._C_UNICHAR)
         self.assertEqual(csig[0], objc._C_SHT)
 
-        pysig = objc.splitSignature(
-            OC_TestTypeCodeLeaks_Result.myUniStrResult.signature
-        )
+        pysig = objc.splitSignature(OC_TestTypeCodeLeaks_Result.myUniStrResult.signature)
         csig = objc.splitSignature(
             OC_TestTypeCodeLeaks_Result.myUniStrResult.native_signature
         )
@@ -128,9 +124,7 @@ class TestTypeCodeLeaks(TestCase):
             )
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefIn.myBOOLArg_.signature)
-        csig = objc.splitSignature(
-            OC_TestTypeCodeLeaks_RefIn.myBOOLArg_.native_signature
-        )
+        csig = objc.splitSignature(OC_TestTypeCodeLeaks_RefIn.myBOOLArg_.native_signature)
         self.assertEqual(pysig[3], objc._C_IN + objc._C_PTR + objc._C_NSBOOL)
         if objc.arch == "arm64":
             self.assertEqual(csig[3], objc._C_IN + objc._C_PTR + objc._C_BOOL)
@@ -138,16 +132,12 @@ class TestTypeCodeLeaks(TestCase):
             self.assertEqual(csig[3], objc._C_IN + objc._C_PTR + objc._C_CHR)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefIn.myInt8Arg_.signature)
-        csig = objc.splitSignature(
-            OC_TestTypeCodeLeaks_RefIn.myInt8Arg_.native_signature
-        )
+        csig = objc.splitSignature(OC_TestTypeCodeLeaks_RefIn.myInt8Arg_.native_signature)
         self.assertEqual(pysig[3], objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_INT)
         self.assertEqual(csig[3], objc._C_IN + objc._C_PTR + objc._C_CHR)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefIn.myByteArg_.signature)
-        csig = objc.splitSignature(
-            OC_TestTypeCodeLeaks_RefIn.myByteArg_.native_signature
-        )
+        csig = objc.splitSignature(OC_TestTypeCodeLeaks_RefIn.myByteArg_.native_signature)
         self.assertEqual(pysig[3], objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT)
         self.assertEqual(csig[3], objc._C_IN + objc._C_PTR + objc._C_CHR)
 
@@ -216,9 +206,7 @@ class TestTypeCodeLeaks(TestCase):
         self.assertEqual(pysig[3], objc._C_INOUT + objc._C_PTR + objc._C_CHAR_AS_TEXT)
         self.assertEqual(csig[3], objc._C_INOUT + objc._C_PTR + objc._C_CHR)
 
-        pysig = objc.splitSignature(
-            OC_TestTypeCodeLeaks_RefInOut.myUniCharArg_.signature
-        )
+        pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefInOut.myUniCharArg_.signature)
         csig = objc.splitSignature(
             OC_TestTypeCodeLeaks_RefInOut.myUniCharArg_.native_signature
         )
@@ -348,9 +336,7 @@ class TestTypeCodeLeaks(TestCase):
         self.assertEqual(pysig[3], objc._C_CONST + objc._C_PTR + objc._C_CHAR_AS_TEXT)
         self.assertEqual(csig[3], objc._C_CONST + objc._C_PTR + objc._C_CHR)
 
-        pysig = objc.splitSignature(
-            OC_TestTypeCodeLeaks_RefConst.myUniCharArg_.signature
-        )
+        pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefConst.myUniCharArg_.signature)
         csig = objc.splitSignature(
             OC_TestTypeCodeLeaks_RefConst.myUniCharArg_.native_signature
         )
@@ -364,11 +350,7 @@ class TestTypeCodeLeaks(TestCase):
 
             myBOOLArg_ = objc.selector(
                 myBOOLArg_,
-                signature=b"v@:"
-                + objc._C_ARY_B
-                + b"4"
-                + objc._C_NSBOOL
-                + objc._C_ARY_E,
+                signature=b"v@:" + objc._C_ARY_B + b"4" + objc._C_NSBOOL + objc._C_ARY_E,
             )
 
             def myInt8Arg_(self, arg):
@@ -400,28 +382,18 @@ class TestTypeCodeLeaks(TestCase):
 
             myUniCharArg_ = objc.selector(
                 myUniCharArg_,
-                signature=b"v@:"
-                + objc._C_ARY_B
-                + b"4"
-                + objc._C_UNICHAR
-                + objc._C_ARY_E,
+                signature=b"v@:" + objc._C_ARY_B + b"4" + objc._C_UNICHAR + objc._C_ARY_E,
             )
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myBOOLArg_.signature)
         csig = objc.splitSignature(
             OC_TestTypeCodeLeaks_ArrayDef.myBOOLArg_.native_signature
         )
-        self.assertEqual(
-            pysig[3], objc._C_ARY_B + b"4" + objc._C_NSBOOL + objc._C_ARY_E
-        )
+        self.assertEqual(pysig[3], objc._C_ARY_B + b"4" + objc._C_NSBOOL + objc._C_ARY_E)
         if objc.arch == "arm64":
-            self.assertEqual(
-                csig[3], objc._C_ARY_B + b"4" + objc._C_BOOL + objc._C_ARY_E
-            )
+            self.assertEqual(csig[3], objc._C_ARY_B + b"4" + objc._C_BOOL + objc._C_ARY_E)
         else:
-            self.assertEqual(
-                csig[3], objc._C_ARY_B + b"4" + objc._C_CHR + objc._C_ARY_E
-            )
+            self.assertEqual(csig[3], objc._C_ARY_B + b"4" + objc._C_CHR + objc._C_ARY_E)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myInt8Arg_.signature)
         csig = objc.splitSignature(
@@ -441,15 +413,11 @@ class TestTypeCodeLeaks(TestCase):
         )
         self.assertEqual(csig[3], objc._C_ARY_B + b"4" + objc._C_CHR + objc._C_ARY_E)
 
-        pysig = objc.splitSignature(
-            OC_TestTypeCodeLeaks_ArrayDef.myUniCharArg_.signature
-        )
+        pysig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myUniCharArg_.signature)
         csig = objc.splitSignature(
             OC_TestTypeCodeLeaks_ArrayDef.myUniCharArg_.native_signature
         )
-        self.assertEqual(
-            pysig[3], objc._C_ARY_B + b"4" + objc._C_UNICHAR + objc._C_ARY_E
-        )
+        self.assertEqual(pysig[3], objc._C_ARY_B + b"4" + objc._C_UNICHAR + objc._C_ARY_E)
         self.assertEqual(csig[3], objc._C_ARY_B + b"4" + objc._C_SHT + objc._C_ARY_E)
 
     def testInStructDef(self):

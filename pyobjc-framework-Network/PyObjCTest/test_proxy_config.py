@@ -35,9 +35,7 @@ class TestProxyConfig(TestCase):
         self.assertArgHasType(Network.nw_proxy_config_create_oblivious_http, 2, b"n^v")
         self.assertArgSizeInArg(Network.nw_proxy_config_create_oblivious_http, 2, 3)
 
-        self.assertResultHasType(
-            Network.nw_proxy_config_create_http_connect, objc._C_ID
-        )
+        self.assertResultHasType(Network.nw_proxy_config_create_http_connect, objc._C_ID)
         self.assertResultIsRetained(Network.nw_proxy_config_create_http_connect)
 
         self.assertResultHasType(Network.nw_proxy_config_create_socksv5, objc._C_ID)
@@ -69,9 +67,7 @@ class TestProxyConfig(TestCase):
 
         Network.nw_proxy_config_clear_excluded_domains
 
-        self.assertArgIsBlock(
-            Network.nw_proxy_config_enumerate_match_domains, 1, b"vn^t"
-        )
+        self.assertArgIsBlock(Network.nw_proxy_config_enumerate_match_domains, 1, b"vn^t")
         self.assertArgIsBlock(
             Network.nw_proxy_config_enumerate_excluded_domains, 1, b"vn^t"
         )

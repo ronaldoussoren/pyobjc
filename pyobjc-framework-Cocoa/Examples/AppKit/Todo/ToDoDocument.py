@@ -176,9 +176,7 @@ class ToDoDocument(Cocoa.NSDocument):
                 else:
                     due = None
 
-                self.itemList.cellAtRow_column_(i, 0).setStringValue_(
-                    thisItem.itemName()
-                )
+                self.itemList.cellAtRow_column_(i, 0).setStringValue_(thisItem.itemName())
                 self.statusList.cellAtRow_column_(i, 0).setTimeDue_(due)
                 self.statusList.cellAtRow_column_(i, 0).setTriState_(thisItem.status())
             else:

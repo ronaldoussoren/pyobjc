@@ -81,9 +81,7 @@ class TestNSFileProviderReplicatedExtension(TestCase):
 
     def test_constants(self):
         self.assertEqual(FileProvider.NSFileProviderCreateItemMayAlreadyExist, 1 << 0)
-        self.assertEqual(
-            FileProvider.NSFileProviderCreateItemDeletionConflicted, 1 << 1
-        )
+        self.assertEqual(FileProvider.NSFileProviderCreateItemDeletionConflicted, 1 << 1)
 
         self.assertEqual(FileProvider.NSFileProviderDeleteItemRecursive, 1 << 0)
 

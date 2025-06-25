@@ -71,9 +71,7 @@ class TestMIDICapabilityInquiry(TestCase):
             2,
             MIDICISessionDisconnectBlock,
         )
-        self.assertResultIsBOOL(
-            CoreMIDI.MIDICISession.sendProfile_onChannel_profileData_
-        )
+        self.assertResultIsBOOL(CoreMIDI.MIDICISession.sendProfile_onChannel_profileData_)
         self.assertResultIsBOOL(CoreMIDI.MIDICIDiscoveredNode.supportsProfiles)
         self.assertResultIsBOOL(CoreMIDI.MIDICIDiscoveredNode.supportsProperties)
 

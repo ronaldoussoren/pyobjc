@@ -178,16 +178,12 @@ class TestPickle(TestCase):
         self.assertEqual(
             Foundation.NSUTF16StringEncoding, Foundation.NSUnicodeStringEncoding
         )
-        self.assertEqual(
-            Foundation.NSUTF16BigEndianStringEncoding, cast_uint(0x90000100)
-        )
+        self.assertEqual(Foundation.NSUTF16BigEndianStringEncoding, cast_uint(0x90000100))
         self.assertEqual(
             Foundation.NSUTF16LittleEndianStringEncoding, cast_uint(0x94000100)
         )
         self.assertEqual(Foundation.NSUTF32StringEncoding, cast_uint(0x8C000100))
-        self.assertEqual(
-            Foundation.NSUTF32BigEndianStringEncoding, cast_uint(0x98000100)
-        )
+        self.assertEqual(Foundation.NSUTF32BigEndianStringEncoding, cast_uint(0x98000100))
         self.assertEqual(
             Foundation.NSUTF32LittleEndianStringEncoding, cast_uint(0x9C000100)
         )
@@ -205,15 +201,9 @@ class TestPickle(TestCase):
         self.assertResultIsBOOL(Foundation.NSString.hasPrefix_)
         self.assertResultIsBOOL(Foundation.NSString.hasSuffix_)
         self.assertResultIsBOOL(Foundation.NSString.boolValue)
-        self.assertArgIsOut(
-            Foundation.NSString.getLineStart_end_contentsEnd_forRange_, 0
-        )
-        self.assertArgIsOut(
-            Foundation.NSString.getLineStart_end_contentsEnd_forRange_, 1
-        )
-        self.assertArgIsOut(
-            Foundation.NSString.getLineStart_end_contentsEnd_forRange_, 2
-        )
+        self.assertArgIsOut(Foundation.NSString.getLineStart_end_contentsEnd_forRange_, 0)
+        self.assertArgIsOut(Foundation.NSString.getLineStart_end_contentsEnd_forRange_, 1)
+        self.assertArgIsOut(Foundation.NSString.getLineStart_end_contentsEnd_forRange_, 2)
         self.assertArgIsOut(
             Foundation.NSString.getParagraphStart_end_contentsEnd_forRange_, 0
         )
@@ -233,9 +223,7 @@ class TestPickle(TestCase):
         self.assertArgHasType(
             Foundation.NSString.getCString_maxLength_encoding_, 0, b"o^v"
         )
-        self.assertArgSizeInArg(
-            Foundation.NSString.getCString_maxLength_encoding_, 0, 1
-        )
+        self.assertArgSizeInArg(Foundation.NSString.getCString_maxLength_encoding_, 0, 1)
 
         self.assertResultIsBOOL(
             Foundation.NSString.getBytes_maxLength_usedLength_encoding_options_range_remainingRange_  # noqa: B950
@@ -314,19 +302,11 @@ class TestPickle(TestCase):
 
         self.assertArgHasType(Foundation.NSString.initWithCString_encoding_, 0, b"n^t")
         self.assertArgIsNullTerminated(Foundation.NSString.initWithCString_encoding_, 0)
-        self.assertArgHasType(
-            Foundation.NSString.stringWithCString_encoding_, 0, b"n^t"
-        )
-        self.assertArgIsNullTerminated(
-            Foundation.NSString.stringWithCString_encoding_, 0
-        )
+        self.assertArgHasType(Foundation.NSString.stringWithCString_encoding_, 0, b"n^t")
+        self.assertArgIsNullTerminated(Foundation.NSString.stringWithCString_encoding_, 0)
 
-        self.assertArgIsOut(
-            Foundation.NSString.initWithContentsOfURL_encoding_error_, 2
-        )
-        self.assertArgIsOut(
-            Foundation.NSString.initWithContentsOfFile_encoding_error_, 2
-        )
+        self.assertArgIsOut(Foundation.NSString.initWithContentsOfURL_encoding_error_, 2)
+        self.assertArgIsOut(Foundation.NSString.initWithContentsOfFile_encoding_error_, 2)
         self.assertArgIsOut(
             Foundation.NSString.stringWithContentsOfURL_encoding_error_, 2
         )
@@ -359,24 +339,16 @@ class TestPickle(TestCase):
             Foundation.NSString.stringWithContentsOfFile_usedEncoding_error_, 2
         )
 
-        self.assertResultIsBOOL(
-            Foundation.NSString.writeToURL_atomically_encoding_error_
-        )
-        self.assertArgIsBOOL(
-            Foundation.NSString.writeToURL_atomically_encoding_error_, 1
-        )
-        self.assertArgIsOut(
-            Foundation.NSString.writeToURL_atomically_encoding_error_, 3
-        )
+        self.assertResultIsBOOL(Foundation.NSString.writeToURL_atomically_encoding_error_)
+        self.assertArgIsBOOL(Foundation.NSString.writeToURL_atomically_encoding_error_, 1)
+        self.assertArgIsOut(Foundation.NSString.writeToURL_atomically_encoding_error_, 3)
         self.assertResultIsBOOL(
             Foundation.NSString.writeToFile_atomically_encoding_error_
         )
         self.assertArgIsBOOL(
             Foundation.NSString.writeToFile_atomically_encoding_error_, 1
         )
-        self.assertArgIsOut(
-            Foundation.NSString.writeToFile_atomically_encoding_error_, 3
-        )
+        self.assertArgIsOut(Foundation.NSString.writeToFile_atomically_encoding_error_, 3)
 
         self.assertArgIsPrintf(Foundation.NSMutableString.appendFormat_, 0)
 
@@ -471,9 +443,7 @@ class TestPickle(TestCase):
         self.assertIsInstance(
             Foundation.NSStringEncodingDetectionLossySubstitutionKey, str
         )
-        self.assertIsInstance(
-            Foundation.NSStringEncodingDetectionLikelyLanguageKey, str
-        )
+        self.assertIsInstance(Foundation.NSStringEncodingDetectionLikelyLanguageKey, str)
 
     @min_os_level("10.10")
     def testMethods10_10(self):

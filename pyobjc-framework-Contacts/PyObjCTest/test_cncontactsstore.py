@@ -45,9 +45,7 @@ class TestCNContactStore(TestCase):
         )
 
         self.assertArgIsOut(Contacts.CNContactStore.groupsMatchingPredicate_error_, 1)
-        self.assertArgIsOut(
-            Contacts.CNContactStore.containersMatchingPredicate_error_, 1
-        )
+        self.assertArgIsOut(Contacts.CNContactStore.containersMatchingPredicate_error_, 1)
 
         self.assertResultIsBOOL(Contacts.CNContactStore.executeSaveRequest_error_)
         self.assertArgIsOut(Contacts.CNContactStore.executeSaveRequest_error_, 1)

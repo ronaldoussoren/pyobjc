@@ -119,9 +119,7 @@ class TestMTLArgumentEncoder(TestCase):
             objc._C_NSUInteger,
         )
 
-        self.assertArgIsIn(
-            TestMTLArgumentEncoderHelper.setBuffers_offsets_withRange_, 0
-        )
+        self.assertArgIsIn(TestMTLArgumentEncoderHelper.setBuffers_offsets_withRange_, 0)
         self.assertArgSizeInArg(
             TestMTLArgumentEncoderHelper.setBuffers_offsets_withRange_, 0, 2
         )
@@ -144,9 +142,7 @@ class TestMTLArgumentEncoder(TestCase):
         )
 
         self.assertArgIsIn(TestMTLArgumentEncoderHelper.setTextures_withRange_, 0)
-        self.assertArgSizeInArg(
-            TestMTLArgumentEncoderHelper.setTextures_withRange_, 0, 1
-        )
+        self.assertArgSizeInArg(TestMTLArgumentEncoderHelper.setTextures_withRange_, 0, 1)
         self.assertArgHasType(
             TestMTLArgumentEncoderHelper.setTextures_withRange_,
             1,

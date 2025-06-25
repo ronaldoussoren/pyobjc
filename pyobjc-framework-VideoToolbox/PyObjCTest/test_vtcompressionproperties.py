@@ -30,12 +30,8 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_AllowFrameReordering, str
         )
-        self.assertIsInstance(
-            VideoToolbox.kVTCompressionPropertyKey_AverageBitRate, str
-        )
-        self.assertIsInstance(
-            VideoToolbox.kVTCompressionPropertyKey_DataRateLimits, str
-        )
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_AverageBitRate, str)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_DataRateLimits, str)
         self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_Quality, str)
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_MoreFramesBeforeStart, str
@@ -94,15 +90,9 @@ class TestVTCompressionProperties(TestCase):
         )
         self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_FieldCount, str)
         self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_FieldDetail, str)
-        self.assertIsInstance(
-            VideoToolbox.kVTCompressionPropertyKey_AspectRatio16x9, str
-        )
-        self.assertIsInstance(
-            VideoToolbox.kVTCompressionPropertyKey_ProgressiveScan, str
-        )
-        self.assertIsInstance(
-            VideoToolbox.kVTCompressionPropertyKey_ColorPrimaries, str
-        )
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_AspectRatio16x9, str)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_ProgressiveScan, str)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_ColorPrimaries, str)
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_TransferFunction, str
         )
@@ -136,9 +126,7 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_5_1, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_5_2, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_AutoLevel, str)
-        self.assertIsInstance(
-            VideoToolbox.kVTCompressionPropertyKey_H264EntropyMode, str
-        )
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_H264EntropyMode, str)
         self.assertIsInstance(VideoToolbox.kVTH264EntropyMode_CAVLC, str)
         self.assertIsInstance(VideoToolbox.kVTH264EntropyMode_CABAC, str)
         self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_RealTime, str)
@@ -400,12 +388,8 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Main_5_1, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Main_5_2, str)
 
-        self.assertIsInstance(
-            VideoToolbox.kVTCompressionPropertyKey_ProjectionKind, str
-        )
-        self.assertIsInstance(
-            VideoToolbox.kVTCompressionPropertyKey_ViewPackingKind, str
-        )
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_ProjectionKind, str)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_ViewPackingKind, str)
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_SuggestedLookAheadFrameCount, str
         )

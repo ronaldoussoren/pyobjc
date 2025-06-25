@@ -20,9 +20,7 @@ class TestNSFileCoordinator(TestCase):
     @min_os_level("10.7")
     def testConstants(self):
         self.assertEqual(Foundation.NSFileCoordinatorReadingWithoutChanges, 1 << 0)
-        self.assertEqual(
-            Foundation.NSFileCoordinatorReadingResolvesSymbolicLink, 1 << 1
-        )
+        self.assertEqual(Foundation.NSFileCoordinatorReadingResolvesSymbolicLink, 1 << 1)
         self.assertEqual(Foundation.NSFileCoordinatorWritingForDeleting, 1 << 0)
         self.assertEqual(Foundation.NSFileCoordinatorWritingForMoving, 1 << 1)
         self.assertEqual(Foundation.NSFileCoordinatorWritingForMerging, 1 << 2)

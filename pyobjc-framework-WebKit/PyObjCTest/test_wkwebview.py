@@ -31,9 +31,7 @@ class TestWKWebView(TestCase):
         self.assertResultIsBOOL(WebKit.WKWebView.canGoBack)
         self.assertResultIsBOOL(WebKit.WKWebView.canGoForward)
         self.assertResultIsBOOL(WebKit.WKWebView.allowsBackForwardNavigationGestures)
-        self.assertArgIsBOOL(
-            WebKit.WKWebView.setAllowsBackForwardNavigationGestures_, 0
-        )
+        self.assertArgIsBOOL(WebKit.WKWebView.setAllowsBackForwardNavigationGestures_, 0)
         self.assertResultIsBOOL(WebKit.WKWebView.allowsMagnification)
         self.assertArgIsBOOL(WebKit.WKWebView.setAllowsMagnification_, 0)
         self.assertArgIsBlock(

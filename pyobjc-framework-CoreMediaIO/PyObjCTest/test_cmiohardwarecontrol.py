@@ -13,9 +13,7 @@ class TestCMIOHardwareControl(TestCase):
         self.assertEqual(CoreMediaIO.kCMIODirectionControlClassID, fourcc(b"dire"))
 
         self.assertEqual(CoreMediaIO.kCMIODataSourceControlClassID, fourcc(b"dsrc"))
-        self.assertEqual(
-            CoreMediaIO.kCMIODataDestinationControlClassID, fourcc(b"dest")
-        )
+        self.assertEqual(CoreMediaIO.kCMIODataDestinationControlClassID, fourcc(b"dest"))
 
         self.assertEqual(CoreMediaIO.kCMIOBlackLevelControlClassID, fourcc(b"bklv"))
         self.assertEqual(CoreMediaIO.kCMIOWhiteLevelControlClassID, fourcc(b"whlv"))
@@ -45,12 +43,8 @@ class TestCMIOHardwareControl(TestCase):
             CoreMediaIO.kCMIOPowerLineFrequencyControlClassID, fourcc(b"pwfq")
         )
         self.assertEqual(CoreMediaIO.kCMIONoiseReductionControlClassID, fourcc(b"s2nr"))
-        self.assertEqual(
-            CoreMediaIO.kCMIOPanTiltAbsoluteControlClassID, fourcc(b"ptab")
-        )
-        self.assertEqual(
-            CoreMediaIO.kCMIOPanTiltRelativeControlClassID, fourcc(b"ptrl")
-        )
+        self.assertEqual(CoreMediaIO.kCMIOPanTiltAbsoluteControlClassID, fourcc(b"ptab"))
+        self.assertEqual(CoreMediaIO.kCMIOPanTiltRelativeControlClassID, fourcc(b"ptrl"))
         self.assertEqual(CoreMediaIO.kCMIOZoomRelativeControlClassID, fourcc(b"zomr"))
         self.assertEqual(CoreMediaIO.kCMIORollAbsoluteControlClassID, fourcc(b"rola"))
 
@@ -120,18 +114,14 @@ class TestCMIOHardwareControl(TestCase):
         self.assertEqual(
             CoreMediaIO.kCMIOExposureControlPropertyUnlockThreshold, fourcc(b"eulk")
         )
-        self.assertEqual(
-            CoreMediaIO.kCMIOExposureControlPropertyTarget, fourcc(b"etgt")
-        )
+        self.assertEqual(CoreMediaIO.kCMIOExposureControlPropertyTarget, fourcc(b"etgt"))
         self.assertEqual(
             CoreMediaIO.kCMIOExposureControlPropertyConvergenceSpeed, fourcc(b"ecsp")
         )
         self.assertEqual(
             CoreMediaIO.kCMIOExposureControlPropertyStability, fourcc(b"esty")
         )
-        self.assertEqual(
-            CoreMediaIO.kCMIOExposureControlPropertyStable, fourcc(b"estb")
-        )
+        self.assertEqual(CoreMediaIO.kCMIOExposureControlPropertyStable, fourcc(b"estb"))
         self.assertEqual(
             CoreMediaIO.kCMIOExposureControlPropertyIntegrationTime, fourcc(b"eint")
         )

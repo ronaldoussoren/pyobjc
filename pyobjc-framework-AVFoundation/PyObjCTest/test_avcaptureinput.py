@@ -26,9 +26,7 @@ class TestAVCaptureInput(TestCase):
         self.assertArgIsOut(AVFoundation.AVCaptureDeviceInput.initWithDevice_error_, 1)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesMouseClicks)
-        self.assertArgIsBOOL(
-            AVFoundation.AVCaptureScreenInput.setCapturesMouseClicks_, 0
-        )
+        self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesMouseClicks_, 0)
 
     @min_os_level("12.0")
     def test_methodsTundra(self):
@@ -53,9 +51,7 @@ class TestAVCaptureInput(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesCursor)
         self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesCursor_, 0)
 
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureScreenInput.removesDuplicateFrames
-        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.removesDuplicateFrames)
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0
         )
@@ -67,9 +63,7 @@ class TestAVCaptureInput(TestCase):
             AVFoundation.AVCaptureScreenInput_Tundra.setCapturesCursor_, 0
         )
 
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureScreenInput.removesDuplicateFrames
-        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.removesDuplicateFrames)
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0
         )

@@ -57,9 +57,7 @@ class TestMKMapView(TestCase):
         self.assertArgIsBOOL(MapKit.MKMapView.setRegion_animated_, 1)
         self.assertArgIsBOOL(MapKit.MKMapView.setCenterCoordinate_animated_, 1)
         self.assertArgIsBOOL(MapKit.MKMapView.setVisibleMapRect_animated_, 1)
-        self.assertArgIsBOOL(
-            MapKit.MKMapView.setVisibleMapRect_edgePadding_animated_, 2
-        )
+        self.assertArgIsBOOL(MapKit.MKMapView.setVisibleMapRect_edgePadding_animated_, 2)
         self.assertArgIsBOOL(MapKit.MKMapView.setCamera_animated_, 1)
 
         self.assertArgIsBOOL(MapKit.MKMapView.setZoomEnabled_, 0)

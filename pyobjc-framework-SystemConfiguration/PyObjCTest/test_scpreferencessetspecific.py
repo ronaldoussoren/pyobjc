@@ -4,9 +4,7 @@ import SystemConfiguration
 
 class TestSCPreferencesSetSpecific(TestCase):
     def testFunctions(self):
-        ref = SystemConfiguration.SCPreferencesCreate(
-            None, "pyobjc.test", "pyobjc.test"
-        )
+        ref = SystemConfiguration.SCPreferencesCreate(None, "pyobjc.test", "pyobjc.test")
         self.assertIsInstance(ref, SystemConfiguration.SCPreferencesRef)
 
         v = SystemConfiguration.SCPreferencesSetComputerName(

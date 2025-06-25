@@ -261,7 +261,6 @@ class TestDefaultNewForObjectiveCClass(TestCase):
         self.assertEqual(v.value(), ["x-y", 1, 2])
 
     def test_removed_init(self):
-
         with self.assertRaisesRegex(
             TypeError, r"OC_GenericNewChild2\(\) requires keyword arguments"
         ):

@@ -15,12 +15,8 @@ class TestWKWebExtensionContext(TestCase):
         )
 
         self.assertIsEnumType(WebKit.WKWebExtensionContextPermissionStatus)
-        self.assertEqual(
-            WebKit.WKWebExtensionContextPermissionStatusDeniedExplicitly, -3
-        )
-        self.assertEqual(
-            WebKit.WKWebExtensionContextPermissionStatusDeniedImplicitly, -2
-        )
+        self.assertEqual(WebKit.WKWebExtensionContextPermissionStatusDeniedExplicitly, -3)
+        self.assertEqual(WebKit.WKWebExtensionContextPermissionStatusDeniedImplicitly, -2)
         self.assertEqual(
             WebKit.WKWebExtensionContextPermissionStatusRequestedImplicitly, -1
         )
@@ -28,12 +24,8 @@ class TestWKWebExtensionContext(TestCase):
         self.assertEqual(
             WebKit.WKWebExtensionContextPermissionStatusRequestedExplicitly, 1
         )
-        self.assertEqual(
-            WebKit.WKWebExtensionContextPermissionStatusGrantedImplicitly, 2
-        )
-        self.assertEqual(
-            WebKit.WKWebExtensionContextPermissionStatusGrantedExplicitly, 3
-        )
+        self.assertEqual(WebKit.WKWebExtensionContextPermissionStatusGrantedImplicitly, 2)
+        self.assertEqual(WebKit.WKWebExtensionContextPermissionStatusGrantedExplicitly, 3)
 
         self.assertIsTypedEnum(WebKit.WKWebExtensionContextNotificationUserInfoKey, str)
 
@@ -89,9 +81,7 @@ class TestWKWebExtensionContext(TestCase):
         self.assertResultIsBOOL(WebKit.WKWebExtensionContext.hasAccessToAllURLs)
         self.assertResultIsBOOL(WebKit.WKWebExtensionContext.hasAccessToAllHosts)
         self.assertResultIsBOOL(WebKit.WKWebExtensionContext.hasInjectedContent)
-        self.assertResultIsBOOL(
-            WebKit.WKWebExtensionContext.hasContentModificationRules
-        )
+        self.assertResultIsBOOL(WebKit.WKWebExtensionContext.hasContentModificationRules)
 
         self.assertArgIsBlock(
             WebKit.WKWebExtensionContext.loadBackgroundContentWithCompletionHandler_,
@@ -102,6 +92,4 @@ class TestWKWebExtensionContext(TestCase):
         self.assertResultIsBOOL(WebKit.WKWebExtensionContext.performCommandForEvent_)
         self.assertResultIsBOOL(WebKit.WKWebExtensionContext.hasActiveUserGestureInTab_)
 
-        self.assertArgIsBOOL(
-            WebKit.WKWebExtensionContext.didCloseTab_windowIsClosing_, 1
-        )
+        self.assertArgIsBOOL(WebKit.WKWebExtensionContext.didCloseTab_windowIsClosing_, 1)

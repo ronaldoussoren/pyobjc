@@ -122,16 +122,12 @@ class TestCharacterSet(TestCase):
         )
         charset = CoreFoundation.CFCharacterSetCreateMutableCopy(None, charset)
 
-        self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4))
-        )
+        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4)))
         CoreFoundation.CFCharacterSetAddCharactersInRange(charset, (1, 10))
         self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4)))
 
         CoreFoundation.CFCharacterSetRemoveCharactersInRange(charset, (4, 2))
-        self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4))
-        )
+        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4)))
 
         self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "5"))
         CoreFoundation.CFCharacterSetAddCharactersInString(charset, "012345")

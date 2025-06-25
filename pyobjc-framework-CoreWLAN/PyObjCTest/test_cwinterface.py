@@ -90,16 +90,10 @@ class TestCWInterface(TestCase):
         self.assertResultIsBOOL(CoreWLAN.CWInterface.setChannel_error_)
         self.assertArgIsOut(CoreWLAN.CWInterface.setChannel_error_, 1)
 
-        self.assertArgIsOut(
-            CoreWLAN.CWInterface.scanForNetworksWithParameters_error_, 1
-        )
+        self.assertArgIsOut(CoreWLAN.CWInterface.scanForNetworksWithParameters_error_, 1)
 
-        self.assertResultIsBOOL(
-            CoreWLAN.CWInterface.associateToNetwork_parameters_error_
-        )
-        self.assertArgIsOut(
-            CoreWLAN.CWInterface.associateToNetwork_parameters_error_, 2
-        )
+        self.assertResultIsBOOL(CoreWLAN.CWInterface.associateToNetwork_parameters_error_)
+        self.assertArgIsOut(CoreWLAN.CWInterface.associateToNetwork_parameters_error_, 2)
 
         self.assertResultIsBOOL(CoreWLAN.CWInterface.enableIBSSWithParameters_error_)
         self.assertArgIsOut(CoreWLAN.CWInterface.enableIBSSWithParameters_error_, 1)

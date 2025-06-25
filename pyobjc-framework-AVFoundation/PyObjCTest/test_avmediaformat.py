@@ -33,9 +33,7 @@ class TestAVMediaFormat(TestCase):
     @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(AVFoundation.AVMediaTypeMetadata, str)
-        self.assertIsInstance(
-            AVFoundation.AVMediaCharacteristicIsMainProgramContent, str
-        )
+        self.assertIsInstance(AVFoundation.AVMediaCharacteristicIsMainProgramContent, str)
         self.assertIsInstance(AVFoundation.AVMediaCharacteristicIsAuxiliaryContent, str)
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicContainsOnlyForcedSubtitles, str
@@ -61,13 +59,9 @@ class TestAVMediaFormat(TestCase):
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertIsInstance(
-            AVFoundation.AVMediaCharacteristicLanguageTranslation, str
-        )
+        self.assertIsInstance(AVFoundation.AVMediaCharacteristicLanguageTranslation, str)
         self.assertIsInstance(AVFoundation.AVMediaCharacteristicDubbedTranslation, str)
-        self.assertIsInstance(
-            AVFoundation.AVMediaCharacteristicVoiceOverTranslation, str
-        )
+        self.assertIsInstance(AVFoundation.AVMediaCharacteristicVoiceOverTranslation, str)
         self.assertIsInstance(AVFoundation.AVFileType3GPP, str)
         self.assertIsInstance(AVFoundation.AVFileType3GPP2, str)
         self.assertIsInstance(AVFoundation.AVFileTypeEnhancedAC3, str)
@@ -100,9 +94,7 @@ class TestAVMediaFormat(TestCase):
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(
-            AVFoundation.AVMediaCharacteristicContainsAlphaChannel, str
-        )
+        self.assertIsInstance(AVFoundation.AVMediaCharacteristicContainsAlphaChannel, str)
 
     @min_os_level("11.0")
     def testConstants11_0(self):

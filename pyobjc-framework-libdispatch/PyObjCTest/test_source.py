@@ -83,18 +83,14 @@ class TestSourceAPI(TestCase):
         self.assertArgHasType(dispatch.dispatch_source_create, 2, objc._C_ULNG)
         self.assertArgHasType(dispatch.dispatch_source_create, 3, objc._C_ID)
 
-        self.assertResultHasType(
-            dispatch.dispatch_source_set_event_handler, objc._C_VOID
-        )
+        self.assertResultHasType(dispatch.dispatch_source_set_event_handler, objc._C_VOID)
         self.assertArgHasType(dispatch.dispatch_source_set_event_handler, 0, objc._C_ID)
         self.assertArgIsBlock(dispatch.dispatch_source_set_event_handler, 1, b"v")
 
         self.assertResultHasType(
             dispatch.dispatch_source_set_event_handler_f, objc._C_VOID
         )
-        self.assertArgHasType(
-            dispatch.dispatch_source_set_event_handler_f, 0, objc._C_ID
-        )
+        self.assertArgHasType(dispatch.dispatch_source_set_event_handler_f, 0, objc._C_ID)
         self.assertArgIsFunction(
             dispatch.dispatch_source_set_event_handler_f, 1, b"v^v", 1
         )
@@ -102,9 +98,7 @@ class TestSourceAPI(TestCase):
         self.assertResultHasType(
             dispatch.dispatch_source_set_cancel_handler, objc._C_VOID
         )
-        self.assertArgHasType(
-            dispatch.dispatch_source_set_cancel_handler, 0, objc._C_ID
-        )
+        self.assertArgHasType(dispatch.dispatch_source_set_cancel_handler, 0, objc._C_ID)
         self.assertArgIsBlock(dispatch.dispatch_source_set_cancel_handler, 1, b"v")
 
         self.assertResultHasType(
@@ -148,9 +142,7 @@ class TestSourceAPI(TestCase):
         self.assertArgHasType(
             dispatch.dispatch_source_set_registration_handler, 0, objc._C_ID
         )
-        self.assertArgIsBlock(
-            dispatch.dispatch_source_set_registration_handler, 1, b"v"
-        )
+        self.assertArgIsBlock(dispatch.dispatch_source_set_registration_handler, 1, b"v")
 
         self.assertResultHasType(
             dispatch.dispatch_source_set_registration_handler_f, objc._C_VOID

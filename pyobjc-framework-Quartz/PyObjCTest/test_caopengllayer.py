@@ -24,6 +24,4 @@ class TestCAOpenGLLayer(TestCase):
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(Quartz.CAOpenGLLayer.wantsExtendedDynamicRangeContent)
-        self.assertArgIsBOOL(
-            Quartz.CAOpenGLLayer.setWantsExtendedDynamicRangeContent_, 0
-        )
+        self.assertArgIsBOOL(Quartz.CAOpenGLLayer.setWantsExtendedDynamicRangeContent_, 0)

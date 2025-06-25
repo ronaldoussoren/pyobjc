@@ -52,18 +52,14 @@ class TestNSFileProviderTesting(TestCase):
         self.assertProtocolExists("NSFileProviderTestingCollisionResolution")
 
     def test_proto_methods(self):
-        self.assertResultHasType(
-            TestNSFileProviderTestingHelper.side, objc._C_NSUInteger
-        )
+        self.assertResultHasType(TestNSFileProviderTestingHelper.side, objc._C_NSUInteger)
         self.assertResultHasType(
             TestNSFileProviderTestingHelper.targetSide, objc._C_NSUInteger
         )
         self.assertResultHasType(
             TestNSFileProviderTestingHelper.changedFields, objc._C_NSUInteger
         )
-        self.assertResultHasType(
-            TestNSFileProviderTestingHelper.type, objc._C_NSInteger
-        )
+        self.assertResultHasType(TestNSFileProviderTestingHelper.type, objc._C_NSInteger)
 
     @min_os_level("11.3")
     def test_methods11_3(self):

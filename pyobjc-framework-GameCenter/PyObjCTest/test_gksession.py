@@ -11,12 +11,8 @@ class TestGKSession(TestCase):
         self.assertResultIsBOOL(GameCenter.GKSession.isAvailable)
         self.assertArgIsBOOL(GameCenter.GKSession.setAvailable_, 0)
 
-        self.assertResultIsBOOL(
-            GameCenter.GKSession.sendData_toPeers_withDataMode_error_
-        )
-        self.assertArgIsOut(
-            GameCenter.GKSession.sendData_toPeers_withDataMode_error_, 3
-        )
+        self.assertResultIsBOOL(GameCenter.GKSession.sendData_toPeers_withDataMode_error_)
+        self.assertArgIsOut(GameCenter.GKSession.sendData_toPeers_withDataMode_error_, 3)
 
         self.assertResultIsBOOL(
             GameCenter.GKSession.sendDataToAllPeers_withDataMode_error_

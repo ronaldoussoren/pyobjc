@@ -312,9 +312,7 @@ class TestNumbers(TestCase):
         ):
             pyObjCPy(objc._C_LNG_LNG, LLONG_MIN - 1)
 
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'long long', got 'str'"
-        ):
+        with self.assertRaisesRegex(ValueError, "depythonifying 'long long', got 'str'"):
             pyObjCPy(objc._C_LNG_LNG, "1")
         with self.assertRaisesRegex(
             ValueError, "depythonifying 'long long', got 'bytes'"
@@ -455,9 +453,7 @@ class TestCArray(TestCase):
             with self.assertRaisesRegex(ValueError, "type mismatch"):
                 w = carrayMaker(objc._C_SHT, 42, None)
 
-        with self.assertRaisesRegex(
-            AttributeError, "Cannot delete option '_ArrayType'"
-        ):
+        with self.assertRaisesRegex(AttributeError, "Cannot delete option '_ArrayType'"):
             del objc.options._ArrayType
 
     def test_array_typecodes(self):
@@ -521,9 +517,7 @@ class TestCArray(TestCase):
             ValueError, r"too few values \(5\) expecting at least 7"
         ):
             carrayMaker(objc._C_SHT, arr, 7)
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'short', got 'str' of 1"
-        ):
+        with self.assertRaisesRegex(ValueError, "depythonifying 'short', got 'str' of 1"):
             carrayMaker(objc._C_SHT, ["a", "b"], 1)
 
     def testShortArray(self):
@@ -665,9 +659,7 @@ class TestCArray(TestCase):
             ValueError, "depythonifying struct of 2 members, got tuple of 1"
         ):
             carrayMaker(b"{Point=ff}", ["a", "b"], 1)
-        with self.assertRaisesRegex(
-            TypeError, "depythonifying struct, got no sequence"
-        ):
+        with self.assertRaisesRegex(TypeError, "depythonifying struct, got no sequence"):
             carrayMaker(b"{Point=ff}", arr2, None)
 
     def testPointArray(self):
@@ -936,9 +928,7 @@ class TestCArray(TestCase):
         self.assertEqual(v, ((1, 2), (3, 4), (5, 6)))
 
         v = carrayMaker(b"[2" + objc._C_CHAR_AS_TEXT + b"]", a, None)
-        self.assertEqual(
-            v, ((b"\x01", b"\x02"), (b"\x03", b"\x04"), (b"\x05", b"\x06"))
-        )
+        self.assertEqual(v, ((b"\x01", b"\x02"), (b"\x03", b"\x04"), (b"\x05", b"\x06")))
 
         v = carrayMaker(objc._C_CHAR_AS_INT, a, None)
         self.assertEqual(v, (1, 2, 3, 4, 5, 6))

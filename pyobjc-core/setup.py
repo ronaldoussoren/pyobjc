@@ -357,9 +357,7 @@ class oc_egg_info(egg_info.egg_info):
             fp.write(
                 "Project-URL: Issue tracker, https://github.com/ronaldoussoren/pyobjc/issues\n"
             )
-            fp.write(
-                "Project-URL: Repository, https://github.com/ronaldoussoren/pyobjc"
-            )
+            fp.write("Project-URL: Repository, https://github.com/ronaldoussoren/pyobjc")
             fp.write(middle)
             fp.write(last)
 
@@ -615,9 +613,7 @@ class oc_build_ext(build_ext.build_ext):
         if not os.path.exists(self.sdk_root):
             raise DistutilsSetupError(f"SDK root {self.sdk_root!r} does not exist")
 
-        if not os.path.exists(
-            os.path.join(self.sdk_root, "usr/include/objc/runtime.h")
-        ):
+        if not os.path.exists(os.path.join(self.sdk_root, "usr/include/objc/runtime.h")):
             if "-DNO_OBJC2_RUNTIME" not in CFLAGS:
                 CFLAGS.append("-DNO_OBJC2_RUNTIME")
                 EXT_CFLAGS.append("-DNO_OBJC2_RUNTIME")
@@ -710,15 +706,15 @@ def parse_package_metadata():
             metadata[opt] += "\n\nProject links\n"
             metadata[opt] += "-------------\n"
             metadata[opt] += "\n"
-            metadata[
-                opt
-            ] += "* `Documentation <https://pyobjc.readthedocs.io/en/latest/>`_\n\n"
-            metadata[
-                opt
-            ] += "* `Issue Tracker <https://github.com/ronaldoussoren/pyobjc/issues>`_\n\n"
-            metadata[
-                opt
-            ] += "* `Repository <https://github.com/ronaldoussoren/pyobjc/>`_\n\n"
+            metadata[opt] += (
+                "* `Documentation <https://pyobjc.readthedocs.io/en/latest/>`_\n\n"
+            )
+            metadata[opt] += (
+                "* `Issue Tracker <https://github.com/ronaldoussoren/pyobjc/issues>`_\n\n"
+            )
+            metadata[opt] += (
+                "* `Repository <https://github.com/ronaldoussoren/pyobjc/>`_\n\n"
+            )
 
         elif opt in ("packages", "namespace_packages", "platforms", "keywords"):
             metadata[opt] = [x.strip() for x in val.split(",")]

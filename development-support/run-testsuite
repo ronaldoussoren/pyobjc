@@ -295,7 +295,7 @@ def test_summary(fp_out, state_dir):
     width = max(len(x) for x in keys)
 
     maxlen = max(len(s) for s in results)
-    fmt = f"%{maxlen+2}s" + (" | %%%ds" % width) * len(keys)
+    fmt = f"%{maxlen + 2}s" + (" | %%%ds" % width) * len(keys)
     print(file=fp_out)
     print()
     print(fmt % (("Project",) + keys), file=fp_out)
@@ -406,7 +406,7 @@ def test_summary_html(fp_out, state_dir):
         for k in keys:
             if k not in results[proj]:
                 print(
-                    "      <td><span class=\"skip\"></span></td>",
+                    '      <td><span class="skip"></span></td>',
                     file=fp_out,
                 )
                 continue
@@ -418,7 +418,7 @@ def test_summary_html(fp_out, state_dir):
 
             if "count" not in info and info.get("message"):
                 print(
-                    f"      <td><span class=\"crash\">{info.get('message')}</span></td>",
+                    f'      <td><span class="crash">{info.get("message")}</span></td>',
                     file=fp_out,
                 )
             else:
@@ -476,9 +476,7 @@ def compiler_supports_arch(arch):
         fp.write("int main(void) { return 42; }\n")
 
     try:
-        subprocess.check_call(
-            ["cc", "-o", "/tmp/detect", "/tmp/detect.c", "-arch", arch]
-        )
+        subprocess.check_call(["cc", "-o", "/tmp/detect", "/tmp/detect.c", "-arch", arch])
     except subprocess.CalledProcessError:
         os.unlink("/tmp/detect.c")
         return False
@@ -519,9 +517,7 @@ def main():
 
     # Invoke 'sw_vers' to get the real system version, even if Python was compiled
     # with an older SDK.
-    osx_release = (
-        subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
-    )
+    osx_release = subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
 
     print(
         f"{BOLD}running PyObjC tests on macOS {osx_release} with python versions {', '.join(options.python_versions)}{RESET}"
@@ -667,9 +663,7 @@ def main():
     ok = test_summary(sys.stdout, osx_dir)
 
     keys = load_pushover_keys()
-    send_pushover(
-        keys, "Testsuite finished" if ok else "Testsuite finished with errors"
-    )
+    send_pushover(keys, "Testsuite finished" if ok else "Testsuite finished with errors")
 
     # Save HTML coverage reports
     # TODO: Find a way to combine all of this in 1 big report

@@ -11,9 +11,7 @@ except AttributeError:
 else:
 
     class TestNSURLSessionStreamTaskHelper(Foundation.NSURLSessionStreamTask):
-        def readDataOfMinLength_maxLength_timeout_completionHandler_(
-            self, mn, mx, t, c
-        ):
+        def readDataOfMinLength_maxLength_timeout_completionHandler_(self, mn, mx, t, c):
             pass
 
         def writeData_timeout_completionHandler_(self, d, t, c):
@@ -118,9 +116,7 @@ class TestNSURLSession(TestCase):
         self.assertIsEnumType(Foundation.NSURLSessionDelayedRequestDisposition)
         self.assertIsEnumType(Foundation.NSURLSessionMultipathServiceType)
         self.assertIsEnumType(Foundation.NSURLSessionResponseDisposition)
-        self.assertIsEnumType(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocol
-        )
+        self.assertIsEnumType(Foundation.NSURLSessionTaskMetricsDomainResolutionProtocol)
         self.assertIsEnumType(Foundation.NSURLSessionTaskMetricsResourceFetchType)
         self.assertIsEnumType(Foundation.NSURLSessionTaskState)
         self.assertIsEnumType(Foundation.NSURLSessionWebSocketCloseCode)
@@ -144,9 +140,7 @@ class TestNSURLSession(TestCase):
         self.assertEqual(Foundation.NSURLSessionWebSocketCloseCodeGoingAway, 1001)
         self.assertEqual(Foundation.NSURLSessionWebSocketCloseCodeProtocolError, 1002)
         self.assertEqual(Foundation.NSURLSessionWebSocketCloseCodeUnsupportedData, 1003)
-        self.assertEqual(
-            Foundation.NSURLSessionWebSocketCloseCodeNoStatusReceived, 1005
-        )
+        self.assertEqual(Foundation.NSURLSessionWebSocketCloseCodeNoStatusReceived, 1005)
         self.assertEqual(Foundation.NSURLSessionWebSocketCloseCodeAbnormalClosure, 1006)
         self.assertEqual(
             Foundation.NSURLSessionWebSocketCloseCodeInvalidFramePayloadData, 1007
@@ -166,15 +160,9 @@ class TestNSURLSession(TestCase):
         self.assertEqual(
             Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUnknown, 0
         )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUDP, 1
-        )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTCP, 2
-        )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTLS, 3
-        )
+        self.assertEqual(Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUDP, 1)
+        self.assertEqual(Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTCP, 2)
+        self.assertEqual(Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTLS, 3)
         self.assertEqual(
             Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolHTTPS, 4
         )
@@ -212,12 +200,8 @@ class TestNSURLSession(TestCase):
         self.assertEqual(
             Foundation.NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad, 1
         )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsResourceFetchTypeServerPush, 2
-        )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsResourceFetchTypeLocalCache, 3
-        )
+        self.assertEqual(Foundation.NSURLSessionTaskMetricsResourceFetchTypeServerPush, 2)
+        self.assertEqual(Foundation.NSURLSessionTaskMetricsResourceFetchTypeLocalCache, 3)
 
     @min_os_level("14.0")
     def testConstants14_0(self):
@@ -264,9 +248,7 @@ class TestNSURLSession(TestCase):
             Foundation.NSURLSessionDownloadTask.cancelByProducingResumeData_, 0, b"v@"
         )
 
-        self.assertResultIsBOOL(
-            TestNSURLSessionConfigurationHelper.waitsForConnectivity
-        )
+        self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.waitsForConnectivity)
         self.assertArgIsBOOL(
             TestNSURLSessionConfigurationHelper.setWaitsForConnectivity_, 0
         )
@@ -281,9 +263,7 @@ class TestNSURLSession(TestCase):
             TestNSURLSessionConfigurationHelper.setHTTPShouldUsePipelining_, 0
         )
 
-        self.assertResultIsBOOL(
-            TestNSURLSessionConfigurationHelper.HTTPShouldSetCookies
-        )
+        self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.HTTPShouldSetCookies)
         self.assertArgIsBOOL(
             TestNSURLSessionConfigurationHelper.setHTTPShouldSetCookies_, 0
         )
@@ -431,18 +411,12 @@ class TestNSURLSession(TestCase):
             b"v@",
         )
 
-        self.assertResultIsBOOL(
-            Foundation.NSURLSessionTaskTransactionMetrics.isCellular
-        )
-        self.assertResultIsBOOL(
-            Foundation.NSURLSessionTaskTransactionMetrics.isExpensive
-        )
+        self.assertResultIsBOOL(Foundation.NSURLSessionTaskTransactionMetrics.isCellular)
+        self.assertResultIsBOOL(Foundation.NSURLSessionTaskTransactionMetrics.isExpensive)
         self.assertResultIsBOOL(
             Foundation.NSURLSessionTaskTransactionMetrics.isConstrained
         )
-        self.assertResultIsBOOL(
-            Foundation.NSURLSessionTaskTransactionMetrics.isMultipath
-        )
+        self.assertResultIsBOOL(Foundation.NSURLSessionTaskTransactionMetrics.isMultipath)
 
     @min_os_level("11.0")
     def testMethods10_15_missing(self):

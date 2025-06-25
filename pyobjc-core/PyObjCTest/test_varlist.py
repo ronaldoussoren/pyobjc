@@ -18,9 +18,7 @@ class TestVarlistVarious(TestCase):
         self.assertIsGenericAlias(t, objc.varlist, (int,))
 
     def test_cannot_create(self):
-        with self.assertRaisesRegex(
-            TypeError, "cannot create 'objc.varlist' instances"
-        ):
+        with self.assertRaisesRegex(TypeError, "cannot create 'objc.varlist' instances"):
             objc.varlist()
 
     def test_array_of_union(self):

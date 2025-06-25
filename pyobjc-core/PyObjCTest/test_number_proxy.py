@@ -890,19 +890,11 @@ class TestInteractions(TestCase):
         self.assertTrue(OC_NumberInt.number_isEqualTo_(NSNumber.numberWithFloat_(0), 0))
 
         self.assertFalse(OC_NumberInt.number_isEqualTo_(42, NSNumber.numberWithInt_(0)))
-        self.assertFalse(
-            OC_NumberInt.number_isEqualTo_(42, NSNumber.numberWithLong_(0))
-        )
-        self.assertFalse(
-            OC_NumberInt.number_isEqualTo_(42, NSNumber.numberWithFloat_(0))
-        )
+        self.assertFalse(OC_NumberInt.number_isEqualTo_(42, NSNumber.numberWithLong_(0)))
+        self.assertFalse(OC_NumberInt.number_isEqualTo_(42, NSNumber.numberWithFloat_(0)))
         self.assertFalse(OC_NumberInt.number_isEqualTo_(NSNumber.numberWithInt_(0), 42))
-        self.assertFalse(
-            OC_NumberInt.number_isEqualTo_(NSNumber.numberWithLong_(0), 42)
-        )
-        self.assertFalse(
-            OC_NumberInt.number_isEqualTo_(NSNumber.numberWithFloat_(0), 42)
-        )
+        self.assertFalse(OC_NumberInt.number_isEqualTo_(NSNumber.numberWithLong_(0), 42))
+        self.assertFalse(OC_NumberInt.number_isEqualTo_(NSNumber.numberWithFloat_(0), 42))
 
 
 class TestNumberFormatter(TestCase):
@@ -1122,9 +1114,7 @@ class TestComparsionMethods(TestCase):
                     with self.assertRaisesRegex(
                         ValueError, "cannot have Python representation"
                     ):
-                        test_method(
-                            value, objc.lookUpClass("OC_NoPythonRepresentation")
-                        )
+                        test_method(value, objc.lookUpClass("OC_NoPythonRepresentation"))
 
     def test_comparision_with_large_long(self):
         OC_NumberInt.number_isEqualTo_(2**63 + 10, 2**63 + 10)

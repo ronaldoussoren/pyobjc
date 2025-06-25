@@ -403,9 +403,7 @@ class TestCTFont(TestCase):
         self.assertArgIsCFRetained(CoreText.CTFontGetPlatformFont, 1)
         self.assertResultIsCFRetained(CoreText.CTFontCreateWithPlatformFont)
 
-        v = CoreText.CTFontCopyAvailableTables(
-            font, CoreText.kCTFontTableOptionNoOptions
-        )
+        v = CoreText.CTFontCopyAvailableTables(font, CoreText.kCTFontTableOptionNoOptions)
         self.assertIsInstance(v, tuple)
 
         v = CoreText.CTFontCopyTable(font, v[0], 0)

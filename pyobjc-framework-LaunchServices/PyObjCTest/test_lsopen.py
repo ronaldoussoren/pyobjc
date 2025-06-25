@@ -11,9 +11,7 @@ with warnings.catch_warnings():
 
 class TestLSOpen(TestCase):
     def setUp(self):
-        self.path = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "dummy.txt"
-        )
+        self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dummy.txt")
         fp = open(self.path, "w")
         fp.write("test contents")
         fp.close()
@@ -122,9 +120,7 @@ class TestLSOpen(TestCase):
         params = LaunchServices.LSApplicationParameters(
             version=0,
             flags=LaunchServices.kLSLaunchDefaults,
-            application=objc.FSRef.from_pathname(
-                "/Applications/Utilities/Terminal.app"
-            ),
+            application=objc.FSRef.from_pathname("/Applications/Utilities/Terminal.app"),
             asyncLaunchRefCon=None,
             environment=None,
             argv=["Terminal"],

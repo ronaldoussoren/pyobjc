@@ -14,9 +14,7 @@ class PythonListAsValue(TestCase):
         self.assertArgIsBOOL(Foundation.NSUserDefaults.setBool_forKey_, 0)
         self.assertResultIsBOOL(Foundation.NSUserDefaults.synchronize)
         self.assertResultIsBOOL(Foundation.NSUserDefaults.objectIsForcedForKey_)
-        self.assertResultIsBOOL(
-            Foundation.NSUserDefaults.objectIsForcedForKey_inDomain_
-        )
+        self.assertResultIsBOOL(Foundation.NSUserDefaults.objectIsForcedForKey_inDomain_)
 
     def testConstants(self):
         self.assertIsInstance(Foundation.NSGlobalDomain, str)

@@ -18,9 +18,7 @@ class TestNSSliderCell(TestCase):
 
         self.assertEqual(AppKit.NSTickMarkPositionBelow, 0)
         self.assertEqual(AppKit.NSTickMarkPositionAbove, 1)
-        self.assertEqual(
-            AppKit.NSTickMarkPositionLeading, AppKit.NSTickMarkPositionAbove
-        )
+        self.assertEqual(AppKit.NSTickMarkPositionLeading, AppKit.NSTickMarkPositionAbove)
         self.assertEqual(
             AppKit.NSTickMarkPositionTrailing, AppKit.NSTickMarkPositionBelow
         )

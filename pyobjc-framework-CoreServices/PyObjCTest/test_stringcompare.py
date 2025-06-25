@@ -4,9 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestStringCompoare(TestCase):
     def assert_not_wrapped(self, name):
-        self.assertTrue(
-            not hasattr(CoreServices, name), f"{name!r} exposed in bindings"
-        )
+        self.assertTrue(not hasattr(CoreServices, name), f"{name!r} exposed in bindings")
 
     def test_not_wrapped(self):
         self.assert_not_wrapped("systemCurLang")

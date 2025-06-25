@@ -79,12 +79,8 @@ class TestColorSyncTransform(TestCase):
         self.assertIsInstance(ColorSync.kColorSyncTransformCodeFragmentType, str)
         self.assertIsInstance(ColorSync.kColorSyncTransformCodeFragmentMD5, str)
         self.assertIsInstance(ColorSync.kColorSyncTransformFullConversionData, str)
-        self.assertIsInstance(
-            ColorSync.kColorSyncTransformSimplifiedConversionData, str
-        )
-        self.assertIsInstance(
-            ColorSync.kColorSyncTransformParametricConversionData, str
-        )
+        self.assertIsInstance(ColorSync.kColorSyncTransformSimplifiedConversionData, str)
+        self.assertIsInstance(ColorSync.kColorSyncTransformParametricConversionData, str)
         self.assertIsInstance(ColorSync.kColorSyncConversionMatrix, str)
         self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve0, str)
         self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve1, str)

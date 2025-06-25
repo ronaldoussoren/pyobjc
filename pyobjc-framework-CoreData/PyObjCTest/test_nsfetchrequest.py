@@ -37,9 +37,7 @@ class TestNSFetchRequest(TestCase):
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(CoreData.NSFetchRequest.shouldRefreshRefetchedObjects)
-        self.assertArgIsBOOL(
-            CoreData.NSFetchRequest.setShouldRefreshRefetchedObjects_, 0
-        )
+        self.assertArgIsBOOL(CoreData.NSFetchRequest.setShouldRefreshRefetchedObjects_, 0)
 
     @min_os_level("10.12")
     def testMethods10_12(self):

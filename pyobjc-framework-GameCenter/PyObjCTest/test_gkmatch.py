@@ -49,9 +49,7 @@ class TestGKError(TestCase):
         self.assertArgIsBlock(
             GameCenter.GKMatch.chooseBestHostingPlayerWithCompletionHandler_, 0, b"v@"
         )
-        self.assertArgIsBlock(
-            GameCenter.GKMatch.rematchWithCompletionHandler_, 0, b"v@@"
-        )
+        self.assertArgIsBlock(GameCenter.GKMatch.rematchWithCompletionHandler_, 0, b"v@@")
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
     @min_os_level("10.9")
@@ -60,12 +58,8 @@ class TestGKError(TestCase):
             GameCenter.GKMatch.chooseBestHostPlayerWithCompletionHandler_, 0, b"v@"
         )
 
-        self.assertResultIsBOOL(
-            GameCenter.GKMatch.sendData_toPlayers_withDataMode_error_
-        )
-        self.assertArgIsOut(
-            GameCenter.GKMatch.sendData_toPlayers_withDataMode_error_, 3
-        )
+        self.assertResultIsBOOL(GameCenter.GKMatch.sendData_toPlayers_withDataMode_error_)
+        self.assertArgIsOut(GameCenter.GKMatch.sendData_toPlayers_withDataMode_error_, 3)
 
     @min_os_level("10.10")
     def testProtocols(self):

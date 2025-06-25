@@ -98,11 +98,7 @@ class TestDescribeType(TestCase):
         )
         self.assertEqual(
             mod.describe_type(
-                objc._C_STRUCT_B
-                + b"name="
-                + objc._C_ID
-                + objc._C_INT
-                + objc._C_STRUCT_E
+                objc._C_STRUCT_B + b"name=" + objc._C_ID + objc._C_INT + objc._C_STRUCT_E
             ),
             "name",
         )
@@ -118,9 +114,7 @@ class TestDescribeType(TestCase):
             "name",
         )
 
-        _ = objc.createStructType(
-            "NamedTestStruct", b'{NamedTestStruct1="a"i"b"i}', None
-        )
+        _ = objc.createStructType("NamedTestStruct", b'{NamedTestStruct1="a"i"b"i}', None)
         self.assertEqual(mod.describe_type(b"{NamedTestStruct1=ii}"), "NamedTestStruct")
 
         self.assertEqual(
@@ -172,10 +166,7 @@ class TestDescribeCallable(TestCase):
                 ("NSTemporaryDirectory", objc._C_ID),
                 (
                     "NSSearchPathForDirectoriesInDomains",
-                    objc._C_ID
-                    + objc._C_NSUInteger
-                    + objc._C_NSUInteger
-                    + objc._C_NSBOOL,
+                    objc._C_ID + objc._C_NSUInteger + objc._C_NSUInteger + objc._C_NSBOOL,
                 ),
             ],
         )
@@ -892,10 +883,7 @@ class TestCallableSignature(TestCase):
                 ("NSTemporaryDirectory", objc._C_ID),
                 (
                     "NSSearchPathForDirectoriesInDomains",
-                    objc._C_ID
-                    + objc._C_NSUInteger
-                    + objc._C_NSUInteger
-                    + objc._C_NSBOOL,
+                    objc._C_ID + objc._C_NSUInteger + objc._C_NSUInteger + objc._C_NSBOOL,
                 ),
             ],
         )

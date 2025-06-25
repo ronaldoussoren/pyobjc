@@ -17,10 +17,8 @@ class MyBaseGradientView(Cocoa.NSView):
             self.myGradient = None
 
         if self.myGradient is None:
-            self.myGradient = (
-                Cocoa.NSGradient.alloc().initWithStartingColor_endingColor_(
-                    self.myStartColor, self.myEndColor
-                )
+            self.myGradient = Cocoa.NSGradient.alloc().initWithStartingColor_endingColor_(
+                self.myStartColor, self.myEndColor
             )
             self.forceColorChange = False
 

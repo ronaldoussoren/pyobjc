@@ -353,9 +353,7 @@ class TestCVPixelBuffer(TestCase):
     @min_os_level("11.0")
     def testConstants11_0(self):
         self.assertIsInstance(Quartz.kCVPixelBufferVersatileBayerKey_BayerPattern, str)
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferProResRAWKey_SenselSitingOffsets, str
-        )
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_SenselSitingOffsets, str)
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_BlackLevel, str)
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteLevel, str)
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceCCT, str)

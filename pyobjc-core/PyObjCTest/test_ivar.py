@@ -420,9 +420,7 @@ class TestAllInstanceVariables(TestCase):
         with self.assertRaisesRegex(ValueError, "depythonifying 'Class', got 'int'"):
             setter(obj, "isa", 42)
 
-        with self.assertRaisesRegex(
-            TypeError, "depythonifying struct, got no sequence"
-        ):
+        with self.assertRaisesRegex(TypeError, "depythonifying struct, got no sequence"):
             setter(obj, "rectValue", 42)
 
         with self.assertRaisesRegex(

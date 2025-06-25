@@ -22,9 +22,7 @@ class TestNSLayoutContraintManual(TestCase):
             {"var1": "foo", "var2": "bar"},
         )
 
-        self.assertRaises(
-            KeyError, AppKit.NSDictionaryOfVariableBindings, "var1", "var3"
-        )
+        self.assertRaises(KeyError, AppKit.NSDictionaryOfVariableBindings, "var1", "var3")
 
     @min_os_level("10.11")
     def testConstants10_11(self):

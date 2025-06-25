@@ -119,9 +119,7 @@ def xcode_version() -> str:
 
 def py_version(ver: str) -> str:
     return (
-        subprocess.check_output(
-            [f"python{ver}", "-c", "import sys; print(sys.version)"]
-        )
+        subprocess.check_output([f"python{ver}", "-c", "import sys; print(sys.version)"])
         .decode("utf-8")
         .splitlines()[0]
     )

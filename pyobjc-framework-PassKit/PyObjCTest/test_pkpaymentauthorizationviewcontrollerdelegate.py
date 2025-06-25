@@ -21,14 +21,10 @@ class TestPKAddPaymentPassRequestHelper(PassKit.NSObject):
     ):
         pass
 
-    def paymentAuthorizationViewController_didSelectPaymentMethod_handler_(
-        self, a, b, c
-    ):
+    def paymentAuthorizationViewController_didSelectPaymentMethod_handler_(self, a, b, c):
         pass
 
-    def paymentAuthorizationViewController_didAuthorizePayment_completion_(
-        self, a, b, c
-    ):
+    def paymentAuthorizationViewController_didAuthorizePayment_completion_(self, a, b, c):
         pass
 
     def paymentAuthorizationViewController_didSelectShippingMethod_completion_(

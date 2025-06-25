@@ -72,9 +72,7 @@ class TestIOBluetoothDevice(TestCase):
             IOBluetooth.IOBluetoothDevice.openL2CAPChannel_findExisting_newChannel_, 2
         )
 
-        self.assertArgIsIn(
-            IOBluetooth.IOBluetoothDevice.sendL2CAPEchoRequest_length_, 0
-        )
+        self.assertArgIsIn(IOBluetooth.IOBluetoothDevice.sendL2CAPEchoRequest_length_, 0)
         self.assertArgSizeInArg(
             IOBluetooth.IOBluetoothDevice.sendL2CAPEchoRequest_length_, 0, 1
         )

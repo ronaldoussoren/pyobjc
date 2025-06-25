@@ -533,17 +533,13 @@ class TestArrayProperty(TestCase):
 
     def testObjCAccessors(self):
         # Check that the right ObjC array accessors are defined and work properly
-        self.assertTrue(
-            TestArrayPropertyHelper.instancesRespondToSelector_(b"setArray:")
-        )
+        self.assertTrue(TestArrayPropertyHelper.instancesRespondToSelector_(b"setArray:"))
         self.assertTrue(TestArrayPropertyHelper.instancesRespondToSelector_(b"array"))
         self.assertTrue(
             TestArrayPropertyHelper.instancesRespondToSelector_(b"countOfArray")
         )
         self.assertTrue(
-            TestArrayPropertyHelper.instancesRespondToSelector_(
-                b"objectInArrayAtIndex:"
-            )
+            TestArrayPropertyHelper.instancesRespondToSelector_(b"objectInArrayAtIndex:")
         )
         self.assertTrue(
             TestArrayPropertyHelper.instancesRespondToSelector_(
@@ -672,9 +668,7 @@ class TestArrayProperty(TestCase):
 
         self.assertFalse(isinstance(o.array, list))
 
-        self.assertEqual(
-            repr(o.array), f"<array proxy for property array {[3, 4, 5]!r}>"
-        )
+        self.assertEqual(repr(o.array), f"<array proxy for property array {[3, 4, 5]!r}>")
 
     def testFinding(self):
         o = TestArrayPropertyHelper.alloc().init()

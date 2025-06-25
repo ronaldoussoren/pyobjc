@@ -50,9 +50,7 @@ class TestMDLVertexDescriptor(TestCase):
         self.assertEqual(
             ModelIO.MDLVertexFormatUChar4, ModelIO.MDLVertexFormatUCharBits | 4
         )
-        self.assertEqual(
-            ModelIO.MDLVertexFormatChar, ModelIO.MDLVertexFormatCharBits | 1
-        )
+        self.assertEqual(ModelIO.MDLVertexFormatChar, ModelIO.MDLVertexFormatCharBits | 1)
         self.assertEqual(
             ModelIO.MDLVertexFormatChar2, ModelIO.MDLVertexFormatCharBits | 2
         )
@@ -150,9 +148,7 @@ class TestMDLVertexDescriptor(TestCase):
             ModelIO.MDLVertexFormatShort4Normalized,
             ModelIO.MDLVertexFormatShortNormalizedBits | 4,
         )
-        self.assertEqual(
-            ModelIO.MDLVertexFormatUInt, ModelIO.MDLVertexFormatUIntBits | 1
-        )
+        self.assertEqual(ModelIO.MDLVertexFormatUInt, ModelIO.MDLVertexFormatUIntBits | 1)
         self.assertEqual(
             ModelIO.MDLVertexFormatUInt2, ModelIO.MDLVertexFormatUIntBits | 2
         )
@@ -163,18 +159,10 @@ class TestMDLVertexDescriptor(TestCase):
             ModelIO.MDLVertexFormatUInt4, ModelIO.MDLVertexFormatUIntBits | 4
         )
         self.assertEqual(ModelIO.MDLVertexFormatInt, ModelIO.MDLVertexFormatIntBits | 1)
-        self.assertEqual(
-            ModelIO.MDLVertexFormatInt2, ModelIO.MDLVertexFormatIntBits | 2
-        )
-        self.assertEqual(
-            ModelIO.MDLVertexFormatInt3, ModelIO.MDLVertexFormatIntBits | 3
-        )
-        self.assertEqual(
-            ModelIO.MDLVertexFormatInt4, ModelIO.MDLVertexFormatIntBits | 4
-        )
-        self.assertEqual(
-            ModelIO.MDLVertexFormatHalf, ModelIO.MDLVertexFormatHalfBits | 1
-        )
+        self.assertEqual(ModelIO.MDLVertexFormatInt2, ModelIO.MDLVertexFormatIntBits | 2)
+        self.assertEqual(ModelIO.MDLVertexFormatInt3, ModelIO.MDLVertexFormatIntBits | 3)
+        self.assertEqual(ModelIO.MDLVertexFormatInt4, ModelIO.MDLVertexFormatIntBits | 4)
+        self.assertEqual(ModelIO.MDLVertexFormatHalf, ModelIO.MDLVertexFormatHalfBits | 1)
         self.assertEqual(
             ModelIO.MDLVertexFormatHalf2, ModelIO.MDLVertexFormatHalfBits | 2
         )

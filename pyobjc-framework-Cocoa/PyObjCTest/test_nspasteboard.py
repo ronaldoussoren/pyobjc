@@ -118,9 +118,7 @@ class TestNSPasteboard(TestCase):
         self.assertIsInstance(AppKit.NSPasteboardTypeFindPanelSearchOptions, str)
 
         self.assertIsInstance(AppKit.NSPasteboardURLReadingFileURLsOnlyKey, str)
-        self.assertIsInstance(
-            AppKit.NSPasteboardURLReadingContentsConformToTypesKey, str
-        )
+        self.assertIsInstance(AppKit.NSPasteboardURLReadingContentsConformToTypesKey, str)
 
         self.assertEqual(AppKit.NSPasteboardWritingPromised, 1 << 9)
 
@@ -146,9 +144,7 @@ class TestNSPasteboard(TestCase):
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(AppKit.NSPasteboard.writeObjects_)
-        self.assertResultIsBOOL(
-            AppKit.NSPasteboard.canReadItemWithDataConformingToTypes_
-        )
+        self.assertResultIsBOOL(AppKit.NSPasteboard.canReadItemWithDataConformingToTypes_)
         self.assertResultIsBOOL(AppKit.NSPasteboard.canReadObjectForClasses_options_)
 
         self.assertResultIsBOOL(AppKit.NSPasteboard.setPropertyList_forType_)

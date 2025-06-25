@@ -68,9 +68,7 @@ def convert_script_example(name, input_file, output_dir, verbose):
         os.makedirs(output_dir)
 
     with open(input_file) as fp_in:
-        with open(
-            os.path.join(output_dir, os.path.basename(input_file)), "w"
-        ) as fp_out:
+        with open(os.path.join(output_dir, os.path.basename(input_file)), "w") as fp_out:
             script = fp_in.read()
             fp_out.write(script)
 

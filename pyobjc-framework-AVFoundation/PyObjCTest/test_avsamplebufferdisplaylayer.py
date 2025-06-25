@@ -5,15 +5,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestAVSampleBufferDisplayLayer(TestCase):
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertEqual(
-            AVFoundation.AVQueuedSampleBufferRenderingStatusUnknown, 0
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVQueuedSampleBufferRenderingStatusRendering, 1
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVQueuedSampleBufferRenderingStatusFailed, 2
-        )  # noqa: B950
+        self.assertEqual(AVFoundation.AVQueuedSampleBufferRenderingStatusUnknown, 0)  # noqa: B950
+        self.assertEqual(AVFoundation.AVQueuedSampleBufferRenderingStatusRendering, 1)  # noqa: B950
+        self.assertEqual(AVFoundation.AVQueuedSampleBufferRenderingStatusFailed, 2)  # noqa: B950
 
         self.assertIsInstance(
             AVFoundation.AVSampleBufferDisplayLayerFailedToDecodeNotification,
@@ -52,9 +46,7 @@ class TestAVSampleBufferDisplayLayer(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         # Header says 10.15, but new in the 10.14.4 SDK headers
-        self.assertResultIsBOOL(
-            AVFoundation.AVSampleBufferDisplayLayer.preventsCapture
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.preventsCapture)  # noqa: B950
         self.assertArgIsBOOL(
             AVFoundation.AVSampleBufferDisplayLayer.setPreventsCapture_, 0
         )
@@ -87,6 +79,4 @@ class TestAVSampleBufferDisplayLayer(TestCase):
 
     @min_os_level("14.4")
     def testMethods14_4(self):
-        self.assertResultIsBOOL(
-            AVFoundation.AVSampleBufferDisplayLayer.isReadyForDisplay
-        )
+        self.assertResultIsBOOL(AVFoundation.AVSampleBufferDisplayLayer.isReadyForDisplay)

@@ -17,9 +17,7 @@ class TestNEVPNConnection(TestCase):
         self.assertEqual(NetworkExtension.NEVPNErrorConfigurationUnknown, 6)
 
         self.assertIsInstance(NetworkExtension.NEVPNErrorDomain, str)
-        self.assertIsInstance(
-            NetworkExtension.NEVPNConfigurationChangeNotification, str
-        )
+        self.assertIsInstance(NetworkExtension.NEVPNConfigurationChangeNotification, str)
 
     @min_os_level("10.11")
     def testMethods(self):

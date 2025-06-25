@@ -626,9 +626,7 @@ class PyOCTestSimpleArguments(TestCase):
     def testStruct1(self):
         self.assertEqual(self.obj.dummyArg_((-1, 1)), (-2, 2))
 
-        with self.assertRaisesRegex(
-            TypeError, "depythonifying struct, got no sequence"
-        ):
+        with self.assertRaisesRegex(TypeError, "depythonifying struct, got no sequence"):
             self.obj.dummyArg_(256)
         with self.assertRaisesRegex(
             ValueError, "depythonifying struct of 2 members, got tuple of 1"
@@ -1407,9 +1405,7 @@ class OCPyTestSimpleCalls(TestCase):
             ValueError, "depythonifying 'long long', got 'int' of wrong magnitude"
         ):
             self.obj.callInstanceLongFuncOf_(self.ocobj)
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'long long', got 'str'"
-        ):
+        with self.assertRaisesRegex(ValueError, "depythonifying 'long long', got 'str'"):
             self.obj.callInstanceLongFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
             ValueError, "longFunc: returned None, expecting a value"
@@ -1489,9 +1485,7 @@ class OCPyTestSimpleCalls(TestCase):
             ValueError, "depythonifying 'long long', got 'int' of wrong magnitude"
         ):
             self.obj.callInstanceLongLongFuncOf_(self.ocobj)
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'long long', got 'str'"
-        ):
+        with self.assertRaisesRegex(ValueError, "depythonifying 'long long', got 'str'"):
             self.obj.callInstanceLongLongFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
             ValueError, "longlongFunc: returned None, expecting a value"
@@ -1509,9 +1503,7 @@ class OCPyTestSimpleCalls(TestCase):
             ValueError, "depythonifying 'long long', got 'int' of wrong magnitude"
         ):
             self.obj.invokeInstanceLongLongFuncOf_(self.ocobj)
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'long long', got 'str'"
-        ):
+        with self.assertRaisesRegex(ValueError, "depythonifying 'long long', got 'str'"):
             self.obj.invokeInstanceLongLongFuncOf_(self.ocobj)
         with self.assertRaisesRegex(
             ValueError, "longlongFunc: returned None, expecting a value"
@@ -1523,9 +1515,7 @@ class OCPyTestSimpleCalls(TestCase):
         self.ocobj.reset()
 
         for o in ULONGLONG_NUMBERS[:-3]:
-            self.assertEqual(
-                self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o
-            )
+            self.assertEqual(self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o)
 
         with self.assertRaisesRegex(
             ValueError,

@@ -48,9 +48,7 @@ class TestAVCaptureOutput(TestCase):
         )
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput_Tundra.isRecording)
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureFileOutput_Tundra.isRecordingPaused
-        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput_Tundra.isRecordingPaused)
 
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureStillImageOutput_Tundra.isCapturingStillImage

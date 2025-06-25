@@ -74,9 +74,7 @@ class TestStream(TestCase):
         self.assertIsInstance(CoreFoundation.kCFStreamPropertyFileCurrentOffset, str)
         self.assertIsInstance(CoreFoundation.kCFStreamPropertySocketNativeHandle, str)
         self.assertIsInstance(CoreFoundation.kCFStreamPropertySocketRemoteHostName, str)
-        self.assertIsInstance(
-            CoreFoundation.kCFStreamPropertySocketRemotePortNumber, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFStreamPropertySocketRemotePortNumber, str)
 
         self.assertIsInstance(CoreFoundation.kCFStreamErrorDomainSOCKS, int)
         self.assertIsInstance(CoreFoundation.kCFStreamPropertySOCKSProxy, str)
@@ -115,9 +113,7 @@ class TestStream(TestCase):
 
     def testReadStream(self):
         strval = b"hello world"
-        self.assertArgHasType(
-            CoreFoundation.CFReadStreamCreateWithBytesNoCopy, 1, b"n^v"
-        )
+        self.assertArgHasType(CoreFoundation.CFReadStreamCreateWithBytesNoCopy, 1, b"n^v")
         self.assertArgSizeInArg(CoreFoundation.CFReadStreamCreateWithBytesNoCopy, 1, 2)
         stream = CoreFoundation.CFReadStreamCreateWithBytesNoCopy(
             None, strval, len(strval), CoreFoundation.kCFAllocatorNull
@@ -350,9 +346,7 @@ class TestStream(TestCase):
 
     @skipUnless(onTheNetwork(), "Test requires a working Internet connection")
     def testSockets(self):
-        with contextlib.closing(
-            socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        ) as sd:
+        with contextlib.closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sd:
             sd.connect(("www.apple.com", 80))
 
             self.assertArgIsOut(CoreFoundation.CFStreamCreatePairWithSocket, 2)
@@ -422,9 +416,7 @@ class TestStream(TestCase):
         self.assertEqual(status, CoreFoundation.kCFStreamStatusNotOpen)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "Crash on 10.13, 10.14??",
     )
     @skipUnless(
@@ -491,9 +483,7 @@ class TestStream(TestCase):
         self.assertEqual(state[0][1], CoreFoundation.kCFStreamEventHasBytesAvailable)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "Crash on 10.13, 10.14??",
     )
     @skipUnless(

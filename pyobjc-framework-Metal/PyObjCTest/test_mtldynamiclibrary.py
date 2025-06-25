@@ -24,9 +24,7 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertProtocolExists("MTLDynamicLibrary")
 
     def test_methods(self):
-        self.assertResultIsBOOL(
-            TestMTLAccelerationStructureHelper.serializeToURL_error_
-        )
+        self.assertResultIsBOOL(TestMTLAccelerationStructureHelper.serializeToURL_error_)
         self.assertArgHasType(
             TestMTLAccelerationStructureHelper.serializeToURL_error_, 1, b"o^@"
         )

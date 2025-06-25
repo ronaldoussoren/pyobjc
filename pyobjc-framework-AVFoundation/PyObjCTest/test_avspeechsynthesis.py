@@ -11,9 +11,7 @@ AVSpeechSynthesizerMarkerCallback = b"v@"
 
 
 class TestAVSpeechSynthesisHelper(AVFoundation.NSObject):
-    def speechSynthesizer_willSpeakRangeOfSpeechString_utterance_(
-        self, a, b, c
-    ):  # noqa: B950
+    def speechSynthesizer_willSpeakRangeOfSpeechString_utterance_(self, a, b, c):  # noqa: B950
         pass
 
 
@@ -62,28 +60,16 @@ class TestAVSpeechSynthesis(TestCase):
         self.assertIsEnumType(AVFoundation.AVSpeechSynthesisVoiceTraits)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceTraitNone, 0)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceTraitIsNoveltyVoice, 1 << 0)
-        self.assertEqual(
-            AVFoundation.AVSpeechSynthesisVoiceTraitIsPersonalVoice, 1 << 1
-        )
+        self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceTraitIsPersonalVoice, 1 << 1)
 
     @min_os_level("10.14")
     def testConstants10_14(self):
-        self.assertIsInstance(
-            AVFoundation.AVSpeechUtteranceMinimumSpeechRate, float
-        )  # noqa: B950
-        self.assertIsInstance(
-            AVFoundation.AVSpeechUtteranceMaximumSpeechRate, float
-        )  # noqa: B950
-        self.assertIsInstance(
-            AVFoundation.AVSpeechUtteranceDefaultSpeechRate, float
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVSpeechUtteranceMinimumSpeechRate, float)  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVSpeechUtteranceMaximumSpeechRate, float)  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVSpeechUtteranceDefaultSpeechRate, float)  # noqa: B950
 
-        self.assertIsInstance(
-            AVFoundation.AVSpeechSynthesisVoiceIdentifierAlex, str
-        )  # noqa: B950
-        self.assertIsInstance(
-            AVFoundation.AVSpeechSynthesisIPANotationAttribute, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVSpeechSynthesisVoiceIdentifierAlex, str)  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVSpeechSynthesisIPANotationAttribute, str)  # noqa: B950
 
     @min_os_level("14.0")
     def testConstants14_0(self):
@@ -102,15 +88,9 @@ class TestAVSpeechSynthesis(TestCase):
     def testMethods10_14(self):
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.isSpeaking)
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.isPaused)
-        self.assertResultIsBOOL(
-            AVFoundation.AVSpeechSynthesizer.stopSpeakingAtBoundary_
-        )
-        self.assertResultIsBOOL(
-            AVFoundation.AVSpeechSynthesizer.pauseSpeakingAtBoundary_
-        )
-        self.assertResultIsBOOL(
-            AVFoundation.AVSpeechSynthesizer.continueSpeaking
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.stopSpeakingAtBoundary_)
+        self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.pauseSpeakingAtBoundary_)
+        self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.continueSpeaking)  # noqa: B950
 
     @min_os_level("10.15")
     def testMethods10_15(self):

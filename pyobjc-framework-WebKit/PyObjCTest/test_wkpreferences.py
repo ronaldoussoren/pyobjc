@@ -32,9 +32,7 @@ class TestWKPreferences(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.isFraudulentWebsiteWarningEnabled)
-        self.assertArgIsBOOL(
-            WebKit.WKPreferences.setFraudulentWebsiteWarningEnabled_, 0
-        )
+        self.assertArgIsBOOL(WebKit.WKPreferences.setFraudulentWebsiteWarningEnabled_, 0)
 
     @min_os_level("12.0")
     def testMethods11_3(self):

@@ -58,17 +58,13 @@ class TestIOBluetoothRFCOMMChannel(TestCase):
 
     def test_methods(self):
         self.assertResultIsBOOL(IOBluetooth.IOBluetoothRFCOMMChannel.isOpen)
-        self.assertResultIsBOOL(
-            IOBluetooth.IOBluetoothRFCOMMChannel.isTransmissionPaused
-        )
+        self.assertResultIsBOOL(IOBluetooth.IOBluetoothRFCOMMChannel.isTransmissionPaused)
 
         self.assertArgIsIn(IOBluetooth.IOBluetoothRFCOMMChannel.write_length_sleep_, 0)
         self.assertArgSizeInArg(
             IOBluetooth.IOBluetoothRFCOMMChannel.write_length_sleep_, 0, 1
         )
-        self.assertArgIsBOOL(
-            IOBluetooth.IOBluetoothRFCOMMChannel.write_length_sleep_, 2
-        )
+        self.assertArgIsBOOL(IOBluetooth.IOBluetoothRFCOMMChannel.write_length_sleep_, 2)
 
         self.assertArgIsIn(
             IOBluetooth.IOBluetoothRFCOMMChannel.writeAsync_length_refcon_, 0

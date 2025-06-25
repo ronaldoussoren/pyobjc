@@ -15,9 +15,7 @@ class TestWKWebExtensionMessagePort(TestCase):
 
     @min_os_level("15.4")
     def test_methods(self):
-        self.assertResultIsBlock(
-            WebKit.WKWebExtensionMessagePort.messageHandler, b"v@@"
-        )
+        self.assertResultIsBlock(WebKit.WKWebExtensionMessagePort.messageHandler, b"v@@")
         self.assertArgIsBlock(
             WebKit.WKWebExtensionMessagePort.setMessageHandler_, 0, b"v@@"
         )

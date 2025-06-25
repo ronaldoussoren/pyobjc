@@ -81,9 +81,7 @@ class DragSupportDataSource(Cocoa.NSObject):
         urlStrings = info.draggingPasteboard().stringForType_(Cocoa.NSStringPboardType)
 
         # get to the arraycontroller feeding the destination table view
-        destinationContentBindingInfo = tableView.infoForBinding_(
-            Cocoa.NSContentBinding
-        )
+        destinationContentBindingInfo = tableView.infoForBinding_(Cocoa.NSContentBinding)
         if destinationContentBindingInfo is not None:
             destinationArrayController = destinationContentBindingInfo.objectForKey_(
                 Cocoa.NSObservedObjectKey
@@ -106,8 +104,10 @@ class DragSupportDataSource(Cocoa.NSObject):
                 sourceArrayController.selectedObjects().count() == 1
             ):
                 context = destinationArrayController.managedObjectContext()
-                destinationControllerEntity = Cocoa.NSEntityDescription.entityForName_inManagedObjectContext_(  # noqa: B950
-                    destinationArrayController.entityName(), context
+                destinationControllerEntity = (
+                    Cocoa.NSEntityDescription.entityForName_inManagedObjectContext_(  # noqa: B950
+                        destinationArrayController.entityName(), context
+                    )
                 )
 
                 items = urlStrings.split(", ")

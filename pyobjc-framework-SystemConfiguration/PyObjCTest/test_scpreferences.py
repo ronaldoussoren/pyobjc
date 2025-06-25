@@ -11,9 +11,7 @@ class TestSCPreferences(TestCase):
     def testFunctions(self):
         self.assertIsInstance(SystemConfiguration.SCPreferencesGetTypeID(), int)
 
-        ref = SystemConfiguration.SCPreferencesCreate(
-            None, "pyobjc.test", "pyobjc.test"
-        )
+        ref = SystemConfiguration.SCPreferencesCreate(None, "pyobjc.test", "pyobjc.test")
         self.assertIsInstance(ref, SystemConfiguration.SCPreferencesRef)
 
         self.assertResultIsBOOL(SystemConfiguration.SCPreferencesLock)

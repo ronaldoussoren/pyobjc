@@ -62,9 +62,7 @@ class ToDoCell(Cocoa.NSButtonCell):
     def startTrackingAt_inView_(self, startPoint, controlView):
         return 1
 
-    def stopTracking_at_inView_mouseIsUp_(
-        self, lastPoint, stopPoint, controlView, flag
-    ):
+    def stopTracking_at_inView_mouseIsUp_(self, lastPoint, stopPoint, controlView, flag):
         if flag:
             self.setTriState_(self.triState() + 1)
 

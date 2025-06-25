@@ -27,26 +27,18 @@ class TestAVPlayerItem(TestCase):
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(AVFoundation.AVPlayerItemTimeJumpedNotification, str)
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemDidPlayToEndTimeNotification, str
-        )
+        self.assertIsInstance(AVFoundation.AVPlayerItemDidPlayToEndTimeNotification, str)
         self.assertIsInstance(
             AVFoundation.AVPlayerItemFailedToPlayToEndTimeNotification, str
         )
 
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemFailedToPlayToEndTimeErrorKey, str
-        )
+        self.assertIsInstance(AVFoundation.AVPlayerItemFailedToPlayToEndTimeErrorKey, str)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVPlayerItemPlaybackStalledNotification, str)
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemNewAccessLogEntryNotification, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemNewErrorLogEntryNotification, str
-        )
+        self.assertIsInstance(AVFoundation.AVPlayerItemNewAccessLogEntryNotification, str)
+        self.assertIsInstance(AVFoundation.AVPlayerItemNewErrorLogEntryNotification, str)
 
     @min_os_level("10.15")
     def testConstants10_15(self):
@@ -112,9 +104,7 @@ class TestAVPlayerItem(TestCase):
         )
 
         self.assertResultIsBOOL(AVFoundation.AVPlayerItem.isAudioSpatializationAllowed)
-        self.assertArgIsBOOL(
-            AVFoundation.AVPlayerItem.setAudioSpatializationAllowed_, 0
-        )
+        self.assertArgIsBOOL(AVFoundation.AVPlayerItem.setAudioSpatializationAllowed_, 0)
 
     @min_os_level("11.0")
     def testMethods11_0(self):

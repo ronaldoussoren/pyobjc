@@ -6,9 +6,7 @@ class TestVTPixelTransferProperties(TestCase):
     def test_constants(self):
         self.assertIsInstance(VideoToolbox.kVTPixelTransferPropertyKey_ScalingMode, str)
         self.assertIsInstance(VideoToolbox.kVTScalingMode_Normal, str)
-        self.assertIsInstance(
-            VideoToolbox.kVTScalingMode_CropSourceToCleanAperture, str
-        )
+        self.assertIsInstance(VideoToolbox.kVTScalingMode_CropSourceToCleanAperture, str)
         self.assertIsInstance(VideoToolbox.kVTScalingMode_Letterbox, str)
         self.assertIsInstance(VideoToolbox.kVTScalingMode_Trim, str)
         self.assertIsInstance(

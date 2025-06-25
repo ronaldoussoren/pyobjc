@@ -84,9 +84,7 @@ class TestSCNView(TestCase):
         self.assertArgIsBOOL(TestSCNViewHelper.setAllowsTranslation_, 0)
         self.assertArgHasType(TestSCNViewHelper.setFlyModeVelocity_, 0, objc._C_CGFloat)
         self.assertArgHasType(TestSCNViewHelper.setPanSensitivity_, 0, objc._C_CGFloat)
-        self.assertArgHasType(
-            TestSCNViewHelper.setTruckSensitivity_, 0, objc._C_CGFloat
-        )
+        self.assertArgHasType(TestSCNViewHelper.setTruckSensitivity_, 0, objc._C_CGFloat)
         self.assertArgHasType(
             TestSCNViewHelper.setRotationSensitivity_, 0, objc._C_CGFloat
         )

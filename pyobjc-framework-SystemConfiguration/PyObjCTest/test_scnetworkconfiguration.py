@@ -8,18 +8,14 @@ class TestSCNetworkConfiguration(TestCase):
         self.assertTrue(
             isinstance(SystemConfiguration.SCNetworkInterfaceRef, objc.objc_class)
         )
-        self.assertTrue(
-            isinstance(SystemConfiguration.SCBondStatusRef, objc.objc_class)
-        )
+        self.assertTrue(isinstance(SystemConfiguration.SCBondStatusRef, objc.objc_class))
         self.assertTrue(
             isinstance(SystemConfiguration.SCNetworkProtocolRef, objc.objc_class)
         )
         self.assertTrue(
             isinstance(SystemConfiguration.SCNetworkServiceRef, objc.objc_class)
         )
-        self.assertTrue(
-            isinstance(SystemConfiguration.SCNetworkSetRef, objc.objc_class)
-        )
+        self.assertTrue(isinstance(SystemConfiguration.SCNetworkSetRef, objc.objc_class))
 
         self.assertTrue(
             SystemConfiguration.SCBondInterfaceRef
@@ -31,15 +27,11 @@ class TestSCNetworkConfiguration(TestCase):
         )
 
     def testConstants(self):
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCNetworkInterfaceType6to4, str)
-        )
+        self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceType6to4, str))
         self.assertTrue(
             isinstance(SystemConfiguration.kSCNetworkInterfaceTypeBluetooth, str)
         )
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCNetworkInterfaceTypeBond, str)
-        )
+        self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceTypeBond, str))
         self.assertTrue(
             isinstance(SystemConfiguration.kSCNetworkInterfaceTypeEthernet, str)
         )
@@ -49,31 +41,17 @@ class TestSCNetworkConfiguration(TestCase):
         self.assertTrue(
             isinstance(SystemConfiguration.kSCNetworkInterfaceTypeIEEE80211, str)
         )
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCNetworkInterfaceTypeL2TP, str)
-        )
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCNetworkInterfaceTypeIrDA, str)
-        )
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCNetworkInterfaceTypeModem, str)
-        )
+        self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceTypeL2TP, str))
+        self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceTypeIrDA, str))
+        self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceTypeModem, str))
         self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceTypePPP, str))
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCNetworkInterfaceTypePPTP, str)
-        )
+        self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceTypePPTP, str))
         self.assertTrue(
             isinstance(SystemConfiguration.kSCNetworkInterfaceTypeSerial, str)
         )
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCNetworkInterfaceTypeVLAN, str)
-        )
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCNetworkInterfaceTypeWWAN, str)
-        )
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCNetworkInterfaceTypeIPv4, str)
-        )
+        self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceTypeVLAN, str))
+        self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceTypeWWAN, str))
+        self.assertTrue(isinstance(SystemConfiguration.kSCNetworkInterfaceTypeIPv4, str))
 
         self.assertTrue(
             isinstance(
@@ -149,9 +127,7 @@ class TestSCNetworkConfiguration(TestCase):
         r = SystemConfiguration.SCNetworkInterfaceGetConfiguration(iface)
         self.assertTrue(r is None or isinstance(r, SystemConfiguration.CFDictionaryRef))
 
-        r = SystemConfiguration.SCNetworkInterfaceGetExtendedConfiguration(
-            iface, "EAPOL"
-        )
+        r = SystemConfiguration.SCNetworkInterfaceGetExtendedConfiguration(iface, "EAPOL")
         self.assertTrue(r is None or isinstance(r, SystemConfiguration.CFDictionaryRef))
 
         r = SystemConfiguration.SCNetworkInterfaceGetHardwareAddressString(iface)
@@ -192,9 +168,7 @@ class TestSCNetworkConfiguration(TestCase):
         for item in r:
             self.assertTrue(isinstance(item, str))
 
-        r = SystemConfiguration.SCNetworkInterfaceCopyMediaSubTypeOptions(
-            available, r[0]
-        )
+        r = SystemConfiguration.SCNetworkInterfaceCopyMediaSubTypeOptions(available, r[0])
         self.assertTrue(isinstance(r, SystemConfiguration.CFArrayRef))
 
         r, mtu_cur, mtu_min, mtu_max = SystemConfiguration.SCNetworkInterfaceCopyMTU(
@@ -215,9 +189,7 @@ class TestSCNetworkConfiguration(TestCase):
         r = SystemConfiguration.SCNetworkInterfaceForceConfigurationRefresh(iface)
         self.assertTrue(r is True or r is False)
 
-        prefs = SystemConfiguration.SCPreferencesCreate(
-            None, "SystemConfiguration", None
-        )
+        prefs = SystemConfiguration.SCPreferencesCreate(None, "SystemConfiguration", None)
         self.assertTrue(isinstance(prefs, SystemConfiguration.SCPreferencesRef))
 
         a = SystemConfiguration.SCBondInterfaceCopyAll(prefs)
@@ -459,9 +431,7 @@ class TestSCNetworkConfiguration(TestCase):
 
     @min_os_level("10.5")
     def testFunctions10_5(self):
-        prefs = SystemConfiguration.SCPreferencesCreate(
-            None, "SystemConfiguration", None
-        )
+        prefs = SystemConfiguration.SCPreferencesCreate(None, "SystemConfiguration", None)
         self.assertTrue(isinstance(prefs, SystemConfiguration.SCPreferencesRef))
 
         r = SystemConfiguration.SCNetworkServiceCopyAll(prefs)

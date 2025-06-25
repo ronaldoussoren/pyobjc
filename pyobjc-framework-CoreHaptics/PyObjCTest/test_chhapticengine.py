@@ -19,9 +19,7 @@ class TestCHHapticEngine(TestCase):
         self.assertEqual(CoreHaptics.CHHapticEngineFinishedActionStopEngine, 1)
         self.assertEqual(CoreHaptics.CHHapticEngineFinishedActionLeaveEngineRunning, 2)
 
-        self.assertEqual(
-            CoreHaptics.CHHapticEngineStoppedReasonAudioSessionInterrupt, 1
-        )
+        self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonAudioSessionInterrupt, 1)
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonApplicationSuspended, 2)
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonIdleTimeout, 3)
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonNotifyWhenFinished, 4)
@@ -34,9 +32,7 @@ class TestCHHapticEngine(TestCase):
 
     @min_sdk_level("12.0")
     def test_constants12_0(self):
-        self.assertIsInstance(
-            CoreHaptics.CHHapticAudioResourceKeyUseVolumeEnvelope, str
-        )
+        self.assertIsInstance(CoreHaptics.CHHapticAudioResourceKeyUseVolumeEnvelope, str)
 
     @min_sdk_level("13.0")
     def test_constants13_0(self):
@@ -94,9 +90,7 @@ class TestCHHapticEngine(TestCase):
             CHHapticEngineFinishedHandler,
         )
 
-        self.assertArgIsOut(
-            CoreHaptics.CHHapticEngine.createPlayerWithPattern_error_, 1
-        )
+        self.assertArgIsOut(CoreHaptics.CHHapticEngine.createPlayerWithPattern_error_, 1)
         self.assertArgIsOut(
             CoreHaptics.CHHapticEngine.createAdvancedPlayerWithPattern_error_, 1
         )
@@ -107,16 +101,12 @@ class TestCHHapticEngine(TestCase):
         self.assertResultIsBOOL(
             CoreHaptics.CHHapticEngine.unregisterAudioResource_error_, 1
         )
-        self.assertArgIsOut(
-            CoreHaptics.CHHapticEngine.unregisterAudioResource_error_, 1
-        )
+        self.assertArgIsOut(CoreHaptics.CHHapticEngine.unregisterAudioResource_error_, 1)
 
         self.assertResultIsBOOL(CoreHaptics.CHHapticEngine.playPatternFromURL_error_, 1)
         self.assertArgIsOut(CoreHaptics.CHHapticEngine.playPatternFromURL_error_, 1)
 
-        self.assertResultIsBOOL(
-            CoreHaptics.CHHapticEngine.playPatternFromData_error_, 1
-        )
+        self.assertResultIsBOOL(CoreHaptics.CHHapticEngine.playPatternFromData_error_, 1)
         self.assertArgIsOut(CoreHaptics.CHHapticEngine.playPatternFromData_error_, 1)
 
     @min_sdk_level("13.0")

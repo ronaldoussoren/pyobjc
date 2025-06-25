@@ -203,16 +203,12 @@ class TestCMFormatDescriptionBridge(TestCase):
             3,
         )
 
-        self.assertArgIsInOut(
-            CoreMedia.CMSwapBigEndianClosedCaptionDescriptionToHost, 0
-        )
+        self.assertArgIsInOut(CoreMedia.CMSwapBigEndianClosedCaptionDescriptionToHost, 0)
         self.assertArgSizeInArg(
             CoreMedia.CMSwapBigEndianClosedCaptionDescriptionToHost, 0, 1
         )
 
-        self.assertArgIsInOut(
-            CoreMedia.CMSwapHostEndianClosedCaptionDescriptionToBig, 0
-        )
+        self.assertArgIsInOut(CoreMedia.CMSwapHostEndianClosedCaptionDescriptionToBig, 0)
         self.assertArgSizeInArg(
             CoreMedia.CMSwapHostEndianClosedCaptionDescriptionToBig, 0, 1
         )
@@ -254,14 +250,10 @@ class TestCMFormatDescriptionBridge(TestCase):
         )
 
         self.assertArgIsInOut(CoreMedia.CMSwapBigEndianTimeCodeDescriptionToHost, 0)
-        self.assertArgSizeInArg(
-            CoreMedia.CMSwapBigEndianTimeCodeDescriptionToHost, 0, 1
-        )
+        self.assertArgSizeInArg(CoreMedia.CMSwapBigEndianTimeCodeDescriptionToHost, 0, 1)
 
         self.assertArgIsInOut(CoreMedia.CMSwapHostEndianTimeCodeDescriptionToBig, 0)
-        self.assertArgSizeInArg(
-            CoreMedia.CMSwapHostEndianTimeCodeDescriptionToBig, 0, 1
-        )
+        self.assertArgSizeInArg(CoreMedia.CMSwapHostEndianTimeCodeDescriptionToBig, 0, 1)
 
         self.assertArgIsIn(
             CoreMedia.CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionData,
@@ -300,11 +292,7 @@ class TestCMFormatDescriptionBridge(TestCase):
         )
 
         self.assertArgIsInOut(CoreMedia.CMSwapBigEndianMetadataDescriptionToHost, 0)
-        self.assertArgSizeInArg(
-            CoreMedia.CMSwapBigEndianMetadataDescriptionToHost, 0, 1
-        )
+        self.assertArgSizeInArg(CoreMedia.CMSwapBigEndianMetadataDescriptionToHost, 0, 1)
 
         self.assertArgIsInOut(CoreMedia.CMSwapHostEndianMetadataDescriptionToBig, 0)
-        self.assertArgSizeInArg(
-            CoreMedia.CMSwapHostEndianMetadataDescriptionToBig, 0, 1
-        )
+        self.assertArgSizeInArg(CoreMedia.CMSwapHostEndianMetadataDescriptionToBig, 0, 1)

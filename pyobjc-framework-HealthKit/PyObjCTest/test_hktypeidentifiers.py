@@ -28,9 +28,7 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierAppleExerciseTime, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierPushCount, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDistanceSwimming, str)
-        self.assertIsInstance(
-            HealthKit.HKQuantityTypeIdentifierSwimmingStrokeCount, str
-        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierSwimmingStrokeCount, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierVO2Max, str)
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierDistanceDownhillSnowSports, str
@@ -53,9 +51,7 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierAppleWalkingSteadiness, str
         )
-        self.assertIsInstance(
-            HealthKit.HKQuantityTypeIdentifierRunningStrideLength, str
-        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierRunningStrideLength, str)
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierRunningVerticalOscillation, str
         )
@@ -66,9 +62,7 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierRunningSpeed, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierHeartRate, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierBodyTemperature, str)
-        self.assertIsInstance(
-            HealthKit.HKQuantityTypeIdentifierBasalBodyTemperature, str
-        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierBasalBodyTemperature, str)
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierBloodPressureSystolic, str
         )
@@ -91,20 +85,14 @@ class TestHKTypeIdentifiers(TestCase):
             HealthKit.HKQuantityTypeIdentifierPeripheralPerfusionIndex, str
         )
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierBloodGlucose, str)
-        self.assertIsInstance(
-            HealthKit.HKQuantityTypeIdentifierNumberOfTimesFallen, str
-        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierNumberOfTimesFallen, str)
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierElectrodermalActivity, str
         )
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierInhalerUsage, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierInsulinDelivery, str)
-        self.assertIsInstance(
-            HealthKit.HKQuantityTypeIdentifierBloodAlcoholContent, str
-        )
-        self.assertIsInstance(
-            HealthKit.HKQuantityTypeIdentifierForcedVitalCapacity, str
-        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierBloodAlcoholContent, str)
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierForcedVitalCapacity, str)
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierForcedExpiratoryVolume1, str
         )
@@ -132,9 +120,7 @@ class TestHKTypeIdentifiers(TestCase):
         )
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDietaryCholesterol, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDietarySodium, str)
-        self.assertIsInstance(
-            HealthKit.HKQuantityTypeIdentifierDietaryCarbohydrates, str
-        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDietaryCarbohydrates, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDietaryFiber, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDietarySugar, str)
         self.assertIsInstance(
@@ -182,15 +168,9 @@ class TestHKTypeIdentifiers(TestCase):
 
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierSleepAnalysis, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierAppleStandHour, str)
-        self.assertIsInstance(
-            HealthKit.HKCategoryTypeIdentifierCervicalMucusQuality, str
-        )
-        self.assertIsInstance(
-            HealthKit.HKCategoryTypeIdentifierOvulationTestResult, str
-        )
-        self.assertIsInstance(
-            HealthKit.HKCategoryTypeIdentifierPregnancyTestResult, str
-        )
+        self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierCervicalMucusQuality, str)
+        self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierOvulationTestResult, str)
+        self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierPregnancyTestResult, str)
         self.assertIsInstance(
             HealthKit.HKCategoryTypeIdentifierProgesteroneTestResult, str
         )
@@ -238,14 +218,10 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierAbdominalCramps, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierAcne, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierAppetiteChanges, str)
-        self.assertIsInstance(
-            HealthKit.HKCategoryTypeIdentifierBladderIncontinence, str
-        )
+        self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierBladderIncontinence, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierBloating, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierBreastPain, str)
-        self.assertIsInstance(
-            HealthKit.HKCategoryTypeIdentifierChestTightnessOrPain, str
-        )
+        self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierChestTightnessOrPain, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierChills, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierConstipation, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierCoughing, str)
@@ -255,9 +231,7 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierFainting, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierFatigue, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierFever, str)
-        self.assertIsInstance(
-            HealthKit.HKCategoryTypeIdentifierGeneralizedBodyAche, str
-        )
+        self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierGeneralizedBodyAche, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierHairLoss, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierHeadache, str)
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierHeartburn, str)
@@ -285,17 +259,13 @@ class TestHKTypeIdentifiers(TestCase):
 
         self.assertIsTypedEnum(HealthKit.HKCharacteristicTypeIdentifier, str)
 
-        self.assertIsInstance(
-            HealthKit.HKCharacteristicTypeIdentifierBiologicalSex, str
-        )
+        self.assertIsInstance(HealthKit.HKCharacteristicTypeIdentifierBiologicalSex, str)
         self.assertIsInstance(HealthKit.HKCharacteristicTypeIdentifierBloodType, str)
         self.assertIsInstance(HealthKit.HKCharacteristicTypeIdentifierDateOfBirth, str)
         self.assertIsInstance(
             HealthKit.HKCharacteristicTypeIdentifierFitzpatrickSkinType, str
         )
-        self.assertIsInstance(
-            HealthKit.HKCharacteristicTypeIdentifierWheelchairUse, str
-        )
+        self.assertIsInstance(HealthKit.HKCharacteristicTypeIdentifierWheelchairUse, str)
         self.assertIsInstance(
             HealthKit.HKCharacteristicTypeIdentifierActivityMoveMode, str
         )
@@ -332,9 +302,7 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierDistanceCrossCountrySkiing, str
         )
-        self.assertIsInstance(
-            HealthKit.HKQuantityTypeIdentifierDistancePaddleSports, str
-        )
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDistancePaddleSports, str)
         self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierDistanceRowing, str)
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierDistanceSkatingSports, str

@@ -1580,9 +1580,7 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "scaleFactor", objc._C_FLT)
 
         with self.subTest("CIAztecCodeGenerator"):
-            self.assert_rw_prop(
-                TestCIBuiltinFilterHelper, "correctionLevel", objc._C_FLT
-            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "correctionLevel", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "layers", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "compactStyle", objc._C_FLT)
 
@@ -1628,13 +1626,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "preferredAspectRatio", objc._C_FLT
             )
-            self.assert_rw_prop(
-                TestCIBuiltinFilterHelper, "compactionMode", objc._C_FLT
-            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "compactionMode", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "compactStyle", objc._C_FLT)
-            self.assert_rw_prop(
-                TestCIBuiltinFilterHelper, "correctionLevel", objc._C_FLT
-            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "correctionLevel", objc._C_FLT)
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "alwaysSpecifyCompaction", objc._C_FLT
             )
@@ -1757,9 +1751,7 @@ class TestCIFilterBuiltins(TestCase):
         with self.subTest("CIHighlightShadowAdjust"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "shadowAmount", objc._C_FLT)
-            self.assert_rw_prop(
-                TestCIBuiltinFilterHelper, "highlightAmount", objc._C_FLT
-            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "highlightAmount", objc._C_FLT)
 
         with self.subTest("CILineOverlay"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "NRNoiseLevel", objc._C_FLT)
@@ -2073,12 +2065,8 @@ class TestCIFilterBuiltins(TestCase):
 
         with self.subTest("CIToneMapHeadroom"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "inputImage", objc._C_ID)
-            self.assert_rw_prop(
-                TestCIBuiltinFilterHelper, "sourceHeadroom", objc._C_FLT
-            )
-            self.assert_rw_prop(
-                TestCIBuiltinFilterHelper, "targetHeadroom", objc._C_FLT
-            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "sourceHeadroom", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "targetHeadroom", objc._C_FLT)
 
         with self.subTest("CIAreaBoundsRed"):
             pass

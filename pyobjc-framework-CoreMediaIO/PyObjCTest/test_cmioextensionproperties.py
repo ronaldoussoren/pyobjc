@@ -9,9 +9,7 @@ class TestCMIOExtensionProperties(TestCase):
     @min_os_level("12.3")
     def test_constants(self):
         self.assertIsInstance(CoreMediaIO.CMIOExtensionPropertyProviderName, str)
-        self.assertIsInstance(
-            CoreMediaIO.CMIOExtensionPropertyProviderManufacturer, str
-        )
+        self.assertIsInstance(CoreMediaIO.CMIOExtensionPropertyProviderManufacturer, str)
         self.assertIsInstance(CoreMediaIO.CMIOExtensionPropertyDeviceModel, str)
         self.assertIsInstance(CoreMediaIO.CMIOExtensionPropertyDeviceIsSuspended, str)
         self.assertIsInstance(CoreMediaIO.CMIOExtensionPropertyDeviceTransportType, str)

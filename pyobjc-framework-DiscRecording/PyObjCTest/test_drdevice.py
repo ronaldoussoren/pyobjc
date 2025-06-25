@@ -39,9 +39,7 @@ class TestDRDevice(TestCase):
         self.assertIsInstance(DiscRecording.DRDeviceProductNameKey, str)
         self.assertIsInstance(DiscRecording.DRDeviceFirmwareRevisionKey, str)
         self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectKey, str)
-        self.assertIsInstance(
-            DiscRecording.DRDevicePhysicalInterconnectLocationKey, str
-        )
+        self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectLocationKey, str)
         self.assertIsInstance(DiscRecording.DRDeviceLoadingMechanismCanEjectKey, str)
         self.assertIsInstance(DiscRecording.DRDeviceLoadingMechanismCanInjectKey, str)
         self.assertIsInstance(DiscRecording.DRDeviceLoadingMechanismCanOpenKey, str)
@@ -52,9 +50,7 @@ class TestDRDevice(TestCase):
         self.assertIsInstance(DiscRecording.DRDeviceSupportLevelAppleSupported, str)
         self.assertIsInstance(DiscRecording.DRDeviceSupportLevelAppleShipping, str)
         self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectATAPI, str)
-        self.assertIsInstance(
-            DiscRecording.DRDevicePhysicalInterconnectFibreChannel, str
-        )
+        self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectFibreChannel, str)
         self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectFireWire, str)
         self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectSCSI, str)
         self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectUSB, str)
@@ -80,9 +76,7 @@ class TestDRDevice(TestCase):
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteDVDPlusRKey, str)
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteDVDPlusRDoubleLayerKey, str)
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteDVDPlusRWKey, str)
-        self.assertIsInstance(
-            DiscRecording.DRDeviceCanWriteDVDPlusRWDoubleLayerKey, str
-        )
+        self.assertIsInstance(DiscRecording.DRDeviceCanWriteDVDPlusRWDoubleLayerKey, str)
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteBDKey, str)
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteBDRKey, str)
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteBDREKey, str)

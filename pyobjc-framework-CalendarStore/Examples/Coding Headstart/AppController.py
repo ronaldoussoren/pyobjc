@@ -133,9 +133,7 @@ class AppController(NSObject):
 
         # Save the new task to the calendar store (CalCalendarStore) and
         # return it
-        res, err = CalCalendarStore.defaultCalendarStore().saveTask_error_(
-            newTask, None
-        )
+        res, err = CalCalendarStore.defaultCalendarStore().saveTask_error_(newTask, None)
         if res:
             return newTask
 

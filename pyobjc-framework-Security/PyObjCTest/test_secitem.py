@@ -152,9 +152,7 @@ class TestAuthorizationDB(TestCase):
         self.assertIsInstance(Security.kSecAttrAccessibleWhenUnlocked, str)
         self.assertIsInstance(Security.kSecAttrAccessibleAfterFirstUnlock, str)
         self.assertIsInstance(Security.kSecAttrAccessibleAlways, str)
-        self.assertIsInstance(
-            Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly, str
-        )
+        self.assertIsInstance(Security.kSecAttrAccessibleWhenUnlockedThisDeviceOnly, str)
         self.assertIsInstance(
             Security.kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly, str
         )

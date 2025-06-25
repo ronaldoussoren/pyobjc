@@ -410,7 +410,8 @@ class TestCase(_unittest.TestCase):
             self.fail(
                 message
                 or "%s is not a variadic function with a "
-                "null-terminated list of arguments" % (method,)
+                "null-terminated list of arguments"
+                % (method,)
             )
 
     def assertArgIsIDLike(self, method, argno, message=None):
@@ -453,9 +454,7 @@ class TestCase(_unittest.TestCase):
         elif tp.startswith(b"N^") and tp[2:] in _idlike_cache:
             return
 
-        self.fail(
-            message or "argument %d of %r is not IDLike (%r)" % (argno, method, tp)
-        )
+        self.fail(message or "argument %d of %r is not IDLike (%r)" % (argno, method, tp))
 
     def assertResultIsIDLike(self, method, message=None):
         global _idlike_cache
@@ -524,8 +523,7 @@ class TestCase(_unittest.TestCase):
             if not info["arguments"][argno + offset].get("c_array_of_variable_length"):
                 self.fail(
                     message
-                    or "argument %d of %r is not a variable sized array"
-                    % (argno, method)
+                    or "argument %d of %r is not a variable sized array" % (argno, method)
                 )
         except (KeyError, IndexError):
             self.fail(
@@ -548,8 +546,7 @@ class TestCase(_unittest.TestCase):
             if not info["arguments"][argno + offset].get("c_array_length_in_result"):
                 self.fail(
                     message
-                    or "argument %d of %r does not have size in result"
-                    % (argno, method)
+                    or "argument %d of %r does not have size in result" % (argno, method)
                 )
         except (KeyError, IndexError):
             self.fail(
@@ -587,9 +584,7 @@ class TestCase(_unittest.TestCase):
 
         try:
             if not info["arguments"][argno + offset]["already_cfretained"]:
-                self.fail(
-                    message or f"Argument {argno} of {method!r} is not cfretained"
-                )
+                self.fail(message or f"Argument {argno} of {method!r} is not cfretained")
         except (KeyError, IndexError):
             self.fail(message or f"Argument {argno} of {method!r} is not cfretained")
 
@@ -692,8 +687,7 @@ class TestCase(_unittest.TestCase):
             and _typealias.get(typestr, typestr) != _typealias.get(tp, tp)
         ):
             self.fail(
-                message
-                or f"result of {method!r} is not of type {tp!r}, but {typestr!r}"
+                message or f"result of {method!r} is not of type {tp!r}, but {typestr!r}"
             )
 
     def assertArgHasType(self, method, argno, tp, message=None):
@@ -721,8 +715,7 @@ class TestCase(_unittest.TestCase):
         ):
             self.fail(
                 message
-                or "arg %d of %s is not of type %r, but %r"
-                % (argno, method, tp, typestr)
+                or "arg %d of %s is not of type %r, but %r" % (argno, method, tp, typestr)
             )
 
     def assertArgIsFunction(self, method, argno, sel_type, retained, message=None):
@@ -788,9 +781,7 @@ class TestCase(_unittest.TestCase):
         try:
             i = info["retval"]
         except (KeyError, IndexError):
-            self.fail(
-                message or f"result of {method} has no metadata (or doesn't exist)"
-            )
+            self.fail(message or f"result of {method} has no metadata (or doesn't exist)")
 
         else:
             typestr = i.get("type", b"@")
@@ -920,9 +911,7 @@ class TestCase(_unittest.TestCase):
         try:
             i = info["retval"]
         except (KeyError, IndexError):
-            self.fail(
-                message or f"result of {method} has no metadata (or doesn't exist)"
-            )
+            self.fail(message or f"result of {method} has no metadata (or doesn't exist)")
 
         typestr = i.get("type", b"@")
         if typestr != objc._C_SEL:
@@ -932,8 +921,7 @@ class TestCase(_unittest.TestCase):
         if st != sel_type and _typemap(st) != _typemap(sel_type):
             self.fail(
                 message
-                or "result of %s doesn't have sel_type %r but %r"
-                % (method, sel_type, st)
+                or "result of %s doesn't have sel_type %r but %r" % (method, sel_type, st)
             )
 
     def assertArgIsSEL(self, method, argno, sel_type, message=None):
@@ -1014,8 +1002,7 @@ class TestCase(_unittest.TestCase):
                 )
         except (KeyError, IndexError):
             self.fail(
-                message
-                or "result of %s is not a C-array of length %d" % (method, count)
+                message or "result of %s is not a C-array of length %d" % (method, count)
             )
 
     def assertArgSizeInArg(self, method, argno, count, message=None):
@@ -1054,8 +1041,7 @@ class TestCase(_unittest.TestCase):
         if cnt != count + offset:
             self.fail(
                 message
-                or "result %s is not a C-array of with length in arg %d"
-                % (method, count)
+                or "result %s is not a C-array of with length in arg %d" % (method, count)
             )
 
     def assertArgIsOut(self, method, argno, message=None):
@@ -1090,9 +1076,7 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
         typestr = info["arguments"][argno + offset]["type"]
         if not typestr.startswith(b"n^") and not typestr.startswith(b"n*"):
-            self.fail(
-                message or "arg %d of %s is not an 'in' argument" % (argno, method)
-            )
+            self.fail(message or "arg %d of %s is not an 'in' argument" % (argno, method))
 
     def assertStartswith(self, value, test, message=None):
         if not value.startswith(test):
@@ -1183,13 +1167,11 @@ class TestCase(_unittest.TestCase):
             if meta.get("already_retained", False) and meta.get(
                 "already_cfretained", False
             ):
-                self.fail(
-                    f"{value}: {idx}: both already_retained and already_cfretained"
-                )
+                self.fail(f"{value}: {idx}: both already_retained and already_cfretained")
 
-            if meta["type"].endswith(objc._C_PTR + objc._C_CHR) or meta[
-                "type"
-            ].endswith(objc._C_CHARPTR):
+            if meta["type"].endswith(objc._C_PTR + objc._C_CHR) or meta["type"].endswith(
+                objc._C_CHARPTR
+            ):
                 if meta.get("c_array_delimited_by_null", False):
                     self.fail(
                         f"{value}: {idx}: null-delimited 'char*', use _C_CHAR_AS_TEXT instead {class_name or ''}"

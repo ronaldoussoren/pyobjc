@@ -248,11 +248,7 @@ def get_os_level():
     # Retrieve the productVersion by invoking sw_vers, code tries
     # to retrieve the version in-process will retrieve a compatibility
     # version when compiled with an SDK older than 11.0.
-    v = (
-        subprocess.check_output(["/usr/bin/sw_vers", "-productVersion"])
-        .decode()
-        .strip()
-    )
+    v = subprocess.check_output(["/usr/bin/sw_vers", "-productVersion"]).decode().strip()
     return ".".join(v.split(".")[:2])
 
 
@@ -507,8 +503,7 @@ def Extension(*args, **kwds):
 
     else:
         cflags.append(
-            "-DPyObjC_BUILD_RELEASE=%02d%02d"
-            % (tuple(map(int, os_level.split(".")[:2])))
+            "-DPyObjC_BUILD_RELEASE=%02d%02d" % (tuple(map(int, os_level.split(".")[:2])))
         )
 
     if os_level == "10.4":
@@ -642,20 +637,20 @@ def setup(
         k["long_description"] += "\n\nProject links\n"
         k["long_description"] += "-------------\n"
         k["long_description"] += "\n"
-        k[
-            "long_description"
-        ] += "* `Documentation <https://{}.readthedocs.io/en/latest/>`_\n\n".format(
-            REPO_NAME,
+        k["long_description"] += (
+            "* `Documentation <https://{}.readthedocs.io/en/latest/>`_\n\n".format(
+                REPO_NAME,
+            )
         )
-        k[
-            "long_description"
-        ] += "* `Issue Tracker <https://github.com/ronaldoussoren/{}/issues>`_\n\n".format(
-            REPO_NAME,
+        k["long_description"] += (
+            "* `Issue Tracker <https://github.com/ronaldoussoren/{}/issues>`_\n\n".format(
+                REPO_NAME,
+            )
         )
-        k[
-            "long_description"
-        ] += "* `Repository <https://github.com/ronaldoussoren/{}/>`_\n\n".format(
-            REPO_NAME,
+        k["long_description"] += (
+            "* `Repository <https://github.com/ronaldoussoren/{}/>`_\n\n".format(
+                REPO_NAME,
+            )
         )
         k["long_description_content_type"] = "text/x-rst; charset=UTF-8"
 

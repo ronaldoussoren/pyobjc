@@ -52,9 +52,7 @@ class TestAVAssetTrack(TestCase):
     def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVTrackAssociationTypeAudioFallback, str)
         self.assertIsInstance(AVFoundation.AVTrackAssociationTypeChapterList, str)
-        self.assertIsInstance(
-            AVFoundation.AVTrackAssociationTypeForcedSubtitlesOnly, str
-        )
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeForcedSubtitlesOnly, str)
         self.assertIsInstance(AVFoundation.AVTrackAssociationTypeSelectionFollower, str)
         self.assertIsInstance(AVFoundation.AVTrackAssociationTypeTimecode, str)
 
@@ -67,9 +65,7 @@ class TestAVAssetTrack(TestCase):
         self.assertIsInstance(
             AVFoundation.AVAssetTrackTimeRangeDidChangeNotification, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVAssetTrackSegmentsDidChangeNotification, str
-        )
+        self.assertIsInstance(AVFoundation.AVAssetTrackSegmentsDidChangeNotification, str)
         self.assertIsInstance(
             AVFoundation.AVAssetTrackTrackAssociationsDidChangeNotification, str
         )

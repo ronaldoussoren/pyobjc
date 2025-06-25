@@ -34,8 +34,10 @@ class TestLocale(TestCase):
         self.assertIsInstance(val, str)
         self.assertEqual(val, "de_DE")
 
-        val = CoreFoundation.CFLocaleCreateCanonicalLocaleIdentifierFromScriptManagerCodes(
-            None, 55, 75
+        val = (
+            CoreFoundation.CFLocaleCreateCanonicalLocaleIdentifierFromScriptManagerCodes(
+                None, 55, 75
+            )
         )
         self.assertIsInstance(val, str)
         dct = CoreFoundation.CFLocaleCreateComponentsFromLocaleIdentifier(None, "nl_NL")
@@ -134,9 +136,7 @@ class TestLocale(TestCase):
         self.assertResultIsCFRetained(
             CoreFoundation.CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode
         )
-        v = CoreFoundation.CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode(
-            None, 1043
-        )
+        v = CoreFoundation.CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode(None, 1043)
         self.assertIsInstance(v, str)
 
         v = CoreFoundation.CFLocaleGetLanguageCharacterDirection("NL")

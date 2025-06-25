@@ -5,9 +5,7 @@ import objc
 
 class TestSCNetworkConnection(TestCase):
     def testTypes(self):
-        self.assertIsInstance(
-            SystemConfiguration.SCNetworkConnectionRef, objc.objc_class
-        )
+        self.assertIsInstance(SystemConfiguration.SCNetworkConnectionRef, objc.objc_class)
 
     def testConstants(self):
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionInvalid, -1)
@@ -22,29 +20,19 @@ class TestSCNetworkConnection(TestCase):
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPDialOnTraffic, 3)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPNegotiatingLink, 4)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPAuthenticating, 5)
-        self.assertEqual(
-            SystemConfiguration.kSCNetworkConnectionPPPWaitingForCallBack, 6
-        )
-        self.assertEqual(
-            SystemConfiguration.kSCNetworkConnectionPPPNegotiatingNetwork, 7
-        )
+        self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPWaitingForCallBack, 6)
+        self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPNegotiatingNetwork, 7)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPConnected, 8)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPTerminating, 9)
-        self.assertEqual(
-            SystemConfiguration.kSCNetworkConnectionPPPDisconnectingLink, 10
-        )
+        self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPDisconnectingLink, 10)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPHoldingLinkOff, 11)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPSuspended, 12)
-        self.assertEqual(
-            SystemConfiguration.kSCNetworkConnectionPPPWaitingForRedial, 13
-        )
+        self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPWaitingForRedial, 13)
 
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionBytesIn, "BytesIn")
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionBytesOut, "BytesOut")
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPacketsIn, "PacketsIn")
-        self.assertEqual(
-            SystemConfiguration.kSCNetworkConnectionPacketsOut, "PacketsOut"
-        )
+        self.assertEqual(SystemConfiguration.kSCNetworkConnectionPacketsOut, "PacketsOut")
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionErrorsIn, "ErrorsIn")
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionErrorsOut, "ErrorsOut")
 
@@ -64,12 +52,8 @@ class TestSCNetworkConnection(TestCase):
         self.assertResultIsBOOL(
             SystemConfiguration.SCNetworkConnectionCopyUserPreferences
         )
-        self.assertArgIsOut(
-            SystemConfiguration.SCNetworkConnectionCopyUserPreferences, 1
-        )
-        self.assertArgIsOut(
-            SystemConfiguration.SCNetworkConnectionCopyUserPreferences, 2
-        )
+        self.assertArgIsOut(SystemConfiguration.SCNetworkConnectionCopyUserPreferences, 1)
+        self.assertArgIsOut(SystemConfiguration.SCNetworkConnectionCopyUserPreferences, 2)
         (
             v,
             servId,

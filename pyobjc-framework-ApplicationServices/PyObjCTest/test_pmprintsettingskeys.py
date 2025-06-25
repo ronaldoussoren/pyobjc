@@ -22,9 +22,7 @@ class TestPMPrintSettingsKeys(TestCase):
         )
 
         self.assertEqual(PrintCore.kPMPageSetStr, b"page-set")
-        self.assertEqual(
-            PrintCore.kPMPageSetKey, PrintCore.kPMPageSetStr.decode("utf-8")
-        )
+        self.assertEqual(PrintCore.kPMPageSetKey, PrintCore.kPMPageSetStr.decode("utf-8"))
 
         self.assertEqual(PrintCore.kPMMirrorStr, b"mirror")
         self.assertEqual(PrintCore.kPMMirrorKey, PrintCore.kPMMirrorStr.decode("utf-8"))

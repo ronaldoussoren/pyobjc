@@ -22,9 +22,7 @@ class TestGKError(TestCase):
         self.assertEqual(GameCenter.GKVoiceChatServiceInternalError, 32000)
         self.assertEqual(GameCenter.GKVoiceChatServiceNoRemotePacketsError, 32001)
         self.assertEqual(GameCenter.GKVoiceChatServiceUnableToConnectError, 32002)
-        self.assertEqual(
-            GameCenter.GKVoiceChatServiceRemoteParticipantHangupError, 32003
-        )
+        self.assertEqual(GameCenter.GKVoiceChatServiceRemoteParticipantHangupError, 32003)
         self.assertEqual(GameCenter.GKVoiceChatServiceInvalidCallIDError, 32004)
         self.assertEqual(GameCenter.GKVoiceChatServiceAudioUnavailableError, 32005)
         self.assertEqual(GameCenter.GKVoiceChatServiceUninitializedClientError, 32006)
@@ -41,9 +39,7 @@ class TestGKError(TestCase):
         self.assertEqual(
             GameCenter.GKVoiceChatServiceRemoteParticipantDeclinedInviteError, 32011
         )
-        self.assertEqual(
-            GameCenter.GKVoiceChatServiceMethodCurrentlyInvalidError, 32012
-        )
+        self.assertEqual(GameCenter.GKVoiceChatServiceMethodCurrentlyInvalidError, 32012)
         self.assertEqual(GameCenter.GKVoiceChatServiceNetworkConfigurationError, 32013)
         self.assertEqual(
             GameCenter.GKVoiceChatServiceUnsupportedRemoteVersionError, 32014

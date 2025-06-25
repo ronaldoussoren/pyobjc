@@ -128,9 +128,7 @@ class TestCTParagraphStyle(TestCase):
             CoreText.CTParagraphStyleSetting(
                 spec=CoreText.kCTParagraphStyleSpecifierBaseWritingDirection,
                 valueSize=CoreText.sizeof_CTWritingDirection,
-                value=chr(CoreText.kCTParagraphStyleSpecifierTailIndent).encode(
-                    "latin1"
-                ),
+                value=chr(CoreText.kCTParagraphStyleSpecifierTailIndent).encode("latin1"),
             ),
             CoreText.CTParagraphStyleSetting(
                 spec=CoreText.kCTParagraphStyleSpecifierFirstLineHeadIndent,
@@ -175,9 +173,7 @@ class TestCTParagraphStyle(TestCase):
         )
         self.assertTrue(ok)
         self.assertIsInstance(v, bytes)
-        self.assertEqual(
-            v, chr(CoreText.kCTWritingDirectionRightToLeft).encode("latin1")
-        )
+        self.assertEqual(v, chr(CoreText.kCTWritingDirectionRightToLeft).encode("latin1"))
 
         ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
             style,

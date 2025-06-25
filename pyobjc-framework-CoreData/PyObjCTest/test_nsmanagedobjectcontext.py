@@ -54,9 +54,7 @@ class TestNSManagedObjectContext(TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(CoreData.NSManagedObjectContext.hasChanges)
-        self.assertArgIsOut(
-            CoreData.NSManagedObjectContext.executeFetchRequest_error_, 1
-        )
+        self.assertArgIsOut(CoreData.NSManagedObjectContext.executeFetchRequest_error_, 1)
         self.assertArgIsBOOL(
             CoreData.NSManagedObjectContext.refreshObject_mergeChanges_, 1
         )
@@ -69,9 +67,7 @@ class TestNSManagedObjectContext(TestCase):
         self.assertArgIsBOOL(
             CoreData.NSManagedObjectContext.setPropagatesDeletesAtEndOfEvent_, 0
         )
-        self.assertResultIsBOOL(
-            CoreData.NSManagedObjectContext.retainsRegisteredObjects
-        )
+        self.assertResultIsBOOL(CoreData.NSManagedObjectContext.retainsRegisteredObjects)
         self.assertArgIsBOOL(
             CoreData.NSManagedObjectContext.setRetainsRegisteredObjects_, 0
         )

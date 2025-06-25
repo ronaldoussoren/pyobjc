@@ -20,9 +20,7 @@ class TestSKTexture(TestCase):
         self.assertArgIsBlock(
             SpriteKit.SKTexture.preloadTextures_withCompletionHandler_, 1, b"v"
         )
-        self.assertArgIsBlock(
-            SpriteKit.SKTexture.preloadWithCompletionHandler_, 0, b"v"
-        )
+        self.assertArgIsBlock(SpriteKit.SKTexture.preloadWithCompletionHandler_, 0, b"v")
 
     @min_os_level("10.10")
     def testMethods10_10(self):

@@ -339,7 +339,11 @@ def selectorFor(callable, argIndex=-1):  # noqa: A002
 
 
 def synthesize(
-    name, copy=False, readwrite=True, type=_C_ID, ivarName=None  # noqa: A002
+    name,
+    copy=False,
+    readwrite=True,
+    type=_C_ID,
+    ivarName=None,  # noqa: A002
 ):
     """
     Use this in a class dictionary to syntheze simple setting/setter methods.

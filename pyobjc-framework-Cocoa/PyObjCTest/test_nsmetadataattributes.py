@@ -23,9 +23,7 @@ class TestNSMetaDataAttributes(TestCase):
         self.assertIsInstance(
             Foundation.NSMetadataUbiquitousItemPercentDownloadedKey, str
         )
-        self.assertIsInstance(
-            Foundation.NSMetadataUbiquitousItemPercentUploadedKey, str
-        )
+        self.assertIsInstance(Foundation.NSMetadataUbiquitousItemPercentUploadedKey, str)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
@@ -40,9 +38,7 @@ class TestNSMetaDataAttributes(TestCase):
         self.assertIsInstance(
             Foundation.NSMetadataUbiquitousItemDownloadingStatusCurrent, str
         )
-        self.assertIsInstance(
-            Foundation.NSMetadataUbiquitousItemDownloadingErrorKey, str
-        )
+        self.assertIsInstance(Foundation.NSMetadataUbiquitousItemDownloadingErrorKey, str)
         self.assertIsInstance(Foundation.NSMetadataUbiquitousItemUploadingErrorKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemAttributeChangeDateKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemKeywordsKey, str)
@@ -168,9 +164,7 @@ class TestNSMetaDataAttributes(TestCase):
         self.assertIsInstance(Foundation.NSMetadataItemAppleLoopsKeyFilterTypeKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemAppleLoopsLoopModeKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemAppleLoopDescriptorsKey, str)
-        self.assertIsInstance(
-            Foundation.NSMetadataItemMusicalInstrumentCategoryKey, str
-        )
+        self.assertIsInstance(Foundation.NSMetadataItemMusicalInstrumentCategoryKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemMusicalInstrumentNameKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemCFBundleIdentifierKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemInformationKey, str)

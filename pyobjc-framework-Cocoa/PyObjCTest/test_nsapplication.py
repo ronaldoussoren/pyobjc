@@ -240,9 +240,7 @@ class TestNSApplication(TestCase):
             self.assertRaises(AttributeError, setattr, AppKit.NSApp, "foo", 42)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "Crash on 10.13, 10.14??",
     )
     @skipUnless(
@@ -313,9 +311,7 @@ class TestNSApplication(TestCase):
             TestNSApplicationHelper.applicationShouldHandleReopen_hasVisibleWindows_, 1
         )
 
-        self.assertResultIsBOOL(
-            TestNSApplicationHelper.writeSelectionToPasteboard_types_
-        )
+        self.assertResultIsBOOL(TestNSApplicationHelper.writeSelectionToPasteboard_types_)
         self.assertResultIsBOOL(TestNSApplicationHelper.readSelectionFromPasteboard_)
 
         self.assertResultIsBOOL(
@@ -359,9 +355,7 @@ class TestNSApplication(TestCase):
         self.assertEqual(
             AppKit.NSApplicationPresentationDisableSessionTermination, (1 << 7)
         )
-        self.assertEqual(
-            AppKit.NSApplicationPresentationDisableHideApplication, (1 << 8)
-        )
+        self.assertEqual(AppKit.NSApplicationPresentationDisableHideApplication, (1 << 8))
         self.assertEqual(
             AppKit.NSApplicationPresentationDisableMenuBarTransparency, (1 << 9)
         )

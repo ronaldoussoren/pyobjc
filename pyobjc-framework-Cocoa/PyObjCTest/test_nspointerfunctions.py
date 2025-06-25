@@ -14,9 +14,7 @@ class TestNSPointerFunctions(TestCase):
         self.assertEqual(Foundation.NSPointerFunctionsMachVirtualMemory, (4 << 0))
         self.assertEqual(Foundation.NSPointerFunctionsObjectPersonality, (0 << 8))
         self.assertEqual(Foundation.NSPointerFunctionsOpaquePersonality, (1 << 8))
-        self.assertEqual(
-            Foundation.NSPointerFunctionsObjectPointerPersonality, (2 << 8)
-        )
+        self.assertEqual(Foundation.NSPointerFunctionsObjectPointerPersonality, (2 << 8))
         self.assertEqual(Foundation.NSPointerFunctionsCStringPersonality, (3 << 8))
         self.assertEqual(Foundation.NSPointerFunctionsStructPersonality, (4 << 8))
         self.assertEqual(Foundation.NSPointerFunctionsIntegerPersonality, (5 << 8))

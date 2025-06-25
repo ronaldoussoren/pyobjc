@@ -11,9 +11,7 @@ IOBluetoothUserNotificationCallback = (
 class TestIOBluetoothUserLib(TestCase):
     def test_types(self):
         self.assertIsOpaquePointer(IOBluetooth.IOBluetoothObjectRef)
-        self.assertIs(
-            IOBluetooth.IOBluetoothDeviceRef, IOBluetooth.IOBluetoothObjectRef
-        )
+        self.assertIs(IOBluetooth.IOBluetoothDeviceRef, IOBluetooth.IOBluetoothObjectRef)
         self.assertIs(
             IOBluetooth.IOBluetoothL2CAPChannelRef, IOBluetooth.IOBluetoothObjectRef
         )
@@ -23,9 +21,7 @@ class TestIOBluetoothUserLib(TestCase):
         self.assertIs(
             IOBluetooth.IOBluetoothSDPServiceRecordRef, IOBluetooth.IOBluetoothObjectRef
         )
-        self.assertIs(
-            IOBluetooth.IOBluetoothSDPUUIDRef, IOBluetooth.IOBluetoothObjectRef
-        )
+        self.assertIs(IOBluetooth.IOBluetoothSDPUUIDRef, IOBluetooth.IOBluetoothObjectRef)
         self.assertIs(
             IOBluetooth.IOBluetoothSDPDataElementRef, IOBluetooth.IOBluetoothObjectRef
         )

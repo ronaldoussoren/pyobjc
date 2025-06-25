@@ -18,7 +18,5 @@ class TestSWAttributionView(TestCase):
         )
 
     def test_methods(self):
-        self.assertArgIsBlock(
-            SharedWithYou.SWCollaborationView.dismissPopover_, 0, b"v"
-        )
+        self.assertArgIsBlock(SharedWithYou.SWCollaborationView.dismissPopover_, 0, b"v")
         self.assertArgIsBOOL(SharedWithYou.SWCollaborationView.setShowManageButton_, 0)

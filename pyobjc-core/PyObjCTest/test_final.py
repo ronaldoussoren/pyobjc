@@ -29,7 +29,5 @@ class TestFinal(TestCase):
 
         self.assertTrue(NonFinalClass.__objc_final__)
 
-        with self.assertRaisesRegex(
-            TypeError, "Cannot delete __objc_final__ attribute"
-        ):
+        with self.assertRaisesRegex(TypeError, "Cannot delete __objc_final__ attribute"):
             del NonFinalClass.__objc_final__

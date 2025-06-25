@@ -22,9 +22,7 @@ class TestITLibrary(TestCase):
         self.assertArgIsOut(
             iTunesLibrary.ITLibrary.libraryWithAPIVersion_options_error_, 2
         )
-        self.assertArgIsOut(
-            iTunesLibrary.ITLibrary.initWithAPIVersion_options_error_, 2
-        )
+        self.assertArgIsOut(iTunesLibrary.ITLibrary.initWithAPIVersion_options_error_, 2)
 
     def testConstants(self):
         self.assertEqual(iTunesLibrary.ITLibExportFeatureNone, 0)

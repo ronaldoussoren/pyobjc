@@ -8,9 +8,7 @@ class TestVNGenerateOpticalFlowRequest(TestCase):
 
     def testConstants(self):
         self.assertEqual(Vision.VNGenerateOpticalFlowRequestComputationAccuracyLow, 0)
-        self.assertEqual(
-            Vision.VNGenerateOpticalFlowRequestComputationAccuracyMedium, 1
-        )
+        self.assertEqual(Vision.VNGenerateOpticalFlowRequestComputationAccuracyMedium, 1)
         self.assertEqual(Vision.VNGenerateOpticalFlowRequestComputationAccuracyHigh, 2)
         self.assertEqual(
             Vision.VNGenerateOpticalFlowRequestComputationAccuracyVeryHigh, 3
@@ -22,6 +20,4 @@ class TestVNGenerateOpticalFlowRequest(TestCase):
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertResultIsBOOL(Vision.VNGenerateOpticalFlowRequest.keepNetworkOutput)
-        self.assertArgIsBOOL(
-            Vision.VNGenerateOpticalFlowRequest.setKeepNetworkOutput_, 0
-        )
+        self.assertArgIsBOOL(Vision.VNGenerateOpticalFlowRequest.setKeepNetworkOutput_, 0)

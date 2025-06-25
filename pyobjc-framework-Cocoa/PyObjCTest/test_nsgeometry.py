@@ -148,19 +148,13 @@ class TestNSGeometry(TestCase):
             AppKit.NSValue.valueWithPoint_, 0, AppKit.NSPoint.__typestr__
         )
         self.assertResultHasType(AppKit.NSValue.pointValue, AppKit.NSPoint.__typestr__)
-        self.assertArgHasType(
-            AppKit.NSValue.valueWithSize_, 0, AppKit.NSSize.__typestr__
-        )
+        self.assertArgHasType(AppKit.NSValue.valueWithSize_, 0, AppKit.NSSize.__typestr__)
         self.assertResultHasType(AppKit.NSValue.sizeValue, AppKit.NSSize.__typestr__)
-        self.assertArgHasType(
-            AppKit.NSValue.valueWithRect_, 0, AppKit.NSRect.__typestr__
-        )
+        self.assertArgHasType(AppKit.NSValue.valueWithRect_, 0, AppKit.NSRect.__typestr__)
         self.assertResultHasType(AppKit.NSValue.rectValue, AppKit.NSRect.__typestr__)
 
     def testCoderMethods(self):
-        self.assertArgHasType(
-            AppKit.NSCoder.encodePoint_, 0, AppKit.NSPoint.__typestr__
-        )
+        self.assertArgHasType(AppKit.NSCoder.encodePoint_, 0, AppKit.NSPoint.__typestr__)
         self.assertResultHasType(AppKit.NSCoder.decodePoint, AppKit.NSPoint.__typestr__)
         self.assertArgHasType(
             AppKit.NSCoder.encodePoint_forKey_, 0, AppKit.NSPoint.__typestr__

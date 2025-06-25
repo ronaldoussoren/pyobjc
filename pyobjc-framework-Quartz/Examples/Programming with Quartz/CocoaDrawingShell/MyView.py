@@ -12,9 +12,7 @@ def doAlphaRects(context):
     tintAdjust = 1.0 / numRects
 
     # ***** Part 2 *****
-    Quartz.CGContextTranslateCTM(
-        context, 2 * ourRect.size.width, 2 * ourRect.size.height
-    )
+    Quartz.CGContextTranslateCTM(context, 2 * ourRect.size.width, 2 * ourRect.size.height)
 
     # ***** Part 3 *****
     tint = 1.0

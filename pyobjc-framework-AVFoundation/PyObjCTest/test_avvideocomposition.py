@@ -8,9 +8,7 @@ class TestAVVideoCompositionHelper(AVFoundation.NSObject):
     ):
         return 1
 
-    def videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_(
-        self, a, b
-    ):
+    def videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_(self, a, b):
         return 1
 
     def videoComposition_shouldContinueValidatingAfterFindingInvalidTimeRangeInInstruction_(  # noqa: B950

@@ -12,9 +12,7 @@ def drawQuartzRomanText(context):
 
     # Set the fill color space. This sets the
     # fill painting color to opaque black.
-    Quartz.CGContextSetFillColorSpace(
-        context, Utilities.getTheCalibratedRGBColorSpace()
-    )
+    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
 
     # The Cocoa framework calls the draw method with an undefined
     # value of the text matrix. It's best to set it to what is needed by
@@ -107,9 +105,7 @@ def drawQuartzTextWithTextModes(context):
 
     # Set the fill and stroke color space. This sets the
     # fill and stroke painting color to opaque black.
-    Quartz.CGContextSetFillColorSpace(
-        context, Utilities.getTheCalibratedRGBColorSpace()
-    )
+    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
     Quartz.CGContextSetStrokeColorSpace(
         context, Utilities.getTheCalibratedRGBColorSpace()
     )

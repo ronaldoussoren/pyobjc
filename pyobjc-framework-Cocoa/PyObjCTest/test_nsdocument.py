@@ -105,9 +105,7 @@ class TestNSDocument(TestCase):
         self.assertResultIsBOOL(
             AppKit.NSDocument.saveToURL_ofType_forSaveOperation_error_
         )
-        self.assertArgIsOut(
-            AppKit.NSDocument.saveToURL_ofType_forSaveOperation_error_, 3
-        )
+        self.assertArgIsOut(AppKit.NSDocument.saveToURL_ofType_forSaveOperation_error_, 3)
         self.assertResultIsBOOL(AppKit.NSDocument.hasUnautosavedChanges)
         self.assertArgIsSEL(
             AppKit.NSDocument.autosaveDocumentWithDelegate_didAutosaveSelector_contextInfo_,

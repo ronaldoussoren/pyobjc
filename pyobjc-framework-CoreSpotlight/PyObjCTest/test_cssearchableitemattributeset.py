@@ -31,8 +31,6 @@ class TestCSSearchableItemAttributeSet(TestCase):
         self.assertArgIsBOOL(CoreSpotlight.CSCustomAttributeKey.setMultiValued_, 0)
 
         self.assertResultIsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchable)
-        self.assertResultIsBOOL(
-            CoreSpotlight.CSCustomAttributeKey.isSearchableByDefault
-        )
+        self.assertResultIsBOOL(CoreSpotlight.CSCustomAttributeKey.isSearchableByDefault)
         self.assertResultIsBOOL(CoreSpotlight.CSCustomAttributeKey.isUnique)
         self.assertResultIsBOOL(CoreSpotlight.CSCustomAttributeKey.isMultiValued)

@@ -26,10 +26,8 @@ def NSLocalizedStringWithDefaultValue(key, tbl, bundle, val, comment):
 
 
 def NSLocalizedAttributedString(key, comment):
-    return (
-        _Foundation.NSBundle.mainBundle().localizedAttributedStringForKey_value_table_(
-            key, "", None
-        )
+    return _Foundation.NSBundle.mainBundle().localizedAttributedStringForKey_value_table_(
+        key, "", None
     )
 
 

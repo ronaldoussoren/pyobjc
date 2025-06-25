@@ -26,12 +26,8 @@ class TestAVAudioEngine(TestCase):
 
     @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertResultIsBOOL(
-            AVFoundation.AVAudioEngine.isAutoShutdownEnabled
-        )  # noqa: B950
-        self.assertArgIsBOOL(
-            AVFoundation.AVAudioEngine.setAutoShutdownEnabled_, 0
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVAudioEngine.isAutoShutdownEnabled)  # noqa: B950
+        self.assertArgIsBOOL(AVFoundation.AVAudioEngine.setAutoShutdownEnabled_, 0)  # noqa: B950
 
         self.assertResultIsBOOL(
             AVFoundation.AVAudioEngine.enableManualRenderingMode_format_maximumFrameCount_error_  # noqa: B950
@@ -41,13 +37,9 @@ class TestAVAudioEngine(TestCase):
             3,
         )
 
-        self.assertArgIsOut(
-            AVFoundation.AVAudioEngine.renderOffline_toBuffer_error_, 2
-        )  # noqa: B950
+        self.assertArgIsOut(AVFoundation.AVAudioEngine.renderOffline_toBuffer_error_, 2)  # noqa: B950
 
-        self.assertResultIsBOOL(
-            AVFoundation.AVAudioEngine.isInManualRenderingMode
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVAudioEngine.isInManualRenderingMode)  # noqa: B950
 
         # NOTE: This almost certainly requires a manual wrapper to use correctly
         self.assertResultIsBlock(
@@ -88,16 +80,10 @@ class TestAVAudioEngine(TestCase):
         self.assertEqual(
             AVFoundation.AVAudioEngineManualRenderingErrorInitialized, -80801
         )
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingErrorNotRunning, -80802
-        )
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingErrorNotRunning, -80802)
 
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingStatusError, -1
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingStatusSuccess, 0
-        )  # noqa: B950
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusError, -1)  # noqa: B950
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusSuccess, 0)  # noqa: B950
         self.assertEqual(
             AVFoundation.AVAudioEngineManualRenderingStatusInsufficientDataFromInputNode,  # noqa: B950
             1,
@@ -107,12 +93,8 @@ class TestAVAudioEngine(TestCase):
             2,  # noqa: B950
         )
 
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingModeOffline, 0
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingModeRealtime, 1
-        )  # noqa: B950
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingModeOffline, 0)  # noqa: B950
+        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingModeRealtime, 1)  # noqa: B950
 
     @min_os_level("10.10")
     def testConstants10_10(self):

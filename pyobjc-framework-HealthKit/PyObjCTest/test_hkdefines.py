@@ -113,9 +113,7 @@ class TestHKDefines(TestCase):
         self.assertIsEnumType(HealthKit.HKCategoryValueProgesteroneTestResult)
         self.assertEqual(HealthKit.HKCategoryValueProgesteroneTestResultNegative, 1)
         self.assertEqual(HealthKit.HKCategoryValueProgesteroneTestResultPositive, 2)
-        self.assertEqual(
-            HealthKit.HKCategoryValueProgesteroneTestResultIndeterminate, 3
-        )
+        self.assertEqual(HealthKit.HKCategoryValueProgesteroneTestResultIndeterminate, 3)
 
         self.assertIsEnumType(HealthKit.HKCategoryValueMenstrualFlow)
         self.assertEqual(HealthKit.HKCategoryValueMenstrualFlowUnspecified, 1)
@@ -180,9 +178,7 @@ class TestHKDefines(TestCase):
         self.assertEqual(
             HealthKit.HKCategoryValueAppleWalkingSteadinessEventInitialVeryLow, 2
         )
-        self.assertEqual(
-            HealthKit.HKCategoryValueAppleWalkingSteadinessEventRepeatLow, 3
-        )
+        self.assertEqual(HealthKit.HKCategoryValueAppleWalkingSteadinessEventRepeatLow, 3)
         self.assertEqual(
             HealthKit.HKCategoryValueAppleWalkingSteadinessEventRepeatVeryLow, 4
         )

@@ -159,21 +159,11 @@ class TestNSAttributedString(TestCase):
             AppKit.NSAttributedString.initWithData_options_documentAttributes_error_, 3
         )
 
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithPath_documentAttributes_, 1
-        )
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithURL_documentAttributes_, 1
-        )
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithRTF_documentAttributes_, 1
-        )
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithRTFD_documentAttributes_, 1
-        )
-        self.assertArgIsOut(
-            AppKit.NSAttributedString.initWithHTML_documentAttributes_, 1
-        )
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithPath_documentAttributes_, 1)
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithURL_documentAttributes_, 1)
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithRTF_documentAttributes_, 1)
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithRTFD_documentAttributes_, 1)
+        self.assertArgIsOut(AppKit.NSAttributedString.initWithHTML_documentAttributes_, 1)
         self.assertArgIsOut(
             AppKit.NSAttributedString.initWithHTML_options_documentAttributes_, 2
         )
@@ -262,9 +252,7 @@ class TestNSAttributedString(TestCase):
     @min_os_level("12.0")
     def test_constants12_0(self):
         self.assertEqual(Foundation.NSInlinePresentationIntentEmphasized, 1 << 0)
-        self.assertEqual(
-            Foundation.NSInlinePresentationIntentStronglyEmphasized, 1 << 1
-        )
+        self.assertEqual(Foundation.NSInlinePresentationIntentStronglyEmphasized, 1 << 1)
         self.assertEqual(Foundation.NSInlinePresentationIntentCode, 1 << 2)
         self.assertEqual(Foundation.NSInlinePresentationIntentStrikethrough, 1 << 5)
         self.assertEqual(Foundation.NSInlinePresentationIntentSoftBreak, 1 << 6)
@@ -329,9 +317,7 @@ class TestNSAttributedString(TestCase):
     @min_os_level("14.0")
     def test_constants14_0(self):
         self.assertIsInstance(Foundation.NSInflectionConceptsKey, str)
-        self.assertIsInstance(
-            Foundation.NSInflectionAgreementArgumentAttributeName, str
-        )
+        self.assertIsInstance(Foundation.NSInflectionAgreementArgumentAttributeName, str)
         self.assertIsInstance(Foundation.NSInflectionAgreementConceptAttributeName, str)
         self.assertIsInstance(Foundation.NSInflectionReferentConceptAttributeName, str)
 

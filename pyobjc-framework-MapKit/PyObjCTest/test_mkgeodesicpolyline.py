@@ -9,9 +9,7 @@ class TestMKGeodesicPolyline(TestCase):
     def testClasses(self):
         self.assertIsInstance(MapKit.MKGeodesicPolyline, objc.objc_class)
 
-        self.assertArgSizeInArg(
-            MapKit.MKGeodesicPolyline.polylineWithPoints_count_, 0, 1
-        )
+        self.assertArgSizeInArg(MapKit.MKGeodesicPolyline.polylineWithPoints_count_, 0, 1)
         self.assertArgIsIn(MapKit.MKGeodesicPolyline.polylineWithPoints_count_, 0)
 
         self.assertArgSizeInArg(

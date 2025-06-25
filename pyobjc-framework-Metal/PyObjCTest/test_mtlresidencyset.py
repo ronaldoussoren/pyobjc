@@ -27,17 +27,13 @@ class TestMTLResidencySet(TestCase):
     def test_protocol_methods(self):
         self.assertResultHasType(TestMTLResidencySetHelper.allocatedSize, b"Q")
 
-        self.assertArgHasType(
-            TestMTLResidencySetHelper.addAllocations_count_, 0, b"n^@"
-        )
+        self.assertArgHasType(TestMTLResidencySetHelper.addAllocations_count_, 0, b"n^@")
         self.assertArgHasType(TestMTLResidencySetHelper.addAllocations_count_, 1, b"Q")
 
         self.assertArgHasType(
             TestMTLResidencySetHelper.removeAllocations_count_, 0, b"n^@"
         )
-        self.assertArgHasType(
-            TestMTLResidencySetHelper.removeAllocations_count_, 1, b"Q"
-        )
+        self.assertArgHasType(TestMTLResidencySetHelper.removeAllocations_count_, 1, b"Q")
 
         self.assertResultIsBOOL(TestMTLResidencySetHelper.containsAllocation_)
         self.assertResultHasType(TestMTLResidencySetHelper.allocationCount, b"Q")

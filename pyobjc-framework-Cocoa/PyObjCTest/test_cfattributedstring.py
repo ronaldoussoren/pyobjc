@@ -82,9 +82,7 @@ class TestAttributedString(TestCase):
         self.assertEqual(dta, "Hallo")
         v = CoreFoundation.CFAttributedStringGetMutableString(val)
         self.assertIs(v, None)
-        CoreFoundation.CFAttributedStringSetAttributes(
-            val, (0, 2), {"ronald": 99}, False
-        )
+        CoreFoundation.CFAttributedStringSetAttributes(val, (0, 2), {"ronald": 99}, False)
         v, rng = CoreFoundation.CFAttributedStringGetAttributes(val, 1, None)
         self.assertEqual(v, {"ronald": 99, "foo": 42, "bar": "baz"})
         self.assertEqual(rng, (0, 2))
@@ -92,9 +90,7 @@ class TestAttributedString(TestCase):
         self.assertEqual(v, {"foo": 42, "bar": "baz"})
         self.assertEqual(rng, (2, 3))
         self.assertIsInstance(rng, CoreFoundation.CFRange)
-        CoreFoundation.CFAttributedStringSetAttributes(
-            val, (0, 2), {"ronald": 99}, True
-        )
+        CoreFoundation.CFAttributedStringSetAttributes(val, (0, 2), {"ronald": 99}, True)
         v, rng = CoreFoundation.CFAttributedStringGetAttributes(val, 1, None)
         self.assertEqual(v, {"ronald": 99})
         self.assertEqual(rng, (0, 2))

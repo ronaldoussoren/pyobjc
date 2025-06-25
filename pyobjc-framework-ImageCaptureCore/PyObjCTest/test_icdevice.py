@@ -42,9 +42,7 @@ class TestICDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICTransportTypeMassStorage, str)
         self.assertIsInstance(ImageCaptureCore.ICDeviceLocationDescriptionUSB, str)
         self.assertIsInstance(ImageCaptureCore.ICDeviceLocationDescriptionFireWire, str)
-        self.assertIsInstance(
-            ImageCaptureCore.ICDeviceLocationDescriptionBluetooth, str
-        )
+        self.assertIsInstance(ImageCaptureCore.ICDeviceLocationDescriptionBluetooth, str)
         self.assertIsInstance(
             ImageCaptureCore.ICDeviceLocationDescriptionMassStorage, str
         )

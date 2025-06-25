@@ -16,9 +16,7 @@ def _setup():
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="NetFS",
         frameworkIdentifier="com.apple.NetFS",
-        frameworkPath=objc.pathForFramework(
-            "/System/Library/Frameworks/NetFS.framework"
-        ),
+        frameworkPath=objc.pathForFramework("/System/Library/Frameworks/NetFS.framework"),
         globals_dict=globals(),
         inline_list=None,
         parents=(Foundation,),

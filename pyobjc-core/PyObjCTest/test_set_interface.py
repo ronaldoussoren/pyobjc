@@ -54,9 +54,7 @@ class TestPyObjCSet(TestCase):
         res = MySet([3, 4]) | s
         self.assertEqual(res, NSSet([1, 2, 3, 4]))
         self.assertIsInstance(res, NSSet)
-        with self.assertRaisesRegex(
-            TypeError, r"value\|NSSet where value is not a set"
-        ):
+        with self.assertRaisesRegex(TypeError, r"value\|NSSet where value is not a set"):
             (3, 4) | s
 
         res = MySet([3, 4]) & s
@@ -168,9 +166,7 @@ class TestSet(test.test_set.TestJointOps, TestCase):
             self.assertEqual(self.thetype("abcba").union(C("efgfe")), set("abcefg"))
             self.assertEqual(self.thetype("abcba").union(C("ccb")), set("abc"))
             self.assertEqual(self.thetype("abcba").union(C("ef")), set("abcef"))
-            self.assertEqual(
-                self.thetype("abcba").union(C("ef"), C("fg")), set("abcefg")
-            )
+            self.assertEqual(self.thetype("abcba").union(C("ef"), C("fg")), set("abcefg"))
 
         # Issue #6573
         x = self.thetype()
@@ -485,9 +481,7 @@ class TestVariousIteratorArgs(test.test_set.TestVariousIteratorArgs):
                         getattr(t, methname)(g(data))
                         self.assertEqual(sorted(s, key=repr), sorted(t, key=repr))
 
-                    with self.assertRaisesRegex(
-                        TypeError, "'X' object is not iterable"
-                    ):
+                    with self.assertRaisesRegex(TypeError, "'X' object is not iterable"):
                         getattr(set("january"), methname)(test.test_set.X(data))
 
                     with self.assertRaisesRegex(
@@ -495,9 +489,7 @@ class TestVariousIteratorArgs(test.test_set.TestVariousIteratorArgs):
                     ):
                         getattr(set("january"), methname)(test.test_set.N(data))
 
-                    with self.assertRaisesRegex(
-                        ZeroDivisionError, "division.* by zero"
-                    ):
+                    with self.assertRaisesRegex(ZeroDivisionError, "division.* by zero"):
                         getattr(set("january"), methname)(test.test_set.E(data))
 
 

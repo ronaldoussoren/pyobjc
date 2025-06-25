@@ -905,7 +905,6 @@ class TestTestSupport(TestCase):
             self.assertArgIsPrintf(m, 3)
 
     def test_arg_cfretained(self):
-
         m = Method(3, {"already_cfretained": True}, selector=True)
         self.assertArgIsCFRetained(m, 1)
         with self.assertRaisesRegex(
@@ -1348,9 +1347,7 @@ class TestTestSupport(TestCase):
 
     def test_result_not_retained(self):
         m = Method(None, {"already_retained": True})
-        with self.assertRaisesRegex(
-            self.failureException, "Result of <.*> is retained"
-        ):
+        with self.assertRaisesRegex(self.failureException, "Result of <.*> is retained"):
             self.assertResultIsNotRetained(m)
 
         m = Method(None, {"already_retained": False})
@@ -2436,7 +2433,6 @@ class TestTestSupport(TestCase):
                     self.failureException,
                     "both already_retained and already_cfretained",
                 ):
-
                     func = Function(
                         idx, {"already_cfretained": True, "already_retained": True}
                     )
@@ -2661,9 +2657,7 @@ class TestTestSupport(TestCase):
                 self.assertIsNot(
                     entry.args[0], NSObject.pyobjc_instanceMethods.description
                 )
-                self.assertIsNot(
-                    entry.args[0], NSObject.pyobjc_classMethods.description
-                )
+                self.assertIsNot(entry.args[0], NSObject.pyobjc_classMethods.description)
 
     @no_autorelease_pool
     def test_without_pool(self):

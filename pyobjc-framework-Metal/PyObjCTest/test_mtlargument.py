@@ -179,9 +179,7 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLBindingAccessReadOnly, 0)
         self.assertEqual(Metal.MTLBindingAccessReadWrite, 1)
         self.assertEqual(Metal.MTLBindingAccessWriteOnly, 2)
-        self.assertEqual(
-            Metal.MTLArgumentAccessReadOnly, Metal.MTLBindingAccessReadOnly
-        )
+        self.assertEqual(Metal.MTLArgumentAccessReadOnly, Metal.MTLBindingAccessReadOnly)
         self.assertEqual(
             Metal.MTLArgumentAccessReadWrite, Metal.MTLBindingAccessReadWrite
         )
@@ -240,12 +238,8 @@ class TestMTLArgument(TestCase):
         self.assertResultHasType(
             TestMTLArgumentHelper.bufferAlignment, objc._C_NSUInteger
         )
-        self.assertResultHasType(
-            TestMTLArgumentHelper.bufferDataSize, objc._C_NSUInteger
-        )
-        self.assertResultHasType(
-            TestMTLArgumentHelper.bufferDataType, objc._C_NSUInteger
-        )
+        self.assertResultHasType(TestMTLArgumentHelper.bufferDataSize, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLArgumentHelper.bufferDataType, objc._C_NSUInteger)
 
         self.assertResultHasType(
             TestMTLArgumentHelper.threadgroupMemoryAlignment, objc._C_NSUInteger

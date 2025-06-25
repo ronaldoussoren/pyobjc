@@ -13,9 +13,7 @@ class TestNEDNSSettingsManager(TestCase):
         self.assertEqual(
             NetworkExtension.NEDNSSettingsManagerErrorConfigurationDisabled, 2
         )
-        self.assertEqual(
-            NetworkExtension.NEDNSSettingsManagerErrorConfigurationStale, 3
-        )
+        self.assertEqual(NetworkExtension.NEDNSSettingsManagerErrorConfigurationStale, 3)
         self.assertEqual(
             NetworkExtension.NEDNSSettingsManagerErrorConfigurationCannotBeRemoved, 4
         )

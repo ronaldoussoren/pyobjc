@@ -9,9 +9,7 @@ class TestWKDownloadDelegateHelper(WebKit.NSObject):
     ):
         pass
 
-    def download_willPerformHTTPRedirection_newRequest_decisionHandler_(
-        self, a, b, c, d
-    ):
+    def download_willPerformHTTPRedirection_newRequest_decisionHandler_(self, a, b, c, d):
         pass
 
     def download_didReceiveAuthenticationChallenge_completionHandler_(self, a, b, c):
@@ -25,7 +23,6 @@ class TestWKDownloadDelegateHelper(WebKit.NSObject):
 
 
 class TestWKDownloadDelegate(TestCase):
-
     def test_constants(self):
         self.assertIsEnumType(WebKit.WKDownloadRedirectPolicy)
         self.assertEqual(WebKit.WKDownloadRedirectPolicyCancel, 0)

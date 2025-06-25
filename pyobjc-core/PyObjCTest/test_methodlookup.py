@@ -108,9 +108,7 @@ class TestMethodResolution(TestCase):
         self.assertEqual(o.pyobjc__instanceCount.selector, b"pyobjc__instanceCount")
 
         self.assertEqual(o.pyobjc_setObject_forKey_(1, 2), [1, 2])
-        self.assertEqual(
-            o.pyobjc_setObject_forKey_.selector, b"pyobjc_setObject:forKey:"
-        )
+        self.assertEqual(o.pyobjc_setObject_forKey_.selector, b"pyobjc_setObject:forKey:")
 
     def test_class_specials(self):
         # Harder cases to get right: selectors with an embedded underscore
@@ -125,9 +123,7 @@ class TestMethodResolution(TestCase):
         self.assertEqual(o.pyobjc__classCount.selector, b"pyobjc__classCount")
 
         self.assertEqual(o.pyobjc_setObject_forKey_(1, 2), [2, 1])
-        self.assertEqual(
-            o.pyobjc_setObject_forKey_.selector, b"pyobjc_setObject:forKey:"
-        )
+        self.assertEqual(o.pyobjc_setObject_forKey_.selector, b"pyobjc_setObject:forKey:")
 
     def test_explicit_choice(self):
         s = PyObjC_MethodLookup1.pyobjc_classMethods.both

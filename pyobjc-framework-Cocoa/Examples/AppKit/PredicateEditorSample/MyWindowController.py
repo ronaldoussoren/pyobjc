@@ -35,9 +35,7 @@ class MyWindowController(Cocoa.NSWindowController):
 
         # setup our Spotlight notifications
         nf = Cocoa.NSNotificationCenter.defaultCenter()
-        nf.addObserver_selector_name_object_(
-            self, "queryNotification:", None, self.query
-        )
+        nf.addObserver_selector_name_object_(self, "queryNotification:", None, self.query)
 
         # initialize our Spotlight query, sort by contact name
 
@@ -173,10 +171,8 @@ class MyWindowController(Cocoa.NSWindowController):
                     return cleanSubpredicates[0]
 
                 else:
-                    return (
-                        Cocoa.NSCompoundPredicate.alloc().initWithType_subpredicates_(
-                            predicate_type, cleanSubpredicates
-                        )
+                    return Cocoa.NSCompoundPredicate.alloc().initWithType_subpredicates_(
+                        predicate_type, cleanSubpredicates
                     )
 
         else:

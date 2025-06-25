@@ -54,9 +54,7 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCGraphCompilationOptionsComputeAllGradients, 0x08)
 
         self.assertEqual(MLCompute.MLCExecutionOptionsNone, 0x00)
-        self.assertEqual(
-            MLCompute.MLCExecutionOptionsSkipWritingInputDataToDevice, 0x01
-        )
+        self.assertEqual(MLCompute.MLCExecutionOptionsSkipWritingInputDataToDevice, 0x01)
         self.assertEqual(MLCompute.MLCExecutionOptionsSynchronous, 0x02)
         self.assertEqual(MLCompute.MLCExecutionOptionsProfiling, 0x04)
         self.assertEqual(MLCompute.MLCExecutionOptionsForwardForInference, 0x08)

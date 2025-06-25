@@ -89,9 +89,7 @@ class TestSCNSceneSource(TestCase):
         self.assertIsInstance(
             SceneKit.SCNSceneSourceAnimationImportPolicyPlayRepeatedly, str
         )
-        self.assertIsInstance(
-            SceneKit.SCNSceneSourceAnimationImportPolicyDoNotPlay, str
-        )
+        self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyDoNotPlay, str)
         self.assertIsInstance(
             SceneKit.SCNSceneSourceAnimationImportPolicyPlayUsingSceneTimeBase, str
         )

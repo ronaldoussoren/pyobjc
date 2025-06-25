@@ -30,9 +30,7 @@ class TestSKAction(TestCase):
         self.assertArgIsBOOL(
             SpriteKit.SKAction.animateWithTextures_timePerFrame_resize_restore_, 3
         )
-        self.assertArgIsBOOL(
-            SpriteKit.SKAction.playSoundFileNamed_waitForCompletion_, 1
-        )
+        self.assertArgIsBOOL(SpriteKit.SKAction.playSoundFileNamed_waitForCompletion_, 1)
         self.assertArgIsBOOL(
             SpriteKit.SKAction.followPath_asOffset_orientToPath_duration_, 1
         )

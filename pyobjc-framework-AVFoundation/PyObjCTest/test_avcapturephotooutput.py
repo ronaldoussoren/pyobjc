@@ -79,9 +79,7 @@ class TestAVCapturePhotoOutput(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCapturePhotoOutput.isFastCapturePrioritizationEnabled
         )
-        self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoOutput.isZeroShutterLagEnabled
-        )
+        self.assertResultIsBOOL(AVFoundation.AVCapturePhotoOutput.isZeroShutterLagEnabled)
         self.assertResultIsBOOL(
             AVFoundation.AVCapturePhotoOutput.isResponsiveCaptureSupported
         )
@@ -94,9 +92,7 @@ class TestAVCapturePhotoOutput(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCapturePhotoOutput.isConstantColorSupported
         )
-        self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhotoOutput.isConstantColorEnabled
-        )
+        self.assertResultIsBOOL(AVFoundation.AVCapturePhotoOutput.isConstantColorEnabled)
         self.assertArgIsBOOL(
             AVFoundation.AVCapturePhotoOutput.setConstantColorEnabled_, 0
         )
@@ -122,6 +118,4 @@ class TestAVCapturePhotoOutput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVCapturePhotoSettings.setShutterSoundSuppressionEnabled_, 0
         )
-        self.assertResultIsBOOL(
-            AVFoundation.AVCapturePhoto.isConstantColorFallbackPhoto
-        )
+        self.assertResultIsBOOL(AVFoundation.AVCapturePhoto.isConstantColorFallbackPhoto)

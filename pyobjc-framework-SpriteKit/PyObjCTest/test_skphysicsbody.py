@@ -11,9 +11,7 @@ class TestSKPhysicsBody(TestCase):
 
         self.assertArgIsBOOL(SpriteKit.SKPhysicsBody.setDynamic_, 0)
         self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.isDynamic)
-        self.assertArgIsBOOL(
-            SpriteKit.SKPhysicsBody.setUsesPreciseCollisionDetection_, 0
-        )
+        self.assertArgIsBOOL(SpriteKit.SKPhysicsBody.setUsesPreciseCollisionDetection_, 0)
         self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.usesPreciseCollisionDetection)
         self.assertArgIsBOOL(SpriteKit.SKPhysicsBody.setAllowsRotation_, 0)
         self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.allowsRotation)

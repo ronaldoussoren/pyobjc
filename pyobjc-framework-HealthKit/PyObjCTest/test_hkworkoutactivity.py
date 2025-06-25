@@ -8,9 +8,7 @@ class TestHKWorkoutActivity(TestCase):
         self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutActivityDuration, str)
         self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutActivityStartDate, str)
         self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutActivityEndDate, str)
-        self.assertIsInstance(
-            HealthKit.HKPredicateKeyPathWorkoutActivitySumQuantity, str
-        )
+        self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutActivitySumQuantity, str)
         self.assertIsInstance(
             HealthKit.HKPredicateKeyPathWorkoutActivityMinimumQuantity, str
         )

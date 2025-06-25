@@ -11,9 +11,7 @@ class TestCMIOSampleBuffer(TestCase):
         self.assertEqual(CoreMediaIO.CMIOGetNextSequenceNumber(0), 1)
         self.assertEqual(CoreMediaIO.CMIOGetNextSequenceNumber(42), 43)
         self.assertEqual(
-            CoreMediaIO.CMIOGetNextSequenceNumber(
-                CoreMediaIO.kCMIOInvalidSequenceNumber
-            ),
+            CoreMediaIO.CMIOGetNextSequenceNumber(CoreMediaIO.kCMIOInvalidSequenceNumber),
             0,
         )
 

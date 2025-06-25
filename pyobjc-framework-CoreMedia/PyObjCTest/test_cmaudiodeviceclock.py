@@ -12,9 +12,7 @@ class TestCMAudioDeviceClock(TestCase):
         self.assertArgIsIDLike(CoreMedia.CMAudioDeviceClockCreate, 2)
 
         self.assertArgIsOut(CoreMedia.CMAudioDeviceClockCreateFromAudioDeviceID, 2)
-        self.assertArgIsCFRetained(
-            CoreMedia.CMAudioDeviceClockCreateFromAudioDeviceID, 2
-        )
+        self.assertArgIsCFRetained(CoreMedia.CMAudioDeviceClockCreateFromAudioDeviceID, 2)
         self.assertArgIsIDLike(CoreMedia.CMAudioDeviceClockCreateFromAudioDeviceID, 0)
         self.assertArgIsIDLike(CoreMedia.CMAudioDeviceClockCreateFromAudioDeviceID, 2)
 

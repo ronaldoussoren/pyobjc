@@ -13,9 +13,7 @@ class INEditMessageIntentResponse(TestCase):
         self.assertEqual(
             Intents.INEditMessageIntentResponseCodeFailureRequiringAppLaunch, 5
         )
-        self.assertEqual(
-            Intents.INEditMessageIntentResponseCodeFailureMessageNotFound, 6
-        )
+        self.assertEqual(Intents.INEditMessageIntentResponseCodeFailureMessageNotFound, 6)
         self.assertEqual(
             Intents.INEditMessageIntentResponseCodeFailurePastEditTimeLimit, 7
         )

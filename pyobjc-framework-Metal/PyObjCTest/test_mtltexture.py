@@ -173,9 +173,7 @@ class TestMTLArgument(TestCase):
         self.assertResultHasType(
             TestMTLTextureHelper.bufferBytesPerRow, objc._C_NSUInteger
         )
-        self.assertResultHasType(
-            TestMTLTextureHelper.iosurfacePlane, objc._C_NSUInteger
-        )
+        self.assertResultHasType(TestMTLTextureHelper.iosurfacePlane, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLTextureHelper.textureType, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLTextureHelper.pixelFormat, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLTextureHelper.width, objc._C_NSUInteger)
@@ -192,9 +190,7 @@ class TestMTLArgument(TestCase):
         self.assertResultHasType(
             TestMTLTextureHelper.allowGPUOptimizedContents, objc._C_NSBOOL
         )
-        self.assertResultHasType(
-            TestMTLTextureHelper.compressionType, objc._C_NSInteger
-        )
+        self.assertResultHasType(TestMTLTextureHelper.compressionType, objc._C_NSInteger)
         self.assertResultHasType(
             TestMTLTextureHelper.gpuResourceID, Metal.MTLResourceID.__typestr__
         )
@@ -358,9 +354,7 @@ class TestMTLArgument(TestCase):
         self.assertResultHasType(
             TestMTLTextureHelper.firstMipmapInTail, objc._C_NSUInteger
         )
-        self.assertResultHasType(
-            TestMTLTextureHelper.tailSizeInBytes, objc._C_NSUInteger
-        )
+        self.assertResultHasType(TestMTLTextureHelper.tailSizeInBytes, objc._C_NSUInteger)
         self.assertResultIsBOOL(TestMTLTextureHelper.isSparse)
 
     @min_os_level("10.14")

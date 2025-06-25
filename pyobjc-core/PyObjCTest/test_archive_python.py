@@ -1462,9 +1462,7 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
 
     @expectedFailure
     def test_recursive_tuple_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(
-            self
-        )
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(self)
 
     # @expectedFailure
     # def test_recursive_dict_subclass_and_inst(self):
@@ -1507,9 +1505,9 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
                 with self.subTest(x=x):
                     buf = self.dumps(x)
                     v = self.loads(buf)
-                    if (val == 2**63 + 1) and os_level_key(
-                        os_release()
-                    ) < os_level_key("10.15"):
+                    if (val == 2**63 + 1) and os_level_key(os_release()) < os_level_key(
+                        "10.15"
+                    ):
                         # Bug in NSNumber...
                         self.assertEqual(cast_ulonglong(v), cast_ulonglong(x))
                     else:
@@ -1610,9 +1608,7 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
     @expectedFailure
     def test_recursive_tuple_and_dict_like_key(self):
         # XXX: Needs further investigation...
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_like_key(
-            self
-        )
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_like_key(self)
 
     @expectedFailure
     def test_recursive_tuple_and_dict_subclass_key(self):
@@ -1634,9 +1630,7 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
     @expectedFailure
     def test_recursive_tuple_and_dict_subclass(self):
         # XXX: Needs further investigation...
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_subclass(
-            self
-        )
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_subclass(self)
 
     @expectedFailure
     def test_recursive_tuple_and_list_like(self):
@@ -1646,9 +1640,7 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
     @expectedFailure
     def test_recursive_tuple_and_list_subclass(self):
         # XXX: Needs further investigation...
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_list_subclass(
-            self
-        )
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_list_subclass(self)
 
     @expectedFailure
     def test_recursive_set(self):
@@ -1805,15 +1797,11 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
 
     @expectedFailure
     def test_recursive_tuple_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(
-            self
-        )
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(self)
 
     @expectedFailure
     def test_recursive_dict_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(
-            self
-        )
+        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(self)
 
     @expectedFailure
     def test_recursive_set_subclass_and_inst(self):

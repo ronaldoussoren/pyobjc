@@ -20,10 +20,7 @@ def openFiles():
     panel.setCanChooseFiles_(True)
     panel.setAllowsMultipleSelection_(True)
 
-    if (
-        panel.runModalForTypes_(Cocoa.NSImage.imageUnfilteredTypes())
-        == Cocoa.NSOKButton
-    ):
+    if panel.runModalForTypes_(Cocoa.NSImage.imageUnfilteredTypes()) == Cocoa.NSOKButton:
         return panel.filenames()
 
     return []

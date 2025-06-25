@@ -13,6 +13,4 @@ class TestMDLAssetResolver(TestCase):
         self.assertProtocolExists("MDLAssetResolver")
 
     def testMethods(self):
-        self.assertResultIsBOOL(
-            ModelIO.TestMDLAssetResolverHelper.canResolveAssetNamed_
-        )
+        self.assertResultIsBOOL(ModelIO.TestMDLAssetResolverHelper.canResolveAssetNamed_)

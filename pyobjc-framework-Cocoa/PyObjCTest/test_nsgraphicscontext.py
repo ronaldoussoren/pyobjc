@@ -59,9 +59,7 @@ class TestNSGraphicsContext(TestCase):
             0,
             b"^{CGContext=}",
         )
-        self.assertResultHasType(
-            AppKit.NSGraphicsContext.graphicsPort, b"^{CGContext=}"
-        )
+        self.assertResultHasType(AppKit.NSGraphicsContext.graphicsPort, b"^{CGContext=}")
 
     @min_os_level("10.10")
     def testMethods10_10(self):

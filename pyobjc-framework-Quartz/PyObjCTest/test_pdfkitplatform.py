@@ -9,9 +9,7 @@ class TestPDFKitPlatform(TestCase):
         self.assertIs(Quartz.PDFKitPlatformScrollView, Quartz.NSScrollView)
         self.assertIs(Quartz.PDFKitPlatformColor, Quartz.NSColor)
         self.assertIs(Quartz.PDFKitPlatformBezierPath, Quartz.NSBezierPath)
-        self.assertIs(
-            Quartz.PDFKitPlatformBezierPathElement, Quartz.NSBezierPathElement
-        )
+        self.assertIs(Quartz.PDFKitPlatformBezierPathElement, Quartz.NSBezierPathElement)
         self.assertIs(Quartz.PDFKitPlatformImage, Quartz.NSImage)
         self.assertIs(Quartz.PDFKitPlatformImageView, Quartz.NSImageView)
         self.assertIs(Quartz.PDFKitPlatformEvent, Quartz.NSEvent)
@@ -23,9 +21,7 @@ class TestPDFKitPlatform(TestCase):
 
         # @protocol:
         # self.assertIs(Quartz.PDFKitPlatformTextViewDelegate, Quartz.NSTextViewDelegate)
-        self.assertIs(
-            Quartz.PDFKitPlatformChoiceWidgetComboBoxView, Quartz.NSPopUpButton
-        )
+        self.assertIs(Quartz.PDFKitPlatformChoiceWidgetComboBoxView, Quartz.NSPopUpButton)
         self.assertIs(Quartz.PDFKitPlatformChoiceWidgetListView, Quartz.NSTableView)
         self.assertIs(Quartz.PDFKitPlatformButton, Quartz.NSButton)
         self.assertIs(Quartz.PDFKitPlatformButtonCell, Quartz.NSButtonCell)
@@ -50,6 +46,4 @@ class TestPDFKitPlatform(TestCase):
 
     @min_os_level("10.11")
     def test_aliases10_11(self):
-        self.assertIs(
-            Quartz.PDFKitPlatformFontWeightRegular, Quartz.NSFontWeightRegular
-        )
+        self.assertIs(Quartz.PDFKitPlatformFontWeightRegular, Quartz.NSFontWeightRegular)

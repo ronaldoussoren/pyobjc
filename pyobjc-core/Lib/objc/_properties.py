@@ -170,7 +170,7 @@ class object_property:
                 else:
                     if self._ivar is NULL:
                         raise ValueError(
-                            "Cannot create default setter for property " "without ivar"
+                            "Cannot create default setter for property without ivar"
                         )
 
                     setprop = selector(
@@ -387,9 +387,7 @@ class array_proxy(collections.abc.MutableSequence):
             raise TypeError(index)
 
     def __repr__(self):
-        return (
-            "<array proxy for property " + self._name + " " + repr(self._wrapped) + ">"
-        )
+        return "<array proxy for property " + self._name + " " + repr(self._wrapped) + ">"
 
     def __reduce__(self):
         # Ensure that the proxy itself doesn't get stored
@@ -650,9 +648,7 @@ class array_property(object_property):
         )
 
     def __pyobjc_class_setup__(self, name, class_dict, instance_methods, class_methods):
-        super().__pyobjc_class_setup__(
-            name, class_dict, instance_methods, class_methods
-        )
+        super().__pyobjc_class_setup__(name, class_dict, instance_methods, class_methods)
 
         # Insert (Mutable) Indexed Accessors
 
@@ -1082,9 +1078,7 @@ class set_property(object_property):
         return v
 
     def __pyobjc_class_setup__(self, name, class_dict, instance_methods, class_methods):
-        super().__pyobjc_class_setup__(
-            name, class_dict, instance_methods, class_methods
-        )
+        super().__pyobjc_class_setup__(name, class_dict, instance_methods, class_methods)
 
         # (Mutable) Unordered Accessors
 

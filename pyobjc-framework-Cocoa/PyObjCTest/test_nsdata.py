@@ -83,9 +83,7 @@ class TestNSData(TestCase):
     def testConstants10_9(self):
         self.assertEqual(Foundation.NSDataBase64Encoding64CharacterLineLength, 1 << 0)
         self.assertEqual(Foundation.NSDataBase64Encoding76CharacterLineLength, 1 << 1)
-        self.assertEqual(
-            Foundation.NSDataBase64EncodingEndLineWithCarriageReturn, 1 << 4
-        )
+        self.assertEqual(Foundation.NSDataBase64EncodingEndLineWithCarriageReturn, 1 << 4)
         self.assertEqual(Foundation.NSDataBase64EncodingEndLineWithLineFeed, 1 << 5)
 
         self.assertEqual(Foundation.NSDataBase64DecodingIgnoreUnknownCharacters, 1 << 0)
@@ -134,9 +132,7 @@ class TestNSData(TestCase):
 
     @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertResultIsBOOL(
-            Foundation.NSMutableData.decompressUsingAlgorithm_error_
-        )
+        self.assertResultIsBOOL(Foundation.NSMutableData.decompressUsingAlgorithm_error_)
         self.assertArgIsOut(Foundation.NSMutableData.decompressUsingAlgorithm_error_, 1)
 
         self.assertResultIsBOOL(Foundation.NSMutableData.compressUsingAlgorithm_error_)
@@ -255,9 +251,8 @@ class TestNSData(TestCase):
                 pass
             elif "cannot modify size of memoryview object" in str(r):
                 pass
-            elif (
-                "ndarray assignment: lvalue and rvalue have different structures"
-                in str(r)
+            elif "ndarray assignment: lvalue and rvalue have different structures" in str(
+                r
             ):
                 pass
             else:
@@ -275,9 +270,7 @@ class TestNSData(TestCase):
             mutableData = Foundation.NSMutableData.dataWithBytes_length_(
                 bigRawBytes, len(bigRawBytes)
             )
-            data = Foundation.NSData.dataWithBytes_length_(
-                bigRawBytes, len(bigRawBytes)
-            )
+            data = Foundation.NSData.dataWithBytes_length_(bigRawBytes, len(bigRawBytes))
 
             self.assertDataContents(data, mutableData, bigRawBytes)
 

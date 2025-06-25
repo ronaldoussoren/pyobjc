@@ -18,9 +18,7 @@ class TestCKQueryOperation(TestCase):
     @min_os_level("10.10")
     def testMethods(self):
         self.assertResultIsBlock(CloudKit.CKQueryOperation.recordFetchedBlock, b"v@")
-        self.assertArgIsBlock(
-            CloudKit.CKQueryOperation.setRecordFetchedBlock_, 0, b"v@"
-        )
+        self.assertArgIsBlock(CloudKit.CKQueryOperation.setRecordFetchedBlock_, 0, b"v@")
         self.assertResultIsBlock(CloudKit.CKQueryOperation.queryCompletionBlock, b"v@@")
         self.assertArgIsBlock(
             CloudKit.CKQueryOperation.setQueryCompletionBlock_, 0, b"v@@"

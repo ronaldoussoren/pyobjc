@@ -92,9 +92,7 @@ class TestNSBitmapImageRep(TestCase):
         rPlane = buffer(rPlane)
 
         gPlane = array.array("B")
-        gPlane.fromlist(
-            [y % 256 for y in range(0, height) for x in range(width, 0, -1)]
-        )
+        gPlane.fromlist([y % 256 for y in range(0, height) for x in range(width, 0, -1)])
         gPlane = buffer(gPlane)
 
         bPlane = array.array("B")
@@ -301,9 +299,7 @@ class TestBadCreation(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSBitmapImageRep.isPlanar)
         self.assertResultIsBOOL(AppKit.NSBitmapImageRep.canBeCompressedUsing_)
-        self.assertArgIsBOOL(
-            AppKit.NSBitmapImageRep.incrementalLoadFromData_complete_, 1
-        )
+        self.assertArgIsBOOL(AppKit.NSBitmapImageRep.incrementalLoadFromData_complete_, 1)
 
         self.assertArgIsOut(AppKit.NSBitmapImageRep.getCompression_factor_, 0)
         self.assertArgIsOut(AppKit.NSBitmapImageRep.getCompression_factor_, 1)

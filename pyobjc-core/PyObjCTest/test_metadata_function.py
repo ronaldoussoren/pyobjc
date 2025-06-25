@@ -913,9 +913,7 @@ class TestByReference(TestCase):
         self.assertEqual(z, objc.NULL)
 
     def test_byref_and_variadic(self):
-        with self.assertRaisesRegex(
-            TypeError, "variadic with by-ref args not supported"
-        ):
+        with self.assertRaisesRegex(TypeError, "variadic with by-ref args not supported"):
             makeCountArrayWithObjects_(None, 1, "b", 3)  # noqa: F821
 
     def test_variadic_null_delimited(self):

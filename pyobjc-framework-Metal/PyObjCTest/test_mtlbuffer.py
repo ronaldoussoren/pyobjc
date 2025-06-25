@@ -28,9 +28,7 @@ class TestMTLBuffer(TestCase):
     def test_methods(self):
         self.assertResultHasType(TestMTLBufferHelper.length, objc._C_NSUInteger)
 
-        self.assertResultHasType(
-            TestMTLBufferHelper.contents, objc._C_PTR + objc._C_VOID
-        )
+        self.assertResultHasType(TestMTLBufferHelper.contents, objc._C_PTR + objc._C_VOID)
         self.assertResultIsVariableSize(TestMTLBufferHelper.contents)
 
         self.assertArgHasType(

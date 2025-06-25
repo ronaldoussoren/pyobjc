@@ -44,9 +44,7 @@ class WhereIsMyMacAppDelegate(Cocoa.NSObject):
     def longitudeRangeForLocation_(self, location):
         latitudeRange = WhereIsMyMacAppDelegate.latitudeRangeForLocation_(location)
 
-        return latitudeRange * math.cos(
-            location.coordinate().latitude * math.pi / 180.0
-        )
+        return latitudeRange * math.cos(location.coordinate().latitude * math.pi / 180.0)
 
     @objc.IBAction
     def openInDefaultBrowser_(self, sender):

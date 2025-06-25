@@ -45,6 +45,4 @@ class TestAVAudioSetting(TestCase):
         self.assertIsInstance(AVFoundation.AVAudioBitRateStrategy_Variable, str)
 
         self.assertIsInstance(AVFoundation.AVSampleRateConverterAlgorithm_Normal, str)
-        self.assertIsInstance(
-            AVFoundation.AVSampleRateConverterAlgorithm_Mastering, str
-        )
+        self.assertIsInstance(AVFoundation.AVSampleRateConverterAlgorithm_Mastering, str)

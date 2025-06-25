@@ -79,9 +79,7 @@ class TestMTLCommandBuffer(TestCase):
         self.assertEqual(Metal.MTLDispatchTypeConcurrent, 1)
 
         self.assertEqual(Metal.MTLCommandBufferErrorOptionNone, 0)
-        self.assertEqual(
-            Metal.MTLCommandBufferErrorOptionEncoderExecutionStatus, 1 << 0
-        )
+        self.assertEqual(Metal.MTLCommandBufferErrorOptionEncoderExecutionStatus, 1 << 0)
 
         self.assertEqual(Metal.MTLCommandEncoderErrorStateUnknown, 0)
         self.assertEqual(Metal.MTLCommandEncoderErrorStateCompleted, 1)
@@ -104,9 +102,7 @@ class TestMTLCommandBuffer(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(TestMTLCommandBufferHelper.retainedReferences)
 
-        self.assertResultHasType(
-            TestMTLCommandBufferHelper.kernelStartTime, objc._C_DBL
-        )
+        self.assertResultHasType(TestMTLCommandBufferHelper.kernelStartTime, objc._C_DBL)
         self.assertResultHasType(TestMTLCommandBufferHelper.kernelEndTime, objc._C_DBL)
 
         self.assertResultHasType(TestMTLCommandBufferHelper.GPUStartTime, objc._C_DBL)
@@ -142,18 +138,14 @@ class TestMTLCommandBuffer(TestCase):
         self.assertArgHasType(
             TestMTLCommandBufferHelper.useResidencySets_count_, 0, b"n^@"
         )
-        self.assertArgSizeInArg(
-            TestMTLCommandBufferHelper.useResidencySets_count_, 0, 1
-        )
+        self.assertArgSizeInArg(TestMTLCommandBufferHelper.useResidencySets_count_, 0, 1)
         self.assertArgHasType(
             TestMTLCommandBufferHelper.useResidencySets_count_, 1, objc._C_ULNGLNG
         )
 
     @min_os_level("11.0")
     def test_methods11_0(self):
-        self.assertResultIsBOOL(
-            Metal.MTLCommandBufferDescriptor.new().retainedReferences
-        )
+        self.assertResultIsBOOL(Metal.MTLCommandBufferDescriptor.new().retainedReferences)
         self.assertArgIsBOOL(
             Metal.MTLCommandBufferDescriptor.new().setRetainedReferences_, 0
         )

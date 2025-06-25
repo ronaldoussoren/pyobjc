@@ -60,9 +60,7 @@ class TestWebPreferences(TestCase):
     @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertResultIsBOOL(WebKit.WebPreferences.suppressesIncrementalRendering)
-        self.assertArgIsBOOL(
-            WebKit.WebPreferences.setSuppressesIncrementalRendering_, 0
-        )
+        self.assertArgIsBOOL(WebKit.WebPreferences.setSuppressesIncrementalRendering_, 0)
 
     @min_os_level("10.11")
     def testMethods10_11(self):

@@ -14,9 +14,7 @@ class TestCMTextMarkup(TestCase):
         self.assertIsInstance(CoreMedia.kCMTextMarkupAttribute_ItalicStyle, str)
         self.assertIsInstance(CoreMedia.kCMTextMarkupAttribute_UnderlineStyle, str)
         self.assertIsInstance(CoreMedia.kCMTextMarkupAttribute_FontFamilyName, str)
-        self.assertIsInstance(
-            CoreMedia.kCMTextMarkupAttribute_GenericFontFamilyName, str
-        )
+        self.assertIsInstance(CoreMedia.kCMTextMarkupAttribute_GenericFontFamilyName, str)
         self.assertIsInstance(CoreMedia.kCMTextMarkupGenericFontName_Default, str)
         self.assertIsInstance(CoreMedia.kCMTextMarkupGenericFontName_Serif, str)
         self.assertIsInstance(CoreMedia.kCMTextMarkupGenericFontName_SansSerif, str)
@@ -27,9 +25,7 @@ class TestCMTextMarkup(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMTextMarkupGenericFontName_ProportionalSansSerif, str
         )
-        self.assertIsInstance(
-            CoreMedia.kCMTextMarkupGenericFontName_MonospaceSerif, str
-        )
+        self.assertIsInstance(CoreMedia.kCMTextMarkupGenericFontName_MonospaceSerif, str)
         self.assertIsInstance(
             CoreMedia.kCMTextMarkupGenericFontName_MonospaceSansSerif, str
         )

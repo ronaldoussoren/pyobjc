@@ -20,9 +20,7 @@ class TestAXNotificationConstants(TestCase):
         self.assertEqual(
             HIServices.kAXApplicationHiddenNotification, "AXApplicationHidden"
         )
-        self.assertEqual(
-            HIServices.kAXApplicationShownNotification, "AXApplicationShown"
-        )
+        self.assertEqual(HIServices.kAXApplicationShownNotification, "AXApplicationShown")
         self.assertEqual(HIServices.kAXWindowCreatedNotification, "AXWindowCreated")
         self.assertEqual(HIServices.kAXWindowMovedNotification, "AXWindowMoved")
         self.assertEqual(HIServices.kAXWindowResizedNotification, "AXWindowResized")
@@ -44,9 +42,7 @@ class TestAXNotificationConstants(TestCase):
         )
         self.assertEqual(HIServices.kAXMenuOpenedNotification, "AXMenuOpened")
         self.assertEqual(HIServices.kAXMenuClosedNotification, "AXMenuClosed")
-        self.assertEqual(
-            HIServices.kAXMenuItemSelectedNotification, "AXMenuItemSelected"
-        )
+        self.assertEqual(HIServices.kAXMenuItemSelectedNotification, "AXMenuItemSelected")
         self.assertEqual(HIServices.kAXRowCountChangedNotification, "AXRowCountChanged")
         self.assertEqual(HIServices.kAXRowExpandedNotification, "AXRowExpanded")
         self.assertEqual(HIServices.kAXRowCollapsedNotification, "AXRowCollapsed")

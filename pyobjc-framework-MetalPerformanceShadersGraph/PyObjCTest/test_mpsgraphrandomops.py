@@ -14,9 +14,7 @@ class TestMPSGraphRandomOps(TestCase):
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphRandomDistributionUniform, 0
         )
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphRandomDistributionNormal, 1
-        )
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphRandomDistributionNormal, 1)
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphRandomDistributionTruncatedNormal, 2
         )

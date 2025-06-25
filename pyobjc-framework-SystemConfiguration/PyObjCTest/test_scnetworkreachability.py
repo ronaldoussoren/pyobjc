@@ -22,9 +22,7 @@ class TestSCNetworkReachability(TestCase):
             None, ("0.0.0.0", 20990), ("www.python.org", 80)
         )
 
-        with contextlib.closing(
-            socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        ) as sd:
+        with contextlib.closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sd:
             sd.listen(5)
 
             self.assertResultIsCFRetained(

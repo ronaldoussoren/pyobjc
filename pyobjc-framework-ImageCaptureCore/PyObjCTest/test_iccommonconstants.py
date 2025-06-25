@@ -60,9 +60,7 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(
             ImageCaptureCore.ICReturnDeviceSoftwareInstallationCanceled, -9948
         )
-        self.assertEqual(
-            ImageCaptureCore.ICReturnDeviceSoftwareInstallationFailed, -9949
-        )
+        self.assertEqual(ImageCaptureCore.ICReturnDeviceSoftwareInstallationFailed, -9949)
         self.assertEqual(ImageCaptureCore.ICReturnDeviceSoftwareNotAvailable, -9950)
         self.assertEqual(ImageCaptureCore.ICReturnDeviceCouldNotPair, -9951)
         self.assertEqual(ImageCaptureCore.ICReturnDeviceCouldNotUnpair, -9952)
@@ -115,16 +113,12 @@ class TestICCameraDevice(TestCase):
             ImageCaptureCore.ICLegacyReturnCodeDeviceMemoryAllocationErr, -9911
         )
         self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceInternalErr, -9912)
-        self.assertEqual(
-            ImageCaptureCore.ICLegacyReturnCodeDeviceInvalidParamErr, -9913
-        )
+        self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceInvalidParamErr, -9913)
         self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceAlreadyOpenErr, -9914)
         self.assertEqual(
             ImageCaptureCore.ICLegacyReturnCodeDeviceLocationIDNotFoundErr, -9915
         )
-        self.assertEqual(
-            ImageCaptureCore.ICLegacyReturnCodeDeviceGUIDNotFoundErr, -9916
-        )
+        self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceGUIDNotFoundErr, -9916)
         self.assertEqual(
             ImageCaptureCore.ICLegacyReturnCodeDeviceIOServicePathNotFoundErr, -9917
         )
@@ -176,9 +170,7 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(
             ImageCaptureCore.ICReturnDeviceSoftwareInstallationCanceled, -9948
         )
-        self.assertEqual(
-            ImageCaptureCore.ICReturnDeviceSoftwareInstallationFailed, -9949
-        )
+        self.assertEqual(ImageCaptureCore.ICReturnDeviceSoftwareInstallationFailed, -9949)
         self.assertEqual(ImageCaptureCore.ICReturnDeviceSoftwareNotAvailable, -9950)
         self.assertEqual(ImageCaptureCore.ICReturnDeviceCouldNotPair, -9951)
         self.assertEqual(ImageCaptureCore.ICReturnDeviceCouldNotUnpair, -9952)
@@ -210,9 +202,7 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(ImageCaptureCore.ICReturnMetadataInvalid, -20147)
 
         self.assertEqual(ImageCaptureCore.ICReturnConnectionDriverExited, -21350)
-        self.assertEqual(
-            ImageCaptureCore.ICReturnConnectionClosedSessionSuddenly, -21349
-        )
+        self.assertEqual(ImageCaptureCore.ICReturnConnectionClosedSessionSuddenly, -21349)
         self.assertEqual(ImageCaptureCore.ICReturnConnectionEjectedSuddenly, -21348)
         self.assertEqual(ImageCaptureCore.ICReturnConnectionSessionAlreadyOpen, -21347)
         self.assertEqual(ImageCaptureCore.ICReturnConnectionEjectFailed, -21346)
@@ -244,16 +234,12 @@ class TestICCameraDevice(TestCase):
             ImageCaptureCore.ICLegacyReturnCodeDeviceMemoryAllocationErr, -9911
         )
         self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceInternalErr, -9912)
-        self.assertEqual(
-            ImageCaptureCore.ICLegacyReturnCodeDeviceInvalidParamErr, -9913
-        )
+        self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceInvalidParamErr, -9913)
         self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceAlreadyOpenErr, -9914)
         self.assertEqual(
             ImageCaptureCore.ICLegacyReturnCodeDeviceLocationIDNotFoundErr, -9915
         )
-        self.assertEqual(
-            ImageCaptureCore.ICLegacyReturnCodeDeviceGUIDNotFoundErr, -9916
-        )
+        self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceGUIDNotFoundErr, -9916)
         self.assertEqual(
             ImageCaptureCore.ICLegacyReturnCodeDeviceIOServicePathNotFoundErr, -9917
         )
@@ -306,9 +292,7 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(
             ImageCaptureCore.ICReturnDeviceSoftwareInstallationCanceled, -9948
         )
-        self.assertEqual(
-            ImageCaptureCore.ICReturnDeviceSoftwareInstallationFailed, -9949
-        )
+        self.assertEqual(ImageCaptureCore.ICReturnDeviceSoftwareInstallationFailed, -9949)
         self.assertEqual(ImageCaptureCore.ICReturnDeviceSoftwareNotAvailable, -9950)
         self.assertEqual(ImageCaptureCore.ICReturnDeviceCouldNotPair, -9951)
         self.assertEqual(ImageCaptureCore.ICReturnDeviceCouldNotUnpair, -9952)

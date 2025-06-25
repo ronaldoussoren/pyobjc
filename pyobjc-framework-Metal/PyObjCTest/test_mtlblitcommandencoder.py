@@ -40,9 +40,7 @@ class TestMTLBlitCommandEncoderHelper(Metal.NSObject):
     ):
         pass
 
-    def copyFromBuffer_sourceOffset_toBuffer_destinationOffset_size_(
-        self, a, b, c, d, e
-    ):
+    def copyFromBuffer_sourceOffset_toBuffer_destinationOffset_size_(self, a, b, c, d, e):
         pass
 
     def optimizeContentsForGPUAccess_slice_level_(self, a, b, c):

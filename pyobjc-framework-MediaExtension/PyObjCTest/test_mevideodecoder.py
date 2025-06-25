@@ -61,9 +61,7 @@ class TestMEVideoDecoder(TestCase):
         )
 
         self.assertResultIsBOOL(TestMEVideoDecoderHelper.producesRAWOutput)
-        self.assertResultIsBOOL(
-            TestMEVideoDecoderHelper.contentHasInterframeDependencies
-        )
+        self.assertResultIsBOOL(TestMEVideoDecoderHelper.contentHasInterframeDependencies)
         self.assertResultHasType(TestMEVideoDecoderHelper.recommendedThreadCount, b"q")
         self.assertArgHasType(
             TestMEVideoDecoderHelper.setRecommendedThreadCount_, 0, b"q"
@@ -88,11 +86,7 @@ class TestMEVideoDecoder(TestCase):
         )
 
         self.assertResultIsBOOL(MediaExtension.MEDecodeFrameOptions.doNotOutputFrame)
-        self.assertArgIsBOOL(
-            MediaExtension.MEDecodeFrameOptions.setDoNotOutputFrame_, 0
-        )
+        self.assertArgIsBOOL(MediaExtension.MEDecodeFrameOptions.setDoNotOutputFrame_, 0)
 
         self.assertResultIsBOOL(MediaExtension.MEDecodeFrameOptions.realTimePlayback)
-        self.assertArgIsBOOL(
-            MediaExtension.MEDecodeFrameOptions.setRealTimePlayback_, 0
-        )
+        self.assertArgIsBOOL(MediaExtension.MEDecodeFrameOptions.setRealTimePlayback_, 0)

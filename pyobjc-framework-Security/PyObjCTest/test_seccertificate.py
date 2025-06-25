@@ -132,16 +132,10 @@ class TestSecCertificate(TestCase):
             objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
-        self.assertResultHasType(
-            Security.SecCertificateCopyShortDescription, objc._C_ID
-        )
+        self.assertResultHasType(Security.SecCertificateCopyShortDescription, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecCertificateCopyShortDescription)
-        self.assertArgHasType(
-            Security.SecCertificateCopyShortDescription, 0, objc._C_ID
-        )
-        self.assertArgHasType(
-            Security.SecCertificateCopyShortDescription, 1, objc._C_ID
-        )
+        self.assertArgHasType(Security.SecCertificateCopyShortDescription, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecCertificateCopyShortDescription, 1, objc._C_ID)
         self.assertArgHasType(
             Security.SecCertificateCopyShortDescription,
             2,
@@ -151,9 +145,7 @@ class TestSecCertificate(TestCase):
         self.assertResultHasType(
             Security.SecCertificateCopyNormalizedIssuerContent, objc._C_ID
         )
-        self.assertResultIsCFRetained(
-            Security.SecCertificateCopyNormalizedIssuerContent
-        )
+        self.assertResultIsCFRetained(Security.SecCertificateCopyNormalizedIssuerContent)
         self.assertArgHasType(
             Security.SecCertificateCopyNormalizedIssuerContent, 0, objc._C_ID
         )
@@ -166,9 +158,7 @@ class TestSecCertificate(TestCase):
         self.assertResultHasType(
             Security.SecCertificateCopyNormalizedSubjectContent, objc._C_ID
         )
-        self.assertResultIsCFRetained(
-            Security.SecCertificateCopyNormalizedSubjectContent
-        )
+        self.assertResultIsCFRetained(Security.SecCertificateCopyNormalizedSubjectContent)
         self.assertArgHasType(
             Security.SecCertificateCopyNormalizedSubjectContent, 0, objc._C_ID
         )
@@ -193,9 +183,7 @@ class TestSecCertificate(TestCase):
         self.assertResultHasType(
             Security.SecCertificateCopyNormalizedIssuerSequence, objc._C_ID
         )
-        self.assertResultIsCFRetained(
-            Security.SecCertificateCopyNormalizedIssuerSequence
-        )
+        self.assertResultIsCFRetained(Security.SecCertificateCopyNormalizedIssuerSequence)
         self.assertArgHasType(
             Security.SecCertificateCopyNormalizedIssuerSequence, 0, objc._C_ID
         )
@@ -212,13 +200,9 @@ class TestSecCertificate(TestCase):
 
     @min_os_level("10.13")
     def test_functions_10_13(self):
-        self.assertResultHasType(
-            Security.SecCertificateCopySerialNumberData, objc._C_ID
-        )
+        self.assertResultHasType(Security.SecCertificateCopySerialNumberData, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecCertificateCopySerialNumberData)
-        self.assertArgHasType(
-            Security.SecCertificateCopySerialNumberData, 0, objc._C_ID
-        )
+        self.assertArgHasType(Security.SecCertificateCopySerialNumberData, 0, objc._C_ID)
         self.assertArgHasType(
             Security.SecCertificateCopySerialNumberData,
             1,

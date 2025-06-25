@@ -140,16 +140,12 @@ def usage(progname):
 
 
 def timer_callback(timer, streamRef):
-    settings.debug(
-        "CFAbsoluteTimeGetCurrent() => %.3f", Cocoa.CFAbsoluteTimeGetCurrent()
-    )
+    settings.debug("CFAbsoluteTimeGetCurrent() => %.3f", Cocoa.CFAbsoluteTimeGetCurrent())
     settings.debug("FSEventStreamFlushAsync(streamRef = %s)", streamRef)
     FSEvents.FSEventStreamFlushAsync(streamRef)
 
 
-def fsevents_callback(
-    streamRef, clientInfo, numEvents, eventPaths, eventMasks, eventIDs
-):
+def fsevents_callback(streamRef, clientInfo, numEvents, eventPaths, eventMasks, eventIDs):
     settings.debug(
         "fsevents_callback(streamRef = %s, clientInfo = %s, numEvents = %s)",
         streamRef,

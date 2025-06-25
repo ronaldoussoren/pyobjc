@@ -81,16 +81,12 @@ class TestNEVPNProtocolIKEv2(TestCase):
         self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.enablePFS)
         self.assertArgIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.setEnablePFS_, 0)
 
-        self.assertResultIsBOOL(
-            NetworkExtension.NEVPNProtocolIKEv2.enableRevocationCheck
-        )
+        self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.enableRevocationCheck)
         self.assertArgIsBOOL(
             NetworkExtension.NEVPNProtocolIKEv2.setEnableRevocationCheck_, 0
         )
 
-        self.assertResultIsBOOL(
-            NetworkExtension.NEVPNProtocolIKEv2.strictRevocationCheck
-        )
+        self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.strictRevocationCheck)
         self.assertArgIsBOOL(
             NetworkExtension.NEVPNProtocolIKEv2.setStrictRevocationCheck_, 0
         )

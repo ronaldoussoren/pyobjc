@@ -23,9 +23,7 @@ class TestVTHDRPerFrameMetadataGenerationSession(TestCase):
     def test_functions(self):
         VideoToolbox.VTHDRPerFrameMetadataGenerationSessionGetTypeID
 
-        self.assertArgIsOut(
-            VideoToolbox.VTHDRPerFrameMetadataGenerationSessionCreate, 3
-        )
+        self.assertArgIsOut(VideoToolbox.VTHDRPerFrameMetadataGenerationSessionCreate, 3)
         self.assertArgIsCFRetained(
             VideoToolbox.VTHDRPerFrameMetadataGenerationSessionCreate, 3
         )

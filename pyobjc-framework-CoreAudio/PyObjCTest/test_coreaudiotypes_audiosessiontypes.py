@@ -35,9 +35,7 @@ class TestAudioSessionTypes(TestCase):
             CoreAudio.AVAudioSessionErrorCodeResourceNotAvailable, fourcc(b"!res")
         )
         self.assertEqual(CoreAudio.AVAudioSessionErrorCodeUnspecified, fourcc(b"what"))
-        self.assertEqual(
-            CoreAudio.AVAudioSessionErrorCodeExpiredSession, fourcc(b"!ses")
-        )
+        self.assertEqual(CoreAudio.AVAudioSessionErrorCodeExpiredSession, fourcc(b"!ses"))
         self.assertEqual(
             CoreAudio.AVAudioSessionErrorCodeSessionNotActive, fourcc(b"inac")
         )

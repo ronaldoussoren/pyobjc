@@ -12,9 +12,7 @@ class TestMAAudibleMedia(TestCase):
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDomainDefault, 0)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDomainUser, 1)
 
-        self.assertEqual(
-            MediaAccessibility.kMACaptionAppearanceDisplayTypeForcedOnly, 0
-        )
+        self.assertEqual(MediaAccessibility.kMACaptionAppearanceDisplayTypeForcedOnly, 0)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDisplayTypeAutomatic, 1)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDisplayTypeAlwaysOn, 2)
 
@@ -38,18 +36,12 @@ class TestMAAudibleMedia(TestCase):
         )
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceFontStyleCasual, 5)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceFontStyleCursive, 6)
-        self.assertEqual(
-            MediaAccessibility.kMACaptionAppearanceFontStyleSmallCapital, 7
-        )
+        self.assertEqual(MediaAccessibility.kMACaptionAppearanceFontStyleSmallCapital, 7)
 
-        self.assertEqual(
-            MediaAccessibility.kMACaptionAppearanceTextEdgeStyleUndefined, 0
-        )
+        self.assertEqual(MediaAccessibility.kMACaptionAppearanceTextEdgeStyleUndefined, 0)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceTextEdgeStyleNone, 1)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceTextEdgeStyleRaised, 2)
-        self.assertEqual(
-            MediaAccessibility.kMACaptionAppearanceTextEdgeStyleDepressed, 3
-        )
+        self.assertEqual(MediaAccessibility.kMACaptionAppearanceTextEdgeStyleDepressed, 3)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceTextEdgeStyleUniform, 4)
         self.assertEqual(
             MediaAccessibility.kMACaptionAppearanceTextEdgeStyleDropShadow, 5
@@ -84,25 +76,17 @@ class TestMAAudibleMedia(TestCase):
         self.assertResultIsCFRetained(
             MediaAccessibility.MACaptionAppearanceCopyForegroundColor
         )
-        self.assertArgIsOut(
-            MediaAccessibility.MACaptionAppearanceCopyForegroundColor, 1
-        )
+        self.assertArgIsOut(MediaAccessibility.MACaptionAppearanceCopyForegroundColor, 1)
         self.assertResultIsCFRetained(
             MediaAccessibility.MACaptionAppearanceCopyBackgroundColor
         )
-        self.assertArgIsOut(
-            MediaAccessibility.MACaptionAppearanceCopyBackgroundColor, 1
-        )
+        self.assertArgIsOut(MediaAccessibility.MACaptionAppearanceCopyBackgroundColor, 1)
         self.assertResultIsCFRetained(
             MediaAccessibility.MACaptionAppearanceCopyWindowColor
         )
         self.assertArgIsOut(MediaAccessibility.MACaptionAppearanceCopyWindowColor, 1)
-        self.assertArgIsOut(
-            MediaAccessibility.MACaptionAppearanceGetForegroundOpacity, 1
-        )
-        self.assertArgIsOut(
-            MediaAccessibility.MACaptionAppearanceGetBackgroundOpacity, 1
-        )
+        self.assertArgIsOut(MediaAccessibility.MACaptionAppearanceGetForegroundOpacity, 1)
+        self.assertArgIsOut(MediaAccessibility.MACaptionAppearanceGetBackgroundOpacity, 1)
         self.assertArgIsOut(MediaAccessibility.MACaptionAppearanceGetWindowOpacity, 1)
         self.assertIsInstance(
             MediaAccessibility.MACaptionAppearanceGetWindowRoundedCornerRadius,

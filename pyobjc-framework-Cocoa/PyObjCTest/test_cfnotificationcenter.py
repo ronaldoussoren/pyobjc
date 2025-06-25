@@ -70,12 +70,8 @@ class TestNotificationCenter(TestCase):
         self.assertEqual(info[2], "pyobjc.test")
         self.assertIs(info[3], ref)
         self.assertEqual(info[4], {"name2": "value2"})
-        self.assertArgHasType(
-            CoreFoundation.CFNotificationCenterRemoveObserver, 1, b"@"
-        )
-        self.assertArgHasType(
-            CoreFoundation.CFNotificationCenterRemoveObserver, 3, b"@"
-        )
+        self.assertArgHasType(CoreFoundation.CFNotificationCenterRemoveObserver, 1, b"@")
+        self.assertArgHasType(CoreFoundation.CFNotificationCenterRemoveObserver, 3, b"@")
         CoreFoundation.CFNotificationCenterRemoveObserver(
             ref, args["object"], args["pyobjc.test"], ref
         )

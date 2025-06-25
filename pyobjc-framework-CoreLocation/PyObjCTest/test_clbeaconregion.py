@@ -6,6 +6,4 @@ class TestCLBeaconRegion(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(CoreLocation.CLBeaconRegion.notifyEntryStateOnDisplay)
-        self.assertArgIsBOOL(
-            CoreLocation.CLBeaconRegion.setNotifyEntryStateOnDisplay_, 0
-        )
+        self.assertArgIsBOOL(CoreLocation.CLBeaconRegion.setNotifyEntryStateOnDisplay_, 0)

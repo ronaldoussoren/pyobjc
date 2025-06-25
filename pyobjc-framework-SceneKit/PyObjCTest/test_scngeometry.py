@@ -48,9 +48,7 @@ class TestSCNGeometry(TestCase):
             SceneKit.SCNGeometrySource.geometrySourceWithVertices_count_, 0, 1
         )
 
-        self.assertArgIsIn(
-            SceneKit.SCNGeometrySource.geometrySourceWithNormals_count_, 0
-        )
+        self.assertArgIsIn(SceneKit.SCNGeometrySource.geometrySourceWithNormals_count_, 0)
         self.assertArgSizeInArg(
             SceneKit.SCNGeometrySource.geometrySourceWithNormals_count_, 0, 1
         )
@@ -85,6 +83,4 @@ class TestSCNGeometry(TestCase):
             SceneKit.SCNGeometryElement.geometryElementWithBuffer_primitiveType_primitiveCount_indicesChannelCount_interleavedIndicesChannels_bytesPerIndex_,
             4,
         )
-        self.assertResultIsBOOL(
-            SceneKit.SCNGeometryElement.hasInterleavedIndicesChannels
-        )
+        self.assertResultIsBOOL(SceneKit.SCNGeometryElement.hasInterleavedIndicesChannels)

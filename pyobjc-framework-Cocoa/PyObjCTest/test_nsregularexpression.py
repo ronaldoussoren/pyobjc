@@ -12,9 +12,7 @@ class TestNSRegularExpression(TestCase):
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(Foundation.NSRegularExpressionCaseInsensitive, 1 << 0)
-        self.assertEqual(
-            Foundation.NSRegularExpressionAllowCommentsAndWhitespace, 1 << 1
-        )
+        self.assertEqual(Foundation.NSRegularExpressionAllowCommentsAndWhitespace, 1 << 1)
         self.assertEqual(Foundation.NSRegularExpressionIgnoreMetacharacters, 1 << 2)
         self.assertEqual(Foundation.NSRegularExpressionDotMatchesLineSeparators, 1 << 3)
         self.assertEqual(Foundation.NSRegularExpressionAnchorsMatchLines, 1 << 4)

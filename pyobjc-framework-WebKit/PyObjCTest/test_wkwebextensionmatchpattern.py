@@ -34,6 +34,4 @@ class TestWKWebExtensionMatchPattern(TestCase):
         self.assertResultIsBOOL(WebKit.WKWebExtensionMatchPattern.matchesURL_)
         self.assertResultIsBOOL(WebKit.WKWebExtensionMatchPattern.matchesURL_options_)
         self.assertResultIsBOOL(WebKit.WKWebExtensionMatchPattern.matchesPattern_)
-        self.assertResultIsBOOL(
-            WebKit.WKWebExtensionMatchPattern.matchesPattern_options_
-        )
+        self.assertResultIsBOOL(WebKit.WKWebExtensionMatchPattern.matchesPattern_options_)

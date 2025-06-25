@@ -141,9 +141,7 @@ class TestMDS(TestCase):
         )
         self.assertFalse(hasattr(Security, "MDS_CDSADIR_EMM_PRIMARY_NUM_ATTRIBUTES"))
         self.assertFalse(hasattr(Security, "MDS_CDSADIR_AC_PRIMARY_NUM_ATTRIBUTES"))
-        self.assertFalse(
-            hasattr(Security, "MDS_CDSADIR_SCHEMA_RELATONS_NUM_ATTRIBUTES")
-        )
+        self.assertFalse(hasattr(Security, "MDS_CDSADIR_SCHEMA_RELATONS_NUM_ATTRIBUTES"))
         self.assertFalse(
             hasattr(Security, "MDS_CDSADIR_SCHEMA_ATTRIBUTES_NUM_ATTRIBUTES")
         )

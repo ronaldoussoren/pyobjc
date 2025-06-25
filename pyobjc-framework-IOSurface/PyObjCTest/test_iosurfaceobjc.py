@@ -28,9 +28,7 @@ class TestIOSurfaceObjC(TestCase):
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPlaneElementHeight, str)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyCacheMode, str)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPixelFormat, str)
-        self.assertIsInstance(
-            IOSurface.IOSurfacePropertyKeyPixelSizeCastingAllowed, str
-        )
+        self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPixelSizeCastingAllowed, str)
 
     @min_os_level("10.14")
     def testConstants10_14(self):

@@ -67,6 +67,4 @@ class TestNSInputManager(TestCase):
         self.assertResultIsBOOL(AppKit.NSInputManager.wantsToInterpretAllKeystrokes)
         self.assertResultIsBOOL(AppKit.NSInputManager.wantsToHandleMouseEvents)
         self.assertResultIsBOOL(AppKit.NSInputManager.handleMouseEvent_)
-        self.assertResultIsBOOL(
-            AppKit.NSInputManager.wantsToDelayTextChangeNotifications
-        )
+        self.assertResultIsBOOL(AppKit.NSInputManager.wantsToDelayTextChangeNotifications)

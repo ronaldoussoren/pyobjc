@@ -30,18 +30,14 @@ class TestDateFormatter(TestCase):
         self.assertIsInstance(CoreFoundation.kCFDateFormatterPMSymbol, str)
         self.assertIsInstance(CoreFoundation.kCFDateFormatterLongEraSymbols, str)
         self.assertIsInstance(CoreFoundation.kCFDateFormatterVeryShortMonthSymbols, str)
-        self.assertIsInstance(
-            CoreFoundation.kCFDateFormatterStandaloneMonthSymbols, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFDateFormatterStandaloneMonthSymbols, str)
         self.assertIsInstance(
             CoreFoundation.kCFDateFormatterShortStandaloneMonthSymbols, str
         )
         self.assertIsInstance(
             CoreFoundation.kCFDateFormatterVeryShortStandaloneMonthSymbols, str
         )
-        self.assertIsInstance(
-            CoreFoundation.kCFDateFormatterVeryShortWeekdaySymbols, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFDateFormatterVeryShortWeekdaySymbols, str)
         self.assertIsInstance(
             CoreFoundation.kCFDateFormatterStandaloneWeekdaySymbols, str
         )

@@ -56,7 +56,7 @@ class MethodAccessTest(TestCase):
         with self.assertRaisesRegex(
             AttributeError, "<nil> doesn't have attribute func_code"
         ):
-            objc.objc_object.pyobjc_instanceMethods.func_code,  # noqa: B018
+            (objc.objc_object.pyobjc_instanceMethods.func_code,)  # noqa: B018
 
         self.assertEqual(objc.objc_object.pyobjc_classMethods.__dict__, {})
         self.assertEqual(objc.objc_object.pyobjc_instanceMethods.__dict__, {})

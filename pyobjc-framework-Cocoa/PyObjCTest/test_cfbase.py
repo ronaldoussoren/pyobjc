@@ -181,9 +181,7 @@ class TestBase(TestCase):
         value = CoreFoundation.CFGetTypeID(CoreFoundation.kCFAllocatorMalloc)
         self.assertEqual(value, CoreFoundation.CFAllocatorGetTypeID())
 
-        v = CoreFoundation.CFCopyTypeIDDescription(
-            CoreFoundation.CFAllocatorGetTypeID()
-        )
+        v = CoreFoundation.CFCopyTypeIDDescription(CoreFoundation.CFAllocatorGetTypeID())
         self.assertIsInstance(v, str)
         obj = CoreFoundation.CFURLCreateWithString(None, "http://www.apple.com/", None)
         i = CoreFoundation.CFGetTypeID(obj)

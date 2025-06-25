@@ -15,6 +15,4 @@ class TestValueTrans(TestCase):
         self.assertIsInstance(Foundation.NSSecureUnarchiveFromDataTransformerName, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(
-            Foundation.NSValueTransformer.allowsReverseTransformation
-        )
+        self.assertResultIsBOOL(Foundation.NSValueTransformer.allowsReverseTransformation)

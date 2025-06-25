@@ -18,15 +18,9 @@ class TestAVQueuedSampleBufferRendering(TestCase):
         self.assertIsEnumType(AVFoundation.AVQueuedSampleBufferRenderingStatus)
 
     def testConstants(self):
-        self.assertEqual(
-            AVFoundation.AVQueuedSampleBufferRenderingStatusUnknown, 0
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVQueuedSampleBufferRenderingStatusRendering, 1
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVQueuedSampleBufferRenderingStatusFailed, 2
-        )  # noqa: B950
+        self.assertEqual(AVFoundation.AVQueuedSampleBufferRenderingStatusUnknown, 0)  # noqa: B950
+        self.assertEqual(AVFoundation.AVQueuedSampleBufferRenderingStatusRendering, 1)  # noqa: B950
+        self.assertEqual(AVFoundation.AVQueuedSampleBufferRenderingStatusFailed, 2)  # noqa: B950
 
     @min_sdk_level("10.13")
     def testProtocols(self):

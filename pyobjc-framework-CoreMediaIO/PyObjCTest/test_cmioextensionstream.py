@@ -36,9 +36,7 @@ class TestCMIOExtensionStream(TestCase):
         self.assertEqual(CoreMediaIO.CMIOExtensionStreamClockTypeCustom, 2)
 
         self.assertEqual(CoreMediaIO.CMIOExtensionStreamDiscontinuityFlagNone, 0)
-        self.assertEqual(
-            CoreMediaIO.CMIOExtensionStreamDiscontinuityFlagUnknown, 1 << 0
-        )
+        self.assertEqual(CoreMediaIO.CMIOExtensionStreamDiscontinuityFlagUnknown, 1 << 0)
         self.assertEqual(CoreMediaIO.CMIOExtensionStreamDiscontinuityFlagTime, 1 << 1)
         self.assertEqual(
             CoreMediaIO.CMIOExtensionStreamDiscontinuityFlagSampleDropped, 1 << 6
@@ -55,9 +53,7 @@ class TestCMIOExtensionStream(TestCase):
             b"o^@",
         )
 
-        self.assertResultIsBOOL(
-            TestCMIOExtensionStreamHelper.setStreamProperties_error_
-        )
+        self.assertResultIsBOOL(TestCMIOExtensionStreamHelper.setStreamProperties_error_)
         self.assertArgHasType(
             TestCMIOExtensionStreamHelper.setStreamProperties_error_, 1, b"o^@"
         )
@@ -66,9 +62,7 @@ class TestCMIOExtensionStream(TestCase):
             TestCMIOExtensionStreamHelper.authorizedToStartStreamForClient_
         )
 
-        self.assertResultIsBOOL(
-            TestCMIOExtensionStreamHelper.startStreamAndReturnError_
-        )
+        self.assertResultIsBOOL(TestCMIOExtensionStreamHelper.startStreamAndReturnError_)
         self.assertArgHasType(
             TestCMIOExtensionStreamHelper.startStreamAndReturnError_, 0, b"o^@"
         )

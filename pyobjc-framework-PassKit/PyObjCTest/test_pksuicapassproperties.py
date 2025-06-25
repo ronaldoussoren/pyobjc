@@ -7,9 +7,7 @@ class TestPKSuicaPassProperties(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(PassKit.PKSuicaPassProperties.isInStation)
         self.assertResultIsBOOL(PassKit.PKSuicaPassProperties.isInShinkansenStation)
-        self.assertResultIsBOOL(
-            PassKit.PKSuicaPassProperties.isBalanceAllowedForCommute
-        )
+        self.assertResultIsBOOL(PassKit.PKSuicaPassProperties.isBalanceAllowedForCommute)
         self.assertResultIsBOOL(
             PassKit.PKSuicaPassProperties.isLowBalanceGateNotificationEnabled
         )

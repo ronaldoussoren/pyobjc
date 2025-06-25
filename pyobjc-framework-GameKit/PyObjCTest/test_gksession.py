@@ -10,9 +10,7 @@ class TestGKSession(TestCase):
         self.assertResultIsBOOL(GameKit.GKSession.sendData_toPeers_withDataMode_error_)
         self.assertArgIsOut(GameKit.GKSession.sendData_toPeers_withDataMode_error_, 3)
 
-        self.assertResultIsBOOL(
-            GameKit.GKSession.sendDataToAllPeers_withDataMode_error_
-        )
+        self.assertResultIsBOOL(GameKit.GKSession.sendDataToAllPeers_withDataMode_error_)
         self.assertArgIsOut(GameKit.GKSession.sendDataToAllPeers_withDataMode_error_, 2)
 
         self.assertResultIsBOOL(GameKit.GKSession.acceptConnectionFromPeer_error_)

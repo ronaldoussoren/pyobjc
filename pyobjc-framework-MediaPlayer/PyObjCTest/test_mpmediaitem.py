@@ -32,9 +32,7 @@ class TestMPMediaItem(TestCase):
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyArtist, str)
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyArtistPersistentID, str)
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumArtist, str)
-        self.assertIsInstance(
-            MediaPlayer.MPMediaItemPropertyAlbumArtistPersistentID, str
-        )
+        self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumArtistPersistentID, str)
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyGenre, str)
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyGenrePersistentID, str)
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyComposer, str)

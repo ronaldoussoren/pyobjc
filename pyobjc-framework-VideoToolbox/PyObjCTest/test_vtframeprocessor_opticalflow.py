@@ -19,9 +19,7 @@ class TestVTFrameProcessor_OpticalFlow(TestCase):
 
         self.assertIsEnumType(VideoToolbox.VTOpticalFlowParametersSubmissionMode)
         self.assertEqual(VideoToolbox.VTOpticalFlowParametersSubmissionModeRandom, 1)
-        self.assertEqual(
-            VideoToolbox.VTOpticalFlowParametersSubmissionModeSequential, 2
-        )
+        self.assertEqual(VideoToolbox.VTOpticalFlowParametersSubmissionModeSequential, 2)
 
     @min_os_level("15.4")
     def test_methods(self):

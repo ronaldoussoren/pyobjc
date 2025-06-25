@@ -16,9 +16,7 @@ class TestCAMetalLayer(TestCase):
         self.assertArgIsBOOL(Quartz.CAMetalLayer.setPresentsWithTransaction_, 0)
 
         self.assertResultIsBOOL(Quartz.CAMetalLayer.wantsExtendedDynamicRangeContent)
-        self.assertArgIsBOOL(
-            Quartz.CAMetalLayer.setWantsExtendedDynamicRangeContent_, 0
-        )
+        self.assertArgIsBOOL(Quartz.CAMetalLayer.setWantsExtendedDynamicRangeContent_, 0)
 
     @min_os_level("10.13")
     def testMethods10_13(self):

@@ -51,9 +51,7 @@ def IICreateImage(url):
             # the ImageInfo struct owns this CGImageRef now, so no need for a retain.
             ii.fImageRef = image
             # the ImageInfo struct owns this CFDictionaryRef, so no need for a retain.
-            ii.fProperties = Quartz.CGImageSourceCopyPropertiesAtIndex(
-                imageSrc, 0, None
-            )
+            ii.fProperties = Quartz.CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, None)
             # Setup the orientation transformation matrix so that the image will
             # display with the proper orientation
             IIGetOrientationTransform(ii)
@@ -80,16 +78,12 @@ def IIGetOrientationTransform(image):
         elif orientation == 2:
             # 2 = 0th row is at the top, and 0th column is on the right.
             # Flip Horizontal
-            image.fOrientation = Quartz.CGAffineTransformMake(
-                -1.0, 0.0, 0.0, 1.0, w, 0.0
-            )
+            image.fOrientation = Quartz.CGAffineTransformMake(-1.0, 0.0, 0.0, 1.0, w, 0.0)
 
         elif orientation == 3:
             # 3 = 0th row is at the bottom, and 0th column is on the right.
             # Rotate 180 degrees
-            image.fOrientation = Quartz.CGAffineTransformMake(
-                -1.0, 0.0, 0.0, -1.0, w, h
-            )
+            image.fOrientation = Quartz.CGAffineTransformMake(-1.0, 0.0, 0.0, -1.0, w, h)
 
         elif orientation == 4:
             # 4 = 0th row is at the bottom, and 0th column is on the left.
@@ -99,16 +93,12 @@ def IIGetOrientationTransform(image):
         elif orientation == 5:
             # 5 = 0th row is on the left, and 0th column is the top.
             # Rotate -90 degrees and Flip Vertical
-            image.fOrientation = Quartz.CGAffineTransformMake(
-                0.0, -1.0, -1.0, 0.0, h, w
-            )
+            image.fOrientation = Quartz.CGAffineTransformMake(0.0, -1.0, -1.0, 0.0, h, w)
 
         elif orientation == 6:
             # 6 = 0th row is on the right, and 0th column is the top.
             # Rotate 90 degrees
-            image.fOrientation = Quartz.CGAffineTransformMake(
-                0.0, -1.0, 1.0, 0.0, 0.0, w
-            )
+            image.fOrientation = Quartz.CGAffineTransformMake(0.0, -1.0, 1.0, 0.0, 0.0, w)
 
         elif orientation == 7:
             # 7 = 0th row is on the right, and 0th column is the bottom.
@@ -120,9 +110,7 @@ def IIGetOrientationTransform(image):
         elif orientation == 8:
             # 8 = 0th row is on the left, and 0th column is the bottom.
             # Rotate -90 degrees
-            image.fOrientation = Quartz.CGAffineTransformMake(
-                0.0, 1.0, -1.0, 0.0, h, 0.0
-            )
+            image.fOrientation = Quartz.CGAffineTransformMake(0.0, 1.0, -1.0, 0.0, h, 0.0)
 
 
 # Gets the orientation of the image from the properties dictionary if available
@@ -197,9 +185,7 @@ def IISaveImage(image, url, width, height):
                     # If the orientation in the original image was not the default,
                     # then we need to replace that key in a duplicate of that dictionary
                     # and then pass that dictionary to ImageIO when adding the image.
-                    prop = Cocoa.CFDictionaryCreateMutableCopy(
-                        None, 0, image.fProperties
-                    )
+                    prop = Cocoa.CFDictionaryCreateMutableCopy(None, 0, image.fProperties)
                     orientation = 1
                     prop[Quartz.kCGImagePropertyOrientation] = orientation
 

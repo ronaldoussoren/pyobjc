@@ -7,9 +7,7 @@ class TestSCSensitivityAnalyzer(TestCase):
     def test_constants(self):
         self.assertIsEnumType(SensitiveContentAnalysis.SCSensitivityAnalysisPolicy)
 
-        self.assertEqual(
-            SensitiveContentAnalysis.SCSensitivityAnalysisPolicyDisabled, 0
-        )
+        self.assertEqual(SensitiveContentAnalysis.SCSensitivityAnalysisPolicyDisabled, 0)
         self.assertEqual(
             SensitiveContentAnalysis.SCSensitivityAnalysisPolicySimpleInterventions, 1
         )

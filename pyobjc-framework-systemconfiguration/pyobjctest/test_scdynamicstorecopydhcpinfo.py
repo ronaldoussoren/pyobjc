@@ -10,9 +10,7 @@ class TestSCDynamicStoreCopyDHCPInfo(TestCase):
         def callback(st, keys, info):
             pass
 
-        st = SystemConfiguration.SCDynamicStoreCreate(
-            None, "pyobjc.test", callback, None
-        )
+        st = SystemConfiguration.SCDynamicStoreCreate(None, "pyobjc.test", callback, None)
         self.assertTrue(isinstance(st, SystemConfiguration.SCDynamicStoreRef))
 
         have_ip = False

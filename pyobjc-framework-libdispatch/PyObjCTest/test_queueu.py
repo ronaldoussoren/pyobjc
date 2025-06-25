@@ -43,9 +43,7 @@ class TestQueueAPI(TestCase):
     @min_os_level("10.6")
     def test_functions(self):
         self.assertResultHasType(dispatch.dispatch_async, objc._C_VOID)
-        self.assertArgHasType(
-            dispatch.dispatch_async, 0, objc._C_ID
-        )  # dispatch_queue_t
+        self.assertArgHasType(dispatch.dispatch_async, 0, objc._C_ID)  # dispatch_queue_t
         self.assertArgIsBlock(dispatch.dispatch_async, 1, b"v")
 
         self.assertResultHasType(dispatch.dispatch_async_f, objc._C_VOID)
@@ -60,17 +58,13 @@ class TestQueueAPI(TestCase):
         self.assertArgIsBlock(dispatch.dispatch_sync, 1, b"v")
 
         self.assertResultHasType(dispatch.dispatch_sync_f, objc._C_VOID)
-        self.assertArgHasType(
-            dispatch.dispatch_sync_f, 0, objc._C_ID
-        )  # dispatch_queue_t
+        self.assertArgHasType(dispatch.dispatch_sync_f, 0, objc._C_ID)  # dispatch_queue_t
         self.assertArgHasType(dispatch.dispatch_sync_f, 1, objc._C_PTR + objc._C_VOID)
         self.assertArgIsFunction(dispatch.dispatch_sync_f, 2, b"v^v", 0)
 
         self.assertResultHasType(dispatch.dispatch_apply, objc._C_VOID)
         self.assertArgHasType(dispatch.dispatch_apply, 0, objc._C_ULNG)
-        self.assertArgHasType(
-            dispatch.dispatch_apply, 1, objc._C_ID
-        )  # dispatch_queue_t
+        self.assertArgHasType(dispatch.dispatch_apply, 1, objc._C_ID)  # dispatch_queue_t
         self.assertArgIsBlock(dispatch.dispatch_apply, 2, b"vQ")
 
         self.assertResultHasType(dispatch.dispatch_apply_f, objc._C_VOID)
@@ -112,9 +106,7 @@ class TestQueueAPI(TestCase):
 
         self.assertResultHasType(dispatch.dispatch_after, objc._C_VOID)
         self.assertArgHasType(dispatch.dispatch_after, 0, objc._C_ULNGLNG)
-        self.assertArgHasType(
-            dispatch.dispatch_after, 1, objc._C_ID
-        )  # dispatch_queue_t
+        self.assertArgHasType(dispatch.dispatch_after, 1, objc._C_ID)  # dispatch_queue_t
         self.assertArgIsBlock(dispatch.dispatch_after, 2, b"v")
 
         self.assertResultHasType(dispatch.dispatch_after_f, objc._C_VOID)
@@ -276,15 +268,11 @@ class TestQueueAPI(TestCase):
         )  # dispatch_queue_t
         self.assertArgIsBlock(dispatch.dispatch_barrier_async_and_wait, 1, b"v")
 
-        self.assertResultHasType(
-            dispatch.dispatch_barrier_async_and_wait_f, objc._C_VOID
-        )
+        self.assertResultHasType(dispatch.dispatch_barrier_async_and_wait_f, objc._C_VOID)
         self.assertArgHasType(
             dispatch.dispatch_barrier_async_and_wait_f, 0, objc._C_ID
         )  # dispatch_queue_t
         self.assertArgHasType(
             dispatch.dispatch_barrier_async_and_wait_f, 1, objc._C_PTR + objc._C_VOID
         )
-        self.assertArgIsFunction(
-            dispatch.dispatch_barrier_async_and_wait_f, 2, b"v^v", 1
-        )
+        self.assertArgIsFunction(dispatch.dispatch_barrier_async_and_wait_f, 2, b"v^v", 1)

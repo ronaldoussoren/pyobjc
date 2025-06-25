@@ -18,9 +18,7 @@ class TestMTLCommandQueue(TestCase):
     def test_protocol_methos(self):
         self.assertArgIsIn(TestMTLCommandQueueHelper.addResidencySets_count_, 0)
         self.assertArgSizeInArg(TestMTLCommandQueueHelper.addResidencySets_count_, 0, 1)
-        self.assertArgHasType(
-            TestMTLCommandQueueHelper.addResidencySets_count_, 1, b"Q"
-        )
+        self.assertArgHasType(TestMTLCommandQueueHelper.addResidencySets_count_, 1, b"Q")
 
         self.assertArgIsIn(TestMTLCommandQueueHelper.removeResidencySets_count_, 0)
         self.assertArgSizeInArg(

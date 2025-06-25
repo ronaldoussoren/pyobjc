@@ -6,9 +6,7 @@ import MetalPerformanceShaders
 class TestMPSNeuralNetwork_MPSCNNLoss(TestCase):
     @min_os_level("10.14")
     def test_methods10_14(self):
-        self.assertResultIsBOOL(
-            MetalPerformanceShaders.MPSCNNYOLOLossDescriptor.rescore
-        )
+        self.assertResultIsBOOL(MetalPerformanceShaders.MPSCNNYOLOLossDescriptor.rescore)
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSCNNYOLOLossDescriptor.setRescore_, 0
         )
@@ -45,9 +43,7 @@ class TestMPSNeuralNetwork_MPSCNNLoss(TestCase):
             MetalPerformanceShaders.MPSCNNYOLOLossDescriptor.setReduceAcrossBatch_, 0
         )
 
-        self.assertResultIsBOOL(
-            MetalPerformanceShaders.MPSCNNYOLOLoss.reduceAcrossBatch
-        )
+        self.assertResultIsBOOL(MetalPerformanceShaders.MPSCNNYOLOLoss.reduceAcrossBatch)
 
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSNNForwardLoss.reduceAcrossBatch

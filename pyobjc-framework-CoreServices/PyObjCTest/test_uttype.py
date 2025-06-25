@@ -19,9 +19,7 @@ class TestUTType(TestCase):
         self.assertIsInstance(CoreServices.kUTTagClassOSType, str)
 
     def testFunctions(self):
-        self.assertResultIsCFRetained(
-            CoreServices.UTTypeCreatePreferredIdentifierForTag
-        )
+        self.assertResultIsCFRetained(CoreServices.UTTypeCreatePreferredIdentifierForTag)
         v = CoreServices.UTTypeCreatePreferredIdentifierForTag(
             CoreServices.kUTTagClassFilenameExtension,
             "py",

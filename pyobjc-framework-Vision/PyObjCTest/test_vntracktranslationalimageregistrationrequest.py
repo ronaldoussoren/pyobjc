@@ -4,9 +4,7 @@ import Vision
 
 class TestVNTrackTranslationalImageRegistrationRequest(TestCase):
     def test_constants(self):
-        self.assertEqual(
-            Vision.VNTrackTranslationalImageRegistrationRequestRevision1, 1
-        )
+        self.assertEqual(Vision.VNTrackTranslationalImageRegistrationRequestRevision1, 1)
 
     @min_os_level("14.9")
     def test_methods(self):

@@ -10,9 +10,7 @@ class TestCMHeadphoneMotionManager(TestCase):
         self.assertResultIsBOOL(
             CoreMotion.CMHeadphoneMotionManager.isDeviceMotionAvailable
         )
-        self.assertResultIsBOOL(
-            CoreMotion.CMHeadphoneMotionManager.isDeviceMotionActive
-        )
+        self.assertResultIsBOOL(CoreMotion.CMHeadphoneMotionManager.isDeviceMotionActive)
         self.assertArgIsBlock(
             CoreMotion.CMHeadphoneMotionManager.startDeviceMotionUpdatesToQueue_withHandler_,
             1,

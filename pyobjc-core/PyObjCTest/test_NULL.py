@@ -41,16 +41,12 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"on:callList:andOut:",
-    {
-        "arguments": {4: {"type_modifier": b"N", "null_accepted": True}}
-    },  # N is by design
+    {"arguments": {4: {"type_modifier": b"N", "null_accepted": True}}},  # N is by design
 )
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"on:callOut:",
-    {
-        "arguments": {3: {"type_modifier": b"N", "null_accepted": True}}
-    },  # N is by design
+    {"arguments": {3: {"type_modifier": b"N", "null_accepted": True}}},  # N is by design
 )
 
 

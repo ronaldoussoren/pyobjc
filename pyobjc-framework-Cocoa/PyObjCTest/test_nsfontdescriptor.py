@@ -24,9 +24,7 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsEnumType(AppKit.NSFontDescriptorSymbolicTraits)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "Crash on 10.13, 10.14??",
     )
     def testConvenience(self):

@@ -18,9 +18,7 @@ class TestSFAuthorizationPluginView(TestCase):
         self.assertEqual(SecurityInterface.SFViewTypeIdentityAndCredentials, 0)
         self.assertEqual(SecurityInterface.SFViewTypeCredentials, 1)
 
-        self.assertIsInstance(
-            SecurityInterface.SFAuthorizationPluginViewUserNameKey, str
-        )
+        self.assertIsInstance(SecurityInterface.SFAuthorizationPluginViewUserNameKey, str)
         self.assertIsInstance(
             SecurityInterface.SFAuthorizationPluginViewUserShortNameKey, str
         )

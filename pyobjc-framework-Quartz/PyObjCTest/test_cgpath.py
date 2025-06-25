@@ -86,9 +86,7 @@ class TestCGPath(TestCase):
         )
 
         self.assertArgIsIn(Quartz.CGPathAddEllipseInRect, 1)
-        Quartz.CGPathAddEllipseInRect(
-            path, transform, Quartz.CGRectMake(50, 60, 20, 20)
-        )
+        Quartz.CGPathAddEllipseInRect(path, transform, Quartz.CGRectMake(50, 60, 20, 20))
 
         self.assertArgIsIn(Quartz.CGPathAddArc, 1)
         self.assertArgHasType(Quartz.CGPathAddArc, 7, objc._C_BOOL)
@@ -227,9 +225,7 @@ class TestCGPath(TestCase):
         self.assertResultIsCFRetained(Quartz.CGPathCreateCopyByUnioningPath)
         self.assertResultIsCFRetained(Quartz.CGPathCreateCopyByIntersectingPath)
         self.assertResultIsCFRetained(Quartz.CGPathCreateCopyBySubtractingPath)
-        self.assertResultIsCFRetained(
-            Quartz.CGPathCreateCopyBySymmetricDifferenceOfPath
-        )
+        self.assertResultIsCFRetained(Quartz.CGPathCreateCopyBySymmetricDifferenceOfPath)
         self.assertResultIsCFRetained(Quartz.CGPathCreateCopyOfLineBySubtractingPath)
         self.assertResultIsCFRetained(Quartz.CGPathCreateCopyOfLineByIntersectingPath)
         self.assertResultIsCFRetained(Quartz.CGPathCreateSeparateComponents)

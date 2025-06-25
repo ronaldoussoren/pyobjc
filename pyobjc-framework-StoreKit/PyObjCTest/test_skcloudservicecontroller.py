@@ -19,18 +19,14 @@ class TestSKCloudServiceController(TestCase):
         self.assertEqual(
             StoreKit.SKCloudServiceCapabilityMusicCatalogSubscriptionEligible, 1 << 1
         )
-        self.assertEqual(
-            StoreKit.SKCloudServiceCapabilityAddToCloudMusicLibrary, 1 << 8
-        )
+        self.assertEqual(StoreKit.SKCloudServiceCapabilityAddToCloudMusicLibrary, 1 << 8)
 
     @min_os_level("11.0")
     def test_constants11_0(self):
         self.assertIsInstance(
             StoreKit.SKCloudServiceCapabilitiesDidChangeNotification, str
         )
-        self.assertIsInstance(
-            StoreKit.SKStorefrontCountryCodeDidChangeNotification, str
-        )
+        self.assertIsInstance(StoreKit.SKStorefrontCountryCodeDidChangeNotification, str)
         self.assertIsInstance(StoreKit.SKStorefrontIdentifierDidChangeNotification, str)
 
     @min_os_level("11.0")

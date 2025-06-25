@@ -92,9 +92,7 @@ class TestKeychainitem(TestCase):
             1,
             objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
-        self.assertArgIsCFRetained(
-            Security.SecKeychainItemCopyFromPersistentReference, 1
-        )
+        self.assertArgIsCFRetained(Security.SecKeychainItemCopyFromPersistentReference, 1)
 
         self.assertFalse(hasattr(Security, "SecKeychainItemGetDLDBHandle"))
         self.assertFalse(hasattr(Security, "SecKeychainItemGetUniqueRecordID"))

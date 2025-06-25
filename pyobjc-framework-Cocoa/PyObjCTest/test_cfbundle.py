@@ -33,14 +33,10 @@ class TestCFBundle(TestCase):
             CoreFoundation.kCFURLPOSIXPathStyle,
             True,
         )
-        array = CoreFoundation.CFBundleCreateBundlesFromDirectory(
-            None, url, "frameworkX"
-        )
+        array = CoreFoundation.CFBundleCreateBundlesFromDirectory(None, url, "frameworkX")
         self.assertEqual(len(array), 0)
 
-        array = CoreFoundation.CFBundleCreateBundlesFromDirectory(
-            None, url, "framework"
-        )
+        array = CoreFoundation.CFBundleCreateBundlesFromDirectory(None, url, "framework")
         self.assertNotEqual(len(array), 0)
 
         array = CoreFoundation.CFBundleCreateBundlesFromDirectory(None, url, None)
@@ -68,9 +64,7 @@ class TestCFBundle(TestCase):
         v = CoreFoundation.CFBundleGetLocalInfoDictionary(bundle)
         if v is not None:
             self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
-        package_type, creator = CoreFoundation.CFBundleGetPackageInfo(
-            bundle, None, None
-        )
+        package_type, creator = CoreFoundation.CFBundleGetPackageInfo(bundle, None, None)
         self.assertIsInstance(package_type, int)
         self.assertIsInstance(creator, int)
         identifier = CoreFoundation.CFBundleGetIdentifier(bundle)
@@ -263,9 +257,7 @@ class TestCFBundle(TestCase):
         self.assertIsInstance(map_id, int)
         CoreFoundation.CFBundleCloseBundleResourceMap(bundle, map_id)
 
-        err, id1, id2 = CoreFoundation.CFBundleOpenBundleResourceFiles(
-            bundle, None, None
-        )
+        err, id1, id2 = CoreFoundation.CFBundleOpenBundleResourceFiles(bundle, None, None)
         self.assertIsInstance(err, int)
         self.assertIsInstance(id1, int)
         self.assertIsInstance(id2, int)
@@ -331,15 +323,9 @@ class TestCFBundle(TestCase):
         self.assertIsInstance(CoreFoundation.kCFBundleLocalizationsKey, str)
         self.assertEqual(CoreFoundation.kCFBundleExecutableArchitectureI386, 0x00000007)
         self.assertEqual(CoreFoundation.kCFBundleExecutableArchitecturePPC, 0x00000012)
-        self.assertEqual(
-            CoreFoundation.kCFBundleExecutableArchitectureX86_64, 0x01000007
-        )
-        self.assertEqual(
-            CoreFoundation.kCFBundleExecutableArchitecturePPC64, 0x01000012
-        )
-        self.assertEqual(
-            CoreFoundation.kCFBundleExecutableArchitectureARM64, 0x0100000C
-        )
+        self.assertEqual(CoreFoundation.kCFBundleExecutableArchitectureX86_64, 0x01000007)
+        self.assertEqual(CoreFoundation.kCFBundleExecutableArchitecturePPC64, 0x01000012)
+        self.assertEqual(CoreFoundation.kCFBundleExecutableArchitectureARM64, 0x0100000C)
 
     @min_os_level("11.0")
     def test_functions11_0(self):

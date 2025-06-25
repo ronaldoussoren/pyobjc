@@ -4,9 +4,7 @@ import MediaExtension
 
 
 class TestMERawProcessorHelper(MediaExtension.NSObject):
-    def processorWithFormatDescription_extensionPixelBufferManager_error_(
-        self, a, b, c
-    ):
+    def processorWithFormatDescription_extensionPixelBufferManager_error_(self, a, b, c):
         return 1
 
     def metalDeviceRegistryID(self):
@@ -42,9 +40,7 @@ class TestMERawProcessor(TestCase):
             2,
         )
         self.assertResultHasType(TestMERawProcessorHelper.metalDeviceRegistryID, b"Q")
-        self.assertArgHasType(
-            TestMERawProcessorHelper.setMetalDeviceRegistryID_, 0, b"Q"
-        )
+        self.assertArgHasType(TestMERawProcessorHelper.setMetalDeviceRegistryID_, 0, b"Q")
         self.assertArgIsBlock(
             TestMERawProcessorHelper.processFrameFromImageBuffer_completionHandler_,
             1,

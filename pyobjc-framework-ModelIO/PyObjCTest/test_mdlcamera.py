@@ -62,9 +62,7 @@ class TestMDLCamera(TestCase):
             ModelIO.MDLCamera.setSensorShift_, 0, simd.vector_float2.__typestr__
         )
 
-        self.assertResultHasType(
-            ModelIO.MDLCamera.flash, simd.vector_float3.__typestr__
-        )
+        self.assertResultHasType(ModelIO.MDLCamera.flash, simd.vector_float3.__typestr__)
         self.assertArgHasType(
             ModelIO.MDLCamera.setFlash_, 0, simd.vector_float3.__typestr__
         )

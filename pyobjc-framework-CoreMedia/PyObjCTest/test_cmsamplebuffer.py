@@ -9,9 +9,7 @@ CMSampleBufferInvalidateCallback = b"v^{opaqueCMSampleBuffer=}Q"
 class TestCMSampleBuffer(TestCase):
     def test_constants(self):
         self.assertEqual(CoreMedia.kCMSampleBufferError_AllocationFailed, -12730)
-        self.assertEqual(
-            CoreMedia.kCMSampleBufferError_RequiredParameterMissing, -12731
-        )
+        self.assertEqual(CoreMedia.kCMSampleBufferError_RequiredParameterMissing, -12731)
         self.assertEqual(CoreMedia.kCMSampleBufferError_AlreadyHasDataBuffer, -12732)
         self.assertEqual(CoreMedia.kCMSampleBufferError_BufferNotReady, -12733)
         self.assertEqual(CoreMedia.kCMSampleBufferError_SampleIndexOutOfRange, -12734)
@@ -40,9 +38,7 @@ class TestCMSampleBuffer(TestCase):
             CoreMedia.kCMTimingInfoInvalid, CoreMedia.CMSampleTimingInfo
         )
 
-        self.assertIsInstance(
-            CoreMedia.kCMSampleBufferNotification_DataBecameReady, str
-        )
+        self.assertIsInstance(CoreMedia.kCMSampleBufferNotification_DataBecameReady, str)
         self.assertIsInstance(
             CoreMedia.kCMSampleBufferConduitNotification_InhibitOutputUntil, str
         )
@@ -71,9 +67,7 @@ class TestCMSampleBuffer(TestCase):
         self.assertIsInstance(CoreMedia.kCMSampleAttachmentKey_NotSync, str)
         self.assertIsInstance(CoreMedia.kCMSampleAttachmentKey_PartialSync, str)
         self.assertIsInstance(CoreMedia.kCMSampleAttachmentKey_HasRedundantCoding, str)
-        self.assertIsInstance(
-            CoreMedia.kCMSampleAttachmentKey_IsDependedOnByOthers, str
-        )
+        self.assertIsInstance(CoreMedia.kCMSampleAttachmentKey_IsDependedOnByOthers, str)
         self.assertIsInstance(CoreMedia.kCMSampleAttachmentKey_DependsOnOthers, str)
         self.assertIsInstance(
             CoreMedia.kCMSampleAttachmentKey_EarlierDisplayTimesAllowed, str
@@ -97,9 +91,7 @@ class TestCMSampleBuffer(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMSampleBufferAttachmentKey_TrimDurationAtEnd, str
         )
-        self.assertIsInstance(
-            CoreMedia.kCMSampleBufferAttachmentKey_SpeedMultiplier, str
-        )
+        self.assertIsInstance(CoreMedia.kCMSampleBufferAttachmentKey_SpeedMultiplier, str)
         self.assertIsInstance(CoreMedia.kCMSampleBufferAttachmentKey_Reverse, str)
         self.assertIsInstance(
             CoreMedia.kCMSampleBufferAttachmentKey_FillDiscontinuitiesWithSilence, str
@@ -141,9 +133,7 @@ class TestCMSampleBuffer(TestCase):
 
     @min_os_level("10.13")
     def test_constants10_13(self):
-        self.assertIsInstance(
-            CoreMedia.kCMSampleAttachmentKey_HEVCTemporalLevelInfo, str
-        )
+        self.assertIsInstance(CoreMedia.kCMSampleAttachmentKey_HEVCTemporalLevelInfo, str)
         self.assertIsInstance(CoreMedia.kCMHEVCTemporalLevelInfoKey_TemporalLevel, str)
         self.assertIsInstance(CoreMedia.kCMHEVCTemporalLevelInfoKey_ProfileSpace, str)
         self.assertIsInstance(CoreMedia.kCMHEVCTemporalLevelInfoKey_TierFlag, str)
@@ -215,9 +205,7 @@ class TestCMSampleBuffer(TestCase):
         self.assertArgIsOut(CoreMedia.CMSampleBufferCreate, 11)
         self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreate, 11)
 
-        self.assertArgIsBOOL(
-            CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 2
-        )
+        self.assertArgIsBOOL(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 2)
         self.assertArgIsFunction(
             CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions,
             3,
@@ -228,9 +216,7 @@ class TestCMSampleBuffer(TestCase):
         self.assertArgSizeInArg(
             CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 8, 6
         )
-        self.assertArgIsOut(
-            CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 9
-        )
+        self.assertArgIsOut(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 9)
         self.assertArgIsCFRetained(
             CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 9
         )
@@ -363,9 +349,7 @@ class TestCMSampleBuffer(TestCase):
 
         self.assertArgIsIn(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 3)
         self.assertArgIsOut(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4)
-        self.assertArgIsCFRetained(
-            CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4
-        )
+        self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4)
 
         CoreMedia.CMSampleBufferSetDataFailed
 

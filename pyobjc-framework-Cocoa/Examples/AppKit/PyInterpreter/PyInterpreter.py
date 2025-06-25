@@ -178,9 +178,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
                 ]
             else:
                 # they started typing the method name
-                check = list(
-                    filter(lambda s: s.lower().startswith(wordlower), dir(obj))
-                )
+                check = list(filter(lambda s: s.lower().startswith(wordlower), dir(obj)))
         else:
             # no dots, must be in the normal namespaces.. no eval necessary
             check = set(dir(__builtins__))

@@ -5,9 +5,7 @@ import Vision
 class TestVNDetectTextRectanglesRequest(TestCase):
     @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertResultIsBOOL(
-            Vision.VNDetectTextRectanglesRequest.reportCharacterBoxes
-        )
+        self.assertResultIsBOOL(Vision.VNDetectTextRectanglesRequest.reportCharacterBoxes)
         self.assertArgIsBOOL(
             Vision.VNDetectTextRectanglesRequest.setReportCharacterBoxes_, 0
         )

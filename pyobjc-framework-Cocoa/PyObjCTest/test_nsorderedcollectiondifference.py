@@ -4,9 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSOrderedCollectionDifference(TestCase):
     def test_enum_types(self):
-        self.assertIsEnumType(
-            Foundation.NSOrderedCollectionDifferenceCalculationOptions
-        )
+        self.assertIsEnumType(Foundation.NSOrderedCollectionDifferenceCalculationOptions)
 
     def test_constants(self):
         self.assertEqual(

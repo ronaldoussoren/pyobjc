@@ -8,30 +8,14 @@ from PyObjCTest.deprecations import OCTestDeprecations, function_list
 from PyObjCTools.TestSupport import TestCase
 
 objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method1", {})
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method2", {"deprecated": 1004}
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method3", {"deprecated": 1004}
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method4", {"deprecated": 1005}
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method5", {"deprecated": 1005}
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method6", {"deprecated": 1006}
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method7", {"deprecated": 1006}
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method8", {"deprecated": 1010}
-)
-objc.registerMetaDataForSelector(
-    b"OCTestDeprecations", b"method9", {"deprecated": 1010}
-)
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method2", {"deprecated": 1004})
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method3", {"deprecated": 1004})
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method4", {"deprecated": 1005})
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method5", {"deprecated": 1005})
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method6", {"deprecated": 1006})
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method7", {"deprecated": 1006})
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method8", {"deprecated": 1010})
+objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method9", {"deprecated": 1010})
 
 _FunctionTable = [
     ("func1", b"i", "", {}),

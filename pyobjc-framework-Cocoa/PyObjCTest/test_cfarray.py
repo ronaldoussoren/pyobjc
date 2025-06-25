@@ -138,12 +138,8 @@ class TestCFArray(TestCase):
         self.assertTrue(CoreFoundation.CFArrayContainsValue(array, (0, 6), 4))
         self.assertFalse(CoreFoundation.CFArrayContainsValue(array, (0, 2), 4))
 
-        self.assertEqual(
-            CoreFoundation.CFArrayGetFirstIndexOfValue(array, (0, 6), 3), 2
-        )
-        self.assertEqual(
-            CoreFoundation.CFArrayGetFirstIndexOfValue(array, (0, 6), 2), 1
-        )
+        self.assertEqual(CoreFoundation.CFArrayGetFirstIndexOfValue(array, (0, 6), 3), 2)
+        self.assertEqual(CoreFoundation.CFArrayGetFirstIndexOfValue(array, (0, 6), 2), 1)
         self.assertEqual(
             CoreFoundation.CFArrayGetFirstIndexOfValue(array, (0, 6), "hello"),
             CoreFoundation.kCFNotFound,

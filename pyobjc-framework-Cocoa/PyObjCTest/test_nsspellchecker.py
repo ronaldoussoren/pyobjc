@@ -99,12 +99,8 @@ class TestNSSpellChecker(TestCase):
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertResultIsBOOL(
-            AppKit.NSSpellChecker.isAutomaticQuoteSubstitutionEnabled
-        )
-        self.assertResultIsBOOL(
-            AppKit.NSSpellChecker.isAutomaticDashSubstitutionEnabled
-        )
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.isAutomaticQuoteSubstitutionEnabled)
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.isAutomaticDashSubstitutionEnabled)
 
     @min_os_level("10.12")
     def testMethods10_12(self):
@@ -125,9 +121,7 @@ class TestNSSpellChecker(TestCase):
 
     @min_os_level("14.0")
     def testMethods14_0(self):
-        self.assertResultIsBOOL(
-            AppKit.NSSpellChecker.isAutomaticInlinePredictionEnabled
-        )
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.isAutomaticInlinePredictionEnabled)
 
     @min_os_level("10.6")
     def testConstants10_6(self):

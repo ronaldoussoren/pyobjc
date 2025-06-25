@@ -156,9 +156,7 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def setPreallocateInhibited_(self, a):
         pass
 
-    def preallocateSpaceForItem_atOffset_length_flags_replyHandler_(
-        self, a, b, c, d, e
-    ):
+    def preallocateSpaceForItem_atOffset_length_flags_replyHandler_(self, a, b, c, d, e):
         pass
 
     # FSVolumeItemDeactivation
@@ -239,9 +237,7 @@ class TestFSVolume(TestCase):
     def test_protocol_methods(self):
         # FSVolumePathConfOperations
         self.assertResultHasType(TestFSVolumeHelper.maximumLinkCount, objc._C_NSInteger)
-        self.assertResultHasType(
-            TestFSVolumeHelper.maximumNameLength, objc._C_NSInteger
-        )
+        self.assertResultHasType(TestFSVolumeHelper.maximumNameLength, objc._C_NSInteger)
         self.assertResultIsBOOL(TestFSVolumeHelper.restrictsOwnershipChanges)
         self.assertResultIsBOOL(TestFSVolumeHelper.truncatesLongNames)
         self.assertResultHasType(TestFSVolumeHelper.maximumXattrSize, objc._C_NSInteger)
@@ -255,9 +251,7 @@ class TestFSVolume(TestCase):
 
         # FSVolumeOperations
 
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.mountWithOptions_replyHandler_, 1, b"v@"
-        )
+        self.assertArgIsBlock(TestFSVolumeHelper.mountWithOptions_replyHandler_, 1, b"v@")
         self.assertArgIsBlock(TestFSVolumeHelper.unmountWithReplyHandler_, 0, b"v")
 
         self.assertArgHasType(
@@ -462,24 +456,18 @@ class TestFSVolume(TestCase):
             FSKit.FSVolumeSupportedCapabilities.setSupportsPersistentObjectIDs_, 0
         )
 
-        self.assertResultIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.supportsSymbolicLinks
-        )
+        self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsSymbolicLinks)
         self.assertArgIsBOOL(
             FSKit.FSVolumeSupportedCapabilities.setSupportsSymbolicLinks_, 0
         )
 
         self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsHardLinks)
-        self.assertArgIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.setSupportsHardLinks_, 0
-        )
+        self.assertArgIsBOOL(FSKit.FSVolumeSupportedCapabilities.setSupportsHardLinks_, 0)
 
         self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsJournal)
         self.assertArgIsBOOL(FSKit.FSVolumeSupportedCapabilities.setSupportsJournal_, 0)
 
-        self.assertResultIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.supportsActiveJournal
-        )
+        self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsActiveJournal)
         self.assertArgIsBOOL(
             FSKit.FSVolumeSupportedCapabilities.setSupportsActiveJournal_, 0
         )
@@ -497,9 +485,7 @@ class TestFSVolume(TestCase):
         )
 
         self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsZeroRuns)
-        self.assertArgIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.setSupportsZeroRuns_, 0
-        )
+        self.assertArgIsBOOL(FSKit.FSVolumeSupportedCapabilities.setSupportsZeroRuns_, 0)
 
         self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsFastStatFS)
         self.assertArgIsBOOL(
@@ -507,13 +493,9 @@ class TestFSVolume(TestCase):
         )
 
         self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supports2TBFiles)
-        self.assertArgIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.setSupports2TBFiles_, 0
-        )
+        self.assertArgIsBOOL(FSKit.FSVolumeSupportedCapabilities.setSupports2TBFiles_, 0)
 
-        self.assertResultIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.supportsOpenDenyModes
-        )
+        self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsOpenDenyModes)
         self.assertArgIsBOOL(
             FSKit.FSVolumeSupportedCapabilities.setSupportsOpenDenyModes_, 0
         )
@@ -562,9 +544,7 @@ class TestFSVolume(TestCase):
             FSKit.FSVolumeSupportedCapabilities.setSupportsSharedSpace_, 0
         )
 
-        self.assertResultIsBOOL(
-            FSKit.FSVolumeSupportedCapabilities.supportsVolumeGroups
-        )
+        self.assertResultIsBOOL(FSKit.FSVolumeSupportedCapabilities.supportsVolumeGroups)
         self.assertArgIsBOOL(
             FSKit.FSVolumeSupportedCapabilities.setSupportsVolumeGroups_, 0
         )

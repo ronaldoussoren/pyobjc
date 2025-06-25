@@ -116,9 +116,7 @@ class TestObjectiveCClasses(TestCase):
 
 class TestObjectiveCClassesFromObjC(TestCase):
     def test_basic_allocation(self):
-        value = initpatterns.OC_InitPatterns.newValueFor_(
-            initpatterns.OC_InitReturnsSelf
-        )
+        value = initpatterns.OC_InitPatterns.newValueFor_(initpatterns.OC_InitReturnsSelf)
         self.assertEqual(value.retainCount(), 1)
 
         part = initpatterns.OC_InitReturnsSelf.alloc()
@@ -135,9 +133,7 @@ class TestObjectiveCClassesFromObjC(TestCase):
         self.assertEqual(init.retainCount(), 1)
 
     def test_init_returns_nil(self):
-        value = initpatterns.OC_InitPatterns.newValueFor_(
-            initpatterns.OC_InitReturnsNil
-        )
+        value = initpatterns.OC_InitPatterns.newValueFor_(initpatterns.OC_InitReturnsNil)
         self.assertIs(value, None)
 
         part = initpatterns.OC_InitReturnsNil.alloc()
@@ -181,9 +177,7 @@ class TestObjectiveCClassesFromObjC(TestCase):
     def test_alloc_singleton(self):
         baseCount = initpatterns.OC_AllocSingleton.singletonRetainCount()
 
-        value = initpatterns.OC_InitPatterns.newValueFor_(
-            initpatterns.OC_AllocSingleton
-        )
+        value = initpatterns.OC_InitPatterns.newValueFor_(initpatterns.OC_AllocSingleton)
         self.assertIsInstance(value, initpatterns.OC_AllocSingleton)
         del value
 

@@ -10,6 +10,4 @@ class TestQLThumbnailRepresentation(TestCase):
         self.assertEqual(
             QuickLookThumbnailing.QLThumbnailRepresentationTypeLowQualityThumbnail, 1
         )
-        self.assertEqual(
-            QuickLookThumbnailing.QLThumbnailRepresentationTypeThumbnail, 2
-        )
+        self.assertEqual(QuickLookThumbnailing.QLThumbnailRepresentationTypeThumbnail, 2)

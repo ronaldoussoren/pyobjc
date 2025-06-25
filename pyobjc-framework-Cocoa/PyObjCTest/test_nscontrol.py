@@ -65,9 +65,7 @@ class TestNSControl(TestCase):
             TestNSControlHelper.control_didFailToFormatString_errorDescription_
         )
         self.assertResultIsBOOL(TestNSControlHelper.control_isValidObject_)
-        self.assertResultIsBOOL(
-            TestNSControlHelper.control_textView_doCommandBySelector_
-        )
+        self.assertResultIsBOOL(TestNSControlHelper.control_textView_doCommandBySelector_)
 
         self.assertArgHasType(
             TestNSControlHelper.control_textView_completions_forPartialWordRange_indexOfSelectedItem_,  # noqa: B950

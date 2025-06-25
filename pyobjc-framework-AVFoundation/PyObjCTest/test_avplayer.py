@@ -47,15 +47,11 @@ class TestAVPlayer(TestCase):
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(
-            AVFoundation.AVPlayerWaitingToMinimizeStallsReason, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVPlayerWaitingToMinimizeStallsReason, str)  # noqa: B950
         self.assertIsInstance(
             AVFoundation.AVPlayerWaitingWhileEvaluatingBufferingRateReason, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVPlayerWaitingWithNoItemToPlayReason, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVPlayerWaitingWithNoItemToPlayReason, str)  # noqa: B950
 
     @min_os_level("10.15")
     def testConstants10_15(self):
@@ -131,16 +127,10 @@ class TestAVPlayer(TestCase):
         )
         self.assertResultIsBOOL(AVFoundation.AVPlayer.isMuted)
         self.assertArgIsBOOL(AVFoundation.AVPlayer.setMuted_, 0)
-        self.assertResultIsBOOL(
-            AVFoundation.AVPlayer.isClosedCaptionDisplayEnabled
-        )  # noqa: B950
-        self.assertArgIsBOOL(
-            AVFoundation.AVPlayer.setClosedCaptionDisplayEnabled_, 0
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVPlayer.isClosedCaptionDisplayEnabled)  # noqa: B950
+        self.assertArgIsBOOL(AVFoundation.AVPlayer.setClosedCaptionDisplayEnabled_, 0)  # noqa: B950
 
-        self.assertResultIsBOOL(
-            AVFoundation.AVQueuePlayer.canInsertItem_afterItem_
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVQueuePlayer.canInsertItem_afterItem_)  # noqa: B950
 
     @min_os_level("10.9")
     def testMethods10_9(self):
@@ -155,9 +145,7 @@ class TestAVPlayer(TestCase):
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.allowsExternalPlayback)
-        self.assertArgIsBOOL(
-            AVFoundation.AVPlayer.setAllowsExternalPlayback_, 0
-        )  # noqa: B950
+        self.assertArgIsBOOL(AVFoundation.AVPlayer.setAllowsExternalPlayback_, 0)  # noqa: B950
         self.assertResultIsBOOL(AVFoundation.AVPlayer.isExternalPlaybackActive)
 
     @min_os_level("10.12")

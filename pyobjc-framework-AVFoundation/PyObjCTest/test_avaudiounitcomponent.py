@@ -15,9 +15,7 @@ class TestAVAudioUnitComponent(TestCase):
         self.assertIsInstance(AVFoundation.AVAudioUnitTypeGenerator, str)
         self.assertIsInstance(AVFoundation.AVAudioUnitTypeOfflineEffect, str)
         self.assertIsInstance(AVFoundation.AVAudioUnitTypeMIDIProcessor, str)
-        self.assertIsInstance(
-            AVFoundation.AVAudioUnitManufacturerNameApple, str
-        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVAudioUnitManufacturerNameApple, str)  # noqa: B950
 
         self.assertIsInstance(
             AVFoundation.AVAudioUnitComponentTagsDidChangeNotification, str

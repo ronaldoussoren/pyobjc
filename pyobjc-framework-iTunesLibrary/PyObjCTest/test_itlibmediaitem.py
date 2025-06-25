@@ -61,9 +61,7 @@ class TestITMediaItem(TestCase):
         )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertySortAlbumArtist, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumIsGapless, str)
-        self.assertIsInstance(
-            iTunesLibrary.ITLibMediaItemPropertyAlbumIsCompilation, str
-        )
+        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumIsCompilation, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumDiscCount, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumDiscNumber, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumTrackCount, str)
@@ -76,9 +74,7 @@ class TestITMediaItem(TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVideoSortSeries, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVideoSeason, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVideoEpisode, str)
-        self.assertIsInstance(
-            iTunesLibrary.ITLibMediaItemPropertyVideoEpisodeOrder, str
-        )
+        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVideoEpisodeOrder, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyHasArtwork, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyBitRate, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyBeatsPerMinute, str)
@@ -128,9 +124,7 @@ class TestITMediaItem(TestCase):
 
     # @max_os_level("13.99")
     def test_constants_removed_in_14_0(self):
-        self.assertIsInstance(
-            iTunesLibrary.ITLibMediaItemPropertyVoiceOverLanguage, str
-        )
+        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVoiceOverLanguage, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):

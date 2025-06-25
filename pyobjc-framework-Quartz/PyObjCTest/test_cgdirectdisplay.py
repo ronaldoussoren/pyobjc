@@ -30,9 +30,7 @@ class TestCGDirectDisplay(TestCase):
         self.assertEqual(Quartz.kCGDisplayBitsPerSample, "BitsPerSample")
         self.assertEqual(Quartz.kCGDisplaySamplesPerPixel, "SamplesPerPixel")
         self.assertEqual(Quartz.kCGDisplayRefreshRate, "RefreshRate")
-        self.assertEqual(
-            Quartz.kCGDisplayModeUsableForDesktopGUI, "UsableForDesktopGUI"
-        )
+        self.assertEqual(Quartz.kCGDisplayModeUsableForDesktopGUI, "UsableForDesktopGUI")
         self.assertEqual(Quartz.kCGDisplayIOFlags, "IOFlags")
         self.assertEqual(Quartz.kCGDisplayBytesPerRow, "kCGDisplayBytesPerRow")
         self.assertEqual(Quartz.kCGIODisplayModeID, "IODisplayModeID")
@@ -40,9 +38,7 @@ class TestCGDirectDisplay(TestCase):
         self.assertEqual(
             Quartz.kCGDisplayModeIsSafeForHardware, "kCGDisplayModeIsSafeForHardware"
         )
-        self.assertEqual(
-            Quartz.kCGDisplayModeIsInterlaced, "kCGDisplayModeIsInterlaced"
-        )
+        self.assertEqual(Quartz.kCGDisplayModeIsInterlaced, "kCGDisplayModeIsInterlaced")
         self.assertEqual(Quartz.kCGDisplayModeIsStretched, "kCGDisplayModeIsStretched")
         self.assertEqual(
             Quartz.kCGDisplayModeIsTelevisionOutput, "kCGDisplayModeIsTelevisionOutput"

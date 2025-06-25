@@ -7,6 +7,7 @@ dynamic features in Objective-C (e.g. method swifling).
 Don't worry too much about formatting, the output will get
 reformatted by black and clang-format.
 """
+
 import pathlib
 import textwrap
 import itertools

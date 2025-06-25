@@ -22,9 +22,7 @@ class TestNSXMLNodeOptions(TestCase):
         self.assertEqual(Foundation.NSXMLDocumentValidate, 1 << 13)
 
         self.assertEqual(Foundation.NSXMLNodeLoadExternalEntitiesAlways, 1 << 14)
-        self.assertEqual(
-            Foundation.NSXMLNodeLoadExternalEntitiesSameOriginOnly, 1 << 15
-        )
+        self.assertEqual(Foundation.NSXMLNodeLoadExternalEntitiesSameOriginOnly, 1 << 15)
         self.assertEqual(Foundation.NSXMLNodeLoadExternalEntitiesNever, 1 << 19)
 
         self.assertEqual(Foundation.NSXMLDocumentXInclude, 1 << 16)

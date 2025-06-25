@@ -28,8 +28,7 @@ objc.registerMetaDataForSelector(
     b"formatUUID2:",
     {
         "arguments": {
-            2
-            + 0: {
+            2 + 0: {
                 "type_modifier": objc._C_OUT,
             }
         }

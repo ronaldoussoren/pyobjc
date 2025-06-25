@@ -6,9 +6,7 @@ from objc import simd
 class TestVNObservation(TestCase):
     def test_constants(self):
         self.assertIsEnumType(Vision.VNHumanBodyPose3DObservationHeightEstimation)
-        self.assertEqual(
-            Vision.VNHumanBodyPose3DObservationHeightEstimationReference, 0
-        )
+        self.assertEqual(Vision.VNHumanBodyPose3DObservationHeightEstimationReference, 0)
         self.assertEqual(Vision.VNHumanBodyPose3DObservationHeightEstimationMeasured, 1)
 
     @min_os_level("11.0")

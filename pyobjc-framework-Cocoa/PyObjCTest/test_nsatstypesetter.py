@@ -37,9 +37,7 @@ class TestNSATSTypesetterHelper(AppKit.NSATSTypesetter):
     ):
         pass
 
-    def setLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(
-        self, v1, v2, v3, v4
-    ):
+    def setLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(self, v1, v2, v3, v4):
         pass
 
     def substituteGlyphsInRange_withGlyphs_(self, v1, v2):
@@ -80,9 +78,7 @@ class TestNSATSTypesetter(TestCase):
         )
 
         o = TestNSATSTypesetterHelper.alloc().init()
-        m = (
-            o.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_.__metadata__()
-        )
+        m = o.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_.__metadata__()
         self.assertStartswith(m["arguments"][2]["type"], b"N^{")
         self.assertStartswith(m["arguments"][4]["type"], b"N^{")
         self.assertStartswith(m["arguments"][5]["type"], b"N^" + objc._C_CGFloat)
@@ -108,9 +104,7 @@ class TestNSATSTypesetter(TestCase):
         self.assertArgIsBOOL(AppKit.NSATSTypesetter.setUsesFontLeading_, 0)
         self.assertResultIsBOOL(AppKit.NSATSTypesetter.bidiProcessingEnabled)
         self.assertArgIsBOOL(AppKit.NSATSTypesetter.setBidiProcessingEnabled_, 0)
-        self.assertArgIsBOOL(
-            AppKit.NSATSTypesetter.setHardInvalidation_forGlyphRange_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSATSTypesetter.setHardInvalidation_forGlyphRange_, 0)
         self.assertArgIsBOOL(
             AppKit.NSATSTypesetter.setNotShownAttribute_forGlyphRange_, 0
         )
@@ -126,16 +120,10 @@ class TestNSATSTypesetter(TestCase):
             1,
             2,
         )
-        self.assertArgSizeInArg(
-            AppKit.NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1
-        )
-        self.assertArgSizeInArg(
-            AppKit.NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1
-        )
+        self.assertArgSizeInArg(AppKit.NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
+        self.assertArgSizeInArg(AppKit.NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
 
-        self.assertArgIsIn(
-            AppKit.NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1
-        )
+        self.assertArgIsIn(AppKit.NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1)
         self.assertArgSizeInArg(
             AppKit.NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0
         )

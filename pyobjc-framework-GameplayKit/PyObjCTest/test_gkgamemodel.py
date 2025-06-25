@@ -39,9 +39,7 @@ class TestGKGameModel(TestCase):
         self.assertResultHasType(TestGKGameModelHelper.playerId, objc._C_NSInteger)
         self.assertArgHasType(TestGKGameModelHelper.setPlayerId_, 0, objc._C_NSInteger)
 
-        self.assertResultHasType(
-            TestGKGameModelHelper.scoreForPlayer_, objc._C_NSInteger
-        )
+        self.assertResultHasType(TestGKGameModelHelper.scoreForPlayer_, objc._C_NSInteger)
         self.assertResultIsBOOL(TestGKGameModelHelper.isWinForPlayer_)
         self.assertResultIsBOOL(TestGKGameModelHelper.isLossForPlayer_)
 

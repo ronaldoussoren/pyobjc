@@ -185,9 +185,7 @@ class TestFunctionList(TestCase):
     def test_missing_function(self):
         d = {}
 
-        with self.assertRaisesRegex(
-            objc.error, "cannot find function 'nosuchfunction'"
-        ):
+        with self.assertRaisesRegex(objc.error, "cannot find function 'nosuchfunction'"):
             objc.loadFunctionList(function_list, d, [("nosuchfunction", b"v")], False)
         self.assertEqual(d, {})
 

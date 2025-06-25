@@ -77,18 +77,14 @@ class TestBEAccessibility(TestCase):
         self.assertEqual(
             BrowserEngineKit.BEAccessibilityContainerTypeSemanticGroup, 1 << 8
         )
-        self.assertEqual(
-            BrowserEngineKit.BEAccessibilityContainerTypeScrollArea, 1 << 9
-        )
+        self.assertEqual(BrowserEngineKit.BEAccessibilityContainerTypeScrollArea, 1 << 9)
         self.assertEqual(BrowserEngineKit.BEAccessibilityContainerTypeAlert, 1 << 10)
         self.assertEqual(
             BrowserEngineKit.BEAccessibilityContainerTypeDescriptionList, 1 << 11
         )
 
     def test_methods(self):
-        self.assertResultIsBOOL(
-            TestBEAccessibilityHelper.browserAccessibilityIsRequired
-        )
+        self.assertResultIsBOOL(TestBEAccessibilityHelper.browserAccessibilityIsRequired)
         self.assertArgIsBOOL(
             TestBEAccessibilityHelper.setBrowserAccessibilityIsRequired_, 0
         )
@@ -101,9 +97,7 @@ class TestBEAccessibility(TestCase):
             0,
             objc._C_NSInteger,
         )
-        self.assertResultIsBOOL(
-            TestBEAccessibilityHelper.browserAccessibilityHasDOMFocus
-        )
+        self.assertResultIsBOOL(TestBEAccessibilityHelper.browserAccessibilityHasDOMFocus)
         self.assertArgIsBOOL(
             TestBEAccessibilityHelper.setBrowserAccessibilityHasDOMFocus_, 0
         )

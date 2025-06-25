@@ -210,12 +210,8 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCCity, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCSubLocation, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCProvinceState, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCCountryPrimaryLocationCode, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCCountryPrimaryLocationName, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCCountryPrimaryLocationCode, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCCountryPrimaryLocationName, str)
         self.assertIsInstance(
             Quartz.kCGImagePropertyIPTCOriginalTransmissionReference, str
         )
@@ -409,9 +405,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyDNGBaselineSharpness, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGPrivateData, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGCameraCalibrationSignature, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyDNGProfileCalibrationSignature, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyDNGProfileCalibrationSignature, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGNoiseProfile, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGWarpRectilinear, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGWarpFisheye, str)
@@ -449,14 +443,10 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAboutCvTermCvId, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAboutCvTermId, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAboutCvTermName, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtAboutCvTermRefinedAbout, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAboutCvTermRefinedAbout, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAddlModelInfo, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkOrObject, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtArtworkCircaDateCreated, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkCircaDateCreated, str)
         self.assertIsInstance(
             Quartz.kCGImagePropertyIPTCExtArtworkContentDescription, str
         )
@@ -466,9 +456,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkCopyrightNotice, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkCreator, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkCreatorID, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtArtworkCopyrightOwnerID, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkCopyrightOwnerID, str)
         self.assertIsInstance(
             Quartz.kCGImagePropertyIPTCExtArtworkCopyrightOwnerName, str
         )
@@ -479,9 +467,7 @@ class TestCGImageProperties(TestCase):
             Quartz.kCGImagePropertyIPTCExtArtworkPhysicalDescription, str
         )
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkSource, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtArtworkSourceInventoryNo, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkSourceInventoryNo, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkSourceInvURL, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkStylePeriod, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtArtworkTitle, str)
@@ -503,9 +489,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtCreatorIdentifier, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtCreatorName, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtCreatorRole, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtControlledVocabularyTerm, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtControlledVocabularyTerm, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtDataOnScreen, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtDataOnScreenRegion, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtDataOnScreenRegionD, str)
@@ -548,15 +532,11 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtGenreCvId, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtGenreCvTermId, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtGenreCvTermName, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtGenreCvTermRefinedAbout, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtGenreCvTermRefinedAbout, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtHeadline, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtIPTCLastEdited, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtLinkedEncRightsExpr, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtLinkedEncodedRightsExpr, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtLinkedEncodedRightsExpr, str)
         self.assertIsInstance(
             Quartz.kCGImagePropertyIPTCExtLinkedEncodedRightsExprType, str
         )
@@ -580,12 +560,8 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtMaxAvailHeight, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtMaxAvailWidth, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtModelAge, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtOrganisationInImageCode, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtOrganisationInImageName, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtOrganisationInImageCode, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtOrganisationInImageName, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtPersonHeard, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtPersonHeardIdentifier, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtPersonHeardName, str)
@@ -594,19 +570,13 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(
             Quartz.kCGImagePropertyIPTCExtPersonInImageCharacteristic, str
         )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtPersonInImageCvTermCvId, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtPersonInImageCvTermCvId, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtPersonInImageCvTermId, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtPersonInImageCvTermName, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtPersonInImageCvTermName, str)
         self.assertIsInstance(
             Quartz.kCGImagePropertyIPTCExtPersonInImageCvTermRefinedAbout, str
         )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtPersonInImageDescription, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtPersonInImageDescription, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtPersonInImageId, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtPersonInImageName, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtProductInImage, str)
@@ -624,35 +594,19 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRating, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRatingRegion, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionCity, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtRatingRegionCountryCode, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtRatingRegionCountryName, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtRatingRegionGPSAltitude, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtRatingRegionGPSLatitude, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtRatingRegionGPSLongitude, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionCountryCode, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionCountryName, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionGPSAltitude, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionGPSLatitude, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionGPSLongitude, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionIdentifier, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionLocationId, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtRatingRegionLocationName, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionLocationName, str)
         self.assertIsInstance(
             Quartz.kCGImagePropertyIPTCExtRatingRegionProvinceState, str
         )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtRatingRegionSublocation, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtRatingRegionWorldRegion, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionSublocation, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingRegionWorldRegion, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingScaleMaxValue, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingScaleMinValue, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtRatingSourceLink, str)
@@ -689,14 +643,10 @@ class TestCGImageProperties(TestCase):
         )
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtVideoBitrate, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtVideoBitrateMode, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtVideoDisplayAspectRatio, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtVideoDisplayAspectRatio, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtVideoEncodingProfile, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtVideoShotType, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyIPTCExtVideoShotTypeIdentifier, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtVideoShotTypeIdentifier, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtVideoShotTypeName, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtVideoStreamsCount, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtVisualColor, str)
@@ -745,9 +695,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyDNGOpcodeList1, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGOpcodeList2, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGOpcodeList3, str)
-        self.assertIsInstance(
-            Quartz.kCGImagePropertyDNGOriginalBestQualityFinalSize, str
-        )
+        self.assertIsInstance(Quartz.kCGImagePropertyDNGOriginalBestQualityFinalSize, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGOriginalDefaultCropSize, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGOriginalDefaultFinalSize, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGOriginalRawFileData, str)

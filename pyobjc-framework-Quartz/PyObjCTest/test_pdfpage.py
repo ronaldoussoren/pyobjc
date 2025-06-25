@@ -4,7 +4,6 @@ import Quartz
 
 
 class TestPDFPage(TestCase):
-
     def testConstants(self):
         self.assertIsEnumType(Quartz.PDFDisplayBox)
         self.assertEqual(Quartz.kPDFDisplayBoxMediaBox, 0)

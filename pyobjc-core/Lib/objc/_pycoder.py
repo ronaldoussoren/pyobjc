@@ -120,9 +120,7 @@ encode_dispatch = {}
 # serializer.
 
 
-def save_reduce(
-    coder, func, args, state=None, listitems=None, dictitems=None, obj=None
-):
+def save_reduce(coder, func, args, state=None, listitems=None, dictitems=None, obj=None):
     if not isinstance(args, tuple):
         raise PicklingError("args from reduce() should be a tuple")
 
@@ -559,7 +557,7 @@ def pyobjectEncode(self, coder):
     rv_len = len(rv)
     if not (2 <= rv_len <= 5):
         raise PicklingError(
-            "Tuple returned by %s must have two to " "five elements" % reduce
+            "Tuple returned by %s must have two to five elements" % reduce
         )
 
     save_reduce(coder, *rv)

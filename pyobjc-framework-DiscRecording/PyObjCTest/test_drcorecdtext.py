@@ -70,9 +70,7 @@ class TestDRCoreCDText(TestCase):
         self.assertIsInstance(DiscRecording.kDRCDTextSizeKey, str)
 
     def testFunctions(self):
-        self.assertResultIsCFRetained(
-            DiscRecording.DRCDTextBlockCreateArrayFromPackList
-        )
+        self.assertResultIsCFRetained(DiscRecording.DRCDTextBlockCreateArrayFromPackList)
 
         self.assertIsInstance(DiscRecording.DRCDTextBlockGetTypeID(), int)
 

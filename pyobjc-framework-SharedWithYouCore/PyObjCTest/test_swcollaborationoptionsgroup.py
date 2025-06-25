@@ -4,6 +4,4 @@ import SharedWithYouCore
 
 class TestSWCollaborationOptionsGroup(TestCase):
     def test_constants(self):
-        self.assertIsInstance(
-            SharedWithYouCore.UTCollaborationOptionsTypeIdentifier, str
-        )
+        self.assertIsInstance(SharedWithYouCore.UTCollaborationOptionsTypeIdentifier, str)

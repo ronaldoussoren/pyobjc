@@ -15,9 +15,7 @@ class TestVTFrameProcessor(TestCase):
         self.assertResultIsBOOL(
             VideoToolbox.VTFrameProcessor.processWithParameters_error_
         )
-        self.assertArgIsOut(
-            VideoToolbox.VTFrameProcessor.processWithParameters_error_, 1
-        )
+        self.assertArgIsOut(VideoToolbox.VTFrameProcessor.processWithParameters_error_, 1)
 
         self.assertArgIsBlock(
             VideoToolbox.VTFrameProcessor.processWithParameters_completionHandler_,

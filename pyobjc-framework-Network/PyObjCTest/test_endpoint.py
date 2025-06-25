@@ -43,9 +43,7 @@ class TestInterface(TestCase):
 
         self.assertResultIsNullTerminated(Network.nw_endpoint_get_bonjour_service_name)
         self.assertResultIsNullTerminated(Network.nw_endpoint_get_bonjour_service_type)
-        self.assertResultIsNullTerminated(
-            Network.nw_endpoint_get_bonjour_service_domain
-        )
+        self.assertResultIsNullTerminated(Network.nw_endpoint_get_bonjour_service_domain)
 
     @min_os_level("10.15")
     def test_functions10_15(self):

@@ -18,9 +18,7 @@ class TestGCMicroGamepadSnapshot(TestCase):
 
     @min_os_level("10.11")
     def testStructs(self):
-        self.assertEqual(
-            GameController.GCMicroGamepadSnapShotDataV100.__struct_pack__, 1
-        )
+        self.assertEqual(GameController.GCMicroGamepadSnapShotDataV100.__struct_pack__, 1)
 
         v = GameController.GCMicroGamepadSnapShotDataV100()
         self.assertIsInstance(v.version, int)

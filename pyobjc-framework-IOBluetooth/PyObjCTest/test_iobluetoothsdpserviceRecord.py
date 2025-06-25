@@ -6,9 +6,7 @@ import IOBluetooth
 class TestIOBluetoothSDPServiceRecord(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(IOBluetooth.IOBluetoothSDPServiceRecord.matchesUUID16_)
-        self.assertResultIsBOOL(
-            IOBluetooth.IOBluetoothSDPServiceRecord.matchesUUIDArray_
-        )
+        self.assertResultIsBOOL(IOBluetooth.IOBluetoothSDPServiceRecord.matchesUUIDArray_)
         self.assertResultIsBOOL(
             IOBluetooth.IOBluetoothSDPServiceRecord.matchesSearchArray_
         )

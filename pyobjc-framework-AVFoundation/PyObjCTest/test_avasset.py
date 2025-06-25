@@ -133,9 +133,7 @@ class TestAVAsset(TestCase):
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(AVFoundation.AVURLAssetAllowsCellularAccessKey, str)
-        self.assertIsInstance(
-            AVFoundation.AVURLAssetAllowsExpensiveNetworkAccessKey, str
-        )
+        self.assertIsInstance(AVFoundation.AVURLAssetAllowsExpensiveNetworkAccessKey, str)
         self.assertIsInstance(
             AVFoundation.AVURLAssetAllowsConstrainedNetworkAccessKey, str
         )

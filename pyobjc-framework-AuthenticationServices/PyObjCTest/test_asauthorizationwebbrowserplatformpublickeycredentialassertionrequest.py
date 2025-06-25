@@ -12,9 +12,7 @@ class TestASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequestHe
         pass
 
 
-class TestASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequest(
-    TestCase
-):
+class TestASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequest(TestCase):
     @min_sdk_level("14.0")
     def test_protocols(self):
         self.assertProtocolExists(

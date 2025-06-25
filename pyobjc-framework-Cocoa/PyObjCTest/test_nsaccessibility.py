@@ -88,12 +88,8 @@ class TestNSAccessibility(TestCase):
 
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertResultIsBOOL(
-            AppKit.NSWorkspace.accessibilityDisplayShouldReduceMotion
-        )
-        self.assertResultIsBOOL(
-            AppKit.NSWorkspace.accessibilityDisplayShouldInvertColors
-        )
+        self.assertResultIsBOOL(AppKit.NSWorkspace.accessibilityDisplayShouldReduceMotion)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.accessibilityDisplayShouldInvertColors)
 
     @min_os_level("10.10")
     def testFunctions10_10(self):
@@ -142,9 +138,7 @@ class TestNSAccessibility(TestCase):
         self.assertEqual(AppKit.NSAccessibilityUnitsPicas, 4)
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "Crash on 10.13, 10.14??",
     )
     @skipUnless(
@@ -152,18 +146,14 @@ class TestNSAccessibility(TestCase):
         "Crash on macOS 15 beta",
     )
     def testFunction(self):
-        v = AppKit.NSAccessibilityRoleDescription(
-            AppKit.NSAccessibilityButtonRole, None
-        )
+        v = AppKit.NSAccessibilityRoleDescription(AppKit.NSAccessibilityButtonRole, None)
         self.assertIsInstance(v, str)
 
         b = AppKit.NSButton.alloc().init()
         v = AppKit.NSAccessibilityRoleDescriptionForUIElement(b)
         self.assertIsInstance(v, str)
 
-        v = AppKit.NSAccessibilityActionDescription(
-            AppKit.NSAccessibilityIncrementAction
-        )
+        v = AppKit.NSAccessibilityActionDescription(AppKit.NSAccessibilityIncrementAction)
         self.assertIsInstance(v, str)
 
         self.assertRaises(
@@ -282,9 +272,7 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityForegroundColorTextAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityBackgroundColorTextAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityUnderlineColorTextAttribute, str)
-        self.assertIsInstance(
-            AppKit.NSAccessibilityStrikethroughColorTextAttribute, str
-        )
+        self.assertIsInstance(AppKit.NSAccessibilityStrikethroughColorTextAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityUnderlineTextAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilitySuperscriptTextAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityStrikethroughTextAttribute, str)
@@ -371,15 +359,11 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityShowMenuAction, str)
         self.assertIsInstance(AppKit.NSAccessibilityDeleteAction, str)
         self.assertIsInstance(AppKit.NSAccessibilityMainWindowChangedNotification, str)
-        self.assertIsInstance(
-            AppKit.NSAccessibilityFocusedWindowChangedNotification, str
-        )
+        self.assertIsInstance(AppKit.NSAccessibilityFocusedWindowChangedNotification, str)
         self.assertIsInstance(
             AppKit.NSAccessibilityFocusedUIElementChangedNotification, str
         )
-        self.assertIsInstance(
-            AppKit.NSAccessibilityApplicationActivatedNotification, str
-        )
+        self.assertIsInstance(AppKit.NSAccessibilityApplicationActivatedNotification, str)
         self.assertIsInstance(
             AppKit.NSAccessibilityApplicationDeactivatedNotification, str
         )
@@ -389,9 +373,7 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityWindowMovedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilityWindowResizedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilityWindowMiniaturizedNotification, str)
-        self.assertIsInstance(
-            AppKit.NSAccessibilityWindowDeminiaturizedNotification, str
-        )
+        self.assertIsInstance(AppKit.NSAccessibilityWindowDeminiaturizedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilityDrawerCreatedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilitySheetCreatedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilityUIElementDestroyedNotification, str)
@@ -401,16 +383,12 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityMovedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilityCreatedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilityHelpTagCreatedNotification, str)
-        self.assertIsInstance(
-            AppKit.NSAccessibilitySelectedTextChangedNotification, str
-        )
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedTextChangedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilityRowCountChangedNotification, str)
         self.assertIsInstance(
             AppKit.NSAccessibilitySelectedChildrenChangedNotification, str
         )
-        self.assertIsInstance(
-            AppKit.NSAccessibilitySelectedRowsChangedNotification, str
-        )
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedRowsChangedNotification, str)
         self.assertIsInstance(
             AppKit.NSAccessibilitySelectedColumnsChangedNotification, str
         )
@@ -494,9 +472,7 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilitySelectedCellsAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityVisibleCellsAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityRowHeaderUIElementsAttribute, str)
-        self.assertIsInstance(
-            AppKit.NSAccessibilityColumnHeaderUIElementsAttribute, str
-        )
+        self.assertIsInstance(AppKit.NSAccessibilityColumnHeaderUIElementsAttribute, str)
         self.assertIsInstance(
             AppKit.NSAccessibilityCellForColumnAndRowParameterizedAttribute, str
         )
@@ -507,9 +483,7 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(
             AppKit.NSAccessibilityHorizontalUnitDescriptionAttribute, str
         )
-        self.assertIsInstance(
-            AppKit.NSAccessibilityVerticalUnitDescriptionAttribute, str
-        )
+        self.assertIsInstance(AppKit.NSAccessibilityVerticalUnitDescriptionAttribute, str)
         self.assertIsInstance(
             AppKit.NSAccessibilityLayoutPointForScreenPointParameterizedAttribute, str
         )
@@ -525,9 +499,7 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityHandlesAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityRowExpandedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilityRowCollapsedNotification, str)
-        self.assertIsInstance(
-            AppKit.NSAccessibilitySelectedCellsChangedNotification, str
-        )
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedCellsChangedNotification, str)
         self.assertIsInstance(AppKit.NSAccessibilityUnitsChangedNotification, str)
         self.assertIsInstance(
             AppKit.NSAccessibilitySelectedChildrenMovedNotification, str

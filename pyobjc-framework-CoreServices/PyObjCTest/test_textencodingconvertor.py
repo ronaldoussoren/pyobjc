@@ -4,9 +4,7 @@ from PyObjCTools.TestSupport import TestCase, fourcc
 
 class TestTextEncodingConvertor(TestCase):
     def assert_not_wrapped(self, name):
-        self.assertTrue(
-            not hasattr(CoreServices, name), f"{name!r} exposed in bindings"
-        )
+        self.assertTrue(not hasattr(CoreServices, name), f"{name!r} exposed in bindings")
 
     def test_constants(self):
         self.assertEqual(CoreServices.kTECSignature, fourcc(b"encv"))
@@ -107,14 +105,10 @@ class TestTextEncodingConvertor(TestCase):
         self.assertArgSizeInArg(CoreServices.TECConvertTextToMultipleEncodings, 1, 2)
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 3)
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 4)
-        self.assertArgSizeInArg(
-            CoreServices.TECConvertTextToMultipleEncodings, 4, (5, 6)
-        )
+        self.assertArgSizeInArg(CoreServices.TECConvertTextToMultipleEncodings, 4, (5, 6))
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 6)
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 7)
-        self.assertArgSizeInArg(
-            CoreServices.TECConvertTextToMultipleEncodings, 7, (8, 9)
-        )
+        self.assertArgSizeInArg(CoreServices.TECConvertTextToMultipleEncodings, 7, (8, 9))
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 9)
 
         self.assertArgIsOut(CoreServices.TECFlushMultipleEncodings, 1)
@@ -160,9 +154,7 @@ class TestTextEncodingConvertor(TestCase):
         CoreServices.TECSetBasicOptions
 
         self.assertArgIsOut(CoreServices.TECCopyTextEncodingInternetNameAndMIB, 2)
-        self.assertArgIsCFRetained(
-            CoreServices.TECCopyTextEncodingInternetNameAndMIB, 2
-        )
+        self.assertArgIsCFRetained(CoreServices.TECCopyTextEncodingInternetNameAndMIB, 2)
         self.assertArgIsOut(CoreServices.TECCopyTextEncodingInternetNameAndMIB, 3)
 
         self.assertArgIsOut(CoreServices.TECGetTextEncodingFromInternetNameOrMIB, 0)

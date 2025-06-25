@@ -6,9 +6,7 @@ class TestNSGestureRecognizerHelper(AppKit.NSObject):
     def gestureRecognizerShouldBegin_(self, g):
         return 1
 
-    def gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_(
-        self, g, a
-    ):
+    def gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_(self, g, a):
         return 1
 
     def gestureRecognizer_shouldRequireFailureOfGestureRecognizer_(self, g, a):
@@ -42,16 +40,12 @@ class TestNSGestureRecognizer(TestCase):
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertArgIsSEL(
-            AppKit.NSGestureRecognizer.initWithTarget_action_, 1, b"v@:@"
-        )
+        self.assertArgIsSEL(AppKit.NSGestureRecognizer.initWithTarget_action_, 1, b"v@:@")
         self.assertArgIsSEL(AppKit.NSGestureRecognizer.setAction_, 0, b"v@:@")
         self.assertResultIsBOOL(AppKit.NSGestureRecognizer.isEnabled)
         self.assertArgIsBOOL(AppKit.NSGestureRecognizer.setEnabled_, 0)
 
-        self.assertResultIsBOOL(
-            AppKit.NSGestureRecognizer.delaysPrimaryMouseButtonEvents
-        )
+        self.assertResultIsBOOL(AppKit.NSGestureRecognizer.delaysPrimaryMouseButtonEvents)
         self.assertResultIsBOOL(
             AppKit.NSGestureRecognizer.delaysSecondaryMouseButtonEvents
         )
@@ -70,9 +64,7 @@ class TestNSGestureRecognizer(TestCase):
             AppKit.NSGestureRecognizer.setDelaysOtherMouseButtonEvents_, 0
         )
         self.assertArgIsBOOL(AppKit.NSGestureRecognizer.setDelaysKeyEvents_, 0)
-        self.assertArgIsBOOL(
-            AppKit.NSGestureRecognizer.setDelaysMagnificationEvents_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSGestureRecognizer.setDelaysMagnificationEvents_, 0)
         self.assertArgIsBOOL(AppKit.NSGestureRecognizer.setDelaysRotationEvents_, 0)
 
         self.assertResultIsBOOL(AppKit.NSGestureRecognizer.canPreventGestureRecognizer_)

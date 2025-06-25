@@ -123,9 +123,7 @@ class TestMEFormatReader(TestCase):
             MediaExtension.MEFileInfoCouldContainButDoesNotContainFragments, 2
         )
 
-        self.assertIsEnumType(
-            MediaExtension.MEFormatReaderParseAdditionalFragmentsStatus
-        )
+        self.assertIsEnumType(MediaExtension.MEFormatReaderParseAdditionalFragmentsStatus)
         self.assertEqual(
             MediaExtension.MEFormatReaderParseAdditionalFragmentsStatusSizeIncreased,
             1 << 0,

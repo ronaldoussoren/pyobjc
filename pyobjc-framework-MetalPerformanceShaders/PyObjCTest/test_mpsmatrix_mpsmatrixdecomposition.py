@@ -9,12 +9,8 @@ class TestMPSMatrix_MPSMatrixDecomposition(TestCase):
 
     def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSMatrixDecompositionStatusSuccess, 0)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSMatrixDecompositionStatusFailure, -1
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSMatrixDecompositionStatusSingular, -2
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSMatrixDecompositionStatusFailure, -1)
+        self.assertEqual(MetalPerformanceShaders.MPSMatrixDecompositionStatusSingular, -2)
         self.assertEqual(
             MetalPerformanceShaders.MPSMatrixDecompositionStatusNonPositiveDefinite, -3
         )

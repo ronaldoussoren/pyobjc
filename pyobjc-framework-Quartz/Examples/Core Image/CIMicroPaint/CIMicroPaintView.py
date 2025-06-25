@@ -33,18 +33,13 @@ class CIMicroPaintView(SampleCIView):
         ):
             self.brushFilter.setValue_forKey_(v, k)
 
-        self.compositeFilter = Quartz.CIFilter.filterWithName_(
-            "CISourceOverCompositing"
-        )
+        self.compositeFilter = Quartz.CIFilter.filterWithName_("CISourceOverCompositing")
         self.compositeFilter.setDefaults()
 
         return self
 
     def viewBoundsDidChange_(self, bounds):
-        if (
-            self.imageAccumulator is not None
-            and bounds == self.imageAccumulator.extent()
-        ):
+        if self.imageAccumulator is not None and bounds == self.imageAccumulator.extent():
             print("Nothing changed")
             return
 

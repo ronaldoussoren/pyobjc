@@ -38,9 +38,7 @@ class TestAXVAlue(TestCase):
             self.assertIs(ok, True)
             self.assertEqual(res, (1, 2))
 
-            ok, res = HIServices.AXValueGetValue(
-                val, HIServices.kAXValueTypeCGSize, None
-            )
+            ok, res = HIServices.AXValueGetValue(val, HIServices.kAXValueTypeCGSize, None)
             self.assertIs(ok, False)
             self.assertIs(res, None)
 
@@ -51,9 +49,7 @@ class TestAXVAlue(TestCase):
             val = HIServices.AXValueCreate(HIServices.kAXValueTypeCGSize, (1, 2))
             self.assertIsInstance(val, HIServices.AXValueRef)
 
-            ok, res = HIServices.AXValueGetValue(
-                val, HIServices.kAXValueTypeCGSize, None
-            )
+            ok, res = HIServices.AXValueGetValue(val, HIServices.kAXValueTypeCGSize, None)
             self.assertIs(ok, True)
             self.assertEqual(res, (1, 2))
 
@@ -72,9 +68,7 @@ class TestAXVAlue(TestCase):
             )
             self.assertIsInstance(val, HIServices.AXValueRef)
 
-            ok, res = HIServices.AXValueGetValue(
-                val, HIServices.kAXValueTypeCGRect, None
-            )
+            ok, res = HIServices.AXValueGetValue(val, HIServices.kAXValueTypeCGRect, None)
             self.assertIs(ok, True)
             self.assertEqual(res, ((1, 2), (3, 4)))
 
@@ -97,9 +91,7 @@ class TestAXVAlue(TestCase):
             self.assertIs(ok, True)
             self.assertEqual(res, (1, 2))
 
-            ok, res = HIServices.AXValueGetValue(
-                val, HIServices.kAXValueTypeCGSize, None
-            )
+            ok, res = HIServices.AXValueGetValue(val, HIServices.kAXValueTypeCGSize, None)
             self.assertIs(ok, False)
             self.assertIs(res, None)
 

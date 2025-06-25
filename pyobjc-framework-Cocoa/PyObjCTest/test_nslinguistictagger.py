@@ -13,9 +13,7 @@ class TestNSLinguisticTagger(TestCase):
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeTokenType, str)
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeLexicalClass, str)
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeNameType, str)
-        self.assertIsInstance(
-            Foundation.NSLinguisticTagSchemeNameTypeOrLexicalClass, str
-        )
+        self.assertIsInstance(Foundation.NSLinguisticTagSchemeNameTypeOrLexicalClass, str)
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeLemma, str)
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeLanguage, str)
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeScript, str)

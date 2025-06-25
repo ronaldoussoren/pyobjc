@@ -206,9 +206,7 @@ class TestURL(TestCase):
         strval = CoreFoundation.CFURLGetString(url)
         self.assertEqual(strval, "filename2")
 
-        ok, strval = CoreFoundation.CFURLGetFileSystemRepresentation(
-            url, True, None, 100
-        )
+        ok, strval = CoreFoundation.CFURLGetFileSystemRepresentation(url, True, None, 100)
         self.assertTrue(ok)
 
         # Unfortunately metadata doesn't allow describing what we actually need
@@ -345,9 +343,7 @@ class TestURL(TestCase):
         )
         self.assertEqual(strval, "http://www.omroep.nl/sport%20en%20%73%70el")
 
-        strval = CoreFoundation.CFURLCreateStringByReplacingPercentEscapes(
-            None, base, ""
-        )
+        strval = CoreFoundation.CFURLCreateStringByReplacingPercentEscapes(None, base, "")
         self.assertEqual(strval, "http://www.omroep.nl/sport en spel")
 
         strval = CoreFoundation.CFURLCreateStringByReplacingPercentEscapes(
@@ -426,9 +422,7 @@ class TestURL(TestCase):
             self.assertEqual(err, None)
 
             self.assertResultIsBOOL(CoreFoundation.CFURLCopyResourcePropertyForKey)
-            self.assertArgIsCFRetained(
-                CoreFoundation.CFURLCopyResourcePropertyForKey, 2
-            )
+            self.assertArgIsCFRetained(CoreFoundation.CFURLCopyResourcePropertyForKey, 2)
             self.assertArgIsOut(CoreFoundation.CFURLCopyResourcePropertyForKey, 2)
             self.assertArgIsOut(CoreFoundation.CFURLCopyResourcePropertyForKey, 3)
             ok, value, error = CoreFoundation.CFURLCopyResourcePropertyForKey(
@@ -549,9 +543,7 @@ class TestURL(TestCase):
             self.assertIs(err, None)
             self.assertTrue(os.path.exists("/tmp/pyobjc.test.2"))
 
-            self.assertResultIsCFRetained(
-                CoreFoundation.CFURLCreateBookmarkDataFromFile
-            )
+            self.assertResultIsCFRetained(CoreFoundation.CFURLCreateBookmarkDataFromFile)
             n, err = CoreFoundation.CFURLCreateBookmarkDataFromFile(None, refURL, None)
             self.assertIsInstance(n, CoreFoundation.CFDataRef)
             self.assertIs(err, None)
@@ -576,9 +568,7 @@ class TestURL(TestCase):
 
     @min_os_level("10.8")
     def testFunctions10_8(self):
-        self.assertResultIsBOOL(
-            CoreFoundation.CFURLStartAccessingSecurityScopedResource
-        )
+        self.assertResultIsBOOL(CoreFoundation.CFURLStartAccessingSecurityScopedResource)
         CoreFoundation.CFURLStopAccessingSecurityScopedResource
 
     @min_os_level("10.8")
@@ -588,9 +578,7 @@ class TestURL(TestCase):
         self.assertIsInstance(CoreFoundation.kCFURLPathKey, str)
 
         self.assertEqual(CoreFoundation.kCFBookmarkResolutionWithoutUIMask, 1 << 8)
-        self.assertEqual(
-            CoreFoundation.kCFBookmarkResolutionWithoutMountingMask, 1 << 9
-        )
+        self.assertEqual(CoreFoundation.kCFBookmarkResolutionWithoutMountingMask, 1 << 9)
         self.assertEqual(
             CoreFoundation.kCFURLBookmarkResolutionWithSecurityScope, 1 << 10
         )
@@ -605,9 +593,7 @@ class TestURL(TestCase):
         self.assertIsInstance(
             CoreFoundation.kCFURLUbiquitousItemDownloadingStatusKey, str
         )
-        self.assertIsInstance(
-            CoreFoundation.kCFURLUbiquitousItemDownloadingErrorKey, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemDownloadingErrorKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemUploadingErrorKey, str)
         self.assertIsInstance(
             CoreFoundation.kCFURLUbiquitousItemDownloadingStatusNotDownloaded, str
@@ -684,16 +670,12 @@ class TestURL(TestCase):
         self.assertEqual(
             CoreFoundation.kCFURLBookmarkCreationPreferFileIDResolutionMask, 1 << 8
         )
-        self.assertEqual(
-            CoreFoundation.kCFURLBookmarkCreationMinimalBookmarkMask, 1 << 9
-        )
+        self.assertEqual(CoreFoundation.kCFURLBookmarkCreationMinimalBookmarkMask, 1 << 9)
         self.assertEqual(
             CoreFoundation.kCFURLBookmarkCreationSuitableForBookmarkFile, 1 << 10
         )
         self.assertEqual(CoreFoundation.kCFBookmarkResolutionWithoutUIMask, 1 << 8)
-        self.assertEqual(
-            CoreFoundation.kCFBookmarkResolutionWithoutMountingMask, 1 << 9
-        )
+        self.assertEqual(CoreFoundation.kCFBookmarkResolutionWithoutMountingMask, 1 << 9)
 
         self.assertEqual(CoreFoundation.kCFURLBookmarkResolutionWithoutUIMask, 1 << 8)
         self.assertEqual(
@@ -702,9 +684,7 @@ class TestURL(TestCase):
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(
-            CoreFoundation.kCFURLBookmarkCreationWithSecurityScope, 1 << 11
-        )
+        self.assertEqual(CoreFoundation.kCFURLBookmarkCreationWithSecurityScope, 1 << 11)
         self.assertEqual(
             CoreFoundation.kCFURLBookmarkCreationSecurityScopeAllowOnlyReadAccess,
             1 << 12,
@@ -726,9 +706,7 @@ class TestURL(TestCase):
         self.assertIsInstance(CoreFoundation.kCFURLFileSecurityKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeNamedPipe, str)
-        self.assertIsInstance(
-            CoreFoundation.kCFURLFileResourceTypeCharacterSpecial, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeCharacterSpecial, str)
         self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeDirectory, str)
         self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeBlockSpecial, str)
         self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeRegular, str)
@@ -746,9 +724,7 @@ class TestURL(TestCase):
         self.assertIsInstance(
             CoreFoundation.kCFURLVolumeSupportsAdvisoryFileLockingKey, str
         )
-        self.assertIsInstance(
-            CoreFoundation.kCFURLVolumeSupportsExtendedSecurityKey, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsExtendedSecurityKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLVolumeIsBrowsableKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLVolumeMaximumFileSizeKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLVolumeIsEjectableKey, str)
@@ -773,9 +749,7 @@ class TestURL(TestCase):
         self.assertIsInstance(
             CoreFoundation.kCFURLUbiquitousItemPercentDownloadedKey, str
         )
-        self.assertIsInstance(
-            CoreFoundation.kCFURLUbiquitousItemPercentUploadedKey, str
-        )
+        self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemPercentUploadedKey, str)
 
     @min_os_level("10.12")
     def testConstants10_12(self):

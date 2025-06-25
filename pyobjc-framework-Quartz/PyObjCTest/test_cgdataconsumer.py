@@ -49,9 +49,7 @@ class TestCGDataConsumer(TestCase):
         consumer = Quartz.CGDataConsumerCreate(output, (putBytes, release))
         self.assertIsInstance(consumer, Quartz.CGDataConsumerRef)
 
-        ctx = Quartz.CGPDFContextCreate(
-            consumer, Quartz.CGRectMake(0, 0, 500, 500), None
-        )
+        ctx = Quartz.CGPDFContextCreate(consumer, Quartz.CGRectMake(0, 0, 500, 500), None)
         self.assertIsInstance(ctx, Quartz.CGContextRef)
         Quartz.CGContextBeginPage(ctx, None)
         Quartz.CGContextFillRect(ctx, ((10, 10), (50, 30)))

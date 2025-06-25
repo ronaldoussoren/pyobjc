@@ -301,26 +301,20 @@ class TestReleasePoolManagement(TestCase):
 
     def test_machinery(self):
         record = []
-        v = OC_ReleasePool_Recorder.alloc().initWithCallback_(
-            lambda: record.append(True)
-        )
+        v = OC_ReleasePool_Recorder.alloc().initWithCallback_(lambda: record.append(True))
         self.assertEqual(record, [])
         del v
         self.assertEqual(record, [True])
 
     @skipUnless(
-        not (
-            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")),
         "crashes on 10.14???",
     )
     @no_autorelease_pool
     def test_manual_recycle(self):
         objc.recycleAutoreleasePool()
         record = []
-        v = OC_ReleasePool_Recorder.alloc().initWithCallback_(
-            lambda: record.append(True)
-        )
+        v = OC_ReleasePool_Recorder.alloc().initWithCallback_(lambda: record.append(True))
         self.assertEqual(record, [])
         v.retain()
         v.autorelease()
@@ -368,9 +362,7 @@ class TestReleasePoolManagement(TestCase):
         self.assertTrue(objc._haveAutoreleasePool())
 
     @skipUnless(
-        not (
-            os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.14") <= os_level_key(os_release()) < os_level_key("10.15")),
         "crashes on 10.14???",
     )
     @no_autorelease_pool
@@ -381,9 +373,7 @@ class TestReleasePoolManagement(TestCase):
 
         objc.recycleAutoreleasePool()
         record = []
-        v = OC_ReleasePool_Recorder.alloc().initWithCallback_(
-            lambda: record.append(True)
-        )
+        v = OC_ReleasePool_Recorder.alloc().initWithCallback_(lambda: record.append(True))
         self.assertEqual(record, [])
         v.retain()
         v.autorelease()

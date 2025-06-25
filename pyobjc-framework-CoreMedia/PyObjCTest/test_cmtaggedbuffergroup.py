@@ -57,8 +57,6 @@ class TestCMTaggedBufferGroup(TestCase):
         )
 
         self.assertArgIsOut(CoreMedia.CMSampleBufferCreateForTaggedBufferGroup, 5)
-        self.assertArgIsCFRetained(
-            CoreMedia.CMSampleBufferCreateForTaggedBufferGroup, 5
-        )
+        self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateForTaggedBufferGroup, 5)
 
         CoreMedia.CMSampleBufferGetTaggedBufferGroup

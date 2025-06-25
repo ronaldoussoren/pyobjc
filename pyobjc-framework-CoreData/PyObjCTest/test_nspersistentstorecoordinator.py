@@ -27,9 +27,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         self.assertIsInstance(CoreData.NSPersistentStoreTimeoutOption, str)
         self.assertIsInstance(CoreData.NSSQLitePragmasOption, str)
         self.assertIsInstance(CoreData.NSIgnorePersistentStoreVersioningOption, str)
-        self.assertIsInstance(
-            CoreData.NSMigratePersistentStoresAutomaticallyOption, str
-        )
+        self.assertIsInstance(CoreData.NSMigratePersistentStoresAutomaticallyOption, str)
         self.assertIsInstance(CoreData.NSStoreModelVersionHashesKey, str)
         self.assertIsInstance(CoreData.NSStoreModelVersionIdentifiersKey, str)
         self.assertIsInstance(CoreData.NSPersistentStoreOSCompatibility, str)
@@ -84,9 +82,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         self.assertIsInstance(
             CoreData.NSPersistentStoreCoordinatorStoresWillChangeNotification, str
         )
-        self.assertIsInstance(
-            CoreData.NSPersistentStoreUbiquitousTransitionTypeKey, str
-        )
+        self.assertIsInstance(CoreData.NSPersistentStoreUbiquitousTransitionTypeKey, str)
         self.assertIsInstance(CoreData.NSPersistentStoreUbiquitousPeerTokenOption, str)
         self.assertIsInstance(
             CoreData.NSPersistentStoreRemoveUbiquitousMetadataOption, str

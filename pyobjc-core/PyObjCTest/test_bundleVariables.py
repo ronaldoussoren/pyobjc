@@ -118,9 +118,7 @@ class TestBundleVariables(TestCase):
         self.assertIsNot(bundle, None)
 
         d = {}
-        objc.loadBundleVariables(
-            bundle, d, [("IOUSBHostVersionString", objc._C_CHARPTR)]
-        )
+        objc.loadBundleVariables(bundle, d, [("IOUSBHostVersionString", objc._C_CHARPTR)])
         self.assertIsInstance(d["IOUSBHostVersionString"], bytes)
 
         d = {}
@@ -130,9 +128,7 @@ class TestBundleVariables(TestCase):
         self.assertIsInstance(d["IOUSBHostVersionString"], bytes)
 
         # XXX: objc._loadConstant has a weird interface...
-        v = objc._loadConstant(
-            "IOUSBHostVersionString", objc._C_CHARPTR.decode(), False
-        )
+        v = objc._loadConstant("IOUSBHostVersionString", objc._C_CHARPTR.decode(), False)
         self.assertEqual(v, d["IOUSBHostVersionString"])
 
 

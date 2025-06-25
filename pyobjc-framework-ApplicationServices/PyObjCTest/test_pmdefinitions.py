@@ -106,9 +106,7 @@ class TestPMDefinitions(TestCase):
             PrintCore.kPMDocumentFormatDefault, "com.apple.documentformat.default"
         )
         self.assertEqual(PrintCore.kPMDocumentFormatPDF, "application/pdf")
-        self.assertEqual(
-            PrintCore.kPMDocumentFormatPostScript, "application/postscript"
-        )
+        self.assertEqual(PrintCore.kPMDocumentFormatPostScript, "application/postscript")
         self.assertEqual(
             PrintCore.kPMGraphicsContextDefault, "com.apple.graphicscontext.default"
         )

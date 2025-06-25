@@ -43,9 +43,7 @@ class TestMPSCore_MPSNDArray(TestCase):
             4,
         )
 
-        self.assertArgIsOut(
-            MetalPerformanceShaders.MPSNDArray.readBytes_strideBytes_, 0
-        )
+        self.assertArgIsOut(MetalPerformanceShaders.MPSNDArray.readBytes_strideBytes_, 0)
         self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSNDArray.readBytes_strideBytes_, 0
         )
@@ -54,15 +52,11 @@ class TestMPSCore_MPSNDArray(TestCase):
             MetalPerformanceShaders.MPSNDArray.readBytes_strideBytes_, 1
         )
 
-        self.assertArgIsIn(
-            MetalPerformanceShaders.MPSNDArray.writeBytes_strideBytes_, 0
-        )
+        self.assertArgIsIn(MetalPerformanceShaders.MPSNDArray.writeBytes_strideBytes_, 0)
         self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSNDArray.writeBytes_strideBytes_, 0
         )
-        self.assertArgIsIn(
-            MetalPerformanceShaders.MPSNDArray.writeBytes_strideBytes_, 1
-        )
+        self.assertArgIsIn(MetalPerformanceShaders.MPSNDArray.writeBytes_strideBytes_, 1)
         self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSNDArray.writeBytes_strideBytes_, 1
         )

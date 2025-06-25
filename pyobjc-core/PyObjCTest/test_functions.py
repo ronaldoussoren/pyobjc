@@ -113,9 +113,7 @@ class TestFunctions(TestCase):
         self.assertIn("NSClassFromString doc", NSClassFromString.__doc__)  # noqa: F821
 
     def test_no_instantation(self):
-        with self.assertRaisesRegex(
-            TypeError, "cannot create 'objc.function' instances"
-        ):
+        with self.assertRaisesRegex(TypeError, "cannot create 'objc.function' instances"):
             objc.function()
 
     def test_no_keywords(self):
@@ -272,7 +270,8 @@ class TestFunctions(TestCase):
         NSClassFromString("NSObject")  # noqa: F821
 
         self.assertEqual(
-            NSClassFromString.__metadata__()["deprecated"], 1005  # noqa: F821
+            NSClassFromString.__metadata__()["deprecated"],
+            1005,  # noqa: F821
         )
 
         with deprecation_warnings("10.4"):

@@ -25,9 +25,7 @@ class TestIoAPI(TestCase):
         self.assertResultHasType(dispatch.dispatch_write, objc._C_VOID)
         self.assertArgHasType(dispatch.dispatch_write, 0, objc._C_INT)
         self.assertArgHasType(dispatch.dispatch_write, 1, objc._C_ID)  # dispatch_data_t
-        self.assertArgHasType(
-            dispatch.dispatch_write, 2, objc._C_ID
-        )  # dispatch_queue_t
+        self.assertArgHasType(dispatch.dispatch_write, 2, objc._C_ID)  # dispatch_queue_t
         self.assertArgIsBlock(dispatch.dispatch_write, 3, b"v@i")
 
         self.assertResultIsRetained(dispatch.dispatch_io_create)
@@ -72,9 +70,7 @@ class TestIoAPI(TestCase):
         self.assertArgIsBlock(dispatch.dispatch_io_read, 4, dispatch_io_handler_t)
 
         self.assertResultHasType(dispatch.dispatch_io_write, objc._C_VOID)
-        self.assertArgHasType(
-            dispatch.dispatch_io_write, 0, objc._C_ID
-        )  # dispatch_io_t
+        self.assertArgHasType(dispatch.dispatch_io_write, 0, objc._C_ID)  # dispatch_io_t
         self.assertArgHasType(dispatch.dispatch_io_write, 1, objc._C_LNGLNG)
         self.assertArgHasType(
             dispatch.dispatch_io_write, 2, objc._C_ID
@@ -85,9 +81,7 @@ class TestIoAPI(TestCase):
         self.assertArgIsBlock(dispatch.dispatch_io_write, 4, dispatch_io_handler_t)
 
         self.assertResultHasType(dispatch.dispatch_io_close, objc._C_VOID)
-        self.assertArgHasType(
-            dispatch.dispatch_io_close, 0, objc._C_ID
-        )  # dispatch_io_t
+        self.assertArgHasType(dispatch.dispatch_io_close, 0, objc._C_ID)  # dispatch_io_t
         self.assertArgHasType(dispatch.dispatch_io_close, 1, objc._C_ULNG)
 
         self.assertResultHasType(dispatch.dispatch_io_barrier, objc._C_VOID)

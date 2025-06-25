@@ -47,9 +47,7 @@ class TesPHASETypes(TestCase):
         self.assertEqual(PHASE.PHASESoundEventErrorBadData, fourcc(b"PHtb"))
         self.assertEqual(PHASE.PHASESoundEventErrorInvalidInstance, fourcc(b"PHtc"))
         self.assertEqual(PHASE.PHASESoundEventErrorAPIMisuse, fourcc(b"PHtd"))
-        self.assertEqual(
-            PHASE.PHASESoundEventErrorSystemNotInitialized, fourcc(b"PHte")
-        )
+        self.assertEqual(PHASE.PHASESoundEventErrorSystemNotInitialized, fourcc(b"PHte"))
         self.assertEqual(PHASE.PHASESoundEventErrorOutOfMemory, fourcc(b"PHtf"))
 
         self.assertIsInstance(PHASE.PHASEAssetErrorDomain, str)

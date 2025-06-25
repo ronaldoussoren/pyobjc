@@ -20,9 +20,7 @@ class TestVTRAWProcessingSession(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTRAWProcessingParameterValueType_Integer, str
         )
-        self.assertIsInstance(
-            VideoToolbox.kVTRAWProcessingParameterValueType_Float, str
-        )
+        self.assertIsInstance(VideoToolbox.kVTRAWProcessingParameterValueType_Float, str)
         self.assertIsInstance(VideoToolbox.kVTRAWProcessingParameterValueType_List, str)
         self.assertIsInstance(
             VideoToolbox.kVTRAWProcessingParameterValueType_SubGroup, str

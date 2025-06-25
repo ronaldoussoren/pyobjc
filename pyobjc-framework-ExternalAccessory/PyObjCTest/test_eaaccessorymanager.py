@@ -8,9 +8,7 @@ class TestEAAccessoryManager(TestCase):
         self.assertIsEnumType(ExternalAccessory.EABluetoothAccessoryPickerErrorCode)
 
     def testConstants(self):
-        self.assertEqual(
-            ExternalAccessory.EABluetoothAccessoryPickerAlreadyConnected, 0
-        )
+        self.assertEqual(ExternalAccessory.EABluetoothAccessoryPickerAlreadyConnected, 0)
         self.assertEqual(ExternalAccessory.EABluetoothAccessoryPickerResultNotFound, 1)
         self.assertEqual(ExternalAccessory.EABluetoothAccessoryPickerResultCancelled, 2)
         self.assertEqual(ExternalAccessory.EABluetoothAccessoryPickerResultFailed, 3)
@@ -19,9 +17,7 @@ class TestEAAccessoryManager(TestCase):
             ExternalAccessory.EABluetoothAccessoryPickerErrorDomain, str
         )
         self.assertIsInstance(ExternalAccessory.EAAccessoryDidConnectNotification, str)
-        self.assertIsInstance(
-            ExternalAccessory.EAAccessoryDidDisconnectNotification, str
-        )
+        self.assertIsInstance(ExternalAccessory.EAAccessoryDidDisconnectNotification, str)
         self.assertIsInstance(ExternalAccessory.EAAccessoryKey, str)
 
     def testMethods(self):

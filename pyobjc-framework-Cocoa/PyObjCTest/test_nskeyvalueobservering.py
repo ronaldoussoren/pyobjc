@@ -79,6 +79,4 @@ class TestNSKeyValueObserving(TestCase):
         self.assertEqual(m["arguments"][4]["type"], b"^v")
 
     def testMethods(self):
-        self.assertResultIsBOOL(
-            Foundation.NSObject.automaticallyNotifiesObserversForKey_
-        )
+        self.assertResultIsBOOL(Foundation.NSObject.automaticallyNotifiesObserversForKey_)

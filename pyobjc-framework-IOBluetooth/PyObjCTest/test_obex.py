@@ -91,13 +91,9 @@ class TestOBEX(TestCase):
         self.assertEqual(IOBluetooth.kOBEXResponseCodeMultipleChoices, 0x30)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeMultipleChoicesWithFinalBit, 0xB0)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeMovedPermanently, 0x31)
-        self.assertEqual(
-            IOBluetooth.kOBEXResponseCodeMovedPermanentlyWithFinalBit, 0xB1
-        )
+        self.assertEqual(IOBluetooth.kOBEXResponseCodeMovedPermanentlyWithFinalBit, 0xB1)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeMovedTemporarily, 0x32)
-        self.assertEqual(
-            IOBluetooth.kOBEXResponseCodeMovedTemporarilyWithFinalBit, 0xB2
-        )
+        self.assertEqual(IOBluetooth.kOBEXResponseCodeMovedTemporarilyWithFinalBit, 0xB2)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeSeeOther, 0x33)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeSeeOtherWithFinalBit, 0xB3)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeNotModified, 0x34)
@@ -115,9 +111,7 @@ class TestOBEX(TestCase):
         self.assertEqual(IOBluetooth.kOBEXResponseCodeNotFound, 0x44)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeNotFoundWithFinalBit, 0xC4)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeMethodNotAllowed, 0x45)
-        self.assertEqual(
-            IOBluetooth.kOBEXResponseCodeMethodNotAllowedWithFinalBit, 0xC5
-        )
+        self.assertEqual(IOBluetooth.kOBEXResponseCodeMethodNotAllowedWithFinalBit, 0xC5)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeNotAcceptable, 0x46)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeNotAcceptableWithFinalBit, 0xC6)
         self.assertEqual(IOBluetooth.kOBEXResponseCodeProxyAuthenticationRequired, 0x47)
@@ -298,9 +292,7 @@ class TestOBEX(TestCase):
 
         self.assertEqual(IOBluetooth.kCharsetStringISO88591, b"CHARSET=ISO-8859-1")
         self.assertEqual(IOBluetooth.kCharsetStringUTF8, b"UTF-8")
-        self.assertEqual(
-            IOBluetooth.kEncodingStringQuotedPrintable, b"QUOTED-PRINTABLE"
-        )
+        self.assertEqual(IOBluetooth.kEncodingStringQuotedPrintable, b"QUOTED-PRINTABLE")
         self.assertEqual(IOBluetooth.kEncodingStringBase64, b"BASE-64")
         self.assertEqual(IOBluetooth.kEncodingString8Bit, b"8BIT")
 

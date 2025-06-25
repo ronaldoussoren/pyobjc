@@ -157,9 +157,7 @@ class TestMTLRenderPipeline(TestCase):
         )
 
         self.assertResultIsBOOL(
-            Metal.MTLMeshRenderPipelineDescriptor.alloc()
-            .init()
-            .isAlphaToCoverageEnabled
+            Metal.MTLMeshRenderPipelineDescriptor.alloc().init().isAlphaToCoverageEnabled
         )
         self.assertArgIsBOOL(
             Metal.MTLMeshRenderPipelineDescriptor.alloc()
@@ -172,9 +170,7 @@ class TestMTLRenderPipeline(TestCase):
             Metal.MTLMeshRenderPipelineDescriptor.alloc().init().isRasterizationEnabled
         )
         self.assertArgIsBOOL(
-            Metal.MTLMeshRenderPipelineDescriptor.alloc()
-            .init()
-            .setRasterizationEnabled_,
+            Metal.MTLMeshRenderPipelineDescriptor.alloc().init().setRasterizationEnabled_,
             0,
         )
 

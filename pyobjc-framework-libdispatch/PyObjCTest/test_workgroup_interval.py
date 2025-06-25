@@ -14,9 +14,7 @@ class TestWorkgroupIntervalAPI(TestCase):
 
         self.assertResultHasType(dispatch.os_workgroup_interval_update, objc._C_INT)
         self.assertArgHasType(dispatch.os_workgroup_interval_update, 0, objc._C_ID)
-        self.assertArgHasType(
-            dispatch.os_workgroup_interval_update, 1, objc._C_ULNG_LNG
-        )
+        self.assertArgHasType(dispatch.os_workgroup_interval_update, 1, objc._C_ULNG_LNG)
         self.assertArgHasType(dispatch.os_workgroup_interval_update, 2, objc._C_ID)
 
         self.assertResultHasType(dispatch.os_workgroup_interval_finish, objc._C_INT)

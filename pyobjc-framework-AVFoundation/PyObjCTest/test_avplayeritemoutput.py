@@ -8,9 +8,7 @@ class TestAVPlayerOutputHelper(AVFoundation.NSObject):
     ):
         pass
 
-    def renderedLegibleOutput_didOutputRenderedCaptionImages_forItemTime_(
-        self, a, b, c
-    ):
+    def renderedLegibleOutput_didOutputRenderedCaptionImages_forItemTime_(self, a, b, c):
         pass
 
 
@@ -33,9 +31,7 @@ class TestAVPlayerOutput(TestCase):
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(
-            AVFoundation.AVPlayerItemOutput.suppressesPlayerRendering
-        )
+        self.assertResultIsBOOL(AVFoundation.AVPlayerItemOutput.suppressesPlayerRendering)
         self.assertArgIsBOOL(
             AVFoundation.AVPlayerItemOutput.setSuppressesPlayerRendering_, 0
         )

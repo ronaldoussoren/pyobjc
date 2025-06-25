@@ -6,6 +6,4 @@ class TestWKPDFConfiguration(TestCase):
     @min_os_level("14.0")
     def test_methods(self):
         self.assertResultIsBOOL(WebKit.WKPDFConfiguration.allowTransparentBackground)
-        self.assertArgIsBOOL(
-            WebKit.WKPDFConfiguration.setAllowTransparentBackground_, 0
-        )
+        self.assertArgIsBOOL(WebKit.WKPDFConfiguration.setAllowTransparentBackground_, 0)

@@ -8,9 +8,7 @@ class TestCFFTPStream(TestCase):
         self.assertIsCFType(CFNetwork.CFHTTPAuthenticationRef)
 
     def testConstants(self):
-        self.assertEqual(
-            CFNetwork.kCFStreamErrorHTTPAuthenticationTypeUnsupported, -1000
-        )
+        self.assertEqual(CFNetwork.kCFStreamErrorHTTPAuthenticationTypeUnsupported, -1000)
         self.assertEqual(CFNetwork.kCFStreamErrorHTTPAuthenticationBadUserName, -1001)
         self.assertEqual(CFNetwork.kCFStreamErrorHTTPAuthenticationBadPassword, -1002)
 
@@ -106,9 +104,7 @@ class TestCFFTPStream(TestCase):
         v = CFNetwork.CFHTTPAuthenticationCopyMethod(ref)
         self.assertTrue(v is None or isinstance(v, str))
 
-        self.assertResultIsBOOL(
-            CFNetwork.CFHTTPAuthenticationRequiresUserNameAndPassword
-        )
+        self.assertResultIsBOOL(CFNetwork.CFHTTPAuthenticationRequiresUserNameAndPassword)
         v = CFNetwork.CFHTTPAuthenticationRequiresUserNameAndPassword(ref)
         self.assertIsInstance(v, bool)
 

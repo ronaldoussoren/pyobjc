@@ -7,9 +7,7 @@ class TestINGetReservationDetailsIntentResponse(TestCase):
         self.assertIsEnumType(Intents.INGetReservationDetailsIntentResponseCode)
 
     def testConstants(self):
-        self.assertEqual(
-            Intents.INGetReservationDetailsIntentResponseCodeUnspecified, 0
-        )
+        self.assertEqual(Intents.INGetReservationDetailsIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INGetReservationDetailsIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INGetReservationDetailsIntentResponseCodeInProgress, 2)
         self.assertEqual(Intents.INGetReservationDetailsIntentResponseCodeSuccess, 3)

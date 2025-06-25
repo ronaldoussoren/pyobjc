@@ -5,9 +5,7 @@ import MetalPerformanceShaders
 
 class TestMPSRayIntersector_MPSRayIntersector(TestCase):
     def test_enum_types(self):
-        self.assertIsEnumType(
-            MetalPerformanceShaders.MPSBoundingBoxIntersectionTestType
-        )
+        self.assertIsEnumType(MetalPerformanceShaders.MPSBoundingBoxIntersectionTestType)
         self.assertIsEnumType(MetalPerformanceShaders.MPSIntersectionDataType)
         self.assertIsEnumType(MetalPerformanceShaders.MPSIntersectionType)
         self.assertIsEnumType(MetalPerformanceShaders.MPSRayDataType)

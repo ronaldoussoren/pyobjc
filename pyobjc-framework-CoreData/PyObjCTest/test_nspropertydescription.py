@@ -20,6 +20,4 @@ class TestNSPropertyDescription(TestCase):
         self.assertResultIsBOOL(CoreData.NSPropertyDescription.isIndexedBySpotlight)
         self.assertArgIsBOOL(CoreData.NSPropertyDescription.setIndexedBySpotlight_, 0)
         self.assertResultIsBOOL(CoreData.NSPropertyDescription.isStoredInExternalRecord)
-        self.assertArgIsBOOL(
-            CoreData.NSPropertyDescription.setStoredInExternalRecord_, 0
-        )
+        self.assertArgIsBOOL(CoreData.NSPropertyDescription.setStoredInExternalRecord_, 0)

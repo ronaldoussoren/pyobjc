@@ -15,9 +15,7 @@ class TestCGImageSource(TestCase):
         self.assertIsInstance(Quartz.kCGImageSourceTypeIdentifierHint, str)
         self.assertIsInstance(Quartz.kCGImageSourceShouldCache, str)
         self.assertIsInstance(Quartz.kCGImageSourceShouldAllowFloat, str)
-        self.assertIsInstance(
-            Quartz.kCGImageSourceCreateThumbnailFromImageIfAbsent, str
-        )
+        self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailFromImageIfAbsent, str)
         self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailFromImageAlways, str)
         self.assertIsInstance(Quartz.kCGImageSourceThumbnailMaxPixelSize, str)
         self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailWithTransform, str)
@@ -39,9 +37,7 @@ class TestCGImageSource(TestCase):
 
     @min_os_level("15.0")
     def testConstants15_0(self):
-        self.assertIsInstance(
-            Quartz.kCGImageSourceGenerateImageSpecificLumaScaling, str
-        )
+        self.assertIsInstance(Quartz.kCGImageSourceGenerateImageSpecificLumaScaling, str)
 
     def testTypes(self):
         self.assertIsCFType(Quartz.CGImageSourceRef)

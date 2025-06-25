@@ -32,9 +32,7 @@ class TestNSButton(TestCase):
         )
         self.assertArgIsSEL(AppKit.NSButton.buttonWithTitle_target_action_, 2, b"v@:@")
         self.assertArgIsSEL(AppKit.NSButton.buttonWithImage_target_action_, 2, b"v@:@")
-        self.assertArgIsSEL(
-            AppKit.NSButton.checkboxWithTitle_target_action_, 2, b"v@:@"
-        )
+        self.assertArgIsSEL(AppKit.NSButton.checkboxWithTitle_target_action_, 2, b"v@:@")
         self.assertArgIsSEL(
             AppKit.NSButton.radioButtonWithTitle_target_action_, 2, b"v@:@"
         )

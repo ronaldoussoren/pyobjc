@@ -14,9 +14,7 @@ class TestINSendMessageRecipientResolutionResult(TestCase):
             3,
         )
 
-        self.assertEqual(
-            Intents.INSendMessageRecipientUnsupportedReasonNoValidHandle, 4
-        )
+        self.assertEqual(Intents.INSendMessageRecipientUnsupportedReasonNoValidHandle, 4)
         self.assertEqual(
             Intents.INSendMessageRecipientUnsupportedReasonRequestedHandleInvalid, 5
         )

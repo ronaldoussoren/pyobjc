@@ -15,9 +15,7 @@ class TestSHCustomCatalog(TestCase):
             2,
         )
 
-        self.assertResultIsBOOL(
-            ShazamKit.SHCustomCatalog.addCustomCatalogFromURL_error_
-        )
+        self.assertResultIsBOOL(ShazamKit.SHCustomCatalog.addCustomCatalogFromURL_error_)
         self.assertArgIsOut(ShazamKit.SHCustomCatalog.addCustomCatalogFromURL_error_, 1)
 
         self.assertResultIsBOOL(ShazamKit.SHCustomCatalog.writeToURL_error_)

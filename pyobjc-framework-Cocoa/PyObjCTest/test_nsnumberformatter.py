@@ -120,14 +120,10 @@ class TestNSNumberFormatter(TestCase):
         )
 
         self.assertResultIsBOOL(Foundation.NSNumberFormatter.generatesDecimalNumbers)
-        self.assertArgIsBOOL(
-            Foundation.NSNumberFormatter.setGeneratesDecimalNumbers_, 0
-        )
+        self.assertArgIsBOOL(Foundation.NSNumberFormatter.setGeneratesDecimalNumbers_, 0)
         self.assertResultIsBOOL(Foundation.NSNumberFormatter.allowsFloats)
         self.assertArgIsBOOL(Foundation.NSNumberFormatter.setAllowsFloats_, 0)
-        self.assertResultIsBOOL(
-            Foundation.NSNumberFormatter.alwaysShowsDecimalSeparator
-        )
+        self.assertResultIsBOOL(Foundation.NSNumberFormatter.alwaysShowsDecimalSeparator)
         self.assertArgIsBOOL(
             Foundation.NSNumberFormatter.setAlwaysShowsDecimalSeparator_, 0
         )

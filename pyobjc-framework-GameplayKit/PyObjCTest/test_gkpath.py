@@ -23,9 +23,7 @@ class TestGKPath(TestCase):
         self.assertArgSizeInArg(
             GameplayKit.GKPath.pathWithPoints_count_radius_cyclical_, 0, 1
         )
-        self.assertArgIsBOOL(
-            GameplayKit.GKPath.pathWithPoints_count_radius_cyclical_, 3
-        )
+        self.assertArgIsBOOL(GameplayKit.GKPath.pathWithPoints_count_radius_cyclical_, 3)
 
         self.assertArgHasType(
             GameplayKit.GKPath.initWithPoints_count_radius_cyclical_,
@@ -36,9 +34,7 @@ class TestGKPath(TestCase):
         self.assertArgSizeInArg(
             GameplayKit.GKPath.initWithPoints_count_radius_cyclical_, 0, 1
         )
-        self.assertArgIsBOOL(
-            GameplayKit.GKPath.initWithPoints_count_radius_cyclical_, 3
-        )
+        self.assertArgIsBOOL(GameplayKit.GKPath.initWithPoints_count_radius_cyclical_, 3)
 
         self.assertResultHasType(
             GameplayKit.GKPath.pointAtIndex_, simd.vector_float2.__typestr__

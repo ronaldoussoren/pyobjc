@@ -343,9 +343,7 @@ class TestMTLComputeCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.useHeaps_count_, 0, b"n^@"
         )
-        self.assertArgSizeInArg(
-            TestMTLComputeCommandEncoderHelper.useHeaps_count_, 0, 1
-        )
+        self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.useHeaps_count_, 0, 1)
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.useHeaps_count_, 1, objc._C_NSUInteger
         )

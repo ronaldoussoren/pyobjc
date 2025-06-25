@@ -10,9 +10,7 @@ class TestAVMIDIPlayer(TestCase):
         self.assertArgIsOut(
             AVFoundation.AVMIDIPlayer.initWithContentsOfURL_soundBankURL_error_, 2
         )
-        self.assertArgIsOut(
-            AVFoundation.AVMIDIPlayer.initWithData_soundBankURL_error_, 2
-        )
+        self.assertArgIsOut(AVFoundation.AVMIDIPlayer.initWithData_soundBankURL_error_, 2)
 
         self.assertArgIsBlock(
             AVFoundation.AVMIDIPlayer.play_, 0, AVMIDIPlayerCompletionHandler

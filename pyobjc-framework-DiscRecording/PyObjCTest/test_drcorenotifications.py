@@ -1,9 +1,7 @@
 import DiscRecording
 from PyObjCTools.TestSupport import TestCase, expectedFailure
 
-DRNotificationCallback = (
-    b"v^{__DRNotificationCenter=}^v^{__CFString=}@^{__CFDictionary=}"
-)
+DRNotificationCallback = b"v^{__DRNotificationCenter=}^v^{__CFString=}@^{__CFDictionary=}"
 
 
 class TestDRCoreNotifications(TestCase):

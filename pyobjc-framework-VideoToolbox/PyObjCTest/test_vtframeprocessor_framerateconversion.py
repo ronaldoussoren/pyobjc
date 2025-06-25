@@ -23,9 +23,7 @@ class TestVTFrameProcessor_FrameRateConversion(TestCase):
         self.assertIsEnumType(VideoToolbox.VTFrameRateConversionConfigurationRevision)
         self.assertEqual(VideoToolbox.VTFrameRateConversionConfigurationRevision1, 1)
 
-        self.assertIsEnumType(
-            VideoToolbox.VTFrameRateConversionParametersSubmissionMode
-        )
+        self.assertIsEnumType(VideoToolbox.VTFrameRateConversionParametersSubmissionMode)
         self.assertEqual(
             VideoToolbox.VTFrameRateConversionParametersSubmissionModeRandom, 1
         )

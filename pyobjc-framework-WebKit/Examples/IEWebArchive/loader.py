@@ -58,12 +58,16 @@ class MHTLoader:
         Convert the MHT archive to a webarchive.
         """
         rootType, rootText = self.parts[self.root]
-        pageResource = WebResource.alloc().initWithData_URL_MIMEType_textEncodingName_frameName_(  # noqa: B950
-            NSData.dataWithBytes_length_(rootText.replace(b"\\", b"/"), len(rootText)),
-            NSURL.URLWithString_(self.fixupURL(self.root)),
-            NSString.stringWithString_(rootType),
-            None,
-            None,
+        pageResource = (
+            WebResource.alloc().initWithData_URL_MIMEType_textEncodingName_frameName_(  # noqa: B950
+                NSData.dataWithBytes_length_(
+                    rootText.replace(b"\\", b"/"), len(rootText)
+                ),
+                NSURL.URLWithString_(self.fixupURL(self.root)),
+                NSString.stringWithString_(rootType),
+                None,
+                None,
+            )
         )
 
         resources = []

@@ -227,9 +227,7 @@ class TestSCNSceneRenderer(TestCase):
         self.assertResultIsBOOL(TestSCNSceneRendererHelper.loops)
         self.assertArgIsBOOL(TestSCNSceneRendererHelper.setLoops_, 0)
         self.assertResultIsBOOL(TestSCNSceneRendererHelper.autoenablesDefaultLighting)
-        self.assertArgIsBOOL(
-            TestSCNSceneRendererHelper.setAutoenablesDefaultLighting_, 0
-        )
+        self.assertArgIsBOOL(TestSCNSceneRendererHelper.setAutoenablesDefaultLighting_, 0)
         self.assertResultIsBOOL(TestSCNSceneRendererHelper.isJitteringEnabled)
         self.assertArgIsBOOL(TestSCNSceneRendererHelper.setJitteringEnabled_, 0)
         self.assertResultIsBOOL(
@@ -268,9 +266,7 @@ class TestSCNSceneRenderer(TestCase):
         )
         # self.assertArgHasType(TestSCNSceneRendererHelper.setStencilPixelFormat_, 0, objc._C_NSUInteger)
         self.assertResultHasType(TestSCNSceneRendererHelper.currentTime, objc._C_DBL)
-        self.assertArgHasType(
-            TestSCNSceneRendererHelper.setCurrentTime_, 0, objc._C_DBL
-        )
+        self.assertArgHasType(TestSCNSceneRendererHelper.setCurrentTime_, 0, objc._C_DBL)
         self.assertArgHasType(
             TestSCNSceneRendererHelper.renderer_updateAtTime_, 1, objc._C_DBL
         )
@@ -299,9 +295,7 @@ class TestSCNSceneRenderer(TestCase):
 
     @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertResultIsBOOL(
-            TestSCNSceneRendererHelper.isTemporalAntialiasingEnabled
-        )
+        self.assertResultIsBOOL(TestSCNSceneRendererHelper.isTemporalAntialiasingEnabled)
         self.assertArgIsBOOL(
             TestSCNSceneRendererHelper.setTemporalAntialiasingEnabled_, 0
         )

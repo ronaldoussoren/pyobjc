@@ -225,9 +225,7 @@ class TestConversion(TestCase):
                     {42: Cocoa.NSArray.arrayWithArray_([4, 5])}
                 )
             )
-            value.append(
-                Cocoa.NSSet.setWithSet_({Cocoa.NSArray.arrayWithArray_([4, 5])})
-            )
+            value.append(Cocoa.NSSet.setWithSet_({Cocoa.NSArray.arrayWithArray_([4, 5])}))
 
             v = Conversion.pythonCollectionFromPropertyList(value)
             # self.assertEqual(v, value)

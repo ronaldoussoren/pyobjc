@@ -59,9 +59,9 @@ def calculate_new_doc(cls):
             else:
                 result[kwds] = f"{cls.__name__}(*, " + ", ".join(kwds) + "):"
             if selector.startswith("init"):
-                result[
-                    kwds
-                ] += f"\n   returns cls.alloc().{selector}({', '.join(kwds)})\n\n"
+                result[kwds] += (
+                    f"\n   returns cls.alloc().{selector}({', '.join(kwds)})\n\n"
+                )
             else:
                 result[kwds] += f"\n   returns cls.{selector}({', '.join(kwds)})\n\n"
     return "".join(sorted(result.values())) + DOC_SUFFIX
@@ -158,7 +158,6 @@ FunctionType = type(new_func)
 
 
 def make_generic_new(cls, *, FunctionType=FunctionType, new_func=new_func):
-
     # XXX: Settings these helps, but does not yet result in the correct
     #      output from help()
 

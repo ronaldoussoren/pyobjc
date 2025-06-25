@@ -86,10 +86,7 @@ def CMTIME_IS_INDEFINITE(time):
 def CMTIME_IS_NUMERIC(time):
     return (
         time.flags
-        & (
-            _CoreMedia.kCMTimeFlags_Valid
-            | _CoreMedia.kCMTimeFlags_ImpliedValueFlagsMask
-        )
+        & (_CoreMedia.kCMTimeFlags_Valid | _CoreMedia.kCMTimeFlags_ImpliedValueFlagsMask)
     ) == _CoreMedia.kCMTimeFlags_Valid
 
 

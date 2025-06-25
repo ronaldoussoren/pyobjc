@@ -16,9 +16,7 @@ def _setup():
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="FSKit",
         frameworkIdentifier="com.apple.FSKit",
-        frameworkPath=objc.pathForFramework(
-            "/System/Library/Frameworks/FSKit.framework"
-        ),
+        frameworkPath=objc.pathForFramework("/System/Library/Frameworks/FSKit.framework"),
         globals_dict=globals(),
         inline_list=None,
         parents=(

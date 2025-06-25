@@ -79,9 +79,7 @@ class TestNSURL(TestCase):
         self.assertArgIsOut(
             Foundation.NSURL.getPromisedItemResourceValue_forKey_error_, 2
         )
-        self.assertArgIsOut(
-            Foundation.NSURL.promisedItemResourceValuesForKeys_error_, 1
-        )
+        self.assertArgIsOut(Foundation.NSURL.promisedItemResourceValuesForKeys_error_, 1)
 
         self.assertResultIsBOOL(
             Foundation.NSURL.checkPromisedItemIsReachableAndReturnError_
@@ -105,9 +103,7 @@ class TestNSURL(TestCase):
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(
-            Foundation.NSURLBookmarkCreationPreferFileIDResolution, (1 << 8)
-        )
+        self.assertEqual(Foundation.NSURLBookmarkCreationPreferFileIDResolution, (1 << 8))
         self.assertEqual(Foundation.NSURLBookmarkCreationMinimalBookmark, (1 << 9))
         self.assertEqual(
             Foundation.NSURLBookmarkCreationSuitableForBookmarkFile, (1 << 10)
@@ -238,9 +234,7 @@ class TestNSURL(TestCase):
         self.assertIsInstance(
             Foundation.NSURLUbiquitousItemDownloadingStatusDownloaded, str
         )
-        self.assertIsInstance(
-            Foundation.NSURLUbiquitousItemDownloadingStatusCurrent, str
-        )
+        self.assertIsInstance(Foundation.NSURLUbiquitousItemDownloadingStatusCurrent, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
@@ -252,9 +246,7 @@ class TestNSURL(TestCase):
         self.assertIsInstance(Foundation.NSURLThumbnailKey, str)
         self.assertIsInstance(Foundation.NSThumbnail1024x1024SizeKey, str)
         self.assertIsInstance(Foundation.NSURLUbiquitousItemDownloadRequestedKey, str)
-        self.assertIsInstance(
-            Foundation.NSURLUbiquitousItemContainerDisplayNameKey, str
-        )
+        self.assertIsInstance(Foundation.NSURLUbiquitousItemContainerDisplayNameKey, str)
 
     @min_os_level("10.11")
     def testConstants10_11(self):
@@ -271,9 +263,7 @@ class TestNSURL(TestCase):
         self.assertIsInstance(Foundation.NSURLVolumeSupportsExclusiveRenamingKey, str)
         self.assertIsInstance(Foundation.NSURLCanonicalPathKey, str)
         self.assertIsInstance(Foundation.NSURLUbiquitousItemIsSharedKey, str)
-        self.assertIsInstance(
-            Foundation.NSURLUbiquitousSharedItemCurrentUserRoleKey, str
-        )
+        self.assertIsInstance(Foundation.NSURLUbiquitousSharedItemCurrentUserRoleKey, str)
         self.assertIsInstance(
             Foundation.NSURLUbiquitousSharedItemCurrentUserPermissionsKey, str
         )
@@ -329,16 +319,12 @@ class TestNSURL(TestCase):
 
     @min_os_level("14.0")
     def testConstants14_0(self):
-        self.assertIsInstance(
-            Foundation.NSURLFileProtectionCompleteWhenUserInactive, str
-        )
+        self.assertIsInstance(Foundation.NSURLFileProtectionCompleteWhenUserInactive, str)
         self.assertIsInstance(Foundation.NSURLDirectoryEntryCountKey, str)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertArgIsBOOL(
-            Foundation.NSURL.URLByAppendingPathComponent_isDirectory_, 1
-        )
+        self.assertArgIsBOOL(Foundation.NSURL.URLByAppendingPathComponent_isDirectory_, 1)
 
         self.assertResultIsBOOL(Foundation.NSURL.getResourceValue_forKey_error_)
         self.assertArgIsOut(Foundation.NSURL.getResourceValue_forKey_error_, 0)
@@ -348,9 +334,7 @@ class TestNSURL(TestCase):
         self.assertArgIsOut(Foundation.NSURL.setResourceValue_forKey_error_, 2)
         self.assertResultIsBOOL(Foundation.NSURL.setResourceValues_error_)
         self.assertArgIsOut(Foundation.NSURL.setResourceValues_error_, 1)
-        self.assertResultIsBOOL(
-            Foundation.NSURL.checkResourceIsReachableAndReturnError_
-        )
+        self.assertResultIsBOOL(Foundation.NSURL.checkResourceIsReachableAndReturnError_)
         self.assertArgIsOut(Foundation.NSURL.checkResourceIsReachableAndReturnError_, 0)
         self.assertResultIsBOOL(Foundation.NSURL.isFileReferenceURL)
 
@@ -385,9 +369,7 @@ class TestNSURL(TestCase):
         self.assertArgIsBOOL(
             Foundation.NSURL.initWithString_encodingInvalidCharacters_, 1
         )
-        self.assertArgIsBOOL(
-            Foundation.NSURL.URLWithString_encodingInvalidCharacters_, 1
-        )
+        self.assertArgIsBOOL(Foundation.NSURL.URLWithString_encodingInvalidCharacters_, 1)
 
         self.assertArgIsBOOL(
             Foundation.NSURLComponents.initWithString_encodingInvalidCharacters_, 1

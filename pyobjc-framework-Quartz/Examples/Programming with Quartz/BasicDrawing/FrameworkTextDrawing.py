@@ -127,9 +127,7 @@ def drawWithNSLayout():
         # Set attributes to use when drawing the string.
         stringAttributes = {
             # Use the font with the PostScript name "Times-Roman" at 40 point.
-            Cocoa.NSFontAttributeName: Cocoa.NSFont.fontWithName_size_(
-                "Times-Roman", 40
-            ),
+            Cocoa.NSFontAttributeName: Cocoa.NSFont.fontWithName_size_("Times-Roman", 40),
             # Set the text color attribute to an opaque red.
             Cocoa.NSForegroundColorAttributeName: Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(  # noqa: B950
                 0.663, 0, 0.031, 1.0
@@ -263,9 +261,7 @@ class MyNSLayoutManager(Cocoa.NSLayoutManager):
         # Draw the glyphs. The total number of glyphs is the length
         # of the glyphs string passed to showPackedGlyphs, divided by 2
         # since there are two bytes per glyph.
-        Quartz.CGContextShowGlyphsAtPoint(
-            context, point.x, point.y, glyphs, glyphLen / 2
-        )
+        Quartz.CGContextShowGlyphsAtPoint(context, point.x, point.y, glyphs, glyphLen / 2)
 
         # If the text drawing mode requires clipping and there is
         # a custom clipping proc, call it. This allows drawing through
@@ -310,9 +306,7 @@ def drawWithCustomNSLayout():
         # Set attributes to use when drawing the string.
         stringAttributes = {
             # Use the font with the PostScript name "Times-Roman" at 40 point.
-            Cocoa.NSFontAttributeName: Cocoa.NSFont.fontWithName_size_(
-                "Times-Roman", 40
-            )
+            Cocoa.NSFontAttributeName: Cocoa.NSFont.fontWithName_size_("Times-Roman", 40)
         }
 
         # Create the range.

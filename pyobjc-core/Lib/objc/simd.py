@@ -416,9 +416,7 @@ def make_type(
 
 
 vector_float2 = make_type("vector_float2", 0.0, float, 2, typestr=b"<2f>")
-vector_float3 = make_type(
-    "vector_float3", 0.0, float, 3, vector_float2, typestr=b"<3f>"
-)
+vector_float3 = make_type("vector_float3", 0.0, float, 3, vector_float2, typestr=b"<3f>")
 vector_float4 = make_type(
     "vector_float4", 0.0, float, 4, vector_float2, vector_float3, typestr=b"<4f>"
 )

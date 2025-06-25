@@ -12,18 +12,14 @@ class TestNSCalendar(TestCase):
         self.assertIsEnumType(Foundation.NSCalendarUnit)
 
     def testConstants(self):
-        self.assertEqual(
-            Foundation.NSEraCalendarUnit, CoreFoundation.kCFCalendarUnitEra
-        )
+        self.assertEqual(Foundation.NSEraCalendarUnit, CoreFoundation.kCFCalendarUnitEra)
         self.assertEqual(
             Foundation.NSYearCalendarUnit, CoreFoundation.kCFCalendarUnitYear
         )
         self.assertEqual(
             Foundation.NSMonthCalendarUnit, CoreFoundation.kCFCalendarUnitMonth
         )
-        self.assertEqual(
-            Foundation.NSDayCalendarUnit, CoreFoundation.kCFCalendarUnitDay
-        )
+        self.assertEqual(Foundation.NSDayCalendarUnit, CoreFoundation.kCFCalendarUnitDay)
         self.assertEqual(
             Foundation.NSHourCalendarUnit, CoreFoundation.kCFCalendarUnitHour
         )
@@ -52,18 +48,14 @@ class TestNSCalendar(TestCase):
         self.assertEqual(Foundation.NSUndefinedDateComponent, Foundation.NSIntegerMax)
         self.assertEqual(Foundation.NSDateComponentUndefined, Foundation.NSIntegerMax)
 
-        self.assertEqual(
-            Foundation.NSCalendarUnitEra, CoreFoundation.kCFCalendarUnitEra
-        )
+        self.assertEqual(Foundation.NSCalendarUnitEra, CoreFoundation.kCFCalendarUnitEra)
         self.assertEqual(
             Foundation.NSCalendarUnitYear, CoreFoundation.kCFCalendarUnitYear
         )
         self.assertEqual(
             Foundation.NSCalendarUnitMonth, CoreFoundation.kCFCalendarUnitMonth
         )
-        self.assertEqual(
-            Foundation.NSCalendarUnitDay, CoreFoundation.kCFCalendarUnitDay
-        )
+        self.assertEqual(Foundation.NSCalendarUnitDay, CoreFoundation.kCFCalendarUnitDay)
         self.assertEqual(
             Foundation.NSCalendarUnitHour, CoreFoundation.kCFCalendarUnitHour
         )

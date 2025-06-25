@@ -11,9 +11,7 @@ class TestAVMovieTrack(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVMutableMovieTrack.isModified)
         self.assertArgIsBOOL(AVFoundation.AVMutableMovieTrack.setModified_, 0)
 
-        self.assertResultIsBOOL(
-            AVFoundation.AVMutableMovieTrack.hasProtectedContent
-        )  # noqa: B950
+        self.assertResultIsBOOL(AVFoundation.AVMutableMovieTrack.hasProtectedContent)  # noqa: B950
 
         self.assertResultIsBOOL(
             AVFoundation.AVMutableMovieTrack.insertTimeRange_ofTrack_atTime_copySampleData_error_  # noqa: B950
@@ -51,9 +49,7 @@ class TestAVMovieTrack(TestCase):
 
     @min_os_level("13.0")
     def testMethods13_0(self):
-        self.assertResultIsBOOL(
-            AVFoundation.AVMutableMovieTrack.hasMediaCharacteristic_
-        )
+        self.assertResultIsBOOL(AVFoundation.AVMutableMovieTrack.hasMediaCharacteristic_)
 
     @min_os_level("10.10")
     def testConstants10_10(self):

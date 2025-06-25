@@ -19,9 +19,7 @@ class TestGCDualSenseAdaptiveTrigger(TestCase):
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeSlopeFeedback, 4)
 
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerStatusUnknown, -1)
-        self.assertEqual(
-            GameController.GCDualSenseAdaptiveTriggerStatusFeedbackNoLoad, 0
-        )
+        self.assertEqual(GameController.GCDualSenseAdaptiveTriggerStatusFeedbackNoLoad, 0)
         self.assertEqual(
             GameController.GCDualSenseAdaptiveTriggerStatusFeedbackLoadApplied, 1
         )

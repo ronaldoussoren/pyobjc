@@ -37,9 +37,5 @@ class TestWorkloop(TestCase):
         self.assertResultHasType(
             dispatch.dispatch_workloop_set_os_workgroup, objc._C_VOID
         )
-        self.assertArgHasType(
-            dispatch.dispatch_workloop_set_os_workgroup, 0, objc._C_ID
-        )
-        self.assertArgHasType(
-            dispatch.dispatch_workloop_set_os_workgroup, 1, objc._C_ID
-        )
+        self.assertArgHasType(dispatch.dispatch_workloop_set_os_workgroup, 0, objc._C_ID)
+        self.assertArgHasType(dispatch.dispatch_workloop_set_os_workgroup, 1, objc._C_ID)

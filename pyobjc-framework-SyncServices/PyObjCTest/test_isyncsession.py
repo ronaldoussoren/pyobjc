@@ -12,15 +12,11 @@ class TestISyncSession(TestCase):
         )
 
     def testMethods(self):
-        self.assertResultIsBOOL(
-            SyncServices.ISyncSession.shouldPushChangesForEntityName_
-        )
+        self.assertResultIsBOOL(SyncServices.ISyncSession.shouldPushChangesForEntityName_)
         self.assertResultIsBOOL(
             SyncServices.ISyncSession.shouldPushAllRecordsForEntityName_
         )
-        self.assertResultIsBOOL(
-            SyncServices.ISyncSession.shouldPullChangesForEntityName_
-        )
+        self.assertResultIsBOOL(SyncServices.ISyncSession.shouldPullChangesForEntityName_)
         self.assertResultIsBOOL(
             SyncServices.ISyncSession.shouldReplaceAllRecordsOnClientForEntityName_
         )

@@ -7,9 +7,7 @@ from PyObjCTools.TestSupport import TestCase, os_level_key, os_release, skipUnle
 
 class TestAlertFormat(TestCase):
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "Crash on 10.13, 10.14??",
     )
     @skipUnless(
@@ -24,9 +22,7 @@ class TestAlertFormat(TestCase):
         self.assertEqual(alert.informativeText(), "foobar is the sucks")
 
     @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
+        not (os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")),
         "Crash on 10.13, 10.14??",
     )
     @skipUnless(

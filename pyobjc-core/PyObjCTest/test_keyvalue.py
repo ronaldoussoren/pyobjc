@@ -135,9 +135,7 @@ class PyKeyValueCoding(TestCase):
     def testValueForKey2(self):
         o = KeyValueClass3()
 
-        self.assertEqual(
-            STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "foo"), "foobar"
-        )
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "foo"), "foobar")
         self.assertEqual(
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, "bar"), "foobarfoobar"
         )
@@ -149,15 +147,9 @@ class PyKeyValueCoding(TestCase):
         o = KeyValueClass2()
         o.addMultiple()
 
-        self.assertEqual(
-            STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key1"), 1
-        )
-        self.assertEqual(
-            STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key2"), 2
-        )
-        self.assertEqual(
-            STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key3"), 3
-        )
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key1"), 1)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key2"), 2)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key3"), 3)
         self.assertEqual(
             STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, "key4"), "4"
         )
@@ -285,9 +277,7 @@ class PyKeyValueCoding(TestCase):
         self.assertEqual(o.key5, "VVVVV")
 
         self.assertNotHasAttr(o, "key9")
-        STUB.setKeyValue_forObject_key_value_(
-            DO_TAKESTOREDVALUE_FORKEY, o, "key9", "IX"
-        )
+        STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, "key9", "IX")
         self.assertHasAttr(o, "key9")
         self.assertEqual(o.key9, "IX")
 
@@ -295,9 +285,7 @@ class PyKeyValueCoding(TestCase):
         o = KeyValueClass3()
 
         self.assertEqual(o.foo, "foobar")
-        STUB.setKeyValue_forObject_key_value_(
-            DO_TAKESTOREDVALUE_FORKEY, o, "foo", "FOO"
-        )
+        STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, "foo", "FOO")
         self.assertEqual(o.foo, "FOO")
 
         with self.assertRaisesRegex(KeyError, "Key key9 does not exist'"):
@@ -512,9 +500,7 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, TestCase):
         )
         self.assertEqual(
             IndirectString,
-            STUB.keyValue_forObject_key_(
-                DO_VALUEFORKEY, self.base, "overIndirectString"
-            ),
+            STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, "overIndirectString"),
         )
 
     def testOverValueKeyPath(self):
@@ -959,9 +945,7 @@ class TestWithoutHelper(TestCase):
             value.key = 42
 
             a = NSArray.arrayWithArray_([value])
-            with self.assertRaisesRegex(
-                ValueError, "helper function for getKey not set"
-            ):
+            with self.assertRaisesRegex(ValueError, "helper function for getKey not set"):
                 a.makeObjectsPerformSelector_withObject_(b"valueForKey:", "key")
 
         finally:
@@ -975,9 +959,7 @@ class TestWithoutHelper(TestCase):
             value = Helper()
             value.key = 42
 
-            with self.assertRaisesRegex(
-                ValueError, "helper function for setKey not set"
-            ):
+            with self.assertRaisesRegex(ValueError, "helper function for setKey not set"):
                 OC_ObjectInt.setValue_forKey_of_("value", "key", value)
 
             self.assertEqual(value.key, 42)

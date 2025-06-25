@@ -80,9 +80,7 @@ class TestHeader(TestCase):
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(
-            AppKit.NSFullScreenModeApplicationPresentationOptions, str
-        )
+        self.assertIsInstance(AppKit.NSFullScreenModeApplicationPresentationOptions, str)
 
         self.assertEqual(AppKit.NSViewLayerContentsRedrawNever, 0)
         self.assertEqual(AppKit.NSViewLayerContentsRedrawOnSetNeedsDisplay, 1)
@@ -91,9 +89,7 @@ class TestHeader(TestCase):
 
         self.assertEqual(AppKit.NSViewLayerContentsPlacementScaleAxesIndependently, 0)
         self.assertEqual(AppKit.NSViewLayerContentsPlacementScaleProportionallyToFit, 1)
-        self.assertEqual(
-            AppKit.NSViewLayerContentsPlacementScaleProportionallyToFill, 2
-        )
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementScaleProportionallyToFill, 2)
         self.assertEqual(AppKit.NSViewLayerContentsPlacementCenter, 3)
         self.assertEqual(AppKit.NSViewLayerContentsPlacementTop, 4)
         self.assertEqual(AppKit.NSViewLayerContentsPlacementTopRight, 5)
@@ -258,9 +254,7 @@ class TestHeader(TestCase):
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(AppKit.NSView.wantsExtendedDynamicRangeOpenGLSurface)
-        self.assertArgIsBOOL(
-            AppKit.NSView.setWantsExtendedDynamicRangeOpenGLSurface_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSView.setWantsExtendedDynamicRangeOpenGLSurface_, 0)
 
     @min_os_level("14.0")
     def testMethods14_0(self):

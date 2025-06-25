@@ -26,13 +26,9 @@ class TestCKSubscription(TestCase):
         self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordDeletion, 4)
         self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnce, 8)
 
-        self.assertEqual(
-            CloudKit.CKQuerySubscriptionOptionsFiresOnRecordCreation, 1 << 0
-        )
+        self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnRecordCreation, 1 << 0)
         self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnRecordUpdate, 1 << 1)
-        self.assertEqual(
-            CloudKit.CKQuerySubscriptionOptionsFiresOnRecordDeletion, 1 << 2
-        )
+        self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnRecordDeletion, 1 << 2)
         self.assertEqual(CloudKit.CKQuerySubscriptionOptionsFiresOnce, 1 << 3)
 
     @min_os_level("10.10")
@@ -48,6 +44,4 @@ class TestCKSubscription(TestCase):
     @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertResultIsBOOL(CloudKit.CKNotificationInfo.shouldSendMutableContent)
-        self.assertArgIsBOOL(
-            CloudKit.CKNotificationInfo.setShouldSendMutableContent_, 0
-        )
+        self.assertArgIsBOOL(CloudKit.CKNotificationInfo.setShouldSendMutableContent_, 0)

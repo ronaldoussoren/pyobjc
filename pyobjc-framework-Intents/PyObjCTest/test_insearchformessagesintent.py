@@ -15,9 +15,7 @@ class TestINSearchForMessagesIntentHelper(Intents.NSObject):
     def resolveSendersForSearchForMessages_withCompletion_(self, intent, completion):
         pass
 
-    def resolveSearchTermsForSearchForMessages_withCompletion_(
-        self, intent, completion
-    ):
+    def resolveSearchTermsForSearchForMessages_withCompletion_(self, intent, completion):
         pass
 
     def resolveAttributesForSearchForMessages_withCompletion_(self, intent, completion):
@@ -28,9 +26,7 @@ class TestINSearchForMessagesIntentHelper(Intents.NSObject):
     ):
         pass
 
-    def resolveIdentifiersForSearchForMessages_withCompletion_(
-        self, intent, completion
-    ):
+    def resolveIdentifiersForSearchForMessages_withCompletion_(self, intent, completion):
         pass
 
     def resolveNotificationIdentifiersForSearchForMessages_withCompletion_(

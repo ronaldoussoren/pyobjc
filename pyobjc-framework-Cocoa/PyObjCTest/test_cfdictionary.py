@@ -62,7 +62,7 @@ class TestCFDictionary(TestCase):
     def testCreation2(self):  # XXX
         dct = CoreFoundation.CFDictionaryCreate(
             None,
-            ["key1" "key2"],
+            ["key1key2"],
             [42, 43],
             2,
             CoreFoundation.kCFTypeDictionaryKeyCallBacks,
@@ -100,9 +100,7 @@ class TestCFDictionary(TestCase):
         self.assertTrue(CoreFoundation.CFDictionaryContainsKey(dct, "key1"))
         self.assertFalse(CoreFoundation.CFDictionaryContainsKey(dct, "key3"))
 
-        self.assertResultHasType(
-            CoreFoundation.CFDictionaryContainsValue, objc._C_NSBOOL
-        )
+        self.assertResultHasType(CoreFoundation.CFDictionaryContainsValue, objc._C_NSBOOL)
         self.assertTrue(CoreFoundation.CFDictionaryContainsValue(dct, 42))
         self.assertFalse(CoreFoundation.CFDictionaryContainsValue(dct, "key3"))
 

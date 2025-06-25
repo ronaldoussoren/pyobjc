@@ -38,9 +38,7 @@ class TestGCAxisInput(TestCase):
     def test_protocol_methods(self):
         self.assertResultIsBlock(TestGCAxisInputHelper.valueDidChangeHandler, b"v@@f")
 
-        self.assertArgIsBlock(
-            TestGCAxisInputHelper.setValueDidChangeHandler_, 0, b"v@@f"
-        )
+        self.assertArgIsBlock(TestGCAxisInputHelper.setValueDidChangeHandler_, 0, b"v@@f")
 
         self.assertResultHasType(TestGCAxisInputHelper.value, b"f")
 

@@ -454,9 +454,7 @@ class TestNSCoderUsage(TestCase):
                 try:
                     coder.decodeValueOfObjCType_at_size_(b"q", None, 4)
                 except ValueError as exc:
-                    if "The type encoded as q is expected to be 8 bytes" not in str(
-                        exc
-                    ):
+                    if "The type encoded as q is expected to be 8 bytes" not in str(exc):
                         raise
                 else:
                     raise AssertionError("size mismatch")
@@ -549,9 +547,7 @@ class TestNSCoderUsage(TestCase):
                 try:
                     coder.encodeBytes_length_forKey_(b"hello there", 20, "key")
                 except ValueError as exc:
-                    if "passed in count 20 is larger than input size 11" not in str(
-                        exc
-                    ):
+                    if "passed in count 20 is larger than input size 11" not in str(exc):
                         raise
                 else:
                     raise AssertionError("Bad size")
@@ -589,9 +585,7 @@ class TestNSCoderUsage(TestCase):
                 imp = coder.methodForSelector_(b"decodeBytesForKey:returnedLength:")
                 self.letters = imp(coder, "letters", None)
 
-                self.location = coder.decodeBytesForKey_returnedLength_(
-                    "location", None
-                )
+                self.location = coder.decodeBytesForKey_returnedLength_("location", None)
                 self.invalid = coder.decodeBytesForKey_returnedLength_("invalid", None)
 
                 try:
@@ -651,9 +645,7 @@ class TestNSCoderUsage(TestCase):
         with self.assertRaisesRegex(objc.error, "raising coder"):
             coder.encodeValueOfObjCType_at_(b"q", 42)
 
-        with self.assertRaisesRegex(
-            TypeError, "Cannot call 'encodeValuesOfObjCTypes:'"
-        ):
+        with self.assertRaisesRegex(TypeError, "Cannot call 'encodeValuesOfObjCTypes:'"):
             coder.encodeValuesOfObjCTypes_(b"qfi", 42, 3.5, 0)
 
         with self.assertRaisesRegex(objc.error, "raising coder"):
@@ -662,9 +654,7 @@ class TestNSCoderUsage(TestCase):
         with self.assertRaisesRegex(objc.error, "raising coder"):
             coder.decodeValueOfObjCType_at_(b"f", None)
 
-        with self.assertRaisesRegex(
-            TypeError, "Cannot call 'decodeValuesOfObjCTypes:'"
-        ):
+        with self.assertRaisesRegex(TypeError, "Cannot call 'decodeValuesOfObjCTypes:'"):
             coder.decodeValuesOfObjCTypes_(b"qfi", None)
 
         with self.assertRaisesRegex(objc.error, "raising coder"):
@@ -881,15 +871,11 @@ class TestPythonCoder(TestCase):
             PyObjC_TestCodingClass.fetchArray_(coder)
 
         coder = MyCoderNotNone.alloc().initWithScenario_(6)
-        with self.assertRaisesRegex(
-            TypeError, "return value must be a of correct size"
-        ):
+        with self.assertRaisesRegex(TypeError, "return value must be a of correct size"):
             PyObjC_TestCodingClass.fetchArray_(coder)
 
         coder = MyCoderNotNone.alloc().initWithScenario_(7)
-        with self.assertRaisesRegex(
-            TypeError, "return value must be a of correct size"
-        ):
+        with self.assertRaisesRegex(TypeError, "return value must be a of correct size"):
             PyObjC_TestCodingClass.fetchArray_(coder)
 
         coder = MyCoderNotNone.alloc().initWithScenario_(8)

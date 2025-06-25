@@ -454,9 +454,7 @@ class oc_test(Command):
                 failures += 1
 
             if not os.path.exists(os.path.join(subdir, "pyobjc_setup.py")):
-                print(
-                    "Framework wrapper for %s does not contain pyobjc_setup.py" % (nm)
-                )
+                print("Framework wrapper for %s does not contain pyobjc_setup.py" % (nm))
                 failures += 1
 
             else:
@@ -687,16 +685,13 @@ class oc_egg_info(egg_info.egg_info):
         with open(path, "w") as fp:
             fp.write(first)
             fp.write(
-                "\nProject-URL: Documentation, "
-                "https://pyobjc.readthedocs.io/en/latest/\n"
+                "\nProject-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n"
             )
             fp.write(
                 "Project-URL: Issue tracker, "
                 "https://github.com/ronaldoussoren/pyobjc/issues\n"
             )
-            fp.write(
-                "Project-URL: Repository, " "https://github.com/ronaldoussoren/pyobjc"
-            )
+            fp.write("Project-URL: Repository, https://github.com/ronaldoussoren/pyobjc")
             fp.write(middle)
             fp.write(last)
 
@@ -713,9 +708,7 @@ setup(
     platforms=["macOS"],
     packages=[],
     install_requires=BASE_REQUIRES + framework_requires(),
-    extras_require={
-        "allbindings": BASE_REQUIRES + framework_requires(include_all=True)
-    },
+    extras_require={"allbindings": BASE_REQUIRES + framework_requires(include_all=True)},
     python_requires=">=3.9",
     setup_requires=[],
     classifiers=CLASSIFIERS,

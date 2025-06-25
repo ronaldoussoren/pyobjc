@@ -5,9 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestNSDateComponentsFormatter(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSDateComponentsFormatterUnitsStyle)
-        self.assertIsEnumType(
-            Foundation.NSDateComponentsFormatterZeroFormattingBehavior
-        )
+        self.assertIsEnumType(Foundation.NSDateComponentsFormatterZeroFormattingBehavior)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
@@ -54,9 +52,7 @@ class TestNSDateComponentsFormatter(TestCase):
         self.assertArgIsBOOL(
             Foundation.NSDateComponentsFormatter.setAllowsFractionalUnits_, 0
         )
-        self.assertResultIsBOOL(
-            Foundation.NSDateComponentsFormatter.collapsesLargestUnit
-        )
+        self.assertResultIsBOOL(Foundation.NSDateComponentsFormatter.collapsesLargestUnit)
         self.assertArgIsBOOL(
             Foundation.NSDateComponentsFormatter.setCollapsesLargestUnit_, 0
         )

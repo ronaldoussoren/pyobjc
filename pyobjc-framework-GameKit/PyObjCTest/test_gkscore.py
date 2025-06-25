@@ -12,6 +12,4 @@ class TestGKScore(TestCase):
             GameKit.GKScore.reportScores_withCompletionHandler_, 1, b"v@"
         )
 
-        self.assertArgIsBlock(
-            GameKit.GKScore.reportScoreWithCompletionHandler_, 0, b"v@"
-        )
+        self.assertArgIsBlock(GameKit.GKScore.reportScoreWithCompletionHandler_, 0, b"v@")

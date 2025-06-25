@@ -52,9 +52,7 @@ class TestAVMetadataObject(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataObjectTypeGS1DataBarExpandedCode, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataObjectTypeGS1DataBarLimitedCode, str
-        )
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeGS1DataBarLimitedCode, str)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeMicroQRCode, str)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeMicroPDF417Code, str)
 

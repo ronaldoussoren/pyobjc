@@ -138,15 +138,11 @@ class TestCFNumber(TestCase):
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CoreFoundation.CFNumberCreate(
-            None, CoreFoundation.kCFNumberFloat32Type, 1
-        )
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberFloat32Type, 1)
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CoreFoundation.CFNumberCreate(
-            None, CoreFoundation.kCFNumberFloat64Type, 1
-        )
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberFloat64Type, 1)
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
@@ -166,9 +162,7 @@ class TestCFNumber(TestCase):
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CoreFoundation.CFNumberCreate(
-            None, CoreFoundation.kCFNumberLongLongType, 1
-        )
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberLongLongType, 1)
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
@@ -180,9 +174,7 @@ class TestCFNumber(TestCase):
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CoreFoundation.CFNumberCreate(
-            None, CoreFoundation.kCFNumberCFIndexType, 1
-        )
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberCFIndexType, 1)
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
@@ -192,9 +184,7 @@ class TestCFNumber(TestCase):
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CoreFoundation.CFNumberCreate(
-            None, CoreFoundation.kCFNumberCGFloatType, 1
-        )
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberCGFloatType, 1)
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)

@@ -85,16 +85,12 @@ class TestMIDIMessages(TestCase):
         self.assertIsEnumType(CoreMIDI.UMPStreamMessageStatus)
         self.assertEqual(CoreMIDI.kUMPStreamMessageStatusEndpointDiscovery, 0x00)
         self.assertEqual(CoreMIDI.kUMPStreamMessageStatusEndpointInfoNotification, 0x01)
-        self.assertEqual(
-            CoreMIDI.kUMPStreamMessageStatusDeviceIdentityNotification, 0x02
-        )
+        self.assertEqual(CoreMIDI.kUMPStreamMessageStatusDeviceIdentityNotification, 0x02)
         self.assertEqual(CoreMIDI.kUMPStreamMessageStatusEndpointNameNotification, 0x03)
         self.assertEqual(
             CoreMIDI.kUMPStreamMessageStatusProductInstanceIDNotification, 0x04
         )
-        self.assertEqual(
-            CoreMIDI.kUMPStreamMessageStatusStreamConfigurationRequest, 0x05
-        )
+        self.assertEqual(CoreMIDI.kUMPStreamMessageStatusStreamConfigurationRequest, 0x05)
         self.assertEqual(
             CoreMIDI.kUMPStreamMessageStatusStreamConfigurationNotification, 0x06
         )
@@ -110,9 +106,7 @@ class TestMIDIMessages(TestCase):
 
         self.assertIsEnumType(CoreMIDI.MIDIUMPFunctionBlockMIDI1Info)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockMIDI1InfoNotMIDI1, 0)
-        self.assertEqual(
-            CoreMIDI.kMIDIUMPFunctionBlockMIDI1InfoUnrestrictedBandwidth, 1
-        )
+        self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockMIDI1InfoUnrestrictedBandwidth, 1)
         self.assertEqual(CoreMIDI.kMIDIUMPFunctionBlockMIDI1InfoRestrictedBandwidth, 2)
 
         self.assertIsEnumType(CoreMIDI.MIDIUMPFunctionBlockUIHint)

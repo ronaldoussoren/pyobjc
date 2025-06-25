@@ -4,9 +4,5 @@ import Vision
 
 class TestVNGenerateAttentionBasedSaliencyImageRequest(TestCase):
     def test_constants(self):
-        self.assertEqual(
-            Vision.VNGenerateAttentionBasedSaliencyImageRequestRevision1, 1
-        )
-        self.assertEqual(
-            Vision.VNGenerateAttentionBasedSaliencyImageRequestRevision2, 2
-        )
+        self.assertEqual(Vision.VNGenerateAttentionBasedSaliencyImageRequestRevision1, 1)
+        self.assertEqual(Vision.VNGenerateAttentionBasedSaliencyImageRequestRevision2, 2)

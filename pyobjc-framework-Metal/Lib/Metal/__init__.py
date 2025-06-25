@@ -17,9 +17,7 @@ def _setup():
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Metal",
         frameworkIdentifier="com.apple.Metal",
-        frameworkPath=objc.pathForFramework(
-            "/System/Library/Frameworks/Metal.framework"
-        ),
+        frameworkPath=objc.pathForFramework("/System/Library/Frameworks/Metal.framework"),
         globals_dict=globals(),
         inline_list=_inline_list_,
         parents=(

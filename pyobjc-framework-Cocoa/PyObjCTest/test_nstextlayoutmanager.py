@@ -18,9 +18,7 @@ class TestNSTextLayoutManager(TestCase):
         self.assertEqual(AppKit.NSTextLayoutManagerSegmentTypeHighlight, 2)
 
         self.assertEqual(AppKit.NSTextLayoutManagerSegmentOptionsNone, 0)
-        self.assertEqual(
-            AppKit.NSTextLayoutManagerSegmentOptionsRangeNotRequired, 1 << 0
-        )
+        self.assertEqual(AppKit.NSTextLayoutManagerSegmentOptionsRangeNotRequired, 1 << 0)
         self.assertEqual(
             AppKit.NSTextLayoutManagerSegmentOptionsMiddleFragmentsExcluded, 1 << 1
         )
@@ -30,9 +28,7 @@ class TestNSTextLayoutManager(TestCase):
         self.assertEqual(
             AppKit.NSTextLayoutManagerSegmentOptionsTailSegmentExtended, 1 << 3
         )
-        self.assertEqual(
-            AppKit.NSTextLayoutManagerSegmentOptionsUpstreamAffinity, 1 << 4
-        )
+        self.assertEqual(AppKit.NSTextLayoutManagerSegmentOptionsUpstreamAffinity, 1 << 4)
 
     @min_sdk_level("12.0")
     def test_protocols(self):

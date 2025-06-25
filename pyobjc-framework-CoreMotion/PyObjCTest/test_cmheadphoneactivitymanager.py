@@ -13,9 +13,7 @@ class TestCMHeadphoneActivityManager(TestCase):
 
     @min_os_level("15.0")
     def test_methods(self):
-        self.assertResultIsBOOL(
-            CoreMotion.CMHeadphoneActivityManager.isActivityAvailable
-        )
+        self.assertResultIsBOOL(CoreMotion.CMHeadphoneActivityManager.isActivityAvailable)
         self.assertResultIsBOOL(CoreMotion.CMHeadphoneActivityManager.isActivityActive)
         self.assertResultIsBOOL(CoreMotion.CMHeadphoneActivityManager.isStatusAvailable)
         self.assertResultIsBOOL(CoreMotion.CMHeadphoneActivityManager.isStatusActive)

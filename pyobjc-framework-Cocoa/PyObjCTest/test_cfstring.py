@@ -90,9 +90,7 @@ class TestString(TestCase):
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertEqual(s, "hello foo = 52")
 
-        self.assertFalse(
-            hasattr(CoreFoundation, "CFStringCreateWithFormatAndArguments")
-        )
+        self.assertFalse(hasattr(CoreFoundation, "CFStringCreateWithFormatAndArguments"))
 
     def testCreateMutable(self):
         s = CoreFoundation.CFStringCreateMutable(None, 0)
@@ -284,9 +282,7 @@ class TestString(TestCase):
         self.assertIs(ok, False)
         ok = CoreFoundation.CFStringHasSuffix("hello", "lo")
         self.assertIs(ok, True)
-        rng = CoreFoundation.CFStringGetRangeOfComposedCharactersAtIndex(
-            "hello world", 5
-        )
+        rng = CoreFoundation.CFStringGetRangeOfComposedCharactersAtIndex("hello world", 5)
         self.assertIsInstance(rng, CoreFoundation.CFRange)
         found, rng = CoreFoundation.CFStringFindCharacterFromSet(
             "hello  world",
@@ -461,9 +457,7 @@ class TestString(TestCase):
             if e == CoreFoundation.kCFStringEncodingInvalidId:
                 break
             self.assertIsInstance(e, int)
-        s = CoreFoundation.CFStringGetNameOfEncoding(
-            CoreFoundation.kCFStringEncodingUTF8
-        )
+        s = CoreFoundation.CFStringGetNameOfEncoding(CoreFoundation.kCFStringEncodingUTF8)
         self.assertEqual(s, "Unicode (UTF-8)")
 
         v = CoreFoundation.CFStringConvertEncodingToNSStringEncoding(
@@ -654,9 +648,7 @@ class TestStringEncodingExt(TestCase):
         self.assertEqual(CoreFoundation.kCFStringEncodingJIS_X0212_90, 0x0623)
         self.assertEqual(CoreFoundation.kCFStringEncodingJIS_C6226_78, 0x0624)
         self.assertEqual(CoreFoundation.kCFStringEncodingShiftJIS_X0213, 0x0628)
-        self.assertEqual(
-            CoreFoundation.kCFStringEncodingShiftJIS_X0213_MenKuTen, 0x0629
-        )
+        self.assertEqual(CoreFoundation.kCFStringEncodingShiftJIS_X0213_MenKuTen, 0x0629)
         self.assertEqual(CoreFoundation.kCFStringEncodingGB_2312_80, 0x0630)
         self.assertEqual(CoreFoundation.kCFStringEncodingGBK_95, 0x0631)
         self.assertEqual(CoreFoundation.kCFStringEncodingGB_18030_2000, 0x0632)
@@ -740,7 +732,5 @@ class TestStringEncodingExt(TestCase):
 
     @min_os_level("13.0")
     def test_functions13_0(self):
-        self.assertArgIsPrintf(
-            CoreFoundation.CFStringCreateStringWithValidatedFormat, 3
-        )
+        self.assertArgIsPrintf(CoreFoundation.CFStringCreateStringWithValidatedFormat, 3)
         self.assertArgIsOut(CoreFoundation.CFStringCreateStringWithValidatedFormat, 4)

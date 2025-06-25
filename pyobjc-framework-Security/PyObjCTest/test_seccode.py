@@ -135,9 +135,7 @@ class TestSecCode(TestCase):
 
         self.assertResultHasType(Security.SecCodeCopyDesignatedRequirement, objc._C_INT)
         self.assertArgHasType(Security.SecCodeCopyDesignatedRequirement, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecCodeCopyDesignatedRequirement, 1, objc._C_UINT
-        )
+        self.assertArgHasType(Security.SecCodeCopyDesignatedRequirement, 1, objc._C_UINT)
         self.assertArgHasType(
             Security.SecCodeCopyDesignatedRequirement,
             2,

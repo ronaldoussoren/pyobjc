@@ -4,9 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTypesetterHelper(AppKit.NSTypesetter):
-    def willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(
-        self, a, b, c, d
-    ):
+    def willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(self, a, b, c, d):
         return 1
 
     def getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_(

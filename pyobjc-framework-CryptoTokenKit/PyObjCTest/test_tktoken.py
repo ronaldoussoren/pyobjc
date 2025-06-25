@@ -77,9 +77,7 @@ class TestTKToken(TestCase):
             b"o^@",
         )
 
-        self.assertArgHasType(
-            TestTKTokenHelper.token_createSessionWithError_, 1, b"o^@"
-        )
+        self.assertArgHasType(TestTKTokenHelper.token_createSessionWithError_, 1, b"o^@")
         self.assertArgHasType(
             TestTKTokenHelper.tokenDriver_tokenForConfiguration_error_, 2, b"o^@"
         )

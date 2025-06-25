@@ -28,9 +28,7 @@ class TestGKObstacle(TestCase):
             b"n^" + simd.vector_float2.__typestr__,
         )
         self.assertArgIsIn(GameplayKit.GKPolygonObstacle.initWithPoints_count_, 0)
-        self.assertArgSizeInArg(
-            GameplayKit.GKPolygonObstacle.initWithPoints_count_, 0, 1
-        )
+        self.assertArgSizeInArg(GameplayKit.GKPolygonObstacle.initWithPoints_count_, 0, 1)
 
         self.assertResultHasType(
             GameplayKit.GKPolygonObstacle.vertexAtIndex_, simd.vector_float2.__typestr__

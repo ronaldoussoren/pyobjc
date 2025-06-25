@@ -62,9 +62,7 @@ class TestMIDIServices(TestCase):
         self.assertIsInstance(
             CoreMIDI.kMIDIPropertyFactoryPatchNameFile, (type(None), str)
         )
-        self.assertIsInstance(
-            CoreMIDI.kMIDIPropertyUserPatchNameFile, (type(None), str)
-        )
+        self.assertIsInstance(CoreMIDI.kMIDIPropertyUserPatchNameFile, (type(None), str))
 
     @min_os_level("14.0")
     def test_constants14_0(self):
@@ -77,9 +75,7 @@ class TestMIDIServices(TestCase):
 
     @min_os_level("15.0")
     def test_constants15_0(self):
-        self.assertIsInstance(
-            CoreMIDI.kMIDIPropertyAssociatedEndpoint, (str, type(None))
-        )
+        self.assertIsInstance(CoreMIDI.kMIDIPropertyAssociatedEndpoint, (str, type(None)))
 
     def test_functions(self):
         self.assertArgIsOut(CoreMIDI.MIDISourceCreate, 2)

@@ -20,9 +20,7 @@ class TestIOBluetoothUIUserLib(TestCase):
 
     def test_constants(self):
         self.assertIsEnumType(IOBluetoothUI.IOBluetoothServiceBrowserControllerOptions)
-        self.assertEqual(
-            IOBluetoothUI.kIOBluetoothServiceBrowserControllerOptionsNone, 0
-        )
+        self.assertEqual(IOBluetoothUI.kIOBluetoothServiceBrowserControllerOptionsNone, 0)
         self.assertEqual(
             IOBluetoothUI.kIOBluetoothServiceBrowserControllerOptionsAutoStartInquiry,
             1 << 0,

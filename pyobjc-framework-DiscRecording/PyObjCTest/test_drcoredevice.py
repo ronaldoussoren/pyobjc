@@ -17,9 +17,7 @@ class TestDRCoreDevice(TestCase):
         self.assertIsInstance(DiscRecording.kDRDeviceProductNameKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceFirmwareRevisionKey, str)
         self.assertIsInstance(DiscRecording.kDRDevicePhysicalInterconnectKey, str)
-        self.assertIsInstance(
-            DiscRecording.kDRDevicePhysicalInterconnectLocationKey, str
-        )
+        self.assertIsInstance(DiscRecording.kDRDevicePhysicalInterconnectLocationKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceWriteCapabilitiesKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceLoadingMechanismCanEjectKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceLoadingMechanismCanInjectKey, str)
@@ -57,13 +55,9 @@ class TestDRCoreDevice(TestCase):
         self.assertIsInstance(DiscRecording.kDRDeviceCanWriteDVDRWDualLayerKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceCanWriteDVDRAMKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceCanWriteDVDPlusRKey, str)
-        self.assertIsInstance(
-            DiscRecording.kDRDeviceCanWriteDVDPlusRDoubleLayerKey, str
-        )
+        self.assertIsInstance(DiscRecording.kDRDeviceCanWriteDVDPlusRDoubleLayerKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceCanWriteDVDPlusRWKey, str)
-        self.assertIsInstance(
-            DiscRecording.kDRDeviceCanWriteDVDPlusRWDoubleLayerKey, str
-        )
+        self.assertIsInstance(DiscRecording.kDRDeviceCanWriteDVDPlusRWDoubleLayerKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceCanWriteBDKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceCanWriteBDRKey, str)
         self.assertIsInstance(DiscRecording.kDRDeviceCanWriteBDREKey, str)

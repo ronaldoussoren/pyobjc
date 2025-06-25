@@ -18,14 +18,10 @@ class TestLatentSemanticMapping(TestCase):
 
         self.assertEqual(LatentSemanticMapping.kLSMAlgorithmKey, "LSMAlgorithm")
         self.assertEqual(LatentSemanticMapping.kLSMAlgorithmDense, "LSMAlgorithmDense")
-        self.assertEqual(
-            LatentSemanticMapping.kLSMAlgorithmSparse, "LSMAlgorithmSparse"
-        )
+        self.assertEqual(LatentSemanticMapping.kLSMAlgorithmSparse, "LSMAlgorithmSparse")
         self.assertEqual(LatentSemanticMapping.kLSMPrecisionKey, "LSMPrecision")
         self.assertEqual(LatentSemanticMapping.kLSMPrecisionFloat, "LSMPrecisionFloat")
-        self.assertEqual(
-            LatentSemanticMapping.kLSMPrecisionDouble, "LSMPrecisionDouble"
-        )
+        self.assertEqual(LatentSemanticMapping.kLSMPrecisionDouble, "LSMPrecisionDouble")
         self.assertEqual(LatentSemanticMapping.kLSMDimensionKey, "LSMDimension")
         self.assertEqual(LatentSemanticMapping.kLSMIterationsKey, "LSMIterations")
         self.assertEqual(LatentSemanticMapping.kLSMSweepAgeKey, "LSMSweepAge")
@@ -143,9 +139,7 @@ class TestLatentSemanticMapping(TestCase):
 
         if 1:
             self.assertResultIsCFRetained(LatentSemanticMapping.LSMMapCreateClusters)
-            clusters = LatentSemanticMapping.LSMMapCreateClusters(
-                None, map1, None, 2, 0
-            )
+            clusters = LatentSemanticMapping.LSMMapCreateClusters(None, map1, None, 2, 0)
             self.assertIsInstance(
                 clusters, (LatentSemanticMapping.CFArrayRef, type(None))
             )

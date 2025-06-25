@@ -40,9 +40,7 @@ class TestVNGeometryUtils(TestCase):
         self.assertResultIsBOOL(
             Vision.VNGeometryUtils.calculatePerimeter_forContour_error_
         )
-        self.assertArgIsIn(
-            Vision.VNGeometryUtils.calculatePerimeter_forContour_error_, 0
-        )
+        self.assertArgIsIn(Vision.VNGeometryUtils.calculatePerimeter_forContour_error_, 0)
         self.assertArgIsOut(
             Vision.VNGeometryUtils.calculatePerimeter_forContour_error_, 2
         )

@@ -32,9 +32,7 @@ class TestCHHapticParameter(TestCase):
 
     @min_sdk_level("13.0")
     def test_constants13_0(self):
-        self.assertIsInstance(
-            CoreHaptics.CHHapticPatternKeyEventWaveformLoopEnabled, str
-        )
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEventWaveformLoopEnabled, str)
 
     @min_sdk_level("10.15")
     def test_methods10_15(self):

@@ -29,9 +29,7 @@ class TestSystemConfiguration(TestCase):
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertIsInstance(
-            SystemConfiguration.kCFErrorDomainSystemConfiguration, str
-        )
+        self.assertIsInstance(SystemConfiguration.kCFErrorDomainSystemConfiguration, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):

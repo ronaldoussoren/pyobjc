@@ -47,9 +47,7 @@ class TestCTGlyphInfo(TestCase):
             CoreText.kCTAdobeJapan2CharacterCollection,
             CoreText.kCTAdobeKorea1CharacterCollection,
         ):
-            v = CoreText.CTGlyphInfoCreateWithCharacterIdentifier(
-                3254, collection, "(c)"
-            )
+            v = CoreText.CTGlyphInfoCreateWithCharacterIdentifier(3254, collection, "(c)")
             if v is not None:
                 break
         self.assertIsInstance(v, CoreText.CTGlyphInfoRef)

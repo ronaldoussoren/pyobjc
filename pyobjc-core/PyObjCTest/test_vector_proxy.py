@@ -246,9 +246,7 @@ class TestMethods(TestCase):
         )
         oc = OC_Vector.alloc().init()
         result = oc.calcId_andFloat4_("hello2", (-1.5, -2.5, -3.5, -4.5))
-        self.assertEqual(
-            result, (("hello2", simd.vector_float4(-1.5, -2.5, -3.5, -4.5)))
-        )
+        self.assertEqual(result, (("hello2", simd.vector_float4(-1.5, -2.5, -3.5, -4.5))))
 
         with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 1"):
             oc.calcId_andFloat4_(42)

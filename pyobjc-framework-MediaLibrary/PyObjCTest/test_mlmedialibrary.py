@@ -25,9 +25,7 @@ class TestMLMediaLibrary(TestCase):
 
         self.assertIsInstance(MediaLibrary.MLMediaSourceCustomFoldersIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLMediaSourceMoviesFolderIdentifier, str)
-        self.assertIsInstance(
-            MediaLibrary.MLMediaSourceAppDefinedFoldersIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLMediaSourceAppDefinedFoldersIdentifier, str)
 
         self.assertIsInstance(MediaLibrary.MLMediaLoadSourceTypesKey, str)
 

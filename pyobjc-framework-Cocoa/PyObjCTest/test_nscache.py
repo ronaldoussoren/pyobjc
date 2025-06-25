@@ -6,9 +6,7 @@ class TestNSCache(TestCase):
     @min_os_level("10.6")
     def testMethods(self):
         self.assertResultIsBOOL(Foundation.NSCache.evictsObjectsWithDiscardedContent)
-        self.assertArgIsBOOL(
-            Foundation.NSCache.setEvictsObjectsWithDiscardedContent_, 0
-        )
+        self.assertArgIsBOOL(Foundation.NSCache.setEvictsObjectsWithDiscardedContent_, 0)
 
     @min_sdk_level("10.10")
     def testProtocols(self):

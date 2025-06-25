@@ -15,9 +15,7 @@ class TestSystemExtensions(TestCase):
     def test_constants10_15(self):
         self.assertIsInstance(SystemExtensions.OSSystemExtensionErrorDomain, str)
         self.assertIsInstance(SystemExtensions.OSBundleUsageDescriptionKey, str)
-        self.assertIsInstance(
-            SystemExtensions.NSSystemExtensionUsageDescriptionKey, str
-        )
+        self.assertIsInstance(SystemExtensions.NSSystemExtensionUsageDescriptionKey, str)
 
         self.assertEqual(SystemExtensions.OSSystemExtensionErrorUnknown, 1)
         self.assertEqual(SystemExtensions.OSSystemExtensionErrorMissingEntitlement, 2)
@@ -41,9 +39,7 @@ class TestSystemExtensions(TestCase):
         )
         self.assertEqual(SystemExtensions.OSSystemExtensionErrorRequestCanceled, 11)
         self.assertEqual(SystemExtensions.OSSystemExtensionErrorRequestSuperseded, 12)
-        self.assertEqual(
-            SystemExtensions.OSSystemExtensionErrorAuthorizationRequired, 13
-        )
+        self.assertEqual(SystemExtensions.OSSystemExtensionErrorAuthorizationRequired, 13)
 
         self.assertEqual(SystemExtensions.OSSystemExtensionReplacementActionCancel, 0)
         self.assertEqual(SystemExtensions.OSSystemExtensionReplacementActionReplace, 1)

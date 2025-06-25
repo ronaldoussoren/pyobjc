@@ -68,12 +68,8 @@ class TestTKSmartCard(TestCase):
             CryptoTokenKit.TKSmartCard.inSessionWithError_executeBlock_, 1, b"Zo^@"
         )
 
-        self.assertArgIsOut(
-            CryptoTokenKit.TKSmartCard.sendIns_p1_p2_data_le_sw_error_, 5
-        )
-        self.assertArgIsOut(
-            CryptoTokenKit.TKSmartCard.sendIns_p1_p2_data_le_sw_error_, 6
-        )
+        self.assertArgIsOut(CryptoTokenKit.TKSmartCard.sendIns_p1_p2_data_le_sw_error_, 5)
+        self.assertArgIsOut(CryptoTokenKit.TKSmartCard.sendIns_p1_p2_data_le_sw_error_, 6)
 
     @min_os_level("10.11")
     @expectedFailure

@@ -174,17 +174,13 @@ class TestMTLLibrary(TestCase):
 
         self.assertResultIsBOOL(Metal.MTLAttribute.alloc().init().isActive)
         self.assertResultIsBOOL(Metal.MTLAttribute.alloc().init().isPatchData)
-        self.assertResultIsBOOL(
-            Metal.MTLAttribute.alloc().init().isPatchControlPointData
-        )
+        self.assertResultIsBOOL(Metal.MTLAttribute.alloc().init().isPatchControlPointData)
 
         self.assertResultIsBOOL(Metal.MTLFunctionConstant.alloc().init().required)
 
     @min_os_level("11.0")
     def test_methods11_0(self):
-        self.assertResultIsBOOL(
-            Metal.MTLCompileOptions.alloc().init().preserveInvariance
-        )
+        self.assertResultIsBOOL(Metal.MTLCompileOptions.alloc().init().preserveInvariance)
         self.assertArgIsBOOL(
             Metal.MTLCompileOptions.alloc().init().setPreserveInvariance_, 0
         )

@@ -27,9 +27,7 @@ class TestNEVPNConnection(TestCase):
         self.assertEqual(NetworkExtension.NEVPNConnectionErrorServerNotResponding, 6)
         self.assertEqual(NetworkExtension.NEVPNConnectionErrorServerDead, 7)
         self.assertEqual(NetworkExtension.NEVPNConnectionErrorAuthenticationFailed, 8)
-        self.assertEqual(
-            NetworkExtension.NEVPNConnectionErrorClientCertificateInvalid, 9
-        )
+        self.assertEqual(NetworkExtension.NEVPNConnectionErrorClientCertificateInvalid, 9)
         self.assertEqual(
             NetworkExtension.NEVPNConnectionErrorClientCertificateNotYetValid, 10
         )

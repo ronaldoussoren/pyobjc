@@ -13,9 +13,7 @@ class TestNSFileProviderDomain(TestCase):
         self.assertEqual(
             FileProvider.NSFileProviderDomainTestingModeAlwaysEnabled, 1 << 0
         )
-        self.assertEqual(
-            FileProvider.NSFileProviderDomainTestingModeInteractive, 1 << 1
-        )
+        self.assertEqual(FileProvider.NSFileProviderDomainTestingModeInteractive, 1 << 1)
 
         self.assertIsEnumType(FileProvider.NSFileProviderKnownFolders)
         self.assertEqual(FileProvider.NSFileProviderDesktop, 1 << 0)

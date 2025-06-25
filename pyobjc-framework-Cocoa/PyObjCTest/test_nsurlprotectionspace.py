@@ -23,9 +23,7 @@ class TestNSURLProtectionSpace(TestCase):
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(
-            Foundation.NSURLAuthenticationMethodClientCertificate, str
-        )
+        self.assertIsInstance(Foundation.NSURLAuthenticationMethodClientCertificate, str)
         self.assertIsInstance(Foundation.NSURLAuthenticationMethodServerTrust, str)
 
     def testMethods(self):

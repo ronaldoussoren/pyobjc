@@ -10,9 +10,7 @@ class TestAVMovie(TestCase):
     def testConstants10_10(self):
         self.assertIsInstance(AVFoundation.AVMovieReferenceRestrictionsKey, str)
 
-        self.assertEqual(
-            AVFoundation.AVMovieWritingAddMovieHeaderToDestination, 0
-        )  # noqa: B950
+        self.assertEqual(AVFoundation.AVMovieWritingAddMovieHeaderToDestination, 0)  # noqa: B950
         self.assertEqual(
             AVFoundation.AVMovieWritingTruncateDestinationToMovieHeaderOnly,
             1 << 0,  # noqa: B950
@@ -44,9 +42,7 @@ class TestAVMovie(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVMovie.isCompatibleWithFileType_)
 
         self.assertResultIsBOOL(AVFoundation.AVMovie.containsMovieFragments)
-        self.assertArgIsOut(
-            AVFoundation.AVMovie.movieHeaderWithFileType_error_, 1
-        )  # noqa: B950
+        self.assertArgIsOut(AVFoundation.AVMovie.movieHeaderWithFileType_error_, 1)  # noqa: B950
 
         self.assertResultIsBOOL(
             AVFoundation.AVMovie.writeMovieHeaderToURL_fileType_options_error_
@@ -56,18 +52,10 @@ class TestAVMovie(TestCase):
             3,  # noqa: B950
         )
 
-        self.assertArgIsOut(
-            AVFoundation.AVMutableMovie.movieWithURL_options_error_, 2
-        )  # noqa: B950
-        self.assertArgIsOut(
-            AVFoundation.AVMutableMovie.initWithURL_options_error_, 2
-        )  # noqa: B950
-        self.assertArgIsOut(
-            AVFoundation.AVMutableMovie.movieWithData_options_error_, 2
-        )  # noqa: B950
-        self.assertArgIsOut(
-            AVFoundation.AVMutableMovie.initWithData_options_error_, 2
-        )  # noqa: B950
+        self.assertArgIsOut(AVFoundation.AVMutableMovie.movieWithURL_options_error_, 2)  # noqa: B950
+        self.assertArgIsOut(AVFoundation.AVMutableMovie.initWithURL_options_error_, 2)  # noqa: B950
+        self.assertArgIsOut(AVFoundation.AVMutableMovie.movieWithData_options_error_, 2)  # noqa: B950
+        self.assertArgIsOut(AVFoundation.AVMutableMovie.initWithData_options_error_, 2)  # noqa: B950
         self.assertArgIsOut(
             AVFoundation.AVMutableMovie.movieWithSettingsFromMovie_options_error_,
             2,  # noqa: B950

@@ -83,9 +83,7 @@ class TestSecTrusted(TestCase):
         self.assertArgHasType(Security.SecTrustSetAnchorCertificates, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTrustSetAnchorCertificates, 1, objc._C_ID)
 
-        self.assertResultHasType(
-            Security.SecTrustSetAnchorCertificatesOnly, objc._C_INT
-        )
+        self.assertResultHasType(Security.SecTrustSetAnchorCertificatesOnly, objc._C_INT)
         self.assertArgHasType(Security.SecTrustSetAnchorCertificatesOnly, 0, objc._C_ID)
         self.assertArgHasType(
             Security.SecTrustSetAnchorCertificatesOnly, 1, objc._C_NSBOOL
@@ -152,9 +150,7 @@ class TestSecTrusted(TestCase):
         self.assertResultIsCFRetained(Security.SecTrustCopyPublicKey)
         self.assertArgHasType(Security.SecTrustCopyPublicKey, 0, objc._C_ID)
 
-        self.assertResultHasType(
-            Security.SecTrustGetCertificateCount, objc._C_NSInteger
-        )
+        self.assertResultHasType(Security.SecTrustGetCertificateCount, objc._C_NSInteger)
         self.assertArgHasType(Security.SecTrustGetCertificateCount, 0, objc._C_ID)
 
         self.assertResultHasType(Security.SecTrustGetCertificateAtIndex, objc._C_ID)
@@ -175,9 +171,7 @@ class TestSecTrusted(TestCase):
     def test_functions_10_9(self):
         self.assertResultHasType(Security.SecTrustSetNetworkFetchAllowed, objc._C_INT)
         self.assertArgHasType(Security.SecTrustSetNetworkFetchAllowed, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecTrustSetNetworkFetchAllowed, 1, objc._C_NSBOOL
-        )
+        self.assertArgHasType(Security.SecTrustSetNetworkFetchAllowed, 1, objc._C_NSBOOL)
 
         self.assertResultHasType(Security.SecTrustGetNetworkFetchAllowed, objc._C_INT)
         self.assertArgHasType(Security.SecTrustGetNetworkFetchAllowed, 0, objc._C_ID)

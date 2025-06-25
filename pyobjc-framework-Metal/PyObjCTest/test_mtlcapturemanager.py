@@ -23,9 +23,5 @@ class TestMTLArgument(TestCase):
     def test_methods10_15(self):
         self.assertResultIsBOOL(Metal.MTLCaptureManager.supportsDestination_)
 
-        self.assertResultIsBOOL(
-            Metal.MTLCaptureManager.startCaptureWithDescriptor_error_
-        )
-        self.assertArgIsOut(
-            Metal.MTLCaptureManager.startCaptureWithDescriptor_error_, 1
-        )
+        self.assertResultIsBOOL(Metal.MTLCaptureManager.startCaptureWithDescriptor_error_)
+        self.assertArgIsOut(Metal.MTLCaptureManager.startCaptureWithDescriptor_error_, 1)

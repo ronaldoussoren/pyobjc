@@ -23,9 +23,7 @@ class TestCIRenderDestination(TestCase):
         self.assertResultIsBOOL(Quartz.CIRenderDestination.isClamped)
         self.assertArgIsBOOL(Quartz.CIRenderDestination.setClamped_, 0)
 
-        self.assertResultIsBOOL(
-            Quartz.CIRenderDestination.blendsInDestinationColorSpace
-        )
+        self.assertResultIsBOOL(Quartz.CIRenderDestination.blendsInDestinationColorSpace)
         self.assertArgIsBOOL(
             Quartz.CIRenderDestination.setBlendsInDestinationColorSpace_, 0
         )

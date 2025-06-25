@@ -31,9 +31,7 @@ class TestGCRelativeInput(TestCase):
         self.assertProtocolExists("GCRelativeInput")
 
     def test_protocol_methods(self):
-        self.assertResultIsBlock(
-            TestGCRelativeInputHelper.deltaDidChangeHandler, b"v@@f"
-        )
+        self.assertResultIsBlock(TestGCRelativeInputHelper.deltaDidChangeHandler, b"v@@f")
         self.assertArgIsBlock(
             TestGCRelativeInputHelper.setDeltaDidChangeHandler_, 0, b"v@@f"
         )

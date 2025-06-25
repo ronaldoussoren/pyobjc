@@ -17,9 +17,7 @@ def _setup():
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="AVKit",
         frameworkIdentifier="com.apple.AVKit",
-        frameworkPath=objc.pathForFramework(
-            "/System/Library/Frameworks/AVKit.framework"
-        ),
+        frameworkPath=objc.pathForFramework("/System/Library/Frameworks/AVKit.framework"),
         globals_dict=globals(),
         inline_list=None,
         parents=(_AVKit, Cocoa, Quartz),

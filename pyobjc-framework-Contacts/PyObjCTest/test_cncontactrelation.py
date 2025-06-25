@@ -80,16 +80,12 @@ class TestCNContactRelation(TestCase):
         self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandson, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationParentInLaw, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationMotherInLaw, str)
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationMotherInLawWifesMother, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationMotherInLawWifesMother, str)
         self.assertIsInstance(
             Contacts.CNLabelContactRelationMotherInLawHusbandsMother, str
         )
         self.assertIsInstance(Contacts.CNLabelContactRelationFatherInLaw, str)
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationFatherInLawWifesFather, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationFatherInLawWifesFather, str)
         self.assertIsInstance(
             Contacts.CNLabelContactRelationFatherInLawHusbandsFather, str
         )
@@ -105,15 +101,11 @@ class TestCNContactRelation(TestCase):
         self.assertIsInstance(
             Contacts.CNLabelContactRelationSisterInLawSpousesSister, str
         )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationSisterInLawWifesSister, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationSisterInLawWifesSister, str)
         self.assertIsInstance(
             Contacts.CNLabelContactRelationSisterInLawHusbandsSister, str
         )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationSisterInLawBrothersWife, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationSisterInLawBrothersWife, str)
         self.assertIsInstance(
             Contacts.CNLabelContactRelationSisterInLawYoungerBrothersWife, str
         )
@@ -225,9 +217,7 @@ class TestCNContactRelation(TestCase):
         self.assertIsInstance(
             Contacts.CNLabelContactRelationElderCousinMothersSistersDaughter, str
         )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationCousinMothersSistersSon, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationCousinMothersSistersSon, str)
         self.assertIsInstance(
             Contacts.CNLabelContactRelationYoungerCousinMothersSistersSon, str
         )
@@ -261,9 +251,7 @@ class TestCNContactRelation(TestCase):
         self.assertIsInstance(
             Contacts.CNLabelContactRelationElderCousinFathersSistersDaughter, str
         )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationCousinFathersSistersSon, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationCousinFathersSistersSon, str)
         self.assertIsInstance(
             Contacts.CNLabelContactRelationYoungerCousinFathersSistersSon, str
         )
@@ -339,19 +327,13 @@ class TestCNContactRelation(TestCase):
         self.assertIsInstance(
             Contacts.CNLabelContactRelationAuntParentsYoungerSister, str
         )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationAuntParentsElderSister, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationAuntParentsElderSister, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationAuntFathersSister, str)
         self.assertIsInstance(
             Contacts.CNLabelContactRelationAuntFathersYoungerSister, str
         )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationAuntFathersElderSister, str
-        )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationAuntFathersBrothersWife, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationAuntFathersElderSister, str)
+        self.assertIsInstance(Contacts.CNLabelContactRelationAuntFathersBrothersWife, str)
         self.assertIsInstance(
             Contacts.CNLabelContactRelationAuntFathersYoungerBrothersWife, str
         )
@@ -362,12 +344,8 @@ class TestCNContactRelation(TestCase):
         self.assertIsInstance(
             Contacts.CNLabelContactRelationAuntMothersYoungerSister, str
         )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationAuntMothersElderSister, str
-        )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationAuntMothersBrothersWife, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationAuntMothersElderSister, str)
+        self.assertIsInstance(Contacts.CNLabelContactRelationAuntMothersBrothersWife, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationGrandaunt, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationUncle, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationUncleParentsBrother, str)
@@ -447,12 +425,8 @@ class TestCNContactRelation(TestCase):
         self.assertIsInstance(Contacts.CNLabelContactRelationStepdaughter, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationStepbrother, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationStepsister, str)
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationMotherInLawOrStepmother, str
-        )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationFatherInLawOrStepfather, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationMotherInLawOrStepmother, str)
+        self.assertIsInstance(Contacts.CNLabelContactRelationFatherInLawOrStepfather, str)
         self.assertIsInstance(
             Contacts.CNLabelContactRelationDaughterInLawOrStepdaughter, str
         )
@@ -469,9 +443,7 @@ class TestCNContactRelation(TestCase):
         self.assertIsInstance(
             Contacts.CNLabelContactRelationDaughterInLawOrSisterInLaw, str
         )
-        self.assertIsInstance(
-            Contacts.CNLabelContactRelationSonInLawOrBrotherInLaw, str
-        )
+        self.assertIsInstance(Contacts.CNLabelContactRelationSonInLawOrBrotherInLaw, str)
 
     @min_os_level("11.0")
     def testConstants11_0(self):

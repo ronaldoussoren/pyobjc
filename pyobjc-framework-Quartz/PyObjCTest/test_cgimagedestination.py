@@ -85,9 +85,7 @@ class TestCGImageDestination(TestCase):
         cons = Quartz.CGDataConsumerCreateWithCFData(dta)
 
         self.assertResultIsCFRetained(Quartz.CGImageDestinationCreateWithDataConsumer)
-        c = Quartz.CGImageDestinationCreateWithDataConsumer(
-            cons, "public.tiff", 1, None
-        )
+        c = Quartz.CGImageDestinationCreateWithDataConsumer(cons, "public.tiff", 1, None)
         self.assertIsInstance(c, Quartz.CGImageDestinationRef)
 
     @min_os_level("10.8")

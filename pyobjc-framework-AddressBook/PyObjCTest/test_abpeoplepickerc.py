@@ -103,9 +103,7 @@ class TestABPeoplePickerC(TestCase):
         v = AddressBook.ABPickerCopySelectedValues(ref)
         self.assertIsInstance(v, AddressBook.NSArray)
 
-        grp = AddressBook.ABCopyArrayOfAllGroups(AddressBook.ABGetSharedAddressBook())[
-            0
-        ]
+        grp = AddressBook.ABCopyArrayOfAllGroups(AddressBook.ABGetSharedAddressBook())[0]
         usr = AddressBook.ABGetMe(AddressBook.ABGetSharedAddressBook())
 
         AddressBook.ABPickerSelectGroup(ref, grp, True)

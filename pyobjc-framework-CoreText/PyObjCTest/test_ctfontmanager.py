@@ -27,16 +27,10 @@ class TestCTFontManager(TestCase):
 
     @min_os_level("10.6")
     def testFunctions10_6(self):
-        self.assertResultIsCFRetained(
-            CoreText.CTFontManagerCopyAvailablePostScriptNames
-        )
-        self.assertResultIsCFRetained(
-            CoreText.CTFontManagerCopyAvailableFontFamilyNames
-        )
+        self.assertResultIsCFRetained(CoreText.CTFontManagerCopyAvailablePostScriptNames)
+        self.assertResultIsCFRetained(CoreText.CTFontManagerCopyAvailableFontFamilyNames)
         self.assertResultIsCFRetained(CoreText.CTFontManagerCopyAvailableFontURLs)
-        self.assertResultIsCFRetained(
-            CoreText.CTFontManagerCreateFontDescriptorsFromURL
-        )
+        self.assertResultIsCFRetained(CoreText.CTFontManagerCreateFontDescriptorsFromURL)
 
         self.assertArgHasType(
             CoreText.CTFontManagerCompareFontFamilyNames, 0, b"^{__CFString=}"
@@ -66,23 +60,17 @@ class TestCTFontManager(TestCase):
 
     @min_os_level("10.7")
     def testFunctions10_7(self):
-        self.assertResultIsCFRetained(
-            CoreText.CTFontManagerCreateFontDescriptorFromData
-        )
+        self.assertResultIsCFRetained(CoreText.CTFontManagerCreateFontDescriptorFromData)
 
     @min_os_level("10.8")
     def testFunctions10_8(self):
-        self.assertResultIsCFRetained(
-            CoreText.CTFontManagerCreateFontDescriptorFromData
-        )
+        self.assertResultIsCFRetained(CoreText.CTFontManagerCreateFontDescriptorFromData)
         self.assertArgIsOut(CoreText.CTFontManagerRegisterGraphicsFont, 1)
         self.assertArgIsOut(CoreText.CTFontManagerUnregisterGraphicsFont, 1)
 
     @min_os_level("10.13")
     def testFunctions10_13(self):
-        self.assertResultIsCFRetained(
-            CoreText.CTFontManagerCreateFontDescriptorsFromData
-        )
+        self.assertResultIsCFRetained(CoreText.CTFontManagerCreateFontDescriptorsFromData)
 
     @min_os_level("10.15")
     def testFunctions10_15(self):

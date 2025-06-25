@@ -15,9 +15,7 @@ class TestNSURLRequest(TestCase):
     def testConstants(self):
         self.assertEqual(Foundation.NSURLRequestUseProtocolCachePolicy, 0)
         self.assertEqual(Foundation.NSURLRequestReloadIgnoringLocalCacheData, 1)
-        self.assertEqual(
-            Foundation.NSURLRequestReloadIgnoringLocalAndRemoteCacheData, 4
-        )
+        self.assertEqual(Foundation.NSURLRequestReloadIgnoringLocalAndRemoteCacheData, 4)
         self.assertEqual(
             Foundation.NSURLRequestReloadIgnoringCacheData,
             Foundation.NSURLRequestReloadIgnoringLocalCacheData,

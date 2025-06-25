@@ -21,9 +21,7 @@ class TestCXError(TestCase):
 
         self.assertEqual(CallKit.CXErrorCodeRequestTransactionErrorUnknown, 0)
         self.assertEqual(CallKit.CXErrorCodeRequestTransactionErrorUnentitled, 1)
-        self.assertEqual(
-            CallKit.CXErrorCodeRequestTransactionErrorUnknownCallProvider, 2
-        )
+        self.assertEqual(CallKit.CXErrorCodeRequestTransactionErrorUnknownCallProvider, 2)
         self.assertEqual(CallKit.CXErrorCodeRequestTransactionErrorEmptyTransaction, 3)
         self.assertEqual(CallKit.CXErrorCodeRequestTransactionErrorUnknownCallUUID, 4)
         self.assertEqual(
@@ -35,27 +33,17 @@ class TestCXError(TestCase):
         )
 
         self.assertEqual(CallKit.CXErrorCodeCallDirectoryManagerErrorUnknown, 0)
-        self.assertEqual(
-            CallKit.CXErrorCodeCallDirectoryManagerErrorNoExtensionFound, 1
-        )
+        self.assertEqual(CallKit.CXErrorCodeCallDirectoryManagerErrorNoExtensionFound, 1)
         self.assertEqual(
             CallKit.CXErrorCodeCallDirectoryManagerErrorLoadingInterrupted, 2
         )
-        self.assertEqual(
-            CallKit.CXErrorCodeCallDirectoryManagerErrorEntriesOutOfOrder, 3
-        )
-        self.assertEqual(
-            CallKit.CXErrorCodeCallDirectoryManagerErrorDuplicateEntries, 4
-        )
+        self.assertEqual(CallKit.CXErrorCodeCallDirectoryManagerErrorEntriesOutOfOrder, 3)
+        self.assertEqual(CallKit.CXErrorCodeCallDirectoryManagerErrorDuplicateEntries, 4)
         self.assertEqual(
             CallKit.CXErrorCodeCallDirectoryManagerErrorMaximumEntriesExceeded, 5
         )
-        self.assertEqual(
-            CallKit.CXErrorCodeCallDirectoryManagerErrorExtensionDisabled, 6
-        )
-        self.assertEqual(
-            CallKit.CXErrorCodeCallDirectoryManagerErrorCurrentlyLoading, 7
-        )
+        self.assertEqual(CallKit.CXErrorCodeCallDirectoryManagerErrorExtensionDisabled, 6)
+        self.assertEqual(CallKit.CXErrorCodeCallDirectoryManagerErrorCurrentlyLoading, 7)
         self.assertEqual(
             CallKit.CXErrorCodeCallDirectoryManagerErrorUnexpectedIncrementalRemoval, 8
         )

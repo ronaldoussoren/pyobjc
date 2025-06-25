@@ -149,9 +149,7 @@ class TestNSTableView(TestCase):
         self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleNone, -1)
         self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleNone, -1)
         self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
-        self.assertEqual(
-            AppKit.NSTableViewDraggingDestinationFeedbackStyleSourceList, 1
-        )
+        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleSourceList, 1)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
@@ -189,9 +187,7 @@ class TestNSTableView(TestCase):
         self.assertResultIsBOOL(AppKit.NSTableView.allowsColumnReordering)
         self.assertArgIsBOOL(AppKit.NSTableView.setAllowsColumnResizing_, 0)
         self.assertResultIsBOOL(AppKit.NSTableView.allowsColumnResizing)
-        self.assertArgIsBOOL(
-            AppKit.NSTableView.setUsesAlternatingRowBackgroundColors_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSTableView.setUsesAlternatingRowBackgroundColors_, 0)
         self.assertResultIsBOOL(AppKit.NSTableView.usesAlternatingRowBackgroundColors)
         self.assertArgIsBOOL(AppKit.NSTableView.setVerticalMotionCanBeginDrag_, 0)
         self.assertResultIsBOOL(AppKit.NSTableView.verticalMotionCanBeginDrag)
@@ -212,9 +208,7 @@ class TestNSTableView(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSTableView.selectColumnIndexes_byExtendingSelection_, 1
         )
-        self.assertArgIsBOOL(
-            AppKit.NSTableView.selectRowIndexes_byExtendingSelection_, 1
-        )
+        self.assertArgIsBOOL(AppKit.NSTableView.selectRowIndexes_byExtendingSelection_, 1)
         self.assertResultIsBOOL(AppKit.NSTableView.isColumnSelected_)
         self.assertResultIsBOOL(AppKit.NSTableView.isRowSelected_)
         self.assertResultIsBOOL(AppKit.NSTableView.textShouldBeginEditing_)
@@ -345,9 +339,7 @@ class TestNSTableView(TestCase):
         )
         self.assertResultIsBOOL(TestNSTableViewHelper.selectionShouldChangeInTableView_)
         self.assertResultIsBOOL(TestNSTableViewHelper.tableView_shouldSelectRow_)
-        self.assertResultIsBOOL(
-            TestNSTableViewHelper.tableView_shouldSelectTableColumn_
-        )
+        self.assertResultIsBOOL(TestNSTableViewHelper.tableView_shouldSelectTableColumn_)
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_,
             2,

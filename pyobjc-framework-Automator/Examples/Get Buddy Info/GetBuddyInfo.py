@@ -35,9 +35,7 @@ class GetBuddyInfo(AMBundleAction):
                 if personDescriptor is not None:
                     # get the uid of the person from this descriptor
                     if personDescriptor.descriptorType() == typeObjectSpecifier:
-                        container = personDescriptor.descriptorForKeyword_(
-                            keyAEContainer
-                        )
+                        container = personDescriptor.descriptorForKeyword_(keyAEContainer)
                         if container is not None:
                             uidDescriptor = container.descriptorAtIndex_(
                                 i

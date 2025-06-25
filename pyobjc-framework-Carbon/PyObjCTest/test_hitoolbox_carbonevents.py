@@ -22,9 +22,7 @@ class TestHIToolbox_CarbonEvents(TestCase):
 
     def test_constants(self):
         self.assertEqual(Carbon.kHISymbolicHotKeyCode, "kHISymbolicHotKeyCode")
-        self.assertEqual(
-            Carbon.kHISymbolicHotKeyModifiers, "kHISymbolicHotKeyModifiers"
-        )
+        self.assertEqual(Carbon.kHISymbolicHotKeyModifiers, "kHISymbolicHotKeyModifiers")
         self.assertEqual(Carbon.kHISymbolicHotKeyEnabled, "kHISymbolicHotKeyEnabled")
 
     def test_functions(self):

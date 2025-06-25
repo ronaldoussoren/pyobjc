@@ -50,9 +50,7 @@ class TestHKMetadata(TestCase):
 
         self.assertIsEnumType(HealthKit.HKHeartRateRecoveryTestType)
         self.assertEqual(HealthKit.HKHeartRateRecoveryTestTypeMaxExercise, 1)
-        self.assertEqual(
-            HealthKit.HKHeartRateRecoveryTestTypePredictionSubMaxExercise, 2
-        )
+        self.assertEqual(HealthKit.HKHeartRateRecoveryTestTypePredictionSubMaxExercise, 2)
         self.assertEqual(HealthKit.HKHeartRateRecoveryTestTypePredictionNonExercise, 3)
 
         self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateRecoveryTestType, str)
@@ -184,9 +182,7 @@ class TestHKMetadata(TestCase):
         self.assertIsInstance(HealthKit.HKMetadataKeyBarometricPressure, str)
         self.assertIsInstance(HealthKit.HKMetadataKeyAppleDeviceCalibrated, str)
         self.assertIsInstance(HealthKit.HKMetadataKeyVO2MaxValue, str)
-        self.assertIsInstance(
-            HealthKit.HKMetadataKeyLowCardioFitnessEventThreshold, str
-        )
+        self.assertIsInstance(HealthKit.HKMetadataKeyLowCardioFitnessEventThreshold, str)
         self.assertIsInstance(
             HealthKit.HKMetadataKeyDateOfEarliestDataUsedForEstimate, str
         )
@@ -194,9 +190,7 @@ class TestHKMetadata(TestCase):
         self.assertIsInstance(HealthKit.HKMetadataKeySWOLFScore, str)
         self.assertIsInstance(HealthKit.HKMetadataKeyQuantityClampedToLowerBound, str)
         self.assertIsInstance(HealthKit.HKMetadataKeyQuantityClampedToUpperBound, str)
-        self.assertIsInstance(
-            HealthKit.HKMetadataKeyGlassesPrescriptionDescription, str
-        )
+        self.assertIsInstance(HealthKit.HKMetadataKeyGlassesPrescriptionDescription, str)
 
         self.assertIsEnumType(HealthKit.HKWaterSalinity)
         self.assertEqual(HealthKit.HKWaterSalinityFreshWater, 1)

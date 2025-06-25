@@ -33,9 +33,7 @@ class TestNSCollectionViewHelper(AppKit.NSObject):
     def collectionView_writeItemsAtIndexes_toPasteboard_(self, v, i, p):
         return 1
 
-    def collectionView_draggingImageForItemsAtIndexes_withEvent_offset_(
-        self, v, i, e, o
-    ):
+    def collectionView_draggingImageForItemsAtIndexes_withEvent_offset_(self, v, i, e, o):
         return 1
 
     def collectionView_validateDrop_proposedIndex_dropOperation_(self, v, d, i, o):
@@ -57,9 +55,7 @@ class TestNSCollectionViewHelper(AppKit.NSObject):
     ):
         pass
 
-    def collectionView_draggingSession_endedAtPoint_draggingOperation_(
-        self, a, b, c, d
-    ):
+    def collectionView_draggingSession_endedAtPoint_draggingOperation_(self, a, b, c, d):
         pass
 
     def collectionView_shouldChangeItemsAtIndexPaths_toHighlightState_(self, a, b, c):
@@ -185,9 +181,7 @@ class TestNSCollectionView(TestCase):
 
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertResultIsBOOL(
-            AppKit.NSCollectionView.backgroundViewScrollsWithContent
-        )
+        self.assertResultIsBOOL(AppKit.NSCollectionView.backgroundViewScrollsWithContent)
         self.assertArgIsBOOL(
             AppKit.NSCollectionView.setBackgroundViewScrollsWithContent_, 0
         )
@@ -195,9 +189,7 @@ class TestNSCollectionView(TestCase):
     def testConstants(self):
         self.assertEqual(AppKit.NSCollectionViewScrollPositionNone, 0)
         self.assertEqual(AppKit.NSCollectionViewScrollPositionTop, 1 << 0)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionCenteredVertically, 1 << 1
-        )
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionCenteredVertically, 1 << 1)
         self.assertEqual(AppKit.NSCollectionViewScrollPositionBottom, 1 << 2)
         self.assertEqual(
             AppKit.NSCollectionViewScrollPositionNearestHorizontalEdge, 1 << 9
@@ -209,9 +201,7 @@ class TestNSCollectionView(TestCase):
         self.assertEqual(AppKit.NSCollectionViewScrollPositionRight, 1 << 5)
         self.assertEqual(AppKit.NSCollectionViewScrollPositionLeadingEdge, 1 << 6)
         self.assertEqual(AppKit.NSCollectionViewScrollPositionTrailingEdge, 1 << 7)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionNearestVerticalEdge, 1 << 8
-        )
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionNearestVerticalEdge, 1 << 8)
 
     @min_os_level("10.6")
     def testConstants10_6(self):

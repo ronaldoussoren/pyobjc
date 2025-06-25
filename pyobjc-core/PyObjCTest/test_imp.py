@@ -191,13 +191,9 @@ class TestBasicIMP(TestCase):
             warnings.simplefilter("ignore", category=objc.ApiDeprecationWarning)
             self.assertFalse(imp.isAlloc)
         self.assertFalse(imp.isClassMethod)
-        self.assertEqual(
-            objc.splitSignature(imp.signature), objc.splitSignature(b"v@:@")
-        )
+        self.assertEqual(objc.splitSignature(imp.signature), objc.splitSignature(b"v@:@"))
         self.assertEqual(imp.selector, b"addObject:")
-        self.assertEqual(
-            imp.__name__, b"addObject:"
-        )  # XXX: Shouldn't this be a string?
+        self.assertEqual(imp.__name__, b"addObject:")  # XXX: Shouldn't this be a string?
         sig = inspect.signature(imp)
         self.assertIsInstance(sig, inspect.Signature)
         self.assertEqual(str(sig), "(arg0, arg1, /)")

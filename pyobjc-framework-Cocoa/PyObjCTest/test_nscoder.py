@@ -151,9 +151,7 @@ class TestPythonCoder(TestCase):
     @min_os_level("15.4")
     def testMethods15_4(self):
         self.assertResultSizeInArg(Foundation.NSCoder.decodeBytesWithMinimumLength_, 0)
-        self.assertResultSizeInArg(
-            Foundation.NSCoder.decodeBytesForKey_minimumLength_, 1
-        )
+        self.assertResultSizeInArg(Foundation.NSCoder.decodeBytesForKey_minimumLength_, 1)
 
     @min_os_level("10.11")
     def testConstants(self):

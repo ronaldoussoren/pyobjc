@@ -6,9 +6,7 @@ import IOBluetooth
 class TestOBEXSession(TestCase):
     def test_constants(self):
         self.assertIsEnumType(IOBluetooth.OBEXTransportEventType)
-        self.assertEqual(
-            IOBluetooth.kOBEXTransportEventTypeDataReceived, fourcc(b"DatA")
-        )
+        self.assertEqual(IOBluetooth.kOBEXTransportEventTypeDataReceived, fourcc(b"DatA"))
         self.assertEqual(IOBluetooth.kOBEXTransportEventTypeStatus, fourcc(b"StaT"))
 
     def test_methods(self):

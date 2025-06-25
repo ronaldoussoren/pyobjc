@@ -23,7 +23,6 @@ class TestFSResource(TestCase):
         self.assertProtocolExists("FSManageableResourceMaintenanceOperations")
 
     def test_protocol_methods(self):
-
         self.assertArgHasType(
             TestFSResourceHelper.startCheckWithTask_options_error_, 2, b"o^@"
         )

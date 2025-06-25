@@ -143,9 +143,7 @@ def bezierPaths(context, rect):
             else:
                 c1 = randomPointInRect(rect)
                 c2 = randomPointInRect(rect)
-                Quartz.CGContextAddCurveToPoint(
-                    context, c1.x, c1.y, c2.x, c2.y, p.x, p.y
-                )
+                Quartz.CGContextAddCurveToPoint(context, c1.x, c1.y, c2.x, c2.y, p.x, p.y)
 
         if k % 2 == 0:
             setRandomFillColor(context)

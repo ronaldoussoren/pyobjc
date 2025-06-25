@@ -23,9 +23,7 @@ class TestPKPaymentAuthorizationControllerHelper(PassKit.NSObject):
     def paymentAuthorizationController_didSelectPlaymentMethod_handler_(self, a, b, c):
         pass
 
-    def paymentAuthorizationController_didSelectShippingMethod_completion_(
-        self, a, b, c
-    ):
+    def paymentAuthorizationController_didSelectShippingMethod_completion_(self, a, b, c):
         pass
 
     def paymentAuthorizationController_didSelectShippingContact_completion_(
@@ -33,9 +31,7 @@ class TestPKPaymentAuthorizationControllerHelper(PassKit.NSObject):
     ):
         pass
 
-    def paymentAuthorizationController_didSelectPaymentMethod_completion_(
-        self, a, b, c
-    ):
+    def paymentAuthorizationController_didSelectPaymentMethod_completion_(self, a, b, c):
         pass
 
     def paymentAuthorizationController_didChangeCouponCode_handler_(self, a, b, c):
@@ -94,9 +90,7 @@ class TestPKPaymentAuthorizationController(TestCase):
             b"v@",
         )
 
-        self.assertResultIsBOOL(
-            PassKit.PKPaymentAuthorizationController.canMakePayments
-        )
+        self.assertResultIsBOOL(PassKit.PKPaymentAuthorizationController.canMakePayments)
         self.assertResultIsBOOL(
             PassKit.PKPaymentAuthorizationController.canMakePaymentsUsingNetworks_
         )

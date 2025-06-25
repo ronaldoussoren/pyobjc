@@ -125,9 +125,7 @@ class MyPDFDocument(Cocoa.NSDocument):
             return
 
         # What is the new page number (zero-based).
-        newPageIndex = self._pdfView.document().indexForPage_(
-            self._pdfView.currentPage()
-        )
+        newPageIndex = self._pdfView.document().indexForPage_(self._pdfView.currentPage())
 
         # Walk outline view looking for best firstpage number match.
         newlySelectedRow = -1
@@ -140,9 +138,7 @@ class MyPDFDocument(Cocoa.NSDocument):
                 == newPageIndex
             ):
                 newlySelectedRow = i
-                self._outlineView.selectRow_byExtendingSelection_(
-                    newlySelectedRow, False
-                )
+                self._outlineView.selectRow_byExtendingSelection_(newlySelectedRow, False)
                 break
 
             elif (
@@ -150,9 +146,7 @@ class MyPDFDocument(Cocoa.NSDocument):
                 > newPageIndex
             ):
                 newlySelectedRow = i - 1
-                self._outlineView.selectRow_byExtendingSelection_(
-                    newlySelectedRow, False
-                )
+                self._outlineView.selectRow_byExtendingSelection_(newlySelectedRow, False)
                 break
 
         # Auto-scroll.

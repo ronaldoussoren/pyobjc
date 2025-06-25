@@ -62,9 +62,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioHardwarePropertyTranslateUIDToDevice, fourcc(b"uidd")
         )
-        self.assertEqual(
-            CoreAudio.kAudioHardwarePropertyMixStereoToMono, fourcc(b"stmo")
-        )
+        self.assertEqual(CoreAudio.kAudioHardwarePropertyMixStereoToMono, fourcc(b"stmo"))
         self.assertEqual(CoreAudio.kAudioHardwarePropertyPlugInList, fourcc(b"plg#"))
         self.assertEqual(
             CoreAudio.kAudioHardwarePropertyTranslateBundleIDToPlugIn, fourcc(b"bidp")
@@ -80,15 +78,11 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioHardwarePropertyTranslateUIDToBox, fourcc(b"uidb")
         )
-        self.assertEqual(
-            CoreAudio.kAudioHardwarePropertyClockDeviceList, fourcc(b"clk#")
-        )
+        self.assertEqual(CoreAudio.kAudioHardwarePropertyClockDeviceList, fourcc(b"clk#"))
         self.assertEqual(
             CoreAudio.kAudioHardwarePropertyTranslateUIDToClockDevice, fourcc(b"uidc")
         )
-        self.assertEqual(
-            CoreAudio.kAudioHardwarePropertyProcessIsMaster, fourcc(b"mast")
-        )
+        self.assertEqual(CoreAudio.kAudioHardwarePropertyProcessIsMaster, fourcc(b"mast"))
         self.assertEqual(CoreAudio.kAudioHardwarePropertyProcessIsMain, fourcc(b"main"))
         self.assertEqual(
             CoreAudio.kAudioHardwarePropertyIsInitingOrExiting, fourcc(b"inot")
@@ -143,9 +137,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(CoreAudio.kAudioDeviceStartTimeDontConsultHALFlag, 1 << 2)
 
         self.assertEqual(CoreAudio.kAudioDevicePropertyPlugIn, fourcc(b"plug"))
-        self.assertEqual(
-            CoreAudio.kAudioDevicePropertyDeviceHasChanged, fourcc(b"diff")
-        )
+        self.assertEqual(CoreAudio.kAudioDevicePropertyDeviceHasChanged, fourcc(b"diff"))
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyDeviceIsRunningSomewhere, fourcc(b"gone")
         )
@@ -165,12 +157,8 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyStreamConfiguration, fourcc(b"slay")
         )
-        self.assertEqual(
-            CoreAudio.kAudioDevicePropertyIOProcStreamUsage, fourcc(b"suse")
-        )
-        self.assertEqual(
-            CoreAudio.kAudioDevicePropertyActualSampleRate, fourcc(b"asrt")
-        )
+        self.assertEqual(CoreAudio.kAudioDevicePropertyIOProcStreamUsage, fourcc(b"suse"))
+        self.assertEqual(CoreAudio.kAudioDevicePropertyActualSampleRate, fourcc(b"asrt"))
         self.assertEqual(CoreAudio.kAudioDevicePropertyClockDevice, fourcc(b"apcd"))
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyIOThreadOSWorkgroup, fourcc(b"oswg")
@@ -190,9 +178,7 @@ class TestAudioHardware(TestCase):
             CoreAudio.kAudioDevicePropertyVolumeDecibelsToScalar, fourcc(b"db2v")
         )
         self.assertEqual(CoreAudio.kAudioDevicePropertyStereoPan, fourcc(b"span"))
-        self.assertEqual(
-            CoreAudio.kAudioDevicePropertyStereoPanChannels, fourcc(b"spn#")
-        )
+        self.assertEqual(CoreAudio.kAudioDevicePropertyStereoPanChannels, fourcc(b"spn#"))
         self.assertEqual(CoreAudio.kAudioDevicePropertyMute, fourcc(b"mute"))
         self.assertEqual(CoreAudio.kAudioDevicePropertySolo, fourcc(b"solo"))
         self.assertEqual(CoreAudio.kAudioDevicePropertyPhantomPower, fourcc(b"phan"))
@@ -235,9 +221,7 @@ class TestAudioHardware(TestCase):
             CoreAudio.kAudioDevicePropertyPlayThruVolumeDecibelsToScalar,
             fourcc(b"mv2s"),
         )
-        self.assertEqual(
-            CoreAudio.kAudioDevicePropertyPlayThruStereoPan, fourcc(b"mspn")
-        )
+        self.assertEqual(CoreAudio.kAudioDevicePropertyPlayThruStereoPan, fourcc(b"mspn"))
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyPlayThruStereoPanChannels, fourcc(b"msp#")
         )
@@ -272,9 +256,7 @@ class TestAudioHardware(TestCase):
             fourcc(b"hipl"),
         )
         self.assertEqual(CoreAudio.kAudioDevicePropertySubVolumeScalar, fourcc(b"svlm"))
-        self.assertEqual(
-            CoreAudio.kAudioDevicePropertySubVolumeDecibels, fourcc(b"svld")
-        )
+        self.assertEqual(CoreAudio.kAudioDevicePropertySubVolumeDecibels, fourcc(b"svld"))
         self.assertEqual(
             CoreAudio.kAudioDevicePropertySubVolumeRangeDecibels, fourcc(b"svd#")
         )
@@ -304,9 +286,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(CoreAudio.kAudioAggregateDeviceIsPrivateKey, b"private")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceIsStackedKey, b"stacked")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceTapListKey, b"taps")
-        self.assertEqual(
-            CoreAudio.kAudioAggregateDeviceTapAutoStartKey, b"tapautostart"
-        )
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceTapAutoStartKey, b"tapautostart")
 
         self.assertEqual(
             CoreAudio.kAudioAggregateDevicePropertyFullSubDeviceList, fourcc(b"grup")
@@ -326,9 +306,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioAggregateDevicePropertyClockDevice, fourcc(b"apcd")
         )
-        self.assertEqual(
-            CoreAudio.kAudioAggregateDevicePropertyTapList, fourcc(b"tap#")
-        )
+        self.assertEqual(CoreAudio.kAudioAggregateDevicePropertyTapList, fourcc(b"tap#"))
         self.assertEqual(
             CoreAudio.kAudioAggregateDevicePropertySubTapList, fourcc(b"atap")
         )
@@ -345,9 +323,7 @@ class TestAudioHardware(TestCase):
         )
 
         self.assertEqual(CoreAudio.kAudioSubTapPropertyExtraLatency, fourcc(b"xltc"))
-        self.assertEqual(
-            CoreAudio.kAudioSubTapPropertyDriftCompensation, fourcc(b"drft")
-        )
+        self.assertEqual(CoreAudio.kAudioSubTapPropertyDriftCompensation, fourcc(b"drft"))
         self.assertEqual(
             CoreAudio.kAudioSubTapPropertyDriftCompensationQuality, fourcc(b"drfq")
         )
@@ -384,9 +360,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(CoreAudio.kAudioProcessPropertyDevices, fourcc(b"pdv#"))
         self.assertEqual(CoreAudio.kAudioProcessPropertyIsRunning, fourcc(b"pir?"))
         self.assertEqual(CoreAudio.kAudioProcessPropertyIsRunningInput, fourcc(b"piri"))
-        self.assertEqual(
-            CoreAudio.kAudioProcessPropertyIsRunningOutput, fourcc(b"piro")
-        )
+        self.assertEqual(CoreAudio.kAudioProcessPropertyIsRunningOutput, fourcc(b"piro"))
 
         self.assertEqual(CoreAudio.kAudioTapClassID, fourcc(b"tcls"))
 

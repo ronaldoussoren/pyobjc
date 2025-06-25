@@ -16,9 +16,7 @@ def _setup():
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="OSLog",
         frameworkIdentifier="com.apple.OSLog",
-        frameworkPath=objc.pathForFramework(
-            "/System/Library/Frameworks/OSLog.framework"
-        ),
+        frameworkPath=objc.pathForFramework("/System/Library/Frameworks/OSLog.framework"),
         globals_dict=globals(),
         inline_list=None,
         parents=(

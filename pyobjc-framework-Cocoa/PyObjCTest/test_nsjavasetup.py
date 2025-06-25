@@ -17,9 +17,7 @@ class TestNSJavaSetup(TestCase):
         self.assertIsInstance(Foundation.NSJavaPathSeparator, str)
         self.assertIsInstance(Foundation.NSJavaWillSetupVirtualMachineNotification, str)
         self.assertIsInstance(Foundation.NSJavaDidSetupVirtualMachineNotification, str)
-        self.assertIsInstance(
-            Foundation.NSJavaWillCreateVirtualMachineNotification, str
-        )
+        self.assertIsInstance(Foundation.NSJavaWillCreateVirtualMachineNotification, str)
         self.assertIsInstance(Foundation.NSJavaDidCreateVirtualMachineNotification, str)
 
     @max_os_level("10.5")

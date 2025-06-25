@@ -55,15 +55,11 @@ class TestWKWebViewConfiguration(TestCase):
     @min_os_level("14.0")
     def testMethods14_0(self):
         self.assertResultIsBOOL(WebKit.WKWebViewConfiguration.allowsInlinePredictions)
-        self.assertArgIsBOOL(
-            WebKit.WKWebViewConfiguration.setAllowsInlinePredictions_, 0
-        )
+        self.assertArgIsBOOL(WebKit.WKWebViewConfiguration.setAllowsInlinePredictions_, 0)
 
     @min_os_level("15.0")
     def testMethods15_0(self):
-        self.assertResultIsBOOL(
-            WebKit.WKWebViewConfiguration.supportsAdaptiveImageGlyph
-        )
+        self.assertResultIsBOOL(WebKit.WKWebViewConfiguration.supportsAdaptiveImageGlyph)
         self.assertArgIsBOOL(
             WebKit.WKWebViewConfiguration.setSupportsAdaptiveImageGlyph_, 0
         )

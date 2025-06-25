@@ -5,9 +5,7 @@ import CloudKit
 class TestCKAllowedSharingOptions(TestCase):
     def test_constants(self):
         self.assertIsEnumType(CloudKit.CKSharingParticipantAccessOption)
-        self.assertEqual(
-            CloudKit.CKSharingParticipantAccessOptionAnyoneWithLink, 1 << 0
-        )
+        self.assertEqual(CloudKit.CKSharingParticipantAccessOptionAnyoneWithLink, 1 << 0)
         self.assertEqual(
             CloudKit.CKSharingParticipantAccessOptionSpecifiedRecipientsOnly, 1 << 1
         )

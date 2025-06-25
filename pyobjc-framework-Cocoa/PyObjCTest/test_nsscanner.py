@@ -73,9 +73,7 @@ class TestNSScannerUsage(TestCase):
         self.assertResultIsBOOL(
             Foundation.NSScanner.scanUpToCharactersFromSet_intoString_
         )
-        self.assertArgIsOut(
-            Foundation.NSScanner.scanUpToCharactersFromSet_intoString_, 1
-        )
+        self.assertArgIsOut(Foundation.NSScanner.scanUpToCharactersFromSet_intoString_, 1)
         self.assertResultIsBOOL(Foundation.NSScanner.isAtEnd)
 
     @min_os_level("10.9")

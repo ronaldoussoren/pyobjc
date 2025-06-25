@@ -5,9 +5,7 @@ import CoreSpotlight
 
 
 class TestCSSearchableIndexHelper(CoreSpotlight.NSObject):
-    def searchableIndex_reindexAllSearchableItemsWithAcknowledgementHandler_(
-        self, i, h
-    ):
+    def searchableIndex_reindexAllSearchableItemsWithAcknowledgementHandler_(self, i, h):
         pass
 
     def searchableIndex_reindexSearchableItemsWithIdentifiers_acknowledgementHandler_(

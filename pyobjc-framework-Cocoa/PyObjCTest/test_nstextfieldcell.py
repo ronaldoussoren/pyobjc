@@ -13,6 +13,4 @@ class TestNSTextFieldCell(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSTextFieldCell.drawsBackground)
         self.assertArgIsBOOL(AppKit.NSTextFieldCell.setDrawsBackground_, 0)
-        self.assertArgIsBOOL(
-            AppKit.NSTextFieldCell.setWantsNotificationForMarkedText_, 0
-        )
+        self.assertArgIsBOOL(AppKit.NSTextFieldCell.setWantsNotificationForMarkedText_, 0)

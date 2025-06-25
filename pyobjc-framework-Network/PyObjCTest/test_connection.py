@@ -43,9 +43,7 @@ class TestConnection(TestCase):
         self.assertArgHasType(
             Network.nw_connection_set_state_changed_handler, 0, objc._C_ID
         )
-        self.assertArgIsBlock(
-            Network.nw_connection_set_state_changed_handler, 1, b"vi@"
-        )
+        self.assertArgIsBlock(Network.nw_connection_set_state_changed_handler, 1, b"vi@")
 
         self.assertArgHasType(
             Network.nw_connection_set_viability_changed_handler, 0, objc._C_ID

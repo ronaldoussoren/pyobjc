@@ -19,9 +19,7 @@ class TestVTVideoEncoderList(TestCase):
         self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_PerformanceRating, str)
         self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_QualityRating, str)
         self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_InstanceLimit, str)
-        self.assertIsInstance(
-            VideoToolbox.kVTVideoEncoderList_IsHardwareAccelerated, str
-        )
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_IsHardwareAccelerated, str)
 
     @min_os_level("11.0")
     def test_constants11_0(self):

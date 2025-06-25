@@ -40,9 +40,7 @@ class TestIOBluetoothDeviceInquiry(TestCase):
         )
 
     def test_methods(self):
-        self.assertResultIsBOOL(
-            IOBluetooth.IOBluetoothDeviceInquiry.updateNewDeviceNames
-        )
+        self.assertResultIsBOOL(IOBluetooth.IOBluetoothDeviceInquiry.updateNewDeviceNames)
         self.assertArgIsBOOL(
             IOBluetooth.IOBluetoothDeviceInquiry.setUpdateNewDeviceNames_, 0
         )

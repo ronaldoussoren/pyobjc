@@ -73,8 +73,7 @@ def setupMetaData():
         b"charpArgPlain:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type": objc._C_CHARPTR,
                 }
             }
@@ -86,8 +85,7 @@ def setupMetaData():
         b"charpArgNullTerminated:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type": objc._C_CHARPTR,
                     "c_array_delimited_by_null": True,
                 }
@@ -99,8 +97,7 @@ def setupMetaData():
         b"charpArg5Chars:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type": objc._C_CHARPTR,
                     "c_array_of_fixed_length": 5,
                 }
@@ -112,8 +109,7 @@ def setupMetaData():
         b"charpArgVariadic:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type": objc._C_CHARPTR,
                     "c_array_of_variable_length": True,
                 }
@@ -125,8 +121,7 @@ def setupMetaData():
         b"charpArgDeref:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type": objc._C_CHARPTR,
                     "deref_result_pointer": True,
                 }
@@ -138,8 +133,7 @@ def setupMetaData():
         b"charpArgCounted:count:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type": objc._C_CHARPTR,
                     "c_array_length_in_arg": 3,
                 }
@@ -151,8 +145,7 @@ def setupMetaData():
         b"charpArgCounted:floatcount:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type": objc._C_CHARPTR,
                     "c_array_length_in_arg": 3,
                 }
@@ -165,8 +158,7 @@ def setupMetaData():
         b"make4Tuple:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_of_fixed_length": 4,
                     "null_accepted": False,
@@ -179,8 +171,7 @@ def setupMetaData():
         b"null4Tuple:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_of_fixed_length": 4,
                     "null_accepted": True,
@@ -194,8 +185,7 @@ def setupMetaData():
         b"makeObjectArray:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_delimited_by_null": True,
                     "null_accepted": False,
@@ -208,8 +198,7 @@ def setupMetaData():
         b"makeStringArray:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_delimited_by_null": True,
                     "null_accepted": False,
@@ -222,8 +211,7 @@ def setupMetaData():
         b"nullStringArray:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_delimited_by_null": True,
                     "null_accepted": True,
@@ -236,8 +224,7 @@ def setupMetaData():
         b"makeIntArray:count:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_length_in_arg": 2 + 1,
                     "null_accepted": False,
@@ -250,8 +237,7 @@ def setupMetaData():
         b"makeIntArray:countPtr:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_length_in_arg": 2 + 1,
                     "null_accepted": False,
@@ -265,8 +251,7 @@ def setupMetaData():
         b"nullIntArray:count:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_length_in_arg": 2 + 1,
                     "null_accepted": True,
@@ -280,8 +265,7 @@ def setupMetaData():
         b"fillArray:uptoCount:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_length_in_arg": 2 + 1,
                     "c_array_length_in_result": True,
@@ -296,8 +280,7 @@ def setupMetaData():
         b"fillArray:count:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_length_in_arg": 2 + 1,
                     "null_accepted": False,
@@ -310,8 +293,7 @@ def setupMetaData():
         b"nullfillArray:count:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_length_in_arg": 2 + 1,
                     "null_accepted": True,
@@ -325,8 +307,7 @@ def setupMetaData():
         b"maybeFillArray:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_of_fixed_length": 4,
                     "c_array_length_in_result": True,
@@ -340,8 +321,7 @@ def setupMetaData():
         b"fill4Tuple:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_of_fixed_length": 4,
                     "null_accepted": False,
@@ -354,8 +334,7 @@ def setupMetaData():
         b"nullfill4Tuple:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_of_fixed_length": 4,
                     "null_accepted": True,
@@ -368,8 +347,7 @@ def setupMetaData():
         b"fillStringArray:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_delimited_by_null": True,
                     "null_accepted": False,
@@ -382,8 +360,7 @@ def setupMetaData():
         b"nullfillStringArray:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_delimited_by_null": True,
                     "null_accepted": True,
@@ -397,8 +374,7 @@ def setupMetaData():
         b"reverseArray:uptoCount:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_INOUT,
                     "c_array_length_in_arg": 2 + 1,
                     "c_array_length_in_result": True,
@@ -412,8 +388,7 @@ def setupMetaData():
         b"reverseArray:count:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_INOUT,
                     "c_array_length_in_arg": 2 + 1,
                     "null_accepted": False,
@@ -426,8 +401,7 @@ def setupMetaData():
         b"nullreverseArray:count:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_INOUT,
                     "c_array_length_in_arg": 2 + 1,
                     "null_accepted": True,
@@ -441,8 +415,7 @@ def setupMetaData():
         b"reverseStrings:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_INOUT,
                     "c_array_delimited_by_null": True,
                     "null_accepted": False,
@@ -455,8 +428,7 @@ def setupMetaData():
         b"nullreverseStrings:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_INOUT,
                     "c_array_delimited_by_null": True,
                     "null_accepted": True,
@@ -470,8 +442,7 @@ def setupMetaData():
         b"maybeReverseArray:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_INOUT,
                     "c_array_of_fixed_length": 4,
                     "c_array_length_in_result": True,
@@ -485,8 +456,7 @@ def setupMetaData():
         b"reverse4Tuple:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_INOUT,
                     "c_array_of_fixed_length": 4,
                     "null_accepted": False,
@@ -499,8 +469,7 @@ def setupMetaData():
         b"nullreverse4Tuple:on:",
         {
             "arguments": {
-                2
-                + 0: {
+                2 + 0: {
                     "type_modifier": objc._C_INOUT,
                     "c_array_of_fixed_length": 4,
                     "null_accepted": True,
@@ -2061,9 +2030,7 @@ class TestOutputVariants(TestCase):
             with self.assertRaisesRegex(
                 TypeError, "intOutCharPtr:: Need tuple of 2 arguments as result"
             ):
-                OC_MetaDataTest.intOutCharPtr_on_(
-                    None, OC_MetaDataTestOutputVariants2()
-                )
+                OC_MetaDataTest.intOutCharPtr_on_(None, OC_MetaDataTestOutputVariants2())
 
         with self.subTest("intOutCharPtr(NULL)"):
             v = OC_MetaDataTest.intOutCharPtr_on_(objc.NULL, obj)

@@ -120,9 +120,7 @@ class TestCHHapticPatternPlayer(TestCase):
         self.assertArgIsBOOL(TestCHHapticPatternPlayerHelper.setLoopEnabled_, 0)
 
         self.assertResultHasType(TestCHHapticPatternPlayerHelper.loopEnd, objc._C_DBL)
-        self.assertArgHasType(
-            TestCHHapticPatternPlayerHelper.setLoopEnd_, 0, objc._C_DBL
-        )
+        self.assertArgHasType(TestCHHapticPatternPlayerHelper.setLoopEnd_, 0, objc._C_DBL)
 
         self.assertResultHasType(
             TestCHHapticPatternPlayerHelper.playbackRate, objc._C_FLT

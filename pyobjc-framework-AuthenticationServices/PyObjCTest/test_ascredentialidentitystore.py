@@ -18,9 +18,7 @@ class TestASCredentialIdentityStore(TestCase):
         self.assertIsEnumType(AuthenticationServices.ASCredentialIdentityTypes)
         self.assertEqual(AuthenticationServices.ASCredentialIdentityTypesAll, 0)
         self.assertEqual(AuthenticationServices.ASCredentialIdentityTypesPassword, 1)
-        self.assertEqual(
-            AuthenticationServices.ASCredentialIdentityTypesPasskey, 1 << 1
-        )
+        self.assertEqual(AuthenticationServices.ASCredentialIdentityTypesPasskey, 1 << 1)
         self.assertEqual(
             AuthenticationServices.ASCredentialIdentityTypesOneTimeCode, 1 << 2
         )

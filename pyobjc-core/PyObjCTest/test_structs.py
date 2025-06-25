@@ -62,14 +62,10 @@ class TestStructs(TestCase):
 
         self.assertIsSubclass(tp, objc._structwrapper)
 
-        with self.assertRaisesRegex(
-            TypeError, r"FooStruct\(\) does not have argument n"
-        ):
+        with self.assertRaisesRegex(TypeError, r"FooStruct\(\) does not have argument n"):
             tp(n=4)
 
-        with self.assertRaisesRegex(
-            TypeError, r"FooStruct\(\) keywords must be strings"
-        ):
+        with self.assertRaisesRegex(TypeError, r"FooStruct\(\) keywords must be strings"):
             tp(**{1: 2})
 
         with self.assertRaisesRegex(UnicodeEncodeError, r".*surrogates not allowed"):
@@ -774,7 +770,7 @@ class TestStructs(TestCase):
             "BasicTypesStruct",
             b"".join(
                 [
-                    b"{_BasicTypesStruct=" b'"char"',
+                    b'{_BasicTypesStruct="char"',
                     objc._C_CHR,
                     b'"uchar"',
                     objc._C_UCHR,

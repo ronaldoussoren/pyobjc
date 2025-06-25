@@ -81,9 +81,7 @@ class TestSIMDVectorTypes(TestCase):
             self.assertEqual(a.w, etype(3))
             self.assertEqual(a.zw.as_tuple(), (etype(2), etype(3)))
             self.assertEqual(a.yzw.as_tuple(), (etype(1), etype(2), etype(3)))
-            self.assertEqual(
-                a.xyzw.as_tuple(), (etype(0), etype(1), etype(2), etype(3))
-            )
+            self.assertEqual(a.xyzw.as_tuple(), (etype(0), etype(1), etype(2), etype(3)))
             self.assertIsNot(a.xyzw, a)
 
         self.assertEqual(abs(a), abs(a))

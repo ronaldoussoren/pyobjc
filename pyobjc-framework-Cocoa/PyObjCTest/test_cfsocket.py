@@ -93,8 +93,7 @@ class TestSocket(TestCase):
             socket.AF_INET,
             socket.SOCK_STREAM,
             0,
-            CoreFoundation.kCFSocketReadCallBack
-            | CoreFoundation.kCFSocketWriteCallBack,
+            CoreFoundation.kCFSocketReadCallBack | CoreFoundation.kCFSocketWriteCallBack,
             callback,
             data,
         )

@@ -347,7 +347,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         self._server = None
         self._methodPrefix = None
         self.setStatusTextFieldMessage_(
-            ("Server failed to respond to %s.  " "See below for more information.")
+            ("Server failed to respond to %s.  See below for more information.")
             % (method,)
         )
         # log.err(why)

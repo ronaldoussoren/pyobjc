@@ -11,9 +11,7 @@ class TestHKStateOfMind(TestCase):
             HealthKit.HKStateOfMindValenceClassificationSlightlyUnpleasant, 3
         )
         self.assertEqual(HealthKit.HKStateOfMindValenceClassificationNeutral, 4)
-        self.assertEqual(
-            HealthKit.HKStateOfMindValenceClassificationSlightlyPleasant, 5
-        )
+        self.assertEqual(HealthKit.HKStateOfMindValenceClassificationSlightlyPleasant, 5)
         self.assertEqual(HealthKit.HKStateOfMindValenceClassificationPleasant, 6)
         self.assertEqual(HealthKit.HKStateOfMindValenceClassificationVeryPleasant, 7)
 

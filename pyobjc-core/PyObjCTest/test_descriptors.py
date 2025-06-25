@@ -173,9 +173,7 @@ class TestBasicDescriptors(TestCase):
                 TypeError, "namedSelector argument must be a callable"
             ):
                 objc.namedselector(b"foo:bar:")(None)
-            with self.assertRaisesRegex(
-                TypeError, "argument 'method' must be callable"
-            ):
+            with self.assertRaisesRegex(TypeError, "argument 'method' must be callable"):
                 objc.namedselector(b"foo:bar:")(42)
 
             @objc.namedselector(b"foo:bar:", signature=b"q@:qq")
@@ -190,9 +188,7 @@ class TestBasicDescriptors(TestCase):
                 TypeError, "namedSelector argument must be a callable"
             ):
                 objc.namedselector(b"foo:bar:", b"q@:qq")(None)
-            with self.assertRaisesRegex(
-                TypeError, "argument 'method' must be callable"
-            ):
+            with self.assertRaisesRegex(TypeError, "argument 'method' must be callable"):
                 objc.namedselector(b"foo:bar:", b"q@:qq")(42)
 
     # synthesize is tested in test_synthesize
@@ -743,9 +739,7 @@ class TestBasicDescriptors(TestCase):
                 return (False, None)
 
             self.assertIsInstance(validateColor_error_, objc.selector)
-            self.assertEqual(
-                validateColor_error_.signature, objc._C_NSBOOL + b"@:N^@o^@"
-            )
+            self.assertEqual(validateColor_error_.signature, objc._C_NSBOOL + b"@:N^@o^@")
 
             # Keyword arguments (**kwds) and varargs (*args) are
             # not supported:

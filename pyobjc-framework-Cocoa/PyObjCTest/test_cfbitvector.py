@@ -43,12 +43,8 @@ class TestBitVector(TestCase):
         bitset = CoreFoundation.CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 32)
 
         self.assertEqual(CoreFoundation.CFBitVectorGetCount(bitset), 32)
-        self.assertEqual(
-            CoreFoundation.CFBitVectorGetCountOfBit(bitset, (0, 30), 1), 10
-        )
-        self.assertEqual(
-            CoreFoundation.CFBitVectorGetCountOfBit(bitset, (0, 30), 0), 20
-        )
+        self.assertEqual(CoreFoundation.CFBitVectorGetCountOfBit(bitset, (0, 30), 1), 10)
+        self.assertEqual(CoreFoundation.CFBitVectorGetCountOfBit(bitset, (0, 30), 0), 20)
 
         self.assertTrue(CoreFoundation.CFBitVectorContainsBit(bitset, (0, 30), 1))
         self.assertFalse(CoreFoundation.CFBitVectorContainsBit(bitset, (0, 3), 1))

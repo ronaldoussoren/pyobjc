@@ -38,9 +38,7 @@ class TestLSConstants(TestCase):
             CoreServices.kLSLaunchFailedBecauseLaunchConstraintsWereViolatedErr, -10350
         )
         self.assertEqual(CoreServices.kLSTemplateApplicationIsCorruptErr, -10401)
-        self.assertEqual(
-            CoreServices.kLSTemplateApplicationDataVaultIsCorruptErr, -10402
-        )
+        self.assertEqual(CoreServices.kLSTemplateApplicationDataVaultIsCorruptErr, -10402)
         self.assertEqual(
             CoreServices.kLSTemplateApplicationDataVaultInformationIsCorruptErr, -10403
         )
@@ -48,9 +46,7 @@ class TestLSConstants(TestCase):
             CoreServices.kLSTemplateApplicationTeamIdentifierMismatchErr, -10404
         )
         self.assertEqual(CoreServices.kLSTemplateApplicationSignatureFailureErr, -10410)
-        self.assertEqual(
-            CoreServices.kLSTemplateApplicationSignatureNotFoundErr, -10411
-        )
+        self.assertEqual(CoreServices.kLSTemplateApplicationSignatureNotFoundErr, -10411)
         self.assertEqual(
             CoreServices.kLSTemplateApplicationUnableToContactServerErr, -10420
         )

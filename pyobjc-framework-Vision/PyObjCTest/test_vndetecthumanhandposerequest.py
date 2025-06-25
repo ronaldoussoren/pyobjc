@@ -57,9 +57,7 @@ class TestVNDetectHumanHandPoseRequest(TestCase):
         self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameLittleDIP, str)
         self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameLittleTip, str)
 
-        self.assertIsInstance(
-            Vision.VNHumanHandPoseObservationJointsGroupNameThumb, str
-        )
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointsGroupNameThumb, str)
         self.assertIsInstance(
             Vision.VNHumanHandPoseObservationJointsGroupNameIndexFinger, str
         )

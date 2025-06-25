@@ -525,8 +525,7 @@ class TestDecimalByReference(TestCase):
             b"getDecimal:",
             {
                 "arguments": {
-                    2
-                    + 0: {
+                    2 + 0: {
                         "type_modifier": objc._C_OUT,
                         "type": b"^{_NSDecimal=b8b4b1b1b18[8S]}",
                         "null_accepted": False,

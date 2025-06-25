@@ -23,12 +23,8 @@ class TestCGError(TestCase):
         self.assertEqual(Quartz.kCGErrorApplicationIncorrectExecutableFormatFound, 1023)
         self.assertEqual(Quartz.kCGErrorApplicationIsLaunching, 1024)
         self.assertEqual(Quartz.kCGErrorApplicationAlreadyRunning, 1025)
-        self.assertEqual(
-            Quartz.kCGErrorApplicationCanOnlyBeRunInOneSessionAtATime, 1026
-        )
-        self.assertEqual(
-            Quartz.kCGErrorClassicApplicationsMustBeLaunchedByClassic, 1027
-        )
+        self.assertEqual(Quartz.kCGErrorApplicationCanOnlyBeRunInOneSessionAtATime, 1026)
+        self.assertEqual(Quartz.kCGErrorClassicApplicationsMustBeLaunchedByClassic, 1027)
         self.assertEqual(Quartz.kCGErrorForkFailed, 1028)
         self.assertEqual(Quartz.kCGErrorRetryRegistration, 1029)
         self.assertEqual(Quartz.kCGErrorLast, Quartz.kCGErrorRetryRegistration)

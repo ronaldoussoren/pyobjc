@@ -9,6 +9,4 @@ class TestGCMouse(TestCase):
         self.assertIsInstance(GameController.GCMouseDidDisconnectNotification, str)
 
         self.assertIsInstance(GameController.GCMouseDidBecomeCurrentNotification, str)
-        self.assertIsInstance(
-            GameController.GCMouseDidStopBeingCurrentNotification, str
-        )
+        self.assertIsInstance(GameController.GCMouseDidStopBeingCurrentNotification, str)

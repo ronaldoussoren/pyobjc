@@ -154,9 +154,7 @@ def drawWithGlobalAlpha(context):
     rect = Quartz.CGRectMake(40.0, 210.0, 100.0, 100.0)
     color = [1.0, 0.0, 0.0, 1.0]  # opaque red
     # Set the fill color space to that returned by getTheCalibratedRGBColorSpace.
-    Quartz.CGContextSetFillColorSpace(
-        context, Utilities.getTheCalibratedRGBColorSpace()
-    )
+    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
 
     Quartz.CGContextSetFillColor(context, color)
     for _ in range(2):
@@ -214,9 +212,7 @@ def drawWithColorBlendMode(context, url):
     Quartz.CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
 
     # Set the fill color space to that returned by getTheCalibratedRGBColorSpace.
-    Quartz.CGContextSetFillColorSpace(
-        context, Utilities.getTheCalibratedRGBColorSpace()
-    )
+    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
     # Set the fill color to green.
     Quartz.CGContextSetFillColor(context, green)
 

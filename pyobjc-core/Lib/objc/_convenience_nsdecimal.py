@@ -71,15 +71,11 @@ addConvenienceForClass(
         ),
         (
             "__truediv__",
-            lambda self, other: NSDecimalNumber(
-                operator.truediv(NSDecimal(self), other)
-            ),
+            lambda self, other: NSDecimalNumber(operator.truediv(NSDecimal(self), other)),
         ),
         (
             "__rtruediv__",
-            lambda self, other: NSDecimalNumber(
-                operator.truediv(other, NSDecimal(self))
-            ),
+            lambda self, other: NSDecimalNumber(operator.truediv(other, NSDecimal(self))),
         ),
         (
             "__floordiv__",

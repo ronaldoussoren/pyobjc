@@ -28,14 +28,10 @@ class TestMLMediaTypes(TestCase):
         self.assertIsInstance(MediaLibrary.MLiTunesFolderPlaylistTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiTunesMoviesPlaylistTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiTunesTVShowsPlaylistTypeIdentifier, str)
-        self.assertIsInstance(
-            MediaLibrary.MLiTunesAudioBooksPlaylistTypeIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLiTunesAudioBooksPlaylistTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiTunesMusicPlaylistTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiTunesGeniusPlaylistTypeIdentifier, str)
-        self.assertIsInstance(
-            MediaLibrary.MLiTunesSavedGeniusPlaylistTypeIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLiTunesSavedGeniusPlaylistTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiTunesiTunesUPlaylistTypeIdentifier, str)
 
         self.assertIsInstance(MediaLibrary.MLiPhotoRootGroupTypeIdentifier, str)
@@ -51,12 +47,8 @@ class TestMLMediaTypes(TestCase):
         self.assertIsInstance(MediaLibrary.MLiPhotoSubscribedAlbumTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiPhotoFacesAlbumTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiPhotoPlacesAlbumTypeIdentifier, str)
-        self.assertIsInstance(
-            MediaLibrary.MLiPhotoPlacesCountryAlbumTypeIdentifier, str
-        )
-        self.assertIsInstance(
-            MediaLibrary.MLiPhotoPlacesProvinceAlbumTypeIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLiPhotoPlacesCountryAlbumTypeIdentifier, str)
+        self.assertIsInstance(MediaLibrary.MLiPhotoPlacesProvinceAlbumTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiPhotoPlacesCityAlbumTypeIdentifier, str)
         self.assertIsInstance(
             MediaLibrary.MLiPhotoPlacesPointOfInterestAlbumTypeIdentifier, str
@@ -103,15 +95,11 @@ class TestMLMediaTypes(TestCase):
             MediaLibrary.MLAperturePlacesPointOfInterestAlbumTypeIdentifier, str
         )
         self.assertIsInstance(MediaLibrary.MLApertureLastImportAlbumTypeIdentifier, str)
-        self.assertIsInstance(
-            MediaLibrary.MLApertureLastNMonthsAlbumTypeIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLApertureLastNMonthsAlbumTypeIdentifier, str)
         self.assertIsInstance(
             MediaLibrary.MLApertureLastViewedEventAlbumTypeIdentifier, str
         )
-        self.assertIsInstance(
-            MediaLibrary.MLAperturePhotoStreamAlbumTypeIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLAperturePhotoStreamAlbumTypeIdentifier, str)
 
         self.assertIsInstance(MediaLibrary.MLGarageBandRootGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLGarageBandFolderGroupTypeIdentifier, str)
@@ -125,17 +113,13 @@ class TestMLMediaTypes(TestCase):
         self.assertIsInstance(MediaLibrary.MLiMovieEventGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiMovieProjectGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiMovieEventLibraryGroupTypeIdentifier, str)
-        self.assertIsInstance(
-            MediaLibrary.MLiMovieEventCalendarGroupTypeIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLiMovieEventCalendarGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiMovieFolderGroupTypeIdentifier, str)
 
         self.assertIsInstance(MediaLibrary.MLFinalCutRootGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLFinalCutEventGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLFinalCutProjectGroupTypeIdentifier, str)
-        self.assertIsInstance(
-            MediaLibrary.MLFinalCutEventLibraryGroupTypeIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLFinalCutEventLibraryGroupTypeIdentifier, str)
         self.assertIsInstance(
             MediaLibrary.MLFinalCutEventCalendarGroupTypeIdentifier, str
         )
@@ -157,9 +141,7 @@ class TestMLMediaTypes(TestCase):
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(
-            MediaLibrary.MLiTunesMusicVideosPlaylistTypeIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLiTunesMusicVideosPlaylistTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLiTunesVideoPlaylistTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosRootGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosSharedGroupTypeIdentifier, str)
@@ -170,9 +152,7 @@ class TestMLMediaTypes(TestCase):
         self.assertIsInstance(MediaLibrary.MLPhotosPublishedAlbumTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosAllMomentsGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosMomentGroupTypeIdentifier, str)
-        self.assertIsInstance(
-            MediaLibrary.MLPhotosAllCollectionsGroupTypeIdentifier, str
-        )
+        self.assertIsInstance(MediaLibrary.MLPhotosAllCollectionsGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosCollectionGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosAllYearsGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosYearGroupTypeIdentifier, str)

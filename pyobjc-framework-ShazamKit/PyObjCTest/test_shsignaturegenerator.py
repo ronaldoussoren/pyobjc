@@ -7,12 +7,8 @@ class TestSHSignatureGeneratorr(TestCase):
         ShazamKit.SHSignatureGenerator
 
     def test_methods(self):
-        self.assertResultIsBOOL(
-            ShazamKit.SHSignatureGenerator.appendBuffer_atTime_error_
-        )
-        self.assertArgIsOut(
-            ShazamKit.SHSignatureGenerator.appendBuffer_atTime_error_, 2
-        )
+        self.assertResultIsBOOL(ShazamKit.SHSignatureGenerator.appendBuffer_atTime_error_)
+        self.assertArgIsOut(ShazamKit.SHSignatureGenerator.appendBuffer_atTime_error_, 2)
 
     @min_os_level("13.0")
     def test_methods13_0(self):

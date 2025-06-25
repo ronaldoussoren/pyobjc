@@ -8,9 +8,7 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(SystemConfiguration.kSCEntNetIPSec, str)
         self.assertIsInstance(SystemConfiguration.kSCEntNetSMB, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecLocalIdentifier, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropNetIPSecLocalIdentifierType, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecLocalIdentifierType, str)
         self.assertIsInstance(
             SystemConfiguration.kSCPropNetIPSecAuthenticationMethod, str
         )
@@ -51,9 +49,7 @@ class TestSCSchemaDefinitions(TestCase):
         )
         self.assertIsInstance(SystemConfiguration.kSCValNetSMBNetBIOSNodeTypePeer, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetSMBNetBIOSNodeTypeMixed, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetSMBNetBIOSNodeTypeHybrid, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetSMBNetBIOSNodeTypeHybrid, str)
 
     @min_os_level("10.6")
     def testConstants10_5_missing(self):
@@ -104,30 +100,20 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPOverridePrimary, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetInterfaces, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetLocalHostName, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropNetAirPortAllowNetCreation, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCPropNetAirPortAllowNetCreation, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetAirPortAuthPassword, str)
         self.assertIsInstance(
             SystemConfiguration.kSCPropNetAirPortAuthPasswordEncryption, str
         )
         self.assertIsInstance(SystemConfiguration.kSCPropNetAirPortJoinMode, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetAirPortPowerEnabled, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropNetAirPortPreferredNetwork, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCPropNetAirPortPreferredNetwork, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetAirPortSavePasswords, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetAirPortJoinModeAutomatic, str
-        )
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetAirPortJoinModePreferred, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetAirPortJoinModeAutomatic, str)
+        self.assertIsInstance(SystemConfiguration.kSCValNetAirPortJoinModePreferred, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetAirPortJoinModeRanked, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetAirPortJoinModeRecent, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetAirPortJoinModeStrongest, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetAirPortJoinModeStrongest, str)
         self.assertIsInstance(
             SystemConfiguration.kSCValNetAirPortAuthPasswordEncryptionKeychain, str
         )
@@ -160,9 +146,7 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(SystemConfiguration.kSCValNetInterfaceTypePPP, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetInterfaceType6to4, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetInterfaceSubTypePPPoE, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetInterfaceSubTypePPPSerial, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetInterfaceSubTypePPPSerial, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetInterfaceSubTypePPTP, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetInterfaceSubTypeL2TP, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetIPv4Addresses, str)
@@ -175,9 +159,7 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(SystemConfiguration.kSCValNetIPv4ConfigMethodBOOTP, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetIPv4ConfigMethodDHCP, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetIPv4ConfigMethodINFORM, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetIPv4ConfigMethodLinkLocal, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetIPv4ConfigMethodLinkLocal, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetIPv4ConfigMethodManual, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetIPv4ConfigMethodPPP, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetIPv6Addresses, str)
@@ -186,9 +168,7 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(SystemConfiguration.kSCPropNetIPv6Flags, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetIPv6PrefixLength, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetIPv6Router, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetIPv6ConfigMethodAutomatic, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetIPv6ConfigMethodAutomatic, str)
         self.assertIsInstance(SystemConfiguration.kSCValNetIPv6ConfigMethodManual, str)
         self.assertIsInstance(
             SystemConfiguration.kSCValNetIPv6ConfigMethodRouterAdvertisement, str
@@ -230,9 +210,7 @@ class TestSCSchemaDefinitions(TestCase):
             SystemConfiguration.kSCPropNetPPPDisconnectOnFastUserSwitch, str
         )
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPDisconnectOnIdle, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropNetPPPDisconnectOnIdleTimer, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCPropNetPPPDisconnectOnIdleTimer, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPDisconnectOnLogout, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPDisconnectOnSleep, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPDisconnectTime, str)
@@ -276,9 +254,7 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPCommRedialInterval, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPCommRemoteAddress, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPCommTerminalScript, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropNetPPPCommUseTerminalScript, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCPropNetPPPCommUseTerminalScript, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPCCPEnabled, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPCCPMPPE40Enabled, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPCCPMPPE128Enabled, str)
@@ -287,12 +263,8 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPLCPEchoEnabled, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPLCPEchoFailure, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPLCPEchoInterval, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropNetPPPLCPCompressionACField, str
-        )
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropNetPPPLCPCompressionPField, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCPropNetPPPLCPCompressionACField, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetPPPLCPCompressionPField, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPLCPMRU, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPLCPMTU, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetPPPLCPReceiveACCM, str)
@@ -341,17 +313,13 @@ class TestSCSchemaDefinitions(TestCase):
         )
         self.assertIsInstance(SystemConfiguration.kSCEntUsersConsoleUser, str)
         self.assertIsInstance(SystemConfiguration.kSCPropSystemComputerName, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropSystemComputerNameEncoding, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCPropSystemComputerNameEncoding, str)
         self.assertIsInstance(SystemConfiguration.kSCDynamicStoreDomainFile, str)
         self.assertIsInstance(SystemConfiguration.kSCDynamicStoreDomainPlugin, str)
         self.assertIsInstance(SystemConfiguration.kSCDynamicStoreDomainSetup, str)
         self.assertIsInstance(SystemConfiguration.kSCDynamicStoreDomainState, str)
         self.assertIsInstance(SystemConfiguration.kSCDynamicStoreDomainPrefs, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCDynamicStorePropSetupCurrentSet, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCDynamicStorePropSetupCurrentSet, str)
         self.assertIsInstance(
             SystemConfiguration.kSCDynamicStorePropSetupLastUpdated, str
         )
@@ -382,9 +350,7 @@ class TestSCSchemaDefinitions(TestCase):
             SystemConfiguration.kSCPropNetAppleTalkSeedNetworkRange, str
         )
         self.assertIsInstance(SystemConfiguration.kSCPropNetAppleTalkSeedZones, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetAppleTalkConfigMethodNode, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetAppleTalkConfigMethodNode, str)
         self.assertIsInstance(
             SystemConfiguration.kSCValNetAppleTalkConfigMethodRouter, str
         )
@@ -400,9 +366,7 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(
             SystemConfiguration.kSCValNetNetInfoBindingMethodsBroadcast, str
         )
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetNetInfoBindingMethodsDHCP, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetNetInfoBindingMethodsDHCP, str)
         self.assertIsInstance(
             SystemConfiguration.kSCValNetNetInfoBindingMethodsManual, str
         )
@@ -426,15 +390,11 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(
             SystemConfiguration.kSCValNetIPSecXAuthPasswordEncryptionPrompt, str
         )
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetIPv4ConfigMethodAutomatic, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetIPv4ConfigMethodAutomatic, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetIPv6ConfigMethodLinkLocal, str
-        )
+        self.assertIsInstance(SystemConfiguration.kSCValNetIPv6ConfigMethodLinkLocal, str)
         self.assertIsInstance(
             SystemConfiguration.kSCPropNetProxiesProxyAutoConfigJavaScript, str
         )

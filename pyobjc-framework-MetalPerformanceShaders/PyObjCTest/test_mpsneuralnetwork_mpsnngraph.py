@@ -17,9 +17,7 @@ class TestMPSNeuralNetwork_MPSNNGraph(TestCase):
             2,
         )
 
-        self.assertResultIsBOOL(
-            MetalPerformanceShaders.MPSNNGraph.outputStateIsTemporary
-        )
+        self.assertResultIsBOOL(MetalPerformanceShaders.MPSNNGraph.outputStateIsTemporary)
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSNNGraph.setOutputStateIsTemporary_, 0
         )

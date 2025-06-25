@@ -29,9 +29,7 @@ class TestVTDecompressionSession(TestCase):
     @min_os_level("10.8")
     def test_functions_manual(self):
         # XXX: The implementation is complex enough to require tests.
-        self.assertNotIsInstance(
-            VideoToolbox.VTDecompressionSessionCreate, objc.function
-        )
+        self.assertNotIsInstance(VideoToolbox.VTDecompressionSessionCreate, objc.function)
 
     @min_os_level("10.8")
     def test_functions(self):

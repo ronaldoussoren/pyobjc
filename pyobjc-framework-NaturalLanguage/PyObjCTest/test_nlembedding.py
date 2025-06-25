@@ -26,9 +26,7 @@ class TestNLEmbedding(TestCase):
 
         self.assertResultIsBOOL(NaturalLanguage.NLEmbedding.getVector_forString_)
         self.assertArgIsOut(NaturalLanguage.NLEmbedding.getVector_forString_, 0)
-        self.assertArgIsVariableSize(
-            NaturalLanguage.NLEmbedding.getVector_forString_, 0
-        )
+        self.assertArgIsVariableSize(NaturalLanguage.NLEmbedding.getVector_forString_, 0)
 
         self.assertArgIsBlock(
             NaturalLanguage.NLEmbedding.enumerateNeighborsForVector_maximumCount_distanceType_usingBlock_,

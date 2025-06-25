@@ -118,9 +118,7 @@ class TestMPSCore_MPSCoreTypes(TestCase):
             MetalPerformanceShaders.MPSAliasingStrategyDefault,
         )
         self.assertEqual(MetalPerformanceShaders.MPSAliasingStrategyShallAlias, 1 << 0)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAliasingStrategyShallNotAlias, 1 << 1
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSAliasingStrategyShallNotAlias, 1 << 1)
         self.assertEqual(
             MetalPerformanceShaders.MPSAliasingStrategyAliasingReserved,
             MetalPerformanceShaders.MPSAliasingStrategyShallAlias
@@ -148,12 +146,8 @@ class TestMPSCore_MPSCoreTypes(TestCase):
 
         self.assertIsEnumType(MetalPerformanceShaders.MPSFloatDataTypeBit)
         self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeSignBit, 0x00800000)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSFloatDataTypeExponentBit, 0x007C0000
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSFloatDataTypeMantissaBit, 0x0003FC00
-        )
+        self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeExponentBit, 0x007C0000)
+        self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeMantissaBit, 0x0003FC00)
 
         self.assertIsEnumType(MetalPerformanceShaders.MPSFloatDataTypeShift)
         self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeSignShift, 23)

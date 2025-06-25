@@ -69,10 +69,6 @@ class TestStringTokenizer(TestCase):
         self.assertEqual(
             CoreFoundation.kCFStringTokenizerTokenHasDerivedSubTokensMask, 1 << 2
         )
-        self.assertEqual(
-            CoreFoundation.kCFStringTokenizerTokenHasHasNumbersMask, 1 << 3
-        )
-        self.assertEqual(
-            CoreFoundation.kCFStringTokenizerTokenHasNonLettersMask, 1 << 4
-        )
+        self.assertEqual(CoreFoundation.kCFStringTokenizerTokenHasHasNumbersMask, 1 << 3)
+        self.assertEqual(CoreFoundation.kCFStringTokenizerTokenHasNonLettersMask, 1 << 4)
         self.assertEqual(CoreFoundation.kCFStringTokenizerTokenIsCJWordMask, 1 << 5)

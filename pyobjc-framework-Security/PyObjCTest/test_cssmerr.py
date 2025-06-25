@@ -43,9 +43,7 @@ class Testcssmerr(TestCase):
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_SELF_CHECK_FAILED"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_OS_ACCESS_DENIED"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_FUNCTION_FAILED"))
-        self.assertFalse(
-            hasattr(Security, "CSSM_ERRCODE_MODULE_MANIFEST_VERIFY_FAILED")
-        )
+        self.assertFalse(hasattr(Security, "CSSM_ERRCODE_MODULE_MANIFEST_VERIFY_FAILED"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_INVALID_GUID"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_OPERATION_AUTH_DENIED"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_OBJECT_USE_AUTH_DENIED"))
@@ -58,15 +56,9 @@ class Testcssmerr(TestCase):
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_INVALID_SAMPLE_VALUE"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_SAMPLE_VALUE_NOT_SUPPORTED"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_INVALID_ACL_SUBJECT_VALUE"))
-        self.assertFalse(
-            hasattr(Security, "CSSM_ERRCODE_ACL_SUBJECT_TYPE_NOT_SUPPORTED")
-        )
-        self.assertFalse(
-            hasattr(Security, "CSSM_ERRCODE_INVALID_ACL_CHALLENGE_CALLBACK")
-        )
-        self.assertFalse(
-            hasattr(Security, "CSSM_ERRCODE_ACL_CHALLENGE_CALLBACK_FAILED")
-        )
+        self.assertFalse(hasattr(Security, "CSSM_ERRCODE_ACL_SUBJECT_TYPE_NOT_SUPPORTED"))
+        self.assertFalse(hasattr(Security, "CSSM_ERRCODE_INVALID_ACL_CHALLENGE_CALLBACK"))
+        self.assertFalse(hasattr(Security, "CSSM_ERRCODE_ACL_CHALLENGE_CALLBACK_FAILED"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_INVALID_ACL_ENTRY_TAG"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_ACL_ENTRY_TAG_NOT_FOUND"))
         self.assertFalse(hasattr(Security, "CSSM_ERRCODE_INVALID_ACL_EDIT_MODE"))
@@ -111,9 +103,7 @@ class Testcssmerr(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_SELF_CHECK_FAILED"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_OS_ACCESS_DENIED"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_FUNCTION_FAILED"))
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSSM_MODULE_MANIFEST_VERIFY_FAILED")
-        )
+        self.assertFalse(hasattr(Security, "CSSMERR_CSSM_MODULE_MANIFEST_VERIFY_FAILED"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_INVALID_GUID"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_INVALID_CONTEXT_HANDLE"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_INCOMPATIBLE_VERSION"))
@@ -137,9 +127,7 @@ class Testcssmerr(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_BUFFER_TOO_SMALL"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_INVALID_ATTRIBUTE"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_ATTRIBUTE_NOT_IN_CONTEXT"))
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSSM_MODULE_MANAGER_INITIALIZE_FAIL")
-        )
+        self.assertFalse(hasattr(Security, "CSSMERR_CSSM_MODULE_MANAGER_INITIALIZE_FAIL"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSSM_MODULE_MANAGER_NOT_FOUND"))
         self.assertFalse(
             hasattr(Security, "CSSMERR_CSSM_EVENT_NOTIFICATION_CALLBACK_NOT_FOUND")
@@ -165,12 +153,8 @@ class Testcssmerr(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_INVALID_SAMPLE_VALUE"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_SAMPLE_VALUE_NOT_SUPPORTED"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_INVALID_ACL_SUBJECT_VALUE"))
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_ACL_SUBJECT_TYPE_NOT_SUPPORTED")
-        )
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_INVALID_ACL_CHALLENGE_CALLBACK")
-        )
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_ACL_SUBJECT_TYPE_NOT_SUPPORTED"))
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_INVALID_ACL_CHALLENGE_CALLBACK"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_ACL_CHALLENGE_CALLBACK_FAILED"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_INVALID_ACL_ENTRY_TAG"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_ACL_ENTRY_TAG_NOT_FOUND"))
@@ -265,36 +249,20 @@ class Testcssmerr(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_ITERATION_COUNT"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_DL_DB_HANDLE"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_DL_DB_HANDLE"))
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_ACCESS_CREDENTIALS")
-        )
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_ACCESS_CREDENTIALS")
-        )
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_PUBLIC_KEY_FORMAT")
-        )
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_PUBLIC_KEY_FORMAT")
-        )
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_PRIVATE_KEY_FORMAT")
-        )
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_PRIVATE_KEY_FORMAT")
-        )
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_ACCESS_CREDENTIALS"))
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_ACCESS_CREDENTIALS"))
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_PUBLIC_KEY_FORMAT"))
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_PUBLIC_KEY_FORMAT"))
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_PRIVATE_KEY_FORMAT"))
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_PRIVATE_KEY_FORMAT"))
         self.assertFalse(
             hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_SYMMETRIC_KEY_FORMAT")
         )
         self.assertFalse(
             hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_SYMMETRIC_KEY_FORMAT")
         )
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_WRAPPED_KEY_FORMAT")
-        )
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_WRAPPED_KEY_FORMAT")
-        )
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_INVALID_ATTR_WRAPPED_KEY_FORMAT"))
+        self.assertFalse(hasattr(Security, "CSSMERR_CSP_MISSING_ATTR_WRAPPED_KEY_FORMAT"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_STAGED_OPERATION_IN_PROGRESS"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_STAGED_OPERATION_NOT_STARTED"))
         self.assertFalse(hasattr(Security, "CSSMERR_CSP_VERIFY_FAILED"))
@@ -512,9 +480,7 @@ class Testcssmerr(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_DL_MISSING_VALUE"))
         self.assertFalse(hasattr(Security, "CSSMERR_DL_UNSUPPORTED_QUERY"))
         self.assertFalse(hasattr(Security, "CSSMERR_DL_UNSUPPORTED_QUERY_LIMITS"))
-        self.assertFalse(
-            hasattr(Security, "CSSMERR_DL_UNSUPPORTED_NUM_SELECTION_PREDS")
-        )
+        self.assertFalse(hasattr(Security, "CSSMERR_DL_UNSUPPORTED_NUM_SELECTION_PREDS"))
         self.assertFalse(hasattr(Security, "CSSMERR_DL_UNSUPPORTED_OPERATOR"))
         self.assertFalse(hasattr(Security, "CSSMERR_DL_INVALID_RESULTS_HANDLE"))
         self.assertFalse(hasattr(Security, "CSSMERR_DL_INVALID_DB_LOCATION"))

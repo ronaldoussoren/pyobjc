@@ -13,9 +13,7 @@ class TestNLContextualEmbedding(TestCase):
 
         self.assertIsEnumType(NaturalLanguage.NLContextualEmbeddingAssetsResult)
         self.assertEqual(NaturalLanguage.NLContextualEmbeddingAssetsResultAvailable, 0)
-        self.assertEqual(
-            NaturalLanguage.NLContextualEmbeddingAssetsResultNotAvailable, 1
-        )
+        self.assertEqual(NaturalLanguage.NLContextualEmbeddingAssetsResultNotAvailable, 1)
         self.assertEqual(NaturalLanguage.NLContextualEmbeddingAssetsResultError, 2)
 
     @min_os_level("14.0")
@@ -28,9 +26,7 @@ class TestNLContextualEmbedding(TestCase):
             2,
         )
 
-        self.assertResultIsBOOL(
-            NaturalLanguage.NLContextualEmbedding.hasAvailableAssets
-        )
+        self.assertResultIsBOOL(NaturalLanguage.NLContextualEmbedding.hasAvailableAssets)
 
         self.assertArgIsBlock(
             NaturalLanguage.NLContextualEmbeddingResult.enumerateTokenVectorsInRange_usingBlock_,

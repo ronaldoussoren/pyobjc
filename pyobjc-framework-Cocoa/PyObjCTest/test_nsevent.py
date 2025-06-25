@@ -71,9 +71,7 @@ class TestNSEvent(TestCase):
         self.assertEqual(AppKit.NSRightMouseUpMask, 1 << AppKit.NSRightMouseUp)
         self.assertEqual(AppKit.NSMouseMovedMask, 1 << AppKit.NSMouseMoved)
         self.assertEqual(AppKit.NSLeftMouseDraggedMask, 1 << AppKit.NSLeftMouseDragged)
-        self.assertEqual(
-            AppKit.NSRightMouseDraggedMask, 1 << AppKit.NSRightMouseDragged
-        )
+        self.assertEqual(AppKit.NSRightMouseDraggedMask, 1 << AppKit.NSRightMouseDragged)
         self.assertEqual(AppKit.NSMouseEnteredMask, 1 << AppKit.NSMouseEntered)
         self.assertEqual(AppKit.NSMouseExitedMask, 1 << AppKit.NSMouseExited)
         self.assertEqual(AppKit.NSKeyDownMask, 1 << AppKit.NSKeyDown)
@@ -91,9 +89,7 @@ class TestNSEvent(TestCase):
         self.assertEqual(AppKit.NSTabletProximityMask, 1 << AppKit.NSTabletProximity)
         self.assertEqual(AppKit.NSOtherMouseDownMask, 1 << AppKit.NSOtherMouseDown)
         self.assertEqual(AppKit.NSOtherMouseUpMask, 1 << AppKit.NSOtherMouseUp)
-        self.assertEqual(
-            AppKit.NSOtherMouseDraggedMask, 1 << AppKit.NSOtherMouseDragged
-        )
+        self.assertEqual(AppKit.NSOtherMouseDraggedMask, 1 << AppKit.NSOtherMouseDragged)
         self.assertEqual(AppKit.NSAnyEventMask, AppKit.NSUIntegerMax)
 
         self.assertEqual(
@@ -108,9 +104,7 @@ class TestNSEvent(TestCase):
         self.assertEqual(
             AppKit.NSEventMaskRightMouseUp, 1 << AppKit.NSEventTypeRightMouseUp
         )
-        self.assertEqual(
-            AppKit.NSEventMaskMouseMoved, 1 << AppKit.NSEventTypeMouseMoved
-        )
+        self.assertEqual(AppKit.NSEventMaskMouseMoved, 1 << AppKit.NSEventTypeMouseMoved)
         self.assertEqual(
             AppKit.NSEventMaskLeftMouseDragged, 1 << AppKit.NSEventTypeLeftMouseDragged
         )
@@ -181,9 +175,7 @@ class TestNSEvent(TestCase):
         self.assertEqual(AppKit.NSEventModifierFlagNumericPad, 1 << 21)
         self.assertEqual(AppKit.NSEventModifierFlagHelp, 1 << 22)
         self.assertEqual(AppKit.NSEventModifierFlagFunction, 1 << 23)
-        self.assertEqual(
-            AppKit.NSEventModifierFlagDeviceIndependentFlagsMask, 0xFFFF0000
-        )
+        self.assertEqual(AppKit.NSEventModifierFlagDeviceIndependentFlagsMask, 0xFFFF0000)
 
         self.assertEqual(AppKit.NSUnknownPointingDevice, 0)
         self.assertEqual(AppKit.NSPenPointingDevice, 1)
@@ -358,9 +350,7 @@ class TestNSEvent(TestCase):
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertEqual(AppKit.NSEventTypeChangeMode, 38)
-        self.assertEqual(
-            AppKit.NSEventMaskChangeMode, 1 << AppKit.NSEventTypeChangeMode
-        )
+        self.assertEqual(AppKit.NSEventMaskChangeMode, 1 << AppKit.NSEventTypeChangeMode)
 
     def testFunctions(self):
         v = AppKit.NSEventMaskFromType(AppKit.NSLeftMouseDown)

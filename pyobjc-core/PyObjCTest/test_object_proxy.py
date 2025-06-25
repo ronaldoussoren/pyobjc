@@ -437,9 +437,7 @@ class TestPlainPythonMethods(TestCase):
         for value in [NSNumber.numberWithLong_(5), object()]:
             for selector, typestr in selectorTab:
                 with self.subTest(type=type(value).__name__, selector=selector):
-                    self.assertTrue(
-                        OC_ObjectInt.respondsToSelector_of_(selector, value)
-                    )
+                    self.assertTrue(OC_ObjectInt.respondsToSelector_of_(selector, value))
 
                     m = OC_ObjectInt.methodSignatureForSelector_of_(selector, value)
                     self.assertIsNot(m, None)
@@ -451,9 +449,7 @@ class TestPlainPythonMethods(TestCase):
                         OC_ObjectInt.respondsToSelector_classOf_(selector, value)
                     )
 
-                    m = OC_ObjectInt.methodSignatureForSelector_classOf_(
-                        selector, value
-                    )
+                    m = OC_ObjectInt.methodSignatureForSelector_classOf_(selector, value)
                     self.assertIsNot(m, None)
                     self.assert_method_signature(m, typestr)
 
@@ -525,9 +521,7 @@ class TestPlainPythonMethods(TestCase):
 
     def test_fowarding_methodSignatureForSelector(self):
         value = object()
-        result = OC_ObjectInt.invokeMethodSignatureForSelector_of_(
-            b"description", value
-        )
+        result = OC_ObjectInt.invokeMethodSignatureForSelector_of_(b"description", value)
         result2 = OC_ObjectInt.methodSignatureForSelector_of_(b"description", value)
 
         self.assertEqual(result, result2)
@@ -554,9 +548,7 @@ class TestPlainPythonMethods(TestCase):
 
         value = Forwarder()
         self.assertTrue(OC_ObjectInt.invokeRespondsToSelector_of_("idSelector", value))
-        self.assertFalse(
-            OC_ObjectInt.invokeRespondsToSelector_of_("voidSelector", value)
-        )
+        self.assertFalse(OC_ObjectInt.invokeRespondsToSelector_of_("voidSelector", value))
 
     def test_forwarding_classForKeyedArchiver(self):
         self.assertIs(

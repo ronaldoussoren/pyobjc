@@ -14,9 +14,7 @@ class TestAVAudioEnvironmentNode(TestCase):
         self.assertEqual(
             AVFoundation.AVAudioEnvironmentDistanceAttenuationModelInverse, 2
         )
-        self.assertEqual(
-            AVFoundation.AVAudioEnvironmentDistanceAttenuationModelLinear, 3
-        )
+        self.assertEqual(AVFoundation.AVAudioEnvironmentDistanceAttenuationModelLinear, 3)
 
         self.assertEqual(AVFoundation.AVAudioEnvironmentOutputTypeAuto, 0)
         self.assertEqual(AVFoundation.AVAudioEnvironmentOutputTypeHeadphones, 1)

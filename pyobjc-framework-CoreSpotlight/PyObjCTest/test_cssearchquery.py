@@ -23,10 +23,6 @@ class TestCSSearchQuery(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(CoreSpotlight.CSSearchQuery.isCancelled)
         self.assertResultIsBlock(CoreSpotlight.CSSearchQuery.foundItemsHandler, b"v@")
-        self.assertArgIsBlock(
-            CoreSpotlight.CSSearchQuery.setFoundItemsHandler_, 0, b"v@"
-        )
+        self.assertArgIsBlock(CoreSpotlight.CSSearchQuery.setFoundItemsHandler_, 0, b"v@")
         self.assertResultIsBlock(CoreSpotlight.CSSearchQuery.completionHandler, b"v@")
-        self.assertArgIsBlock(
-            CoreSpotlight.CSSearchQuery.setCompletionHandler_, 0, b"v@"
-        )
+        self.assertArgIsBlock(CoreSpotlight.CSSearchQuery.setCompletionHandler_, 0, b"v@")

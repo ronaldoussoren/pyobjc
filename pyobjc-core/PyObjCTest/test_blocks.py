@@ -558,7 +558,6 @@ class TestBlocks(TestCase):
         )
 
     def test_block_is_collected(self):
-
         for use_function in (0, 1):
             with self.subTest(use_function=use_function):
                 deleted = False
@@ -607,7 +606,6 @@ class TestBlocks(TestCase):
                 self.assertTrue(deleted)
 
     def test_block_is_stored(self):
-
         for use_function in (0, 1):
             with self.subTest(use_function=use_function):
                 deleted = False
@@ -825,12 +823,8 @@ class TestBlocks(TestCase):
         def callback(a, b):
             return a * b
 
-        self.assertEqual(
-            obj.callDoubleBlock_withValue_andValue_(callback, 2.0, 3.5), 7.0
-        )
-        self.assertEqual(
-            obj.callDoubleBlock_withValue_andValue_(callback, 2.5, 10), 25.0
-        )
+        self.assertEqual(obj.callDoubleBlock_withValue_andValue_(callback, 2.0, 3.5), 7.0)
+        self.assertEqual(obj.callDoubleBlock_withValue_andValue_(callback, 2.5, 10), 25.0)
 
         def callback(a, b):
             return
@@ -986,9 +980,7 @@ class TestBlocks(TestCase):
 
         block = obj.getFloatBlock()
         sig = objc.splitSignature(objc._block_signature(block))
-        self.assertEqual(
-            sig, (objc._C_DBL, objc._C_ID + b"?", objc._C_DBL, objc._C_DBL)
-        )
+        self.assertEqual(sig, (objc._C_DBL, objc._C_ID + b"?", objc._C_DBL, objc._C_DBL))
 
         block = obj.getStructBlock()
         sig = objc.splitSignature(objc._block_signature(block))
