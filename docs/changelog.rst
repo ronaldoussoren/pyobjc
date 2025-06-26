@@ -34,6 +34,20 @@ found while doing this.
 * Fix crash when a callable returns a C function with a signature that's not
   compatible with libffi (such as a function using a SIMD argument or return type).
 
+* The :class:`selector` constructor no longer unpacks a selector passed in as
+  the callable. That is, given:
+
+  .. sourcecode:: python
+
+     @objc.selector
+     def mymethod_(self, a):
+         pass
+
+     othermethod = objc.selector(mymethod_, selector=b"hello")
+
+  In previous versions ``othermethod.callable`` was set to ``mymethod_.callable``,
+  in this version it is set to ``mymethod_``.
+
 Version 11.1
 ------------
 

@@ -118,6 +118,7 @@ PyObjC
          :caption: Technical Notes
          :maxdepth: 1
 
+         notes/free-threading
          notes/instantiating
          core/super
          notes/exceptions
