@@ -85,9 +85,7 @@ static PyObject* _Nullable object_repr(PyObject* _self)
     PyObject*     res;
     unsigned int  flags;
 
-    Py_BEGIN_CRITICAL_SECTION(_self);
     flags = self->flags;
-    Py_END_CRITICAL_SECTION();
 
     if (flags & PyObjCObject_kMAGIC_COOKIE) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START

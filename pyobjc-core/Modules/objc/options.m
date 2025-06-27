@@ -1004,7 +1004,6 @@ PyObjC_CallClassExtender(PyObject* cls)
             Py_INCREF(k);
             Py_INCREF(v);
 
-#ifdef Py_GIL_DISABLED
             /* free-threading: First check if the attribute is already set
              * to the "new" value, and avoid resetting the attribute to the
              * same value.
@@ -1014,6 +1013,9 @@ PyObjC_CallClassExtender(PyObject* cls)
              *
              * That race condition is fixed in 3.15, but that makes updating
              * slots expensive, making it important to avoid spurious updates.
+             *
+             * The check is not necessary for the regular build, but does avoid
+             * setting attributes unnecessarily.
              */
             PyObject* c;
             int       r = PyDict_GetItemRef(((PyTypeObject*)cls)->tp_dict, k, &c);
@@ -1029,7 +1031,7 @@ PyObjC_CallClassExtender(PyObject* cls)
             if (c == NULL) {
                 r = 0;
             } else {
-                r = PyObject_RichCompareBool(v, c, Py_EQ);
+                r = PyObject_RichCompareBool(c, v, Py_EQ);
             }
             switch (r) {
             case -1:
@@ -1038,16 +1040,13 @@ PyObjC_CallClassExtender(PyObject* cls)
                 Py_CLEAR(dict);
                 return -1;
             case 0:
-#endif
                 if (PyType_Type.tp_setattro(cls, k, v) == -1) {
                     PyErr_Clear();
                 }
-#ifdef Py_GIL_DISABLED
                 /* case 1: */
                 /* pass */
             }
             Py_CLEAR(c);
-#endif
             Py_CLEAR(k);
             Py_CLEAR(v);
 

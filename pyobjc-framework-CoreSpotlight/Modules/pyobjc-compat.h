@@ -314,6 +314,23 @@ static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
     Py_XINCREF(result);
     return result;
 }
+
+static inline int
+PyDict_SetDefaultRef(PyObject* p, PyObejct* key, PyObject* default_value3,
+                     PyObject* _NonNull* _Nullable result)
+{
+    *result = PyDict_SetDefault(p, key, default_value);
+    if (*result == NULL) {
+        return -1;
+    }
+    Py_INCREF(*result);
+
+    /* This does not follow the spec, should return 1 when the key was already
+     * in the dict. That part of the API is not used in PyObjC though.
+     */
+    return 0;
+}
+
 #endif
 
 #if PY_VERSION_HEX < 0x030c0000

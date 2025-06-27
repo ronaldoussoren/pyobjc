@@ -118,11 +118,9 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
             // LCOV_EXCL_START
             // Guards against invalid data in the ObjC runtime
             PyErr_SetString(PyObjCExc_Error, "Cannot extract type encoding from ivar");
-            return NULL;
+            res = NULL;
             // LCOV_EXCL_STOP
-        }
-
-        if (encoding[0] == _C_ID) {
+        } else if (encoding[0] == _C_ID) {
             /* An object */
             id value = object_getIvar(objc, var);
             res      = pythonify_c_value(encoding, &value);

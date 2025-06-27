@@ -158,6 +158,8 @@ PyAPI_FUNC(PyObject* _Nullable) PyList_GetItem(PyObject*, Py_ssize_t)
     __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(PyObject* _Nullable) PyList_New(Py_ssize_t size)
     __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyDict_SetDefault(PyObject*, PyObject*, PyObject*)
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(Py_ssize_t) PyList_Size(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(double) PyLong_AsDouble(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(long) PyLong_AsLong(PyObject*) __attribute__((warn_unused_result));
@@ -502,7 +504,9 @@ PyAPI_FUNC(int)
         __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyObject_HasAttrStringWithError(PyObject*, const char*)
     __attribute__((warn_unused_result));
-
+PyAPI_FUNC(int) PyDict_SetDefaultRef(PyObject* p, PyObject* key, PyObject* default_value,
+                                     PyObject* _Nonnull* _Nullable result)
+    __attribute__((warn_unused_result));
 #endif
 
 static inline Py_ALWAYS_INLINE void(Py_INCREF)(PyObject* _Nonnull op);

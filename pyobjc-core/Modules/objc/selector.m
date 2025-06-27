@@ -1251,11 +1251,6 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
         // LCOV_EXCL_STOP
     }
 
-    if (PyObjCPythonSelector_Check(callable)) {
-        /* XXX: Should this be supported at all? */
-        callable = ((PyObjCPythonSelector*)callable)->callable;
-    }
-
     if (PyObjC_is_pyfunction(callable)) {
         result->argcount = PyObjC_num_arguments(callable);
         if (result->argcount == -1) {

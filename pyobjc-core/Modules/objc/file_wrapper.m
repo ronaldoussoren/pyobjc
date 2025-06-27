@@ -190,12 +190,13 @@ static PyObject* _Nullable file_seek(PyObject* _self, PyObject* args, PyObject* 
     long                result;
     PyObject*           retval;
 
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "ni", keywords, &offset, &whence)) {
+        return NULL;
+    }
+
     Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        retval = NULL;
-    } else if (!PyArg_ParseTupleAndKeywords(args, kwds, "ni", keywords, &offset,
-                                            &whence)) {
         retval = NULL;
     } else {
         result = fseek(self->fp, offset, whence);

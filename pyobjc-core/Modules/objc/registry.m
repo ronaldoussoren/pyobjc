@@ -25,35 +25,15 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     switch (PyDict_GetItemRef(registry, selector, &sublist)) {
     case -1:
         return -1;
-    case 0:
-#ifdef Py_GIL_DISABLED
-        /* For the free threaded build add the new sublist in
-         * a critical section to avoid race conditions for this.
-         */
-        Py_BEGIN_CRITICAL_SECTION(registry);
+    case 0: {
+        PyObject* temp = PyList_New(0);
 
-        switch (PyDict_GetItemRef(registry, selector, &sublist)) { // LCOV_BR_EXCL_LINE
-        case -1:
-            // LCOV_EXCL_START
-            result = -1;
-            break;
-            // LCOV_EXCL_STOP
-        case 0:
-#endif /* Py_GIL_DISABLED */
-            sublist = PyList_New(0);
-            if (sublist == NULL) { // LCOV_BR_EXCL_LINE
-                result = -1;       // LCOV_EXCL_LINE
-            } else {               // LCOV_EXCL_LINE
-                result = PyDict_SetItem(registry, selector, sublist);
-            }
-#ifdef Py_GIL_DISABLED
-            /* case 1: pass */
+        int r = PyDict_SetDefaultRef(registry, selector, temp, &sublist);
+        Py_CLEAR(temp);
+        if (r == -1) { // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
-        Py_END_CRITICAL_SECTION();
-#endif                     /* Py_GIL_DISABLED */
-        if (result != 0) { // LCOV_BR_EXCL_LINE
-            return result; // LCOV_EXCL_LINE
-        }
+    }
         /* case 1: fallthrough */
     }
 
@@ -64,16 +44,22 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     /*
      * Check if there is a registration for *class_name* in
      * *sublist*, if so replace that registration.
+     *
+     * Free-threading: A race between two registrations
+     * can end up with having 2 registrations for 'class_name'
+     * in the sublist.
+     *
+     * That's harmless other than using a little more memory.
+     *
+     * In practice this is not a problem because registrations
+     * are generally added during program startup.
      */
 
-    Py_BEGIN_CRITICAL_SECTION(sublist);
-    Py_ssize_t len = PyList_Size(sublist);
-    for (Py_ssize_t i = 0; i < len; i++) {
+    for (Py_ssize_t i = 0; i < PyList_Size(sublist); i++) {
         PyObject* item = PyList_GetItemRef(sublist, i);
         if (item == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(sublist);
-            Py_EXIT_CRITICAL_SECTION();
             return -1;
             // LCOV_EXCL_STOP
         }
@@ -86,7 +72,6 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
             // LCOV_EXCL_START
             Py_DECREF(item);
             Py_DECREF(sublist);
-            Py_EXIT_CRITICAL_SECTION();
             return -1;
             // LCOV_EXCL_STOP
         }
@@ -96,7 +81,6 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
             r = PyList_SetItem(sublist, i, new_item);
             Py_DECREF(item);
             Py_DECREF(sublist);
-            Py_EXIT_CRITICAL_SECTION();
             return r;
         }
     }
@@ -105,7 +89,6 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     if (item == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(sublist);
-        Py_EXIT_CRITICAL_SECTION();
         return -1;
         // LCOV_EXCL_STOP
     }
@@ -113,7 +96,6 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     Py_DECREF(item);
     Py_DECREF(sublist);
 
-    Py_END_CRITICAL_SECTION();
     return result;
 }
 

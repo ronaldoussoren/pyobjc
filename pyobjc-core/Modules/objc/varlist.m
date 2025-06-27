@@ -206,6 +206,8 @@ varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop,
         return -1;
     }
 
+    /* The critical section is needed to avoid concurrently reading and writing.
+     */
     Py_BEGIN_CRITICAL_SECTION(self);
     result = 0;
     for (idx = start; idx < stop; idx++) {

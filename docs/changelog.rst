@@ -48,6 +48,8 @@ found while doing this.
   In previous versions ``othermethod.callable`` was set to ``mymethod_.callable``,
   in this version it is set to ``mymethod_``.
 
+* Free-threading support is no longer experimental.
+
 Version 11.1
 ------------
 

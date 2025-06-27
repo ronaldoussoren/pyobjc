@@ -70,6 +70,11 @@
     return ((id (*)(id, SEL))objc_msgSend)(object, sel);
 }
 
++ (id)invokeSelector:(SEL)sel of:(NSObject*)object withArg:(id)arg
+{
+    return ((id (*)(id, SEL, id))objc_msgSend)(object, sel, arg);
+}
+
 + (bool)respondsToSelector:(SEL)sel classOf:(NSObject*)object
 {
     return [[object class] respondsToSelector:sel];

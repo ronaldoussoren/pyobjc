@@ -535,12 +535,19 @@ static NSException* _Nullable python_exception_to_objc(void)
         } // LCOV_EXCL_LINE
     }
 
-    repr = PyObject_Str(exc_value);
-    if (repr) {                                                // LCOV_BR_EXCL_LINE
-        if (depythonify_python_object(repr, &oc_repr) == -1) { // LCOV_BR_EXCL_LINE
-            /* Ignore errors in conversion */
-            PyErr_Clear(); // LCOV_EXCL_LINE
-        } // LCOV_EXCL_LINE
+    if (exc_value != NULL) { // LCOV_BR_EXCL_LINE
+        repr = PyObject_Str(exc_value);
+        if (repr) {                                                // LCOV_BR_EXCL_LINE
+            if (depythonify_python_object(repr, &oc_repr) == -1) { // LCOV_BR_EXCL_LINE
+                /* Ignore errors in conversion */
+                PyErr_Clear(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
+        }
+    } else {
+        // LCOV_EXCL_START
+        repr    = NULL;
+        oc_repr = nil;
+        // LCOV_EXCL_STOP
     }
 
     val = [NSException

@@ -12,20 +12,20 @@
 
 + (NSDictionary*)dictWithAuthorizationItem:(AuthorizationItem*)item
 {
+    NSObject* name_value =
+        item->name != NULL ? [NSString stringWithUTF8String:item->name] : nil;
     if (item->value) {
         return @{
             @"flags" : @(item->flags),
             @"value" : [NSData dataWithBytes:item->value length:item->valueLength],
-            @"name" : item->name ? [NSString stringWithUTF8String:item->name]
-                                 : [NSNull null],
+            @"name" : name_value ? name_value : [NSNull null],
         };
     } else {
         return @{
             @"flags" : @(item->flags),
             @"value" : [NSNull null],
             @"valueLength" : @(item->valueLength),
-            @"name" : item->name ? [NSString stringWithUTF8String:item->name]
-                                 : [NSNull null],
+            @"name" : name_value ? name_value : [NSNull null],
         };
     }
 }
@@ -34,7 +34,11 @@
 {
     switch (kind) {
     case 0:
-        item->name        = NULL;
+        /* The _Nonnull cast is required because the name
+         * cannot be NULL according to Apple's headers. For
+         * testing we want to set it to a NULL value anyway.
+         */
+        item->name        = (char* _Nonnull)NULL;
         item->value       = NULL;
         item->valueLength = 32;
         item->flags       = 0;

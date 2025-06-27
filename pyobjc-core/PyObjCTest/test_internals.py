@@ -193,19 +193,18 @@ class TestRescanClass(TestCase):
         no_compare = NoCompare()
 
         def dummy_extender(klass, class_dict):
-            class_dict["foo"] = no_compare
+            class_dict["object_to_compare"] = no_compare
 
-        cls.foo = objc.python_method(lambda self: 99)
+        cls.object_to_compare = objc.python_method(lambda self: 99)
         try:
             with pyobjc_options(_class_extender=dummy_extender):
                 objc._updatingMetadata(True)
                 objc._updatingMetadata(False)
-
                 with self.assertRaisesRegex(TypeError, "cannot compare"):
                     objc._rescanClass("NSURLSession")
 
         finally:
-            del cls.foo
+            del cls.object_to_compare
 
         objc._updatingMetadata(True)
         objc._updatingMetadata(False)

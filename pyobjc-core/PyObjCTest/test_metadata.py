@@ -857,6 +857,12 @@ def setupMetaData():
         },
     )
 
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"callFunction:",
+        {"arguments": {2 + 0: {"callable": {"args": {}, "retval": {"type": "@"}}}}},
+    )
+
 
 setupMetaData()
 
@@ -2334,6 +2340,25 @@ class TestMisc(TestCase):
         self.assertEqual(signature["arguments"][0]["type"], b"@?")
         self.assertEqual(signature["arguments"][1]["type"], b"i")
         self.assertEqual(signature["arguments"][2]["type"], b"f")
+
+    def test_callbacks(self):
+        def fn():
+            return 42
+
+        o = OC_MetaDataTest.alloc().init()
+        self.assertEqual(o.callFunction_(fn), 42)
+
+        v = NSObject.alloc().init()
+
+        self.assertEqual(o.callFunction_(v.description), repr(v))
+
+        class OC_Object42(NSObject):
+            def method(self):
+                return 99
+
+        v = OC_Object42.alloc().init()
+
+        self.assertEqual(o.callFunction_(v.method), 99)
 
 
 class OCInitFamily(NSObject):

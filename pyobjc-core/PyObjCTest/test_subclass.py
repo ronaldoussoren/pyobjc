@@ -15,6 +15,7 @@ from .copying import OC_CopyBase
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
 NSArray = objc.lookUpClass("NSArray")
+NSMutableArray = objc.lookUpClass("NSMutableArray")
 NSData = objc.lookUpClass("NSData")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
@@ -1211,7 +1212,7 @@ class TestSelectorEdgeCases(TestCase):
             pass
 
         value = objc.selector(someSelector)
-        self.assertIs(value.callable, someSelector.callable)
+        self.assertIs(value.callable, someSelector)
 
     def test_void_selector_returns_value(self):
         class OC_TestVoidSelectorReturnsValue(NSObject):
@@ -1270,6 +1271,35 @@ class TestSelectorEdgeCases(TestCase):
 
         obj = ClassWithDirAsSelector.alloc().init()
         self.assertEqual(obj.method(), dir(obj))
+
+    def test_selector_implementation_is_bound_selector(self):
+        collected = []
+
+        class OC_PythonSelectorImp1(NSObject):
+            def initWithValue_(self, value):
+                self = super().init()
+                self._value = value
+                return self
+
+            def collect_(self, *a):
+                self._value.append(a)
+
+        value = OC_PythonSelectorImp1.alloc().initWithValue_(collected)
+        self.assertIs(value._value, collected)
+
+        class OC_PythonSelectorImp2(NSObject):
+            method_ = objc.selector(value.collect_, selector=b"method:")
+
+        obj = OC_PythonSelectorImp2.alloc().init()
+
+        OC_ObjectInt.invokeSelector_of_withArg_(b"collect:", value, 1)
+        self.assertEqual(collected, [(1,)])
+
+        OC_ObjectInt.invokeSelector_of_withArg_(b"method:", obj, 2)
+        self.assertEqual(collected, [(1,), (obj, 2)])
+
+        obj.method_(4)
+        self.assertEqual(collected, [(1,), (obj, 2), (obj, 4)])
 
 
 class TestMixin(TestCase):

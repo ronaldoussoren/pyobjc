@@ -76,8 +76,6 @@ static PyObject* _Nullable struct_sq_item(PyObject* self, Py_ssize_t offset)
         return NULL;
     }
 
-    Py_BEGIN_CRITICAL_SECTION(self);
-
     len = STRUCT_LENGTH(self);
 
     if (offset < 0 || offset >= len) {
@@ -85,14 +83,15 @@ static PyObject* _Nullable struct_sq_item(PyObject* self, Py_ssize_t offset)
                      Py_TYPE(self)->tp_name);
         res = NULL;
     } else {
+        Py_BEGIN_CRITICAL_SECTION(self);
         member = Py_TYPE(self)->tp_members + offset;
         res    = GET_STRUCT_FIELD(self, member);
         assert(res != NULL);
 
         Py_INCREF(res);
+        Py_END_CRITICAL_SECTION();
     }
 
-    Py_END_CRITICAL_SECTION();
     return res;
 }
 
@@ -220,6 +219,10 @@ struct_sq_contains(PyObject* self, PyObject* value)
         return -1;
     }
 
+    /* XXX: Consider shrinking the critical section here, to avoid running
+     *      arbitrary code inside the section. That can result in a lot
+     *      more locking though...
+     */
     Py_BEGIN_CRITICAL_SECTION(self);
     for (PyMemberDef* member = Py_TYPE(self)->tp_members; member && member->name;
          member++) {

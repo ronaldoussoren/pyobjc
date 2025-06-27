@@ -145,6 +145,12 @@ use_id(id x __attribute__((__unused__)))
 
 @implementation OC_MetaDataTest
 
+typedef id (*callfunc)(void);
+- (id)callFunction:(callfunc)func
+{
+    return func();
+}
+
 - (id (^)(int, float))getAnonBlock
 {
     return ^(int a, float b) {

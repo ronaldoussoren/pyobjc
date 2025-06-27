@@ -1336,7 +1336,6 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
         return 0;
 
     while (info->class != NULL) {
-
         if (info->generation != PyObjC_MappingCount) {
             int r;
 #ifdef Py_GIL_DISABLED
@@ -1349,6 +1348,7 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
              *
              */
             int should_call;
+
             Py_BEGIN_CRITICAL_SECTION(info);
             if (info->generation != PyObjC_MappingCount) {
                 should_call = 1;
