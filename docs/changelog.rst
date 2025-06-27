@@ -57,9 +57,15 @@ found while doing this.
   selector, the issue was found while improving test coverage for
   edge cases.
 
-* :issue:`653`: Fix building with older clangs versions
+* :pr:`653`: Fix building with older clangs versions
 
   PR by GitHub user `moubctez <https://github.com/moubctez>`_.
+
+* :pr:`604`: Add some internal assertions that validate the state of block proxies
+
+  Based on a PR by GitHub user `mrpippy <https://github.com/mrpippy>`_.
+
+
 
 Version 11.1
 ------------

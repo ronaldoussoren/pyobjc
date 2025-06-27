@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 #define PyObjCObject_kBLOCK 0x40
 #define PyObjCObject_kNEW_WRAPPER 0x80
 
+#define PyObjCObject_kALL_FLAGS                                                          \
+    (PyObjCObject_kDEFAULT | PyObjCObject_kDEALLOC_HELPER                                \
+     | PyObjCObject_kSHOULD_NOT_RELEASE | PyObjCObject_kMAGIC_COOKIE                     \
+     | PyObjCObject_kCFOBJECT | PyObjCObject_kBLOCK | PyObjCObject_kNEW_WRAPPER)
+
 typedef struct {
     PyObject_HEAD
 

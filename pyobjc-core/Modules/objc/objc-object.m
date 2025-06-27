@@ -1331,7 +1331,9 @@ PyObjCObject_GetObject(PyObject* object)
 unsigned int
 PyObjCObject_GetFlags(PyObject* object)
 {
-    return PyObjCObject_FLAGS(object);
+    unsigned int result = PyObjCObject_FLAGS(object);
+    assert((result & ~PyObjCObject_kALL_FLAGS) == 0);
+    return result;
 }
 
 bool
