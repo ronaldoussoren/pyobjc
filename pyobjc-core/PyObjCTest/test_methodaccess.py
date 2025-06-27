@@ -222,6 +222,59 @@ class MethodAccessTest(TestCase):
             OC_UnusedClass.pyobjc_classMethods.someClassMethod, objc.selector
         )
 
+        OC_UnusedClass.someOtherInstanceMethod = 42
+
+        self.assertIsInstance(
+            OC_UnusedClass.pyobjc_instanceMethods.someOtherInstanceMethod, objc.selector
+        )
+
+        class helper:
+            def __get__(self, instance, instance_type=None):
+                raise RuntimeError("no getting")
+
+            def __set__(self, instance, new_value):
+                raise RuntimeError("no setting")
+
+        OC_UnusedClass.yetAnotherInstanceMethod = helper()
+
+        self.assertIsInstance(
+            OC_UnusedClass.pyobjc_instanceMethods.yetAnotherInstanceMethod,
+            objc.selector,
+        )
+
+        #
+        # Actually use the class to validate  that the changes to
+        # 'someOtherInstanceMethod' and 'yetAnotherInstanceMethod' were
+        # effective.
+        #
+
+        o = OC_UnusedClass.alloc().init()
+        self.assertEqual(o.someOtherInstanceMethod, 42)
+
+        with self.assertRaisesRegex(RuntimeError, "no getting"):
+            o.yetAnotherInstanceMethod
+
+        with self.assertRaisesRegex(RuntimeError, "no setting"):
+            o.yetAnotherInstanceMethod = 21
+
+        #
+        # Revalidate resolving through method accessor
+        #
+        self.assertIsInstance(
+            OC_UnusedClass.pyobjc_instanceMethods.someOtherInstanceMethod, objc.selector
+        )
+        self.assertIsInstance(
+            OC_UnusedClass.pyobjc_instanceMethods.yetAnotherInstanceMethod,
+            objc.selector,
+        )
+
+        # Check in __dict__
+        d = OC_UnusedClass.pyobjc_instanceMethods.__dict__
+        self.assertIn("someOtherInstanceMethod", d)
+        self.assertIn("yetAnotherInstanceMethod", d)
+        self.assertIsInstance(d["someOtherInstanceMethod"], objc.selector)
+        self.assertIsInstance(d["yetAnotherInstanceMethod"], objc.selector)
+
     def test_various_methods(self):
         value = OCTestWithAttributes.alloc().init()
         NSObject.alloca = objc.python_method(OCTestWithAttributes.alloc)

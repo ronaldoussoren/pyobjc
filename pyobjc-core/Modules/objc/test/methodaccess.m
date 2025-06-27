@@ -19,6 +19,16 @@
     return @"someInstanceMethod";
 }
 
+- (id)someOtherInstanceMethod
+{
+    return @"someOtherInstanceMethod";
+}
+
+- (id)yetAnotherInstanceMethod
+{
+    return @"yetAnotherInstanceMethod";
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
