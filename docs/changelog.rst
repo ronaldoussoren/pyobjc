@@ -57,6 +57,10 @@ found while doing this.
   selector, the issue was found while improving test coverage for
   edge cases.
 
+* :issue:`653`: Fix building with older clangs versions
+
+  PR by GitHub user `moubctez <https://github.com/moubctez>`_.
+
 Version 11.1
 ------------
 
