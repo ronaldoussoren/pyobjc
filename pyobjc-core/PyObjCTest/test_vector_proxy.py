@@ -34,6 +34,12 @@ class Fake:
 
 
 class TestRepythonify(TestCase):
+    def test_invalid_encoding(self):
+        with self.assertRaisesRegex(
+            objc.internal_error, "Unsupported SIMD encoding: <2i"
+        ):
+            objc.repythonify((1, 2), b"<2i")
+
     def test_from_tuple(self):
         for simd_type, args in CASES:
             with self.subTest(type=simd_type, args=args):
@@ -74,6 +80,19 @@ MPSImageHistogramInfo = objc.createStructType(
     ["numberOfHistogramEntries", "histogramForAlpha", "minPixelValue", "maxPixelValue"],
 )
 
+objc.registerMetaDataForSelector(
+    b"OC_Vector", b"initWithVectorFloat2:", {"full_signature": b"@@:<2f>"}
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"stringWithVectorFloat2:",
+    {"full_signature": b"@@:<2f>", "retval": {"already_retained": True}},
+)
+objc.registerMetaDataForSelector(
+    b"OC_Vector",
+    b"cfstringWithVectorFloat2:",
+    {"full_signature": b"@@:<2f>", "retval": {"already_cfretained": True}},
+)
 objc.registerMetaDataForSelector(
     b"OC_Vector", b"getVectorFloat3", {"full_signature": b"<3f>@:"}
 )
@@ -608,3 +627,22 @@ class TestIMP(TestCase):
             imp(oc, 42)
 
     # XXX: All tests in the class above should be here as well.
+
+
+class TestSpecials(TestCase):
+    def test_init(self):
+        v = OC_Vector.alloc().initWithVectorFloat2_((1.5, 2.5))
+        self.assertEqual(v.getAndResetValues(), simd.vector_float2(1.5, 2.5))
+        self.assertIsInitializer(OC_Vector.initWithVectorFloat2_)
+
+    def test_already_retained(self):
+        v = OC_Vector.alloc().init()
+        self.assertResultIsRetained(v.stringWithVectorFloat2_)
+        s = v.stringWithVectorFloat2_((2.5, 3.5))
+        self.assertEqual(s, "vector<2.5, 3.5>")
+
+    def test_already_cfretained(self):
+        v = OC_Vector.alloc().init()
+        self.assertResultIsCFRetained(v.cfstringWithVectorFloat2_)
+        s = v.cfstringWithVectorFloat2_((5.5, 6.5))
+        self.assertEqual(s, "cfvector<5.5; 6.5>")

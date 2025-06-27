@@ -35,10 +35,11 @@ GlobalType = objc.createStructType(
 class TestStructs(TestCase):
     def testCreateExplicit(self):
         tp = objc.createStructType(
-            "FooStruct", b"{_FooStruct=ffff}", ["a", "b", "c", "d"]
+            "FooStruct", b"{_FooStruct=ffff}", ["a", "b", "c", "d"], "docstring"
         )
         self.assertIsInstance(tp, type)
         self.assertEqual(tp.__typestr__, b"{_FooStruct=ffff}")
+        self.assertEqual(tp.__doc__, "docstring")
 
         self.assertEqual(tp._fields, ("a", "b", "c", "d"))
 
@@ -72,12 +73,38 @@ class TestStructs(TestCase):
             tp(**{1: 2})
 
         with self.assertRaisesRegex(UnicodeEncodeError, r".*surrogates not allowed"):
-            tp(**{"\uDC00": 1})
+            tp(**{"\udc00": 1})
 
         with self.assertRaisesRegex(
             TypeError, r"FooStruct\(\) got multiple values for keyword argument 'a'"
         ):
             tp(1, a=2)
+
+    def test_api_misuse(self):
+        with self.assertRaisesRegex(TypeError, "missing 3 required"):
+            objc.createStructType()
+
+        with self.assertRaisesRegex(TypeError, "missing required argument"):
+            objc._objc.createStructType()
+
+        with self.assertRaisesRegex(
+            TypeError, "fieldnames must be a sequence of strings"
+        ):
+            objc.createStructType("FooStruct", b"{_FooStruct=ffff}", 42)
+
+        with self.assertRaisesRegex(
+            TypeError, "fieldnames must be a sequence of strings"
+        ):
+            objc.createStructType(
+                "FooStruct", b"{_FooStruct=ffff}", ["a", "b", 42, "d"], "docstring"
+            )
+
+        with self.assertRaises(UnicodeEncodeError):
+            objc.createStructType(
+                "FooStruct",
+                b"{_FooStruct=ffff}",
+                ["\U000fffff\udbbb", "b", "c", "d"],
+            )
 
     def test_copy_copy(self):
         Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
@@ -132,6 +159,9 @@ class TestStructs(TestCase):
         self.assertIsNot(r.stop, start)
         self.assertIs(r.start, r.stop)
 
+        with self.assertRaisesRegex(TypeError, "missing required argument"):
+            line.__deepcopy__()
+
     @min_python_release("3.13")
     def test_copy_replace(self):
         Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
@@ -155,13 +185,13 @@ class TestStructs(TestCase):
 
         r = copy.replace(line)
         self.assertEqual(r, line)
-        self.assertIsNot(r.start, start)
-        self.assertIsNot(r.stop, stop)
+        self.assertIs(r.start, start)
+        self.assertIs(r.stop, stop)
 
         r = copy.replace(line, stop=start)
         self.assertIsInstance(r, Line)
         self.assertEqual(r.start, start)
-        self.assertEqual(r.stop, stop)
+        self.assertEqual(r.stop, start)
 
     def testNamedTupleAPI(self):
         Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
@@ -331,6 +361,20 @@ class TestStructs(TestCase):
         v = tp0()
         w = objc.repythonify(v, tp0.__typestr__)
         self.assertEqual(v, w)
+
+    def test_repythonify_empty_struct(self):
+        self.assertEqual(objc.repythonify((), b"{struct_tag}"), ())
+        self.assertEqual(objc.repythonify((), b"{struct_tag=}"), ())
+
+    def test_repythonify_struct_with_fieldnames(self):
+        self.assertEqual(objc.repythonify((1,), b'{struct_tag="field"i}'), (1,))
+
+        with self.assertRaisesRegex(objc.error, "invalid embedded field name"):
+            objc.repythonify((1,), b'{struct_tag="fieldi}')
+
+    def test_repythonify_struct_with_invalid_field(self):
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
+            objc.repythonify((1,), b'{struct_tag="field"X}')
 
     def testStructNotWritable(self):
         tp0 = objc.createStructType("FooStruct", b'{FooStruct="first"i"second"i}', None)
@@ -1115,7 +1159,86 @@ class TestStructAlias(TestCase):
         gc.collect()
         self.assertTrue(flag)
 
+    def test_typestr_as_field(self):
+        tp = objc.createStructType(
+            "TypeStruct", b"{_TypeStruct=ff}", ["a", "__typestr__"], "docstring"
+        )
+        self.assertEqual(tp.__typestr__, b"{_TypeStruct=ff}")
+        value = tp(1, 2)
+        self.assertIsInstance(value, tp)
+
+        # XXX: The "__typestr__" property conflicts with the
+        #      "__typestr__" attribute that the struct creation
+        #      also adds. The latter wins.
+        #
+        #      This in "don't do that than" territory, and is
+        #      not an issue in practice.
+        self.assertEqual(value.a, 1)
+        self.assertEqual(value.__typestr__, tp.__typestr__)
+
+        self.assertEqual(value[0], 1)
+        self.assertEqual(value[1], 2)
+
+        o = objc.repythonify(value, b"{_TypeStruct=ff}")
+        self.assertIsInstance(o, tp)
+        self.assertEqual(o, value)
+        self.assertEqual(o[0], 1)
+        self.assertEqual(o[1], 2)
+
 
 class TestInternals(TestCase):
     def test_functions_overridden(self):
         self.assertIsNot(objc.registerStructAlias, objc._objc.registerStructAlias)
+
+    def test_repythonify_invalid_struct(self):
+        pt = (1, 2)
+
+        o = objc.repythonify(pt, b"n{_StructPoint=ff}")
+        self.assertEqual(o, pt)
+
+        with self.assertRaisesRegex(
+            objc.internal_error, "Struct encoding with invalid embedded field name"
+        ):
+            objc.repythonify(pt, b'[2{_StructPoint="xf}]')
+
+        with self.assertRaisesRegex(
+            objc.internal_error, "Struct encoding with invalid embedded field name"
+        ):
+            objc.repythonify(pt, b'{_StructPoint="xf}')
+
+        with self.assertRaisesRegex(
+            objc.internal_error, "PyObjCRT_AlignOfType: Unhandled type"
+        ):
+            objc.repythonify(pt, b"{_StructPoint=fx}")
+
+    def test_repythonify_invalid_union_type(self):
+        pt = (1, 2)
+
+        with self.assertRaisesRegex(
+            objc.internal_error, "PyObjCRT_AlignOfType: Unhandled type"
+        ):
+            objc.repythonify(pt, b"[2(_StructPoint=lx)]")
+
+        with self.assertRaisesRegex(
+            objc.internal_error, "PyObjCRT_SkipTypeSpec: Unhandled type"
+        ):
+            objc.repythonify(pt, b"(_StructPoint=l^{f=)]")
+
+    def test_without_deepcopy(self):
+        with pyobjc_options(_deepcopy=None):
+            v = GlobalType(1, 2)
+
+            with self.assertRaisesRegex(objc.error, "options._deepcopy is not set"):
+                v._replace(a=3)
+
+        def deepcopy(value, memo=None):
+            raise RuntimeError("cannot copy")
+
+        with pyobjc_options(_deepcopy=deepcopy):
+            v = GlobalType(1, 2)
+
+            with self.assertRaisesRegex(RuntimeError, "cannot copy"):
+                v._replace(b=5)
+
+        with self.assertRaisesRegex(AttributeError, "Cannot delete option '_deepcopy'"):
+            del objc.options._deepcopy

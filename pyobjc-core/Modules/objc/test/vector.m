@@ -37,8 +37,8 @@
 - (instancetype)init
 {
     self = [super init];
-    if (self == nil) {
-        return nil;
+    if (self == nil) { // LCOV_BR_EXCL_LINE
+        return nil;    // LCOV_EXCL_LINE
     }
     values = NULL;
     return self;
@@ -182,59 +182,75 @@ CALC_VALUE_VALUE(calcId, andFloat2, id, "@", simd_float2, "<2f>")
 CALC_VALUE_VALUE(calcId, andFloat3, id, "@", simd_float3, "<3f>")
 CALC_VALUE_VALUE(calcId, andFloat4, id, "@", simd_float4, "<4f>")
 
+- (id)initWithVectorFloat2:(simd_float2)value
+{
+    self = [super init];
+    [self setVectorFloat2:value];
+    return self;
+}
+
+- (id)stringWithVectorFloat2:(simd_float2)value NS_RETURNS_RETAINED
+{
+    return [[NSString stringWithFormat:@"vector<%.1f, %.1f>", value.x, value.y] retain];
+}
+
+- (CFStringRef)cfstringWithVectorFloat2:(simd_float2)value CF_RETURNS_RETAINED
+{
+    return CFStringCreateWithFormat(NULL, NULL, CFSTR("cfvector<%.1f; %.1f>"), value.x,
+                                    value.y);
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static int mod_exec_module(PyObject* m)
+static int
+mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_Vector", PyObjC_IdToPython([OC_Vector class])) < 0) {
-        return -1;
+    if (PyModule_AddObject(m, // LCOV_EXCL_LINE
+                           "OC_Vector", PyObjC_IdToPython([OC_Vector class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* This extension does not use the CPython API other than initializing
          * the module, hence is safe with subinterpreters and per-interpreter
          * GILs
          */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "vector",
-    .m_doc = NULL,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "vector",
+    .m_doc      = NULL,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit_vector(void);

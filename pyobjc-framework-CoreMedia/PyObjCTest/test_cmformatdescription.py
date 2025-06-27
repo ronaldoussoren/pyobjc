@@ -75,6 +75,7 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMVideoCodecType_Cinepak, fourcc(b"cvid"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG, fourcc(b"jpeg"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_OpenDML, fourcc(b"dmb1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_XL, fourcc(b"jxlc"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo, fourcc(b"SVQ1"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo3, fourcc(b"SVQ3"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_H263, fourcc(b"h263"))
@@ -651,6 +652,13 @@ class TestCMFormatDescription(TestCase):
         )
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionViewPackingKind_OverUnder, str
+        )
+
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionProjectionKind_Equirectangular, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionProjectionKind_HalfEquirectangular, str
         )
 
     def test_structs(self):

@@ -25,6 +25,9 @@ class NEProvider(TestCase):
         self.assertEqual(NetworkExtension.NEProviderStopReasonUserLogout, 12)
         self.assertEqual(NetworkExtension.NEProviderStopReasonUserSwitch, 13)
         self.assertEqual(NetworkExtension.NEProviderStopReasonConnectionFailed, 14)
+        self.assertEqual(NetworkExtension.NEProviderStopReasonSleep, 15)
+        self.assertEqual(NetworkExtension.NEProviderStopReasonAppUpdate, 16)
+        self.assertEqual(NetworkExtension.NEProviderStopReasonInternalError, 17)
 
     @min_os_level("10.11")
     def testMethods(self):

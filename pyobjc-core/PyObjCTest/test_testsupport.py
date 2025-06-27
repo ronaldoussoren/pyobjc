@@ -654,6 +654,56 @@ class TestTestSupport(TestCase):
         ):
             self.assertArgIsNullTerminated(m, 3)
 
+    def test_selector_initializer(self):
+        m = Method(None, {}, selector=True)
+        self.assertIsNotInitializer(m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not an initializer",
+        ):
+            self.assertIsInitializer(m)
+
+        m._meta.update({"initializer": False})
+        self.assertIsNotInitializer(m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is not an initializer",
+        ):
+            self.assertIsInitializer(m)
+
+        m._meta.update({"initializer": True})
+        with self.assertRaisesRegex(
+            self.failureException,
+            "<.*> is an initializer",
+        ):
+            self.assertIsNotInitializer(m)
+        self.assertIsInitializer(m)
+
+    def test_free_result(self):
+        m = Method(None, {}, selector=True)
+        self.assertDoesNotFreeResult(m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"<.*> does not call free\(3\) on the result",
+        ):
+            self.assertDoesFreeResult(m)
+
+        m._meta.update({"free_result": False})
+        self.assertDoesNotFreeResult(m)
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"<.*> does not call free\(3\) on the result",
+        ):
+            self.assertDoesFreeResult(m)
+
+        m._meta.update({"free_result": True})
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"<.*> calls free\(3\) on the result",
+        ):
+            self.assertDoesNotFreeResult(m)
+        self.assertDoesFreeResult(m)
+
     def test_function_nullterminated(self):
         m = Method(None, {}, selector=False)
         m._meta.update({"variadic": True, "c_array_delimited_by_null": True})
@@ -855,6 +905,7 @@ class TestTestSupport(TestCase):
             self.assertArgIsPrintf(m, 3)
 
     def test_arg_cfretained(self):
+
         m = Method(3, {"already_cfretained": True}, selector=True)
         self.assertArgIsCFRetained(m, 1)
         with self.assertRaisesRegex(
@@ -2380,6 +2431,17 @@ class TestTestSupport(TestCase):
                     )
                     self._validateCallableMetadata(func)
 
+            with self.subTest(f"{idx}: both retained and cfretaind"):
+                with self.assertRaisesRegex(
+                    self.failureException,
+                    "both already_retained and already_cfretained",
+                ):
+
+                    func = Function(
+                        idx, {"already_cfretained": True, "already_retained": True}
+                    )
+                    self._validateCallableMetadata(func)
+
             for pfx in (objc._C_IN, objc._C_OUT, objc._C_INOUT):
                 with self.subTest(f"{idx}: by-ref specifier {pfx} on int"):
                     with self.assertRaisesRegex(
@@ -2430,6 +2492,23 @@ class TestTestSupport(TestCase):
 
                 self.assertEqual(m.Object.__name__, "Object")
                 self.assertIsInstance(m.Object, objc.objc_class)
+
+        with self.subTest("validate framework identifier"):
+            m = Mod()
+            m.__bundle__ = Mod()
+            m.__bundle__.bundleIdentifier = lambda: "framework.id"
+            m.__framework_identifier__ = "framework.id2"
+
+            with self.assertRaisesRegex(
+                self.failureException, "framework.id' != 'framework.id2"
+            ):
+                self._validateBundleIdentifier(m)
+
+            try:
+                m.__framework_identifier__ = "framework.id"
+                self._validateBundleIdentifier(m)
+            except self.failureException:
+                self.fail("validation failed unexpectedly")
 
         with self.subTest("validate is called for class and instance methods"):
             NSObject = objc.lookUpClass("NSObject")

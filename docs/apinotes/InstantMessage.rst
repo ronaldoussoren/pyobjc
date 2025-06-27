@@ -1,3 +1,8 @@
+.. module:: InstantMessage
+   :platform: macOS
+   :synopsis: Bindings for the InstantMessage framework
+   :deprecated:
+
 API Notes: InstantMessage framework
 ===================================
 
@@ -6,11 +11,9 @@ available on Apple's developer website.
 
 These bindings are accessed through the ``InstantMessage`` package (that is, ``import InstantMessage``).
 
+.. deprecated:: macOS 10.9
+   Use the :mod:`Social` framework instead.
+
 
 API Notes
 ---------
-
-All API's in the InstantMessage framework are wrapped by PyObjC.
-
-The InstantMessage framework is deprecated in macOS 10.9, use the
-Social framework instead (which is new in macOS 10.9)

@@ -18,6 +18,94 @@
      }
     ]
    },
+   "MERAWProcessingListParameter": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "hasCameraValue:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "hasNeutralValue:"
+     }
+    ]
+   },
+   "MERAWProcessingIntegerParameter": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "hasCameraValue:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "hasNeutralValue:"
+     }
+    ]
+   },
+   "MERAWProcessingFloatParameter": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "hasCameraValue:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "hasNeutralValue:"
+     }
+    ]
+   },
+   "MERAWProcessingBooleanParameter": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "hasCameraValue:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "hasNeutralValue:"
+     }
+    ]
+   },
    "MEByteSource": {
     "methods": [
      {

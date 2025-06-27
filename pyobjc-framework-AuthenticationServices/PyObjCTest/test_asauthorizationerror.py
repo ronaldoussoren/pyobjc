@@ -17,3 +17,9 @@ class TestASAuthorization(TestCase):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationErrorMatchedExcludedCredential, 1006
         )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationErrorCredentialImport, 1007
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationErrorCredentialExport, 1008
+        )

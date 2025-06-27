@@ -56,7 +56,9 @@ the class are:
   those will be based on factory class methods for which there
   is no equivalent using the ``alloc().init...(...)`` pattern.
 
+
 For classes in system frameworks the possible init methods are
+For classes in system frameworks the possibly init method are
 registered using framework data.
 
 For classes implemented in Python the possible init methods

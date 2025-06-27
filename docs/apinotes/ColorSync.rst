@@ -1,8 +1,9 @@
+.. module:: ColorSync
+   :platform: macOS 10.13+
+   :synopsis: Bindings for the ColorSync framework
+
 API Notes: ColorSync framework
 ===============================
-
-Apple documentation
--------------------
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -12,13 +13,11 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 These bindings are accessed through the ``ColorSync`` package (that is,
 ``import ColorSync``).
 
+.. versionadded:: macOS 10.13
 
 API Notes
 ---------
 
-.. note::
-
-   This framework is only available on macOS 10.13 and later.
 
 Plugins
 .......

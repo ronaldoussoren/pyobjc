@@ -39,7 +39,8 @@ alloc_prepped_closure(ffi_closure** cl, ffi_cif* cif, void** codeloc, void* func
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
 
-    rv = ffi_prep_closure_loc(*cl, cif, (void (*)(ffi_cif *, void *, void **, void *))func, userdata, *codeloc);
+    rv = ffi_prep_closure_loc(*cl, cif, (void (*)(ffi_cif*, void*, void**, void*))func,
+                              userdata, *codeloc);
 
 #pragma clang diagnostic pop
 
@@ -48,12 +49,14 @@ alloc_prepped_closure(ffi_closure** cl, ffi_cif* cif, void** codeloc, void* func
 #if PyObjC_BUILD_RELEASE >= 1015
 
     if (@available(macOS 10.15, *)) { // LCOV_BR_EXCL_LINE
-        rv = ffi_prep_closure_loc(*cl, cif, (void (*)(ffi_cif *, void *, void **, void *))func, userdata, *codeloc);
+        rv = ffi_prep_closure_loc(
+            *cl, cif, (void (*)(ffi_cif*, void*, void**, void*))func, userdata, *codeloc);
     } else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-        rv = ffi_prep_closure(*cl, cif, (void (*)(ffi_cif *, void *, void **, void *))func, userdata);
+        rv = ffi_prep_closure(*cl, cif, (void (*)(ffi_cif*, void*, void**, void*))func,
+                              userdata);
 
 #pragma clang diagnostic pop
     }

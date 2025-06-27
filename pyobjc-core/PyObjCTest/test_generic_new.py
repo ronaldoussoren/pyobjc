@@ -2,7 +2,13 @@ import objc
 from PyObjCTools.TestSupport import TestCase
 from objc import super  # noqa: A004
 import objc._new as new_mod
-from .genericnew import OC_GenericNew, OC_GenericNewChild, OC_GenericNewChild2
+from .genericnew import (
+    OC_GenericNew,
+    OC_GenericNewChild,
+    OC_GenericNewChild2,
+    OC_GenericNewChild3,
+)
+import textwrap
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -13,6 +19,7 @@ objc.registerNewKeywordsFromSelector("OC_GenericNewChild", b"initWithX:y:")
 objc.registerNewKeywordsFromSelector("OC_GenericNewChild2", b"initWithX:y:z:")
 objc.registerUnavailableMethod("OC_GenericNewChild2", b"initWithX:y:")
 objc.registerUnavailableMethod("OC_GenericNewChild2", b"init")
+objc.registerNewKeywords("OC_GenericNewChild3", ("a", "b"), "valueWithA_b_")
 
 
 class TestDefaultNewForPythonClass(TestCase):
@@ -26,6 +33,25 @@ class TestDefaultNewForPythonClass(TestCase):
             TypeError, r"NSObject\(\) does not support keyword arguments 'y', 'x'"
         ):
             NSObject(y=3, x=4)
+
+        doc = NSObject.__new__.__doc__
+        self.assertIsInstance(doc, str)
+        self.assertEqual(
+            doc,
+            textwrap.dedent(
+                """\
+            NSObject():
+               returns cls.alloc().init()
+
+            The order of keyword arguments is significant
+        """
+            ),
+        )
+
+        self.assertIsInstance(NSObject.__new__, new_mod.function_wrapper)
+        NSObject.__new__.foo = 42
+        self.assertEqual(NSObject.__new__._function.foo, 42)
+        del NSObject.__new__._function.foo
 
     def test_basic(self):
         class OCPyNew1(NSObject):
@@ -43,6 +69,9 @@ class TestDefaultNewForPythonClass(TestCase):
             def initializeZ_(self, z):
                 self.z = 0
 
+            # Not a method, should be used
+            initA_b_ = 42
+
         v = OCPyNew1(x=1, y=2)
         self.assertIsInstance(v, OCPyNew1)
         self.assertEqual(v.x, 1)
@@ -57,6 +86,11 @@ class TestDefaultNewForPythonClass(TestCase):
         self.assertIsInstance(v, OCPyNew1)
 
         with self.assertRaisesRegex(
+            TypeError, "does not support keyword arguments 'a', 'b'"
+        ):
+            OCPyNew1(a=1, b=2)
+
+        with self.assertRaisesRegex(
             TypeError, r"OCPyNew1\(\) does not support keyword arguments 'y', 'x'"
         ):
             OCPyNew1(y=3, x=4)
@@ -65,6 +99,56 @@ class TestDefaultNewForPythonClass(TestCase):
             TypeError, r"OCPyNew1\(\) does not support keyword arguments 'z'"
         ):
             OCPyNew1(z=4)
+
+        with self.assertRaisesRegex(TypeError, "does not accept positional arguments"):
+            OCPyNew1(1, 2)
+
+        doc = OCPyNew1.__new__.__doc__
+        self.assertIsInstance(doc, str)
+        self.assertEqual(
+            doc,
+            textwrap.dedent(
+                """\
+                OCPyNew1():
+                   returns cls.alloc().init()
+
+                OCPyNew1(*, point):
+                   returns cls.alloc().initPoint_(point)
+
+                OCPyNew1(*, x, y):
+                   returns cls.alloc().initWithX_y_(x, y)
+
+                The order of keyword arguments is significant
+            """
+            ),
+        )
+
+    def test_no_new_in_options(self):
+        orig = objc.options._setDunderNew
+        try:
+
+            def raiser(*args, **kwds):
+                raise RuntimeError
+
+            objc.options._setDunderNew = raiser
+
+            with self.assertRaises(RuntimeError):
+
+                class OCPyNew6a(NSObject):
+                    pass
+
+            objc.options._setDunderNew = None
+
+            class OCPyNew6b(NSObject):
+                pass
+
+            self.assertIs(
+                OCPyNew6b.__new__,
+                objc.lookUpClass("_PyObjCIntermediate_NSObject").__new__,
+            )
+
+        finally:
+            objc.options._setDunderNew = orig
 
     def test_explicit_new(self):
         # Test that an explicit __new__ overrides the default
@@ -197,3 +281,52 @@ class TestDefaultNewForObjectiveCClass(TestCase):
 
         v = OC_GenericNewChild2(x=1, y=2, z=3)
         self.assertEqual(v.value(), ["x-y-z", 1, 2, 3])
+
+        self.assertEqual(
+            OC_GenericNewChild2.__new__.__doc__,
+            textwrap.dedent(
+                """\
+            OC_GenericNewChild2(*, URL):
+               returns cls.alloc().initWithURL_(URL)
+
+            OC_GenericNewChild2(*, first, second):
+               returns cls.alloc().initWithFirst_second_(first, second)
+
+            OC_GenericNewChild2(*, value):
+               returns cls.alloc().initWithValue_(value)
+
+            OC_GenericNewChild2(*, x, y, z):
+               returns cls.alloc().initWithX_y_z_(x, y, z)
+
+            The order of keyword arguments is significant
+        """
+            ),
+        )
+
+    def test_class_factory(self):
+        v = OC_GenericNewChild3(a=9, b=10)
+        self.assertEqual(v.value(), ["A-B", 9, 10])
+
+        self.assertEqual(
+            OC_GenericNewChild3.__new__.__doc__,
+            textwrap.dedent(
+                """\
+            OC_GenericNewChild3():
+               returns cls.alloc().init()
+
+            OC_GenericNewChild3(*, URL):
+               returns cls.alloc().initWithURL_(URL)
+
+            OC_GenericNewChild3(*, a, b):
+               returns cls.valueWithA_b_(a, b)
+
+            OC_GenericNewChild3(*, first, second):
+               returns cls.alloc().initWithFirst_second_(first, second)
+
+            OC_GenericNewChild3(*, value):
+               returns cls.alloc().initWithValue_(value)
+
+            The order of keyword arguments is significant
+            """
+            ),
+        )

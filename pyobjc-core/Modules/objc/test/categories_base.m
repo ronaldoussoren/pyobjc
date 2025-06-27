@@ -9,53 +9,53 @@
 
 #import <Foundation/Foundation.h>
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP0 : NSObject
-{
+@interface OC_Category_GP0 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P0 : OC_Category_GP0
-{
+@interface OC_Category_P0 : OC_Category_GP0 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C0 : OC_Category_P0
-{
+@interface OC_Category_C0 : OC_Category_P0 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP0
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP0 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP0 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP0 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP0 - method4 - GP";
 }
 
@@ -63,19 +63,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P0
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP0 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP0 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P0 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P0 - method2 - P";
 }
 
@@ -83,71 +87,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C0
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP0 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP0 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P0 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C0 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP1 : NSObject
-{
+@interface OC_Category_GP1 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P1 : OC_Category_GP1
-{
+@interface OC_Category_P1 : OC_Category_GP1 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C1 : OC_Category_P1
-{
+@interface OC_Category_C1 : OC_Category_P1 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP1
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP1 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP1 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP1 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP1 - method4 - GP";
 }
 
@@ -155,19 +163,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P1
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP1 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP1 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P1 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P1 - method2 - P";
 }
 
@@ -175,71 +187,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C1
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP1 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP1 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P1 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C1 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP2 : NSObject
-{
+@interface OC_Category_GP2 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P2 : OC_Category_GP2
-{
+@interface OC_Category_P2 : OC_Category_GP2 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C2 : OC_Category_P2
-{
+@interface OC_Category_C2 : OC_Category_P2 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP2
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP2 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP2 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP2 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP2 - method4 - GP";
 }
 
@@ -247,19 +263,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P2
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP2 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP2 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P2 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P2 - method2 - P";
 }
 
@@ -267,71 +287,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C2
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP2 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP2 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P2 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C2 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP3 : NSObject
-{
+@interface OC_Category_GP3 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P3 : OC_Category_GP3
-{
+@interface OC_Category_P3 : OC_Category_GP3 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C3 : OC_Category_P3
-{
+@interface OC_Category_C3 : OC_Category_P3 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP3
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP3 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP3 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP3 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP3 - method4 - GP";
 }
 
@@ -339,19 +363,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P3
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP3 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP3 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P3 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P3 - method2 - P";
 }
 
@@ -359,71 +387,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C3
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP3 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP3 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P3 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C3 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP4 : NSObject
-{
+@interface OC_Category_GP4 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P4 : OC_Category_GP4
-{
+@interface OC_Category_P4 : OC_Category_GP4 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C4 : OC_Category_P4
-{
+@interface OC_Category_C4 : OC_Category_P4 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP4
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP4 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP4 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP4 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP4 - method4 - GP";
 }
 
@@ -431,19 +463,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P4
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP4 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP4 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P4 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P4 - method2 - P";
 }
 
@@ -451,71 +487,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C4
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP4 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP4 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P4 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C4 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP5 : NSObject
-{
+@interface OC_Category_GP5 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P5 : OC_Category_GP5
-{
+@interface OC_Category_P5 : OC_Category_GP5 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C5 : OC_Category_P5
-{
+@interface OC_Category_C5 : OC_Category_P5 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP5
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP5 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP5 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP5 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP5 - method4 - GP";
 }
 
@@ -523,19 +563,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P5
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP5 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP5 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P5 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P5 - method2 - P";
 }
 
@@ -543,71 +587,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C5
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP5 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP5 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P5 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C5 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP6 : NSObject
-{
+@interface OC_Category_GP6 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P6 : OC_Category_GP6
-{
+@interface OC_Category_P6 : OC_Category_GP6 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C6 : OC_Category_P6
-{
+@interface OC_Category_C6 : OC_Category_P6 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP6
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP6 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP6 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP6 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP6 - method4 - GP";
 }
 
@@ -615,19 +663,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P6
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP6 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP6 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P6 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P6 - method2 - P";
 }
 
@@ -635,71 +687,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C6
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP6 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP6 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P6 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C6 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP7 : NSObject
-{
+@interface OC_Category_GP7 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P7 : OC_Category_GP7
-{
+@interface OC_Category_P7 : OC_Category_GP7 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C7 : OC_Category_P7
-{
+@interface OC_Category_C7 : OC_Category_P7 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP7
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP7 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP7 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP7 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP7 - method4 - GP";
 }
 
@@ -707,19 +763,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P7
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP7 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP7 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P7 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P7 - method2 - P";
 }
 
@@ -727,71 +787,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C7
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP7 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP7 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P7 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C7 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP8 : NSObject
-{
+@interface OC_Category_GP8 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P8 : OC_Category_GP8
-{
+@interface OC_Category_P8 : OC_Category_GP8 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C8 : OC_Category_P8
-{
+@interface OC_Category_C8 : OC_Category_P8 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP8
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP8 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP8 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP8 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP8 - method4 - GP";
 }
 
@@ -799,19 +863,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P8
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP8 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP8 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P8 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P8 - method2 - P";
 }
 
@@ -819,71 +887,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C8
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP8 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP8 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P8 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C8 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP9 : NSObject
-{
+@interface OC_Category_GP9 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P9 : OC_Category_GP9
-{
+@interface OC_Category_P9 : OC_Category_GP9 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C9 : OC_Category_P9
-{
+@interface OC_Category_C9 : OC_Category_P9 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP9
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP9 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP9 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP9 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP9 - method4 - GP";
 }
 
@@ -891,19 +963,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P9
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP9 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP9 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P9 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P9 - method2 - P";
 }
 
@@ -911,71 +987,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C9
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP9 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP9 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P9 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C9 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP10 : NSObject
-{
+@interface OC_Category_GP10 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P10 : OC_Category_GP10
-{
+@interface OC_Category_P10 : OC_Category_GP10 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C10 : OC_Category_P10
-{
+@interface OC_Category_C10 : OC_Category_P10 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP10
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP10 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP10 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP10 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP10 - method4 - GP";
 }
 
@@ -983,19 +1063,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P10
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP10 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP10 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P10 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P10 - method2 - P";
 }
 
@@ -1003,71 +1087,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C10
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP10 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP10 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P10 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C10 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP11 : NSObject
-{
+@interface OC_Category_GP11 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P11 : OC_Category_GP11
-{
+@interface OC_Category_P11 : OC_Category_GP11 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C11 : OC_Category_P11
-{
+@interface OC_Category_C11 : OC_Category_P11 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP11
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP11 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP11 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP11 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP11 - method4 - GP";
 }
 
@@ -1075,19 +1163,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P11
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP11 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP11 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P11 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P11 - method2 - P";
 }
 
@@ -1095,71 +1187,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C11
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP11 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP11 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P11 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C11 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP12 : NSObject
-{
+@interface OC_Category_GP12 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P12 : OC_Category_GP12
-{
+@interface OC_Category_P12 : OC_Category_GP12 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C12 : OC_Category_P12
-{
+@interface OC_Category_C12 : OC_Category_P12 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP12
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP12 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP12 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP12 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP12 - method4 - GP";
 }
 
@@ -1167,19 +1263,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P12
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP12 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP12 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P12 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P12 - method2 - P";
 }
 
@@ -1187,71 +1287,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C12
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP12 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP12 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P12 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C12 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP13 : NSObject
-{
+@interface OC_Category_GP13 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P13 : OC_Category_GP13
-{
+@interface OC_Category_P13 : OC_Category_GP13 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C13 : OC_Category_P13
-{
+@interface OC_Category_C13 : OC_Category_P13 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP13
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP13 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP13 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP13 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP13 - method4 - GP";
 }
 
@@ -1259,19 +1363,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P13
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP13 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP13 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P13 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P13 - method2 - P";
 }
 
@@ -1279,71 +1387,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C13
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP13 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP13 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P13 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C13 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP14 : NSObject
-{
+@interface OC_Category_GP14 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P14 : OC_Category_GP14
-{
+@interface OC_Category_P14 : OC_Category_GP14 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C14 : OC_Category_P14
-{
+@interface OC_Category_C14 : OC_Category_P14 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP14
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP14 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP14 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP14 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP14 - method4 - GP";
 }
 
@@ -1351,19 +1463,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P14
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP14 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP14 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P14 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P14 - method2 - P";
 }
 
@@ -1371,71 +1487,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C14
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP14 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP14 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P14 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C14 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP15 : NSObject
-{
+@interface OC_Category_GP15 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P15 : OC_Category_GP15
-{
+@interface OC_Category_P15 : OC_Category_GP15 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C15 : OC_Category_P15
-{
+@interface OC_Category_C15 : OC_Category_P15 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP15
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP15 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP15 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP15 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP15 - method4 - GP";
 }
 
@@ -1443,19 +1563,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P15
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP15 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP15 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P15 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P15 - method2 - P";
 }
 
@@ -1463,71 +1587,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C15
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP15 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP15 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P15 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C15 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP16 : NSObject
-{
+@interface OC_Category_GP16 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P16 : OC_Category_GP16
-{
+@interface OC_Category_P16 : OC_Category_GP16 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C16 : OC_Category_P16
-{
+@interface OC_Category_C16 : OC_Category_P16 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP16
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP16 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP16 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP16 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP16 - method4 - GP";
 }
 
@@ -1535,19 +1663,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P16
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP16 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP16 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P16 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P16 - method2 - P";
 }
 
@@ -1555,71 +1687,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C16
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP16 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP16 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P16 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C16 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP17 : NSObject
-{
+@interface OC_Category_GP17 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P17 : OC_Category_GP17
-{
+@interface OC_Category_P17 : OC_Category_GP17 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C17 : OC_Category_P17
-{
+@interface OC_Category_C17 : OC_Category_P17 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP17
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP17 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP17 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP17 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP17 - method4 - GP";
 }
 
@@ -1627,19 +1763,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P17
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP17 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP17 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P17 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P17 - method2 - P";
 }
 
@@ -1647,71 +1787,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C17
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP17 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP17 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P17 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C17 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP18 : NSObject
-{
+@interface OC_Category_GP18 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P18 : OC_Category_GP18
-{
+@interface OC_Category_P18 : OC_Category_GP18 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C18 : OC_Category_P18
-{
+@interface OC_Category_C18 : OC_Category_P18 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP18
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP18 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP18 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP18 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP18 - method4 - GP";
 }
 
@@ -1719,19 +1863,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P18
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP18 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP18 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P18 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P18 - method2 - P";
 }
 
@@ -1739,71 +1887,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C18
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP18 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP18 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P18 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C18 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP19 : NSObject
-{
+@interface OC_Category_GP19 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P19 : OC_Category_GP19
-{
+@interface OC_Category_P19 : OC_Category_GP19 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C19 : OC_Category_P19
-{
+@interface OC_Category_C19 : OC_Category_P19 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP19
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP19 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP19 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP19 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP19 - method4 - GP";
 }
 
@@ -1811,19 +1963,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P19
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP19 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP19 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P19 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P19 - method2 - P";
 }
 
@@ -1831,71 +1987,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C19
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP19 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP19 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P19 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C19 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP20 : NSObject
-{
+@interface OC_Category_GP20 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P20 : OC_Category_GP20
-{
+@interface OC_Category_P20 : OC_Category_GP20 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C20 : OC_Category_P20
-{
+@interface OC_Category_C20 : OC_Category_P20 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP20
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP20 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP20 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP20 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP20 - method4 - GP";
 }
 
@@ -1903,19 +2063,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P20
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP20 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP20 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P20 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P20 - method2 - P";
 }
 
@@ -1923,71 +2087,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C20
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP20 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP20 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P20 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C20 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP21 : NSObject
-{
+@interface OC_Category_GP21 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P21 : OC_Category_GP21
-{
+@interface OC_Category_P21 : OC_Category_GP21 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C21 : OC_Category_P21
-{
+@interface OC_Category_C21 : OC_Category_P21 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP21
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP21 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP21 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP21 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP21 - method4 - GP";
 }
 
@@ -1995,19 +2163,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P21
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP21 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP21 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P21 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P21 - method2 - P";
 }
 
@@ -2015,71 +2187,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C21
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP21 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP21 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P21 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C21 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP22 : NSObject
-{
+@interface OC_Category_GP22 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P22 : OC_Category_GP22
-{
+@interface OC_Category_P22 : OC_Category_GP22 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C22 : OC_Category_P22
-{
+@interface OC_Category_C22 : OC_Category_P22 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP22
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP22 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP22 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP22 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP22 - method4 - GP";
 }
 
@@ -2087,19 +2263,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P22
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP22 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP22 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P22 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P22 - method2 - P";
 }
 
@@ -2107,71 +2287,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C22
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP22 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP22 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P22 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C22 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP23 : NSObject
-{
+@interface OC_Category_GP23 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P23 : OC_Category_GP23
-{
+@interface OC_Category_P23 : OC_Category_GP23 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C23 : OC_Category_P23
-{
+@interface OC_Category_C23 : OC_Category_P23 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP23
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP23 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP23 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP23 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP23 - method4 - GP";
 }
 
@@ -2179,19 +2363,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P23
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP23 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP23 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P23 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P23 - method2 - P";
 }
 
@@ -2199,71 +2387,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C23
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP23 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP23 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P23 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C23 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP24 : NSObject
-{
+@interface OC_Category_GP24 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P24 : OC_Category_GP24
-{
+@interface OC_Category_P24 : OC_Category_GP24 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C24 : OC_Category_P24
-{
+@interface OC_Category_C24 : OC_Category_P24 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP24
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP24 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP24 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP24 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP24 - method4 - GP";
 }
 
@@ -2271,19 +2463,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P24
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP24 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP24 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P24 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P24 - method2 - P";
 }
 
@@ -2291,71 +2487,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C24
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP24 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP24 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P24 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C24 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP25 : NSObject
-{
+@interface OC_Category_GP25 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P25 : OC_Category_GP25
-{
+@interface OC_Category_P25 : OC_Category_GP25 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C25 : OC_Category_P25
-{
+@interface OC_Category_C25 : OC_Category_P25 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP25
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP25 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP25 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP25 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP25 - method4 - GP";
 }
 
@@ -2363,19 +2563,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P25
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP25 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP25 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P25 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P25 - method2 - P";
 }
 
@@ -2383,71 +2587,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C25
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP25 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP25 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P25 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C25 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP26 : NSObject
-{
+@interface OC_Category_GP26 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P26 : OC_Category_GP26
-{
+@interface OC_Category_P26 : OC_Category_GP26 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C26 : OC_Category_P26
-{
+@interface OC_Category_C26 : OC_Category_P26 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP26
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP26 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP26 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP26 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP26 - method4 - GP";
 }
 
@@ -2455,19 +2663,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P26
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP26 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP26 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P26 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P26 - method2 - P";
 }
 
@@ -2475,71 +2687,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C26
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP26 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP26 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P26 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C26 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP27 : NSObject
-{
+@interface OC_Category_GP27 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P27 : OC_Category_GP27
-{
+@interface OC_Category_P27 : OC_Category_GP27 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C27 : OC_Category_P27
-{
+@interface OC_Category_C27 : OC_Category_P27 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP27
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP27 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP27 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP27 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP27 - method4 - GP";
 }
 
@@ -2547,19 +2763,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P27
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP27 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP27 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P27 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P27 - method2 - P";
 }
 
@@ -2567,71 +2787,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C27
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP27 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP27 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P27 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C27 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP28 : NSObject
-{
+@interface OC_Category_GP28 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P28 : OC_Category_GP28
-{
+@interface OC_Category_P28 : OC_Category_GP28 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C28 : OC_Category_P28
-{
+@interface OC_Category_C28 : OC_Category_P28 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP28
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP28 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP28 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP28 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP28 - method4 - GP";
 }
 
@@ -2639,19 +2863,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P28
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP28 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP28 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P28 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P28 - method2 - P";
 }
 
@@ -2659,71 +2887,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C28
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP28 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP28 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P28 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C28 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP29 : NSObject
-{
+@interface OC_Category_GP29 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P29 : OC_Category_GP29
-{
+@interface OC_Category_P29 : OC_Category_GP29 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C29 : OC_Category_P29
-{
+@interface OC_Category_C29 : OC_Category_P29 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP29
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP29 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP29 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP29 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP29 - method4 - GP";
 }
 
@@ -2731,19 +2963,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P29
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP29 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP29 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P29 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P29 - method2 - P";
 }
 
@@ -2751,71 +2987,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C29
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP29 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP29 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P29 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C29 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP30 : NSObject
-{
+@interface OC_Category_GP30 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P30 : OC_Category_GP30
-{
+@interface OC_Category_P30 : OC_Category_GP30 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C30 : OC_Category_P30
-{
+@interface OC_Category_C30 : OC_Category_P30 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP30
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP30 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP30 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP30 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP30 - method4 - GP";
 }
 
@@ -2823,19 +3063,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P30
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP30 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP30 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P30 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P30 - method2 - P";
 }
 
@@ -2843,71 +3087,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C30
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP30 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP30 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P30 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C30 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP31 : NSObject
-{
+@interface OC_Category_GP31 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P31 : OC_Category_GP31
-{
+@interface OC_Category_P31 : OC_Category_GP31 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C31 : OC_Category_P31
-{
+@interface OC_Category_C31 : OC_Category_P31 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP31
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP31 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP31 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP31 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP31 - method4 - GP";
 }
 
@@ -2915,19 +3163,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P31
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP31 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP31 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P31 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P31 - method2 - P";
 }
 
@@ -2935,71 +3187,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C31
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP31 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP31 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P31 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C31 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP32 : NSObject
-{
+@interface OC_Category_GP32 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P32 : OC_Category_GP32
-{
+@interface OC_Category_P32 : OC_Category_GP32 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C32 : OC_Category_P32
-{
+@interface OC_Category_C32 : OC_Category_P32 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP32
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP32 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP32 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP32 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP32 - method4 - GP";
 }
 
@@ -3007,19 +3263,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P32
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP32 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP32 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P32 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P32 - method2 - P";
 }
 
@@ -3027,71 +3287,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C32
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP32 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP32 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P32 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C32 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP33 : NSObject
-{
+@interface OC_Category_GP33 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P33 : OC_Category_GP33
-{
+@interface OC_Category_P33 : OC_Category_GP33 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C33 : OC_Category_P33
-{
+@interface OC_Category_C33 : OC_Category_P33 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP33
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP33 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP33 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP33 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP33 - method4 - GP";
 }
 
@@ -3099,19 +3363,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P33
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP33 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP33 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P33 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P33 - method2 - P";
 }
 
@@ -3119,71 +3387,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C33
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP33 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP33 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P33 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C33 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP34 : NSObject
-{
+@interface OC_Category_GP34 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P34 : OC_Category_GP34
-{
+@interface OC_Category_P34 : OC_Category_GP34 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C34 : OC_Category_P34
-{
+@interface OC_Category_C34 : OC_Category_P34 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP34
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP34 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP34 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP34 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP34 - method4 - GP";
 }
 
@@ -3191,19 +3463,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P34
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP34 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP34 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P34 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P34 - method2 - P";
 }
 
@@ -3211,71 +3487,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C34
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP34 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP34 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P34 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C34 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP35 : NSObject
-{
+@interface OC_Category_GP35 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P35 : OC_Category_GP35
-{
+@interface OC_Category_P35 : OC_Category_GP35 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C35 : OC_Category_P35
-{
+@interface OC_Category_C35 : OC_Category_P35 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP35
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP35 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP35 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP35 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP35 - method4 - GP";
 }
 
@@ -3283,19 +3563,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P35
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP35 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP35 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P35 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P35 - method2 - P";
 }
 
@@ -3303,71 +3587,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C35
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP35 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP35 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P35 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C35 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP36 : NSObject
-{
+@interface OC_Category_GP36 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P36 : OC_Category_GP36
-{
+@interface OC_Category_P36 : OC_Category_GP36 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C36 : OC_Category_P36
-{
+@interface OC_Category_C36 : OC_Category_P36 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP36
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP36 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP36 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP36 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP36 - method4 - GP";
 }
 
@@ -3375,19 +3663,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P36
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP36 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP36 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P36 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P36 - method2 - P";
 }
 
@@ -3395,71 +3687,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C36
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP36 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP36 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P36 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C36 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP37 : NSObject
-{
+@interface OC_Category_GP37 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P37 : OC_Category_GP37
-{
+@interface OC_Category_P37 : OC_Category_GP37 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C37 : OC_Category_P37
-{
+@interface OC_Category_C37 : OC_Category_P37 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP37
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP37 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP37 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP37 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP37 - method4 - GP";
 }
 
@@ -3467,19 +3763,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P37
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP37 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP37 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P37 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P37 - method2 - P";
 }
 
@@ -3487,71 +3787,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C37
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP37 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP37 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P37 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C37 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP38 : NSObject
-{
+@interface OC_Category_GP38 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P38 : OC_Category_GP38
-{
+@interface OC_Category_P38 : OC_Category_GP38 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C38 : OC_Category_P38
-{
+@interface OC_Category_C38 : OC_Category_P38 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP38
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP38 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP38 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP38 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP38 - method4 - GP";
 }
 
@@ -3559,19 +3863,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P38
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP38 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP38 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P38 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P38 - method2 - P";
 }
 
@@ -3579,71 +3887,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C38
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP38 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP38 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P38 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C38 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP39 : NSObject
-{
+@interface OC_Category_GP39 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P39 : OC_Category_GP39
-{
+@interface OC_Category_P39 : OC_Category_GP39 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C39 : OC_Category_P39
-{
+@interface OC_Category_C39 : OC_Category_P39 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP39
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP39 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP39 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP39 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP39 - method4 - GP";
 }
 
@@ -3651,19 +3963,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P39
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP39 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP39 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P39 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P39 - method2 - P";
 }
 
@@ -3671,71 +3987,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C39
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP39 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP39 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P39 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C39 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP40 : NSObject
-{
+@interface OC_Category_GP40 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P40 : OC_Category_GP40
-{
+@interface OC_Category_P40 : OC_Category_GP40 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C40 : OC_Category_P40
-{
+@interface OC_Category_C40 : OC_Category_P40 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP40
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP40 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP40 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP40 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP40 - method4 - GP";
 }
 
@@ -3743,19 +4063,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P40
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP40 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP40 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P40 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P40 - method2 - P";
 }
 
@@ -3763,71 +4087,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C40
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP40 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP40 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P40 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C40 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP41 : NSObject
-{
+@interface OC_Category_GP41 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P41 : OC_Category_GP41
-{
+@interface OC_Category_P41 : OC_Category_GP41 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C41 : OC_Category_P41
-{
+@interface OC_Category_C41 : OC_Category_P41 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP41
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP41 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP41 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP41 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP41 - method4 - GP";
 }
 
@@ -3835,19 +4163,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P41
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP41 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP41 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P41 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P41 - method2 - P";
 }
 
@@ -3855,71 +4187,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C41
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP41 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP41 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P41 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C41 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP42 : NSObject
-{
+@interface OC_Category_GP42 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P42 : OC_Category_GP42
-{
+@interface OC_Category_P42 : OC_Category_GP42 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C42 : OC_Category_P42
-{
+@interface OC_Category_C42 : OC_Category_P42 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP42
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP42 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP42 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP42 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP42 - method4 - GP";
 }
 
@@ -3927,19 +4263,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P42
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP42 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP42 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P42 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P42 - method2 - P";
 }
 
@@ -3947,71 +4287,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C42
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP42 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP42 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P42 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C42 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP43 : NSObject
-{
+@interface OC_Category_GP43 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P43 : OC_Category_GP43
-{
+@interface OC_Category_P43 : OC_Category_GP43 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C43 : OC_Category_P43
-{
+@interface OC_Category_C43 : OC_Category_P43 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP43
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP43 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP43 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP43 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP43 - method4 - GP";
 }
 
@@ -4019,19 +4363,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P43
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP43 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP43 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P43 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P43 - method2 - P";
 }
 
@@ -4039,71 +4387,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C43
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP43 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP43 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P43 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C43 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP44 : NSObject
-{
+@interface OC_Category_GP44 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P44 : OC_Category_GP44
-{
+@interface OC_Category_P44 : OC_Category_GP44 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C44 : OC_Category_P44
-{
+@interface OC_Category_C44 : OC_Category_P44 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP44
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP44 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP44 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP44 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP44 - method4 - GP";
 }
 
@@ -4111,19 +4463,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P44
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP44 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP44 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P44 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P44 - method2 - P";
 }
 
@@ -4131,71 +4487,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C44
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP44 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP44 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P44 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C44 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP45 : NSObject
-{
+@interface OC_Category_GP45 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P45 : OC_Category_GP45
-{
+@interface OC_Category_P45 : OC_Category_GP45 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C45 : OC_Category_P45
-{
+@interface OC_Category_C45 : OC_Category_P45 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP45
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP45 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP45 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP45 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP45 - method4 - GP";
 }
 
@@ -4203,19 +4563,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P45
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP45 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP45 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P45 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P45 - method2 - P";
 }
 
@@ -4223,71 +4587,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C45
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP45 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP45 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P45 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C45 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP46 : NSObject
-{
+@interface OC_Category_GP46 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P46 : OC_Category_GP46
-{
+@interface OC_Category_P46 : OC_Category_GP46 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C46 : OC_Category_P46
-{
+@interface OC_Category_C46 : OC_Category_P46 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP46
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP46 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP46 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP46 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP46 - method4 - GP";
 }
 
@@ -4295,19 +4663,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P46
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP46 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP46 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P46 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P46 - method2 - P";
 }
 
@@ -4315,71 +4687,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C46
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP46 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP46 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P46 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C46 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP47 : NSObject
-{
+@interface OC_Category_GP47 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P47 : OC_Category_GP47
-{
+@interface OC_Category_P47 : OC_Category_GP47 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C47 : OC_Category_P47
-{
+@interface OC_Category_C47 : OC_Category_P47 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP47
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP47 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP47 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP47 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP47 - method4 - GP";
 }
 
@@ -4387,19 +4763,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P47
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP47 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP47 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P47 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P47 - method2 - P";
 }
 
@@ -4407,71 +4787,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C47
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP47 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP47 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P47 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C47 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP48 : NSObject
-{
+@interface OC_Category_GP48 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P48 : OC_Category_GP48
-{
+@interface OC_Category_P48 : OC_Category_GP48 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C48 : OC_Category_P48
-{
+@interface OC_Category_C48 : OC_Category_P48 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP48
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP48 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP48 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP48 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP48 - method4 - GP";
 }
 
@@ -4479,19 +4863,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P48
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP48 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP48 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P48 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P48 - method2 - P";
 }
 
@@ -4499,71 +4887,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C48
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP48 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP48 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P48 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C48 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP49 : NSObject
-{
+@interface OC_Category_GP49 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P49 : OC_Category_GP49
-{
+@interface OC_Category_P49 : OC_Category_GP49 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C49 : OC_Category_P49
-{
+@interface OC_Category_C49 : OC_Category_P49 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP49
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP49 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP49 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP49 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP49 - method4 - GP";
 }
 
@@ -4571,19 +4963,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P49
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP49 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP49 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P49 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P49 - method2 - P";
 }
 
@@ -4591,71 +4987,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C49
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP49 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP49 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P49 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C49 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP50 : NSObject
-{
+@interface OC_Category_GP50 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P50 : OC_Category_GP50
-{
+@interface OC_Category_P50 : OC_Category_GP50 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C50 : OC_Category_P50
-{
+@interface OC_Category_C50 : OC_Category_P50 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP50
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP50 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP50 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP50 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP50 - method4 - GP";
 }
 
@@ -4663,19 +5063,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P50
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP50 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP50 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P50 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P50 - method2 - P";
 }
 
@@ -4683,71 +5087,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C50
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP50 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP50 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P50 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C50 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP51 : NSObject
-{
+@interface OC_Category_GP51 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P51 : OC_Category_GP51
-{
+@interface OC_Category_P51 : OC_Category_GP51 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C51 : OC_Category_P51
-{
+@interface OC_Category_C51 : OC_Category_P51 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP51
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP51 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP51 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP51 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP51 - method4 - GP";
 }
 
@@ -4755,19 +5163,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P51
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP51 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP51 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P51 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P51 - method2 - P";
 }
 
@@ -4775,71 +5187,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C51
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP51 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP51 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P51 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C51 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP52 : NSObject
-{
+@interface OC_Category_GP52 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P52 : OC_Category_GP52
-{
+@interface OC_Category_P52 : OC_Category_GP52 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C52 : OC_Category_P52
-{
+@interface OC_Category_C52 : OC_Category_P52 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP52
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP52 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP52 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP52 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP52 - method4 - GP";
 }
 
@@ -4847,19 +5263,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P52
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP52 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP52 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P52 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P52 - method2 - P";
 }
 
@@ -4867,71 +5287,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C52
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP52 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP52 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P52 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C52 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP53 : NSObject
-{
+@interface OC_Category_GP53 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P53 : OC_Category_GP53
-{
+@interface OC_Category_P53 : OC_Category_GP53 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C53 : OC_Category_P53
-{
+@interface OC_Category_C53 : OC_Category_P53 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP53
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP53 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP53 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP53 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP53 - method4 - GP";
 }
 
@@ -4939,19 +5363,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P53
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP53 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP53 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P53 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P53 - method2 - P";
 }
 
@@ -4959,71 +5387,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C53
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP53 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP53 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P53 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C53 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP54 : NSObject
-{
+@interface OC_Category_GP54 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P54 : OC_Category_GP54
-{
+@interface OC_Category_P54 : OC_Category_GP54 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C54 : OC_Category_P54
-{
+@interface OC_Category_C54 : OC_Category_P54 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP54
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP54 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP54 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP54 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP54 - method4 - GP";
 }
 
@@ -5031,19 +5463,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P54
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP54 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP54 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P54 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P54 - method2 - P";
 }
 
@@ -5051,71 +5487,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C54
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP54 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP54 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P54 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C54 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP55 : NSObject
-{
+@interface OC_Category_GP55 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P55 : OC_Category_GP55
-{
+@interface OC_Category_P55 : OC_Category_GP55 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C55 : OC_Category_P55
-{
+@interface OC_Category_C55 : OC_Category_P55 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP55
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP55 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP55 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP55 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP55 - method4 - GP";
 }
 
@@ -5123,19 +5563,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P55
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP55 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP55 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P55 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P55 - method2 - P";
 }
 
@@ -5143,71 +5587,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C55
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP55 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP55 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P55 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C55 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP56 : NSObject
-{
+@interface OC_Category_GP56 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P56 : OC_Category_GP56
-{
+@interface OC_Category_P56 : OC_Category_GP56 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C56 : OC_Category_P56
-{
+@interface OC_Category_C56 : OC_Category_P56 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP56
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP56 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP56 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP56 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP56 - method4 - GP";
 }
 
@@ -5215,19 +5663,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P56
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP56 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP56 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P56 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P56 - method2 - P";
 }
 
@@ -5235,71 +5687,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C56
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP56 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP56 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P56 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C56 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP57 : NSObject
-{
+@interface OC_Category_GP57 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P57 : OC_Category_GP57
-{
+@interface OC_Category_P57 : OC_Category_GP57 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C57 : OC_Category_P57
-{
+@interface OC_Category_C57 : OC_Category_P57 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP57
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP57 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP57 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP57 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP57 - method4 - GP";
 }
 
@@ -5307,19 +5763,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P57
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP57 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP57 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P57 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P57 - method2 - P";
 }
 
@@ -5327,71 +5787,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C57
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP57 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP57 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P57 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C57 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP58 : NSObject
-{
+@interface OC_Category_GP58 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P58 : OC_Category_GP58
-{
+@interface OC_Category_P58 : OC_Category_GP58 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C58 : OC_Category_P58
-{
+@interface OC_Category_C58 : OC_Category_P58 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP58
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP58 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP58 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP58 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP58 - method4 - GP";
 }
 
@@ -5399,19 +5863,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P58
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP58 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP58 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P58 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P58 - method2 - P";
 }
 
@@ -5419,71 +5887,75 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C58
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP58 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP58 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P58 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C58 - method1 - C";
 }
 
 @end
 
-
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP59 : NSObject
-{
+@interface OC_Category_GP59 : NSObject {
 }
--(id)gpMethod1; /* not overridden */
--(id)gpMethod2; /* overridden in P */
--(id)gpMethod3; /* overridden in P and C */
--(id)gpMethod4; /* overridden in C */
+- (id)gpMethod1; /* not overridden */
+- (id)gpMethod2; /* overridden in P */
+- (id)gpMethod3; /* overridden in P and C */
+- (id)gpMethod4; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P59 : OC_Category_GP59
-{
+@interface OC_Category_P59 : OC_Category_GP59 {
 }
--(id)gpMethod2;
--(id)gpMethod3;
+- (id)gpMethod2;
+- (id)gpMethod3;
 
--(id)pMethod1; /* not overridden */
--(id)pMethod2; /* overridden in C */
+- (id)pMethod1; /* not overridden */
+- (id)pMethod2; /* overridden in C */
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C59 : OC_Category_P59
-{
+@interface OC_Category_C59 : OC_Category_P59 {
 }
--(id)gpMethod3;
--(id)gpMethod4;
--(id)pMethod2;
--(id)method1;
+- (id)gpMethod3;
+- (id)gpMethod4;
+- (id)pMethod2;
+- (id)method1;
 @end
 
 @implementation OC_Category_GP59
 
--(id)gpMethod1 {
+- (id)gpMethod1
+{
     return @"GP59 - method1 - GP";
 }
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP59 - method2 - GP";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP59 - method3 - GP";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP59 - method4 - GP";
 }
 
@@ -5491,19 +5963,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_P59
 
--(id)gpMethod2 {
+- (id)gpMethod2
+{
     return @"GP59 - method2 - P";
 }
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP59 - method3 - P";
 }
 
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P59 - method1 - P";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P59 - method2 - P";
 }
 
@@ -5511,19 +5987,23 @@ __attribute__((__visibility__("default")))
 
 @implementation OC_Category_C59
 
--(id)gpMethod3 {
+- (id)gpMethod3
+{
     return @"GP59 - method3 - C";
 }
 
--(id)gpMethod4 {
+- (id)gpMethod4
+{
     return @"GP59 - method4 - C";
 }
 
--(id)pMethod2 {
+- (id)pMethod2
+{
     return @"P59 - method2 - C";
 }
 
--(id)method1 {
+- (id)method1
+{
     return @"C59 - method1 - C";
 }
 
@@ -5531,778 +6011,1004 @@ __attribute__((__visibility__("default")))
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static int mod_exec_module(PyObject* m)
+static int
+mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP0", PyObjC_IdToPython([OC_Category_GP0 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P0", PyObjC_IdToPython([OC_Category_P0 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C0", PyObjC_IdToPython([OC_Category_C0 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP1", PyObjC_IdToPython([OC_Category_GP1 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P1", PyObjC_IdToPython([OC_Category_P1 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C1", PyObjC_IdToPython([OC_Category_C1 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP2", PyObjC_IdToPython([OC_Category_GP2 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P2", PyObjC_IdToPython([OC_Category_P2 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C2", PyObjC_IdToPython([OC_Category_C2 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP3", PyObjC_IdToPython([OC_Category_GP3 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P3", PyObjC_IdToPython([OC_Category_P3 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C3", PyObjC_IdToPython([OC_Category_C3 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP4", PyObjC_IdToPython([OC_Category_GP4 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P4", PyObjC_IdToPython([OC_Category_P4 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C4", PyObjC_IdToPython([OC_Category_C4 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP5", PyObjC_IdToPython([OC_Category_GP5 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P5", PyObjC_IdToPython([OC_Category_P5 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C5", PyObjC_IdToPython([OC_Category_C5 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP6", PyObjC_IdToPython([OC_Category_GP6 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P6", PyObjC_IdToPython([OC_Category_P6 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C6", PyObjC_IdToPython([OC_Category_C6 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP7", PyObjC_IdToPython([OC_Category_GP7 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P7", PyObjC_IdToPython([OC_Category_P7 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C7", PyObjC_IdToPython([OC_Category_C7 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP8", PyObjC_IdToPython([OC_Category_GP8 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P8", PyObjC_IdToPython([OC_Category_P8 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C8", PyObjC_IdToPython([OC_Category_C8 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP9", PyObjC_IdToPython([OC_Category_GP9 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P9", PyObjC_IdToPython([OC_Category_P9 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C9", PyObjC_IdToPython([OC_Category_C9 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP10",
+                           PyObjC_IdToPython([OC_Category_GP10 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P10", PyObjC_IdToPython([OC_Category_P10 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C10", PyObjC_IdToPython([OC_Category_C10 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP11",
+                           PyObjC_IdToPython([OC_Category_GP11 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P11", PyObjC_IdToPython([OC_Category_P11 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C11", PyObjC_IdToPython([OC_Category_C11 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP12",
+                           PyObjC_IdToPython([OC_Category_GP12 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P12", PyObjC_IdToPython([OC_Category_P12 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C12", PyObjC_IdToPython([OC_Category_C12 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP13",
+                           PyObjC_IdToPython([OC_Category_GP13 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P13", PyObjC_IdToPython([OC_Category_P13 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C13", PyObjC_IdToPython([OC_Category_C13 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP14",
+                           PyObjC_IdToPython([OC_Category_GP14 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P14", PyObjC_IdToPython([OC_Category_P14 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C14", PyObjC_IdToPython([OC_Category_C14 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP15",
+                           PyObjC_IdToPython([OC_Category_GP15 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P15", PyObjC_IdToPython([OC_Category_P15 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C15", PyObjC_IdToPython([OC_Category_C15 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP16",
+                           PyObjC_IdToPython([OC_Category_GP16 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P16", PyObjC_IdToPython([OC_Category_P16 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C16", PyObjC_IdToPython([OC_Category_C16 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP17",
+                           PyObjC_IdToPython([OC_Category_GP17 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P17", PyObjC_IdToPython([OC_Category_P17 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C17", PyObjC_IdToPython([OC_Category_C17 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP18",
+                           PyObjC_IdToPython([OC_Category_GP18 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P18", PyObjC_IdToPython([OC_Category_P18 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C18", PyObjC_IdToPython([OC_Category_C18 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP19",
+                           PyObjC_IdToPython([OC_Category_GP19 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P19", PyObjC_IdToPython([OC_Category_P19 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C19", PyObjC_IdToPython([OC_Category_C19 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP20",
+                           PyObjC_IdToPython([OC_Category_GP20 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P20", PyObjC_IdToPython([OC_Category_P20 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C20", PyObjC_IdToPython([OC_Category_C20 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP21",
+                           PyObjC_IdToPython([OC_Category_GP21 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P21", PyObjC_IdToPython([OC_Category_P21 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C21", PyObjC_IdToPython([OC_Category_C21 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP22",
+                           PyObjC_IdToPython([OC_Category_GP22 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P22", PyObjC_IdToPython([OC_Category_P22 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C22", PyObjC_IdToPython([OC_Category_C22 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP23",
+                           PyObjC_IdToPython([OC_Category_GP23 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P23", PyObjC_IdToPython([OC_Category_P23 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C23", PyObjC_IdToPython([OC_Category_C23 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP24",
+                           PyObjC_IdToPython([OC_Category_GP24 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P24", PyObjC_IdToPython([OC_Category_P24 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C24", PyObjC_IdToPython([OC_Category_C24 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP25",
+                           PyObjC_IdToPython([OC_Category_GP25 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P25", PyObjC_IdToPython([OC_Category_P25 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C25", PyObjC_IdToPython([OC_Category_C25 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP26",
+                           PyObjC_IdToPython([OC_Category_GP26 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P26", PyObjC_IdToPython([OC_Category_P26 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C26", PyObjC_IdToPython([OC_Category_C26 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP27",
+                           PyObjC_IdToPython([OC_Category_GP27 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P27", PyObjC_IdToPython([OC_Category_P27 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C27", PyObjC_IdToPython([OC_Category_C27 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP28",
+                           PyObjC_IdToPython([OC_Category_GP28 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P28", PyObjC_IdToPython([OC_Category_P28 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C28", PyObjC_IdToPython([OC_Category_C28 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP29",
+                           PyObjC_IdToPython([OC_Category_GP29 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P29", PyObjC_IdToPython([OC_Category_P29 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C29", PyObjC_IdToPython([OC_Category_C29 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP30",
+                           PyObjC_IdToPython([OC_Category_GP30 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P30", PyObjC_IdToPython([OC_Category_P30 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C30", PyObjC_IdToPython([OC_Category_C30 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP31",
+                           PyObjC_IdToPython([OC_Category_GP31 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P31", PyObjC_IdToPython([OC_Category_P31 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C31", PyObjC_IdToPython([OC_Category_C31 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP32",
+                           PyObjC_IdToPython([OC_Category_GP32 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P32", PyObjC_IdToPython([OC_Category_P32 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C32", PyObjC_IdToPython([OC_Category_C32 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP33",
+                           PyObjC_IdToPython([OC_Category_GP33 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P33", PyObjC_IdToPython([OC_Category_P33 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C33", PyObjC_IdToPython([OC_Category_C33 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP34",
+                           PyObjC_IdToPython([OC_Category_GP34 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P34", PyObjC_IdToPython([OC_Category_P34 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C34", PyObjC_IdToPython([OC_Category_C34 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP35",
+                           PyObjC_IdToPython([OC_Category_GP35 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P35", PyObjC_IdToPython([OC_Category_P35 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C35", PyObjC_IdToPython([OC_Category_C35 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP36",
+                           PyObjC_IdToPython([OC_Category_GP36 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P36", PyObjC_IdToPython([OC_Category_P36 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C36", PyObjC_IdToPython([OC_Category_C36 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP37",
+                           PyObjC_IdToPython([OC_Category_GP37 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P37", PyObjC_IdToPython([OC_Category_P37 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C37", PyObjC_IdToPython([OC_Category_C37 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP38",
+                           PyObjC_IdToPython([OC_Category_GP38 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P38", PyObjC_IdToPython([OC_Category_P38 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C38", PyObjC_IdToPython([OC_Category_C38 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP39",
+                           PyObjC_IdToPython([OC_Category_GP39 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P39", PyObjC_IdToPython([OC_Category_P39 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C39", PyObjC_IdToPython([OC_Category_C39 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP40",
+                           PyObjC_IdToPython([OC_Category_GP40 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P40", PyObjC_IdToPython([OC_Category_P40 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C40", PyObjC_IdToPython([OC_Category_C40 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP41",
+                           PyObjC_IdToPython([OC_Category_GP41 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P41", PyObjC_IdToPython([OC_Category_P41 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C41", PyObjC_IdToPython([OC_Category_C41 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP42",
+                           PyObjC_IdToPython([OC_Category_GP42 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P42", PyObjC_IdToPython([OC_Category_P42 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C42", PyObjC_IdToPython([OC_Category_C42 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP43",
+                           PyObjC_IdToPython([OC_Category_GP43 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P43", PyObjC_IdToPython([OC_Category_P43 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C43", PyObjC_IdToPython([OC_Category_C43 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP44",
+                           PyObjC_IdToPython([OC_Category_GP44 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P44", PyObjC_IdToPython([OC_Category_P44 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C44", PyObjC_IdToPython([OC_Category_C44 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP45",
+                           PyObjC_IdToPython([OC_Category_GP45 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P45", PyObjC_IdToPython([OC_Category_P45 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C45", PyObjC_IdToPython([OC_Category_C45 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP46",
+                           PyObjC_IdToPython([OC_Category_GP46 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P46", PyObjC_IdToPython([OC_Category_P46 class]))
+        < 0) { // LCOV_EXCL_LINE
         return -1;
     }
- if (PyModule_AddObject(m, "OC_Category_GP0", PyObjC_IdToPython([OC_Category_GP0 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P0", PyObjC_IdToPython([OC_Category_P0 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C0", PyObjC_IdToPython([OC_Category_C0 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP1", PyObjC_IdToPython([OC_Category_GP1 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P1", PyObjC_IdToPython([OC_Category_P1 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C1", PyObjC_IdToPython([OC_Category_C1 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP2", PyObjC_IdToPython([OC_Category_GP2 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P2", PyObjC_IdToPython([OC_Category_P2 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C2", PyObjC_IdToPython([OC_Category_C2 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP3", PyObjC_IdToPython([OC_Category_GP3 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P3", PyObjC_IdToPython([OC_Category_P3 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C3", PyObjC_IdToPython([OC_Category_C3 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP4", PyObjC_IdToPython([OC_Category_GP4 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P4", PyObjC_IdToPython([OC_Category_P4 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C4", PyObjC_IdToPython([OC_Category_C4 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP5", PyObjC_IdToPython([OC_Category_GP5 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P5", PyObjC_IdToPython([OC_Category_P5 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C5", PyObjC_IdToPython([OC_Category_C5 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP6", PyObjC_IdToPython([OC_Category_GP6 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P6", PyObjC_IdToPython([OC_Category_P6 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C6", PyObjC_IdToPython([OC_Category_C6 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP7", PyObjC_IdToPython([OC_Category_GP7 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P7", PyObjC_IdToPython([OC_Category_P7 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C7", PyObjC_IdToPython([OC_Category_C7 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP8", PyObjC_IdToPython([OC_Category_GP8 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P8", PyObjC_IdToPython([OC_Category_P8 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C8", PyObjC_IdToPython([OC_Category_C8 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP9", PyObjC_IdToPython([OC_Category_GP9 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P9", PyObjC_IdToPython([OC_Category_P9 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C9", PyObjC_IdToPython([OC_Category_C9 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP10", PyObjC_IdToPython([OC_Category_GP10 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P10", PyObjC_IdToPython([OC_Category_P10 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C10", PyObjC_IdToPython([OC_Category_C10 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP11", PyObjC_IdToPython([OC_Category_GP11 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P11", PyObjC_IdToPython([OC_Category_P11 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C11", PyObjC_IdToPython([OC_Category_C11 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP12", PyObjC_IdToPython([OC_Category_GP12 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P12", PyObjC_IdToPython([OC_Category_P12 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C12", PyObjC_IdToPython([OC_Category_C12 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP13", PyObjC_IdToPython([OC_Category_GP13 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P13", PyObjC_IdToPython([OC_Category_P13 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C13", PyObjC_IdToPython([OC_Category_C13 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP14", PyObjC_IdToPython([OC_Category_GP14 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P14", PyObjC_IdToPython([OC_Category_P14 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C14", PyObjC_IdToPython([OC_Category_C14 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP15", PyObjC_IdToPython([OC_Category_GP15 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P15", PyObjC_IdToPython([OC_Category_P15 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C15", PyObjC_IdToPython([OC_Category_C15 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP16", PyObjC_IdToPython([OC_Category_GP16 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P16", PyObjC_IdToPython([OC_Category_P16 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C16", PyObjC_IdToPython([OC_Category_C16 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP17", PyObjC_IdToPython([OC_Category_GP17 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P17", PyObjC_IdToPython([OC_Category_P17 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C17", PyObjC_IdToPython([OC_Category_C17 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP18", PyObjC_IdToPython([OC_Category_GP18 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P18", PyObjC_IdToPython([OC_Category_P18 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C18", PyObjC_IdToPython([OC_Category_C18 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP19", PyObjC_IdToPython([OC_Category_GP19 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P19", PyObjC_IdToPython([OC_Category_P19 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C19", PyObjC_IdToPython([OC_Category_C19 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP20", PyObjC_IdToPython([OC_Category_GP20 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P20", PyObjC_IdToPython([OC_Category_P20 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C20", PyObjC_IdToPython([OC_Category_C20 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP21", PyObjC_IdToPython([OC_Category_GP21 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P21", PyObjC_IdToPython([OC_Category_P21 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C21", PyObjC_IdToPython([OC_Category_C21 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP22", PyObjC_IdToPython([OC_Category_GP22 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P22", PyObjC_IdToPython([OC_Category_P22 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C22", PyObjC_IdToPython([OC_Category_C22 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP23", PyObjC_IdToPython([OC_Category_GP23 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P23", PyObjC_IdToPython([OC_Category_P23 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C23", PyObjC_IdToPython([OC_Category_C23 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP24", PyObjC_IdToPython([OC_Category_GP24 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P24", PyObjC_IdToPython([OC_Category_P24 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C24", PyObjC_IdToPython([OC_Category_C24 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP25", PyObjC_IdToPython([OC_Category_GP25 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P25", PyObjC_IdToPython([OC_Category_P25 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C25", PyObjC_IdToPython([OC_Category_C25 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP26", PyObjC_IdToPython([OC_Category_GP26 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P26", PyObjC_IdToPython([OC_Category_P26 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C26", PyObjC_IdToPython([OC_Category_C26 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP27", PyObjC_IdToPython([OC_Category_GP27 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P27", PyObjC_IdToPython([OC_Category_P27 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C27", PyObjC_IdToPython([OC_Category_C27 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP28", PyObjC_IdToPython([OC_Category_GP28 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P28", PyObjC_IdToPython([OC_Category_P28 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C28", PyObjC_IdToPython([OC_Category_C28 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP29", PyObjC_IdToPython([OC_Category_GP29 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P29", PyObjC_IdToPython([OC_Category_P29 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C29", PyObjC_IdToPython([OC_Category_C29 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP30", PyObjC_IdToPython([OC_Category_GP30 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P30", PyObjC_IdToPython([OC_Category_P30 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C30", PyObjC_IdToPython([OC_Category_C30 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP31", PyObjC_IdToPython([OC_Category_GP31 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P31", PyObjC_IdToPython([OC_Category_P31 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C31", PyObjC_IdToPython([OC_Category_C31 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP32", PyObjC_IdToPython([OC_Category_GP32 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P32", PyObjC_IdToPython([OC_Category_P32 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C32", PyObjC_IdToPython([OC_Category_C32 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP33", PyObjC_IdToPython([OC_Category_GP33 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P33", PyObjC_IdToPython([OC_Category_P33 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C33", PyObjC_IdToPython([OC_Category_C33 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP34", PyObjC_IdToPython([OC_Category_GP34 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P34", PyObjC_IdToPython([OC_Category_P34 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C34", PyObjC_IdToPython([OC_Category_C34 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP35", PyObjC_IdToPython([OC_Category_GP35 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P35", PyObjC_IdToPython([OC_Category_P35 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C35", PyObjC_IdToPython([OC_Category_C35 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP36", PyObjC_IdToPython([OC_Category_GP36 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P36", PyObjC_IdToPython([OC_Category_P36 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C36", PyObjC_IdToPython([OC_Category_C36 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP37", PyObjC_IdToPython([OC_Category_GP37 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P37", PyObjC_IdToPython([OC_Category_P37 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C37", PyObjC_IdToPython([OC_Category_C37 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP38", PyObjC_IdToPython([OC_Category_GP38 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P38", PyObjC_IdToPython([OC_Category_P38 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C38", PyObjC_IdToPython([OC_Category_C38 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP39", PyObjC_IdToPython([OC_Category_GP39 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P39", PyObjC_IdToPython([OC_Category_P39 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C39", PyObjC_IdToPython([OC_Category_C39 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP40", PyObjC_IdToPython([OC_Category_GP40 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P40", PyObjC_IdToPython([OC_Category_P40 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C40", PyObjC_IdToPython([OC_Category_C40 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP41", PyObjC_IdToPython([OC_Category_GP41 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P41", PyObjC_IdToPython([OC_Category_P41 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C41", PyObjC_IdToPython([OC_Category_C41 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP42", PyObjC_IdToPython([OC_Category_GP42 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P42", PyObjC_IdToPython([OC_Category_P42 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C42", PyObjC_IdToPython([OC_Category_C42 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP43", PyObjC_IdToPython([OC_Category_GP43 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P43", PyObjC_IdToPython([OC_Category_P43 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C43", PyObjC_IdToPython([OC_Category_C43 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP44", PyObjC_IdToPython([OC_Category_GP44 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P44", PyObjC_IdToPython([OC_Category_P44 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C44", PyObjC_IdToPython([OC_Category_C44 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP45", PyObjC_IdToPython([OC_Category_GP45 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P45", PyObjC_IdToPython([OC_Category_P45 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C45", PyObjC_IdToPython([OC_Category_C45 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP46", PyObjC_IdToPython([OC_Category_GP46 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P46", PyObjC_IdToPython([OC_Category_P46 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C46", PyObjC_IdToPython([OC_Category_C46 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP47", PyObjC_IdToPython([OC_Category_GP47 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P47", PyObjC_IdToPython([OC_Category_P47 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C47", PyObjC_IdToPython([OC_Category_C47 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP48", PyObjC_IdToPython([OC_Category_GP48 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P48", PyObjC_IdToPython([OC_Category_P48 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C48", PyObjC_IdToPython([OC_Category_C48 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP49", PyObjC_IdToPython([OC_Category_GP49 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P49", PyObjC_IdToPython([OC_Category_P49 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C49", PyObjC_IdToPython([OC_Category_C49 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP50", PyObjC_IdToPython([OC_Category_GP50 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P50", PyObjC_IdToPython([OC_Category_P50 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C50", PyObjC_IdToPython([OC_Category_C50 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP51", PyObjC_IdToPython([OC_Category_GP51 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P51", PyObjC_IdToPython([OC_Category_P51 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C51", PyObjC_IdToPython([OC_Category_C51 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP52", PyObjC_IdToPython([OC_Category_GP52 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P52", PyObjC_IdToPython([OC_Category_P52 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C52", PyObjC_IdToPython([OC_Category_C52 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP53", PyObjC_IdToPython([OC_Category_GP53 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P53", PyObjC_IdToPython([OC_Category_P53 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C53", PyObjC_IdToPython([OC_Category_C53 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP54", PyObjC_IdToPython([OC_Category_GP54 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P54", PyObjC_IdToPython([OC_Category_P54 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C54", PyObjC_IdToPython([OC_Category_C54 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP55", PyObjC_IdToPython([OC_Category_GP55 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P55", PyObjC_IdToPython([OC_Category_P55 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C55", PyObjC_IdToPython([OC_Category_C55 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP56", PyObjC_IdToPython([OC_Category_GP56 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P56", PyObjC_IdToPython([OC_Category_P56 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C56", PyObjC_IdToPython([OC_Category_C56 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP57", PyObjC_IdToPython([OC_Category_GP57 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P57", PyObjC_IdToPython([OC_Category_P57 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C57", PyObjC_IdToPython([OC_Category_C57 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP58", PyObjC_IdToPython([OC_Category_GP58 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P58", PyObjC_IdToPython([OC_Category_P58 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C58", PyObjC_IdToPython([OC_Category_C58 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_GP59", PyObjC_IdToPython([OC_Category_GP59 class]))
-     < 0) {
-     return -1;
-}
- if (PyModule_AddObject(m, "OC_Category_P59", PyObjC_IdToPython([OC_Category_P59 class]))
-     < 0) {
-     return -1;
- }
- if (PyModule_AddObject(m, "OC_Category_C59", PyObjC_IdToPython([OC_Category_C59 class]))
-     < 0) {
-     return -1;
- }
-
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C46", PyObjC_IdToPython([OC_Category_C46 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP47",
+                           PyObjC_IdToPython([OC_Category_GP47 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P47", PyObjC_IdToPython([OC_Category_P47 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C47", PyObjC_IdToPython([OC_Category_C47 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP48",
+                           PyObjC_IdToPython([OC_Category_GP48 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P48", PyObjC_IdToPython([OC_Category_P48 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C48", PyObjC_IdToPython([OC_Category_C48 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP49",
+                           PyObjC_IdToPython([OC_Category_GP49 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P49", PyObjC_IdToPython([OC_Category_P49 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C49", PyObjC_IdToPython([OC_Category_C49 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP50",
+                           PyObjC_IdToPython([OC_Category_GP50 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P50", PyObjC_IdToPython([OC_Category_P50 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C50", PyObjC_IdToPython([OC_Category_C50 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP51",
+                           PyObjC_IdToPython([OC_Category_GP51 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P51", PyObjC_IdToPython([OC_Category_P51 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C51", PyObjC_IdToPython([OC_Category_C51 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP52",
+                           PyObjC_IdToPython([OC_Category_GP52 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P52", PyObjC_IdToPython([OC_Category_P52 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C52", PyObjC_IdToPython([OC_Category_C52 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP53",
+                           PyObjC_IdToPython([OC_Category_GP53 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P53", PyObjC_IdToPython([OC_Category_P53 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C53", PyObjC_IdToPython([OC_Category_C53 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP54",
+                           PyObjC_IdToPython([OC_Category_GP54 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P54", PyObjC_IdToPython([OC_Category_P54 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C54", PyObjC_IdToPython([OC_Category_C54 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP55",
+                           PyObjC_IdToPython([OC_Category_GP55 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P55", PyObjC_IdToPython([OC_Category_P55 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C55", PyObjC_IdToPython([OC_Category_C55 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP56",
+                           PyObjC_IdToPython([OC_Category_GP56 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P56", PyObjC_IdToPython([OC_Category_P56 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C56", PyObjC_IdToPython([OC_Category_C56 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP57",
+                           PyObjC_IdToPython([OC_Category_GP57 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P57", PyObjC_IdToPython([OC_Category_P57 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C57", PyObjC_IdToPython([OC_Category_C57 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP58",
+                           PyObjC_IdToPython([OC_Category_GP58 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P58", PyObjC_IdToPython([OC_Category_P58 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C58", PyObjC_IdToPython([OC_Category_C58 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_GP59",
+                           PyObjC_IdToPython([OC_Category_GP59 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_P59", PyObjC_IdToPython([OC_Category_P59 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_Category_C59", PyObjC_IdToPython([OC_Category_C59 class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
 
     return 0;
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* This extension does not use the CPython API other than initializing
          * the module, hence is safe with subinterpreters and per-interpreter
          * GILs
          */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "categories_base",
-    .m_doc = NULL,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "categories_base",
+    .m_doc      = NULL,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit_categories_base(void);
 
-PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit_categories_base(void)
+PyObject* __attribute__((__visibility__("default"))) _Nullable PyInit_categories_base(
+    void)
 {
     return PyModuleDef_Init(&mod_module);
 }

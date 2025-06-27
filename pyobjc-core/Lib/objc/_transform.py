@@ -25,12 +25,6 @@ __all__ = ("objc_method", "python_method")
 NO_VALUE = object()
 
 
-def _isSelectorPrefix(name, prefix):
-    return name.startswith(prefix) and (
-        len(name) == len(prefix) | name[len(prefix)].isupper()
-    )
-
-
 def _selectorToKeywords(selector):
     if not selector.startswith("init"):
         raise ValueError("selector is not a valid init selector")
@@ -41,6 +35,8 @@ def _selectorToKeywords(selector):
         return ()
 
     parts = selector.split(":")[:-1]
+    if not parts:
+        return None
     if parts[0].startswith("With"):
         parts[0] = parts[0][4:]
     if len(parts[0]) == 1 or len(parts[0]) > 1 and not parts[0][1].isupper():
@@ -481,7 +477,7 @@ def transformAttribute(name, value, class_object, protocols):
                     signature_parts[0] = overridden_rval
 
                 for idx in overridden_args:
-                    if (idx < 0) or idx >= len(signature_parts) - 1:
+                    if idx >= len(signature_parts) - 1:
                         raise objc.error(
                             f"{name!r} has invalid metadata, index {idx} out of range"
                         )
@@ -591,20 +587,25 @@ def returns_value(func):
     # XXX: This will give a false positive for functions
     #      that only contain "return None" paths for
     #      returning a value.
+    #
+    # Until Python 3.14 constant 0 was always None, due to
+    # changes in the bytecode compiler that's no longer true.
+
     if not isinstance(func.__code__, types.CodeType):
         return True
 
     prev = None
+    consts = func.__code__.co_consts
 
     for inst in dis.get_instructions(func):
         if inst.opname == "RETURN_VALUE":
             assert prev is not None
-            if prev.opname == "LOAD_CONST" and prev.arg != 0:
+            if prev.opname == "LOAD_CONST" and consts[prev.arg] is not None:
                 return True
             elif prev.opname != "LOAD_CONST":
                 return True
 
-        elif inst.opname == "RETURN_CONST" and inst.arg != 0:
+        elif inst.opname == "RETURN_CONST" and consts[inst.arg] is not None:
             # New in Python 3.12.
             return True
         prev = inst

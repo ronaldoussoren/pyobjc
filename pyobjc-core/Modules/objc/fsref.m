@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma GCC diagnostic   ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 /*
@@ -21,9 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
  * aref.as_pathname()
  *  # -> returns a Unicode string with the posix path
  *
- * aref.as_carbon()
- *  # -> return a Carbon.File.FSRef instance (only
- *  #    available when Carbon support is enabled in Python)
+ * aref.__fspath__()
+ *  # -> returns a Unicode string with the posix path
  *
  * aref.data
  *  # -> read-only property with the bytes in the FSRef
@@ -83,16 +82,15 @@ static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unuse
         }
         Py_CLEAR(fspath);
 
-    } else if (PyBytes_Check(fspath)) {
-        value = fspath;
-        fspath = NULL;
     } else {
-        Py_DECREF(fspath);
-        PyErr_SetString(PyExc_TypeError, "Expecting string or os.PathLike");
-        return NULL;
+        /* PyOS_FSPath guarantees that the result is
+         * a string of byte string
+         */
+        value  = fspath;
+        fspath = NULL;
     }
 
-    PyObjC_Assert(PyBytes_Check(value), NULL);
+    assert(PyBytes_Check(value));
 
     rc = FSPathMakeRef((UInt8*)PyBytes_AsString(value), &result, &isDirectory);
     Py_DECREF(value);
@@ -125,6 +123,10 @@ static PyGetSetDef fsref_getset[] = {{
 
 static PyMethodDef fsref_methods[] = {
     {.ml_name  = "as_pathname",
+     .ml_meth  = (PyCFunction)fsref_as_path,
+     .ml_flags = METH_NOARGS,
+     .ml_doc   = "as_pathname()\n" CLINIC_SEP "\nReturn POSIX path for this object"},
+    {.ml_name  = "__fspath__",
      .ml_meth  = (PyCFunction)fsref_as_path,
      .ml_flags = METH_NOARGS,
      .ml_doc   = "as_pathname()\n" CLINIC_SEP "\nReturn POSIX path for this object"},
@@ -204,8 +206,9 @@ PyObjCFSRef_Setup(PyObject* module)
     }
     PyObjCFSRef_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "FSRef", PyObjCFSRef_Type) == -1) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "FSRef", PyObjCFSRef_Type)
+        == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFSRef_Type);

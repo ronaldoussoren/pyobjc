@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 from PyObjCTest.test_object_proxy import NoObjectiveC
 
 from . import fnd as Foundation
@@ -81,8 +81,8 @@ class TestBundleVariables(TestCase):
             objc.loadBundleVariables(NoObjectiveC(), {}, [])
 
         with self.assertRaisesRegex(
-            ValueError,
-            r"NSInvalidArgumentException - -\[OC_BuiltinPythonUnicode bundlePath\]: unrecognized selector sent to instance",
+            objc.error,
+            "bundle argument is not an NSBundle",
         ):
             # This exception is suboptimal, but does show that the bridge doesn't crash when an incorrect value is passed.
             objc.loadBundleVariables("", {}, [])
@@ -110,6 +110,31 @@ class TestBundleVariables(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             objc.loadBundleVariables(self.bundle, {}, [(NoObjectiveC(), b"@")])
 
+    @min_os_level("10.15")
+    def test_charptr_variable(self):
+        bundle = Foundation.NSBundle.bundleWithPath_(
+            "/System/Library/Frameworks/IOUSBHost.framework"
+        )
+        self.assertIsNot(bundle, None)
+
+        d = {}
+        objc.loadBundleVariables(
+            bundle, d, [("IOUSBHostVersionString", objc._C_CHARPTR)]
+        )
+        self.assertIsInstance(d["IOUSBHostVersionString"], bytes)
+
+        d = {}
+        objc.loadBundleVariables(
+            bundle, d, [("IOUSBHostVersionString", objc._C_PTR + objc._C_CHR)]
+        )
+        self.assertIsInstance(d["IOUSBHostVersionString"], bytes)
+
+        # XXX: objc._loadConstant has a weird interface...
+        v = objc._loadConstant(
+            "IOUSBHostVersionString", objc._C_CHARPTR.decode(), False
+        )
+        self.assertEqual(v, d["IOUSBHostVersionString"])
+
 
 class TestSpecialVariables(TestCase):
     def setUp(self):
@@ -132,8 +157,8 @@ class TestSpecialVariables(TestCase):
             objc.loadSpecialVar(NoObjectiveC(), {}, 42, "hello")
 
         with self.assertRaisesRegex(
-            ValueError,
-            r"NSInvalidArgumentException - -\[OC_BuiltinPythonUnicode bundlePath\]: unrecognized selector sent to instance",
+            objc.error,
+            "bundle argument is not an NSBundle",
         ):
             # This exception is suboptimal, but does show that the bridge doesn't crash when an incorrect value is passed.
             objc.loadSpecialVar("", {}, 42, "hello")

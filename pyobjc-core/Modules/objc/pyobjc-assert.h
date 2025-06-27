@@ -45,13 +45,6 @@ extern PyObject* PyObjCExc_InternalError;
                                       __FUNCTION__, __FILE__, __LINE__, msg);            \
     } while (0)
 
-#define PyObjC_Assert(expr, retval)                                                      \
-    do {                                                                                 \
-        if (unlikely(!(expr))) {                                                         \
-            PyObjCErr_InternalErrorMesg("assertion failed: " #expr);                     \
-            return (retval);                                                             \
-        }                                                                                \
-    } while (0)
 #else
 
 #define PyObjCErr_InternalError() ((void)0)

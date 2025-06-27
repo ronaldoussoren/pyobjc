@@ -1,3 +1,15 @@
+"""
+This script demonstrates how to use the
+:mod:`PyObjCTools.Conversion` module to convert
+between a python and Objective-C representation
+of a data structure.
+
+Note that most code doesn't need to perform this
+conversion because the Python representation is
+automatically proxied to the Objective-C world with
+an interface that matches the Objective-C interface.
+"""
+
 import pprint
 
 from PyObjCTools.Conversion import propertyListFromPythonCollection

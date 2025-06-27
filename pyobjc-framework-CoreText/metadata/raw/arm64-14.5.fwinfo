@@ -4057,7 +4057,7 @@
          "typestr": "B"
         },
         {
-         "typestr": "^B"
+         "typestr": "o^B"
         }
        ],
        "retval": {

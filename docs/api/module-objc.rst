@@ -2,11 +2,7 @@
 ================================
 
 .. module:: objc
-   :platform: macOS
    :synopsis: The PyObjC bridge
-
-.. moduleauthor:: Ronald Oussoren <ronaldoussoren@mac.com>
-
 
 Introduction
 ------------
@@ -20,32 +16,29 @@ The module :mod:`objc` defines a number of functions whose names start with
 an underscore. Those functions are private and should not be used, they can
 be removed from release without warning.
 
-NOTE: This document is currently mostly an exhaustive list of stuff and
-needs to be reorganised once I've filled in the technical details.
-
 Bridge options
 ..............
 
 .. data:: options
 
-   The object :data:`options` has attributes for reading and setting
-   a number of configuration options for the bridge.
+   Attributes of this object contain configuration settings for the bridge.
 
-   Attributes whose names start with an underscore are reserved for
-   use by the bridge and can appear or disappear with every release
-   of PyObjC.
+   Attributes whose names start with an underscore are private
+   and can appear or disappear with every release of PyObjC.
 
    .. versionadded:: 3.0
 
 
-   .. data:: objc.options.verbose
+   .. attribute:: verbose
+      :type: bool
 
       When the value is :const:`True` the bridge will log more information.
 
       This currently results in output on the standard error stream whenever
       an exception is translated from Python to Objective-C.
 
-   .. data:: objc.options.use_kvo
+   .. attribute:: use_kvo
+      :type: bool
 
       The default value for the *__useKVO__* attribute on
       classes.
@@ -54,28 +47,15 @@ Bridge options
       of the class will generate Key-Value Observation notifications when
       setting attributes from Python.
 
-
-   .. data:: objc.options.unknown_pointer_raises
+   .. attribute:: unknown_pointer_raises
+      :type: bool
 
       When True (the default) the bridge will raise an exception when
       it encounters a pointer value that cannot be converted to Python,
       otherwise it it creates instances of :class:`ObjCPointer`.
 
-   .. data:: objc.options.strbridge_enabled
-
-      Python 2 only: When True (the default) instances of :class:`str`
-      are bridged as instances of a subclass of *NSString*, otherwise
-      strings are not bridged.
-
-      .. note::
-
-         This option is only relevant for Python 2.x, for Python 3.x
-         instances of :class:`str` are bridged as instances of a
-         subclass of *NSString* and instances of :class:`bytes` (
-         the :class:`str` class in Python 2) are bridged as instances
-         of a subclass of *NSData*.
-
-   .. data:: objc.options.deprecation_warnings
+   .. attribute:: deprecation_warnings
+      :type: str | None
 
       When ``"0.0"`` (the default) the bridge will not emit deprecation warnings,
       otherwise the value should be a platform version in the form
@@ -90,29 +70,33 @@ Bridge options
 
       .. versionadded:: 3.3
 
-      .. versionchanged: 10.0
+      .. versionchanged:: 10.0
 
          The value for this option is now a string instead of an integer.
 
-  .. data:: objc.options.structs_indexable
+   .. attribute:: structs_indexable
+      :type: bool
 
-     When True (the default) PyObjC's wrappers for C structs can be indexed
-     as if they are (writable) tuples. When False this isn't possible.
+      When True (the default) PyObjC's wrappers for C structs can be indexed
+      as if they are (writable) tuples. When False this isn't possible.
 
-     .. note:: This is primarily an experimental option, that will likely be removed in a future version.
+      .. note:: This is primarily an experimental option.
 
-  .. data:: objc.options.structs_writable
+   .. attribute:: structs_writable
+      :type: bool
 
-     When True (the default) PyObjC's wrappers for C structs are writable,
-     otherwise they are read-only.
+      When True (the default) PyObjC's wrappers for C structs are writable,
+      otherwise they are read-only.
 
-     .. note:: This is an experimental option. I don't know yet if making structs read-only will be a better.
+     .. note:: This is an experimental option.
 
 
 Deprecated functions for changing options
 .........................................
 
 .. function:: setVerbose(yesOrNo)
+
+   :param bool yesOrNo: Whether or not to enable verbose mode.
 
    When the argument is :const:`True` the bridge will log more information.
 
@@ -124,67 +108,43 @@ Deprecated functions for changing options
 
 .. function:: getVerbose()
 
-   Returns the current value of the verbose flag.
+   :return: Current value of the verbose flag.
+   :rtype: bool
 
    .. deprecated:: 3.0 Use :data:`objc.options` instead
 
 
-.. function:: setUseKVOForSetattr
+.. function:: setUseKVOForSetattr(yesOrNo)
+
+   :param bool yesOrNo: Default value for the *__useKVO__* attribute of classes defined after this call.
+   :return: The previous value
+   :rtype: bool
 
    Sets the default value for the *__useKVO__* attribute on
    classes defined after this call. Returns the previous value.
 
-   When the *__useKVO__* attribute of a class is true instances
-   of the class will generate Key-Value Observation notifications when
-   setting attributes from Python.
-
    .. deprecated:: 3.0 Use :data:`objc.options` instead
 
-.. function:: setStrBridgeEnabled(yesOrNo)
+.. function:: getUseKVOForSetattr()
 
-   If *yesOrNo* is true instances of :class:`str` are bridged
-   as NSString instances, otherwise bridging issues a :data:`PyObjCStrBridgeWarning`
-   warning and still bridges as an NSString instances.
-
-   By default PyObjC behaves as if ``setStrBridgeEnabled(True)`` was called.
-
-   .. note::
-
-      This function is not available in Python 3.x
-
-   .. note::
-
-      Setting this option to false is discouraged and is mostly useful when porting
-      to Python 3.
-
-   .. deprecated:: 3.0 Use :data:`objc.options` instead
-
-
-.. function:: getStrBridgeEnabled
-
-   Returns :data:`True` if the str bridge is enabled and :data:`False` when it is
-   not.
-
-   .. note::
-
-      This function is not available in Python 3.x
+   :return: The default value for the *__useKVO__* attribute on classes.
+   :rtype: bool
 
    .. deprecated:: 3.0 Use :data:`objc.options` instead
 
 Weak references
 ---------------
 
-
 .. class:: WeakRef(object)
+   :final:
 
-   It is not possible to use the :mod:`weakref` module to create
-   weak references to Cocoa objects due to implementation restrictions
-   (at best it would be possible to create a weakref to the Python
-   proxy for such objects).
+   :param objc.objc_object object: Value to create a weak reference to.
 
-   PyObjC implements a zero-ing weakref object when running on
-   macOS 10.7 or later. These objects more or less behave the
-   same as ``__weak`` variables in Objective-C.
+   This class creates weak references to an Objective-C value. The reference
+   is cleared when the last reference to the native Objective-C value is
+   released, even when that reference is an Objective-C reference.
+
+   Instances of this class behave similar to ``__weak`` variables in Objective-C.
 
    The *object* must be a Cocoa object, and must not be a CoreFoundation
    object (unless the CoreFoundation type is transparently bridged to Cocoa).
@@ -193,14 +153,7 @@ Weak references
 
    .. method:: __call__()
 
-      Returns the weakly references object when that is still alive,
-      otherwise returns :data:`None`.
-
-    .. note::
-
-       Unlike :class:`weakref.ref` this class cannot be subclasses, and
-       does not have a callback option. The callback option cannot be
-       reliably be implemented with the current Objective-C runtime API.
+      :return: The weakly references object when that is still alive, or :data:`None`.
 
     .. warning::
 
@@ -218,31 +171,30 @@ for objects.
 
 .. function:: setAssociatedObject(object, key, value, policy)
 
-   :param object: the base object (a Cocoa instance)
-   :type key: an arbitrary object, the same object must be used to
+   :param objc.objc_object object object: the base object (a Cocoa instance)
+   :param object key: an arbitrary object, the same object must be used to
                retrieve the value.
-   :param value: value for the associated object
-   :param policy: policy for the association (see below)
+   :param object value: value for the associated object
+   :param int policy: policy for the association (see below)
 
    Associate *assoc* with *object* under name *name*.
 
 .. function:: getAssociatedObject(object, key)
 
-   :param object: an object (a Cocoa instance)
-   :param key: the key object that was used with :func:`setAssociatedObject`
+   :param objc.objc_object object: an object (a Cocoa instance)
+   :param object key: the key object that was used with :func:`setAssociatedObject`
    :return: the value for the key, or :data:`None`.
-
-   Returns the value of an associated object.
 
 .. function:: removeAssociatedObjects(object)
 
-   :param object: an object (a Cocoa instance)
+   :param objc.objc_object object: an object (a Cocoa instance)
 
    Remove all associations for *object*. It is generally a bad idea to
    use this function, because other libraries might have set associations
    as well.
 
 .. data:: OBJC_ASSOCIATION_ASSIGN
+   :type: int
 
    Policy for creating a weak reference to the associated object
 
@@ -250,19 +202,23 @@ for objects.
              you arrange to keep the proxy object alive some other way.
 
 .. data:: OBJC_ASSOCIATION_RETAIN_NONATOMIC
+   :type: int
 
    Policy for creating a strong reference to the associated object.
 
 .. data:: OBJC_ASSOCIATION_COPY_NONATOMIC
+   :type: int
 
    Policy for creating a strong reference to a copy of the associated object.
 
 .. data:: OBJC_ASSOCIATION_RETAIN
+   :type: int
 
    Policy for creating a strong reference to the associated object, the
    association is made atomically.
 
 .. data:: OBJC_ASSOCIATION_COPY
+   :type: int
 
    Policy for creating a strong reference to a copy of the associated object,
    the association is made atomically.
@@ -270,46 +226,27 @@ for objects.
 Utilities
 ---------
 
-.. function:: macos_available(major, minor, patch=0)
+.. function:: macos_available(major, minor=0, patch=0)
 
-   Returns true iff the current macOS version is at least the version
-   specified. Use this like the "@available" construct in Objective-C.
+   :param int major: Major version
+   :param int minor: Minor version
+   :param int patch: Patch level
+   :return: True iff the current macOS version is at least the version
+            specified. Use this like the "@available" construct in Objective-C.
+   :rtype: bool
+
+
+   .. versionchanged:: 10.4
+
+      There is now a default for *minor*.
 
 .. function:: allocateBuffer(length)
 
-   Returns a writable buffer object of *length* bytes. This function is
-   equivalent to `bytearray(length)`
+   :param int length: Length of the buffer
+   :return: A writable buffer object of *length* bytes.
+   :rtype: bytearray
 
-   .. deprecated: 8.2
-
-.. function:: CFToObject
-
-   Converts an object from the standard library :mod:`CF` module to a
-   PyObjC wrapper for the same CoreFoundation object. Raises an exception
-   when the conversion fails.
-
-   .. deprecated:: 2.4
-      part of support for the CF module in the python 2 std. library,
-      will be removed in PyObjC 3.0.
-
-   .. note::
-      this function is not available for Python 3.
-
-
-.. function:: ObjectToCF
-
-   Converts a PyObjC wrapper for a CoreFoundation object to an object from the standard
-   library :mod:`CF` module for the same CoreFoundation object. Raises an exception
-   when the conversion fails.
-
-   .. deprecated:: 2.4
-      part of support for the CF module in the python 2 std. library,
-      will be removed in PyObjC 3.0.
-
-   .. note::
-      this function is not available for Python 3.
-
-
+   .. deprecated:: 8.2 Use :class:`bytearray` instead
 
 Accessing classes and protocols
 -------------------------------
@@ -317,21 +254,20 @@ Accessing classes and protocols
 .. function:: lookUpClass(classname)
 
    :param classname: the name of an Objective-C class
-   :type classname: string
+   :type classname: str
    :return: the named Objective-C class
-   :raise: :exc:`objc.nosuchclass_error` when the class does not exist
+   :rtype: objc.objc_class
+   :raises objc.nosuchclass_error: when the class does not exist
 
 
-.. function:: getClassList([ignore_invalid_identifiers]
+.. function:: getClassList(ignore_invalid_identifiers=True)
 
+   :param bool ignore_invalid_identifiers: If true the result only contains
+                                           classes whose name is a valid Python
+                                           identifier.
    :return: a list of a classes known to the Objective-C runtime
+   :rtype: list[objc.objc_class]
 
-
-   When ``ignore_invalid_identifiers`` is false (the default) all
-   classes known to the Objective-C runtime are returned, if it is true
-   only the classes whose's full name is a valid Python identifier are
-   returned as well as a number of names that are known to be problematic
-   (FB12286520)
 
    .. versionchanged: 10.0
 
@@ -339,55 +275,59 @@ Accessing classes and protocols
 
 .. function:: protocolsForClass(cls)
 
-   Returns a list of Protocol objects that the class claims to
-   implement directly. The *cls* object must a subclass of NSObject.
+   :param objc.objc_class cls: The class to introspect
+   :return: A list of protocols the class claims to implement directly.
+   :rtype: list[objc.formal_protocol]
 
 .. function:: protocolsForProcess
 
-   Returns a list of all Protocol objects known to the Objective-C
-   runtime.
+   Introspect the formal protocols known to the Objective-C runtime.
+
+   :return: A list of all protocols known to the Objective-C runtime.
+   :rtype: list[objc.formal_protocol]
 
 .. function:: propertiesForClass(objcClass)
 
-   :type objcClass: an Objective-C class or formal protocol
+   :param objc.objc_class|objc.formal_protocol objcClass: an Objective-C class or formal protocol
    :return: a list of properties from the Objective-C runtime
+   :rtype: list[dict]
 
    The return value is a list with information about
    properties on this class or protocol from the Objective-C runtime. This
-   does not include properties superclasses.
+   does not include properties defined in superclasses.
 
    Every entry in the list is dictionary with the following keys:
 
-   ============= =============================================================
-   Key           Description
-   ============= =============================================================
-   *name*        Name of the property (a string)
-   ------------- -------------------------------------------------------------
-   *raw_attr*    Raw value of the attribute string (a byte string)
-   ------------- -------------------------------------------------------------
-   *typestr*     The type string for this attribute (a byte string)
-   ------------- -------------------------------------------------------------
-   *classname*   When the type string is ``objc._C_ID`` this is the
-                 name of the Objective-C class (a string).
-   ------------- -------------------------------------------------------------
-   *readonly*    True iff the property is read-only (bool)
-   ------------- -------------------------------------------------------------
-   *copy*        True iff the property is copying the value (bool)
-   ------------- -------------------------------------------------------------
-   *retain*      True iff the property is retaining the value (bool)
-   ------------- -------------------------------------------------------------
-   *nonatomic*   True iff the property is not atomic (bool)
-   ------------- -------------------------------------------------------------
-   *dynamic*     True iff the property is dynamic (bool)
-   ------------- -------------------------------------------------------------
-   *weak*        True iff the property is weak (bool)
-   ------------- -------------------------------------------------------------
-   *collectable* True iff the property is collectable (bool)
-   ------------- -------------------------------------------------------------
-   *getter*      Non-standard selector for the getter method (a byte string)
-   ------------- -------------------------------------------------------------
-   *setter*      Non-standard selector for the setter method (a byte string)
-   ============= =============================================================
+   =========== ============== ===================================================
+   Key           Type          Description
+   =========== ============== ===================================================
+   name        :class:`str`   Name of the property
+   ----------- -------------- ---------------------------------------------------
+   raw_attr    :class:`bytes` Raw value of the attribute string
+   ----------- -------------- ---------------------------------------------------
+   typestr     :class:`bytes` The type string for this attribute
+   ----------- -------------- ---------------------------------------------------
+   classname   :class:`str`   When the type string is ``objc._C_ID`` this is the
+                              name of the Objective-C class.
+   ----------- -------------- ---------------------------------------------------
+   readonly    :class:`bool`  True iff the property is read-only.
+   ----------- -------------- ---------------------------------------------------
+   copy        :class:`bool`  True iff the property is copying the value.
+   ----------- -------------- ---------------------------------------------------
+   retain      :class:`bool`  True iff the property is retaining the value.
+   ----------- -------------- ---------------------------------------------------
+   nonatomic   :class:`bool`  True iff the property is not atomic.
+   ----------- -------------- ---------------------------------------------------
+   dynamic     :class:`bool`  True iff the property is dynamic.
+   ----------- -------------- ---------------------------------------------------
+   weak        :class:`bool`  True iff the property is weak.
+   ----------- -------------- ---------------------------------------------------
+   collectable :class:`bool`  True iff the property is collectable.
+   ----------- -------------- ---------------------------------------------------
+   getter      :class:`bytes` Non-standard selector for the getter method.
+   ----------- -------------- ---------------------------------------------------
+   setter      :class:`bytes` Non-standard selector for the setter method.
+   =========== ============== ===================================================
 
    All values but *name* and *raw_attr* are optional. The other attributes
    contain a decoded version of the *raw_attr* value. The boolean attributes
@@ -400,25 +340,29 @@ Accessing classes and protocols
    in the Objective-C runtime, that is using ``@property`` definitions in an
    Objective-C interface. Not all properties as they are commonly used  in
    Objective-C are defined using that syntax, especially properties in classes
-   that were introduced before MacOSX 10.5.
-
-   This function always returns an empty list on macOS 10.4.
+   that were introduced before macOS 10.5.
 
    .. versionadded:: 2.3
 
 .. function:: listInstanceVariables(classOrInstance)
 
-   Returns a list of information about all instance variables for
-   a class or instance. *ClassOrInstance* must be a subclass of NSObject,
-   or an instance of such a class.
+   :param classOrInstance: The class or instance to introspect, must be a subclass
+                           of :class:`NSObject` or an instance of such a class.
+   :type classOrInstance: objc.objc_object | objc.objc_class
+   :returns: A list of information about all instance variables for
+             a class or instance.
 
-   The elements of the list are tuples with two elements: a string with
-   the name of the instance variable and a byte string with the type encoding
-   of the instance variable.
+             The elements of the list are tuples with two elements: a string with
+             the name of the instance variable and a byte string with the type encoding
+             of the instance variable.
 
 .. function:: getInstanceVariable(object, name)
 
-   Returns the value of the instance variable *name*.
+   :param classOrInstance: The class or instance to introspect, must be a subclass
+                           of :class:`NSObject` or an instance of such a class.
+   :type classOrInstance: objc.objc_object | objc.objc_class
+   :param str name: Name of the attribute.
+   :returns: The value of the instance variable *name*.
 
    .. warning::
 
@@ -428,9 +372,13 @@ Accessing classes and protocols
 
 .. function:: setInstanceVariable(object, name, value[ ,updateRefCounts])
 
-   Set the value of instance variable *name* to *value*. When the instance variable
-   type encoding is :data:`objc._C_ID` *updateRefCounts* must be specified and tells
-   whether or not the retainCount of the old and new values are updated.
+   :param classOrInstance: The class or instance to introspect, must be a subclass
+                           of :class:`NSObject` or an instance of such a class.
+   :type classOrInstance: objc.objc_object | objc.objc_class
+   :param str name: Name of the attribute.
+   :param value: The new value for the attribute
+   :param bool updateRefCounts: If true the ``retainCount`` of the old an new value or updated.
+                                Must be specified when the instance variable is an object.
 
    .. warning::
 
@@ -445,11 +393,13 @@ Accessing classes and protocols
       representation of *value* is kept alive, when *value* is not a Cocoa object
       just keeping *value* alive isn't good enough.
 
-
 .. function:: protocolNamed(name)
 
-   Returns a Protocol object for the named protocol. Raises :exc:`ProtocolError`
-   when the protocol does not exist.
+   :param str name: Name of a protocol
+   :returns: The protocol object for the named protocol.
+   :rtype: objc.formal_protocol
+   :raises ProtocolError: The protocol doesn't exist.
+
 
    This is the equivalent of ``@protocol(name)`` in Objective-C.
 
@@ -466,32 +416,39 @@ Dynamic modification of classes
 
    Add a sequence of methods to the given class.
 
-   The effect is similar to how categories work in Objective-C. If the class
-   already implements a method that is defined in *methods* the existing
-   implementation is replaced by the new one.
+   :param objc_class cls: The class to update
+   :param list[typing.Callable] methods: Sequence of methods to add to *cls*.
 
-   The objects in *methods* should be one of:
+                                  The objects in *methods* should be one of:
 
-   * :class:`selector` instances with a callable (that is, the first argument
-     to :class:`selector` must not be :data:`None`).
+                                  * :class:`selector` instances with a callable
+                                    (that is, the first argument to :class:`selector`
+                                    must not be :data:`None`).
 
-   * :class:`classmethod` or :class:`staticmethod` instances that wrap a
-     function object.
+                                  * :func:`classmethod` or :func:`staticmethod`
+                                    instances that wrap a function object.
 
-   * functions
+                                  * functions
 
-   * unbound methods
+                                  * unbound methods
 
-   For the last two the method selector is calculated using the regular
-   algorithm for this (e.g. as if ``selector(item)`` was called). The last
-   two are instance methods by default, but automatically made class methods
-   when the class (or a superclass) has a class method with the same
-   selector.
+                                  For the last two the method selector is calculated
+                                  using the regular algorithm for this (e.g. as if
+                                  ``selector(item)`` was called). The last two are
+                                  instance methods by default, but automatically made
+                                  class methods when the class (or a superclass) has a
+                                  class method with the same selector.
 
 .. function:: classAddMethod(cls, name, method)
 
    Adds function *method* as selector *name* to the given class. When *method*
    is a selector the signature and class-method-ness are copied from the selector.
+
+   :param objc.objc_class cls: The class to update
+   :param bytes name: The selector name
+   :param typing.Callable method: The method implementation. The implementation should
+                                  be a callable that's accepted as a selector implementation
+                                  in class definitions.
 
    .. note::
 
@@ -501,9 +458,11 @@ Dynamic modification of classes
 .. class:: Category
 
    A helper class for adding a category to an existing Objecive-C class (subclass
-   of *NSObject*).
+   of :class:`NSObject`).
 
-   Usage::
+   Usage:
+
+   .. sourcecode:: python
 
        class NSObject (Category(NSObject)):
           def method(self):
@@ -521,11 +480,11 @@ Dynamic modification of classes
 Plugin bundles
 --------------
 
-.. function:: currentBundle
+.. function:: currentBundle()
 
    During module initialization this function returns an NSBundle object for
    the current bundle. This works for application as well as plug-ins created
-   using `py2app <https://pythonhosted.org/py2app/>`_.
+   using `py2app <https://pypi.org/project/py2app/>`_.
 
    After module initialization use ``NSBundle.bundleForClass_(ClassInYourBundle)``
    to get the bundle.
@@ -548,7 +507,6 @@ in this section help in finetuning this behaviour.
    on import. In plugins this pool will interact in unwanted ways with the
    embedding application.
 
-
 .. function:: autorelease_pool()
 
    A context manager that runs the body of the block with a fresh autorelease
@@ -559,7 +517,9 @@ in this section help in finetuning this behaviour.
         with autorelease_pool():
             pass
 
-   .. todo:: insert links to documentation explaining why you'd want to use this.
+   This context manager is used to control when autoreleased values are
+   released, and is mostly useful when accessing or calculating many values
+   without reentering a run loop.
 
 Test support
 ------------
@@ -573,26 +533,28 @@ use these functions in your code.
    Split an encoded Objective-C signature string into the
    encoding strings for separate types.
 
-   :param typestring: an encoded method signature (byte string)
+   :param bytes typestring: an encoded method signature
    :return: list of type signatures
-   :type typestring: byte string
-   :rtype: list of byte strings
+   :rtype: list[bytes]
 
 
 .. function:: splitStructSignature(typestring)
 
-   Returns (structname, fields). *Structname* is a string or :data:`None` and
-   *fields* is a list of (name, typestr) values. The *name* is a string or
-   :data:`None` and the *typestr* is a byte string.
+   :param bytes typestr: and encoded signature for a struct
+   :return: ``(structname, fields)``. *Structname* is a string or :data:`None` and
+            *fields* is a list of (name, typestr) values. The *name* is a string or
+            :data:`None` and the *typestr* is a byte string.
+   :rtype: tuple[str|None, list[tuple[str|None, bytes]]]
+   :raise ValueError: The *typestring* is not the encoding of a C struct
 
-   Raises :exc:`ValueError` when the type is not the type string for a struct
-   type.
+.. function:: repythonify(object, type=b"@")
 
+   Convert *object* to an Objective-C value and back to Python.
 
-.. function:: repythonify(object [, type])
-
-   Internal API for converting an object to a given Objetive-C type
-   and converting it back again.
+   :param object: Value to pass to the bridge
+   :param bytes type: The C type that should be used as the intermediate.
+   :return: The value of *object* after converting it to Objective-C and
+            back again into Python.
 
 
 Framework wrappers
@@ -600,13 +562,11 @@ Framework wrappers
 
 .. function:: pyobjc_id(obj)
 
-   Returns the address of the underlying object as an integer.
+   Equivalent to :func:`id` for the Objective-C object proxied by PyObjC.
 
-   .. note::
-
-      This is basically the same as :func:`id`, but for the Objective-C
-      object wrapped by PyObjC instead of python objects.
-
+   :param objc.objc_object obj: Value to query
+   :return: The ``NSObject*`` value for *obj* as an integer
+   :rtype: int
 
 
 Types
@@ -617,7 +577,7 @@ Types
    This class is the metatype for Objective-C classes and provides no user-visible
    behavior.
 
-.. class:: objc_object([cobject, [c_void_p]])
+.. class:: objc_object(*, cobject=None, c_void_p=None)
 
    This class is the root class for Objective-C classes, that is all wrappers for
    Objective-C classes are a subclass of this class. It is not possible to instantiate
@@ -630,31 +590,27 @@ Types
    refers to. *Cobject* should be a Python capsule created using the :meth:`__cobject__`
    method, *c_void_p* should be a :class:`ctypes.c_void_p`.
 
-   .. note::
+   .. attribute:: pyobjc_ISA
+      :type: objc.objc_class
 
-      The normal way to create instances of (subclasses of) :class:`objc_object` is
-      to call the normal Cocoa allocation method. Calling the class should only be used
-      to construct a proxy from a pre-existing pointer value (for interoperability with
-      other libraries).
+      Read-only property with the current Objective-C classes of an object. The value
+      ``value.pyobjc_ISA`` is the same as ``type(value)``.
 
+      .. deprecated:: 11.1 Use ``type(value)`` instead.
 
+   .. attribute:: pyobjc_instanceMethods
 
-   .. data:: pyobjc_ISA
-
-      Read-only property that returns the current Objective-C classes of an object.
-
-   .. data:: pyobjc_instanceMethods
 
       Read-only property that provides explicit access to just the instance methods
       of an object.
 
-   .. data:: __block_signature__
+   .. attribute:: __block_signature__
 
       Property with the type signature for calling a block, or :data:`None`.
 
-   .. data:: __hasdict__
+   .. attribute:: __hasdict__
 
-      True if instances of this class have a ``__dict__`` and False otherwise.
+      True if instances of this class have a ``__dict__`` and false otherwise.
 
    .. method:: __cobject__()
 
@@ -667,9 +623,9 @@ Types
 
    .. method:: __reduce__()
 
-      This method ensures that Objective-C objects will not be pickled unless the subclass
-      explicitly implements the pickle protocol. This is needed because the pickle will
-      write an incomplete serialization of Objective-C objects for protocol 2 or later.
+      Raises :exc:`TypeError`. This ensures that Objective-C objects cannot used
+      with :mod:`pickle` (because the Cocoa and Python serialization protocols are
+      not compatible).
 
    .. method:: __class_getitem__(*args)
       :classmethod:
@@ -682,17 +638,15 @@ Types
 
    .. note::
 
-      The wrapper classes for the *NSString* class cluster aren't subclasses
-      of :class:`objc_object`, but are subclasses of the builtin :class:`unicode` type
-      (:class:`str:` in Python 3).
+      The wrapper classes for the :class:`NSString` class cluster aren't subclasses
+      of :class:`objc_object`, but are subclasses of the builtin :class:`str` type.
 
 .. class:: pyobjc_unicode
 
-   This class is used to wrap instances of the *NSString* class cluster and is
-   a subclass of the builtin Unicode type (:class:`unicode` for python 2 and :class:`str`
-   for Python 3).
+   This class is used to wrap instances of the :class:`NSString` class cluster and is
+   a subclass of :class:`str`.
 
-   Methods of the underlying *NSString* class can be accessed at as methods
+   Methods of the underlying :class:`NSString` class can be accessed at as methods
    of the python type, unless they have the same name as a method of the built-in Unicode
    type.
 
@@ -706,15 +660,15 @@ Types
 
       Instances of *NSString* can be mutable. Mutations to mutable Cocoa
       strings are not reflected in instances of :class:`pyobjc_unicode`, use
-      :meth:`nsstring` and explicit conversion to the built-in unicode type when
+      :meth:`nsstring` and explicit conversion to the built-in :class:`str` type when
       you work with mutable *NSString* values.
 
    .. note::
 
-      Cocoa strings are wrapped using a subclass of the built-in unicode string
+      Cocoa strings are wrapped using a subclass of the built-in :class:`str` type
       to get better interaction between Python and Cocoa. Because Cocoa strings are
-      instances of the built-in unicode type they can be passed to functions in
-      extension modules that expect unicode arguments (in particular the file
+      instances of the built-in :class:`str` type they can be passed to functions in
+      extension modules that expect string arguments (in particular the file
       system access APIs such as :func:`open`).
 
 
@@ -730,15 +684,15 @@ Types
                      and :data:`False` otherwise)
    :param isRequired:    Specify if the method is required (defaults to :data:`True`), used in the definition of protocols.
 
-   .. data:: callable
+   .. attribute:: callable
 
       Read-only property with access to the underlying callable (the *function* argument to the constructor).
 
-   .. data:: __doc__
+   .. attribute:: __doc__
 
       Documentation string for the selector
 
-   .. data:: __signature__
+   .. attribute:: __signature__
 
       An :class:`inspect.Signature` for the object
 
@@ -753,7 +707,46 @@ Types
       Returns a copy of the metadata dictionary for the selector.  See the
       :doc:`metadata system documentation </metadata/manual>` for more information.
 
-.. class:: objc_method(callable, \*, selector=None, signature=None, isclass=None)
+   .. attribute:: isHidden
+
+      True when the selector is hidden, and false otherwise.
+
+   .. attribute:: isRequired
+
+      True when the selector is required, and false otherwise. Only used for
+      conformance checking in protocols.
+
+   .. attribute:: isClassMethod
+
+      True when the selector is a class method, and false otherwise.
+
+   .. attribute:: definingClass
+
+      The class that defines this selector.
+
+
+    .. attribute:: __objclass__
+
+       Alias for *definingClass*.
+
+    .. attribute:: signature
+
+       Byte string with the Objective-C signature for the selector.
+
+    .. attribute:: native_signature
+
+       Byte string with the Objective-C signature for the selector, without post processing
+       or applying metadata.
+
+    .. attribute:: self
+
+       The *self* value for a bound selector.
+
+    .. attribute:: selector
+
+       Byte string with the Objective-C selector name.
+
+.. class:: objc_method(callable, *, selector=None, signature=None, isclass=None)
 
    Use this as a decorator in a Cococa class definition to signal that the
    method should definitely be converted to on Objective-C selector, and optional
@@ -817,7 +810,6 @@ Types
 
    .. versionadded:: 3.0
 
-
    .. versionadded: 9.1
 
       The decorator can now also be used with parenthesis while decorating:
@@ -857,14 +849,22 @@ Types
 
    Instances of :class:`ivar` have a number of attributes that help with introspection:
 
-   * *__typestr__*: The type encoding of the Objective-C type of the variable. See
-     :ref:`type-encodings` for more information.
+   .. attribute:: __typestr__
 
-   * *__name__*: The Objective-C name of the variable
+      The type encoding of the Objective-C type of the variable. See
+      :ref:`type-encodings` for more information.
 
-   * *__isOutlet__*: :data:`True` if the variable is an :func:`IBOutlet`
+   .. attribute:: __name__
 
-   * *__isSlot__*: :data:`True` if the variable is a Python slot.
+      The Objective-C name of the variable
+
+   .. attribute:: __isOutlet__
+
+      True if the variable is an :func:`IBOutlet`, false otherwise.
+
+   .. attribute:: __isSlot__
+
+      True if the variable is a Python slot, false otherwise.
 
 
    The :class:`ivar` has convenience class methods for creating :class:`ivar` objects
@@ -968,12 +968,6 @@ Types
       You cannot access these attributes  through an Objective-C instance, you have to access
       them through the class object. That's because :class:`ivar` is a data descriptor.
 
-   .. seealso::
-
-      Function :func:`IBOutlet`
-         Definition of outlets.
-
-
 .. class:: informal_protocol(name, selector_list)
 
    This class is used to specify which methods are part of an informal protocol
@@ -987,11 +981,11 @@ Types
    :param name: Name of the protocol
    :param selector_list: A sequence of :class:`selector` instances, all of which should have no callable.
 
-   .. data:: __name__
+   .. attribute:: __name__
 
       Read-only property with the protocol name
 
-   .. data:: selectors
+   .. attribute:: selectors
 
       Read-only property with the sequence of selectors for this protocol
 
@@ -1005,31 +999,22 @@ Types
    :param supers:   A list of protocols this protocol inherits from
    :param selector_list: A sequence of :class:`selector` instances, all of which should have no callable.
 
-   .. note::
-
-      Constructing new protocols is supported on a subset of macOS platforms:
-
-      * All 32-bit programs
-
-      * 64-bit programs starting from macOS 10.7, but only when PyObjC was build with
-        the 10.7 SDK (or later)
-
-   .. note::
+   .. warning::
 
       The protocols created by PyObjC are not compatible with NSXPCInterface because that
       class needs information ("extended method signature") that cannot be registered through
       the public API for the Objective-C runtime. See :doc:`../notes/using-nsxpcinterface` for
       more information.
 
-   .. data:: __name__
+   .. attribute:: __name__
 
       Read-only property with the name of the protocol
 
-   .. method:: name
+   .. attribute:: name
 
       Returns the name of the protocol
 
-   .. method:: conformsTo_(proto)
+   .. attribute:: conformsTo_(proto)
 
       Returns :data:`True` if this protocol conforms to protocol *proto*, returns :data:`False` otherwise.
 
@@ -1077,7 +1062,7 @@ Types
       is garbage collected. The Apple documentation for the API should mention how long
       the reference is safe to use.
 
-   .. data:: __typestr__
+   .. attribute:: __typestr__
 
       The type encoding for elements of the array. See :ref:`type-encodings` for more
       information.
@@ -1129,19 +1114,19 @@ Types
    Instances of this class represent global functions from Cocoa frameworks. These
    objects are created using :func:`loadBundleFunctions` and :func:`loadFunctionList`.
 
-   .. data:: __doc__
+   .. attribute:: __doc__
 
       Read-only property with the documentation string for the function.
 
-   .. data:: __name__
+   .. attribute:: __name__
 
       Read-only property with the name of the function
 
-   .. data:: __module__
+   .. attribute:: __module__
 
       Read-write property with the module that defined the function
 
-   .. data:: __signature__
+   .. attribute:: __signature__
 
       An :class:`inspect.Signature` for the object
 
@@ -1163,29 +1148,31 @@ Types
    method (basically a C function). Instances behave the same as unbound methods:
    you can call them but need to specify the "self" argument.
 
-   .. data:: isAlloc
+   .. attribute:: isAlloc
 
       Read-only attribute that specifies if the IMP is an allocator (that is,
       the implementation of "+alloc" or one of its variant)
 
-   .. data:: isClassMethod
+      .. deprecated:: 11.1 Is always :data:`False` and will be removed in PyObjC 12.
+
+   .. attribute:: isClassMethod
 
       Read-only attribute that specified if the IMP is for a class method.
 
-   .. data:: signature
+   .. attribute:: signature
 
       Read-only attribute with the type encoding for the IMP.
 
-   .. data:: selector
+   .. attribute:: selector
 
       Read-only attribute with the selector for the method that this IMP
       is associated with.
 
-   .. data:: __name__
+   .. attribute:: __name__
 
       Alias for :data:`selector`.
 
-   .. data:: __signature__
+   .. attribute:: __signature__
 
       An :class:`inspect.Signature` for the object
 
@@ -1209,6 +1196,13 @@ Types
    The regular :class:`super <__builtin__.super>` does *not* work correctly
    for Cocoa classes, the default function doesn't support custom attribute
    getters as used by PyObjC.
+
+   Always import this method in a way that shadows the builtin super when
+   using *super* in class definitions, that is always import like this:
+
+   .. sourcecode:: python
+
+      from objc import super
 
 
 Constants
@@ -1255,10 +1249,8 @@ Objective-C type strings
 ------------------------
 
 The Objective-C runtime and the PyObjC bridge represent the types of
-instance variables and methods arguments and return values as a string
-with a compact representation. The Python representation of that string is
-a byte string (that is type :class:`bytes` in Python 3.x and :class:`str`
-in Python 2.x).
+instance variables and methods arguments and return values as a byte string
+with a compact representation.
 
 Basic types
 ............
@@ -1820,18 +1812,6 @@ PyObjC provides an API that implements locking in the same way as the
       Release the object mutex
 
 
-Archiving Python and Objective-C objects
-----------------------------------------
-
-Python and Objective-C each provide a native object serialization method,
-the :mod:`pickle` module in Python and the *NSCoding* protocol in Objective-C.
-
-It is possible to use an *NSKeyedArchiver* to store any Python object that
-can be pickled in an Objective-C serialized data object.
-
-Due to technical details it is not possible to pickle an Objective-C object,
-unless someone explicitly implements the pickle protocol for such an object.
-
 Properties
 ----------
 
@@ -1849,12 +1829,6 @@ methods that mechanisms like Key-Value Coding use to interact with a class.
 PyObjC therefore has a number of property classes that allow you to define new
 properties that do interact fully with the Key-Value Coding and Observation
 frameworks.
-
-.. todo:: Implement method for enabling properties on existing classes and tell
-   why that is off by default and when it will be turned on by default.
-
-.. todo:: The description is way to minimal, even the design document contained
-   more information.
 
 .. class:: object_property(name=None, read_only=False, copy=False, dynamic=False, ivar=None, typestr=_C_ID, depends_on=None)
 
@@ -1950,8 +1924,7 @@ it cannot convert to normal Python values. When
 is false such pointer values are bridged as instances of :class:`ObjCPointer`.
 
 The bridge will unconditionally emit a warning before creating such instances,
-the reason for this is that the use of :class:`ObjCPointer` is unwanted
-(that's why the creation of such objects is disabled by default in PyObjC 3.0).
+the reason for this is that the use of :class:`ObjCPointer` is unwanted.
 
 .. class:: ObjCPointer
 
@@ -1969,23 +1942,28 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
 "FILE*" support
 ---------------
 
+PyObjC provides a limited wrapper for C's ``FILE*`` type. This wrapper
+is not a full replacement for the :mod:`io` module, but is only provided
+to make it easier to use a limited set of Cocoa APIs that use this
+C type.
+
 .. class:: FILE
 
-   This class is only present when using Python 3 and is used to
-   represent "FILE*" handles in Python. For Python 2 the regular
-   "file" type is used for that.
+   This class represents ``FILE*`` values.
 
    This types provides a fairly limited file-like API for binary
    I/O. Instances of this type don't close the stream automatically and
-   don't implement a contextmanager.
+   do not implement a contextmanager.
 
    .. method:: at_eof()
 
-      Returns True iff the stream is at the EOF marker
+      :return: If the stream is at the EOF marker
+      :rtype: bool
 
    .. method:: has_errors()
 
-      Return True iff the stream has errors.
+      :return: If the stream has errors
+      :rtype: bool
 
    .. method:: close()
 
@@ -1999,22 +1977,34 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
 
    .. method:: readline()
 
-      Read a single line from the stream.
+      :return: Next line in the file, or an empty string at the end of file
+      :rtype: bytes
 
    .. method:: read(buffer_size)
 
-      Read *buffer_size* bytes. This returns an empty bytes object
-      when the stream has reached end-of-file.
+      :param int buffer_size: Number of bytes to read
+      :return: The data that was read, which can be less than the requested amount
+               and will be an empty string at the enf of file.
+      :rtype: bytes
 
    .. method:: write(buffer)
 
-      Write *buffer* to the stream. Returns the number of bytes
-      that are actually written.
+      :param bytes buffer: Data to write.
+      :return: Amount of bytes that were written.
+      :rtype: int
 
    .. method:: tell()
 
-      Returns the current offset of the stream.
+      :return: the current offset of the stream.
+      :rtype: int
 
    .. method:: seek(offset, whence)
 
-      Seek to the specified offset.
+      :param int offset: Offset to seek to
+      :param int whence: Base for the offset (of one :data:`os.SEEK_SET`,
+                         :data:`os.SEEK_CUR`, :data:`os.SEEK_END`).
+
+   .. method:: fileno()
+
+      :return: The file descriptor associated with the ``FILE`` object
+      :rtype: int

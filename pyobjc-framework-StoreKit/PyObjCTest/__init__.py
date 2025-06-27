@@ -1,1 +1,1 @@
-""" StoreKit tests """
+"""StoreKit tests"""

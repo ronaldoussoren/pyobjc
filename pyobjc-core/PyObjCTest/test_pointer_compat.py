@@ -4,6 +4,8 @@ except ImportError:
     ctypes = None
 
 import objc
+import sys
+import types
 from PyObjCTest.pointersupport import object_capsule, opaque_capsule, OC_PointerSupport
 from PyObjCTools.TestSupport import TestCase, skipUnless
 
@@ -176,10 +178,18 @@ class TestMiscTypes(TestCase):
         self.assertIs(v, None)
 
     def test_class_alias(self):
-        self.assertEqual(OC_PointerSupport.getClass(), OC_PointerSupport)
+        self.assertEqual(
+            OC_PointerSupport.getClass.__metadata__()["retval"]["type"],
+            b"^{objc_class=}",
+        )
+        self.assertEqual(
+            OC_PointerSupport.className_.__metadata__()["arguments"][2]["type"],
+            b"^{objc_class=}",
+        )
         self.assertEqual(
             OC_PointerSupport.className_(objc.lookUpClass("NSObject")), "NSObject"
         )
+        self.assertEqual(OC_PointerSupport.getClass(), OC_PointerSupport)
 
     def test_string_ref(self):
         v1 = OC_PointerSupport.getString()
@@ -198,3 +208,20 @@ class TestMiscTypes(TestCase):
         v2 = OC_PointerSupport.getContext()
 
         self.assertIs(v1, v2)
+
+    def test_special_union(self):
+        self.assertResultHasType(OC_PointerSupport.getUnion, b"^(test_union=if)")
+        self.assertArgHasType(OC_PointerSupport.intFromUnion_, 0, b"^(test_union=if)")
+        v1 = OC_PointerSupport.getUnion()
+        if sys.version_info[:2] >= (3, 13):
+            self.assertIsInstance(v1, types.CapsuleType)
+        else:
+            self.assertEqual(type(v1).__name__, "PyCapsule")
+        self.assertIn('"__union__"', str(v1))
+        v2 = OC_PointerSupport.intFromUnion_(v1)
+        self.assertEqual(v2, 99)
+
+        with self.assertRaises(ValueError):
+            OC_PointerSupport.intFromUnion_(42)
+
+        self.assertEqual(objc._nameForSignature(b"^(test_union=if)"), "union_test")

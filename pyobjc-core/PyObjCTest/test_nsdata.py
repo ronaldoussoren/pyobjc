@@ -100,6 +100,21 @@ class DataSubClass(NSData):
         return self._value
 
 
+class DataSubClassErrorBytes(NSData):
+    def init(self):
+        self = super().init()
+        self._value = b"hello world"
+        return self
+
+    def length(self):
+        if self._value is None:
+            return 0
+        return len(self._value)
+
+    def bytes(self):  # noqa: A003
+        raise RuntimeError("don't have bytes")
+
+
 class MutableDataSubClass(NSMutableData):
     def init(self):
         self = super().init()
@@ -118,6 +133,24 @@ class MutableDataSubClass(NSMutableData):
         return self._value
 
 
+class MutableDataSubClassErrorBytes(NSMutableData):
+    def init(self):
+        self = super().init()
+        self._value = bytearray(b"hello world")
+        return self
+
+    def length(self):
+        if self._value is None:
+            return 0
+        return len(self._value)
+
+    def bytes(self):  # noqa: A003
+        return self._value
+
+    def mutableBytes(self):
+        raise RuntimeError("don't have mutable bytes")
+
+
 class TestSubclassing(TestCase):
     def testNSData(self):
         buf = DataSubClass.alloc().init()
@@ -131,6 +164,10 @@ class TestSubclassing(TestCase):
         buf._value = 42
         with self.assertRaises(TypeError):
             OC_MutableDataHelper.fetchBytesOf_(buf)
+
+        buf = DataSubClassErrorBytes.alloc().init()
+        with self.assertRaisesRegex(RuntimeError, "don't have bytes"):
+            NSData.dataWithData_(buf)
 
     def testNSMutableData(self):
         buf = MutableDataSubClass.alloc().init()
@@ -153,6 +190,10 @@ class TestSubclassing(TestCase):
             OC_MutableDataHelper.fetchBytesOf_(buf)
 
         with self.assertRaises(TypeError):
+            OC_MutableDataHelper.fetchMutableBytesOf_(buf)
+
+        buf = MutableDataSubClassErrorBytes.alloc().init()
+        with self.assertRaisesRegex(RuntimeError, "don't have mutable bytes"):
             OC_MutableDataHelper.fetchMutableBytesOf_(buf)
 
     def testCopyRO(self):
@@ -986,3 +1027,30 @@ class TestBytearrayInterface(TestBytesInterface):
 
         with self.assertRaisesRegex(IndexError, "index out of range"):
             py.pop(-22 * len(value))
+
+    @min_python_release("3.14")
+    def test_resize(self):
+        value = b"abcdefg"
+
+        oc = self.oc_cls.dataWithData_(value)
+        py = self.py_cls(value)
+
+        # XXX: The comparisons keep a temporary buffer alive until
+        # the current autorelease pool is poppped.
+        with objc.autorelease_pool():
+            self.assertEqual(oc, py)
+            self.assertEqual(bytes(oc), py)
+
+        oc.resize(20)
+        py.resize(20)
+
+        with objc.autorelease_pool():
+            self.assertEqual(oc, py)
+            self.assertEqual(bytes(oc), py)
+
+        oc.resize(2)
+        py.resize(2)
+
+        with objc.autorelease_pool():
+            self.assertEqual(oc, py)
+            self.assertEqual(bytes(oc), py)

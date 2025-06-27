@@ -4,7 +4,8 @@
  * Last update: Fri May 15 18:01:06 2015
  */
 
-static void __attribute__((__used__)) use_protocols(void)
+static void __attribute__((__used__))
+use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
 #if PyObjC_BUILD_RELEASE >= 1010
@@ -301,6 +302,10 @@ static void __attribute__((__used__)) use_protocols(void)
 #endif
 #if PyObjC_BUILD_RELEASE >= 1500
     p = PyObjC_IdToPython(@protocol(NSViewContentSelectionInfo));
+    Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1502
+    p = PyObjC_IdToPython(@protocol(NSWritingToolsCoordinatorDelegate));
     Py_XDECREF(p);
 #endif
 }

@@ -15,12 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
     if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
         return nil;            // LCOV_EXCL_LINE
 
-#ifdef PyObjC_DEBUG
-    if (!PyLong_Check(v) && !PyFloat_Check(v)) { // LCOV_BR_EXCL_LINE
-        PyObjCErr_InternalError();               // LCOV_EXCL_LINE
-    }
-#endif /* PyObjC_DEBUG */
-
     SET_FIELD_INCREF(value, v);
     return self;
 }
@@ -31,38 +25,22 @@ NS_ASSUME_NONNULL_BEGIN
     return value;
 }
 
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
+// LCOV_EXCL_STOP
 
 + (BOOL)supportsSecureCoding
 {
     return NO;
-}
-
-- (oneway void)release
-{
-    /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-
-        @try {
-            [super release];
-        } @catch (NSObject* exc) {
-            PyObjC_LEAVE_GIL;
-            @throw;
-        }
-
-    PyObjC_END_WITH_GIL
 }
 
 - (void)dealloc
@@ -88,21 +66,20 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
             PyObjC_GIL_RETURN(@encode(double));
-        } else if (PyLong_Check(value)) {
+        } else { // LCOV_EXCL_LINE
             (void)PyLong_AsLongLong(value);
             if (!PyErr_Occurred()) {
                 PyObjC_GIL_RETURN(@encode(long long));
-            } else {
-                PyErr_Clear();
-                (void)PyLong_AsUnsignedLongLong(value);
-                if (!PyErr_Occurred()) {
-                    PyObjC_GIL_RETURN(@encode(unsigned long long));
-                }
-                PyErr_Clear();
+            } // LCOV_EXCL_LINE
+            PyErr_Clear();
+            (void)PyLong_AsUnsignedLongLong(value);
+            if (!PyErr_Occurred()) {
+                PyObjC_GIL_RETURN(@encode(unsigned long long));
+            } // LCOV_EXCL_LINE
+            PyErr_Clear();
 
-                /* Wrap on overflow */
-                PyObjC_GIL_RETURN(@encode(long long));
-            }
+            /* Wrap on overflow */
+            PyObjC_GIL_RETURN(@encode(long long));
         }
     PyObjC_END_WITH_GIL
 
@@ -117,18 +94,18 @@ NS_ASSUME_NONNULL_BEGIN
         r = depythonify_c_value(encoded, value, buffer);
         if (r == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 }
 
 - (BOOL)boolValue
 {
-    int         r;
+    int r;
     PyObjC_BEGIN_WITH_GIL
         r = PyObject_IsTrue(value);
         if (r == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 
     return !!r;
@@ -149,7 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         if (r == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -161,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
             PyObjC_GIL_RETURN(PyFloat_AsDouble(value));
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
     return (double)[self longLongValue];
 }
@@ -217,21 +194,21 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (long long)longLongValue
-  /* Disable float-cast-overflow checking when running
-   * with undefined behaviour sanitizer. The float cast
-   * below can result in undefined behaviour but is
-   * necessary to match Cocoa semantics.
-   */
-  __attribute__((no_sanitize("float-cast-overflow")))
+    /* Disable float-cast-overflow checking when running
+     * with undefined behaviour sanitizer. The float cast
+     * below can result in undefined behaviour but is
+     * necessary to match Cocoa semantics.
+     */
+    __attribute__((no_sanitize("float-cast-overflow")))
 {
     long long result;
 
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
             double float_result = PyFloat_AsDouble(value);
-            result = (long long)float_result;
+            result              = (long long)float_result;
             PyObjC_GIL_RETURN(result);
-        } else if (PyLong_Check(value)) {
+        } else {
             result = PyLong_AsUnsignedLongLongMask(value);
             PyObjC_GIL_RETURN(result);
         }
@@ -246,12 +223,12 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (unsigned long long)unsignedLongLongValue
-  /* Disable float-cast-overflow checking when running
-   * with undefined behaviour sanitizer. The float cast
-   * below can result in undefined behaviour but is
-   * necessary to match Cocoa semantics.
-   */
-  __attribute__((no_sanitize("float-cast-overflow")))
+    /* Disable float-cast-overflow checking when running
+     * with undefined behaviour sanitizer. The float cast
+     * below can result in undefined behaviour but is
+     * necessary to match Cocoa semantics.
+     */
+    __attribute__((no_sanitize("float-cast-overflow")))
 {
     unsigned long long result;
 
@@ -275,7 +252,7 @@ NS_ASSUME_NONNULL_BEGIN
                 result = (unsigned long long)temp;
             }
             PyObjC_GIL_RETURN(result);
-        }
+        } // LCOV_BR_EXCL_LINE
     PyObjC_END_WITH_GIL
 
     // LCOV_EXCL_START
@@ -300,12 +277,12 @@ NS_ASSUME_NONNULL_BEGIN
         repr = PyObject_Repr(value);
         if (repr == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (depythonify_python_object(repr, &result) == -1) {
             Py_DECREF(repr);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(repr);
     PyObjC_END_WITH_GIL
     return result;
@@ -349,7 +326,11 @@ NS_ASSUME_NONNULL_BEGIN
     if (use_super) {
         [super encodeWithCoder:coder];
     } else {
-        PyObjC_encodeWithCoder(value, coder);
+        PyObjC_BEGIN_WITH_GIL
+            if (PyObjC_encodeWithCoder(value, coder) == -1) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
+        PyObjC_END_WITH_GIL
     }
 }
 
@@ -368,52 +349,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id _Nullable)initWithCoder:(NSCoder*)coder
 {
-    if (PyObjC_Decoder != NULL) {
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* setValue;
-            PyObject* selfAsPython;
-            PyObject* v;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
+        if (decoded == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
 
-            PyObject* cdr = id_to_python(coder);
-            if (cdr == NULL) {            // LCOV_BR_EXC_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+        SET_FIELD(value, decoded);
 
-            selfAsPython = PyObjCObject_New(self, 0, YES);
-            if (selfAsPython == NULL) {   // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
-            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+        id actual = PyObjC_RegisterObjCProxy(value, self);
+        [self release];
+        self = actual;
 
-            v = PyObjC_CallDecoder(cdr, setValue);
-            Py_DECREF(cdr);
-            Py_DECREF(setValue);
-            Py_DECREF(selfAsPython);
+    PyObjC_END_WITH_GIL
 
-            if (v == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-            Py_XDECREF(value);
-            value = v;
-
-            id actual = PyObjC_RegisterObjCProxy(value, self);
-            if (actual != self) {
-                [actual retain];
-                [self release];
-                self = actual;
-            }
-
-        PyObjC_END_WITH_GIL
-
-        return self;
-
-    } else {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"decoding Python objects is not supported"
-                                     userInfo:nil];
-        return nil;
-    }
+    return self;
 }
 
 - (BOOL)isEqualToValue:(NSValue*)other
@@ -439,7 +389,7 @@ NS_ASSUME_NONNULL_BEGIN
                 r = PyLong_AsLongLong(value);
                 if (r == -1 && PyErr_Occurred()) {
                     PyErr_Clear();
-                } else {
+                } else { // LCOV_EXCL_LINE
                     use_super = 1;
                 }
             }
@@ -457,19 +407,19 @@ NS_ASSUME_NONNULL_BEGIN
 
         if (other == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         ok = PyObjC_Cmp(value, other, &r);
         Py_DECREF(other);
         if (ok == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (r < 0) {
             PyObjC_GIL_RETURN(NSOrderedAscending);
         } else if (r > 0) {
             PyObjC_GIL_RETURN(NSOrderedDescending);
-        } else {
+        } else { // LCOV_EXCL_LINE
             PyObjC_GIL_RETURN(NSOrderedSame);
         }
 
@@ -484,17 +434,17 @@ NS_ASSUME_NONNULL_BEGIN
             int       r;                                                                 \
             if (other == NULL) {                                                         \
                 PyObjC_GIL_FORWARD_EXC();                                                \
-            }                                                                            \
+            } /* LCOV_EXCL_LINE */                                                       \
                                                                                          \
             r = PyObject_RichCompareBool(value, other, OPERATOR);                        \
             Py_DECREF(other);                                                            \
             if (r == -1) {                                                               \
                 PyObjC_GIL_FORWARD_EXC();                                                \
-            }                                                                            \
+            } /* LCOV_EXCL_LINE */                                                       \
                                                                                          \
             if (r) {                                                                     \
                 PyObjC_GIL_RETURN(YES);                                                  \
-            } else {                                                                     \
+            } else { /* LCOV_EXCL_LINE */                                                \
                 PyObjC_GIL_RETURN(NO);                                                   \
             }                                                                            \
                                                                                          \
@@ -533,19 +483,19 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
                 (void)PyLong_AsLongLong(value);
                 if (!PyErr_Occurred()) {
                     PyObjC_GIL_RETURN([NSNumber class]);
-                } else {
+                } else { // LCOV_EXCL_LINE
                     PyErr_Clear();
 
                     (void)PyLong_AsUnsignedLongLong(value);
                     if (!PyErr_Occurred()) {
                         PyObjC_GIL_RETURN([NSNumber class]);
-                    } else {
+                    } else { // LCOV_EXCL_LINE
                         PyErr_Clear();
 
                         PyObjC_GIL_RETURN([self class]);
                     }
                 }
-            } else {
+            } else { // LCOV_EXCL_LINE
                 PyObjC_GIL_RETURN([self class]);
             }
 
@@ -573,7 +523,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
     return [self copyWithZone:NULL];
 }
 
-- (id)copyWithZone:(NSZone* _Nullable)__attribute__((__unused__))zone
+- (id)copyWithZone:(NSZone* _Nullable)__attribute__((__unused__)) zone
 {
     /* XXX: This is ok if value is a python builtin
      *      but not for arbitrary python objects.

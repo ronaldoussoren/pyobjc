@@ -4515,6 +4515,24 @@
    }
   },
   "enum": {
+   "AVAudioSessionMicrophoneInjectionModeNone": {
+    "value": 0
+   },
+   "AVAudioSessionMicrophoneInjectionModeSpokenAudio": {
+    "value": 1
+   },
+   "AVAudioApplicationMicrophoneInjectionPermissionServiceDisabled": {
+    "value": 1936876659
+   },
+   "AVAudioApplicationMicrophoneInjectionPermissionUndetermined": {
+    "value": 1970168948
+   },
+   "AVAudioApplicationMicrophoneInjectionPermissionDenied": {
+    "value": 1684369017
+   },
+   "AVAudioApplicationMicrophoneInjectionPermissionGranted": {
+    "value": 1735552628
+   },
    "AVAudio3DMixingRenderingAlgorithmEqualPowerPanning": {
     "value": 0
    },
@@ -4871,6 +4889,12 @@
    }
   },
   "enum_type": {
+   "AVAudioSessionMicrophoneInjectionMode": {
+    "type": "q"
+   },
+   "AVAudioApplicationMicrophoneInjectionPermission": {
+    "type": "q"
+   },
    "AVAudio3DMixingPointSourceInHeadMode": {
     "type": "q"
    },

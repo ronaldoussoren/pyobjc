@@ -1,5 +1,6 @@
 import objc
 from PyObjCTools.TestSupport import TestCase
+from PyObjCTest.test_metadata_function import makeArrayWithFormat_
 
 objc.registerMetaDataForSelector(
     b"OC_CallbackTest",
@@ -227,6 +228,21 @@ class TestCallbackFor(TestCase):
             objc.callbackFor(OC_CallbackTest.selWithCallback_)(
                 lambda a, b, c: None,
             )
+
+        m = objc.callbackFor(OC_CallbackTest.selWithCallback_andCallback_, 3)
+        with self.assertRaisesRegex(TypeError, "Callable isn't callable"):
+            m(42)
+
+        with self.assertRaisesRegex(TypeError, "missing 1"):
+            m()
+
+        m = objc.callbackFor(makeArrayWithFormat_, 0)
+        with self.assertRaisesRegex(ValueError, "Argument 0 is not callable"):
+            m(lambda a: 42)
+
+        m = objc.callbackFor(makeArrayWithFormat_, 1)
+        with self.assertRaisesRegex(IndexError, "No such argument"):
+            m(lambda a: 42)
 
 
 class TestSelectorFor(TestCase):

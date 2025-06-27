@@ -60,6 +60,13 @@ class SplitSignatureTest(TestCase):
                     # Check is that the call is successfull
                     objc.splitSignature(sel.signature)
 
+    def test_invalid(self):
+        with self.assertRaises(TypeError):
+            objc.splitSignature()
+
+        with self.assertRaisesRegex(ValueError, "type signature"):
+            objc.splitSignature(b"{ab")
+
     def testSimple(self):
         self.assertEqual(objc.splitSignature(b"@:@"), (b"@", b":", b"@"))
         self.assertEqual(
@@ -126,8 +133,10 @@ class SplitSignatureTest(TestCase):
                     continue
 
                 if sel.selector.split(b":", 1)[0] in (
+                    b"set",
                     b"fm",
                     b"_fm",
+                    b"_ns",
                     b"_ax",
                     b"_scr",
                     b"CA_interpolateValues",
@@ -147,6 +156,8 @@ class SplitSignatureTest(TestCase):
                     b"ams",
                     b"safari",
                     b"vs",
+                    b"swiftui",
+                    b"_swiftui",
                 ) or sel.selector in (
                     b"isNSArray::",
                     b"isNSCFConstantString::",
@@ -186,14 +197,28 @@ class SplitSignatureTest(TestCase):
                     )
 
     def testSplitStructSignature(self):
+        with self.assertRaises(TypeError):
+            objc.splitStructSignature()
+
+        self.assertEqual(objc.splitStructSignature(b"{a}"), (None, []))
+
         with self.assertRaisesRegex(ValueError, "not a struct encoding"):
             objc.splitStructSignature(objc._C_ID)
+
+        with self.assertRaisesRegex(
+            ValueError, "value is not a complete struct signature"
+        ):
+            objc.splitStructSignature(b"{}")
+
         with self.assertRaisesRegex(
             ValueError, "value is not a complete struct signature"
         ):
             objc.splitStructSignature(b"{NSPoint=dd")
         with self.assertRaisesRegex(ValueError, "additional text at end of signature"):
             objc.splitStructSignature(b"{NSPoint=dd}d")
+
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
+            objc.splitStructSignature(b"{NSPoint=XX}")
 
         self.assertEqual(
             objc.splitStructSignature(b"{NSPoint=dd}"),
@@ -202,4 +227,24 @@ class SplitSignatureTest(TestCase):
         self.assertEqual(
             objc.splitStructSignature(b'{NSPoint="x"d"y"d}'),
             ("NSPoint", [("x", b"d"), ("y", b"d")]),
+        )
+
+        self.assertEqual(
+            objc.splitStructSignature(b"{=d10d}"),
+            (None, [(None, b"d"), (None, b"d")]),
+        )
+
+        self.assertEqual(
+            objc.splitStructSignature(b"{=dd}"),
+            (None, [(None, b"d"), (None, b"d")]),
+        )
+
+        self.assertEqual(
+            objc.splitStructSignature(b"{NSPoint=}"),
+            ("NSPoint", []),
+        )
+
+        self.assertEqual(
+            objc.splitStructSignature(b"{NSPoint}"),
+            ("NSPoint", []),
         )

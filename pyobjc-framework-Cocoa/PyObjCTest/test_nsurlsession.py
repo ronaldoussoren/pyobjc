@@ -59,6 +59,12 @@ else:
         def setWaitsForConnectivity_(self, v):
             pass
 
+        def usesClassicLoadingMode(self):
+            return 1
+
+        def setUsesClassicLoadingMode_(self, v):
+            pass
+
 
 class TestNSURLSessionHelper(Foundation.NSObject):
     def URLSession_didReceiveChallenge_completionHandler_(self, a, b, c):
@@ -476,6 +482,15 @@ class TestNSURLSession(TestCase):
             Foundation.NSURLSessionDownloadTask.cancelByProducingResumeData_,
             0,
             b"v@",
+        )
+
+    @min_os_level("15.4")
+    def testMethods15_4(self):
+        self.assertResultIsBOOL(
+            Foundation.NSURLSessionConfiguration.usesClassicLoadingMode
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURLSessionConfiguration.setUsesClassicLoadingMode_, 0
         )
 
     @min_sdk_level("10.12")

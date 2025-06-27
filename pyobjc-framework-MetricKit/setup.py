@@ -15,12 +15,12 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = "11.0a0"
+VERSION = "11.1.1"
 
 setup(
     name="pyobjc-framework-MetricKit",
     description="Wrappers for the framework MetricKit on macOS",
-    min_os_level="10.16",
+    min_os_level="11.0",
     packages=["MetricKit"],
     ext_modules=[
         Extension(

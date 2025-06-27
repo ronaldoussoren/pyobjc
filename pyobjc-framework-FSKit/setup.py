@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = "11.0a0"
+VERSION = "11.1.1"
 
 setup(
     name="pyobjc-framework-FSKit",
@@ -27,7 +27,7 @@ setup(
         Extension(
             "FSKit._FSKit",
             ["Modules/_FSKit.m"],
-            extra_link_args=["-framework", "FSKit"],
+            # extra_link_args=["-framework", "FSKit"],
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -38,10 +38,7 @@ setup(
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,
-        "pyobjc-framework-CoreMedia>=" + VERSION,
-        "pyobjc-framework-CoreAudio>=" + VERSION,
         "pyobjc-framework-Cocoa>=" + VERSION,
-        "pyobjc-framework-Quartz>=" + VERSION,
     ],
     long_description=__doc__,
 )

@@ -5,6 +5,9 @@
   "typed_enum": {
    "FSTaskParameterConstant":  { "type": "@", "type_name": "NSString" }
   },
+  "externs": {
+   "FSKitVersionString": { "ignore": true }
+  },
   "classes": {
    "NSObject": {
     "methods": [
@@ -60,7 +63,7 @@
           "4": { "type": "Q" },
           "5": { "type": "I" }
          },
-         "retval": { "type": "i" }
+         "retval": { "type": "Z" }
         }
        }
       }
@@ -106,19 +109,56 @@
      }
     ]
    },
-   "FSBlockDeviceResource": {
+   "FSModuleIdentity": {
     "methods": [
      {
-      "selector": "installedExtensionsWithError:",
-      "class_method": true,
-      "args": {
-       "0": { "type_modifier": "o" }
-      }
+      "selector": "isSystem",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
      }
     ]
    },
    "FSBlockDeviceResource": {
     "methods": [
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "delayedMetadataWriteFrom:startingAt:length:error:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "metadataWriteFrom:startingAt:length:error:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "metadataReadInto:startingAt:length:error:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "readInto:startingAt:length:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
+      },
+      "class_method": false,
+      "selector": "readInto:startingAt:length:completionHandler:"
+     },
      {
       "args": {
        "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
@@ -135,85 +175,61 @@
      },
      {
       "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "writeFrom:startingAt:length:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      },
+      "class_method": false,
+      "selector": "writeFrom:startingAt:length:completionHandler:"
+     },
+     {
+      "args": {
        "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "writeFrom:startingAt:length:replyHandler:"
      },
      {
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      },
+      "selector": "metadataReadInto:startingAt:length:",
       "class_method": false,
-      "selector": "synchronousWriteFrom:startingAt:length:replyHandler:"
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 }
+      }
      },
      {
       "args": {
-       "0": { "type_modifier": "N", "c_array_length_in_arg": 2 }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2},
+       "3": { "type_modifier": "n", "c_array_length_in_arg": 4 }
       },
       "class_method": false,
-      "selector": "synchronousMetaReadInto:startingAt:length:replyHandler:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "N", "c_array_length_in_arg": 2},
-       "3": { "type_modifier": "N", "c_array_length_in_arg": 4 }
-      },
-      "class_method": false,
-      "selector": "synchronousMetaReadInto:startingAt:length:readAheadExtents:readAheadCount:replyHandler:"
+      "selector": "metadataReadInto:startingAt:length:readAheadExtents:readAheadCount:"
      },
      {
       "args": {
        "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
-      "selector": "metaWriteFrom:startingAt:length:replyHandler:"
+      "selector": "metadataWriteFrom:startingAt:length:"
      },
      {
       "args": {
        "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
-      "selector": "synchronousMetaWriteFrom:startingAt:length:replyHandler:"
+      "selector": "delayedMetadataWriteFrom:startingAt:length:"
      },
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+       "1": { "type_override": "Z" }
       },
       "class_method": false,
-      "selector": "synchronousDelayedMetaWriteFrom:startingAt:length:replyHandler:"
-     }
-    ]
-   },
-   "FSEntityIdentifier": {
-    "methods": [
-     {
-      "args": {
-       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
-      },
-      "class_method": false,
-      "selector": "initWithUUID:byteQualifier:"
-     },
-     {
-      "args": {
-       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
-      },
-      "class_method": false,
-      "selector": "initWithUUID:longByteQualifier:"
-     },
-     {
-      "args": {
-       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
-      },
-      "class_method": true,
-      "selector": "identifierWithUUID:byteQualifier:"
-     },
-     {
-      "args": {
-       "1": { "type_override": "^v", "type_modifier": "n", "c_array_of_variable_length": true }
-      },
-      "class_method": true,
-      "selector": "identifierWithUUID:longByteQualifier:"
+      "selector": "proxyResourceForBSDName:isWritable:"
      }
     ]
    },

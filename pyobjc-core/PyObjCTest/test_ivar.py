@@ -1,20 +1,12 @@
 import objc
 from PyObjCTest.instanceVariables import ClassWithVariables
 from PyObjCTools.TestSupport import TestCase
+from .test_metadata import NoObjCClass
+
 
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
-
-
-# XXX: This type and instance should be in a  helper module
-class NilHelper(NSObject):
-    def init(self):
-        self.release()
-        return None
-
-
-nilObject = NilHelper.alloc()
-nilObject.init()
+NSArray = objc.lookUpClass("NSArray")
 
 
 class Base:
@@ -43,9 +35,50 @@ class TestClass(NSObject):
     shortVar = objc.ivar.short("shortVar2")
 
 
+class NoBool:
+    def __bool__(self):
+        raise RuntimeError("no bool")
+
+
 class TestInstanceVariables(TestCase):
     def setUp(self):
         self.object = TestClass.alloc().init()
+
+    def test_invalid_outlet(self):
+        with self.assertRaisesRegex(RuntimeError, "no bool"):
+            objc.ivar("name", isOutlet=NoBool())
+
+        with self.assertRaisesRegex(RuntimeError, "no bool"):
+            objc.ivar("name", isSlot=NoBool())
+
+    def test_class_setup(self):
+        v = objc.ivar()
+        with self.assertRaisesRegex(TypeError, "required argument "):
+            v.__pyobjc_class_setup__()
+
+        class_dict = {}
+        ilist = set()
+        clist = set()
+
+        v.__pyobjc_class_setup__("myname", class_dict, ilist, clist)
+        self.assertEqual(v.__name__, "myname")
+        self.assertEqual(class_dict, {})
+        self.assertEqual(ilist, set())
+        self.assertEqual(clist, set())
+
+    def test_ivar_misusage(self):
+        iv = objc.ivar("iv")
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot access Objective-C instance-variables through class"
+        ):
+            iv.__get__(objc.lookUpClass("NSObject"))
+
+        o = NSArray.alloc()
+        o.init()
+
+        with self.assertRaisesRegex(ValueError, "Invalid type encoding"):
+            objc.ivar("iv", b"X")
 
     def test_ivar_equality(self):
         # Check that ivar equality tests are correct,
@@ -56,6 +89,8 @@ class TestInstanceVariables(TestCase):
         ivar_b = objc.ivar("b")
         ivar_b2 = objc.ivar("b", isSlot=True)
         ivar_b3 = objc.ivar("b", isOutlet=True)
+        ivar_nameless = objc.ivar()
+        ivar_nameless2 = objc.ivar()
 
         self.assertFalse(ivar_b.__isSlot__)
         self.assertFalse(ivar_b.__isOutlet__)
@@ -68,15 +103,30 @@ class TestInstanceVariables(TestCase):
         self.assertFalse(ivar_b == ivar_b2)
         self.assertFalse(ivar_b == ivar_b3)
         self.assertFalse(ivar_b2 == ivar_b3)
+        self.assertTrue(ivar_nameless == ivar_nameless2)
+        self.assertFalse(ivar_nameless == ivar_a)
+        self.assertFalse(ivar_a == ivar_nameless)
+        self.assertFalse(ivar_a == 42)
 
+        self.assertFalse(ivar_a != ivar_a)
         self.assertFalse(ivar_a != ivar_a2)
         self.assertTrue(ivar_a != ivar_a3)
         self.assertTrue(ivar_a != ivar_b)
         self.assertTrue(ivar_b != ivar_b2)
         self.assertTrue(ivar_b != ivar_b3)
         self.assertTrue(ivar_b2 != ivar_b3)
+        self.assertFalse(ivar_nameless != ivar_nameless2)
+        self.assertTrue(ivar_nameless != ivar_a)
+        self.assertTrue(ivar_a != ivar_nameless)
+        self.assertTrue(ivar_a != 42)
 
+        with self.assertRaisesRegex(TypeError, "'<' not supported"):
+            ivar_a < ivar_b  # noqa: B015
+
+        self.assertEqual(hash(ivar_nameless), hash(ivar_nameless2))
         self.assertEqual(hash(ivar_a), hash(ivar_a2))
+        self.assertNotEqual(hash(ivar_b), hash(ivar_b2))
+        self.assertNotEqual(hash(ivar_b), hash(ivar_b3))
 
     def test_ivars_with_same_name(self):
         with self.assertRaises(objc.error):
@@ -151,6 +201,14 @@ class TestInstanceVariables(TestCase):
 
         self.object.idVar = "hello"
         self.assertEqual(self.object.idVar, "hello")
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            self.object.idVar = NoObjCClass()
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot set Objective-C instance-variables through class"
+        ):
+            type(self.object).idVar.__set__(type(self.object), 42)
 
     def testInt(self):
         # Check that we can set and query attributes of type 'int'
@@ -280,11 +338,6 @@ class TestAllInstanceVariables(TestCase):
         with self.assertRaisesRegex(TypeError, "argument 2 must be str, not int"):
             getter(obj, 42)
 
-        with self.assertRaisesRegex(
-            ValueError, "Getting instance variable of a nil object"
-        ):
-            getter(nilObject, "isa")
-
     def testWriting(self):
         obj = ClassWithVariables.alloc().init()
 
@@ -318,6 +371,16 @@ class TestAllInstanceVariables(TestCase):
             "Instance variable is an object, updateRefCounts argument is required",
         ):
             setter(obj, "objValue", o)
+
+        class NotBool:
+            def __bool__(self):
+                raise RuntimeError("no bool")
+
+        with self.assertRaisesRegex(
+            RuntimeError,
+            "no bool",
+        ):
+            setter(obj, "objValue", o, NotBool())
 
         self.assertIsNot(getter(obj, "objValue"), o)
         setter(obj, "objValue", o, True)
@@ -367,11 +430,6 @@ class TestAllInstanceVariables(TestCase):
             r"(function missing required argument 'name' \(pos 2\))|(Required argument 'name' \(pos 2\) not found)",
         ):
             setter(obj)
-
-        with self.assertRaisesRegex(
-            ValueError, "Setting instance variable of a nil object"
-        ):
-            setter(nilObject, "isa", NSObject)
 
     def testClassMod(self):
         # It's scary as hell, but updating the class of an object does "work"

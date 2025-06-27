@@ -880,6 +880,11 @@
    }
   },
   "functions": {
+   "IOBluetoothOBEXSessionOpenTransportConnection": {
+    "args": {
+     "1": {"callable_retained": true }
+    }
+   },
    "IOBluetoothAddSCOAudioDevice": {
     "args": {
      "0": {},
@@ -900,6 +905,7 @@
     "args": {
      "0": {},
      "1": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

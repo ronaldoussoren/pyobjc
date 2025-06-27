@@ -101,3 +101,9 @@ class TestAVAudioSessionTypes(TestCase):
         self.assertEqual(AVFoundation.AVAudioSessionRenderingModeSpatialAudio, 3)
         self.assertEqual(AVFoundation.AVAudioSessionRenderingModeDolbyAudio, 4)
         self.assertEqual(AVFoundation.AVAudioSessionRenderingModeDolbyAtmos, 5)
+
+        self.assertIsEnumType(AVFoundation.AVAudioSessionMicrophoneInjectionMode)
+        self.assertEqual(AVFoundation.AVAudioSessionMicrophoneInjectionModeNone, 0)
+        self.assertEqual(
+            AVFoundation.AVAudioSessionMicrophoneInjectionModeSpokenAudio, 1
+        )

@@ -43,11 +43,11 @@ PyObject* _Nullable PyObjC_TryCreateCFProxy(NSObject* value)
 {
     PyObject* rval = NULL;
 
-    PyObjC_Assert(gTypeid2class != NULL, NULL);
+    assert(gTypeid2class != NULL);
 
     PyObject*     cfid;
     PyTypeObject* tp;
-    int r;
+    int           r;
 
     cfid = PyLong_FromLong(CFGetTypeID((CFTypeRef)value));
     if (cfid == NULL) { // LCOV_BR_EXCL_LINE
@@ -55,9 +55,9 @@ PyObject* _Nullable PyObjC_TryCreateCFProxy(NSObject* value)
     }
     r = PyDict_GetItemRef(gTypeid2class, cfid, (PyObject**)&tp);
     Py_DECREF(cfid);
-    switch (r) {
+    switch (r) { // LCOV_BR_EXCL_LINE
     case -1:
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
 
     case 0:
         return NULL;
@@ -70,7 +70,7 @@ PyObject* _Nullable PyObjC_TryCreateCFProxy(NSObject* value)
         }
 
         ((PyObjCObject*)rval)->objc_object = value;
-        ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
+        ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
         CFRetain(value);
 
         return rval;
@@ -87,7 +87,7 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
     PyObject* rval = NULL;
 
     rval = PyObjC_FindPythonProxy(self);
-    if (rval == NULL) {
+    if (rval == NULL) { // LCOV_BR_EXCL_LINE
         rval = PyObjC_TryCreateCFProxy(self);
         if (rval == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
             return NULL;                        // LCOV_EXCL_LINE
@@ -104,9 +104,14 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
             Py_DECREF(rval);
             return actual;
         }
-    }
+    } // LCOV_EXCL_LINE
 
-    return rval;
+    /* Currently all code paths that end up calling
+     * the __pyobjc_PythonObject__ selector already
+     * checked if the proxy exists fore calling the
+     * selector.
+     */
+    return rval; // LCOV_EXCL_LINE
 }
 #endif
 
@@ -117,7 +122,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     PyObject*          result;
     PyObject*          bases;
     PyObjCClassObject* info;
-    int r;
+    int                r;
 
     if (encoding[0] != _C_ID) {
         if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) { // LCOV_BR_EXCL_LINE
@@ -132,7 +137,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
          * XXX: Can we reproduce this in testing?
          */
         // LCOV_EXCL_START
-        PyObjC_Assert(PyObjC_NSCFTypeClass != NULL, NULL);
+        assert(PyObjC_NSCFTypeClass != NULL);
         Py_INCREF(PyObjC_NSCFTypeClass);
         return PyObjC_NSCFTypeClass;
         // LCOV_EXCL_STOP
@@ -149,17 +154,18 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     }
 
     r = PyDict_GetItemRef(gTypeid2class, cf, &result);
-    switch (r) {
+    switch (r) { // LCOV_BR_EXCL_LINE
     case -1:
+        // LCOV_EXCL_START
         Py_DECREF(cf);
         return NULL;
+        // LCOV_EXCL_STOP
     case 1:
         /* This type is the same as an already registered type,
          * return that type
          */
         Py_DECREF(cf);
         return result;
-
     }
     /* case 0: */
     dict = PyDict_New();
@@ -254,7 +260,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
             result, "__module__", PyObjCClass_DefaultModule)
         < 0) {
         PyErr_Clear(); // LCOV_EXCL_LINE
-    }
+    } // LCOV_EXCL_LINE
 
     if (PyDict_SetItem(gTypeid2class, cf, result) == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -341,17 +347,17 @@ PyObject* _Nullable PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* dat
 {
     PyObject* v;
     PyObject* typestr_obj = PyUnicode_FromString(typestr);
-    if (typestr_obj == NULL) {
-        return NULL;
+    if (typestr_obj == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;           // LCOV_EXCL_LINE
     }
     int r = PyDict_GetItemRef(PyObjC_TypeStr2CFTypeID, typestr_obj, &v);
     Py_DECREF(typestr_obj);
 
     CFTypeID typeid;
 
-    switch (r) {
+    switch (r) { // LCOV_BR_EXCL_LINE
     case -1:
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     case 0:
         PyErr_Format(PyExc_ValueError,
                      "Don't know CF type for typestr '%s', cannot create special wrapper",
@@ -359,8 +365,10 @@ PyObject* _Nullable PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* dat
         return NULL;
     default:
         if (depythonify_c_value(@encode(CFTypeID), v, &typeid) < 0) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(v);
-            return NULL;                                              // LCOV_EXCL_LINE
+            return NULL;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(v);
 
@@ -378,19 +386,19 @@ PyObject*
 PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
 {
     PyObject* rval = NULL;
-    int r;
+    int       r;
 
-    PyObjC_Assert(gTypeid2class != NULL, NULL);
+    assert(gTypeid2class != NULL);
 
     PyObject*     cfid;
     PyTypeObject* tp;
 
     cfid = PyLong_FromLong(typeid);
-    r = PyDict_GetItemRef(gTypeid2class, cfid, (PyObject**)&tp);
+    r    = PyDict_GetItemRef(gTypeid2class, cfid, (PyObject**)&tp);
     Py_DECREF(cfid);
-    switch (r) {
+    switch (r) { // LCOV_BR_EXCL_LINE
     case -1:
-        return NULL;
+        return NULL; // LCOV_EXCL_LINE
     case 0:
         return (PyObject*)PyObjCObject_New(
             datum, PyObjCObject_kMAGIC_COOKIE | PyObjCObject_kSHOULD_NOT_RELEASE, NO);

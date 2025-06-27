@@ -60,8 +60,7 @@ static PyObject* _Nullable proto_get__name__(PyObject* object,
 
     if (name == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
         // LCOV_EXCL_STOP
     }
 
@@ -214,9 +213,9 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
         return NULL;      // LCOV_EXCL_LINE
     }
 
-    result->objc = theProtocol;
+    result->objc     = theProtocol;
     PyObject* actual = PyObjC_RegisterPythonProxy( // LCOV_BR_EXCL_LINE
-            result->objc, (PyObject*)result);
+        result->objc, (PyObject*)result);
     Py_DECREF(result);
     return actual;
 
@@ -236,8 +235,7 @@ static PyObject* _Nullable proto_name(PyObject* object)
 
     if (name == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
         // LCOV_EXCL_STOP
     }
 
@@ -260,11 +258,9 @@ static PyObject* _Nullable proto_conformsTo_(PyObject* object, PyObject* _Nullab
     }
 
     if (protocol_conformsToProtocol(self->objc, objc_protocol)) {
-        Py_INCREF(Py_True);
-        return Py_True;
+        Py_RETURN_TRUE;
     } else {
-        Py_INCREF(Py_False);
-        return Py_False;
+        Py_RETURN_FALSE;
     }
 }
 
@@ -379,8 +375,7 @@ static PyObject* _Nullable descriptionForInstanceMethod_(PyObject* object, PyObj
     }
 
     if (descr.name == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
 
     } else {
         char buf[512];
@@ -403,8 +398,7 @@ static PyObject* _Nullable descriptionForClassMethod_(PyObject* object, PyObject
         descr = protocol_getMethodDescription(self->objc, aSelector, NO, NO);
     }
     if (descr.name == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     } else {
         char buf[256];
         PyObjCRT_SimplifySignature(descr.types, buf, sizeof(buf));
@@ -486,7 +480,7 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
 {
     PyObjCFormalProtocol* result;
 
-    PyObjC_Assert(protocol != NULL, NULL);
+    assert(protocol != NULL);
 
     result = (PyObjCFormalProtocol*)PyObject_New(
         PyObjCFormalProtocol, (PyTypeObject*)PyObjCFormalProtocol_Type);
@@ -494,17 +488,18 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
         return NULL;      // LCOV_EXCL_LINE
     }
 
-    result->objc = protocol;
+    result->objc     = protocol;
     PyObject* actual = PyObjC_RegisterPythonProxy(result->objc, (PyObject*)result);
     Py_DECREF(result);
     return actual;
 }
 
-Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject* object)
+Protocol*
+PyObjCFormalProtocol_GetProtocol(PyObject* object) NS_RETURNS_NOT_RETAINED
 {
-    PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
+    assert(PyObjCFormalProtocol_Check(object));
 
-    PyObjC_Assert(PyObjCFormalProtocol_Check(self), NULL);
+    PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
 
     return self->objc;
 }

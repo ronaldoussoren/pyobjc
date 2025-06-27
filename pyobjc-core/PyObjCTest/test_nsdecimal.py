@@ -8,27 +8,38 @@ import warnings
 import objc
 from objc import super  # noqa: A004
 from PyObjCTest.decimal import OC_TestDecimal
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase, skipUnless
 
 
 class TestNSDecimalWrapper(TestCase):
     def test_creation(self):
-        d = objc.NSDecimal(0)
-        self.assertEqual(str(d), "0")
+        for value in (0, 5, (2**62) + 5):
+            d = objc.NSDecimal(value)
+            self.assertIsInstance(d, objc.NSDecimal)
+            self.assertEqual(str(d), str(value))
 
-        d = objc.NSDecimal(-5)
-        self.assertEqual(str(d), "-5")
+            d = objc.NSDecimal(-value)
+            self.assertIsInstance(d, objc.NSDecimal)
+            self.assertEqual(str(d), str(-value))
+
+        value = 2**63 + 2
+        d = objc.NSDecimal(value)
+        self.assertIsInstance(d, objc.NSDecimal)
+        self.assertEqual(str(d), str(value))
 
         with self.assertRaisesRegex(OverflowError, "int too big to convert"):
             objc.NSDecimal(1 << 66)
 
         d = objc.NSDecimal(0.0)
+        self.assertIsInstance(d, objc.NSDecimal)
         self.assertEqual(str(d), "0")
 
         d = objc.NSDecimal(0.5)
+        self.assertIsInstance(d, objc.NSDecimal)
         self.assertEqual(str(d), "0.5")
 
         d = objc.NSDecimal("1.24")
+        self.assertIsInstance(d, objc.NSDecimal)
         self.assertEqual(str(d), "1.24")
 
         d = objc.NSDecimal(500, 3, False)
@@ -51,13 +62,37 @@ class TestNSDecimalWrapper(TestCase):
         ):
             objc.NSDecimal(500, -6, True, False)
 
+        class NotBool:
+            def __bool__(self):
+                raise RuntimeError("no bool")
+
+        with self.assertRaisesRegex(RuntimeError, "no bool"):
+            objc.NSDecimal(500, -6, NotBool())
+
         with self.assertRaisesRegex(
             TypeError, "cannot convert instance of NSObject to NSDecimal"
         ):
             objc.NSDecimal(objc.lookUpClass("NSObject").new())
 
+        with self.assertRaisesRegex(TypeError, r"unsupported operand type\(s\) for \+"):
+            objc.NSDecimal(1) + set()
+
         d = objc.NSDecimal("invalid")
         self.assertEqual(str(d), "NaN")
+
+        class NoObjCString(str):
+            @property
+            def __pyobjc_object__(self):
+                raise RuntimeError("cannot convert")
+
+        with self.assertRaisesRegex(RuntimeError, "cannot convert"):
+            objc.NSDecimal(NoObjCString("1.5"))
+
+        with self.assertRaises(OverflowError):
+            objc.NSDecimal(1 << 128)
+
+        with self.assertRaises(OverflowError):
+            objc.NSDecimal(-(1 << 128))
 
     def test_comparing(self):
         d1 = objc.NSDecimal("1.500")
@@ -93,6 +128,12 @@ class TestNSDecimalWrapper(TestCase):
         self.assertTrue(d1 >= d3)
         self.assertFalse(d1 >= d4)
 
+        with self.assertRaisesRegex(TypeError, "Cannot compare NSDecimal and bytes"):
+            d1 < b"hello"  # noqa: B015
+
+        with self.assertRaisesRegex(TypeError, "Cannot compare NSDecimal and bytes"):
+            b"hello" < d1  # noqa: B015
+
         self.assertEqual(objc.NSDecimal("1.50"), objc.NSDecimal("1.500"))
 
         # Comparison with other types is possible when
@@ -104,13 +145,17 @@ class TestNSDecimalWrapper(TestCase):
         D5 = decimal.Decimal(5)
 
         self.assertTrue(d5 == i5)
+        self.assertTrue(i5 == d5)
         self.assertTrue(d5 == f5)
+        self.assertTrue(f5 == d5)
         self.assertFalse(d5 == D5)
         self.assertFalse(d5 != i5)
         self.assertFalse(d5 != f5)
         self.assertTrue(d5 != D5)
         self.assertFalse(d5 < i5)
         self.assertFalse(d5 < f5)
+        self.assertFalse(f5 < d5)
+        self.assertFalse(f5 > d5)
         with self.assertRaisesRegex(
             TypeError, "Cannot compare NSDecimal and decimal.Decimal"
         ):
@@ -129,6 +174,8 @@ class TestNSDecimalWrapper(TestCase):
             d5 >= D5  # noqa: B015
         self.assertTrue(d5 <= i5)
         self.assertTrue(d5 <= f5)
+        self.assertTrue(i5 <= d5)
+        self.assertTrue(f5 <= d5)
         with self.assertRaisesRegex(
             TypeError, "Cannot compare NSDecimal and decimal.Decimal"
         ):
@@ -220,14 +267,82 @@ class TestNSDecimalWrapper(TestCase):
         o = d1 - 1
         self.assertEqual(o, objc.NSDecimal("0.5"))
 
+        o = 1 - d1
+        self.assertEqual(o, objc.NSDecimal("-0.5"))
+
         o = d1 * 2
+        self.assertEqual(o, objc.NSDecimal("3"))
+
+        o = 2 * d1
         self.assertEqual(o, objc.NSDecimal("3"))
 
         o = d1 / 2
         self.assertEqual(o, objc.NSDecimal("0.75"))
 
+        o = 3 / d1
+        self.assertEqual(o, objc.NSDecimal("2"))
+        self.assertIsInstance(o, objc.NSDecimal)
+
         o = d1 // 2
         self.assertEqual(o, objc.NSDecimal("0"))
+
+        o = 2 // d1
+        self.assertEqual(o, objc.NSDecimal("1"))
+
+        o = d1 // d1
+        self.assertEqual(o, objc.NSDecimal("1"))
+
+        with self.assertRaisesRegex(OverflowError, "Numeric overflow"):
+            prod = d1
+            for _ in range(10):
+                prod = prod * prod
+
+        with self.assertRaisesRegex(ZeroDivisionError, "Division by zero"):
+            objc.NSDecimal(1) / 0
+
+        with self.assertRaises(
+            TypeError,
+        ):
+            "0.5" * d1
+
+        with self.assertRaises(
+            TypeError,
+        ):
+            d1 * "0.5"
+
+        with self.assertRaises(
+            TypeError,
+        ):
+            "0.5" - d1
+
+        with self.assertRaises(
+            TypeError,
+        ):
+            d1 - "0.5"
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"can only concatenate str",
+        ):
+            "0.5" + d1
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"can't concat",
+        ):
+            b"0.5" + d1
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for \+: 'objc.NSDecimal' and 'str'",
+        ):
+            d1 + "0.5"
+
+        with self.assertRaisesRegex(
+            TypeError,
+            r"unsupported operand type\(s\) for \+: 'objc.NSDecimal' and 'bytes'",
+        ):
+            d1 + b"0.5"
 
         with self.assertRaisesRegex(
             TypeError,
@@ -271,6 +386,18 @@ class TestNSDecimalWrapper(TestCase):
         ):
             0.5 / d1
 
+        with self.assertRaisesRegex(TypeError, r"unsupported operand type\(s\) for /"):
+            d1 / []
+
+        with self.assertRaisesRegex(TypeError, r"unsupported operand type\(s\) for /"):
+            [] / d1
+
+        with self.assertRaisesRegex(TypeError, r"unsupported operand type\(s\) for //"):
+            [] // d1
+
+        with self.assertRaisesRegex(TypeError, r"unsupported operand type\(s\) for //"):
+            d1 // []
+
     def test_inplace_ro(self):
         d1 = objc.NSDecimal("1.5")
         d2 = objc.NSDecimal("0.5")
@@ -306,12 +433,24 @@ class TestUsingNSDecimalNumber(TestCase):
         self.assertIsInstance(n, cls)
         self.assertEqual(str(n), str(d))
 
+        e = objc.NSDecimal(n)
+        self.assertEqual(e, d)
+
         n = cls.alloc().initWithDecimal_(d)
         self.assertIsInstance(n, cls)
         self.assertEqual(str(n), str(d))
 
         v = n.decimalValue()
+        self.assertIsInstance(v, objc.NSDecimal)
         self.assertEqual(d, v)
+
+        v2 = objc.NSDecimal(n)
+        self.assertIsInstance(v2, objc.NSDecimal)
+        self.assertEqual(d, v2)
+        self.assertEqual(v, v2)
+
+        with self.assertRaisesRegex(TypeError, "expected no arguments, got 1"):
+            n.decimalValue(42)
 
         with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
             cls.decimalNumberWithDecimal_(d, 1)
@@ -332,7 +471,7 @@ class TestUsingNSDecimalNumber(TestCase):
             ):
                 cls.alloc().initWithDecimal_("42.5")
 
-    @expectedFailure
+    @skipUnless(False, "Test runs into platform bug")
     def test_subclassing(self):
         # At least on macOS 13 subclassing of NSDecimalNumber basically doesn't work,
         # leaving the test here as a reminder of that.
@@ -341,7 +480,7 @@ class TestUsingNSDecimalNumber(TestCase):
         class OC_DecimalNumberPlusOne(NSDecimalNumber):
             @objc.objc_method(signature=NSDecimalNumber.initWithDecimal_.signature)
             def initWithDecimal_(self, value):
-                return super().initWithDecimal_(value)
+                return NSDecimalNumber.initWithDecimal_(self, value)
 
             def decimalValue(self):
                 return super().decimalValue() + 1

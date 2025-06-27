@@ -3,6 +3,7 @@
 {
  "definitions": {
   "typed_enum": {
+   "CAToneMapMode": { "type": "@", "type_name": "NSString" },
    "CAScrollLayerScrollMode": { "type": "@", "type_name": "NSString" },
    "CALayerContentsGravity": { "type": "@", "type_name": "NSString" },
    "CALayerContentsFormat": { "type": "@", "type_name": "NSString" },
@@ -56,6 +57,7 @@
    "kCIInputEnableEDRModeKey": { "typestr": "@" },
    "kCIImageContentHeadroom": { "typestr": "@" },
    "kCIImageRepresentationHDRImage": { "typestr": "@" },
+   "kCIImageRepresentationHDRGainMapImage": { "typestr": "@" },
    "kCIContextAllowLowPower": { "typestr": "@" },
    "kCARendererMetalCommandQueue": { "typestr": "@" },
    "kCAContentsFormatRGBA8Uint": { "typestr": "@" },

@@ -46,6 +46,15 @@ class TestBEAccessibilityHelper(BrowserEngineKit.NSObject):
     def browserAccessibilityDeleteTextAtCursor_(self, a):
         pass
 
+    def accessibilityLineEndPositionFromCurrentSelection(self):
+        pass
+
+    def accessibilityLineStartPositionFromCurrentSelection(self):
+        pass
+
+    def accessibilityLineRangeForPosition_(self, a):
+        pass
+
 
 class TestBEAccessibility(TestCase):
     def test_constants(self):
@@ -124,5 +133,22 @@ class TestBEAccessibility(TestCase):
         self.assertArgHasType(
             TestBEAccessibilityHelper.browserAccessibilityDeleteTextAtCursor_,
             0,
-            objc._C_NSUInteger,
+            objc._C_NSInteger,
+        )
+        self.assertResultHasType(
+            TestBEAccessibilityHelper.accessibilityLineEndPositionFromCurrentSelection,
+            objc._C_NSInteger,
+        )
+        self.assertResultHasType(
+            TestBEAccessibilityHelper.accessibilityLineStartPositionFromCurrentSelection,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestBEAccessibilityHelper.accessibilityLineRangeForPosition_,
+            0,
+            objc._C_NSInteger,
+        )
+        self.assertResultHasType(
+            TestBEAccessibilityHelper.accessibilityLineRangeForPosition_,
+            BrowserEngineKit.NSRange.__typestr__,
         )

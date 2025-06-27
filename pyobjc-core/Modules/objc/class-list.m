@@ -9,48 +9,22 @@ NS_ASSUME_NONNULL_BEGIN
 PyObject*
 PyObjC_GetClassList(bool ignore_invalid_identifiers)
 {
-    PyObject* result    = NULL;
-    Class*    buffer    = NULL;
-    int       bufferLen = 0;
-    int       neededLen = 0;
-    int       i;
-
-    /*
-     * objc_getClassList returns the number of classes known in the runtime,
-     * the documented way to fetch the list is:
-     * 1. call ret = objc_getClassList(NULL, 0);
-     * 2. allocate a buffer of 'ret' class-pointers
-     * 3. call objc_getClassList again with this buffer.
-     *
-     * Step 3 might return more classes because another thread may have
-     * loaded a new framework/bundle. This means we need a loop to be sure
-     * we'll get all classes.
-     */
-    neededLen = objc_getClassList(NULL, 0);
-    bufferLen = 0;
-    buffer    = NULL;
-
-    while (bufferLen < neededLen) {
-        Class* newBuffer;
-        bufferLen = neededLen;
-
-        newBuffer = PyMem_Realloc(buffer, sizeof(Class) * bufferLen);
-        if (newBuffer == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_NoMemory();
-            goto error;
-            // LCOV_EXCL_STOP
-        }
-
-        buffer    = newBuffer;
-        newBuffer = NULL;
-        neededLen = objc_getClassList(buffer, bufferLen);
-    }
-    bufferLen = neededLen;
+    PyObject*    result    = NULL;
+    Class*       buffer    = NULL;
+    unsigned int bufferLen = 0;
+    unsigned int i;
 
     result = PyList_New(0);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         goto error;       // LCOV_EXCL_LINE
+    }
+
+    buffer = objc_copyClassList(&bufferLen);
+    if (buffer == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_SetString(PyObjCExc_Error, "getting class list failed");
+        return result;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < bufferLen; i++) {
@@ -58,7 +32,6 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
 
         if (ignore_invalid_identifiers) {
             const char* name = class_getName(buffer[i]);
-
 
             if (strncmp(name, "__SwiftNative", 12) == 0) {
                 /* FB12286520 */
@@ -76,7 +49,6 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
             if (skip) {
                 continue;
             }
-
         }
 
 #if PyObjC_BUILD_RELEASE > 1011
@@ -93,27 +65,26 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
          * versions should build on the latest one (and preferably
          * use the "official" binary wheels).
          */
-        if (@available(macOS 10.15, *)) {
-        } else  {
+        if (@available(macOS 10.15, *)) { // LCOV_BR_EXCL_LINE
+        } else {
+            // LCOV_EXCL_START
+            // Excluded from  coverage runs because those runs are
+            // done on a modern system and will never hit this path.
+
             /* A numbef of private(-ish) classes that cause
              * crashes when constructed here while running
              * on macOS 10.14
              */
             const char* name = class_getName(buffer[i]);
-            bool skip = false;
+            bool        skip = false;
             if (name[0] == 'Q' && name[1] == 'T') {
                 static const char* IGNORE_NAMES[] = {
-            	    "QTKeyedArchiverDelegate",
-                    "QTMoviePlaybackController",
-                    "QTHUDTimelineCell",
-                    "QTHUDTimeline",
-                    NULL
-                };
+                    "QTKeyedArchiverDelegate", "QTMoviePlaybackController",
+                    "QTHUDTimelineCell", "QTHUDTimeline", NULL};
                 for (const char** cur = IGNORE_NAMES; *cur != NULL; cur++) {
                     if (strcmp(name, *cur) == 0) {
-                        skip= true;
+                        skip = true;
                         break;
-
                     }
                 }
                 if (skip) {
@@ -121,16 +92,19 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
                 }
             }
 
-            /* The classes below are from a private framework (AnnotationKit), and at least some of them
-             * cause a hard crash when they are looked at in the metadata sanity check.
+            /* The classes below are from a private framework (AnnotationKit), and at
+             * least some of them cause a hard crash when they are looked at in the
+             * metadata sanity check.
              *
-             * The obvious solution is to look at the bundle that defined the class, but using
-             * +[NSBundle bundleForClass:] is enough to trigger class initialization and a crash.
-             * Therefore look at a hardcoded list of class names.
+             * The obvious solution is to look at the bundle that defined the class, but
+             * using
+             * +[NSBundle bundleForClass:] is enough to trigger class initialization and a
+             * crash. Therefore look at a hardcoded list of class names.
              *
              * I have not tried to minimize the list.
              */
-            if ((name[0] == 'A' && name[1] == 'K') || (name[0] == '_' && name[1] == 'A' && name[2] == 'K')) {
+            if ((name[0] == 'A' && name[1] == 'K')
+                || (name[0] == '_' && name[1] == 'A' && name[2] == 'K')) {
                 static const char* IGNORE_NAMES[] = {
                     "AKAbsintheSigner",
                     "AKAccessibleContainerView",
@@ -477,19 +451,18 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
                     "_AKAppleIDAuthenticationContextManager",
                     "_AKColorWellButtonCell",
                     "_AKInkOverlayDrawingUndoTarget",
-                    NULL
-                };
+                    NULL};
                 for (const char** cur = IGNORE_NAMES; *cur != NULL; cur++) {
                     if (strcmp(name, *cur) == 0) {
-                        skip= true;
+                        skip = true;
                         break;
-
                     }
                 }
                 if (skip) {
                     continue;
                 }
-             }
+            }
+            // LCOV_EXCL_START
         }
 #endif /* PyObjC_BUILD_RELEASE > 1011 */
         pyclass = PyObjCClass_New(buffer[i]);
@@ -501,7 +474,7 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
         }
     }
 
-    PyMem_Free(buffer);
+    free(buffer);
     buffer = NULL;
 
     PyObject* tmp = PyList_AsTuple(result);
@@ -512,7 +485,7 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
 error:
     // LCOV_EXCL_START
     if (buffer != NULL) {
-        PyMem_Free(buffer);
+        free(buffer);
     }
     Py_XDECREF(result);
     return NULL;

@@ -40,6 +40,9 @@ class TestClassLookup(TestCase):
         self.assertIn(NSException, objc.getClassList())
         self.assertIn(NSMutableArray, objc.getClassList())
 
+        with self.assertRaises(TypeError):
+            objc.getClassList(1, 2)
+
 
 class TestMethodInvocation(TestCase):
     def setUp(self):
@@ -121,3 +124,37 @@ class TestPrivate(TestCase):
             AttributeError, "module 'sys' has no attribute 'does_not_exist'"
         ):
             resolve("sys.does_not_exist")
+
+
+class TestLoadBundle(TestCase):
+    def test_invalid(self):
+        with self.assertRaisesRegex(TypeError, "required argument"):
+            objc.loadBundle(invalid=True)
+
+        with self.assertRaisesRegex(
+            ValueError, "Need to specify either bundle_path or bundle_identifier"
+        ):
+            objc.loadBundle("foo", {})
+
+        with self.assertRaisesRegex(
+            ValueError, "Need to specify either bundle_path or bundle_identifier"
+        ):
+            objc.loadBundle("foo", {}, bundle_identifier="foo", bundle_path="")
+
+        with self.assertRaisesRegex(TypeError, "bundle_path is not a string"):
+            objc.loadBundle("foo", {}, bundle_path=42)
+
+        with self.assertRaisesRegex(TypeError, "bundle_identifier is not a string"):
+            objc.loadBundle("foo", {}, bundle_identifier=42)
+
+        class NotBool:
+            def __bool__(self):
+                raise RuntimeError("foo")
+
+        with self.assertRaisesRegex(RuntimeError, "foo"):
+            objc.loadBundle(
+                "foo",
+                {},
+                bundle_identifier="com.apple.Foundation",
+                scan_classes=NotBool(),
+            )

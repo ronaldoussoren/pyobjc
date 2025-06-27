@@ -7,8 +7,10 @@ NOTE: this file is very, very incomplete and just tests copying at the moment.
 import objc
 from PyObjCTest.pythonset import OC_TestSet
 from PyObjCTest.dictint import OC_DictInt
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTest.objectint import OC_NoPythonRepresentation
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 import collections
+import collections.abc
 from unittest import SkipTest
 
 OC_PythonDictionary = objc.lookUpClass("OC_PythonDictionary")
@@ -47,6 +49,21 @@ class TestDictionary(TestCase):
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEqual(s, o)
         self.assertIsNot(s, o)
+
+        def copy_func(value):
+            raise RuntimeError("cannot copy")
+
+        with pyobjc_options(_copy=copy_func):
+            with self.assertRaisesRegex(RuntimeError, "cannot copy"):
+                OC_TestSet.set_copyWithZone_(s, None)
+
+        def copy_func(value):
+            return Fake()
+
+        with pyobjc_options(_copy=copy_func):
+
+            with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+                OC_TestSet.set_copyWithZone_(s, None)
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
@@ -111,12 +128,39 @@ class TestDictionary(TestCase):
 
         self.assertIs(OC_DictInt.dict_getItem_(s, "key"), NSNull.null())
 
+    def test_get_item(self):
+        s = self.mapClass()
+
+        self.assertIs(OC_DictInt.dict_getItem_(s, "a"), None)
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            self.assertIs(
+                OC_DictInt.dict_getItemInstanceOf_(s, OC_NoPythonRepresentation), None
+            )
+
     def test_set_item(self):
         s = self.mapClass()
 
         OC_DictInt.dict_set_value_(s, "key", "value")
-
         self.assertEqual(s["key"], "value")
+
+        OC_DictInt.dict_set_value_(s, "key2", None)
+        self.assertEqual(s["key2"], None)
+
+        OC_DictInt.dict_set_value_(s, "key3", NSNull.null())
+        self.assertEqual(s["key3"], None)
+
+        OC_DictInt.dict_set_value_(s, None, "value2")
+        self.assertEqual(s[None], "value2")
+
+        OC_DictInt.dict_set_value_(s, None, "value2")
+        self.assertEqual(s[None], "value2")
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_DictInt.dict_setInstanceOf_value_(s, OC_NoPythonRepresentation, "value2")
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_DictInt.dict_set_valueInstanceOf_(s, "key", OC_NoPythonRepresentation)
 
     def test_set_null(self):
         s = self.mapClass()
@@ -157,6 +201,9 @@ class TestDictionary(TestCase):
             # not KeyError
             OC_DictInt.dict_remove_(s, "a")
 
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_DictInt.dict_removeInstanceOf_(s, OC_NoPythonRepresentation)
+
     def test_removing_key_raises(self):
         s = self.mapClass({RaisingKey("a"): 1})
         with self.assertRaisesRegex(TypeError, "a is not valid"):
@@ -168,6 +215,43 @@ class TestUserDict(TestDictionary):
 
 
 class TestMisc(TestCase):
+    def test_mutableCopy_fails(self):
+        class MyMapping(collections.abc.Mapping):
+            def __getitem__(self, o):
+                raise RuntimeError("no items!")
+
+            def __len__(self):
+                return 1
+
+            def __iter__(self):
+                yield 1
+
+            def keys(self):
+                raise RuntimeError("what is a key anyway")
+
+        s = MyMapping()
+
+        with self.assertRaisesRegex(RuntimeError, "what is a key anyway"):
+            OC_TestSet.set_mutableCopyWithZone_(s, None)
+
+    def test_getitem_raises(self):
+        class MyMapping(collections.abc.Mapping):
+            def __getitem__(self, o):
+                raise RuntimeError("no items!")
+
+            def __len__(self):
+                return 1
+
+            def __iter__(self):
+                yield 1
+
+        v = MyMapping()
+        with self.assertRaisesRegex(RuntimeError, "no items!"):
+            v[1]
+
+        with self.assertRaisesRegex(RuntimeError, "no items!"):
+            OC_DictInt.dict_getItem_(v, 1)
+
     def test_key_enumerator_no_keys(self):
         class MyDict(collections.UserDict):
             def keys(self):

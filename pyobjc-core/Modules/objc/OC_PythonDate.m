@@ -1,25 +1,6 @@
 #include "pyobjc.h"
 NS_ASSUME_NONNULL_BEGIN
 
-static bool
-is_builtin_date(PyObject* object)
-{
-    if (PyObjC_DateTime_Date_Type == NULL || PyObjC_DateTime_Date_Type == Py_None) {
-        return false;
-    }
-    return ((PyObject*)Py_TYPE(object) == PyObjC_DateTime_Date_Type);
-}
-
-static bool
-is_builtin_datetime(PyObject* object)
-{
-    if (PyObjC_DateTime_DateTime_Type == NULL
-        || PyObjC_DateTime_DateTime_Type == Py_None) {
-        return false;
-    }
-    return ((PyObject*)Py_TYPE(object) == PyObjC_DateTime_DateTime_Type);
-}
-
 @implementation OC_PythonDate
 
 + (instancetype _Nullable)dateWithPythonObject:(PyObject*)v
@@ -72,7 +53,7 @@ is_builtin_datetime(PyObject* object)
             return nil;
         }
     }
-    PyObjC_Assert(ts != NULL, nil);
+    assert(ts != NULL);
     if (depythonify_c_value(@encode(NSTimeInterval), ts, &timeSinceEpoch) == -1) {
         [self release];
         return nil;
@@ -104,33 +85,18 @@ is_builtin_datetime(PyObject* object)
     return value;
 }
 
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
-
-- (oneway void)release
-{
-    /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        @try {
-            [super release];
-        } @catch (NSException* exc) {
-            PyObjC_LEAVE_GIL;
-            [exc raise];
-        }
-
-    PyObjC_END_WITH_GIL
-}
+// LCOV_EXCL_STOP
 
 - (void)dealloc
 {
@@ -163,19 +129,19 @@ is_builtin_datetime(PyObject* object)
      *
      * XXX: Add code to encode the timezone as well.
      */
-    if (is_builtin_date(value)) {
+    if (PyObjC_IsBuiltinDate(value)) {
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:1 forKey:@"pytype"];
         }
         [super encodeWithCoder:coder];
         return;
-    } else if (is_builtin_datetime(value)) {
+    } else if (PyObjC_IsBuiltinDatetime(value)) {
         if ([coder allowsKeyedCoding]) {
             id c_info = nil;
             [coder encodeInt32:2 forKey:@"pytype"];
 
             PyObjC_BEGIN_WITH_GIL
-                PyObject* tzinfo = PyObject_GetAttrString(value, "tzinfo");
+                PyObject* tzinfo = PyObject_GetAttr(value, PyObjCNM_tzinfo);
                 if (tzinfo != NULL && tzinfo != Py_None) {
                     if (depythonify_python_object( // LCOV_BR_EXCL_LINE
                             tzinfo, &c_info)
@@ -184,7 +150,7 @@ is_builtin_datetime(PyObject* object)
                         Py_DECREF(tzinfo);
                         PyObjC_GIL_FORWARD_EXC();
                         // LCOV_EXCL_STOP
-                    }
+                    } // LCOV_EXCL_LINE
                 }
                 PyErr_Clear();
             PyObjC_END_WITH_GIL
@@ -203,7 +169,11 @@ is_builtin_datetime(PyObject* object)
         }
     }
 
-    PyObjC_encodeWithCoder(value, coder);
+    PyObjC_BEGIN_WITH_GIL
+        if (PyObjC_encodeWithCoder(value, coder) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
+    PyObjC_END_WITH_GIL
 }
 
 /*
@@ -232,7 +202,21 @@ is_builtin_datetime(PyObject* object)
         pytype = [coder decodeInt32ForKey:@"pytype"];
 
     } else {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+        /* Old deployment target, modern SDK */
+        if (@available(macOS 10.13, *)) {
+            [coder decodeValueOfObjCType:@encode(int) at:&pytype size:sizeof(pytype)];
+        } else {
+            CLANG_SUPPRESS
+            [coder decodeValueOfObjCType:@encode(int) at:&pytype];
+        }
+#elif PyObjC_BUILD_RELEASE >= 1013
+        /* Modern deployment target */
+        [coder decodeValueOfObjCType:@encode(int) at:&pytype size:sizeof(pytype)];
+#else
+        /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&pytype];
+#endif
     }
 
     self = [super init];
@@ -244,97 +228,46 @@ is_builtin_datetime(PyObject* object)
     switch (pytype) {
     case 1: {
         PyObjC_BEGIN_WITH_GIL
-            NSDate*   temp    = [[NSDate alloc] initWithCoder:coder];
-            PyObject* args[3] = {
-                NULL,
-                PyObjC_DateTime_Date_Type,
-                PyFloat_FromDouble([temp timeIntervalSince1970]),
-            };
-            [temp release];
+            NSDate* temp = [[NSDate alloc] initWithCoder:coder];
 
-            value = PyObject_VectorcallMethod(PyObjCNM_fromtimestamp, args + 1,
-                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+            value = PyObjC_DateFromTimestamp([temp timeIntervalSince1970]);
+            [temp release];
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
     }
     case 2: {
         PyObjC_BEGIN_WITH_GIL
 
-            id        c_info = [coder decodeObjectForKey:@"py_tzinfo"];
-            PyObject* tzinfo = NULL;
-            NSDate*   temp   = [[NSDate alloc] initWithCoder:coder];
+            id      c_info = [coder decodeObjectForKey:@"py_tzinfo"];
+            NSDate* temp   = [[NSDate alloc] initWithCoder:coder];
 
-            if (c_info != nil) {
-                tzinfo = id_to_python(c_info);
-                if (tzinfo == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-            }
-
-            PyObject* args[4] = {
-                NULL,
-                PyObjC_DateTime_DateTime_Type,
-                PyFloat_FromDouble([temp timeIntervalSince1970]),
-                tzinfo,
-            };
+            value = PyObjC_DatetimeFromTimestamp([temp timeIntervalSince1970], c_info);
             [temp release];
-            value = PyObject_VectorcallMethod(
-                PyObjCNM_fromtimestamp, args + 1,
-                (tzinfo == NULL ? 2 : 3) | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
     } break;
 
     case 3:
-        if (PyObjC_Decoder != NULL) {
-            PyObjC_BEGIN_WITH_GIL
-                PyObject* cdr = id_to_python(coder);
-                if (cdr == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
+            if (decoded == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
 
-                PyObject* setValue;
-                PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
-                if (selfAsPython == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            SET_FIELD(value, decoded);
+            id actual = PyObjC_RegisterObjCProxy(value, self);
+            [self release];
+            self = actual;
 
-                PyObject* v = PyObjC_CallDecoder(cdr, setValue);
+        PyObjC_END_WITH_GIL
 
-                Py_DECREF(cdr);
-                Py_DECREF(setValue);
-                Py_DECREF(selfAsPython);
-
-                if (v == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
-                SET_FIELD(value, v);
-                id actual = PyObjC_RegisterObjCProxy(value, self);
-                if (actual != self) {
-                    [actual retain];
-                    [self release];
-                    self = actual;
-                }
-
-            PyObjC_END_WITH_GIL
-
-            return self;
-
-        } else {
-            @throw
-                [NSException exceptionWithName:NSInvalidArgumentException
-                                        reason:@"decoding Python objects is not supported"
-                                      userInfo:nil];
-            return nil;
-        }
+        return self;
 
     default:
         // LCOV_EXCL_START
@@ -347,7 +280,7 @@ is_builtin_datetime(PyObject* object)
 
 - (Class)classForCoder
 {
-    if (is_builtin_date(value) || is_builtin_datetime(value)) {
+    if (PyObjC_IsBuiltinDate(value) || PyObjC_IsBuiltinDatetime(value)) {
         return [NSDate class];
     } else {
         return [OC_PythonDate class];

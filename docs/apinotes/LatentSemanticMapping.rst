@@ -1,3 +1,7 @@
+.. module:: LatentSemanticMapping
+   :platform: macOS
+   :synopsis: Bindings for the LatentSemanticMapping framework
+
 API Notes: LatentSemanticMapping framework
 ==========================================
 

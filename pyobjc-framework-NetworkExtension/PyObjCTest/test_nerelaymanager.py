@@ -81,3 +81,8 @@ class TestNERelayManager(TestCase):
             1,
             b"v@",
         )
+
+    @min_os_level("15.4")
+    def test_methods15_4(self):
+        self.assertResultIsBOOL(NetworkExtension.NERelayManager.isUIToggleEnabled)
+        self.assertArgIsBOOL(NetworkExtension.NERelayManager.setUIToggleEnabled_, 0)

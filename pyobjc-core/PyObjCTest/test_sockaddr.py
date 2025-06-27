@@ -2,7 +2,7 @@ import objc
 import socket
 import os
 from PyObjCTest.sockaddr import PyObjCTestSockAddr
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, skipUnless, pyobjc_options
 
 FUNCTION_LIST = [
     (
@@ -23,6 +23,19 @@ FUNCTION_LIST = [
 ]
 SOCK_FUNCTIONS = {}
 objc.loadBundleFunctions(None, SOCK_FUNCTIONS, FUNCTION_LIST, skip_undefined=False)
+
+
+def host_valid(hostname):
+    """
+    Return true iff *hostname* resolves
+    """
+    try:
+        socket.gethostbyname(hostname)
+    except OSError:
+        return False
+    else:
+        return True
+
 
 objc.registerMetaDataForSelector(
     b"PyObjCTestSockAddr",
@@ -52,6 +65,22 @@ objc.registerMetaDataForSelector(
 
 
 class TestSockAddrSupport(TestCase):
+    def test_bad_option(self):
+        o = PyObjCTestSockAddr
+        with pyobjc_options(_socket_error=None):
+            with self.assertRaises(SystemError):
+                o.sockAddrToValue_(("<broadcast>", 99, 0))
+
+        with pyobjc_options(_socket_gaierror=None):
+            with self.assertRaises(SystemError):
+                o.sockAddrToValue_(("nosuchhost.python.org", 99))
+
+        with self.assertRaisesRegex(AttributeError, "Cannot delete option"):
+            del objc.options._socket_error
+
+        with self.assertRaisesRegex(AttributeError, "Cannot delete option"):
+            del objc.options._socket_gaierror
+
     def testToObjC(self):
         o = PyObjCTestSockAddr
 
@@ -67,11 +96,17 @@ class TestSockAddrSupport(TestCase):
         v = o.sockAddrToValue_(b"/tmp/my.sock")
         self.assertEqual(v, ("UNIX", "/tmp/my.sock"))
 
+        with self.assertRaisesRegex(OSError, "AF_UNIX path too long"):
+            o.sockAddrToValue_(b"/tmp/my.sock" + b"/dir" * 500)
+
         with self.assertRaisesRegex(UnicodeEncodeError, "can't encode characters"):
             o.sockAddrToValue_("\ud800\udc00")
 
         v = o.sockAddrToValue_(("<broadcast>", 99))
         self.assertEqual(v, ("IPv4", "255.255.255.255", 99))
+
+        with self.assertRaises(socket.error):
+            o.sockAddrToValue_(("<nothing>", 99))
 
         with self.assertRaisesRegex(socket.error, "address family mismatched"):
             o.sockAddrToValue_(("<broadcast>", 99, 0))
@@ -81,16 +116,6 @@ class TestSockAddrSupport(TestCase):
 
         v = o.sockAddrToValue_(("", 100, 0))
         self.assertEqual(v, ("IPv6", "::", 100, 0, 0))
-
-        with self.assertRaisesRegex(
-            socket.gaierror, "nodename nor servname provided, or not known"
-        ):
-            o.sockAddrToValue_(("nosuchhost.python.org", 99, 0))
-
-        with self.assertRaisesRegex(
-            socket.gaierror, "nodename nor servname provided, or not known"
-        ):
-            o.sockAddrToValue_(("nosuchhost.python.org", 99))
 
         with self.assertRaisesRegex(
             TypeError,
@@ -118,6 +143,22 @@ class TestSockAddrSupport(TestCase):
         info = o.sockAddrToValue_(("mail.python.org", 99, 0))
         sockinfo = socket.getaddrinfo("mail.python.org", 99, socket.AF_INET6)
         self.assertEqual(info, ("IPv6",) + sockinfo[0][4])
+
+    @skipUnless(
+        not host_valid("nosuchhost.python.org"), "'nosuchhost.python.org' resolves"
+    )
+    def testToObjCForNonExistingHost(self):
+        o = PyObjCTestSockAddr
+
+        with self.assertRaisesRegex(
+            socket.gaierror, "nodename nor servname provided, or not known"
+        ):
+            o.sockAddrToValue_(("nosuchhost.python.org", 99, 0))
+
+        with self.assertRaisesRegex(
+            socket.gaierror, "nodename nor servname provided, or not known"
+        ):
+            o.sockAddrToValue_(("nosuchhost.python.org", 99))
 
     def testIPv4FromC(self):
         o = PyObjCTestSockAddr

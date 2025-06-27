@@ -34,3 +34,10 @@ class TestAppKitErrors(TestCase):
         self.assertEqual(AppKit.NSWindowSharingRequestUnspecifiedError, 67458)
         self.assertEqual(AppKit.NSWindowSharingErrorMinimum, 67456)
         self.assertEqual(AppKit.NSWindowSharingErrorMaximum, 67466)
+
+        self.assertEqual(AppKit.NSPasteboardMiscellaneousError, 67584)
+        self.assertEqual(AppKit.NSPasteboardCommunicationError, 67585)
+        self.assertEqual(AppKit.NSPasteboardInvalidArgumentError, 67586)
+        self.assertEqual(AppKit.NSPasteboardContentsNotAvailableError, 67587)
+        self.assertEqual(AppKit.NSPasteboardErrorMinimum, 67584)
+        self.assertEqual(AppKit.NSPasteboardErrorMaximum, 67839)

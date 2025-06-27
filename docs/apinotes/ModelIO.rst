@@ -1,3 +1,7 @@
+.. module:: ModelIO
+   :platform: macOS
+   :synopsis: Bindings for the ModelIO framework
+
 API Notes: ModelIO framework
 ============================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``ModelIO`` package (that is, ``import M
 
 API Notes
 ---------
-
-The full API for the ModelIO framework is available from Python.

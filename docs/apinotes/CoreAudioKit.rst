@@ -1,8 +1,9 @@
+.. module:: CoreAudioKit
+   :platform: macOS
+   :synopsis: Bindings for the CoreAudioKit framework
+
 API Notes: CoreAudioKit framework
 =================================
-
-Apple documentation
--------------------
 
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
@@ -14,5 +15,3 @@ These bindings are accessed through the ``CoreAudioKit`` package (that is, ``imp
 
 API Notes
 ---------
-
-* The full API can be used from Python

@@ -41,8 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
     {
 
 #define END_UNITTEST                                                                     \
-    Py_INCREF(Py_None);                                                                  \
-    return Py_None;                                                                      \
+    Py_RETURN_NONE;                                                                      \
     error:                                                                               \
     return NULL;                                                                         \
     }
@@ -53,9 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
             goto error;                                                                  \
     } while (0)
 
-#pragma GCC diagnostic   push
+#pragma GCC diagnostic push
 #pragma clang diagnostic push
-#pragma GCC diagnostic   ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 
 static inline void
@@ -70,7 +69,7 @@ unittest_assert_failed(const char* file, int line, char* msg, ...)
     PyErr_Format(PyExc_AssertionError, "%s:%d %s", file, line, buf);
 }
 
-#pragma GCC diagnostic   pop
+#pragma GCC diagnostic pop
 #pragma clang diagnostic pop
 
 #define ASSERT(expr)                                                                     \
@@ -119,7 +118,9 @@ unittest_assert_failed(const char* file, int line, char* msg, ...)
 
 #define TESTDEF(name)                                                                    \
     {                                                                                    \
-        .ml_name = #name, .ml_meth = (PyCFunction)test_##name, .ml_flags = METH_NOARGS,  \
+        .ml_name  = #name,                                                               \
+        .ml_meth  = (PyCFunction)test_##name,                                            \
+        .ml_flags = METH_NOARGS,                                                         \
     }
 
 NS_ASSUME_NONNULL_END

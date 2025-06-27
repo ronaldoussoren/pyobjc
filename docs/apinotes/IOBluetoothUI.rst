@@ -1,3 +1,7 @@
+.. module:: IOBluetoothUI
+   :platform: macOS
+   :synopsis: Bindings for the IOBluetoothUI framework
+
 API Notes: IOBluetoothUI framework
 ===================================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``IOBluetoothUI`` package (that is, ``im
 
 API Notes
 ---------
-
-The full API is available from Python.

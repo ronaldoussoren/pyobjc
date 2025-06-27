@@ -1,6 +1,7 @@
 import functools
 import sys
 import gc
+import io
 import warnings
 import types
 
@@ -15,6 +16,7 @@ from PyObjCTools.TestSupport import TestCase
 rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 
 NSInvocation = objc.lookUpClass("NSInvocation")
+NSArray = objc.lookUpClass("NSArray")
 
 
 class OCTestRegrWithGetItem(NSObject):
@@ -39,6 +41,12 @@ class ReturnAStruct(NSObject):
 
 
 class TestRegressions(TestCase):
+    def test_sizeof_objc_object(self):
+        array = NSArray.array()
+        size = sys.getsizeof(array)
+        self.assertIsInstance(size, int)
+        self.assertGreater(size, sys.getsizeof(object()))
+
     def testSetCompare(self):
         oc = objc.lookUpClass("NSSet").setWithArray_([None])
         oc2 = objc.lookUpClass("NSMutableSet").setWithArray_([None])
@@ -86,8 +94,7 @@ class TestRegressions(TestCase):
             # coverage.py
             gc.collect()
 
-        self.assertTrue(len(w) == 1)
-        self.assertEqual(w[0].category, objc.UninitializedDeallocWarning)
+        self.assertTrue(len(w) == 0)
 
     def testOneWayMethods(self):
         # This one should be in test_methods*.py
@@ -164,6 +171,14 @@ class TestRegressions(TestCase):
         o = structargs.StructArgClass.alloc().init()
         v = o.compP_aRect_anOp_((1, 2), ((3, 4), (5, 6)), 7)
         self.assertEqual(v, "aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
+
+    def test_empty_struct(self):
+        o = structargs.StructArgClass.alloc().init()
+
+        # libffi doesn't support calling functions with an empty struct
+        # arguments (e.g. "struct empty {}", even if C compilers do.
+        with self.assertRaisesRegex(objc.error, "Cannot setup FFI CIF: bad typedef"):
+            self.assertEqual(o.callWithEmpty_(()), 99)
 
     def testInitialize(self):
         calls = []
@@ -631,6 +646,18 @@ class TestReplacingDir(TestCase):
         self.assertEqual(value.__dir__(), ["hello"])
         self.assertIsInstance(value.__dir__, types.MethodType)
 
+    def test_basic_dir(self):
+        class OC_TestBasicDir(NSObject):
+            pass
+
+        o = OC_TestBasicDir.alloc().init()
+        self.assertNotIn("key", dir(o))
+        self.assertIn("init", dir(o))
+
+        o.key = 42
+        self.assertIn("key", dir(o))
+        self.assertIn("init", dir(o))
+
 
 class TestMethodsWithVarargs(TestCase):
     def test_method_with_varargs(self):
@@ -689,6 +716,126 @@ class TestSuperDealloc(TestCase):
         assert deleted
 
 
-class TestFreeThreaded(TestCase):
-    def test_freethreaded_if_configured(self):
-        self.assertFreeThreadedIfConfigured()
+class TestMagic(TestCase):
+    def test_magic_nil(self):
+        o = NSArray.alloc()
+        o.init()
+
+        self.assertFalse(o.__pyobjc_magic_coookie__())
+
+    def test_magic_normal(self):
+        o = NSArray.alloc().init()
+
+        self.assertFalse(o.__pyobjc_magic_coookie__())
+
+
+class TestISA(TestCase):
+    def test_base(self):
+        o = NSArray()
+        cls = o.pyobjc_ISA
+        self.assertIsSubclass(cls, NSArray)
+
+        o = NSArray.alloc()
+        o.init()
+        o.pyobjc_ISA
+
+
+class DeallocRevives(NSObject):
+    def __del__(self):
+        global VALUE
+        VALUE = self
+
+
+class TestDelRevives(TestCase):
+    def test_basic(self):
+        global VALUE
+
+        VALUE = None
+        o = DeallocRevives()
+
+        orig_stderr = sys.stderr
+        try:
+            sys.stderr = captured_stderr = io.StringIO()
+            del o
+
+        finally:
+            sys.stderr = orig_stderr
+
+        self.assertIn(
+            "revived Objective-C object of type DeallocRevives. Object is zero-ed out.",
+            captured_stderr.getvalue(),
+        )
+
+        self.assertEqual(repr(VALUE), "<null>")
+
+
+class TestConvertNegativeToUnsigedWarns(TestCase):
+    def test_repythonify_negative_int(self):
+        class Number:
+            def __int__(self):
+                return -28
+
+        with warnings.catch_warnings():
+            warnings.filterwarnings("error", category=DeprecationWarning)
+
+            with self.assertRaisesRegex(
+                DeprecationWarning, "converting negative value to unsigned integer"
+            ):
+                objc.repythonify(-40, b"I")
+
+            with self.assertRaisesRegex(
+                DeprecationWarning, "converting negative value to unsigned integer"
+            ):
+                objc.repythonify(Number(), b"I")
+
+
+class TestKeywordArgumentsForSelect(TestCase):
+    def test_kwargs_not_allowed(self):
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            NSArray.arrayWithArray_(a=4)
+
+
+class TestInvokingMethods(TestCase):
+    def invokeDescriptionOf(self, value):
+        signature = value.methodSignatureForSelector_(b"description")
+        inv = NSInvocation.invocationWithMethodSignature_(signature)
+        inv.setTarget_(value)
+        inv.setSelector_(b"description")
+        value.forwardInvocation_(inv)
+        return inv.getReturnValue_(None)
+
+    def test_nsobject(self):
+        v = NSObject.alloc().init()
+        with self.assertRaisesRegex(
+            ValueError, "unrecognized selector sent to instance"
+        ):
+            self.invokeDescriptionOf(v)
+
+    def test_pyobject(self):
+        v = OCTestRegrWithGetItem.alloc().init()
+        with self.assertRaisesRegex(
+            ValueError, "unrecognized selector sent to instance"
+        ):
+            self.invokeDescriptionOf(v)
+
+    def test_pyobject_with_descr(self):
+        class OC_ObjectWithDescription(NSObject):
+            def description(self):
+                return "<an object>"
+
+        v = OC_ObjectWithDescription.alloc().init()
+        self.assertEqual(v.description(), "<an object>")
+        self.assertEqual(self.invokeDescriptionOf(v), "<an object>")
+
+    def test_forward_invalid(self):
+        value = OCTestRegrWithGetItem.alloc().init()
+
+        signature = value.methodSignatureForSelector_(b"description")
+        inv = NSInvocation.invocationWithMethodSignature_(signature)
+        inv.setTarget_(value)
+        inv.setSelector_(b"descriptions")
+
+        with self.assertRaisesRegex(
+            ValueError, "unrecognized selector sent to instance"
+        ):
+            value.forwardInvocation_(inv)

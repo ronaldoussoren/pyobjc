@@ -37,47 +37,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (id _Nullable)initWithPyObject:(PyObject*)obj
 {
     // XXX: Fix callers to do the registration for us.
-    id actual = PyObjC_RegisterObjCProxy(obj, self);
-    if (actual != self) {
-        /*
-         * Race between two threads creating a proxy, use the
-         * first one that got registered.
-         */
-        [self release];
-        [actual retain];
-        return actual;
-    }
-
     SET_FIELD_INCREF(pyObject, obj);
 
+    id actual = PyObjC_RegisterObjCProxy(obj, self);
+    [self release];
+    self = actual;
+
     return self;
-}
-
-- (oneway void)release
-{
-    /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        @try {
-            [super release];
-
-        } @catch (NSObject* exc) { // LCOV_EXCL_LINE
-            /* This catch statement is here mostly
-             * for code consistency, [NSProxy release]
-             * should never raise.
-             */
-            // LCOV_EXCL_START
-            PyObjC_LEAVE_GIL;
-            @throw;
-            // LCOV_EXCL_STOP
-        }
-    PyObjC_END_WITH_GIL
 }
 
 - (void)dealloc
@@ -104,26 +70,19 @@ NS_ASSUME_NONNULL_BEGIN
     NSObject* result;
     PyObject* copy;
 
-    if (PyObjC_CopyFunc == NULL || PyObjC_CopyFunc == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"cannot copy Python objects"
-                                     userInfo:nil];
+    PyObjC_BEGIN_WITH_GIL
+        copy = PyObjC_Copy(pyObject);
+        if (copy == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
 
-    } else {
-        PyObjC_BEGIN_WITH_GIL
-            copy = PyObjC_CallCopyFunc(pyObject);
-            if (copy == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-            if (depythonify_python_object(copy, &result) == -1) {
-                Py_DECREF(copy);
-                PyObjC_GIL_FORWARD_EXC();
-            }
+        if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
+        Py_DECREF(copy);
 
-        PyObjC_END_WITH_GIL
-    }
+    PyObjC_END_WITH_GIL
 
     if (result) {
         [result retain];
@@ -161,14 +120,14 @@ NS_ASSUME_NONNULL_BEGIN
             Py_DECREF(repr);
             if (err == -1) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             PyObjC_GIL_RETURN(result);
         }
         PyObjC_GIL_FORWARD_EXC();
 
     PyObjC_END_WITH_GIL
-}
+} // LCOV_EXCL_LINE
 
 - (void)doesNotRecognizeSelector:(SEL)aSelector
 {
@@ -186,8 +145,8 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 
     if (PyObjC_is_pyfunction(pymethod)) {
         func_code = (PyCodeObject*)PyObjC_get_code(pymethod);
-        if (func_code == NULL) {
-            return -1;
+        if (func_code == NULL) { // LCOV_BR_EXCL_LINE
+            return -1;           // LCOV_EXCL_LINE
         }
         if (argcount == func_code->co_argcount) {
             Py_DECREF(func_code);
@@ -197,8 +156,8 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 
     } else if (PyObjC_is_pymethod(pymethod)) {
         func_code = PyObjC_get_code(pymethod);
-        if (func_code == NULL) {
-            return -1;
+        if (func_code == NULL) { // LCOV_BR_EXCL_LINE
+            return -1;           // LCOV_EXCL_LINE
         }
         if (argcount == func_code->co_argcount - 1) {
             Py_DECREF(func_code);
@@ -216,7 +175,6 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 {
     const char* meth_name;
-    char        pymeth_name[256];
     Py_ssize_t  argcount;
     PyObject*   pymethod;
     const char* p;
@@ -237,12 +195,13 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
     }
 
-    const char* py_meth_name =
-        PyObjC_SELToPythonName(aSelector, pymeth_name, sizeof(pymeth_name) - 1);
-    if (py_meth_name == NULL) {
-        return NULL;
+    PyObject* py_meth_name = PyObjC_SELToPythonName(aSelector);
+    if (py_meth_name == NULL) { // LCOV_BR_EXCL_LINE
+        /* Can only fail due to memory errors */
+        return NULL; // LCOV_EXCL_LINE
     }
-    pymethod = PyObject_GetAttrString(obj, py_meth_name);
+    pymethod = PyObject_GetAttr(obj, py_meth_name);
+    Py_CLEAR(py_meth_name);
     if (pymethod == NULL) {
         return NULL;
     }
@@ -274,7 +233,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         if (m) {
             Py_DECREF(m);
             PyObjC_GIL_RETURN(YES);
-        } else {
+        } else { // LCOV_EXCL_LINE
             PyErr_Clear();
             PyObjC_GIL_RETURN(NO);
         }
@@ -315,7 +274,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     if (m != NULL) {
         /* A real Objective-C method */
         const char* typestr = method_getTypeEncoding(m);
-        if (typestr == NULL) { // LCOv_BR_EXCL_LINE
+        if (typestr == NULL) { // LCOV_BR_EXCL_LINE
             return nil;        // LCOV_EXCL_LINE
         }
         return [NSMethodSignature signatureWithObjCTypes:typestr];
@@ -327,7 +286,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         if (!pymethod) {
             PyErr_Clear();
             PyObjC_GIL_RETURN(nil);
-        }
+        } // LCOV_EXCL_LINE
 
         if (PyObjC_is_pymethod(pymethod)) {
             argcount = PyObjC_num_arguments(pymethod) - 1;
@@ -336,9 +295,13 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             argcount = PyObjC_num_arguments(pymethod);
         }
         Py_DECREF(pymethod);
-        if (argcount < 0) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        if (argcount < 0) { // LCOV_BR_EXCL_LINE
+            /* Cannot fail because get_method_for_selector
+             * will only return a method or function for which
+             * the number of arguments can be calculated.
+             */
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
 
         encoding = alloca(argcount + 4);
         memset(encoding, '@', argcount + 3);
@@ -525,9 +488,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_BEGIN_WITH_GIL
 
         retsize = PyObjCRT_SizeOfType(rettype);
-        if (retsize == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
+        if (retsize == -1) { // LCOV_BR_EXCL_LINE
+            /* Cannot happen unless the ObjC runtime contains
+             * invalid data.
+             */
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
 
         retbuffer = alloca(retsize);
 
@@ -560,7 +526,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             Py_DECREF(pymethod);
             PyObjC_GIL_FORWARD_EXC();
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
         for (i = 2; i < argcount; i++) {
             const char* argtype;
             char*       argbuffer;
@@ -577,11 +543,16 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             // LCOV_EXCL_STOP
 
             argsize = PyObjCRT_SizeOfType(argtype);
-            if (argsize == -1) {
+            if (argsize == -1) { // LCOV_BR_EXCL_LINE
+                /* Cannot happen unless the ObjC runtime
+                 * contains invalid data.
+                 */
+                // LCOV_EXCL_START
                 Py_DECREF(args);
                 Py_DECREF(pymethod);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+                // LCOV_EXCL_STOP
+            } // LCOV_EXCL_LINE
             argbuffer = alloca(argsize);
 
             Py_BEGIN_ALLOW_THREADS
@@ -601,7 +572,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                 Py_DECREF(args);
                 Py_DECREF(pymethod);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
             PyTuple_SET_ITEM(args, i - 2, pyarg);
         }
@@ -613,14 +584,13 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
         if (result == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-            return;
-        }
+        } // LCOV_EXCL_LINE
 
         err = depythonify_c_value(rettype, result, retbuffer);
         Py_DECREF(result);
         if (err == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        } else {
+        } else { // LCOV_EXCL_LINE
             Py_BEGIN_ALLOW_THREADS
                 @try {
                     [invocation setReturnValue:retbuffer];
@@ -652,6 +622,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
     PyObjC_END_WITH_GIL
 }
+
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     PyObjC_BEGIN_WITH_GIL
@@ -672,6 +648,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
     return rval;
 }
+// LCOV_EXCL_STOP
 
 /*
  * Implementation for Key-Value Coding.
@@ -693,37 +670,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (id)valueForKey:(NSString*)key
 {
-    PyObject* keyName;
-    PyObject* val;
-    id        res = nil;
-
-    if (PyObjC_getKey == NULL || PyObjC_getKey == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"helper function for getKey not set"
-                                     userInfo:nil];
-    }
+    id res = nil;
 
     PyObjC_BEGIN_WITH_GIL
-
-        keyName = id_to_python(key);
-        if (keyName == NULL) {
+        if (PyObjC_GetKey(pyObject, key, &res) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyObject* args[3] = {NULL, pyObject, keyName};
-
-        val = PyObject_Vectorcall(PyObjC_getKey, args + 1,
-                                  2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        Py_DECREF(keyName);
-        if (val == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        if (depythonify_c_value(@encode(id), val, &res) < 0) {
-            Py_DECREF(val);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-        Py_DECREF(val);
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -742,40 +694,10 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (void)setValue:value forKey:(NSString*)key
 {
-    PyObject* keyName;
-    PyObject* pyValue;
-    PyObject* val;
-
-    if (PyObjC_setKey == NULL || PyObjC_setKey == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"helper function for setKey not set"
-                                     userInfo:nil];
-    }
-
     PyObjC_BEGIN_WITH_GIL
-
-        keyName = id_to_python(key);
-        if (keyName == NULL) {
+        if (PyObjC_SetKey(pyObject, key, value) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
-
-        pyValue = id_to_python(value);
-        if (pyValue == NULL) {
-            Py_DECREF(keyName);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyObject* args[4] = {NULL, pyObject, keyName, pyValue};
-
-        val = PyObject_Vectorcall(PyObjC_setKey, args + 1,
-                                  3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        Py_DECREF(keyName);
-        Py_DECREF(pyValue);
-        if (val == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        Py_DECREF(val);
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 }
@@ -804,36 +726,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (id _Nullable)valueForKeyPath:(NSString*)keyPath
 {
-    PyObject* keyName;
-    PyObject* val;
-    id        res = nil;
-
-    if (PyObjC_getKeyPath == NULL || PyObjC_getKeyPath == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"helper function for getKeyPath not set"
-                                     userInfo:nil];
-    }
+    id res = nil;
 
     PyObjC_BEGIN_WITH_GIL
-        keyName = id_to_python(keyPath);
-        if (keyName == NULL) {
+        if (PyObjC_GetKeyPath(pyObject, keyPath, &res) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyObject* args[3] = {NULL, pyObject, keyName};
-
-        val = PyObject_Vectorcall(PyObjC_getKeyPath, args + 1,
-                                  2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        Py_DECREF(keyName);
-        if (val == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        if (depythonify_python_object(val, &res) < 0) {
-            Py_DECREF(val);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-        Py_DECREF(val);
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -847,39 +745,10 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (void)setValue:value forKeyPath:(NSString*)keyPath
 {
-    PyObject* keyName;
-    PyObject* pyValue;
-    PyObject* val;
-
-    if (PyObjC_setKeyPath == NULL || PyObjC_setKeyPath == Py_None) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"helper function for setKeyPath not set"
-                                     userInfo:nil];
-    }
-
     PyObjC_BEGIN_WITH_GIL
-        keyName = id_to_python(keyPath);
-        if (keyName == NULL) {
+        if (PyObjC_SetKeyPath(pyObject, keyPath, value) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
-
-        pyValue = id_to_python(value);
-        if (pyValue == NULL) {
-            Py_DECREF(keyName);
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        PyObject* args[4] = {NULL, pyObject, keyName, pyValue};
-
-        val = PyObject_Vectorcall(PyObjC_setKeyPath, args + 1,
-                                  3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        Py_DECREF(keyName);
-        Py_DECREF(pyValue);
-        if (val == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-        Py_DECREF(val);
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 }
@@ -901,17 +770,35 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     }
 }
 
+/* Deprecated in macOS 10.3, not called in practice */
+// LCOV_EXCL_START
 - (void)unableToSetNilForKey:(NSString*)key
 {
-    @throw [NSException
-        exceptionWithName:NSUndefinedKeyException
-                   reason:[NSString stringWithFormat:@"cannot set Nil for key: %@", key]
-                 userInfo:nil];
+    [self setNilValueForKey:key];
 }
 
 - (id)handleQueryWithUnboundKey:(NSString*)key
 {
     return [self valueForUndefinedKey:key];
+}
+
+- (void)handleTakeValue:value forUnboundKey:(NSString*)key
+{
+    [self setValue:value forUndefinedKey:key];
+}
+// LCOV_EXCL_STOP
+
+// LCOV_EXCL_START
+/* These are defined for NSObject, but are only invoked by
+ * the setValue:forKey: implementation, and ours never does
+ * that.
+ */
+- (void)setNilValueForKey:(NSString*)key
+{
+    @throw [NSException
+        exceptionWithName:NSUndefinedKeyException
+                   reason:[NSString stringWithFormat:@"cannot set Nil for key: %@", key]
+                 userInfo:nil];
 }
 
 - (id)valueForUndefinedKey:(NSString*)key
@@ -922,11 +809,6 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                  userInfo:nil];
 }
 
-- (void)handleTakeValue:value forUnboundKey:(NSString*)key
-{
-    [self setValue:value forUndefinedKey:key];
-}
-
 - (void)setValue:value forUndefinedKey:(NSString*)key
 {
     @throw [NSException
@@ -935,6 +817,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
                                                      key, value]
                  userInfo:nil];
 }
+// LCOV_EXCL_STOP
 
 - (void)addObserver:(NSObject*)observer
          forKeyPath:(NSString*)keyPath
@@ -982,19 +865,21 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         if (otherPyObject == NULL) {
             PyErr_Clear();
             PyObjC_GIL_RETURN(NO);
-        }
-        if (otherPyObject == pyObject) {
-            PyObjC_GIL_RETURN(YES);
-        }
+        } // LCOV_EXCL_LINE
+        if (otherPyObject == pyObject) { // LCOV_BR_EXCL_LINE
+            /* Should never happen because of the test if
+             * self is other earlier in the method.
+             */
+            PyObjC_GIL_RETURN(YES); // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
         switch (PyObject_RichCompareBool(pyObject, otherPyObject, Py_EQ)) {
         case -1:
             PyErr_Clear();
         case 0:
             PyObjC_GIL_RETURN(NO);
-            break;
         default:
             PyObjC_GIL_RETURN(YES);
-        }
+        } // LCOV_EXCL_LINE
     PyObjC_END_WITH_GIL
 }
 
@@ -1012,14 +897,17 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         PyObject* otherPyObject = id_to_python(other);
         if (otherPyObject == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
-        if (otherPyObject == pyObject) {
-            PyObjC_GIL_RETURN(NSOrderedSame);
-        }
+        } // LCOV_EXCL_LINE
+        if (otherPyObject == pyObject) { // LCOV_BR_EXCL_LINE
+            /* Should never happen because of checking if self is other
+             * earlier in this method.
+             */
+            PyObjC_GIL_RETURN(NSOrderedSame); // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
         int r;
         if (PyObjC_Cmp(pyObject, otherPyObject, &r) == -1) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         NSComparisonResult rval;
         switch (r) {
         case -1:
@@ -1040,7 +928,14 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
  */
 - (void)encodeWithCoder:(NSCoder*)coder
 {
-    PyObjC_encodeWithCoder(pyObject, coder);
+    int rval;
+
+    PyObjC_BEGIN_WITH_GIL
+        rval = PyObjC_encodeWithCoder(pyObject, coder);
+        if (rval == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
+    PyObjC_END_WITH_GIL
 }
 
 /*
@@ -1060,68 +955,42 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 {
     pyObject = NULL;
 
-    if (PyObjC_Decoder != NULL && PyObjC_Decoder != Py_None) {
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = id_to_python(coder);
-            PyObject* setValue;
-            PyObject* selfAsPython;
-            PyObject* v;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
+        if (decoded == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
 
-            if (cdr == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-            selfAsPython = PyObjCObject_New(self, 0, YES);
-            if (selfAsPython == NULL) {   // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
-            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
-            if (setValue == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_STOP
-                Py_DECREF(selfAsPython);
-                PyObjC_GIL_FORWARD_EXC();
-                // LCOV_EXCL_STOP
-            }
-
-            v = PyObjC_CallDecoder(cdr, setValue);
-            Py_DECREF(cdr);
-            Py_DECREF(setValue);
-            Py_DECREF(selfAsPython);
-
-            if (v == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-            /* To make life more interesting the correct proxy
-             * type for 'v' might not be OC_PythonObject, in particular
-             * when introducing new proxy types in new versions
-             * of PyObjC, and in some error cases.
+        /* To make life more interesting the correct proxy
+         * type for 'v' might not be OC_PythonObject, in particular
+         * when introducing new proxy types in new versions
+         * of PyObjC, and in some error cases.
+         */
+        NSObject* temp;
+        if (depythonify_python_object(decoded, &temp) == -1) { // LCOV_BR_EXCL_LINE
+            /* Cannot get here with testing, the decoder invokes
+             * 'setValue' above and that call has already depythonified
+             * the value.
              */
-            NSObject* temp;
-            if (depythonify_python_object(v, &temp) == -1) {
-                Py_DECREF(v);
-                PyObjC_GIL_FORWARD_EXC();
-            }
+            // LCOV_EXCL_START
+            Py_DECREF(decoded);
+            PyObjC_GIL_FORWARD_EXC();
+            // LCOV_EXCL_STOP
+        } // LCOV_EXCL_LINE
 
-            if (temp != (NSObject*)self) {
-                [temp retain];
-                [self release];
-                self = (OC_PythonObject*)temp;
-            }
-            Py_DECREF(pyObject);
+        if (temp != (NSObject*)self) {
+            [temp retain];
+            [self release];
+            self = (OC_PythonObject*)temp;
+        }
+        Py_DECREF(pyObject);
 
-        PyObjC_END_WITH_GIL
+    PyObjC_END_WITH_GIL
 
-        return self;
-
-    } else {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"decoding Python objects is not supported"
-                                     userInfo:nil];
-    }
+    return self;
 }
 
-- (id _Nullable)awakeAfterUsingCoder:(NSCoder*)__attribute__((__unused__))coder
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder*)__attribute__((__unused__)) coder
 {
     return self;
 }
@@ -1129,7 +998,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-- (NSObject*)replacementObjectForArchiver:(NSArchiver*)__attribute__((__unused__))archiver
+- (NSObject*)replacementObjectForArchiver:(NSArchiver*)__attribute__((__unused__))
+                                          archiver
 {
     return (NSObject*)self;
 }
@@ -1142,12 +1012,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 #pragma clang diagnostic pop
 
 - (NSObject*)replacementObjectForKeyedArchiver:
-    (NSKeyedArchiver*)__attribute__((__unused__))archiver
+    (NSKeyedArchiver*)__attribute__((__unused__)) archiver
 {
     return (NSObject*)self;
 }
 
-- (NSObject*)replacementObjectForCoder:(NSCoder*)__attribute__((__unused__))archiver
+- (NSObject*)replacementObjectForCoder:(NSCoder*)__attribute__((__unused__)) archiver
 {
     return (NSObject*)self;
 }
@@ -1237,12 +1107,12 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
  * Fake implementation for _cfTypeID, which gets called by
  * system frameworks on some occasions.
  */
-static BOOL     haveTypeID = NO;
-static CFTypeID _NSObjectTypeID;
+static PyObjC_ATOMIC BOOL     haveTypeID = NO;
+static PyObjC_ATOMIC CFTypeID _NSObjectTypeID;
 
 - (CFTypeID)_cfTypeID
 {
-    if (haveTypeID) {
+    if (!haveTypeID) {
         NSObject* obj   = [[NSObject alloc] init];
         _NSObjectTypeID = CFGetTypeID((CFTypeRef)obj);
         [obj release];
@@ -1252,37 +1122,5 @@ static CFTypeID _NSObjectTypeID;
 }
 
 @end /* OC_PythonObject class implementation */
-
-void
-PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
-{
-    /* XXX: This should be called with the GIL held, and should
-     * return an error indicator.
-     */
-    if (PyObjC_Encoder != NULL && PyObjC_Encoder != Py_None) {
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = id_to_python(coder);
-            if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
-
-            PyObject* args[3] = {NULL, pyObject, cdr};
-
-            PyObject* r = PyObject_Vectorcall(PyObjC_Encoder, args + 1,
-                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            Py_DECREF(cdr);
-            Py_XDECREF(r);
-            if (r == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-        PyObjC_END_WITH_GIL
-
-    } else {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"encoding Python objects is not supported"
-                                     userInfo:nil];
-    }
-}
 
 NS_ASSUME_NONNULL_END

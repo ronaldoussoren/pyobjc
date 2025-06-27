@@ -42,7 +42,7 @@ static PyObject*
 avt_get_mInputDataSize(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_value_translation* self = (struct audio_value_translation*)_self;
-    PyObject* result;
+    PyObject*                       result;
 
     Py_BEGIN_CRITICAL_SECTION(self);
     result = Py_BuildValue("I", self->avt_translation->mInputDataSize);
@@ -54,7 +54,7 @@ static PyObject*
 avt_get_mOutputDataSize(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_value_translation* self = (struct audio_value_translation*)_self;
-    PyObject* result;
+    PyObject*                       result;
 
     Py_BEGIN_CRITICAL_SECTION(self);
     result = Py_BuildValue("I", self->avt_translation->mOutputDataSize);
@@ -66,7 +66,7 @@ static PyObject*
 avt_get_mInputData(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_value_translation* self = (struct audio_value_translation*)_self;
-    PyObject* result;
+    PyObject*                       result;
 
     if (self->avt_translation->mInputData == NULL) {
         Py_INCREF(Py_None);
@@ -74,7 +74,7 @@ avt_get_mInputData(PyObject* _self, void* closure __attribute__((__unused__)))
     }
     Py_BEGIN_CRITICAL_SECTION(self);
     result = PyMemoryView_FromMemory(self->avt_translation->mInputData,
-                                   self->avt_translation->mInputDataSize, PyBUF_WRITE);
+                                     self->avt_translation->mInputDataSize, PyBUF_WRITE);
     Py_END_CRITICAL_SECTION();
     return result;
 }
@@ -83,7 +83,7 @@ static PyObject*
 avt_get_mOutputData(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_value_translation* self = (struct audio_value_translation*)_self;
-    PyObject* result;
+    PyObject*                       result;
 
     if (self->avt_translation->mOutputData == NULL) {
         Py_INCREF(Py_None);
@@ -92,7 +92,7 @@ avt_get_mOutputData(PyObject* _self, void* closure __attribute__((__unused__)))
 
     Py_BEGIN_CRITICAL_SECTION(self);
     result = PyMemoryView_FromMemory(self->avt_translation->mOutputData,
-                                   self->avt_translation->mOutputDataSize, PyBUF_WRITE);
+                                     self->avt_translation->mOutputDataSize, PyBUF_WRITE);
     Py_END_CRITICAL_SECTION();
     return result;
 }
@@ -176,7 +176,6 @@ avt_create_output_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     if (PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size) == -1) {
         return NULL;
     }
-
 
     new_buf = PyMem_Malloc(buf_size);
     if (new_buf == NULL) {

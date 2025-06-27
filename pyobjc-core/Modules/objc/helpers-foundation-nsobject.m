@@ -23,7 +23,7 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
     /* XXX: No they don't, class methods can be accessed through
      *      instances for Python subclasses...
      */
-    // PyObjC_Assert(PyObjCClass_Check(self), NULL);
+    // assert(PyObjCClass_Check(self));
 
     if (unlikely(PyObjCIMP_Check(method))) {
         anIMP = PyObjCIMP_GetIMP(method);
@@ -38,29 +38,33 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
 
         Py_BEGIN_ALLOW_THREADS
             @try {
-                result = ((id(*)(Class, SEL))anIMP)(aClass, aSel);
+                result = ((id (*)(Class, SEL))anIMP)(aClass, aSel);
 
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
+            } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
                 result = nil;
             }
         Py_END_ALLOW_THREADS
 
     } else {
-        spr.super_class = object_getClass(PyObjCSelector_GetClass(method));
-        if (PyObjCClass_Check(self)) {
-            spr.receiver = PyObjCClass_GetClass(self);
+        spr.super_class =
+            (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method));
+        if (PyObjCClass_Check(self)) { // LCOV_BR_EXCL_LINE
+            spr.receiver = (id _Nonnull)PyObjCClass_GetClass(self);
         } else {
-            spr.receiver = object_getClass(PyObjCObject_GetObject(self));
+            /* It is not possible to resolve class methods through an instance */
+            // LCOV_EXCL_START
+            spr.receiver = (id _Nonnull)object_getClass(PyObjCObject_GetObject(self));
+            // LCOV_EXCL_STOP
         }
         aSel = PyObjCSelector_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
-                result = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
+                result = ((id (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
+            } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
                 result = nil;
             }
         Py_END_ALLOW_THREADS
@@ -71,11 +75,31 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
     }
 
     if (result == nil) {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
-    return PyObjCObject_New(result, PyObjCObject_kUNINITIALIZED, NO);
+    PyObject* rval = PyObjC_FindPythonProxy(result);
+    if (rval != NULL) {
+        /* Found an existing proxy
+         * Compensate for the +1 retainCount from +alloc
+         */
+        if (object_getClass(result) != NSAutoreleasePool_class) { // LCOV_BR_EXCL_LINE
+            [result release];
+        }
+        return rval;
+    }
+
+    /* The 'NO' ensures that the proxy object doesn't retain, which
+     * compensates for the +1 from +alloc
+     */
+    rval = PyObjCObject_New(result, PyObjCObject_kDEFAULT, NO);
+    if (rval == NULL) { // LCOV_BR_EXCL_LINE
+        return rval;    // LCOV_EXCL_LINE
+    }
+
+    PyObject* actual = PyObjC_RegisterPythonProxy(result, rval);
+    Py_DECREF(rval);
+    return actual;
 }
 
 static IMP
@@ -84,7 +108,7 @@ mkimp_NSObject_alloc(PyObject*              callable,
 {
     Py_INCREF(callable);
     id (^block)(id) = ^(Class _Nullable self) {
-      id        rv;
+      id        rv = nil;
       int       err;
       PyObject* v      = NULL;
       PyObject* result = NULL;
@@ -92,31 +116,35 @@ mkimp_NSObject_alloc(PyObject*              callable,
       PyObjC_BEGIN_WITH_GIL
 
           v = id_to_python(self);
-          if (unlikely(v == NULL)) {
-              PyObjC_GIL_FORWARD_EXC();
-          }
+          if (unlikely(v == NULL)) {    // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
           v = PyObjC_AdjustSelf(v);
-          if (unlikely(v == NULL)) {
-              PyObjC_GIL_FORWARD_EXC();
-          }
+          if (unlikely(v == NULL)) {    // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, v};
           result            = PyObject_Vectorcall((PyObject*)callable, args + 1,
                                                   1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
-          Py_DECREF(v);
-          v = NULL;
+          Py_CLEAR(v);
           if (unlikely(result == NULL)) {
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
 
-          err = depythonify_c_value(@encode(id), result, &rv);
-          Py_DECREF(result);
+          err = depythonify_python_object(result, &rv);
           if (unlikely(err == -1)) {
+              Py_DECREF(result);
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
+
+          [rv retain];
+          Py_DECREF(result);
 
       PyObjC_END_WITH_GIL
+
+      /* +alloc returns a +1 reference */
       return rv;
     };
     return imp_implementationWithBlock(block);
@@ -136,7 +164,7 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
         return NULL;
 
     /* objc.selector and friends already check this */
-    PyObjC_Assert(PyObjCObject_Check(self), NULL);
+    assert(PyObjCObject_Check(self));
 
     if (unlikely(PyObjCIMP_Check(method))) {
         anIMP      = PyObjCIMP_GetIMP(method);
@@ -145,10 +173,10 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
 
         Py_BEGIN_ALLOW_THREADS
             @try {
-                ((void (*)(id, SEL))anIMP)(anInstance, aSel);
+                ((void (*)(id, SEL))anIMP)(anInstance, aSel); // LCOV_BR_EXCL_LINE
 
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
+            } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
 
@@ -161,20 +189,28 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
             @try {
                 ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
+            } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
     }
 
-    PyObjCObject_ClearObject(self);
+    /* After the call to dealloc the 'objc_object' value is garbage,
+     * ensure that there's still a valid reference until the proxy is
+     * deallocated.
+     */
+    PyObjC_UnregisterPythonProxy(((PyObjCObject*)self)->objc_object, self);
+    if (!(((PyObjCObject*)self)->flags
+          & PyObjCObject_kSHOULD_NOT_RELEASE)) { // LCOV_BR_EXCL_LINE
+        [NSNull_null retain];                    // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
+    ((PyObjCObject*)self)->objc_object = NSNull_null;
 
-    if (unlikely(PyErr_Occurred())) {
-        return NULL;
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static IMP
@@ -189,9 +225,9 @@ mkimp_NSObject_dealloc(PyObject*              callable,
 
       PyObjC_BEGIN_WITH_GIL
           pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              PyObjC_GIL_FORWARD_EXC();
-          }
+          if (pyself == NULL) {         // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, pyself};
           result            = PyObject_Vectorcall(callable, args + 1,
@@ -199,7 +235,7 @@ mkimp_NSObject_dealloc(PyObject*              callable,
           PyObjCObject_ReleaseTransient(pyself, cookie);
           if (result == NULL) {
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
 
           if (unlikely(result != Py_None)) {
               PyErr_Format(PyExc_TypeError,
@@ -207,7 +243,7 @@ mkimp_NSObject_dealloc(PyObject*              callable,
                            " of %s",
                            Py_TYPE(result)->tp_name);
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
 
           Py_DECREF(result);
 
@@ -230,7 +266,7 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
         return NULL;
 
     /* objc.selector and friends already check this */
-    PyObjC_Assert(PyObjCObject_Check(self), NULL);
+    assert(PyObjCObject_Check(self));
 
     if (unlikely(PyObjCIMP_Check(method))) {
         anIMP      = PyObjCIMP_GetIMP(method);
@@ -241,8 +277,8 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
             @try {
                 ((void (*)(id, SEL))anIMP)(anInstance, aSel);
 
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
+            } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
 
@@ -255,8 +291,8 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
             @try {
                 ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
+            } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
     }
@@ -265,8 +301,7 @@ static PyObject* _Nullable call_NSObject_release(PyObject* method, PyObject* sel
         return NULL;
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self,
@@ -284,7 +319,7 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
         return NULL;
 
     /* objc.selector and friends already check this */
-    PyObjC_Assert(PyObjCObject_Check(self), NULL);
+    assert(PyObjCObject_Check(self));
 
     /*
      * XXX:
@@ -300,10 +335,10 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
 
         // Py_BEGIN_ALLOW_THREADS
         @try {
-            retval = ((id(*)(id, SEL))anIMP)(anInstance, aSel);
+            retval = ((id (*)(id, SEL))anIMP)(anInstance, aSel);
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
         // Py_END_ALLOW_THREADS
 
@@ -314,16 +349,16 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
 
         // Py_BEGIN_ALLOW_THREADS
         @try {
-            retval = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
+            retval = ((id (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
         // Py_END_ALLOW_THREADS
     }
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     return id_to_python(retval);
@@ -341,9 +376,9 @@ mkimp_NSObject_release(PyObject*              callable,
 
       PyObjC_BEGIN_WITH_GIL
           pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              PyObjC_GIL_FORWARD_EXC();
-          }
+          if (pyself == NULL) {         // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, pyself};
           result            = PyObject_Vectorcall(callable, args + 1,
@@ -351,7 +386,7 @@ mkimp_NSObject_release(PyObject*              callable,
           if (result == NULL) {
               PyObjCObject_ReleaseTransient(pyself, cookie);
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
 
           if (result != Py_None) {
@@ -360,7 +395,7 @@ mkimp_NSObject_release(PyObject*              callable,
                            " of %s",
                            Py_TYPE(result)->tp_name);
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
 
           Py_DECREF(result);
 
@@ -383,9 +418,9 @@ mkimp_NSObject_retain(PyObject*              callable,
 
       PyObjC_BEGIN_WITH_GIL
           pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              PyObjC_GIL_FORWARD_EXC();
-          }
+          if (pyself == NULL) {         // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           PyObject* pyargs[2] = {NULL, pyself};
           result              = PyObject_Vectorcall(callable, pyargs + 1,
@@ -393,13 +428,13 @@ mkimp_NSObject_retain(PyObject*              callable,
           PyObjCObject_ReleaseTransient(pyself, cookie);
           if (result == NULL) {
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
 
           err = depythonify_python_object(result, &rv);
           Py_DECREF(result);
           if (err == -1) {
               PyObjC_GIL_FORWARD_EXC();
-          }
+          } // LCOV_EXCL_LINE
 
       PyObjC_END_WITH_GIL
       return rv;

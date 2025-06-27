@@ -15,11 +15,11 @@ import ssl
 import subprocess
 import sys
 import time
+import textwrap
 from http.client import HTTPSConnection
 from urllib.parse import urlencode
 
 from _common_definitions import (
-    PY_VERSIONS,
     TEST_STATE_DIR,
     TOP_DIR,
     setup_variant,
@@ -27,26 +27,43 @@ from _common_definitions import (
     variants,
     virtualenv,
     sort_framework_wrappers,
+    detect_pyversions,
+    RED,
+    BOLD,
+    RESET,
 )
 
-_detected_versions = None
+HTML_PREFIX = textwrap.dedent(
+    """\
+    <html>
+      <head>
+        <title>PyObjC Test Result</title>
+        <style type="text/css">
+          table, th, td { border: 1px solid grey; border-collapse: collapse; }
+          th { font-style: bold }
+          .errors { background-color: red; color: white; border-radius: 5px }
+          .errors:before { content:" Errors: "}
+          .errors:after { content:" "}
+          .fails { background-color: orange; color: white; border-radius: 5px }
+          .fails:before { content:" Fails: "}
+          .fails:after { content:" "}
+          .crash { background-color: red; color: white; border-radius: 5px }
+          .skip { background-color: light-green; color: white; border-radius: 5px }
+          .ok { background-color: green; color: white; border-radius: 5px }
+          .ok:before { content:" "}
+          .ok:after { content:" "}
+        </style>
+      </head>
+      <body>
+    """
+)
 
-
-def detect_pyversions():
-    global _detected_versions
-    if _detected_versions is not None:
-        return _detected_versions
-
-    result = []
-    for ver in PY_VERSIONS:
-        if os.path.exists(
-            os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
-        ):
-
-            result.append(ver)
-
-    _detected_versions = result
-    return _detected_versions
+HTML_SUFFIX = textwrap.dedent(
+    """\
+      </body>
+    </html>
+    """
+)
 
 
 def load_pushover_keys():
@@ -99,7 +116,8 @@ def parse_arguments():
         metavar="VER",
         action="append",
         default=[],
-        help="Select python version to test (%s)" % (", ".join(detect_pyversions())),
+        help="Select python version to test (%s)"
+        % (", ".join(detect_pyversions(include_alpha=True))),
     )
 
     parser.add_argument(
@@ -128,16 +146,23 @@ def parse_arguments():
         help="Restrict python variants to test (default: no restrictions)",
     )
 
+    parser.add_argument(
+        "--gil",
+        dest="gil_enabled",
+        metavar="VAL",
+        action="append",
+        default=[],
+        help="Which -Xgil=VAL values should be tested for the free-threaded build (defaults to 0 and 1)",
+    )
+
     result = parser.parse_args()
     if not result.python_versions:
-        result.python_versions = detect_pyversions()
+        result.python_versions = detect_pyversions(include_alpha=True)
 
     return result
 
 
-def build_project(*, interpreter, py_ver, project):
-    lg = logging.getLogger("build_project")
-
+def build_project(*, interpreter, py_ver, project, idx, count):
     proj_dir = os.path.join(TOP_DIR, project)
 
     # Clean up any existing build artifacts
@@ -147,16 +172,18 @@ def build_project(*, interpreter, py_ver, project):
         shutil.rmtree(os.path.join(proj_dir, "dist"))
 
     # Actually build
-    lg.info("building %r using %r (%s)", project, interpreter, py_ver)
+    print(
+        f"{BOLD}[{idx}/{count}] Building {project} using {interpreter} ({py_ver}){RESET}"
+    )
     status = subprocess.call(
         [interpreter, "-mpip", "install", "--no-deps", "--no-cache-dir", "."],
         cwd=proj_dir,
     )
     if status != 0:
-        lg.warning("build %r failed (status %s)", project, status)
+        print(f"{RED}build {project} failed (status {status}){RESET}")
         return False
 
-    lg.info("checking install %r using %r (%s)", project, interpreter, py_ver)
+    print(f"checking install {project} using {interpreter} ({py_ver})")
     status = subprocess.call(
         [
             interpreter,
@@ -165,47 +192,61 @@ def build_project(*, interpreter, py_ver, project):
         ]
     )
     if status != 0:
-        lg.warning("build %r failed: package not actually installed?", project)
+        print(f"{RED}build {project} failed: package not actually installed?{RESET}")
         return False
 
     return True
 
 
-def run_tests(*, interpreter, arch, py_ver, project, state_dir):
-    lg = logging.getLogger("run_tests")
-
+def run_tests(
+    *, interpreter, arch, py_ver, project, state_dir, extra_py_args, idx, count
+):
     proj_dir = os.path.join(TOP_DIR, project)
 
-    lg.info("testing %r using %r (%s, %7s)", project, interpreter, py_ver, arch)
+    print(
+        f"{BOLD}[{idx}/{count}] Testing {project} using {interpreter} ({py_ver}, {arch}) {' '.join(extra_py_args)}{RESET}"
+    )
     k = {}
     k["env"] = os.environ.copy()
     k["env"]["PATH"] = os.path.dirname(interpreter) + ":" + k["env"]["PATH"]
 
-    p = subprocess.Popen(
-        [
-            "/usr/bin/arch",
-            f"-{arch}",
-            interpreter,
-            # XXX: Coverage support is disabled for now because
-            # I've never actually used it.
-            # "-mcoverage",
-            # "run",
-            # "--branch",
-            # "--parallel",
-            "setup.py",
-            "test",
-            "-v",
-        ],
-        cwd=proj_dir,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        **k
-    )
-    stdout, stderr = p.communicate()
-    exitcode = p.wait()
+    if not os.path.exists(state_dir):
+        os.makedirs(state_dir)
+
+    with (
+        open(os.path.join(state_dir, project + ".stdout"), "wb") as fp_stdout,
+        open(os.path.join(state_dir, project + ".stderr"), "wb") as fp_stderr,
+    ):
+        p = subprocess.Popen(
+            [
+                "/usr/bin/arch",
+                f"-{arch}",
+                interpreter,
+            ]
+            + extra_py_args
+            + [
+                # XXX: Coverage support is disabled for now because
+                # I've never actually used it.
+                # "-mcoverage",
+                # "run",
+                # "--branch",
+                # "--parallel",
+                "setup.py",
+                "test",
+                "-v",
+            ],
+            cwd=proj_dir,
+            stdout=fp_stdout,
+            stderr=fp_stderr,
+            **k,
+        )
+        exitcode = p.wait()
+
+    with open(os.path.join(state_dir, project + ".stdout")) as fp_stdout:
+        stdout = fp_stdout.read()
 
     try:
-        status_line = stdout.decode("utf-8").rsplit("\n", 2)[-2]
+        status_line = stdout.rsplit("\n", 2)[-2]
         if not status_line.startswith("SUMMARY"):
             status = {
                 "message": "No status line at end",
@@ -221,17 +262,8 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
 
     status["exitcode"] = exitcode
 
-    if not os.path.exists(state_dir):
-        os.makedirs(state_dir)
-
     with open(os.path.join(state_dir, project + ".status"), "w") as fp:
         json.dump(status, fp)
-
-    with open(os.path.join(state_dir, project + ".stdout"), "wb") as fp:
-        fp.write(stdout)
-
-    with open(os.path.join(state_dir, project + ".stderr"), "wb") as fp:
-        fp.write(stderr)
 
 
 def test_summary(fp_out, state_dir):
@@ -243,7 +275,7 @@ def test_summary(fp_out, state_dir):
     results = collections.defaultdict(dict)
 
     for nm in os.listdir(state_dir):
-        if nm.endswith(".txt"):
+        if nm.endswith(".txt") or nm.endswith(".html"):
             continue
 
         sd = os.path.join(state_dir, nm)
@@ -256,7 +288,10 @@ def test_summary(fp_out, state_dir):
             with open(os.path.join(sd, fn)) as fp:
                 results[proj][nm] = json.load(fp)
 
-    keys = tuple(sorted(results[next(iter(results))].keys()))
+    keys = set()
+    for v in results.values():
+        keys.update(v.keys())
+    keys = tuple(sorted(keys))
     width = max(len(x) for x in keys)
 
     maxlen = max(len(s) for s in results)
@@ -275,33 +310,140 @@ def test_summary(fp_out, state_dir):
         # ignore errors w.r.t. reporting if there were problems in the test run.
         row = [proj]
         for k in keys:
-            info = results[proj][k]
+            if k not in results[proj]:
+                row.append("skip")
+                continue
+            else:
+                info = results[proj][k]
             if info.get("errors"):
-                row.append("E:{}".format(info["errors"]))
-                if proj != "DictionaryServices":
-                    ok = False
+                row.append(f"E:{info['errors']}")
             elif info.get("fails"):
-                row.append("F:{}".format(info["fails"]))
-                if proj != "DictionaryServices":
-                    ok = False
+                row.append(f"F:{info['fails']}")
             elif "count" not in info and info.get("message"):
                 row.append("CRASH")
-                if proj != "DictionaryServices":
-                    ok = False
             else:
                 row.append("")
 
         print(fmt % tuple(row), file=fp_out)
+
     return ok
 
 
-def system_supports_arch(interpreter, arch):
-    assert supports_arch(interpreter, arch)
+def parse_build_info(state_dir):
+    info = {}
+    python_versions = {}
 
+    with open(f"{state_dir}/build-info.txt") as fp:
+        for line in fp:
+            if not line.strip():
+                break
+
+            key, _, value = line.strip().partition(":")
+            info[key.strip()] = value.strip()
+
+        for line in fp:
+            version, _, rest = line.partition(":")
+            _, _, version = version.partition(" ")
+            rest = rest.strip()
+            python_versions[version] = rest
+
+    return info, python_versions
+
+
+def test_summary_html(fp_out, state_dir):
+    fp_out.write(HTML_PREFIX)
+
+    info, python_versions = parse_build_info(state_dir)
+
+    print("  <h1>Build information</h1>", file=fp_out)
+    print("  <table>", file=fp_out)
+    print("    <tr><th>Key</th><th>Value</th></tr>", file=fp_out)
+    for key, value in info.items():
+        print(f"    <tr><td>{key}</td><td>{value}</td></tr>", file=fp_out)
+    print("  </table>", file=fp_out)
+
+    print("  <h1>Python versions</h1>", file=fp_out)
+    print("  <table>", file=fp_out)
+    print("    <tr><th>Versions</th><th>Details</th></tr>", file=fp_out)
+    for key, value in python_versions.items():
+        print(f"    <tr><td>{key}</td><td>{value}</td></tr>", file=fp_out)
+    print("  </table>", file=fp_out)
+
+    results = collections.defaultdict(dict)
+
+    for nm in os.listdir(state_dir):
+        if nm.endswith(".txt") or nm.endswith(".html"):
+            continue
+
+        sd = os.path.join(state_dir, nm)
+        for fn in os.listdir(sd):
+            if not fn.endswith(".status"):
+                continue
+            proj = fn[:-7]
+            proj = proj.replace("pyobjc-framework-", "FWK: ")
+
+            with open(os.path.join(sd, fn)) as fp:
+                results[proj][nm] = json.load(fp)
+
+    keys = set()
+    for v in results.values():
+        keys.update(v.keys())
+    keys = tuple(sorted(keys))
+
+    print("  <h1>Test Results</h1>", file=fp_out)
+    print("  <table>", file=fp_out)
+    print("    <tr>", file=fp_out)
+    print("      <th>Project</th>", file=fp_out)
+    for k in keys:
+        print(f"      <th>{k}</th>", file=fp_out)
+    print("    </tr>", file=fp_out)
+
+    for proj in sorted(results):
+        # Note: DictionaryServices has a known crashing testcase,
+        # ignore errors w.r.t. reporting if there were problems in the test run.
+        print("    <tr>", file=fp_out)
+        print(f"      <td>{proj}</td>", file=fp_out)
+        for k in keys:
+            if k not in results[proj]:
+                print(
+                    "      <td><span class=\"skip\"></span></td>",
+                    file=fp_out,
+                )
+                continue
+            else:
+                info = results[proj][k]
+            errors = info.get("errors", 0)
+            fails = info.get("fails", 0)
+            oks = info.get("count", 0)
+
+            if "count" not in info and info.get("message"):
+                print(
+                    f"      <td><span class=\"crash\">{info.get('message')}</span></td>",
+                    file=fp_out,
+                )
+            else:
+                parts = []
+                if errors:
+                    parts.append(f'<span class="errors">{errors}</span>')
+                if fails:
+                    parts.append(f'<span class="fails">{fails}</span>')
+
+                if parts:
+                    print(f"      <td>{' '.join(parts)}</td>", file=fp_out)
+                elif not oks:
+                    print("      <td></td>", file=fp_out)
+                else:
+                    print('      <td><span class="ok">OK</span></td>', file=fp_out)
+
+    print("    </tr>", file=fp_out)
+
+    print("  </table>", file=fp_out)
+    fp_out.write(HTML_SUFFIX)
+
+
+def system_supports_arch(interpreter, arch):
     try:
-        subprocess.check_output(
-            ["/usr/bin/arch", f"-{arch}", interpreter, "-c", ""]
-        )
+        subprocess.check_output(["/usr/bin/arch", f"-{arch}", interpreter, "-c", ""])
     except subprocess.CalledProcessError:
         return False
 
@@ -368,8 +510,6 @@ def format_seconds(seconds):
 def main():
     start_time = time.time()
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-    lg = logging.getLogger("runtests")
-
     options = parse_arguments()
 
     # The exceptionhandling testsuite calls atos and that can ask for a password.
@@ -379,12 +519,12 @@ def main():
 
     # Invoke 'sw_vers' to get the real system version, even if Python was compiled
     # with an older SDK.
-    osx_release = subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
+    osx_release = (
+        subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
+    )
 
-    lg.info(
-        "running PyObjC tests on OSX %s with python versions %s",
-        osx_release,
-        ", ".join(options.python_versions),
+    print(
+        f"{BOLD}running PyObjC tests on macOS {osx_release} with python versions {', '.join(options.python_versions)}{RESET}"
     )
     osx_dir = os.path.join(options.state_dir, ".".join(osx_release.split(".")[:2]))
     if not os.path.exists(osx_dir):
@@ -404,7 +544,7 @@ def main():
 
     for py_ver in options.python_versions:
         for variant in variants(py_ver, options.permitted_variants):
-            lg.info(f"Preparing variant {variant!r} of python {py_ver}")
+            print(f"{BOLD}Preparing variant {variant!r} of python {py_ver}{RESET}")
 
             setup_variant(py_ver, variant)
 
@@ -418,8 +558,6 @@ def main():
                         "--no-warn-script-location",
                         "-U",
                         "coverage",
-                        "twine",
-
                         # For some reason 'chardet' is needed for some
                         # 'pyobjc' tests on x86_64 (in emulation)
                         "chardet",
@@ -427,9 +565,41 @@ def main():
                 )
 
                 # Install packages into the virtualenv
-                for project in build_order:
+                for idx, project in enumerate(build_order):
                     build_project(
-                        interpreter=interpreter, py_ver=variant, project=project
+                        interpreter=interpreter,
+                        py_ver=variant,
+                        project=project,
+                        idx=idx,
+                        count=len(build_order),
+                    )
+
+                if py_ver == options.python_versions[0]:
+                    # Run the 'pyobjc' tests only once. These
+                    # tests are fairly expensive and test basic
+                    # housekeeping for the project as a whole.
+                    #
+                    # Running them for every element of the
+                    # test matrix is not useful.
+                    for arch in ("arm64", "x86_64"):
+                        if not system_supports_arch(interpreter, arch):
+                            continue
+                        if options.arch and arch not in options.arch:
+                            continue
+                        if supports_arch(interpreter, arch):
+                            break
+                    else:
+                        raise RuntimeError("Cannot find supported architecture")
+
+                    run_tests(
+                        interpreter=interpreter,
+                        arch=arch,
+                        py_ver=variant,
+                        project="pyobjc",
+                        state_dir=os.path.join(osx_dir, f"{variant}-{arch}"),
+                        extra_py_args=[],
+                        idx=0,
+                        count=len(build_order) + 1,
                     )
 
                 # Then run tests for all supported architectures
@@ -438,49 +608,61 @@ def main():
                         continue
 
                     if not supports_arch(interpreter, arch):
-                        lg.info(
-                            "skipping Python %s (%7s), unsupported architecture",
-                            variant,
-                            arch,
+                        print(
+                            f"skipping Python {variant} ({arch}), unsupported architecture"
                         )
                         continue
 
                     if not system_supports_arch(interpreter, arch):
-                        lg.info(
-                            "skipping Python %s (%7s), system cannot run architecture",
-                            variant,
-                            arch,
+                        print(
+                            f"skipping Python {variant} ({arch}), system cannot run architecture"
                         )
                         continue
 
                     if not compiler_supports_arch(arch):
-                        lg.info(
-                            "skipping Python %s (%7s), compiler cannot build for architecture",
-                            variant,
-                            arch,
+                        print(
+                            f"skipping Python {variant} ({arch}), compiler cannot build for architecture"
                         )
                         continue
 
-                    lg.info(
-                        "running with Python %s (%7s) using %s",
-                        variant,
-                        arch,
-                        interpreter,
+                    print(
+                        f"{BOLD}running with Python {variant} ({arch}s) using {interpreter}{RESET}"
                     )
-                    state_dir = os.path.join(osx_dir, f"{variant}-{arch}")
 
-                    for project in ["pyobjc"] + build_order:
-                        run_tests(
-                            interpreter=interpreter,
-                            arch=arch,
-                            py_ver=variant,
-                            project=project,
-                            state_dir=state_dir,
-                        )
+                    if py_ver.endswith("t"):
+                        # Test free-threaded builds both with and without the GIL enabled.
+                        if options.gil_enabled:
+                            extra_args = tuple(
+                                [f"-Xgil={value}"] for value in options.gil_enabled
+                            )
+                        else:
+                            extra_args = (["-Xgil=1"], ["-Xgil=0"])
+                    else:
+                        extra_args = [[]]
 
-    lg.info("done")
+                    for extra in extra_args:
+                        state_dir = os.path.join(osx_dir, f"{variant}-{arch}")
+                        if extra:
+                            state_dir = state_dir + "-" + "~".join(extra)
+
+                        for idx, project in enumerate(build_order):
+                            run_tests(
+                                interpreter=interpreter,
+                                arch=arch,
+                                py_ver=variant,
+                                project=project,
+                                state_dir=state_dir,
+                                extra_py_args=extra,
+                                idx=idx + 1,
+                                count=len(build_order) + 1,
+                            )
+
+    print(f"{BOLD}done{RESET}")
     with open(os.path.join(osx_dir, "summary.txt"), "w") as fp:
         test_summary(fp, osx_dir)
+
+    with open(os.path.join(osx_dir, "summary.html"), "w") as fp:
+        test_summary_html(fp, osx_dir)
 
     ok = test_summary(sys.stdout, osx_dir)
 

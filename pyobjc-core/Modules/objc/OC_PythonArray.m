@@ -25,50 +25,26 @@ NS_ASSUME_NONNULL_BEGIN
     return value;
 }
 
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
-    /*
-     * XXX: Check if 'value' can ever be NULL
-     *      if not: replace by PyObjC_Assert check
-     *
-     * XXX: return [self __pyobjc_PythonObject__];
-     */
     if (likely(value)) {
         Py_INCREF(value);
         return value;
     } else {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 }
+// LCOV_EXCL_STOP
 
 + (BOOL)supportsSecureCoding
 {
     return NO;
-}
-
-- (oneway void)release
-{
-    /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-    PyObjC_BEGIN_WITH_GIL
-
-        @try {
-            [super release];
-        } @catch (NSException* exc) { // LCOV_EXCL_LINE
-            // LCOV_EXCL_START
-            PyObjC_LEAVE_GIL;
-            @throw;
-            // LCOV_EXCL_STOP
-        }
-
-    PyObjC_END_WITH_GIL
 }
 
 - (void)dealloc
@@ -82,8 +58,16 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
 
+        /* XXX: This is different from other proxies
+         *      to make it easier to hit a race in
+         *      proxy-registry.m for testing.
+         *
+         *      With the current implementation of
+         *      proxy-registry (using weak refs) either
+         *      order works correctly.
+         */
         PyObjC_UnregisterObjCProxy(value, self);
-        Py_CLEAR(value);
+        Py_XDECREF(value);
 
     PyObjC_END_WITH_GIL
 
@@ -96,9 +80,9 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
         result = PySequence_Length(value);
-        if (result < 0 && PyErr_Occurred()) {
+        if (result < 0) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
 
@@ -116,22 +100,22 @@ NS_ASSUME_NONNULL_BEGIN
         if (unlikely(idx > PY_SSIZE_T_MAX)) {
             PyErr_SetString(PyExc_IndexError, "out of range");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         v = PySequence_GetItem(value, (Py_ssize_t)idx);
         if (unlikely(v == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (v == Py_None) {
-            result = [NSNull null];
+            result = NSNull_null;
 
         } else {
             err = depythonify_python_object(v, &result);
             if (unlikely(err == -1)) {
                 Py_CLEAR(v);
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
         Py_CLEAR(v);
 
@@ -148,9 +132,9 @@ NS_ASSUME_NONNULL_BEGIN
         if (unlikely(idx > PY_SSIZE_T_MAX)) {
             PyErr_SetString(PyExc_IndexError, "out of range");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
-        if (unlikely(newValue == [NSNull null])) {
+        if (unlikely(newValue == NSNull_null)) {
             Py_INCREF(Py_None);
             v = Py_None;
 
@@ -158,13 +142,13 @@ NS_ASSUME_NONNULL_BEGIN
             v = id_to_python(newValue);
             if (v == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         if (PySequence_SetItem(value, idx, v) < 0) {
             Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         Py_DECREF(v);
 
@@ -176,11 +160,6 @@ NS_ASSUME_NONNULL_BEGIN
     PyObject* v;
     PyObject* w;
 
-    static NSObject* NSNull_null = nil;
-    if (NSNull_null == nil) {
-        NSNull_null = [NSNull null];
-    }
-
     PyObjC_BEGIN_WITH_GIL
 
         if (unlikely(anObject == NSNull_null)) {
@@ -190,7 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
             v = id_to_python(anObject);
             if (v == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
         PyObject* args[3] = {NULL, value, v};
 
@@ -199,7 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_DECREF(v);
         if (unlikely(w == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(w);
 
     PyObjC_END_WITH_GIL;
@@ -210,17 +189,12 @@ NS_ASSUME_NONNULL_BEGIN
     PyObject* v;
     PyObject* w;
 
-    static NSObject* NSNull_null = nil;
-    if (NSNull_null == nil) {
-        NSNull_null = [NSNull null];
-    }
-
     if (unlikely(idx > PY_SSIZE_T_MAX)) {
         PyObjC_BEGIN_WITH_GIL
             PyErr_SetString(PyExc_IndexError, "No such index");
             PyObjC_GIL_FORWARD_EXC();
         PyObjC_END_WITH_GIL // LCOV_EXCL_LINE
-    }
+    } // LCOV_EXCL_LINE
 
     PyObjC_BEGIN_WITH_GIL
         if (unlikely(anObject == NSNull_null)) {
@@ -230,14 +204,14 @@ NS_ASSUME_NONNULL_BEGIN
             v = id_to_python(anObject);
             if (v == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
         }
 
         PyObject* args[4] = {NULL, value, NULL, v};
         args[2]           = PyLong_FromUnsignedLong(idx);
         if (args[2] == NULL) {        // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-        }
+        } // LCOV_EXCL_LINE
 
         w = PyObject_VectorcallMethod(PyObjCNM_insert, args + 1,
                                       3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -246,7 +220,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         if (unlikely(w == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
         Py_DECREF(w);
 
     PyObjC_END_WITH_GIL;
@@ -261,17 +235,17 @@ NS_ASSUME_NONNULL_BEGIN
         idx = PySequence_Length(value);
         if (unlikely(idx == -1)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         if (unlikely(idx == 0)) {
             PyErr_SetString(PyExc_ValueError, "pop empty sequence");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         r = PySequence_DelItem(value, idx - 1);
         if (unlikely(r == -1)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL;
 }
@@ -284,12 +258,12 @@ NS_ASSUME_NONNULL_BEGIN
         if (unlikely(idx > PY_SSIZE_T_MAX)) {
             PyErr_SetString(PyExc_IndexError, "No such index");
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         r = PySequence_DelItem(value, (Py_ssize_t)idx);
         if (unlikely(r == -1)) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL;
 }
@@ -312,7 +286,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_ssize_t size = PyTuple_Size(value);
 
         if ([coder allowsKeyedCoding]) {
-            if (size > INT_MAX) { // LCOV_BT_EXCL_LINE
+            if (size > INT_MAX) { // LCOV_BR_EXCL_LINE
                 /* Excluded from coverage tests because this would require creating
                  * rather huge tuples, with corresponding memory usage.
                  */
@@ -321,7 +295,7 @@ NS_ASSUME_NONNULL_BEGIN
                 [coder encodeInt64:(int64_t)PyTuple_Size(value) forKey:@"pylength"];
                 // LCOV_EXCL_STOP
 
-            } else { // LCOV_BR_EXCL_LINE
+            } else { // LCOV_EXCL_LINE
                 [coder encodeInt32:4 forKey:@"pytype"];
                 [coder encodeInt32:(int32_t)PyTuple_Size(value) forKey:@"pylength"];
             }
@@ -347,13 +321,17 @@ NS_ASSUME_NONNULL_BEGIN
             [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
 
-        PyObjC_encodeWithCoder(value, coder);
+        PyObjC_BEGIN_WITH_GIL
+            if (PyObjC_encodeWithCoder(value, coder) == -1) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
+        PyObjC_END_WITH_GIL
     }
 }
 
 - (Class)classForCoder
 {
-    if (value == NULL || PyTuple_CheckExact(value)) {
+    if (PyTuple_CheckExact(value)) {
         return [NSArray class];
 
     } else if (PyList_CheckExact(value)) {
@@ -376,13 +354,16 @@ NS_ASSUME_NONNULL_BEGIN
      */
     NSUInteger i;
 
-    static NSObject* NSNull_null = nil;
-    if (NSNull_null == nil) {
-        NSNull_null = [NSNull null];
+    if (count > 0 && objects == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        [self release];
+        return nil;
+        // LCOV_EXCL_STOP
     }
 
     PyObjC_BEGIN_WITH_GIL
-        if (PyTuple_CheckExact(value) && (NSUInteger)PyTuple_Size(value) == count) {
+        if (PyTuple_CheckExact(value)
+            && (NSUInteger)PyTuple_Size(value) == count) { // LCOV_BR_EXCL_LINE
             for (i = 0; i < count; i++) {
                 PyObject* v;
 
@@ -394,16 +375,18 @@ NS_ASSUME_NONNULL_BEGIN
                     v = id_to_python(objects[i]);
                     if (v == NULL) {
                         PyObjC_GIL_FORWARD_EXC();
-                    }
+                    } // LCOV_EXCL_LINE
                 }
 
                 /* XXX: Can this every be true? */
-                if (PyTuple_GET_ITEM(value, i) != NULL) {
+                if (PyTuple_GET_ITEM(value, i) != NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     /* use temporary object to avoid race condition */
                     PyObject* t = PyTuple_GET_ITEM(value, i);
                     PyTuple_SET_ITEM(value, i, NULL);
                     Py_DECREF(t);
-                }
+                    // LCOV_EXCL_STOP
+                } // LCOV_EXCL_LINE
                 PyTuple_SET_ITEM(value, i, v);
             }
         } else {
@@ -420,13 +403,13 @@ NS_ASSUME_NONNULL_BEGIN
                     v = id_to_python(objects[i]);
                     if (v == NULL) {
                         PyObjC_GIL_FORWARD_EXC();
-                    }
+                    } // LCOV_EXCL_LINE
                 }
 
                 r = PyList_Append(value, v);
                 if (r == -1) {                // LCOV_BR_EXCL_LINE
                     PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
+                } // LCOV_EXCL_LINE
 
                 Py_DECREF(v);
             }
@@ -461,10 +444,24 @@ NS_ASSUME_NONNULL_BEGIN
         code = [coder decodeInt32ForKey:@"pytype"];
 
     } else {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+        /* Old deployment target, modern SDK */
+        if (@available(macOS 10.13, *)) {
+            [coder decodeValueOfObjCType:@encode(int) at:&code size:sizeof(code)];
+        } else {
+            CLANG_SUPPRESS
+            [coder decodeValueOfObjCType:@encode(int) at:&code];
+        }
+#elif PyObjC_BUILD_RELEASE >= 1013
+        /* Modern deployment target */
+        [coder decodeValueOfObjCType:@encode(int) at:&code size:sizeof(code)];
+#else
+        /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&code];
+#endif
     }
 
-    switch (code) {
+    switch (code) { // LCOV_BR_EXCL_LINE
     case 1:
         /* This code was used by some previous versions of PyObjC
          * (before 2.2) and is kept around for backward compatibility.
@@ -477,7 +474,7 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyList_New(0);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
 
@@ -485,7 +482,7 @@ NS_ASSUME_NONNULL_BEGIN
         if (tmpVal == nil) {
             return nil;
         }
-        PyObjC_Assert(tmpVal == self, nil);
+        assert(tmpVal == self);
         self = tmpVal;
 
         PyObjC_BEGIN_WITH_GIL
@@ -494,7 +491,7 @@ NS_ASSUME_NONNULL_BEGIN
             Py_DECREF(t);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
         // LCOV_EXCL_STOP
@@ -504,12 +501,12 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyList_New(0);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
 
         tmpVal = [super initWithCoder:coder];
-        PyObjC_Assert(tmpVal == self, nil);
+        assert(tmpVal == self);
         return tmpVal;
 
     case 3:
@@ -517,54 +514,22 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyList_New(0);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
+
+            PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
+            if (decoded == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
+
+            SET_FIELD(value, decoded);
+
+            id actual = PyObjC_RegisterObjCProxy(value, self);
+            [self release];
+            self = actual;
 
         PyObjC_END_WITH_GIL
 
-        if (PyObjC_Decoder != NULL) {
-            PyObjC_BEGIN_WITH_GIL
-                PyObject* cdr = id_to_python(coder);
-                PyObject* setValue;
-                PyObject* selfAsPython;
-                PyObject* v;
-
-                if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
-                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
-
-                selfAsPython = PyObjCObject_New(self, 0, YES);
-                if (selfAsPython == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
-                Py_DECREF(selfAsPython);
-
-                if (setValue == NULL) {       // LCOV_BR_EXCL_LINE
-                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
-
-                v = PyObjC_CallDecoder(cdr, setValue);
-                Py_DECREF(cdr);
-                Py_DECREF(setValue);
-
-                if (v == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
-                SET_FIELD(value, v);
-
-                id actual = PyObjC_RegisterObjCProxy(value, self);
-                if (actual != self) {
-                    [actual retain];
-                    [self release];
-                    self = actual;
-                }
-
-            PyObjC_END_WITH_GIL
-
-            return self;
-        }
+        return self;
 
     case 4:
         /* tuple with less than MAX_INT elements */
@@ -573,7 +538,21 @@ NS_ASSUME_NONNULL_BEGIN
 
         } else {
             int isize;
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+            /* Old deployment target, modern SDK */
+            if (@available(macOS 10.13, *)) {
+                [coder decodeValueOfObjCType:@encode(int) at:&isize size:sizeof(isize)];
+            } else {
+                CLANG_SUPPRESS
+                [coder decodeValueOfObjCType:@encode(int) at:&isize];
+            }
+#elif PyObjC_BUILD_RELEASE >= 1013
+            /* Modern deployment target */
+            [coder decodeValueOfObjCType:@encode(int) at:&isize size:sizeof(isize)];
+#else
+            /* Deployment target is ancient and SDK is old */
             [coder decodeValueOfObjCType:@encode(int) at:&isize];
+#endif
             size = isize;
         }
 
@@ -581,12 +560,12 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyTuple_New(size);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
 
         tmpVal = [super initWithCoder:coder];
-        PyObjC_Assert(tmpVal == self, nil);
+        assert(tmpVal == self);
         return tmpVal;
 
     case 5:
@@ -598,7 +577,23 @@ NS_ASSUME_NONNULL_BEGIN
         if ([coder allowsKeyedCoding]) {
             size = [coder decodeInt64ForKey:@"pylength"];
         } else {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+            /* Old deployment target, modern SDK */
+            if (@available(macOS 10.13, *)) {
+                [coder decodeValueOfObjCType:@encode(long long)
+                                          at:&size
+                                        size:sizeof(size)];
+            } else {
+                CLANG_SUPPRESS
+                [coder decodeValueOfObjCType:@encode(long long) at:&size];
+            }
+#elif PyObjC_BUILD_RELEASE >= 1013
+            /* Modern deployment target */
+            [coder decodeValueOfObjCType:@encode(long long) at:&size size:sizeof(size)];
+#else
+            /* Deployment target is ancient and SDK is old */
             [coder decodeValueOfObjCType:@encode(long long) at:&size];
+#endif
         }
 
         PyObjC_BEGIN_WITH_GIL
@@ -609,9 +604,9 @@ NS_ASSUME_NONNULL_BEGIN
 
         PyObjC_END_WITH_GIL
         tmpVal = [super initWithCoder:coder];
-        PyObjC_Assert(tmpVal == self, nil);
-        // LCOV_EXCL_STOP
+        assert(tmpVal == self);
         return tmpVal;
+        // LCOV_EXCL_STOP
 
     default:
         // LCOV_EXCL_START
@@ -632,33 +627,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id)copyWithZone:(NSZone* _Nullable)zone
 {
-    if (PyObjC_CopyFunc && PyObjC_CopyFunc != Py_None) {
-        NSObject* result;
-        PyObjC_BEGIN_WITH_GIL
+    NSObject* result;
+    PyObjC_BEGIN_WITH_GIL
 
-            PyObject* copy = PyObjC_CallCopyFunc(value);
+        PyObject* copy = PyObjC_Copy(value);
+        if (copy == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
 
-            if (copy == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
-            if (depythonify_python_object(copy, &result) == -1) {
-                Py_DECREF(copy);
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
+        if (depythonify_python_object(copy, &result) == -1) {
             Py_DECREF(copy);
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
 
-        PyObjC_END_WITH_GIL
+        Py_DECREF(copy);
 
-        [result retain];
-        return result;
+    PyObjC_END_WITH_GIL
 
-    } else {
-        return [super copyWithZone:zone];
-    }
+    [result retain];
+    return result;
 }
-
 
 - (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {
@@ -667,12 +655,15 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* copy = PySequence_List(value);
         if (copy == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
-        if (depythonify_python_object(copy, &result) == -1) {
+        if (depythonify_python_object(copy, &result) == -1) { // LCOV_BR_EXCL_LINE
+            /* Should never fail, 'copy' is an instance of PyList_Type */
+            // LCOV_EXCL_START
             Py_DECREF(copy);
             PyObjC_GIL_FORWARD_EXC();
-        }
+            // LCOV_EXCL_STOP
+        } // LCOV_EXCL_LINE
 
         Py_DECREF(copy);
 

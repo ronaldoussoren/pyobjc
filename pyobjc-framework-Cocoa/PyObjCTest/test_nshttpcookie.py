@@ -28,6 +28,10 @@ class TestNSHTTPCookie(TestCase):
         self.assertIsInstance(Foundation.NSHTTPCookieSameSiteLax, str)
         self.assertIsInstance(Foundation.NSHTTPCookieSameSiteStrict, str)
 
+    @min_os_level("15.2")
+    def testConstants15_2(self):
+        self.assertIsInstance(Foundation.NSHTTPCookieSetByJavaScript, str)
+
     def testMethods(self):
         self.assertResultIsBOOL(Foundation.NSHTTPCookie.isSessionOnly)
         self.assertResultIsBOOL(Foundation.NSHTTPCookie.isSecure)

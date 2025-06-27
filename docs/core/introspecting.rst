@@ -50,6 +50,15 @@ limitation in :mod:`pydoc` w.r.t.  functions implemented in C.
 The documentation string does list a full prototype, and
 information about arguments.
 
+.. note::
+
+   It is possible to use :mod:`pydoc` and :func:`help` with entire
+   binding modules (e.g. ``help(Foundation)``), but this will be
+   pretty slow due to the sheer size of Apple frameworks.
+
+   As an example, the output of ``pydoc Foundation`` is more than
+   350 MB of text.
+
 
 Function and method metadata
 ----------------------------

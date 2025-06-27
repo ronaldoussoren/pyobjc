@@ -24,7 +24,7 @@ static PyMemberDef opaque_members[] = {
 
 static PyObject* _Nullable as_cobject(PyObject* self)
 {
-    PyObjC_Assert(((OpaquePointerObject*)self)->pointer_value != NULL, NULL);
+    assert(((OpaquePointerObject*)self)->pointer_value != NULL);
 
     return PyCapsule_New(((OpaquePointerObject*)self)->pointer_value, "objc.__opaque__",
                          NULL);
@@ -32,6 +32,7 @@ static PyObject* _Nullable as_cobject(PyObject* self)
 
 static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 {
+    assert(((OpaquePointerObject*)self)->pointer_value != NULL);
     return PyObjC_MakeCVoidP(((OpaquePointerObject*)self)->pointer_value);
 }
 
@@ -86,7 +87,7 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
         p = PyCapsule_GetPointer(cobject, "objc.__opaque__");
         if (p == NULL) {
             /* The pointer in a capsule cannot be NULL */
-            PyObjC_Assert(PyErr_Occurred(), NULL);
+            assert(PyErr_Occurred());
             return NULL;
         }
 
@@ -123,8 +124,7 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
             }
 
         } else if (attrval == Py_None) {
-            Py_INCREF(Py_None);
-            return Py_None;
+            Py_RETURN_NONE;
 
         } else {
             PyErr_SetString(PyExc_TypeError, "c_void_p.value is not an integer");
@@ -134,8 +134,7 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
         Py_DECREF(attrval);
 
         if (p == NULL) {
-            Py_INCREF(Py_None);
-            return Py_None;
+            Py_RETURN_NONE;
         }
 
         result = PyObject_GC_New(OpaquePointerObject, type);
@@ -156,16 +155,12 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
 static void
 opaque_dealloc(PyObject* self)
 {
-#if PY_VERSION_HEX >= 0x03090000
     PyTypeObject* tp = Py_TYPE(self);
-#endif
 
     PyObject_GC_UnTrack(self);
     PyObject_GC_Del(self);
 
-#if PY_VERSION_HEX >= 0x03090000
     Py_DECREF(tp);
-#endif /* PY_VERSION_HEX >= 0x03090000 */
 }
 
 static int
@@ -173,9 +168,7 @@ opaque_traverse(PyObject* self __attribute__((__unused__)),
                 visitproc visit __attribute__((__unused__)),
                 void*     arg __attribute__((__unused__)))
 {
-#if PY_VERSION_HEX >= 0x03090000
     Py_VISIT(Py_TYPE(self));
-#endif /* PY_VERSION_HEX >= 0x03090000 */
     return 0;
 }
 
@@ -194,13 +187,12 @@ opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** arg
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         *(PyObject**)retval = NULL;
-        return;
         // LCOV_EXCL_STOP
+    } else { // LCOV_EXCL_LINE
+        result->pointer_value = pointer_value;
+        PyObject_GC_Track((PyObject*)result);
+        *(PyObject**)retval = (PyObject*)result;
     }
-
-    result->pointer_value = pointer_value;
-    PyObject_GC_Track((PyObject*)result);
-    *(PyObject**)retval = (PyObject*)result;
 }
 
 static void
@@ -216,11 +208,10 @@ opaque_to_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** args,
         PyErr_Format(PyExc_TypeError, "Need instance of %s, got instance of %s",
                      opaque_type->tp_name, Py_TYPE(obj)->tp_name);
         *(int*)retval = -1;
-        return;
+    } else {
+        *(void**)pObj = ((OpaquePointerObject*)obj)->pointer_value;
+        *(int*)retval = 0;
     }
-
-    *(void**)pObj = ((OpaquePointerObject*)obj)->pointer_value;
-    *(int*)retval = 0;
 }
 
 /*
@@ -263,7 +254,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
         if (new_cif == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;       // LCOV_EXCL_LINE
         }
-    }
+    } // LCOV_BR_EXCL_LINE
 
     if (convert_cif == NULL) {
         PyObjCMethodSignature* signature;
@@ -276,7 +267,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
         if (convert_cif == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;           // LCOV_EXCL_LINE
         }
-    }
+    } // LCOV_BR_EXCL_LINE
 
     PyType_Slot opaque_slots[] = {
         {
@@ -318,7 +309,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
             // LCOV_EXCL_STOP
         }
         docslot->slot = 0;
-    }
+    } // LCOV_BR_EXCL_LINE
 
     dot = strchr(name, '.');
     if (dot == NULL) {
@@ -327,7 +318,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
             goto error_cleanup;
         }
         strcpy(buf, "objc.");
-        strcpy(buf + 5, name);
+        strlcpy(buf + 5, name, sizeof(buf) - 5);
     }
 
     PyType_Spec opaque_spec = {
@@ -341,7 +332,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 
     if (opaque_spec.name == NULL) { // LCOV_BR_EXCL_LINE
         goto error_cleanup;         // LCOV_EXCL_LINE
-    }                               // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 
     newType = PyType_FromSpec(&opaque_spec);
     if (newType == NULL) {                   // LCOV_BR_EXCL_LINE
@@ -429,11 +420,11 @@ error_cleanup:
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
     if (cl_to_c) {                 // LCOV_BR_EXCL_LINE
         ffi_closure_free(cl_to_c); // LCOV_EXCL_LINE
-    }                              // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 
     if (cl_from_c) {                 // LCOV_BR_EXCL_LINE
         ffi_closure_free(cl_from_c); // LCOV_EXCL_LINE
-    }                                // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 #pragma clang diagnostic pop
 #endif
     Py_XDECREF(newType);

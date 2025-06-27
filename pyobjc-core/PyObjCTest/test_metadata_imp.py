@@ -45,6 +45,9 @@ class TestArraysOut(TestCase):
         self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
 
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            m()
+
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_("fillStringArray:")

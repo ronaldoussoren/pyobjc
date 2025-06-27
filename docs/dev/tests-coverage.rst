@@ -30,7 +30,7 @@ to improve coverage with tests in python first.
 
 The Makefile target "c-coverage" runs the test suite
 while collecting coverage information. This requires having
-`lcov <https://ltp.sourceforge.net/coverage/lcov.php>`_ on the system
+`lcov <https://github.com/linux-test-project/lcov>`_ on the system
 running the tests, and currently requires an arm64 system.
 
 It is possible to mark lines as unreachable for coverage reporting, use
@@ -44,7 +44,7 @@ code is correct):
 .. note::
 
    I've also started marking branches and failure cases as excluded when
-   the propagate one of the cases mentioned earlier.
+   they propagate one of the cases mentioned earlier.
 
 Use ``LCOV_EXCL_LINE`` in a comment to exclude a specific line.
 

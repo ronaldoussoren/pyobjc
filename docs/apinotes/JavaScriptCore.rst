@@ -1,3 +1,7 @@
+.. module:: JavaScriptCore
+   :platform: macOS
+   :synopsis: Bindings for the JavaScriptCore framework
+
 API Notes: JavaScriptCore framework
 ===================================
 
@@ -76,7 +80,7 @@ Not supported at the moment as this requires manual wrappers (C code).
 ``JSExport``
 ............
 
-macOS 10.9 introcuded a ``JSExport`` protocol. The macro ``JSExportAs`` is
+The macro ``JSExportAs`` is
 available as a function with a slightly more involved interface:
 
 .. sourcecode:: python
@@ -93,6 +97,3 @@ available as a function with a slightly more involved interface:
     )
 
 But sadly, using a protocol defined in Python does not work at this time.
-
-To use the protocol you must use a Python that's build with macOS 10.9 or later
-as the deployment target.

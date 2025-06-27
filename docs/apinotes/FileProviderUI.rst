@@ -1,3 +1,7 @@
+.. module:: FileProviderUI
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the FileProviderUI framework
+
 API Notes: FileProviderUI framework
 ===================================
 
@@ -9,9 +13,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 These bindings are accessed through the ``FileProviderUI`` package (that is, ``import FileProviderUI``).
 
 
+.. versionadded:: macOS 10.15
+
 API Notes
 ---------
-
-.. note::
-
-   This framework is only available on macOS 10.15 and later.

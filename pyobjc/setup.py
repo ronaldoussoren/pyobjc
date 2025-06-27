@@ -13,7 +13,7 @@ import re
 from setuptools import setup, Command
 from setuptools.command import egg_info
 
-VERSION = "11.0a0"
+VERSION = "11.1.1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -73,6 +73,7 @@ FRAMEWORK_WRAPPERS = [
     ("CryptoTokenKit", "10.10", None),
     ("DataDetection", "12.0", None),
     ("DeviceCheck", "10.15", None),
+    ("DeviceDiscoveryExtension", "15.0", None),
     ("DictionaryServices", "10.5", None),
     ("DiscRecording", None, None),
     ("DiscRecordingUI", None, None),
@@ -86,7 +87,7 @@ FRAMEWORK_WRAPPERS = [
     ("FileProvider", "10.15", None),
     ("FileProviderUI", "10.15", None),
     ("FSEvents", "10.5", None),
-    ("FSKit", "15.0", None),
+    ("FSKit", "15.4", None),
     ("FinderSync", "10.10", None),
     ("GameCenter", "10.8", None),
     ("GameController", "10.9", None),
@@ -149,6 +150,7 @@ FRAMEWORK_WRAPPERS = [
     ("Security", None, None),
     ("SecurityFoundation", None, None),
     ("SecurityInterface", None, None),
+    ("SecurityUI", "15.4", None),
     ("SearchKit", None, None),
     ("ServiceManagement", "10.6", None),
     ("ShazamKit", "12.0", None),
@@ -202,6 +204,9 @@ MACOS_TO_DARWIN = {
     "14.0": "23.0",
     "14.4": "23.4",
     "15.0": "24.0",
+    "15.1": "24.1",
+    "15.2": "24.2",
+    "15.4": "24.4",
 }
 
 
@@ -267,7 +272,6 @@ Development Status :: 5 - Production/Stable
 Environment :: Console
 Environment :: MacOS X :: Cocoa
 Intended Audience :: Developers
-License :: OSI Approved :: MIT License
 Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
@@ -336,7 +340,9 @@ def scan_info(path):
     packages = []
     required = []
 
-    a = compile(open(path).read(), path, "exec", ast.PyCF_ONLY_AST)
+    with open(path) as stream:
+        contents = stream.read()
+    a = compile(contents, path, "exec", ast.PyCF_ONLY_AST)
     for node in ast.walk(a):
         if isinstance(node, ast.Call) and getattr(node.func, "id", "") == "setup":
             for child in node.keywords:
@@ -357,10 +363,11 @@ def get_imports(prefix):
     for topdir, _dirnames, fnames in os.walk(prefix):
         for fn in fnames:
             if fn == "__init__.py":
-                for line in open(os.path.join(topdir, fn)).readlines():
-                    m = re.match(r"^\s+import\s([A-Za-z0-9]*)$", line)
-                    if m is not None:
-                        imports.add(m.group(1))
+                with open(os.path.join(topdir, fn)) as stream:
+                    for line in stream.readlines():
+                        m = re.match(r"^\s+import\s([A-Za-z0-9]*)$", line)
+                        if m is not None:
+                            imports.add(m.group(1))
 
     return imports
 
@@ -521,52 +528,54 @@ class oc_test(Command):
                     failures += 1
 
         print("  validating sdist archives...")
-        devnull = open("/dev/null", "a")
-        for nm in ("pyobjc", "pyobjc-core") + tuple(
-            sorted(nm for nm in os.listdir("..") if nm.startswith("pyobjc-framework-"))
-        ):
-            print(f"    {nm}")
-            subdir = os.path.join("..", nm)
-            if os.path.exists(os.path.join(subdir, "dist")):
-                shutil.rmtree(os.path.join(subdir, "dist"))
+        with open("/dev/null", "a") as devnull:
+            for nm in ("pyobjc", "pyobjc-core") + tuple(
+                sorted(
+                    nm for nm in os.listdir("..") if nm.startswith("pyobjc-framework-")
+                )
+            ):
+                print(f"    {nm}")
+                subdir = os.path.join("..", nm)
+                if os.path.exists(os.path.join(subdir, "dist")):
+                    shutil.rmtree(os.path.join(subdir, "dist"))
 
-            p = subprocess.check_call(
-                [sys.executable, "setup.py", "sdist"],
-                cwd=subdir,
-                stdout=devnull,
-                stderr=devnull,
-            )
-            files = glob.glob(os.path.join(subdir, "dist", "*.tar.gz"))
+                p = subprocess.check_call(
+                    [sys.executable, "setup.py", "sdist"],
+                    cwd=subdir,
+                    stdout=devnull,
+                    stderr=devnull,
+                )
+                files = glob.glob(os.path.join(subdir, "dist", "*.tar.gz"))
 
-            if not files:
-                print(f"No sdist in {nm}")
-                failures += 1
+                if not files:
+                    print(f"No sdist in {nm}")
+                    failures += 1
 
-            elif len(files) > 1:
-                print(f"Too many sdist in {nm}")
-                failures += 1
+                elif len(files) > 1:
+                    print(f"Too many sdist in {nm}")
+                    failures += 1
 
-            else:
-                t = tarfile.open(files[0], "r:gz")
-                for fn in t.getnames():
-                    if fn.startswith("/"):
-                        print(f"Absolute path in sdist for {nm}")
-                        failures += 1
-
-                    for p in (
-                        "__pycache__",
-                        ".pyc",
-                        ".pyo",
-                        ".so",
-                        ".dSYM",
-                        ".eggs",
-                        ".app",
-                        "/build/",
-                        "/dist/",
-                    ):
-                        if p in fn:
-                            print(f"Unwanted pattern {p!r} in sdist for {nm}: {fn}")
+                else:
+                    t = tarfile.open(files[0], "r:gz")
+                    for fn in t.getnames():
+                        if fn.startswith("/"):
+                            print(f"Absolute path in sdist for {nm}")
                             failures += 1
+
+                        for p in (
+                            "__pycache__",
+                            ".pyc",
+                            ".pyo",
+                            ".so",
+                            ".dSYM",
+                            ".eggs",
+                            ".app",
+                            "/build/",
+                            "/dist/",
+                        ):
+                            if p in fn:
+                                print(f"Unwanted pattern {p!r} in sdist for {nm}: {fn}")
+                                failures += 1
 
         print("  validating long description...")
         for nm in ("pyobjc", "pyobjc-core") + tuple(
@@ -710,7 +719,7 @@ setup(
     python_requires=">=3.9",
     setup_requires=[],
     classifiers=CLASSIFIERS,
-    license="MIT License",
+    license="MIT",
     zip_safe=True,
     # workaround for setuptools 0.6b4 bug
     dependency_links=[],

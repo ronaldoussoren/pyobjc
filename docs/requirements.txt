@@ -1,3 +1,13 @@
 sphinx-sitemap
 sphinxcontrib.blockdiag
 sphinxcontrib.spelling
+sphinx>=7.3
+shibuya
+sphinx-copybutton
+sphinx-design
+sphinx-tabs
+sphinx-togglebutton
+sphinx-docsearch
+sphinxcontrib-mermaid
+sphinx-reredirects
+sphinxext-opengraph[social-cards]

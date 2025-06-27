@@ -102,7 +102,7 @@ ffi_closure* _Nullable PyObjC_ffi_closure_alloc(size_t size, void** codeloc)
         PyErr_SetString(PyObjCExc_Error, "Allocating closure of unexpected size");
         return NULL;
     }
-    PyObjC_Assert(codeloc, NULL);
+    assert(codeloc != NULL);
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&freelist_mutex);
 #endif

@@ -4,8 +4,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 PyObjC_FINAL_CLASS @interface OC_PythonEnumerator : NSEnumerator {
-    PyObject* value;
-    BOOL      valid;
+    PyObject*          value;
+    PyObjC_ATOMIC BOOL valid;
 }
 
 + (instancetype)enumeratorWithPythonObject:(PyObject*)object;

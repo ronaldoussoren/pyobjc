@@ -10,10 +10,12 @@ import os
 import shutil
 import subprocess
 import time
+import sys
+import typing
 from _topsort import topological_sort
 
 
-PY_VERSIONS = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.13t"]
+PY_VERSIONS = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.13t", "3.14", "3.14t"]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,8 +27,56 @@ TEST_REPORT_DIR = os.path.join(TOP_DIR, "test-results", "html")
 TEST_TMPL_DIR = os.path.join(_basedir, "templates")
 TEST_STATIC_DIR = os.path.join(_basedir, "static")
 
+# "colors" for pretty output
+if os.isatty(sys.stdout.fileno()):
+    RED = "\033[31m"
+    BOLD = "\033[1m"
+    RESET = "\033[39m\033[m"
+else:
+    RED = ""
+    BOLD = ""
+    RESET = ""
 
-def mac_ver():
+_detected_versions = None
+
+
+def is_usable_release(ver: str, *, include_alpha: bool = False) -> bool:
+    if ver.endswith("t"):
+        path = os.path.join("/Library/Frameworks/PythonT.framework/Versions", ver[:-1])
+        command = "python3t"
+    else:
+        path = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+        command = "python3"
+
+    if not os.path.exists(path):
+        return False
+
+    if include_alpha:
+        return True
+
+    output = subprocess.check_output([f"{path}/bin/{command}", "--version"]).decode()
+    if "a" in output.strip():
+        # Alpha release
+        return False
+
+    return True
+
+
+def detect_pyversions(*, include_alpha: bool = False) -> typing.List[str]:
+    global _detected_versions
+    if _detected_versions is not None:
+        return _detected_versions
+
+    result = []
+    for ver in PY_VERSIONS:
+        if is_usable_release(ver, include_alpha=include_alpha):
+            result.append(ver)
+
+    _detected_versions = result
+    return _detected_versions
+
+
+def mac_ver() -> str:
     # Return a macOS version string that includes the Build ID
     info = {}
     for ln in subprocess.check_output("sw_vers").decode("utf-8").splitlines():
@@ -38,7 +88,7 @@ def mac_ver():
     return "{ProductVersion} ({BuildVersion})".format(**info)
 
 
-def repository_id():
+def repository_id() -> str:
     return (
         subprocess.check_output(
             ["git", "describe", "--abbrev=12", "--always", "--dirty=+"], cwd=TOP_DIR
@@ -48,7 +98,7 @@ def repository_id():
     )
 
 
-def repository_commit_state():
+def repository_commit_state() -> str:
     summary = subprocess.check_output(["git", "status"], cwd=TOP_DIR).decode("utf-8")
     for ln in summary.splitlines():
         if "Changes not staged for commit" in ln:
@@ -56,10 +106,9 @@ def repository_commit_state():
     return "(clean)"
 
 
-def xcode_version():
+def xcode_version() -> str:
     try:
-        data = subprocess.check_output(["xcodebuild", "-version"])
-        data = data.decode("utf-8")
+        data = subprocess.check_output(["xcodebuild", "-version"]).decode("utf-8")
         lines = data.splitlines()
         assert len(lines) >= 2
         return f"{lines[0]} ({lines[-1]})"
@@ -68,7 +117,7 @@ def xcode_version():
         return "Xcode not installed (cmd line tools)"
 
 
-def py_version(ver):
+def py_version(ver: str) -> str:
     return (
         subprocess.check_output(
             [f"python{ver}", "-c", "import sys; print(sys.version)"]
@@ -78,7 +127,9 @@ def py_version(ver):
     )
 
 
-def system_report(path, py_versions):
+def system_report(
+    path: typing.Union[str, os.PathLike[str]], py_versions: typing.Sequence[str]
+) -> None:
     with open(path, "w") as fp:
         fp.write(f"Build at:           {time.ctime()}\n")
         fp.write(f"macOS version:      {mac_ver()}\n")
@@ -91,24 +142,58 @@ def system_report(path, py_versions):
             fp.write(f"Python {ver}:         {py_version(ver)}\n")
 
 
-def _install_virtualenv_software(interpreter):
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "pip"])
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "setuptools"])
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "wheel"])
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "twine"])
+def _install_virtualenv_software(interpreter: str, silent: bool) -> None:
+    if silent:
+        subprocess.check_call(
+            [interpreter, "-mpip", "install", "-U", "pip"],
+            stdout=subprocess.DEVNULL,
+        )
+        subprocess.check_call(
+            [interpreter, "-mpip", "install", "-U", "setuptools"],
+            stdout=subprocess.DEVNULL,
+        )
+        subprocess.check_call(
+            [interpreter, "-mpip", "install", "-U", "wheel"],
+            stdout=subprocess.DEVNULL,
+        )
+        subprocess.run(
+            [interpreter, "-mpip", "install", "-U", "twine"],
+            stdout=subprocess.DEVNULL,
+        )
+    else:
+        subprocess.check_call(
+            [interpreter, "-mpip", "install", "-U", "pip"],
+        )
+        subprocess.check_call(
+            [interpreter, "-mpip", "install", "-U", "setuptools"],
+        )
+        subprocess.check_call(
+            [interpreter, "-mpip", "install", "-U", "wheel"],
+        )
+        subprocess.run(
+            [interpreter, "-mpip", "install", "-U", "twine"],
+        )
 
 
 @contextlib.contextmanager
-def virtualenv(interpreter):
+def virtualenv(interpreter: str, silent: bool = True) -> typing.Iterator[str]:
     if os.path.exists("test-env"):
         shutil.rmtree("test-env")
 
-    subprocess.check_call([interpreter, "-mvenv", "test-env"])
+    if silent:
+        subprocess.check_call(
+            [interpreter, "-mvenv", "test-env"],
+            stdout=subprocess.DEVNULL,
+        )
+    else:
+        subprocess.check_call(
+            [interpreter, "-mvenv", "test-env"],
+        )
     if not os.path.exists("test-env/bin/python"):
         raise RuntimeError("VirtualEnv incomplete")
 
     try:
-        _install_virtualenv_software("test-env/bin/python")
+        _install_virtualenv_software("test-env/bin/python", silent=silent)
         yield os.path.abspath("test-env/bin/python")
 
     finally:
@@ -117,21 +202,25 @@ def virtualenv(interpreter):
 
 
 def variants(
-    ver, permitted_variants=("64bit", "x86_64", "arm64", "intel", "universal2")
-):
-    if os.path.islink(
-        os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
-    ):
+    ver: str,
+    permitted_variants: typing.Sequence[str] = ("universal2", "x86_64", "arm64"),
+) -> typing.List[str]:
+    if ver.endswith("t"):
+        fwk_path = "/Library/Frameworks/PythonT.framework/Versions"
+    else:
+        fwk_path = "/Library/Frameworks/Python.framework/Versions"
+
+    if os.path.islink(os.path.join(fwk_path, ver.rstrip("t"))):
         result = []
-        for nm in os.listdir("/Library/Frameworks/Python.framework/Versions"):
-            if nm == ver:
+        for nm in os.listdir(fwk_path):
+            if nm == ver.rstrip("t"):
                 continue
 
             v, _, s = nm.partition("-")
 
             if permitted_variants and s not in permitted_variants:
                 continue
-            if v == ver:
+            if v == ver.rstrip("t"):
                 result.append(nm)
 
         if result:
@@ -140,11 +229,16 @@ def variants(
     return [ver]
 
 
-def setup_variant(ver, variant):
+def setup_variant(ver: str, variant: str) -> None:
     if ver == variant:
         return
 
-    tgt = os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+    if ver.endswith("t"):
+        fwk_path = "/Library/Frameworks/PythonT.framework/Versions"
+    else:
+        fwk_path = "/Library/Frameworks/Python.framework/Versions"
+
+    tgt = os.path.join(fwk_path, ver.rstrip("t"))
 
     if os.path.exists(tgt):
         os.unlink(tgt)
@@ -152,7 +246,7 @@ def setup_variant(ver, variant):
     os.symlink(variant, tgt)
 
 
-def sort_framework_wrappers():
+def sort_framework_wrappers() -> typing.List[str]:
     """
     Returns a list of framework wrappers in the order they should
     be build in.
@@ -195,5 +289,4 @@ def sort_framework_wrappers():
         for dep in requires:
             partial_order.append((dep, subdir))
 
-    frameworks = topological_sort(frameworks, partial_order)
-    return frameworks
+    return topological_sort(frameworks, partial_order)

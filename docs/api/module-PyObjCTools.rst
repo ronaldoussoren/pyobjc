@@ -2,11 +2,7 @@
 ================================
 
 .. module:: PyObjCTools
-   :platform: MacOS X
    :synopsis: Utilities for PyObjC
-
-.. moduleauthor:: Ronald Oussoren <ronaldoussoren@mac.com>
-
 
 The module :mod:`PyObjCTools` is a namespace package that is filled by
 a number of PyObjC distributions. This package provides useful utilities

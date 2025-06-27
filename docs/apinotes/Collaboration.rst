@@ -1,3 +1,7 @@
+.. module:: Collaboration
+   :platform: macOS
+   :synopsis: Bindings for the Collaboration framework
+
 API Notes: Collaboration framework
 ==================================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``Collaboration`` package (that is, ``im
 
 API Notes
 ---------
-
-The Collaboration framework wrappers for PyObjC are complete.

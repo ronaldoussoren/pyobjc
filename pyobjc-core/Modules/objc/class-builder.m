@@ -74,7 +74,7 @@ setup_gMethods_selectors(void)
 int
 PyObjCClass_FinishClass(Class objc_class)
 {
-    PyObjC_Assert(objc_class != nil, -1);
+    assert(objc_class != nil);
 
     objc_registerClassPair(objc_class);
     return 0;
@@ -89,8 +89,8 @@ PyObjCClass_FinishClass(Class objc_class)
 int
 PyObjCClass_UnbuildClass(Class objc_class __attribute__((__unused__)))
 {
-    PyObjC_Assert(objc_class != nil, -1);
-    PyObjC_Assert(objc_lookUpClass(class_getName(objc_class)) == nil, -1);
+    assert(objc_class != nil);
+    assert(objc_lookUpClass(class_getName(objc_class)) == nil);
 
     objc_disposeClassPair(objc_class);
     return 0;
@@ -109,9 +109,8 @@ PyObjCClass_UnbuildClass(Class objc_class __attribute__((__unused__)))
  * against creating the same intermedia class twice in the free threaded
  * build.
  */
-static PyMutex intermediate_mutex = { 0 };
+static PyMutex intermediate_mutex = {0};
 #endif
-
 
 static Class _Nullable build_intermediate_class(Class base_class, char* name)
 {
@@ -119,8 +118,8 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&intermediate_mutex);
-
 #endif
+
     /*
      * The naming style for the intermediate class ensures that the class
      * we've found has the correct parent, so no need to check for this in
@@ -128,7 +127,11 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
      */
     intermediate_class = objc_lookUpClass(name);
     if (intermediate_class != Nil) {
-        PyObjC_Assert(class_getSuperclass(intermediate_class) == base_class, Nil);
+#ifdef Py_GIL_DISABLED
+        PyMutex_Unlock(&intermediate_mutex);
+#endif
+        assert(class_getSuperclass(intermediate_class) == base_class);
+
         return intermediate_class;
     }
 
@@ -209,6 +212,9 @@ is_ivar(PyObject* value)
 static int
 is_instance_method(PyObject* value)
 {
+    // XXX: 'bytes' values are ignored???
+    //      (but are inserted by one of the
+    //      property classes)
     if (PyBytes_Check(value)) {
         return 1;
     }
@@ -224,8 +230,9 @@ is_instance_method(PyObject* value)
 static int
 is_class_method(PyObject* value)
 {
-    if (PyBytes_Check(value)) {
-        return 1;
+    // XXX: 'bytes' values are ignored???
+    if (PyBytes_Check(value)) { // LCOV_BR_EXCL_LINE
+        return 1;               // LCOV_EXCL_LINE
     }
     if (!PyObjCSelector_Check(value)) {
         return 0;
@@ -259,7 +266,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                                        PyObject* class_dict, PyObject* meta_dict,
                                        PyObject* hiddenSelectors,
                                        PyObject* hiddenClassSelectors,
-                                       int* has_dunder_new)
+                                       int*      has_dunder_new)
 {
     PyObject*  value = NULL;
     Py_ssize_t i;
@@ -271,9 +278,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     PyObject*  instance_methods   = NULL;
     PyObject*  class_methods      = NULL;
 
-    PyObjC_Assert(super_class != Nil, Nil);
-    PyObjC_Assert(PyList_Check(protocols), Nil);
-    PyObjC_Assert(PyDict_Check(class_dict), Nil);
+    assert(super_class != Nil);
+    assert(PyList_Check(protocols));
+    assert(PyDict_Check(class_dict));
 
     if (objc_lookUpClass(name) != NULL) {
         PyErr_Format(PyObjCExc_Error, "%s is overriding existing Objective-C class",
@@ -291,21 +298,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         return Nil;              // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_processClassDict == NULL || PyObjC_processClassDict == Py_None) {
-        PyErr_SetString(
-            PyObjCExc_InternalError,
-            "Cannot create class because 'objc.options._processClassDict' is not set");
-        goto error_cleanup;
-    }
-    PyObject* py_name = PyUnicode_FromString(name);
-    if (py_name == NULL) {
-        goto error_cleanup;
-    }
-    PyObject* args[] = {NULL,      py_name, class_dict,      meta_dict,           py_superclass,
-                        protocols, hiddenSelectors, hiddenClassSelectors};
-    PyObject* rv     = PyObject_Vectorcall(PyObjC_processClassDict, args + 1,
-                                           7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(py_name);
+    PyObject* rv =
+        PyObjC_ProcessClassDict(name, class_dict, meta_dict, py_superclass, protocols,
+                                hiddenSelectors, hiddenClassSelectors);
     if (rv == NULL) {
         goto error_cleanup;
     }
@@ -323,10 +318,13 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     class_methods = PyTuple_GET_ITEM(rv, 2);
     Py_INCREF(class_methods);
     *has_dunder_new = PyObject_IsTrue(PyTuple_GET_ITEM(rv, 3));
+    if (*has_dunder_new == -1) {
+        goto error_cleanup;
+    }
     Py_DECREF(rv);
-    PyObjC_Assert(instance_variables != NULL, Nil);
-    PyObjC_Assert(instance_methods != NULL, Nil);
-    PyObjC_Assert(class_methods != NULL, Nil);
+    assert(instance_variables != NULL);
+    assert(instance_methods != NULL);
+    assert(class_methods != NULL);
     if (validate_tuple(instance_variables, is_ivar,
                        "invalid instance_variables in result of class dict transformer")
         == -1) {
@@ -379,7 +377,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         if (py_superclass == Nil) { // LCOV_BR_EXCL_LINE
             goto error_cleanup;     // LCOV_EXCL_LINE
         }
-    }
+    } // LCOV_BR_EXCL_LINE
 
     /* Allocate the class as soon as possible, for new selector objects */
     new_class = objc_allocateClassPair(super_class, name, 0);
@@ -401,24 +399,23 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     for (i = 0; i < protocol_count; i++) {
         PyObject* wrapped_protocol;
         wrapped_protocol = PyList_GetItemRef(protocols, i);
-        if (wrapped_protocol == NULL) {
-            goto error_cleanup;
+        if (wrapped_protocol == NULL) { // LCOV_BR_EXCL_LINE
+            goto error_cleanup;         // LCOV_EXCL_LINE
         }
         if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
             Py_DECREF(wrapped_protocol);
             continue;
         }
 
-        /* PyObjCFormalProtocol_GetProtocol() is nonnull because we've already type
-         * checked */
         if (!class_addProtocol( // LCOV_BR_EXCL_LINE
-                new_class,
-                (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+                new_class, PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+            // LCOV_EXCL_START
             Py_DECREF(wrapped_protocol);
-            goto error_cleanup; // LCOV_EXCL_LINE
+            goto error_cleanup;
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(wrapped_protocol);
-    }
+    } // LCOV_BR_EXCL_LINE
 
     /* add instance variables */
     for (i = 0; i < PyTuple_GET_SIZE(instance_variables); i++) {
@@ -590,8 +587,13 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
     Py_CLEAR(py_superclass);
 
-    /* XXX: Can __dict__ ever be in the class_dict? */
-    if (PyDict_DelItemString(class_dict, "__dict__") == -1) {
+    /* XXX: This is questionable at best, does not match regular
+     *      classes, and silently ignores an entry in the dict.
+     *      Probably best to emit a deprecation warning and
+     *      reject __dict__ later on (or just drop these lines,
+     *      but that requires testing)
+     */
+    if (PyDict_DelItem(class_dict, PyObjCNM___dict__) == -1) {
         PyErr_Clear();
     }
     Py_CLEAR(instance_variables);
@@ -634,7 +636,8 @@ static void
 free_ivars(id self, PyObject* cls)
 {
     /* Free all instance variables introduced through python */
-    Ivar var;
+    Ivar      var;
+    PyObject* cur_cls;
 
     var = class_getInstanceVariable(PyObjCClass_GetClass(cls), "__dict__");
     if (var != NULL) {
@@ -644,8 +647,9 @@ free_ivars(id self, PyObject* cls)
         Py_XDECREF(tmp);
     }
 
-    while (cls != NULL) {
-        Class     objcClass = PyObjCClass_GetClass(cls);
+    cur_cls = cls;
+    while (cur_cls != NULL) {
+        Class     objcClass = PyObjCClass_GetClass(cur_cls);
         PyObject* clsDict;
         PyObject* clsValues;
         PyObject* o;
@@ -655,7 +659,7 @@ free_ivars(id self, PyObject* cls)
         }
 
         /* XXX: Why does this not access the dict slot directly? */
-        clsDict = PyObject_GetAttrString(cls, "__dict__");
+        clsDict = PyObject_GetAttrString(cur_cls, "__dict__");
         if (clsDict == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_Clear();
@@ -729,8 +733,9 @@ free_ivars(id self, PyObject* cls)
                     @try {
                         [*(id*)(((char*)self) + ivar_getOffset(var)) autorelease];
 
-                    } @catch (NSObject* localException) {
-                        NSLog(@"ignoring exception %@ in destructor", localException);
+                    } @catch (NSObject* localException) {             // LCOV_EXCL_LINE
+                        NSLog(@"ignoring exception %@ in destructor", // LCOV_EXCL_LINE
+                              localException);                        // LCOV_EXCL_LINE
                     }
                 Py_END_ALLOW_THREADS
                 *(id*)(((char*)self) + ivar_getOffset(var)) = nil;
@@ -742,23 +747,34 @@ free_ivars(id self, PyObject* cls)
         /* XXX: Why does this use cls.__bases__()[0] instead of
          *      the type slot with the primary superclass?
          */
-        o = PyObject_GetAttrString(cls, "__bases__");
-        if (o == NULL) {
+        o = PyObject_GetAttrString(cur_cls, "__bases__");
+        if (o == NULL) { // LCOV_BR_EXCL_LINE
+            /* type has an __bases__ attribute, and
+             * PyObjC's subclasses don't do anything
+             * that changes that.
+             */
+            // LCOV_EXCL_START
             PyErr_Clear();
-            cls = NULL;
+            cur_cls = NULL;
+            // LCOV_EXCL_STOP
 
-        } else if (PyTuple_Size(o) == 0) {
+        } else if (PyTuple_Size(o) == 0) { // LCOV_BR_EXCL_LINE
+            /* It should be impossible to have and empty
+             * __bases__ for PyObjC's classes.
+             */
+            // LCOV_EXCL_START
             PyErr_Clear();
-            cls = NULL;
+            cur_cls = NULL;
             Py_DECREF(o);
+            // LCOV_EXCL_STOP
 
-        } else {
-            cls = PyTuple_GET_ITEM(o, 0);
-            if (cls == (PyObject*)&PyObjCClass_Type) {
-                cls = NULL;
-            }
+        } else { // LCOV_EXCL_LINE
+            cur_cls = PyTuple_GET_ITEM(o, 0);
+            if (cur_cls == (PyObject*)&PyObjCClass_Type) { // LCOV_BR_EXCL_LINE
+                cur_cls = NULL;                            // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
             Py_DECREF(o);
-        }
+        } // LCOV_EXCL_LINE
     }
 }
 
@@ -834,7 +850,7 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
     spr.super_class = super_cls = (Class _Nonnull)class_getSuperclass((Class)userdata);
     spr.receiver                = self;
     copy =
-        ((id(*)(struct objc_super*, SEL, NSZone*))objc_msgSendSuper)(&spr, _meth, zone);
+        ((id (*)(struct objc_super*, SEL, NSZone*))objc_msgSendSuper)(&spr, _meth, zone);
 
     if (copy == nil) {
         *(id*)resp = nil;
@@ -865,6 +881,9 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
          *      It might be possible to make the two consistent, but that could
          *      break backward compatibility.
          *      This code also needs tests!
+         *
+         * XXX: Shouldn't this use the objc.ivar instances in the class proxy
+         *      for this class?
          */
         for (i = 0; i < ivarCount; i++) {
             Ivar        v = ivarList[i];
@@ -875,23 +894,30 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
             typestr = ivar_getTypeEncoding(v);
             offset  = ivar_getOffset(v);
 
-            if (strcmp(typestr, @encode(PyObject*)) != 0)
-                continue;
-
-            /* A PyObject, increase it's refcount */
-            p = (PyObject**)(((char*)copy) + offset);
-            if (*p == NULL)
-                continue;
-            if (strcmp(ivar_getName(v), "__dict__") == 0) {
-                /* copy __dict__ */
-                *p = PyDict_Copy(*p);
-                if (*p == NULL) {
-                    [copy release];
-                    PyObjCErr_ToObjCWithGILState(&state);
-                    return;
+            if (strcmp(typestr, @encode(PyObject*)) == 0) {
+                /* A PyObject, increase it's refcount */
+                p = (PyObject**)(((char*)copy) + offset);
+                if (*p == NULL)
+                    continue;
+                if (strcmp(ivar_getName(v), "__dict__") == 0) {
+                    /* copy __dict__ */
+                    *p = PyDict_Copy(*p);
+                    if (*p == NULL) { // LCOV_BR_EXCL_LINE
+                        // LCOV_EXCL_START
+                        [copy release];
+                        PyObjCErr_ToObjCWithGILState(&state);
+                        return;
+                        // LCOV_EXCL_STOP
+                    }
+                } else {
+                    Py_INCREF(*p);
                 }
-            } else {
-                Py_INCREF(*p);
+            } else if (*typestr == _C_ID) {
+                /* XXX: This doesn't do the correct thing for
+                 *      weak reference like in outlets. Should
+                 *      look at the Python proxy!
+                 */
+                [*(id*)(((char*)copy) + offset) retain];
             }
         }
 
@@ -946,16 +972,15 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
      * again.
      */
 
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            theSelector = [invocation selector];
-        } @catch (NSObject* localException) {
-            /* XXX: This is wrong, releasing the GIL while we don't hold it */
-            Py_DECREF(pyself);
-            PyGILState_Release(state);
-            @throw;
-        }
-    Py_END_ALLOW_THREADS
+    @try {
+        theSelector = [invocation selector];
+        // LCOV_EXCL_START
+    } @catch (NSObject* localException) {
+        Py_DECREF(pyself);
+        PyGILState_Release(state);
+        @throw;
+    }
+    // LCOV_EXCL_STOP
 
     PyObject* pymeth = PyObjCObject_FindSelector(pyself, theSelector);
 
@@ -969,7 +994,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         Py_XDECREF(pymeth);
         Py_XDECREF(pyself);
 
-        spr.super_class = class_getSuperclass((Class)userdata);
+        spr.super_class = (Class _Nonnull)class_getSuperclass((Class)userdata);
         spr.receiver    = self;
         PyGILState_Release(state);
         ((void (*)(struct objc_super*, SEL, NSInvocation*))objc_msgSendSuper)(&spr, _meth,
@@ -994,11 +1019,16 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         @throw;
         // LCOV_EXCL_STOP
     }
-    if (method == NULL) {
+    if (method == NULL) { // LCOV_BR_EXCL_LINE
+        /* The method is found by PyObjCObject_FindSelector, but not
+         * by methodForSelector. That should never happen.
+         */
+        // LCOV_EXCL_START
         PyGILState_Release(state);
         @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                        reason:@"cannot resolve selector"
                                      userInfo:nil];
+        // LCOV_EXCL_STOP
     }
 
     if (PyObjCFFI_CallUsingInvocation(method, invocation) == -1) {
@@ -1028,9 +1058,9 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
 
     /* First check super */
     @try {
-        spr.super_class = class_getSuperclass((Class)userdata);
+        spr.super_class = (Class _Nonnull)class_getSuperclass((Class _Nonnull)userdata);
         spr.receiver    = self;
-        *((id*)retval)  = ((id(*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(
+        *((id*)retval)  = ((id (*)(struct objc_super*, SEL, NSString*))objc_msgSendSuper)(
             &spr, _meth, key);
     } @catch (NSObject* localException) {
 
@@ -1083,7 +1113,7 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
             }
             PyGILState_Release(state);
         } else {
-            @throw;
+            @throw; // LCOV_EXCL_LINE
         }
     }
 }
@@ -1109,7 +1139,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
 
     @try {
         /* First check super */
-        spr.super_class = class_getSuperclass((Class)userdata);
+        spr.super_class = (Class _Nonnull)class_getSuperclass((Class _Nonnull)userdata);
         spr.receiver    = self;
         ((void (*)(struct objc_super*, SEL, id, id))objc_msgSendSuper)(&spr, _meth, value,
                                                                        key);
@@ -1123,11 +1153,13 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
 
             PyGILState_STATE state = PyGILState_Ensure();
             PyObject*        val   = id_to_python(value);
-            if (val == NULL) {
+            if (val == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_Clear();
                 PyGILState_Release(state);
 
                 @throw;
+                // LCOV_EXCL_STOP
             }
             PyObject* res     = NULL;
             PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
@@ -1140,7 +1172,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
                     if (r != -1) {
                         break;
                     }
-                }
+                } // LCOV_EXCL_LINE
                 PyErr_Clear();
                 rawkey = (char*)[key UTF8String];
                 r      = PyObject_SetAttrString(selfObj, rawkey, val);
@@ -1155,7 +1187,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
             }
             PyGILState_Release(state);
         } else {
-            @throw;
+            @throw; // LCOV_EXCL_LINE
         }
     }
 }

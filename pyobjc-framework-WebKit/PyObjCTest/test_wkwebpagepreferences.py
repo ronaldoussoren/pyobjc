@@ -3,13 +3,26 @@ import WebKit
 
 
 class TestWebPagePreferences(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(WebKit.WKContentMode)
 
     def test_constants(self):
+        self.assertIsEnumType(WebKit.WKContentMode)
         self.assertEqual(WebKit.WKContentModeRecommended, 0)
         self.assertEqual(WebKit.WKContentModeMobile, 1)
         self.assertEqual(WebKit.WKContentModeDesktop, 2)
+
+        self.assertIsEnumType(WebKit.WKWebpagePreferencesUpgradeToHTTPSPolicy)
+        self.assertEqual(
+            WebKit.WKWebpagePreferencesUpgradeToHTTPSPolicyKeepAsRequested, 0
+        )
+        self.assertEqual(
+            WebKit.WKWebpagePreferencesUpgradeToHTTPSPolicyAutomaticFallbackToHTTP, 1
+        )
+        self.assertEqual(
+            WebKit.WKWebpagePreferencesUpgradeToHTTPSPolicyUserMediatedFallbackToHTTP, 2
+        )
+        self.assertEqual(
+            WebKit.WKWebpagePreferencesUpgradeToHTTPSPolicyErrorOnFailure, 3
+        )
 
     @min_os_level("11.0")
     def test_methods11_0(self):

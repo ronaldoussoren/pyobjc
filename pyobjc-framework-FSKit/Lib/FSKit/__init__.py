@@ -31,6 +31,34 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls, sel in (
+        ("FSClient", b"init"),
+        ("FSClient", b"new"),
+        ("FSContainerStatus", b"init"),
+        ("FSContainerStatus", b"new"),
+        ("FSFileName", b"init"),
+        ("FSFileName", b"new"),
+        ("FSMutableFileDataBuffer", b"init"),
+        ("FSMutableFileDataBuffer", b"new"),
+        ("FSResource", b"init"),
+        ("FSResource", b"new"),
+        ("FSMetadataRange", b"init"),
+        ("FSMetadataRange", b"new"),
+        ("FSProbeResult", b"init"),
+        ("FSProbeResult", b"new"),
+        ("FSTaskOptions", b"init"),
+        ("FSTaskOptions", b"new"),
+        ("FSDirectoryEntryPacker", b"init"),
+        ("FSDirectoryEntryPacker", b"new"),
+        ("FSVolume", b"init"),
+        ("FSVolume", b"new"),
+        ("FSStatFSResult", b"init"),
+        ("FSStatFSResult", b"new"),
+        ("FSExtentPacker", b"init"),
+        ("FSExtentPacker", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["FSKit._metadata"]
 
 

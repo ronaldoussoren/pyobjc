@@ -124,14 +124,14 @@ class TestMisc(TestCase):
         with pyobjc_options(_nscoding_decoder=None):
             with self.assertRaisesRegex(
                 ValueError,
-                "NSInvalidArgumentException - decoding Python objects is not supported",
+                "decoding Python objects is not supported",
             ):
                 NSKeyedUnarchiver.unarchiveObjectWithData_(blob)
 
         with pyobjc_options(_nscoding_encoder=None):
             with self.assertRaisesRegex(
                 ValueError,
-                "NSInvalidArgumentException - encoding Python objects is not supported",
+                "encoding Python objects is not supported",
             ):
                 NSKeyedArchiver.archivedDataWithRootObject_(MyString("jojo"))
 
@@ -148,3 +148,12 @@ class TestMisc(TestCase):
         with pyobjc_options(_nscoding_decoder=failed):
             with self.assertRaisesRegex(TypeError, "Cannot encode"):
                 NSKeyedUnarchiver.unarchiveObjectWithData_(blob)
+
+    def test_characters(self):
+        v = "hello"
+        self.assertEqual(OC_StringInt.getCharactersOn_(v), v)
+
+        # UCS4 + single surrogate: cannot encode to UTF-8
+        v = "\U000fffff\udbbb"
+        with self.assertRaisesRegex(UnicodeEncodeError, "surrogates not allowed"):
+            OC_StringInt.getCharactersOn_(v)

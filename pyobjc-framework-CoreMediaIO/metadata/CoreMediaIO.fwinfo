@@ -151,6 +151,7 @@
     "args": {
      "1": { "type_modifier": "n" },
      "2": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -233,6 +234,7 @@
     "args": {
      "1": { "type_modifier": "n" },
      "2": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

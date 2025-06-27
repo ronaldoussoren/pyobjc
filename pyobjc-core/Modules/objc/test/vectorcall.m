@@ -10,6 +10,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <AppKit/AppKit.h>
+
 #if PyObjC_BUILD_RELEASE >= 1011
 #import <GameplayKit/GameplayKit.h>
 #import <ModelIO/ModelIO.h>
@@ -35,12 +37,7 @@
 #define simd_float3x3 matrix_float3x3
 #define simd_float4x4 matrix_float4x4
 #define simd_double4x4 matrix_double4x4
-
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
-
-
-
-
 
 @interface OC_VectorCall : NSObject {
     PyObject* values;
@@ -54,8 +51,8 @@ static BOOL      shouldRaise = NO;
 - (instancetype)init
 {
     self = [super init];
-    if (self == nil) {
-        return nil;
+    if (self == nil) { // LCOV_BR_EXCL_LINE
+        return nil;    // LCOV_EXCL_LINE
     }
     values = NULL;
     return self;
@@ -106,6 +103,36 @@ static BOOL      shouldRaise = NO;
         Py_CLEAR(clsvalues);
     PyObjC_END_WITH_GIL
     return result;
+}
+
+- (simd_uchar16)v16C
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        values = PyList_New(0);
+        if (values == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+}
+
++ (simd_uchar16)clsv16C
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        clsvalues = PyList_New(0);
+        if (clsvalues == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 }
 
 - (simd_double2)v2d
@@ -3468,9 +3495,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidid:(id)arg0 GKBox:(GKBox)arg1
 {
     PyObject* items;
@@ -3498,8 +3523,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 - (id)idid:(id)arg0 GKQuad:(GKQuad)arg1
 {
@@ -3528,9 +3553,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidid:(id)arg0 GKQuad:(GKQuad)arg1
 {
     PyObject* items;
@@ -3558,8 +3581,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1011
 - (id)idid:(id)arg0
     MDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox)arg1
@@ -3595,9 +3618,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 + (id)clsidid:(id)arg0
     MDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox)arg1
                             f:(float)arg2
@@ -3632,8 +3653,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 - (id)idid:(id)arg0 simdfloat2x2:(simd_float2x2)arg1
 {
     PyObject* items;
@@ -3830,9 +3851,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 + (id)clsidid:(id)arg0 simdquatf:(simd_quatf)arg1
 {
     PyObject* items;
@@ -3860,8 +3879,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 - (id)idid:(id)arg0 simdquatf:(simd_quatf)arg1 id:(id)arg2
 {
@@ -3895,9 +3914,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 + (id)clsidid:(id)arg0 simdquatf:(simd_quatf)arg1 id:(id)arg2
 {
     PyObject* items;
@@ -3930,8 +3947,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 - (id)idCGColor:(CGColorRef)arg0 CGColor:(CGColorRef)arg1 id:(id)arg2 v2i:(simd_int2)arg3
 {
     PyObject* items;
@@ -4800,9 +4817,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidGKBox:(GKBox)arg0
 {
     PyObject* items;
@@ -4825,8 +4840,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 - (id)idGKBox:(GKBox)arg0 f:(float)arg1
 {
@@ -4855,9 +4870,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidGKBox:(GKBox)arg0 f:(float)arg1
 {
     PyObject* items;
@@ -4885,8 +4898,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 - (id)idGKQuad:(GKQuad)arg0
 {
@@ -4910,9 +4923,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidGKQuad:(GKQuad)arg0
 {
     PyObject* items;
@@ -4935,8 +4946,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 - (id)idGKQuad:(GKQuad)arg0 f:(float)arg1
 {
@@ -4965,9 +4976,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (id)clsidGKQuad:(GKQuad)arg0 f:(float)arg1
 {
     PyObject* items;
@@ -4995,8 +5004,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1011
 - (id)idMDLVoxelIndexExtent:(MDLVoxelIndexExtent)arg0
 {
@@ -5020,9 +5029,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 + (id)clsidMDLVoxelIndexExtent:(MDLVoxelIndexExtent)arg0
 {
     PyObject* items;
@@ -5045,8 +5052,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return @"hello";
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 - (id)idsimdfloat4x4:(simd_float4x4)arg0
 {
     PyObject* items;
@@ -6541,9 +6548,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 + (void)clsvMDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox)arg0
 {
     PyObject* items;
@@ -6565,8 +6570,8 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1011
 - (void)vMDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox)arg0 Z:(BOOL)arg1
 {
@@ -6594,9 +6599,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 + (void)clsvMDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox)arg0 Z:(BOOL)arg1
 {
     PyObject* items;
@@ -6623,8 +6626,8 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 - (void)vsimddouble4x4:(simd_double4x4)arg0
 {
     PyObject* items;
@@ -6936,9 +6939,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 + (void)clsvsimdquatd:(simd_quatd)arg0 d:(double)arg1
 {
     PyObject* items;
@@ -6965,8 +6966,8 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 - (void)vsimdquatf:(simd_quatf)arg0
 {
@@ -6989,9 +6990,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 + (void)clsvsimdquatf:(simd_quatf)arg0
 {
     PyObject* items;
@@ -7013,8 +7012,8 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 - (void)vsimdquatf:(simd_quatf)arg0 v3f:(simd_float3)arg1
 {
@@ -7042,9 +7041,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 + (void)clsvsimdquatf:(simd_quatf)arg0 v3f:(simd_float3)arg1
 {
     PyObject* items;
@@ -7071,8 +7068,8 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 - (void)vsimdquatf:(simd_quatf)arg0 d:(double)arg1
 {
@@ -7100,9 +7097,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 + (void)clsvsimdquatf:(simd_quatf)arg0 d:(double)arg1
 {
     PyObject* items;
@@ -7129,8 +7124,8 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
     PyObjC_END_WITH_GIL
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1012
 - (GKBox)GKBox
 {
@@ -7146,9 +7141,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (GKBox){(vector_float3){1.0, 2.0, 3.0}, (vector_float3){4.0, 5.0, 6.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (GKBox)clsGKBox
 {
     if ([self shouldRaise]) {
@@ -7163,8 +7156,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (GKBox){(vector_float3){1.0, 2.0, 3.0}, (vector_float3){4.0, 5.0, 6.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 - (GKQuad)GKQuad
 {
@@ -7180,9 +7173,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (GKQuad){(vector_float2){9.0, 10.0}, (vector_float2){11.0, 12.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (GKQuad)clsGKQuad
 {
     if ([self shouldRaise]) {
@@ -7197,8 +7188,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (GKQuad){(vector_float2){9.0, 10.0}, (vector_float2){11.0, 12.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 - (GKTriangle)GKTriangleQ:(unsigned long long)arg0
 {
@@ -7224,9 +7215,7 @@ static BOOL      shouldRaise = NO;
                          (vector_float3){-111.5, -112.5, -113.5},
                          (vector_float3){-17.5, 11.5, 122.5}}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 + (GKTriangle)clsGKTriangleQ:(unsigned long long)arg0
 {
     PyObject* items;
@@ -7251,8 +7240,8 @@ static BOOL      shouldRaise = NO;
                          (vector_float3){-111.5, -112.5, -113.5},
                          (vector_float3){-17.5, 11.5, 122.5}}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1011
 - (MDLAxisAlignedBoundingBox)MDLAxisAlignedBoundingBox
 {
@@ -7269,9 +7258,7 @@ static BOOL      shouldRaise = NO;
     return (MDLAxisAlignedBoundingBox){(vector_float3){-8.0, -9.0, -10.0},
                                        (vector_float3){-11.0, -12.0, -13.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 + (MDLAxisAlignedBoundingBox)clsMDLAxisAlignedBoundingBox
 {
     if ([self shouldRaise]) {
@@ -7287,8 +7274,8 @@ static BOOL      shouldRaise = NO;
     return (MDLAxisAlignedBoundingBox){(vector_float3){-8.0, -9.0, -10.0},
                                        (vector_float3){-11.0, -12.0, -13.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1011
 - (MDLAxisAlignedBoundingBox)MDLAxisAlignedBoundingBoxv4i:(simd_int4)arg0
 {
@@ -7313,9 +7300,7 @@ static BOOL      shouldRaise = NO;
     return (MDLAxisAlignedBoundingBox){(vector_float3){-8.0, -9.0, -10.0},
                                        (vector_float3){-11.0, -12.0, -13.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 + (MDLAxisAlignedBoundingBox)clsMDLAxisAlignedBoundingBoxv4i:(simd_int4)arg0
 {
     PyObject* items;
@@ -7339,8 +7324,8 @@ static BOOL      shouldRaise = NO;
     return (MDLAxisAlignedBoundingBox){(vector_float3){-8.0, -9.0, -10.0},
                                        (vector_float3){-11.0, -12.0, -13.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1011
 - (MDLAxisAlignedBoundingBox)MDLAxisAlignedBoundingBoxd:(double)arg0
 {
@@ -7365,9 +7350,7 @@ static BOOL      shouldRaise = NO;
     return (MDLAxisAlignedBoundingBox){(vector_float3){-8.0, -9.0, -10.0},
                                        (vector_float3){-11.0, -12.0, -13.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 + (MDLAxisAlignedBoundingBox)clsMDLAxisAlignedBoundingBoxd:(double)arg0
 {
     PyObject* items;
@@ -7391,8 +7374,8 @@ static BOOL      shouldRaise = NO;
     return (MDLAxisAlignedBoundingBox){(vector_float3){-8.0, -9.0, -10.0},
                                        (vector_float3){-11.0, -12.0, -13.0}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1011
 - (MDLVoxelIndexExtent)MDLVoxelIndexExtent
 {
@@ -7409,9 +7392,7 @@ static BOOL      shouldRaise = NO;
     return (MDLVoxelIndexExtent){(vector_int4){100, 101, 102, 103},
                                  (vector_int4){-20, -21, -22, -23}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 + (MDLVoxelIndexExtent)clsMDLVoxelIndexExtent
 {
     if ([self shouldRaise]) {
@@ -7427,8 +7408,78 @@ static BOOL      shouldRaise = NO;
     return (MDLVoxelIndexExtent){(vector_int4){100, 101, 102, 103},
                                  (vector_int4){-20, -21, -22, -23}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 1013
+- (MPSImageHistogramInfo)MPSImageHistogramInfo
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        values = PyList_New(0);
+        if (values == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSImageHistogramInfo){4398046511104, YES,
+                                   (vector_float4){1.0, 2.0, 3.0, 4.0},
+                                   (vector_float4){-1.0, -2.0, -3.0, -4.0}};
+}
+
++ (MPSImageHistogramInfo)clsMPSImageHistogramInfo
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        clsvalues = PyList_New(0);
+        if (clsvalues == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSImageHistogramInfo){4398046511104, YES,
+                                   (vector_float4){1.0, 2.0, 3.0, 4.0},
+                                   (vector_float4){-1.0, -2.0, -3.0, -4.0}};
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#if PyObjC_BUILD_RELEASE >= 1014
+- (MPSAxisAlignedBoundingBox)MPSAxisAlignedBoundingBox
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        values = PyList_New(0);
+        if (values == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
+                                       (vector_float3){4.5, 5.5, 6.5}};
+}
+
++ (MPSAxisAlignedBoundingBox)clsMPSAxisAlignedBoundingBox
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        clsvalues = PyList_New(0);
+        if (clsvalues == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
+                                       (vector_float3){4.5, 5.5, 6.5}};
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 - (simd_double4x4)simddouble4x4
 {
     if ([self shouldRaise]) {
@@ -7575,6 +7626,40 @@ static BOOL      shouldRaise = NO;
     return (simd_float3x3){{(vector_float3){0.0, 1.5, 3.0},
                             (vector_float3){0.0, 1.5, 3.0},
                             (vector_float3){0.0, 1.5, 3.0}}};
+}
+
+- (simd_float4x3)simdfloat4x3
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        values = PyList_New(0);
+        if (values == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x3){
+        {(vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0},
+         (vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}}};
+}
+
++ (simd_float4x3)clssimdfloat4x3
+{
+    if ([self shouldRaise]) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        clsvalues = PyList_New(0);
+        if (clsvalues == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x3){
+        {(vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0},
+         (vector_float3){0.0, 1.5, 3.0}, (vector_float3){0.0, 1.5, 3.0}}};
 }
 
 - (simd_float4x4)simdfloat4x4
@@ -7804,9 +7889,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (simd_quatd){(vector_double4){0.0, 1.5, 3.0, 4.5}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 + (simd_quatd)clssimdquatdd:(double)arg0
 {
     PyObject* items;
@@ -7829,8 +7912,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (simd_quatd){(vector_double4){0.0, 1.5, 3.0, 4.5}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 - (simd_quatf)simdquatf
 {
@@ -7846,9 +7929,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (simd_quatf){(vector_float4){0.0, 1.5, 3.0, 4.5}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 + (simd_quatf)clssimdquatf
 {
     if ([self shouldRaise]) {
@@ -7863,8 +7944,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (simd_quatf){(vector_float4){0.0, 1.5, 3.0, 4.5}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 - (simd_quatf)simdquatfd:(double)arg0
 {
@@ -7888,9 +7969,7 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (simd_quatf){(vector_float4){0.0, 1.5, 3.0, 4.5}};
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 + (simd_quatf)clssimdquatfd:(double)arg0
 {
     PyObject* items;
@@ -7913,112 +7992,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return (simd_quatf){(vector_float4){0.0, 1.5, 3.0, 4.5}};
 }
+
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-- (simd_uchar16)v16C
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        values = PyList_New(0);
-        if (values == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-}
-
-+ (simd_uchar16)clsv16C
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        clsvalues = PyList_New(0);
-        if (clsvalues == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (vector_uchar16){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
-- (MPSImageHistogramInfo)MPSImageHistogramInfo
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        values = PyList_New(0);
-        if (values == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSImageHistogramInfo){4398046511104, YES,
-                                   (vector_float4){1.0, 2.0, 3.0, 4.0},
-                                   (vector_float4){-1.0, -2.0, -3.0, -4.0}};
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-#if PyObjC_BUILD_RELEASE >= 1013
-+ (MPSImageHistogramInfo)clsMPSImageHistogramInfo
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        clsvalues = PyList_New(0);
-        if (clsvalues == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSImageHistogramInfo){4398046511104, YES,
-                                   (vector_float4){1.0, 2.0, 3.0, 4.0},
-                                   (vector_float4){-1.0, -2.0, -3.0, -4.0}};
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-#if PyObjC_BUILD_RELEASE >= 1014
-- (MPSAxisAlignedBoundingBox)MPSAxisAlignedBoundingBox
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        values = PyList_New(0);
-        if (values == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
-                                       (vector_float3){4.5, 5.5, 6.5}};
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
-
-#if PyObjC_BUILD_RELEASE >= 1014
-+ (MPSAxisAlignedBoundingBox)clsMPSAxisAlignedBoundingBox
-{
-    if ([self shouldRaise]) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        clsvalues = PyList_New(0);
-        if (clsvalues == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (MPSAxisAlignedBoundingBox){(vector_float3){1.5, 2.5, 3.5},
-                                       (vector_float3){4.5, 5.5, 6.5}};
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
-
 @end
 
 @interface OC_VectorCallInvoke : NSObject {
@@ -8026,6 +8001,19 @@ static BOOL      shouldRaise = NO;
 @end
 
 @implementation OC_VectorCallInvoke
+
++ (id)v16COn:(OC_VectorCall*)value
+{
+    id           cinter;
+    simd_uchar16 result = [value v16C];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("<16C>", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
 
 + (id)v2dOn:(OC_VectorCall*)value
 {
@@ -8779,8 +8767,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 + (id)ididGKQuadOn:(OC_VectorCall*)value
 {
@@ -8796,14 +8784,14 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1011
 + (id)ididMDLAxisAlignedBoundingBoxfOn:(OC_VectorCall*)value
 {
     id result = [value idid:@"hello"
         MDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox) {
-            (vector_float3){-8.0, -9.0, -10.0}, (vector_float3) { -11.0, -12.0, -13.0 }
+            (vector_float3){-8.0, -9.0, -10.0}, (vector_float3){-11.0, -12.0, -13.0}
         }
                                 f:2500000000.0];
     id cinter;
@@ -8815,8 +8803,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 + (id)ididsimdfloat2x2On:(OC_VectorCall*)value
 {
     id result = [value idid:@"hello"
@@ -8879,15 +8867,13 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 + (id)ididsimdquatfidOn:(OC_VectorCall*)value
 {
     id result = [value idid:@"hello"
-                  simdquatf:(simd_quatf) {
-                      (vector_float4) { 0.0, 1.5, 3.0, 4.5 }
-                  }
+                  simdquatf:(simd_quatf) { (vector_float4){0.0, 1.5, 3.0, 4.5} }
                          id:@"hello"];
     id cinter;
     PyObjC_BEGIN_WITH_GIL
@@ -8898,8 +8884,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 + (id)idCGColorCGColoridv2iOn:(OC_VectorCall*)value
 {
     id result = [value idCGColor:(CGColorRef) @"color!"
@@ -9069,15 +9055,14 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 + (id)idGKBoxfOn:(OC_VectorCall*)value
 {
-    id result = [value idGKBox:(GKBox) {
-        (vector_float3){1.0, 2.0, 3.0}, (vector_float3) { 4.0, 5.0, 6.0 }
-    }
-                             f:2500000000.0];
+    id result = [value
+        idGKBox:(GKBox) { (vector_float3){1.0, 2.0, 3.0}, (vector_float3){4.0, 5.0, 6.0} }
+              f:2500000000.0];
     id cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter = PyObjC_ObjCToPython("@", &result);
@@ -9087,8 +9072,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 + (id)idGKQuadOn:(OC_VectorCall*)value
 {
@@ -9103,15 +9088,14 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 + (id)idGKQuadfOn:(OC_VectorCall*)value
 {
-    id result = [value idGKQuad:(GKQuad) {
-        (vector_float2){9.0, 10.0}, (vector_float2) { 11.0, 12.0 }
-    }
-                              f:2500000000.0];
+    id result = [value
+        idGKQuad:(GKQuad) { (vector_float2){9.0, 10.0}, (vector_float2){11.0, 12.0} }
+               f:2500000000.0];
     id cinter;
     PyObjC_BEGIN_WITH_GIL
         PyObject* inter = PyObjC_ObjCToPython("@", &result);
@@ -9121,8 +9105,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1011
 + (id)idMDLVoxelIndexExtentOn:(OC_VectorCall*)value
 {
@@ -9138,8 +9122,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 + (id)idsimdfloat4x4On:(OC_VectorCall*)value
 {
     id result =
@@ -9162,10 +9146,7 @@ static BOOL      shouldRaise = NO;
     id result = [value idsimdfloat4x4:(simd_float4x4) {
         {
             (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-                (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4)
-            {
-                0.0, 1.5, 3.0, 4.5
-            }
+                (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}
         }
     }
                                     Z:NO];
@@ -9377,18 +9358,18 @@ static BOOL      shouldRaise = NO;
                                           (vector_float3){-8.0, -9.0, -10.0},
                                           (vector_float3){-11.0, -12.0, -13.0}}];
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1011
 + (void)vMDLAxisAlignedBoundingBoxZOn:(OC_VectorCall*)value
 {
     [value vMDLAxisAlignedBoundingBox:(MDLAxisAlignedBoundingBox) {
-        (vector_float3){-8.0, -9.0, -10.0}, (vector_float3) { -11.0, -12.0, -13.0 }
+        (vector_float3){-8.0, -9.0, -10.0}, (vector_float3){-11.0, -12.0, -13.0}
     }
                                     Z:NO];
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 + (void)vsimddouble4x4On:(OC_VectorCall*)value
 {
     [value vsimddouble4x4:(simd_double4x4){{(vector_double4){0.0, 1.5, 3.0, 4.5},
@@ -9402,10 +9383,7 @@ static BOOL      shouldRaise = NO;
     [value vsimddouble4x4:(simd_double4x4) {
         {
             (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5},
-                (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4)
-            {
-                0.0, 1.5, 3.0, 4.5
-            }
+                (vector_double4){0.0, 1.5, 3.0, 4.5}, (vector_double4){0.0, 1.5, 3.0, 4.5}
         }
     }
                         d:-557000000000.0];
@@ -9437,10 +9415,7 @@ static BOOL      shouldRaise = NO;
     [value vsimdfloat4x4:(simd_float4x4) {
         {
             (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-                (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4)
-            {
-                0.0, 1.5, 3.0, 4.5
-            }
+                (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}
         }
     }
                        d:-557000000000.0];
@@ -9449,40 +9424,34 @@ static BOOL      shouldRaise = NO;
 #if PyObjC_BUILD_RELEASE >= 1013
 + (void)vsimdquatddOn:(OC_VectorCall*)value
 {
-    [value vsimdquatd:(simd_quatd) {
-        (vector_double4) { 0.0, 1.5, 3.0, 4.5 }
-    }
+    [value vsimdquatd:(simd_quatd) { (vector_double4){0.0, 1.5, 3.0, 4.5} }
                     d:-557000000000.0];
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 + (void)vsimdquatfOn:(OC_VectorCall*)value
 {
     [value vsimdquatf:(simd_quatf){(vector_float4){0.0, 1.5, 3.0, 4.5}}];
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 + (void)vsimdquatfv3fOn:(OC_VectorCall*)value
 {
-    [value vsimdquatf:(simd_quatf) {
-        (vector_float4) { 0.0, 1.5, 3.0, 4.5 }
-    }
+    [value vsimdquatf:(simd_quatf) { (vector_float4){0.0, 1.5, 3.0, 4.5} }
                   v3f:(vector_float3){0.0, 1.5, 3.0}];
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 + (void)vsimdquatfdOn:(OC_VectorCall*)value
 {
-    [value vsimdquatf:(simd_quatf) {
-        (vector_float4) { 0.0, 1.5, 3.0, 4.5 }
-    }
+    [value vsimdquatf:(simd_quatf) { (vector_float4){0.0, 1.5, 3.0, 4.5} }
                     d:-557000000000.0];
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1012
 + (id)GKBoxOn:(OC_VectorCall*)value
 {
@@ -9496,8 +9465,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 + (id)GKQuadOn:(OC_VectorCall*)value
 {
@@ -9511,8 +9480,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1012
 + (id)GKTriangleQOn:(OC_VectorCall*)value
 {
@@ -9526,8 +9495,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 #if PyObjC_BUILD_RELEASE >= 1011
 + (id)MDLAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
 {
@@ -9542,8 +9511,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1011
 + (id)MDLAxisAlignedBoundingBoxv4iOn:(OC_VectorCall*)value
 {
@@ -9559,8 +9528,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1011
 + (id)MDLAxisAlignedBoundingBoxdOn:(OC_VectorCall*)value
 {
@@ -9575,8 +9544,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 #if PyObjC_BUILD_RELEASE >= 1011
 + (id)MDLVoxelIndexExtentOn:(OC_VectorCall*)value
 {
@@ -9590,8 +9559,40 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 1013
++ (id)MPSImageHistogramInfoOn:(OC_VectorCall*)value
+{
+    id                    cinter;
+    MPSImageHistogramInfo result = [value MPSImageHistogramInfo];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter =
+            PyObjC_ObjCToPython("{MPSImageHistogramInfo=QZ<4f><4f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#if PyObjC_BUILD_RELEASE >= 1014
++ (id)MPSAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
+{
+    id                        cinter;
+    MPSAxisAlignedBoundingBox result = [value MPSAxisAlignedBoundingBox];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter =
+            PyObjC_ObjCToPython("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 + (id)simddouble4x4On:(OC_VectorCall*)value
 {
     id             cinter;
@@ -9644,6 +9645,19 @@ static BOOL      shouldRaise = NO;
     return cinter;
 }
 
++ (id)simdfloat4x3On:(OC_VectorCall*)value
+{
+    id            cinter;
+    simd_float4x3 result = [value simdfloat4x3];
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{simd_float4x3=[4<3f>]}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
 + (id)simdfloat4x4On:(OC_VectorCall*)value
 {
     id            cinter;
@@ -9688,10 +9702,7 @@ static BOOL      shouldRaise = NO;
     simd_float4x4 result = [value simdfloat4x4simdfloat4x4:(simd_float4x4) {
         {
             (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-                (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4)
-            {
-                0.0, 1.5, 3.0, 4.5
-            }
+                (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}
         }
     }
                                                         id:@"hello"];
@@ -9718,8 +9729,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 + (id)simdquatfOn:(OC_VectorCall*)value
 {
@@ -9733,8 +9744,8 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 #if PyObjC_BUILD_RELEASE >= 1013
 + (id)simdquatfdOn:(OC_VectorCall*)value
 {
@@ -9748,112 +9759,65 @@ static BOOL      shouldRaise = NO;
     PyObjC_END_WITH_GIL
     return cinter;
 }
+
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-+ (id)v16COn:(OC_VectorCall*)value
-{
-    id           cinter;
-    simd_uchar16 result = [value v16C];
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* inter = PyObjC_ObjCToPython("<16C>", &result);
-        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return cinter;
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
-+ (id)MPSImageHistogramInfoOn:(OC_VectorCall*)value
-{
-    id                    cinter;
-    MPSImageHistogramInfo result = [value MPSImageHistogramInfo];
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* inter =
-            PyObjC_ObjCToPython("{MPSImageHistogramInfo=QZ<4f><4f>}", &result);
-        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return cinter;
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-#if PyObjC_BUILD_RELEASE >= 1014
-+ (id)MPSAxisAlignedBoundingBoxOn:(OC_VectorCall*)value
-{
-    id                        cinter;
-    MPSAxisAlignedBoundingBox result = [value MPSAxisAlignedBoundingBox];
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* inter =
-            PyObjC_ObjCToPython("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &result);
-        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return cinter;
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
-
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static int mod_exec_module(PyObject* m)
+static int
+mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "OC_VectorCall", PyObjC_IdToPython([OC_VectorCall class]))
+    if (PyModule_AddObject(m, // LCOV_EXCL_LINE
+                           "OC_VectorCall", PyObjC_IdToPython([OC_VectorCall class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyModule_AddObject(m, "OC_VectorCallInvoke",
+    if (PyModule_AddObject(m, // LCOV_EXCL_LINE
+                           "OC_VectorCallInvoke",
                            PyObjC_IdToPython([OC_VectorCallInvoke class]))
         < 0) {
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* This extension does not use the CPython API other than initializing
          * the module, hence is safe with subinterpreters and per-interpreter
          * GILs
          */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "vectorcall",
-    .m_doc = NULL,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "vectorcall",
+    .m_doc      = NULL,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit_vectorcall(void);

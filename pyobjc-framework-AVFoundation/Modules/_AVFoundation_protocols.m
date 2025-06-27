@@ -4,7 +4,8 @@
  * Last update: Wed Jan 16 13:10:52 2013
  */
 
-static void __attribute__((__used__)) use_protocols(void)
+static void __attribute__((__used__))
+use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
     p = PyObjC_IdToPython(@protocol(AVAssetResourceLoaderDelegate));
@@ -87,5 +88,8 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVMetricEventStreamSubscriber));
     Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1502
+    p = PyObjC_IdToPython(@protocol(AVCaptureSessionControlsDelegate));
 #endif
 }

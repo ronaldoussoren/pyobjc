@@ -1,3 +1,7 @@
+.. module:: CoreMedia
+   :platform: macOS 10.7+
+   :synopsis: Bindings for the CoreMedia framework
+
 API Notes: CoreMedia framework
 ===============================
 
@@ -7,11 +11,6 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 .. __: https://developer.apple.com/documentation/coremedia/?preferredLanguage=occ
 
 These bindings are accessed through the ``CoreMedia`` package (that is, ``import CoreMedia``).
-
-.. note::
-
-   This framework was introduced in macOS 10.7
-
 
 API Notes
 ---------

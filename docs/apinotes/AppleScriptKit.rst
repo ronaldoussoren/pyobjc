@@ -1,3 +1,7 @@
+.. module:: AppleScriptKit
+   :platform: macOS
+   :synopsis: Bindings for the AppleScriptKit framework
+
 API Notes: AppleScriptKit framework
 ===================================
 

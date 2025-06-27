@@ -26,37 +26,37 @@ def nsobject_hash(self, _max=sys.maxsize, _const=((sys.maxsize + 1) * 2)):
 
 
 def nsobject__eq__(self, other):
-    if self.__is_magic():
+    if self.__pyobjc_magic_coookie__():
         return self is other
     return bool(self.isEqualTo_(other))
 
 
 def nsobject__ne__(self, other):
-    if self.__is_magic():
+    if self.__pyobjc_magic_coookie__():
         return self is not other
     return bool(self.isNotEqualTo_(other))
 
 
 def nsobject__gt__(self, other):
-    if self.__is_magic():
+    if self.__pyobjc_magic_coookie__():
         return NotImplemented
     return bool(self.isGreaterThan_(other))
 
 
 def nsobject__ge__(self, other):
-    if self.__is_magic():
+    if self.__pyobjc_magic_coookie__():
         return NotImplemented
     return bool(self.isGreaterThanOrEqualTo_(other))
 
 
 def nsobject__lt__(self, other):
-    if self.__is_magic():
+    if self.__pyobjc_magic_coookie__():
         return NotImplemented
     return bool(self.isLessThan_(other))
 
 
 def nsobject__le__(self, other):
-    if self.__is_magic():
+    if self.__pyobjc_magic_coookie__():
         return NotImplemented
     return bool(self.isLessThanOrEqualTo_(other))
 

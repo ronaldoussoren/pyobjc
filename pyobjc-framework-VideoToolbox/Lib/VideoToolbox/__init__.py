@@ -35,6 +35,42 @@ def _setup():
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 
+    for cls in (
+        "VTFrameProcessor",
+        "VTFrameProcessorFrame",
+        "VTFrameProcessorOpticalFlow",
+        "VTFrameRateConversionConfiguration",
+        "VTFrameRateConversionParameters",
+        "VTMotionBlurConfiguration",
+        "VTMotionBlurParameters",
+        "VTOpticalFlowConfiguration",
+        "VTOpticalFlowParameters",
+    ):
+        try:
+            objc.lookUpClass(cls).__objc_final__ = True
+        except objc.error:
+            pass
+
+    for cls, sel in (
+        ("VTFrameProcessorFrame", b"init"),
+        ("VTFrameProcessorFrame", b"new"),
+        ("VTFrameProcessorOpticalFlow", b"init"),
+        ("VTFrameProcessorOpticalFlow", b"new"),
+        ("VTFrameRateConversionConfiguration", b"init"),
+        ("VTFrameRateConversionConfiguration", b"new"),
+        ("VTFrameRateConversionParameters", b"init"),
+        ("VTFrameRateConversionParameters", b"new"),
+        ("VTMotionBlurConfiguration", b"init"),
+        ("VTMotionBlurConfiguration", b"new"),
+        ("VTMotionBlurParameters", b"init"),
+        ("VTMotionBlurParameters", b"new"),
+        ("VTOpticalFlowConfiguration", b"init"),
+        ("VTOpticalFlowConfiguration", b"new"),
+        ("VTOpticalFlowParameters", b"init"),
+        ("VTOpticalFlowParameters", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     del sys.modules["VideoToolbox._metadata"]
 
 

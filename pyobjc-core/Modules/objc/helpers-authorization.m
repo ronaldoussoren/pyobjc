@@ -29,45 +29,58 @@ PyObject* _Nullable pythonify_authorizationitem(const void* _value)
     PyObject*                   t;
     int                         r;
 
-    result = PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}", 27, NULL,
-                                           &pack);
+    result =
+        PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}", 27, NULL, &pack);
     if (result == NULL) {
         have_tuple = 1;
         result     = PyTuple_New(4);
-        if (result == NULL) {
-            return NULL;
+        if (result == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         }
     }
 
-    t = PyBytes_FromString(value->name);
-    if (t == NULL) {
+    if (value->name) {
+        t = PyBytes_FromString(value->name);
+    } else {
+        t = Py_None;
+        Py_INCREF(Py_None);
+    }
+    if (t == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     if (have_tuple) {
         PyTuple_SET_ITEM(result, 0, t);
     } else {
         r = PyObjC_SetStructField(result, 0, t);
         Py_DECREF(t);
-        if (r == -1) {
+        if (r == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
-    t = PyLong_FromLong(value->valueLength);
-    if (t == NULL) {
+    t = PyLong_FromSize_t(value->valueLength);
+    if (t == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     if (have_tuple) {
         PyTuple_SET_ITEM(result, 1, t);
     } else {
         r = PyObjC_SetStructField(result, 1, t);
         Py_DECREF(t);
-        if (r == -1) {
+        if (r == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -76,9 +89,11 @@ PyObject* _Nullable pythonify_authorizationitem(const void* _value)
         Py_INCREF(t);
     } else {
         t = PyBytes_FromStringAndSize(value->value, value->valueLength);
-        if (t == NULL) {
+        if (t == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -87,25 +102,31 @@ PyObject* _Nullable pythonify_authorizationitem(const void* _value)
     } else {
         r = PyObjC_SetStructField(result, 2, t);
         Py_DECREF(t);
-        if (r == -1) {
+        if (r == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
-    t = PyLong_FromLong(value->valueLength);
-    if (t == NULL) {
+    t = PyLong_FromLong(value->flags);
+    if (t == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     if (have_tuple) {
         PyTuple_SET_ITEM(result, 3, t);
     } else {
         r = PyObjC_SetStructField(result, 3, t);
         Py_DECREF(t);
-        if (r == -1) {
+        if (r == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -150,7 +171,7 @@ depythonify_authorizationitem(PyObject* value, void* _out)
     }
 
     if (PyLong_Check(PyTuple_GET_ITEM(seq, 1))) {
-        out->valueLength = PyLong_AsLong(PyTuple_GET_ITEM(seq, 1));
+        out->valueLength = PyLong_AsSize_t(PyTuple_GET_ITEM(seq, 1));
         if (PyErr_Occurred()) {
             Py_DECREF(seq);
             return -1;
@@ -169,11 +190,14 @@ depythonify_authorizationitem(PyObject* value, void* _out)
 
     } else if (PyBytes_Check(PyTuple_GET_ITEM(seq, 2))) {
         Py_ssize_t len;
-        if (PyBytes_AsStringAndSize(PyTuple_GET_ITEM(seq, 2), (char**)&out->value,
+        if (PyBytes_AsStringAndSize(PyTuple_GET_ITEM(seq, 2),
+                                    (char**)&out->value, // LCOV_BR_EXCL_LINE
                                     &len)
             == -1) {
+            // LCOV_EXCL_START
             Py_DECREF(seq);
             return -1;
+            // LCOV_EXCL_STOP
         } else if ((size_t)len < out->valueLength) {
             PyErr_Format(PyExc_ValueError,
                          "AuthorizationItem.value too small; expecting at least %ld "
@@ -192,7 +216,7 @@ depythonify_authorizationitem(PyObject* value, void* _out)
     }
 
     if (PyLong_Check(PyTuple_GET_ITEM(seq, 3))) {
-        out->valueLength = PyLong_AsUnsignedLong(PyTuple_GET_ITEM(seq, 3));
+        out->flags = (unsigned int)PyLong_AsUnsignedLong(PyTuple_GET_ITEM(seq, 3));
         if (PyErr_Occurred()) {
             Py_DECREF(seq);
             return -1;
@@ -200,7 +224,7 @@ depythonify_authorizationitem(PyObject* value, void* _out)
 
     } else {
         PyErr_Format(PyExc_TypeError,
-                     "AuthorizationItem.flags should be a byte string, not %s",
+                     "AuthorizationItem.flags should be an integer, not %s",
                      Py_TYPE(PyTuple_GET_ITEM(seq, 3))->tp_name);
         Py_DECREF(seq);
         return -1;

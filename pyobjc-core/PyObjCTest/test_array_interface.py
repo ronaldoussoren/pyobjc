@@ -5,7 +5,7 @@ import sys
 from test import list_tests, seq_tests
 
 import objc
-from PyObjCTools.TestSupport import skipUnless, expectedFailure
+from PyObjCTools.TestSupport import skipUnless
 
 NSArray = objc.lookUpClass("NSArray")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -249,7 +249,7 @@ class MutableArrayTest(list_tests.CommonTest):
         v = self.type2test([1, 2, 0, 3, 4])
         self.assertEqual(u, v)
 
-    @expectedFailure
+    # @expectedFailure
     def test_pyobjc_pop(self):
         u = self.type2test([1, 2, 3, 4])
         with self.assertRaises(IndexError):

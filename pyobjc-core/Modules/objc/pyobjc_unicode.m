@@ -37,11 +37,13 @@ PyDoc_STRVAR(unic_doc, "objc.pyobjc_unicode\n"
 static void
 unic_dealloc(PyObject* obj)
 {
-    PyObjCUnicodeObject* uobj     = (PyObjCUnicodeObject*)obj;
-    PyObject*            weakrefs = uobj->weakrefs;
-    PyObject*            py_nsstr = uobj->py_nsstr;
 
+    PyObjCUnicodeObject* uobj = (PyObjCUnicodeObject*)obj;
     PyObjC_UnregisterPythonProxy(uobj->nsstr, obj);
+
+    PyObject* weakrefs = uobj->weakrefs;
+    PyObject* py_nsstr = uobj->py_nsstr;
+
     Py_CLEAR(py_nsstr);
 
     if (weakrefs) {
@@ -156,14 +158,12 @@ static PyGetSetDef unic_getset[] = {{
                                     }};
 
 static PyMemberDef unic_members[] = {
-#if PY_VERSION_HEX >= 0x03090000
     {
         .name   = "__weaklistoffset__",
         .type   = T_PYSSIZET,
         .offset = offsetof(PyObjCUnicodeObject, weakrefs),
         .flags  = READONLY,
     },
-#endif
     {
         .name = NULL /* SENTINEL */
     }};
@@ -238,7 +238,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
     length = [value length];
 
-    characters = PyObject_Malloc(sizeof(unichar) * (length + 1));
+    characters = PyMem_Malloc(sizeof(unichar) * (length + 1));
     if (characters == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
@@ -261,25 +261,28 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     Py_END_ALLOW_THREADS
 
     if (have_exception) {
-        PyObject_Free(characters);
+        PyMem_Free(characters);
         characters = NULL;
 
         return NULL;
     }
 
-    result = PyObject_New(PyObjCUnicodeObject, (PyTypeObject*)PyObjCUnicode_Type);
+    // Using PyObject_Malloc instead of PyObject_New matches the
+    // implementation of PyUnicode_New
+    result = PyObject_Malloc(sizeof(PyObjCUnicodeObject));
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        PyObject_Free(characters);
+        PyMem_Free(characters);
         characters = NULL;
 
         return NULL;
         // LCOV_EXCL_STOP
     }
+    (void)PyObject_Init((PyObject*)result, (PyTypeObject*)PyObjCUnicode_Type);
 
     result->weakrefs = NULL;
     result->py_nsstr = NULL;
-    result->nsstr    = nil;
+    result->nsstr    = [value retain];
 
     ascii   = (PyASCIIObject*)result;
     compact = (PyCompactUnicodeObject*)result;
@@ -296,9 +299,13 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 #endif
     ascii->state.interned = SSTATE_NOT_INTERNED;
 
+#if PY_VERSION_HEX >= 0x030c0000
+    ascii->state.statically_allocated = 0;
+#endif
+
     compact->utf8_length = 0;
     compact->utf8        = NULL;
-#if PY_VERSION_HEX < 0x030C0000
+#if PY_VERSION_HEX < 0x030c0000
     compact->wstr_length = 0;
 #endif
 
@@ -348,27 +355,18 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         Py_UCS1* latin1_cur;
 
         result->base.data.latin1 =
-            PyObject_MALLOC(sizeof(Py_UCS1) * (length + 1 - nr_surrogates));
+            PyMem_Malloc(sizeof(Py_UCS1) * (length + 1 - nr_surrogates));
         if (result->base.data.latin1 == NULL) // LCOV_BR_EXCL_LINE
             goto error;                       // LCOV_EXCL_LINE
 
         latin1_cur = result->base.data.latin1;
         for (i = 0; i < length; i++) {
-            if ( // LCOV_BR_EXCL_LINE
-                Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1)
-                && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
-                Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
-                /* AFAIK  this cannot happen, surrogtes are outside of the range
-                 * of 1BYTE_KIND, likewise for the decoded character.
-                 */
-                // LCOV_EXCL_START
-                *latin1_cur++ = (Py_UCS1)ch;
-                i++;
-                // LCOV_EXCL_STOP
-
-            } else {
-                *latin1_cur++ = (Py_UCS1)characters[i];
-            }
+            /* The code had a check for surrogates here for a long time, but
+             * given that wer'e dealing with UCS1 text there cannot be
+             * surrogates here (which have values > 256)
+             */
+            assert(!Py_UNICODE_IS_HIGH_SURROGATE(characters[i]));
+            *latin1_cur++ = (Py_UCS1)characters[i];
         }
 
         *latin1_cur   = 0;
@@ -399,7 +397,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
             Py_UCS2* ucs2_cur;
 
             result->base.data.ucs2 =
-                PyObject_MALLOC(sizeof(Py_UCS2) * (length + 1 - nr_surrogates));
+                PyMem_Malloc(sizeof(Py_UCS2) * (length + 1 - nr_surrogates));
             if (result->base.data.ucs2 == NULL) // LCOV_BR_EXCL_LINE
                 goto error;                     // LCOV_EXCL_LINE
 
@@ -418,13 +416,13 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
             ascii->length = length - nr_surrogates;
             *ucs2_cur     = 0;
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
 
     } else { /* 4BYTE_KIND */
         Py_UCS4* ucs4_cur;
 
         result->base.data.ucs4 =
-            PyObject_MALLOC(sizeof(Py_UCS4) * (length + 1 - nr_surrogates));
+            PyMem_Malloc(sizeof(Py_UCS4) * (length + 1 - nr_surrogates));
         if (result->base.data.ucs4 == NULL) { // LCOV_BR_EXCL_LINE
             goto error;                       // LCOV_EXCL_LINE
         }
@@ -444,7 +442,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
                      */
                     *ucs4_cur++ = (Py_UCS4)characters[i];
                     // LCOV_EXCL_STOP
-                } else { // LCOV_BR_EXCL_LINE
+                } else { // LCOV_EXCL_LINE
                     *ucs4_cur++ = (Py_UCS4)ch;
                     i++;
                 }
@@ -467,19 +465,16 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     }
 
     if (characters != NULL) {
-        PyObject_Free(characters);
+        PyMem_Free(characters);
         characters = NULL;
     }
-
-    /* Finally store PyUnicode specific data */
-    result->nsstr = [value retain];
 
     return (PyObject*)result;
 
 error:
     // LCOV_EXCL_START
     Py_DECREF((PyObject*)result);
-    PyObject_Free(characters);
+    PyMem_Free(characters);
     characters = NULL;
     PyErr_NoMemory();
     return NULL;
@@ -508,12 +503,6 @@ PyObjCUnicode_Setup(PyObject* module)
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
         return -1;     // LCOV_EXCL_LINE
     }
-#if PY_VERSION_HEX < 0x03090000
-    /* Support for setting this slot through PyType_Spec was introduced
-     * in 3.9
-     */
-    ((PyTypeObject*)tmp)->tp_weaklistoffset = offsetof(PyObjCUnicodeObject, weakrefs);
-#endif
     PyObjCUnicode_Type = tmp;
 
     if ( // LCOV_BR_EXCL_LINE

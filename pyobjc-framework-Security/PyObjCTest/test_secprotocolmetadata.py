@@ -98,3 +98,21 @@ class TestSecProtocolMetadata(TestCase):
             Security.sec_protocol_metadata_access_pre_shared_keys, 1, b"v@@"
         )
         Security.sec_protocol_options_set_tls_pre_shared_key_identity_hint
+
+    @min_os_level("15.5")
+    def test_functions15_5(self):
+        self.assertResultHasType(
+            Security.sec_protocol_metadata_copy_negotiated_protocol,
+            objc._C_PTR + objc._C_CHAR_AS_TEXT,
+        )
+        self.assertResultIsNullTerminated(
+            Security.sec_protocol_metadata_copy_negotiated_protocol
+        )
+
+        self.assertResultHasType(
+            Security.sec_protocol_metadata_copy_server_name,
+            objc._C_PTR + objc._C_CHAR_AS_TEXT,
+        )
+        self.assertResultIsNullTerminated(
+            Security.sec_protocol_metadata_copy_server_name
+        )

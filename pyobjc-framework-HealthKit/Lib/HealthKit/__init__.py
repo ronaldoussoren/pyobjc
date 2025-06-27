@@ -91,6 +91,10 @@ def _setup():
         ("HKStatisticsCollection", b"init"),
         ("HKGlassesLensSpecification", b"init"),
         ("HKGlassesLensSpecification", b"new"),
+        ("HKAudiogramSensitivityPointClampingRange", b"init"),
+        ("HKAudiogramSensitivityPointClampingRange", b"new"),
+        ("HKAudiogramSensitivityTes", b"init"),
+        ("HKAudiogramSensitivityTes", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+This script demonstrates how to use a Cocoa
+event loop to asynchronously read from an
+existing file descriptor.
+"""
 
 from Foundation import (
     NSObject,

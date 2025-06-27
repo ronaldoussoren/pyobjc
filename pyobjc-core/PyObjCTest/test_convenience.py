@@ -494,6 +494,41 @@ class TestBasicConveniences(TestCase):
         finally:
             convenience.currentBundle = orig
 
+    def test_bundleForClassOption(self):
+        orig = objc.options._make_bundleForClass
+        try:
+            objc.options._make_bundleForClass = None
+
+            class OC_Test_Basic_Convenience_2(objc.lookUpClass("NSObject")):
+                pass
+
+            with self.assertRaisesRegex(AttributeError, "bundleForClass"):
+                OC_Test_Basic_Convenience_2.bundleForClass()
+
+            def raiser(*args, **kwds):
+                raise RuntimeError
+
+            objc.options._make_bundleForClass = raiser
+
+            with self.assertRaises(RuntimeError):
+
+                class OC_Test_Basic_Convenience_3(objc.lookUpClass("NSObject")):
+                    pass
+
+            def faker(*args, **kwds):
+                return 42
+
+            objc.options._make_bundleForClass = faker
+
+            class OC_Test_Basic_Convenience_4(objc.lookUpClass("NSObject")):
+                pass
+
+            with self.assertRaisesRegex(AttributeError, "bundleForClass"):
+                OC_Test_Basic_Convenience_4.bundleForClass()
+
+        finally:
+            objc.options._make_bundleForClass = orig
+
     def test_kvc_helper(self):
         o = objc.lookUpClass("NSURL").URLWithString_("http://www.python.org/")
         self.assertEqual(o.host(), "www.python.org")

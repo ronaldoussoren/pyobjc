@@ -36,8 +36,6 @@ _DEFAULT_ALIASES = {
 
 
 def _deprecation_level(value):
-    if isinstance(value, int):
-        return value
     major, _, minor = value.partition(".")
     return int(major) * 100 + int(minor)
 
@@ -245,8 +243,8 @@ def createFrameworkDirAndGetattr(
             for nm, _val in re.findall(r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", enummap):
                 try:
                     expressions_mapping[nm]
-                except KeyError:
-                    pass
+                except KeyError:  # pragma: no cover
+                    pass  # pragma: no cover
 
             enummap = ""
 

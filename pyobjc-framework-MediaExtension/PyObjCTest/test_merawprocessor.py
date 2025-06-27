@@ -67,6 +67,16 @@ class TestMERawProcessor(TestCase):
         )
 
         self.assertArgIsBOOL(
+            MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_neutralValue_,
+            3,
+        )
+
+        self.assertArgIsBOOL(
+            MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_cameraValue_,
+            3,
+        )
+
+        self.assertArgIsBOOL(
             MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_neutralValue_cameraValue_,
             3,
         )
@@ -86,8 +96,84 @@ class TestMERawProcessor(TestCase):
             MediaExtension.MERAWProcessingBooleanParameter.currentValue
         )
         self.assertResultIsBOOL(
-            MediaExtension.MERAWProcessingBooleanParameter.neutralValue
+            MediaExtension.MERAWProcessingBooleanParameter.hasNeutralValue_
         )
         self.assertResultIsBOOL(
-            MediaExtension.MERAWProcessingBooleanParameter.cameraValue
+            MediaExtension.MERAWProcessingBooleanParameter.hasCameraValue_
+        )
+
+    @min_os_level("15.0")
+    def test_methods15_1(self):
+        self.assertArgIsBOOL(
+            MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_neutralValue_,
+            3,
+        )
+        self.assertArgIsBOOL(
+            MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_neutralValue_,
+            4,
+        )
+
+        self.assertArgIsBOOL(
+            MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_cameraValue_,
+            3,
+        )
+        self.assertArgIsBOOL(
+            MediaExtension.MERAWProcessingBooleanParameter.initWithName_key_description_initialValue_cameraValue_,
+            4,
+        )
+
+        self.assertResultIsBOOL(
+            MediaExtension.MERAWProcessingBooleanParameter.hasNeutralValue_
+        )
+        self.assertArgHasType(
+            MediaExtension.MERAWProcessingBooleanParameter.hasNeutralValue_, 0, b"o^Z"
+        )
+
+        self.assertResultIsBOOL(
+            MediaExtension.MERAWProcessingBooleanParameter.hasCameraValue_
+        )
+        self.assertArgHasType(
+            MediaExtension.MERAWProcessingBooleanParameter.hasCameraValue_, 0, b"o^Z"
+        )
+
+        self.assertResultIsBOOL(
+            MediaExtension.MERAWProcessingIntegerParameter.hasNeutralValue_
+        )
+        self.assertArgIsOut(
+            MediaExtension.MERAWProcessingIntegerParameter.hasNeutralValue_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MediaExtension.MERAWProcessingIntegerParameter.hasCameraValue_
+        )
+        self.assertArgIsOut(
+            MediaExtension.MERAWProcessingIntegerParameter.hasCameraValue_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MediaExtension.MERAWProcessingFloatParameter.hasNeutralValue_
+        )
+        self.assertArgIsOut(
+            MediaExtension.MERAWProcessingFloatParameter.hasNeutralValue_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MediaExtension.MERAWProcessingFloatParameter.hasCameraValue_
+        )
+        self.assertArgIsOut(
+            MediaExtension.MERAWProcessingFloatParameter.hasCameraValue_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MediaExtension.MERAWProcessingListParameter.hasNeutralValue_
+        )
+        self.assertArgIsOut(
+            MediaExtension.MERAWProcessingListParameter.hasNeutralValue_, 0
+        )
+
+        self.assertResultIsBOOL(
+            MediaExtension.MERAWProcessingListParameter.hasCameraValue_
+        )
+        self.assertArgIsOut(
+            MediaExtension.MERAWProcessingListParameter.hasCameraValue_, 0
         )

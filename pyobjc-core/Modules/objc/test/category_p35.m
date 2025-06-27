@@ -9,88 +9,91 @@
 
 #import <Foundation/Foundation.h>
 __attribute__((__visibility__("default")))
-@interface OC_Category_GP35 : NSObject {}
+@interface OC_Category_GP35 : NSObject {
+}
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_P35 : OC_Category_GP35 {}
+@interface OC_Category_P35 : OC_Category_GP35 {
+}
 @end
 
 __attribute__((__visibility__("default")))
-@interface OC_Category_C35 : OC_Category_P35 {}
+@interface OC_Category_C35 : OC_Category_P35 {
+}
 @end
 
-
-@implementation OC_Category_P35(Cat)
--(id)gpMethod1 {
+@implementation OC_Category_P35 (Cat)
+- (id)gpMethod1
+{
     return @"P35 - gpMethod1 - P35(Cat)";
 }
--(id)gpMethod5 {
+- (id)gpMethod5
+{
     return @"P35 - gpMethod5 - P35(Cat)";
 }
--(id)pMethod1 {
+- (id)pMethod1
+{
     return @"P35 - pMethod1 - P35(Cat)";
 }
--(id)pMethod3 {
+- (id)pMethod3
+{
     return @"P35 - pMethod3 - P35(Cat)";
 }
--(id)method1 {
+- (id)method1
+{
     return @"P35 - method1 - P35(Cat)";
 }
--(id)method2 {
+- (id)method2
+{
     return @"P35 - method2 - P35(Cat)";
 }
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-static int mod_exec_module(PyObject* m)
+static int
+mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
-
 
     return 0;
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {
-    {
-        .slot = Py_mod_exec,
-        .value = (void*)mod_exec_module
-    },
+    {.slot = Py_mod_exec, .value = (void*)mod_exec_module},
 #if PY_VERSION_HEX >= 0x030c0000
     {
         /* This extension does not use the CPython API other than initializing
          * the module, hence is safe with subinterpreters and per-interpreter
          * GILs
          */
-        .slot = Py_mod_multiple_interpreters,
+        .slot  = Py_mod_multiple_interpreters,
         .value = Py_MOD_PER_INTERPRETER_GIL_SUPPORTED,
     },
 #endif
 #if PY_VERSION_HEX >= 0x030d0000
     {
-        .slot = Py_mod_gil,
+        .slot  = Py_mod_gil,
         .value = Py_MOD_GIL_NOT_USED,
     },
 #endif
-    {  /* Sentinel */
-        .slot = 0,
-        .value = 0
-    }
-};
+    {/* Sentinel */
+     .slot  = 0,
+     .value = 0}};
 
 static struct PyModuleDef mod_module = {
-    .m_base = PyModuleDef_HEAD_INIT,
-    .m_name = "category_p35",
-    .m_doc = NULL,
-    .m_size = 0,
-    .m_methods = mod_methods,
-    .m_slots = mod_slots,
+    .m_base     = PyModuleDef_HEAD_INIT,
+    .m_name     = "category_p35",
+    .m_doc      = NULL,
+    .m_size     = 0,
+    .m_methods  = mod_methods,
+    .m_slots    = mod_slots,
     .m_traverse = NULL,
-    .m_clear = NULL,
-    .m_free = NULL,
+    .m_clear    = NULL,
+    .m_free     = NULL,
 };
 
 PyObject* PyInit_category_p35(void);

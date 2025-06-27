@@ -6,7 +6,7 @@ from PyObjCTest.testhelper import PyObjC_TestClass3
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
-rawBytes = b"a\x13b\x00cd\xFFef\xEFgh"
+rawBytes = b"a\x13b\x00cd\xffef\xefgh"
 otherBytes = array.array("B")
 otherBytes.frombytes(b"12345678901234567890" * 5)
 
@@ -224,7 +224,7 @@ class TestNSData(TestCase):
         self.assertEqual(rawBytes, bytesValue)
 
         try:
-            bytesValue[3] = b"\xAE"
+            bytesValue[3] = b"\xae"
         except TypeError as r:
             if str(r).find("buffer is read-only") == 0:
                 pass

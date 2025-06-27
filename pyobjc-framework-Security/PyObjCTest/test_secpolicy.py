@@ -59,6 +59,15 @@ class TestSecPolicy(TestCase):
     def test_constants10_11(self):
         self.assertIsInstance(Security.kSecPolicyApplePayIssuerEncryption, str)
 
+    @min_os_level("15.4")
+    def test_constants15_4(self):
+        self.assertIsInstance(Security.kSecPolicyAppleSSLServer, str)
+        self.assertIsInstance(Security.kSecPolicyAppleSSLClient, str)
+        self.assertIsInstance(Security.kSecPolicyAppleEAPServer, str)
+        self.assertIsInstance(Security.kSecPolicyAppleEAPClient, str)
+        self.assertIsInstance(Security.kSecPolicyAppleIPSecServer, str)
+        self.assertIsInstance(Security.kSecPolicyAppleIPSecClient, str)
+
     def test_functions(self):
         self.assertIsInstance(Security.SecPolicyGetTypeID(), int)
 

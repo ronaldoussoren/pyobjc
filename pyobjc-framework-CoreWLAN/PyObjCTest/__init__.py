@@ -1,1 +1,1 @@
-""" testsuite for CoreWLAN """
+"""testsuite for CoreWLAN"""

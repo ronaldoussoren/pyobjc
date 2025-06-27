@@ -92,8 +92,8 @@ class TestBundleFunctions(TestCase):
             objc.loadBundleFunctions(NoObjectiveC(), {}, [])
 
         with self.assertRaisesRegex(
-            ValueError,
-            r"NSInvalidArgumentException - -\[OC_BuiltinPythonUnicode bundlePath\]: unrecognized selector sent to instance",
+            objc.error,
+            "bundle argument is not an NSBundle",
         ):
             # This exception is suboptimal, but does show that the bridge doesn't crash when an incorrect value is passed.
             objc.loadBundleFunctions("", {}, [])
@@ -166,6 +166,12 @@ class TestFunctionList(TestCase):
             TypeError, "a bytes-like object is required, not 'str'"
         ):
             objc.loadFunctionList(function_list, {}, [("foo", "@")])
+
+        with self.assertRaisesRegex(
+            ValueError, "PyCapsule_GetPointer called with incorrect name"
+        ):
+            o = NSObject.alloc().init()
+            objc.loadFunctionList(o.__cobject__(), {}, [("foo", b"@")])
 
     def test_invalid_function_signature(self):
         d = {}

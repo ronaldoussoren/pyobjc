@@ -52,11 +52,12 @@ def calculate_new_doc(cls):
         for kwds, selector in new_map.items():
             if selector is None:
                 result.pop(kwds, None)
+                continue
 
             if not kwds:
-                result[kwds] = f"{cls.__name__}(): "
+                result[kwds] = f"{cls.__name__}():"
             else:
-                result[kwds] = f"{cls.__name__}(*, " + ", ".join(kwds) + "): "
+                result[kwds] = f"{cls.__name__}(*, " + ", ".join(kwds) + "):"
             if selector.startswith("init"):
                 result[
                     kwds
@@ -98,67 +99,80 @@ class function_wrapper:
         return self._function(*args, **kwds)
 
 
-def make_generic_new(cls):
-    def __new__(cls, *args, **kwds):
-        """
-        Generic implementation for Objective-C `__new__`.
-        """
-        key = tuple(kwds.keys())
+def new_func(cls, *args, **kwds):
+    """
+    Generic implementation for Objective-C `__new__`.
+    """
+    key = tuple(kwds.keys())
 
-        for c in cls.__mro__:
-            new_map = NEW_MAP.get(c.__name__, UNSET)
-            if new_map is UNSET:
-                continue
+    for c in cls.__mro__:
+        new_map = NEW_MAP.get(c.__name__, UNSET)
+        if new_map is UNSET:
+            continue
 
-            name = new_map.get(key, UNSET)
-            if name is UNSET:
-                continue
+        name = new_map.get(key, UNSET)
+        if name is UNSET:
+            continue
 
-            if name is None:
-                if key:
-                    raise TypeError(
-                        f"{cls.__name__}() does not support keyword arguments {', '.join(repr(k) for k in key)}"
-                    )
-                else:
-                    raise TypeError(f"{cls.__name__}() requires keyword arguments")
-
-            if not isinstance(name, str):
-                # Assume that 'name' is actually a callable.
-                #
-                # This is used to implement custom signatures for a number
-                # of classes in the various ._convenience sibling modules.
-                return name(cls, *args, **kwds)
-
-            if args:
+        if name is None:
+            if key:
                 raise TypeError(
-                    f"{cls.__name__}() does not accept positional arguments"
+                    f"{cls.__name__}() does not support keyword arguments {', '.join(repr(k) for k in key)}"
                 )
-
-            args = [kwds[n] for n in key]
-            if name.startswith("init") and len(name) == 4 or name[4].isupper():
-                return getattr(cls.alloc(), name)(*args)
-
             else:
-                return getattr(cls, name)(*args)
+                raise TypeError(f"{cls.__name__}() requires keyword arguments")
 
-        if key in (("cobject",), ("c_void_p",)):
-            # Support for creating instances from raw pointers in the default
-            # __new__ implementation.
-            return objc.objc_object.__new__(cls, **kwds)
+        if not isinstance(name, str):
+            # Assume that 'name' is actually a callable.
+            #
+            # This is used to implement custom signatures for a number
+            # of classes in the various ._convenience sibling modules.
+            return name(cls, *args, **kwds)
 
-        if key:
-            raise TypeError(
-                f"{cls.__name__}() does not support keyword arguments {', '.join(repr(k) for k in key)}"
-            )
+        if args:
+            raise TypeError(f"{cls.__name__}() does not accept positional arguments")
+
+        args = [kwds[n] for n in key]
+        if name.startswith("init") and len(name) == 4 or name[4].isupper():
+            return getattr(cls.alloc(), name)(*args)
+
         else:
-            raise TypeError(f"{cls.__name__}() requires keyword arguments")
+            return getattr(cls, name)(*args)
+
+    if key in (("cobject",), ("c_void_p",)):
+        # Support for creating instances from raw pointers in the default
+        # __new__ implementation.
+        return objc.objc_object.__new__(cls, **kwds)
+
+    if key:  # pragma: no branch
+        raise TypeError(
+            f"{cls.__name__}() does not support keyword arguments {', '.join(repr(k) for k in key)}"
+        )
+    else:  # pragma: no cover
+        # Should never be reached due to a similar test earlier
+        # in this function.
+        raise TypeError(f"{cls.__name__}() requires keyword arguments")
+
+
+FunctionType = type(new_func)
+
+
+def make_generic_new(cls, *, FunctionType=FunctionType, new_func=new_func):
 
     # XXX: Settings these helps, but does not yet result in the correct
     #      output from help()
-    __new__.__name__ = cls.__name__ + ".__new__"
-    __new__.__qualname__ = cls.__name__ + ".__new__"
-    __new__.__module__ = cls.__module__
-    return function_wrapper(__new__, cls)
+
+    result = FunctionType(
+        new_func.__code__,
+        new_func.__globals__,
+        cls.__name__ + ".__new__",
+        new_func.__defaults__,
+        new_func.__closure__,
+    )
+    result.__qualname__ = result.__name__
+    result.__module__ = cls.__module__
+    result = function_wrapper(result, cls)
+    return result
 
 
 objc.options._genericNewClass = function_wrapper

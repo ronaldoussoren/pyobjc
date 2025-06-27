@@ -27,6 +27,12 @@ class TestFSRef(TestCase):
         with self.assertRaisesRegex(OSError, r"MAC Error -\d+"):
             ref.as_pathname()
 
+        some_path = "/Library"
+        ref = o.fsrefForPath_(some_path)
+        ref_list = os.listdir(ref)
+        native_list = os.listdir(some_path)
+        self.assertEqual(ref_list, native_list)
+
     def testArg(self):
         # return  #
         o = OC_TestFSRefHelper.alloc().init()
@@ -66,6 +72,11 @@ class TestFSRef(TestCase):
 
         self.assertEqual(ref.as_pathname(), os.path.realpath("/etc/hosts"))
 
+        ref = objc.FSRef.from_pathname(b"/etc/hosts")
+        self.assertIsInstance(ref, objc.FSRef)
+
+        self.assertEqual(ref.as_pathname(), os.path.realpath("/etc/hosts"))
+
         ref = objc.FSRef.from_pathname(pathlib.Path("/etc/hosts"))
         self.assertIsInstance(ref, objc.FSRef)
 
@@ -77,10 +88,15 @@ class TestFSRef(TestCase):
             objc.FSRef.from_pathname(42)
 
         with self.assertRaisesRegex(UnicodeEncodeError, r".*surrogates not allowed"):
-            objc.FSRef.from_pathname("\uDC00")
+            objc.FSRef.from_pathname("\udc00")
 
         with self.assertRaisesRegex(OSError, r"MAC Error -\d+"):
             objc.FSRef.from_pathname("no-such-file.missing")
+
+        with self.assertRaisesRegex(
+            TypeError, "expected str, bytes or os.PathLike object, not int"
+        ):
+            objc.FSRef.from_pathname(42)
 
     def test_sizeof(self):
         ref = objc.FSRef.from_pathname("/etc/hosts")

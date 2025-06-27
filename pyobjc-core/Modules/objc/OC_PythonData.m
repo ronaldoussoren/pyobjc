@@ -11,9 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
-#ifndef USE_STATIC_ANALYZER
-    PyObjC_Assert(PyObject_CheckBuffer(v), nil);
-#endif
+    assert(PyObject_CheckBuffer(v));
 
     self = [super init];
     if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
@@ -29,37 +27,22 @@ NS_ASSUME_NONNULL_BEGIN
     return value;
 }
 
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
+// LCOV_EXCL_STOP
 
 + (BOOL)supportsSecureCoding
 {
     return NO;
-}
-
-- (oneway void)release
-{
-    /* See comment in OC_PythonUnicode */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        @try {
-            [super release];
-        } @catch (NSException* exc) {
-            PyObjC_LEAVE_GIL;
-            [exc raise];
-        }
-
-    PyObjC_END_WITH_GIL
 }
 
 - (void)dealloc
@@ -91,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
             PyErr_Clear();
             PyObjC_GIL_RETURN(0);
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
         rval = [temp length];
         [temp release];
 
@@ -109,13 +92,13 @@ NS_ASSUME_NONNULL_BEGIN
              * an OCReleasedBuffer.
              */
             PyObjC_GIL_RETURN(PyBytes_AS_STRING(value));
-        }
+        } // LCOV_EXCL_LINE
 
         OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value
                                                                        writable:NO];
         if (temp == NULL) {           // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-        }
+        } // LCOV_EXCL_LINE
 
         rval = [temp buffer];
         [temp autorelease];
@@ -133,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
                                                                        writable:YES];
         if (temp == NULL) {
             PyObjC_GIL_FORWARD_EXC();
-        }
+        } // LCOV_EXCL_LINE
 
         rval = [temp buffer];
         [temp autorelease];
@@ -183,7 +166,11 @@ NS_ASSUME_NONNULL_BEGIN
                     [coder encodeValueOfObjCType:@encode(int) at:&v];
                 }
 
-                PyObjC_encodeWithCoder(value, coder);
+                PyObjC_BEGIN_WITH_GIL
+                    if (PyObjC_encodeWithCoder(value, coder) == -1) {
+                        PyObjC_GIL_FORWARD_EXC();
+                    } // LCOV_EXCL_LINE
+                PyObjC_END_WITH_GIL
             }
         } @catch (NSException* exc) {
             PyObjC_LEAVE_GIL;
@@ -213,9 +200,23 @@ NS_ASSUME_NONNULL_BEGIN
         v = [coder decodeInt32ForKey:@"pytype"];
 
     } else {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+        /* Old deployment target, modern SDK */
+        if (@available(macOS 10.13, *)) {
+            [coder decodeValueOfObjCType:@encode(int) at:&v size:sizeof(v)];
+        } else {
+            CLANG_SUPPRESS
+            [coder decodeValueOfObjCType:@encode(int) at:&v];
+        }
+#elif PyObjC_BUILD_RELEASE >= 1013
+        /* Modern deployment target */
+        [coder decodeValueOfObjCType:@encode(int) at:&v size:sizeof(v)];
+#else
+        /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&v];
+#endif
     }
-    if (v == 1) {
+    if (v == 1) { // LCOV_BR_EXCL_LINE
         /* Backward compatibility:
          * PyObjC up to version 3 used this type to archive instances of bytes
          */
@@ -238,67 +239,34 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyBytes_FromStringAndSize(bytes, length);
             if (value == NULL) {
                 @try {
-                    [super dealloc]; /* XXX: Is this correct? */
+                    [super release];
                 } @catch (NSException* exc) {
                     PyObjC_LEAVE_GIL;
                     [exc raise];
                 }
                 PyObjC_GIL_FORWARD_EXC();
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL;
         return self;
         // LCOV_EXCL_STOP
 
     } else if (v == 2) {
-        if (PyObjC_Decoder != NULL) {
-            PyObjC_BEGIN_WITH_GIL
-                PyObject* cdr = id_to_python(coder);
-                PyObject* setValue;
-                PyObject* selfAsPython;
-                PyObject* v2;
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
+            if (decoded == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
 
-                if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
-                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
+            SET_FIELD(value, decoded);
 
-                selfAsPython = PyObjCObject_New(self, 0, YES);
-                if (selfAsPython == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            id actual = PyObjC_RegisterObjCProxy(value, self);
+            [self release];
+            self = actual;
 
-                v2 = PyObjC_CallDecoder(cdr, setValue);
-                Py_DECREF(cdr);
-                Py_DECREF(setValue);
-                Py_DECREF(selfAsPython);
+        PyObjC_END_WITH_GIL
 
-                if (v2 == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
-                SET_FIELD(value, v2);
-
-                id actual = PyObjC_RegisterObjCProxy(value, self);
-                if (actual != self) {
-                    [actual retain];
-                    [self release];
-                    self = actual;
-                }
-
-
-            PyObjC_END_WITH_GIL
-
-            return self;
-
-        } else {
-            // LCOV_EXCL_START
-            @throw
-                [NSException exceptionWithName:NSInvalidArgumentException
-                                        reason:@"decoding Python objects is not supported"
-                                      userInfo:nil];
-            // LCOV_EXCL_STOP
-        }
+        return self;
 
     } else if (v == 3) {
         return [super initWithCoder:coder];
@@ -308,7 +276,7 @@ NS_ASSUME_NONNULL_BEGIN
             value = PyByteArray_FromStringAndSize(NULL, 0);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
         return [super initWithCoder:coder];
@@ -336,18 +304,18 @@ NS_ASSUME_NONNULL_BEGIN
             PyErr_SetString(PyExc_ValueError, "Trying to decode a too long data object");
             PyObjC_GIL_FORWARD_EXC();
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
 
         if (value != NULL && PyByteArray_CheckExact(value)) {
             if (PyByteArray_Resize(value, length) < 0) { // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC();                // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
             memcpy(PyByteArray_AS_STRING(value), bytes, length);
         } else {
             value = PyBytes_FromStringAndSize(bytes, length);
             if (value == NULL) {          // LCOV_BR_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-            }
+            } // LCOV_EXCL_LINE
         }
     PyObjC_END_WITH_GIL
 

@@ -496,7 +496,7 @@ class TestVariousIteratorArgs(test.test_set.TestVariousIteratorArgs):
                         getattr(set("january"), methname)(test.test_set.N(data))
 
                     with self.assertRaisesRegex(
-                        ZeroDivisionError, "integer division or modulo by zero"
+                        ZeroDivisionError, "division.* by zero"
                     ):
                         getattr(set("january"), methname)(test.test_set.E(data))
 

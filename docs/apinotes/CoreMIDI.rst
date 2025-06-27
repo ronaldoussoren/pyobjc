@@ -1,3 +1,7 @@
+.. module:: CoreMIDI
+   :platform: macOS
+   :synopsis: Bindings for the CoreMIDI framework
+
 API Notes: CoreMIDI framework
 =============================
 

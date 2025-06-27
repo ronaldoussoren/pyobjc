@@ -99,6 +99,10 @@ def _setup():
         ("NSBindingSelectionMarker", b"init"),
         ("NSTextAttachmentViewProvider", b"init"),
         ("NSTextAttachmentViewProvider", b"new"),
+        ("NSWritingToolsCoordinatorAnimationParameters", b"init"),
+        ("NSWritingToolsCoordinatorAnimationParameters", b"new"),
+        ("NSWritingToolsCoordinatorContext", b"init"),
+        ("NSWritingToolsCoordinatorContext", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

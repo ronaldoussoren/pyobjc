@@ -38,7 +38,8 @@ static PyObject* _Nullable file_new(PyTypeObject* type __attribute__((__unused__
         return PyErr_SetFromErrno(PyExc_OSError);
     }
 
-    return FILE_create(fp);
+    CLANG_SUPPRESS /* leaking 'fopen' result */
+        return FILE_create(fp);
 }
 
 static void
@@ -59,30 +60,33 @@ file_dealloc(PyObject* self)
 static PyObject* _Nullable file_close(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
+    FILE*               fp;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
+    fp       = self->fp;
+    self->fp = NULL;
+    Py_END_CRITICAL_SECTION();
 
-    if (self->fp == NULL) {
+    if (fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Closing closed file");
         return NULL;
     }
 
-    if (fclose(self->fp) < 0) {
+    if (fclose(fp) < 0) {
+        /* This is very unlikely, restore previous value */
+        Py_BEGIN_CRITICAL_SECTION(_self);
+        self->fp = fp;
+        Py_END_CRITICAL_SECTION();
         return PyErr_SetFromErrno(PyExc_OSError);
     }
 
-    self->fp = NULL;
-
-    Py_END_CRITICAL_SECTION();
-
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static PyObject* _Nullable file_flush(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
-    PyObject* retval;
+    PyObject*           retval;
     int                 result;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
@@ -93,7 +97,7 @@ static PyObject* _Nullable file_flush(PyObject* _self)
     } else {
         result = fflush(self->fp);
         if (result != 0) {
-            retval =  PyErr_SetFromErrno(PyExc_OSError);
+            retval = PyErr_SetFromErrno(PyExc_OSError);
         } else {
             Py_INCREF(Py_None);
             retval = Py_None;
@@ -107,48 +111,58 @@ static PyObject* _Nullable file_errors(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 result;
-    PyObject* retval;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
 
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        retval = NULL;
+        result = -1;
     } else {
-        result = ferror(self->fp);
-        retval =  PyBool_FromLong(result);
+        result = ferror(self->fp) != 0;
     }
 
     Py_END_CRITICAL_SECTION();
 
-    return retval;
+    switch (result) {
+    case -1:
+        return NULL;
+    case 0:
+        Py_RETURN_FALSE;
+    default:
+        Py_RETURN_TRUE;
+    }
 }
 
 static PyObject* _Nullable file_at_eof(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 result;
-    PyObject* retval;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
 
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        retval =  NULL;
+        result = -1;
     } else {
-        result = feof(self->fp);
-        retval = PyBool_FromLong(result);
+        result = feof(self->fp) != 0;
     }
     Py_END_CRITICAL_SECTION();
 
-    return retval;
+    switch (result) {
+    case -1:
+        return NULL;
+    case 0:
+        Py_RETURN_FALSE;
+    default:
+        Py_RETURN_TRUE;
+    }
 }
 
 static PyObject* _Nullable file_tell(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     long                offset;
-    PyObject* retval;
+    PyObject*           retval;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
@@ -174,13 +188,15 @@ static PyObject* _Nullable file_seek(PyObject* _self, PyObject* args, PyObject* 
     Py_ssize_t          offset;
     int                 whence;
     long                result;
-    PyObject* retval;
+    PyObject*           retval;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "ni", keywords, &offset, &whence)) {
+        return NULL;
+    }
 
     Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        retval = NULL;
-    } else if (!PyArg_ParseTupleAndKeywords(args, kwds, "ni", keywords, &offset, &whence)) {
         retval = NULL;
     } else {
         result = fseek(self->fp, offset, whence);
@@ -200,7 +216,7 @@ static PyObject* _Nullable file_fileno(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 fd;
-    PyObject* retval;
+    PyObject*           retval;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
@@ -224,7 +240,7 @@ static PyObject* _Nullable file_write(PyObject* _self, PyObject* args, PyObject*
     void*               buffer;
     Py_ssize_t          buffer_size;
     size_t              result;
-    PyObject* retval;
+    PyObject*           retval;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "y#", keywords, &buffer, &buffer_size)) {
         return NULL;
@@ -233,10 +249,10 @@ static PyObject* _Nullable file_write(PyObject* _self, PyObject* args, PyObject*
     Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
-        retval =  NULL;
+        retval = NULL;
     } else {
         result = fwrite(buffer, 1, buffer_size, self->fp);
-        retval =  PyLong_FromSize_t(result);
+        retval = PyLong_FromSize_t(result);
     }
     Py_END_CRITICAL_SECTION();
     return retval;
@@ -247,11 +263,12 @@ static PyObject* _Nullable file_readline(PyObject* _self)
     struct file_object* self = (struct file_object*)_self;
     char                buffer[2048];
     char*               result;
-    PyObject* retval;
+    PyObject*           retval;
 
     Py_BEGIN_CRITICAL_SECTION(_self);
     if (self->fp == NULL) {
         PyErr_SetString(PyExc_ValueError, "Using closed file");
+        Py_EXIT_CRITICAL_SECTION();
         return NULL;
     } else {
         result = fgets(buffer, 2048, self->fp);
@@ -362,14 +379,16 @@ static PyType_Spec file_spec = {
     .slots = file_slots,
 };
 
-PyObject*
-FILE_create(FILE* fp)
+PyObject* _Nullable FILE_create(FILE* fp)
 {
     struct file_object* self;
 
-    PyObjC_Assert(fp != NULL, NULL);
+    assert(fp != NULL);
 
-    self     = PyObject_NEW(struct file_object, (PyTypeObject*)FILE_Type);
+    self = PyObject_NEW(struct file_object, (PyTypeObject*)FILE_Type);
+    if (self == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
+    }
     self->fp = fp;
     return (PyObject*)self;
 }

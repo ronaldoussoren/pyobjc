@@ -6,10 +6,13 @@
  * The definitions are only used when running the static analyzer, to
  * avoid unexpected incompatibilities when performing a regular build.
  *
+ * This is used for 3 things:
+ * 1) Add nullability information for pointer values
+ * 2) Make sure return values are used
+ * 3) Make some APIs unavailable (most APIs returning borrowed references)
+ *
  * XXX: 'USE_STATIC_ANALYZER' is used because I haven't found another way
  *      to detect that the analyzer is used.
- * XXX: The definitions in this file have been added manually, there should
- *      at least be a test that warns if the file is incomplete.
  */
 #ifdef USE_STATIC_ANALYZER
 
@@ -23,10 +26,16 @@ PyAPI_FUNC(int) PyArg_Parse(PyObject*, const char*, ...)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyArg_ParseTuple(PyObject* _Nullable, const char*, ...)
     __attribute__((warn_unused_result));
+#if PY_VERSION_HEX >= 0x030d0000
+PyAPI_FUNC(int) PyArg_ParseTupleAndKeywords(PyObject* _Nullable, PyObject* _Nullable,
+                                            const char* _Nullable,
+                                            char* _Nullable const* _Nullable, ...)
+    __attribute__((warn_unused_result));
+#else
 PyAPI_FUNC(int)
     PyArg_ParseTupleAndKeywords(PyObject* _Nullable, PyObject* _Nullable,
-                                const char* _Nullable, char* _Nullable* _Nullable, ...)
-        __attribute__((warn_unused_result));
+                                const char* _Nullable, char* _Nullable* _Nullable, ...);
+#endif
 
 PyAPI_FUNC(PyObject* _Nullable) PyBool_FromLong(long) __attribute__((warn_unused_result));
 PyAPI_FUNC(void) PyBuffer_Release(Py_buffer* view);
@@ -42,6 +51,7 @@ PyAPI_FUNC(int) PyByteArray_Resize(PyObject*, Py_ssize_t)
 PyAPI_FUNC(Py_ssize_t) PyByteArray_Size(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(char* _Nullable) PyBytes_AsString(PyObject*)
     __attribute__((warn_unused_result));
+PyAPI_FUNC(Py_ssize_t) PyBytes_Size(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PyBytes_AsStringAndSize(PyObject*   obj, char* _Nullable* _Nonnull buffer,
                                         Py_ssize_t* _Nullablelength)
     __attribute__((warn_unused_result));
@@ -135,9 +145,9 @@ PyAPI_FUNC(PyObject* _Nullable) PyFunction_GetCode(PyObject*)
 PyAPI_FUNC(PyGILState_STATE) PyGILState_Ensure(void) __attribute__((warn_unused_result));
 PyAPI_FUNC(void) PyGILState_Release(PyGILState_STATE);
 PyAPI_FUNC(PyObject* _Nullable) PyImport_Import(PyObject* name)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(PyObject* _Nullable) PyImport_ImportModule(const char* name)
-    __attribute__((warn_unused_result));
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(int) PyIndex_Check(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyIter_Next(PyObject*)
     __attribute__((warn_unused_result));
@@ -146,13 +156,14 @@ PyAPI_FUNC(PyObject* _Nullable) PyList_AsTuple(PyObject*)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyList_GetItem(PyObject*, Py_ssize_t)
     __attribute__((warn_unused_result)) __attribute__((unavailable));
-PyAPI_FUNC(PyObject* _Nullable) PyList_GetItemRef(PyObject*, Py_ssize_t)
-    __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyList_New(Py_ssize_t size)
     __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyDict_SetDefault(PyObject*, PyObject*, PyObject*)
+    __attribute__((warn_unused_result)) __attribute__((unavailable));
 PyAPI_FUNC(Py_ssize_t) PyList_Size(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(double) PyLong_AsDouble(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(long) PyLong_AsLong(PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(size_t) PyLong_AsSize_t(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(long long) PyLong_AsLongLong(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(Py_ssize_t) PyLong_AsSsize_t(PyObject*) __attribute__((warn_unused_result));
 PyAPI_FUNC(unsigned long) PyLong_AsUnsignedLong(PyObject*)
@@ -395,7 +406,116 @@ PyAPI_FUNC(Py_ssize_t) PySlice_AdjustIndices(Py_ssize_t length, Py_ssize_t* star
                                              Py_ssize_t* stop, Py_ssize_t step)
     __attribute__((warn_unused_result));
 
-PyAPI_FUNC(int) PyDict_GetItemRef(PyObject *p, PyObject *key, PyObject * _Nonnull* _Nullable result) __attribute__((warn_unused_result));
+PyAPI_FUNC(void* _Nullable) PyCapsule_Import(const char*, int)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyCode_GetCode(PyCodeObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyUnicode_New(Py_ssize_t, Py_UCS4)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyUnicode_WriteChar(PyObject*, Py_ssize_t, Py_UCS4)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyDict_Merge(PyObject*, PyObject*, int)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyErr_GetRaisedException(void)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(void) PyErr_SetRaisedException(PyObject*);
+PyAPI_FUNC(int) PyErr_WarnEx(PyObject*, const char*, Py_ssize_t)
+    __attribute__((warn_unused_result));
+
+PyAPI_FUNC(PyObject* _Nullable) PyUnicode_InternFromString(const char*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(const char* _Nullable)
+    PyUnicode_AsUTF8AndSize(PyObject*, Py_ssize_t* _Nullable)
+        __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyUnicode_AsUTF16String(PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyUnicode_AsASCIIString(PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyType_Ready(PyTypeObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyType_GetDict(PyTypeObject*)
+    __attribute__((warn_unused_result));
+
+PyAPI_FUNC(PyObject* _Nullable) PyTuple_Pack(Py_ssize_t n, ...)
+    __attribute__((warn_unused_result)); /* clang doesn't have an attribute that can be
+                                            used to validate the argument count */
+
+PyAPI_FUNC(void) PySys_WriteStderr(const char*, ...)
+    __attribute__((format(printf, 1, 2)));
+PyAPI_FUNC(PyObject* _Nullable) PySlice_New(PyObject*, PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
+
+PyAPI_FUNC(PyObject* _Nullable)
+    PyObject_Vectorcall(PyObject*, PyObject* const _Nullable* _Nonnull, size_t nargsf,
+                        PyObject* _Nullable) __attribute__((warn_unused_result));
+
+PyAPI_FUNC(Py_ssize_t) PyObject_Hash(PyObject*) __attribute__((warn_unused_result));
+
+PyAPI_FUNC(int) PyObject_HasAttrString(PyObject*, const char*)
+    __attribute__((warn_unused_result))
+#if PY_VERSION_HEX >= 0x030d0000
+    __attribute__((unavailable))
+#endif
+    ;
+
+PyAPI_FUNC(int) PyObject_HasAttr(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
+
+PyAPI_FUNC(PyObject*) PyObject_GetIter(PyObject*) __attribute__((warn_unused_result));
+
+PyAPI_FUNC(PyObject* _Nullable) PyObject_GetItem(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyObject_GetAttrString(PyObject*, const char*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyObject_GetAttr(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
+
+PyAPI_FUNC(void) PyObject_Del(void*);
+PyAPI_FUNC(void) PyMem_Free(void*);
+PyAPI_FUNC(void) PyObject_ClearWeakRefs(PyObject*);
+PyAPI_FUNC(int) PyObject_CheckBuffer(PyObject*) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyObject_CallOneArg(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyObject_CallObject(PyObject*, PyObject* _Nullable)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyOS_FSPath(PyObject*)
+    __attribute__((warn_unused_result));
+
+PyAPI_FUNC(PyObject* _Nullable) PyModuleDef_Init(PyModuleDef*)
+    __attribute__((warn_unused_result));
+
+PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromMemory(char*, Py_ssize_t, int)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyList_SetItem(PyObject*, Py_ssize_t, PyObject*)
+    __attribute__((warn_unused_result));
+
+PyAPI_FUNC(PyHash_FuncDef*) PyHash_GetFuncDef(void) __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyFloat_FromString(PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyException_SetTraceback(PyObject*, PyObject*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(void) PyException_SetCause(PyObject*, PyObject*);
+
+#if PY_VERSION_HEX >= 0x030d0000
+
+PyAPI_FUNC(PyObject* _Nullable) PyList_GetItemRef(PyObject*, Py_ssize_t)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int)
+    PyDict_GetItemRef(PyObject* p, PyObject* key, PyObject* _Nonnull* _Nullable result)
+        __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyObject_HasAttrStringWithError(PyObject*, const char*)
+    __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PyDict_SetDefaultRef(PyObject* p, PyObject* key, PyObject* default_value,
+                                     PyObject* _Nonnull* _Nullable result)
+    __attribute__((warn_unused_result));
+#endif
+
+static inline Py_ALWAYS_INLINE void(Py_INCREF)(PyObject* _Nonnull op);
+
+#if PY_VERSION_HEX >= 0x030e0000
+PyAPI_FUNC(int) PyUnstable_Object_IsUniquelyReferenced(PyObject*);
+PyAPI_FUNC(void) PyUnstable_EnableTryIncRef(PyObject* obj);
+PyAPI_FUNC(int) PyUnstable_TryIncRef(PyObject* obj);
+#endif
 
 NS_ASSUME_NONNULL_END
 #endif /* USE_STATIC_ANALYZER */

@@ -22,59 +22,29 @@ NS_ASSUME_NONNULL_BEGIN
 - (PyObject*)__pyobjc_PythonObject__
 {
     /* XXX: Can value ever be NULL? */
-    if (value == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
+    if (value == NULL) { // LCOV_BR_EXCL_LINE
+        Py_RETURN_NONE;  // LCOV_EXCL_LINE
     }
     Py_INCREF(value);
     return value;
 }
 
+// LCOV_EXCL_START
+/* PythonTransient is used in the implementation of
+ * methods written in Python, OC_Python* classes
+ * don't have such methods.
+ */
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
+// LCOV_EXCL_STOP
 
 + (BOOL)supportsSecureCoding
 {
     return NO;
-}
-
-- (oneway void)release
-{
-    /* There is small race condition when an object is almost deallocated
-     * in one thread and fetched from the registration mapping in another
-     * thread. If we don't get the GIL this object might get a -dealloc
-     * message just as the other thread is fetching us from the mapping.
-     * That's why we need to grab the GIL here (getting it in dealloc is
-     * too late, we'd already be dead).
-     */
-    /* FIXME: Should switch to __weak on OSX 10.7 or later, that should
-     * fix this issue without a performance penalty.
-     */
-    /*
-     * There is also a race condition on application shutdown between
-     * the call to Py_Finalize (shutting down the interpreter) and the
-     * cleanup performed by Cocoa, possible on other threads.
-     */
-    if (unlikely(!Py_IsInitialized())) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        [super release];
-        return;
-        // LCOV_EXCL_STOP
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        @try {
-            [super release];
-
-        } @catch (NSObject* exc) {
-            PyObjC_LEAVE_GIL;
-            @throw;
-        }
-    PyObjC_END_WITH_GIL
 }
 
 - (void)dealloc
@@ -115,11 +85,11 @@ NS_ASSUME_NONNULL_BEGIN
             PyUnicode_GET_LENGTH(value);
         PyObjC_END_WITH_GIL
         // LCOV_EXCL_STOP
-    }
+    } // LCOV_EXCL_LINE
 #endif
 
     if (!realObject) {
-        switch (PyUnicode_KIND(value)) {
+        switch (PyUnicode_KIND(value)) { // LCOV_BR_EXCL_LINE
         case PyUnicode_1BYTE_KIND:
             if (PyUnicode_IS_ASCII(value)) {
                 realObject = [[NSString alloc]
@@ -153,9 +123,8 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_BEGIN_WITH_GIL
                 PyObject* utf8 = PyUnicode_AsUTF8String(value);
                 if (!utf8) {
-                    NSLog(@"failed to encode unicode string to byte string");
-                    PyErr_Clear();
-                } else {
+                    PyObjC_GIL_FORWARD_EXC();
+                } else { // LCOV_EXCL_START
                     realObject =
                         [[NSString alloc] initWithBytes:PyBytes_AS_STRING(utf8)
                                                  length:(NSUInteger)PyBytes_GET_SIZE(utf8)
@@ -197,6 +166,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
     int byteorder = 0;
     /* XXX: Call super? */
+    self = [super init];
+    if (self == nil) { // LCOV_BR_EXCL_LINE
+        return nil;    // LCOV_EXCL_LINE
+    }
+
     PyObjC_BEGIN_WITH_GIL
         /* Decode as a UTF-16 string in native byteorder */
         value =
@@ -234,9 +208,9 @@ NS_ASSUME_NONNULL_BEGIN
     if (encoding == NSUTF8StringEncoding) {
         PyObjC_BEGIN_WITH_GIL
             value = PyUnicode_DecodeUTF8(bytes, length, NULL);
-            if (value == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
+            if (value == NULL) {          // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
     }
@@ -279,7 +253,7 @@ NS_ASSUME_NONNULL_BEGIN
             //  LCOV_EXCL_START
             PyObjC_GIL_FORWARD_EXC();
             //  LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL;
     return self;
@@ -304,7 +278,21 @@ NS_ASSUME_NONNULL_BEGIN
     if ([coder allowsKeyedCoding]) {
         ver = [coder decodeInt32ForKey:@"pytype"];
     } else {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
+        /* Old deployment target, modern SDK */
+        if (@available(macOS 10.13, *)) {
+            [coder decodeValueOfObjCType:@encode(int) at:&ver size:sizeof(ver)];
+        } else {
+            CLANG_SUPPRESS
+            [coder decodeValueOfObjCType:@encode(int) at:&ver];
+        }
+#elif PyObjC_BUILD_RELEASE >= 1013
+        /* Modern deployment target */
+        [coder decodeValueOfObjCType:@encode(int) at:&ver size:sizeof(ver)];
+#else
+        /* Deployment target is ancient and SDK is old */
         [coder decodeValueOfObjCType:@encode(int) at:&ver];
+#endif
     }
     if (ver == 1) {
         /* Version 1: plain unicode string (not subclass).
@@ -312,60 +300,29 @@ NS_ASSUME_NONNULL_BEGIN
          */
         self = [super initWithCoder:coder];
         return self;
-    } else if (ver == 2) {
+    } else if (ver == 2) { // LCOV_BR_EXCL_LINE
 
-        if (PyObjC_Decoder != NULL && PyObjC_Decoder != Py_None) {
-            PyObjC_BEGIN_WITH_GIL
-                PyObject* setValue;
-                PyObject* selfAsPython;
-                PyObject* v;
+        PyObjC_BEGIN_WITH_GIL
+            PyObject* decoder = PyObjC_decodeWithCoder(coder, self);
+            if (decoder == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
 
-                PyObject* cdr = id_to_python(coder);
-                if (cdr == NULL) {            // LCOV_BR_EXCL_LINE
-                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
+            SET_FIELD(value, decoder);
 
-                selfAsPython = PyObjCObject_New(self, 0, YES);
-                if (selfAsPython == NULL) {   // LCOV_BR_EXCL_LINE
-                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-                }
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            id actual = PyObjC_RegisterObjCProxy(value, self);
+            [self release];
+            self = actual;
 
-                v = PyObjC_CallDecoder(cdr, setValue);
-                Py_DECREF(cdr);
-                Py_DECREF(setValue);
-                Py_DECREF(selfAsPython);
+        PyObjC_END_WITH_GIL
 
-                if (v == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-
-                SET_FIELD(value, v);
-
-                id actual = PyObjC_RegisterObjCProxy(value, self);
-                if (actual != self) {
-                    [actual retain];
-                    [self release];
-                    self = actual;
-                }
-
-            PyObjC_END_WITH_GIL
-
-            return self;
-
-        } else { // LCOV_BR_EXCL_LINE
-            // LOCV_EXCL_START
-            @throw
-                [NSException exceptionWithName:NSInvalidArgumentException
-                                        reason:@"decoding Python objects is not supported"
-                                      userInfo:nil];
-            return nil;
-            // LOCV_EXCL_STOP
-        }
+        return self;
     } else {
+        // LCOV_EXCL_START
         @throw [NSException exceptionWithName:NSInvalidArgumentException
                                        reason:@"decoding Python objects is not supported"
                                      userInfo:nil];
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -389,18 +346,22 @@ NS_ASSUME_NONNULL_BEGIN
             [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
 
-        PyObjC_encodeWithCoder(value, coder);
+        PyObjC_BEGIN_WITH_GIL
+            if (PyObjC_encodeWithCoder(value, coder) == -1) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
+        PyObjC_END_WITH_GIL
     }
 }
 
 - (NSObject* _Nullable)replacementObjectForArchiver:
-    (NSArchiver*)__attribute__((__unused__))archiver
+    (NSArchiver*)__attribute__((__unused__)) archiver
 {
     return self;
 }
 
 - (NSObject* _Nullable)replacementObjectForKeyedArchiver:
-    (NSKeyedArchiver*)__attribute__((__unused__))archiver
+    (NSKeyedArchiver*)__attribute__((__unused__)) archiver
 {
     return self;
 }
@@ -412,7 +373,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSObject* _Nullable)replacementObjectForPortCoder:
-    (NSPortCoder*)__attribute__((__unused__))archiver
+    (NSPortCoder*)__attribute__((__unused__)) archiver
 {
     return self;
 }

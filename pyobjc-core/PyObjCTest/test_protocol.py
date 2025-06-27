@@ -716,6 +716,15 @@ class TestFormalProtocols2(TestCase):
     #
 
     def testInheritedProtocol(self):
+        # try:
+        #    cls = objc.lookUpClass("MyClassImplementingNSObject")
+        # except objc.error:
+        #    pass
+        # else:
+        #    import inspect
+        #    print("XXX already defined", inspect.getsourcefile(cls), isnpect.getsourcelines(cls)[-1])
+        #    pass
+
         class MyClassImplementingNSObject(
             NSObject, protocols=[objc.protocolNamed("OC_TestProtocol2")]
         ):

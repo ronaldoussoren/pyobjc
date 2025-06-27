@@ -422,6 +422,14 @@ def nsmutabledata_clear(self):
     self.setData_(b"")
 
 
+def nsmutabledata_resize(self, size):
+    cursize = self.length()
+    if cursize < size:
+        self.increaseLengthBy_(size - cursize)
+    elif cursize > size:
+        self.replaceBytesInRange_withBytes_length_((size, cursize - size), b"", 0)
+
+
 addConvenienceForClass(
     "NSMutableData",
     (
@@ -436,5 +444,6 @@ addConvenienceForClass(
         ("clear", nsmutabledata_clear),
         ("pop", nsmutabledata_pop),
         ("insert", nsmutabledata_insert),
+        ("resize", nsmutabledata_resize),
     ),
 )

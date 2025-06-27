@@ -9,38 +9,44 @@ typedef struct {
     PyObjCMethodSignature* signature;
     SEL                    selector;
     int                    flags;
-#if PY_VERSION_HEX >= 0x03090000
-    vectorcallfunc vectorcall;
-#endif
+    vectorcallfunc         vectorcall;
     ffi_cif* _Nullable cif;
 } PyObjCIMPObject;
 
 ffi_cif* _Nullable PyObjCIMP_GetCIF(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
+    assert(PyObjCIMP_Check(self));
 
-    return ((PyObjCIMPObject*)self)->cif;
+    ffi_cif* result;
+    Py_BEGIN_CRITICAL_SECTION(self);
+    result = ((PyObjCIMPObject*)self)->cif;
+    Py_END_CRITICAL_SECTION();
+
+    return result;
 }
 
 int
 PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), -1);
+    assert(PyObjCIMP_Check(self));
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     ((PyObjCIMPObject*)self)->cif = cif;
+    Py_END_CRITICAL_SECTION();
+
     return 0;
 }
 
 SEL _Nullable PyObjCIMP_GetSelector(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
+    assert(PyObjCIMP_Check(self));
 
     return ((PyObjCIMPObject*)self)->selector;
 }
 
 IMP _Nullable PyObjCIMP_GetIMP(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
+    assert(PyObjCIMP_Check(self));
 
     return ((PyObjCIMPObject*)self)->imp;
 }
@@ -48,15 +54,16 @@ IMP _Nullable PyObjCIMP_GetIMP(PyObject* self)
 int
 PyObjCIMP_GetFlags(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), -1);
+    assert(PyObjCIMP_Check(self));
 
     return ((PyObjCIMPObject*)self)->flags;
 }
 
 PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)
 {
-    PyObjC_Assert(PyObjCIMP_Check(self), NULL);
+    assert(PyObjCIMP_Check(self));
 
+    Py_INCREF(((PyObjCIMPObject*)self)->signature);
     return ((PyObjCIMPObject*)self)->signature;
 }
 
@@ -78,9 +85,6 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     PyObject*        pyself;
-    PyObjC_CallFunc  execute = NULL;
-    PyObject*        res;
-    PyObject*        pyres;
 
     if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
         return NULL;
@@ -97,54 +101,23 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
         PyErr_SetString(PyExc_TypeError, "Missing argument: self");
         return NULL;
     }
+    assert(args != NULL);
 
     pyself = args[0];
-    PyObjC_Assert(pyself != NULL, NULL);
+    assert(pyself != NULL);
+    assert(self->callfunc != NULL);
 
-    execute = self->callfunc;
-
-    pyres = res = execute((PyObject*)self, pyself, args + 1, nargsf - 1);
-
-    if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
-        && PyTuple_GET_ITEM(pyres, 0) == pyself) {
-        pyres = pyself;
-    }
-
-    if (PyObjCObject_Check(pyself)
-        && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
-        if (pyself != pyres && !PyErr_Occurred()) {
-            PyObjCObject_ClearObject(pyself);
-        }
-    }
-
-    if (pyres && PyObjCObject_Check(res)) {
-        if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
-
-        } else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags &= ~PyObjCObject_kUNINITIALIZED;
-            if (pyself && pyself != pyres && PyObjCObject_Check(pyself)
-                && !PyErr_Occurred()) {
-                PyObjCObject_ClearObject(pyself);
-            }
-        }
-    }
-
-    return res;
+    return self->callfunc((PyObject*)self, pyself, args + 1, nargsf - 1);
 }
 
-#if PY_VERSION_HEX >= 0x03090000
 static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
                                                  PyObject* const* _Nullable args,
                                                  size_t nargsf,
                                                  PyObject* _Nullable kwnames)
 {
-    PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    PyObject*        pyself;
-    PyObject*        res;
-    PyObject*        pyres;
+    PyObject* pyself;
 
-    PyObjC_Assert(self->signature->shortcut_signature, NULL);
+    assert(((PyObjCIMPObject*)_self)->signature->shortcut_signature);
 
     if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
         return NULL;
@@ -162,51 +135,13 @@ static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
         return NULL;
     }
 
+    assert(args != NULL);
+
     pyself = args[0];
-    PyObjC_Assert(pyself != NULL, NULL);
+    assert(pyself != NULL);
 
-    pyres = res = PyObjCFFI_Caller_Simple(_self, pyself, args + 1, nargsf - 1);
-
-    if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
-        && PyTuple_GET_ITEM(pyres, 0) == pyself) {
-        pyres = pyself;
-    }
-
-    if (PyObjCObject_Check(pyself)
-        && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
-        if (pyself != pyres && !PyErr_Occurred()) {
-            PyObjCObject_ClearObject(pyself);
-        }
-    }
-
-    if (pyres && PyObjCObject_Check(res)) {
-        if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
-
-        } else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags &= ~PyObjCObject_kUNINITIALIZED;
-            if (pyself && pyself != pyres && PyObjCObject_Check(pyself)
-                && !PyErr_Occurred()) {
-                PyObjCObject_ClearObject(pyself);
-            }
-        }
-    }
-
-    return res;
+    return PyObjCFFI_Caller_Simple(_self, pyself, args + 1, nargsf - 1);
 }
-#endif
-
-#if PY_VERSION_HEX < 0x03090000
-static PyObject* _Nullable imp_call(PyObject* _self, PyObject* _Nullable args,
-                                    PyObject* _Nullable kwds)
-{
-    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
-        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
-        return NULL;
-    }
-    return imp_vectorcall(_self, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
-}
-#endif
 
 static PyObject* _Nullable imp_repr(PyObject* _self)
 {
@@ -235,8 +170,8 @@ static PyObject* _Nullable imp_signature(PyObject* _self,
                                          void*     closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    PyObjC_Assert(self->signature != NULL, NULL);
-    PyObjC_Assert(self->signature->signature != NULL, NULL);
+    assert(self->signature != NULL);
+    assert(self->signature->signature != NULL);
     return PyBytes_FromString(self->signature->signature);
 }
 
@@ -255,10 +190,12 @@ static PyObject*
 imp_class_method(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    PyObject*        result =
-        (0 != (self->flags & PyObjCSelector_kCLASS_METHOD)) ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+
+    if ((self->flags & PyObjCSelector_kCLASS_METHOD) != 0) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 PyDoc_STRVAR(
@@ -266,14 +203,14 @@ PyDoc_STRVAR(
     "True if this is method returns a a freshly allocated object (uninitialized)\n"
     "\n"
     "NOTE: This field is used by the implementation.");
-static PyObject*
-imp_is_alloc(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable imp_is_alloc(PyObject* self __attribute__((__unused__)),
+                                        void*     closure __attribute__((__unused__)))
 {
-    PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    PyObject*        result =
-        (0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED)) ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    if (PyErr_Warn(PyObjCExc_DeprecationWarning, "isAlloc is always false") < 0) {
+        return NULL;
+    }
+
+    Py_RETURN_FALSE;
 }
 
 static PyGetSetDef imp_getset[] = {{
@@ -303,7 +240,7 @@ static PyGetSetDef imp_getset[] = {{
                                    },
                                    {
                                        .name = "__signature__",
-                                       .get  = PyObjC_callable_signature_get,
+                                       .get  = PyObjC_GetCallableSignature,
                                        .doc  = "inspect.Signature for an IMP",
                                    },
                                    {
@@ -331,14 +268,6 @@ static PyObject* _Nullable imp_metadata(PyObject* self)
         return NULL;       // LCOV_EXCL_LINE
     }
 
-    if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-        r = PyDict_SetItem(result, PyObjCNM_return_unitialized_object, Py_True);
-        if (r == -1) {         // LCOV_BR_EXCL_LINE
-            Py_DECREF(result); // LCOV_EXCL_LINE
-            return NULL;       // LCOV_EXCL_LINE
-        }
-    }
-
     return result;
 }
 
@@ -352,7 +281,6 @@ static PyMethodDef imp_methods[] = {{
                                         .ml_name = NULL /* SENTINEL */
                                     }};
 
-#if PY_VERSION_HEX >= 0x03090000
 static PyMemberDef imp_members[] = {{
                                         .name   = "__vectorcalloffset__",
                                         .type   = T_PYSSIZET,
@@ -363,20 +291,15 @@ static PyMemberDef imp_members[] = {{
                                         .name = NULL /* SENTINEL */
                                     }};
 
-#endif
-
 static PyType_Slot imp_slots[] = {
     {.slot = Py_tp_repr, .pfunc = (void*)&imp_repr},
     {.slot = Py_tp_dealloc, .pfunc = (void*)&imp_dealloc},
     {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
     {.slot = Py_tp_getset, .pfunc = (void*)&imp_getset},
     {.slot = Py_tp_methods, .pfunc = (void*)&imp_methods},
-#if PY_VERSION_HEX >= 0x03090000
     {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
     {.slot = Py_tp_members, .pfunc = (void*)&imp_members},
-#else
-    {.slot = Py_tp_call, .pfunc = (void*)&imp_call},
-#endif
+
 #if PY_VERSION_HEX < 0x030a0000
     {.slot = Py_tp_new, .pfunc = (void*)&imp_new},
 #endif
@@ -391,10 +314,8 @@ static PyType_Spec imp_spec = {
 #if PY_VERSION_HEX >= 0x030a0000
     .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION | Py_TPFLAGS_HAVE_VECTORCALL,
-#elif PY_VERSION_HEX >= 0x03090000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
 #else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
 #endif
     .slots = imp_slots,
 };
@@ -406,8 +327,8 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
 {
     PyObjCIMPObject* result;
 
-    PyObjC_Assert(callfunc != NULL, NULL);
-    PyObjC_Assert(signature != NULL, NULL);
+    assert(callfunc != NULL);
+    assert(signature != NULL);
 
     result = PyObject_New(PyObjCIMPObject, (PyTypeObject*)PyObjCIMP_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
@@ -422,14 +343,13 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
 
     result->flags = flags;
 
-#if PY_VERSION_HEX >= 0x03090000
-    if (signature && signature->shortcut_signature && (callfunc == PyObjCFFI_Caller)) {
-        PyObjC_Assert(signature->shortcut_signature, NULL);
+    if (signature && signature->shortcut_signature
+        && (callfunc == PyObjCFFI_Caller)) { // LCOV_BR_EXCL_LINE
+        assert(signature->shortcut_signature);
         result->vectorcall = imp_vectorcall_simple;
     } else {
         result->vectorcall = imp_vectorcall;
     }
-#endif
     return (PyObject*)result;
 }
 
@@ -446,37 +366,48 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
+
+    assert(args != NULL);
+
     sel = args[0];
 
     if (depythonify_c_value(@encode(SEL), sel, &selector) == -1) {
         return NULL;
     }
 
-    if (!PyObjCClass_Check(self)) {
+    if (!PyObjCClass_Check(self)) { // LCOV_BR_EXCL_LINE
+        /* AFAIK it is not possible to get an unbound objc.selector
+         * for a class method.
+         */
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_TypeError,
                      "Expecting instance of 'objc.objc_class' as 'self', "
                      "got '%s'",
                      Py_TYPE(self)->tp_name);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            retval = ((IMP(*)(Class, SEL, SEL))objc_msgSend)(
-                PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method), selector);
+            retval = ((IMP (*)(Class, SEL, SEL))objc_msgSend)( // LCOV_BR_EXCL_LINE
+                PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method),
+                selector); // LCOV_BR_EXCL_LINE
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
-            retval = NULL;
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
+            retval = NULL;                      // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (retval == NULL) {
+    if (retval == NULL) { // LCOV_BR_EXCL_LINE
+        /* AFAIK the method in practice never returns NULL */
+        // LCOV_EXCL_START
         if (PyErr_Occurred()) {
             return NULL;
         }
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
+        // LCOV_EXCL_STOP
     }
 
     attr = PyObjCClass_FindSelector(self, selector, NO);
@@ -505,9 +436,15 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         }
     }
 
+    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
+    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
+    }
+
     res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
-                        PyObjCSelector_GetMetadata(attr), PyObjCSelector_GetFlags(attr));
+                        methinfo, PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
+    Py_DECREF(methinfo);
     return res;
 }
 
@@ -524,6 +461,9 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
+
+    assert(args != NULL);
+
     sel = args[0];
 
     if (depythonify_c_value(@encode(SEL), sel, &selector) == -1) {
@@ -531,30 +471,33 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
     }
 
     if (PyObjCClass_Check(self)) {
-        super.receiver = PyObjCClass_GetClass(self);
+        super.receiver = (Class _Nonnull)PyObjCClass_GetClass(self);
 
     } else {
         super.receiver = PyObjCObject_GetObject(self);
     }
-    super.super_class = object_getClass(super.receiver);
+    super.super_class = (Class _Nonnull)object_getClass(super.receiver);
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            retval = ((IMP(*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(
-                &super, PyObjCSelector_GetSelector(method), selector);
+            retval = ((IMP (*)(struct objc_super*, SEL,
+                               SEL))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
+                &super, PyObjCSelector_GetSelector(method),
+                selector); // LCOV_BR_EXCL_LINE
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
-            retval = NULL;
+        } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
+            retval = NULL;                      // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (retval == NULL) {
+    if (retval == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         if (PyErr_Occurred()) {
             return NULL;
         }
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
+        // LCOV_EXCL_STOP
     }
 
     if (PyObjCClass_Check(self)) {
@@ -587,9 +530,18 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
         }
     }
 
+    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
+    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(attr);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
     res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
-                        PyObjCSelector_GetMetadata(attr), PyObjCSelector_GetFlags(attr));
+                        methinfo, PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
+    Py_DECREF(methinfo);
     return res;
 }
 

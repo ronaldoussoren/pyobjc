@@ -57,6 +57,10 @@ class TestSystemExtensions(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("OSSystemExtensionRequestDelegate")
 
+    @min_sdk_level("15.2")
+    def test_protocols15_2(self):
+        self.assertProtocolExists("OSSystemExtensionsWorkspaceObserver")
+
     @min_os_level("10.15")
     def test_classes(self):
         # Explictly test for classes because the API doesn't require any
@@ -73,6 +77,15 @@ class TestSystemExtensions(TestCase):
         )
         self.assertResultIsBOOL(
             SystemExtensions.OSSystemExtensionProperties.isUninstalling
+        )
+
+    @min_os_level("15.1")
+    def test_methods15_1(self):
+        self.assertResultIsBOOL(
+            SystemExtensions.OSSystemExtensionsWorkspace.addObserver_error_
+        )
+        self.assertArgIsOut(
+            SystemExtensions.OSSystemExtensionsWorkspace.addObserver_error_, 1
         )
 
 

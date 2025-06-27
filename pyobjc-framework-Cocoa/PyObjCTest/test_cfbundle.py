@@ -346,3 +346,9 @@ class TestCFBundle(TestCase):
         self.assertResultIsBOOL(CoreFoundation.CFBundleIsExecutableLoadable)
         self.assertResultIsBOOL(CoreFoundation.CFBundleIsExecutableLoadableForURL)
         self.assertResultIsBOOL(CoreFoundation.CFBundleIsArchitectureLoadable)
+
+    @min_os_level("15.4")
+    def test_functions15_4(self):
+        self.assertResultIsCFRetained(
+            CoreFoundation.CFBundleCopyLocalizedStringForLocalizations
+        )

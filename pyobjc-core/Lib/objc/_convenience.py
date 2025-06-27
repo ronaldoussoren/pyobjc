@@ -15,6 +15,10 @@ from objc._objc import (
 import PyObjCTools.KeyValueCoding as kvc
 from objc._new import make_generic_new, NEW_MAP
 from objc._transform import _selectorToKeywords
+import array
+import copy
+import ctypes
+import socket
 
 __all__ = (
     "addConvenienceForClass",
@@ -32,6 +36,11 @@ options._getKey = kvc.getKey
 options._setKey = kvc.setKey
 options._getKeyPath = kvc.getKeyPath
 options._setKeyPath = kvc.setKeyPath
+options._ArrayType = array.ArrayType
+options._deepcopy = copy.deepcopy
+options._c_void_p = ctypes.c_void_p
+options._socket_error = socket.error
+options._socket_gaierror = socket.gaierror
 
 del kvc
 
@@ -151,7 +160,6 @@ def registerABCForClass(classname, *abc_class):
     Register *classname* with the *abc_class*-es when
     the class becomes available.
     """
-    global CLASS_ABC
     try:
         CLASS_ABC[classname] += tuple(abc_class)
     except KeyError:

@@ -1,3 +1,7 @@
+.. module:: EventKit
+   :platform: macOS
+   :synopsis: Bindings for the EventKit framework
+
 API Notes: EventKit framework
 =============================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``EventKit`` package (that is, ``import 
 
 API Notes
 ---------
-
-The entire "EventKit" framework on macOS 10.8 (or later) is available from Python.

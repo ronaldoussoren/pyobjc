@@ -26,7 +26,7 @@ typedef struct {
 void* _Nullable PyObjCPointer_Ptr(PyObject* obj)
 {
     /* The only caller checks the type as well */
-    PyObjC_Assert(PyObjCPointer_Check(obj), NULL);
+    assert(PyObjCPointer_Check(obj));
 
     return ((PyObjCPointer*)(obj))->ptr;
 }
@@ -112,8 +112,13 @@ PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
         return NULL;
     }
 
-    while (isdigit(typeend[-1])) {
-        typeend--;
+    // The loop below should never be used in practice because
+    // the signature passed in has already be cleaned from
+    // spurious digits.
+    //
+    // The loop is left in just in case...
+    while (isdigit(typeend[-1])) { // LCOV_BR_EXCL_LINE
+        typeend--;                 // LCOV_EXCL_LINE
     }
     PyObjCPointer* self;
 
@@ -152,8 +157,8 @@ PyObjCPointer_Setup(PyObject* module)
     }
     PyObjCPointer_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "ObjCPointer", PyObjCPointer_Type) == -1) {
+    int r = PyModule_AddObject(module, "ObjCPointer", PyObjCPointer_Type);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCPointer_Type);

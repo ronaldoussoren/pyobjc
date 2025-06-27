@@ -3,16 +3,258 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 11.0 (Unreleased, expected release is October 2024)
------------------------------------------------------------
+Version 11.1.1
+--------------
+
+The focus of this release is increasing test coverage and fixing issues
+found while doing this.
+
+* Fix a number of edge cases in handling of both calling and implementing
+  ``NSCoder`` methods. Issues found while increasing test coverage.
+
+* Fix error handling for a possible ``NULL`` result from ``objc_copyClassList()``
+  (should not happen in practice, but the API is annotated as nullable).
+
+* Fix race condition in recalculating the internal ``sel_methinfo`` of
+  selector objects.
+
+* ``NSCoder.encodeBytes_length_forKey_`` now accepts three arguments (
+  matching PyObjC's regular pattern for binding Objective-C APIs). The older
+  interface still works, but is deprecated and will be removed in PyObjC 13.
+
+* Implementing the same method now requires following the PyObjC convention,
+  that is the implementation must have 3 arguments.
+
+* Drop some code paths from pyobjc-core's extension module that supported
+  Python 3.8.
+
+* Fix some error messages in incorrect invocations of ``objc.function``
+  instances.
+
+* Fix crash when a callable returns a C function with a signature that's not
+  compatible with libffi (such as a function using a SIMD argument or return type).
+
+* The :class:`selector` constructor no longer unpacks a selector passed in as
+  the callable. That is, given:
+
+  .. sourcecode:: python
+
+     @objc.selector
+     def mymethod_(self, a):
+         pass
+
+     othermethod = objc.selector(mymethod_, selector=b"hello")
+
+  In previous versions ``othermethod.callable`` was set to ``mymethod_.callable``,
+  in this version it is set to ``mymethod_``.
+
+* Free-threading support is no longer experimental.
+
+* Fixed a bug in the look-up code that selects the most specific
+  manual override for calling an Objective-C method from Python.
+
+  In practice PyObjC ships with at most one such override for a
+  selector, the issue was found while improving test coverage for
+  edge cases.
+
+* :pr:`653`: Fix building with older clangs versions
+
+  PR by GitHub user `moubctez <https://github.com/moubctez>`_.
+
+* :pr:`604`: Add some internal assertions that validate the state of block proxies
+
+  Based on a PR by GitHub user `mrpippy <https://github.com/mrpippy>`_.
+
+
+
+Version 11.1
+------------
+
+The major change in this release is aligning behaviour of the core bridge
+with `clang's documentation for automatic reference counting <https://clang.llvm.org/docs/AutomaticReferenceCounting.html>`_
+for initializer methods. In particular, PyObjC now correctly models
+that methods in the "init" family steal a reference to self and return
+a new reference.
+
+In previous version of PyObjC the proxy for ``[NSObject alloc]`` would be
+marked as 'partially initialized' and would be cleared when the ``-init`` method
+returns something else then ``self``.
+
+This has two problems:
+
+1. Behaviour is incorrect when ``+alloc`` returns a singleton whose
+   ``-init`` method(s) are factory methods (such as ``NSArray`` in
+   recent versions of macOS)
+
+2. The proxy for Objective-C objects needs to contain mutable state.
+   This in turn requires locking in the implementation to work
+   correctly with free-threading.
+
+This version drops the concept of "uninitialized" values and correctly models
+how reference counts are handled by ``-init`` methods.
+
+* Update framework bindings for the macOS 15.5 SDK
+
+* Added bindings for the ``SecurityUI`` framework
+
+* Restructure the PyObjC website
+
+  The theme of the PyObjC websites is now [shibuya](https://shibuya.lepture.com)
+  to give a more modern look and feel to the website.
+
+  The actual content is mostly still the same, with some minor restructuring
+  of pages. Restructuring will continue in future updates.
+
+
+* :class:`objc.FSRef` now implements :class:`os.PathLike`.
+
+* :issue:`642`: Fix concurrency issue when creating ``NSArray`` instances
+  using ``NSArray.alloc().init...``.
+
+  In previous versions the following would fail on recent versions of macOS:
+
+  .. sourcecode:: python
+
+    value1 = NSArray.alloc()
+    value2 = NSArray.alloc()
+
+    value1 = value1.init()
+    value2 = value2.init()
+
+  That's a unrealistic code pattern, but the same can be triggered using
+  ``NSArray.alloc().init()``  when run concurrently in multiple threads,
+  especially when using free-threading.
+
+* Fixing the previous issue required rearchitecting the way partially
+  initialized objects (e.g. the result of ``SomeClass.alloc()`` are handled,
+  and has some other user visible behaviour changes (none of which should
+  affect normal code):
+
+  * :class:`objc.UninitializedDeallocWarning` is now soft deprecated because
+    this warning will never be emitted.
+
+  * Bit ``0x1`` will never be set in the ``__flags__`` attribute of
+    Objective-C objects.
+
+  * The proxied value of an :class:`objc.objc_object` instance will never
+    be ``nil``, all exceptions about accessing attributes or methods
+    of a NIL object are gone.
+
+  * It is now possible to call methods on a partially initialized object,
+    in previous versions that would often result in setting the proxied value
+    to ``nil``.
+
+  * It is now possible to call an ``init`` method multiple times an an
+    partially initialized value, e.g.:
+
+    .. sourcecode:: python
+
+       part = SomeClass.alloc()
+       value1 = part.init()
+       value2 = part.init()
+
+    Whether or not this is safe depends on the implementation of the
+    Objective-C class. In general it is advised to not use this pattern,
+    but always call ``SomeClass.alloc().init...()`` or the more pythonic
+    ``SomeClass(...)`` introduced in PyObjC 10.3.
+
+  * The following code accidentally worked in previous versions of PyObjC
+    and will now crash. Handling of partially initialized objects in previous
+    versions hides the reference counting bug in this code.
+
+    .. sourcecode:: python
+
+       class NilObject(NSObject):
+          def init(self):
+              self.release()
+              return None
+
+  * The ``isAlloc`` attribute of :class:`objc.selector` is deprecated and
+    will be removed in PyObjC 12.
+
+  * The bridge no longer uses ``CFRetain`` and ``CFRelease`` to maintain
+    the reference counts of Objective-C values. The original reason to do
+    this is no longer needed, there are edge cases where mixing native ObjC
+    retain count updates with these functions causes problems.
+
+* Python 3.14: Use ``PyUnstable_Object_IsUniquelyReferenced`` to check if the
+  dealloc helper is uniquely referenced when trying to release it instead of
+  manually checking the reference count.
+
+  This fixes an unlikely edge case in the free threading build where checking
+  the reference count like this is not correct.
+
+* Deprecated :attr:`objc.objc_object.pyobjc_ISA`.
+
+* Implement ``__class_getitem__`` for :class:`objc.function`,
+  :class:`objc.selector`.  :class:`objc.varlist`.  and
+  :class:`objc.WeakRef`
+
+  This allows for treating these classes a generic in type annotations.
+
+* Add some methods to :class:`PyObjCTools.TestSupport.TestCase`, in
+  particular
+  :meth:`assertIsInitializer <PyObjCTools.TestSupport.TestCase.assertIsInitializer`,
+  :meth:`assertIsNotInitializer <PyObjCTools.TestSupport.TestCase.assertIsNotInitializer`,
+  :meth:`assertDoesFreeResult <PyObjCTools.TestSupport.TestCase.assertDoesFreeResult`,
+  :meth:`assertDoesNotFreeResult <PyObjCTools.TestSupport.TestCase.assertDoesNotFreeResult`.
+
+* Add implementation for ``NSMutableData.resize`` to match :meth:`bytearray.resize` that
+  was introduced in Python 3.14.
+
+* Using a instance of a Python class with an ``__call__`` method as
+  an Objective-C block is now possible.
+
+* Change PyObjC's internal assertions in C code from ``PyObjC_Assert`` to ``assert``
+  (and only enable them using debug builds of CPython). This is slightly more efficient
+  and enables removing error return paths in a number of functions due to internal
+  APIs that could only fail due to assertion errors.
+
+* Removed some helper code that was used when subclassing a number of ``NSDecimalNumber``
+  methods. This should have no effect because overriding these methods is effectifly
+  impossible anyway on recent versions of macOS.
+
+* Fix some free-threaded race conditions
+
+* Classes ``NSString`` and ``NSMutableString`` are marked as "final", which
+  means these classes can no longer be subclassed.
+
+  Reason for this is that Cocoa strings have special handling in PyObjC
+  and trying to subclass these classes in Python will result in crashes.
+
+* The ``objc._objc`` extension no longer performs imports from native code,
+  all external dependencies are passed in as (private) options from Python
+  code.
+
+  This simplifies PyObjC's code, and avoids having imports that are hidden
+  from analysis tools.
+
+* Remove usage of ``pkg_resources`` in PyObjC's setup.py files.
+
+  This is needed because this library is deprecated in setuptools and will
+  be removed.
+
+* :issue:`651`: Fix build issue on macOS 10.12 by changing the invocation
+  of sw_vers(1).
+
+Version 11.0
+------------
+
+The major change in this release is experimental support for free-threading
+(`PEP 703 <https://peps.python.org/pep-0703/>`_) which was introduced
+as an experimental feature in Python 3.13.
+
+This required fairly significant changes in the core of PyObjC to change
+C Python API use and PyObjC internal APIs (mostly related to the use of
+borrowed references).
 
 * Dropped support for Python 3.8. PyObjC 11 supports Python 3.9 and later.
 
-* Updated metadata for the macOS 15 SDK (first beta), including bindings
+* Updated metadata for the macOS 15.2 SDK, including bindings
   for the following frameworks:
 
-  - FSKit
   - MediaExtension
+  - DeviceDiscoveryExtension
 
 * :issue:`249`: Added minimal bindings to the Carbon framework.
 
@@ -26,9 +268,103 @@ Version 11.0 (Unreleased, expected release is October 2024)
 * The ``__pyobjc_copy__`` method has been removed from struct wrappers. This
   was never a public API. Use :func:`copy.deepcopy` instead.
 
-* :issue:`608`: The extension modules for framework bindings were transitioned to multi-phase
-  init. As a side effect of this the framework bindings no longer use the
-  stable ABI.
+* :meth:`objc.FSRef.from_path`` now supports ``os.PathLike`` values as its
+  arguments (as well as strings).
+
+* :issue:`608`: Experimental support for the free-threading mode
+  introduced in Python 3.13.
+
+  The core bridge and framework bindings claim compatibility with free-threading
+  as introduced as an experimental feature in Python 3.13.
+
+  The support in PyObjC is also an experimental feature: I've reviewed
+  code for free-threading issues and adjusted it where needed, but the
+  code has seen only light testing w.r.t. concurrency.
+
+  Some functionality that's explicitly not thread-safe:
+
+  - Defining an Objective-C class with the same name in multiple threads concurrently.
+
+  - Splitting calls to ``alloc`` and ``init`` and calling ``init`` multiple
+    times concurrently. E.g.:
+
+     .. sourcecode:: python
+
+        import threading
+        from Cocoa import NSObject
+
+        v = NSObject.alloc()
+
+        t_list = []
+        for _ in range(2):
+            t = threading.Thread(target=lambda: v.init())
+            t_list.append(t)
+            t.start()
+
+        for t in t_list:
+            t.join()
+
+* The internal mapping from Python values to their active Objective-C
+  proxy value now uses weak references. This should not affect user code,
+  other than being a bit more efficient.
+
+* The internal interfaces for updating this mapping, and the reverse mapping
+  from Objective-C values to their active Python proxy was changed to remove
+  a small race condition. This was required for free threading support, but
+  could in theory also bit hit when using the GIL.
+
+* The data structure for mapping Python values to their Objective-C proxy
+  has been rewritten to support free threading. This also simplifies the
+  code, and should be small performance improvement for the regular build
+  of Python.
+
+* The :exc:`TypeError` raised when passing a non-sequence value to
+  some APIs implemented in C now has a ``__cause__`` with more detailed
+  information.
+
+  This is a side effect of dropping the use of ``PySequence_Fast`` in the
+  implementation of PyObjC.
+
+* Removed ``objc.options._nscoding_version``, a private option that is no
+  longer used.
+
+* Changing the ``__block_signature__`` of a block value when the current
+  value of the signature is not ``None`` is no longer possible.
+
+  Please file an issue if you have a use case for changing the signature
+  of a block.
+
+* Fix compatibility with Python 3.14 (alpha 3)
+
+* Removed private function ``objc._sizeOfType`` because its unused.
+
+* Fix memory leak when using Python callables as blocks.
+
+  The memory leak also resulted in leaking a reference to the callable
+  (and hence anything kept alive by that reference).
+
+* The generic ``__new__`` implementation now works as intended when
+  registering methods that other than ``init...`` methods.
+
+* Dropped '%n' support in handling printf-format strings for variadic
+  functions and methods.
+
+  Two reasons for that: 1) supporting this properly should return the
+  value writing to the %n location (requiring significant changes) and
+  2) Apple's libraries require using static strings for '%n' to work (at
+  least on some platforms and versions of the OS)
+
+* :issue:`633`: Fix manual bindings for ``AVAudioPCMBuffer`` methods for
+  getting channel data (``floatChannelData``, ``int16ChannelData`` and
+  ``int32ChannelData``)
+
+* :issue:`632`: fix broken bindings for ``CGWindowListCreateImageFromArray``.
+
+* The private ``__is_magic`` attribute on :class:`objc.objc_object` has
+  been renamed to ``__pyobjc_magic_coookie__``.
+
+* Various fixes to edge case behaviour that were found while improving
+  test coverage.
 
 Version 10.3.2
 --------------
@@ -41,6 +377,39 @@ Version 10.3.2
 
 * :issue:`613`: Actually expose protocols ``KHTTPCookieStoreObserver``,
   ``WKURLSchemeTask``, and ``WKURLSchemeHandler`` in the WebKit bindings.
+
+* :issue:`621`: Drop dependency on ``setuptools.command.test`` which is deprecated
+  and will be removed by the end of the year.
+
+* :issue:`627`: Fix build issue when deployment target is 15.0 or later.
+
+* :issue:`623`: Don't lowercase the first character of the first keyword
+   argument for ``__new__`` when the segment only contains upper case
+   characters.
+
+   Before this change ``initWithURL:`` mapped to an ``uRL`` keyword argument,
+   with this fix the keyword argument is named ``URL``.
+
+   Fix by user rndblnch on github
+
+* :issue:`625`: Fix crash for calling ``NSIndexSet.alloc().initWithIndex_(0)``
+
+  This "fix" is a workaround for what appears to be a bug in Foundation.
+
+* The proxy objects created when passing a Python callable to an Objective-C
+  method/function expecting a block value were never released due to an error
+  in the cleanup code in PyObjC.
+
+* Variadic methods and functions where the one of the arguments contains a
+  count of the number of variadic values now work as intended (so far this
+  feature hasn't been necessary in binding Apple frameworks, so shouldn't
+  affect existing code)
+
+* Add support for 'long double' in function/method interfaces, including support
+  for '%Ld' in printf-style varargs handling.
+
+  Note that this primarily affects x86_64, on arm64 systems 'long double'
+  is effectively an alias for 'double'.
 
 Version 10.3.1
 --------------
@@ -55,6 +424,8 @@ Version 10.3.1
   Code relying on the ``__new__`` provided by PyObjC still cannot use
   ``__init__`` for the reason explained in the 10.3 release notes.
 
+* :issue:`619`: Fix race condition in creating Python proxyies for
+  Objective-C classes.
 
 Version 10.3
 ------------
@@ -461,8 +832,7 @@ Version 9.2
 * :issue:`549`: Document that ``objc.super`` must be used instead of
   ``builtin.super`` when calling superclass methods in a Cocoa subclass.
 
-  See `the documentation <(https://pyobjc.readthedocs.io/core/super.html>`_
-  for more details.
+  See :func:`the documentation <objc.super>` for more details.
 
 * :issue:`550`: Add minimal ``pyproject.toml`` to all subprojects
 
@@ -6149,7 +6519,7 @@ Version 1.1a0 (2004-02-02)
 
 - NSAppleEventDescriptor bridged to Carbon.AE
 
-- LibFFI is used more aggressivly, this should have no user-visible effects
+- LibFFI is used more aggressively, this should have no user-visible effects
   other than fixing a bug related to key-value observing.
 
 

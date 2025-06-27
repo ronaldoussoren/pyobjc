@@ -82,11 +82,13 @@ Arrays
 C Arrays are represented a lists where all elements are of the right basic
 type (as described earlier).
 
-.. todo::
+Arguments to functions and methods that are an array can be any sequence
+of the correct base type.
 
-   * Array arguments (input, output, use of array.array and other buffers)
-
-   * objc.varlist objects for results of unclear size and their limitations
+For some APIs the size of the C array for a return value is
+not specified, or cannot be statically determined (such, an array size that's
+calculated from a property of an Objective-C instance). In those cases
+the value is represented using an instance of :class:`objc.varlist`.
 
 Structs
 .......

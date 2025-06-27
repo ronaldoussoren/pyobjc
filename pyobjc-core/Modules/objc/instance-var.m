@@ -68,7 +68,6 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     }
 
     if (!obj || PyObjCClass_Check(obj)) {
-        /* XXX: Not sure if this is ever true... */
         PyErr_SetString(PyExc_TypeError, "Cannot access Objective-C instance-variables "
                                          "through class");
         return NULL;
@@ -80,11 +79,7 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     }
 
     objc = PyObjCObject_GetObject(obj);
-    if (objc == NULL) {
-        PyErr_SetString(PyExc_TypeError,
-                        "Cannot access Objective-C instance-variables of NULL");
-        return NULL;
-    }
+    assert(objc != nil);
 
     if (self->name == NULL) {
         PyErr_SetString(PyExc_TypeError, "Using unnamed instance variable");
@@ -110,7 +105,8 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
         res = *(PyObject**)(((char*)objc) + ivar_getOffset(var));
 
         if (res == NULL) {
-            PyErr_Format(PyExc_AttributeError, "No attribute %s\n", ivar_getName(var));
+            PyErr_Format(PyExc_AttributeError, "'%s' object has no attribute '%s'",
+                         class_getName(object_getClass(objc)), ivar_getName(var));
         } else {
             Py_INCREF(res);
         }
@@ -118,20 +114,21 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     } else {
         const char* encoding = ivar_getTypeEncoding(var);
 
-        if (encoding == NULL) {
+        if (encoding == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            // Guards against invalid data in the ObjC runtime
             PyErr_SetString(PyObjCExc_Error, "Cannot extract type encoding from ivar");
-            return NULL;
-        }
-
-        if (encoding[0] == _C_ID) {
+            res = NULL;
+            // LCOV_EXCL_STOP
+        } else if (encoding[0] == _C_ID) {
             /* An object */
             id value = object_getIvar(objc, var);
             res      = pythonify_c_value(encoding, &value);
         } else {
             res = pythonify_c_value(encoding, ((char*)objc) + ivar_getOffset(var));
         }
-    }
-    Py_END_CRITICAL_SECTION();
+    } // LCOV_BR_EXCL_LINE
+    Py_END_CRITICAL_SECTION(); // LCOV_BR_EXCL_LINE
     return res;
 }
 
@@ -141,7 +138,6 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     Ivar                    var;
     id                      objc;
-    Py_ssize_t              size;
     int                     res;
 
     if (value == NULL && !self->isSlot) {
@@ -161,11 +157,7 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
     }
 
     objc = PyObjCObject_GetObject(obj);
-    if (objc == NULL) {
-        PyErr_SetString(PyExc_TypeError,
-                        "Cannot access Objective-C instance-variables of NULL");
-        return -1;
-    }
+    assert(objc != nil);
 
     if (self->name == NULL) {
         PyErr_SetString(PyExc_TypeError, "Using unnamed instance variable");
@@ -199,7 +191,7 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
         PyObject** slotval = (PyObject**)(((char*)objc) + ivar_getOffset(var));
         Py_XINCREF(value);
         PyObject* old_value = *slotval;
-        *slotval = value;
+        *slotval            = value;
         Py_XDECREF(old_value);
         Py_END_CRITICAL_SECTION();
 
@@ -233,10 +225,13 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
             old_value = object_getIvar(objc, var);
             @try {
                 [new_value retain];
+
+                // LCOV_EXCL_START
             } @catch (NSObject* localException) {
                 NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
                       localException);
             }
+            // LCOV_EXCL_STOP
         }
 
         object_setIvar(objc, var, new_value);
@@ -247,25 +242,22 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
              */
             @try {
                 [old_value release];
+                // LCOV_EXCL_START
             } @catch (NSObject* localException) {
                 NSLog(@"PyObjC: ignoring exception during attribute replacement: %@",
                       localException);
             }
+            // LCOV_EXCL_STOP
         }
 
         return 0;
     }
 
     Py_BEGIN_CRITICAL_SECTION(obj);
-    size = PyObjCRT_SizeOfType(ivar_getTypeEncoding(var));
-    if (size == -1) {
-        // [objc didChangeValueForKey:ocName];
-        return -1;
-    }
-    res = depythonify_c_value(ivar_getTypeEncoding(var), value,
+    res = depythonify_c_value((const char* _Nonnull)ivar_getTypeEncoding(var), value,
                               (void*)(((char*)objc) + ivar_getOffset(var)));
     Py_END_CRITICAL_SECTION();
-    if (res == -1) {
+    if (res == -1) { // LCOV_BR_EXCL_LINE
         // [objc didChangeValueForKey:ocName];
         return -1;
     }
@@ -296,8 +288,8 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
 
     if (name) {
         self->name = PyObjCUtil_Strdup(name);
-        if (self->name == NULL) {
-            return -1;
+        if (self->name == NULL) { // LCOV_BR_EXCL_LINE
+            return -1;            // LCOV_EXCL_LINE
         }
 
     } else {
@@ -305,22 +297,32 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
     }
 
     char* type_copy = PyObjCUtil_Strdup(type);
-    if (type_copy == NULL) {
+    if (type_copy == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         if (name) {
             PyMem_Free(self->name);
         }
         return -1;
+        // LCOV_EXCL_STOP
     }
     self->type = type_copy;
     if (isOutletObj) {
-        self->isOutlet = PyObject_IsTrue(isOutletObj);
+        int r = PyObject_IsTrue(isOutletObj);
+        if (r == -1) {
+            return -1;
+        }
+        self->isOutlet = r;
 
     } else {
         self->isOutlet = 0;
     }
 
     if (isSlotObj) {
-        self->isSlot = PyObject_IsTrue(isSlotObj);
+        int r = PyObject_IsTrue(isSlotObj);
+        if (r == -1) {
+            return -1;
+        }
+        self->isSlot = r;
 
     } else {
         self->isSlot = 0;
@@ -352,14 +354,15 @@ static PyObject* _Nullable ivar_class_setup(PyObject* _self, PyObject* _Nullable
 
     if (self->name == NULL) {
         self->name = PyObjCUtil_Strdup(name);
-        if (self->name == NULL) {
+        if (self->name == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_NoMemory();
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static Py_hash_t
@@ -390,9 +393,9 @@ ivar_hash(PyObject* o)
         result ^= 0x20;
     }
 
-    if (result == -1) {
-        result = -2;
-    }
+    if (result == -1) { // LCOV_BR_EXCL_LINE
+        result = -2;    // LCOV_EXCL_LINE
+    } // LCOV_EXCL_LINE
 
     return result;
 }
@@ -412,17 +415,27 @@ static PyObject* _Nullable ivar_richcompare(PyObject* a, PyObject* b, int op)
                        && (strcmp(PyObjCInstanceVariable_GetName(a),
                                   PyObjCInstanceVariable_GetName(b))
                            == 0);
+            } else {
+                same = 0;
             }
 
-            if (PyObjCInstanceVariable_GetType(a) == NULL) {
+            /* XXX: ..._GetType cannot be NULL */
+            if (PyObjCInstanceVariable_GetType(a) == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 if (PyObjCInstanceVariable_GetType(b) != NULL) {
                     same = 0;
                 }
-            } else if (PyObjCInstanceVariable_GetType(b) != NULL) {
+                // LCOV_EXCL_STOP
+            } else if (PyObjCInstanceVariable_GetType(b) != NULL) { // LCOV_BR_EXCL_LINE
                 same = same
                        && (strcmp(PyObjCInstanceVariable_GetType(a),
                                   PyObjCInstanceVariable_GetType(b))
                            == 0);
+            } else {
+                // LCOV_EXCL_START
+                /* a's type is not null while b's type is */
+                same = 0;
+                // LCOV_EXCL_STOP
             }
 
             if (PyObjCInstanceVariable_IsSlot(a) != PyObjCInstanceVariable_IsSlot(b)) {
@@ -435,25 +448,20 @@ static PyObject* _Nullable ivar_richcompare(PyObject* a, PyObject* b, int op)
             }
 
             if ((op == Py_EQ && !same) || (op == Py_NE && same)) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
             } else {
-                Py_INCREF(Py_False);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
 
         } else {
             if (op == Py_EQ) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
             } else {
-                Py_INCREF(Py_False);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
         }
     }
-    Py_INCREF(Py_NotImplemented);
-    return Py_NotImplemented;
+    Py_RETURN_NOTIMPLEMENTED;
 }
 
 static PyMethodDef ivar_methods[] = {{
@@ -497,8 +505,7 @@ static PyObject* _Nullable ivar_get_name(PyObject* _self, void* _Nullable closur
     if (self->name) {
         return PyUnicode_FromString(self->name);
     } else {
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 }
 
@@ -506,20 +513,25 @@ PyDoc_STRVAR(ivar_isOutlet_doc, "True if the instance variable is an IBOutlet");
 static PyObject* _Nullable ivar_get_isOutlet(PyObject* _self, void* _Nullable closure
                                              __attribute__((__unused__)))
 {
-    PyObjCInstanceVariable* self   = (PyObjCInstanceVariable*)_self;
-    PyObject*               result = self->isOutlet ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
+
+    if (self->isOutlet) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 PyDoc_STRVAR(ivar_isSlot_doc, "True if the instance variable is a Python slot");
 static PyObject* _Nullable ivar_get_isSlot(PyObject* _self, void* _Nullable closure
                                            __attribute__((__unused__)))
 {
-    PyObjCInstanceVariable* self   = (PyObjCInstanceVariable*)_self;
-    PyObject*               result = self->isSlot ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
+    PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
+    if (self->isSlot) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
 }
 
 static PyGetSetDef ivar_getset[] = {{
@@ -576,13 +588,14 @@ int
 PyObjCInstanceVariable_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&ivar_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
     PyObjCInstanceVariable_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "ivar", PyObjCInstanceVariable_Type) == -1) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "ivar", PyObjCInstanceVariable_Type)
+        == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.12
 
 import configparser
 import os
@@ -7,12 +7,7 @@ import subprocess
 from _common_definitions import TOP_DIR
 
 
-def contents(path):
-    with open(path, "rb") as fp:
-        return fp.read()
-
-
-def main():
+def main() -> None:
     for nm in sorted(os.listdir(TOP_DIR), key=lambda x: x.lower()):
         if not nm.startswith("pyobjc-framework-"):
             continue

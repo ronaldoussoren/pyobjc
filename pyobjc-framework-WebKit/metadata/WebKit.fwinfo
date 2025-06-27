@@ -2,6 +2,11 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "WKWebExtensionContextNotificationUserInfoKey": { "type": "@", "type_name": "NSString" },
+   "WKWebExtensionDataType": { "type": "@", "type_name": "NSString" },
+   "WKWebExtensionPermission": { "type": "@", "type_name": "NSString" }
+  },
   "structs": {
    "WebPreferencesPrivate": { "ignore": true },
    "DOMObjectInternal": { "ignore": true }

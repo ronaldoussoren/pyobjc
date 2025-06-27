@@ -6,7 +6,7 @@
  *
  */
 
-#define OBJC_VERSION "11.0a0"
+#define OBJC_VERSION "11.1.1"
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
@@ -103,8 +103,8 @@
 #import "OC_PythonNumber.h"
 #import "OC_PythonObject.h"
 #import "OC_PythonSet.h"
-#import "OC_PythonUnicode.h"
 #import "OC_PythonURL.h"
+#import "OC_PythonUnicode.h"
 
 #import "OC_BuiltinPythonArray.h"
 #import "OC_BuiltinPythonData.h"
@@ -177,10 +177,6 @@
 /* module.m */
 NS_ASSUME_NONNULL_BEGIN
 extern PyObject* _Nullable PyObjC_TypeStr2CFTypeID;
-extern PyObject* _Nullable PyObjC_callable_docstr_get(PyObject* callable,
-                                                      void* _Nullable closure);
-extern PyObject* _Nullable PyObjC_callable_signature_get(PyObject* callable,
-                                                         void* _Nullable closure);
 extern PyObject* _Nullable PyInit__objc(void);
 NS_ASSUME_NONNULL_END
 

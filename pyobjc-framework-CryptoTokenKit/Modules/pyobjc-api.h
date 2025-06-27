@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Only add items to the end of this list!
  */
 typedef int(RegisterMethodMappingFunctionType)(
-    Class, SEL,
+    Class _Nullable, SEL,
     PyObject* _Nullable (*_Nonnull)(PyObject* _Nonnull, PyObject* _Nonnull,
                                     PyObject* _Nonnull const* _Nonnull, size_t),
     IMP _Nullable (*_Nonnull)(PyObject* _Nonnull, PyObject* _Nonnull));
@@ -83,7 +83,8 @@ struct pyobjc_api {
     PyObject* _Nullable (*_Nonnull unsupported_method_caller)(
         PyObject* _Nonnull, PyObject* _Nonnull, PyObject* _Nonnull const* _Nonnull,
         size_t);
-    void (*_Nonnull err_python_to_objc_gil)(PyGILState_STATE* _Nonnull state);
+    void (*_Nonnull err_python_to_objc_gil)(PyGILState_STATE* _Nonnull state)
+        __attribute__((__noreturn__));
     int (*_Nonnull simplify_sig)(const char* signature, char* buf, size_t buflen);
     void (*_Nonnull free_c_array)(int, Py_buffer*);
     int (*_Nonnull py_to_c_array)(BOOL, BOOL, const char* _Nonnull, PyObject* _Nonnull,
@@ -113,7 +114,8 @@ struct pyobjc_api {
     int (*_Nonnull checknokwnames)(PyObject* _Nonnull callable,
                                    PyObject* _Nullable kwnames);
 
-    PyObject* _Nullable (*_Nonnull createopaquepointertype)(const char*, const char*, const char*);
+    PyObject* _Nullable (*_Nonnull createopaquepointertype)(const char*, const char*,
+                                                            const char*);
 };
 
 #ifndef PYOBJC_BUILD

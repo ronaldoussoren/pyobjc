@@ -1,8 +1,8 @@
 /*
  * Implementation of objective-C object wrapper
  *
- * NOTE: We're using CFRetain and CFRelease to manage the retaincount of the Objective-C
- * objects because that will do the right thing when Garbage Collection is involved.
+ * XXX: Free-threading: Access to 'flags' is not yet thread safe, need to audit all
+ *      paths that change flags.
  */
 #include "pyobjc.h"
 
@@ -83,8 +83,11 @@ static PyObject* _Nullable object_repr(PyObject* _self)
 {
     PyObjCObject* self = (PyObjCObject*)_self;
     PyObject*     res;
+    unsigned int  flags;
 
-    if (self->flags & PyObjCObject_kMAGIC_COOKIE) { // LCOV_BR_EXCL_LINE
+    flags = self->flags;
+
+    if (flags & PyObjCObject_kMAGIC_COOKIE) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         //
         // There currently is no code path that can create objective-c
@@ -95,28 +98,29 @@ static PyObject* _Nullable object_repr(PyObject* _self)
         // LCOV_EXCL_STOP
     }
 
-    if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0) {
-        /* Try to call the method 'description', which is the ObjC
-         * equivalent of __repr__. If that fails we'll fall back to
-         * the default repr.
-         * Don't call 'description' for uninitialized objects, that
-         * is undefined behaviour and will crash the interpreter sometimes.
-         */
-        PyObject* args[2] = {NULL, (PyObject*)self};
-        res               = PyObject_VectorcallMethod(PyObjCNM_description, args + 1,
-                                                      1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        if (res == NULL) {
-            PyErr_Clear();
-            /* Fall though to default */
-        } else if (res == Py_None) {
-            Py_DECREF(res);
-            /* Fall though to default */
-        } else {
-            return res;
-        }
+    /* Try to call the method 'description', which is the ObjC
+     * equivalent of __repr__. If that fails we'll fall back to
+     * the default repr.
+     * Don't call 'description' for uninitialized objects, that
+     * is undefined behaviour and will crash the interpreter sometimes.
+     *
+     * Free threaded: the UNINITIALIZED flags is never re-set once cleared.
+     */
+    PyObject* args[2] = {NULL, (PyObject*)self};
+    res               = PyObject_VectorcallMethod(PyObjCNM_description, args + 1,
+                                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    if (res == NULL) {
+        PyErr_Clear();
+    } else if (res == Py_None) {
+        Py_DECREF(res);
+    } else {
+        return res;
     }
-    return PyUnicode_FromFormat("<%s objective-c instance %p>", Py_TYPE(self)->tp_name,
-                                self->objc_object);
+
+    res = PyUnicode_FromFormat("<%s objective-c instance %p>", Py_TYPE(self)->tp_name,
+                               self->objc_object);
+
+    return res;
 }
 
 // LCOV_EXCL_START
@@ -133,59 +137,38 @@ object_dealloc(PyObject* obj)
     /*
      * Save exception information, needed because releasing the object
      * might clear or modify the exception state.
+     *
+     * free-threaded: the dealloc method can only be called when there
+     * are no references to `obj` left, hence no need to use locking here.
      */
     PyObject *ptype, *pvalue, *ptraceback;
     PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+    id objc_object = ((PyObjCObject*)obj)->objc_object;
 
-    if (PyObjCObject_IsBlock(obj)) {
-        PyObjCMethodSignature* v = PyObjCObject_GetBlock(obj);
-        PyObjCObject_SET_BLOCK(obj, NULL);
-        Py_XDECREF(v);
-    }
+    PyObjC_UnregisterPythonProxy(objc_object, obj);
 
-    if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER
-        && PyObjCObject_GetObject(obj) != nil) {
+    if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER) {
         /* Release the proxied object, we don't have to do this when
          * there is no proxied object.
          */
-        PyObjC_UnregisterPythonProxy(PyObjCObject_GetObject(obj), obj);
-
         if ((((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE)) {
             /* pass */
-
-        } else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
-            /* Freeing of an uninitialized object, just leak because
-             * there is no reliable manner to free such objects.
-             *
-             * - [obj release] doesn't work because some classes
-             *   cause crashes for uninitialized objects
-             * - [[obj init] release] also doesn't work because
-             *   not all classes implement -init
-             * - [obj dealloc] doesn't work for class
-             *   clusters like NSArray.
-             */
-            char buf[256];
-            snprintf(buf, sizeof(buf), "leaking an uninitialized object of type %s",
-                     Py_TYPE(obj)->tp_name);
-            ((PyObjCObject*)obj)->objc_object = nil;
-            if (PyErr_Warn(PyObjCExc_UnInitDeallocWarning, buf) == -1) {
-                PyErr_WriteUnraisable((PyObject*)Py_TYPE(obj));
-            }
 
         } else {
             Py_BEGIN_ALLOW_THREADS
                 @try {
-                    CFRelease(((PyObjCObject*)obj)->objc_object);
+                    [objc_object release];
 
                 } @catch (NSObject* localException) {
                     NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
                           localException);
                 }
             Py_END_ALLOW_THREADS;
-            ((PyObjCObject*)obj)->objc_object = nil;
         }
     }
-
+    if (PyObjCObject_IsBlock(obj)) {
+        SET_FIELD(((PyObjCBlockObject*)obj)->signature, NULL);
+    }
     Py_TYPE(obj)->tp_free(obj);
 
     PyErr_Restore(ptype, pvalue, ptraceback);
@@ -197,10 +180,8 @@ object_verify_type(PyObject* obj)
     /* Check that the Objective-C type of 'obj' hasn't changed */
     id obj_inst;
 
-    obj_inst = PyObjCObject_GetObject(obj);
-    if (obj_inst == nil) {
-        return 0;
-    }
+    obj_inst = PyObjCObject_OBJECT(obj);
+    assert(obj_inst != nil);
 
     if (PyObjCClass_IsCFWrapper(Py_TYPE(obj))) {
         /* Object is a CoreFoundation type, ISA swiffling doesn't
@@ -216,7 +197,7 @@ object_verify_type(PyObject* obj)
          * object because that might cause havoc.
          */
 
-    } else {
+    } else { // LCOV_EXCL_LINE
         /* Special hack for KVO on MacOS X, when an object is observed it's
          * ISA is changed by the runtime. We change the python type as well.
          *
@@ -227,8 +208,16 @@ object_verify_type(PyObject* obj)
         PyTypeObject* tp =
             (PyTypeObject*)PyObjCClass_New((Class _Nonnull)object_getClass(obj_inst));
 
+        if (tp == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            PyErr_Format(PyObjCExc_Error, "Cannot get class for Objective-C class '%s'",
+                         class_getName((Class _Nonnull)object_getClass(obj_inst)));
+            return -1;
+            // LCOV_EXCL_STOP
+        }
+
         if (tp != Py_TYPE(obj)) {
-            PyTypeObject* tmp;
+            int did_change = 0;
 
             /* XXX: The correct way to do this is calling ``setattr(obj, "__class__",
              * tp)`` Investigate the impact of that. Performance shouldn't be an issue
@@ -243,16 +232,32 @@ object_verify_type(PyObject* obj)
              * XXX: Probably need to call PyObject_Type.tp_setattro(...) to avoid hitting
              * calling object_setattro in this file.
              */
-            tmp = Py_TYPE(obj);
-            Py_SET_TYPE(obj, tp);
-            Py_INCREF(tp);
-            Py_DECREF(tmp);
+            PyTypeObject* tmp = NULL;
+            Py_BEGIN_CRITICAL_SECTION(obj);
+#ifdef Py_GIL_DISABLED
+            /* Recheck in a free threaded build, another thread
+             * may have raced us.
+             */
+            if (tp != Py_TYPE(obj)) {
+#endif
+                tmp = Py_TYPE(obj);
+                Py_SET_TYPE(obj, tp);
+                Py_INCREF(tp);
+                did_change = 1;
 
-            if (PyObjCClass_CheckMethodList((PyObject*)tp, 0) < 0) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(tp);
-                return -1;
-                // LCOV_EXCL_STOP
+#ifdef Py_GIL_DISABLED
+            }
+#endif
+            Py_END_CRITICAL_SECTION();
+            Py_XDECREF(tmp);
+            if (did_change) {
+                if (PyObjCClass_CheckMethodList((PyObject*)tp, 0)
+                    < 0) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_DECREF(tp);
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
             }
         }
         Py_CLEAR(tp);
@@ -260,144 +265,106 @@ object_verify_type(PyObject* obj)
     return 0;
 }
 
-static int
-object_verify_not_nil(PyObject* obj, PyObject* name)
-{
-    if (PyObjCObject_GetObject(obj) == nil) {
-        PyErr_Format(PyExc_AttributeError,
-                     "cannot access attribute '%U' of NIL '%.50s' object", name,
-                     Py_TYPE(obj)->tp_name);
-        return -1;
-    }
-    return 0;
-}
-
-PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name,
-                                                   SEL sel)
-{
-    Class cls = PyObjCClass_GetClass(base);
-    if (cls == NULL) {
-        return NULL;
-    }
-    PyObject* dict = PyObjC_get_tp_dict((PyTypeObject*)base);
-    Method    m    = class_getInstanceMethod(cls, sel);
-    if (m) {
-#ifndef PyObjC_FAST_BUT_INEXACT
-        int   use = 1;
-        Class sup = class_getSuperclass(cls);
-        if (sup) {
-            Method m_sup = class_getInstanceMethod(sup, sel);
-            if (m_sup == m) {
-                use = 0;
-            }
-        }
-        if (!use)
-            return NULL;
-#endif
-
-        /* Create (unbound) selector */
-        const char* encoding = method_getTypeEncoding(m);
-        if (encoding == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_SetString(PyObjCExc_Error, "Native selector with Nil type encoding");
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-        PyObject* result = PyObjCSelector_NewNative(cls, sel, encoding, 0);
-        if (result == NULL) {
-            /* XXX: Can fail if the 'encoding' is invalid, needs test case */
-            return NULL;
-        }
-
-        /* add to __dict__ 'cache' */
-        if (PyDict_SetItem(dict, name, result) == -1) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(result);
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-
-        /* and return as a borrowed reference */
-        Py_DECREF(result);
-        return result;
-    }
-    return NULL;
-}
-
 static PyObject* _Nullable* _Nullable _get_dictptr(PyObject* obj)
 {
+    /* XXX: See above: should be safe with a free-threaded build
+     */
     Py_ssize_t dictoffset;
-    id         obj_object;
+    id         objc_object;
     dictoffset = PyObjCClass_DictOffset((PyObject*)Py_TYPE(obj));
     if (dictoffset == 0)
         return NULL;
-    obj_object = PyObjCObject_GetObject(obj);
-    PyObjC_Assert(obj_object != nil, NULL);
-    return (PyObject**)(((char*)obj_object) + dictoffset);
+    objc_object = PyObjCObject_OBJECT(obj);
+    assert(objc_object != nil);
+    return (PyObject**)(((char*)objc_object) + dictoffset);
 }
 
+/* returns a new reference */
 static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
                                                const char* name_bytes)
 {
     Py_ssize_t i, n;
     PyObject * mro, *base, *dict;
-    PyObject*  first_class = NULL;
-    PyObject*  descr       = NULL;
-    SEL        sel         = PyObjCSelector_DefaultSelector(name_bytes);
+#ifdef PyObjC_ENABLE_LOOKUP_CACHE
+    PyObject* first_class = NULL;
+#endif
+    PyObject* descr = NULL;
+    SEL       sel   = PyObjCSelector_DefaultSelector(name_bytes);
 
     /* Look in tp_dict of types in MRO */
+    Py_BEGIN_CRITICAL_SECTION(tp);
     mro = tp->tp_mro;
+    Py_XINCREF(mro);
+    Py_END_CRITICAL_SECTION();
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
 
-    PyObjC_Assert(PyTuple_Check(mro), NULL);
+    assert(PyTuple_Check(mro));
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
 
         if (PyObjCClass_Check(base)) {
+#ifdef PyObjC_ENABLE_LOOKUP_CACHE
             if (i == 0) {
                 first_class = base;
             }
             PyObject* cache = PyObjCClass_GetLookupCache((PyTypeObject*)base);
             if (cache != NULL) {
-                descr = PyDict_GetItemWithError(cache, name);
-                if (descr == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                    return NULL;                         // LCOV_EXCL_LINE
-                }
-                if (descr != NULL) {
+                int r = PyDict_GetItemRef(cache, name, &descr);
+                Py_CLEAR(cache);
+                if (r == -1) { // LCOV_BR_EXCL_LINE
+                    Py_CLEAR(mro);
+                    return NULL; // LCOV_EXCL_LINE
+                } else if (r == 1) {
                     break;
                 }
             }
+#endif
 
             if (PyObjCClass_CheckMethodList(base, 0) < 0) { // LCOV_BR_EXCL_LINE
-                return NULL;                                // LCOV_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_CLEAR(mro);
+                return NULL;
+                // LCOV_EXCL_STOP
             }
 
-            dict = PyObjC_get_tp_dict((PyTypeObject*)base);
+            dict = PyType_GetDict((PyTypeObject*)base);
 
-        } else if (PyType_Check(base)) {
+        } else if (PyType_Check(base)) { // LCOV_BR_EXCL_LINE
 
-            dict = PyObjC_get_tp_dict((PyTypeObject*)base);
+            dict = PyType_GetDict((PyTypeObject*)base);
 
         } else {
-            /* XXX: Can this ever happen? */
+            /* This can only happen when an MRO entry
+             * is not a class, that shouldn't be possible
+             * for Objective-C classes.
+             */
+            // LCOV_EXCL_START
+            Py_CLEAR(mro);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
-        PyObjC_Assert(dict && PyDict_Check(dict), NULL);
+        assert(dict && PyDict_Check(dict));
 
-        descr = PyDict_GetItemWithError(dict, name);
-        if (descr == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return NULL;                         // LCOV_EXCL_LINE
-        } else if (descr != NULL) {
+        int r = PyDict_GetItemRef(dict, name, &descr);
+        Py_CLEAR(dict);
+        if (r == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_CLEAR(mro);
+            return NULL;
+            // LCOV_EXCL_STOP
+        } else if (r == 1) {
+#ifdef PyObjC_ENABLE_LOOKUP_CACHE
             if (first_class != NULL) {
                 if (PyObjCClass_AddToLookupCache((PyTypeObject*)first_class, name, descr)
                     == -1) {
                     PyErr_Clear();
                 }
             }
+#endif
             break;
         }
 
@@ -410,13 +377,18 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
             PyObject* hidden = PyObjCClass_HiddenSelector(base, sel, NO);
             if (!hidden) {
                 if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                    return NULL;        // LCOV_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_CLEAR(mro);
+                    return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 descr = PyObjCClass_TryResolveSelector(base, name, sel);
                 if (descr) {
+                    Py_CLEAR(mro);
                     return descr;
                 } else if (PyErr_Occurred()) {
+                    Py_CLEAR(mro);
                     return NULL;
                 }
             }
@@ -424,26 +396,28 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name,
         }
     }
 
+    Py_CLEAR(mro);
     return descr;
 }
 
 /* XXX: Consider passing in name_bytes as well */
-static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject* name,
-                                                      const char* name_bytes)
+/* returns a new reference */
+static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
     PyObject * mro, *base;
     PyObject*  descr = NULL;
-    char       selbuf[1024];
-    char*      sel_name;
 
     /* Look in tp_dict of types in MRO */
+    Py_BEGIN_CRITICAL_SECTION(tp);
     mro = tp->tp_mro;
+    Py_XINCREF(mro);
+    Py_END_CRITICAL_SECTION();
     if (mro == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;   // LCOV_EXCL_LINE
     }
 
-    PyObjC_Assert(PyTuple_Check(mro), NULL);
+    assert(PyTuple_Check(mro));
     n = PyTuple_GET_SIZE(mro);
 
     for (i = 0; i < n; i++) {
@@ -452,12 +426,21 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         unsigned int method_count, j;
         base = PyTuple_GET_ITEM(mro, i);
 
-        if (!PyObjCClass_Check(base)) {
-            continue;
+        if (!PyObjCClass_Check(base)) { // LCOV_BR_EXCL_LINE
+            /* Should not be hit: The last entry
+             * on the MRO that is not an ObjC class
+             * is ``objc.objc_class`` and that has
+             * a Nil Class value, which means that
+             * the check below will exit the loop (
+             * e.g. never ending up at the PyType_Type
+             * on the MRO)
+             */
+            continue; // LCOV_EXCL_LINE
         }
 
         cls = PyObjCClass_GetClass(base);
         if (cls == NULL) {
+            Py_CLEAR(mro);
             return NULL;
         }
 
@@ -470,14 +453,16 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
             PyObject* hidden = PyObjCClass_HiddenSelector(base, method_getName(m), NO);
 
             if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                return NULL;                          // LCOV_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_CLEAR(mro);
+                return NULL;
+                // LCOV_EXCL_STOP
             } else if (hidden) {
                 Py_CLEAR(hidden);
                 continue;
             }
 
-            sel_name =
-                (char*)PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
+            PyObject* sel_name = PyObjC_SELToPythonName(method_getName(m));
             if (sel_name == NULL) { // LCOV_BR_EXCL_LINE
                 /* This can only be hit if the method selector is nil or
                  * if the selector name is longer than 1K
@@ -488,44 +473,66 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
                 // LCOV_EXCL_STOP
             }
 
-            if (strcmp(sel_name, name_bytes) == 0) {
+            int same = PyObject_RichCompareBool(sel_name, name, Py_EQ);
+            Py_CLEAR(sel_name);
+            if (same == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                PyErr_Clear();
+                continue;
+                // LCOV_EXCL_STOP
+            }
+            if (same) {
                 const char* encoding  = method_getTypeEncoding(m);
                 SEL         meth_name = method_getName(m);
 
-                if (encoding == NULL) {
+                if (encoding == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     free(methods);
+                    Py_CLEAR(mro);
                     PyErr_SetString(PyObjCExc_Error,
                                     "Native selector with Nil type encoding");
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
-                if (meth_name == NULL) {
+                if (meth_name == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     free(methods);
+                    Py_CLEAR(mro);
                     PyErr_SetString(PyObjCExc_Error, "Native selector with Nil selector");
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 /* Create (unbound) selector */
                 descr = PyObjCSelector_NewNative(cls, meth_name, encoding, 0);
                 free(methods);
-                if (descr == NULL) {
+                if (descr == NULL) { // LCOV_BR_EXCL_LINE
+                    /* Can only fail due to memory errors */
+                    // LCOV_EXCL_START
+                    Py_CLEAR(mro);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 /* add to __dict__ 'cache' */
-                if (PyDict_SetItem(PyObjC_get_tp_dict((PyTypeObject*)base), name, descr)
-                    == -1) {
+                /* 'base' is a PyObjClass instance, using tp_dict is safe */
+                if (PyDict_SetItem(((PyTypeObject*)base)->tp_dict, name, descr)
+                    == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(descr);
+                    Py_CLEAR(mro);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
-                /* and return as a borrowed reference */
-                Py_DECREF(descr);
+                Py_CLEAR(mro);
                 return descr;
             }
         }
         free(methods);
     }
 
+    Py_CLEAR(mro);
     return descr;
 }
 
@@ -538,21 +545,22 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
     PyObject**    dictptr;
     const char*   namestr;
 
-    PyObjC_Assert(name != NULL, NULL);
+    assert(name != NULL);
 
-    if (!PyUnicode_Check(name)) {
+    if (!PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
+        /* Can only happen when someone calls the tp_getattro slot
+         * directly.
+         */
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_TypeError, "attribute name must be string, got %s",
                      Py_TYPE(name)->tp_name);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     namestr = PyUnicode_AsUTF8(name);
     if (namestr == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;       // LOCV_EXCL_LINE
-    }
-
-    if (object_verify_not_nil(obj, name) == -1) {
-        goto done;
+        return NULL;       // LCOV_EXCL_LINE
     }
 
     if (object_verify_type(obj) == -1) {
@@ -576,17 +584,28 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
             res = f(descr, obj, (PyObject*)Py_TYPE(obj));
             if (res == NULL && !PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
+                Py_CLEAR(descr);
                 PyErr_SetString(PyObjCExc_Error, "Descriptor getter returned NULL "
                                                  "without raising an exception");
                 // LCOV_EXCL_STOP
-            }
+            } // LCOV_EXCL_LINE
             goto done;
         }
     }
 
     if (PyObjC_is_ascii_string(name, "__del__")) {
-
         res = PyObjCClass_GetDelMethod((PyObject*)Py_TYPE(obj));
+        if (res != NULL) {
+            descrgetfunc f = Py_TYPE(res)->tp_descr_get;
+            if (f != NULL) {
+                PyObject* tmp = f(res, obj, (PyObject*)Py_TYPE(obj));
+                Py_CLEAR(res);
+                res = tmp;
+            }
+        } else {
+            PyErr_Format(PyExc_AttributeError, "'%.50s' object has no attribute '%.400s'",
+                         tp->tp_name, namestr);
+        }
         goto done;
     }
 
@@ -598,13 +617,24 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
 
         if (PyObjC_is_ascii_string(name, "__dict__")) {
 
-            res = *dictptr;
+            res = *(PyObject * PyObjC_ATOMIC*)dictptr;
             if (res == NULL) {
-                *dictptr = PyDict_New();
-                if (*dictptr == NULL) {
-                    PyErr_Clear();
+                res = PyDict_New();
+
+                /* free-threading: setting *dictptr must
+                 * be done using a critical section to avoid
+                 * races between two threads.
+                 */
+                PyObject* to_clear = NULL;
+                Py_BEGIN_CRITICAL_SECTION(obj);
+                if (*(PyObject * PyObjC_ATOMIC*)dictptr == NULL) {
+                    *(PyObject * PyObjC_ATOMIC*)dictptr = res;
+                } else {
+                    to_clear = res;
+                    res      = *(PyObject * PyObjC_ATOMIC*)dictptr;
                 }
-                res = *dictptr;
+                Py_END_CRITICAL_SECTION();
+                Py_CLEAR(to_clear);
             }
 
             if (res != NULL) {
@@ -612,12 +642,13 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
                 goto done;
             }
 
-        } else {
+        } else { // LCOV_EXCL_LINE
             dict = *dictptr;
             if (dict != NULL) {
-                switch (PyDict_GetItemRef(dict, name, &res)) {
+                switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+                    dict, name, &res)) {
                 case -1:
-                    goto done;
+                    goto done; // LCOV_EXCL_LINE
                 /* case 0: pass */
                 case 1:
                     goto done;
@@ -633,7 +664,7 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
          * for a method where the selector does not conform to the
          * naming convention that _type_lookup expects.
          */
-        descr = _type_lookup_harder(tp, name, namestr);
+        descr = _type_lookup_harder(tp, name);
 
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
@@ -650,13 +681,13 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
             PyErr_SetString(PyObjCExc_Error, "Descriptor getter returned NULL "
                                              "without raising an exception");
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
         goto done;
     }
 
     if (descr != NULL) {
-        Py_INCREF(descr);
-        res = descr;
+        res   = descr;
+        descr = NULL;
         goto done;
     }
 
@@ -668,6 +699,7 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
                  tp->tp_name, namestr);
 
 done:
+    Py_CLEAR(descr);
     if (res != NULL) {
         /* class methods cannot be accessed through instances */
         if (PyObjCSelector_Check(res) && PyObjCSelector_IsClassMethod(res)) {
@@ -702,27 +734,28 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
         return -1;
     }
 
-    if (object_verify_not_nil(obj, name) == -1) {
-        return -1;
-    }
-
     obj_inst = PyObjCObject_GetObject(obj);
 
     obj_name = nil;
     if (((PyObjCClassObject*)tp)->useKVO) {
-        if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
-            if (!PyObjC_is_ascii_prefix(name, "_", 1)) {
-                obj_name =
-                    [NSString stringWithUTF8String:PyObjC_Unicode_Fast_Bytes(name)];
+        if (!PyObjC_is_ascii_prefix(name, "_", 1)) {
+            obj_name = [NSString
+                stringWithUTF8String:(const char* _Nonnull)PyObjC_Unicode_Fast_Bytes(
+                                         name)];
 
-                @try {
-                    [(NSObject*)obj_inst willChangeValueForKey:obj_name];
-                } @catch (NSObject* localException) {
-                    PyObjCErr_FromObjC(localException);
-                }
-                if (PyErr_Occurred()) {
-                    return -1;
-                }
+            if (obj_name == nil) {
+                PyErr_SetString(PyObjCExc_Error,
+                                "Cannot convert attribute name to NSString");
+                return -1;
+            }
+
+            @try {
+                [(NSObject*)obj_inst willChangeValueForKey:obj_name];
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+            if (PyErr_Occurred()) {
+                return -1;
             }
         }
     }
@@ -752,7 +785,20 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
                 goto done;
             }
 
-            *dictptr = dict;
+            /* free-threading: setting *dictptr must
+             * be done using a critical section to avoid
+             * races between two threads.
+             */
+            PyObject* to_clear = NULL;
+            Py_BEGIN_CRITICAL_SECTION(obj);
+            if (*dictptr == NULL) {
+                *dictptr = dict;
+            } else {
+                to_clear = dict;
+                dict     = *dictptr;
+            }
+            Py_END_CRITICAL_SECTION();
+            Py_CLEAR(to_clear);
         }
 
         if (dict != NULL) {
@@ -786,6 +832,7 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
                  tp->tp_name, PyObjC_Unicode_Fast_Bytes(name));
     res = -1;
 done:
+    Py_CLEAR(descr);
     if (obj_inst && obj_name) {
         @try {
             [(NSObject*)obj_inst didChangeValueForKey:obj_name];
@@ -804,21 +851,31 @@ PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
 static PyObject* _Nullable objc_get_real_class(PyObject* self,
                                                void* closure __attribute__((__unused__)))
 {
-    id        obj_object;
+    id        objc_object;
     PyObject* ret;
 
-    obj_object = PyObjCObject_GetObject(self);
-    PyObjC_Assert(obj_object != nil, NULL);
+    objc_object = PyObjCObject_OBJECT(self);
+    assert(objc_object != nil);
+
     /* object_getClass only return Nil if its argument is nil */
-    ret = PyObjCClass_New((Class _Nonnull)object_getClass(obj_object));
-    if (ret == NULL) {
-        return NULL;
+    ret = PyObjCClass_New((Class _Nonnull)object_getClass(objc_object));
+    if (ret == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
     if (ret != (PyObject*)Py_TYPE(self)) {
-        Py_DECREF(Py_TYPE(self));
-        Py_SET_TYPE(self, (PyTypeObject*)ret);
-        Py_INCREF(ret);
-    }
+        Py_BEGIN_CRITICAL_SECTION(self);
+#ifdef Py_GIL_DISABLED
+        /* Free-threading: Recheck within a critical section to avoid a race */
+        if (ret != (PyObject*)Py_TYPE(self)) {
+#endif
+            Py_DECREF(Py_TYPE(self));
+            Py_SET_TYPE(self, (PyTypeObject*)ret);
+            Py_INCREF(ret);
+#ifdef Py_GIL_DISABLED
+        }
+#endif
+        Py_END_CRITICAL_SECTION();
+    } // LCOV_EXCL_LINE
     return ret;
 }
 
@@ -844,26 +901,28 @@ static PyObject* _Nullable obj_get_blocksignature(PyObject* self, void* closure
                                                   __attribute__((__unused__)))
 {
     if (PyObjCObject_IsBlock(self)) {
-        PyObject* v = (PyObject*)PyObjCObject_GetBlock(self);
+        PyObjCMethodSignature* v = PyObjCObject_GetBlockSignature(self);
         if (v != NULL) {
             Py_INCREF(v);
-            return v;
+            return (PyObject*)v;
         } else {
-            const char* typestr = PyObjCBlock_GetSignature(PyObjCObject_GetObject(self));
+            id objc_self = PyObjCObject_GetObject(self);
+            assert(objc_self != nil);
+
+            const char* typestr = PyObjCBlock_GetSignature(objc_self);
             if (typestr != NULL) {
-                v = (PyObject*)PyObjCMethodSignature_WithMetaData(typestr, NULL, YES);
+                v = PyObjCMethodSignature_WithMetaData(typestr, NULL, YES);
                 if (v == NULL) {
                     return NULL;
                 }
-                PyObjCObject_SET_BLOCK(self, (PyObjCMethodSignature*)v);
-                Py_INCREF(v);
-                return v;
+                PyObjCMethodSignature* result = PyObjCObject_SetBlockSignature(self, v);
+                Py_DECREF(v);
+                return (PyObject*)result;
             }
         }
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 static int
@@ -880,20 +939,20 @@ obj_set_blocksignature(PyObject* self, PyObject* _Nullable newVal,
         return -1;
     }
 
-    if (newVal != NULL) {
-        if (!PyObjCMethodSignature_Check(newVal)) {
-            PyErr_SetString(PyExc_TypeError, "New value must be a method signature");
-            return -1;
-        }
+    if (!PyObjCMethodSignature_Check(newVal)) {
+        PyErr_SetString(PyExc_TypeError, "New value must be a method signature");
+        return -1;
     }
 
-    PyObject* v = (PyObject*)PyObjCObject_GetBlock(self);
-    Py_XINCREF(newVal);
-    PyObjCObject_SET_BLOCK(self, (PyObjCMethodSignature*)newVal);
-    if (v != NULL) {
-        Py_DECREF(v);
+    PyObjCMethodSignature* result =
+        PyObjCObject_SetBlockSignature(self, (PyObjCMethodSignature*)newVal);
+    Py_DECREF(newVal);
+    Py_XDECREF(result);
+    if (result != NULL && newVal != (PyObject*)result) {
+        PyErr_SetString(PyObjCExc_Error, "Cannot reset __block_signature__");
+        return -1;
     }
-    return 0;
+    return result != NULL ? 0 : -1;
 }
 
 static PyGetSetDef obj_getset[] = {{
@@ -938,66 +997,36 @@ static PyObject* _Nullable meth_sizeof(PyObject* self __attribute__((__unused__)
      * This doesn't return the correct size for collections (such as NSArray),
      * but is better than the default implementation
      */
-    if (PyObjCObject_GetObject(self) == nil) {
-        return PyLong_FromSize_t(Py_TYPE(self)->tp_basicsize);
+    id objc_value = PyObjCObject_GetObject(self);
+    assert(objc_value != nil);
 
-    } else {
-        return PyLong_FromSize_t(
-            Py_TYPE(self)->tp_basicsize
-            + class_getInstanceSize(object_getClass(PyObjCObject_GetObject(self))));
-    }
+    return PyLong_FromSize_t(Py_TYPE(self)->tp_basicsize
+                             + class_getInstanceSize(object_getClass(objc_value)));
 }
 
 static PyObject*
 meth_is_magic(PyObject* self)
 {
-    int is_magic;
-
-    if (PyObjCObject_GetObject(self) == nil) {
-        is_magic = 0;
+    if (PyObjCObject_IsMagic(self)) {
+        Py_RETURN_TRUE;
     } else {
-        is_magic = PyObjCObject_IsMagic(self);
+        Py_RETURN_FALSE;
     }
-
-    PyObject* result = is_magic ? Py_True : Py_False;
-    Py_INCREF(result);
-    return result;
 }
 
 static PyObject* _Nullable as_cobject(PyObject* self)
 {
-    if (PyObjCObject_GetObject(self) == nil) {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
+    id self_value = PyObjCObject_OBJECT(self);
+    assert(self_value != nil);
 
-    return PyCapsule_New(PyObjCObject_GetObject(self), "objc.__object__", NULL);
-}
-
-/* XXX: Move this function to objc_util.m */
-PyObject* _Nullable PyObjC_get_c_void_p(void)
-{
-    static PyObject* c_void_p = NULL;
-    if (c_void_p == NULL) {
-        PyObject* mod_ctypes = PyImport_ImportModule("ctypes");
-        if (mod_ctypes == NULL) {
-            /* ctypes is not available */
-            return NULL;
-        }
-
-        c_void_p = PyObject_GetAttrString(mod_ctypes, "c_void_p");
-        Py_DECREF(mod_ctypes);
-        if (c_void_p == NULL) {
-            /* invalid or incomplete module */
-            return NULL;
-        }
-    }
-    return c_void_p;
+    return PyCapsule_New(self_value, "objc.__object__", NULL);
 }
 
 static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 {
-    return PyObjC_MakeCVoidP(PyObjCObject_GetObject(self));
+    id self_value = PyObjCObject_OBJECT(self);
+    assert(self_value != nil);
+    return PyObjC_MakeCVoidP(self_value);
 }
 
 /*
@@ -1006,20 +1035,36 @@ static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 static PyObject* _Nullable meth_dir(PyObject* self)
 {
     PyObject*    result;
+    PyObject*    result_list;
     Class        cls;
     Method*      methods;
     unsigned int method_count, i;
-    char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
-    result = PyDict_Keys(PyObjC_get_tp_dict(Py_TYPE(self)));
+    PyObject* class_dict = Py_TYPE(self)->tp_dict;
+
+    result = PySet_New(class_dict);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
 
+    PyObject** dictptr = _get_dictptr(self);
+    if (dictptr != NULL && *dictptr != NULL) {
+        PyObject* args[] = {NULL, result, *dictptr};
+        PyObject* tmp    = PyObject_VectorcallMethod(
+            PyObjCNM_update, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_CLEAR(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        Py_CLEAR(tmp);
+    } // LCOV_BR_EXCL_LINE
+
     if (PyObjCObject_IsMagic(self)) {
         /* "magic cookie" objects don't have Objective-C methods */
-        return result;
+        goto done;
     }
 
     cls = object_getClass(PyObjCObject_GetObject(self));
@@ -1031,7 +1076,6 @@ static PyObject* _Nullable meth_dir(PyObject* self)
          */
         methods = (Method* _Nonnull)class_copyMethodList(cls, &method_count);
         for (i = 0; i < method_count; i++) {
-            char*     name;
             PyObject* item;
             SEL       sel;
 
@@ -1052,17 +1096,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
                 continue;
             }
 
-            name = (char*)PyObjC_SELToPythonName(method_getName(methods[i]), selbuf,
-                                                 sizeof(selbuf));
-            if (name == NULL) { // LCOV_BR_EXCL_LINE
-                /* Can only fail if the selector name is longer than the buffer */
-                // LCOV_EXCL_START
-                PyErr_Clear();
-                continue;
-                // LCOV_EXCL_STOP
-            }
-
-            item = PyUnicode_FromString(name);
+            item = PyObjC_SELToPythonName(method_getName(methods[i]));
             if (item == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(methods);
@@ -1071,7 +1105,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
                 // LCOV_EXCL_STOP
             }
 
-            if (PyList_Append(result, item) == -1) { // LCOV_BR_EXCL_LINE
+            if (PySet_Add(result, item) == -1) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(result);
@@ -1085,7 +1119,11 @@ static PyObject* _Nullable meth_dir(PyObject* self)
 
         cls = class_getSuperclass(cls);
     }
-    return result;
+
+done:
+    result_list = PySequence_List(result);
+    Py_CLEAR(result);
+    return result_list;
 }
 
 static PyMethodDef obj_methods[] = {
@@ -1107,7 +1145,7 @@ static PyMethodDef obj_methods[] = {
         .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name  = "__is_magic",
+        .ml_name  = "__pyobjc_magic_coookie__",
         .ml_meth  = (PyCFunction)meth_is_magic,
         .ml_flags = METH_NOARGS,
     },
@@ -1149,17 +1187,17 @@ PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object)
     PyObject*     res;
     PyTypeObject* cls_type;
 
-    PyObjC_Assert(objc_object != nil, NULL);
+    assert(objc_object != nil);
     cls_type =
         (PyTypeObject*)PyObjCClass_New((Class _Nonnull)object_getClass(objc_object));
-    if (cls_type == NULL) {
-        return NULL;
+    if (cls_type == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     res = cls_type->tp_alloc(cls_type, 0);
     Py_DECREF(cls_type);
-    if (res == NULL) {
-        return NULL;
+    if (res == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
 
     if (PyObjCClass_CheckMethodList((PyObject*)Py_TYPE(res), 1) < 0) {
@@ -1176,7 +1214,11 @@ PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object)
 void
 _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 {
+#if PY_VERSION_HEX >= 0x030e0000
+    if (PyUnstable_Object_IsUniquelyReferenced(obj) != 1) {
+#else
     if (Py_REFCNT(obj) != 1) {
+#endif
         /* Someone revived this object. Objective-C doesn't like
          * this at all, therefore warn the user about this and
          * zero out the instance.
@@ -1187,36 +1229,23 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
                  Py_TYPE(obj)->tp_name);
 
         id objc_object = PyObjCObject_GetObject(obj);
-        if (objc_object != nil) {
+        assert(objc_object != nil);
 
-            if (((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE) {
-                /* pass */
+        PyObjC_UnregisterPythonProxy(objc_object, obj);
 
-            } else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
-                /* pass */
-
-            } else {
-                CFRelease(objc_object);
-            }
-
-            PyObjC_UnregisterPythonProxy(objc_object, obj);
-        }
-        ((PyObjCObject*)obj)->objc_object = nil;
-
-        Py_DECREF(obj);
+        /* Object is set to ``[NSNull null]`` to maintain the invariant */
+        ((PyObjCObject*)obj)->objc_object = NSNull_null;
 
         if (PyErr_Warn(PyObjCExc_ObjCRevivalWarning, buf) == -1) {
             PyErr_WriteUnraisable(obj);
         }
-
-        return;
     }
     Py_DECREF(obj);
 }
 
 PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
 {
-    PyObjC_Assert(objc_object != nil, NULL);
+    assert(objc_object != nil);
 
     /* object_getClass only returns Nil if its argument is nil */
     Class         cls = (Class _Nonnull)object_getClass(objc_object);
@@ -1232,15 +1261,20 @@ PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
     }
 
     cls_type = (PyTypeObject*)PyObjCClass_New(cls);
-    if (cls_type == NULL) {
-        PyErr_SetString(PyObjCExc_Error, "Found method without selector in runtime");
+    if (cls_type == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        if (!PyErr_Occurred()) {
+            PyErr_Format(PyObjCExc_Error, "Cannot find python proxy for class '%s'",
+                         class_getName(cls));
+        }
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     res = cls_type->tp_alloc(cls_type, 0);
     Py_DECREF(cls_type);
-    if (res == NULL) {
-        return NULL;
+    if (res == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;   // LCOV_EXCL_LINE
     }
 
     if (cls_type->tp_basicsize == sizeof(PyObjCBlockObject)) {
@@ -1263,9 +1297,9 @@ PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
     }
 
     if (retain) {
-        if (strcmp(object_getClassName(objc_object), "NSAutoreleasePool") != 0) {
+        if (object_getClass(objc_object) != NSAutoreleasePool_class) {
             /* NSAutoreleasePool doesn't like retain */
-            CFRetain(objc_object);
+            [objc_object retain];
         }
     }
 
@@ -1284,50 +1318,71 @@ PyObject* _Nullable PyObjCObject_New(id objc_object, int flags, int retain)
 
 PyObject* _Nullable PyObjCObject_FindSelector(PyObject* object, SEL selector)
 {
-    PyObject* meth;
-
-    meth = PyObjCClass_FindSelector((PyObject*)Py_TYPE(object), selector, NO);
-
-    if (meth == NULL) {
-        return NULL;
-
-    } else {
-        return meth;
-    }
+    return PyObjCClass_FindSelector((PyObject*)Py_TYPE(object), selector, NO);
 }
 
-id _Nullable(PyObjCObject_GetObject)(PyObject* object)
+id
+PyObjCObject_GetObject(PyObject* object)
 {
-    if (!PyObjCObject_Check(object)) {
-        PyErr_Format(PyExc_TypeError, "'objc.objc_object' expected, got '%s'",
-                     Py_TYPE(object)->tp_name);
-        return nil;
-    }
-
-    return PyObjCObject_GetObject(object);
+    id result = PyObjCObject_OBJECT(object);
+    return result;
 }
 
-void
-PyObjCObject_ClearObject(PyObject* object)
+unsigned int
+PyObjCObject_GetFlags(PyObject* object)
 {
-    if (!PyObjCObject_Check(object)) {
-        PyErr_Format(PyExc_TypeError, "'objc.objc_object' expected, got '%s'",
-                     Py_TYPE(object)->tp_name);
-    }
-    PyObjC_UnregisterPythonProxy(((PyObjCObject*)object)->objc_object, object);
-    ((PyObjCObject*)object)->objc_object = nil;
+    unsigned int result = PyObjCObject_FLAGS(object);
+    assert((result & ~PyObjCObject_kALL_FLAGS) == 0);
+    return result;
 }
 
-PyObject* _Nullable PyObjCObject_GetAttr(PyObject* obj, PyObject* name)
+bool
+PyObjCObject_IsBlock(PyObject* object)
 {
-    return object_getattro(obj, name);
+    assert(PyObjCObject_Check(object));
+    return (PyObjCObject_FLAGS(object) & PyObjCObject_kBLOCK) != 0;
+}
+
+bool
+PyObjCObject_IsMagic(PyObject* object)
+{
+    assert(PyObjCObject_Check(object));
+    return (PyObjCObject_FLAGS(object) & PyObjCObject_kMAGIC_COOKIE) != 0;
+}
+
+PyObjCMethodSignature* _Nullable PyObjCObject_GetBlockSignature(PyObject* object)
+{
+    PyObjCMethodSignature* result;
+    assert(PyObjCObject_IsBlock(object));
+    Py_BEGIN_CRITICAL_SECTION(object);
+    result = (((PyObjCBlockObject*)(object))->signature);
+    Py_XINCREF(result);
+    Py_END_CRITICAL_SECTION();
+    return result;
+}
+
+PyObjCMethodSignature* _Nullable PyObjCObject_SetBlockSignature(
+    PyObject* object, PyObjCMethodSignature* methinfo)
+{
+    assert(PyObjCObject_IsBlock(object));
+    PyObjCMethodSignature* result;
+
+    Py_BEGIN_CRITICAL_SECTION(object);
+    result = ((PyObjCBlockObject*)(object))->signature;
+    if (result == NULL) {
+        SET_FIELD_INCREF(((PyObjCBlockObject*)(object))->signature, methinfo);
+        result = methinfo;
+    }
+    Py_INCREF(result);
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 PyObject* _Nullable PyObjCObject_GetAttrString(PyObject* obj, char* name)
 {
     PyObject* pyname = PyUnicode_FromString(name);
-    if (pyname == NULL)
-        return NULL;
+    if (pyname == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_START
 
     PyObject* rv = object_getattro(obj, pyname);
     Py_DECREF(pyname);

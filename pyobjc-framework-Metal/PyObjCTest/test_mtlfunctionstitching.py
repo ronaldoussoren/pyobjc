@@ -8,7 +8,7 @@ class TestTMLFunctionStitching(TestCase):
         self.assertEqual(Metal.MTLStitchedLibraryOptionNone, 0)
         self.assertEqual(Metal.MTLStitchedLibraryOptionFailOnBinaryArchiveMiss, 1 << 0)
         self.assertEqual(
-            Metal.MTLStitchedLibraryOptionStoreLibraryInMetalScript, 1 << 1
+            Metal.MTLStitchedLibraryOptionStoreLibraryInMetalPipelinesScript, 1 << 1
         )
 
     @min_sdk_level("12.0")

@@ -1,3 +1,7 @@
+.. module:: LocalAuthentication
+   :platform: macOS 10.10+
+   :synopsis: Bindings for the LocalAuthentication framework
+
 API notes: LocalAuthentication framework
 =========================================
 
@@ -8,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``LocalAuthentication`` package (that is, ``import LocalAuthentication``).
 
+.. versionadded:: macOS 10.10
+
 API Notes
 ---------
-
-The entire "LocalAuthentication" framework on macOS 10.10 (or later) is available from Python.

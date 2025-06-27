@@ -57,11 +57,6 @@ Unlike informal protocols, it is necessary to explicitly declare
 conformance to formal protocols.  However, all formal protocols in Cocoa
 are also described using ``objc.informal_protocol`` objects.
 
-.. todo::
-
-   Is this necessary? we could also use the same strategy as for informal
-   protocols, and drop the informal_protocol wrappers for formal protocols.
-
 Protocol conformance is declared by using a ``protocols`` keyword to
 the class definitions:
 

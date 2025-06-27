@@ -67,6 +67,11 @@ class TestDeprecationWarnings(TestCase):
         self.assertEqual(len(w), 1)
         self.assertTrue(issubclass(w[-1].category, objc.ApiDeprecationWarning))
 
+        with self.assertRaises(objc.ApiDeprecationWarning):
+            with warnings.catch_warnings(record=True) as w:
+                warnings.simplefilter("error")
+                func()
+
     def assertNoDeprecationWarning(self, func):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")

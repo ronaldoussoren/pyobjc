@@ -31,8 +31,8 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 """
 
@@ -244,17 +244,23 @@ def generate_testext_base(num_base):
             stream.write(
                 textwrap.dedent(
                     f"""\
-                    if (PyModule_AddObject(m, "OC_Category_GP{idx}", PyObjC_IdToPython([OC_Category_GP{idx} class]))
+                    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                                           "OC_Category_GP{idx}",
+                                           PyObjC_IdToPython([OC_Category_GP{idx} class]))
                         < 0) {{
                         return -1;
                    }}
-                    if (PyModule_AddObject(m, "OC_Category_P{idx}", PyObjC_IdToPython([OC_Category_P{idx} class]))
+                    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                                           "OC_Category_P{idx}",
+                                           PyObjC_IdToPython([OC_Category_P{idx} class]))
                         < 0) {{
-                        return -1;
+                        return -1; //LCOV_EXCL_LINE
                     }}
-                    if (PyModule_AddObject(m, "OC_Category_C{idx}", PyObjC_IdToPython([OC_Category_C{idx} class]))
+                    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                                           "OC_Category_C{idx}",
+                                           PyObjC_IdToPython([OC_Category_C{idx} class]))
                         < 0) {{
-                        return -1;
+                        return -1; // LCOV_EXCL_LINE
                     }}
                     """
                 )

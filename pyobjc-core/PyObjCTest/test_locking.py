@@ -13,6 +13,7 @@ from PyObjCTest.locking import OC_LockTest
 from PyObjCTools.TestSupport import TestCase
 
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
+NSObject = objc.lookUpClass("NSObject")
 
 
 class OtherThread(threading.Thread):
@@ -79,6 +80,17 @@ class BaseClass(objc.lookUpClass("NSObject")):
 
 
 class TestLockingBasic(TestCase):
+    def test_invalid_usage(self):
+        with self.assertRaisesRegex(TypeError, "takes exactly 1 argument"):
+            objc._objc_sync_enter()
+
+        with self.assertRaisesRegex(TypeError, "takes exactly 1 argument"):
+            objc._objc_sync_exit()
+
+        o = NSObject.alloc().init()
+        with self.assertRaisesRegex(objc.LockError, "objc_sync_exit failed"):
+            objc._objc_sync_exit(o)
+
     def testBasicLocking(self):
         lst = []
 

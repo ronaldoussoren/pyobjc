@@ -1,5 +1,6 @@
 import objc
 import inspect
+import warnings
 from PyObjCTools.TestSupport import TestCase
 from PyObjCTest.test_metadata import OC_MetaDataTest
 
@@ -7,6 +8,11 @@ from PyObjCTest.test_metadata import OC_MetaDataTest
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
 NSArray = objc.lookUpClass("NSArray")
+
+
+class OC_InstanceMethod(NSObject):
+    def instanceMethod(self):
+        return 42
 
 
 class TestBasicIMP(TestCase):
@@ -29,8 +35,30 @@ class TestBasicIMP(TestCase):
         )
         self.assertEqual(m.selector, b"alloc")
 
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            m()
+
         o = m(cls).init()
         self.assertIsInstance(o, cls)
+
+        o = NSArray.alloc()
+        m = o.methodForSelector_("init")
+
+        # XXX: Need to recreate the value because
+        #      calling a method on a partially
+        #      initialed value resets the object
+        #      reference (see comment in selector.m)
+        o = NSArray.alloc()
+
+        o2 = m(o)
+        self.assertEqual(o2, [])
+        self.assertIsInstance(o2, NSArray)
+
+        o = NSObject.alloc().init()
+        i = NSObject.methodForSelector_(b"alloc")
+        o2 = i(o).init()
+        self.assertIsInstance(o2, NSObject)
+        self.assertIsNot(o, o2)
 
     def testInit1(self):
         cls = NSObject
@@ -65,7 +93,11 @@ class TestBasicIMP(TestCase):
     def testDescription(self):
         o = NSObject.alloc().init()
 
-        self.assertEqual(o.description(), o.methodForSelector_(b"description")(o))
+        imp = o.methodForSelector_(b"description")
+        self.assertEqual(o.description(), imp(o))
+
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            imp()
 
     def test_repr(self):
         o = NSObject.alloc().init()
@@ -149,19 +181,15 @@ class TestBasicIMP(TestCase):
         self.assertIsInstance(p, NSArray)
         self.assertIsNot(o, p)
 
-        # Make sure the pointer to ObjC is cleared:
-        with self.assertRaisesRegex(
-            AttributeError, "cannot access attribute '__c_void_p__' of NIL "
-        ):
-            o.__c_void_p__
-
     def test_imp_attributes(self):
         o = NSMutableArray.alloc().init()
         imp = o.methodForSelector_(b"addObject:")
         alloc_imp = NSMutableArray.methodForSelector_(b"alloc")
         cls_imp = NSMutableArray.methodForSelector_(b"array")
 
-        self.assertFalse(imp.isAlloc)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=objc.ApiDeprecationWarning)
+            self.assertFalse(imp.isAlloc)
         self.assertFalse(imp.isClassMethod)
         self.assertEqual(
             objc.splitSignature(imp.signature), objc.splitSignature(b"v@:@")
@@ -174,10 +202,21 @@ class TestBasicIMP(TestCase):
         self.assertIsInstance(sig, inspect.Signature)
         self.assertEqual(str(sig), "(arg0, arg1, /)")
 
-        self.assertFalse(cls_imp.isAlloc)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=objc.ApiDeprecationWarning)
+            self.assertFalse(cls_imp.isAlloc)
         self.assertTrue(cls_imp.isClassMethod)
 
-        self.assertTrue(alloc_imp.isAlloc)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=objc.ApiDeprecationWarning)
+            self.assertFalse(alloc_imp.isAlloc)
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=objc.ApiDeprecationWarning)
+            with self.assertRaisesRegex(
+                objc.ApiDeprecationWarning, "isAlloc is always false"
+            ):
+                self.assertFalse(alloc_imp.isAlloc)
         self.assertTrue(alloc_imp.isClassMethod)
 
 
@@ -208,3 +247,23 @@ class TestGettingIMPs(TestCase):
 
         with self.assertRaisesRegex(ValueError, "depythonifying 'SEL', got 'int'"):
             NSMutableArray.instanceMethodForSelector_(42)
+
+    def test_not_found(self):
+        o = NSMutableArray.alloc().init()
+        with self.assertRaisesRegex(AttributeError, "No selector doesnotexist"):
+            o.methodForSelector_(b"doesnotexist")
+
+        with self.assertRaisesRegex(AttributeError, "No selector doesnotexist"):
+            NSMutableArray.instanceMethodForSelector_(b"doesnotexist")
+
+    def test_python_selector(self):
+        o = OC_InstanceMethod.alloc().init()
+        with self.assertRaisesRegex(
+            TypeError, "Cannot locate Python representation of instanceMethod"
+        ):
+            o.methodForSelector_(b"instanceMethod")
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot locate Python representation of instanceMethod"
+        ):
+            OC_InstanceMethod.instanceMethodForSelector_(b"instanceMethod")

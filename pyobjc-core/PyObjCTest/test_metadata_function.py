@@ -12,6 +12,22 @@ union_SomeUnion = union_SomeUnion.encode()
 
 _FunctionTable = [
     (
+        "makeArrayWithObjects_",
+        b"@@",
+        "",
+        {"variadic": True, "c_array_delimited_by_null": True},
+    ),
+    (
+        "makeCountArrayWithObjects_",
+        b"@^Q@",
+        "",
+        {
+            "variadic": True,
+            "c_array_delimited_by_null": True,
+            "arguments": {0: {"type_modifier": b"o"}},
+        },
+    ),
+    (
         "makeArrayWithFormat_",
         b"@@",
         "",
@@ -419,7 +435,7 @@ _FunctionTable = [
                 "callable": {
                     "retval": {"type": objc._C_INT},
                     "arguments": {
-                        "0": {"type": objc._C_INT},
+                        0: {"type": objc._C_INT},
                     },
                 }
             }
@@ -896,6 +912,19 @@ class TestByReference(TestCase):
         self.assertEqual(y, 43)
         self.assertEqual(z, objc.NULL)
 
+    def test_byref_and_variadic(self):
+        with self.assertRaisesRegex(
+            TypeError, "variadic with by-ref args not supported"
+        ):
+            makeCountArrayWithObjects_(None, 1, "b", 3)  # noqa: F821
+
+    def test_variadic_null_delimited(self):
+        v = makeArrayWithObjects_(1, "b", 3)  # noqa: F821
+        self.assertEqual(v, [1, "b", 3])
+
+        with self.assertRaisesRegex(TypeError, "Need at least 1 arguments, got 0"):
+            makeArrayWithObjects_()  # noqa: F821
+
 
 class TestPrintfFormat(TestCase):
     def test_nsformat(self):
@@ -914,3 +943,14 @@ class TestPrintfFormat(TestCase):
 
         v = makeArrayWithCFormat_(b"hello %s", b"world")  # noqa: F821
         self.assertEqual(list(v), ["hello %s", "hello world"])
+
+
+class TestFunctionReturn(TestCase):
+    def test_function(self):
+        v = getDoubleFunc()  # noqa: F821
+        self.assertIsInstance(v, objc.function)
+        self.assertResultHasType(v, objc._C_INT)
+        self.assertArgHasType(v, 0, objc._C_INT)
+
+        self.assertEqual(v(2), 4)
+        self.assertEqual(v(2**16), 2**17)

@@ -1,3 +1,7 @@
+.. module:: ExceptionHandling
+   :platform: macOS
+   :synopsis: Bindings for the ExceptionHandling framework
+
 API Notes: ExceptionHandling framework
 ======================================
 
@@ -11,5 +15,3 @@ These bindings are accessed through the ``ExceptionHandling`` package (that is, 
 
 API Notes
 ---------
-
-This framework is fully wrapped.

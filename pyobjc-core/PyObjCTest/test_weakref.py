@@ -143,3 +143,7 @@ class TestObjCWeakRef(TestCase):
 
             class MyRef(objc.WeakRef):
                 pass
+
+    def test_weakrefs(self):
+        t = objc.WeakRef["a"]
+        self.assertIsGenericAlias(t, objc.WeakRef, ("a",))

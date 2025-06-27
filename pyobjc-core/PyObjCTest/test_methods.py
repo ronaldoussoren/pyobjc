@@ -51,6 +51,15 @@ import objc
 from PyObjCTest.testbndl import OC_TestClass1, OC_TestClass2
 from PyObjCTools.TestSupport import TestCase
 
+
+class Number:
+    def __init__(self, v):
+        self._value = v
+
+    def __int__(self):
+        return self._value
+
+
 # Can't set the right signatures in plain Objective-C.
 for method, argmeta in [
     (b"passInOutChar:", {2: {"type_modifier": b"N"}}),
@@ -87,8 +96,11 @@ for method, argmeta in [
     (b"passOutFloat:", {2: {"type_modifier": b"o"}}),
     (b"passInFloat:", {2: {"type_modifier": b"n"}}),
     (b"passInOutDouble:", {2: {"type_modifier": b"N"}}),
+    (b"passInOutLongDouble:", {2: {"type_modifier": b"N"}}),
     (b"passOutDouble:", {2: {"type_modifier": b"o"}}),
+    (b"passOutLongDouble:", {2: {"type_modifier": b"o"}}),
     (b"passInDouble:", {2: {"type_modifier": b"n"}}),
+    (b"passInLongDouble:", {2: {"type_modifier": b"n"}}),
     (b"passInOutCharp:", {2: {"type_modifier": b"N"}}),
     (b"passOutCharp:", {2: {"type_modifier": b"o"}}),
     (b"passInCharp:", {2: {"type_modifier": b"n"}}),
@@ -194,6 +206,13 @@ class PyOCTestSimpleReturns(TestCase):
         self.assertEqual(OC_TestClass1.doubleClsFunc(), 1.0)
         self.assertEqual(OC_TestClass1.doubleClsFunc(), 42.0)
         self.assertEqual(OC_TestClass1.doubleClsFunc(), 1e10)
+
+    def testClsLongDouble(self):
+        OC_TestClass1.clsReset()
+        self.assertEqual(OC_TestClass1.longdoubleClsFunc(), 0.128)
+        self.assertEqual(OC_TestClass1.longdoubleClsFunc(), 1.0)
+        self.assertEqual(OC_TestClass1.longdoubleClsFunc(), 42.0)
+        self.assertEqual(OC_TestClass1.longdoubleClsFunc(), 1e10)
 
     def testClsCharp(self):
         OC_TestClass1.clsReset()
@@ -305,6 +324,14 @@ class PyOCTestSimpleReturns(TestCase):
         self.assertEqual(obj.doubleFunc(), 1.0)
         self.assertEqual(obj.doubleFunc(), 42.0)
         self.assertEqual(obj.doubleFunc(), 1e10)
+
+    def testLongDouble(self):
+        obj = OC_TestClass1.new()
+        obj.reset()
+        self.assertEqual(obj.longdoubleFunc(), 0.128)
+        self.assertEqual(obj.longdoubleFunc(), 1.0)
+        self.assertEqual(obj.longdoubleFunc(), 42.0)
+        self.assertEqual(obj.longdoubleFunc(), 1e10)
 
     def testCharp(self):
         obj = OC_TestClass1.new()
@@ -455,6 +482,12 @@ class PyOCTestSimpleArguments(TestCase):
         ):
             self.obj.shortArg_(1 << 16)
 
+            with self.assertRaises(OverflowError):
+                self.obj.shortArg_(Number(1 << 128))
+
+            with self.assertRaises(OverflowError):
+                self.obj.shortArg_(1 << 128)
+
     def testUShort(self):
         self.assertEqual(self.obj.ushortArg_(0), 0)
         self.assertEqual(self.obj.ushortArg_(10), 5)
@@ -497,6 +530,15 @@ class PyOCTestSimpleArguments(TestCase):
                 r"depythonifying 'unsigned short', got 'int' of wrong magnitude \(max [0-9]+, value [0-9]+\)",
             ):
                 self.obj.ushortArg_(1 << 16)
+
+            with self.assertRaises(OverflowError):
+                self.obj.ushortArg_(Number(1 << 128))
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "depythonifying 'unsigned short', got 'Number' of wrong magnitude ",
+            ):
+                self.obj.ushortArg_(Number(-40))
 
     def testChar(self):
         self.assertEqual(self.obj.charArg_(0), (0))
@@ -785,6 +827,10 @@ class PyOCTestByReferenceArguments(TestCase):
         self.assertEqual(self.obj.passInDouble_(10), 90.0)
         self.assertEqual(self.obj.passInDouble_(0.11), 0.99)
 
+    def testLongDoubleIn(self):
+        self.assertEqual(self.obj.passInLongDouble_(10), 90.0)
+        self.assertEqual(self.obj.passInLongDouble_(0.11), 0.99)
+
     def testDoubleOut(self):
         self.obj.reset()
         self.assertEqual(self.obj.passOutDouble_(None), 0.128)
@@ -792,10 +838,22 @@ class PyOCTestByReferenceArguments(TestCase):
         self.assertEqual(self.obj.passOutDouble_(None), 42.0)
         self.assertEqual(self.obj.passOutDouble_(None), 1e10)
 
+    def testLongDoubleOut(self):
+        self.obj.reset()
+        self.assertEqual(self.obj.passOutLongDouble_(None), 0.128)
+        self.assertEqual(self.obj.passOutLongDouble_(None), 1.0)
+        self.assertEqual(self.obj.passOutLongDouble_(None), 42.0)
+        self.assertEqual(self.obj.passOutLongDouble_(None), 1e10)
+
     def testDoubleInOut(self):
         self.assertEqual(self.obj.passInOutDouble_(10), 420)
         self.assertEqual(self.obj.passInOutDouble_(10.0), 420)
         self.assertEqual(self.obj.passInOutDouble_(0.01), 0.42)
+
+    def testLongDoubleInOut(self):
+        self.assertEqual(self.obj.passInOutLongDouble_(10), 420)
+        self.assertEqual(self.obj.passInOutLongDouble_(10.0), 420)
+        self.assertEqual(self.obj.passInOutLongDouble_(0.01), 0.42)
 
     def testCharpIn(self):
         self.assertEqual(self.obj.passInCharp_(b"hello"), b"hheelllloo")
@@ -863,6 +921,7 @@ ULONGLONG_NUMBERS = [
 
 FLOAT_NUMBERS = [makeCFloat(0.1), makeCFloat(100.0)]
 DOUBLE_NUMBERS = [1.5, 3.5, 1e10, 1.99e10]
+LONG_DOUBLE_NUMBERS = [1.5, 3.5, 1e10, 1.99e10]
 OBJECTS = ["hello", 1.0, range(4), lambda x: 10]
 DUMMY_OBJECTS = [(1, 1), (-10, -10), (-4, -5), (0, 0), (10, 20)]
 DUMMY2_OBJECTS = [((1, 2, 3, 4),), ((-9, -8, -7, -6),)]
@@ -977,6 +1036,15 @@ class MyOCClass(objc.lookUpClass("NSObject")):
 
     doubleFunc = objc.selector(doubleFunc, signature=OC_TestClass1.doubleFunc.signature)
 
+    def longdoubleFunc(self):
+        i = self.idx
+        self.idx += 1
+        return LONG_DOUBLE_NUMBERS[i]
+
+    longdoubleFunc = objc.selector(
+        longdoubleFunc, signature=OC_TestClass1.longdoubleFunc.signature
+    )
+
     def idFunc(self):
         i = self.idx
         self.idx += 1
@@ -1068,6 +1136,13 @@ class MyOCClass(objc.lookUpClass("NSObject")):
         return arg * 2
 
     doubleArg_ = objc.selector(doubleArg_, signature=OC_TestClass1.doubleArg_.signature)
+
+    def longdoubleArg_(self, arg):
+        return arg * 2
+
+    longdoubleArg_ = objc.selector(
+        longdoubleArg_, signature=OC_TestClass1.longdoubleArg_.signature
+    )
 
 
 class OCPyTestSimpleCalls(TestCase):
@@ -1510,12 +1585,26 @@ class OCPyTestSimpleCalls(TestCase):
         for o in DOUBLE_NUMBERS:
             self.assertEqual(self.obj.callInstanceDoubleFuncOf_(self.ocobj), o)
 
+    def testLongCDouble(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in LONG_DOUBLE_NUMBERS:
+            self.assertEqual(self.obj.callInstanceLongDoubleFuncOf_(self.ocobj), o)
+
     def testIDouble(self):
         self.pyobj.reset()
         self.ocobj.reset()
 
         for o in DOUBLE_NUMBERS:
             self.assertEqual(self.obj.invokeInstanceDoubleFuncOf_(self.ocobj), o)
+
+    def testILongDouble(self):
+        self.pyobj.reset()
+        self.ocobj.reset()
+
+        for o in LONG_DOUBLE_NUMBERS:
+            self.assertEqual(self.obj.invokeInstanceLongDoubleFuncOf_(self.ocobj), o)
 
     def testCId(self):
         self.pyobj.reset()

@@ -148,8 +148,6 @@ class MyQuartzView(Cocoa.NSView):
         # that the context size corresponds to the size of the view
         # i.e. one unit in the context == one pixel
         # Also, the origin is in the bottom left of the view with +y pointing up
-        global getFunction
-
         bounds = self.bounds()
 
         angle = 0

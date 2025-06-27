@@ -133,6 +133,18 @@ class TestHiddenSelector(TestCase):
         v = OCTestHidden.pyobjc_classMethods.clsmethod()
         self.assertEqual(v, 99)
 
+    def test_hidden_flag_invalid(self):
+        @objc.selector
+        def addedmethod(self):
+            return "NEW"
+
+        class NoBool:
+            def __bool__(self):
+                raise RuntimeError("no bool")
+
+        with self.assertRaisesRegex(RuntimeError, "no bool"):
+            addedmethod.isHidden = NoBool()
+
     def testHiddenAddMethods(self):
         @objc.selector
         def addedmethod(self):

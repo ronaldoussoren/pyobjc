@@ -25,9 +25,7 @@ typedef struct {
     PyObject_HEAD
 
     NSObject* _Nullable object;
-#if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc vectorcall;
-#endif
 } PyObjC_WeakRef;
 
 static PyObject* PyObjCWeakRef_Type;
@@ -67,21 +65,6 @@ static PyObject* _Nullable weakref_vectorcall(PyObject* object,
     return id_to_python(tmp);
 }
 
-#if PY_VERSION_HEX < 0x03090000
-
-static PyObject* _Nullable weakref_call(PyObject* s, PyObject* _Nullable args,
-                                        PyObject* _Nullable kwds)
-{
-    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
-        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
-        return NULL;
-    }
-
-    return weakref_vectorcall(s, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
-}
-
-#endif /* PY_VERSION_HEX < 0x03090000 */
-
 static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unused__)),
                                        PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
@@ -115,16 +98,13 @@ static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unuse
         return NULL;                // LCOV_EXCL_LINE
     }
 
-    result->object = nil;
-#if PY_VERSION_HEX >= 0x03090000
+    result->object     = nil;
     result->vectorcall = weakref_vectorcall;
-#endif
     objc_storeWeak(&result->object, PyObjCObject_GetObject(tmp));
 
     return (PyObject*)result;
 }
 
-#if PY_VERSION_HEX >= 0x03090000
 static PyMemberDef weakref_members[] = {
     {
         .name   = "__vectorcalloffset__",
@@ -135,19 +115,23 @@ static PyMemberDef weakref_members[] = {
     {
         .name = NULL /* SENTINEL */
     }};
-#endif
+
+static PyMethodDef weakref_methods[] = {{.ml_name  = "__class_getitem__",
+                                         .ml_meth  = (PyCFunction)Py_GenericAlias,
+                                         .ml_flags = METH_O | METH_CLASS,
+                                         .ml_doc   = "See PEP 585"},
+                                        {
+                                            .ml_name = NULL /* SENTINEL */
+                                        }};
 
 static PyType_Slot weakref_slots[] = {
     {.slot = Py_tp_dealloc, .pfunc = (void*)&weakref_dealloc},
     {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
     {.slot = Py_tp_doc, .pfunc = (void*)&weakref_cls_doc},
     {.slot = Py_tp_new, .pfunc = (void*)&weakref_new},
-#if PY_VERSION_HEX >= 0x03090000
     {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
     {.slot = Py_tp_members, .pfunc = (void*)&weakref_members},
-#else
-    {.slot = Py_tp_call, .pfunc = (void*)&weakref_call},
-#endif
+    {.slot = Py_tp_methods, .pfunc = (void*)&weakref_methods},
 
     {0, NULL} /* sentinel */
 };
@@ -159,10 +143,8 @@ static PyType_Spec weakref_spec = {
 #if PY_VERSION_HEX >= 0x030a0000
     .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_HAVE_VECTORCALL,
-#elif PY_VERSION_HEX >= 0x03090000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
 #else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
 #endif
     .slots = weakref_slots,
 };

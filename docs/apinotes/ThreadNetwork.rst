@@ -1,3 +1,7 @@
+.. module:: ThreadNetwork
+   :platform: macOS 13+
+   :synopsis: Bindings for the ThreadNetwork framework
+
 API Notes: ThreadNetwork framework
 ==================================
 
@@ -8,10 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``ThreadNetwork`` package (that is, ``import ThreadNetwork``).
 
+.. versionadded:: macOS 13
 
 API Notes
 ---------
-
-.. note::
-
-   This framework is available on macOS 13 and later.

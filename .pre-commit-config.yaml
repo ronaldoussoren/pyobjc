@@ -1,13 +1,13 @@
 minimum_pre_commit_version: "3.0"
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.16.0
+    rev: v3.20.0
     hooks:
     -   id: pyupgrade
         args: ['--py38-plus']
 
   - repo: https://github.com/psf/black
-    rev: 24.4.2
+    rev: 25.1.0
     hooks:
       - id: black
         language_version: python3.10
@@ -16,7 +16,7 @@ repos:
         types: []
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.0
+    rev: 7.3.0
     hooks:
       - id: flake8
         args: ["--config", ".flake8" ]
@@ -39,14 +39,13 @@ repos:
 #
 
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: 'v18.1.8'
+    rev: 'v20.1.6'
     hooks:
     - id: clang-format
-      types: [c, objective-c]
 
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
+    rev: v2.4.1
     hooks:
     -   id: codespell
         args: ["--config", ".codespellrc"]
@@ -65,6 +64,11 @@ repos:
       language: python
       language_version: python3.10
       entry: ./development-support/validate-fwinfo
+    - id: check-python-used
+      name: check-python-used
+      language: python
+      language_version: python3.10
+      entry: ./development-support/check-pyobjc-core-python-used
 
 #  - repo: https://github.com/pre-commit/mirrors-clang-format
 #    rev: 'v13.0.0'
@@ -72,7 +76,7 @@ repos:
 #    -   id: clang-format
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer

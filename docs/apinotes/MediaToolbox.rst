@@ -1,3 +1,7 @@
+.. module:: MediaToolbox
+   :platform: macOS
+   :synopsis: Bindings for the MediaToolbox framework
+
 API Notes: MediaToolbox framework
 =================================
 
@@ -10,7 +14,7 @@ These bindings are accessed through the ``MediaToolbox`` package (that is, ``imp
 API Notes
 ---------
 
-The full framework is available from Python. This framework was introduced in macOS 10.7.
+The full framework is available from Python.
 
 * ``MTAudioProcessingTapCreate``
 

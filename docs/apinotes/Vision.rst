@@ -1,3 +1,7 @@
+.. module:: Vision
+   :platform: macOS 10.13+
+   :synopsis: Bindings for the Vision framework
+
 API Notes: Vision framework
 ===========================
 
@@ -11,10 +15,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``Vision`` package (that is, ``import Vision``).
 
+.. versionadded:: macOS 10.13
 
 API Notes
 ---------
-
-.. note::
-
-   This framework is only available on macOS 10.13 and later.

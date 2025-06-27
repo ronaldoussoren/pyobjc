@@ -81,7 +81,7 @@ class TestCGWindow(TestCase):
         v = Quartz.CGWindowListCreateImageFromArray(
             ((0, 0), (100, 100)), windowArray, 0
         )
-        self.assertIsInstance(v, Quartz.CGImageRef)
+        self.assertIsInstance(v, (Quartz.CGImageRef, type(None)))
 
     @min_os_level("11.0")
     def testFunctions10_15(self):

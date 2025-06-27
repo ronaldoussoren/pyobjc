@@ -35,6 +35,10 @@ struct PyObjC_method {
 #define _C_ATOMIC 'A'
 #define _C_COMPLEX 'j' /* XXX: Requires more work to support */
 
+#ifndef _C_LNG_DBL
+#define _C_LNG_DBL 'D'
+#endif
+
 /* These don't actually exist in the Objective-C runtime, but are used
  * by the bridge to simplify code.
  */

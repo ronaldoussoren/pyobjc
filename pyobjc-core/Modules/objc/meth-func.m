@@ -40,13 +40,15 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
         if (PyObjC_is_pyfunction(func)) {
             PyObject* code = PyObject_GetAttrString(func, "__code__");
             Py_DECREF(func);
-            if (code == NULL) { // LCOV_BR_EXCL_LINE
-                return NULL;    // LCOV_EXCL_LINE
-            } else if (!PyCode_Check(code)) {
+            if (code == NULL) {               // LCOV_BR_EXCL_LINE
+                return NULL;                  // LCOV_EXCL_LINE
+            } else if (!PyCode_Check(code)) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_Format(PyExc_ValueError,
                              "%R does not have a valid '__code__' attribute", value);
                 Py_DECREF(code);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
             return (PyCodeObject*)code;
         } else {
@@ -79,6 +81,7 @@ PyObjC_returns_value(PyObject* value)
     }
 #if PY_VERSION_HEX >= 0x030b0000
     PyObject* co = PyCode_GetCode(func_code);
+
     if (co == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Clear();
@@ -86,6 +89,19 @@ PyObjC_returns_value(PyObject* value)
         return true;
         // LCOV_EXCL_STOP
     }
+
+#if PY_VERSION_HEX >= 0x030e0000
+    PyObject* consts = PyObject_GetAttr((PyObject*)func_code, PyObjCNM_co_consts);
+    if (consts == NULL) {
+        // LCOV_EXCL_START
+        PyErr_Clear();
+        Py_DECREF(func_code);
+        Py_DECREF(co);
+        return true;
+        // LCOV_EXCL_STOP
+    }
+#endif /* PY_VERSION_HEX >= 0x030e0000 */
+
     if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
             co, &buf, PyBUF_CONTIG_RO)
         == -1) {
@@ -114,6 +130,9 @@ PyObjC_returns_value(PyObject* value)
          */
         // LCOV_EXCL_START
         Py_DECREF(func_code);
+#if PY_VERSION_HEX >= 0x030e0000
+        Py_DECREF(consts);
+#endif
         return NULL;
         // LCOV_EXCL_STOP
     }
@@ -129,23 +148,28 @@ PyObjC_returns_value(PyObject* value)
     bool was_none = false;
 
 #if PY_VERSION_HEX >= 0x03060000
-    PyObjC_Assert(buf.len % 2 == 0, NULL);
+    assert(buf.len % 2 == 0);
 
     for (Py_ssize_t i = 0; i < buf.len; i += 2) {
         int op = ((unsigned char*)buf.buf)[i];
+#if PY_VERSION_HEX >= 0x030e0000
+        if (op == LOAD_CONST
+            && PyTuple_GET_ITEM(consts, ((unsigned char*)buf.buf)[i + 1]) == Py_None) {
+#else
         if (op == LOAD_CONST && ((unsigned char*)buf.buf)[i + 1] == 0) {
+#endif
             was_none = true;
         } else {
             if (op == RETURN_VALUE && !was_none) {
                 rv = true;
                 break;
             }
-#if PY_VERSION_HEX >= 0x030c0000
+#if PY_VERSION_HEX >= 0x030c0000 && PY_VERSION_HEX < 0x030e0000
             else if (op == RETURN_CONST && ((unsigned char*)buf.buf)[i + 1] != 0) {
                 rv = true;
                 break;
             }
-#endif /* PY_VERSION_HEX >= 0x030c0000 */
+#endif /* PY_VERSION_HEX >= 0x030c0000 && PY_VERSION_HEX < 0x030e0000 */
 
             was_none = false;
         }
@@ -173,13 +197,16 @@ PyObjC_returns_value(PyObject* value)
 #endif /* PY_VERSION_HEX < 0x03060000 */
     PyBuffer_Release(&buf);
     Py_DECREF(func_code);
+#if PY_VERSION_HEX >= 0x030e0000
+    Py_DECREF(consts);
+#endif
     return rv;
 }
 
 Py_ssize_t
 PyObjC_num_defaults(PyObject* value)
 {
-    PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
+    assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value));
 
     PyObject* defaults = PyObject_GetAttrString(value, "__defaults__");
     if (defaults == NULL) { // LCOV_BR_EXCL_LINE
@@ -205,21 +232,26 @@ PyObjC_num_defaults(PyObject* value)
 Py_ssize_t
 PyObjC_num_kwdefaults(PyObject* value)
 {
-    PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
+    assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value));
 
     PyObject* defaults = PyObject_GetAttrString(value, "__kwdefaults__");
-    if (defaults == NULL) {
-        return -1;
+    if (defaults == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;          // LCOV_EXCL_LINE
     }
-    if (PyDict_Check(defaults)) {
+    if (PyDict_Check(defaults)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_ssize_t num = PyDict_Size(defaults);
         Py_DECREF(defaults);
         return num;
-    } else if (defaults != Py_None) {
+        // LCOV_EXCL_STOP
+    } else if (defaults != Py_None) { // LCOV_BR_EXCL_LINE
+        /* This cannot happen without poking into CPython internals */
+        // LCOV_EXCL_START
         Py_DECREF(defaults);
         PyErr_Format(PyExc_ValueError, "%R has an invalid '__kwdefaults__' attribute",
                      value);
         return -1;
+        // LCOV_EXCL_STOP
     } else {
         Py_DECREF(defaults);
         return 0;
@@ -229,7 +261,7 @@ PyObjC_num_kwdefaults(PyObject* value)
 Py_ssize_t
 PyObjC_num_arguments(PyObject* value)
 {
-    PyObjC_Assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value), -1);
+    assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value));
 
     PyCodeObject* func_code = PyObjC_get_code(value);
     if (func_code == NULL) {

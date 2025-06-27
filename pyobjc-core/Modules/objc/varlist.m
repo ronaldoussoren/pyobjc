@@ -169,12 +169,18 @@ static PyObject* _Nullable varlist__getslice__(PyObject* _self, Py_ssize_t start
 }
 
 static int
-varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject* newval)
+varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop,
+                    PyObject* _Nullable newval)
 {
-    int result;
+    int            result;
     PyObjCVarList* self = (PyObjCVarList*)_self;
     Py_ssize_t     idx;
     PyObject*      seq;
+
+    if (newval == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Cannot delete items of an 'objc.varlist'");
+        return -1;
+    }
 
     if (check_index(self, start) == -1) {
         return -1;
@@ -200,6 +206,8 @@ varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject
         return -1;
     }
 
+    /* The critical section is needed to avoid concurrently reading and writing.
+     */
     Py_BEGIN_CRITICAL_SECTION(self);
     result = 0;
     for (idx = start; idx < stop; idx++) {
@@ -207,7 +215,6 @@ varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject
         int       r = depythonify_c_value(
             self->typestr, v, ((unsigned char*)self->array) + (idx * self->itemsize));
         if (r == -1) {
-            Py_DECREF(seq);
             result = -1;
             break;
         }
@@ -226,10 +233,15 @@ varlist__setitem__(PyObject* _self, Py_ssize_t idx, PyObject* _Nullable value)
         return -1;
     }
 
+    if (value == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Cannot delete items of an 'objc.varlist'");
+        return -1;
+    }
+
     int result;
     Py_BEGIN_CRITICAL_SECTION(self);
     result = depythonify_c_value(self->typestr, value,
-                               ((unsigned char*)self->array) + (idx * self->itemsize));
+                                 ((unsigned char*)self->array) + (idx * self->itemsize));
     Py_END_CRITICAL_SECTION();
     return result;
 }
@@ -397,6 +409,10 @@ static PyMethodDef varlist_methods[] = {{.ml_name  = "as_tuple",
                                          .ml_meth  = (PyCFunction)varlist_as_buffer,
                                          .ml_flags = METH_VARARGS | METH_KEYWORDS,
                                          .ml_doc   = varlist_as_buffer_doc},
+                                        {.ml_name  = "__class_getitem__",
+                                         .ml_meth  = (PyCFunction)Py_GenericAlias,
+                                         .ml_flags = METH_O | METH_CLASS,
+                                         .ml_doc   = "See PEP 585"},
                                         {
                                             .ml_name = NULL /* SENTINEL */
                                         }};
@@ -451,7 +467,6 @@ PyObjCVarList_New(const char* tp, void* array)
         end--;
     }
 
-    /* XXX: Use PyObject_New() + separate buffer for the encoding */
     result = (PyObjCVarList*)PyObject_Malloc(
         _PyObject_SIZE((PyTypeObject*)PyObjCVarList_Type) + (end - tp) + 1);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
@@ -487,8 +502,8 @@ PyObjCVarList_Setup(PyObject* module)
     }
     PyObjCVarList_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "varlist", PyObjCVarList_Type) == -1) {
+    int r = PyModule_AddObject(module, "varlist", PyObjCVarList_Type);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCVarList_Type);

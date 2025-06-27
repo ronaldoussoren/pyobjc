@@ -37,21 +37,6 @@ extern PyTypeObject PyObjCClass_Type;
 #define PyObjCClass_Check(obj) PyObject_TypeCheck(obj, &PyObjCClass_Type)
 #define PyObjCMetaClass_Check(obj) PyObject_TypeCheck(obj, &PyObjCMetaClass_Type)
 
-// The @const is not correct, but what else can we use here?
-/*!
- * @const PyObjC_ClassExtender
- * @discussion
- *     PyObjC_ClassExtender is either NULL or a Python function that can
- *     update a class dictionary.
- *
- *     The interface for the extender function is:
- *          extender(super_class, class_name, class_dict)
- *
- *     The return value of the function is ignored, it should update the
- *     class_dict (which represents the __dict__ of an Objective-C class.
- */
-extern PyObject* PyObjC_ClassExtender;
-
 /*!
  * @struct PyObjCClassObject
  * @abstract The type struct for Objective-C classes (Python 2.3 and later)
@@ -84,14 +69,16 @@ typedef struct _PyObjCClassObject {
     PyObject* _Nullable delmethod;
     PyObject* hiddenSelectors;
     PyObject* hiddenClassSelectors;
+#ifdef PyObjC_ENABLE_LOOKUP_CACHE
     PyObject* _Nullable lookup_cache;
+#endif
 
-    Py_ssize_t   dictoffset;
-    Py_ssize_t   generation;
-    unsigned int useKVO : 1;
-    unsigned int hasPythonImpl : 1;
-    unsigned int isCFWrapper : 1;
-    unsigned int isFinal : 1;
+    Py_ssize_t               dictoffset;
+    PyObjC_ATOMIC Py_ssize_t generation;
+    unsigned int             useKVO : 1;
+    unsigned int             hasPythonImpl : 1;
+    unsigned int             isCFWrapper : 1;
+    unsigned int             isFinal : 1;
 } PyObjCClassObject;
 
 extern PyObject* _Nullable PyObjCClass_DefaultModule;
@@ -104,8 +91,7 @@ extern int        ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
 extern int        PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
 extern Py_ssize_t PyObjCClass_DictOffset(PyObject* cls);
 extern PyObject* _Nullable PyObjCClass_GetDelMethod(PyObject* cls);
-extern void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
-extern int  PyObjCClass_HasPythonImplementation(PyObject* cls);
+extern int PyObjCClass_HasPythonImplementation(PyObject* cls);
 extern PyObject* _Nullable PyObjCClass_ClassForMetaClass(PyObject* meta);
 extern PyObject* _Nullable PyObjCClass_HiddenSelector(
     PyObject* tp, SEL sel, BOOL classMethod); /* returns borrowed */
@@ -121,36 +107,40 @@ extern PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObje
 extern PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base,
                                                               PyObject* name, SEL sel);
 
+#ifdef PyObjC_ENABLE_LOOKUP_CACHE
 static inline PyObject* _Nullable PyObjCClass_GetLookupCache(PyTypeObject* tp)
 {
-    return ((PyObjCClassObject*)tp)->lookup_cache;
+    PyObject* result = ((PyObjCClassObject*)tp)->lookup_cache;
+    Py_XINCREF(result);
+    return result;
 }
 
 static inline int
 PyObjCClass_AddToLookupCache(PyTypeObject* _tp, PyObject* name, PyObject* value)
 {
-#ifdef PyObjC_ENABLE_LOOKUP_CACHE
     int                r;
     PyObjCClassObject* tp = (PyObjCClassObject*)_tp;
     if (tp->lookup_cache == NULL) {
-        tp->lookup_cache = PyDict_New();
+#ifdef Py_GIL_DISABLED
+        Py_BEGIN_CRITICAL_SECTION(_tp);
         if (tp->lookup_cache == NULL) {
-            return -1;
+#endif
+            tp->lookup_cache = PyDict_New();
+            if (tp->lookup_cache == NULL) {
+#ifdef Py_GIL_DISABLED
+                Py_EXIT_CRITICAL_SECTION();
+#endif
+                return -1;
+            }
+#ifdef Py_GIL_DISABLED
         }
+        Py_END_CRITICAL_SECTION();
+#endif
     }
     r = PyDict_SetItem(tp->lookup_cache, name, value);
     return r;
-#else
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-value"
-
-    &_tp;
-    &name;
-    &value;
-#pragma clang diagnostic pop
-    return 0;
-#endif
 }
+#endif /* PyObjC_ENABLE_LOOKUP_CACHE */
 
 static inline int
 PyObjCClass_IsCFWrapper(PyTypeObject* tp)
@@ -165,6 +155,8 @@ PyObjCClass_IsFinal(PyTypeObject* tp)
 }
 
 PyObject* _Nullable objc_class_locate(Class objc_class);
+
+extern int PyObjCClass_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END
 

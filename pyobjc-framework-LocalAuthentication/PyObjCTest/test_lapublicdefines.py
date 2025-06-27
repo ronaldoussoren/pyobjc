@@ -81,3 +81,12 @@ class TestLAPublicDefines(TestCase):
 
         self.assertEqual(LocalAuthentication.kLACompanionTypeWatch, 1 << 0)
         self.assertEqual(LocalAuthentication.kLACompanionTypeMac, 1 << 1)
+
+        self.assertEqual(LocalAuthentication.kLAAccessControlOperationCreateItem, 0)
+        self.assertEqual(LocalAuthentication.kLAAccessControlOperationUseItem, 1)
+        self.assertEqual(LocalAuthentication.kLAAccessControlOperationCreateKey, 2)
+        self.assertEqual(LocalAuthentication.kLAAccessControlOperationUseKeySign, 3)
+        self.assertEqual(LocalAuthentication.kLAAccessControlOperationUseKeyDecrypt, 4)
+        self.assertEqual(
+            LocalAuthentication.kLAAccessControlOperationUseKeyKeyExchange, 5
+        )

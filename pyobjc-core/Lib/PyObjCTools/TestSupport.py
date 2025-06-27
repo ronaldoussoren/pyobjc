@@ -14,6 +14,7 @@ import sys as _sys
 import unittest as _unittest
 import subprocess as _subprocess
 import pickle as _pickle
+import types as _types
 from sysconfig import get_config_var as _get_config_var
 
 import objc
@@ -341,6 +342,11 @@ class TestCase(_unittest.TestCase):
     # Primary reason for the new API is to ensure that all metadata overrides
     # are explicitly tested.
 
+    def assertIsGenericAlias(self, alias, base_type, args):
+        self.assertIsInstance(alias, _types.GenericAlias)
+        self.assertIs(alias.__origin__, base_type)
+        self.assertEqual(alias.__args__, args)
+
     def assertManualBinding(self, func):
         if hasattr(func, "__metadata__"):
             self.fail(f"{func} has automatic bindings")
@@ -622,6 +628,38 @@ class TestCase(_unittest.TestCase):
                 self.fail(message or f"Argument {argno} of {method!r} is not retained")
         except (KeyError, IndexError):
             self.fail(message or f"Argument {argno} of {method!r} is not retained")
+
+    def assertIsInitializer(self, method, message=None):
+        if not isinstance(method, objc.selector):
+            return
+
+        info = method.__metadata__()
+        if not info.get("initializer", False):
+            self.fail(message or f"{method!r} is not an initializer")
+
+    def assertIsNotInitializer(self, method, message=None):
+        if not isinstance(method, objc.selector):
+            return
+
+        info = method.__metadata__()
+        if info.get("initializer", False):
+            self.fail(message or f"{method!r} is an initializer")
+
+    def assertDoesFreeResult(self, method, message=None):
+        if not isinstance(method, objc.selector):
+            return
+
+        info = method.__metadata__()
+        if not info.get("free_result", False):
+            self.fail(message or f"{method!r} does not call free(3) on the result")
+
+    def assertDoesNotFreeResult(self, method, message=None):
+        if not isinstance(method, objc.selector):
+            return
+
+        info = method.__metadata__()
+        if info.get("free_result", False):
+            self.fail(message or f"{method!r} calls free(3) on the result")
 
     def assertArgIsNotRetained(self, method, argno, message=None):
         if isinstance(method, objc.selector):
@@ -1226,6 +1264,14 @@ class TestCase(_unittest.TestCase):
                         f"{value}: {idx}: pointer argument, but no by-ref annotation:{tp!r} {class_name or ''}"
                     )
 
+    def _validateBundleIdentifier(self, module):
+        if hasattr(module, "__bundle__"):
+            self.assertHasAttr(module, "__framework_identifier__")
+            self.assertEqual(
+                module.__bundle__.bundleIdentifier(),
+                module.__framework_identifier__,
+            )
+
     def assertCallableMetadataIsSane(
         self, module, *, exclude_cocoa=True, exclude_attrs=()
     ):
@@ -1239,13 +1285,8 @@ class TestCase(_unittest.TestCase):
         # XXX: exclude_cocoa may exclude too much depending on
         #      import order.
 
-        if hasattr(module, "__bundle__"):
-            with self.subTest("validate framework identifier"):
-                self.assertHasAttr(module, "__framework_identifier__")
-                self.assertEqual(
-                    module.__bundle__.bundleIdentifier(),
-                    module.__framework_identifier__,
-                )
+        with self.subTest("validate framework identifier"):
+            self._validateBundleIdentifier(module)
 
         if exclude_cocoa:
             try:
@@ -1431,8 +1472,8 @@ class TestCase(_unittest.TestCase):
         """
         try:
             cls = objc.lookUpClass("NSApplication")
-        except objc.error:
-            pass
+        except objc.error:  # pragma: no cover
+            pass  # pragma: no cover
         else:
             cls.sharedApplication()
 

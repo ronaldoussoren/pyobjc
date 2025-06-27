@@ -980,3 +980,51 @@ class TestCallableSignature(TestCase):
         self.assertIs(mod.describe_callable(m), None)
 
         self.assertIs(mod.callable_signature(m), None)
+
+    def test_introspect_doc(self):
+        meth = NSArray.arrayWithArray_
+
+        s = meth.__doc__
+        self.assertIsInstance(s, str)
+
+        orig = objc.options._callable_doc
+        try:
+            objc.options._callable_doc = None
+
+            s = meth.__doc__
+            self.assertIs(s, None)
+
+            def raiser(func):
+                raise RuntimeError
+
+            objc.options._callable_doc = raiser
+
+            with self.assertRaises(RuntimeError):
+                s = meth.__doc__
+
+        finally:
+            objc.options._callable_doc = orig
+
+    def test_introspect_signature(self):
+        meth = NSArray.arrayWithArray_
+
+        s = meth.__signature__
+        self.assertIsInstance(s, inspect.Signature)
+
+        orig = objc.options._callable_signature
+        try:
+            objc.options._callable_signature = None
+
+            s = meth.__signature__
+            self.assertIs(s, None)
+
+            def raiser(func):
+                raise RuntimeError
+
+            objc.options._callable_signature = raiser
+
+            with self.assertRaises(RuntimeError):
+                s = meth.__signature__
+
+        finally:
+            objc.options._callable_signature = orig

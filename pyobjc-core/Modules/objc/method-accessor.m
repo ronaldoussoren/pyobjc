@@ -21,13 +21,14 @@ static PyObject* _Nullable methacc_new(PyObject* self __attribute__((__unused__)
 static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                                          int class_method)
 {
-    SEL                sel = PyObjCSelector_DefaultSelector(name);
-    id                 objc_object;
-    NSMethodSignature* methsig;
-    char               buf[2048];
-    int                unbound_instance_method = 0;
-    char*              flattened               = NULL;
-    PyObject*          class_object;
+    SEL                    sel = PyObjCSelector_DefaultSelector(name);
+    id                     objc_object;
+    NSMethodSignature*     methsig;
+    char                   buf[2048];
+    int                    unbound_instance_method = 0;
+    char*                  flattened               = NULL;
+    PyObject*              class_object;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (name[0] == '_' && name[1] == '_') {
         /* There are no public methods that start with a double underscore,
@@ -45,22 +46,24 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
             unbound_instance_method = 1;
         }
 
+        /* XXX: Check if PyObjCClass_GetClass can return Nil */
+        if (objc_object == nil) {
+            PyErr_Format(PyExc_AttributeError, "<nil> doesn't have attribute %s", name);
+            return NULL;
+        }
+
     } else {
-        PyObjC_Assert(PyObjCObject_Check(self), NULL);
+        assert(PyObjCObject_Check(self));
 
         /* Objective-C class methods cannot be accessed though the
          * instance, class_method will never be true
          */
-        PyObjC_Assert(!class_method, NULL);
+        assert(!class_method);
 
         class_object = (PyObject*)Py_TYPE(self);
 
         objc_object = PyObjCObject_GetObject(self);
-    }
-
-    if (objc_object == nil) {
-        PyErr_Format(PyExc_AttributeError, "<nil> doesn't have attribute %s", name);
-        return NULL;
+        assert(objc_object != nil);
     }
 
     if (strcmp(object_getClassName(objc_object), "_NSZombie") == 0) { // LCOV_BR_EXCL_LINE
@@ -84,9 +87,11 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (unbound_instance_method) {
-                methsig = [objc_object instanceMethodSignatureForSelector:sel];
+                methsig = [objc_object
+                    instanceMethodSignatureForSelector:sel]; // LCOV_BR_EXCL_LINE
             } else {
-                methsig = [objc_object methodSignatureForSelector:sel];
+                methsig =
+                    [objc_object methodSignatureForSelector:sel]; // LCOV_BR_EXCL_LINE
             }
 
         } @catch (NSObject* localException) { // LCOV_EXCL_LINE
@@ -94,7 +99,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
              * but that's fine, Cocoa should never raise here.
              */
             methsig = nil; // LCOV_EXCL_LINE
-        }                  // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
     Py_END_ALLOW_THREADS
 
     if (methsig == NULL) {
@@ -103,7 +108,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     }
 
     if (!class_method) {
-        objc_object = (id)object_getClass(objc_object);
+        objc_object = (id _Nonnull)object_getClass(objc_object);
     }
 
     /* Look for a hidden method, in practice the value (if present)
@@ -140,16 +145,39 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
             } else {
                 IMP sel_imp =
                     [PyObjCSelector_GetClass(meta) instanceMethodForSelector:sel];
-                IMP cur_imp = [PyObjCObject_GetObject(self) methodForSelector:sel];
+                IMP cur_imp;
+
+                /* XXX: The typecheck here is necessary because some callers pass a
+                 *      class, I'm not yet sure this is correct. Found by stricter
+                 *      checks in PyObjCObject_GetObject.
+                 */
+                if (PyObjCObject_Check(self)) {
+                    cur_imp = [PyObjCObject_GetObject(self) methodForSelector:sel];
+                } else if (PyObjCClass_Check(self)) { // LCOV_BR_EXCL_LINE
+                    cur_imp = [PyObjCClass_GetClass(self) methodForSelector:sel];
+                } else {
+                    // LCOV_EXCL_START
+                    PyErr_SetString(PyObjCExc_Error,
+                                    "Unsupported case for find_selector");
+                    return NULL;
+                    // LCOV_EXCL_STOP
+                }
+
                 if (sel_imp == cur_imp) {
                     return meta;
                 } else {
-                    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(meta);
-                    if (methinfo == NULL) {
+                    methinfo = PyObjCSelector_GetMetadata(meta);
+                    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+                        // LCOV_EXCL_START
                         Py_DECREF(meta);
                         return NULL;
+                        // LCOV_EXCL_STOP
                     }
                     flattened = (char*)methinfo->signature;
+
+                    /* Cannot decref 'methinfo' here because 'flattened'
+                     * is used below.
+                     */
                 }
             }
         }
@@ -165,9 +193,13 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
          * the NSMethodSignature is invalid, or if the encoded
          * signature would not fit buffer.
          */
-        return NULL; // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_CLEAR(methinfo);
+        return NULL;
+        // LCOV_EXCL_STOP
     }
 
+    Py_CLEAR(methinfo);
     return PyObjCSelector_NewNative((Class)objc_object, sel, flattened, class_method);
 }
 
@@ -177,7 +209,6 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
     PyObject*    res;
     Method*      methods;
     unsigned int i, method_count;
-    char         buf[256];
     Class        objc_class;
 
     if (PyObjCClass_Check(self)) {
@@ -189,14 +220,11 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
         }
 
     } else {
-        PyObjC_Assert(PyObjCObject_Check(self), NULL);
-        PyObjC_Assert(!class_method, NULL);
+        assert(PyObjCObject_Check(self));
+        assert(!class_method);
 
         id obj = PyObjCObject_GetObject(self);
-
-        if (obj == NULL) {
-            return PyDict_New();
-        }
+        assert(obj != nil);
 
         cls        = object_getClass(obj);
         objc_class = cls;
@@ -218,10 +246,10 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
 
         for (i = 0; i < method_count; i++) {
             PyObject* v;
-            char*     name;
+            PyObject* py_name;
 
-            name = PyObjC_SELToPythonName(method_getName(methods[i]), buf, sizeof(buf));
-            if (name == NULL) { // LCOV_BR_EXCL_LINE
+            py_name = PyObjC_SELToPythonName(method_getName(methods[i]));
+            if (py_name == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(res);
@@ -230,10 +258,10 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
             }
 
             /* XXX: This needs some documentation. Basically resolve the method
-             * through normal lookup first, that avoid replicating objc_object.tp_getattro
-             * here.
+             * through normal lookup first, that avoids replicating
+             * objc_object.tp_getattro here.
              */
-            v = PyObject_GetAttrString(self, name);
+            v = PyObject_GetAttr(self, py_name);
             if (v == NULL) {
                 PyErr_Clear();
 
@@ -257,6 +285,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                     PyErr_SetString(PyObjCExc_Error,
                                     "Native selector with Nil type encoding");
                     free(methods);
+                    Py_CLEAR(py_name);
                     Py_DECREF(res);
                     return NULL;
                     // LCOV_EXCL_STOP
@@ -271,23 +300,26 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                      * Ignoring the error is more useful than raising.
                      */
                     // LCOV_EXCL_START
+                    Py_CLEAR(py_name);
                     PyErr_Clear();
                     continue;
                     // LCOV_EXCL_STOP
                 }
             }
 
-            if (PyDict_SetItemString(res, name, v) == -1) { // LCOV_BR_EXCL_LINE
+            if (PyDict_SetItem(res, py_name, v) == -1) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(v);
                 Py_DECREF(res);
+                Py_CLEAR(py_name);
                 free(methods);
                 return NULL;
                 // LCOV_EXCL_STOP
             }
 
+            Py_CLEAR(py_name);
             Py_DECREF(v);
-        }
+        } // LCOV_BR_EXCL_LINE
 
         free(methods);
     }
@@ -335,6 +367,13 @@ methacc_traverse(PyObject* _self, visitproc visit, void* _Nullable arg)
     return 0;
 }
 
+// LCOV_EXCL_START
+// Instances of this type cannot be part of a loop: This type has
+// references to an ObjC type of instance. Instances only have
+// references to their type, and ObjC types are immortal.
+//
+// Even when an ObjC class has (Python) attributes those are stored
+// on the actual ObjC object, not on the ``PyObjCObject*`` value.
 static int
 methacc_clear(PyObject* _self)
 {
@@ -348,15 +387,16 @@ methacc_clear(PyObject* _self)
 
     return 0;
 }
+// LCOV_EXCL_STOP
 
 static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 {
     PyObjCMethodAccessor* self   = (PyObjCMethodAccessor*)_self;
     PyObject*             result = NULL;
 
-    PyObjC_Assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base), NULL);
+    assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base));
 
-    if (PyUnicode_Check(name)) {
+    if (PyUnicode_Check(name)) {                       // LCOV_BR_EXCL_LINE
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;                               // LCOV_EXCL_LINE
         }
@@ -397,7 +437,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
     }
 
     if (self->class_method) {
-        PyObjC_Assert(PyObjCClass_Check(self->base), NULL);
+        assert(PyObjCClass_Check(self->base));
         result = PyObject_GetAttr(self->base, name);
 
     } else {
@@ -421,12 +461,15 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                 if (!PyObjCClass_Check(c))
                     continue;
 
-                PyObject* dict = PyObjC_get_tp_dict((PyTypeObject*)c);
+                PyObject* dict = PyType_GetDict((PyTypeObject*)c);
                 PyObject* v;
 
                 int r = PyDict_GetItemRef(dict, name, &v);
-                if (r == -1) {
+                if (r == -1) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_CLEAR(dict);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 } else if (r == 1) {
                     if (PyObjCSelector_Check(v)) {
                         /* Found it, use the
@@ -434,8 +477,9 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                          * fetch the actual result
                          */
                         v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
-                        if (v == NULL) { // LCOV_BR_EXCL_LINE
-                            return NULL; // LCOV_EXCL_LINE
+                        if (v == NULL) {    // LCOV_BR_EXCL_LINE
+                            Py_CLEAR(dict); // LCOV_EXCL_LINE
+                            return NULL;    // LCOV_EXCL_LINE
                         }
                         result = v;
                     } else {
@@ -444,6 +488,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                     /* Found an item with the specified
                      * name, abort the search.
                      */
+                    Py_CLEAR(dict);
                     break;
                 }
             }
@@ -463,13 +508,14 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
     }
 
     if (result) {
-        if (self->class_method) {
+        if (self->class_method) { // LCOV_BR_EXCL_LINE
             if (!PyObjCSelector_IsClassMethod(result)) {
                 Py_DECREF(result);
                 result = NULL;
             }
         } else {
             if (PyObjCSelector_IsClassMethod(result)) {
+                printf("found class method on instance");
                 Py_DECREF(result);
                 result = NULL;
             }
@@ -492,7 +538,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 
     if (!self->class_method && PyObjCClass_Check(self->base)) {
         /* Unbound instance method */
-        PyObjC_Assert(((PyObjCSelector*)result)->sel_self == NULL, NULL);
+        assert(((PyObjCSelector*)result)->sel_self == NULL);
         return result;
     } else {
         /* Bound instance or class method
@@ -575,9 +621,9 @@ static PyObject* PyObjCMethodAccessor_Type;
 PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method)
 {
     PyObjCMethodAccessor* result;
-    PyObjC_Assert(PyObjCObject_Check(base) || PyObjCClass_Check(base), NULL);
+    assert(PyObjCObject_Check(base) || PyObjCClass_Check(base));
     if (class_method) {
-        PyObjC_Assert(PyObjCClass_Check(base), NULL);
+        assert(PyObjCClass_Check(base));
     }
 
     result =

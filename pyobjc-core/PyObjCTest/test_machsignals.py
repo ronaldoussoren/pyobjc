@@ -114,3 +114,14 @@ class TestMachSignals(TestCase):
 
         with self.assertRaises(TypeError):
             MachSignals._machsignals.handle_signal(signal.SIGUSR2, lambda x: None)
+
+    def test_handler_raises(self):
+        MachSignals.signal(signal.SIGUSR2, lambda x: x / 0)
+        os.kill(os.getpid(), signal.SIGUSR2)
+
+        NSRunLoop = objc.lookUpClass("NSRunLoop")
+        NSDate = objc.lookUpClass("NSDate")
+        loop = NSRunLoop.currentRunLoop()
+
+        with self.assertRaises(ZeroDivisionError):
+            loop.runUntilDate_(NSDate.dateWithTimeIntervalSinceNow_(0.5))

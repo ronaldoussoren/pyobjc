@@ -305,3 +305,7 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(AppKit.NSTextHighlightColorSchemeBlue, str)
 
         self.assertIsInstance(AppKit.NSTextKit1ListMarkerFormatDocumentOption, str)
+
+    @min_os_level("15.2")
+    def test_constants15_2(self):
+        self.assertIsInstance(AppKit.NSWritingToolsExclusionAttributeName, str)

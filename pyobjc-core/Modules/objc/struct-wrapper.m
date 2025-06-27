@@ -17,6 +17,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/* This variable is initialized int the _Init function, called
+ * before the API using the variable is called.
+ */
+static ffi_cif* _Nonnull init_cif = (ffi_cif* _Nonnull)NULL;
+
 /*
  * First some helpers: easy access to the actual fields
  */
@@ -76,14 +81,17 @@ static PyObject* _Nullable struct_sq_item(PyObject* self, Py_ssize_t offset)
     if (offset < 0 || offset >= len) {
         PyErr_Format(PyExc_IndexError, "%.100s index out of range",
                      Py_TYPE(self)->tp_name);
-        return NULL;
+        res = NULL;
+    } else {
+        Py_BEGIN_CRITICAL_SECTION(self);
+        member = Py_TYPE(self)->tp_members + offset;
+        res    = GET_STRUCT_FIELD(self, member);
+        assert(res != NULL);
+
+        Py_INCREF(res);
+        Py_END_CRITICAL_SECTION();
     }
 
-    member = Py_TYPE(self)->tp_members + offset;
-    res    = GET_STRUCT_FIELD(self, member);
-    PyObjC_Assert(res != NULL, NULL);
-
-    Py_INCREF(res);
     return res;
 }
 
@@ -93,24 +101,28 @@ static PyObject* _Nullable struct_sq_slice(PyObject* self, Py_ssize_t ilow,
     PyObject*  result;
     Py_ssize_t i;
 
-#ifdef PyObjC_DEBUG
+#ifndef NDEBUG
     Py_ssize_t len = STRUCT_LENGTH(self);
 #endif
-    PyObjC_Assert(ilow >= 0, NULL);
-    PyObjC_Assert(ihigh <= len, NULL);
+    assert(ilow >= 0);
+    assert(ihigh <= len);
 
     result = PyTuple_New(ihigh - ilow);
-    if (result == NULL) {
-        return NULL; // LCOV_EXCL_LINE
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
+
+    Py_BEGIN_CRITICAL_SECTION(self);
 
     for (i = ilow; i < ihigh; i++) {
         PyMemberDef* member = Py_TYPE(self)->tp_members + i;
         PyObject*    v      = GET_STRUCT_FIELD(self, member);
-        PyObjC_Assert(v != NULL, NULL);
+        assert(v != NULL);
         Py_INCREF(v);
         PyTuple_SET_ITEM(result, i - ilow, v);
-    }
+    } // LCOV_BR_EXCL_LINE
+
+    Py_END_CRITICAL_SECTION();
     return result;
 }
 
@@ -120,16 +132,11 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* _Nullable newVal
     Py_ssize_t   len;
     PyMemberDef* member;
 
-    if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences",
-                     Py_TYPE(self)->tp_name);
-        return -1;
-    }
-    if (!PyObjC_StructsWritable) {
-        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are read-only",
-                     Py_TYPE(self)->tp_name);
-        return -1;
-    }
+    /* It is not necessary to test if sequences are writable and indexable,
+     * both have been checked by our callers.
+     */
+    assert(PyObjC_StructsIndexable);
+    assert(PyObjC_StructsWritable);
 
     if (newVal == NULL) {
         PyErr_Format(PyExc_TypeError,
@@ -146,12 +153,16 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* _Nullable newVal
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;
+
+    Py_BEGIN_CRITICAL_SECTION(self);
     SET_STRUCT_FIELD(self, member, newVal);
+    Py_END_CRITICAL_SECTION();
     return 0;
 }
 
 static int
-struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject* v)
+struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh,
+                    PyObject* _Nullable v)
 {
     PyObject*  seq;
     Py_ssize_t i;
@@ -162,13 +173,13 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
         return -1;
     }
 
-#ifdef PyObjC_DEBUG
+#ifndef NDEBUG
     Py_ssize_t len = STRUCT_LENGTH(self);
 #endif
-    PyObjC_Assert(ilow >= 0, -1);
-    PyObjC_Assert(ilow <= len, -1);
-    PyObjC_Assert(ihigh >= 0, -1);
-    PyObjC_Assert(ihigh <= len, -1);
+    assert(ilow >= 0);
+    assert(ilow <= len);
+    assert(ihigh >= 0);
+    assert(ihigh <= len);
 
     seq = PyObjCSequence_Tuple(v, "Must assign sequence to slice");
     if (seq == NULL)
@@ -183,21 +194,24 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
         return -1;
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (i = ilow; i < ihigh; i++) {
         PyObject*    x;
         PyMemberDef* member = Py_TYPE(self)->tp_members + i;
 
         x = PyTuple_GET_ITEM(seq, i - ilow);
-        PyObjC_Assert(x != NULL, -1);
+        assert(x != NULL);
         SET_STRUCT_FIELD(self, member, x);
-    }
+    } // LCOV_BR_EXCL_LINE
     Py_DECREF(seq);
+    Py_END_CRITICAL_SECTION();
     return 0;
 }
 
 static int
 struct_sq_contains(PyObject* self, PyObject* value)
 {
+    int result = 0;
 
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences",
@@ -205,20 +219,29 @@ struct_sq_contains(PyObject* self, PyObject* value)
         return -1;
     }
 
+    /* XXX: Consider shrinking the critical section here, to avoid running
+     *      arbitrary code inside the section. That can result in a lot
+     *      more locking though...
+     */
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (PyMemberDef* member = Py_TYPE(self)->tp_members; member && member->name;
          member++) {
-        int       r;
+        int r;
+
         PyObject* cur = GET_STRUCT_FIELD(self, member);
-        PyObjC_Assert(cur != NULL, -1);
+        assert(cur != NULL);
 
         r = PyObject_RichCompareBool(cur, value, Py_EQ);
         if (r == -1) {
-            return -1;
+            result = -1;
+            break;
         } else if (r) {
-            return 1;
+            result = 1;
+            break;
         }
     }
-    return 0;
+    Py_END_CRITICAL_SECTION();
+    return result;
 }
 
 static PyObject* _Nullable struct_reduce(PyObject* self)
@@ -232,12 +255,14 @@ static PyObject* _Nullable struct_reduce(PyObject* self)
     if (values == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (i = 0; i < len; i++) {
         PyObject* v = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
-        PyObjC_Assert(v != NULL, NULL);
+        assert(v != NULL);
         Py_INCREF(v);
         PyTuple_SET_ITEM(values, i, v);
-    }
+    } // LCOV_BR_EXCL_LINE
+    Py_END_CRITICAL_SECTION();
 
     result = PyTuple_Pack(2, Py_TYPE(self), values);
     Py_DECREF(values);
@@ -259,90 +284,77 @@ static PyObject* _Nullable struct__copy__(PyObject* self)
         return NULL;      // LCOV_EXCL_LINE
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     while (member && member->name) {
-        PyObjC_Assert(member->type == T_OBJECT, NULL);
+        assert(member->type == T_OBJECT);
         *((PyObject**)(((char*)result) + member->offset)) = NULL;
         PyObject* t = GET_STRUCT_FIELD(self, member);
-        PyObjC_Assert(t != NULL, NULL);
+        assert(t != NULL);
 
         if (t != NULL) {
             SET_STRUCT_FIELD(result, member, t);
         }
 
         member++;
-    }
+    } // LCOV_BR_EXCL_LINE
+    Py_END_CRITICAL_SECTION();
 
     PyObject_GC_Track(result);
     return result;
 }
 
-static PyObject* _Nullable struct__deepcopy__(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable struct__deepcopy__(PyObject* self, PyObject* args,
+                                              PyObject* kwds)
 {
     static char* keywords[] = {"memo", NULL};
     PyObject*    memo;
     PyObject*    result;
     PyMemberDef* member = Py_TYPE(self)->tp_members;
-    PyObject*    deepcopy;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &memo)) {
         return NULL;
     }
 
-    deepcopy= PyObjC_ImportName("copy.deepcopy");
-    if (deepcopy == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
-    }
-
     result = PyObject_GC_New(PyObject, Py_TYPE(self));
     if (result == NULL) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(deepcopy); // LCOV_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
 
     while (member && member->name) {
-        PyObjC_Assert(member->type == T_OBJECT, NULL);
+        PyObject* t;
+        assert(member->type == T_OBJECT);
         *((PyObject**)(((char*)result) + member->offset)) = NULL;
-        PyObject* t = GET_STRUCT_FIELD(self, member);
-        PyObjC_Assert(t != NULL, NULL);
 
-        if (t != NULL) {
-            Py_INCREF(t);
-            PyObject* args[3] = {NULL, t, memo};
-            PyObject* v       = PyObject_Vectorcall(
-                    deepcopy, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-            if (v == NULL) {
-                Py_DECREF(result);
-                Py_DECREF(deepcopy);
-                return NULL;
-            }
-            SET_STRUCT_FIELD(result, member, v);
-            Py_DECREF(v);
+        Py_BEGIN_CRITICAL_SECTION(self);
+        t = GET_STRUCT_FIELD(self, member);
+        assert(t != NULL);
+        Py_INCREF(t);
+        Py_END_CRITICAL_SECTION();
+
+        PyObject* v = PyObjC_deepcopy(t, memo);
+        Py_DECREF(t);
+        if (v == NULL) {
+            Py_DECREF(result);
+            return NULL;
         }
+        SET_STRUCT_FIELD(result, member, v);
+        Py_DECREF(v);
 
         member++;
     }
 
     PyObject_GC_Track(result);
-    Py_DECREF(deepcopy);
     return result;
 }
 
 static PyObject* _Nullable struct_deepcopy(PyObject* self)
 {
-    PyObject* deepcopy= PyObjC_ImportName("copy.deepcopy");
-    if (deepcopy == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
-    }
-    PyObject* args[2] = {NULL, self};
-    PyObject* result       = PyObject_Vectorcall(
-            deepcopy, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(deepcopy);
-    return result;
+    return PyObjC_deepcopy(self, NULL);
 }
 
-
-static PyObject* _Nullable struct_replace_impl(const char* name, int deepcopy, PyObject* self, PyObject* _Nullable args,
-                                          PyObject* _Nullable kwds)
+static PyObject* _Nullable struct_replace_impl(const char* name, int deepcopy,
+                                               PyObject* self, PyObject* _Nullable args,
+                                               PyObject* _Nullable kwds)
 {
     /* NOTE: This is a fairly inefficient implementation, first
      * perform a deep copy, then replace attributes. The deep copy
@@ -370,13 +382,18 @@ static PyObject* _Nullable struct_replace_impl(const char* name, int deepcopy, P
     }
 
     if (kwds != NULL) {
+        Py_BEGIN_CRITICAL_SECTION2(self, kwds);
         while (PyDict_Next(kwds, &pos, &key, &value)) {
             int r = PyObject_SetAttr(result, key, value);
             if (r == -1) {
                 Py_DECREF(result);
-                return NULL;
+                result = NULL;
+                goto exit;
             }
-        }
+        } // LCOV_BR_EXCL_LINE
+    exit:
+        (void)0;
+        Py_END_CRITICAL_SECTION2();
     }
 
     return result;
@@ -389,7 +406,7 @@ static PyObject* _Nullable struct_replace(PyObject* self, PyObject* _Nullable ar
 }
 
 static PyObject* _Nullable struct__replace__(PyObject* self, PyObject* _Nullable args,
-                                          PyObject* _Nullable kwds)
+                                             PyObject* _Nullable kwds)
 {
     return struct_replace_impl("__replace__", 0, self, args, kwds);
 }
@@ -405,22 +422,37 @@ static PyObject* _Nullable struct_asdict(PyObject* self)
         return NULL; // LCOV_EXCL_LINE
     }
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     while (member && member->name) {
         PyObject* t;
-        PyObjC_Assert(member->type == T_OBJECT, NULL);
+        assert(member->type == T_OBJECT);
 
         t = GET_STRUCT_FIELD(self, member);
-        PyObjC_Assert(t != NULL, NULL);
-        r = PyDict_SetItemString(result, member->name, t);
+        assert(t != NULL);
+
+        PyObject* py_name = PyUnicode_FromString(member->name);
+        if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_CLEAR(result);
+            goto exit;
+            // LCOV_EXCL_STOP
+        }
+
+        r = PyDict_SetItem(result, py_name, t);
 
         if (r == -1) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
-            Py_DECREF(result);
-            return NULL;
+            Py_CLEAR(result);
+            Py_DECREF(py_name);
+            goto exit;
             // LCOV_EXCL_STOP
         }
+        Py_DECREF(py_name);
         member++;
-    }
+    } // LCOV_BR_EXCL_LINE
+exit:
+    (void)0;
+    Py_END_CRITICAL_SECTION();
 
     return result;
 }
@@ -428,7 +460,7 @@ static PyObject* _Nullable struct_asdict(PyObject* self)
 static PyObject* _Nullable struct_mp_subscript(PyObject* self, PyObject* item)
 {
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 7",
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences",
                      Py_TYPE(self)->tp_name);
         return NULL;
     }
@@ -485,7 +517,7 @@ static int
 struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable value)
 {
     if (!PyObjC_StructsIndexable) {
-        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 8",
+        PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences",
                      Py_TYPE(self)->tp_name);
         return -1;
     }
@@ -546,7 +578,7 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable valu
                 return -1;
                 // LCOV_EXCL_STOP
             }
-        }
+        } // LCOV_BR_EXCL_LINE
 
         Py_DECREF(seq);
         return 0;
@@ -658,7 +690,7 @@ static PyObject* _Nullable struct_new(PyTypeObject* type, PyObject* args, PyObje
         return NULL;    // LCOV_EXCL_LINE
 
     while (member && member->name) {
-        PyObjC_Assert(member->type == T_OBJECT, NULL);
+        assert(member->type == T_OBJECT);
         *((PyObject**)(((char*)result) + member->offset)) = Py_None;
         Py_INCREF(Py_None);
         member++;
@@ -702,7 +734,7 @@ set_defaults(PyObject* self, const char* typestr)
         /* The encoding cannot have embedded field names,
          * those were removed during type creation
          */
-        PyObjC_Assert(*typestr != '"', -1);
+        assert(*typestr != '"');
         next = PyObjCRT_SkipTypeSpec(typestr);
         if (next == NULL) { // LCOV_BR_EXCL_LINE
             /* Should never happen, the signature was
@@ -713,11 +745,13 @@ set_defaults(PyObject* self, const char* typestr)
         switch (*typestr) {
 #ifdef _C_BOOL
         case _C_BOOL:
-            v = PyBool_FromLong(0);
+            v = Py_False;
+            Py_INCREF(Py_False);
             break;
 #endif
         case _C_NSBOOL:
-            v = PyBool_FromLong(0);
+            v = Py_False;
+            Py_INCREF(Py_False);
             break;
 
         case _C_CHAR_AS_TEXT: {
@@ -786,7 +820,7 @@ set_defaults(PyObject* self, const char* typestr)
             return -1; // LCOV_EXCL_LINE
         }
         typestr = next;
-    }
+    } // LCOV_BR_EXCL_LINE
 
     return 0;
 }
@@ -904,31 +938,16 @@ struct_init(ffi_cif* cif __attribute__((__unused__)), void* retval,
 
 static initproc _Nullable make_init(const char* _typestr)
 {
-    static ffi_cif* init_cif = NULL;
-    ffi_closure*    cl       = NULL;
-    void*           codeloc;
-    const char*     typestr_copy;
+    ffi_closure* cl = NULL;
+    void*        codeloc;
+    const char*  typestr_copy;
 
     typestr_copy = PyObjCUtil_Strdup(_typestr);
     if (typestr_copy == NULL) {
         return NULL; // LCOV_EXCL_LINE
     }
 
-    if (init_cif == NULL) {
-        PyObjCMethodSignature* signature =
-            PyObjCMethodSignature_WithMetaData("i^v^v^v", NULL, YES);
-        if (signature == NULL) {
-            return NULL; // LCOV_EXCL_LINE
-        }
-        init_cif = PyObjCFFI_CIFForSignature(signature);
-        Py_DECREF(signature);
-        if (init_cif == NULL) {
-            // LCOV_EXCL_START
-            PyMem_Free((void*)typestr_copy);
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-    }
+    assert(init_cif != NULL);
 
     if (alloc_prepped_closure( // LCOV_BR_EXCL_LINE
             &cl, init_cif, &codeloc, (void*)struct_init, (char*)typestr_copy)
@@ -965,16 +984,18 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
 
         len = STRUCT_LENGTH(self);
 
+        Py_BEGIN_CRITICAL_SECTION2(self, other);
         for (i = 0; i < len; i++) {
             int k;
 
             self_cur  = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
             other_cur = GET_STRUCT_FIELD(other, Py_TYPE(other)->tp_members + i);
-            PyObjC_Assert(self_cur != NULL, NULL);
-            PyObjC_Assert(other_cur != NULL, NULL);
+            assert(self_cur != NULL);
+            assert(other_cur != NULL);
 
             k = PyObject_RichCompareBool(self_cur, other_cur, Py_EQ);
             if (k < 0) {
+                Py_EXIT_CRITICAL_SECTION2();
                 return NULL;
             }
 
@@ -982,33 +1003,30 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
                 /* Not equal, result is the comparison of the last
                  * item, we can do better for '==' and '!='.
                  */
-                PyObject* v;
-
                 if (op == Py_EQ) {
-                    Py_INCREF(Py_False);
-                    return Py_False;
+                    Py_EXIT_CRITICAL_SECTION2();
+                    Py_RETURN_FALSE;
                 } else if (op == Py_NE) {
-                    Py_INCREF(Py_True);
-                    return Py_True;
+                    Py_EXIT_CRITICAL_SECTION2();
+                    Py_RETURN_TRUE;
                 }
-                v = PyObject_RichCompare(self_cur, other_cur, op);
-                return v;
+                Py_EXIT_CRITICAL_SECTION2();
+                return PyObject_RichCompare(self_cur, other_cur, op);
             }
         }
+        Py_END_CRITICAL_SECTION2();
 
         /* All items are equal, compare using sizes */
         switch (op) {
         case Py_LT:
         case Py_NE:
         case Py_GT:
-            Py_INCREF(Py_False);
-            return Py_False;
+            Py_RETURN_FALSE;
 
         case Py_LE:
         case Py_EQ:
         case Py_GE:
-            Py_INCREF(Py_True);
-            return Py_True;
+            Py_RETURN_TRUE;
 
         default:
             /* Should never happen */
@@ -1021,12 +1039,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
 
     if (!PySequence_Check(other)) {
         if (op == Py_EQ) {
-            Py_INCREF(Py_False);
-            return Py_False;
+            Py_RETURN_FALSE;
 
         } else if (op == Py_NE) {
-            Py_INCREF(Py_True);
-            return Py_True;
+            Py_RETURN_TRUE;
 
         } else {
             PyErr_Format(PyExc_TypeError, "Cannot compare instances of %.100s and %.100s",
@@ -1036,12 +1052,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
 
     } else if (!PyObjC_StructsIndexable) {
         if (op == Py_EQ) {
-            Py_INCREF(Py_False);
-            return Py_False;
+            Py_RETURN_FALSE;
 
         } else if (op == Py_NE) {
-            Py_INCREF(Py_True);
-            return Py_True;
+            Py_RETURN_TRUE;
 
         } else {
             PyErr_Format(PyExc_TypeError, "Cannot compare instances of %.100s and %.100s",
@@ -1060,20 +1074,20 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
     if (self_len != other_len && (op == Py_EQ || op == Py_NE)) {
         /* Shortcut comparison for non-equals lengths */
         if (op == Py_EQ) {
-            Py_INCREF(Py_False);
-            return Py_False;
+            Py_RETURN_FALSE;
 
         } else {
-            Py_INCREF(Py_True);
-            return Py_True;
+            Py_RETURN_TRUE;
         }
     }
 
     for (i = 0; i < len; i++) {
         int k;
 
+        Py_BEGIN_CRITICAL_SECTION(self);
         self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
-        PyObjC_Assert(self_cur != NULL, NULL);
+        Py_END_CRITICAL_SECTION();
+        assert(self_cur != NULL);
         other_cur = PySequence_GetItem(other, i);
         if (other_cur == NULL) // LCOV_BR_EXCL_LINE
             return NULL;       // LCOV_EXCL_LINE
@@ -1091,11 +1105,9 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
             PyObject* v;
 
             if (op == Py_EQ) {
-                Py_INCREF(Py_False);
-                return Py_False;
+                Py_RETURN_FALSE;
             } else if (op == Py_NE) {
-                Py_INCREF(Py_True);
-                return Py_True;
+                Py_RETURN_TRUE;
             }
             v = PyObject_RichCompare(self_cur, other_cur, op);
             Py_DECREF(other_cur);
@@ -1133,12 +1145,10 @@ static PyObject* _Nullable struct_richcompare(PyObject* self, PyObject* other, i
     }
 
     if (cmp) {
-        Py_INCREF(Py_True);
-        return Py_True;
+        Py_RETURN_TRUE;
 
     } else {
-        Py_INCREF(Py_False);
-        return Py_False;
+        Py_RETURN_FALSE;
     }
 }
 
@@ -1147,17 +1157,20 @@ struct_traverse(PyObject* self, visitproc visit, void* _Nullable arg)
 {
     PyMemberDef* member;
     PyObject*    v;
-    int          err;
+    int          err = 0;
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (member = Py_TYPE(self)->tp_members; member && member->name; member++) {
         v = GET_STRUCT_FIELD(self, member);
         if (v == NULL) // LCOV_BR_EXCL_LINE
             continue;  // LCOV_EXCL_LINE
         err = visit(v, arg);
-        if (err)
-            return err;
+        if (err) { // LCOV_BR_EXCL_LINE
+            break; // LCOV_EXCL_LINE
+        }
     }
-    return 0;
+    Py_END_CRITICAL_SECTION();
+    return err;
 }
 
 static int
@@ -1165,6 +1178,7 @@ struct_clear(PyObject* self)
 {
     PyMemberDef* member;
 
+    Py_BEGIN_CRITICAL_SECTION(self);
     for (member = Py_TYPE(self)->tp_members; member && member->name; member++) {
         /* Maintain the invariant that struct fields are not NULL.
          *
@@ -1174,6 +1188,7 @@ struct_clear(PyObject* self)
          */
         SET_STRUCT_FIELD(self, member, Py_None);
     }
+    Py_END_CRITICAL_SECTION();
     return 0;
 }
 
@@ -1208,8 +1223,10 @@ static PyObject* _Nullable struct_repr(PyObject* self)
         if (cur == NULL) // LCOV_BR_EXCL_LINE
             goto done;   // LCOV_EXCL_LINE
 
+        Py_BEGIN_CRITICAL_SECTION(self);
         v = GET_STRUCT_FIELD(self, member);
-        PyObjC_Assert(v != NULL, NULL);
+        Py_END_CRITICAL_SECTION();
+        assert(v != NULL);
 
         PyObject* repr = PyObject_Repr(v);
         if (repr == NULL) { // LCOV_BR_EXCL_LINE
@@ -1223,7 +1240,7 @@ static PyObject* _Nullable struct_repr(PyObject* self)
         if (cur == NULL) // LCOV_BR_EXCL_LINE
             goto done;   // LCOV_EXCL_LINE
         member++;
-    }
+    } // LCOV_BR_EXCL_LINE
 
     PyUnicode_Append(&cur, PyUnicode_FromString(">"));
 
@@ -1269,8 +1286,7 @@ static struct StructTypeObject StructTemplate_Type = {
     .pack = -1};
 
 PyObject*
-PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
-                      initproc _Nullable tpinit, Py_ssize_t                  numFields,
+PyObjC_MakeStructType(const char* name, const char* _Nullable doc, Py_ssize_t numFields,
                       const char* _Nonnull* _Nonnull fieldnames, const char* typestr,
                       Py_ssize_t pack)
 {
@@ -1315,7 +1331,7 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
         members[i].offset = sizeof(PyObject) + i * sizeof(PyObject*);
         members[i].flags  = 0; /* A read-write field */
         members[i].doc    = NULL;
-    }
+    } // LCOV_BR_EXCL_LINE
     members[numFields].name = NULL;
 
     result = PyMem_Malloc(sizeof(struct StructTypeObject));
@@ -1345,8 +1361,8 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
     Py_SET_REFCNT(result, 1);
     result->base.tp_members   = members;
     result->base.tp_basicsize = sizeof(PyObject) + (numFields * sizeof(PyObject*));
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            result->base.tp_dict, "_fields", fields)
+    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+            result->base.tp_dict, PyObjCNM__fields, fields)
         == -1) {
         // LCOV_EXCL_START
         Py_DECREF(fields);
@@ -1357,8 +1373,8 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
     }
 
 #if PY_VERSION_HEX >= 0x030a0000
-    if (PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-            result->base.tp_dict, "__match_args__", fields)
+    if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+            result->base.tp_dict, PyObjCNM___match_args__, fields)
         == -1) {
         // LCOV_EXCL_START
         Py_DECREF(fields);
@@ -1371,16 +1387,13 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
 
     Py_CLEAR(fields);
 
-    if (tpinit) {
-        result->base.tp_init = tpinit;
-
-    } else {
-        result->base.tp_init = make_init(typestr);
-        if (result->base.tp_init == NULL) {
-            PyMem_Free(members);
-            PyMem_Free(result);
-            return NULL;
-        }
+    result->base.tp_init = make_init(typestr);
+    if (result->base.tp_init == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyMem_Free(members);
+        PyMem_Free(result);
+        return NULL;
+        // LCOV_EXCL_STOP
     }
 
     result->pack = pack;
@@ -1403,16 +1416,38 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
  * This is the start of PyObjC specific code
  */
 
-static PyObject* structRegistry = NULL;
+/* The registry is initialized in PyObjCStruct_Init, which is
+ * called before any function in this file is called.
+ *
+ * The lock is needed to get consistent updates to the registry
+ * dict.
+ */
+
+#ifdef Py_GIL_DISABLED
+PyMutex registry_mutex = {0};
+#endif
+static PyObject* _Nonnull structRegistry = (PyObject* _Nonnull)NULL;
+
+int
+PyObjC_DropRegisteredStruct(PyObject* key)
+{
+    int r;
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&registry_mutex);
+#endif
+    r = PyDict_DelItem(structRegistry, key);
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&registry_mutex);
+#endif
+    return r;
+}
 
 PyObject* _Nullable PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
 {
     PyObject* type;
     PyObject* v;
 
-    if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;              // LCOV_EXCL_LINE
-    }
+    assert(structRegistry != NULL);
 
     v = PyUnicode_FromStringAndSize(signature, len);
     if (v == NULL) { // LCOV_BR_EXCL_LINE
@@ -1424,6 +1459,7 @@ PyObject* _Nullable PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_
         return NULL;
     }
     Py_DECREF(v);
+
     return type;
 }
 
@@ -1435,9 +1471,9 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
     PyObject*     result;
     PyObject*     v;
     PyMemberDef*  member;
+    int           r;
 
-    if (structRegistry == NULL)
-        return NULL;
+    assert(structRegistry != NULL);
 
     if (ppack != NULL) {
         *ppack = -1;
@@ -1445,7 +1481,9 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
 
     v = PyUnicode_FromStringAndSize(signature, len);
 
-    if (PyDict_GetItemRef(structRegistry, v, (PyObject**)&type) != 1) {
+    r = PyDict_GetItemRef(structRegistry, v, (PyObject**)&type);
+
+    if (r != 1) {
         Py_DECREF(v);
         return NULL;
     }
@@ -1463,7 +1501,7 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
     }
 
     while (member && member->name) {
-        PyObjC_Assert(member->type == T_OBJECT, NULL);
+        assert(member->type == T_OBJECT);
         *((PyObject**)(((char*)result) + member->offset)) = Py_None;
         Py_INCREF(Py_None);
         member++;
@@ -1472,9 +1510,19 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
     PyObject_GC_Track(result);
 
     if (objc_encoding) {
+        /*
+         * The structRegistry only contains struct wrapper types
+         * which by construction always have a bytes __typestr__
+         * attribute.
+         *
+         * The code below guards against getting invalid values
+         * in case someone uses Python's introspection facilities
+         * to find the registry dict and add an invalid value.
+         */
         PyObject* typestr;
 
-        switch(PyDict_GetItemRef(type->tp_dict, PyObjCNM___typestr__, &typestr)) {
+        switch ( // LCOV_BR_EXCL_LINE
+            PyDict_GetItemRef(type->tp_dict, PyObjCNM___typestr__, &typestr)) {
         case -1:
             // LCOV_EXCL_START
             Py_DECREF(type);
@@ -1482,25 +1530,33 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
             return NULL;
             // LCOV_EXCL_STOP
         case 0:
-            /* XXX: Can this ever happen? */
+            // LCOV_EXCL_START
             if (objc_encoding != NULL) {
                 *objc_encoding = signature;
             }
             break;
+            // LCOV_EXCL_STOP
 
         case 1:
-            if (!PyBytes_Check(typestr)) {
+            if (!PyBytes_Check(typestr)) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_SetString(PyExc_TypeError, "__typestr__ not a bytes object");
                 Py_DECREF(type);
                 Py_DECREF(result);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
-            // XXX: this effectively returns a borrowed reference.
-            if (objc_encoding != NULL) {
-                *objc_encoding = PyBytes_AsString(typestr);
-            }
+
+            /* Setting ``*objc_encoding`` effectively returns
+             * a borrowed reference.
+             *
+             * XXX: This might be unsafe when the struct registry
+             * is updated concurrently with a new type.
+             */
+            *objc_encoding = PyBytes_AsString(typestr);
+            Py_DECREF(typestr);
         }
-    }
+    } // LCOV_BR_EXCL_LINE
 
     if (ppack != NULL) {
         *ppack = ((struct StructTypeObject*)type)->pack;
@@ -1512,7 +1568,6 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
 
 PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char* name,
                                               const char* _Nullable doc,
-                                              initproc _Nullable tpinit,
                                               Py_ssize_t numFields,
                                               const char* _Nonnull* _Nullable fieldnames,
                                               Py_ssize_t pack)
@@ -1572,8 +1627,6 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
                 return NULL;
             }
 
-            if (*sigcur == _C_STRUCT_E)
-                break;
             sigcur = PyObjCRT_NextField(sigcur);
             if (sigcur == NULL) {
                 return NULL;
@@ -1591,16 +1644,16 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
 
                 sigcur++;
                 end = strchr(sigcur, '"');
-                PyObjC_Assert(end != NULL, NULL);
+                assert(end != NULL);
 
                 fieldnames[numFields] = PyMem_Malloc(end - sigcur + 1);
                 memcpy((char*)fieldnames[numFields], sigcur, end - sigcur);
                 ((char*)fieldnames[numFields])[end - sigcur] = '\0';
                 sigcur                                       = end + 1;
-            }
+            } // LCOV_BR_EXCL_LINE
             numFields++;
             sigcur = PyObjCRT_NextField(sigcur);
-            PyObjC_Assert(sigcur != NULL, NULL);
+            assert(sigcur != NULL);
         }
         fieldnames[numFields] = NULL;
         freeNames             = 1;
@@ -1627,11 +1680,10 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
         }
         signature = sigtmp;
     } else {
-        PyObjC_Assert(fieldnames, NULL);
+        assert(fieldnames);
     }
 
-    structType =
-        PyObjC_MakeStructType(name, doc, tpinit, numFields, fieldnames, signature, pack);
+    structType = PyObjC_MakeStructType(name, doc, numFields, fieldnames, signature, pack);
     if (structType == NULL) {
         if (freeNames) { // LCOV_BR_EXCL_LINE
             /* This should never happen unless the system
@@ -1648,7 +1700,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
             }
             PyMem_Free(fieldnames);
             // LCOV_EXCL_STOP
-        }
+        } // LCOV_EXCL_LINE
         return NULL;
     }
 
@@ -1660,7 +1712,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
         // LCOV_EXCL_STOP
     }
 
-    r = PyDict_SetItemString(((PyTypeObject*)structType)->tp_dict, "__typestr__", v);
+    r = PyDict_SetItem(((PyTypeObject*)structType)->tp_dict, PyObjCNM___typestr__, v);
     Py_DECREF(v);
     if (r == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -1680,8 +1732,8 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
             return NULL;
             // LCOV_EXCL_STOP
         }
-        r = PyDict_SetItemString(((PyTypeObject*)structType)->tp_dict, "__struct_pack__",
-                                 v);
+        r = PyDict_SetItem(((PyTypeObject*)structType)->tp_dict, PyObjCNM___struct_pack__,
+                           v);
         Py_DECREF(v);
         if (r == -1) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
@@ -1691,37 +1743,67 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
         }
     }
 
-    if (structRegistry == NULL) {
-        structRegistry = PyDict_New();
-        if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
-            /* This leaks some memory, but we cannot safely
-             * deallocate the type
-             *
-             * XXX: Why is that?
-             */
-            return NULL; // LCOV_EXCL_LINE
-        }
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&registry_mutex);
+#endif
+    PyObject* py_signature = PyUnicode_FromString(signature);
+    if (py_signature == NULL) { // LCOV_BR_EXCL_LINE
+        /* This leaks some memory, but we cannot safely
+         * deallocate the type
+         */
+        // LCOV_EXCL_START
+        structType = NULL;
+        goto exit;
+        // LCOV_EXCL_STOP
     }
 
-    r = PyDict_SetItemString(structRegistry, signature, structType);
+    r = PyDict_SetItem(structRegistry, py_signature, structType);
     if (r == -1) { // LCOV_BR_EXCL_LINE
         /* This leaks some memory, but we cannot safely
          * deallocate the type
          */
-        return NULL; // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(py_signature);
+        structType = NULL;
+        goto exit;
+        // LCOV_EXCL_STOP
     }
+    Py_DECREF(py_signature);
 
     /* Register again using the typecode used in the ObjC runtime */
     if (PyObjC_RemoveInternalTypeCodes((char*)signature) == -1) { // LCOV_BR_EXCL_LINE
         /* We've validated the type signature earlier, the
          * call should never fail.
          */
-        return NULL; // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        structType = NULL;
+        goto exit;
+        // LCOV_EXCL_STOP
     }
-    r = PyDict_SetItemString(structRegistry, signature, structType);
-    if (r == -1) {   // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+
+    py_signature = PyUnicode_FromString(signature);
+    if (py_signature == NULL) { // LCOV_BR_EXCL_LINE
+        /* This leaks some memory, but we cannot safely
+         * deallocate the type
+         */
+        structType = NULL; // LCOV_EXCL_LINE
+        goto exit;         // LCOV_EXCL_LINE
     }
+
+    r = PyDict_SetItem(structRegistry, py_signature, structType);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(py_signature);
+        structType = NULL;
+        // LCOV_EXCL_STOP
+        goto exit; // LCOV_EXCL_LINE
+    }
+    Py_DECREF(py_signature);
+
+exit:
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&registry_mutex);
+#endif
 
     return structType;
 }
@@ -1731,6 +1813,7 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
 {
     char buf[1024];
     int  r;
+    int  retval = 0;
 
     if (strlen(signature) > 1023) {
         PyErr_SetString(PyExc_ValueError, "typestr too long");
@@ -1740,7 +1823,7 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
         return -1;
     }
 
-    if (!PyObject_HasAttrString(structType, "__typestr__")) {
+    if (!PyObject_HasAttr(structType, PyObjCNM___typestr__)) {
         PyErr_SetString(PyExc_TypeError, "struct type is not valid");
         return -1;
     }
@@ -1748,30 +1831,50 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
      * compatible encoding (some number of fields, compatible types)
      */
 
-    if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        structRegistry = PyDict_New();
-        if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;                // LCOV_EXCL_LINE
-        }
-        // LCOV_EXCL_STOP
+    assert(structRegistry != NULL);
+
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&registry_mutex);
+#endif
+    PyObject* py_buf = PyUnicode_FromString(buf);
+    if (py_buf == NULL) { // LCOV_BR_EXCL_LINE
+        retval = -1;      // LCOV_EXCL_LINE
+        goto exit;        // LCOV_EXCL_LINE
     }
 
-    r = PyDict_SetItemString(structRegistry, buf, structType);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    r = PyDict_SetItem(structRegistry, py_buf, structType);
+    if (r == -1) {         // LCOV_BR_EXCL_LINE
+        Py_DECREF(py_buf); // LCOV_EXCL_LINE
+        retval = -1;       // LCOV_EXCL_LINE
+        goto exit;         // LCOV_EXCL_LINE
     }
+    Py_DECREF(py_buf);
 
     /* Register again using the typecode used in the ObjC runtime */
     if (PyObjC_RemoveInternalTypeCodes(buf) == -1) { // LCOV_BR_EXCL_LINE
-        return -1;                                   // LCOV_EXCL_LINE
-    }
-    r = PyDict_SetItemString(structRegistry, buf, structType);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+        retval = -1;                                 // LCOV_EXCL_LINE
+        goto exit;                                   // LCOV_EXCL_LINE
     }
 
-    return 0;
+    py_buf = PyUnicode_FromString(buf);
+    if (py_buf == NULL) { // LCOV_BR_EXCL_LINE
+        retval = -1;      // LCOV_EXCL_LINE
+        goto exit;        // LCOV_EXCL_LINE
+    }
+    r = PyDict_SetItem(structRegistry, py_buf, structType);
+    if (r == -1) {         // LCOV_BR_EXCL_LINE
+        Py_DECREF(py_buf); // LCOV_EXCL_LINE
+        retval = -1;       // LCOV_EXCL_LINE
+        goto exit;         // LCOV_EXCL_LINE
+    }
+    Py_DECREF(py_buf);
+
+exit:
+#ifdef Py_GIL_DISABLED
+    PyMutex_Unlock(&registry_mutex);
+#endif
+
+    return retval;
 }
 
 int
@@ -1780,7 +1883,7 @@ PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
     Py_ssize_t   len;
     PyMemberDef* member;
 
-    PyObjC_Assert(newVal != NULL, -1);
+    assert(newVal != NULL);
 
     len = STRUCT_LENGTH(self);
 
@@ -1793,7 +1896,9 @@ PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
         // LCOV_EXCL_STOP
     }
     member = Py_TYPE(self)->tp_members + offset;
+    Py_BEGIN_CRITICAL_SECTION(self);
     SET_STRUCT_FIELD(self, member, newVal);
+    Py_END_CRITICAL_SECTION();
     return 0;
 }
 
@@ -1801,18 +1906,52 @@ PyObject* _Nullable StructAsTuple(PyObject* strval)
 {
     Py_ssize_t i, len = STRUCT_LENGTH(strval);
     PyObject*  retval = PyTuple_New(len);
-    if (retval == NULL) {
-        return 0; // LCOV_EXCL_LINE
+    if (retval == NULL) { // LCOV_BR_EXCL_LINE
+        return 0;         // LCOV_EXCL_LINE
     }
 
+    Py_BEGIN_CRITICAL_SECTION(strval);
     for (i = 0; i < len; i++) {
         PyObject* v;
         v = GET_STRUCT_FIELD(strval, Py_TYPE(strval)->tp_members + i);
-        PyObjC_Assert(v != NULL, NULL);
+        assert(v != NULL);
         PyTuple_SET_ITEM(retval, i, v);
         Py_INCREF(v);
-    }
+    } // LCOV_BR_EXCL_LINE
+    Py_END_CRITICAL_SECTION();
     return retval;
+}
+
+int
+PyObjCStruct_Init(PyObject* module __attribute__((__unused__)))
+{
+    structRegistry = PyDict_New();
+    if (structRegistry == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;                // LCOV_EXCL_LINE
+    }
+
+    PyObjCMethodSignature* signature =
+        PyObjCMethodSignature_WithMetaData("i^v^v^v", NULL, YES);
+    if (signature == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(structRegistry);
+        structRegistry = (PyObject* _Nonnull)NULL;
+        return -1;
+        // LCOV_EXCL_STOP
+    }
+
+    ffi_cif* temp_cif = PyObjCFFI_CIFForSignature(signature);
+    Py_CLEAR(signature);
+    if (temp_cif == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(structRegistry);
+        structRegistry = (PyObject* _Nonnull)NULL;
+        return -1;
+        // LCOV_EXCL_STOP
+    }
+    init_cif = temp_cif;
+
+    return 0;
 }
 
 NS_ASSUME_NONNULL_END

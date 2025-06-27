@@ -124,3 +124,4 @@ class TestAVVideoSettings(TestCase):
     def testConstants15_0(self):
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes4444XQ, str)
         self.assertIsInstance(AVFoundation.AVVideoTransferFunction_IEC_sRGB, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeJPEGXL, str)

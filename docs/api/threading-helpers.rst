@@ -1,4 +1,3 @@
-=============================
 Utility methods for threading
 =============================
 
@@ -29,14 +28,10 @@ of your program.
   This is the safe alternative for
   ``performSelector_onThread_withObject_waitUntilDone_``.
 
-  (Introduced in macOS 10.5)
-
 * ``pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_``
 
   This is the safe alternative for
   ``performSelector_onThread_withObject_waitUntilDone_modes_``.
-
-  (Introduced in macOS 10.5)
 
 * ``pyobjc_performSelector_withObject_afterDelay_``
 
@@ -52,8 +47,6 @@ of your program.
 
   This is the safe alternative for
   ``performSelectorInBackground_withObject_``.
-
-  (Introduced in macOS 10.5)
 
 * ``pyobjc_performSelectorOnMainThread_withObject_waitUntilDone_``
 
@@ -81,7 +74,6 @@ until the call on the "other" thread is done.
 As an example:
 
   .. sourcecode:: python
-      :linenos:
 
 	class MyClass (NSObject):
 

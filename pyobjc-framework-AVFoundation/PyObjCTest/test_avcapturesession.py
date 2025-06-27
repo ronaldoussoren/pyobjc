@@ -1,5 +1,10 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    min_sdk_level,
+    expectedFailure,
+)
 
 
 class TestAVCaptureSession(TestCase):
@@ -54,6 +59,10 @@ class TestAVCaptureSession(TestCase):
         self.assertIsInstance(
             AVFoundation.AVCaptureSessionInterruptionEndedNotification, str
         )
+
+    @min_sdk_level("15.2")
+    def test_protocools(self):
+        self.assertProtocolExists("AVCaptureSessionControlsDelegate")
 
     @min_os_level("10.7")
     def testMethods(self):
@@ -158,3 +167,8 @@ class TestAVCaptureSession(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureConnection.isVideoRotationAngleSupported_
         )
+
+    @min_os_level("15.0")
+    def testMethods15_0(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureSession.supportsControls)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canAddControl_)

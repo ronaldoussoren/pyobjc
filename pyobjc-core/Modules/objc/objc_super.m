@@ -36,15 +36,18 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
         /* We want __class__ to return the class of the super object
          * (i.e. super, or a subclass), not the class of su->obj.
          */
-        if (PyUnicode_Check(name)) {
+        if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
             skip = PyObjC_is_ascii_string(name, "__class__");
 
         } else {
-            skip = 0;
+            /* name should also be a string, unless someone calls
+             * the slot directly.
+             */
+            skip = 0; // LCOV_EXCL_LINE
         }
     }
 
-    if (PyUnicode_Check(name)) {
+    if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
         const char* b = PyObjC_Unicode_Fast_Bytes(name);
         if (b == NULL) { // LCOV_BR_EXCL_LINE
             return NULL; // LCOV_EXCL_LINE
@@ -71,8 +74,8 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
         starttype = su->obj_type;
         mro       = starttype->tp_mro;
 
-        if (mro != NULL) {
-            PyObjC_Assert(PyTuple_Check(mro), NULL);
+        if (mro != NULL) { // LCOV_BR_EXCL_LINE
+            assert(PyTuple_Check(mro));
             n = PyTuple_GET_SIZE(mro);
         }
 
@@ -97,18 +100,25 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
             }
 
             if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj)) {
-                dict = PyObjC_get_tp_dict(Py_TYPE(tmp));
+                dict = PyType_GetDict(Py_TYPE(tmp));
 
-            } else if (PyType_Check(tmp)) {
-                dict = PyObjC_get_tp_dict((PyTypeObject*)tmp);
+            } else if (PyType_Check(tmp)) { // LCOV_BR_EXCL_LINE
+                dict = PyType_GetDict((PyTypeObject*)tmp);
 
             } else {
-                continue;
+                /* This can only be reached when there's a non-class
+                 * on the MRO and that shouldn't be possible with
+                 * PyObjC's clasees.
+                 */
+                continue; // LCOV_EXCL_LINE
             }
 
-            switch(PyDict_GetItemRef(dict, name, &res)) {
+            switch (PyDict_GetItemRef(dict, name, &res)) { // LCOV_BR_EXCL_LINE
             case -1:
+                // LCOV_EXCL_START
+                Py_CLEAR(dict);
                 return NULL;
+                // LCOV_EXCL_STOP
 
             case 1:
                 f = Py_TYPE(res)->tp_descr_get;
@@ -124,6 +134,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                     Py_DECREF(res);
                     res = tmp;
                 }
+                Py_CLEAR(dict);
                 return res;
             }
 
@@ -136,7 +147,6 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                 }
 
                 if (res) {
-                    Py_INCREF(res);
                     f = Py_TYPE(res)->tp_descr_get;
                     if (f != NULL) {
                         tmp = f(res,
@@ -151,12 +161,15 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                         res = tmp;
                     }
 
+                    Py_CLEAR(dict);
                     return res;
 
                 } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    Py_CLEAR(dict);            // LCOV_EXCL_LINE
                     return NULL;               // LCOV_EXCL_LINE
                 }
             }
+            Py_CLEAR(dict);
         }
     }
     return PyObject_GenericGetAttr(self, name);
@@ -182,7 +195,7 @@ static PyObject* PyObjCSuper_Type;
 int
 PyObjCSuper_Setup(PyObject* module)
 {
-    PyObjC_Assert(sizeof(superobject) == PySuper_Type.tp_basicsize, -1);
+    assert(sizeof(superobject) == PySuper_Type.tp_basicsize);
 
     super_slots[1].pfunc = (void*)(PySuper_Type.tp_doc);
 

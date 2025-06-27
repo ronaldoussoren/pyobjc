@@ -11,9 +11,11 @@ import operator
 import struct
 
 import objc
+from objc import super  # noqa: A004
 from PyObjCTest.fnd import NSNumber, NSNumberFormatter
 from PyObjCTest.misc import OC_Misc
 from PyObjCTest.pythonnumber import OC_NumberInt
+from PyObjCTest.objectint import OC_ObjectInt
 from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
 from PyObjCTest.test_object_proxy import NoObjectiveC
 
@@ -202,6 +204,19 @@ class TestNSNumber(TestCase):
         self.assertEqual(OC_NumberInt.numberAsUnsignedLongLong_(v), 42)
         self.assertEqual(OC_NumberInt.numberAsFloat_(v), 42.0)
         self.assertEqual(OC_NumberInt.numberAsDouble_(v), 42.0)
+
+        class NotBool(int):
+            __slots__ = ()
+
+            def __bool__(self):
+                raise RuntimeError("don't judge me")
+
+        value = NotBool()
+        with self.assertRaisesRegex(RuntimeError, "don't judge me"):
+            bool(value)
+
+        with self.assertRaisesRegex(RuntimeError, "don't judge me"):
+            OC_NumberInt.numberAsBOOL_(value)
 
     def testIntConversions(self):
         v = NSNumber.numberWithInt_(42)
@@ -399,6 +414,11 @@ class TestNSNumber(TestCase):
         )
 
         self.assertEqual(
+            OC_NumberInt.compareA_andB_(2**256, NSNumber.numberWithInt_(1)),
+            NSOrderedDescending,
+        )
+
+        self.assertEqual(
             OC_NumberInt.compareA_andB_(
                 NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(0)
             ),
@@ -420,6 +440,7 @@ class TestNSNumber(TestCase):
     def testDescription(self):
         v = OC_NumberInt.numberDescription_(NSNumber.numberWithInt_(0))
         self.assertIsInstance(v, str)
+
         self.assertEqual(v, "0")
 
         v = OC_NumberInt.numberDescription_(NSNumber.numberWithLongLong_(2**60))
@@ -734,6 +755,19 @@ class TestPyNumber(TestCase):
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 0), NSOrderedSame)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 0.0), NSOrderedSame)
 
+        self.assertEqual(
+            OC_NumberInt.compareA_andB_(
+                2**128,
+                2**140,
+            ),
+            NSOrderedAscending,
+        )
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_NumberInt.compareA_instanceOf_(
+                1, objc.lookUpClass("OC_NoPythonRepresentation")
+            )
+
     def testNumberEqualToValue(self):
         self.assertFalse(OC_NumberInt.number_isEqualToValue_(0, 1))
         self.assertFalse(OC_NumberInt.number_isEqualToValue_(0, 2**64))
@@ -757,6 +791,18 @@ class TestPyNumber(TestCase):
 
         self.assertTrue(OC_NumberInt.number_isEqualTo_(0, 0))
         self.assertTrue(OC_NumberInt.number_isEqualTo_(0, 0.0))
+
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_NumberInt.number_isEqualToInstanceOf_(
+                1, objc.lookUpClass("OC_NoPythonRepresentation")
+            )
+
+        class FailingInt(int):
+            def __eq__(self, other):
+                raise RuntimeError("do not judge me")
+
+        with self.assertRaisesRegex(RuntimeError, "do not judge me"):
+            OC_NumberInt.number_isEqualTo_(0, FailingInt())
 
     def testDescription(self):
         v = OC_NumberInt.numberDescription_(0)
@@ -782,6 +828,16 @@ class TestPyNumber(TestCase):
         v = OC_NumberInt.numberDescription_(True)
         self.assertIsInstance(v, str)
         self.assertEqual(v, "1")
+
+    def test_proxy_class(self):
+        self.assertIs(OC_NumberInt.numberClass_(1), OC_BuiltinPythonNumber)
+        self.assertIs(OC_NumberInt.numberClass_(1.5), OC_BuiltinPythonNumber)
+        self.assertIsNot(OC_NumberInt.numberClass_(True), OC_BuiltinPythonNumber)
+
+        class myint(int):
+            pass
+
+        self.assertIs(OC_NumberInt.numberClass_(myint(1)), OC_PythonNumber)
 
 
 class TestInteractions(TestCase):
@@ -1053,6 +1109,23 @@ class TestComparsionMethods(TestCase):
             with self.subTest(func=check_method.__name__):
                 self.assertEqual(s, {True, False})
 
+        for test_method in [
+            OC_NumberInt.number_isEqualToInstanceOf_,
+            OC_NumberInt.number_isNotEqualToInstanceOf_,
+            OC_NumberInt.number_isGreaterThanInstanceOf_,
+            OC_NumberInt.number_isGreaterThanOrEqualToInstanceOf_,
+            OC_NumberInt.number_isLessThanInstanceOf_,
+            OC_NumberInt.number_isLessThanOrEqualToInstanceOf_,
+        ]:
+            for value in (1, 1.5, -2, -2.5):
+                with self.subTest(func=check_method.__name__, value=value):
+                    with self.assertRaisesRegex(
+                        ValueError, "cannot have Python representation"
+                    ):
+                        test_method(
+                            value, objc.lookUpClass("OC_NoPythonRepresentation")
+                        )
+
     def test_comparision_with_large_long(self):
         OC_NumberInt.number_isEqualTo_(2**63 + 10, 2**63 + 10)
         OC_NumberInt.number_isEqualTo_(2**63 + 10, as_nsnumber(2**63 + 10))
@@ -1098,3 +1171,71 @@ class TestComparsionMethods(TestCase):
 
         with self.assertRaisesRegex(OverflowError, "int too big to convert"):
             OC_NumberInt.numberAsDecimal_(2**65)
+
+    def test_number_options(self):
+        orig = objc.options._nsnumber_wrapper
+        try:
+            v = NSNumber.numberWithInt_(42)
+
+            self.assertIn("OC_PythonLong", type(v).__name__)
+            self.assertIsInstance(v, NSNumber)
+
+            objc.options._nsnumber_wrapper = None
+
+            v = NSNumber.numberWithInt_(43)
+
+            self.assertNotIn("OC_PythonLong", type(v).__name__)
+            self.assertIsInstance(v, NSNumber)
+
+            def raiser(*args):
+                raise RuntimeError
+
+            objc.options._nsnumber_wrapper = raiser
+
+            with self.assertRaises(RuntimeError):
+                NSNumber.numberWithInt_(44)
+
+        finally:
+            objc.options._nsnumber_wrapper = orig
+
+    def test_number_copy(self):
+        v = 2**128
+        w = OC_ObjectInt.copyObject_(v)
+        self.assertIs(v, w)
+
+    def test_coding(self):
+        class myint(int):
+            pass
+
+        for value in (1, 1.5, myint(1.5)):
+            with self.subTest(value=value):
+                a = OC_ObjectInt.invokeSelector_of_("classForCoder", value)
+                b = OC_ObjectInt.invokeSelector_of_("classForArchiver", value)
+                c = OC_ObjectInt.invokeSelector_of_("classForKeyedArchiver", value)
+                self.assertIs(a, b)
+                self.assertIs(a, c)
+
+
+class TestNumberSubclass(TestCase):
+    def test_nsnumber_subclass(self):
+        class MyObject(NSNumber):
+            def init(self):
+                self = super().init()
+                return self
+
+            def objCType(self):
+                return b"i"
+
+            def intValue(self):
+                return 42
+
+            def getValue_(self, buf):
+                return self.intValue()
+
+        o = MyObject()
+        self.assertIsInstance(o, MyObject)
+
+        self.assertEqual(o.intValue(), 42)
+        self.assertEqual(o, 42)
+
+        self.assertEqual(o.description(), "42")

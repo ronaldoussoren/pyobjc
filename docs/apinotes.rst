@@ -7,7 +7,7 @@ using the the basic wrapping rules (LINK).
 
 The documents below contain notes about specific APIs in the various
 frameworks that are either not available to Python programmers, or using
-an other interface that provided by the basic wrapping rules (LINK)
+an other interface that provided by the basic wrapping rules.
 
 .. toctree::
    :maxdepth: 1

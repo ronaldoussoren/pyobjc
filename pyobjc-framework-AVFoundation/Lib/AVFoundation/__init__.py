@@ -284,6 +284,10 @@ def _setup():
         ("AVContinuityDevice", b"init"),
         ("AVDepthData", b"new"),
         ("AVDepthData", b"init"),
+        ("AVCaptureSession", b"new"),
+        ("AVCaptureSession", b"init"),
+        ("AVExposureBiasRange", b"new"),
+        ("AVExposureBiasRange", b"init"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

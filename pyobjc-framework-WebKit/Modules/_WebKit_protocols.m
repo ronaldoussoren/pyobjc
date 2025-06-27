@@ -8,7 +8,8 @@
 #import <WebKit/WKScriptMessageHandlerWithReply.h>
 #endif
 
-static void __attribute__((__used__)) use_protocols(void)
+static void __attribute__((__used__))
+use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
     p = PyObjC_IdToPython(@protocol(DOMEventListener));
@@ -69,6 +70,14 @@ static void __attribute__((__used__)) use_protocols(void)
 #endif
 #if PyObjC_BUILD_RELEASE >= 1103
     p = PyObjC_IdToPython(@protocol(WKDownloadDelegate));
+    Py_XDECREF(p);
+#endif
+#if PyObjC_BUILD_RELEASE >= 1504
+    p = PyObjC_IdToPython(@protocol(WKWebExtensionControllerDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(WKWebExtensionTab));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(WKWebExtensionWindow));
     Py_XDECREF(p);
 #endif
 }

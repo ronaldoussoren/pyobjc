@@ -26,7 +26,7 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
     int       r;
 
     if (PyObjCObject_Check(object)) {
-        cur = object_getClass((id)PyObjCObject_GetObject(object));
+        cur = object_getClass(PyObjCObject_GetObject(object));
 
     } else if (PyObjCClass_Check(object)) {
         cur = PyObjCClass_GetClass(object);
@@ -36,7 +36,7 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    PyObjC_Assert(cur != NULL, NULL);
+    assert(cur != NULL);
 
     result = PyList_New(0);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
@@ -99,7 +99,7 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
                 return NULL;
                 // LCOV_EXCL_STOP
             }
-        }
+        } // LCOV_BR_EXCL_LINE
 
         free(ivarList);
 
@@ -134,10 +134,7 @@ PyObject* _Nullable PyObjCIvar_Get(PyObject* self __attribute__((__unused__)),
     }
 
     objcValue = PyObjCObject_GetObject(anObject);
-    if (objcValue == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Getting instance variable of a nil object");
-        return NULL;
-    }
+    assert(objcValue != nil);
 
     /* Shortcut for isa, mostly due to Objective-C 2.0 weirdness */
     if (strcmp(name, "isa") == 0) {
@@ -193,10 +190,7 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
     }
 
     objcValue = PyObjCObject_GetObject(anObject);
-    if (objcValue == NULL) {
-        PyErr_SetString(PyExc_ValueError, "Setting instance variable of a nil object");
-        return NULL;
-    }
+    assert(objcValue != nil);
 
     if (strcmp(name, "isa") == 0) {
         /*
@@ -229,8 +223,7 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
         curType = Py_TYPE(anObject);
         Py_SET_TYPE(anObject, (PyTypeObject*)pycls);
         Py_DECREF((PyObject*)curType);
-        Py_INCREF(Py_None);
-        return Py_None;
+        Py_RETURN_NONE;
     }
 
     ivar = find_ivar(objcValue, name);
@@ -266,7 +259,11 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
             return NULL;
         }
 
-        if (PyObject_IsTrue(updateRefCounts)) {
+        int update = PyObject_IsTrue(updateRefCounts);
+        if (update == -1) {
+            return NULL;
+        }
+        if (update) {
             [tmpValue retain];
 
             id v = object_getIvar(objcValue, ivar);
@@ -303,8 +300,7 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
         }
     }
 
-    Py_INCREF(Py_None);
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 NS_ASSUME_NONNULL_END

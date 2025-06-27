@@ -117,3 +117,8 @@ class TestPKConstants(TestCase):
     def test_constants14_5(self):
         self.assertIsInstance(PassKit.PKPaymentNetworkNAPAS, str)
         self.assertIsInstance(PassKit.PKPaymentNetworkBankAxept, str)
+
+    @min_os_level("15.4")
+    def test_constants15_4(self):
+        self.assertIsInstance(PassKit.PKPaymentNetworkHimyan, str)
+        self.assertIsInstance(PassKit.PKPaymentNetworkJaywan, str)

@@ -15,12 +15,12 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import setup  # noqa: E402
 
-VERSION = "11.0a0"
+VERSION = "11.1.1"
 
 setup(
     name="pyobjc-framework-UserNotificationsUI",
     description="Wrappers for the framework UserNotificationsUI on macOS",
-    min_os_level="10.16",
+    min_os_level="11.0",
     packages=["UserNotificationsUI"],
     version=VERSION,
     install_requires=[

@@ -36,14 +36,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 static inline int
-extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
-                    Class* super_class, int* flags, PyObjCMethodSignature** methinfo)
+extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* self_obj,
+                    Class _Nonnull* super_class, int* flags,
+                    PyObjCMethodSignature** methinfo)
 {
     *isIMP = !!PyObjCIMP_Check(method);
 
     if (*isIMP) {
         *flags    = PyObjCIMP_GetFlags(method);
-        *methinfo = PyObjCIMP_GetSignature(method);
+        *methinfo = (PyObjCMethodSignature* _Nonnull)PyObjCIMP_GetSignature(method);
     } else {
         *flags    = PyObjCSelector_GetFlags(method);
         *methinfo = PyObjCSelector_GetMetadata(method);
@@ -52,32 +53,38 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
     if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
         if (PyObjCObject_Check(self)) {
             *self_obj = PyObjCObject_GetObject(self);
-            if (*self_obj == nil && PyErr_Occurred()) {
-                return -1;
+            if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                return -1;                              // LCOV_EXCL_LINE
             }
-            if (*self_obj != NULL) {
-                *self_obj = object_getClass(*self_obj);
-                if (*self_obj == nil && PyErr_Occurred()) {
-                    return -1;
-                }
+            if (*self_obj != (id _Nonnull)NULL) { // LCOV_BR_EXCL_LINE
+                /* object_getClass never returns Nil for non-nil objects */
+                *self_obj = (id _Nonnull)object_getClass(*self_obj); // LCOV_EXCL_LINE
             }
 
         } else if (PyObjCClass_Check(self)) {
-            *self_obj = PyObjCClass_GetClass(self);
-            if (*self_obj == nil && PyErr_Occurred()) {
-                return -1;
-            }
+            /* PyObjCClass_GetClass only returns Nil on internal errors */
+            *self_obj = (Class _Nonnull)PyObjCClass_GetClass(self);
+            if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                return -1;                              // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
 
-        } else if (PyType_Check(self)
+        } else if (PyType_Check(self) // LCOV_BR_EXCL_LINE
                    && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
             PyObject* c = PyObjCClass_ClassForMetaClass(self);
-            if (c == NULL) {
-                *self_obj = nil;
+            if (c == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                *self_obj = (Class _Nonnull)nil;
+                PyErr_Format(
+                    PyExc_TypeError,
+                    "Need Objective-C object or class as self, not an instance of '%s'",
+                    Py_TYPE(self)->tp_name);
+                return -1;
+                // LCOV_EXCL_STOP
 
-            } else {
+            } else { // LCOV_BR_EXCL_LINE
                 *self_obj = PyObjCClass_GetClass(c);
-                if (*self_obj == nil && PyErr_Occurred()) {
-                    return -1;
+                if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    return -1;                              // LCOV_EXCL_LINE
                 }
             }
 
@@ -92,6 +99,9 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
     } else {
         int err;
         if (PyObjCObject_Check(self)) {
+            /* PyObjCObject_GetObject only returns NULL if 'self' is not an objc_object,
+             * which cannot happen here.
+             */
             *self_obj = PyObjCObject_GetObject(self);
             if (*self_obj == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 return -1;                              // LCOV_EXCL_LINE
@@ -105,48 +115,160 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id* self_obj,
     }
 
     if (*isIMP) {
-        *super_class = nil;
+        /* _Nonnull is safe because of the IMP path doesn't use the super class */
+        *super_class = (Class _Nonnull)Nil;
     } else {
         if ((*flags) & PyObjCSelector_kCLASS_METHOD) {
-            *super_class = object_getClass(PyObjCSelector_GetClass(method));
+            /* _Nonnull is safe because object_getClass will only return Nil when the
+             * class itself is Nil */
+            *super_class =
+                (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method));
         } else {
-            *super_class = PyObjCSelector_GetClass(method);
+            *super_class = (Class _Nonnull)PyObjCSelector_GetClass(method);
         }
     }
+
+    if (*self_obj != nil && (*methinfo != NULL) && (*methinfo)->initializer) {
+        /* the called method will steal a reference to self */
+        [*self_obj retain];
+    }
+
+    assert(*self_obj != nil);
+    assert(*methinfo != NULL);
+    assert(*isIMP || (*super_class != Nil));
 
     return 0;
 }
 
-static PyObject*
-adjust_retval(PyObjCMethodSignature* methinfo, PyObject* self, int flags,
-              PyObject* result)
+static PyObject* _Nullable adjust_retval(PyObjCMethodSignature* methinfo,
+                                         id _Nullable retval)
 {
+    PyObject* result = id_to_python(retval);
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        assert(PyErr_Occurred());
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
     if (methinfo->rettype->alreadyRetained) {
-        if (PyObjCObject_Check(result)) {
-            /* pythonify_c_return_value has retained the object, but we already
-             * own a reference, therefore give the ref away again
-             */
-            [PyObjCObject_GetObject(result) release];
-        }
+        /* pythonify_c_return_value has retained the object, but we already
+         * own a reference, therefore give the ref away again
+         */
+        [retval release];
     }
 
     if (methinfo->rettype->alreadyCFRetained) {
-        if (PyObjCObject_Check(result)) {
-            /* pythonify_c_return_value has retained the object, but we already
-             * own a reference, therefore give the ref away again
-             */
-            CFRelease(PyObjCObject_GetObject(result));
-        }
+        /* pythonify_c_return_value has retained the object, but we already
+         * own a reference, therefore give the ref away again
+         */
+        CFRelease(retval);
     }
 
-    if (self != NULL && result != self && PyObjCObject_Check(self)
-        && PyObjCObject_Check(result) && !(flags & PyObjCSelector_kRETURNS_UNINITIALIZED)
-        && (((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED)) {
-
-        [PyObjCObject_GetObject(result) release]; /* XXX??? */
-        PyObjCObject_ClearObject(self);
+    if (methinfo->initializer) {
+        /* method returns +1 without being annotated as such */
+        [retval release];
     }
     return result;
+}
+
+static PyObject* _Nullable call_v16C(PyObject* method, PyObject* self,
+                                     PyObject* const* arguments
+                                     __attribute__((__unused__)),
+                                     size_t nargs)
+{
+    struct objc_super super;
+    simd_uchar16      rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo = NULL;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                // LCOV_BR_EXCL_START
+                rv = ((simd_uchar16 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                // LCOV_BR_EXCL_START
+                rv = ((simd_uchar16 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
+            }
+
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("<16C>", &rv);
+}
+
+static IMP
+mkimp_v16C(PyObject*              callable,
+           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_uchar16 (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_uchar16 oc_result;
+      if (depythonify_c_value("<16C>", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) { // LCOV_BR_EXCL_LINE
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
 }
 
 static PyObject* _Nullable call_v2d(PyObject* method, PyObject* self,
@@ -164,36 +286,43 @@ static PyObject* _Nullable call_v2d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_double2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_double2 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_double2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_double2 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2d>", &rv);
 }
 
@@ -208,9 +337,9 @@ mkimp_v2d(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -225,22 +354,16 @@ mkimp_v2d(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
@@ -265,37 +388,44 @@ static PyObject* _Nullable call_v2d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_double2(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_double2 (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv =
-                    ((simd_double2(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
-                        &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_START
+                rv = ((
+                    simd_double2 (*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2d>", &rv);
 }
 
@@ -311,14 +441,14 @@ mkimp_v2d_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -340,7 +470,7 @@ mkimp_v2d_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -368,36 +498,43 @@ static PyObject* _Nullable call_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float2 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float2 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2f>", &rv);
 }
 
@@ -412,9 +549,9 @@ mkimp_v2f(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -429,22 +566,16 @@ mkimp_v2f(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
@@ -469,37 +600,44 @@ static PyObject* _Nullable call_v2f_Q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float2(*)(id, SEL, unsigned long long))(PyObjCIMP_GetIMP(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float2 (*)(id, SEL, unsigned long long))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float2(*)(struct objc_super*, SEL,
-                                      unsigned long long))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float2 (*)(struct objc_super*, SEL,
+                                       unsigned long long))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2f>", &rv);
 }
 
@@ -516,14 +654,14 @@ mkimp_v2f_Q(PyObject*              callable,
           int       cookie;
           PyObject* args[3] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("Q", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -545,7 +683,7 @@ mkimp_v2f_Q(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -576,36 +714,44 @@ static PyObject* _Nullable call_v2f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float2(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float2 (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float2(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_START
+                rv =
+                    ((simd_float2 (*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                        &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2f>", &rv);
 }
 
@@ -621,14 +767,14 @@ mkimp_v2f_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -650,7 +796,7 @@ mkimp_v2f_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -681,37 +827,44 @@ static PyObject* _Nullable call_v2f_q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float2(*)(id, SEL, long long))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float2 (*)(id, SEL, long long))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((
-                    simd_float2(*)(struct objc_super*, SEL, long long))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float2 (*)(struct objc_super*, SEL,
+                                       long long))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2f>", &rv);
 }
 
@@ -727,14 +880,14 @@ mkimp_v2f_q(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("q", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -756,7 +909,7 @@ mkimp_v2f_q(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -784,36 +937,43 @@ static PyObject* _Nullable call_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_int2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_int2 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_int2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_int2 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<2i>", &rv);
 }
 
@@ -828,9 +988,9 @@ mkimp_v2i(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -845,22 +1005,16 @@ mkimp_v2i(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
@@ -885,37 +1039,44 @@ static PyObject* _Nullable call_v3d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_double3(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_double3 (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv =
-                    ((simd_double3(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
-                        &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_START
+                rv = ((
+                    simd_double3 (*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<3d>", &rv);
 }
 
@@ -931,14 +1092,14 @@ mkimp_v3d_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -960,7 +1121,7 @@ mkimp_v3d_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -988,36 +1149,43 @@ static PyObject* _Nullable call_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float3(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1032,9 +1200,9 @@ mkimp_v3f(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -1049,22 +1217,16 @@ mkimp_v3f(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
@@ -1093,37 +1255,44 @@ static PyObject* _Nullable call_v3f_v2i_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float3(*)(id, SEL, simd_int2, simd_int2))(PyObjCIMP_GetIMP(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(id, SEL, simd_int2, simd_int2))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float3(*)(struct objc_super*, SEL, simd_int2,
-                                      simd_int2))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(struct objc_super*, SEL, simd_int2,
+                                       simd_int2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1140,17 +1309,17 @@ mkimp_v3f_v2i_v2i(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2i>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2i>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -1172,7 +1341,7 @@ mkimp_v3f_v2i_v2i(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -1203,37 +1372,44 @@ static PyObject* _Nullable call_v3f_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float3(*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float3(*)(struct objc_super*, SEL,
-                                      simd_float3))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(struct objc_super*, SEL,
+                                       simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1249,14 +1425,14 @@ mkimp_v3f_v3f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<3f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -1278,7 +1454,7 @@ mkimp_v3f_v3f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -1313,37 +1489,44 @@ static PyObject* _Nullable call_v3f_v3f_id(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float3(*)(id, SEL, simd_float3, id))(PyObjCIMP_GetIMP(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(id, SEL, simd_float3, id))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float3(*)(struct objc_super*, SEL, simd_float3,
-                                      id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(struct objc_super*, SEL, simd_float3,
+                                       id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1360,17 +1543,17 @@ mkimp_v3f_v3f_id(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("@", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -1392,7 +1575,7 @@ mkimp_v3f_v3f_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -1423,37 +1606,44 @@ static PyObject* _Nullable call_v3f_v4i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float3(*)(id, SEL, simd_int4))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(id, SEL, simd_int4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((
-                    simd_float3(*)(struct objc_super*, SEL, simd_int4))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(struct objc_super*, SEL,
+                                       simd_int4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1469,14 +1659,14 @@ mkimp_v3f_v4i(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<4i>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -1498,7 +1688,7 @@ mkimp_v3f_v4i(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -1529,37 +1719,44 @@ static PyObject* _Nullable call_v3f_Q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float3(*)(id, SEL, unsigned long long))(PyObjCIMP_GetIMP(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(id, SEL, unsigned long long))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float3(*)(struct objc_super*, SEL,
-                                      unsigned long long))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(struct objc_super*, SEL,
+                                       unsigned long long))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1576,14 +1773,14 @@ mkimp_v3f_Q(PyObject*              callable,
           int       cookie;
           PyObject* args[3] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("Q", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -1605,7 +1802,7 @@ mkimp_v3f_Q(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -1636,36 +1833,44 @@ static PyObject* _Nullable call_v3f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float3(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3 (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float3(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_START
+                rv =
+                    ((simd_float3 (*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                        &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<3f>", &rv);
 }
 
@@ -1681,14 +1886,14 @@ mkimp_v3f_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -1710,7 +1915,7 @@ mkimp_v3f_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -1741,37 +1946,44 @@ static PyObject* _Nullable call_v4d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_double4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_double4 (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv =
-                    ((simd_double4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
-                        &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_START
+                rv = ((
+                    simd_double4 (*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<4d>", &rv);
 }
 
@@ -1787,14 +1999,14 @@ mkimp_v4d_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -1816,7 +2028,7 @@ mkimp_v4d_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -1844,36 +2056,43 @@ static PyObject* _Nullable call_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float4 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float4 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<4f>", &rv);
 }
 
@@ -1888,9 +2107,9 @@ mkimp_v4f(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -1905,22 +2124,16 @@ mkimp_v4f(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__u
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
@@ -1945,36 +2158,44 @@ static PyObject* _Nullable call_v4f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float4 (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_START
+                rv =
+                    ((simd_float4 (*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                        &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<4f>", &rv);
 }
 
@@ -1990,14 +2211,14 @@ mkimp_v4f_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -2019,7 +2240,7 @@ mkimp_v4f_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -2050,37 +2271,44 @@ static PyObject* _Nullable call_v4i_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_int4(*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_int4 (*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((
-                    simd_int4(*)(struct objc_super*, SEL, simd_float3))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_int4 (*)(struct objc_super*, SEL,
+                                     simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("<4i>", &rv);
 }
 
@@ -2096,14 +2324,14 @@ mkimp_v4i_v3f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<3f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -2125,7 +2353,7 @@ mkimp_v4i_v3f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -2160,38 +2388,46 @@ static PyObject* _Nullable call_id_v2d_id(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_double2, id))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_double2, id))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv =
-                    ((id(*)(struct objc_super*, SEL, simd_double2, id))objc_msgSendSuper)(
-                        &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_START
+                rv = ((
+                    id (*)(struct objc_super*, SEL, simd_double2, id))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2206,17 +2442,17 @@ mkimp_id_v2d_id(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<2d>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("@", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -2238,7 +2474,7 @@ mkimp_id_v2d_id(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -2273,39 +2509,46 @@ static PyObject* _Nullable call_id_v2d_q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv =
-                    ((id(*)(id, SEL, simd_double2, long long))(PyObjCIMP_GetIMP(method)))(
-                        self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_double2, long long))(PyObjCIMP_GetIMP(
+                    method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_double2,
-                             long long))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_double2,
+                              long long))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2321,17 +2564,17 @@ mkimp_id_v2d_q(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2d>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("q", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -2353,7 +2596,7 @@ mkimp_id_v2d_q(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -2384,37 +2627,45 @@ static PyObject* _Nullable call_id_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float2))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float2))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2429,14 +2680,14 @@ mkimp_id_v2f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<2f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -2458,7 +2709,7 @@ mkimp_id_v2f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -2501,39 +2752,47 @@ static PyObject* _Nullable call_id_v2f_v2I_q_id(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float2, simd_uint2, long long, id))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float2, simd_uint2, long long, id))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float2, simd_uint2, long long,
-                             id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float2, simd_uint2, long long,
+                              id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2549,23 +2808,23 @@ mkimp_id_v2f_v2I_q_id(PyObject*              callable,
           int       cookie;
           PyObject* args[6] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2I>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("q", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("@", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -2587,7 +2846,7 @@ mkimp_id_v2f_v2I_q_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -2622,38 +2881,46 @@ static PyObject* _Nullable call_id_v2f_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float2, simd_float2))(PyObjCIMP_GetIMP(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float2, simd_float2))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float2,
-                             simd_float2))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float2,
+                              simd_float2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2669,17 +2936,17 @@ mkimp_id_v2f_v2f(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2f>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -2701,7 +2968,7 @@ mkimp_id_v2f_v2f(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -2732,37 +2999,45 @@ static PyObject* _Nullable call_id_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_int2))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_int2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_int2))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_int2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2777,14 +3052,14 @@ mkimp_id_v2i(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<2i>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -2806,7 +3081,7 @@ mkimp_id_v2i(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -2849,39 +3124,47 @@ static PyObject* _Nullable call_id_v2i_i_i_Z(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_int2, int, int, BOOL))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_int2, int, int, BOOL))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_int2, int, int,
-                             BOOL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_int2, int, int,
+                              BOOL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -2897,23 +3180,23 @@ mkimp_id_v2i_i_i_Z(PyObject*              callable,
           int       cookie;
           PyObject* args[6] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2i>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("i", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("i", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("Z", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -2935,7 +3218,7 @@ mkimp_id_v2i_i_i_Z(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -2983,40 +3266,47 @@ static PyObject* _Nullable call_id_v2i_i_i_Z_Class(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_int2, int, int, BOOL, Class))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_int2, int, int, BOOL, Class))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_int2, int, int, BOOL,
-                             Class))objc_msgSendSuper)(&super,
-                                                       PyObjCSelector_GetSelector(method),
-                                                       arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_int2, int, int, BOOL, Class))
+                          objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method),
+                                             arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3032,26 +3322,26 @@ mkimp_id_v2i_i_i_Z_Class(PyObject*              callable,
           int       cookie;
           PyObject* args[7] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2i>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("i", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("i", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("Z", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("#", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -3073,7 +3363,7 @@ mkimp_id_v2i_i_i_Z_Class(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -3104,37 +3394,45 @@ static PyObject* _Nullable call_id_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3149,14 +3447,14 @@ mkimp_id_v3f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<3f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -3178,7 +3476,7 @@ mkimp_id_v3f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -3234,41 +3532,49 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_Z_q_id(PyObject* method, PyObject
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3, simd_uint2, BOOL, BOOL, BOOL,
-                             long long, id))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3, simd_uint2, BOOL, BOOL, BOOL,
+                              long long, id))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4,
                     arg5, arg6);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, BOOL, BOOL,
-                             BOOL, long long, id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3, simd_uint2, BOOL,
+                              BOOL, BOOL, long long, id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5, arg6);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3285,32 +3591,32 @@ mkimp_id_v3f_v2I_Z_Z_Z_q_id(PyObject*              callable,
           int       cookie;
           PyObject* args[9] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2I>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("Z", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("Z", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("Z", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[7] = pythonify_c_value("q", &arg5);
-          if (args[7] == NULL)
-              goto error;
+          if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[8] = pythonify_c_value("@", &arg6);
-          if (args[8] == NULL)
-              goto error;
+          if (args[8] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 8 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -3332,7 +3638,7 @@ mkimp_id_v3f_v2I_Z_Z_Z_q_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -3384,41 +3690,49 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_Z_q_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3, simd_uint2, BOOL, BOOL, long long,
-                             id))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3, simd_uint2, BOOL, BOOL, long long,
+                              id))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4,
                     arg5);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, BOOL, BOOL,
-                             long long, id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3, simd_uint2, BOOL,
+                              BOOL, long long, id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3435,29 +3749,29 @@ mkimp_id_v3f_v2I_Z_Z_q_id(PyObject*              callable,
           int       cookie;
           PyObject* args[8] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2I>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("Z", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("Z", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("q", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[7] = pythonify_c_value("@", &arg5);
-          if (args[7] == NULL)
-              goto error;
+          if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -3479,7 +3793,7 @@ mkimp_id_v3f_v2I_Z_Z_q_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -3527,40 +3841,48 @@ static PyObject* _Nullable call_id_v3f_v2I_Z_q_id(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3, simd_uint2, BOOL, long long, id))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3, simd_uint2, BOOL, long long, id))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, BOOL,
-                             long long, id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3, simd_uint2, BOOL,
+                              long long, id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3577,26 +3899,26 @@ mkimp_id_v3f_v2I_Z_q_id(PyObject*              callable,
           int       cookie;
           PyObject* args[7] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2I>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("Z", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("q", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("@", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -3618,7 +3940,7 @@ mkimp_id_v3f_v2I_Z_q_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -3670,40 +3992,49 @@ static PyObject* _Nullable call_id_v3f_v2I_i_Z_q_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3, simd_uint2, int, BOOL, long long, id))(
-                    PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
-                                               arg0, arg1, arg2, arg3, arg4, arg5);
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3, simd_uint2, int, BOOL, long long,
+                              id))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4,
+                    arg5);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, int, BOOL,
-                             long long, id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3, simd_uint2, int, BOOL,
+                              long long, id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3720,29 +4051,29 @@ mkimp_id_v3f_v2I_i_Z_q_id(PyObject*              callable,
           int       cookie;
           PyObject* args[8] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2I>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("i", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("Z", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("q", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[7] = pythonify_c_value("@", &arg5);
-          if (args[7] == NULL)
-              goto error;
+          if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -3764,7 +4095,7 @@ mkimp_id_v3f_v2I_i_Z_q_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -3807,39 +4138,47 @@ static PyObject* _Nullable call_id_v3f_v2I_q_id(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3, simd_uint2, long long, id))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3, simd_uint2, long long, id))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint2, long long,
-                             id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3, simd_uint2, long long,
+                              id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3855,23 +4194,23 @@ mkimp_id_v3f_v2I_q_id(PyObject*              callable,
           int       cookie;
           PyObject* args[6] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2I>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("q", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("@", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -3893,7 +4232,7 @@ mkimp_id_v3f_v2I_q_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -3941,40 +4280,48 @@ static PyObject* _Nullable call_id_v3f_v3I_Z_q_id(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3, simd_uint3, BOOL, long long, id))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3, simd_uint3, BOOL, long long, id))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint3, BOOL,
-                             long long, id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3, simd_uint3, BOOL,
+                              long long, id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -3991,26 +4338,26 @@ mkimp_id_v3f_v3I_Z_q_id(PyObject*              callable,
           int       cookie;
           PyObject* args[7] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<3I>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("Z", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("q", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("@", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -4032,7 +4379,7 @@ mkimp_id_v3f_v3I_Z_q_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -4080,40 +4427,48 @@ static PyObject* _Nullable call_id_v3f_v3I_q_Z_id(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3, simd_uint3, long long, BOOL, id))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3, simd_uint3, long long, BOOL, id))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3, simd_uint3, long long,
-                             BOOL, id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3, simd_uint3, long long,
+                              BOOL, id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4130,26 +4485,26 @@ mkimp_id_v3f_v3I_q_Z_id(PyObject*              callable,
           int       cookie;
           PyObject* args[7] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<3I>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("q", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("Z", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("@", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -4171,7 +4526,7 @@ mkimp_id_v3f_v3I_q_Z_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -4227,42 +4582,50 @@ static PyObject* _Nullable call_id_v3f_Q_Q_q_Z_Z_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3, unsigned long long, unsigned long long,
-                             long long, BOOL, BOOL, id))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4,
-                    arg5, arg6);
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3, unsigned long long,
+                              unsigned long long, long long, BOOL, BOOL, id))(
+                    PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
+                                               arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3, unsigned long long,
-                             unsigned long long, long long, BOOL, BOOL,
-                             id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3, unsigned long long,
+                              unsigned long long, long long, BOOL, BOOL,
+                              id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5, arg6);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4280,32 +4643,32 @@ mkimp_id_v3f_Q_Q_q_Z_Z_id(PyObject*              callable,
       int       cookie;
       PyObject* args[9] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<3f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("Q", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[4] = pythonify_c_value("Q", &arg2);
-      if (args[4] == NULL)
-          goto error;
+      if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[5] = pythonify_c_value("q", &arg3);
-      if (args[5] == NULL)
-          goto error;
+      if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[6] = pythonify_c_value("Z", &arg4);
-      if (args[6] == NULL)
-          goto error;
+      if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[7] = pythonify_c_value("Z", &arg5);
-      if (args[7] == NULL)
-          goto error;
+      if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[8] = pythonify_c_value("@", &arg6);
-      if (args[8] == NULL)
-          goto error;
+      if (args[8] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              8 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -4327,7 +4690,7 @@ mkimp_id_v3f_Q_Q_q_Z_Z_id(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -4370,39 +4733,47 @@ static PyObject* _Nullable call_id_v3f_Z_q_id(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float3, BOOL, long long, id))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float3, BOOL, long long, id))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float3, BOOL, long long,
-                             id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float3, BOOL, long long,
+                              id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4418,23 +4789,23 @@ mkimp_id_v3f_Z_q_id(PyObject*              callable,
           int       cookie;
           PyObject* args[6] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("Z", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("q", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("@", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -4456,7 +4827,7 @@ mkimp_id_v3f_Z_q_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -4487,37 +4858,45 @@ static PyObject* _Nullable call_id_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float4))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float4))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4532,14 +4911,14 @@ mkimp_id_v4f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<4f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -4561,7 +4940,7 @@ mkimp_id_v4f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -4609,40 +4988,48 @@ static PyObject* _Nullable call_id_id_v2d_v2d_v2i_Z(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, simd_double2, simd_double2, simd_int2, BOOL))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, simd_double2, simd_double2, simd_int2, BOOL))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, simd_double2, simd_double2,
-                             simd_int2, BOOL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, simd_double2, simd_double2,
+                              simd_int2, BOOL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4659,26 +5046,26 @@ mkimp_id_id_v2d_v2d_v2i_Z(PyObject*              callable,
           int       cookie;
           PyObject* args[7] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2d>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2d>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("<2i>", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("Z", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -4700,7 +5087,7 @@ mkimp_id_id_v2d_v2d_v2i_Z(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -4735,37 +5122,46 @@ static PyObject* _Nullable call_id_id_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, simd_float2))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, simd_float2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, simd_float2))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_START
+                rv =
+                    ((id (*)(struct objc_super*, SEL, id, simd_float2))objc_msgSendSuper)(
+                        &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4780,17 +5176,17 @@ mkimp_id_id_v2f(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("<2f>", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -4812,7 +5208,7 @@ mkimp_id_id_v2f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -4847,37 +5243,46 @@ static PyObject* _Nullable call_id_id_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, simd_float3))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, simd_float3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, simd_float3))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_START
+                rv =
+                    ((id (*)(struct objc_super*, SEL, id, simd_float3))objc_msgSendSuper)(
+                        &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -4892,17 +5297,17 @@ mkimp_id_id_v3f(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("<3f>", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -4924,7 +5329,7 @@ mkimp_id_id_v3f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -4959,37 +5364,46 @@ static PyObject* _Nullable call_id_id_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, simd_float4))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, simd_float4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, simd_float4))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_START
+                rv =
+                    ((id (*)(struct objc_super*, SEL, id, simd_float4))objc_msgSendSuper)(
+                        &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5004,17 +5418,17 @@ mkimp_id_id_v4f(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("<4f>", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -5036,7 +5450,7 @@ mkimp_id_id_v4f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -5075,38 +5489,46 @@ static PyObject* _Nullable call_id_id_id_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, id, simd_int2))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, id, simd_int2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 rv = ((
-                    id(*)(struct objc_super*, SEL, id, id, simd_int2))objc_msgSendSuper)(
+                    id (*)(struct objc_super*, SEL, id, id, simd_int2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5122,20 +5544,20 @@ mkimp_id_id_id_v2i(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("@", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2i>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -5157,7 +5579,7 @@ mkimp_id_id_id_v2i(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -5200,39 +5622,47 @@ static PyObject* _Nullable call_id_id_id_v2i_f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, id, simd_int2, float))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, id, simd_int2, float))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, id, simd_int2,
-                             float))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, id, simd_int2,
+                              float))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5248,23 +5678,23 @@ mkimp_id_id_id_v2i_f(PyObject*              callable,
           int       cookie;
           PyObject* args[6] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("@", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2i>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("f", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -5286,7 +5716,7 @@ mkimp_id_id_id_v2i_f(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -5325,39 +5755,47 @@ static PyObject* _Nullable call_id_id_Q_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, unsigned long long, simd_float2))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, unsigned long long, simd_float2))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, unsigned long long,
-                             simd_float2))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, unsigned long long,
+                              simd_float2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5373,20 +5811,20 @@ mkimp_id_id_Q_v2f(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("Q", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2f>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -5408,7 +5846,7 @@ mkimp_id_id_Q_v2f(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -5447,39 +5885,47 @@ static PyObject* _Nullable call_id_id_Q_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, unsigned long long, simd_float3))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, unsigned long long, simd_float3))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, unsigned long long,
-                             simd_float3))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, unsigned long long,
+                              simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5495,20 +5941,20 @@ mkimp_id_id_Q_v3f(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("Q", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<3f>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -5530,7 +5976,7 @@ mkimp_id_id_Q_v3f(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -5569,39 +6015,47 @@ static PyObject* _Nullable call_id_id_Q_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, unsigned long long, simd_float4))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, unsigned long long, simd_float4))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, unsigned long long,
-                             simd_float4))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, unsigned long long,
+                              simd_float4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5617,20 +6071,20 @@ mkimp_id_id_Q_v4f(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("Q", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<4f>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -5652,7 +6106,7 @@ mkimp_id_id_Q_v4f(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -5692,39 +6146,47 @@ static PyObject* _Nullable call_id_id_Q_simd_float4x4(PyObject* method, PyObject
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, unsigned long long, simd_float4x4))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, unsigned long long, simd_float4x4))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, unsigned long long,
-                             simd_float4x4))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, unsigned long long,
+                              simd_float4x4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5740,20 +6202,20 @@ mkimp_id_id_Q_simd_float4x4(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("Q", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -5775,7 +6237,7 @@ mkimp_id_id_Q_simd_float4x4(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -5835,42 +6297,50 @@ static PyObject* _Nullable call_id_id_Z_id_v2i_q_Q_q_Z(PyObject* method, PyObjec
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, BOOL, id, simd_int2, long long,
-                             unsigned long long, long long, BOOL))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, BOOL, id, simd_int2, long long,
+                              unsigned long long, long long, BOOL))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4, arg5, arg6,
                                                arg7);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, BOOL, id, simd_int2, long long,
-                             unsigned long long, long long, BOOL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, BOOL, id, simd_int2, long long,
+                              unsigned long long, long long, BOOL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5, arg6, arg7);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -5888,35 +6358,35 @@ mkimp_id_id_Z_id_v2i_q_Q_q_Z(PyObject*              callable,
       int       cookie;
       PyObject* args[10] = {NULL};
       PyObject* pyself   = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("Z", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[4] = pythonify_c_value("@", &arg2);
-      if (args[4] == NULL)
-          goto error;
+      if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[5] = pythonify_c_value("<2i>", &arg3);
-      if (args[5] == NULL)
-          goto error;
+      if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[6] = pythonify_c_value("q", &arg4);
-      if (args[6] == NULL)
-          goto error;
+      if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[7] = pythonify_c_value("Q", &arg5);
-      if (args[7] == NULL)
-          goto error;
+      if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[8] = pythonify_c_value("q", &arg6);
-      if (args[8] == NULL)
-          goto error;
+      if (args[8] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[9] = pythonify_c_value("Z", &arg7);
-      if (args[9] == NULL)
-          goto error;
+      if (args[9] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              9 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -5938,7 +6408,7 @@ mkimp_id_id_Z_id_v2i_q_Q_q_Z(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -5994,41 +6464,49 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, long long, simd_int2, float, float, float,
-                             float))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, long long, simd_int2, float, float, float,
+                              float))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4,
                     arg5, arg6);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, long long, simd_int2, float,
-                             float, float, float))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, long long, simd_int2, float,
+                              float, float, float))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5, arg6);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6045,32 +6523,32 @@ mkimp_id_id_q_v2i_f_f_f_f(PyObject*              callable,
           int       cookie;
           PyObject* args[9] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("q", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2i>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("f", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("f", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[7] = pythonify_c_value("f", &arg5);
-          if (args[7] == NULL)
-              goto error;
+          if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[8] = pythonify_c_value("f", &arg6);
-          if (args[8] == NULL)
-              goto error;
+          if (args[8] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 8 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -6092,7 +6570,7 @@ mkimp_id_id_q_v2i_f_f_f_f(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -6152,41 +6630,49 @@ static PyObject* _Nullable call_id_id_q_v2i_f_f_f_f_f(PyObject* method, PyObject
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, long long, simd_int2, float, float, float,
-                             float, float))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, long long, simd_int2, float, float, float,
+                              float, float))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4,
                     arg5, arg6, arg7);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, long long, simd_int2, float,
-                             float, float, float, float))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, long long, simd_int2, float,
+                              float, float, float, float))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5, arg6, arg7);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6203,35 +6689,35 @@ mkimp_id_id_q_v2i_f_f_f_f_f(PyObject*              callable,
           int       cookie;
           PyObject* args[10] = {NULL};
           PyObject* pyself   = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("q", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2i>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("f", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("f", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[7] = pythonify_c_value("f", &arg5);
-          if (args[7] == NULL)
-              goto error;
+          if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[8] = pythonify_c_value("f", &arg6);
-          if (args[8] == NULL)
-              goto error;
+          if (args[8] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[9] = pythonify_c_value("f", &arg7);
-          if (args[9] == NULL)
-              goto error;
+          if (args[9] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 9 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -6253,7 +6739,7 @@ mkimp_id_id_q_v2i_f_f_f_f_f(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -6289,37 +6775,45 @@ static PyObject* _Nullable call_id_id_GKBox(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, GKBox))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, GKBox))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, GKBox))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, GKBox))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6334,17 +6828,17 @@ mkimp_id_id_GKBox(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("{GKBox=<3f><3f>}", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -6366,7 +6860,7 @@ mkimp_id_id_GKBox(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -6379,8 +6873,8 @@ mkimp_id_id_GKBox(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
 static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -6403,41 +6897,47 @@ static PyObject* _Nullable call_id_id_GKQuad(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, GKQuad))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, GKQuad))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, GKQuad))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, GKQuad))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_id_id_GKQuad(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -6450,17 +6950,17 @@ mkimp_id_id_GKQuad(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("{GKQuad=<2f><2f>}", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -6482,7 +6982,7 @@ mkimp_id_id_GKQuad(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -6495,8 +6995,8 @@ mkimp_id_id_GKQuad(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
-
 #if PyObjC_BUILD_RELEASE >= 1011
+
 static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
     PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
@@ -6524,43 +7024,49 @@ static PyObject* _Nullable call_id_id_MDLAxisAlignedBoundingBox_f(
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, MDLAxisAlignedBoundingBox, float))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, MDLAxisAlignedBoundingBox, float))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, MDLAxisAlignedBoundingBox,
-                             float))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, MDLAxisAlignedBoundingBox,
+                              float))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_id_id_MDLAxisAlignedBoundingBox_f(PyObject*              callable,
                                         PyObjCMethodSignature* methinfo
@@ -6575,20 +7081,20 @@ mkimp_id_id_MDLAxisAlignedBoundingBox_f(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("f", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -6610,7 +7116,7 @@ mkimp_id_id_MDLAxisAlignedBoundingBox_f(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -6647,38 +7153,46 @@ static PyObject* _Nullable call_id_id_simd_float2x2(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, simd_float2x2))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, simd_float2x2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 rv = ((
-                    id(*)(struct objc_super*, SEL, id, simd_float2x2))objc_msgSendSuper)(
+                    id (*)(struct objc_super*, SEL, id, simd_float2x2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6694,17 +7208,17 @@ mkimp_id_id_simd_float2x2(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("{simd_float2x2=[2<2f>]}", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -6726,7 +7240,7 @@ mkimp_id_id_simd_float2x2(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -6762,38 +7276,46 @@ static PyObject* _Nullable call_id_id_simd_float3x3(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, simd_float3x3))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, simd_float3x3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 rv = ((
-                    id(*)(struct objc_super*, SEL, id, simd_float3x3))objc_msgSendSuper)(
+                    id (*)(struct objc_super*, SEL, id, simd_float3x3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6809,17 +7331,17 @@ mkimp_id_id_simd_float3x3(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("{simd_float3x3=[3<3f>]}", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -6841,7 +7363,7 @@ mkimp_id_id_simd_float3x3(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -6877,38 +7399,46 @@ static PyObject* _Nullable call_id_id_simd_float4x4(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 rv = ((
-                    id(*)(struct objc_super*, SEL, id, simd_float4x4))objc_msgSendSuper)(
+                    id (*)(struct objc_super*, SEL, id, simd_float4x4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -6924,17 +7454,17 @@ mkimp_id_id_simd_float4x4(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -6956,7 +7486,7 @@ mkimp_id_id_simd_float4x4(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -6968,8 +7498,8 @@ mkimp_id_id_simd_float4x4(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-
 #if PyObjC_BUILD_RELEASE >= 1013
+
 static PyObject* _Nullable call_id_id_simd_quatf(PyObject* method, PyObject* self,
                                                  PyObject* const* arguments, size_t nargs)
 {
@@ -6992,41 +7522,47 @@ static PyObject* _Nullable call_id_id_simd_quatf(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, simd_quatf))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, simd_quatf))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, id, simd_quatf))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, simd_quatf))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_id_id_simd_quatf(PyObject*              callable,
                        PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -7039,17 +7575,17 @@ mkimp_id_id_simd_quatf(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("{simd_quatf=<4f>}", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -7071,7 +7607,7 @@ mkimp_id_id_simd_quatf(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -7084,8 +7620,8 @@ mkimp_id_id_simd_quatf(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
 #if PyObjC_BUILD_RELEASE >= 1013
+
 static PyObject* _Nullable call_id_id_simd_quatf_id(PyObject* method, PyObject* self,
                                                     PyObject* const* arguments,
                                                     size_t           nargs)
@@ -7113,42 +7649,48 @@ static PyObject* _Nullable call_id_id_simd_quatf_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, id, simd_quatf, id))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, id, simd_quatf, id))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((
-                    id(*)(struct objc_super*, SEL, id, simd_quatf, id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, id, simd_quatf,
+                              id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_id_id_simd_quatf_id(PyObject*              callable,
                           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -7162,20 +7704,20 @@ mkimp_id_id_simd_quatf_id(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("{simd_quatf=<4f>}", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("@", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -7197,7 +7739,7 @@ mkimp_id_id_simd_quatf_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -7243,39 +7785,47 @@ static PyObject* _Nullable call_id_CGColor_CGColor_id_v2i(PyObject*        metho
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, CGColorRef, CGColorRef, id, simd_int2))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, CGColorRef, CGColorRef, id, simd_int2))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, CGColorRef, CGColorRef, id,
-                             simd_int2))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, CGColorRef, CGColorRef, id,
+                              simd_int2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7291,23 +7841,23 @@ mkimp_id_CGColor_CGColor_id_v2i(PyObject* callable, PyObjCMethodSignature* methi
           int       cookie;
           PyObject* args[6] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("^{CGColor=}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("^{CGColor=}", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("@", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("<2i>", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -7329,7 +7879,7 @@ mkimp_id_CGColor_CGColor_id_v2i(PyObject* callable, PyObjCMethodSignature* methi
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -7368,38 +7918,46 @@ static PyObject* _Nullable call_id_f_v2f_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, float, simd_float2, simd_float2))(PyObjCIMP_GetIMP(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, float, simd_float2, simd_float2))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, float, simd_float2,
-                             simd_float2))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, float, simd_float2,
+                              simd_float2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7415,20 +7973,20 @@ mkimp_id_f_v2f_v2f(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("f", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2f>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2f>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -7450,7 +8008,7 @@ mkimp_id_f_v2f_v2f(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -7494,39 +8052,47 @@ static PyObject* _Nullable call_id_f_v2f_v2f_Class(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, float, simd_float2, simd_float2, Class))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, float, simd_float2, simd_float2, Class))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, float, simd_float2, simd_float2,
-                             Class))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, float, simd_float2, simd_float2,
+                              Class))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7542,23 +8108,23 @@ mkimp_id_f_v2f_v2f_Class(PyObject*              callable,
           int       cookie;
           PyObject* args[6] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("f", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2f>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2f>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("#", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -7580,7 +8146,7 @@ mkimp_id_f_v2f_v2f_Class(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -7640,43 +8206,51 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_Q_q_Z_id(PyObject* method, PyObject
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, float, simd_float2, unsigned long long,
-                             unsigned long long, unsigned long long, long long, BOOL,
-                             id))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, float, simd_float2, unsigned long long,
+                              unsigned long long, unsigned long long, long long, BOOL,
+                              id))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4,
                     arg5, arg6, arg7);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, float, simd_float2,
-                             unsigned long long, unsigned long long, unsigned long long,
-                             long long, BOOL, id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, float, simd_float2,
+                              unsigned long long, unsigned long long, unsigned long long,
+                              long long, BOOL, id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5, arg6, arg7);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7695,35 +8269,35 @@ mkimp_id_f_v2f_Q_Q_Q_q_Z_id(PyObject*              callable,
       int       cookie;
       PyObject* args[10] = {NULL};
       PyObject* pyself   = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("f", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("<2f>", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[4] = pythonify_c_value("Q", &arg2);
-      if (args[4] == NULL)
-          goto error;
+      if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[5] = pythonify_c_value("Q", &arg3);
-      if (args[5] == NULL)
-          goto error;
+      if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[6] = pythonify_c_value("Q", &arg4);
-      if (args[6] == NULL)
-          goto error;
+      if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[7] = pythonify_c_value("q", &arg5);
-      if (args[7] == NULL)
-          goto error;
+      if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[8] = pythonify_c_value("Z", &arg6);
-      if (args[8] == NULL)
-          goto error;
+      if (args[8] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[9] = pythonify_c_value("@", &arg7);
-      if (args[9] == NULL)
-          goto error;
+      if (args[9] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              9 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -7745,7 +8319,7 @@ mkimp_id_f_v2f_Q_Q_Q_q_Z_id(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -7801,42 +8375,50 @@ static PyObject* _Nullable call_id_f_v2f_Q_Q_q_Z_id(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, float, simd_float2, unsigned long long,
-                             unsigned long long, long long, BOOL, id))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, float, simd_float2, unsigned long long,
+                              unsigned long long, long long, BOOL, id))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, float, simd_float2,
-                             unsigned long long, unsigned long long, long long, BOOL,
-                             id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, float, simd_float2,
+                              unsigned long long, unsigned long long, long long, BOOL,
+                              id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5, arg6);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -7854,32 +8436,32 @@ mkimp_id_f_v2f_Q_Q_q_Z_id(PyObject*              callable,
       int       cookie;
       PyObject* args[9] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("f", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("<2f>", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[4] = pythonify_c_value("Q", &arg2);
-      if (args[4] == NULL)
-          goto error;
+      if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[5] = pythonify_c_value("Q", &arg3);
-      if (args[5] == NULL)
-          goto error;
+      if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[6] = pythonify_c_value("q", &arg4);
-      if (args[6] == NULL)
-          goto error;
+      if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[7] = pythonify_c_value("Z", &arg5);
-      if (args[7] == NULL)
-          goto error;
+      if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[8] = pythonify_c_value("@", &arg6);
-      if (args[8] == NULL)
-          goto error;
+      if (args[8] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              8 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -7901,7 +8483,7 @@ mkimp_id_f_v2f_Q_Q_q_Z_id(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -7953,40 +8535,48 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_Z(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, float, id, simd_int2, int, long long, BOOL))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, float, id, simd_int2, int, long long, BOOL))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4, arg5);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, float, id, simd_int2, int,
-                             long long, BOOL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, float, id, simd_int2, int,
+                              long long, BOOL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8003,29 +8593,29 @@ mkimp_id_f_id_v2i_i_q_Z(PyObject*              callable,
           int       cookie;
           PyObject* args[8] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("f", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("@", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2i>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("i", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("q", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[7] = pythonify_c_value("Z", &arg5);
-          if (args[7] == NULL)
-              goto error;
+          if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -8047,7 +8637,7 @@ mkimp_id_f_id_v2i_i_q_Z(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -8102,41 +8692,49 @@ static PyObject* _Nullable call_id_f_id_v2i_i_q_CGColor_CGColor(
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, float, id, simd_int2, int, long long, CGColorRef,
-                             CGColorRef))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, float, id, simd_int2, int, long long, CGColorRef,
+                              CGColorRef))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2, arg3, arg4,
                     arg5, arg6);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, float, id, simd_int2, int,
-                             long long, CGColorRef, CGColorRef))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, float, id, simd_int2, int,
+                              long long, CGColorRef, CGColorRef))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5, arg6);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8153,32 +8751,32 @@ mkimp_id_f_id_v2i_i_q_CGColor_CGColor(PyObject* callable, PyObjCMethodSignature*
           int       cookie;
           PyObject* args[9] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("f", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("@", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2i>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("i", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("q", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[7] = pythonify_c_value("^{CGColor=}", &arg5);
-          if (args[7] == NULL)
-              goto error;
+          if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[8] = pythonify_c_value("^{CGColor=}", &arg6);
-          if (args[8] == NULL)
-              goto error;
+          if (args[8] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 8 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -8200,7 +8798,7 @@ mkimp_id_f_id_v2i_i_q_CGColor_CGColor(PyObject* callable, PyObjCMethodSignature*
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -8243,39 +8841,47 @@ static PyObject* _Nullable call_id_f_id_v2i_q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, float, id, simd_int2, long long))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, float, id, simd_int2, long long))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, float, id, simd_int2,
-                             long long))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, float, id, simd_int2,
+                              long long))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8291,23 +8897,23 @@ mkimp_id_f_id_v2i_q(PyObject*              callable,
           int       cookie;
           PyObject* args[6] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("f", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("@", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2i>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("q", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -8329,7 +8935,7 @@ mkimp_id_f_id_v2i_q(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -8372,39 +8978,47 @@ static PyObject* _Nullable call_id_f_f_id_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, float, float, id, simd_int2))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, float, float, id, simd_int2))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, float, float, id,
-                             simd_int2))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, float, float, id,
+                              simd_int2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8420,23 +9034,23 @@ mkimp_id_f_f_id_v2i(PyObject*              callable,
           int       cookie;
           PyObject* args[6] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("f", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("f", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("@", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("<2i>", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -8458,7 +9072,7 @@ mkimp_id_f_f_id_v2i(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -8490,37 +9104,45 @@ static PyObject* _Nullable call_id_GKBox(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, GKBox))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, GKBox))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, GKBox))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, GKBox))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8535,14 +9157,14 @@ mkimp_id_GKBox(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{GKBox=<3f><3f>}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -8564,7 +9186,7 @@ mkimp_id_GKBox(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -8601,37 +9223,45 @@ static PyObject* _Nullable call_id_GKBox_f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, GKBox, float))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, GKBox, float))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, GKBox, float))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, GKBox, float))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -8646,17 +9276,17 @@ mkimp_id_GKBox_f(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{GKBox=<3f><3f>}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("f", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -8678,7 +9308,7 @@ mkimp_id_GKBox_f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -8691,8 +9321,8 @@ mkimp_id_GKBox_f(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
 static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
                                           PyObject* const* arguments, size_t nargs)
 {
@@ -8711,41 +9341,47 @@ static PyObject* _Nullable call_id_GKQuad(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, GKQuad))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, GKQuad))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, GKQuad))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, GKQuad))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_id_GKQuad(PyObject*              callable,
                 PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -8758,14 +9394,14 @@ mkimp_id_GKQuad(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{GKQuad=<2f><2f>}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -8787,7 +9423,7 @@ mkimp_id_GKQuad(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -8800,8 +9436,8 @@ mkimp_id_GKQuad(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
 static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
                                             PyObject* const* arguments, size_t nargs)
 {
@@ -8824,41 +9460,47 @@ static PyObject* _Nullable call_id_GKQuad_f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, GKQuad, float))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, GKQuad, float))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, GKQuad, float))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, GKQuad, float))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_id_GKQuad_f(PyObject*              callable,
                   PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -8871,17 +9513,17 @@ mkimp_id_GKQuad_f(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{GKQuad=<2f><2f>}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("f", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -8903,7 +9545,7 @@ mkimp_id_GKQuad_f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -8916,8 +9558,8 @@ mkimp_id_GKQuad_f(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
-
 #if PyObjC_BUILD_RELEASE >= 1011
+
 static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObject* self,
                                                        PyObject* const* arguments,
                                                        size_t           nargs)
@@ -8938,42 +9580,48 @@ static PyObject* _Nullable call_id_MDLVoxelIndexExtent(PyObject* method, PyObjec
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, MDLVoxelIndexExtent))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, MDLVoxelIndexExtent))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL,
-                             MDLVoxelIndexExtent))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL,
+                              MDLVoxelIndexExtent))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_id_MDLVoxelIndexExtent(PyObject*              callable,
                              PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -8987,14 +9635,14 @@ mkimp_id_MDLVoxelIndexExtent(PyObject*              callable,
           int       cookie;
           PyObject* args[3] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{MDLVoxelIndexExtent=<4i><4i>}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -9016,7 +9664,7 @@ mkimp_id_MDLVoxelIndexExtent(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -9048,37 +9696,45 @@ static PyObject* _Nullable call_id_simd_float4x4(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float4x4))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float4x4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -9093,14 +9749,14 @@ mkimp_id_simd_float4x4(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -9122,7 +9778,7 @@ mkimp_id_simd_float4x4(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -9158,38 +9814,46 @@ static PyObject* _Nullable call_id_simd_float4x4_Z(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((id(*)(id, SEL, simd_float4x4, BOOL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(id, SEL, simd_float4x4, BOOL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((id(*)(struct objc_super*, SEL, simd_float4x4,
-                             BOOL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((id (*)(struct objc_super*, SEL, simd_float4x4,
+                              BOOL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
-    return adjust_retval(methinfo, self, flags, pythonify_c_value("@", &rv));
+    PyObject* result = adjust_retval(methinfo, rv);
+    Py_CLEAR(methinfo);
+    return result;
 }
 
 static IMP
@@ -9205,17 +9869,17 @@ mkimp_id_simd_float4x4_Z(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("Z", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -9237,7 +9901,7 @@ mkimp_id_simd_float4x4_Z(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -9285,39 +9949,46 @@ static PyObject* _Nullable call_Z_v2i_id_id_id_id(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((BOOL(*)(id, SEL, simd_int2, id, id, id, id))(
+                // LCOV_BR_EXCL_START
+                rv = ((BOOL (*)(id, SEL, simd_int2, id, id, id, id))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((BOOL(*)(struct objc_super*, SEL, simd_int2, id, id, id,
-                               id))objc_msgSendSuper)(&super,
-                                                      PyObjCSelector_GetSelector(method),
-                                                      arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_START
+                rv = ((BOOL (*)(struct objc_super*, SEL, simd_int2, id, id, id,
+                                id))objc_msgSendSuper)(&super,
+                                                       PyObjCSelector_GetSelector(method),
+                                                       arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("Z", &rv);
 }
 
@@ -9334,35 +10005,35 @@ mkimp_Z_v2i_id_id_id_id(PyObject*              callable,
           int       cookie;
           PyObject* args[7] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2i>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("@", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("@", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("@", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("@", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           if (result == NULL)
               goto error;
           BOOL oc_result;
-          if (depythonify_c_value("Z", result, &oc_result) == -1) {
-              Py_DECREF(result);
-              goto error;
+          if (depythonify_c_value("Z", result, &oc_result) == -1) { // LCOV_BR_EXCL_LINE
+              Py_DECREF(result);                                    // LCOV_EXCL_LINE
+              goto error;                                           // LCOV_EXCL_LINE
           }
 
           Py_DECREF(result);
@@ -9375,7 +10046,7 @@ mkimp_Z_v2i_id_id_id_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -9427,39 +10098,46 @@ static PyObject* _Nullable call_Z_v2i_q_f_id_id_id(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((BOOL(*)(id, SEL, simd_int2, long long, float, id, id, id))(
+                // LCOV_BR_EXCL_START
+                rv = ((BOOL (*)(id, SEL, simd_int2, long long, float, id, id, id))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4, arg5);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((BOOL(*)(struct objc_super*, SEL, simd_int2, long long, float, id,
-                               id, id))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((BOOL (*)(struct objc_super*, SEL, simd_int2, long long, float, id,
+                                id, id))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4, arg5);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("Z", &rv);
 }
 
@@ -9477,38 +10155,38 @@ mkimp_Z_v2i_q_f_id_id_id(PyObject*              callable,
           int       cookie;
           PyObject* args[8] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2i>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("q", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("f", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("@", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("@", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[7] = pythonify_c_value("@", &arg5);
-          if (args[7] == NULL)
-              goto error;
+          if (args[7] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 7 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           if (result == NULL)
               goto error;
           BOOL oc_result;
-          if (depythonify_c_value("Z", result, &oc_result) == -1) {
-              Py_DECREF(result);
-              goto error;
+          if (depythonify_c_value("Z", result, &oc_result) == -1) { // LCOV_BR_EXCL_LINE
+              Py_DECREF(result);                                    // LCOV_EXCL_LINE
+              goto error;                                           // LCOV_EXCL_LINE
           }
 
           Py_DECREF(result);
@@ -9521,7 +10199,7 @@ mkimp_Z_v2i_q_f_id_id_id(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -9568,39 +10246,46 @@ static PyObject* _Nullable call_Z_v4i_Z_Z_Z_Z(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((BOOL(*)(id, SEL, simd_int4, BOOL, BOOL, BOOL, BOOL))(
+                // LCOV_BR_EXCL_START
+                rv = ((BOOL (*)(id, SEL, simd_int4, BOOL, BOOL, BOOL, BOOL))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3, arg4);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((BOOL(*)(struct objc_super*, SEL, simd_int4, BOOL, BOOL, BOOL,
-                               BOOL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((BOOL (*)(struct objc_super*, SEL, simd_int4, BOOL, BOOL, BOOL,
+                                BOOL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3,
                     arg4);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("Z", &rv);
 }
 
@@ -9617,35 +10302,35 @@ mkimp_Z_v4i_Z_Z_Z_Z(PyObject*              callable,
           int       cookie;
           PyObject* args[7] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<4i>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("Z", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("Z", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[5] = pythonify_c_value("Z", &arg3);
-          if (args[5] == NULL)
-              goto error;
+          if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[6] = pythonify_c_value("Z", &arg4);
-          if (args[6] == NULL)
-              goto error;
+          if (args[6] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 6 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           if (result == NULL)
               goto error;
           BOOL oc_result;
-          if (depythonify_c_value("Z", result, &oc_result) == -1) {
-              Py_DECREF(result);
-              goto error;
+          if (depythonify_c_value("Z", result, &oc_result) == -1) { // LCOV_BR_EXCL_LINE
+              Py_DECREF(result);                                    // LCOV_EXCL_LINE
+              goto error;                                           // LCOV_EXCL_LINE
           }
 
           Py_DECREF(result);
@@ -9658,7 +10343,7 @@ mkimp_Z_v4i_Z_Z_Z_Z(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -9689,37 +10374,44 @@ static PyObject* _Nullable call_CGColor_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((CGColorRef(*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((CGColorRef (*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((CGColorRef(*)(struct objc_super*, SEL,
-                                     simd_float3))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((CGColorRef (*)(struct objc_super*, SEL,
+                                      simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("^{CGColor=}", &rv);
 }
 
@@ -9735,23 +10427,24 @@ mkimp_CGColor_v3f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<3f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
       if (result == NULL)
           goto error;
       CGColorRef oc_result;
-      if (depythonify_c_value("^{CGColor=}", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
+      if (depythonify_c_value("^{CGColor=}", result, &oc_result)
+          == -1) {           // LCOV_BR_EXCL_LINE
+          Py_DECREF(result); // LCOV_EXCL_LINE
+          goto error;        // LCOV_EXCL_LINE
       }
 
       Py_DECREF(result);
@@ -9764,7 +10457,7 @@ mkimp_CGColor_v3f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -9800,38 +10493,45 @@ static PyObject* _Nullable call_CGColor_v3f_CGColorSpace(PyObject* method, PyObj
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((CGColorRef(*)(id, SEL, simd_float3, CGColorSpaceRef))(
+                // LCOV_BR_EXCL_START
+                rv = ((CGColorRef (*)(id, SEL, simd_float3, CGColorSpaceRef))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((CGColorRef(*)(struct objc_super*, SEL, simd_float3,
-                                     CGColorSpaceRef))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((CGColorRef (*)(struct objc_super*, SEL, simd_float3,
+                                      CGColorSpaceRef))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("^{CGColor=}", &rv);
 }
 
@@ -9848,26 +10548,27 @@ mkimp_CGColor_v3f_CGColorSpace(PyObject* callable, PyObjCMethodSignature* methin
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("^{CGColorSpace=}", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           if (result == NULL)
               goto error;
           CGColorRef oc_result;
-          if (depythonify_c_value("^{CGColor=}", result, &oc_result) == -1) {
-              Py_DECREF(result);
-              goto error;
+          if (depythonify_c_value("^{CGColor=}", result, &oc_result)
+              == -1) {           // LCOV_BR_EXCL_LINE
+              Py_DECREF(result); // LCOV_EXCL_LINE
+              goto error;        // LCOV_EXCL_LINE
           }
 
           Py_DECREF(result);
@@ -9880,7 +10581,7 @@ mkimp_CGColor_v3f_CGColorSpace(PyObject* callable, PyObjCMethodSignature* methin
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -9911,36 +10612,43 @@ static PyObject* _Nullable call_f_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 rv = ((float (*)(id, SEL, simd_float2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 rv = ((float (*)(struct objc_super*, SEL, simd_float2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("f", &rv);
 }
 
@@ -9956,14 +10664,14 @@ mkimp_f_v2f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<2f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -9985,7 +10693,7 @@ mkimp_f_v2f(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -10016,36 +10724,43 @@ static PyObject* _Nullable call_f_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 rv = ((float (*)(id, SEL, simd_int2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 rv = ((float (*)(struct objc_super*, SEL, simd_int2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("f", &rv);
 }
 
@@ -10061,14 +10776,14 @@ mkimp_f_v2i(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<2i>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -10090,7 +10805,7 @@ mkimp_f_v2i(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -10120,33 +10835,39 @@ static PyObject* _Nullable call_v_v2d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_double2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_double2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10165,14 +10886,14 @@ mkimp_v_v2d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<2d>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -10194,7 +10915,7 @@ mkimp_v_v2d(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -10228,34 +10949,40 @@ static PyObject* _Nullable call_v_v2d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_double2, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_double2,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10275,17 +11002,17 @@ mkimp_v_v2d_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2d>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -10307,7 +11034,7 @@ mkimp_v_v2d_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -10337,33 +11064,39 @@ static PyObject* _Nullable call_v_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10382,14 +11115,14 @@ mkimp_v_v2f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<2f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -10411,7 +11144,7 @@ mkimp_v_v2f(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -10445,34 +11178,40 @@ static PyObject* _Nullable call_v_v2f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float2, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float2,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10492,17 +11231,17 @@ mkimp_v_v2f_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<2f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -10524,7 +11263,7 @@ mkimp_v_v2f_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -10554,33 +11293,39 @@ static PyObject* _Nullable call_v_v3d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_double3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_double3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10599,14 +11344,14 @@ mkimp_v_v3d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<3d>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -10628,7 +11373,7 @@ mkimp_v_v3d(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -10662,34 +11407,40 @@ static PyObject* _Nullable call_v_v3d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_double3, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_double3,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10709,17 +11460,17 @@ mkimp_v_v3d_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3d>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -10741,7 +11492,7 @@ mkimp_v_v3d_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -10771,33 +11522,39 @@ static PyObject* _Nullable call_v_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10816,14 +11573,14 @@ mkimp_v_v3f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<3f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -10845,7 +11602,7 @@ mkimp_v_v3f(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -10879,34 +11636,40 @@ static PyObject* _Nullable call_v_v3f_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float3, simd_float3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float3,
                            simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -10926,17 +11689,17 @@ mkimp_v_v3f_v3f(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<3f>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -10958,7 +11721,7 @@ mkimp_v_v3f_v3f(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -10996,35 +11759,41 @@ static PyObject* _Nullable call_v_v3f_v3f_v3f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float3, simd_float3, simd_float3))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float3, simd_float3,
                            simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11044,20 +11813,20 @@ mkimp_v_v3f_v3f_v3f(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<3f>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<3f>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -11079,7 +11848,7 @@ mkimp_v_v3f_v3f_v3f(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -11113,34 +11882,40 @@ static PyObject* _Nullable call_v_v3f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float3, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float3,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11160,17 +11935,17 @@ mkimp_v_v3f_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<3f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -11192,7 +11967,7 @@ mkimp_v_v3f_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -11226,34 +12001,40 @@ static PyObject* _Nullable call_v_v4d_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_double4, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_double4,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11273,17 +12054,17 @@ mkimp_v_v4d_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<4d>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -11305,7 +12086,7 @@ mkimp_v_v4d_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -11335,33 +12116,39 @@ static PyObject* _Nullable call_v_v4f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11380,14 +12167,14 @@ mkimp_v_v4f(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<4f>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -11409,7 +12196,7 @@ mkimp_v_v4f(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -11443,34 +12230,40 @@ static PyObject* _Nullable call_v_v4f_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float4, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float4,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11490,17 +12283,17 @@ mkimp_v_v4f_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("<4f>", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -11522,7 +12315,7 @@ mkimp_v_v4f_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -11552,33 +12345,39 @@ static PyObject* _Nullable call_v_v4i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_int4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_int4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11597,14 +12396,14 @@ mkimp_v_v4i(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<4i>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -11626,7 +12425,7 @@ mkimp_v_v4i(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -11664,34 +12463,40 @@ static PyObject* _Nullable call_v_id_v2f_v2f(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, id, simd_float2, simd_float2))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, id, simd_float2,
                            simd_float2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11711,20 +12516,20 @@ mkimp_v_id_v2f_v2f(PyObject*              callable,
           int       cookie;
           PyObject* args[5] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("@", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2f>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[4] = pythonify_c_value("<2f>", &arg2);
-          if (args[4] == NULL)
-              goto error;
+          if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -11746,7 +12551,7 @@ mkimp_v_id_v2f_v2f(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -11788,35 +12593,41 @@ static PyObject* _Nullable call_v_id_v2f_v2f_q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, id, simd_float2, simd_float2, long long))(
                     PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
                                                arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, id, simd_float2, simd_float2,
                            long long))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1, arg2, arg3);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11836,23 +12647,23 @@ mkimp_v_id_v2f_v2f_q(PyObject*              callable,
       int       cookie;
       PyObject* args[6] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("<2f>", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[4] = pythonify_c_value("<2f>", &arg2);
-      if (args[4] == NULL)
-          goto error;
+      if (args[4] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[5] = pythonify_c_value("q", &arg3);
-      if (args[5] == NULL)
-          goto error;
+      if (args[5] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              5 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -11874,7 +12685,7 @@ mkimp_v_id_v2f_v2f_q(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -11908,33 +12719,39 @@ static PyObject* _Nullable call_v_f_v2i(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, float, simd_int2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, float, simd_int2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -11954,17 +12771,17 @@ mkimp_v_f_v2i(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("f", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<2i>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -11986,7 +12803,7 @@ mkimp_v_f_v2i(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -11998,8 +12815,8 @@ mkimp_v_f_v2i(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-
 #if PyObjC_BUILD_RELEASE >= 1011
+
 static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox(PyObject*        method,
                                                             PyObject*        self,
                                                             PyObject* const* arguments,
@@ -12020,41 +12837,45 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox(PyObject*        met
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, MDLAxisAlignedBoundingBox))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, MDLAxisAlignedBoundingBox))
                      objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
     Py_RETURN_NONE;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_v_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methinfo
                                   __attribute__((__unused__)))
@@ -12068,14 +12889,14 @@ mkimp_v_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* met
           int       cookie;
           PyObject* args[3] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -12097,7 +12918,7 @@ mkimp_v_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* met
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -12110,8 +12931,8 @@ mkimp_v_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* met
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
-
 #if PyObjC_BUILD_RELEASE >= 1011
+
 static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox_Z(PyObject*        method,
                                                               PyObject*        self,
                                                               PyObject* const* arguments,
@@ -12136,42 +12957,46 @@ static PyObject* _Nullable call_v_MDLAxisAlignedBoundingBox_Z(PyObject*        m
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, MDLAxisAlignedBoundingBox, BOOL))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, MDLAxisAlignedBoundingBox,
                            BOOL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
     Py_RETURN_NONE;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_v_MDLAxisAlignedBoundingBox_Z(PyObject* callable, PyObjCMethodSignature* methinfo
                                     __attribute__((__unused__)))
@@ -12185,17 +13010,17 @@ mkimp_v_MDLAxisAlignedBoundingBox_Z(PyObject* callable, PyObjCMethodSignature* m
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("Z", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -12217,7 +13042,7 @@ mkimp_v_MDLAxisAlignedBoundingBox_Z(PyObject* callable, PyObjCMethodSignature* m
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -12248,33 +13073,39 @@ static PyObject* _Nullable call_v_simd_double4x4(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_double4x4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_double4x4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12293,14 +13124,14 @@ mkimp_v_simd_double4x4(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{simd_double4x4=[4<4d>]}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -12322,7 +13153,7 @@ mkimp_v_simd_double4x4(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -12357,34 +13188,40 @@ static PyObject* _Nullable call_v_simd_double4x4_d(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_double4x4, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_double4x4,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12404,17 +13241,17 @@ mkimp_v_simd_double4x4_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{simd_double4x4=[4<4d>]}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -12436,7 +13273,7 @@ mkimp_v_simd_double4x4_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -12466,33 +13303,39 @@ static PyObject* _Nullable call_v_simd_float2x2(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float2x2))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float2x2))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12511,14 +13354,14 @@ mkimp_v_simd_float2x2(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{simd_float2x2=[2<2f>]}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -12540,7 +13383,7 @@ mkimp_v_simd_float2x2(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -12570,33 +13413,39 @@ static PyObject* _Nullable call_v_simd_float3x3(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float3x3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float3x3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12615,14 +13464,14 @@ mkimp_v_simd_float3x3(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{simd_float3x3=[3<3f>]}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -12644,7 +13493,7 @@ mkimp_v_simd_float3x3(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -12674,33 +13523,39 @@ static PyObject* _Nullable call_v_simd_float4x4(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float4x4))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float4x4))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12719,14 +13574,14 @@ mkimp_v_simd_float4x4(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -12748,7 +13603,7 @@ mkimp_v_simd_float4x4(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -12783,34 +13638,40 @@ static PyObject* _Nullable call_v_simd_float4x4_d(PyObject* method, PyObject* se
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_float4x4, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_float4x4,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
@@ -12830,17 +13691,17 @@ mkimp_v_simd_float4x4_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -12862,7 +13723,7 @@ mkimp_v_simd_float4x4_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -12874,8 +13735,8 @@ mkimp_v_simd_float4x4_d(PyObject*              callable,
 
     return imp_implementationWithBlock(block);
 }
-
 #if PyObjC_BUILD_RELEASE >= 1013
+
 static PyObject* _Nullable call_v_simd_quatd_d(PyObject* method, PyObject* self,
                                                PyObject* const* arguments, size_t nargs)
 {
@@ -12897,42 +13758,46 @@ static PyObject* _Nullable call_v_simd_quatd_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_quatd, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_quatd,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
     Py_RETURN_NONE;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_v_simd_quatd_d(PyObject*              callable,
                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -12946,17 +13811,17 @@ mkimp_v_simd_quatd_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{simd_quatd=<4d>}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -12978,7 +13843,7 @@ mkimp_v_simd_quatd_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -12991,8 +13856,8 @@ mkimp_v_simd_quatd_d(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
 #if PyObjC_BUILD_RELEASE >= 1013
+
 static PyObject* _Nullable call_v_simd_quatf(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -13010,41 +13875,45 @@ static PyObject* _Nullable call_v_simd_quatf(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_quatf))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_quatf))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
     Py_RETURN_NONE;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_v_simd_quatf(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13057,14 +13926,14 @@ mkimp_v_simd_quatf(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("{simd_quatf=<4f>}", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -13086,7 +13955,7 @@ mkimp_v_simd_quatf(PyObject*              callable,
       return;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -13099,8 +13968,8 @@ mkimp_v_simd_quatf(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
 #if PyObjC_BUILD_RELEASE >= 1013
+
 static PyObject* _Nullable call_v_simd_quatf_v3f(PyObject* method, PyObject* self,
                                                  PyObject* const* arguments, size_t nargs)
 {
@@ -13122,42 +13991,46 @@ static PyObject* _Nullable call_v_simd_quatf_v3f(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_quatf, simd_float3))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_quatf,
                            simd_float3))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
     Py_RETURN_NONE;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_v_simd_quatf_v3f(PyObject*              callable,
                        PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13171,17 +14044,17 @@ mkimp_v_simd_quatf_v3f(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{simd_quatf=<4f>}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("<3f>", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -13203,7 +14076,7 @@ mkimp_v_simd_quatf_v3f(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -13216,8 +14089,8 @@ mkimp_v_simd_quatf_v3f(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
 #if PyObjC_BUILD_RELEASE >= 1013
+
 static PyObject* _Nullable call_v_simd_quatf_d(PyObject* method, PyObject* self,
                                                PyObject* const* arguments, size_t nargs)
 {
@@ -13239,42 +14112,46 @@ static PyObject* _Nullable call_v_simd_quatf_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
+                // LCOV_BR_EXCL_START
                 ((void (*)(id, SEL, simd_quatf, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
                 ((void (*)(struct objc_super*, SEL, simd_quatf,
                            double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
     Py_RETURN_NONE;
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_v_simd_quatf_d(PyObject*              callable,
                      PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13288,17 +14165,17 @@ mkimp_v_simd_quatf_d(PyObject*              callable,
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{simd_quatf=<4f>}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("d", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -13320,7 +14197,7 @@ mkimp_v_simd_quatf_d(PyObject*              callable,
           return;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -13350,40 +14227,47 @@ static PyObject* _Nullable call_GKBox(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((GKBox(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((GKBox (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((GKBox(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+                rv = ((GKBox (*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
-                rv = ((GKBox(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                rv = ((GKBox (*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{GKBox=<3f><3f>}", &rv);
 }
 
@@ -13399,9 +14283,9 @@ mkimp_GKBox(PyObject*              callable,
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -13416,30 +14300,24 @@ mkimp_GKBox(PyObject*              callable,
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
 static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
                                        PyObject* const* arguments
                                        __attribute__((__unused__)),
@@ -13455,41 +14333,46 @@ static PyObject* _Nullable call_GKQuad(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((GKQuad(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((GKQuad (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((GKQuad(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((GKQuad (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{GKQuad=<2f><2f>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_GKQuad(PyObject*              callable,
              PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13502,9 +14385,9 @@ mkimp_GKQuad(PyObject*              callable,
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -13519,30 +14402,24 @@ mkimp_GKQuad(PyObject*              callable,
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
-
 #if PyObjC_BUILD_RELEASE >= 1012
+
 static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -13561,47 +14438,52 @@ static PyObject* _Nullable call_GKTriangle_Q(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((GKTriangle(*)(id, SEL, unsigned long long))(PyObjCIMP_GetIMP(
+                // LCOV_BR_EXCL_START
+                rv = ((GKTriangle (*)(id, SEL, unsigned long long))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((GKTriangle(*)(struct objc_super*, SEL,
-                                     unsigned long long))objc_msgSendSuper_stret)(
+                rv = ((GKTriangle (*)(struct objc_super*, SEL,
+                                      unsigned long long))objc_msgSendSuper_stret)(
 #else
-                rv = ((GKTriangle(*)(struct objc_super*, SEL,
-                                     unsigned long long))objc_msgSendSuper)(
+                rv = ((GKTriangle (*)(struct objc_super*, SEL,
+                                      unsigned long long))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{GKTriangle=[3<3f>]}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1012 */
 
-#if PyObjC_BUILD_RELEASE >= 1012
 static IMP
 mkimp_GKTriangle_Q(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -13615,14 +14497,14 @@ mkimp_GKTriangle_Q(PyObject*              callable,
           int       cookie;
           PyObject* args[3] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("Q", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -13644,7 +14526,7 @@ mkimp_GKTriangle_Q(PyObject*              callable,
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -13657,8 +14539,8 @@ mkimp_GKTriangle_Q(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
-
 #if PyObjC_BUILD_RELEASE >= 1011
+
 static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        method,
                                                           PyObject*        self,
                                                           PyObject* const* arguments
@@ -13675,47 +14557,52 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox(PyObject*        metho
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((MDLAxisAlignedBoundingBox(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((MDLAxisAlignedBoundingBox (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*,
-                                                    SEL))objc_msgSendSuper_stret)(
+                rv = ((MDLAxisAlignedBoundingBox (*)(struct objc_super*,
+                                                     SEL))objc_msgSendSuper_stret)(
 #else
-                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*,
-                                                    SEL))objc_msgSendSuper)(
+                rv = ((MDLAxisAlignedBoundingBox (*)(struct objc_super*,
+                                                     SEL))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methinfo
                                 __attribute__((__unused__)))
@@ -13728,9 +14615,9 @@ mkimp_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methi
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -13746,30 +14633,24 @@ mkimp_MDLAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methi
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
-
 #if PyObjC_BUILD_RELEASE >= 1011
+
 static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_v4i(PyObject*        method,
                                                               PyObject*        self,
                                                               PyObject* const* arguments,
@@ -13790,47 +14671,53 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_v4i(PyObject*        m
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((MDLAxisAlignedBoundingBox(*)(id, SEL, simd_int4))(PyObjCIMP_GetIMP(
-                    method)))(self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_START
+                rv = ((MDLAxisAlignedBoundingBox (*)(id, SEL, simd_int4))(
+                    PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
+                                               arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL,
-                                                    simd_int4))objc_msgSendSuper_stret)(
+                rv = ((MDLAxisAlignedBoundingBox (*)(struct objc_super*, SEL,
+                                                     simd_int4))objc_msgSendSuper_stret)(
 #else
-                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL,
-                                                    simd_int4))objc_msgSendSuper)(
+                rv = ((MDLAxisAlignedBoundingBox (*)(struct objc_super*, SEL,
+                                                     simd_int4))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_MDLAxisAlignedBoundingBox_v4i(PyObject* callable, PyObjCMethodSignature* methinfo
                                     __attribute__((__unused__)))
@@ -13844,14 +14731,14 @@ mkimp_MDLAxisAlignedBoundingBox_v4i(PyObject* callable, PyObjCMethodSignature* m
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("<4i>", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -13874,7 +14761,7 @@ mkimp_MDLAxisAlignedBoundingBox_v4i(PyObject* callable, PyObjCMethodSignature* m
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -13887,8 +14774,8 @@ mkimp_MDLAxisAlignedBoundingBox_v4i(PyObject* callable, PyObjCMethodSignature* m
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
-
 #if PyObjC_BUILD_RELEASE >= 1011
+
 static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_d(PyObject*        method,
                                                             PyObject*        self,
                                                             PyObject* const* arguments,
@@ -13909,47 +14796,52 @@ static PyObject* _Nullable call_MDLAxisAlignedBoundingBox_d(PyObject*        met
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((MDLAxisAlignedBoundingBox(*)(id, SEL, double))(PyObjCIMP_GetIMP(
+                // LCOV_BR_EXCL_START
+                rv = ((MDLAxisAlignedBoundingBox (*)(id, SEL, double))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL,
-                                                    double))objc_msgSendSuper_stret)(
+                rv = ((MDLAxisAlignedBoundingBox (*)(struct objc_super*, SEL,
+                                                     double))objc_msgSendSuper_stret)(
 #else
-                rv = ((MDLAxisAlignedBoundingBox(*)(struct objc_super*, SEL,
-                                                    double))objc_msgSendSuper)(
+                rv = ((MDLAxisAlignedBoundingBox (*)(struct objc_super*, SEL,
+                                                     double))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{MDLAxisAlignedBoundingBox=<3f><3f>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_MDLAxisAlignedBoundingBox_d(PyObject* callable, PyObjCMethodSignature* methinfo
                                   __attribute__((__unused__)))
@@ -13962,14 +14854,14 @@ mkimp_MDLAxisAlignedBoundingBox_d(PyObject* callable, PyObjCMethodSignature* met
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -13992,7 +14884,7 @@ mkimp_MDLAxisAlignedBoundingBox_d(PyObject* callable, PyObjCMethodSignature* met
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -14005,8 +14897,8 @@ mkimp_MDLAxisAlignedBoundingBox_d(PyObject* callable, PyObjCMethodSignature* met
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
-
 #if PyObjC_BUILD_RELEASE >= 1011
+
 static PyObject* _Nullable call_MDLVoxelIndexExtent(PyObject* method, PyObject* self,
                                                     PyObject* const* arguments
                                                     __attribute__((__unused__)),
@@ -14022,46 +14914,52 @@ static PyObject* _Nullable call_MDLVoxelIndexExtent(PyObject* method, PyObject* 
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((MDLVoxelIndexExtent(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((MDLVoxelIndexExtent (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((MDLVoxelIndexExtent(*)(struct objc_super*,
-                                              SEL))objc_msgSendSuper_stret)(
+                rv = ((MDLVoxelIndexExtent (*)(struct objc_super*,
+                                               SEL))objc_msgSendSuper_stret)(
 #else
-                rv = ((MDLVoxelIndexExtent(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                rv =
+                    ((MDLVoxelIndexExtent (*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{MDLVoxelIndexExtent=<4i><4i>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
 static IMP
 mkimp_MDLVoxelIndexExtent(PyObject*              callable,
                           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -14074,9 +14972,9 @@ mkimp_MDLVoxelIndexExtent(PyObject*              callable,
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -14092,28 +14990,241 @@ mkimp_MDLVoxelIndexExtent(PyObject*              callable,
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 1013
+
+static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject* self,
+                                                      PyObject* const* arguments
+                                                      __attribute__((__unused__)),
+                                                      size_t nargs)
+{
+    struct objc_super     super;
+    MPSImageHistogramInfo rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo = NULL;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                // LCOV_BR_EXCL_START
+                rv = ((MPSImageHistogramInfo (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                // LCOV_BR_EXCL_START
+#ifdef __x86_64__
+                rv = ((MPSImageHistogramInfo (*)(struct objc_super*,
+                                                 SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((
+                    MPSImageHistogramInfo (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
+            }
+
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", &rv);
+}
+
+static IMP
+mkimp_MPSImageHistogramInfo(PyObject*              callable,
+                            PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    MPSImageHistogramInfo (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      MPSImageHistogramInfo oc_result;
+      if (depythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", result, &oc_result)
+          == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) { // LCOV_BR_EXCL_LINE
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+#if PyObjC_BUILD_RELEASE >= 1014
+
+static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        method,
+                                                          PyObject*        self,
+                                                          PyObject* const* arguments
+                                                          __attribute__((__unused__)),
+                                                          size_t nargs)
+{
+    struct objc_super         super;
+    MPSAxisAlignedBoundingBox rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo = NULL;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                // LCOV_BR_EXCL_START
+                rv = ((MPSAxisAlignedBoundingBox (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                // LCOV_BR_EXCL_START
+#ifdef __x86_64__
+                rv = ((MPSAxisAlignedBoundingBox (*)(struct objc_super*,
+                                                     SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((MPSAxisAlignedBoundingBox (*)(struct objc_super*,
+                                                     SEL))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
+            }
+
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &rv);
+}
+
+static IMP
+mkimp_MPSAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methinfo
+                                __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    MPSAxisAlignedBoundingBox (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      MPSAxisAlignedBoundingBox oc_result;
+      if (depythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result)
+          == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) { // LCOV_BR_EXCL_LINE
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 
 static PyObject* _Nullable call_simd_double4x4(PyObject* method, PyObject* self,
                                                PyObject* const* arguments
@@ -14130,41 +15241,48 @@ static PyObject* _Nullable call_simd_double4x4(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_double4x4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_double4x4 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv =
-                    ((simd_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+                rv = ((
+                    simd_double4x4 (*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
-                rv = ((simd_double4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                rv = ((simd_double4x4 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
-                        &super, PyObjCSelector_GetSelector(method));
+                    &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_double4x4=[4<4d>]}", &rv);
 }
 
@@ -14180,9 +15298,9 @@ mkimp_simd_double4x4(PyObject*              callable,
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -14197,22 +15315,16 @@ mkimp_simd_double4x4(PyObject*              callable,
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
@@ -14237,42 +15349,49 @@ static PyObject* _Nullable call_simd_double4x4_d(PyObject* method, PyObject* sel
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_double4x4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_double4x4 (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((simd_double4x4(*)(struct objc_super*, SEL,
-                                         double))objc_msgSendSuper_stret)(
+                rv = ((simd_double4x4 (*)(struct objc_super*, SEL,
+                                          double))objc_msgSendSuper_stret)(
 #else
-                rv = ((
-                    simd_double4x4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                rv = ((simd_double4x4 (*)(struct objc_super*, SEL,
+                                          double))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_double4x4=[4<4d>]}", &rv);
 }
 
@@ -14288,14 +15407,14 @@ mkimp_simd_double4x4_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -14317,7 +15436,7 @@ mkimp_simd_double4x4_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -14345,36 +15464,43 @@ static PyObject* _Nullable call_simd_float2x2(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float2x2(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float2x2 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_float2x2(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float2x2 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float2x2=[2<2f>]}", &rv);
 }
 
@@ -14390,9 +15516,9 @@ mkimp_simd_float2x2(PyObject*              callable,
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -14407,22 +15533,16 @@ mkimp_simd_float2x2(PyObject*              callable,
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
@@ -14444,40 +15564,48 @@ static PyObject* _Nullable call_simd_float3x3(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float3x3(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float3x3 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((simd_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+                rv =
+                    ((simd_float3x3 (*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
-                rv = ((simd_float3x3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                rv = ((simd_float3x3 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
-                    &super, PyObjCSelector_GetSelector(method));
+                        &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float3x3=[3<3f>]}", &rv);
 }
 
@@ -14493,9 +15621,9 @@ mkimp_simd_float3x3(PyObject*              callable,
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -14510,22 +15638,121 @@ mkimp_simd_float3x3(PyObject*              callable,
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+
+static PyObject* _Nullable call_simd_float4x3(PyObject* method, PyObject* self,
+                                              PyObject* const* arguments
+                                              __attribute__((__unused__)),
+                                              size_t nargs)
+{
+    struct objc_super super;
+    simd_float4x3     rv;
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo = NULL;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float4x3 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                    self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                // LCOV_BR_EXCL_START
+#ifdef __x86_64__
+                rv =
+                    ((simd_float4x3 (*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+#else
+                rv = ((simd_float4x3 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
+#endif
+                        &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
+            }
+
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{simd_float4x3=[4<3f>]}", &rv);
+}
+
+static IMP
+mkimp_simd_float4x3(PyObject*              callable,
+                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    simd_float4x3 (^block)(id) = ^(id _Nullable self) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[2] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
+
+      args[1] = pyself;
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      simd_float4x3 oc_result;
+      if (depythonify_c_value("{simd_float4x3=[4<3f>]}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
       }
+
+      Py_DECREF(result);
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) { // LCOV_BR_EXCL_LINE
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
@@ -14547,40 +15774,48 @@ static PyObject* _Nullable call_simd_float4x4(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float4x4(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float4x4 (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
+                rv =
+                    ((simd_float4x4 (*)(struct objc_super*, SEL))objc_msgSendSuper_stret)(
 #else
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                rv = ((simd_float4x4 (*)(struct objc_super*, SEL))objc_msgSendSuper)(
 #endif
-                    &super, PyObjCSelector_GetSelector(method));
+                        &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
 
@@ -14596,9 +15831,9 @@ mkimp_simd_float4x4(PyObject*              callable,
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -14613,22 +15848,16 @@ mkimp_simd_float4x4(PyObject*              callable,
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
@@ -14658,42 +15887,49 @@ static PyObject* _Nullable call_simd_float4x4_id_d(PyObject* method, PyObject* s
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float4x4(*)(id, SEL, id, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float4x4 (*)(id, SEL, id, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL, id,
-                                        double))objc_msgSendSuper_stret)(
+                rv = ((simd_float4x4 (*)(struct objc_super*, SEL, id,
+                                         double))objc_msgSendSuper_stret)(
 #else
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL, id,
-                                        double))objc_msgSendSuper)(
+                rv = ((simd_float4x4 (*)(struct objc_super*, SEL, id,
+                                         double))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
 
@@ -14709,17 +15945,17 @@ mkimp_simd_float4x4_id_d(PyObject*              callable,
       int       cookie;
       PyObject* args[4] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("@", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
       args[3] = pythonify_c_value("d", &arg1);
-      if (args[3] == NULL)
-          goto error;
+      if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -14741,7 +15977,7 @@ mkimp_simd_float4x4_id_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -14772,42 +16008,49 @@ static PyObject* _Nullable call_simd_float4x4_d(PyObject* method, PyObject* self
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float4x4(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float4x4 (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL,
-                                        double))objc_msgSendSuper_stret)(
+                rv = ((simd_float4x4 (*)(struct objc_super*, SEL,
+                                         double))objc_msgSendSuper_stret)(
 #else
                 rv = ((
-                    simd_float4x4(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                    simd_float4x4 (*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
 
@@ -14823,14 +16066,14 @@ mkimp_simd_float4x4_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -14852,7 +16095,7 @@ mkimp_simd_float4x4_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -14889,42 +16132,49 @@ static PyObject* _Nullable call_simd_float4x4_simd_float4x4_id(PyObject*        
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_float4x4(*)(id, SEL, simd_float4x4, id))(PyObjCIMP_GetIMP(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_float4x4 (*)(id, SEL, simd_float4x4, id))(PyObjCIMP_GetIMP(
                     method)))(self_obj, PyObjCIMP_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4,
-                                        id))objc_msgSendSuper_stret)(
+                rv = ((simd_float4x4 (*)(struct objc_super*, SEL, simd_float4x4,
+                                         id))objc_msgSendSuper_stret)(
 #else
-                rv = ((simd_float4x4(*)(struct objc_super*, SEL, simd_float4x4,
-                                        id))objc_msgSendSuper)(
+                rv = ((simd_float4x4 (*)(struct objc_super*, SEL, simd_float4x4,
+                                         id))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method), arg0, arg1);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
 
@@ -14941,17 +16191,17 @@ mkimp_simd_float4x4_simd_float4x4_id(PyObject* callable, PyObjCMethodSignature* 
           int       cookie;
           PyObject* args[4] = {NULL};
           PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {
-              goto error;
-          }
+          if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+              goto error;       // LCOV_EXCL_LINE
+          } // LCOV_EXCL_LINE
 
           args[1] = pyself;
           args[2] = pythonify_c_value("{simd_float4x4=[4<4f>]}", &arg0);
-          if (args[2] == NULL)
-              goto error;
+          if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
           args[3] = pythonify_c_value("@", &arg1);
-          if (args[3] == NULL)
-              goto error;
+          if (args[3] == NULL) // LCOV_BR_EXCL_LINE
+              goto error;      // LCOV_EXCL_LINE
 
           PyObject* result = PyObject_Vectorcall(
               callable, args + 1, 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -14973,7 +16223,7 @@ mkimp_simd_float4x4_simd_float4x4_id(PyObject* callable, PyObjCMethodSignature* 
           return oc_result;
 
       error:
-          if (pyself) {
+          if (pyself) { // LCOV_BR_EXCL_LINE
               PyObjCObject_ReleaseTransient(pyself, cookie);
           }
 
@@ -14985,8 +16235,8 @@ mkimp_simd_float4x4_simd_float4x4_id(PyObject* callable, PyObjCMethodSignature* 
 
     return imp_implementationWithBlock(block);
 }
-
 #if PyObjC_BUILD_RELEASE >= 1013
+
 static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -15005,46 +16255,51 @@ static PyObject* _Nullable call_simd_quatd_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_quatd(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_quatd (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
+                // LCOV_BR_EXCL_START
 #ifdef __x86_64__
-                rv = ((simd_quatd(*)(struct objc_super*, SEL,
-                                     double))objc_msgSendSuper_stret)(
+                rv = ((simd_quatd (*)(struct objc_super*, SEL,
+                                      double))objc_msgSendSuper_stret)(
 #else
-                rv = ((simd_quatd(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                rv = ((simd_quatd (*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
 #endif
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_quatd=<4d>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_simd_quatd_d(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -15057,14 +16312,14 @@ mkimp_simd_quatd_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -15086,7 +16341,7 @@ mkimp_simd_quatd_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -15099,8 +16354,8 @@ mkimp_simd_quatd_d(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
 #if PyObjC_BUILD_RELEASE >= 1013
+
 static PyObject* _Nullable call_simd_quatf(PyObject* method, PyObject* self,
                                            PyObject* const* arguments
                                            __attribute__((__unused__)),
@@ -15116,41 +16371,46 @@ static PyObject* _Nullable call_simd_quatf(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_quatf(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_quatf (*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_quatf(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_quatf (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_quatf=<4f>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_simd_quatf(PyObject*              callable,
                  PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -15163,9 +16423,9 @@ mkimp_simd_quatf(PyObject*              callable,
       int       cookie;
       PyObject* args[2] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
 
@@ -15180,30 +16440,24 @@ mkimp_simd_quatf(PyObject*              callable,
       }
 
       Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
 
       PyObjCObject_ReleaseTransient(pyself, cookie);
       PyGILState_Release(state);
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
       PyObjCErr_ToObjCWithGILState(&state);
     };
 
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
 #if PyObjC_BUILD_RELEASE >= 1013
+
 static PyObject* _Nullable call_simd_quatf_d(PyObject* method, PyObject* self,
                                              PyObject* const* arguments, size_t nargs)
 {
@@ -15222,41 +16476,46 @@ static PyObject* _Nullable call_simd_quatf_d(PyObject* method, PyObject* self,
     id                     self_obj;
     Class                  super_class;
     int                    flags;
-    PyObjCMethodSignature* methinfo;
+    PyObjCMethodSignature* methinfo = NULL;
 
     if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
                             &methinfo)
         == -1) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
-                rv = ((simd_quatf(*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_quatf (*)(id, SEL, double))(PyObjCIMP_GetIMP(method)))(
                     self_obj, PyObjCIMP_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
 
             } else {
                 super.receiver    = self_obj;
                 super.super_class = super_class;
 
-                rv = ((simd_quatf(*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
+                // LCOV_BR_EXCL_START
+                rv = ((simd_quatf (*)(struct objc_super*, SEL, double))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
             }
 
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
         return NULL;
     }
 
+    Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_quatf=<4f>}", &rv);
 }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
 
-#if PyObjC_BUILD_RELEASE >= 1013
 static IMP
 mkimp_simd_quatf_d(PyObject*              callable,
                    PyObjCMethodSignature* methinfo __attribute__((__unused__)))
@@ -15269,14 +16528,14 @@ mkimp_simd_quatf_d(PyObject*              callable,
       int       cookie;
       PyObject* args[3] = {NULL};
       PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
 
       args[1] = pyself;
       args[2] = pythonify_c_value("d", &arg0);
-      if (args[2] == NULL)
-          goto error;
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
 
       PyObject* result = PyObject_Vectorcall(callable, args + 1,
                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -15298,7 +16557,7 @@ mkimp_simd_quatf_d(PyObject*              callable,
       return oc_result;
 
   error:
-      if (pyself) {
+      if (pyself) { // LCOV_BR_EXCL_LINE
           PyObjCObject_ReleaseTransient(pyself, cookie);
       }
 
@@ -15311,330 +16570,15 @@ mkimp_simd_quatf_d(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-static PyObject* _Nullable call_v16C(PyObject* method, PyObject* self,
-                                     PyObject* const* arguments
-                                     __attribute__((__unused__)),
-                                     size_t nargs)
-{
-    struct objc_super super;
-    simd_uchar16      rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((simd_uchar16(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-                rv = ((simd_uchar16(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("<16C>", &rv);
-}
-
-static IMP
-mkimp_v16C(PyObject*              callable,
-           PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    simd_uchar16 (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      simd_uchar16 oc_result;
-      if (depythonify_c_value("<16C>", result, &oc_result) == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-
-#if PyObjC_BUILD_RELEASE >= 1013
-static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject* self,
-                                                      PyObject* const* arguments
-                                                      __attribute__((__unused__)),
-                                                      size_t nargs)
-{
-    struct objc_super     super;
-    MPSImageHistogramInfo rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((MPSImageHistogramInfo(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((MPSImageHistogramInfo(*)(struct objc_super*,
-                                                SEL))objc_msgSendSuper_stret)(
-#else
-                rv = ((
-                    MPSImageHistogramInfo(*)(struct objc_super*, SEL))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", &rv);
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-#if PyObjC_BUILD_RELEASE >= 1013
-static IMP
-mkimp_MPSImageHistogramInfo(PyObject*              callable,
-                            PyObjCMethodSignature* methinfo __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    MPSImageHistogramInfo (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      MPSImageHistogramInfo oc_result;
-      if (depythonify_c_value("{MPSImageHistogramInfo=QZ<4f><4f>}", result, &oc_result)
-          == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-#if PyObjC_BUILD_RELEASE >= 1014
-static PyObject* _Nullable call_MPSAxisAlignedBoundingBox(PyObject*        method,
-                                                          PyObject*        self,
-                                                          PyObject* const* arguments
-                                                          __attribute__((__unused__)),
-                                                          size_t nargs)
-{
-    struct objc_super         super;
-    MPSAxisAlignedBoundingBox rv;
-
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
-        return NULL;
-
-    bool                   isIMP;
-    id                     self_obj;
-    Class                  super_class;
-    int                    flags;
-    PyObjCMethodSignature* methinfo;
-
-    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
-                            &methinfo)
-        == -1) {
-        return NULL;
-    }
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            if (isIMP) {
-                rv = ((MPSAxisAlignedBoundingBox(*)(id, SEL))(PyObjCIMP_GetIMP(method)))(
-                    self_obj, PyObjCIMP_GetSelector(method));
-
-            } else {
-                super.receiver    = self_obj;
-                super.super_class = super_class;
-
-#ifdef __x86_64__
-                rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*,
-                                                    SEL))objc_msgSendSuper_stret)(
-#else
-                rv = ((MPSAxisAlignedBoundingBox(*)(struct objc_super*,
-                                                    SEL))objc_msgSendSuper)(
-#endif
-                    &super, PyObjCSelector_GetSelector(method));
-            }
-
-        } @catch (NSObject* localException) { // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);
-        } // LCOV_EXCL_LINE
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    return pythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", &rv);
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
-
-#if PyObjC_BUILD_RELEASE >= 1014
-static IMP
-mkimp_MPSAxisAlignedBoundingBox(PyObject* callable, PyObjCMethodSignature* methinfo
-                                __attribute__((__unused__)))
-{
-    Py_INCREF(callable);
-
-    MPSAxisAlignedBoundingBox (^block)(id) = ^(id _Nullable self) {
-      PyGILState_STATE state = PyGILState_Ensure();
-
-      int       cookie;
-      PyObject* args[2] = {NULL};
-      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) {
-          goto error;
-      }
-
-      args[1] = pyself;
-
-      PyObject* result = PyObject_Vectorcall(callable, args + 1,
-                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-      if (result == NULL)
-          goto error;
-      MPSAxisAlignedBoundingBox oc_result;
-      if (depythonify_c_value("{_MPSAxisAlignedBoundingBox=<3f><3f>}", result, &oc_result)
-          == -1) {
-          Py_DECREF(result);
-          goto error;
-      }
-
-      Py_DECREF(result);
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      PyGILState_Release(state);
-      return oc_result;
-
-  error:
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
-      }
-
-      for (size_t i = 2; i < 2; i++) {
-          Py_CLEAR(args[i]);
-      }
-      PyObjCErr_ToObjCWithGILState(&state);
-    };
-
-    return imp_implementationWithBlock(block);
-}
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
-
 int
 PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 {
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "<16C>@:", call_v16C, mkimp_v16C)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "<2d>@:", call_v2d, mkimp_v2d)
@@ -16014,8 +16958,8 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#if PyObjC_BUILD_RELEASE >= 1012
 
+#if PyObjC_BUILD_RELEASE >= 1012
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:@{GKBox=<3f><3f>}", call_id_id_GKBox, mkimp_id_id_GKBox)
         == -1) {
@@ -16151,16 +17095,16 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#if PyObjC_BUILD_RELEASE >= 1012
 
+#if PyObjC_BUILD_RELEASE >= 1012
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{GKBox=<3f><3f>}", call_id_GKBox, mkimp_id_GKBox)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1012 */
-#if PyObjC_BUILD_RELEASE >= 1012
 
+#if PyObjC_BUILD_RELEASE >= 1012
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "@@:{GKBox=<3f><3f>}f", call_id_GKBox_f, mkimp_id_GKBox_f)
         == -1) {
@@ -16392,9 +17336,7 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
-#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
-#if PyObjC_BUILD_RELEASE >= 1011
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "v@:{MDLAxisAlignedBoundingBox=<3f><3f>}B",
             call_v_MDLAxisAlignedBoundingBox_Z, mkimp_v_MDLAxisAlignedBoundingBox_Z)
@@ -16472,8 +17414,8 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         return -1; // LCOV_EXCL_LINE
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-#if PyObjC_BUILD_RELEASE >= 1012
 
+#if PyObjC_BUILD_RELEASE >= 1012
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{GKBox=<3f><3f>}@:", call_GKBox, mkimp_GKBox)
         == -1) {
@@ -16533,6 +17475,31 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
+#if PyObjC_BUILD_RELEASE >= 1013
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{MPSImageHistogramInfo=QZ<4f><4f>}@:", call_MPSImageHistogramInfo,
+            mkimp_MPSImageHistogramInfo)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{MPSImageHistogramInfo=QB<4f><4f>}@:", call_MPSImageHistogramInfo,
+            mkimp_MPSImageHistogramInfo)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+#endif /* PyObjC_BUILD_RELEASE >= 1013 */
+
+#if PyObjC_BUILD_RELEASE >= 1014
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{_MPSAxisAlignedBoundingBox=<3f><3f>}@:", call_MPSAxisAlignedBoundingBox,
+            mkimp_MPSAxisAlignedBoundingBox)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+#endif /* PyObjC_BUILD_RELEASE >= 1014 */
+
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{simd_double4x4=[4<4d>]}@:", call_simd_double4x4, mkimp_simd_double4x4)
         == -1) {
@@ -16553,6 +17520,12 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
 
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
             "{simd_float3x3=[3<3f>]}@:", call_simd_float3x3, mkimp_simd_float3x3)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{simd_float4x3=[4<3f>]}@:", call_simd_float4x3, mkimp_simd_float4x3)
         == -1) {
         return -1; // LCOV_EXCL_LINE
     }
@@ -16606,39 +17579,6 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         return -1; // LCOV_EXCL_LINE
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "<16C>@:", call_v16C, mkimp_v16C)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-#if PyObjC_BUILD_RELEASE >= 1013
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{MPSImageHistogramInfo=QZ<4f><4f>}@:", call_MPSImageHistogramInfo,
-            mkimp_MPSImageHistogramInfo)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-#if PyObjC_BUILD_RELEASE >= 1013
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{MPSImageHistogramInfo=QB<4f><4f>}@:", call_MPSImageHistogramInfo,
-            mkimp_MPSImageHistogramInfo)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-#endif /* PyObjC_BUILD_RELEASE >= 1013 */
-
-#if PyObjC_BUILD_RELEASE >= 1014
-    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
-            "{_MPSAxisAlignedBoundingBox=<3f><3f>}@:", call_MPSAxisAlignedBoundingBox,
-            mkimp_MPSAxisAlignedBoundingBox)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-#endif /* PyObjC_BUILD_RELEASE >= 1014 */
 
     return 0;
 }

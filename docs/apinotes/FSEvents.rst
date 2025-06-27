@@ -1,3 +1,7 @@
+.. module:: FSEvents
+   :platform: macOS
+   :synopsis: Bindings for the FSEvents framework
+
 API Notes: FSEvents framework
 =============================
 

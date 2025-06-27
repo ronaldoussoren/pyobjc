@@ -44,10 +44,10 @@ class TestLazyImport(TestCase):
         self.assertEqual(o.bundleIdentifier(), "com.apple.AppKit")
         self.assertTrue(o.isLoaded())
 
-        # Should not be loaded yet, hence fallback from identifier to path
+        # Uses an invalid identifier on purpuse to force fallback to path.
         o = lazyimport._loadBundle(
             "PreferencePanes",
-            "com.apple.frameworks.preferencepanes",
+            "com.apple.frameworks.xxpreferencepanes",
             "/System/Library/Frameworks/PreferencePanes.framework",
         )
         o.load()
@@ -552,9 +552,11 @@ class TestLazyImport(TestCase):
         self.assertIsInstance(mod.kCFAllocatorDefault, mod.CFAllocatorRef)
         self.assertIsInstance(repr(mod.kCFAllocatorDefault), str)
         self.assertIn("magic instance", repr(mod.kCFAllocatorDefault))
+        self.assertIsInstance(mod.kCFAllocatorDefault.retain, objc.native_selector)
+        self.assertIsInstance(dir(mod.kCFAllocatorDefault), list)
 
         # XXX: These need to be in a different test file
-        self.assertTrue(getattr(mod.kCFAllocatorDefault, "__is_magic")())  # noqa: B009
+        self.assertTrue(mod.kCFAllocatorDefault.__pyobjc_magic_coookie__)
         self.assertTrue(mod.kCFAllocatorDefault == mod.kCFAllocatorDefault)
         self.assertFalse(mod.kCFAllocatorDefault != mod.kCFAllocatorDefault)
         self.assertTrue(mod.kCFAllocatorDefault != mod.CFBagRef)
@@ -837,3 +839,19 @@ class TestLazyImport(TestCase):
         )
 
         self.assertIn("CFType", mod.LSSharedFileListItemRef.__name__)
+
+    def test_cfstr(self):
+        metadict = {"expressions": {"foo": "CFSTR(b'foo')"}}
+        initial_dict = {}
+
+        mod = objc.ObjCLazyModule(
+            "AppKit",
+            None,
+            "/System/Library/Frameworks/AppKit.framework",
+            copy.deepcopy(metadict),
+            None,
+            initial_dict,
+            (),
+        )
+
+        self.assertEqual(mod.foo, "foo")

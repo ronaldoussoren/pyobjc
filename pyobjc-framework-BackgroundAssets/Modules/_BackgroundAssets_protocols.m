@@ -4,7 +4,8 @@
  * Last update: Wed Jan 16 13:10:52 2013
  */
 
-static void __attribute__((__used__)) use_protocols(void)
+static void __attribute__((__used__))
+use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
     p = PyObjC_IdToPython(@protocol(BADownloadManagerDelegate));

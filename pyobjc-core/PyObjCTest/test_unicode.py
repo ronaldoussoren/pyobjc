@@ -24,6 +24,14 @@ class TestUnicodeProxy(TestCase):
 
         self.assertEqual(o.stringByAppendingString_("foo %d"), "hellofoo %d")
 
+    def test_wide_string(self):
+
+        # UCS4 + single surrogate: cannot encode to UTF-8
+        strval = "\U000fffff\udbbb"
+
+        with self.assertRaisesRegex(UnicodeEncodeError, "codec can't encode character"):
+            NSString.stringWithString_(strval)
+
     def test_weakref(self):
         val = NSString.stringWithString_("groceries")
 

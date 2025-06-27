@@ -4,15 +4,7 @@ import FSKit
 
 
 class TestFSFileSystemBaseHelper(FSKit.NSObject):
-    def containerState(self):
-        return 1
-
-    def setContainerState_(self, a):
-        pass
-
-    def wipeResource_includingRanges_excludingRanges_completionHandler_(
-        self, a, b, c, d
-    ):
+    def wipeResource_completionHandler_(self, a, b):
         pass
 
 
@@ -21,11 +13,8 @@ class TestFSFileSystemBase(TestCase):
         self.assertProtocolExists("FSFileSystemBase")
 
     def test_protocol_methods(self):
-        self.assertResulsHasType(TestFSFileSystemBaseHelper.containerState, b"Q")
-        self.assertArgHasType(TestFSFileSystemBaseHelper.setContainerState_, 0, b"Q")
-
         self.assertArgIsBlock(
-            TestFSFileSystemBaseHelper.wipeResource_includingRanges_excludingRanges_completionHandler_,
-            3,
+            TestFSFileSystemBaseHelper.wipeResource_completionHandler_,
+            1,
             b"v@",
         )

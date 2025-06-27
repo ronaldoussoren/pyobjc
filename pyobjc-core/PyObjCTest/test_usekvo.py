@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -88,3 +88,31 @@ class TestUseKVO(TestCase):
         self.assertFalse(OCTestUseKVO4.__useKVO__)
         obj = OCTestUseKVO4.alloc().init()
         self.assertNoChangesEmitted(obj)
+
+    def test_update_attr(self):
+        objc.options.use_kvo = False
+
+        class OCTestUseKVO5(NSObject):
+            value = objc.ivar()
+
+        self.assertFalse(OCTestUseKVO5.__useKVO__)
+
+        OCTestUseKVO5.__useKVO__ = "foo"
+
+        self.assertTrue(OCTestUseKVO5.__useKVO__)
+
+        OCTestUseKVO5.__useKVO__ = False
+
+        self.assertFalse(OCTestUseKVO5.__useKVO__)
+
+        with self.assertRaisesRegex(TypeError, "Cannot delete __useKVO__ attribute"):
+            del OCTestUseKVO5.__useKVO__
+
+    def test_useKVO_in_body(self):
+        with pyobjc_options(use_kvo=False):
+
+            class OCTestUseKVO6(NSObject):
+                value = objc.ivar()
+                __useKVO__ = 42
+
+            self.assertIs(OCTestUseKVO6.__useKVO__, True)

@@ -703,6 +703,7 @@
     "args": {
      "2": { "type_modifier": "n", "c_array_length_in_arg": 3 },
      "3": { "type_override": "L" },
+     "4": { "callable_retained": true },
      "6": { "type_modifier": "o" }
     }
    },
@@ -711,6 +712,7 @@
      "0": {},
      "1": {},
      "2": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -779,6 +781,7 @@
      "0": {},
      "1": {},
      "2": {
+      "callable_retained": true,
       "function": {
        "args": [
         {

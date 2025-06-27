@@ -11,7 +11,6 @@ CFArrayRef = objc.registerCFSignature(
     "CFArrayRef", b"^{__CFArray=}", CFArrayGetTypeID(), "NSArray"  # noqa: F821
 )
 
-
 for tp in (
     "char",
     "short",
@@ -34,21 +33,40 @@ for tp in (
         )
 
     for pfx in ("", "u"):
-        objc.registerMetaDataForSelector(
-            b"OC_ArgSizeInArg",
-            f"p{pfx}{tp}:array:".encode(),
-            {
-                "arguments": {
-                    2 + 0: {"type_modifier": objc._C_IN},
-                    2
-                    + 1: {
-                        "type_modifier": objc._C_IN,
-                        "c_array_length_in_arg": 2 + 0,
-                        "null_accepted": False,
-                    },
-                }
-            },
-        )
+        if tp == "char" and pfx == "u":
+            # In recent(?) versions of clang @encode(unsigned char*) is
+            # '*' and not '^C' :-((((
+            objc.registerMetaDataForSelector(
+                b"OC_ArgSizeInArg",
+                f"p{pfx}{tp}:array:".encode(),
+                {
+                    "arguments": {
+                        2 + 0: {"type_modifier": objc._C_IN, "type": "^C"},
+                        2
+                        + 1: {
+                            "type_modifier": objc._C_IN,
+                            "c_array_length_in_arg": 2 + 0,
+                            "null_accepted": False,
+                        },
+                    }
+                },
+            )
+        else:
+            objc.registerMetaDataForSelector(
+                b"OC_ArgSizeInArg",
+                f"p{pfx}{tp}:array:".encode(),
+                {
+                    "arguments": {
+                        2 + 0: {"type_modifier": objc._C_IN},
+                        2
+                        + 1: {
+                            "type_modifier": objc._C_IN,
+                            "c_array_length_in_arg": 2 + 0,
+                            "null_accepted": False,
+                        },
+                    }
+                },
+            )
 
 objc.registerMetaDataForSelector(
     b"OC_ArgSizeInArg",
@@ -434,6 +452,9 @@ class TestIndirectArraySizes(TestCase):
         self.assertEqual(v, range(5))
 
         v = OC_ArgSizeInArg.pid_array_(None, range(50))
+        self.assertIs(v, None)
+
+        v = OC_ArgSizeInArg.pid_array_(objc.NULL, range(50))
         self.assertIs(v, None)
 
     def test_float(self):

@@ -31,3 +31,18 @@ class TestAVAssetVariant(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetWriterInputTaggedPixelBufferGroupAdaptor.appendTaggedPixelBufferGroup_withPresentationTime_
         )
+
+    @min_os_level("15.5")
+    def test_methods15_5(self):
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetVariantQualifier.predicateForBinauralAudio_,
+            0,
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetVariantQualifier.predicateForImmersiveAudio_,
+            0,
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetVariantQualifier.predicateForDownmixAudio_,
+            0,
+        )

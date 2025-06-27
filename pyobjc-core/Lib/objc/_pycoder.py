@@ -202,10 +202,10 @@ def save_global(coder, obj, name=None):
         module = import_module(module_name)
         obj2 = _getattribute(module, name)
 
-    except (ImportError, KeyError, AttributeError):
+    except (ImportError, KeyError, AttributeError) as exc:
         raise PicklingError(
             f"Can't pickle {obj!r}: it's not found as {module_name}.{name}"
-        )
+        ) from exc
     else:
         if obj2 is not obj:
             raise PicklingError(
@@ -578,7 +578,6 @@ def pyobjectDecode(coder, setValue):
 
 
 # An finally register the coder/decoder
-objc.options._nscoding_version = 1
 objc.options._nscoding_encoder = pyobjectEncode
 objc.options._nscoding_decoder = pyobjectDecode
 objc.options._copy = copy.copy

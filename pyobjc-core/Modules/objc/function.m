@@ -25,9 +25,7 @@ typedef struct {
     PyObject* _Nullable doc;
     PyObject* _Nullable name;
     PyObject* _Nullable module;
-#if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc vectorcall;
-#endif
 } func_object;
 
 static PyObject* _Nullable func_metadata(PyObject* _self)
@@ -54,18 +52,22 @@ static PyMethodDef func_methods[] = {
      .ml_meth  = (PyCFunction)func_metadata,
      .ml_flags = METH_NOARGS,
      .ml_doc   = "Return a dict that describes the metadata for this function."},
+    {.ml_name  = "__class_getitem__",
+     .ml_meth  = (PyCFunction)Py_GenericAlias,
+     .ml_flags = METH_O | METH_CLASS,
+     .ml_doc   = "See PEP 585"},
     {
         .ml_name = NULL /* SENTINEL */
     }};
 
 static PyGetSetDef func_getset[] = {{
                                         .name = "__doc__",
-                                        .get  = PyObjC_callable_docstr_get,
+                                        .get  = PyObjC_GetCallableDocString,
                                         .doc  = "Documentation for a function",
                                     },
                                     {
                                         .name = "__signature__",
-                                        .get  = PyObjC_callable_signature_get,
+                                        .get  = PyObjC_GetCallableSignature,
                                         .doc  = "inspect.Signature for a function",
                                     },
                                     {
@@ -83,14 +85,12 @@ static PyMemberDef func_members[] = {{
                                          .type   = T_OBJECT,
                                          .offset = offsetof(func_object, module),
                                      },
-#if PY_VERSION_HEX >= 0x03090000
                                      {
                                          .name   = "__vectorcalloffset__",
                                          .type   = T_PYSSIZET,
                                          .offset = offsetof(func_object, vectorcall),
                                          .flags  = READONLY,
                                      },
-#endif
                                      {
                                          .name = NULL /* SENTINEL */
                                      }};
@@ -126,7 +126,7 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     ffi_cif           cif;
     ffi_cif*          cifptr;
 
-    PyObject* retval;
+    PyObject* retval = NULL;
 
     if (PyObjC_CheckNoKwnames(s, kwnames) == -1) {
         return NULL;
@@ -169,8 +169,8 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     argbuf_len = align(argbuf_len, sizeof(void*));
     r = PyObjCFFI_CountArguments(self->methinfo, 0, &byref_in_count, &byref_out_count,
                                  &plain_count, &argbuf_len, &variadicAllArgs);
-    if (r == -1) {
-        return NULL;
+    if (r == -1) {   // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     variadicAllArgs |=
@@ -179,15 +179,14 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
 
     if (variadicAllArgs) {
         if (byref_in_count != 0 || byref_out_count != 0) {
-            PyErr_Format(PyExc_TypeError,
-                         "Sorry, printf format with by-ref args not supported");
+            PyErr_Format(PyExc_TypeError, "variadic with by-ref args not supported");
             return NULL;
         }
 
         if (nargsf < (size_t)Py_SIZE(self->methinfo)) {
             PyErr_Format(PyExc_TypeError,
-                         "Need %" PY_FORMAT_SIZE_T "d arguments, got %zu",
-                         Py_SIZE(self->methinfo) - 2, nargsf);
+                         "Need at least %" PY_FORMAT_SIZE_T "d arguments, got %zu",
+                         Py_SIZE(self->methinfo), nargsf);
             return NULL;
         }
 
@@ -242,9 +241,11 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
 #pragma clang diagnostic pop
 #endif
 
-        if (r != FFI_OK) {
+        if (r != FFI_OK) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
             goto error;
+            // LCOV_EXCL_STOP
         }
         cifptr = &cif;
 
@@ -266,27 +267,11 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     }
 
     retval = PyObjCFFI_BuildResult(self->methinfo, 0, argbuf, byref, byref_attr,
-                                   byref_out_count, NULL, 0, values);
-
-    if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + nargsf, byref, byref_attr)
-            < 0) {
-            goto error;
-        }
-
-    } else {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr) < 0) {
-            goto error;
-        }
-    }
-
-    PyMem_Free(argbuf);
-    argbuf = NULL;
-    return retval;
+                                   byref_out_count, values);
 
 error:
     if (variadicAllArgs) {
-        PyObjCFFI_FreeByRef(nargsf, byref, byref_attr); /* XXX: Compare with call above */
+        PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + nargsf, byref, byref_attr);
 
     } else {
         PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr);
@@ -294,11 +279,11 @@ error:
 
     if (argbuf) {
         PyMem_Free(argbuf);
+        argbuf = NULL;
     }
-    return NULL;
+    return retval;
 }
 
-#if PY_VERSION_HEX >= 0x03090000
 /*
  * A variant of func_vectorcall that only handles "simple" functions. This allows
  * for a number of simplifications that significantly speed up functions calls
@@ -313,7 +298,7 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
     unsigned char argbuf[SHORTCUT_MAX_ARGBUF];
     void*         values[MAX_ARGCOUNT_SIMPLE];
 
-    PyObjC_Assert(self->methinfo->shortcut_signature, NULL);
+    assert(self->methinfo->shortcut_signature);
 
     if (unlikely(kwnames != NULL
                  && (PyTuple_CheckExact(kwnames) && PyTuple_GET_SIZE(kwnames) != 0))) {
@@ -349,7 +334,7 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
                      self->methinfo, 0, args, nargsf,
                      align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type),
                            sizeof(void*)),
-                     argbuf, sizeof(argbuf), /*arglist,*/ values)
+                     argbuf, sizeof(argbuf), values)
                  == -1)) {
 
         goto error;
@@ -367,25 +352,11 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
         goto error;
     }
 
-    return PyObjCFFI_BuildResult_Simple(self->methinfo, argbuf, NULL, 0);
+    return PyObjCFFI_BuildResult_Simple(self->methinfo, argbuf);
 
 error:
     return NULL;
 }
-#endif
-
-#if PY_VERSION_HEX < 0x03090000
-static PyObject* _Nullable func_call(PyObject* s, PyObject* _Nullable args,
-                                     PyObject* _Nullable kwds)
-{
-    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
-        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
-        return NULL;
-    }
-
-    return func_vectorcall(s, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
-}
-#endif
 
 static void
 func_dealloc(PyObject* s)
@@ -438,11 +409,7 @@ static PyType_Slot func_slots[] = {
 #if PY_VERSION_HEX < 0x030a0000
     {.slot = Py_tp_new, .pfunc = (void*)&func_new},
 #endif
-#if PY_VERSION_HEX >= 0x03090000
     {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
-#else
-    {.slot = Py_tp_call, .pfunc = (void*)&func_call},
-#endif
 
     {0, NULL} /* sentinel */
 };
@@ -454,11 +421,8 @@ static PyType_Spec func_spec = {
 #if PY_VERSION_HEX >= 0x030a0000
     .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#elif PY_VERSION_HEX >= 0x03090000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_HEAPTYPE,
-
 #else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_HEAPTYPE,
 #endif
     .slots = func_slots,
 };
@@ -468,24 +432,25 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
 {
     func_object* result;
 
-    PyObjC_Assert(!name || PyUnicode_Check(name), NULL);
+    assert(!name || PyUnicode_Check(name));
 
     result = PyObject_NEW(func_object, (PyTypeObject*)PyObjCFunc_Type);
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
-#if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = func_vectorcall;
-#endif
-    result->function = func;
-    result->doc      = NULL;
-    result->name     = name;
+    result->function   = func;
+    result->doc        = NULL;
+    result->name       = name;
     Py_XINCREF(name);
     result->module   = NULL;
     result->methinfo = methinfo;
     Py_XINCREF(methinfo);
+    if (result->methinfo->shortcut_signature) {
+        result->vectorcall = func_vectorcall_simple;
+    }
+    result->cif = NULL;
 
-    /* XXX: Set ->cif on first call? */
     ffi_cif* cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (cif == NULL) {
         Py_DECREF(result);
@@ -501,7 +466,7 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
 {
     func_object* result;
 
-    PyObjC_Assert(!name || PyUnicode_Check(name), NULL);
+    assert(!name || PyUnicode_Check(name));
     if (doc && PyUnicode_GetLength(doc) == 0) {
         /* Ignore empty docstring */
         doc = NULL;
@@ -511,10 +476,8 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     if (result == NULL) // LCOV_BR_EXCL_LINE
         return NULL;    // LCOV_EXCL_LINE
 
-#if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = func_vectorcall;
-#endif
-    result->function = func;
+    result->function   = func;
 
     /* set later in this function */
     result->doc      = (PyObject* _Nonnull)NULL;
@@ -531,16 +494,13 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     }
     result->methinfo = methinfo;
 
-#if PY_VERSION_HEX >= 0x03090000
     if (result->methinfo->shortcut_signature) {
         result->vectorcall = func_vectorcall_simple;
     }
-#endif
 
     SET_FIELD_INCREF(result->doc, doc);
     SET_FIELD_INCREF(result->name, name);
 
-    /* XXX: Set ->cif on first call? */
     result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (result->cif == NULL) { // LCOV_BR_EXCL_LINE
         Py_DECREF(result);     // LCOV_EXCL_LINE
@@ -552,6 +512,7 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
 
 PyObjCMethodSignature* _Nullable PyObjCFunc_GetMethodSignature(PyObject* func)
 {
+    Py_INCREF(((func_object*)func)->methinfo);
     return ((func_object*)func)->methinfo;
 }
 
@@ -563,8 +524,9 @@ PyObjCFunc_Setup(PyObject* module)
         return -1;                 // LCOV_EXCL_LINE
     }
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "function", PyObjCFunc_Type) == -1) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "function", PyObjCFunc_Type)
+        == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFunc_Type);

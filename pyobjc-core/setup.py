@@ -1,4 +1,5 @@
 import glob
+import importlib
 import os
 import re
 import plistlib
@@ -6,6 +7,7 @@ import shlex
 import tempfile
 import sys
 import subprocess
+import textwrap
 import warnings
 from setuptools import Extension, setup, Command
 from setuptools.command import build_ext, build_py, egg_info, install_lib
@@ -13,8 +15,6 @@ from distutils import log
 from distutils.errors import DistutilsError, DistutilsPlatformError, DistutilsSetupError
 from distutils.sysconfig import get_config_var as _get_config_var
 from distutils.sysconfig import get_config_vars
-
-from pkg_resources import add_activation_listener, normalize_path, require, working_set
 
 
 def get_config_var(var):
@@ -91,15 +91,16 @@ CFLAGS = [
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     # "--analyze",
     "-Werror",
+    "-Wno-cast-function-type-mismatch",
     "-I/usr/include/ffi",
     "-fvisibility=hidden",
     # "-O0",
     "-g",
     # "-O0",
-    # "-O3",
-    # "-flto=thin",
+    "-O3",
+    "-flto=thin",
     # XXX: Use object_path_lto (during linking?)
-    "-UNDEBUG",
+    # "-fsanitize-thread-atomics",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -118,9 +119,10 @@ OBJC_LDFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    # "-O3",
-    # "-flto=thin",
-    # "-fexceptions",
+    "-O3",
+    "-flto=thin",
+    "-fexceptions",
+    # "-fsanitize-thread-atomics",
 ]
 
 
@@ -225,8 +227,6 @@ class oc_test(Command):
             self.verbosity = int(self.verbosity)
 
     def cleanup_environment(self):
-        add_activation_listener(lambda dist: dist.activate())
-
         ei_cmd = self.get_finalized_command("egg_info")
         egg_name = ei_cmd.egg_name.replace("-", "_")
 
@@ -240,11 +240,9 @@ class oc_test(Command):
             log.info(f"removing installed {dirname!r} from sys.path before testing")
             sys.path.remove(dirname)
 
-        working_set.__init__(sys.path)
+        importlib.invalidate_caches()
 
     def add_project_to_sys_path(self):
-        from pkg_resources import working_set
-
         self.reinitialize_command("egg_info")
         self.run_command("egg_info")
         self.reinitialize_command("build_ext", inplace=1)
@@ -257,12 +255,10 @@ class oc_test(Command):
             del sys.modules["PyObjCTools"]
 
         ei_cmd = self.get_finalized_command("egg_info")
-        sys.path.insert(0, normalize_path(ei_cmd.egg_base))
+        sys.path.insert(0, os.path.abspath(ei_cmd.egg_base))
         sys.path.insert(1, os.path.dirname(__file__))
 
-        add_activation_listener(lambda dist: dist.activate())
-        working_set.__init__()
-        require(f"{ei_cmd.egg_name}=={ei_cmd.egg_version}")
+        importlib.invalidate_caches()
 
         from PyObjCTools import TestSupport
 
@@ -281,12 +277,10 @@ class oc_test(Command):
             raise DistutilsError("Setting up test environment failed for 'objc'")
 
     def remove_from_sys_path(self):
-        from pkg_resources import working_set
-
         sys.path[:] = self.__old_path
         sys.modules.clear()
         sys.modules.update(self.__old_modules)
-        working_set.__init__()
+        importlib.invalidate_caches()
 
     def run(self):
         verify_platform()
@@ -345,6 +339,8 @@ class oc_egg_info(egg_info.egg_info):
 
             self.write_header(fn, os.path.join(self.egg_info, fn))
 
+        self.write_build_info()
+
         egg_info.egg_info.run(self)
 
         path = os.path.join(self.egg_info, "PKG-INFO")
@@ -375,6 +371,42 @@ class oc_egg_info(egg_info.egg_info):
                 os.makedirs(os.path.dirname(filename))
 
         self.write_file(basename, filename, data)
+
+    def write_build_info(self):
+        macos_version = subprocess.check_output(
+            ["sw_vers", "-productVersion"], text=True
+        ).strip()
+        macos_build = subprocess.check_output(
+            ["sw_vers", "-buildVersion"], text=True
+        ).strip()
+        clang_version = (
+            subprocess.check_output(["clang", "--version"], text=True)
+            .splitlines()[0]
+            .strip()
+        )
+
+        sdk_root = self.get_finalized_command("build_ext").sdk_root
+        sdk_info = os.path.join(sdk_root, "SDKSettings.plist")
+        if os.path.exists(sdk_info):
+            with open(sdk_info, "rb") as stream:
+                pl = plistlib.load(stream)
+            sdk_version = pl["DisplayName"]
+        else:
+            sdk_version = os.path.basename(sdk_root)
+
+        build_info = textwrap.dedent(
+            f"""\
+            macOS {macos_version} ({macos_build})
+            {clang_version}
+            SDK: {sdk_version}
+            """
+        )
+
+        self.write_file(
+            "pyobjc-build-info.txt",
+            os.path.join(self.egg_info, "pyobjc-build-info.txt"),
+            build_info,
+        )
 
 
 class oc_install_lib(install_lib.install_lib):
@@ -627,6 +659,12 @@ class oc_build_ext(build_ext.build_ext):
             or any(cmd in sys.argv for cmd in ["develop", "test"])
         )
 
+        for ext in self.extensions:
+            if ext.name.startswith("PyObjCTest"):
+                ext.extra_compile_args = ext.extra_compile_args + extra_compile_args(
+                    ext.sources[0]
+                )
+
         build_ext.build_ext.run(self)
         extensions = self.extensions
         self.extensions = [e for e in extensions if e.name.startswith("PyObjCTest")]
@@ -708,6 +746,18 @@ def package_version():
             return ln.split()[-1][1:-1]
 
     raise DistutilsSetupError("Version not found")
+
+
+def extra_compile_args(source):
+    result = []
+
+    with open(source) as stream:
+        for line in stream:
+            if "CFLAGS:" in line:
+                _, _, rest = line.partition("CFLAGS:")
+                result.extend(shlex.split(rest))
+
+    return result
 
 
 #

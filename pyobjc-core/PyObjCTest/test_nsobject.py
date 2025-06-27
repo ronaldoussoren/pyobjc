@@ -6,8 +6,13 @@ import tempfile
 from PyObjCTools.TestSupport import TestCase
 from PyObjCTest.helpernsobject import OC_AllocRaises, OC_RefcountRaises
 from objc import super  # noqa: A004
+from .test_metadata import NoObjCClass
 
 NSObject = objc.lookUpClass("NSObject")
+
+objc.registerMetaDataForSelector(
+    b"OC_AllocRaises", b"invokeAlloc:", {"retval": {"already_retained": True}}
+)
 
 
 class SomeException(Exception):
@@ -18,12 +23,6 @@ class Py_AllocRaises(NSObject):
     @classmethod
     def alloc(cls):
         raise SomeException("alloc")
-
-
-class Py_AllocPasses(NSObject):
-    @classmethod
-    def alloc(cls):
-        return super().alloc()
 
 
 class Py_RefCountRaises(NSObject):
@@ -40,6 +39,9 @@ class Py_RefCountRaises(NSObject):
         if self.scenario == 1:
             self.scenario = 0
             raise SomeException("retain")
+        elif self.scenario == 4:
+            self.scenario = 0
+            return NoObjCClass()
         r = super().retain()
         return r
 
@@ -47,6 +49,9 @@ class Py_RefCountRaises(NSObject):
         if self.scenario == 2:
             self.scenario = 0
             raise SomeException("release")
+        elif self.scenario == 5:
+            self.scenario = 0
+            return 1
         r = super().release()
         return r
 
@@ -123,6 +128,8 @@ class TestNSObjectSupport(TestCase):
         o.retain()
         self.assertEqual(o.retainCount(), start + 1)
 
+        return
+
         o.release()
         self.assertEqual(o.retainCount(), start)
 
@@ -189,17 +196,31 @@ class TestNSObjectSupport(TestCase):
 
     def test_python_alloc_raises(self):
         with self.assertRaisesRegex(SomeException, "alloc"):
-            Py_AllocRaises.alloc()
+            OC_AllocRaises.invokeAlloc_(Py_AllocRaises)
 
     def test_python_alloc(self):
-        v = Py_AllocPasses.alloc().init()
+        count = 0
+
+        class Py_AllocPasses(NSObject):
+            @classmethod
+            def alloc(cls):
+                nonlocal count
+                count += 1
+                return super().alloc()
+
+        v = OC_AllocRaises.invokeAlloc_(Py_AllocPasses).init()
         self.assertIsInstance(v, Py_AllocPasses)
+        self.assertEqual(count, 1)
 
-    # XXX: Test where alloc returns something that cannot be convered to ObjC
+    def test_alloc_returns_invalid(self):
+        class Py_AllocReturnsInvalid(NSObject):
+            def alloc(cls):
+                return NoObjCClass()
 
-    def no_test_python_retain_release(self):
-        # XXX: Needs some work to support --with-pydebug
-        #     See #446
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            OC_AllocRaises.invokeAlloc_(Py_AllocReturnsInvalid).init()
+
+    def test_python_retain_release(self):
         obj = Py_RefCountRaises.alloc().init()
 
         obj.retain()
@@ -207,15 +228,19 @@ class TestNSObjectSupport(TestCase):
 
         obj.scenario = 1
         with self.assertRaisesRegex(SomeException, "retain"):
-            obj.retain()
+            OC_AllocRaises.invoke_on_(b"retain", obj)
 
         obj.scenario = 2
         with self.assertRaisesRegex(SomeException, "release"):
-            obj.release()
+            OC_AllocRaises.invoke_on_(b"release", obj)
 
-        obj.scenario = 3
-        with self.assertRaisesRegex(SomeException, "dealloc"):
-            obj.dealloc()
+        obj.scenario = 4
+        with self.assertRaisesRegex(TypeError, "proxy"):
+            OC_AllocRaises.invoke_on_(b"retain", obj)
+
+        obj.scenario = 5
+        with self.assertRaisesRegex(TypeError, "release should return None"):
+            OC_AllocRaises.invoke_on_(b"release", obj)
 
         orig = os.dup(2)
         obj.scenario = 3
@@ -232,3 +257,33 @@ class TestNSObjectSupport(TestCase):
 
         self.assertIn("Exception during dealloc of proxy: ", capture)
         self.assertIn("PyObjCTest.test_nsobject.SomeException", capture)
+
+
+class MemoryManagedThroughIMPs(TestCase):
+    def test_retain_release(self):
+        value = NSObject.alloc().init()
+
+        imp_retain = NSObject.instanceMethodForSelector_(b"retain")
+        imp_release = NSObject.instanceMethodForSelector_(b"release")
+
+        self.assertEqual(value.retainCount(), 1)
+        imp_retain(value)
+        self.assertEqual(value.retainCount(), 2)
+        imp_release(value)
+        self.assertEqual(value.retainCount(), 1)
+
+        del value
+
+    def test_dealloc(self):
+        imp_dealloc = NSObject.instanceMethodForSelector_(b"dealloc")
+
+        class OC_SuperThroughIMP(NSObject):
+            def dealloc(self):
+                nonlocal cnt
+                cnt += 1
+                imp_dealloc(self)
+
+        cnt = 0
+        v = OC_SuperThroughIMP.alloc().init()
+        del v
+        self.assertEqual(cnt, 1)

@@ -12,6 +12,8 @@
 
 // LCOV_BR_EXCL_START
 // LCOV_EXCL_START
+//
+struct empty {};
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -149,6 +151,8 @@ END_UNITTEST
 
 BEGIN_UNITTEST(StructSize)
 
+ASSERT_EQUALS(sizeof(struct empty), PyObjCRT_SizeOfType(@encode(struct empty)), "%d");
+
 ASSERT_EQUALS(sizeof(struct Struct1), PyObjCRT_SizeOfType(@encode(struct Struct1)), "%d");
 
 ASSERT_EQUALS(sizeof(struct Struct2), PyObjCRT_SizeOfType(@encode(struct Struct2)), "%d");
@@ -162,6 +166,9 @@ ASSERT_EQUALS(sizeof(NSRect), PyObjCRT_SizeOfType(@encode(NSRect)), "%d");
 END_UNITTEST
 
 BEGIN_UNITTEST(StructAlign)
+
+ASSERT_EQUALS(__alignof__(struct empty), PyObjCRT_AlignOfType(@encode(struct empty)),
+              "%d");
 
 ASSERT_EQUALS(__alignof__(struct Struct1), PyObjCRT_AlignOfType(@encode(struct Struct1)),
               "%d");
@@ -828,6 +835,7 @@ END_UNITTEST
 BEGIN_UNITTEST(UnicodeFunctions)
 PyObject* unicode = PyUnicode_FromString("hello world");
 int       ok;
+ASSERT(unicode != NULL);
 
 ok = PyObjC_is_ascii_string(unicode, "hello world");
 ASSERT(ok);
@@ -852,6 +860,18 @@ ASSERT(ok);
 
 ok = PyObjC_is_ascii_prefix(unicode, "hello world!", 12);
 ASSERT(!ok);
+
+Py_CLEAR(unicode);
+
+unicode = PyUnicode_FromString("Straße");
+ASSERT(unicode != NULL);
+ok = PyObjC_is_ascii_prefix(unicode, "hello", 5);
+ASSERT(!ok);
+
+ok = PyObjC_is_ascii_string(unicode, "hello");
+ASSERT(!ok);
+
+Py_CLEAR(unicode);
 
 END_UNITTEST
 
@@ -963,13 +983,22 @@ END_UNITTEST
 
 BEGIN_UNITTEST(InvalidObjCPointer)
 
-/* Invalid type encoding */
+/* Invalid type encodings
+ *
+ * XXX: This tests are artificial, but at least
+ *      ensure that some error paths are hit.
+ */
 PyObject* p = PyObjCPointer_New(&p, "^{foo=");
 ASSERT(PyErr_Occurred());
 ASSERT(!p);
 PyErr_Clear();
 
 p = PyObjCPointer_New(&p, "{foo=");
+ASSERT(PyErr_Occurred());
+ASSERT(!p);
+PyErr_Clear();
+
+p = PyObjCPointer_New(&p, "X");
 ASSERT(PyErr_Occurred());
 ASSERT(!p);
 PyErr_Clear();
@@ -989,7 +1018,6 @@ ASSERT(r == -1);
 PyErr_Clear();
 
 END_UNITTEST
-
 
 BEGIN_UNITTEST(MethodSignatureString)
 PyObjCMethodSignature* sig = PyObjCMethodSignature_WithMetaData("@@:d", NULL, NO);
@@ -1035,6 +1063,150 @@ FAIL_IF(PyObjCRT_IsValidEncoding("{a=\"f\"i}", 8));
 
 END_UNITTEST
 
+static int
+exception_text_matches(const char* text)
+{
+    PyObject* type;
+    PyObject* value;
+    PyObject* traceback;
+
+    PyErr_Fetch(&type, &value, &traceback);
+    if (type == NULL && value == NULL && traceback == NULL) {
+        /* No exception */
+        return 0;
+    }
+
+    PyErr_NormalizeException(&type, &value, &traceback);
+
+    PyObject* repr = PyObject_Repr(value);
+
+    Py_CLEAR(type);
+    Py_CLEAR(value);
+    Py_CLEAR(traceback);
+    if (repr == NULL) {
+        PyErr_Clear();
+        return 0;
+    }
+
+    PyObject* expected = PyUnicode_FromString(text);
+    if (expected == NULL) {
+        Py_CLEAR(repr);
+        PyErr_Clear();
+        return 0;
+    }
+
+    int r = PyObject_RichCompareBool(repr, expected, Py_EQ);
+    if (r == -1) {
+        Py_CLEAR(repr);
+        Py_CLEAR(expected);
+        PyErr_Clear();
+        return 0;
+    }
+
+    if (r) {
+        Py_CLEAR(repr);
+        Py_CLEAR(expected);
+        return 1;
+    }
+
+    _PyObject_Dump(repr);
+    _PyObject_Dump(expected);
+
+    return 0;
+}
+
+BEGIN_UNITTEST(CheckArgCount)
+/* C test because it hitting the error paths in regular tests
+ * is not possible.
+ *
+ * Also: currently only the core only * uses the this to check
+ * the number of arguments in functions with a fixed number
+ * of arguments.
+ */
+int       r;
+PyObject* callable = Py_None;
+
+r = PyObjC_CheckArgCount(callable, 1, 1, 1);
+FAIL_IF(r == -1);
+FAIL_IF(PyErr_Occurred());
+
+r = PyObjC_CheckArgCount(callable, 1, 3, 2);
+FAIL_IF(r == -1);
+FAIL_IF(PyErr_Occurred());
+
+r = PyObjC_CheckArgCount(callable, 1, 1, 2);
+FAIL_IF(r != -1);
+FAIL_IF(!exception_text_matches("TypeError('None expected 1 arguments, got 2')"));
+
+r = PyObjC_CheckArgCount(callable, 1, 3, 4);
+FAIL_IF(r != -1);
+FAIL_IF(!exception_text_matches(
+    "TypeError('None expected between 1 and 3 arguments, got 4')"));
+
+END_UNITTEST
+
+BEGIN_UNITTEST(NoKwNames)
+/* C test because it hitting the error paths in regular tests
+ * is not possible.
+ */
+int       r;
+PyObject* callable = Py_None;
+PyObject* kwnames;
+
+r = PyObjC_CheckNoKwnames(callable, NULL);
+FAIL_IF(r == -1);
+FAIL_IF(PyErr_Occurred());
+
+kwnames = PyList_New(0);
+if (kwnames == NULL) {
+    goto error;
+}
+
+r = PyObjC_CheckNoKwnames(callable, kwnames);
+Py_CLEAR(kwnames);
+FAIL_IF(r == -1);
+FAIL_IF(PyErr_Occurred());
+
+kwnames = PyList_New(0);
+if (kwnames == NULL) {
+    goto error;
+}
+if (PyList_Append(kwnames, Py_None) == -1) {
+    goto error;
+}
+
+r = PyObjC_CheckNoKwnames(callable, kwnames);
+Py_CLEAR(kwnames);
+FAIL_IF(r != -1);
+FAIL_IF(!exception_text_matches("TypeError('None does not accept keyword arguments')"));
+
+r = PyObjC_CheckNoKwnames(callable, callable);
+Py_CLEAR(kwnames);
+FAIL_IF(r != -1);
+PyErr_Clear();
+
+END_UNITTEST
+
+BEGIN_UNITTEST(PyObjC_NSMethodSignatureToTypeString_Errors)
+char               buffer[2048];
+char*              result;
+NSMethodSignature* sig = [NSURL
+    instanceMethodSignatureForSelector:@selector
+    (initByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:)];
+ASSERT(sig != nil);
+
+result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 0);
+ASSERT(result == NULL);
+ASSERT(PyErr_Occurred());
+PyErr_Clear();
+
+result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 4);
+ASSERT(result == NULL);
+ASSERT(PyErr_Occurred());
+PyErr_Clear();
+
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(VectorSize),
@@ -1073,6 +1245,9 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(InvalidRegistryUsage),
                                     TESTDEF(MethodSignatureString),
                                     TESTDEF(ValidEncoding),
+                                    TESTDEF(CheckArgCount),
+                                    TESTDEF(NoKwNames),
+                                    TESTDEF(PyObjC_NSMethodSignatureToTypeString_Errors),
                                     {0, 0, 0, 0}};
 
 int
@@ -1086,16 +1261,25 @@ PyObjC_init_ctests(PyObject* m)
     PyMethodDef* cur;
     for (cur = mod_methods; cur->ml_name != NULL; cur++) {
         PyObject* meth = PyCFunction_NewEx(cur, NULL, NULL);
-        if (meth == NULL) {
-            Py_DECREF(d); // LCOV_EXCL_LINE
-            return -1;    // LCOV_EXCL_LINE
+        if (meth == NULL) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(d);   // LCOV_EXCL_LINE
+            return -1;      // LCOV_EXCL_LINE
         }
-        if (PyDict_SetItemString(d, cur->ml_name, meth) < 0) {
+
+        PyObject* key = PyUnicode_FromString(cur->ml_name);
+        if (key == NULL) {   // LCOV_BR_EXCL_LINE
             Py_DECREF(d);    // LCOV_EXCL_LINE
             Py_DECREF(meth); // LCOV_EXCL_LINE
-            return -1;       // LCOV_EXCL_LINE
+            return -1;
+        }
+        if (PyDict_SetItem(d, key, meth) < 0) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(d);                       // LCOV_EXCL_LINE
+            Py_DECREF(meth);                    // LCOV_EXCL_LINE
+            Py_DECREF(key);                     // LCOV_EXCL_LINE
+            return -1;                          // LCOV_EXCL_LINE
         }
         Py_DECREF(meth);
+        Py_DECREF(key);
     }
 
     return PyModule_AddObject(m, "_ctests", d);

@@ -1,3 +1,7 @@
+.. module:: PushKit
+   :platform: macOS 10.15+
+   :synopsis: Bindings for the PushKit framework
+
 API Notes: PushKit framework
 ============================
 
@@ -9,9 +13,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``PushKit`` package (that is, ``import PushKit``).
 
-This framework is available starting macOS 10.15 (Catalina).
+.. versionadded:: macOS 10.15
 
 API Notes
 ---------
-
-The entire API is exposed to Python.

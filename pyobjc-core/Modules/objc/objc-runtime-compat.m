@@ -22,8 +22,7 @@ PyObjC_class_isSubclassOf(Class child, Class parent)
 
 /* XXX: Is this not needed for arm64? */
 
-@implementation
-Protocol (NSObjectCompat)
+@implementation Protocol (NSObjectCompat)
 - (id)self
 {
     return self;
@@ -45,12 +44,14 @@ PyObjC_class_addMethodList(Class cls, struct PyObjC_method* list, unsigned int c
          * because the method already exists in the class.
          * Strictly speaking this isn't correct, but this is the best
          * we can do through the 2.0 API (see 4809039 in RADAR)
+         *
+         * XXX: Use class_replaceMethod instead
          */
         r = class_addMethod(cls, list[i].name, list[i].imp, list[i].type);
         if (!r) {
             m = class_getInstanceMethod(cls, list[i].name);
 
-            if (m != NULL) {
+            if (m != NULL) { // LCOV_BR_EXCL_LINE
                 method_setImplementation(m, list[i].imp);
 
             } else { // LCOV_BR_EXCL_LINE

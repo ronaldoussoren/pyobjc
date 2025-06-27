@@ -71,7 +71,7 @@ class TestQueueAPI(TestCase):
         self.assertArgHasType(
             dispatch.dispatch_apply, 1, objc._C_ID
         )  # dispatch_queue_t
-        self.assertArgIsBlock(dispatch.dispatch_apply, 2, b"vL")
+        self.assertArgIsBlock(dispatch.dispatch_apply, 2, b"vQ")
 
         self.assertResultHasType(dispatch.dispatch_apply_f, objc._C_VOID)
         self.assertArgHasType(dispatch.dispatch_apply_f, 0, objc._C_ULNG)

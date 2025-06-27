@@ -2623,6 +2623,7 @@
      "0": {},
      "1": { "type_override": "@"},
      "2": {
+      "callable_retained": true,
       "function": {
        "args": [
         {
@@ -5379,7 +5380,7 @@
      "0": {},
      "1": {},
      "2": {
-      "function_pointer_retained": true,
+      "callable_retained": true,
       "function": {
        "args": [
         {

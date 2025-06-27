@@ -14,9 +14,10 @@ class TestFinal(TestCase):
 
         self.assertTrue(FinalClass.__objc_final__)
 
-        # with self.assertRaises(TypeError):
-        #    class SubclaasOfFinal (FinalClass):
-        #        pass
+        with self.assertRaisesRegex(TypeError, "super class FinalClass is final"):
+
+            class SubclaasOfFinal(FinalClass):
+                pass
 
     def test_make_final(self):
         class NonFinalClass(NSObject):
@@ -27,3 +28,8 @@ class TestFinal(TestCase):
         NonFinalClass.__objc_final__ = True
 
         self.assertTrue(NonFinalClass.__objc_final__)
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot delete __objc_final__ attribute"
+        ):
+            del NonFinalClass.__objc_final__
