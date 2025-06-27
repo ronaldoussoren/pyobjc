@@ -1,6 +1,7 @@
 import objc
 import os
 from objc import super  # noqa: A004
+from .supercall import OCSuperCallHelper
 from PyObjCTools.TestSupport import (
     TestCase,
     pyobjc_options,
@@ -10,6 +11,8 @@ from PyObjCTools.TestSupport import (
     os_release,
 )
 import objc.simd
+
+NSObject = objc.lookUpClass("NSObject")
 
 
 class TestMetadataRegistry(TestCase):
@@ -551,3 +554,90 @@ class TestSizeOfType(TestCase):
 
         with self.assertRaisesRegex(TypeError, "a bytes-like object is required"):
             objc._sizeOfType(42)
+
+
+class TestOverrideResolution(TestCase):
+    # Tests checks validate the logic for resolving a custom method call function
+    # when overrides are registered in different orders for base and sub classes.
+    @classmethod
+    def setUpClass(cls):
+        cls.baseclass = NSObject.alloc().init()
+        cls.subclass = OCSuperCallHelper.alloc().init()
+
+    def test_register_nsobject_first(self):
+        self.assertEqual(
+            self.baseclass.ocRegisterCallerFirst(), "overriden-first-nsobject"
+        )
+        self.assertEqual(
+            self.subclass.ocRegisterCallerFirst(), "overriden-first-subclass"
+        )
+
+    def test_register_nsobject_last(self):
+        self.assertEqual(
+            self.baseclass.ocRegisterCallerLast(), "overriden-last-nsobject"
+        )
+        self.assertEqual(
+            self.subclass.ocRegisterCallerLast(), "overriden-last-subclass"
+        )
+
+    def test_register_nsobject_first_nil_before(self):
+        self.assertEqual(
+            self.baseclass.ocRegisterCallerFirstNone1(),
+            "overriden-first-none1-nsobject",
+        )
+        self.assertEqual(
+            self.subclass.ocRegisterCallerFirstNone1(), "overriden-first-none1-subclass"
+        )
+
+    def test_register_nsobject_last_nil_before(self):
+        self.assertEqual(
+            self.baseclass.ocRegisterCallerLastNone1(), "overriden-last-none1-nsobject"
+        )
+        self.assertEqual(
+            self.subclass.ocRegisterCallerLastNone1(), "overriden-last-none1-subclass"
+        )
+
+    def test_register_nsobject_first_nil_after(self):
+        self.assertEqual(
+            self.baseclass.ocRegisterCallerFirstNone2(),
+            "overriden-first-none2-nsobject",
+        )
+        self.assertEqual(
+            self.subclass.ocRegisterCallerFirstNone2(), "overriden-first-none2-subclass"
+        )
+
+    def test_register_nsobject_last_nil_after(self):
+        self.assertEqual(
+            self.baseclass.ocRegisterCallerLastNone2(), "overriden-last-none2-nsobject"
+        )
+        self.assertEqual(
+            self.subclass.ocRegisterCallerLastNone2(), "overriden-last-none2-subclass"
+        )
+
+    def test_register_subclss_only(self):
+        self.assertEqual(
+            self.baseclass.ocRegisterSubClassOnly(), "native-subclass-only"
+        )
+        self.assertEqual(
+            self.subclass.ocRegisterSubClassOnly(), "overriden-subclass-only-subclass"
+        )
+
+    def test_register_subclss_only_none_first(self):
+        self.assertEqual(
+            self.baseclass.ocRegisterSubClassOnlyNone1(),
+            "overriden-subclass-only-none1-none",
+        )
+        self.assertEqual(
+            self.subclass.ocRegisterSubClassOnlyNone1(),
+            "overriden-subclass-only-none1-subclass",
+        )
+
+    def test_register_subclss_only_none_last(self):
+        self.assertEqual(
+            self.baseclass.ocRegisterSubClassOnlyNone2(),
+            "overriden-subclass-only-none2-none",
+        )
+        self.assertEqual(
+            self.subclass.ocRegisterSubClassOnlyNone2(),
+            "overriden-subclass-only-none2-subclass",
+        )

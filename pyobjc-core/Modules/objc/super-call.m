@@ -371,42 +371,38 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
             Py_DECREF(entry);  // LCOV_EXCL_LINE
             continue;          // LCOV_EXCL_LINE
         }
-        if (pyclass != Py_None
-            && !PyType_IsSubtype((PyTypeObject*)search_class, (PyTypeObject*)pyclass)) {
+
+        if (pyclass == Py_None) {
+            if (special_class != NULL) {
+                /* Already have a match, Py_None is less specific */
+                Py_DECREF(entry);
+                continue;
+            }
+        } else if (!PyType_IsSubtype((PyTypeObject*)search_class,
+                                     (PyTypeObject*)pyclass)) {
+            /* Current entry is not for a superclass of search_class */
             Py_DECREF(entry);
             continue;
+        } else {
+            /* Current entry is for a superclass of search_class */
+            if (special_class != NULL && special_class != Py_None) {
+                if (!PyType_IsSubtype((PyTypeObject*)pyclass,
+                                      (PyTypeObject*)special_class)) {
+                    /* The new class is not more specific than the old one */
+                    Py_DECREF(entry);
+                    continue;
+                }
+            }
         }
 
-        if (!special_class) {
-            /* No match yet, use */
-            Py_CLEAR(special_class);
-            Py_CLEAR(result);
-            special_class = pyclass;
-            result        = PyTuple_GET_ITEM(entry, 1);
-            Py_INCREF(special_class);
-            Py_INCREF(result);
-            Py_DECREF(entry);
-
-        } else if (pyclass == Py_None) {
-            /* Already have a match, Py_None is less specific */
-            Py_DECREF(entry);
-            continue;
-
-        } else if (PyType_IsSubtype((PyTypeObject*)special_class,
-                                    (PyTypeObject*)pyclass)) {
-            /* special_type is a superclass of search_class,
-             * but a subclass of the current match, hence it is
-             * a more specific match or a similar match later in the
-             * list.
-             */
-            Py_CLEAR(result);
-            Py_CLEAR(special_class);
-            Py_INCREF(pyclass);
-            special_class = pyclass;
-            result        = PyTuple_GET_ITEM(entry, 1);
-            Py_INCREF(result);
-            Py_DECREF(entry);
-        }
+        /* pyclass is a new most specific match */
+        Py_CLEAR(special_class);
+        Py_CLEAR(result);
+        special_class = pyclass;
+        result        = PyTuple_GET_ITEM(entry, 1);
+        Py_INCREF(special_class);
+        Py_INCREF(result);
+        Py_DECREF(entry);
     }
     if (!result)
         goto error;

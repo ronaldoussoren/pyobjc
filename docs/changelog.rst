@@ -50,6 +50,13 @@ found while doing this.
 
 * Free-threading support is no longer experimental.
 
+* Fixed a bug in the look-up code that selects the most specific
+  manual override for calling an Objective-C method from Python.
+
+  In practice PyObjC ships with at most one such override for a
+  selector, the issue was found while improving test coverage for
+  edge cases.
+
 Version 11.1
 ------------
 
