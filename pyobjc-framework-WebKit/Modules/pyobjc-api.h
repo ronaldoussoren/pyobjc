@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Only add items to the end of this list!
  */
 typedef int(RegisterMethodMappingFunctionType)(
-    Class, SEL,
+    Class _Nullable, SEL,
     PyObject* _Nullable (*_Nonnull)(PyObject* _Nonnull, PyObject* _Nonnull,
                                     PyObject* _Nonnull const* _Nonnull, size_t),
     IMP _Nullable (*_Nonnull)(PyObject* _Nonnull, PyObject* _Nonnull));
