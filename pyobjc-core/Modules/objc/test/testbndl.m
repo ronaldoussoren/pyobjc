@@ -1747,7 +1747,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 + (int)fetchInt:(NSCoder*)coder
 {
     int i;
-    [[clang::suppress]] [coder decodeValueOfObjCType:@encode(int) at:&i];
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(int) at:&i];
 
     return i;
 }
@@ -1755,7 +1755,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 + (double)fetchDouble:(NSCoder*)coder
 {
     double i;
-    [[clang::suppress]] [coder decodeValueOfObjCType:@encode(double) at:&i];
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(double) at:&i];
     return i;
 }
 

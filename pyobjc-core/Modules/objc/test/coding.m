@@ -54,7 +54,7 @@
 + (int)fetchInt:(NSCoder*)coder
 {
     int i;
-    [[clang::suppress]] [coder decodeValueOfObjCType:@encode(int) at:&i];
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(int) at:&i];
     return i;
 }
 
@@ -63,9 +63,9 @@
     int i;
 
     if (@available(macOS 10.13, *)) {
-        [[clang::suppress]] [coder decodeValueOfObjCType:@encode(int) at:&i size:size];
+        CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(int) at:&i size:size];
     } else {
-        [[clang::suppress]] [coder decodeValueOfObjCType:@encode(int) at:&i];
+        CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(int) at:&i];
     }
     return i;
 }
@@ -73,7 +73,7 @@
 + (double)fetchDouble:(NSCoder*)coder
 {
     double i;
-    [[clang::suppress]] [coder decodeValueOfObjCType:@encode(double) at:&i];
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(double) at:&i];
     return i;
 }
 
