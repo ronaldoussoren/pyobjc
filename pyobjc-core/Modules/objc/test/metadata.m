@@ -5,6 +5,7 @@
  */
 #include "Python.h"
 #include "pyobjc-api.h"
+#include <simd/simd.h>
 #include <stdarg.h>
 
 #import <Foundation/Foundation.h>
@@ -956,6 +957,11 @@ typedef id (*callfunc)(void);
 - (void)fillVoids:(void*)data count:(int)count
 {
     memset(data, '\xab', count);
+}
+
+- (void)getVectorFloat4:(vector_float4)data into:(float*)pdata
+{
+    *pdata = data[0] + data[1] + data[2] + data[3];
 }
 
 - (int*)unknownLengthArray

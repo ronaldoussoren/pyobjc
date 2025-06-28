@@ -829,6 +829,21 @@ def setupMetaData():
     )
 
     objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"getVectorFloat4:into:",
+        {
+            "full_signature": b"v@:<4f>^f",
+            "arguments": {
+                2
+                + 1: {
+                    "type_modifier": objc._C_OUT,
+                    "null_accepted": False,
+                }
+            },
+        },
+    )
+
+    objc.registerMetaDataForSelector(
         b"NSObject",
         b"makeBuffer:len:",
         {
@@ -1958,6 +1973,21 @@ class TestBuffers(TestCase):
         v = o.fillVoids_count_(a, 44)
         self.assertEqual(buffer_as_bytes(v), b"\xab" * 44)
         self.assertIs(v, a)
+
+        m = OC_MetaDataTest.__dict__["fillVoids_count_"]
+        with self.assertRaisesRegex(
+            TypeError, "Expecting instance of OC_MetaDataTest as self, got one of int"
+        ):
+            m(42, None, 4)
+
+    def test_out_vector(self):
+        o = OC_MetaDataTest.alloc().init()
+        self.assertArgHasType(o.getVectorFloat4_into_, 0, b"<4f>")
+        self.assertArgHasType(o.getVectorFloat4_into_, 1, b"o^f")
+        with self.assertRaisesRegex(
+            NotImplementedError, "Vector types not supported by libffi caller"
+        ):
+            o.getVectorFloat4_into_((1, 2, 3, 4), None)
 
 
 class TestVariableLengthValue(TestCase):

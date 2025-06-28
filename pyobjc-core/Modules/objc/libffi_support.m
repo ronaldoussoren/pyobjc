@@ -3593,7 +3593,10 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 error = depythonify_c_value(argtype, argument, arg);
 
                 arglist[i] = PyObjCFFI_Typestr2FFI(argtype);
-                values[i]  = arg;
+                if (arglist[i] == NULL) {
+                    return -1;
+                }
+                values[i] = arg;
             }
 
             if (error == -1) {

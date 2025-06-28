@@ -19,6 +19,7 @@ rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 
 NSInvocation = objc.lookUpClass("NSInvocation")
 NSArray = objc.lookUpClass("NSArray")
+NSString = objc.lookUpClass("NSString")
 
 
 class OCTestRegrWithGetItem(NSObject):
@@ -976,3 +977,57 @@ class TestSelectorEdgeCases(TestCase):
 
         with self.assertRaisesRegex(TypeError, "cannot use staticmethod"):
             objc.selector(func)
+
+
+class TestStringSpecials(TestCase):
+    def test_passing_non_string_as_self_simple(self):
+        o = NSString.stringWithString_("hello")
+        self.assertEqual(o.length(), 5)
+        m = o.length.definingClass.__dict__["length"]
+
+        self.assertEqual(m(o), 5)
+        with self.assertRaisesRegex(
+            TypeError, "Expecting instance of .* as self, got one of str"
+        ):
+            m("Theo")
+
+        with self.assertRaisesRegex(
+            TypeError, "Expecting instance of .* as self, got one of int"
+        ):
+            m(42)
+
+    def test_passing_non_string_as_self_complex(self):
+        o = NSString.stringWithString_("hello")
+
+        if not o.getCharacters_range_.__metadata__()["arguments"][2]["type"].startswith(
+            b"o"
+        ):
+            objc.registerMetaDataForSelector(
+                b"NSString",
+                b"getCharacters:range:",
+                {
+                    "arguments": {
+                        2 + 0: {"type_modifier": b"o", "c_array_length_in_arg": 2 + 1}
+                    }
+                },
+            )
+
+        self.assertArgIsOut(o.getCharacters_range_, 0)
+        self.assertArgSizeInArg(o.getCharacters_range_, 0, 1)
+
+        self.assertEqual(
+            o.getCharacters_range_(None, (0, 2)), tuple(ord(ch) for ch in "he")
+        )
+
+        m = o.getCharacters_range_.definingClass.__dict__["getCharacters_range_"]
+
+        self.assertEqual(m(o, None, (0, 3)), tuple(ord(ch) for ch in "hel"))
+        with self.assertRaisesRegex(
+            TypeError, "Expecting instance of .* as self, got one of str"
+        ):
+            m("Theo", None, (0, 3))
+
+        with self.assertRaisesRegex(
+            TypeError, "Expecting instance of .* as self, got one of int"
+        ):
+            m(42, None, (0, 3))

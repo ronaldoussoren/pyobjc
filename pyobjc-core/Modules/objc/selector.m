@@ -635,7 +635,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
         }
 
         if (!(PyObject_IsInstance(pyself, myClass)
-              || (PyUnicode_Check(pyself)
+              || (PyObjCUnicode_Check(pyself)
                   && PyObjC_class_isSubclassOf(self->base.sel_class,
                                                [NSString class])))) {
 
@@ -718,9 +718,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
 
         execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector,
                                       self->base.sel_methinfo->signature);
-        if (execute == NULL) {
-            return NULL;
-        }
+        assert(execute != NULL);
 
         if (self->sel_call_func == NULL) {
             self->sel_call_func = execute;
@@ -730,8 +728,11 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
                 self->base.sel_vectorcall = objcsel_vectorcall_simple;
             }
         } else {
+            /* XXX: Hitting this requires a race condition between two initial calls */
+            // LCOV_EXCL_START
             Py_CLEAR(execute);
             execute = self->sel_call_func;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -750,7 +751,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
             return NULL;       // LCOV_EXCL_LINE
         }
         if (!(PyObject_IsInstance(pyself, myClass)
-              || (PyUnicode_Check(pyself)
+              || (PyObjCUnicode_Check(pyself)
                   && PyObjC_class_isSubclassOf(self->base.sel_class,
                                                [NSString class])))) {
 

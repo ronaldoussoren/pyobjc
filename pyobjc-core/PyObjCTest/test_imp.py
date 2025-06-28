@@ -248,6 +248,9 @@ class TestGettingIMPs(TestCase):
         with self.assertRaisesRegex(ValueError, "depythonifying 'SEL', got 'int'"):
             NSMutableArray.instanceMethodForSelector_(42)
 
+        m = o.methodForSelector_("sortUsingSelector:")
+        m(o, b"description")
+
     def test_not_found(self):
         o = NSMutableArray.alloc().init()
         with self.assertRaisesRegex(AttributeError, "No selector doesnotexist"):

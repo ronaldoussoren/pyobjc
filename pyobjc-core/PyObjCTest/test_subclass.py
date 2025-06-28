@@ -210,6 +210,26 @@ class TestSelectors(TestCase):
 
         self.assertStartswith(repr(someSel_arg_), "<unbound selector someSel:arg: at")
 
+    def test_native_selector_edge_cases(self):
+        o = NSArray.alloc().init()
+        o.count
+        for cls in type(o).__mro__:
+            m = cls.__dict__.get("count", None)
+            if m is not None:
+                break
+        else:
+            self.fail("no count method")
+
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            m()
+
+        o = NSData.alloc().init()
+
+        with self.assertRaisesRegex(
+            TypeError, "Expecting instance of .* as self, got one of .*"
+        ):
+            m(o)
+
 
 class TestCopying(TestCase):
     def testCopy(self):
@@ -1072,9 +1092,11 @@ class TestSelectorAttributes(TestCase):
         #      Consider deprecating
         self.assertFalse(meth1 < meth1)
         self.assertTrue(meth1 < meth2)
+        self.assertFalse(meth2 <= meth1)
         self.assertTrue(meth1 <= meth1)
         self.assertFalse(meth1 > meth1)
         self.assertTrue(meth2 > meth1)
+        self.assertFalse(meth1 >= meth2)
         self.assertTrue(meth1 >= meth1)
 
         with self.assertRaisesRegex(

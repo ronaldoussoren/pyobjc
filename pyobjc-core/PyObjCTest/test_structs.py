@@ -1012,7 +1012,7 @@ class TestStructs(TestCase):
             objc.createStructType("InvStruct", b"q", ["a", "b"])
 
         with self.assertRaisesRegex(
-            ValueError, "Invalid struct definition in type signature: {_FooStruct="
+            objc.error, "Invalid struct definition in type signature: {_FooStruct="
         ):
             objc.createStructType("InvStruct", b"{_FooStruct=", [])
 

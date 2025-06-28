@@ -75,6 +75,12 @@ found while doing this.
 * Passing a :class:`staticmethod` instance as the callable argument
   of :class:`objc.selector` now raises an error as intended.
 
+* Fix crash when a SIMD type is present in the method signature of
+  a method or function with by-reference arguments.
+
+* Fix handling of Python strings as 'self' for NSString methods
+  (which should raise an exception, but didn't).
+
 Version 11.1
 ------------
 
