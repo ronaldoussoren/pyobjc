@@ -87,6 +87,67 @@ class SplitSignatureTest(TestCase):
             ),
         )
 
+        # union definition in an struct objc_ivar
+        self.assertEqual(
+            objc.splitSignature(b'(_union="a"i"b"f)'),
+            (b'(_union="a"i"b"f)',),
+        )
+
+    def test_embedded(self):
+        r = objc.splitStructSignature(b'{p=i<2f>"world"[10@]}')
+        self.assertEqual(r, ("p", [(None, b"i"), (None, b"<2f>"), ("world", b"[10@]")]))
+
+    def test_invalid_encodings(self):
+        with self.assertRaisesRegex(
+            objc.error, "Invalid SIMD definition in type signature: <2ii"
+        ):
+            objc.splitSignature(b"<2ii")
+
+        with self.assertRaisesRegex(
+            objc.error, "Invalid SIMD definition in type signature: <2i"
+        ):
+            objc.splitSignature(b"<2i")
+
+        with self.assertRaisesRegex(
+            objc.error, r"Invalid array definition in type signature: \[2ii"
+        ):
+            objc.splitSignature(b"[2ii")
+
+        with self.assertRaisesRegex(
+            objc.error, r"Invalid array definition in type signature: \[2i"
+        ):
+            objc.splitSignature(b"[2i")
+
+        with self.assertRaisesRegex(
+            objc.error, "Invalid struct definition in type signature: {p"
+        ):
+            objc.splitSignature(b"{p")
+
+        with self.assertRaisesRegex(
+            objc.error, "Invalid struct definition in type signature: {p=2i"
+        ):
+            objc.splitSignature(b"{p=2i")
+
+        with self.assertRaisesRegex(
+            objc.error, 'Invalid struct definition in type signature: {p=2i"helloi'
+        ):
+            objc.splitSignature(b'{p=2i"helloi')
+
+        with self.assertRaisesRegex(
+            objc.error, r"Invalid union definition in type signature: \(p"
+        ):
+            objc.splitSignature(b"(p")
+
+        with self.assertRaisesRegex(
+            objc.error, r"Invalid union definition in type signature: \(p=2i"
+        ):
+            objc.splitSignature(b"(p=2i")
+
+        with self.assertRaisesRegex(
+            objc.error, r"Invalid union definition in type signature: \(p=2i\"helloi"
+        ):
+            objc.splitSignature(b'(p=2i"helloi')
+
     def testSignatureCount(self):
         EXCEPTIONS = [
             # For some reason this signature doesn't seem to be correct, even

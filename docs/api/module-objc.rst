@@ -1293,6 +1293,8 @@ Name                     Objective-C type
 ------------------------ -------------------------------------------------
 :const:`_C_DBL`          *double*
 ------------------------ -------------------------------------------------
+:const:`_C_LNG_DBL`      *long double*
+------------------------ -------------------------------------------------
 :const:`_C_VOID`         *void*
 ------------------------ -------------------------------------------------
 :const:`_C_UNDEF`        "other" (such a function)
@@ -1308,6 +1310,8 @@ Name                     Objective-C type
 :const:`_C_CHAR_AS_INT`  *int8_t* (or *char* when
                          used as a number)
 ======================== =================================================
+
+.. versionadded: 11.1.1 The value ``_C_LNG_DBL``.
 
 The values :const:`_C_NSBOOL`, :const:`_C_UNICHAR`, :const:`_C_CHAR_AS_TEXT`,
 and :const:`_C_CHAR_AS_INT` are inventions of PyObjC and are not used in

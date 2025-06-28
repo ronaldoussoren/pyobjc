@@ -149,6 +149,21 @@ PyErr_Clear();
 
 END_UNITTEST
 
+BEGIN_UNITTEST(BitFieldSize)
+struct bitfield1 {
+    unsigned int first : 4;
+};
+struct bitfield2 {
+    unsigned int first : 4;
+    unsigned int second : 30;
+};
+
+ASSERT_EQUALS(sizeof(struct bitfield1), PyObjCRT_SizeOfType(@encode(struct bitfield1)),
+              "%d");
+ASSERT_EQUALS(sizeof(struct bitfield2), PyObjCRT_SizeOfType(@encode(struct bitfield2)),
+              "%d");
+END_UNITTEST
+
 BEGIN_UNITTEST(StructSize)
 
 ASSERT_EQUALS(sizeof(struct empty), PyObjCRT_SizeOfType(@encode(struct empty)), "%d");
@@ -162,6 +177,10 @@ ASSERT_EQUALS(sizeof(struct Struct3), PyObjCRT_SizeOfType(@encode(struct Struct3
 ASSERT_EQUALS(sizeof(struct Struct4), PyObjCRT_SizeOfType(@encode(struct Struct4)), "%d");
 
 ASSERT_EQUALS(sizeof(NSRect), PyObjCRT_SizeOfType(@encode(NSRect)), "%d");
+
+Py_ssize_t r = PyObjCRT_SizeOfType("{p=!}");
+FAIL_IF(r != -1);
+PyErr_Clear();
 
 END_UNITTEST
 
@@ -181,6 +200,16 @@ ASSERT_EQUALS(__alignof__(struct Struct3), PyObjCRT_AlignOfType(@encode(struct S
 
 ASSERT_EQUALS(__alignof__(struct Struct4), PyObjCRT_AlignOfType(@encode(struct Struct4)),
               "%d");
+
+ASSERT_EQUALS(__alignof__(struct empty), PyObjCRT_AlignOfType("n{empty=}"), "%d");
+
+Py_ssize_t r = PyObjCRT_AlignOfType("{p=!");
+FAIL_IF(r != -1);
+PyErr_Clear();
+
+r = PyObjCRT_AlignOfType("(p=!");
+FAIL_IF(r != -1);
+PyErr_Clear();
 
 END_UNITTEST
 
@@ -1058,8 +1087,19 @@ FAIL_IF(!PyObjCRT_IsValidEncoding("n^{a=i}", 7));
 FAIL_IF(PyObjCRT_IsValidEncoding("n^{a=i}", 5));
 FAIL_IF(PyObjCRT_IsValidEncoding("n^{a=i}", 2));
 FAIL_IF(PyObjCRT_IsValidEncoding("n^{a=i}", 1));
+FAIL_IF(PyObjCRT_IsValidEncoding("n^{a=!}", 7));
 
 FAIL_IF(PyObjCRT_IsValidEncoding("{a=\"f\"i}", 8));
+
+FAIL_IF(!PyObjCRT_IsValidEncoding("<2f>", 4));
+FAIL_IF(PyObjCRT_IsValidEncoding("<2f", 3));
+FAIL_IF(PyObjCRT_IsValidEncoding("<2f>", 3));
+FAIL_IF(PyObjCRT_IsValidEncoding("<2ff>", 5));
+
+FAIL_IF(!PyObjCRT_IsValidEncoding("[2f]", 4));
+FAIL_IF(PyObjCRT_IsValidEncoding("[2!]", 4));
+
+FAIL_IF(PyObjCRT_IsValidEncoding("(p=ii)", 6));
 
 END_UNITTEST
 
@@ -1212,6 +1252,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(VectorSize),
                                     TESTDEF(VectorAlign),
                                     TESTDEF(StructSize),
+                                    TESTDEF(BitFieldSize),
                                     TESTDEF(StructAlign),
                                     TESTDEF(FillStruct1),
                                     TESTDEF(FillStruct2),

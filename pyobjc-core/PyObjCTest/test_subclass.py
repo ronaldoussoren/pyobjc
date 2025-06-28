@@ -987,9 +987,11 @@ class TestSelectorAttributes(TestCase):
         self.assertFalse(meth1 < meth1)
         self.assertTrue(meth1 < meth2)
         self.assertTrue(meth1 <= meth1)
+        self.assertFalse(meth2 <= meth1)
         self.assertFalse(meth1 > meth1)
         self.assertTrue(meth2 > meth1)
         self.assertTrue(meth1 >= meth1)
+        self.assertFalse(meth1 >= meth2)
 
         with self.assertRaisesRegex(
             TypeError,

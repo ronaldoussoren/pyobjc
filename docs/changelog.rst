@@ -65,7 +65,15 @@ found while doing this.
 
   Based on a PR by GitHub user `mrpippy <https://github.com/mrpippy>`_.
 
+* More consistently raise :exc:`objc.error` when an invalid type encoding
+  is encountered (used to sometimes raise :exc:`ValueError` instead).
 
+* Passing a :class:`classmethod` instance as the callable argument
+  of :class:`objc.selector` works again (resulting a selector object
+  that is a class method).
+
+* Passing a :class:`staticmethod` instance as the callable argument
+  of :class:`objc.selector` now raises an error as intended.
 
 Version 11.1
 ------------

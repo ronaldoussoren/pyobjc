@@ -1069,7 +1069,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
         return retval;
 
-    } else if (PyObjCObject_Check(self)) {
+    } else if (PyObjCObject_Check(self)) { // LCOV_BR_EXCL_LINE
         id object;
 
         object = PyObjCObject_GetObject(self);
@@ -1096,17 +1096,21 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
                 retval = NULL;
             }
 
+            // LCOV_EXCL_START
         } @catch (NSObject* localException) {
             PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
             retval = NULL;
         }
+        // LCOV_EXCL_STOP
 
         return retval;
 
     } else {
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_RuntimeError, "PyObjCSelector_FindNative called on plain "
                                             "python object");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -1259,21 +1263,11 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
         }
 
     } else if (PyMethod_Check(callable)) {
-        /* XXX: Can PyMethod_Self ever be NULL? */
-        /*      if it cannot: Drop this case */
-        if (PyMethod_Self(callable) == NULL) {
-            result->argcount = PyObjC_num_arguments(callable);
-            if (result->argcount == -1) {
-                Py_DECREF(result);
-                return NULL;
-            }
-
-        } else {
-            result->argcount = PyObjC_num_arguments(callable) - 1;
-            if (result->argcount == -2) {
-                Py_DECREF(result);
-                return NULL;
-            }
+        assert(PyMethod_Self(callable) != NULL);
+        result->argcount = PyObjC_num_arguments(callable) - 1;
+        if (result->argcount == -2) {
+            Py_DECREF(result);
+            return NULL;
         }
 
     } else if (PyObjC_is_pymethod(callable)) {
@@ -1435,7 +1429,8 @@ static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
     PyObjCPythonSelector* self = (PyObjCPythonSelector*)_self;
     PyObject*             result;
 
-    if (self->callable == NULL) {
+    assert(self->callable != NULL);
+    if (self->callable == Py_None) {
         PyErr_Format(PyExc_TypeError, "Calling abstract methods with selector %s",
                      sel_getName(self->base.sel_selector));
         return NULL;
@@ -1544,15 +1539,14 @@ pysel_default_signature(SEL selector, PyObject* callable)
 
     if (!PyObjC_returns_value(callable)) {
         result[0] = _C_VOID;
-        if (PyErr_Occurred()) {
-            PyMem_Free(result);
-            return NULL;
-        }
     }
 
     return result;
 }
 
+/*
+ * XXX: This logic is different from the function below.
+ */
 static SEL _Nullable pysel_default_selector(PyObject* callable)
 {
     char      buf[1024];
@@ -1571,6 +1565,7 @@ static SEL _Nullable pysel_default_selector(PyObject* callable)
         Py_DECREF(bytes);
 
     } else {
+        PyErr_Format(PyExc_TypeError, "__name__ of %R is not a string", callable);
         return NULL;
     }
 
@@ -1700,11 +1695,6 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
         }
     }
 
-    if (callable != Py_None && !PyCallable_Check(callable)) {
-        PyErr_SetString(PyExc_TypeError, "argument 'method' must be callable");
-        return NULL;
-    }
-
     if (PyObject_TypeCheck(callable, &PyClassMethod_Type)) {
         /* Special treatment for 'classmethod' instances */
         PyObject* tmp =
@@ -1713,19 +1703,20 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
             return NULL;
         }
 
-        if (PyObjC_is_pyfunction(tmp)) {
-            /* A 'staticmethod' instance, cannot convert */
-            Py_DECREF(tmp);
-            PyErr_SetString(PyExc_TypeError, "cannot use staticmethod as the "
-                                             "callable for a selector.");
-            return NULL;
-        }
-
-        callable = PyObject_GetAttrString(tmp, "__func__");
+        callable     = PyObject_GetAttrString(tmp, "__func__");
+        class_method = 1;
         Py_DECREF(tmp);
         if (callable == NULL) {
             return NULL;
         }
+    } else if (PyObject_TypeCheck(callable, &PyStaticMethod_Type)) {
+        PyErr_SetString(PyExc_TypeError, "cannot use staticmethod as the "
+                                         "callable for a selector.");
+        return NULL;
+
+    } else if (callable != Py_None && !PyCallable_Check(callable)) {
+        PyErr_SetString(PyExc_TypeError, "argument 'method' must be callable");
+        return NULL;
 
     } else {
         Py_INCREF(callable);

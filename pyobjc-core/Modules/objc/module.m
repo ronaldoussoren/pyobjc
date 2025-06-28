@@ -2101,6 +2101,7 @@ struct objc_typestr_values {
                            {"_C_ULNG_LNG", _C_ULNG_LNG},
                            {"_C_FLT", _C_FLT},
                            {"_C_DBL", _C_DBL},
+                           {"_C_LNG_DBL", _C_LNG_DBL},
                            {"_C_BFLD", _C_BFLD},
                            {"_C_VOID", _C_VOID},
                            {"_C_UNDEF", _C_UNDEF},

@@ -116,3 +116,15 @@ class TestUseKVO(TestCase):
                 __useKVO__ = 42
 
             self.assertIs(OCTestUseKVO6.__useKVO__, True)
+
+    def test_useKVO_in_body_nonbool(self):
+        class NotBool:
+            def __bool__(self):
+                raise RuntimeError("not bool")
+
+        with pyobjc_options(use_kvo=False):
+            with self.assertRaisesRegex(RuntimeError, "not bool"):
+
+                class OCTestUseKVO7(NSObject):
+                    value = objc.ivar()
+                    __useKVO__ = NotBool()

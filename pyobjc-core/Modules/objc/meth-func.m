@@ -100,7 +100,7 @@ PyObjC_returns_value(PyObject* value)
         return true;
         // LCOV_EXCL_STOP
     }
-#endif /* PY_VERSION_HEX >= 0x030e0000 */
+#endif /* PY_VERSION_HEX < 0x030e0000 */
 
     if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
             co, &buf, PyBUF_CONTIG_RO)
@@ -112,9 +112,10 @@ PyObjC_returns_value(PyObject* value)
          * will be a bytes object.
          */
         // LCOV_EXCL_START
+        PyErr_Clear();
         Py_DECREF(func_code);
         Py_DECREF(co);
-        return NULL;
+        return false;
         // LCOV_EXCL_STOP
     }
 
@@ -129,11 +130,12 @@ PyObjC_returns_value(PyObject* value)
          * the buffer protocol.
          */
         // LCOV_EXCL_START
+        PyErr_Clear();
         Py_DECREF(func_code);
 #if PY_VERSION_HEX >= 0x030e0000
         Py_DECREF(consts);
 #endif
-        return NULL;
+        return false;
         // LCOV_EXCL_STOP
     }
 #endif
@@ -200,6 +202,7 @@ PyObjC_returns_value(PyObject* value)
 #if PY_VERSION_HEX >= 0x030e0000
     Py_DECREF(consts);
 #endif
+    PyErr_Clear();
     return rv;
 }
 

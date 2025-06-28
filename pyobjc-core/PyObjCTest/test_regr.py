@@ -4,6 +4,8 @@ import gc
 import io
 import warnings
 import types
+import struct
+import fractions
 
 import objc
 from PyObjCTest import copying, structargs
@@ -769,6 +771,75 @@ class TestDelRevives(TestCase):
         self.assertEqual(repr(VALUE), "<null>")
 
 
+class TestMisCConversions(TestCase):
+    def test_sel(self):
+        # XXX: Fix me for PyObjC 12:
+        self.assertEqual(objc.repythonify(b"hello", objc._C_SEL), "hello")
+        self.assertEqual(objc.repythonify("hello", objc._C_SEL), "hello")
+        self.assertEqual(
+            objc.repythonify(NSArray.description, objc._C_SEL), "description"
+        )
+        self.assertEqual(objc.repythonify("hello", objc._C_SEL), "hello")
+        self.assertEqual(objc.repythonify(bytearray(b"hello"), objc._C_SEL), "hello")
+
+        self.assertEqual(objc.repythonify(b"", objc._C_SEL), None)
+        self.assertEqual(objc.repythonify(bytearray(b""), objc._C_SEL), None)
+        self.assertEqual(objc.repythonify("", objc._C_SEL), None)
+        self.assertEqual(objc.repythonify(None, objc._C_SEL), None)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'SEL', got 'int'"):
+            objc.repythonify(42, objc._C_SEL)
+
+        with self.assertRaises(UnicodeEncodeError):
+            objc.repythonify("hel\udffflo", objc._C_SEL)
+
+    def test_class(self):
+        self.assertEqual(objc.repythonify(None, objc._C_CLASS), None)
+        self.assertEqual(objc.repythonify(NSArray, objc._C_CLASS), NSArray)
+        self.assertEqual(objc.repythonify(type(NSArray), objc._C_CLASS), NSArray)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'Class', got 'object'"):
+            objc.repythonify(object(), objc._C_CLASS)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'Class', got 'type'"):
+            objc.repythonify(type, objc._C_CLASS)
+
+    def test_union(self):
+        inval = struct.pack("=i", 42)
+        outval = objc.repythonify(inval, b"(p=if)")
+        self.assertEqual(inval, outval)
+
+        inval = struct.pack("=f", 42.5)
+        outval = objc.repythonify(inval, b"(p=fi)")
+        self.assertEqual(inval, outval)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'union' of size 4, got byte string of 3"
+        ):
+            objc.repythonify(inval[:-1], b"(p=fi)")
+
+    def test_vector(self):
+        out = objc.repythonify((42,) * 4, b"<4i>")
+        self.assertEqual(out, (42,) * 4)
+
+        with self.assertRaisesRegex(objc.error, "Unsupported SIMD encoding: <5i>"):
+            objc.repythonify((42,) * 5, b"<5i>")
+
+    def test_float(self):
+        for encoding in (objc._C_FLT, objc._C_DBL, objc._C_LNG_DBL):
+            self.assertEqual(objc.repythonify(2.5, encoding), 2.5)
+
+            f = fractions.Fraction(1, 2)
+            self.assertEqual(float(f), 0.5)
+
+            self.assertEqual(objc.repythonify(f, encoding), 0.5)
+
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying '[a-z ]*', got 'str'"
+            ):
+                objc.repythonify("2.5", encoding)
+
+
 class TestConvertNegativeToUnsigedWarns(TestCase):
     def test_repythonify_negative_int(self):
         class Number:
@@ -839,3 +910,69 @@ class TestInvokingMethods(TestCase):
             ValueError, "unrecognized selector sent to instance"
         ):
             value.forwardInvocation_(inv)
+
+
+class TestSelectorEdgeCases(TestCase):
+    def test_sel_incomparable(self):
+        def function(self):
+            pass
+
+        sel1 = objc.selector(function, selector=b"hello", signature=b"@@:")
+
+        class Callable:
+            def __call__(self):
+                return 99
+
+            def __eq__(self, other):
+                raise RuntimeError("no comparison")
+
+        sel2 = objc.selector(Callable(), selector=b"hello", signature=b"@@:")
+
+        with self.assertRaisesRegex(RuntimeError, "no comparison"):
+            sel1 == sel2  # noqa: B015
+
+    def test_callable_with_name_issues(self):
+        class Callable:
+            def __call__(self):
+                return 99
+
+        func = Callable()
+        with self.assertRaisesRegex(
+            AttributeError, "'Callable' object has no attribute '__name__'"
+        ):
+            objc.selector(func)
+
+        func.__name__ = "hello \udff0"
+        with self.assertRaisesRegex(UnicodeEncodeError, "surrogates"):
+            objc.selector(func)
+
+        func.__name__ = 42
+        with self.assertRaisesRegex(TypeError, "__name__ of .* is not a string"):
+            objc.selector(func)
+
+    def test_calling_abstract(self):
+        obj = NSObject.alloc().init()
+
+        sel = objc.selector(None, selector=b"hello:", signature=b"@@:n^f")
+
+        with self.assertRaisesRegex(
+            TypeError, "Calling abstract methods with selector hello:"
+        ):
+            sel(obj, None)
+
+    def test_classmethod(self):
+        @classmethod
+        def func(cls):
+            pass
+
+        sel = objc.selector(func)
+        self.assertEqual(sel.selector, b"func")
+        self.assertTrue(sel.isClassMethod)
+
+    def test_staticmethod(self):
+        @staticmethod
+        def func():
+            pass
+
+        with self.assertRaisesRegex(TypeError, "cannot use staticmethod"):
+            objc.selector(func)

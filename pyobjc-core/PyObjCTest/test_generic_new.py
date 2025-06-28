@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 from objc import super  # noqa: A004
 import objc._new as new_mod
 from .genericnew import (
@@ -330,3 +330,8 @@ class TestDefaultNewForObjectiveCClass(TestCase):
             """
             ),
         )
+
+    def test_without_generic_new(self):
+        with pyobjc_options(_genericNewClass=None):
+            with self.assertRaisesRegex(TypeError, "'None' is not a type"):
+                NSObject()

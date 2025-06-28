@@ -1169,6 +1169,9 @@ class TestArraysIn(TestCase):
         self.assertIs(v[1], q)
         self.assertIs(v[2], r)
 
+        with self.assertRaisesRegex(TypeError, "depythonifying array, got no sequence"):
+            o.makeObjectArray_(42)
+
         v = o.makeStringArray_(())
         self.assertEqual(len(v), 0)
 

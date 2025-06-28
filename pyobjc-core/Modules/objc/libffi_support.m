@@ -494,7 +494,7 @@ ffi_type* _Nullable PyObjCFFI_Typestr2FFI(const char* argtype)
     if (t == NULL)   // LCOV_BR_EXCL_LINE
         return NULL; // LCOV_EXCL_LINE
     argtype = t;
-    switch (*argtype) {
+    switch (*argtype) { // LCOV_BR_EXCL_LINE
     case _C_VOID:
         return &ffi_type_void;
     case _C_ID:

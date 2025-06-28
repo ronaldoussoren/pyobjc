@@ -153,11 +153,13 @@ NS_ASSUME_NONNULL_BEGIN
     return PyObjCObject_New(self, PyObjCObject_kSHOULD_NOT_RELEASE, NO);
 }
 
+// LCOV_EXCL_START
 + (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     return (PyObject*)PyObjCClass_New(self);
 }
+// LCOV_EXCL_STOP
 @end /* PyObjCSupport */
 
 @interface Protocol (PyObjCSupport)
@@ -687,7 +689,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
                 if (type != NULL) {
                     type++;
                 } else {
-                    PyErr_Format(PyExc_ValueError,
+                    PyErr_Format(PyObjCExc_InternalError,
                                  "Invalid struct definition in type signature: %s",
                                  start_type);
                     return NULL;
@@ -696,7 +698,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
             type = PyObjCRT_SkipTypeSpec(type);
         }
         if (type && *type != _C_STRUCT_E) {
-            PyErr_Format(PyExc_ValueError,
+            PyErr_Format(PyObjCExc_InternalError,
                          "Invalid struct definition in type signature: %s", start_type);
             return NULL;
         }
@@ -716,7 +718,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
                     type++;
                 } else {
                     PyErr_Format(PyObjCExc_InternalError,
-                                 "Invalid union definition in type signature: '%s'",
+                                 "Invalid union definition in type signature: %s",
                                  start_type);
                     return NULL;
                 }
@@ -725,7 +727,7 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
         }
         if (type && *type != _C_UNION_E) {
             PyErr_Format(PyObjCExc_InternalError,
-                         "Invalid union definition in type signature: '%s'", start_type);
+                         "Invalid union definition in type signature: %s", start_type);
             return NULL;
         }
         if (type)
@@ -777,7 +779,7 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
 
     type = PyObjCRT_SkipTypeQualifiers(type);
 
-    switch (*type) {
+    switch (*type) { // LCOV_BR_EXCL_LINE
     /* The following are one character type codes */
     case _C_UNDEF:
     case _C_CLASS:
@@ -1055,8 +1057,8 @@ PyObjCRT_AlignOfType(const char* start_type)
             }
             maxalign = MAX(maxalign, item_align);
             type     = PyObjCRT_SkipTypeSpec(type);
-            if (type == NULL) {
-                return -1;
+            if (type == NULL) { // LCOV_BR_EXCL_LINE
+                return -1;      // LCOV_EXCL_LINE
             }
         }
         return maxalign;
@@ -1239,12 +1241,12 @@ PyObjCRT_SizeOfType(const char* start_type)
             acc_size  = ROUND(acc_size, align);
 
             itemSize = PyObjCRT_SizeOfType(type);
-            if (itemSize == -1)
-                return -1;
+            if (itemSize == -1) // LCOV_BR_EXCL_LINE
+                return -1;      // LCOV_EXCL_LINE
             acc_size += itemSize;
             type = PyObjCRT_SkipTypeSpec(type);
-            if (type == NULL) {
-                return -1;
+            if (type == NULL) { // LCOV_BR_EXCL_LINE
+                return -1;      // LCOV_EXCL_LINE
             }
         }
 
@@ -1371,9 +1373,11 @@ PyObjCRT_IsValidEncoding(const char* _type, Py_ssize_t type_length)
             return false;
         }
         type = PyObjCRT_SkipTypeSpec(type);
-        if (type == NULL) {
+        if (type == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_Clear();
             return false;
+            // LCOV_EXCL_STOP
         }
         if (type >= end_type) {
             return false;
@@ -1403,9 +1407,11 @@ PyObjCRT_IsValidEncoding(const char* _type, Py_ssize_t type_length)
             }
 
             type = PyObjCRT_SkipTypeSpec(type);
-            if (type == NULL) {
+            if (type == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_Clear();
                 return false;
+                // LCOV_EXCL_STOP
             }
         }
         if (type >= end_type) {
@@ -2286,6 +2292,7 @@ pythonify_c_value(const char* type, const void* datum)
         } else {
             SEL s;
             memcpy((void*)&s, datum, sizeof(SEL));
+            /* XXX: This should be bytes, not string! */
             retobject = PyUnicode_FromString(sel_getName(s));
         }
         break;
@@ -2808,16 +2815,16 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
         if (PyBytes_Check(argument)) {
             char* v = PyBytes_AsString(argument);
-            memcpy(datum, (void*)&v, sizeof(char*));
             if (v == NULL) {
                 return -1;
             }
+            memcpy(datum, (void*)&v, sizeof(char*));
         } else if (PyByteArray_Check(argument)) {
             char* v = PyByteArray_AsString(argument);
-            memcpy(datum, (void*)&v, sizeof(char*));
             if (v == NULL) {
                 return -1;
             }
+            memcpy(datum, (void*)&v, sizeof(char*));
         } else if (argument == Py_None) {
             char* v = NULL;
             memcpy(datum, (void*)&v, sizeof(char*));
@@ -2999,10 +3006,12 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
         } else if (PyType_Check(argument)
                    && PyType_IsSubtype((PyTypeObject*)argument, &PyObjCClass_Type)) {
             PyObject* class_object = PyObjCClass_ClassForMetaClass(argument);
-            if (class_object == NULL) {
+            if (class_object == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_Format(PyObjCExc_Error, "Cannot locate class for metaclass %R",
                              argument);
                 return -1;
+                // LCOV_EXCL_STOP
             }
             *(Class*)datum = PyObjCClass_GetClass(class_object);
 
@@ -3036,13 +3045,15 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
                 sel = sel_getUid(selname);
                 Py_DECREF(bytes);
 
-                if (sel) {
+                if (sel) { // LCOV_BR_EXCL_LINE
                     *(SEL*)datum = sel;
 
                 } else {
+                    // LCOV_EXCL_START
                     PyErr_Format(PyExc_ValueError, "depythonifying 'SEL', cannot "
                                                    "register string with runtime");
                     return -1;
+                    // LCOV_EXCL_STOP
                 }
             }
 
@@ -3056,13 +3067,15 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             } else {
                 sel = sel_getUid(selname);
 
-                if (sel) {
+                if (sel) { // LCOV_BR_EXCL_LINE
                     *(SEL*)datum = sel;
 
                 } else {
+                    // LCOV_EXCL_START
                     PyErr_Format(PyExc_ValueError, "depythonifying 'SEL', cannot "
                                                    "register string with runtime");
                     return -1;
+                    // LCOV_EXCL_STOP
                 }
             }
         } else if (PyByteArray_Check(argument)) {
@@ -3075,13 +3088,15 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             } else {
                 sel = sel_getUid(selname);
 
-                if (sel) {
+                if (sel) { // LCOV_BR_EXCL_LINE
                     *(SEL*)datum = sel;
 
                 } else {
+                    // LCOV_EXCL_START
                     PyErr_Format(PyExc_ValueError, "depythonifying 'SEL', cannot "
                                                    "register string with runtime");
                     return -1;
+                    // LCOV_EXCL_STOP
                 }
             }
         } else {

@@ -179,7 +179,7 @@ PyObjCClass_Setup(PyObject* module __attribute__((__unused__)))
  * Returns a new reference to the registered class,
  * which can be a
  */
-static PyObject* _Nullable __attribute__((warn_unused_result))
+static PyObject* __attribute__((warn_unused_result))
 objc_class_register(Class objc_class, PyObject* py_class)
 {
     assert(class_registry != NULL);
@@ -390,19 +390,14 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
     ((PyObjCClassObject*)result)->class = objc_meta_class;
 
     PyTypeObject* existing = objc_metaclass_register(result, objc_class, objc_meta_class);
-    if (existing == NULL) {
-        return NULL;
+    if (existing == NULL) { // LCOV_BR_EXCL_LINE
+        // Can only happen with double registration, which would
+        // be a bug.
+        return NULL; // LCOV_EXCL_LINE
     }
     Py_DECREF(result);
     return existing;
 }
-
-/*
- * class_new: Create a new objective-C class, as a subclass of 'type'. This is
- * PyObjCClass_Type.tp_new.
- *
- * Note: This function creates new _classes_
- */
 
 static PyObject* _Nullable class_call(PyObject* self, PyObject* _Nullable args,
                                       PyObject* _Nullable kwds)
@@ -410,9 +405,11 @@ static PyObject* _Nullable class_call(PyObject* self, PyObject* _Nullable args,
     PyTypeObject* type = (PyTypeObject*)self;
     PyObject*     result;
 
-    if (type->tp_new == NULL) {
+    if (type->tp_new == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_TypeError, "cannot create '%s' instances", type->tp_name);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     result = type->tp_new(type, args, kwds);
@@ -475,6 +472,13 @@ class_init(PyObject* cls, PyObject* args, PyObject* kwds)
     } // LCOV_EXCL_LINE
     return PyType_Type.tp_init(cls, args, kwds);
 }
+
+/*
+ * class_new: Create a new objective-C class, as a subclass of 'type'. This is
+ * PyObjCClass_Type.tp_new.
+ *
+ * Note: This function creates new _classes_
+ */
 
 static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused__)),
                                      PyObject* _Nullable args, PyObject* _Nullable kwds)
@@ -1105,7 +1109,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
          * initialize calls very early on with the ObjC 2.0 runtime.
          */
         PyObject* actual = PyObjC_RegisterPythonProxy(objc_class, res);
-        if (actual != res) {
+        if (actual != res) { // LCOV_BR_EXCL_LINE
             /* This should never happen, *objc_class* was created by this
              * function.
              *
@@ -1113,20 +1117,20 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
              * this point, which should avoid races with code introspecting
              * the available classes.
              */
+            // LCOV_EXCL_START
             Py_DECREF(res);
             Py_DECREF(actual);
             return PyErr_Format(
                 PyObjCExc_Error,
                 "Race between creating and registering an ObjC class '%s'\n",
                 class_getName(objc_class));
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(actual);
 
         PyObject* existing = objc_class_register(objc_class, res);
-        if (existing == NULL) {
-            Py_CLEAR(res);
-            return NULL;
-        } else if (existing != res) {
+        assert(existing != NULL);
+        if (existing != res) {
             /*
              * XXX: Can this happen?
              *
@@ -1282,13 +1286,14 @@ class_dealloc(PyObject* cls)
 {
     PyObjCClassObject* self = (PyObjCClassObject*)cls;
 
-    if (self->hasPythonImpl) {
+    if (self->hasPythonImpl) { // LCOV_BR_EXCL_LINE
         /*
          * This is a class implemented in Python. These cannot be deallocated because
          * the state in the Objective-C runtime cannot be reverted. Deallocating the
          * Python state would therefore result in dangling pointers in the Objective-C
          * runtime.
          */
+        // LCOV_EXCL_START
         char buf[1024];
 
         snprintf(buf, sizeof(buf), "Deallocating objective-C class %s %d %p\n",
@@ -1298,6 +1303,7 @@ class_dealloc(PyObject* cls)
         fputs(buf, stderr);
         Py_INCREF(cls);
         return;
+        // LCOV_EXCL_STOP
     }
 
     /*
