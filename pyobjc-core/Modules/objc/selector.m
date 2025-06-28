@@ -718,7 +718,9 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
 
         execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector,
                                       self->base.sel_methinfo->signature);
-        assert(execute != NULL);
+        if (execute == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;       // LCOV_EXCL_LINE
+        }
 
         if (self->sel_call_func == NULL) {
             self->sel_call_func = execute;

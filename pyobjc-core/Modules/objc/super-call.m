@@ -472,8 +472,7 @@ exit:
     return result;
 }
 
-PyObjC_CallFunc
-PyObjC_FindCallFunc(Class class, SEL sel, const char* signature)
+PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* signature)
 {
     struct registry* special;
     PyObjC_CallFunc  result;

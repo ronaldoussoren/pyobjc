@@ -431,7 +431,9 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
             ((PyObjCNativeSelector*)attr)->base.sel_class,
             ((PyObjCNativeSelector*)attr)->base.sel_selector,
             ((PyObjCNativeSelector*)attr)->base.sel_methinfo->signature);
-        assert(((PyObjCNativeSelector*)attr)->sel_call_func != NULL);
+        if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;                                            // LCOV_EXCL_LINE
+        }
     }
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
@@ -523,7 +525,9 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
             ((PyObjCNativeSelector*)attr)->base.sel_class,
             ((PyObjCNativeSelector*)attr)->base.sel_selector,
             ((PyObjCNativeSelector*)attr)->base.sel_methinfo->signature);
-        assert(((PyObjCNativeSelector*)attr)->sel_call_func != NULL);
+        if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;                                            // LCOV_EXCL_LINE
+        }
     }
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
