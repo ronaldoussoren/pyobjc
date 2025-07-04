@@ -429,6 +429,7 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* c
     struct block_literal block = gLiteralTemplate;
 
     assert(gGlobalBlockClass != Nil);
+    assert(callable != NULL);
 
     block.descriptor_memory =
         PyBytes_FromStringAndSize(NULL, sizeof(struct block_descriptor));

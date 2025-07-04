@@ -35,35 +35,4 @@ PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result)
     return -1;
 }
 
-/* XXX: Can we do without this function, it is a little too intimate with
- * unicode details.
- */
-const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object)
-{
-    /* Having a unicode string is a precondition, checked manually
-     * that callers check the type beforehand.
-     */
-    assert(PyUnicode_Check(object));
-
-    if (!PyUnicode_IS_ASCII(object)) {
-        /* The code below raises the correct error in a roundabout
-         * way. That's because UnicodeEncodeError expects more
-         * than one argument.
-         */
-        PyObject* r = PyUnicode_AsASCIIString(object);
-        if (unlikely(r != NULL)) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_SetString(PyObjCExc_Error, "Raising UnicodeError failed");
-            Py_DECREF(r);
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-
-        assert(r == NULL);
-        return NULL;
-    }
-
-    return (const char*)(PyUnicode_DATA(object));
-}
-
 NS_ASSUME_NONNULL_END

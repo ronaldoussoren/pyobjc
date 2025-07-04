@@ -159,20 +159,6 @@ extern PyObject* _Nullable PyObject_VectorcallMethod(
 
 extern int PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
 
-/*
- * A micro optimization: when using Python 3.3 or later it
- * is possible to access a 'char*' with an ASCII representation
- * of a unicode object without first converting it to a bytes
- * string (if the string can be encoded as ASCII in the first
- * place.
- *
- * This slightly reduces the object allocation rate during
- * attribute access.
- *
- * XXX: Use PyUnicode_AsUTF8 instead.
- */
-extern const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object);
-
 #ifdef __clang__
 
 #ifndef Py_LIMITED_API

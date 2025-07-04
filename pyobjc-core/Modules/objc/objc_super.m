@@ -48,7 +48,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
     }
 
     if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
-        const char* b = PyObjC_Unicode_Fast_Bytes(name);
+        const char* b = PyUnicode_AsUTF8(name);
         if (b == NULL) { // LCOV_BR_EXCL_LINE
             return NULL; // LCOV_EXCL_LINE
         }
@@ -171,7 +171,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
             }
             Py_CLEAR(dict);
         }
-    }
+    } // LCOV_EXCL_LINE
     return PyObject_GenericGetAttr(self, name);
 }
 

@@ -4,7 +4,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define SHORTCUT_MAX_ARGBUF 512
+/* Was 512 */
+#define SHORTCUT_MAX_ARGBUF 256
 
 extern PyObject* PyObjCMethodSignature_Type;
 #define PyObjCMethodSignature_Check(obj)                                                 \
@@ -53,17 +54,17 @@ struct _PyObjCMethodSignature {
 
         const char* signature;
     PyObject* _Nullable suggestion;
-    unsigned char            variadic : 1;
-    unsigned char            null_terminated_array : 1;
-    unsigned char            free_result : 1;
-    unsigned char            initializer : 1;
-    unsigned char            shortcut_signature : 1;
-    unsigned int             shortcut_argbuf_size : 10;
-    unsigned int             shortcut_result_size : 8;
-    int16_t                  arrayArg;
-    int                      deprecated;
-    struct _PyObjC_ArgDescr* rettype;
-    struct _PyObjC_ArgDescr* _Nonnull argtype[1]; /* XXX: [1] to be replaced by [] */
+    unsigned char variadic : 1;
+    unsigned char null_terminated_array : 1;
+    unsigned char free_result : 1;
+    unsigned char initializer : 1;
+    unsigned char shortcut_signature : 1;
+    unsigned int  shortcut_argbuf_size : 10;
+    unsigned int  shortcut_result_size : 8;
+    int16_t       arrayArg;
+    int           deprecated;
+    struct _PyObjC_ArgDescr* _Nullable rettype;
+    struct _PyObjC_ArgDescr* _Nullable argtype[1]; /* XXX: [1] to be replaced by [] */
 };
 
 extern PyObjCMethodSignature* _Nullable PyObjCMethodSignature_WithMetaData(
@@ -82,17 +83,16 @@ extern PyObject* _Nullable PyObjC_copyMetadataRegistry(void);
 extern PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
 
 #ifndef NDEBBUG
-static inline void
-PyObjCMethodSignature_Validate(PyObjCMethodSignature* methinfo)
-{
-    assert(methinfo->signature != NULL);
-    for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) { // LCOV_BR_EXCL_LINE
-        assert(methinfo->argtype[i] != NULL);
-        assert(methinfo->argtype[i]->type != NULL);
-    }
-    assert(methinfo->rettype != NULL);
-    assert(methinfo->rettype->type != NULL);
-}
+#define PyObjCMethodSignature_Validate(methinfo)                                         \
+    do {                                                                                 \
+        assert(methinfo->signature != NULL);                                             \
+        for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) { /* LCOV_BR_EXCL_LINE */     \
+            assert(methinfo->argtype[i] != NULL);                                        \
+            assert(methinfo->argtype[i]->type != NULL);                                  \
+        }                                                                                \
+        assert(methinfo->rettype != NULL);                                               \
+        assert(methinfo->rettype->type != NULL);                                         \
+    } while (0)
 #endif /* NDEBUG */
 
 extern PyObjCMethodSignature* PyObjCMethodSignature_GetRegistered(Class cls, SEL sel);

@@ -160,3 +160,21 @@ class TestCoreFoundation(TestCase):
 
         with self.assertRaisesRegex(ValueError, "depythonifying.*got"):
             objc.registerCFSignature("CFFooBar", b"^{__CFFooBar=}", "hello")
+
+    def test_nscftype_del(self):
+        for name in ("__NSCFType", "NSCFType", "___NSCFType"):
+            try:
+                cftype = objc.lookUpClass(name)
+                break
+            except objc.error:
+                pass
+        else:
+            self.fail("NSCFType not found")
+
+        with self.assertRaisesRegex(
+            objc.error, "cannot define __del__ on subclasses of NSCFType"
+        ):
+
+            class MyCFType(cftype):
+                def __del__(self):
+                    pass

@@ -77,13 +77,11 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_GIL_RETURN(@encode(unsigned long long));
             } // LCOV_EXCL_LINE
             PyErr_Clear();
-
-            /* Wrap on overflow */
-            PyObjC_GIL_RETURN(@encode(long long));
         }
     PyObjC_END_WITH_GIL
 
-    __builtin_unreachable(); // LCOV_EXCL_LINE
+    /* Wrap on overflow */
+    return @encode(long long);
 }
 
 - (void)getValue:(void*)buffer
@@ -207,19 +205,11 @@ NS_ASSUME_NONNULL_BEGIN
         if (PyFloat_Check(value)) {
             double float_result = PyFloat_AsDouble(value);
             result              = (long long)float_result;
-            PyObjC_GIL_RETURN(result);
         } else {
             result = PyLong_AsUnsignedLongLongMask(value);
-            PyObjC_GIL_RETURN(result);
         }
     PyObjC_END_WITH_GIL
-
-    // LCOV_EXCL_START
-    @throw
-        [NSException exceptionWithName:NSInvalidArgumentException
-                                reason:@"Cannot determine objective-C type of this number"
-                              userInfo:nil];
-    // LCOV_EXCL_STOP
+    return result;
 }
 
 - (unsigned long long)unsignedLongLongValue
@@ -235,7 +225,6 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         if (PyLong_Check(value)) {
             result = PyLong_AsUnsignedLongLongMask(value);
-            PyObjC_GIL_RETURN(result);
         } else if (PyFloat_Check(value)) {
             double temp = PyFloat_AsDouble(value);
             if (temp < 0) {
@@ -251,16 +240,17 @@ NS_ASSUME_NONNULL_BEGIN
             } else {
                 result = (unsigned long long)temp;
             }
-            PyObjC_GIL_RETURN(result);
-        } // LCOV_BR_EXCL_LINE
+        } else {
+            // LCOV_EXCL_START
+            @throw [NSException
+                exceptionWithName:NSInvalidArgumentException
+                           reason:@"Cannot determine objective-C type of this number"
+                         userInfo:nil];
+            // LCOV_EXCL_STOP
+        }
     PyObjC_END_WITH_GIL
 
-    // LCOV_EXCL_START
-    @throw
-        [NSException exceptionWithName:NSInvalidArgumentException
-                                reason:@"Cannot determine objective-C type of this number"
-                              userInfo:nil];
-    // LCOV_EXCL_STOP
+    return result;
 }
 
 - (NSString*)description
@@ -401,6 +391,7 @@ NS_ASSUME_NONNULL_BEGIN
         }
     }
 
+    NSComparisonResult rv;
     PyObjC_BEGIN_WITH_GIL
         PyObject* other = id_to_python(number);
         int       r, ok;
@@ -416,19 +407,21 @@ NS_ASSUME_NONNULL_BEGIN
         } // LCOV_EXCL_LINE
 
         if (r < 0) {
-            PyObjC_GIL_RETURN(NSOrderedAscending);
+            rv = NSOrderedAscending;
         } else if (r > 0) {
-            PyObjC_GIL_RETURN(NSOrderedDescending);
-        } else { // LCOV_EXCL_LINE
-            PyObjC_GIL_RETURN(NSOrderedSame);
+            rv = NSOrderedDescending;
+        } else {
+            rv = NSOrderedSame;
         }
 
     PyObjC_END_WITH_GIL
+    return rv;
 }
 
 #define COMPARE_METHOD(NAME, OPERATOR)                                                   \
     -(BOOL)NAME : (NSObject* _Nullable)number                                            \
     {                                                                                    \
+        BOOL rv;                                                                         \
         PyObjC_BEGIN_WITH_GIL                                                            \
             PyObject* other = id_to_python(number);                                      \
             int       r;                                                                 \
@@ -443,12 +436,13 @@ NS_ASSUME_NONNULL_BEGIN
             } /* LCOV_EXCL_LINE */                                                       \
                                                                                          \
             if (r) {                                                                     \
-                PyObjC_GIL_RETURN(YES);                                                  \
+                rv = YES;                                                                \
             } else { /* LCOV_EXCL_LINE */                                                \
-                PyObjC_GIL_RETURN(NO);                                                   \
+                rv = NO;                                                                 \
             }                                                                            \
                                                                                          \
         PyObjC_END_WITH_GIL                                                              \
+        return rv;                                                                       \
     }
 
 COMPARE_METHOD(isEqualTo, Py_EQ)
@@ -465,13 +459,14 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 
 - (Class)classForArchiver
 {
+    Class result;
     PyObjC_BEGIN_WITH_GIL
         @try {
             if (PyFloat_CheckExact(value)) {
                 /* Float is a C double and can be roundtripped using
                  * NSNumber.
                  */
-                PyObjC_GIL_RETURN([NSNumber class]);
+                result = [NSNumber class];
             } else if (PyLong_CheckExact(value)) {
                 /* If the value fits inside a long long or
                  * unsigned long long encode as an NSNumber,
@@ -482,21 +477,21 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
                  */
                 (void)PyLong_AsLongLong(value);
                 if (!PyErr_Occurred()) {
-                    PyObjC_GIL_RETURN([NSNumber class]);
+                    result = [NSNumber class];
                 } else { // LCOV_EXCL_LINE
                     PyErr_Clear();
 
                     (void)PyLong_AsUnsignedLongLong(value);
                     if (!PyErr_Occurred()) {
-                        PyObjC_GIL_RETURN([NSNumber class]);
+                        result = [NSNumber class];
                     } else { // LCOV_EXCL_LINE
                         PyErr_Clear();
 
-                        PyObjC_GIL_RETURN([self class]);
+                        result = [self class];
                     }
                 }
             } else { // LCOV_EXCL_LINE
-                PyObjC_GIL_RETURN([self class]);
+                result = [self class];
             }
 
             // LCOV_EXCL_START
@@ -506,7 +501,8 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
         }
         // LCOV_EXCL_STOP
     PyObjC_END_WITH_GIL
-}
+    return result;
+} // LCOV_EXCL_LINE
 
 - (Class _Nullable)classForKeyedArchiver
 {

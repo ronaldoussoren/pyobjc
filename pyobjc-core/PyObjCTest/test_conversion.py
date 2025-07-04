@@ -954,6 +954,15 @@ class TestCArray(TestCase):
         with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
             OC_ObjectInt.new().unpythonicObjects()
 
+    def test_size_mismatch(self):
+        a = array.array("i", [1, 2, 3])
+
+        with self.assertRaisesRegex(ValueError, "Badly shaped array.array"):
+            carrayMaker(b"{T=ii}", a, 2)
+
+        with self.assertRaisesRegex(ValueError, "0 sized struct or array: {T=}"):
+            carrayMaker(b"{T=}", a, 2)
+
 
 class PyOCTestTypeStr(TestCase):
     #

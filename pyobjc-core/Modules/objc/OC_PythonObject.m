@@ -108,26 +108,24 @@ NS_ASSUME_NONNULL_BEGIN
     if (pyObject == NULL)           // LCOV_BR_EXCL_LINE
         return @"no python object"; // LCOV_EXCL_LINE
 
+    NSString* result = nil;
     PyObjC_BEGIN_WITH_GIL
 
         repr = PyObject_Repr(pyObject);
 
-        if (repr) {
-            int       err;
-            NSString* result;
+        if (!repr) {
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
 
-            err = depythonify_python_object(repr, &result);
-            Py_DECREF(repr);
-            if (err == -1) {
-                PyObjC_GIL_FORWARD_EXC();
-            } // LCOV_EXCL_LINE
-
-            PyObjC_GIL_RETURN(result);
-        }
-        PyObjC_GIL_FORWARD_EXC();
+        int err = depythonify_python_object(repr, &result);
+        Py_DECREF(repr);
+        if (err == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        } // LCOV_EXCL_LINE
 
     PyObjC_END_WITH_GIL
-} // LCOV_EXCL_LINE
+    return result;
+}
 
 - (void)doesNotRecognizeSelector:(SEL)aSelector
 {
@@ -227,18 +225,20 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         return YES;
     }
 
+    BOOL rv;
     PyObjC_BEGIN_WITH_GIL
         m = get_method_for_selector(pyObject, aSelector);
 
         if (m) {
             Py_DECREF(m);
-            PyObjC_GIL_RETURN(YES);
+            rv = YES;
         } else { // LCOV_EXCL_LINE
             PyErr_Clear();
-            PyObjC_GIL_RETURN(NO);
+            rv = NO;
         }
 
     PyObjC_END_WITH_GIL
+    return rv;
 }
 
 + (NSMethodSignature* _Nullable)methodSignatureForSelector:(SEL)sel
@@ -609,18 +609,19 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
+    PyObject* rv = NULL;
     PyObjC_BEGIN_WITH_GIL
         /* XXX: This is a bit too magic. Can pyObject ever be NULL?
          * and why not return None in that case?
          */
         if (pyObject == NULL) {
-            PyObject* r = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-            PyObjC_GIL_RETURN(r);
+            rv = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
         } else {
             Py_XINCREF(pyObject);
-            PyObjC_GIL_RETURN(pyObject);
+            rv = pyObject;
         }
     PyObjC_END_WITH_GIL
+    return rv;
 }
 
 // LCOV_EXCL_START
@@ -860,6 +861,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         return YES;
     }
 
+    BOOL rv;
     PyObjC_BEGIN_WITH_GIL
         PyObject* otherPyObject = id_to_python(anObject);
         if (otherPyObject == NULL) {
@@ -876,11 +878,13 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         case -1:
             PyErr_Clear();
         case 0:
-            PyObjC_GIL_RETURN(NO);
+            rv = NO;
+            break;
         default:
-            PyObjC_GIL_RETURN(YES);
-        } // LCOV_EXCL_LINE
+            rv = YES;
+        }
     PyObjC_END_WITH_GIL
+    return rv;
 }
 
 /* NSObject methods */
@@ -893,6 +897,9 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     } else if (self == other) {
         return NSOrderedSame;
     }
+
+    NSComparisonResult rval;
+
     PyObjC_BEGIN_WITH_GIL
         PyObject* otherPyObject = id_to_python(other);
         if (otherPyObject == NULL) {
@@ -908,7 +915,6 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         if (PyObjC_Cmp(pyObject, otherPyObject, &r) == -1) {
             PyObjC_GIL_FORWARD_EXC();
         } // LCOV_EXCL_LINE
-        NSComparisonResult rval;
         switch (r) {
         case -1:
             rval = NSOrderedAscending;
@@ -919,8 +925,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         default:
             rval = NSOrderedDescending;
         }
-        PyObjC_GIL_RETURN(rval);
     PyObjC_END_WITH_GIL
+    return rval;
 }
 
 /*

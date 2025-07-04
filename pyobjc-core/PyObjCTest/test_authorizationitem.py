@@ -116,6 +116,7 @@ class TestAuthorizationItemStruct(TestCase):
             OC_Authorization.dictWithAuthorizationItem_(x)
 
     def test_from_objc(self):
+        self.assertArgIsOut(OC_Authorization.getAuthorizationItem_kind_, 0)
         x = OC_Authorization.getAuthorizationItem_kind_(None, 0)
         self.assertEqual(x.name, None)
         self.assertEqual(x.value, None)
@@ -201,6 +202,7 @@ class TestAuthorizationItemTuple(TestCase):
             OC_Authorization.dictWithAuthorizationItem_(object())
 
     def test_from_objc(self):
+        self.assertArgIsOut(OC_Authorization.getAuthorizationItem_kind_, 0)
         x = OC_Authorization.getAuthorizationItem_kind_(None, 0)
         self.assertEqual(x, (None, 32, None, 0))
 

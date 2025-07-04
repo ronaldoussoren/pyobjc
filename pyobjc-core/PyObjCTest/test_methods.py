@@ -673,18 +673,23 @@ class PyOCTestByReferenceArguments(TestCase):
         self.assertEqual(self.obj.passOutChar_(None), 127)
 
     def testCharInOut(self):
-        self.assertEqual(self.obj.passInOutChar_(b"\x10"), 0x3A)
+        buf = b"\x10"
+        self.assertEqual(self.obj.passInOutChar_(buf), 0x3A)
+        self.assertEqual(buf[0], 0x10)
 
     def testUCharIn(self):
+        self.assertArgIsIn(self.obj.passInUChar_, 0)
         self.assertEqual(self.obj.passInUChar_(10), 19)
 
     def testUCharOut(self):
         self.obj.reset()
+        self.assertArgIsOut(self.obj.passOutUChar_, 0)
         self.assertEqual(self.obj.passOutUChar_(None), 0)
         self.assertEqual(self.obj.passOutUChar_(None), 128)
         self.assertEqual(self.obj.passOutUChar_(None), 255)
 
     def testUCharInOut(self):
+        self.assertArgIsInOut(self.obj.passInOutUChar_, 0)
         self.assertEqual(self.obj.passInOutUChar_(10), 52)
 
     def testShortIn(self):

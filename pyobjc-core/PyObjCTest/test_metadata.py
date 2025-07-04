@@ -23,6 +23,11 @@ from objc import super  # noqa: A004
 make_array = array.array
 
 
+class NotBool:
+    def __bool__(self):
+        raise RuntimeError("not bool")
+
+
 class NoObjCClass:
     @property
     def __pyobjc_object__(self):
@@ -40,8 +45,19 @@ def setupMetaData():
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"methodWithSEL1:",
+        {"arguments": {2 + 0: {"sel_of_type": b"@@:@"}}},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"methodWithSEL2:",
+        {"arguments": {2 + 0: {"sel_of_type": "i@:i"}}},
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"intInArg:",
-        {"arguments": {2 + 0: {"type_modifier": objc._C_IN}}},
+        {"arguments": {2 + 0: {"type_modifier": objc._C_IN}}, "retval": None},
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
@@ -84,7 +100,26 @@ def setupMetaData():
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"makeVariableLengthBuffer:halfCount:",
+        {
+            "arguments": {
+                2 + 0: {"c_array_of_variable_length": True, "type_modifier": objc._C_IN}
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"makeVariableLengthArray:halfCount:on:",
+        {
+            "arguments": {
+                2 + 0: {"c_array_of_variable_length": True, "type_modifier": objc._C_IN}
+            }
+        },
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeVariableLengthBuffer:halfCount:on:",
         {
             "arguments": {
                 2 + 0: {"c_array_of_variable_length": True, "type_modifier": objc._C_IN}
@@ -294,7 +329,7 @@ def setupMetaData():
                 2
                 + 0: {
                     "type_modifier": objc._C_IN,
-                    "c_array_length_in_arg": 2 + 1,
+                    "c_array_length_in_arg": (2 + 1,),
                     "null_accepted": False,
                 }
             }
@@ -466,6 +501,26 @@ def setupMetaData():
             }
         },
     )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillArray:size:written:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": (2 + 1, 2 + 2),
+                    "null_accepted": False,
+                },
+                2
+                + 2: {
+                    "type_modifier": objc._C_OUT,
+                },
+            }
+        },
+    )
+
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullfillArray:count:",
@@ -878,6 +933,23 @@ def setupMetaData():
         {"arguments": {2 + 0: {"callable": {"args": {}, "retval": {"type": "@"}}}}},
     )
 
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"storeIntFunc:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "callable": {
+                        "arguments": {0: {"type": objc._C_INT}},
+                        "retval": {"type": objc._C_INT},
+                    },
+                    "callable_retained": True,
+                }
+            },
+        },
+    )
+
 
 setupMetaData()
 
@@ -977,6 +1049,18 @@ class TestArraysOut(TestCase):
         v = o.fillArray_count_(a, 10)
         self.assertIs(a, v)
         self.assertEqual(list(a), [0, 1, 4, 9, 16, 25, 36, 49, 64, 81])
+
+        v = OC_MetaDataTest.fillArray_size_written_(None, 20, None)
+        self.assertIsInstance(v, tuple)
+        self.assertEqual(v[1], 17)
+        self.assertEqual(list(v[0]), [i * i * i for i in range(17)])
+
+        a = make_array("i", [0] * 25)
+        v = OC_MetaDataTest.fillArray_size_written_(a, 25, None)
+        self.assertIsInstance(v, tuple)
+        self.assertEqual(v[1], 22)
+        self.assertIs(v[0], a)
+        self.assertEqual(list(a), [i * i * i for i in range(22)] + [0, 0, 0])
 
     def testWithCountInResult(self):
         o = OC_MetaDataTest.new()
@@ -1898,6 +1982,8 @@ class TestBuffers(TestCase):
     def testInVoids(self):
         o = OC_MetaDataTest.alloc().init()
 
+        self.assertArgHasType(o.makeDataForBytes_count_, 0, b"n*")
+
         v = o.makeDataForBytes_count_(b"hello world", len(b"hello world"))
         self.assertIsInstance(v, objc.lookUpClass("NSData"))
 
@@ -1933,6 +2019,11 @@ class TestBuffers(TestCase):
         self.assertIs(v, input_value)
         self.assertNotEqual(input_value[0:5], b"hello")
         self.assertEqual([x + 1 for x in b"hello\0world"], list(v))
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'int'"
+        ):
+            o.addOneToBytes_count_(42, 3)
 
     def testInOutVoids(self):
         o = OC_MetaDataTest.alloc().init()
@@ -2273,6 +2364,11 @@ class TestVariableLengthValue(TestCase):
         )
         self.assertEqual(result, [(), objc.NULL])
 
+    def test_imput_bytes(self):
+        o = OC_MetaDataTest.alloc().init()
+        result = o.makeVariableLengthBuffer_halfCount_(b"abcdef", 3)
+        self.assertEqual(result, list(b"abcdef"))
+
 
 class TestVariadicArray(TestCase):
     def testObjects(self):
@@ -2298,6 +2394,191 @@ class TestMisc(TestCase):
 
         with self.assertRaisesRegex(TypeError, "metadata should be a dictionary"):
             objc.registerMetaDataForSelector(b"Class", b"selector", 42)
+
+        with self.assertRaisesRegex(TypeError, "metadata of type int: 42"):
+            objc.registerMetaDataForSelector(b"Class", b"selector", {"retval": 42})
+
+    def test_invalid_metadata_values(self):
+        for key in (
+            "null_accepted",
+            "already_retained",
+            "already_cfretained",
+            "callable_retained",
+            "c_array_length_in_result",
+            "printf_format",
+            "c_array_delimited_by_null",
+            "c_array_of_variable_length",
+            "deref_result_pointer",
+        ):
+            with self.subTest(key):
+                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                    objc.registerMetaDataForSelector(
+                        b"Class", b"selector", {"arguments": {2: {key: NotBool()}}}
+                    )
+        for key in (
+            "free_result",
+            "variadic",
+            "free_result",
+            "c_array_delimited_by_null",
+        ):
+            with self.subTest(key):
+                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                    objc.registerMetaDataForSelector(
+                        b"Class", b"selector", {key: NotBool()}
+                    )
+
+        with self.subTest("callable"):
+            with self.assertRaisesRegex(ValueError, "expecting dict for 'callable'"):
+                objc.registerMetaDataForSelector(
+                    b"Class", b"selector", {"arguments": {2: {"callable": 42}}}
+                )
+
+            with self.assertRaisesRegex(RuntimeError, "not bool"):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {
+                        "arguments": {
+                            2: {
+                                "callable": {
+                                    "retval": {"already_cfretained": NotBool()}
+                                }
+                            }
+                        }
+                    },
+                )
+
+            with self.assertRaisesRegex(TypeError, "object of type 'int' has no len()"):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2: {"callable": {"arguments": 42}}}},
+                )
+
+            with self.assertRaisesRegex(TypeError, "metadata of type int: 42"):
+                objc.registerMetaDataForSelector(b"Class", b"selector", {"retval": 42})
+
+        with self.subTest("c_array_of_fixed_length"):
+            with self.assertRaises(OverflowError):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2: {"c_array_of_fixed_length": 2**128}}},
+                )
+
+        for k in ("deprecated", "c_array_length_in_arg"):
+            with self.subTest(k):
+                with self.assertRaises(OverflowError):
+                    objc.registerMetaDataForSelector(b"Class", b"selector", {k: 2**128})
+
+        with self.subTest("c_array_length_in_arg (int)"):
+            with self.assertRaises(OverflowError):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2 + 0: {"c_array_length_in_arg": 2**65}}},
+                )
+
+        with self.subTest("c_array_length_in_arg (tuple)"):
+            with self.assertRaisesRegex(TypeError, "array_out argument not integer"):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2 + 0: {"c_array_length_in_arg": ("a",)}}},
+                )
+
+            with self.assertRaises(OverflowError):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2 + 0: {"c_array_length_in_arg": (2**65,)}}},
+                )
+
+            with self.assertRaisesRegex(TypeError, "array_out argument not integer"):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2 + 0: {"c_array_length_in_arg": ("a", 2)}}},
+                )
+
+            with self.assertRaisesRegex(TypeError, "array_out argument not integer"):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2 + 0: {"c_array_length_in_arg": (2, "a")}}},
+                )
+
+            with self.assertRaises(OverflowError):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2 + 0: {"c_array_length_in_arg": (2**65, 2)}}},
+                )
+
+            with self.assertRaises(OverflowError):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2 + 0: {"c_array_length_in_arg": (2, 2**65)}}},
+                )
+
+        with self.subTest("type_modifier"):
+            with self.assertRaisesRegex(UnicodeEncodeError, "surrogates not allowed"):
+                objc.registerMetaDataForSelector(
+                    b"Class",
+                    b"selector",
+                    {"arguments": {2 + 0: {"type_modifier": "\udff0"}}},
+                )
+
+        with self.subTest("type"):
+            with self.assertRaisesRegex(UnicodeEncodeError, "surrogates not allowed"):
+                objc.registerMetaDataForSelector(
+                    b"Class", b"selector", {"retval": {"type": "\udff0"}}
+                )
+
+    def test_arguments_not_dict(self):
+        objc.registerMetaDataForSelector(
+            b"NSObject",
+            b"attributeKeys",
+            {"arguments": [{"type": "@", "c_array_length_in_arg": 2}, {"type": ":"}]},
+        )
+        self.assertNotIn(
+            "c_array_length_in_arg",
+            NSObject.attributeKeys.__metadata__()["arguments"][0],
+        )
+
+    def test_argument_index_errorw(self):
+        with self.assertRaises(OverflowError):
+            objc.registerMetaDataForSelector(
+                b"NSObject", b"attributeKeys", {"arguments": {2**66: {"type": "@"}}}
+            )
+
+        with self.assertRaisesRegex(
+            objc.error, "Maximum argument index is metadata is larger than"
+        ):
+            objc.registerMetaDataForSelector(
+                b"NSObject", b"attributeKeys", {"arguments": {66: {"type": "@"}}}
+            )
+
+    def test_replacing_with_type_override(self):
+        NSTimer = objc.lookUpClass("NSTimer")
+        objc.registerMetaDataForSelector(
+            b"NSTimer", b"fireDate", {"retval": {"type": "^v"}}
+        )
+        objc.registerMetaDataForSelector(
+            b"NSTimer", b"setFireDate:", {"arguments": {2 + 0: {"type": "^v"}}}
+        )
+        self.assertResultHasType(NSTimer.fireDate, b"^v")
+        self.assertArgHasType(NSTimer.setFireDate_, 0, b"^v")
+
+        objc.registerMetaDataForSelector(
+            b"NSTimer", b"fireDate", {"retval": {"type": "@"}}
+        )
+        objc.registerMetaDataForSelector(
+            b"NSTimer", b"setFireDate:", {"arguments": {2 + 0: {"type": "@"}}}
+        )
+        self.assertResultHasType(NSTimer.fireDate, b"@")
+        self.assertArgHasType(NSTimer.setFireDate_, 0, b"@")
 
     def test_by_reference_voidp(self):
         class OC_ByRefVoidP(NSObject):
@@ -2338,8 +2619,11 @@ class TestMisc(TestCase):
             def intInOutArg_(self, a):
                 return 4 * a
 
-        obj = OC_MetaDataTestInOutRegular()
+        self.assertArgHasType(OC_MetaDataTestInOutRegular.intInArg_, 0, b"i")
+        self.assertArgHasType(OC_MetaDataTestInOutRegular.intOutArg_, 0, b"i")
+        self.assertArgHasType(OC_MetaDataTestInOutRegular.intInOutArg_, 0, b"i")
 
+        obj = OC_MetaDataTestInOutRegular()
         self.assertEqual(OC_MetaDataTest.intInArg_on_(8, obj), 4 << 8)
         self.assertEqual(OC_MetaDataTest.intOutArg_on_(8, obj), 4 + 8)
         self.assertEqual(OC_MetaDataTest.intInOutArg_on_(8, obj), 4 * 8)
@@ -2393,6 +2677,24 @@ class TestMisc(TestCase):
 
         self.assertEqual(o.callFunction_(v.method), 99)
 
+    def test_stored_function(self):
+        self.assertArgIsFunction(OC_MetaDataTest.storeIntFunc_, 0, b"ii", True)
+
+        def double(value):
+            return value * 2
+
+        @objc.callbackFor(OC_MetaDataTest.storeIntFunc_)
+        def triple(value):
+            return value * 3
+
+        with self.assertRaisesRegex(
+            TypeError, "Callable argument is not a PyObjC closure"
+        ):
+            OC_MetaDataTest.storeIntFunc_(double)
+
+        OC_MetaDataTest.storeIntFunc_(triple)
+        self.assertEqual(OC_MetaDataTest.callIntFuncWithValue_(42), 42 * 3)
+
 
 class OCInitFamily(NSObject):
     def initWithX_(self, x):
@@ -2435,3 +2737,17 @@ class TestInitMethods(TestCase):
         self.assertIsInitializer(OCInitFamily.initSelector)
         self.assertIsNotInitializer(OCInitFamily.initInteger)
         self.assertIsNotInitializer(OCInitFamily.initialSize)
+
+
+class TestSELArguments(TestCase):
+    def test_basic(self):
+        self.assertArgIsSEL(OC_MetaDataTest.methodWithSEL1_, 0, b"@@:@")
+        self.assertArgIsSEL(OC_MetaDataTest.methodWithSEL2_, 0, b"i@:i")
+
+    def test_invalid_string(self):
+        with self.assertRaisesRegex(UnicodeEncodeError, "surrogates not allowed"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"methodWithSEL2:",
+                {"arguments": {2 + 0: {"sel_of_type": "@@:\udff0"}}},
+            )

@@ -282,7 +282,8 @@ class TestPythonSubclasses(TestCase):
 
 class TestPythonSubclassesFromObjC(TestCase):
     def test_init_returns_self(self):
-        value = initpatterns.OC_InitPatterns.newValueFor_(PythonInitReturnsSelf)
+        with objc.autorelease_pool():
+            value = initpatterns.OC_InitPatterns.newValueFor_(PythonInitReturnsSelf)
         self.assertEqual(value.retainCount(), 1)
 
         part = PythonInitReturnsSelf.alloc()

@@ -51,6 +51,7 @@ use_id(id x __attribute__((__unused__)))
 - (NSArray* _Nullable)make4Tuple:(double*)data;
 - (NSArray* _Nullable)null4Tuple:(double*)data;
 - (NSArray* _Nullable)makeVariableLengthArray:(int*)array halfCount:(int)cnt;
+- (NSArray* _Nullable)makeVariableLengthBuffer:(unsigned char*)array halfCount:(int)cnt;
 
 /* Out arrays: */
 - (void)fillArray:(int*)data count:(int)count;
@@ -145,6 +146,21 @@ use_id(id x __attribute__((__unused__)))
 @end
 
 @implementation OC_MetaDataTest
+
++ (id)methodWithSEL1:(SEL)sel
+{
+    return [NSString stringWithUTF8String:sel_getName(sel)];
+}
+
++ (id)methodWithSEL2:(SEL)sel
+{
+    return [NSString stringWithUTF8String:sel_getName(sel)];
+}
+
++ (id)methodWithSEL3:(SEL)sel
+{
+    return [NSString stringWithUTF8String:sel_getName(sel)];
+}
 
 typedef id (*callfunc)(void);
 - (id)callFunction:(callfunc)func
@@ -427,6 +443,14 @@ typedef id (*callfunc)(void);
     int i;
     for (i = 0; i < count; i++) {
         data[i] = i * i;
+    }
+}
+
++ (void)fillArray:(int*)data size:(int)size written:(int*)written
+{
+    *written = size - 3;
+    for (int i = 0; i < *written; i++) {
+        data[i] = i * i * i;
     }
 }
 
@@ -991,6 +1015,20 @@ typedef id (*callfunc)(void);
     return result;
 }
 
+- (NSArray*)makeVariableLengthBuffer:(unsigned char*)array halfCount:(int)cnt
+{
+    cnt *= 2;
+
+    NSMutableArray* result;
+    int             i;
+
+    result = [NSMutableArray arrayWithCapacity:cnt];
+
+    for (i = 0; i < cnt; i++) {
+        [result addObject:[NSNumber numberWithLong:array[i]]];
+    }
+    return result;
+}
 - (NSArray* _Nullable)makeNullDelimitedObjectArray:(id)value, ...
 {
     va_list         ap;
@@ -1072,6 +1110,13 @@ typedef id (*callfunc)(void);
                                  on:(OC_MetaDataTest*)value
 {
     return [value makeVariableLengthArray:array halfCount:cnt];
+}
+
++ (NSArray*)makeVariableLengthBuffer:(unsigned char*)array
+                           halfCount:(int)cnt
+                                  on:(OC_MetaDataTest*)value
+{
+    return [value makeVariableLengthBuffer:array halfCount:cnt];
 }
 
 /* various pointer return values */
@@ -1493,6 +1538,21 @@ typedef id (*callfunc)(void);
 + (int)intOutInt:(int*)outval add:(int)inval on:(OC_MetaDataTest*)obj
 {
     return [obj intOutInt:outval add:inval];
+}
+
+typedef int (*intfunc)(int);
+static intfunc gIntFunc = NULL;
++ (void)storeIntFunc:(intfunc)func
+{
+    gIntFunc = func;
+}
+
++ (int)callIntFuncWithValue:(int)value
+{
+    if (gIntFunc == NULL) {
+        return -1;
+    }
+    return gIntFunc(value);
 }
 
 @end

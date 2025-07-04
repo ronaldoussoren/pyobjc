@@ -346,6 +346,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         return [OC_PythonDictionaryEnumerator enumeratorWithWrappedDictionary:self];
 
     } else {
+        NSEnumerator* result = nil;
         PyObjC_BEGIN_WITH_GIL
             PyObject* args[2] = {NULL, value};
 
@@ -361,10 +362,10 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                 PyObjC_GIL_FORWARD_EXC();
             } // LCOV_EXCL_LINE
 
-            NSEnumerator* result = [OC_PythonEnumerator enumeratorWithPythonObject:iter];
-            PyObjC_GIL_RETURN(result);
+            result = [OC_PythonEnumerator enumeratorWithPythonObject:iter];
 
         PyObjC_END_WITH_GIL
+        return result;
     }
 }
 

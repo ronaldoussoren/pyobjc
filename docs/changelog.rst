@@ -48,6 +48,14 @@ found while doing this.
   In previous versions ``othermethod.callable`` was set to ``mymethod_.callable``,
   in this version it is set to ``mymethod_``.
 
+* Free-threading: Correctly check if instances are uniquely referenced
+  in a couple of locations (``Py_REFCNT(obj) == 1`` in the regular build).
+
+* Disabled logic that avoids calling ``[[result retain] autorelease]`` in the
+  implementation of functions and methods that return an object. This can result
+  in higher load on Objective-C's autorelease pools and later deallocation of
+  values.
+
 * Free-threading support is no longer experimental.
 
 * Fixed a bug in the look-up code that selects the most specific
@@ -79,7 +87,60 @@ found while doing this.
   a method or function with by-reference arguments.
 
 * Fix handling of Python strings as 'self' for NSString methods
-  (which should raise an exception, but didn't).
+  (which should raise an exception, but didn't). This can only
+  be triggered by using unbound instance methods.
+
+* 'free_result' metadata is now accepted even if there is no
+  specific metadata for the result ('retval' key).
+
+* Raise a better exception when the registered metadata is not
+  a dictionary (used to raise :exc:`SystemError`, now raises
+  :exc:`TypeError`).
+
+* Special handling of "const pointer" results is no longer present
+  (and isn't used by PyObjC's framework bindings). Use 'deref_result'
+  metadata instead.
+
+  That is, instead of:
+
+  .. sourcecode:: python
+
+     objc.registerMetaDataForSelector(b"SomeClass", b"someSelector",
+         "retval": { "type_modifier": objc._C_CONST }
+     )
+
+  use:
+
+  .. sourcecode:: python
+
+     objc.registerMetaDataForSelector(b"SomeClass", b"someSelector",
+         "retval": { "deref_result": True }
+     )
+
+* Defining methods on Objective-C classes with non-ASCII
+  characters in their name now works.  This works both for
+  python methods and selectors (even if the latter are not
+  legal in Objective-C)
+
+  .. sourcecode:: python
+
+     class MyClass(NSObject):
+           def zurück(self):  # OK, selector
+               return "back"
+
+           def zurück_fart(self): # OK, regular python method
+          return "return drive"
+
+     obj = MyClass()
+     print(obj.zurück_fart())
+
+  This change primarily allows writing Python methods
+  (``@python_method``) with accented or otherwise non-ascii
+  names to match regular Python classes.
+
+* It is no longer possible to register metadata for a selector
+  with more than 64 arguments (which is also the maximum number
+  of arguments in a method call).
 
 Version 11.1
 ------------

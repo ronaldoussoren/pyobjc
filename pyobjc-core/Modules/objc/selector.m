@@ -397,10 +397,8 @@ static void
 sel_dealloc(PyObject* object)
 {
     PyObjCSelector* self = (PyObjCSelector*)object;
-    Py_XDECREF(self->sel_self);
-    self->sel_self = NULL;
-    Py_XDECREF(self->sel_methinfo);
-    self->sel_methinfo = NULL;
+    Py_CLEAR(self->sel_self);
+    Py_CLEAR(self->sel_methinfo);
 
     PyMem_Free((char*)self->sel_python_signature);
 
@@ -1042,8 +1040,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
                 const char* typestr =
                     PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
-                if (typestr == NULL) {
-                    return NULL;
+                if (typestr == NULL) { // LCOV_BR_EXCL_LINE
+                    return NULL;       // LCOV_EXCL_LINE
                 }
                 retval = PyObjCSelector_NewNative(cls, sel, typestr, 1);
             } else if ((class_getClassMethod(cls, @selector(methodSignatureForSelector:))
@@ -1054,8 +1052,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
                 const char* typestr =
                     PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
-                if (typestr == NULL) {
-                    retval = NULL;
+                if (typestr == NULL) { // LCOV_BR_EXCL_LINE
+                    retval = NULL;     // LCOV_EXCL_LINE
                 } else {
                     retval = PyObjCSelector_NewNative(cls, sel, typestr, 1);
                 }
@@ -1082,9 +1080,9 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
                 PyObjCNativeSelector* res;
                 const char*           typestr =
                     PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
-                if (typestr == NULL) {
-                    retval = NULL;
-                } else {
+                if (typestr == NULL) { // LCOV_BR_EXCL_LINE
+                    retval = NULL;     // LCOV_EXCL_LINE
+                } else {               // LCOV_EXCL_LINE
                     res = (PyObjCNativeSelector*)PyObjCSelector_NewNative(
                         (Class _Nonnull)object_getClass(object), sel, typestr, 0);
                     if (res != NULL) {
@@ -1268,16 +1266,26 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     } else if (PyMethod_Check(callable)) {
         assert(PyMethod_Self(callable) != NULL);
         result->argcount = PyObjC_num_arguments(callable) - 1;
-        if (result->argcount == -2) {
+        if (result->argcount == -2) { // LCOV_BR_EXCL_LINE
+            /* 'PyObjC_num_arguments' can only fail if 'callable'
+             * is not a valid function, and we already checked that.
+             */
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
     } else if (PyObjC_is_pymethod(callable)) {
         result->argcount = PyObjC_num_arguments(callable) - 1;
-        if (result->argcount == -2) {
+        if (result->argcount == -2) { // LCOV_BR_EXCL_LINE
+            /* 'PyObjC_num_arguments' can only fail if 'callable'
+             * is not a valid method, and we already checked that.
+             */
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
     } else if (callable == Py_None) {
@@ -1702,15 +1710,15 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
         /* Special treatment for 'classmethod' instances */
         PyObject* tmp =
             PyObject_CallMethod(callable, "__get__", "OO", Py_None, &PyList_Type);
-        if (tmp == NULL) {
-            return NULL;
+        if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;   // LCOV_EXCL_LINE
         }
 
         callable     = PyObject_GetAttrString(tmp, "__func__");
         class_method = 1;
         Py_DECREF(tmp);
-        if (callable == NULL) {
-            return NULL;
+        if (callable == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
     } else if (PyObject_TypeCheck(callable, &PyStaticMethod_Type)) {
         PyErr_SetString(PyExc_TypeError, "cannot use staticmethod as the "
@@ -1764,9 +1772,11 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
 
     /* Bind 'self' */
     if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
-        if (unlikely(class == NULL)) {
+        if (unlikely(class == NULL)) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyExc_TypeError, "class is NULL");
             return NULL;
+            // LCOV_EXCL_STOP
         }
         obj = class;
 

@@ -163,6 +163,16 @@ class MethodAccessTest(TestCase):
             "<class method-accessor for <objective-c class NSObject at 0x[0-9a-f]+>>",
         )
 
+    def test_invalid_string(self):
+        with self.assertRaises(AttributeError):
+            getattr(NSObject.pyobjc_classMethods, "\udfff")
+
+        with self.assertRaises(AttributeError):
+            getattr(NSObject.pyobjc_instanceMethods, "\udfff")
+
+        with self.assertRaises(AttributeError):
+            getattr(NSObject.alloc().init().pyobjc_instanceMethods, "\udfff")
+
     def test_python_category_override_attribute(self):
         # See also test_category_overides_attribute
         #

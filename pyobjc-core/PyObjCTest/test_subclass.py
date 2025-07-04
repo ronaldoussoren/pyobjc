@@ -212,13 +212,10 @@ class TestSelectors(TestCase):
 
     def test_native_selector_edge_cases(self):
         o = NSArray.alloc().init()
-        o.count
-        for cls in type(o).__mro__:
-            m = cls.__dict__.get("count", None)
-            if m is not None:
-                break
-        else:
-            self.fail("no count method")
+        self.assertEqual(o.count(), 0)
+        m = o.count.definingClass.__dict__["count"]
+
+        self.assertEqual(m(o), 0)
 
         with self.assertRaisesRegex(TypeError, "Missing argument: self"):
             m()
@@ -769,16 +766,6 @@ class TestOverridingSpecials(TestCase):
             ClassWithCopiedSelector.mySelector.__objclass__, ClassWithCopiedSelector
         )
 
-    def test_method_with_nonascii_name(self):
-        with self.assertRaisesRegex(
-            UnicodeEncodeError,
-            r"'ascii' codec can't encode character '\\xf6' in position 6: ordinal not in range\(128\)",
-        ):
-
-            class ClassWithNonASCIIMethod(NSObject):
-                def myMethöd(self):
-                    pass
-
     def test_method_with_integer_name(self):
         def myMethod(self):
             return "gone"
@@ -1061,6 +1048,14 @@ class TestSelectorAttributes(TestCase):
         ):
             42 >= meth1  # noqa: B015
 
+    def test_selector_call_without_self(self):
+        @objc.selector
+        def method(self):
+            return 42
+
+        with self.assertRaisesRegex(objc.error, "need self argument"):
+            method()
+
     def test_native_compare(self):
         # XXX: Same tests but with python selectors
         # XXX: Also comparision between native and python selector
@@ -1325,6 +1320,44 @@ class TestSelectorEdgeCases(TestCase):
         obj.method_(4)
         self.assertEqual(collected, [(1,), (obj, 2), (obj, 4)])
 
+    def test_nonascii_selectors(self):
+        class NonAscii(NSObject):
+            def zurück(self):
+                return "back"
+
+            @classmethod
+            def brücke(self):
+                return "bridge"
+
+        obj = NonAscii.alloc().init()
+        self.assertIsInstance(obj.zurück, objc.python_selector)
+        self.assertIsInstance(obj.pyobjc_instanceMethods.zurück, objc.python_selector)
+        self.assertIsInstance(
+            NonAscii.pyobjc_instanceMethods.zurück, objc.python_selector
+        )
+        self.assertEqual(obj.zurück(), "back")
+        self.assertEqual(
+            OC_ObjectInt.invokeSelector_of_("zurück".encode(), obj), "back"
+        )
+
+        self.assertIsInstance(NonAscii.pyobjc_classMethods.brücke, objc.python_selector)
+        self.assertEqual(NonAscii.brücke(), "bridge")
+        self.assertEqual(
+            OC_ObjectInt.invokeSelector_of_("brücke".encode(), NonAscii), "bridge"
+        )
+
+        with self.assertRaises(UnicodeEncodeError):
+            getattr(NonAscii, "\udfff")
+
+        with self.assertRaises(UnicodeEncodeError):
+            getattr(obj, "\udfff")
+
+        with self.assertRaisesRegex(AttributeError, "bäcker"):
+            NonAscii.bäcker()
+
+        with self.assertRaisesRegex(AttributeError, "bäcker"):
+            obj.bäcker()
+
 
 class TestMixin(TestCase):
     def test_basic(self):
@@ -1524,14 +1557,53 @@ class TestSubclassOptions(TestCase):
                 pass
 
     def test_class_extender_fails(self):
-        def extender(*args, **kwds):
-            raise RuntimeError("don't extend me")
+        with self.subTest("extender fails during class creation"):
 
-        with pyobjc_options(_class_extender=extender):
-            with self.assertRaisesRegex(RuntimeError, "don't extend me"):
+            def extender(*args, **kwds):
+                raise RuntimeError("don't extend me")
 
-                class OC_SubClassingFails1(NSObject):
-                    pass
+            with pyobjc_options(_class_extender=extender):
+                with self.assertRaisesRegex(RuntimeError, "don't extend me"):
+
+                    class OC_SubClassingFails1(NSObject):
+                        pass
+
+        with self.subTest("extender fails for superclass"):
+            cur_extender = objc.options._class_extender
+
+            def extender(cls, dct):
+                if cls.__name__ == "NSObject":
+                    raise RuntimeError("don't extend me")
+                cur_extender(cls, dct)
+
+            with pyobjc_options(_class_extender=extender):
+                objc._updatingMetadata(True)
+                objc._updatingMetadata(False)
+                with self.assertRaisesRegex(RuntimeError, "don't extend me"):
+
+                    class OC_SubClassingFails2(NSObject):
+                        pass
+
+        with self.subTest("during method lookup"):
+            cur_extender = objc.options._class_extender
+            cnt = 0
+
+            def extender(cls, dct):
+                nonlocal cnt
+                if cls.__name__ == "NSObject":
+                    if cnt == 0:
+                        raise RuntimeError("don't extend me")
+                    cnt += 1
+                    objc._updatingMetadata(True)
+                    objc._updatingMetadata(False)
+                cur_extender(cls, dct)
+
+            with pyobjc_options(_class_extender=extender):
+                objc._updatingMetadata(True)
+                objc._updatingMetadata(False)
+                with self.assertRaisesRegex(RuntimeError, "don't extend me"):
+
+                    NSObject.instanceMethodForSelector_(b"init")
 
     def test_invalid_protocols(self):
         try:
@@ -1561,6 +1633,8 @@ class TestSubclassOptions(TestCase):
         self.assertEqual(OC_SubClassWithProtocols.__pyobjc_protocols__, (proto,))
 
     def test_class_version(self):
+        self.assertIs(objc.objc_object.__version__, None)
+
         class OC_VersionedClass(NSObject):
             pass
 

@@ -64,7 +64,7 @@ class SplitSignatureTest(TestCase):
         with self.assertRaises(TypeError):
             objc.splitSignature()
 
-        with self.assertRaisesRegex(ValueError, "type signature"):
+        with self.assertRaisesRegex(objc.error, "type signature"):
             objc.splitSignature(b"{ab")
 
     def testSimple(self):

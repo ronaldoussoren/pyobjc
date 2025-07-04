@@ -6,6 +6,7 @@ import warnings
 import types
 import struct
 import fractions
+import objc.simd
 
 import objc
 from PyObjCTest import copying, structargs
@@ -821,7 +822,7 @@ class TestMisCConversions(TestCase):
 
     def test_vector(self):
         out = objc.repythonify((42,) * 4, b"<4i>")
-        self.assertEqual(out, (42,) * 4)
+        self.assertEqual(out, objc.simd.vector_int4(42, 42, 42, 42))
 
         with self.assertRaisesRegex(objc.error, "Unsupported SIMD encoding: <5i>"):
             objc.repythonify((42,) * 5, b"<5i>")
@@ -980,12 +981,27 @@ class TestSelectorEdgeCases(TestCase):
 
 
 class TestStringSpecials(TestCase):
+    def test_passing_string_as_self(self):
+        strval = NSString.stringWithString_("hello")
+        arrval = NSArray.alloc().init()
+        self.assertEqual(arrval.count(), 0)
+
+        m = arrval.count.definingClass.__dict__["count"]
+        self.assertEqual(m(arrval), 0)
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "Expecting instance of .* as self, got one of objc.pyobjc_unicode",
+        ):
+            m(strval)
+
     def test_passing_non_string_as_self_simple(self):
         o = NSString.stringWithString_("hello")
         self.assertEqual(o.length(), 5)
         m = o.length.definingClass.__dict__["length"]
 
         self.assertEqual(m(o), 5)
+        self.assertEqual(m(o.nsstring()), 5)
         with self.assertRaisesRegex(
             TypeError, "Expecting instance of .* as self, got one of str"
         ):
@@ -1007,7 +1023,12 @@ class TestStringSpecials(TestCase):
                 b"getCharacters:range:",
                 {
                     "arguments": {
-                        2 + 0: {"type_modifier": b"o", "c_array_length_in_arg": 2 + 1}
+                        2
+                        + 0: {
+                            "type_modifier": b"o",
+                            "c_array_length_in_arg": 2 + 1,
+                            "type": b"^" + objc._C_UNICHAR,
+                        }
                     }
                 },
             )
@@ -1015,13 +1036,13 @@ class TestStringSpecials(TestCase):
         self.assertArgIsOut(o.getCharacters_range_, 0)
         self.assertArgSizeInArg(o.getCharacters_range_, 0, 1)
 
-        self.assertEqual(
-            o.getCharacters_range_(None, (0, 2)), tuple(ord(ch) for ch in "he")
-        )
+        self.assertEqual(o.getCharacters_range_(None, (0, 2)), "he")
 
         m = o.getCharacters_range_.definingClass.__dict__["getCharacters_range_"]
 
-        self.assertEqual(m(o, None, (0, 3)), tuple(ord(ch) for ch in "hel"))
+        self.assertEqual(m(o, None, (0, 3)), "hel")
+        self.assertEqual(m(o.nsstring(), None, (0, 3)), "hel")
+
         with self.assertRaisesRegex(
             TypeError, "Expecting instance of .* as self, got one of str"
         ):
@@ -1031,3 +1052,35 @@ class TestStringSpecials(TestCase):
             TypeError, "Expecting instance of .* as self, got one of int"
         ):
             m(42, None, (0, 3))
+
+
+class TestClasses(TestCase):
+    def test_class_comparisons(self):
+        self.assertTrue(NSObject == NSObject)
+        self.assertFalse(NSObject == NSArray)
+        self.assertFalse(NSObject == 42)
+        self.assertFalse(42 == NSObject)
+        self.assertFalse(NSObject != NSObject)
+        self.assertTrue(NSObject != NSArray)
+        self.assertFalse(NSObject == objc.objc_object)
+        self.assertFalse(objc.objc_object == NSObject)
+
+        self.assertFalse(NSObject < NSArray)
+        self.assertTrue(NSArray < NSObject)
+        self.assertFalse(NSObject <= NSArray)
+        self.assertTrue(NSArray <= NSObject)
+
+        self.assertTrue(NSObject > NSArray)
+        self.assertFalse(NSArray > NSObject)
+        self.assertTrue(NSObject >= NSArray)
+        self.assertFalse(NSArray >= NSObject)
+
+        with self.assertRaisesRegex(
+            TypeError, "not supported between instances of 'NSArray' and 'int'"
+        ):
+            NSArray < 42  # noqa: B015
+
+        with self.assertRaisesRegex(
+            TypeError, "not supported between instances of 'int' and 'NSObject'"
+        ):
+            42 < NSObject  # noqa: B015

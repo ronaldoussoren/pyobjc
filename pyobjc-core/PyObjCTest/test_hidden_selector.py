@@ -2,6 +2,11 @@ import objc
 from PyObjCTools.TestSupport import TestCase
 
 
+class NotBool:
+    def __bool__(self):
+        raise RuntimeError("not bool")
+
+
 class hidden_method:
     def __pyobjc_class_setup__(self, name, class_dict, instance_methods, class_methods):
         @objc.selector
@@ -138,12 +143,11 @@ class TestHiddenSelector(TestCase):
         def addedmethod(self):
             return "NEW"
 
-        class NoBool:
-            def __bool__(self):
-                raise RuntimeError("no bool")
+        with self.assertRaisesRegex(RuntimeError, "not bool"):
+            addedmethod.isHidden = NotBool()
 
-        with self.assertRaisesRegex(RuntimeError, "no bool"):
-            addedmethod.isHidden = NoBool()
+        with self.assertRaisesRegex(RuntimeError, "not bool"):
+            OCTestHidden.pyobjc_hiddenSelectors(NotBool())
 
     def testHiddenAddMethods(self):
         @objc.selector

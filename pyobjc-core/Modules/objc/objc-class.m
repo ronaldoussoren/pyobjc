@@ -383,8 +383,8 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
 
     result = (PyTypeObject*)PyType_Type.tp_new(&PyType_Type, args, NULL);
     Py_DECREF(args);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     ((PyObjCClassObject*)result)->class = objc_meta_class;
@@ -920,6 +920,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     /* case 0: pass */
     case 1:
         if (isCFProxyClass) {
+            /* XXX: Needs documentation on why this isn't possible */
             PyErr_SetString(PyObjCExc_Error,
                             "cannot define __del__ on subclasses of NSCFType");
             Py_XDECREF(delmethod);
@@ -1201,12 +1202,18 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     /* Merge the "difference" to pick up new selectors */
-    len = PyList_Size(keys);
-    for (i = 0; i < len; i++) {
+    for (i = 0; i < PyList_Size(keys); i++) {
         k = PyList_GetItemRef(keys, i);
-        if (k == NULL) {
-            /* XXX: Check refcounts, old_dict */
+        if (k == NULL) { // LCOV_BR_EXCL_LINE
+            /* This failing requires changes to 'keys'
+             * while iterating, while 'keys' is a new
+             * list returned from 'PyDict_Keys'.
+             */
+            // LCOV_EXCL_START
+            Py_DECREF(old_dict);
+            Py_DECREF(keys);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         PyObject* old_v;
@@ -1304,7 +1311,7 @@ class_dealloc(PyObject* cls)
         Py_INCREF(cls);
         return;
         // LCOV_EXCL_STOP
-    }
+    } // LCOV_EXCL_LINE
 
     /*
      * Proxies for "native" Objective-C classes can be deallocated when two threads race
@@ -1533,7 +1540,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
     Py_ssize_t  i, n;
     PyObject *  mro, *base, *dict;
     PyObject*   descr    = NULL;
-    const char* sel_name = PyObjC_Unicode_Fast_Bytes(name);
+    const char* sel_name = PyUnicode_AsUTF8(name);
     if (sel_name == NULL) {
         return NULL;
     }
@@ -1642,8 +1649,10 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
         PyObject* class_for_base = PyObjCClass_ClassForMetaClass(base);
         if (class_for_base == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_CLEAR(mro);
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;
+            // LCOV_EXCL_STOP
         }
 
         /* class_copyMethodList only returns NULL when it sets method_count
@@ -1654,16 +1663,18 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
         for (j = 0; j < method_count; j++) {
             Method m         = methods[j];
             SEL    meth_name = method_getName(m);
-            if (meth_name == NULL) {
+            if (meth_name == NULL) { // LCOV_BR_EXCL_LINE
                 /* Method without a selector, ignore these */
-                continue;
+                continue; // LCOV_EXCL_LINE
             }
 
             PyObject* hidden = PyObjCClass_HiddenSelector(class_for_base, meth_name, YES);
             if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(methods);
                 Py_CLEAR(mro);
-                return NULL; // LCOV_EXCL_LINE
+                return NULL;
+                // LCOV_EXCL_STOP
 
             } else if (hidden) {
                 Py_CLEAR(hidden);
@@ -1757,8 +1768,8 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
         }
         // LCOV_EXCL_STOP
     }
-    if (m == nil && PyErr_Occurred()) {
-        return NULL;
+    if (m == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;                    // LCOV_EXCL_LINE
     }
 
     hidden = PyObjCClass_HiddenSelector(
@@ -1820,7 +1831,7 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
     Py_ssize_t  i, n;
     PyObject *  mro, *base, *dict;
     PyObject*   descr  = NULL;
-    const char* c_name = PyObjC_Unicode_Fast_Bytes(name);
+    const char* c_name = PyUnicode_AsUTF8(name);
     if (c_name == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
@@ -1942,7 +1953,7 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
 {
     Py_ssize_t  i, n;
     PyObject *  mro, *base;
-    const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
+    const char* name_bytes = PyUnicode_AsUTF8(name);
     if (name_bytes == NULL) {
         return NULL;
     }
@@ -2054,7 +2065,7 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
      *       class).
      *
      */
-    if (PyUnicode_Check(name)) {
+    if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
         if (PyObjC_is_ascii_prefix(name, "__", 2)
             && !PyObjC_is_ascii_string(name, "__dict__")) {
             result = PyType_Type.tp_getattro(self, name);
@@ -2064,14 +2075,20 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
             PyErr_Clear();
         }
 
-        if (PyObjC_Unicode_Fast_Bytes(name) == NULL)
+        if (PyUnicode_AsUTF8(name) == NULL)
             return NULL;
 
     } else {
+        /* Never reached because the interpreter already performs
+         * the typecheck on 'name'. Type check can only fail if
+         * someone directly invokes the getattro slot.
+         */
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_TypeError,
                      "Attribute name is not a string, but an instance of '%s'",
                      Py_TYPE(name)->tp_name);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     if (PyObjCClass_CheckMethodList(self, 1) < 0) {
         return NULL;
@@ -2090,7 +2107,7 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
         }
     }
 
-    if (strcmp(PyObjC_Unicode_Fast_Bytes(name), "__dict__") == 0) {
+    if (strcmp(PyUnicode_AsUTF8(name), "__dict__") == 0) {
         /* XXX: Is this correct */
         result = ((PyTypeObject*)self)->tp_dict;
         Py_INCREF(result);
@@ -2153,7 +2170,7 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
 
     /* Try to find the method anyway */
     PyErr_Clear();
-    const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
+    const char* name_bytes = PyUnicode_AsUTF8(name);
     if (name_bytes == NULL) {
         return NULL;
     }
@@ -2166,7 +2183,7 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
         return NULL;
     }
 
-    name_bytes = PyObjC_Unicode_Fast_Bytes(name);
+    name_bytes = PyUnicode_AsUTF8(name);
     if (name_bytes == NULL) {
         return NULL;
     }
@@ -2223,8 +2240,8 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
             if (PyErr_ExceptionMatches(PyExc_AttributeError)) {
                 PyErr_Clear();
                 protocols = PyList_New(0);
-                if (protocols == NULL) {
-                    return -1;
+                if (protocols == NULL) { // LCOV_BR_EXCL_LINE
+                    return -1;           // LCOV_EXCL_LINE
                 }
             } else {
                 return -1;
@@ -2408,7 +2425,7 @@ static PyObject* _Nullable class_richcompare(PyObject* self, PyObject* other, in
     other_class = PyObjCClass_GetClass(other);
 
     if (self_class == other_class) {
-        v = 0;
+        v = 0; // LCOV_EXCL_LINE
 
     } else if (!self_class) {
         v = -1;
@@ -2423,7 +2440,7 @@ static PyObject* _Nullable class_richcompare(PyObject* self, PyObject* other, in
              * if they are the same class.
              */
             if (self_class == other_class) {
-                Py_RETURN_TRUE;
+                Py_RETURN_TRUE; // LCOV_EXCL_LINE
             } else {
                 Py_RETURN_FALSE;
             }
@@ -2432,14 +2449,14 @@ static PyObject* _Nullable class_richcompare(PyObject* self, PyObject* other, in
             if (self_class == other_class) {
                 Py_RETURN_FALSE;
             } else {
-                Py_RETURN_TRUE;
+                Py_RETURN_TRUE; // LCOV_EXCL_LINE
             }
         }
 
         v = strcmp(class_getName(self_class), class_getName(other_class));
     }
 
-    switch (op) {
+    switch (op) { // LCOV_BR_EXCL_LINE
     case Py_EQ:
         if (v == 0) {
             Py_RETURN_TRUE;
@@ -2489,8 +2506,10 @@ static PyObject* _Nullable class_richcompare(PyObject* self, PyObject* other, in
         break;
 
     default:
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_TypeError, "Unexpected op=%d in class_richcompare", op);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -2998,10 +3017,12 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     result = PyType_Type.tp_new(metaclass, args, NULL);
     Py_DECREF(args);
     Py_DECREF(metaclass);
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     info                       = (PyObjCClassObject*)result;
@@ -3364,11 +3385,14 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
     PyObjCClassObject* info;
     PyObject*          result;
 
-    if (!PyObjCClass_Check(cls)) {
+    if (!PyObjCClass_Check(cls)) { // LCOV_BR_EXCL_LINE
+        /* All callers ensure 'cls' is an actual class */
+        // LCOV_EXCL_START
         PyErr_Format(PyObjCExc_InternalError,
                      "PyObjCClass_FindSelector called for non-class (%s)",
                      Py_TYPE(cls)->tp_name);
         return NULL;
+        // LCIV_EXCL_STOP
     }
 
     if (PyObjCClass_CheckMethodList(cls, 1) < 0) {
@@ -3406,8 +3430,8 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
     /* First check the cache */
 
     PyObject* k = PyUnicode_FromString(sel_getName(selector));
-    if (k == NULL) {
-        return NULL;
+    if (k == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     switch (PyDict_GetItemRef(info->sel_to_py, k, &result)) { // LCOV_BR_EXCL_LINE
@@ -3835,9 +3859,11 @@ PyObject* _Nullable PyObjCClass_TryResolveSelector(PyObject* base, PyObject* nam
             // LCOV_EXCL_STOP
         }
         PyObject* result = PyObjCSelector_NewNative(cls, sel, encoding, 0);
-        if (result == NULL) {
-            /* XXX: Can fail if the 'encoding' is invalid, needs test case */
-            return NULL;
+        if (result == NULL) { // LCOV_BR_EXCL_LINE
+            /* Can only fail if the encoding in the ObjC runtime is
+             * invalid.
+             */
+            return NULL; // LCOV_EXCL_LINE
         }
 
         /* add to __dict__ 'cache' */

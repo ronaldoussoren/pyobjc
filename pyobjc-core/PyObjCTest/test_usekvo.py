@@ -4,6 +4,11 @@ from PyObjCTools.TestSupport import TestCase, pyobjc_options
 NSObject = objc.lookUpClass("NSObject")
 
 
+class NotBool:
+    def __bool__(self):
+        raise RuntimeError("not bool")
+
+
 class TestUseKVOObserver(NSObject):
     def init(self):
         self = objc.super(TestUseKVOObserver, self).init()
@@ -108,6 +113,9 @@ class TestUseKVO(TestCase):
         with self.assertRaisesRegex(TypeError, "Cannot delete __useKVO__ attribute"):
             del OCTestUseKVO5.__useKVO__
 
+        with self.assertRaisesRegex(RuntimeError, "not bool"):
+            OCTestUseKVO5.__useKVO__ = NotBool()
+
     def test_useKVO_in_body(self):
         with pyobjc_options(use_kvo=False):
 
@@ -118,9 +126,6 @@ class TestUseKVO(TestCase):
             self.assertIs(OCTestUseKVO6.__useKVO__, True)
 
     def test_useKVO_in_body_nonbool(self):
-        class NotBool:
-            def __bool__(self):
-                raise RuntimeError("not bool")
 
         with pyobjc_options(use_kvo=False):
             with self.assertRaisesRegex(RuntimeError, "not bool"):

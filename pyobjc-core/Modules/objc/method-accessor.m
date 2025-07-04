@@ -391,14 +391,17 @@ methacc_clear(PyObject* _self)
 
 static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 {
-    PyObjCMethodAccessor* self   = (PyObjCMethodAccessor*)_self;
-    PyObject*             result = NULL;
+    PyObjCMethodAccessor* self       = (PyObjCMethodAccessor*)_self;
+    PyObject*             result     = NULL;
+    const char*           name_bytes = NULL;
 
     assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base));
 
-    if (PyUnicode_Check(name)) {                       // LCOV_BR_EXCL_LINE
-        if (PyObjC_Unicode_Fast_Bytes(name) == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;                               // LCOV_EXCL_LINE
+    if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
+        name_bytes = PyUnicode_AsUTF8(name);
+        if (name_bytes == NULL) {
+            PyErr_SetObject(PyExc_AttributeError, name);
+            return NULL;
         }
 
     } else { // LCOV_BR_EXCL_LINE
@@ -527,10 +530,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
     }
 
     /* Didn't find the selector the first trip around, try harder. */
-    const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
-    if (name_bytes == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;          // LCOV_EXCL_LINE
-    }
+    assert(name_bytes != NULL);
     result = find_selector(self->base, name_bytes, self->class_method);
     if (result == NULL) {
         return result;

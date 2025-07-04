@@ -290,6 +290,11 @@ class TestClassAsignments(TestCase):
         ):
             del theClass.init
 
+        with self.assertRaisesRegex(
+            AttributeError, "type object 'NSObject' has no attribute 'i_do_not_exist'"
+        ):
+            del theClass.i_do_not_exist
+
 
 class TestCategory(TestCase):
     # Tests of objc.Category

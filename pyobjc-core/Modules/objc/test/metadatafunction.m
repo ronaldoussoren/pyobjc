@@ -576,6 +576,24 @@ returnPointerArray(void)
     return buffer;
 }
 
+static int
+add_integers(int* pval1, int* pval2)
+{
+    return *pval1 + *pval2;
+}
+
+static void
+get_integer(int* pval)
+{
+    *pval = 42;
+}
+
+static void
+double_integer(int* pval)
+{
+    *pval *= 2;
+}
+
 typedef void (*F)(void);
 static struct function {
     char* name;
@@ -632,6 +650,9 @@ static struct function {
                     {"return2ndPointerArray", (F)returnPointerArray},
                     {"makeCountArrayWithObjects_", (F)makeCountArrayWithObjects_},
                     {"makeArrayWithObjects_", (F)makeArrayWithObjects_},
+                    {"add_integers", (F)add_integers},
+                    {"get_integer", (F)get_integer},
+                    {"double_integer", (F)double_integer},
 
                     {NULL, NULL}};
 

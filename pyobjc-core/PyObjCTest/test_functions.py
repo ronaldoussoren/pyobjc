@@ -426,3 +426,80 @@ class TestFunctions(TestCase):
             ValueError, "depythonifying 'unsigned long long', got 'str'"
         ):
             NSFrameAddress("a")
+
+    def test_byref_in_encoding(self):
+        m = {}
+        objc.loadFunctionList(
+            function_list,
+            m,
+            [
+                (
+                    "add_integers",
+                    b"in^in^i",
+                ),
+                (
+                    "get_integer",
+                    b"vo^i",
+                ),
+                (
+                    "double_integer",
+                    b"vN^i",
+                ),
+            ],
+        )
+        self.assertIn("add_integers", m)
+        self.assertIn("get_integer", m)
+        self.assertIn("double_integer", m)
+
+        self.assertEqual(m["add_integers"](1, 2), 3)
+        self.assertEqual(m["get_integer"](None), 42)
+        self.assertEqual(m["double_integer"](99), 2 * 99)
+
+    def test_byref_as_metadata(self):
+        m = {}
+        objc.loadFunctionList(
+            function_list,
+            m,
+            [
+                (
+                    "add_integers",
+                    b"i^i^i",
+                    "",
+                    {
+                        "arguments": {
+                            0: {"type_modifier": objc._C_IN},
+                            1: {"type_modifier": objc._C_IN},
+                        }
+                    },
+                ),
+                (
+                    "get_integer",
+                    b"v^i",
+                    "",
+                    {
+                        "arguments": {
+                            0: {"type_modifier": objc._C_OUT},
+                        }
+                    },
+                ),
+                (
+                    "double_integer",
+                    b"v^i",
+                    "",
+                    {
+                        "arguments": {
+                            0: {"type_modifier": objc._C_INOUT, "type": b"^i20"},
+                        }
+                    },
+                ),
+            ],
+        )
+        self.assertIn("add_integers", m)
+        self.assertIn("get_integer", m)
+        self.assertIn("double_integer", m)
+
+        self.assertEqual(m["add_integers"](1, 2), 3)
+        self.assertEqual(m["get_integer"](None), 42)
+        self.assertEqual(m["double_integer"](99), 2 * 99)
+
+        self.assertArgHasType(m["double_integer"], 0, b"N^i")

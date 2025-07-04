@@ -3407,6 +3407,8 @@ PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 BOOL
 PyObjC_signatures_compatible(const char* type1, const char* type2)
 {
+    assert(type1);
+    assert(type2);
     static const char CHAR[] = {_C_CHR, 0};
 
     /* Ignore type modifiers */

@@ -933,7 +933,8 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                 PyErr_Clear();
                 PyObject* byte_array;
 
-                if (PyObject_GetBuffer(pythonList, view, PyBUF_CONTIG_RO) == -1) {
+                if (PyObject_GetBuffer(pythonList, view, PyBUF_CONTIG_RO)
+                    == -1) { // LCOV_BR_EXCL_LINE
                     return -1;
                 }
 
@@ -1038,18 +1039,22 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         if (writable) {
             PyObject* tmp = PyByteArray_FromObject(bytes_array);
             Py_DECREF(bytes_array);
-            if (tmp == NULL) {
-                return -1;
+            if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+                // bytes_array is an instance of PyBytes_Type
+                return -1; // LCOV_EXCL_LINE
             }
 
             bytes_array = tmp;
         }
 
-        if (PyObject_GetBuffer(bytes_array, view,
+        if (PyObject_GetBuffer(bytes_array, view, // LCOV_BR_EXCL_LINE
                                writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO)
             == -1) {
+            // bytes_array is either 'bytes' or 'bytesarray' depending
+            // LCOV_EXCL_START
             Py_DECREF(bytes_array);
             return -1;
+            // LCOV_EXCL_STOP
         }
 
         *array = (void*)((char*)view->buf + 2);
@@ -1121,10 +1126,10 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        if (PyObject_GetBuffer(pythonList, view,
+        if (PyObject_GetBuffer(pythonList, view, // LCOV_BR_EXCL_LINE
                                writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO)
             == -1) {
-            return -1;
+            return -1; // LCOV_EXCL_LINE
         }
 
         if (eltsize == 0) {

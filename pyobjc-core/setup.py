@@ -121,6 +121,7 @@ OBJC_LDFLAGS = [
     "-g",
     "-O3",
     "-flto=thin",
+    # "-O0",
     "-fexceptions",
     # "-fsanitize-thread-atomics",
 ]

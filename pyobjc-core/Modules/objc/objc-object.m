@@ -729,7 +729,7 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
                      Py_TYPE(name)->tp_name);
         return -1;
     }
-    namestr = PyObjC_Unicode_Fast_Bytes(name);
+    namestr = PyUnicode_AsUTF8(name);
     if (namestr == NULL) {
         return -1;
     }
@@ -740,8 +740,7 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
     if (((PyObjCClassObject*)tp)->useKVO) {
         if (!PyObjC_is_ascii_prefix(name, "_", 1)) {
             obj_name = [NSString
-                stringWithUTF8String:(const char* _Nonnull)PyObjC_Unicode_Fast_Bytes(
-                                         name)];
+                stringWithUTF8String:(const char* _Nonnull)PyUnicode_AsUTF8(name)];
 
             if (obj_name == nil) {
                 PyErr_SetString(PyObjCExc_Error,
@@ -823,13 +822,13 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
 
     if (descr == NULL) {
         PyErr_Format(PyExc_AttributeError, "'%.50s' object has no attribute '%.400s'",
-                     tp->tp_name, PyObjC_Unicode_Fast_Bytes(name));
+                     tp->tp_name, PyUnicode_AsUTF8(name));
         res = -1;
         goto done;
     }
 
     PyErr_Format(PyExc_AttributeError, "'%.50s' object attribute '%.400s' is read-only",
-                 tp->tp_name, PyObjC_Unicode_Fast_Bytes(name));
+                 tp->tp_name, PyUnicode_AsUTF8(name));
     res = -1;
 done:
     Py_CLEAR(descr);
@@ -1214,7 +1213,7 @@ PyObject* _Nullable _PyObjCObject_NewDeallocHelper(id objc_object)
 void
 _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 {
-#if PY_VERSION_HEX >= 0x030e0000
+#ifdef Py_GIL_DISABLED
     if (PyUnstable_Object_IsUniquelyReferenced(obj) != 1) {
 #else
     if (Py_REFCNT(obj) != 1) {
@@ -1361,8 +1360,8 @@ PyObjCMethodSignature* _Nullable PyObjCObject_GetBlockSignature(PyObject* object
     return result;
 }
 
-PyObjCMethodSignature* _Nullable PyObjCObject_SetBlockSignature(
-    PyObject* object, PyObjCMethodSignature* methinfo)
+PyObjCMethodSignature*
+PyObjCObject_SetBlockSignature(PyObject* object, PyObjCMethodSignature* methinfo)
 {
     assert(PyObjCObject_IsBlock(object));
     PyObjCMethodSignature* result;

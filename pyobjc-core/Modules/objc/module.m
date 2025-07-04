@@ -538,7 +538,7 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
         if (!r) {
             return pythonify_c_value(@encode(NSBundle*), &bundle);
         }
-    }
+    } // LCOV_EXCL_LINE
 
     class_list = PyObjC_GetClassList(1);
     if (class_list == NULL) { // LCOV_BR_EXCL_LINE
