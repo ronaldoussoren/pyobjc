@@ -12,6 +12,15 @@ struct BufferStruct {
 
 struct empty {};
 
+struct large {
+    double a;
+    double b;
+    double c;
+    double d;
+    double e;
+    double f;
+};
+
 @interface StructArgClass : NSObject {
 }
 - (NSString*)compP:(NSPoint)aPoint aRect:(NSRect)aRect anOp:(int)op;
@@ -50,6 +59,25 @@ struct empty {};
 {
     return [NSString stringWithFormat:@"aP:%@ aR:%@ anO:%d", NSStringFromPoint(aPoint),
                                       NSStringFromRect(aRect), op];
+}
+
++ (struct large)sumA:(struct large)a
+                   b:(struct large)b
+                   c:(struct large)c
+                   d:(struct large)d
+                   e:(struct large)e
+                   f:(struct large)f
+                   g:(struct large)g
+{
+    struct large result;
+    result.a = a.a + b.a + c.a + d.a + e.a + f.a + g.a;
+    result.b = a.b + b.b + c.b + d.b + e.b + f.b + g.b;
+    result.c = a.c + b.c + c.c + d.c + e.c + f.c + g.c;
+    result.d = a.d + b.d + c.d + d.d + e.d + f.d + g.d;
+    result.e = a.e + b.e + c.e + d.e + e.e + f.e + g.e;
+    result.f = a.f + b.f + c.f + d.f + e.f + f.f + g.f;
+
+    return result;
 }
 
 static size_t

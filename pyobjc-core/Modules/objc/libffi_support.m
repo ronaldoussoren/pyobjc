@@ -3287,7 +3287,6 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                             break;
 
                         case PyObjC_kNullTerminatedArray:
-                            /* TODO: add explicit support for UniChar arrays */
                             if (*resttype == _C_CHAR_AS_TEXT && PyBytes_Check(argument)) {
                                 byref[i] = PyMem_Malloc(PyBytes_Size(argument) + 1);
                                 if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
@@ -3299,6 +3298,28 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                     memcpy(byref[i], PyBytes_AsString(argument),
                                            PyBytes_Size(argument));
                                     ((char*)(byref[i]))[PyBytes_Size(argument)] = '\0';
+                                }
+
+                            } else if (*resttype == _C_UNICHAR
+                                       && PyUnicode_Check(argument)) {
+                                PyObject* as_utf16 = PyUnicode_AsUTF16String(argument);
+                                if (as_utf16 == NULL) {
+                                    error = -1;
+                                } else {
+                                    byref[i] = PyMem_Malloc(PyBytes_Size(as_utf16));
+                                    if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                                        // LCOV_EXCL_START
+                                        Py_CLEAR(as_utf16);
+                                        PyErr_NoMemory();
+                                        error = -1;
+                                        // LCOV_EXCL_STOP
+                                    } else {
+                                        memcpy(byref[i], PyBytes_AsString(as_utf16) + 2,
+                                               PyBytes_Size(as_utf16) - 2);
+                                        *(unichar*)(((char*)byref[i])
+                                                    + PyBytes_Size(as_utf16) - 2) = 0;
+                                        Py_CLEAR(as_utf16);
+                                    }
                                 }
 
                             } else {

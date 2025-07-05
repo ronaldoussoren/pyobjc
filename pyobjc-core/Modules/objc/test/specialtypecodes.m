@@ -87,6 +87,11 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     return gUniCharArray;
 }
 
+- (id)UniCharArrayOfCount:(NSInteger)count In:(unichar*)buffer
+{
+    return [NSString stringWithCharacters:buffer length:count];
+}
+
 - (char*)byteArray
 {
     static char gByteArray[] = {100, 200, 150, 99};

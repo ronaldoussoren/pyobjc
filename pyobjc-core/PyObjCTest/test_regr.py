@@ -176,6 +176,19 @@ class TestRegressions(TestCase):
         v = o.compP_aRect_anOp_((1, 2), ((3, 4), (5, 6)), 7)
         self.assertEqual(v, "aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
 
+    def test_large_structs(self):
+
+        # "Large" but simple APIs use a different code path, ensure
+        # we're actually hitting that path.
+        tp = structargs.StructArgClass.sumA_b_c_d_e_f_g_.__metadata__()["retval"][
+            "type"
+        ]
+        self.assertGreater(objc._sizeOfType(tp) * 8, 256)
+
+        inval = ((n,) * 6 for n in range(7))
+        outval = structargs.StructArgClass.sumA_b_c_d_e_f_g_(*inval)
+        self.assertEqual(outval, (sum(range(7)),) * 6)
+
     def test_empty_struct(self):
         o = structargs.StructArgClass.alloc().init()
 

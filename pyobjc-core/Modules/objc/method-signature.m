@@ -1619,6 +1619,12 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
         return NULL;
     }
 
+    /*
+     * XXX: Setting 'tmpl' is dodgy, but required
+     * to pass tests. Either ensure that setting 'tmpl'
+     * is not necessary, or properly document why it
+     * is needed.
+     */
     if (result->rettype != NULL && !result->rettype->tmpl) {
         result->rettype->tmpl = YES;
     }

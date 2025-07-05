@@ -1881,6 +1881,24 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
 
         memcpy(datum, PyBytes_AS_STRING(value), nitems);
         return 0;
+#if 0
+    } else if (*type == _C_UNICHAR && PyUnicode_Check(value)) {
+        PyObject* as_utf16 = PyUnicode_AsUTF16String(value);
+        if (as_utf16 == NULL) {
+            return -1;
+        }
+        if (PyBytes_Size(as_utf16)/2-1 < nitems) {
+            PyErr_Format(PyExc_ValueError,
+                         "depythonifying unichar array of %" PY_FORMAT_SIZE_T
+                         "d items, got one of %" PY_FORMAT_SIZE_T "d",
+                         nitems, PyBytes_Size(as_utf16)/2-1);
+            Py_CLEAR(as_utf16);
+            return -1;
+        }
+        memcpy(datum, PyBytes_AS_STRING(value) + 2, nitems*2);
+        Py_CLEAR(as_utf16);
+        return 0;
+#endif
     }
 
     seq = PyObjCSequence_Tuple(value, "depythonifying array, got no sequence");

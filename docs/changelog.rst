@@ -142,6 +142,13 @@ found while doing this.
   with more than 64 arguments (which is also the maximum number
   of arguments in a method call).
 
+* Passing strings with characters outside of the BMP now works
+  when the function argument is a null-terminated array of ``unichar``.
+
+  A side effect of this is that passing strings that cannot be
+  encoded as UTF-16, such as strings containing lone surrogates
+  now fails.
+
 Version 11.1
 ------------
 

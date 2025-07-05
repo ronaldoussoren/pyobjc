@@ -107,10 +107,11 @@ def setupMetaData():
         b"UniCharArrayOfCount:In:",
         {
             "arguments": {
-                3: {
+                2
+                + 1: {
                     "type": objc._C_PTR + objc._C_UNICHAR,
                     "type_modifier": objc._C_IN,
-                    "c_array_of_lenght_in_arg": 2,
+                    "c_array_length_in_arg": 2 + 0,
                 }
             }
         },
@@ -123,7 +124,7 @@ def setupMetaData():
                 3: {
                     "type": objc._C_PTR + objc._C_UNICHAR,
                     "type_modifier": objc._C_OUT,
-                    "c_array_of_lenght_in_arg": 2,
+                    "c_array_length_in_arg": 2,
                 }
             }
         },
@@ -136,7 +137,7 @@ def setupMetaData():
                 3: {
                     "type": objc._C_PTR + objc._C_UNICHAR,
                     "type_modifier": objc._C_INOUT,
-                    "c_array_of_lenght_in_arg": 2,
+                    "c_array_length_in_arg": 2,
                 }
             }
         },
@@ -208,10 +209,8 @@ class TestTypeCode_UniChar(TestCase):
         ):
             o.UniCharStringArg_([99, 100, 100, 0])
 
-        # with self.assertRaisesRegex(UnicodeEncodeError, "surrogate"):
-        inval = "\udfff"
-        outval = o.UniCharStringArg_("\udfff")
-        self.assertEqual(inval, outval)
+        with self.assertRaisesRegex(UnicodeEncodeError, "surrogate"):
+            o.UniCharStringArg_("\udfff")
 
         inval = "\U0001f9c1"
         self.assertEqual(len(inval), 1)
@@ -265,3 +264,11 @@ class TestTypeCode_UniChar(TestCase):
         v, w = o.UniCharArrayOf4InOut_("foot")
         self.assertEqual(v, "foot")
         self.assertEqual(w, "hand")
+
+    def test_counted_array(self):
+        o = OC_TestSpecialTypeCode.alloc().init()
+
+        self.assertArgIsIn(o.UniCharArrayOfCount_In_, 1)
+        self.assertArgSizeInArg(o.UniCharArrayOfCount_In_, 1, 0)
+        r = o.UniCharArrayOfCount_In_(4, "hello there")
+        self.assertEqual(r, "hell")
