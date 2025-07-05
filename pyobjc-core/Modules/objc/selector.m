@@ -481,9 +481,10 @@ objcsel_repr(PyObject* _self)
     PyObjCNativeSelector* sel = (PyObjCNativeSelector*)_self;
     PyObject*             rval;
     if (sel->base.sel_self == NULL) {
-        rval = PyUnicode_FromFormat("<unbound native-selector %s in %s>",
-                                    sel_getName(sel->base.sel_selector),
-                                    class_getName(sel->base.sel_class));
+        rval = PyUnicode_FromFormat(
+            "<unbound native-selector %s in %s%s>", sel_getName(sel->base.sel_selector),
+            class_isMetaClass(sel->base.sel_class) ? "metaclass " : "",
+            class_getName(sel->base.sel_class));
 
     } else {
         rval =

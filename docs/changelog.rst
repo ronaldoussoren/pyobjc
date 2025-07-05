@@ -149,6 +149,10 @@ found while doing this.
   encoded as UTF-16, such as strings containing lone surrogates
   now fails.
 
+* ``SomeClass.pyobjc_instanceMethods.method(someInstance)`` now
+  works, even if ``method`` is hidden on the class (for example
+  by overriding it with something that's not a selector).
+
 Version 11.1
 ------------
 

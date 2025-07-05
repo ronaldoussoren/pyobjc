@@ -73,6 +73,8 @@ class MethodAccessTest(TestCase):
 
         # XXX: This test fails, but shouldn't.
         o = OCTestWithAttributes.alloc().init()
+        self.assertEqual(o.pyobjc_instanceMethods.method(), 21)
+        self.assertEqual(o.method, -21)
         self.assertEqual(OCTestWithAttributes.pyobjc_instanceMethods.method(o), 21)
 
     def testNSProxyStuff(self):
