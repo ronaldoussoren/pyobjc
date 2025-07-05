@@ -488,8 +488,7 @@ class TestUsingNSDecimalNumber(TestCase):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=objc.UninitializedDeallocWarning)
             o = OC_DecimalNumberPlusOne.alloc().initWithDecimal_(objc.NSDecimal("1.5"))
-            v = objc.NSDecimal(o)
-            print(v)
+            objc.NSDecimal(o)
 
 
 class TestDecimalByReference(TestCase):
