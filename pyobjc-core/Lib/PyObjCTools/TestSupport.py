@@ -27,27 +27,6 @@ __unittest = False
 # Have a way to disable the autorelease pool behaviour
 _usepool = not _os.environ.get("PYOBJC_NO_AUTORELEASE")
 
-# XXX: Python 2 Compatibility for the PyObjC Test Suite
-try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
-    long
-except NameError:
-    long = int
-
-try:
-    basestring
-except NameError:
-    basestring = str
-
-try:
-    unichr
-except NameError:
-    unichr = chr
-
 
 def _typemap(tp):
     if tp is None:

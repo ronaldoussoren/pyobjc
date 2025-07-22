@@ -1,15 +1,10 @@
 from AppKit import NSFormatter, NSString
 from PyObjCTools import AppHelper
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class MyFormatter(NSFormatter):
     def stringForObjectValue_(self, product):
-        if isinstance(product, (str, unicode)):
+        if isinstance(product, str):
             return product
         return str(product)
 

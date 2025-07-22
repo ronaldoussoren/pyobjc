@@ -59,10 +59,7 @@ class PythonBrowserModel(NSObject):
 
 
 # objects of these types are not eligible for expansion in the outline view
-try:
-    SIMPLE_TYPES = (str, unicode, int, long, float, complex)
-except NameError:
-    SIMPLE_TYPES = (str, int, float, complex)
+SIMPLE_TYPES = (str, int, float, complex)
 
 
 def getInstanceVarNames(obj):
