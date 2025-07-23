@@ -45,6 +45,11 @@ class TestAVPlayer(TestCase):
             3,
         )
 
+        self.assertIsEnumType(AVFoundation.AVPlayerNetworkResourcePriority)
+        self.assertEqual(AVFoundation.AVPlayerNetworkResourcePriorityDefault, 0)
+        self.assertEqual(AVFoundation.AVPlayerNetworkResourcePriorityLow, 1)
+        self.assertEqual(AVFoundation.AVPlayerNetworkResourcePriorityHigh, 2)
+
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(
@@ -194,3 +199,12 @@ class TestAVPlayer(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVPlayerItem.setAutomaticallyHandlesInterstitialEvents_, 0
         )
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayer.audioOutputSuppressedDueToNonMixableAudioRoute
+        )
+
+        self.assertResultIsBOOL(AVFoundation.AVPlayer.isObservationEnabled)
+        self.assertArgIsBOOL(AVFoundation.AVPlayer.setObservationEnabled_, 0)

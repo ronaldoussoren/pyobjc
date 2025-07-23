@@ -76,6 +76,8 @@ use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVPlaybackCoordinatorPlaybackControlDelegate));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(AVPlayerPlaybackCoordinatorDelegate));
+    Py_XDECREF(p);
 #endif
 #if PyObjC_BUILD_RELEASE >= 1400
     p = PyObjC_IdToPython(@protocol(AVCapturePhotoOutputReadinessCoordinatorDelegate));
@@ -91,5 +93,8 @@ use_protocols(void)
 #endif
 #if PyObjC_BUILD_RELEASE >= 1502
     p = PyObjC_IdToPython(@protocol(AVCaptureSessionControlsDelegate));
+#endif
+#if PyObjC_BUILD_RELEASE >= 2600
+    p = PyObjC_IdToPython(@protocol(AVCaptureSessionDeferredStartDelegate));
 #endif
 }

@@ -79,6 +79,12 @@ class TestAVContentKeySession(TestCase):
             str,  # noqa: B950
         )
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVContentKeyRequestShouldRandomizeDeviceIdentifierKey, str
+        )
+
     def testMethods(self):
         self.assertResultIsBOOL(
             TestAVContentKeySessionHelper.contentKeySession_shouldRetryContentKeyRequest_reason_  # noqa: B950

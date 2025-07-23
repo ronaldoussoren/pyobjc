@@ -289,6 +289,10 @@ def _setup():
         ("AVCaptureSession", b"init"),
         ("AVExposureBiasRange", b"new"),
         ("AVExposureBiasRange", b"init"),
+        ("AVMetricMediaRendition", b"new"),
+        ("AVMetricMediaRendition", b"init"),
+        ("AVMetricDownloadSummaryEvent", b"new"),
+        ("AVMetricDownloadSummaryEvent", b"init"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

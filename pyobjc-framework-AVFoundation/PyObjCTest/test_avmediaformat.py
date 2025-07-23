@@ -6,6 +6,7 @@ class TestAVMediaFormat(TestCase):
     def test_typed_enum(self):
         self.assertIsTypedEnum(AVFoundation.AVFileTypeProfile, str)
         self.assertIsTypedEnum(AVFoundation.AVVideoRange, str)
+        self.assertIsTypedEnum(AVFoundation.AVMediaCharacteristic, str)
 
     @min_os_level("10.7")
     def testConstants(self):
@@ -135,3 +136,10 @@ class TestAVMediaFormat(TestCase):
     @min_os_level("15.0")
     def test_constants15_0(self):
         self.assertIsInstance(AVFoundation.AVMediaTypeAuxiliaryPicture, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVMediaCharacteristicIndicatesNonRectilinearProjection, str
+        )
+        self.assertIsInstance(AVFoundation.AVMediaCharacteristicMachineGenerated, str)

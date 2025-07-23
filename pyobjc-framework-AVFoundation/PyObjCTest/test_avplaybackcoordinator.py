@@ -103,6 +103,17 @@ class TestAVPlaybackCoordinator(TestCase):
             AVFoundation.AVDelegatingPlaybackCoordinatorSeekCommand.shouldBufferInAnticipationOfPlayback
         )
 
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayerPlaybackCoordinator.coordinateUsingCoordinationMedium_error_
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVPlayerPlaybackCoordinator.coordinateUsingCoordinationMedium_error_,
+            1,
+        )
+
     @min_sdk_level("12.0")
     def test_protocols(self):
         self.assertProtocolExists("AVPlaybackCoordinatorPlaybackControlDelegate")
+        self.assertProtocolExists("AVPlayerPlaybackCoordinatorDelegate")

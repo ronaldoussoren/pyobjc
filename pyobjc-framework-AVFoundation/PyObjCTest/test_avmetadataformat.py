@@ -5,6 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestAVMetadataFormat(TestCase):
     def test_typed_enum(self):
         self.assertIsTypedEnum(AVFoundation.AVMetadataFormat, str)
+        self.assertIsTypedEnum(AVFoundation.AVMetadataKey, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
@@ -492,4 +493,17 @@ class TestAVMetadataFormat(TestCase):
     def testConstants15_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeMetadataKeyFullFrameRatePlaybackIntent, str
+        )
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyCinematicVideoIntent, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyCameraLensModel, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyCameraFocalLength35mmEquivalent,
+            str,
         )

@@ -40,5 +40,6 @@ if len(versions_seen) != 1:
 if incorrect:
     print(f"{incorrect} frameworks with too much metadata")
 
-if len(versions) != 1 or incorrect:
+if incorrect or len(versions_seen) != 2:
+    # XXX: ^^^ Test for 2 versions_seen while transitioning to macOS 26 SDK
     raise SystemExit(1)

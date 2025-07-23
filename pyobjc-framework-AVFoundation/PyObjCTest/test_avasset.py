@@ -153,6 +153,12 @@ class TestAVAsset(TestCase):
     def testConstants14_0(self):
         self.assertIsInstance(AVFoundation.AVURLAssetOverrideMIMETypeKey, str)
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVURLAssetShouldParseExternalSphericalTagsKey, str
+        )
+
     @min_sdk_level("10.11")
     def testProtocols(self):
         self.assertProtocolExists("AVFragmentMinding")

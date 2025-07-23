@@ -5518,6 +5518,18 @@
    }
   },
   "typed_enum": {
+   "AVMetadataIdentifier": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "AVMetadataKey": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "AVMediaCharacteristic": {
+    "type": "@",
+    "type_name": "NSString"
+   },
    "AVAssetDownloadedAssetEvictionPriority": {
     "type": "@",
     "type_name": "NSString"

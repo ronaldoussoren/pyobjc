@@ -98,6 +98,12 @@ class TestAVAssetExportSession(TestCase):
         self.assertIsInstance(AVFoundation.AVAssetExportPresetMVHEVC960x960, str)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetMVHEVC1440x1440, str)
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC4320x2160, str)
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetMVHEVC4320x4320, str)
+        self.assertIsInstance(AVFoundation.AVAssetExportPresetMVHEVC7680x7680, str)
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertArgIsBlock(

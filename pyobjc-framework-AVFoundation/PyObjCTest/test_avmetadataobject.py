@@ -11,6 +11,10 @@ class TestAVMetadataObject(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVMetadataFaceObject.hasRollAngle)
         self.assertResultIsBOOL(AVFoundation.AVMetadataFaceObject.hasYawAngle)
 
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(AVFoundation.AVMetadataObject.isFixedFocus)
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeFace, str)
@@ -61,3 +65,7 @@ class TestAVMetadataObject(TestCase):
     @min_os_level("14.0")
     def testConstants14_0(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeHumanFullBody, str)
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDogHead, str)
