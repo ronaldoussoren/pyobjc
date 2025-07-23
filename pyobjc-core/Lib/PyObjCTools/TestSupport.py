@@ -155,6 +155,10 @@ def os_release():
     if _os_release is not None:
         return _os_release
 
+    # NOTE: This calls 'sw_vers' because system APIs lie
+    #       to us during some system transitions (e.g.
+    #       from 10.15 to 11.0 and from 15.0 to 26.0) until
+    #       Python itself is rebuild using a newer SDK.
     _os_release = (
         _subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
     )
