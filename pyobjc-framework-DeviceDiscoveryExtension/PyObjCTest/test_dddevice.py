@@ -47,6 +47,15 @@ class TestDDDevice(TestCase):
         self.assertEqual(
             DeviceDiscoveryExtension.DDDeviceSupportsBluetoothTransportBridging, 1 << 2
         )
+        self.assertEqual(DeviceDiscoveryExtension.DDDeviceSupportsBluetoothHID, 1 << 3)
+
+        self.assertIsEnumType(DeviceDiscoveryExtension.DDDeviceWiFiAwareServiceRole)
+        self.assertEqual(
+            DeviceDiscoveryExtension.DDDeviceWiFiAwareServiceRoleSubscriber, 10
+        )
+        self.assertEqual(
+            DeviceDiscoveryExtension.DDDeviceWiFiAwareServiceRolePublisher, 20
+        )
 
     def test_functions(self):
         DeviceDiscoveryExtension.DDDeviceProtocolToString

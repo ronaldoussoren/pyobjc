@@ -123,3 +123,17 @@ class TestMAAudibleMedia(TestCase):
     def test_functions10_15(self):
         MediaAccessibility.MACaptionAppearanceDidDisplayCaptions
         MediaAccessibility.MACaptionAppearanceIsCustomized
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        self.assertResultIsCFRetained(
+            MediaAccessibility.MACaptionAppearanceCopyProfileIDs
+        )
+        MediaAccessibility.MACaptionAppearanceSetActiveProfileID
+        self.assertResultIsCFRetained(
+            MediaAccessibility.MACaptionAppearanceCopyActiveProfileID
+        )
+        self.assertResultIsCFRetained(
+            MediaAccessibility.MACaptionAppearanceCopyProfileName
+        )
+        MediaAccessibility.MACaptionAppearanceExecuteBlockForProfileID

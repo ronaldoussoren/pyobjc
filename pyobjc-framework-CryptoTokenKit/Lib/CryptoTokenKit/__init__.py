@@ -46,7 +46,11 @@ def _setup():
         ("TKTokenKeyAlgorithm", b"init"),
         ("TKTokenSession", b"init"),
         ("TKToken", b"init"),
+        ("TKToken", b"new"),
         ("TKTLVRecord", b"init"),
+        ("TKTLVRecord", b"new"),
+        ("TKSmartCardTokenRegistrationManager", b"init"),
+        ("TKSmartCardTokenRegistrationManager", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

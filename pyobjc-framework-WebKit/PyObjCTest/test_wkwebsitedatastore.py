@@ -36,3 +36,16 @@ class TestWKWebsiteDataStore(TestCase):
             0,
             b"v@",
         )
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertArgIsBlock(
+            WebKit.WKWebsiteDataStore.fetchDataOfTypes_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            WebKit.WKWebsiteDataStore.restoreData_completionHandler_,
+            1,
+            b"v@",
+        )

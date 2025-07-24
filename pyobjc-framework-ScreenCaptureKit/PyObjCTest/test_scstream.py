@@ -70,6 +70,10 @@ class TestSCStream(TestCase):
             ScreenCaptureKit.SCStreamConfigurationPresetCaptureHDRScreenshotCanonicalDisplay,
             3,
         )
+        self.assertEqual(
+            ScreenCaptureKit.SCStreamConfigurationPresetCaptureHDRRecordingPreservedSDRHDR10,
+            4,
+        )
 
     @min_os_level("13.1")
     def test_constants13_1(self):

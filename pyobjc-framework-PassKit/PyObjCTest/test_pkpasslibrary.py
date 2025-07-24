@@ -40,6 +40,15 @@ class TestPKPassLibrary(TestCase):
         self.assertIsInstance(PassKit.PKPassLibraryPassTypeIdentifierUserInfoKey, str)
         self.assertIsInstance(PassKit.PKPassLibrarySerialNumberUserInfoKey, str)
 
+        self.assertIsEnumType(PassKit.PKPassLibraryCapability)
+        self.assertEqual(PassKit.PKPassLibraryCapabilityBackgroundAddPasses, 0)
+
+        self.assertIsEnumType(PassKit.PKPassLibraryAuthorizationStatus)
+        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusNotDetermined, -1)
+        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusDenied, 0)
+        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusAuthorized, 1)
+        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusRestricted, 2)
+
     def test_methods(self):
         self.assertResultIsBOOL(PassKit.PKPassLibrary.isPassLibraryAvailable)
 
@@ -96,4 +105,12 @@ class TestPKPassLibrary(TestCase):
             PassKit.PKPassLibrary.encryptedServiceProviderDataForSecureElementPass_completion_,
             1,
             b"v@@",
+        )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertArgIsBlock(
+            PassKit.PKPassLibrary.requestAuthorizationForCapability_completion_,
+            1,
+            b"vq",
         )

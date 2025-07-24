@@ -116,6 +116,7 @@
    "PHAssetMediaSubtypeVideoStreamed": { "value": 65536 },
    "PHAssetMediaSubtypeVideoHighFrameRate": { "value": 131072 },
    "PHAssetMediaSubtypeVideoTimelapse": { "value": 262144 },
+   "PHAssetMediaSubtypeVideoScreenRecording": { "value": 524288 },
    "PHLivePhotoFrameTypePhoto": { "value": 0 },
    "PHLivePhotoFrameTypeVideo": { "value": 1 },
    "PHLivePhotoEditingErrorCodeUnknown": { "value": 0 },

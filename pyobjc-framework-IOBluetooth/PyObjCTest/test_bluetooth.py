@@ -5,6 +5,9 @@ import IOBluetooth
 
 class TestBluetooth(TestCase):
     def test_constants(self):
+        self.assertEqual(
+            IOBluetooth.kBluetoothConnectionHandleSerialDeviceReserved, 0x0FFF
+        )
         self.assertEqual(IOBluetooth.kBluetoothConnectionHandleNone, 0xFFFF)
 
         self.assertIsEnumType(IOBluetooth.BluetoothEncryptionEnable)

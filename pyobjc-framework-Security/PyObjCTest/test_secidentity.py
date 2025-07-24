@@ -78,3 +78,7 @@ class TestSecIdentity(TestCase):
             objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecIdentitySetSystemIdentity, 1)
+
+    @min_os_level("10.12")
+    def test_functions12_0(self):
+        self.assertResultIsCFRetained(Security.SecIdentityCreate)

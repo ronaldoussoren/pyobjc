@@ -12,4 +12,10 @@ use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(BADownloaderExtension));
     Py_XDECREF(p);
+#if PyObjC_BUILD_RELEASE >= 2600
+    p = PyObjC_IdToPython(@protocol(BAManagedAssetPackDownloadDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(BAManagedDownloaderExtension));
+    Py_XDECREF(p);
+#endif
 }

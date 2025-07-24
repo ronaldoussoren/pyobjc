@@ -13,3 +13,7 @@ class TestLACompanionType(TestCase):
             LocalAuthentication.LACompanionTypeMac,
             LocalAuthentication.kLACompanionTypeMac,
         )
+        self.assertEqual(
+            LocalAuthentication.LACompanionTypeVision,
+            LocalAuthentication.kLACompanionTypeVision,
+        )

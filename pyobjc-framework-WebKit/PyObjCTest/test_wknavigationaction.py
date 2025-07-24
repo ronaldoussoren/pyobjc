@@ -18,3 +18,7 @@ class TestWKNavigationAction(TestCase):
     @min_os_level("11.3")
     def testMethods11_3(self):
         self.assertResultIsBOOL(WebKit.WKNavigationAction.shouldPerformDownload)
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(WebKit.WKNavigationAction.isContentRuleListRedirect)

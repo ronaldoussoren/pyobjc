@@ -28,28 +28,30 @@ class TestMPSImage_MPSImageKernel(TestCase):
         )
         self.assertResultHasType(
             MetalPerformanceShaders.MPSBinaryImageKernel.primaryOffset,
-            MetalPerformanceShaders.MTLOffset.__typestr__,
+            MetalPerformanceShaders.MPSOffset.__typestr__,
         )
         self.assertArgHasType(
             MetalPerformanceShaders.MPSBinaryImageKernel.setPrimaryOffset_,
             0,
-            MetalPerformanceShaders.MTLOffset.__typestr__,
+            MetalPerformanceShaders.MPSOffset.__typestr__,
         )
         self.assertResultHasType(
             MetalPerformanceShaders.MPSBinaryImageKernel.secondaryOffset,
-            MetalPerformanceShaders.MTLOffset.__typestr__,
+            MetalPerformanceShaders.MPSOffset.__typestr__,
         )
         self.assertArgHasType(
             MetalPerformanceShaders.MPSBinaryImageKernel.setSecondaryOffset_,
             0,
-            MetalPerformanceShaders.MTLOffset.__typestr__,
+            MetalPerformanceShaders.MPSOffset.__typestr__,
         )
         self.assertArgHasType(
             MetalPerformanceShaders.MPSBinaryImageKernel.primarySourceRegionForDestinationSize_,
+            0,
             MetalPerformanceShaders.MTLSize.__typestr__,
         )
         self.assertArgHasType(
             MetalPerformanceShaders.MPSBinaryImageKernel.secondarySourceRegionForDestinationSize_,
+            0,
             MetalPerformanceShaders.MTLSize.__typestr__,
         )
 

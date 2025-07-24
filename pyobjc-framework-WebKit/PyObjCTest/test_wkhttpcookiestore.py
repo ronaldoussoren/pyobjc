@@ -29,3 +29,9 @@ class TestWKError(TestCase):
             0,
             b"v" + objc._C_NSInteger,
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertArgIsBlock(
+            WebKit.WKHTTPCookieStore.setCookies_completionHandler_, 1, b"v"
+        )

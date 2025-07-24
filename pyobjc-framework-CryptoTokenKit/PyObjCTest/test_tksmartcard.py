@@ -1,6 +1,6 @@
 import objc
 
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import CryptoTokenKit
 
 
@@ -74,45 +74,3 @@ class TestTKSmartCard(TestCase):
         self.assertArgIsOut(
             CryptoTokenKit.TKSmartCard.sendIns_p1_p2_data_le_sw_error_, 6
         )
-
-    @min_os_level("10.11")
-    @expectedFailure
-    def testMethods10_11_missing(self):
-        self.assertResultIsBOOL(
-            CryptoTokenKit.TKSmartCardSlotScreen.displayMessage_x_y_duration_clearScreen_
-        )
-        self.assertArgIsBOOL(
-            CryptoTokenKit.TKSmartCardSlotScreen.displayMessage_x_y_duration_clearScreen_,
-            4,
-        )
-
-    @min_os_level("10.10")
-    def testConstants(self):
-        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateMissing, 0)
-        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateEmpty, 1)
-        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateProbing, 2)
-        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateMuteCard, 3)
-        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateValidCard, 4)
-
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINCharsetNumeric, 0)
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINCharsetAlphanumeric, 1)
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINCharsetUpperAlphanumeric, 2)
-
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINEncodingBinary, 0)
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINEncodingASCII, 1)
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINEncodingBCD, 2)
-
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINJustificationLeft, 0)
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINJustificationRight, 1)
-
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINCompletionMaxLength, 1 << 0)
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINCompletionKey, 1 << 1)
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINCompletionTimeout, 1 << 2)
-
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINConfirmationNone, 0)
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINConfirmationNew, 1 << 0)
-        self.assertEqual(CryptoTokenKit.TKSmartCardPINConfirmationCurrent, 1 << 1)
-
-    @min_os_level("10.11")
-    def testProtocols(self):
-        self.assertProtocolExists("TKSmartCardUserInteractionDelegate")

@@ -1,5 +1,5 @@
 import AutomaticAssessmentConfiguration
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAEErrors(TestCase):
@@ -20,4 +20,17 @@ class TestAEErrors(TestCase):
         self.assertEqual(
             AutomaticAssessmentConfiguration.AEAssessmentErrorConfigurationUpdatesNotSupported,
             4,
+        )
+        self.assertEqual(
+            AutomaticAssessmentConfiguration.AEAssessmentErrorRequiredParticipantsNotAvailable,
+            5,
+        )
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            AutomaticAssessmentConfiguration.AENotInstalledParticipantsKey, str
+        )
+        self.assertIsInstance(
+            AutomaticAssessmentConfiguration.AERestrictedSystemParticipantsKey, str
         )

@@ -18,7 +18,7 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(AXDataAxisDescriptor));
     Py_XDECREF(p);
 #endif
-#if PyObjC_BUILD_RELEASE >= 1201
+#if PyObjC_BUILD_RELEASE >= 2600
     p = PyObjC_IdToPython(@protocol(AXBrailleMapRenderer));
     Py_XDECREF(p);
 #endif

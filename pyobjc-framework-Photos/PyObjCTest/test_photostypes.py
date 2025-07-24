@@ -38,6 +38,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoStreamed, (1 << 16))
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoHighFrameRate, (1 << 17))
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoTimelapse, (1 << 18))
+        self.assertEqual(Photos.PHAssetMediaSubtypeVideoScreenRecording, (1 << 19))
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoCinematic, (1 << 21))
 
         self.assertEqual(Photos.PHImageContentModeAspectFit, 0)
@@ -93,6 +94,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumRAW, 217)
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumCinematic, 218)
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumSpatial, 219)
+        self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumScreenRecordings, 220)
         self.assertEqual(Photos.PHAssetCollectionSubtypeAny, sys.maxsize)
 
         self.assertEqual(Photos.PHAssetEditOperationDelete, 1)

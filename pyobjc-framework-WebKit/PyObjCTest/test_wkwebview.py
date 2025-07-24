@@ -24,6 +24,9 @@ class TestWKWebView(TestCase):
         self.assertEqual(WebKit.WKFullscreenStateInFullscreen, 2)
         self.assertEqual(WebKit.WKFullscreenStateExitingFullscreen, 3)
 
+        self.assertIsEnumType(WebKit.WKWebViewDataType)
+        self.assertEqual(WebKit.WKWebViewDataTypeSessionStorage, 1 << 0)
+
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(WebKit.WKWebView.isLoading)
@@ -145,3 +148,12 @@ class TestWKWebView(TestCase):
     @min_os_level("15.0")
     def testMethods15_0(self):
         self.assertResultIsBOOL(WebKit.WKWebView.isWritingToolsActive)
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(WebKit.WKWebView.isBlockedByScreenTime)
+
+        self.assertArgIsBlock(
+            WebKit.WKWebView.fetchDataOfTypes_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(WebKit.WKWebView.restoreData_completionHandler_, 1, b"v@")

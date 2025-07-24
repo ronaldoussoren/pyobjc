@@ -22,4 +22,8 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(SKStoreProductViewControllerDelegate));
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1016 */
+#if PyObjC_BUILD_RELEASE >= 2600
+    p = PyObjC_IdToPython(@protocol(SKDownloaderExtension));
+    Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 2600 */
 }

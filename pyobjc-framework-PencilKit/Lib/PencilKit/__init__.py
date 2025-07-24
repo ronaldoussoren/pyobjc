@@ -30,8 +30,11 @@ def _setup():
 
     for cls, sel in (
         ("PKStrokePoint", b"init"),
+        ("PKStrokePoint", b"new"),
         ("PKTool", b"init"),
         ("PKTool", b"new"),
+        ("PKToolPickerItem", b"init"),
+        ("PKToolPickerItem", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

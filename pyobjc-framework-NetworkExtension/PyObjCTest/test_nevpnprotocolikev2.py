@@ -62,6 +62,11 @@ class TestNEVPNProtocolIKEv2(TestCase):
         self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_1, 2)
         self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_2, 3)
 
+        self.assertIsEnumType(NetworkExtension.NEVPNIKEv2PostQuantumKeyExchangeMethod)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2PostQuantumKeyExchangeMethodNone, 0)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2PostQuantumKeyExchangeMethod36, 36)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2PostQuantumKeyExchangeMethod37, 37)
+
     @min_os_level("10.11")
     def testMethods(self):
         self.assertResultIsBOOL(
@@ -100,5 +105,15 @@ class TestNEVPNProtocolIKEv2(TestCase):
         self.assertResultIsBOOL(NetworkExtension.NEVPNIKEv2PPKConfiguration.isMandatory)
         self.assertArgIsBOOL(
             NetworkExtension.NEVPNIKEv2PPKConfiguration.setIsMandatory_,
+            0,
+        )
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(
+            NetworkExtension.NEVPNProtocolIKEv2.allowPostQuantumKeyExchangeFallback
+        )
+        self.assertArgIsBOOL(
+            NetworkExtension.NEVPNProtocolIKEv2.setAllowPostQuantumKeyExchangeFallback_,
             0,
         )

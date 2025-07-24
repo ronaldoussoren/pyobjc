@@ -218,7 +218,7 @@ functions = {
                             1: {"type": b"d"},
                             2: {"type": b"q"},
                             3: {"type": b"B"},
-                            4: {"type": b"^B"},
+                            4: {"type": b"o^B"},
                         },
                     }
                 }

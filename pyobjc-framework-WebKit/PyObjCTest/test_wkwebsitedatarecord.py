@@ -28,3 +28,7 @@ class TestWKWebsiteDataRecord(TestCase):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeSearchFieldRecentSearches, str)
         self.assertIsInstance(WebKit.WKWebsiteDataTypeMediaKeys, str)
         self.assertIsInstance(WebKit.WKWebsiteDataTypeHashSalt, str)
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(WebKit.WKWebsiteDataTypeScreenTime, str)

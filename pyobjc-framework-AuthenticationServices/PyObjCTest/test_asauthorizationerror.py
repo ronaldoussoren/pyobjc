@@ -23,3 +23,10 @@ class TestASAuthorization(TestCase):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationErrorCredentialExport, 1008
         )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationErrorPreferSignInWithApple, 1009
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationErrorDeviceNotConfiguredForPasskeyCreation,
+            1010,
+        )

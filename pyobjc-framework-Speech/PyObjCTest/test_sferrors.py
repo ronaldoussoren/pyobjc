@@ -9,7 +9,8 @@ class TestSFErrors(TestCase):
         self.assertEqual(Speech.SFSpeechErrorCodeAudioReadFailed, 2)
         self.assertEqual(Speech.SFSpeechErrorCodeUndefinedTemplateClassName, 7)
         self.assertEqual(Speech.SFSpeechErrorCodeMalformedSupplementalModel, 8)
-        self.assertEqual(Speech.SFSpeechErrorCodeTimeout, 10)
+        self.assertEqual(Speech.SFSpeechErrorCodeTimeout, 12)
+        self.assertEqual(Speech.SFSpeechErrorCodeMissingParameter, 13)
 
     @min_os_level("14.0")
     def test_constants14_0(self):

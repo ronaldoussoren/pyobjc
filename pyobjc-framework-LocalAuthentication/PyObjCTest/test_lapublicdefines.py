@@ -79,8 +79,10 @@ class TestLAPublicDefines(TestCase):
             LocalAuthentication.kLAErrorTouchIDLockout,
         )
 
+        self.assertEqual(LocalAuthentication.kLACompanionTypeNone, 0)
         self.assertEqual(LocalAuthentication.kLACompanionTypeWatch, 1 << 0)
         self.assertEqual(LocalAuthentication.kLACompanionTypeMac, 1 << 1)
+        self.assertEqual(LocalAuthentication.kLACompanionTypeVision, 1 << 2)
 
         self.assertEqual(LocalAuthentication.kLAAccessControlOperationCreateItem, 0)
         self.assertEqual(LocalAuthentication.kLAAccessControlOperationUseItem, 1)

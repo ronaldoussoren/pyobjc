@@ -63,6 +63,8 @@ def _setup():
         ("PKShareablePassMetadataPreview", b"new"),
         ("PKIdentityDocumentMetadata", b"init"),
         ("PKIdentityDocumentMetadata", b"new"),
+        ("PKIdentityAnyOfDescriptor", b"init"),
+        ("PKIdentityAnyOfDescriptor", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

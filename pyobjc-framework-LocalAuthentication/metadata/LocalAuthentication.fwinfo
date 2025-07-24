@@ -239,6 +239,15 @@
    }
   },
   "enum": {
+   "kLAOptionUserFallback": {
+    "value": 1
+   },
+   "kLAOptionAuthenticationReason": {
+    "value": 2
+   },
+   "kLACompanionTypeVision": {
+    "value": 4
+   },
    "kLACompanionTypeWatch": {
     "value": 1
    },

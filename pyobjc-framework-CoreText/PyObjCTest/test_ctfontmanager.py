@@ -58,7 +58,9 @@ class TestCTFontManager(TestCase):
             CoreText.CTFontManagerCreateFontRequestRunLoopSource
         )
         self.assertArgIsBlock(
-            CoreText.CTFontManagerCreateFontRequestRunLoopSource, 1, b"@@i"
+            CoreText.CTFontManagerCreateFontRequestRunLoopSource,
+            1,
+            b"^{__CFArray=}^{__CFDictionary=}i",
         )
 
         CoreText.CTFontManagerGetAutoActivationSetting

@@ -37,6 +37,12 @@ def _setup():
         ("BAAppExtensionInfo", b"new"),
         ("BADownload", b"init"),
         ("BADownload", b"new"),
+        ("BAAssetPack", b"init"),
+        ("BAAssetPack", b"new"),
+        ("BAAssetPackManager", b"init"),
+        ("BAAssetPackManager", b"new"),
+        ("BAAssetPackManifest", b"init"),
+        ("BAAssetPackManifest", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

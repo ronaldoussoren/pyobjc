@@ -9,6 +9,13 @@
    "PKPassLibraryNotificationKey": { "type": "@", "type_name": "NSString" },
    "PKPaymentErrorKey": { "type": "@", "type_name": "NSString" }
   },
+  "enum_type": {
+   "PKDisbursementRequestSchedule": { "typestr": "q" }
+  },
+  "enum": {
+   "PKDisbursementRequestScheduleOneTime": { "value": 0, "deprecated": 1500 },
+   "PKDisbursementRequestScheduleFuture": { "value": 1, "deprecated": 1500 }
+  },
   "classes": {
    "PKStoredValuePassProperties": {
     "methods": [
