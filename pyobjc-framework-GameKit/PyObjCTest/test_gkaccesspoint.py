@@ -48,3 +48,28 @@ class TestGKAccessPoint(TestCase):
         self.assertArgIsBlock(
             GameKit.GKAccessPoint.triggerAccessPointWithPlayer_handler_, 1, b"v"
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertArgIsBlock(
+            GameKit.GKAccessPoint.triggerAccessPointForPlayTogetherWithHandler_, 0, b"v"
+        )
+        self.assertArgIsBlock(
+            GameKit.GKAccessPoint.triggerAccessPointForChallengesWithHandler_, 0, b"v"
+        )
+        self.assertArgIsBlock(
+            GameKit.GKAccessPoint.triggerAccessPointWithChallengeDefinitionID_handler_,
+            1,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            GameKit.GKAccessPoint.triggerAccessPointWithGameActivityDefinitionID_handler_,
+            1,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            GameKit.GKAccessPoint.triggerAccessPointWithGameActivity_handler_, 1, b"v"
+        )
+        self.assertArgIsBlock(
+            GameKit.GKAccessPoint.triggerAccessPointForFriendingWithHandler_, 0, b"v"
+        )

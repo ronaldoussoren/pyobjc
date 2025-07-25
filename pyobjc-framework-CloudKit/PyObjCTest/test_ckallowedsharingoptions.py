@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import CloudKit
 
 
@@ -24,4 +24,18 @@ class TestCKAllowedSharingOptions(TestCase):
             CloudKit.CKSharingParticipantPermissionOptionAny,
             CloudKit.CKSharingParticipantPermissionOptionReadOnly
             | CloudKit.CKSharingParticipantPermissionOptionReadWrite,
+        )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            CloudKit.CKAllowedSharingOptions.allowsParticipantsToInviteOthers
+        )
+        self.assertArgIsBOOL(
+            CloudKit.CKAllowedSharingOptions.setAllowsParticipantsToInviteOthers_, 0
+        )
+
+        self.assertResultIsBOOL(CloudKit.CKAllowedSharingOptions.allowsAccessRequests)
+        self.assertArgIsBOOL(
+            CloudKit.CKAllowedSharingOptions.setAllowsAccessRequests_, 0
         )

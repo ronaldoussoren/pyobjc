@@ -56,6 +56,10 @@ def _setup():
         ("FSStatFSResult", b"new"),
         ("FSExtentPacker", b"init"),
         ("FSExtentPacker", b"new"),
+        ("FSGenericURLResource", b"init"),
+        ("FSGenericURLResource", b"new"),
+        ("FSPathURLResource", b"init"),
+        ("FSPathURLResource", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

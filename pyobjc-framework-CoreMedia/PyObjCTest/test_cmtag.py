@@ -49,6 +49,9 @@ class TestCMTag(TestCase):
             CoreMedia.kCMProjectionType_HalfEquirectangular, fourcc(b"hequ")
         )
         self.assertEqual(CoreMedia.kCMProjectionType_Fisheye, fourcc(b"fish"))
+        self.assertEqual(
+            CoreMedia.kCMProjectionType_ParametricImmersive, fourcc(b"prim")
+        )
 
         self.assertIsEnumType(CoreMedia.CMPackingType)
         self.assertEqual(CoreMedia.kCMPackingType_None, fourcc(b"none"))
@@ -82,6 +85,12 @@ class TestCMTag(TestCase):
         self.assertIsInstance(CoreMedia.kCMTagValueKey, str)
         self.assertIsInstance(CoreMedia.kCMTagCategoryKey, str)
         self.assertIsInstance(CoreMedia.kCMTagDataTypeKey, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMTagProjectionTypeParametricImmersive, CoreMedia.CMTag
+        )
 
     def test_structs(self):
         v = CoreMedia.CMTag()

@@ -135,6 +135,35 @@ class TestCMMetadata(TestCase):
             str,
         )
 
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataIdentifier_QuickTimeMetadataSpatialAudioMix, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataIdentifier_QuickTimeMetadataDisplayMaskRectangleMono,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataIdentifier_QuickTimeMetadataDisplayMaskRectangleStereoLeft,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataIdentifier_QuickTimeMetadataDisplayMaskRectangleStereoRight,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataIdentifier_QuickTimeMetadataPresentationImmersiveMedia,
+            str,
+        )
+
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataBaseDataType_RasterRectangleValue, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataBaseDataType_ExtendedRasterRectangleValue, str
+        )
+
     @min_os_level("10.10")
     def test_functions10_10(self):
         self.assertArgIsOut(CoreMedia.CMMetadataCreateIdentifierForKeyAndKeySpace, 3)

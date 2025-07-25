@@ -28,3 +28,8 @@ class TestCKShareParticipant(TestCase):
         self.assertEqual(CloudKit.CKShareParticipantRoleOwner, 1)
         self.assertEqual(CloudKit.CKShareParticipantRolePrivateUser, 3)
         self.assertEqual(CloudKit.CKShareParticipantRolePublicUser, 4)
+        self.assertEqual(CloudKit.CKShareParticipantRoleAdministrator, 2)
+
+    @min_os_level("26.0")
+    def test_methods(self):
+        self.assertResultIsBOOL(CloudKit.CKShareParticipant.isApprovedRequester)

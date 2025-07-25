@@ -991,6 +991,12 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertIsInstance(v.mChannelLayoutTag, int)
         self.assertPickleRoundTrips(v)
 
+        v = CoreAudio.AudioStreamPacketDependencyDescription()
+        self.assertIsInstance(v.mIsIndependentlyDecodable, int)
+        self.assertIsInstance(v.mPreRollCount, int)
+        self.assertIsInstance(v.mFlags, int)
+        self.assertIsInstance(v.mReserved, int)
+
     def test_functions(self):
         CoreAudio.TestAudioFormatNativeEndian
 

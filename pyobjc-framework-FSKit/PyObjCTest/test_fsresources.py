@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import FSKit
 
@@ -155,3 +155,7 @@ class TestFSResource(TestCase):
         self.assertArgIsBOOL(
             FSKit.FSBlockDeviceResource.proxyResourceForBSDName_isWritable_, 1
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(FSKit.FSPathURLResource.isWritable)

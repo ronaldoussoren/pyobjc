@@ -31,3 +31,8 @@ class TestGCProductCategories(TestCase):
     @min_os_level("13.0")
     def test_constants13_0(self):
         self.assertIsInstance(GameController.GCProductCategoryHID, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(GameController.GCProductCategorySpatialController, str)
+        self.assertIsInstance(GameController.GCProductCategorySpatialStylus, str)

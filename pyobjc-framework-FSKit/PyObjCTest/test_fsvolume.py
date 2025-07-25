@@ -122,6 +122,12 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def closeItem_keepingModes_replyHandler_(self, a, b, c):
         pass
 
+    def enableOpenUnlinkEmulation(self):
+        return 1
+
+    def setEnableOpenUnlinkEmulation_(self, a):
+        pass
+
     # FSVolumeReadWriteOperations
     def readFromFile_offset_length_intoBuffer_replyHandler_(self, a, b, c, d, e):
         pass
@@ -339,6 +345,9 @@ class TestFSVolume(TestCase):
         self.assertArgIsBlock(
             TestFSVolumeHelper.deactivateWithOptions_replyHandler_, 1, b"v@"
         )
+
+        self.assertResultIsBOOL(TestFSVolumeHelper.enableOpenUnlinkEmulation)
+        self.assertArgIsBOOL(TestFSVolumeHelper.setEnableOpenUnlinkEmulation_, 0)
 
         # FSVolumeXattrOperations
         self.assertResultIsBOOL(TestFSVolumeHelper.xattrOperationsInhibited)

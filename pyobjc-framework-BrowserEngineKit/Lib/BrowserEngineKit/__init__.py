@@ -64,6 +64,10 @@ def _setup():
         ("BEWebContentProcess", b"new"),
         ("BETextDocumentContext", b"init"),
         ("BETextDocumentContext", b"new"),
+        ("BEAccessibilityRemoteHostElement", b"init"),
+        ("BEAccessibilityRemoteHostElement", b"new"),
+        ("BEAccessibilityRemoteElement", b"init"),
+        ("BEAccessibilityRemoteElement", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

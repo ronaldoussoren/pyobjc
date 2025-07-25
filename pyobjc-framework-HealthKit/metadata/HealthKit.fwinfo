@@ -12,6 +12,8 @@
    "HKClinicalTypeIdentifier": { "type": "@", "type_name": "NSString" },
    "HKFHIRRelease": { "type": "@", "type_name": "NSString" },
    "HKFHIRResourceType": { "type": "@", "type_name": "NSString" },
+   "HKMedicationGeneralForm": { "type": "@", "type_name": "NSString" },
+   "HKHealthConceptDomain": { "type": "@", "type_name": "NSString" },
    "HKAudiogramConductionType": { "type": "q" }
   },
   "enum": {

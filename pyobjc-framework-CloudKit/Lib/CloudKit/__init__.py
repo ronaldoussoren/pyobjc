@@ -106,6 +106,10 @@ def _setup():
         ("CKSyncEngineFetchChangesContext", b"new"),
         ("CKSyncEngineSendChangesContext", b"init"),
         ("CKSyncEngineSendChangesContext", b"new"),
+        ("CKShareAccessRequester", b"init"),
+        ("CKShareAccessRequester", b"new"),
+        ("CKShareBlockedIdentity", b"init"),
+        ("CKShareBlockedIdentity", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 
@@ -172,6 +176,8 @@ def _setup():
         "CKSystemSharingUIObserver",
         "CKUserIdentity",
         "CKUserIdentityLookupInfo",
+        "CKShareAccessRequester",
+        "CKShareBlockedIdentity",
     ):
         try:
             objc.lookUpClass(clsname).__final__ = True

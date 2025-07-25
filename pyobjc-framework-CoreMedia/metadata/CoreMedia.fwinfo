@@ -75,6 +75,11 @@
    "kCMFormatDescriptionExtension_AlternativeTransferCharacteristics": { "typestr": "@" }
   },
   "functions": {
+  "CMTaggedBufferGroupFormatDescriptionCreateForTaggedBufferGroupWithExtensions": {
+   "args": {
+    "3": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
   "CMTagCollectionCopyTagsOfCategories": {
    "args": {
     "2": { "type_modifier": "n", "c_array_length_in_arg": 3 },

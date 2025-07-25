@@ -292,6 +292,12 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyVoiceActivityDetectionState, fourcc(b"vAdS")
         )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyWantsControlsRestored, fourcc(b"resc")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyWantsStreamFormatsRestored, fourcc(b"resf")
+        )
 
         self.assertEqual(CoreAudio.kAudioAggregateDeviceClassID, fourcc(b"aagg"))
 

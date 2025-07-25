@@ -19,3 +19,8 @@ class TestCATapDescription(TestCase):
         self.assertArgIsBOOL(CoreAudio.CATapDescription.setMixdown_, 0)
         self.assertResultIsBOOL(CoreAudio.CATapDescription.isPrivate)
         self.assertArgIsBOOL(CoreAudio.CATapDescription.setPrivate_, 0)
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(CoreAudio.CATapDescription.isProcessRestoreEnabled)
+        self.assertArgIsBOOL(CoreAudio.CATapDescription.setProcessRestoreEnabled_, 0)

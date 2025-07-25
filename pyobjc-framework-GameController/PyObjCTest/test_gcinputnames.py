@@ -48,6 +48,16 @@ class TestGCInputNames(TestCase):
         self.assertIsInstance(GameController.GCInputLeftPaddle, str)
         self.assertIsInstance(GameController.GCInputRightPaddle, str)
 
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(GameController.GCInputThumbstick, str)
+        self.assertIsInstance(GameController.GCInputThumbstickButton, str)
+        self.assertIsInstance(GameController.GCInputGripButton, str)
+        self.assertIsInstance(GameController.GCInputTrigger, str)
+        self.assertIsInstance(GameController.GCInputStylusTip, str)
+        self.assertIsInstance(GameController.GCInputStylusPrimaryButton, str)
+        self.assertIsInstance(GameController.GCInputStylusSecondaryButton, str)
+
     def test_enum_types(self):
         self.assertIsTypedEnum(GameController.GCInputElementName, str)
         self.assertIsTypedEnum(GameController.GCInputButtonName, str)

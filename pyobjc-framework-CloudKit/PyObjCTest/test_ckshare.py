@@ -13,3 +13,8 @@ class TestCKShare(TestCase):
     @min_os_level("12.0")
     def testConstants12_0(self):
         self.assertIsInstance(CloudKit.CKRecordNameZoneWideShare, str)
+
+    @min_os_level("26.0")
+    def test_methods(self):
+        self.assertResultIsBOOL(CloudKit.CKShare.allowsAccessRequests)
+        self.assertArgIsBOOL(CloudKit.CKShare.setAllowsAccessRequests_, 0)

@@ -95,6 +95,14 @@ def _setup():
         ("HKAudiogramSensitivityPointClampingRange", b"new"),
         ("HKAudiogramSensitivityTes", b"init"),
         ("HKAudiogramSensitivityTes", b"new"),
+        ("HKHealthConceptIdentifier", b"init"),
+        ("HKHealthConceptIdentifier", b"new"),
+        ("HKMedicationConcept", b"init"),
+        ("HKMedicationConcept", b"new"),
+        ("HKMedicationDoseEvent", b"init"),
+        ("HKMedicationDoseEvent", b"new"),
+        ("HKUserAnnotatedMedication", b"init"),
+        ("HKUserAnnotatedMedication", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

@@ -41,7 +41,7 @@ class TestSFAuthorization(TestCase):
         self.assertArgHasType(
             SecurityFoundation.SFAuthorization.initWithFlags_rights_environment_,
             1,
-            "^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}",
+            b"^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}",
         )
         self.assertArgHasType(
             SecurityFoundation.SFAuthorization.initWithFlags_rights_environment_,

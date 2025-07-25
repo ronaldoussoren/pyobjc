@@ -360,3 +360,12 @@ class TestHKTypeIdentifiers(TestCase):
             HealthKit.HKQuantityTypeIdentifierAppleSleepingBreathingDisturbances, str
         )
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierSleepApneaEvent, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            HealthKit.HKMedicationDoseEventTypeIdentifierMedicationDoseEvent, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKDataTypeIdentifierUserAnnotatedMedicationConcept, str
+        )

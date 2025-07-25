@@ -543,6 +543,11 @@
    "kAudioChannelBit_CenterTopMiddle": { "alias": "kAudioChannelBit_TopCenterSurround" }
   },
   "structs": {
+   "AudioStreamPacketDependencyDescription": {
+    "typestr": "{AudioStreamPacketDependencyDescription=IIII}",
+    "special": false,
+    "fieldnames": ["mIsIndependentlyDecodable", "mPreRollCount", "mFlags", "mReserved"]
+   },
    "AudioClassDescription": {
     "typestr": "{AudioClassDescription=III}",
     "special": false,
