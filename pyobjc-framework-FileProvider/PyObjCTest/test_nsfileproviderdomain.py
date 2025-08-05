@@ -23,7 +23,7 @@ class TestNSFileProviderDomain(TestCase):
 
     @min_os_level("26.0")
     def test_constants26_0(self):
-        self.assertIsInstance(FileProvider.NSFileProviderUserInfoKey, str)
+        self.assertIsTypedEnum(FileProvider.NSFileProviderUserInfoKey, str)
         self.assertIsInstance(FileProvider.NSFileProviderUserInfoExperimentIDKey, str)
 
     @min_os_level("11.0")

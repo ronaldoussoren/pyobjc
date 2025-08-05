@@ -14,3 +14,4 @@ class TestMTLFunctionDescriptor(TestCase):
         )
         self.assertEqual(Metal.MTLFunctionOptionStoreFunctionInMetalScript, 1 << 1)
         self.assertEqual(Metal.MTLFunctionOptionFailOnBinaryArchiveMiss, 1 << 2)
+        self.assertEqual(Metal.MTLFunctionOptionPipelineIndependent, 1 << 3)

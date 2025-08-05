@@ -31,6 +31,6 @@ class TestSFSpeechLanguageModel(TestCase):
         )
         self.assertArgIsBlock(
             Speech.SFSpeechLanguageModel.prepareCustomLanguageModelForUrl_configuration_ignoresCache_completion_,
-            4,
+            3,
             b"v@",
         )

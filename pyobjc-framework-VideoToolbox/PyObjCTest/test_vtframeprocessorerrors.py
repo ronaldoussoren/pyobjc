@@ -18,6 +18,7 @@ class TestVTFrameProcessorErrors(TestCase):
         self.assertEqual(VideoToolbox.VTFrameProcessorProcessingError, -19740)
         self.assertEqual(VideoToolbox.VTFrameProcessorInvalidParameterError, -19741)
         self.assertEqual(VideoToolbox.VTFrameProcessorInvalidFrameTiming, -19742)
+        self.assertEqual(VideoToolbox.VTFrameProcessorAssetDownloadFailed, -19743)
 
     @min_os_level("15.4")
     def test_constants15_4(self):

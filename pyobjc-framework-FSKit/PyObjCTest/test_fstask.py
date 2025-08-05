@@ -6,5 +6,5 @@ import FSKit
 class TestFSTask(TestCase):
     @min_os_level("26.0")
     def test_methods(self):
-        self.assertResultIsBlock(FSKit.FSTask.cancellationHandler, b"v")
-        self.assertArgIsBlock(FSKit.FSTask.setCancellationHandler_, 0, b"v")
+        self.assertResultIsBlock(FSKit.FSTask.cancellationHandler, b"@")
+        self.assertArgIsBlock(FSKit.FSTask.setCancellationHandler_, 0, b"@")

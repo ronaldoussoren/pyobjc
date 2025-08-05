@@ -114,6 +114,17 @@
      }
     ]
    },
+   "AVPlayerPlaybackCoordinator": {
+    "methods": [
+     {
+      "selector": "coordinateUsingCoordinationMedium:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVAssetExportSession": {
     "methods": [
      {
@@ -5518,6 +5529,10 @@
    }
   },
   "typed_enum": {
+   "AVCaptureSceneMonitoringStatus": {
+    "type": "@",
+    "type_name": "NSString"
+   },
    "AVMetadataIdentifier": {
     "type": "@",
     "type_name": "NSString"

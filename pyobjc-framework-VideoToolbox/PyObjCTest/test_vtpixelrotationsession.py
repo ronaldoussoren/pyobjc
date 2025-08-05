@@ -18,3 +18,9 @@ class TestVTPixelRotationSession(TestCase):
         self.assertIsInstance(VideoToolbox.VTPixelRotationSessionGetTypeID(), int)
 
         VideoToolbox.VTPixelRotationSessionRotateImage
+
+    @min_os_level("26.0")
+    def test_constants(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTRAWProcessingPropertyKey_MetadataForSidecarFile, str
+        )

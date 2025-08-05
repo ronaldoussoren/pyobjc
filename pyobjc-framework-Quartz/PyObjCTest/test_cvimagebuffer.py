@@ -144,6 +144,40 @@ class TestCVImageBuffer(TestCase):
             Quartz.kCVImageBufferPostDecodeProcessingFrameMetadataKey, str
         )
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Quartz.kCVImageBufferDisplayMaskRectangleKey, str)
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangle_ReferenceRasterWidthKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangle_ReferenceRasterHeightKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangle_RectangleLeftKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangle_RectangleWidthKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangle_RectangleTopKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangle_RectangleHeightKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangleStereoLeftKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangleStereoRightKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangle_LeftEdgePointsKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVImageBufferDisplayMaskRectangle_RightEdgePointsKey, str
+        )
+
     def testFunctions(self):
         self.assertResultHasType(
             Quartz.CVImageBufferGetEncodedSize, Quartz.CGSize.__typestr__

@@ -106,6 +106,7 @@ class TestNSTextCheckingClient(TestCase):
         self.assertEqual(AppKit.NSWritingToolsResultRichText, 1 << 1)
         self.assertEqual(AppKit.NSWritingToolsResultList, 1 << 2)
         self.assertEqual(AppKit.NSWritingToolsResultTable, 1 << 3)
+        self.assertEqual(AppKit.NSWritingToolsResultPresentationIntent, 1 << 4)
 
     def test_methods(self):
         self.assertResultHasType(

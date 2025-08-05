@@ -644,3 +644,9 @@ class TestCGContext(TestCase):
         Quartz.CGContextSetEDRTargetHeadroom
         Quartz.CGContextGetEDRTargetHeadroom
         Quartz.CGContextDrawImageApplyingToneMapping
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        Quartz.CGContextGetContentToneMappingInfo
+        Quartz.CGContextSetContentToneMappingInfo
+        Quartz.CGContextSynchronizeAttributes

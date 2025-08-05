@@ -28,3 +28,7 @@ class TestVTFrameProcessor_OpticalFlow(TestCase):
         self.assertResultIsBOOL(
             VideoToolbox.VTOpticalFlowConfiguration.processorSupported
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(VideoToolbox.VTOpticalFlowConfiguration.isSupported)

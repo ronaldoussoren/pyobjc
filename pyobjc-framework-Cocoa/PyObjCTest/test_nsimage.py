@@ -59,6 +59,16 @@ class TestNSImage(TestCase):
         self.assertEqual(AppKit.NSImageSymbolScaleMedium, 2)
         self.assertEqual(AppKit.NSImageSymbolScaleLarge, 3)
 
+        self.assertIsEnumType(AppKit.NSImageSymbolVariableValueMode)
+        self.assertEqual(AppKit.NSImageSymbolVariableValueModeAutomatic, 0)
+        self.assertEqual(AppKit.NSImageSymbolVariableValueModeColor, 1)
+        self.assertEqual(AppKit.NSImageSymbolVariableValueModeDraw, 2)
+
+        self.assertIsEnumType(AppKit.NSImageSymbolColorRenderingMode)
+        self.assertEqual(AppKit.NSImageSymbolColorRenderingModeAutomatic, 0)
+        self.assertEqual(AppKit.NSImageSymbolColorRenderingModeFlat, 1)
+        self.assertEqual(AppKit.NSImageSymbolColorRenderingModeGradient, 2)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(AppKit.NSImageNameQuickLookTemplate, str)

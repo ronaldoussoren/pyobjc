@@ -93,10 +93,10 @@ class TestMPMediaItem(TestCase):
         self.assertArgIsBlock(
             MediaPlayer.MPMediaItemAnimatedArtwork.initWithArtworkID_previewImageRequestHandler_videoAssetFileURLRequestHandler_,
             1,
-            b"v@@?" + Quartz.CGSize.__typestr__,
+            b"v" + Quartz.CGSize.__typestr__ + b"@?",
         )
         self.assertArgIsBlock(
             MediaPlayer.MPMediaItemAnimatedArtwork.initWithArtworkID_previewImageRequestHandler_videoAssetFileURLRequestHandler_,
             2,
-            b"v@@?" + Quartz.CGSize.__typestr__,
+            b"v" + Quartz.CGSize.__typestr__ + b"@?",
         )

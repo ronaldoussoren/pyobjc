@@ -16,7 +16,7 @@ class TestGKChallengeDefinition(TestCase):
             b"v@@",
         )
         self.assertArgIsBlock(
-            GameKit.GKChallengeDefinition.hasActiveChallengesWithCompletionHandler,
+            GameKit.GKChallengeDefinition.hasActiveChallengesWithCompletionHandler_,
             0,
             b"vZ@",
         )

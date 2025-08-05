@@ -43,6 +43,10 @@ class TestCGImageSource(TestCase):
             Quartz.kCGImageSourceGenerateImageSpecificLumaScaling, str
         )
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Quartz.kCGComputeHDRStats, str)
+
     def testTypes(self):
         self.assertIsCFType(Quartz.CGImageSourceRef)
 

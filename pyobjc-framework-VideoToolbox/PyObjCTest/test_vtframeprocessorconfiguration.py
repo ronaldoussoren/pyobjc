@@ -19,6 +19,9 @@ class TestVTFrameProcessorConfigurationHelper(VideoToolbox.NSObject):
     def minimumDimensions(self):
         return 1
 
+    def isSupported(self):
+        return 1
+
 
 class TestVTFrameProcessorConfiguration(TestCase):
     @min_sdk_level("15.4")
@@ -26,9 +29,7 @@ class TestVTFrameProcessorConfiguration(TestCase):
         self.assertProtocolExists("VTFrameProcessorConfiguration")
 
     def test_protocol_methods(self):
-        self.assertResultIsBOOL(
-            TestVTFrameProcessorConfigurationHelper.processorSupported
-        )
+        self.assertResultIsBOOL(TestVTFrameProcessorConfigurationHelper.isSupported)
         self.assertResultHasType(
             TestVTFrameProcessorConfigurationHelper.nextFrameCount, objc._C_NSInteger
         )

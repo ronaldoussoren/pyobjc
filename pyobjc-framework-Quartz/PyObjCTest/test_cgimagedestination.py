@@ -108,6 +108,16 @@ class TestCGImageDestination(TestCase):
     def testConstants10_12(self):
         self.assertIsInstance(Quartz.kCGImageDestinationOptimizeColorForSharing, str)
 
+        self.assertIsInstance(Quartz.kCGImagePropertyEncoder, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyASTCEncoder, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyPVREncoder, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyASTCBlockSize, str)
+
+    @min_os_level("10.14")
+    def testConstants10_14(self):
+        self.assertIsInstance(Quartz.kCGImagePropertyBCEncoder, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyBCFormat, str)
+
     @min_os_level("11.0")
     def testConstants11_0(self):
         self.assertIsInstance(Quartz.kCGImageDestinationPreserveGainMap, str)
@@ -121,6 +131,26 @@ class TestCGImageDestination(TestCase):
         self.assertIsInstance(Quartz.kCGImageDestinationEncodeRequestOptions, str)
         self.assertIsInstance(Quartz.kCGImageDestinationEncodeBaseIsSDR, str)
         self.assertIsInstance(Quartz.kCGImageDestinationEncodeTonemapMode, str)
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Quartz.kCGImagePropertyASTCBlockSize4x4, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyASTCBlockSize8x8, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeIsBaseImage, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeBaseColorSpace, str)
+        self.assertIsInstance(
+            Quartz.kCGImageDestinationEncodeBasePixelFormatRequest, str
+        )
+        self.assertIsInstance(
+            Quartz.kCGImageDestinationEncodeGenerateGainMapWithBaseImage, str
+        )
+        self.assertIsInstance(
+            Quartz.kCGImageDestinationEncodeGainMapPixelFormatRequest, str
+        )
+        self.assertIsInstance(
+            Quartz.kCGImageDestinationEncodeGainMapSubsampleFactor, str
+        )
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeAlternateColorSpace, str)
 
     @min_os_level("10.8")
     def testFunctions10_8(self):

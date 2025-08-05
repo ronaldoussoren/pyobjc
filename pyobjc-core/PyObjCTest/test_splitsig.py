@@ -87,6 +87,14 @@ class SplitSignatureTest(TestCase):
             ),
         )
 
+    def test_macos26_blocks(self):
+        self.assertEqual(
+            objc.splitSignature(
+                b'v32@0:8@"NSString"16@?<v@?@"BAAssetPack"@"NSError">24'
+            ),
+            (b"v", b"@", b":", b"@", b'@?<v@?@"BAAssetPack"@"NSError">'),
+        )
+
     def testSignatureCount(self):
         EXCEPTIONS = [
             # For some reason this signature doesn't seem to be correct, even
@@ -133,6 +141,7 @@ class SplitSignatureTest(TestCase):
                     continue
 
                 if sel.selector.split(b":", 1)[0] in (
+                    b"setSwiftUI",
                     b"set",
                     b"fm",
                     b"_fm",

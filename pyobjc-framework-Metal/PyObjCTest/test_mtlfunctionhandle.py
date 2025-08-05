@@ -7,6 +7,9 @@ class TestMTLFunctionHandleHelper(Metal.NSObject):
     def functionType(self):
         return 1
 
+    def gpuResourceID(self):
+        return 1
+
 
 class TestMTLFunctionHandle(TestCase):
     @min_sdk_level("11.0")
@@ -16,4 +19,7 @@ class TestMTLFunctionHandle(TestCase):
     def test_methods(self):
         self.assertResultHasType(
             TestMTLFunctionHandleHelper.functionType, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFunctionHandleHelper.gpuResourceID, Metal.MTLResourceID.__typestr__
         )

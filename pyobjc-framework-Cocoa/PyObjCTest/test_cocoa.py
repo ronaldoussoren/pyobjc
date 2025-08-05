@@ -36,6 +36,10 @@ class TestCallableMetadata(TestCase):
                 ("IOBluetoothDevice", "updateInquiryInfo_lastUpdate_"),
                 ("IOBluetoothDevice", "updateServicesArchive_lastUpdate_"),
                 ("SDPQueryCallbackDispatcher", "sdpQueryComplete_status_"),
+                (
+                    "NSTextLayoutFragment",
+                    "coreTypesetter_baseWritingDirectionForRange_bidiLevelsPointer_",
+                ),
                 "UINSServiceViewController",
                 "IOBluetoothDeviceInquiry",
             },

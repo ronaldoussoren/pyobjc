@@ -90,4 +90,3 @@ class TestNERelayManager(TestCase):
     @min_os_level("26.0")
     def test_methods26_0(self):
         self.assertResultIsBOOL(NetworkExtension.NERelayManager.isDNSFailoverAllowed)
-        self.assertArgIsBOOL(NetworkExtension.NERelayManager.setDNSFailoverAllowed_, 0)

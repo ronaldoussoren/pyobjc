@@ -1,5 +1,3 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
   "aliases": {
@@ -116,6 +114,7 @@
   },
   "classes": {},
   "typed_enum": {
+   "CIDynamicRangeOption": { "type": "@", "type_name": "NSString" },
    "CIContextOption": { "type": "@", "type_name": "NSString" },
    "CIImageRepresentationOption": { "type": "@", "type_name": "NSString" },
    "CIFormat": { "type": "q" },
@@ -263,6 +262,22 @@
    }
   },
   "externs": {
+   "kCIInputCountKey": { "typestr": "@" },
+   "kCIInputThresholdKey": { "typestr": "@" },
+   "kCIInputRadius0Key": { "typestr": "@" },
+   "kCIInputRadius1Key": { "typestr": "@" },
+   "kCIInputColor0Key": { "typestr": "@" },
+   "kCIInputColor1Key": { "typestr": "@" },
+   "kCIInputColorSpaceKey": { "typestr": "@" },
+   "kCIInputExtrapolateKey": { "typestr": "@" },
+   "kCIInputPerceptualKey": { "typestr": "@" },
+   "kCIInputBiasVectorKey": { "typestr": "@" },
+   "kCIInputBacksideImageKey": { "typestr": "@" },
+   "kCIInputPaletteImageKey": { "typestr": "@" },
+   "kCIInputPoint0Key": { "typestr": "@" },
+   "kCIInputPoint1Key": { "typestr": "@" },
+   "kCIDynamicRangeConstrainedHigh": { "typestr": "@" },
+   "kCIDynamicRangeHigh": { "typestr": "@" },
    "kCGColorSpaceLinearDisplayP3": {
     "typestr": "@"
    },
@@ -372,6 +387,12 @@
     "args": {
      "0": { "callable_retained": true }
     }
+   },
+   "CGRenderingBufferProviderCreate": {
+    "args": {
+     "3": { "type_modifier": "0", "c_array_length_in_arg": 1 }
+    },
+    "retval": { "already_cfretained": true }
    },
    "CGColorConversionInfoConvertData": {
     "args": {
@@ -5230,8 +5251,18 @@
    "CGGradientCreateWithColorComponents": {
     "args": {
      "0": {},
-     "1": { "c_array_length_in_arg": 3, "type_modifier": "n" },
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" },
      "2": { "c_array_length_in_arg": 3, "type_modifier": "n"  }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CGGradientCreateWithContentHeadroom": {
+    "args": {
+     "0": {},
+     "2": { "c_array_of_variable_length": true, "type_modifier": "n" },
+     "3": { "c_array_length_in_arg": 4, "type_modifier": "n"  }
     },
     "retval": {
      "already_cfretained": true

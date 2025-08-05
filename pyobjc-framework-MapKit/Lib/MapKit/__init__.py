@@ -49,6 +49,14 @@ def _setup():
         ("MKLookAroundScene", b"new"),
         ("MKClusterAnnotation", b"init"),
         ("MKClusterAnnotation", b"new"),
+        ("MKAddress", b"init"),
+        ("MKAddress", b"new"),
+        ("MKAddressRepresentations", b"init"),
+        ("MKAddressRepresentations", b"new"),
+        ("MKGeocodingRequest", b"init"),
+        ("MKGeocodingRequest", b"new"),
+        ("MKReverseGeocodingRequest", b"init"),
+        ("MKReverseGeocodingRequest", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

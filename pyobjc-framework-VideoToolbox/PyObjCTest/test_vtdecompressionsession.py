@@ -91,3 +91,18 @@ class TestVTDecompressionSession(TestCase):
             4,
             VTDecompressionMultiImageCapableOutputHandler,
         )
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        self.assertArgIsInOut(
+            VideoToolbox.VTDecompressionSessionDecodeFrameWithOptions, 5
+        )
+
+        self.assertArgIsBlock(
+            VideoToolbox.VTDecompressionSessionDecodeFrameWithOptionsAndOutputHandler,
+            5,
+            VTDecompressionOutputHandler,
+        )
+        self.assertArgIsInOut(
+            VideoToolbox.VTDecompressionSessionDecodeFrameWithOptionsAndOutputHandler, 4
+        )

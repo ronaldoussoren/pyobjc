@@ -30,4 +30,4 @@ class TestMTLFunctionLog(TestCase):
     def test_methods(self):
         self.assertResultHasType(TestMTLFunctionLogHelper.line, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLFunctionLogHelper.column, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLFunctionLogHelper.type, objc._C_NSInteger)
+        self.assertResultHasType(TestMTLFunctionLogHelper.type, objc._C_NSUInteger)

@@ -878,6 +878,8 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kIIOCameraModelType_GenericPinhole, str)
         self.assertIsInstance(Quartz.kIIOCameraModel_Intrinsics, str)
 
+        self.assertIsInstance(Quartz.kCGImagePropertyOpenEXRCompression, str)
+
     @min_os_level("13.3")
     def testConstants13_3(self):
         # kCGImagePropertyOpenEXRCompression is no longer present in the 14.0 SDK,
@@ -905,3 +907,8 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kIIOMonoscopicImageLocation_Left, str)
         self.assertIsInstance(Quartz.kIIOMonoscopicImageLocation_Right, str)
         self.assertIsInstance(Quartz.kIIOMonoscopicImageLocation_Center, str)
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Quartz.kCGImageProviderPreferredTileWidth, str)
+        self.assertIsInstance(Quartz.kCGImageProviderPreferredTileHeight, str)

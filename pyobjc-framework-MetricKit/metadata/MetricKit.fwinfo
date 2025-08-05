@@ -4,6 +4,9 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "typed_enum": {
+   "MXLaunchTaskID": { "type": "@", "type_name": "NSString" }
+  },
   "literals": {
    "_MXSIGNPOST_METRICS_SNAPSHOT_FORMAT": {
     "value": "\n%{public, signpost:metrics}@",

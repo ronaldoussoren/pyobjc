@@ -81,6 +81,7 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLLanguageVersion3_0, (3 << 16) + 0)
         self.assertEqual(Metal.MTLLanguageVersion3_1, (3 << 16) + 1)
         self.assertEqual(Metal.MTLLanguageVersion3_2, (3 << 16) + 2)
+        self.assertEqual(Metal.MTLLanguageVersion4_0, (4 << 16) + 0)
 
         self.assertEqual(Metal.MTLLibraryErrorUnsupported, 1)
         self.assertEqual(Metal.MTLLibraryErrorInternal, 2)
@@ -152,7 +153,7 @@ class TestMTLLibrary(TestCase):
         self.assertArgIsOut(
             TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_error_, 1
         )
-        self.assertResultHasType(TestMTLLibraryHelper.type, objc._C_NSInteger)
+        self.assertResultHasType(TestMTLLibraryHelper.type, objc._C_NSUInteger)
 
     @min_os_level("10.11")
     def test_methods10_11(self):

@@ -126,6 +126,10 @@ class TestMTLComputeCommandEncoder(TestCase):
         self.assertEqual(v.stageInSize, None)
         self.assertPickleRoundTrips(v)
 
+        v = Metal.MTLDispatchThreadsIndirectArguments()
+        self.assertEqual(v.threadsPerGrid, None)
+        self.assertEqual(v.threadsPerThreadgroup, None)
+
     @min_sdk_level("10.11")
     def test_protocols(self):
         self.assertProtocolExists("MTLComputeCommandEncoder")

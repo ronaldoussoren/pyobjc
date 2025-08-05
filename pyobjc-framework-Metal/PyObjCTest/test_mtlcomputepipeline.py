@@ -19,11 +19,17 @@ class TestMTLComputePipelineHelper(Metal.NSObject):
     def newComputePipelineStateWithAdditionalBinaryFunctions_error_(self, a, b):
         return 1
 
+    def newComputePipelineStateWithBinaryFunctions_error_(self, a, b):
+        return 1
+
     def shaderValidation(self):
         return 1
 
     def setShaderValidation_(self, a):
         pass
+
+    def requiredThreadsPerThreadgroup(self):
+        return 1
 
 
 class TestMTLComputePipeline(TestCase):
@@ -70,8 +76,18 @@ class TestMTLComputePipeline(TestCase):
             1,
             b"o^@",
         )
+        self.assertArgHasType(
+            TestMTLComputePipelineHelper.newComputePipelineStateWithBinaryFunctions_error_,
+            1,
+            b"o^@",
+        )
 
         self.assertResultHasType(
             TestMTLComputePipelineHelper.shaderValidation,
             objc._C_NSInteger,
+        )
+
+        self.assertResultHasType(
+            TestMTLComputePipelineHelper.requiredThreadsPerThreadgroup,
+            Metal.MTLSize.__typestr__,
         )

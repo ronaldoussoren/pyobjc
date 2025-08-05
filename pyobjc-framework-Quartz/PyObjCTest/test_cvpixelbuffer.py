@@ -130,6 +130,9 @@ class TestCVPixelBuffer(TestCase):
         )
         self.assertEqual(Quartz.kCVPixelFormatType_16VersatileBayer, fourcc(b"bp16"))
         self.assertEqual(
+            Quartz.kCVPixelFormatType_96VersatileBayerPacked12, fourcc(b"btp2")
+        )
+        self.assertEqual(
             Quartz.kCVPixelFormatType_64RGBA_DownscaledProResRAW, fourcc(b"bp64")
         )
         self.assertEqual(
@@ -385,3 +388,7 @@ class TestCVPixelBuffer(TestCase):
     @min_os_level("12.0")
     def testFunctions12_0(self):
         self.assertResultIsCFRetained(Quartz.CVPixelBufferCopyCreationAttributes)
+
+    @min_os_level("26.0")
+    def testFunctions26_0(self):
+        self.assertResultIsBOOL(Quartz.CVPixelBufferIsCompatibleWithAttributes)

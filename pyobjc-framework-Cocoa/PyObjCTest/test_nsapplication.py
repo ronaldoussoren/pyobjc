@@ -426,6 +426,17 @@ class TestNSApplication(TestCase):
             AppKit.NSApplicationProtectedDataDidBecomeAvailableNotification, str
         )
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(
+            AppKit.NSApplicationShouldBeginSuppressingHighDynamicRangeContentNotification,
+            str,
+        )
+        self.assertIsInstance(
+            AppKit.NSApplicationShouldEndSuppressingHighDynamicRangeContentNotification,
+            str,
+        )
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(AppKit.NSApplication.setActivationPolicy_)
@@ -444,6 +455,13 @@ class TestNSApplication(TestCase):
     @min_os_level("12.0")
     def testMethods12_0(self):
         self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
+        self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSApplication.applicationShouldSuppressHighDynamicRangeContent
+        )
         self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
 
     @min_sdk_level("10.10")

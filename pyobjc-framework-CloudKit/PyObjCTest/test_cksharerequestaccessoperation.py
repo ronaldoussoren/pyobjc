@@ -11,6 +11,7 @@ class TestCKShareRequestAccessOperation(TestCase):
         )
         self.assertArgIsBlock(
             CloudKit.CKShareRequestAccessOperation.setPerShareAccessRequestCompletionBlock_,
+            0,
             b"v@@",
         )
 
@@ -20,5 +21,6 @@ class TestCKShareRequestAccessOperation(TestCase):
         )
         self.assertArgIsBlock(
             CloudKit.CKShareRequestAccessOperation.setShareRequestAccessCompletionBlock_,
+            0,
             b"v@",
         )

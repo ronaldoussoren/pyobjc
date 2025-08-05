@@ -17,6 +17,12 @@ class TestASAuthorizationProviderExtensionRegistrationHandlerHelper(
     def keyWillRotateForKeyType_newKey_loginManager_completion_(self, a, b, c, d):
         pass
 
+    def displayNamesForGroups_loginManager_completion_(self, a, b, c):
+        pass
+
+    def profilePictureForUserUsingLoginManager_completion_(self, a, b):
+        pass
+
 
 class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
     def test_constants(self):
@@ -164,8 +170,8 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
     def test_methods26_0(self):
         self.assertArgIsBlock(
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.displayNamesForGroups_loginManager_completion_,
-            3,
-            b"v@@",
+            2,
+            b"v@",
         )
         self.assertArgIsBlock(
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.profilePictureForUserUsingLoginManager_completion_,

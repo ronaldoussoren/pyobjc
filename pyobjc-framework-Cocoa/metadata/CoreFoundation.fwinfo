@@ -342,6 +342,9 @@
    "CFAllocatorReallocate": {
     "ignore": true
    },
+   "CFAllocatorCreateWithZone": {
+    "ignore": true
+   },
    "CFAllocatorAllocateTyped": {
     "ignore": true
    },
@@ -597,6 +600,12 @@
     }
    },
    "CFAttributedStringGetBidiLevelsAndResolvedDirections": {
+    "args": {
+     "3": { "type_modifier": "o", "c_array_length_in_arg": 1 },
+     "4": { "type_modifier": "o", "c_array_length_in_arg": 1 }
+    }
+   },
+   "CFAttributedStringGetStatisticalWritingDirections": {
     "args": {
      "3": { "type_modifier": "o", "c_array_length_in_arg": 1 },
      "4": { "type_modifier": "o", "c_array_length_in_arg": 1 }

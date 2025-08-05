@@ -3,6 +3,8 @@
   "typed_enum": {
    "NSFontWidth": { "type": "d" },
    "NSPasteboardAccessBehavior": { "type": "q" },
+   "NSAccessibilityDateTimeComponentsFlags": { "type": "q" },
+   "NSAccessibilitySearchKey": { "type": "@", "type_name": "NSString" },
    "NSTextHighlightStyle": { "type": "@", "type_name": "NSString" },
    "NSPasteboardMetadataType": { "type": "@", "type_name": "NSString" },
    "NSPasteboardDetectionPattern": { "type": "@", "type_name": "NSString" },

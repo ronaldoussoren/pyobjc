@@ -124,7 +124,7 @@ class TestMTLCommandBuffer(TestCase):
             TestMTLCommandBufferHelper.addCompletedHandler_, 0, MTLCommandBufferHandler
         )
 
-        self.assertResultHasType(TestMTLCommandBufferHelper.status, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLCommandBufferHelper.status, objc._C_NSInteger)
 
         self.assertArgHasType(
             TestMTLCommandBufferHelper.computeCommandEncoderWithDispatchType_,

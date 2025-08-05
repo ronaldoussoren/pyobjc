@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 import PHASE
@@ -23,3 +23,14 @@ class TestPHASESoundEvent(TestCase):
             PHASE.PHASESoundEvent.seekToTime_completion_, 1, b"v" + objc._C_NSInteger
         )
         self.assertResultIsBOOL(PHASE.PHASESoundEvent.isIndefinite)
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertArgIsBlock(
+            PHASE.PHASESoundEvent.startAtTime_completion_, 1, b"v" + objc._C_NSInteger
+        )
+        self.assertArgIsBlock(
+            PHASE.PHASESoundEvent.seekToTime_resumeAtEngineTime_completion_,
+            2,
+            b"v" + objc._C_NSInteger,
+        )

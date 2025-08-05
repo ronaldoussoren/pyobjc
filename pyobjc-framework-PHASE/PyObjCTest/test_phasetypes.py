@@ -123,3 +123,8 @@ class TesPHASETypes(TestCase):
 
         self.assertIsEnumType(PHASE.PHASEAutomaticHeadTrackingFlags)
         self.assertEqual(PHASE.PHASEAutomaticHeadTrackingFlagOrientation, 1 << 0)
+        self.assertEqual(PHASE.PHASEAutomaticHeadTrackingFlagPosition, 1 << 1)
+
+        self.assertIsEnumType(PHASE.PHASERenderingMode)
+        self.assertEqual(PHASE.PHASERenderingModeLocal, 0)
+        self.assertEqual(PHASE.PHASERenderingModeClient, 1)

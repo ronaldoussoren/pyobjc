@@ -97,11 +97,29 @@
    "MTLPackedFloat3": { "typestr": "{_MTLPackedFloat3=[3f]}", "fieldnames": ["elements"] }
   },
   "classes": {
+   "MTL4RenderPassDescriptor": {
+    "methods": [
+     {
+      "selector": "setSamplePositions:count:",
+      "class_method": true,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "getSamplePositions:count:",
+      "class_method": true,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1 }
+      }
+     }
+    ]
+   },
    "MTLRasterizationRateMapDescriptor": {
     "methods": [
      {
       "selector": "rasterizationRateMapDescriptorWithScreenSize:layerCount:layers:",
-      "class_method": false,
+      "class_method": true,
       "args": {
        "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       }
@@ -132,6 +150,76 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "copyBufferMappingsFromBuffer:toBuffer:operations:count:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "updateBufferMappings:heap:operations:count:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "copyTextureMappingsFromTexture:toTexture:operations:count:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "updateTextureMappings:heap:operations:count:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      }
+     },
+     {
+      "selector": "setVertexAmplificationCount:viewMappings:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 0 }
+      }
+     },
+     {
+      "selector": "getBytes:strides:fromSliceOrigin:sliceDimensions:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
+      }
+     },
+     {
+      "selector": "replaceSliceOrigin:sliceDimensions:withBytes:strides:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true }
+      }
+     },
+     {
+      "selector": "commit:count:options:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "commit:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "useResidencySets:count:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
      {
       "selector": "removeAllocations:count:",
       "class_method": false,

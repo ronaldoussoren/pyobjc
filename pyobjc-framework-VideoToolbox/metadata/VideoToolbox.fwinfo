@@ -476,6 +476,26 @@
      }
     }
    },
+   "VTMotionEstimationSessionCreate": {
+    "args": {
+     "4": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTMotionEstimationSessionCopySourcePixelBufferAttributes": {
+    "args": {
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTDecompressionSessionDecodeFrameWithOptionsAndOutputHandler": {
+    "args": {
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "VTDecompressionSessionDecodeFrameWithOptions": {
+    "args": {
+     "5": { "type_modifier": "o" }
+    }
+   },
    "VTRAWProcessingSessionSetParameterChangedHander": {
     "args": {
      "1": {

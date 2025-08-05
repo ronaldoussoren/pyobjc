@@ -417,7 +417,7 @@ class TestAVCaptureDevice(TestCase):
     @min_os_level("26.0")
     def testMethods26_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptureDevice.exposureRectOfInterestSupported
+            AVFoundation.AVCaptureDevice.isExposureRectOfInterestSupported
         )
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isCinematicVideoCaptureSupported
@@ -426,9 +426,9 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureDeviceFormat.isCameraLensSmudgeDetectionSupported
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVCaptureDeviceFormat.setCameraLensSmudgeDetectionEnabled_detectionInterval_,
+            AVFoundation.AVCaptureDevice.setCameraLensSmudgeDetectionEnabled_detectionInterval_,
             0,
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptureDeviceFormat.isCameraLensSmudgeDetectionEnabled
+            AVFoundation.AVCaptureDevice.isCameraLensSmudgeDetectionEnabled
         )

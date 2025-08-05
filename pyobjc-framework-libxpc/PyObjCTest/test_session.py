@@ -51,3 +51,7 @@ class TestSession(TestCase):
             2,
             xpc_session_reply_handler_t,
         )
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        xpc.xpc_session_set_peer_requirement

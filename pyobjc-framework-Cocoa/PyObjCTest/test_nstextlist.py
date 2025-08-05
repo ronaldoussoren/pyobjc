@@ -31,3 +31,7 @@ class TestNSTextList(TestCase):
         self.assertIsInstance(AppKit.NSTextListMarkerLowercaseRoman, str)
         self.assertIsInstance(AppKit.NSTextListMarkerUppercaseRoman, str)
         self.assertIsInstance(AppKit.NSTextListMarkerDecimal, str)
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(AppKit.NSTextList.includesTextListMarkers)

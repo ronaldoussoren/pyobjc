@@ -267,6 +267,11 @@ class TestHeader(TestCase):
         self.assertResultIsBOOL(AppKit.NSView.clipsToBounds)
         self.assertArgIsSEL(AppKit.NSView.displayLinkWithTarget_selector_, 1, b"v@:@")
 
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(AppKit.NSView.prefersCompactControlSizeMetrics)
+        self.assertArgIsBOOL(AppKit.NSView.setPrefersCompactControlSizeMetrics_, 0)
+
     def testProtocol(self):
         self.assertArgHasType(
             TestNSViewHelper.view_stringForToolTip_point_userData_,

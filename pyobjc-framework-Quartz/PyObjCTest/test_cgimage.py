@@ -1,7 +1,7 @@
 import os
 import sys
 
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import Quartz
 
 import objc
@@ -55,6 +55,56 @@ class TestCGImage(TestCase):
         self.assertEqual(Quartz.kCGImageByteOrder32Little, 2 << 12)
         self.assertEqual(Quartz.kCGImageByteOrder16Big, 3 << 12)
         self.assertEqual(Quartz.kCGImageByteOrder32Big, 4 << 12)
+        self.assertEqual(Quartz.kCGImageByteOrder32Big, 4 << 12)
+        if sys.byteorder == "little":
+            self.assertEqual(
+                Quartz.kCGImageByteOrder16Host, Quartz.kCGImageByteOrder16Little
+            )
+            self.assertEqual(
+                Quartz.kCGImageByteOrder32Host, Quartz.kCGImageByteOrder32Little
+            )
+        else:
+            self.assertEqual(
+                Quartz.kCGImageByteOrder16Host, Quartz.kCGImageByteOrder16Big
+            )
+            self.assertEqual(
+                Quartz.kCGImageByteOrder32Host, Quartz.kCGImageByteOrder32Big
+            )
+
+        self.assertIsEnumType(Quartz.CGImageComponentInfo)
+        self.assertEqual(Quartz.kCGImageComponentInteger, 0 << 8)
+        self.assertEqual(Quartz.kCGImageComponentFloat, 1 << 8)
+
+        self.assertIsEnumType(Quartz.CGBitmapInfo)
+        self.assertEqual(Quartz.kCGBitmapAlphaInfoMask, 0x1F)
+        self.assertEqual(Quartz.kCGBitmapComponentInfoMask, 0xF00)
+        self.assertEqual(Quartz.kCGBitmapByteOrderInfoMask, 0x7000)
+        self.assertEqual(Quartz.kCGBitmapPixelFormatInfoMask, 0xF0000)
+        self.assertEqual(
+            Quartz.kCGBitmapFloatInfoMask, Quartz.kCGBitmapComponentInfoMask
+        )
+        self.assertEqual(
+            Quartz.kCGBitmapByteOrderMask, Quartz.kCGBitmapByteOrderInfoMask
+        )
+        self.assertEqual(Quartz.kCGBitmapFloatComponents, Quartz.kCGImageComponentFloat)
+        self.assertEqual(
+            Quartz.kCGBitmapByteOrderDefault, Quartz.kCGImageByteOrderDefault
+        )
+        self.assertEqual(
+            Quartz.kCGBitmapByteOrder16Little, Quartz.kCGImageByteOrder16Little
+        )
+        self.assertEqual(
+            Quartz.kCGBitmapByteOrder32Little, Quartz.kCGImageByteOrder32Little
+        )
+        self.assertEqual(Quartz.kCGBitmapByteOrder16Big, Quartz.kCGImageByteOrder16Big)
+        self.assertEqual(Quartz.kCGBitmapByteOrder32Big, Quartz.kCGImageByteOrder32Big)
+
+        self.assertEqual(
+            Quartz.kCGBitmapByteOrder16Host, Quartz.kCGImageByteOrder16Host
+        )
+        self.assertEqual(
+            Quartz.kCGBitmapByteOrder32Host, Quartz.kCGImageByteOrder32Host
+        )
 
     @min_os_level("15.0")
     def test_constants15_0(self):
@@ -247,3 +297,17 @@ class TestCGImage(TestCase):
         Quartz.CGImageContainsImageSpecificToneMappingMetadata
 
         self.assertResultIsCFRetained(Quartz.CGImageCreateCopyWithContentHeadroom)
+
+    @min_sdk_level("26.0")
+    def test_inline_functions26_0(self):
+        Quartz.CGBitmapInfoMake
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        Quartz.CGImageCalculateContentHeadroom
+        Quartz.CGImageGetContentAverageLightLevel
+        Quartz.CGImageCalculateContentAverageLightLevel
+        self.assertResultIsCFRetained(
+            Quartz.CGImageCreateCopyWithContentAverageLightLevel
+        )
+        self.assertResultIsCFRetained(Quartz.CGImageCreateCopyWithCalculatedHDRStats)

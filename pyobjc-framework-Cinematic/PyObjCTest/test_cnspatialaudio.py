@@ -30,12 +30,12 @@ class TestCNSpatialAudio(TestCase):
         self.assertResultIsBOOL(Cinematic.CNAssetSpatialAudioInfo.isSupported)
 
         self.assertArgIsBlock(
-            Cinematic.CNAssetSpatialAudioInfo.checkIfContainsSpatialAudio_completionHandlder_,
+            Cinematic.CNAssetSpatialAudioInfo.checkIfContainsSpatialAudio_completionHandler_,
             1,
             b"vZ",
         )
         self.assertArgIsBlock(
-            Cinematic.CNAssetSpatialAudioInfo.loadFromAsset_completionHandlder_,
+            Cinematic.CNAssetSpatialAudioInfo.loadFromAsset_completionHandler_,
             1,
             b"v@@",
         )

@@ -98,3 +98,17 @@ class TestMTLIndirectCommandBuffer(TestCase):
             .setSupportDynamicAttributeStride_,
             0,
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .supportColorAttachmentMapping
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .setSupportColorAttachmentMapping_,
+            0,
+        )

@@ -134,6 +134,4 @@ class TestMTLIOCommandBuffer(TestCase):
             TestMTLIOCommandBufferHelper.signalEvent_value_, 1, objc._C_ULNG_LNG
         )
 
-        self.assertResultHasType(
-            TestMTLIOCommandBufferHelper.status, objc._C_NSUInteger
-        )
+        self.assertResultHasType(TestMTLIOCommandBufferHelper.status, objc._C_NSInteger)

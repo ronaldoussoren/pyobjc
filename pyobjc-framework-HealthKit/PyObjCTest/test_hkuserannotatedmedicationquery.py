@@ -7,5 +7,6 @@ class TestHKUserAnnotatedMedicationQuery(TestCase):
     def test_methods(self):
         self.assertArgIsBlock(
             HealthKit.HKUserAnnotatedMedicationQuery.initWithPredicate_limit_resultsHandler_,
+            2,
             b"v@@Z@",
         )

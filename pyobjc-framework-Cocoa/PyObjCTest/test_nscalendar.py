@@ -161,6 +161,20 @@ class TestNSCalendar(TestCase):
         self.assertIsInstance(Foundation.NSCalendarIdentifierIslamicTabular, str)
         self.assertIsInstance(Foundation.NSCalendarIdentifierIslamicUmmAlQura, str)
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Foundation.NSCalendarIdentifierBangla, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierGujarati, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierKannada, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierMalayalam, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierMarathi, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierOdia, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierTamil, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierTelugu, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierVikram, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierDangi, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierVietnamese, str)
+
     @min_os_level("10.5")
     def testMethods10_5(self):
         Foundation.NSCalendar.currentCalendar()

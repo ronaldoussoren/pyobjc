@@ -644,6 +644,29 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
         if (*type == '?') {
             /* Block pointer */
             type++;
+            if (type[0] == '<' && !isdigit(type[1])) {
+                /* New in macOS 26: Some classes encode the signature for a block
+                 * in the type encoding for a method
+                 * Example: <v@?@"BAAssetPack"@"NSError">24
+                 */
+                type++;
+                do {
+                    type = PyObjCRT_SkipTypeSpec(type);
+                    if (type != NULL && *type == '"') {
+                        type++;
+                        while (*type && *type++ != '"') {
+                        }
+                    }
+                } while (type != NULL && *type && *type != '>');
+                if (type == NULL) {
+                    return NULL;
+                }
+                if (!*type) {
+                    PyErr_Format(PyObjCExc_InternalError, "invalid block encoding");
+                    return NULL;
+                }
+                type++;
+            }
         }
         break;
 

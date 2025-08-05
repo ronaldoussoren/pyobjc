@@ -80,6 +80,45 @@
    "xpc_endpoint_create": {
     "retval": { "already_retained": true }
    },
+   "xpc_peer_requirement_create_entitlement_exists": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_modifier": "o"  }
+    }
+   },
+   "xpc_peer_requirement_create_entitlement_matches_value": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o"  }
+    }
+   },
+   "xpc_peer_requirement_create_team_identity": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_modifier": "o"  }
+    }
+   },
+   "xpc_peer_requirement_create_platform_identity": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_modifier": "o"  }
+    }
+   },
+   "xpc_peer_requirement_create_lwcr": {
+    "retval": { "already_retained": true },
+    "args": {
+     "1": { "type_modifier": "o"  }
+    }
+   },
+   "xpc_peer_requirement_match_received_message": {
+    "args": {
+     "2": { "type_modifier": "o"  }
+    }
+   },
    "xpc_activity_register": {
     "args": {
      "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },

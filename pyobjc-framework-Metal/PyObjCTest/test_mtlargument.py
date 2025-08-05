@@ -59,6 +59,12 @@ class TestMTLArgumentHelper(Metal.NSObject):
     def objectPayloadDataSize(self):
         return 1
 
+    def tensorDataType(self):
+        return 1
+
+    def indexType(self):
+        return 1
+
 
 class TestMTLArgument(TestCase):
     def test_enum_types(self):
@@ -201,6 +207,10 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLBindingTypeIntersectionFunctionTable, 27)
         self.assertEqual(Metal.MTLBindingTypeObjectPayload, 34)
 
+        self.assertIsEnumType(Metal.MTLIndexType)
+        self.assertEqual(Metal.MTLIndexTypeUInt16, 0)
+        self.assertEqual(Metal.MTLIndexTypeUInt32, 1)
+
     @min_sdk_level("13.0")
     def test_protocols(self):
         self.assertProtocolExists("MTLBinding")
@@ -208,6 +218,10 @@ class TestMTLArgument(TestCase):
         self.assertProtocolExists("MTLThreadgroupBinding")
         self.assertProtocolExists("MTLTextureBinding")
         self.assertProtocolExists("MTLObjectPayloadBinding")
+
+    @min_sdk_level("26.0")
+    def test_protocols26_0(self):
+        self.assertProtocolExists("MTLTensorBinding")
 
     @min_os_level("10.11")
     def test_methods10_11(self):
@@ -230,7 +244,7 @@ class TestMTLArgument(TestCase):
         )
 
     def test_protocol_methods(self):
-        self.assertResultHasType(TestMTLArgumentHelper.type, objc._C_NSInteger)
+        self.assertResultHasType(TestMTLArgumentHelper.type, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLArgumentHelper.access, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLArgumentHelper.index, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLArgumentHelper.index, objc._C_NSUInteger)
@@ -267,3 +281,6 @@ class TestMTLArgument(TestCase):
         self.assertResultHasType(
             TestMTLArgumentHelper.objectPayloadDataSize, objc._C_NSUInteger
         )
+
+        self.assertResultHasType(TestMTLArgumentHelper.tensorDataType, b"q")
+        self.assertResultHasType(TestMTLArgumentHelper.indexType, b"Q")

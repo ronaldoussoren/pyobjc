@@ -13,6 +13,40 @@
       "selector": "analyzeCGImage:completionHandler:"
      }
     ]
+   },
+   "SCVideoStreamAnalyzer": {
+    "methods": [
+     {
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" },
+         "1": { "type": "@" },
+         "2": { "type": "@" }
+        },
+        "retval": { "type": "v" }
+       }
+      },
+      "class_method": false,
+      "selector": "analysisChangedHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setAnalysisChangedHandler:"
+     }
+    ]
    }
   },
   "formal_protocols": {},

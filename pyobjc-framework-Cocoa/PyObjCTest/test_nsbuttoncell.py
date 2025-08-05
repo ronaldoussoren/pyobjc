@@ -68,6 +68,7 @@ class TestNSButtonCell(TestCase):
         self.assertEqual(AppKit.NSBezelStyleAccessoryBar, 13)
         self.assertEqual(AppKit.NSBezelStylePushDisclosure, 14)
         self.assertEqual(AppKit.NSBezelStyleBadge, 15)
+        self.assertEqual(AppKit.NSBezelStyleGlass, 16)
 
         self.assertEqual(AppKit.NSBezelStyleRounded, AppKit.NSBezelStylePush)
         self.assertEqual(

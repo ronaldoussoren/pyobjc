@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
 import objc
 
@@ -56,3 +56,9 @@ class TestCGShading(TestCase):
         self.assertTrue(v is shading)
 
         Quartz.CGShadingRelease(shading)
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        self.assertResultIsCFRetained(Quartz.CGShadingCreateAxialWithContentHeadroom)
+        self.assertResultIsCFRetained(Quartz.CGShadingCreateRadialWithContentHeadroom)
+        Quartz.CGShadingGetContentHeadroom

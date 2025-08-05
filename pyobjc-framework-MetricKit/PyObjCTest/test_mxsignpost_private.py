@@ -14,6 +14,7 @@ class TestMXSignpost_Private(TestCase):
     def test_function_macros(self):
         # These function macros use _MXSignpostMetricsSnapshot() which
         # is not available on macOS, hence these should not be exposed:
+        # XXX: The macOS 26 SDK introduces support...
         self.assertNotHasAttr(MetricKit, "_MXSignpostEventEmit_guaranteed_args")
         self.assertNotHasAttr(MetricKit, "_MXSignpostIntervalBegin_guaranteed_args")
         self.assertNotHasAttr(

@@ -7,6 +7,11 @@ class TestCGColor(TestCase):
     def testTypes(self):
         self.assertIsCFType(Quartz.CGColorRef)
 
+    @min_os_level("26.0")
+    def testFunctions26_0(self):
+        self.assertResultIsCFRetained(Quartz.CGColorCreateWithContentHeadroom)
+        Quartz.CGColorGetContentHeadroom
+
     @min_os_level("10.15")
     def testFunctions10_15(self):
         self.assertResultIsCFRetained(Quartz.CGColorCreateGenericGrayGamma2_2)

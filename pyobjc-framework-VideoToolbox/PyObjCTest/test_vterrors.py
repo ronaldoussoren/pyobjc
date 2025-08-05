@@ -59,5 +59,6 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTDecodeInfo_FrameDropped, 1 << 1)
         self.assertEqual(VideoToolbox.kVTDecodeInfo_ImageBufferModifiable, 1 << 2)
         self.assertEqual(VideoToolbox.kVTDecodeInfo_SkippedLeadingFrameDropped, 1 << 3)
+        self.assertEqual(VideoToolbox.kVTDecodeInfo_FrameInterrupted, 1 << 4)
         self.assertEqual(VideoToolbox.kVTEncodeInfo_Asynchronous, 1 << 0)
         self.assertEqual(VideoToolbox.kVTEncodeInfo_FrameDropped, 1 << 1)

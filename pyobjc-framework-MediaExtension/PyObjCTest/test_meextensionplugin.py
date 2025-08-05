@@ -35,3 +35,14 @@ class TestMEExtensionPlugin(TestCase):
         self.assertEqual(MediaExtension.kMEVideoDecoderCodecTypeKey, "CodecType")
         self.assertEqual(MediaExtension.kMEVideoDecoderCodecNameKey, "CodecName")
         self.assertEqual(MediaExtension.kMEVideoDecoderObjectNameKey, "ObjectName")
+
+        self.assertEqual(
+            MediaExtension.kMERAWProcessorClassImplementationIDKey,
+            "ClassImplementationID",
+        )
+        self.assertEqual(
+            MediaExtension.kMERAWProcessorProcessorInfoKey, "ProcessorInfo"
+        )
+        self.assertEqual(MediaExtension.kMERAWProcessorCodecTypeKey, "CodecType")
+        self.assertEqual(MediaExtension.kMERAWProcessorCodecNameKey, "CodecName")
+        self.assertEqual(MediaExtension.kMERAWProcessorObjectNameKey, "ObjectName")

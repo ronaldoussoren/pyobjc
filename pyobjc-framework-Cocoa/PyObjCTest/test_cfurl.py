@@ -829,6 +829,13 @@ class TestURL(TestCase):
     def testConstants14_0(self):
         self.assertIsInstance(CoreFoundation.kCFURLDirectoryEntryCountKey, str)
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(
+            CoreFoundation.kCFURLUbiquitousItemSupportedSyncControlsKey, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemIsSyncPausedKey, str)
+
     @min_os_level("10.9")
     def testFunctions10_9(self):
         self.assertResultIsBOOL(CoreFoundation.CFURLIsFileReferenceURL)

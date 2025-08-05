@@ -177,3 +177,14 @@ class TestVTDecompressionProperties(TestCase):
             VideoToolbox.kVTDecompressionPropertyKey_RequestRAWOutput,
             str,
         )
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTDecodeFrameOptionKey_ContentAnalyzerRotation,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTDecodeFrameOptionKey_ContentAnalyzerCropRectangle,
+            str,
+        )

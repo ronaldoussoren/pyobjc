@@ -18,7 +18,13 @@ Version 12.0a0
 
   As part of this introduce bindings for the following new framework bindings:
 
-  - ...
+  - ARKit
+  - CompositorServices
+  - GameSave
+
+* In macOS 26 a number of type encodings for block arguments include a signature
+  for the block interface. Update PyObjC runtime introspection to ignore that
+  information.
 
 * Dropped old metadata scans. That is, all framework bindings are now created
   from the most recent macOS SDK headers with some manual additions and annotations.

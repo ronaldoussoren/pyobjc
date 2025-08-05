@@ -76,6 +76,17 @@
    }
   },
   "functions": {
+   "LSInit": {
+    "args": {
+     "0": { "type_override": "I" }
+    },
+    "retval": { "type_override": "i" }
+   },
+   "LSTerm": {
+    "args": {
+    },
+    "retval": { "type_override": "i" }
+   },
    "LSSharedFileListItemCopyIconRef": {
     "args": {
      "0": {

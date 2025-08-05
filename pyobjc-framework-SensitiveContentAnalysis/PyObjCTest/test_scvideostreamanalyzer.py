@@ -51,11 +51,11 @@ class TestSCVideoStreamAnalyzer(TestCase):
         )
 
         self.assertResultIsBOOL(
-            SensitiveContentAnalysis.SCVideoStreamAnalyzer.shouldInterruptVideo
+            SensitiveContentAnalysis.SCSensitivityAnalysis.shouldInterruptVideo
         )
         self.assertResultIsBOOL(
-            SensitiveContentAnalysis.SCVideoStreamAnalyzer.shouldIndicateSensitivity
+            SensitiveContentAnalysis.SCSensitivityAnalysis.shouldIndicateSensitivity
         )
         self.assertResultIsBOOL(
-            SensitiveContentAnalysis.SCVideoStreamAnalyzer.shouldMuteAudio
+            SensitiveContentAnalysis.SCSensitivityAnalysis.shouldMuteAudio
         )

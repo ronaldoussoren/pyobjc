@@ -84,3 +84,9 @@ class TestNSControl(TestCase):
         self.assertIsInstance(AppKit.NSControlTextDidBeginEditingNotification, str)
         self.assertIsInstance(AppKit.NSControlTextDidEndEditingNotification, str)
         self.assertIsInstance(AppKit.NSControlTextDidChangeNotification, str)
+
+        self.assertIsEnumType(AppKit.NSControlBorderShape)
+        self.assertEqual(AppKit.NSControlBorderShapeAutomatic, 0)
+        self.assertEqual(AppKit.NSControlBorderShapeCapsule, 1)
+        self.assertEqual(AppKit.NSControlBorderShapeRoundedRectangle, 2)
+        self.assertEqual(AppKit.NSControlBorderShapeCircle, 3)

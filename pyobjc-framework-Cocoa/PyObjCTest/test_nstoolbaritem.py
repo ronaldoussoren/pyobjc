@@ -27,6 +27,10 @@ class TestNSToolbarItem(TestCase):
         self.assertIsInstance(AppKit.NSToolbarCustomizeToolbarItemIdentifier, str)
         self.assertIsInstance(AppKit.NSToolbarPrintItemIdentifier, str)
 
+        self.assertIsEnumType(AppKit.NSToolbarItemStyle)
+        self.assertEqual(AppKit.NSToolbarItemStylePlain, 0)
+        self.assertEqual(AppKit.NSToolbarItemStyleProminent, 1)
+
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(AppKit.NSToolbarToggleSidebarItemIdentifier, str)

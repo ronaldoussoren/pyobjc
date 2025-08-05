@@ -16,3 +16,8 @@ class TestNSStringDrawing(TestCase):
         self.assertEqual(AppKit.NSStringDrawingDisableScreenFontSubstitution, (1 << 2))
         self.assertEqual(AppKit.NSStringDrawingUsesDeviceMetrics, (1 << 3))
         self.assertEqual(AppKit.NSStringDrawingOneShot, (1 << 4))
+
+        self.assertEqual(
+            AppKit.NSStringDrawingOptionsResolvesNaturalAlignmentWithBaseWritingDirection,
+            (1 << 9),
+        )

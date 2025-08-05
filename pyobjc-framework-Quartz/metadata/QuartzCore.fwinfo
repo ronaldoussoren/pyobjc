@@ -9,6 +9,7 @@
    "CALayerContentsFormat": { "type": "@", "type_name": "NSString" },
    "CALayerContentsFilter": { "type": "@", "type_name": "NSString" },
    "CALayerCornerCurve": { "type": "@", "type_name": "NSString" },
+   "CADynamicRange": { "type": "@", "type_name": "NSString" },
    "CAMediaTimingFunctionName": { "type": "@", "type_name": "NSString" },
    "CATextLayerTruncationMode": { "type": "@", "type_name": "NSString" },
    "CATextLayerAlignmentMode": { "type": "@", "type_name": "NSString" },
@@ -1584,6 +1585,66 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "roundedData",
+      "class_method": false,
+      "retval": { "type_override": "B" }
+     },
+     {
+      "selector": "setRoundedData:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "B" }
+      }
+     },
+     {
+      "selector": "roundedMarkers",
+      "class_method": false,
+      "retval": { "type_override": "q" }
+     },
+     {
+      "selector": "setRoundedMarkers:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "q" }
+      }
+     },
+     {
+      "selector": "centerSpaceSize",
+      "class_method": false,
+      "retval": { "type_override": "f" }
+     },
+     {
+      "selector": "setCenterSpaceSize:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "f" }
+      }
+     },
+     {
+      "selector": "displayHeadroom",
+      "class_method": false,
+      "retval": { "type_override": "f" }
+     },
+     {
+      "selector": "setDisplayHeadroom:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "f" }
+      }
+     },
+     {
+      "selector": "smoothness",
+      "class_method": false,
+      "retval": { "type_override": "f" }
+     },
+     {
+      "selector": "setSmoothness:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "f" }
+      }
+     },
      {
       "selector": "sourceHeadroom",
       "class_method": false,
