@@ -79,3 +79,11 @@ class TestVTRAWProcessingSession(TestCase):
         )
 
         VideoToolbox.VTRAWProcessingSessionSetProcessingParameters
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        self.assertArgIsBlock(
+            VideoToolbox.VTRAWProcessingSessionSetParameterChangedHandler,
+            1,
+            VTRAWProcessingParameterChangeHandler,
+        )

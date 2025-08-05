@@ -101,6 +101,8 @@ class TestNSCalendar(TestCase):
         )
         self.assertEqual(Foundation.NSCalendarUnitCalendar, (1 << 20))
         self.assertEqual(Foundation.NSCalendarUnitTimeZone, (1 << 21))
+        self.assertEqual(Foundation.NSCalendarUnitIsLeapMonth, (1 << 30))
+        self.assertEqual(Foundation.NSCalendarUnitIsRepeatedDay, (1 << 31))
         self.assertEqual(Foundation.NSCalendarWrapComponents, (1 << 0))
         self.assertEqual(Foundation.NSCalendarMatchStrictly, (1 << 1))
         self.assertEqual(Foundation.NSCalendarSearchBackwards, (1 << 2))
@@ -265,3 +267,8 @@ class TestNSCalendar(TestCase):
 
         self.assertResultIsBOOL(Foundation.NSDateComponents.isValidDate)
         self.assertResultIsBOOL(Foundation.NSDateComponents.isValidDateInCalendar_)
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(Foundation.NSDateComponents.isRepeatedDay)
+        self.assertArgIsBOOL(Foundation.NSDateComponents.setRepeatedDay_, 0)

@@ -15,6 +15,7 @@
    "ASAuthorizationSecurityKeyPublicKeyCredentialDescriptorTransport": { "type": "@","type_name": "NSString" },
    "ASCOSEAlgorithmIdentifier": { "type": "q"},
    "ASCOSEEllipticCurveIdentifier": { "type": "q"},
+   "ASAuthorizationProviderExtensionAuthenticationMethod": { "type": "q"},
    "ASAuthorizationProviderExtensionFederationType": { "type": "q"}
   },
   "enum": {
