@@ -14,13 +14,16 @@ Version 12.0a0
 
   The package is included in the ``pyobjc-framework-AVFoundation`` distribution.
 
-* Updated metadata for the macOS 26 SDK (Xcode 26 beta 4).
+* Updated metadata for the macOS 26 SDK (Xcode 26 beta 5).
 
   As part of this introduce bindings for the following new framework bindings:
 
   - ARKit
   - CompositorServices
   - GameSave
+
+  There are no bindings for the ``MetalPerformancePrimitives`` at this time, it is
+  a low-level C++ library that would require a lot of work to create bindings.
 
 * In macOS 26 a number of type encodings for block arguments include a signature
   for the block interface. Update PyObjC runtime introspection to ignore that
@@ -227,6 +230,9 @@ Version 12.0a0
     using the library: ``WebUIDelegate``, ``WebViewEditingDelegate``, ``WebPolicyDelegate``,
     ``WebDownloadDelegate``, ``WebResourceLoadDelegate``, ``WebFrameLoadDelegate``,
     and ``WebJavaPlugIn``.
+
+* Added ``objc.NSInteger``, ``objc.NSUInteger`` and ``objc.CGFloat`` that will make
+  it easier to use type annotations that match Apple's type information.
 
 Version 11.1.1
 --------------
