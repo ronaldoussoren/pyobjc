@@ -103,6 +103,8 @@ def _setup():
         ("NSWritingToolsCoordinatorAnimationParameters", b"new"),
         ("NSWritingToolsCoordinatorContext", b"init"),
         ("NSWritingToolsCoordinatorContext", b"new"),
+        ("NSViewLayoutRegion", b"init"),
+        ("NSViewLayoutRegion", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

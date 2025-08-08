@@ -145,6 +145,10 @@ class TestCVPixelBuffer(TestCase):
             Quartz.kCVPixelFormatType_444YpCbCr16VideoRange_16A_TriPlanar,
             fourcc(b"s4as"),
         )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_30RGBLE_8A_BiPlanar,
+            fourcc(b"b3a8"),
+        )
 
         self.assertEqual(Quartz.kCVVersatileBayer_BayerPattern_RGGB, 0)
         self.assertEqual(Quartz.kCVVersatileBayer_BayerPattern_GRBG, 1)
@@ -177,6 +181,14 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(
             Quartz.kCVPixelFormatType_Lossless_420YpCbCr10PackedBiPlanarFullRange,
             fourcc(b"&xf0"),
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_Lossless_30RGBLE_8A_BiPlanar,
+            fourcc(b"&b38"),
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_Lossless_30RGBLEPackedWideGamut,
+            fourcc(b"&w3r"),
         )
 
         self.assertEqual(Quartz.kCVPixelFormatType_Lossy_32BGRA, fourcc(b"-BGA"))

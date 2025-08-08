@@ -25,6 +25,11 @@
     "methods": [
      {
       "class_method": false,
+      "retval": { "c_array_of_variable_length": true },
+      "selector": "packetDependencies"
+     },
+     {
+      "class_method": false,
       "retval": {},
       "selector": "audioBufferList"
      },
