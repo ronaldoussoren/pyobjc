@@ -1,7 +1,7 @@
 import VideoToolbox
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
-VTMotionEstimationOutputHandler = b"viQ@@"
+VTMotionEstimationOutputHandler = b"viq@@"
 
 
 class TestVTMotionEstimationSession(TestCase):
@@ -27,10 +27,10 @@ class TestVTMotionEstimationSession(TestCase):
         self.assertArgIsCFRetained(VideoToolbox.VTMotionEstimationSessionCreate, 4)
 
         self.assertArgIsOut(
-            VideoToolbox.VTMotionEstimationSessionCopySourcePixelBufferAttributes, 2
+            VideoToolbox.VTMotionEstimationSessionCopySourcePixelBufferAttributes, 1
         )
         self.assertArgIsCFRetained(
-            VideoToolbox.VTMotionEstimationSessionCopySourcePixelBufferAttributes, 2
+            VideoToolbox.VTMotionEstimationSessionCopySourcePixelBufferAttributes, 1
         )
 
         VideoToolbox.VTMotionEstimationSessionInvalidate

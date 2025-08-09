@@ -60,9 +60,7 @@ class TestCVPixelFormatDescription(TestCase):
 
     @min_os_level("26.0")
     def testFunctions26_0(self):
-        self.assertResultIsAlreadyCFRetained(
-            Quartz.CVPixelFormatTypeCopyFourCharCodeString
-        )
+        self.assertResultIsCFRetained(Quartz.CVPixelFormatTypeCopyFourCharCodeString)
 
     @min_os_level("10.7")
     def testConstants10_7(self):

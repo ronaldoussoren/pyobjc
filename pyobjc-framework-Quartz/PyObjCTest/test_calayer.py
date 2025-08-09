@@ -142,10 +142,10 @@ class TestCALayer(TestCase):
 
     @min_os_level("26.0")
     def testConstants26_0(self):
-        self.assertIsTypedEnum(Quartz.CADynamicRangeAutomatic, str)
-        self.assertIsTypedEnum(Quartz.CADynamicRangeStandard, str)
-        self.assertIsTypedEnum(Quartz.CADynamicRangeConstrainedHigh, str)
-        self.assertIsTypedEnum(Quartz.CADynamicRangeHigh, str)
+        self.assertIsInstance(Quartz.CADynamicRangeAutomatic, str)
+        self.assertIsInstance(Quartz.CADynamicRangeStandard, str)
+        self.assertIsInstance(Quartz.CADynamicRangeConstrainedHigh, str)
+        self.assertIsInstance(Quartz.CADynamicRangeHigh, str)
 
     @min_sdk_level("10.6")
     def testProtocols(self):

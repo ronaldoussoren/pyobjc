@@ -144,23 +144,36 @@ class TestCGBitmapContext(TestCase):
     @min_os_level("26.0")
     def test_functions26_0(self):
         self.assertResultIsCFRetained(Quartz.CGBitmapContextCreateAdaptive)
+        # XXX: Add pass-by-reference annotations
         self.assertArgIsBlock(
             Quartz.CGBitmapContextCreateAdaptive,
             3,
-            b"B{ContextInfo=QQBBf}N^{CGBitmapParameters=QQQQQQQQ^{__CGColorSpace=}BQf}",
+            b"B^"
+            + Quartz.CGContentInfo.__typestr__
+            + b"^"
+            + Quartz.CGBitmapParameters.__typestr__,
         )
         self.assertArgIsBlock(
             Quartz.CGBitmapContextCreateAdaptive,
             4,
-            b"^{__CGRenderingBufferProviderRef=}{ContextInfo=QQBBf}n^{CGBitmapParameters=QQQQQQQQ^{__CGColorSpace=}BQf}",
+            b"^{CGRenderingBufferProvider=}^"
+            + Quartz.CGContentInfo.__typestr__
+            + b"^"
+            + Quartz.CGBitmapParameters.__typestr__,
         )
         self.assertArgIsBlock(
             Quartz.CGBitmapContextCreateAdaptive,
             5,
-            b"v{^{__CGRenderingBufferProviderRef}{ContextInfo=QQBBf}n^{CGBitmapParameters=QQQQQQQQ^{__CGColorSpace=}BQf}",
+            b"v^{CGRenderingBufferProvider=}^"
+            + Quartz.CGContentInfo.__typestr__
+            + b"^"
+            + Quartz.CGBitmapParameters.__typestr__,
         )
         self.assertArgIsBlock(
             Quartz.CGBitmapContextCreateAdaptive,
             6,
-            b"v{^{__CGError=}{ContextInfo=QQBBf}n^{CGBitmapParameters=QQQQQQQQ^{__CGColorSpace=}BQf}",
+            b"v^{__CFError=}^"
+            + Quartz.CGContentInfo.__typestr__
+            + b"^"
+            + Quartz.CGBitmapParameters.__typestr__,
         )

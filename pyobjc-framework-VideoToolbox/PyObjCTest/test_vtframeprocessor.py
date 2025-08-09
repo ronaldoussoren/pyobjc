@@ -30,5 +30,5 @@ class TestVTFrameProcessor(TestCase):
         self.assertArgIsBlock(
             VideoToolbox.VTFrameProcessor.processWithParameters_frameOutputHandler_,
             1,
-            b"v@Z@",
+            b"v@" + VideoToolbox.CMTime.__typestr__ + b"Z@",
         )

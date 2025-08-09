@@ -7,9 +7,9 @@ class TestCGEXRToneMappingGamma(TestCase):
     def test_functions26_0(self):
         Quartz.CGEXRToneMappingGammaGetDefaultOptions
 
-        self.assertIsCFRetained(Quartz.CGGradientCreateWithContentHeadroom)
+        self.assertResultIsCFRetained(Quartz.CGGradientCreateWithContentHeadroom)
         self.assertArgIsIn(Quartz.CGGradientCreateWithContentHeadroom, 2)
-        self.self.assertArgIsVariableSize(Quartz.CGGradientCreateWithContentHeadroom, 2)
+        self.assertArgIsVariableSize(Quartz.CGGradientCreateWithContentHeadroom, 2)
         self.assertArgIsIn(Quartz.CGGradientCreateWithContentHeadroom, 3)
         self.assertArgSizeInArg(Quartz.CGGradientCreateWithContentHeadroom, 3, 4)
 

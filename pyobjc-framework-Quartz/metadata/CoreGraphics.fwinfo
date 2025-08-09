@@ -284,10 +284,19 @@
    "kCGColorSpaceLinearITUR_2020": {
     "typestr": "@"
    },
+   "kCIImageApplyCleanAperture": {
+    "typestr": "@"
+   },
+   "kCIImageContentAverageLightLevel": {
+    "typestr": "@"
+   },
    "kCIInputLocalToneMapAmountKey": {
     "typestr": "@"
    },
    "kCIImageAuxiliarySemanticSegmentationSkyMatte": {
+    "typestr": "@"
+   },
+   "kCIImageRepresentationHDRGainMapAsRGB": {
     "typestr": "@"
    },
    "kCIImageRepresentationSemanticSegmentationSkyMatteImage": {
@@ -383,6 +392,23 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGRenderingBufferLockBytePtr": {
+    "retval": { "c_array_of_variable_length": true }
+   },
+   "CGBitmapContextCreateAdaptive": {
+    "args": {
+     "3": {
+      "callable": {
+       "arguments": {
+        "0": { "typestr": "^v" },
+        "1": { "typestr": "^{CGContentInfo=QQBBf}", "type_modifier": "N" },
+        "2": { "typestr": "^{CGBitmapParameters=QQQQQQQQ^{__CGColorSpace=}Bqf}", "type_modifier": "N" }
+       },
+       "retval": { "typestr": "B" }
+      }
+     }
+    }
+   },
    "CGErrorSetCallback": {
     "args": {
      "0": { "callable_retained": true }
@@ -390,7 +416,7 @@
    },
    "CGRenderingBufferProviderCreate": {
     "args": {
-     "3": { "type_modifier": "0", "c_array_length_in_arg": 1 }
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
     },
     "retval": { "already_cfretained": true }
    },

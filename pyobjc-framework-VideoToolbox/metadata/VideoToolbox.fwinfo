@@ -29,6 +29,10 @@
    "kVTAlphaChannelMode_PremultipliedAlpha": { "typestr": "@" }
   },
   "cftypes": {
+   "VTMotionEstimationSessionRef": {
+    "typestr": "^{OpaqueVTMotionEstimationSession=}",
+    "gettypeid_func": "VTMotionEstimationSessionGetTypeID"
+   },
    "VTRAWProcessingSessionRef": {
     "typestr": "^{OpaqueVTRAWProcessingSession=}",
     "gettypeid_func": "VTRAWProcessingSessionGetTypeID"
@@ -82,6 +86,22 @@
    "VTCopyVideoDecoderExtensionProperties": {
     "args": {
      "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "VTMotionEstimationSessionEstimateMotionVectors": {
+    "args": {
+     "5": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" },
+        "2": { "type": "q" },
+        "3": { "type": "@" },
+        "4": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
     }
    },
    "VTCompressionSessionEncodeMultiImageFrameWithOutputHandler": {
@@ -488,7 +508,20 @@
    },
    "VTDecompressionSessionDecodeFrameWithOptionsAndOutputHandler": {
     "args": {
-     "4": { "type_modifier": "o" }
+     "4": { "type_modifier": "o" },
+     "5": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" },
+        "2": { "type": "I" },
+        "3": { "type": "^{__CVBuffer=}" },
+	"4": { "type": "{CMTime=qiIq}" },
+	"5": { "type": "{CMTime=qiIq}" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
     }
    },
    "VTDecompressionSessionDecodeFrameWithOptions": {

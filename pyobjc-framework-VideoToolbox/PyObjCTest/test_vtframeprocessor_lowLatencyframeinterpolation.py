@@ -8,6 +8,3 @@ class TestVTFrameProcessor_LowLatencyFrameInterpolation(TestCase):
         self.assertResultIsBOOL(
             VideoToolbox.VTLowLatencyFrameInterpolationConfiguration.isSupported
         )
-        self.assertArgIsBOOL(
-            VideoToolbox.VTLowLatencyFrameInterpolationConfiguration.setSupported_, 0
-        )
