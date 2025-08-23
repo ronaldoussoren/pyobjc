@@ -388,6 +388,10 @@ class TestCVPixelBuffer(TestCase):
     def testConstants12_0(self):
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_MetadataExtension, str)
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePurgeableKey, str)
+
     @min_os_level("10.6")
     def testFunctions10_6(self):
         self.assertResultHasType(Quartz.CVPixelBufferGetIOSurface, b"^{__IOSurface=}")
