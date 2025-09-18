@@ -70,6 +70,21 @@ class TestMTLIndirectCommandEncoderHelper(Metal.NSObject):
     ):
         pass
 
+    def setDepthBias_slopeScale_clamp_(self, a, b, c):
+        pass
+
+    def setDepthClipMode_(self, a):
+        pass
+
+    def setCullMode_(self, a):
+        pass
+
+    def setFrontFacingWinding_(self, a):
+        pass
+
+    def setTriangleFillMode_(self, a):
+        pass
+
 
 class TestMTLIndirectCommandEncoder(TestCase):
     @min_sdk_level("10.14")
@@ -381,4 +396,25 @@ class TestMTLIndirectCommandEncoder(TestCase):
             TestMTLIndirectCommandEncoderHelper.drawMeshThreads_threadsPerObjectThreadgroup_threadsPerMeshThreadgroup_,  # noqa: B950
             2,
             Metal.MTLSize.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setDepthBias_slopeScale_clamp_, 0, b"f"
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setDepthBias_slopeScale_clamp_, 1, b"f"
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setDepthBias_slopeScale_clamp_, 2, b"f"
+        )
+
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setDepthClipMode_, 0, b"q"
+        )
+        self.assertArgHasType(TestMTLIndirectCommandEncoderHelper.setCullMode_, 0, b"q")
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setFrontFacingWinding_, 0, b"q"
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandEncoderHelper.setTriangleFillMode_, 0, b"q"
         )

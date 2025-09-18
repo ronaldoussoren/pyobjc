@@ -507,3 +507,27 @@ class TestAVMetadataFormat(TestCase):
             AVFoundation.AVMetadataQuickTimeMetadataKeyCameraFocalLength35mmEquivalent,
             str,
         )
+
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyCameraISOSensitivity, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyCameraWhiteBalance, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyWhiteBalanceByCCTWhiteBalanceFactors,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyWhiteBalanceByCCTColorMatrices,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyCameraShutterSpeedAngle, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyCameraShutterSpeedTime, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyCameraLensIrisFNumber, str
+        )

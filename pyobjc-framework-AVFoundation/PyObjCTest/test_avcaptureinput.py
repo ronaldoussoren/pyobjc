@@ -101,3 +101,10 @@ class TestAVCaptureInput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureDeviceInput.setCinematicVideoCaptureEnabled_, 0
         )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.isLockedVideoFrameDurationSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.isExternalSyncSupported
+        )

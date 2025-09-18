@@ -177,6 +177,7 @@ class TestCVImageBuffer(TestCase):
         self.assertIsInstance(
             Quartz.kCVImageBufferDisplayMaskRectangle_RightEdgePointsKey, str
         )
+        self.assertIsInstance(Quartz.kCVImageBufferLogTransferFunction_AppleLog2, str)
 
     def testFunctions(self):
         self.assertResultHasType(

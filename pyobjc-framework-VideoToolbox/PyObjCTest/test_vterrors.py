@@ -50,6 +50,9 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTCouldNotFindExtensionErr, -19510)
         self.assertEqual(VideoToolbox.kVTExtensionConflictErr, -19511)
         self.assertEqual(
+            VideoToolbox.kVTVideoEncoderAutoWhiteBalanceNotLockedErr, -19512
+        )
+        self.assertEqual(
             VideoToolbox.kVTDecodeFrame_EnableAsynchronousDecompression, 1 << 0
         )
         self.assertEqual(VideoToolbox.kVTDecodeFrame_DoNotOutputFrame, 1 << 1)

@@ -96,5 +96,7 @@ use_protocols(void)
 #endif
 #if PyObjC_BUILD_RELEASE >= 2600
     p = PyObjC_IdToPython(@protocol(AVCaptureSessionDeferredStartDelegate));
+    p = PyObjC_IdToPython(@protocol(AVCaptureTimecodeGeneratorDelegate));
+    p = PyObjC_IdToPython(@protocol(AVExternalSyncDeviceDelegate));
 #endif
 }

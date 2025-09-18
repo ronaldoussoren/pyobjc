@@ -100,4 +100,5 @@ class TestMTLDataType(TestCase):
         self.assertEqual(Metal.MTLDataTypeBFloat2, 122)
         self.assertEqual(Metal.MTLDataTypeBFloat3, 123)
         self.assertEqual(Metal.MTLDataTypeBFloat4, 124)
+        self.assertEqual(Metal.MTLDataTypeDepthStencilState, 139)
         self.assertEqual(Metal.MTLDataTypeTensor, 140)

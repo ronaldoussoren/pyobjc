@@ -947,3 +947,31 @@ class TestAVMetadataIdentifiers(TestCase):
             AVFoundation.AVMetadataIdentifierQuickTimeMetadataPresentationImmersiveMedia,
             str,
         )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraISOSensitivity,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraWhiteBalance,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataWhiteBalanceByCCTWhiteBalanceFactors,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataWhiteBalanceByCCTColorMatrices,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraShutterSpeedAngle,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraShutterSpeedTime,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraLensIrisFNumber,
+            str,
+        )

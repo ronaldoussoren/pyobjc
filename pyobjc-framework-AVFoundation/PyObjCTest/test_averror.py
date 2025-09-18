@@ -120,6 +120,7 @@ class TestAVError(TestCase):
         self.assertEqual(AVFoundation.AVErrorToneMappingFailed, -11885)
         self.assertEqual(AVFoundation.AVErrorMediaExtensionDisabled, -11886)
         self.assertEqual(AVFoundation.AVErrorMediaExtensionConflict, -11887)
+        self.assertEqual(AVFoundation.AVErrorNoSmartFramingsEnabled, -11890)
 
     @min_os_level("10.10")
     def testConstants10_10(self):

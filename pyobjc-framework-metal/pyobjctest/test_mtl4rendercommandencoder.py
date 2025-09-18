@@ -27,6 +27,9 @@ class TestMTL4RenderCommandEncoderHelper(Metal.NSObject):
     def setDepthBias_slopeScale_clamp_(self, a, b, c):
         pass
 
+    def setDepthTestMinBound_maxBound_(self, a, b):
+        pass
+
     def setScissorRect_(self, a):
         pass
 
@@ -191,6 +194,13 @@ class TestMTL4RenderCommandEncoder(TestCase):
         )
         self.assertArgHasType(
             TestMTL4RenderCommandEncoderHelper.setDepthBias_slopeScale_clamp_, 2, b"f"
+        )
+
+        self.assertArgHasType(
+            TestMTL4RenderCommandEncoderHelper.setDepthTestMinBound_maxBound_, 0, b"f"
+        )
+        self.assertArgHasType(
+            TestMTL4RenderCommandEncoderHelper.setDepthTestMinBound_maxBound_, 1, b"f"
         )
 
         self.assertArgHasType(

@@ -293,6 +293,12 @@ def _setup():
         ("AVMetricMediaRendition", b"init"),
         ("AVMetricDownloadSummaryEvent", b"new"),
         ("AVMetricDownloadSummaryEvent", b"init"),
+        ("AVCaptureExternalDisplayConfigurator", b"new"),
+        ("AVCaptureExternalDisplayConfigurator", b"init"),
+        ("AVExternalSyncDevice", b"new"),
+        ("AVExternalSyncDevice", b"init"),
+        ("AVExternalSyncDeviceDiscoverySession", b"new"),
+        ("AVExternalSyncDeviceDiscoverySession", b"init"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

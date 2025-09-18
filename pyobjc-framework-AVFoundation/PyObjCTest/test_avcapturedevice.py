@@ -432,3 +432,21 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice.isCameraLensSmudgeDetectionEnabled
         )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isVideoFrameDurationLocked)
+        self.assertHasType(
+            AVFoundation.AVCaptureDevice.minSupportedLockedVideoFrameDuration,
+            AVFoundation.CMTime.__typestr__,
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isFollowingExternalSyncDevice
+        )
+        self.assertHasType(
+            AVFoundation.AVCaptureDevice.minSupportedExternalSyncFrameDuration,
+            AVFoundation.CMTime.__typestr__,
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVCaptureDevice.setWhiteBalanceModeLockedWithDeviceWhiteBalanceTemperatureAndTintValues_completionHandler_,
+            1,
+            b"v" + AVFoundation.CMTime.__typestr__,
+        )

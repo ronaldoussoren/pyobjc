@@ -14,7 +14,7 @@ Version 12.0a0
 
   The package is included in the ``pyobjc-framework-AVFoundation`` distribution.
 
-* Updated metadata for the macOS 26 SDK (Xcode 26 beta 7).
+* Updated metadata for the macOS 26 SDK.
 
   As part of this introduce bindings for the following new framework bindings:
 
