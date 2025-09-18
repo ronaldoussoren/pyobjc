@@ -153,7 +153,7 @@ class TestMTLLibrary(TestCase):
         self.assertArgIsOut(
             TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_error_, 1
         )
-        self.assertResultHasType(TestMTLLibraryHelper.type, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLLibraryHelper.type, objc._C_NSInteger)
 
     @min_os_level("10.11")
     def test_methods10_11(self):

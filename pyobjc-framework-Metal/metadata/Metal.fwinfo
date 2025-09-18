@@ -151,6 +151,13 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "setDepthStencilStates:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
       "selector": "copyBufferMappingsFromBuffer:toBuffer:operations:count:",
       "class_method": false,
       "args": {

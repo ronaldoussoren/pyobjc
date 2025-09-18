@@ -77,7 +77,7 @@ class TestAVCaptureTimecodeGenerator(TestCase):
         self.assertArgHasType(
             TestAVCaptureTimecodeGeneratorHelper.timecodeGenerator_didReceiveUpdate_fromSource_,
             1,
-            objc._C_NSInteger,
+            AVFoundation.AVCaptureTimecode.__typestr__,
         )
         self.assertArgHasType(
             TestAVCaptureTimecodeGeneratorHelper.timecodeGenerator_transitionedToSynchronizationStatus_forSource_,

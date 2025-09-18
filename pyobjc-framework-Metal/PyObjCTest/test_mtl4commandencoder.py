@@ -47,7 +47,7 @@ class TestMTL4CommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTL4CommandEncoderHelper.barrierAfterQueueStages_beforeStages_visibilityOptions_,
             2,
-            b"q",
+            b"Q",
         )
 
         self.assertArgHasType(
@@ -63,7 +63,7 @@ class TestMTL4CommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTL4CommandEncoderHelper.barrierAfterStages_beforeQueueStages_visibilityOptions_,
             2,
-            b"q",
+            b"Q",
         )
 
         self.assertArgHasType(
@@ -79,7 +79,7 @@ class TestMTL4CommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTL4CommandEncoderHelper.barrierAfterEncoderStages_beforeEncoderStages_visibilityOptions_,
             2,
-            b"q",
+            b"Q",
         )
 
         self.assertArgHasType(

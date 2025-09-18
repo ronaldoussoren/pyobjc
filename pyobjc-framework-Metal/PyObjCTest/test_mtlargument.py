@@ -244,7 +244,7 @@ class TestMTLArgument(TestCase):
         )
 
     def test_protocol_methods(self):
-        self.assertResultHasType(TestMTLArgumentHelper.type, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLArgumentHelper.type, objc._C_NSInteger)
         self.assertResultHasType(TestMTLArgumentHelper.access, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLArgumentHelper.index, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLArgumentHelper.index, objc._C_NSUInteger)

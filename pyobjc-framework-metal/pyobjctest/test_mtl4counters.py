@@ -36,7 +36,7 @@ class TestMTL4Counters(TestCase):
 
     def test_protocol_methods(self):
         self.assertResultHasType(TestMTL4CountersHelper.count, b"Q")
-        self.assertResultHasType(TestMTL4CountersHelper.type, b"Q")
+        self.assertResultHasType(TestMTL4CountersHelper.type, b"q")
         self.assertArgHasType(
             TestMTL4CountersHelper.resolveCounterRange_, 0, Metal.NSRange.__typestr__
         )

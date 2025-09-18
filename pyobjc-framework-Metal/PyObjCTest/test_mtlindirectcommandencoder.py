@@ -409,12 +409,12 @@ class TestMTLIndirectCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.setDepthClipMode_, 0, b"q"
+            TestMTLIndirectCommandEncoderHelper.setDepthClipMode_, 0, b"Q"
         )
-        self.assertArgHasType(TestMTLIndirectCommandEncoderHelper.setCullMode_, 0, b"q")
+        self.assertArgHasType(TestMTLIndirectCommandEncoderHelper.setCullMode_, 0, b"Q")
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.setFrontFacingWinding_, 0, b"q"
+            TestMTLIndirectCommandEncoderHelper.setFrontFacingWinding_, 0, b"Q"
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.setTriangleFillMode_, 0, b"q"
+            TestMTLIndirectCommandEncoderHelper.setTriangleFillMode_, 0, b"Q"
         )
