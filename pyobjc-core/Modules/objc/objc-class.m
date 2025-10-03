@@ -1053,6 +1053,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(old_dict);
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
+        if (objc_class != Nil) {
+            (void)PyObjCClass_UnbuildClass(objc_class);
+        }
         return NULL;
         // LCOV_EXCL_STOP
     }
