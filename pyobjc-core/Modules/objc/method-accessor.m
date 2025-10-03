@@ -107,7 +107,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         return NULL;
     }
 
-    if (!class_method) {
+    if (!class_method && !PyObjCClass_Check(self)) {
         objc_object = (id _Nonnull)object_getClass(objc_object);
     }
 
@@ -515,7 +515,6 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
             }
         } else {
             if (PyObjCSelector_IsClassMethod(result)) {
-                printf("found class method on instance");
                 Py_DECREF(result);
                 result = NULL;
             }

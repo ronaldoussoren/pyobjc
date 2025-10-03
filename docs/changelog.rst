@@ -234,6 +234,9 @@ Version 12.0a0
 * Added ``objc.NSInteger``, ``objc.NSUInteger`` and ``objc.CGFloat`` that will make
   it easier to use type annotations that match Apple's type information.
 
+* Fix edge cases in method accessors when some uses of ``SomeClass.pyobjc_instanceMethods.method``
+  would result in a method object that's bound to a meta class.
+
 Version 11.1.1
 --------------
 
