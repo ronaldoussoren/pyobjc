@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 from objc import super  # noqa: A004
 import objc._new as new_mod
 from .genericnew import (
@@ -52,6 +52,15 @@ class TestDefaultNewForPythonClass(TestCase):
         NSObject.__new__.foo = 42
         self.assertEqual(NSObject.__new__._function.foo, 42)
         del NSObject.__new__._function.foo
+
+    def test_function_wrapper_slots(self):
+        value = NSObject.__new__
+        self.assertIs(type(value), new_mod.function_wrapper)
+        self.assertIn("_cls", new_mod.function_wrapper.__dict__)
+        self.assertIn("_function", new_mod.function_wrapper.__dict__)
+        self.assertNotIn("__dict__", new_mod.function_wrapper.__dict__)
+
+        self.assertIs(value.__dict__, value._function.__dict__)
 
     def test_basic(self):
         class OCPyNew1(NSObject):
@@ -149,6 +158,23 @@ class TestDefaultNewForPythonClass(TestCase):
 
         finally:
             objc.options._setDunderNew = orig
+
+    def test_invalid_new_class_option(self):
+        class OC_GenericNewWithInit(NSObject):
+            def __init__(self):
+                self.foo = 42
+
+        o = OC_GenericNewWithInit()
+        self.assertNotHasAttr(o, "foo")
+
+        with pyobjc_options(_genericNewClass=float):
+            o = OC_GenericNewWithInit()
+            self.assertEqual(o.foo, 42)
+
+        with pyobjc_options(_genericNewClass=42):
+            with self.assertRaisesRegex(TypeError, "42 is not a type"):
+                o = OC_GenericNewWithInit()
+                print(o)
 
     def test_explicit_new(self):
         # Test that an explicit __new__ overrides the default

@@ -188,6 +188,13 @@ class TestSubclassing(TestCase):
         o = OC_SubClassingWithDunderDict()
         self.assertNotIn("a", o.__dict__)
 
+    def test_deleting_attributes(self):
+        with self.assertRaisesRegex(AttributeError, "nosuchmethod"):
+            del NSObject.nosuchmethod
+
+        with self.assertRaisesRegex(AttributeError, "Cannot remove selector"):
+            del NSObject.description
+
 
 class TestSelectors(TestCase):
     def testSelectorRepr(self):
@@ -974,9 +981,12 @@ class TestSelectorAttributes(TestCase):
         self.assertFalse(meth1 == meth3)
 
         self.assertTrue(meth1 != dir)
+        self.assertTrue(dir != meth1)
 
         self.assertTrue(meth1 != dir)
         self.assertFalse(meth1 == dir)
+        self.assertTrue(dir != meth1)
+        self.assertFalse(dir == meth1)
 
         # XXX: Ordering between selector instances
         #      is not very usefull, but the code
@@ -986,9 +996,12 @@ class TestSelectorAttributes(TestCase):
         self.assertFalse(meth1 < meth1)
         self.assertTrue(meth1 < meth2)
         self.assertTrue(meth1 <= meth1)
+        self.assertFalse(meth2 <= meth1)
         self.assertFalse(meth1 > meth1)
         self.assertTrue(meth2 > meth1)
         self.assertTrue(meth1 >= meth1)
+        self.assertFalse(meth1 > meth2)
+        self.assertFalse(meth1 >= meth2)
 
         with self.assertRaisesRegex(
             TypeError,

@@ -557,3 +557,20 @@ class TestSizeOfType(TestCase):
 
         with self.assertRaisesRegex(TypeError, "a bytes-like object is required"):
             objc._sizeOfType(42)
+
+
+class TestSelectorEdgeCases(TestCase):
+    def test_selector_invalid_name(self):
+        def fn(self):
+            pass
+
+        fn.__name__ = "\udfff"
+        with self.assertRaisesRegex(UnicodeError, "surrogate"):
+            fn.__name__.encode()
+
+        with self.assertRaisesRegex(UnicodeError, "surrogate"):
+            objc.selector(fn)
+
+        # Setting the name to non-string doesn't work:
+        with self.assertRaises(TypeError):
+            fn.__name__ = b"fn"
