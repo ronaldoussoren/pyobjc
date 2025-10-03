@@ -1434,7 +1434,7 @@ int
 PyObjCClass_Convert(PyObject* object, void* pvar)
 {
     if (!PyObjCClass_Check(object)) {
-        PyErr_SetString(PyExc_TypeError, "Expected objective-C class");
+        PyErr_Format(PyExc_TypeError, "Expected objective-C class, got %R", object);
         return 0;
     }
 
