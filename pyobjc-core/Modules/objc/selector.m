@@ -1567,7 +1567,7 @@ static SEL _Nullable pysel_default_selector(PyObject* callable)
     if (name == NULL)
         return NULL;
 
-    if (PyUnicode_Check(name)) {
+    if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
         PyObject* bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
         if (bytes == NULL) {
             return NULL;
@@ -1576,7 +1576,8 @@ static SEL _Nullable pysel_default_selector(PyObject* callable)
         Py_DECREF(bytes);
 
     } else {
-        return NULL;
+        /* The name of built-in callables is always a unicode string */
+        return NULL; // LCOV_EXCL_LINE
     }
 
     if (buf[strlen(buf) - 1] != '_') {

@@ -445,7 +445,7 @@ static PyObject* _Nullable class_call(PyObject* self, PyObject* _Nullable args,
     }
 
     type = Py_TYPE(result);
-    if (type->tp_init != NULL) {
+    if (type->tp_init != NULL) { // LCOV_BR_EXCL_LINE
         int res = type->tp_init(result, args, kwds);
         if (res == -1) {
             Py_SETREF(result, NULL);
@@ -458,7 +458,7 @@ static int
 class_init(PyObject* cls, PyObject* args, PyObject* kwds)
 {
     if (kwds != NULL) {
-        if (PyDict_Check(kwds) && PyDict_Size(kwds) == 1) {
+        if (PyDict_Check(kwds) && PyDict_Size(kwds) == 1) { // LCOV_BR_EXCL_LINE
 
             PyObject* v;
 
@@ -629,8 +629,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         }
 
         for (i = 0; i < protocols_len; i++) {
-            if (PyList_Append(protocols, PyTuple_GET_ITEM(seq, i))
-                < 0) { // LCOV_BR_EXCL_LINE
+            if (PyList_Append( // LCOV_BR_EXCL_LINE
+                    protocols, PyTuple_GET_ITEM(seq, i))
+                < 0) {
                 // LCOV_EXCL_START
                 Py_DECREF(hiddenSelectors);
                 Py_DECREF(hiddenClassSelectors);
@@ -706,8 +707,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     }
 
     /* Also look for '__pyobjc_protocols__' in the class dictionary. */
-    switch (PyDict_GetItemRef(dict, PyObjCNM___pyobjc_protocols__,
-                              &arg_protocols)) { // LCOV_BR_EXCL_LINE
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        dict, PyObjCNM___pyobjc_protocols__, &arg_protocols)) {
     case -1:
         // LCOV_EXCL_START
         Py_DECREF(protocols);
@@ -1639,8 +1640,10 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
         PyObject* class_for_base = PyObjCClass_ClassForMetaClass(base);
         if (class_for_base == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_CLEAR(mro);
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;
+            // LCOV_EXCL_STOP
         }
 
         /* class_copyMethodList only returns NULL when it sets method_count
@@ -1658,9 +1661,11 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
             PyObject* hidden = PyObjCClass_HiddenSelector(class_for_base, meth_name, YES);
             if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 free(methods);
                 Py_CLEAR(mro);
-                return NULL; // LCOV_EXCL_LINE
+                return NULL;
+                // LCOV_EXCL_STOP
 
             } else if (hidden) {
                 Py_CLEAR(hidden);
@@ -1754,8 +1759,8 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
         }
         // LCOV_EXCL_STOP
     }
-    if (m == nil && PyErr_Occurred()) {
-        return NULL;
+    if (m == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;                    // LCOV_EXCL_LINE
     }
 
     hidden = PyObjCClass_HiddenSelector(

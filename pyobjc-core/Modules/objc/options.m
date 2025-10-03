@@ -1051,12 +1051,13 @@ PyObjC_CallClassExtender(PyObject* cls)
             Py_CLEAR(k);
             Py_CLEAR(v);
 
-        } else {
+        } else { // LCOV_BR_EXCL_LINE
             /* 'cls' is known to be an PyObjCClass instance, hence the tp_dict
              * slot is usable directly.
              */
-            if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v)
-                == -1) {       // LCOV_BR_EXCL_LINE
+            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    ((PyTypeObject*)cls)->tp_dict, k, v)
+                == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         }
@@ -1096,7 +1097,7 @@ PyObjCErr_SetGAIError(int error)
         Py_DECREF(v);
     }
     Py_DECREF(type);
-}
+} // LCOV_BR_EXCL_LINE
 
 PyObject* _Nullable PyObjCErr_SetSocketError(const char* message)
 {
@@ -1225,6 +1226,12 @@ PyObjC_IsGenericNew(PyObject* value)
     Py_INCREF(type);
     UNLOCK(PyObjC_genericNewClass);
 
+    if (!PyType_Check(type)) {
+        PyErr_Format(PyExc_TypeError, "%R is not a type", type);
+        Py_DECREF(type);
+        return -1;
+    }
+
     int r = PyObject_TypeCheck(value, (PyTypeObject*)type);
     Py_DECREF(type);
     return r;
@@ -1239,6 +1246,7 @@ PyObjC_ArrayTypeCheck(PyObject* value)
     UNLOCK(PyObjC_genericNewClass);
 
     if (type == Py_None) {
+        Py_DECREF(type);
         return 0;
     }
 
