@@ -391,8 +391,9 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
     Py_BEGIN_ALLOW_THREADS
         @try {
             retval = ((IMP (*)(Class, SEL, SEL))objc_msgSend)( // LCOV_BR_EXCL_LINE
-                PyObjCClass_GetClass(self), PyObjCSelector_GetSelector(method),
-                selector); // LCOV_BR_EXCL_LINE
+                PyObjCClass_GetClass(self),                    // LCOV_BR_EXCL_LINE
+                PyObjCSelector_GetSelector(method),            // LCOV_BR_EXCL_LINE
+                selector);
 
         } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
             PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
@@ -426,23 +427,22 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         return NULL;
     }
 
-    if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
-        ((PyObjCNativeSelector*)attr)->sel_call_func = PyObjC_FindCallFunc(
-            ((PyObjCNativeSelector*)attr)->base.sel_class,
-            ((PyObjCNativeSelector*)attr)->base.sel_selector,
-            ((PyObjCNativeSelector*)attr)->base.sel_methinfo->signature);
-        if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
-            return NULL;
-        }
-    }
-
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
     if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;        // LCOV_EXCL_LINE
     }
 
-    res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
-                        methinfo, PyObjCSelector_GetFlags(attr));
+    PyObjC_CallFunc call_func = PyObjCSelector_GetCallFunc((PyObjCNativeSelector*)attr);
+    if (call_func == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(attr);
+        Py_DECREF(methinfo);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
+    res = PyObjCIMP_New(retval, selector, call_func, methinfo,
+                        PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
     Py_DECREF(methinfo);
     return res;
@@ -480,10 +480,10 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            retval = ((IMP (*)(struct objc_super*, SEL,
-                               SEL))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
-                &super, PyObjCSelector_GetSelector(method),
-                selector); // LCOV_BR_EXCL_LINE
+            retval = ((IMP (*)(struct objc_super*, SEL,     // LCOV_BR_EXCL_LINE
+                               SEL))objc_msgSendSuper)(     // LCOV_BR_EXCL_LINE
+                &super, PyObjCSelector_GetSelector(method), // LCOV_BR_EXCL_LINE
+                selector);                                  // LCOV_BR_EXCL_LINE
 
         } @catch (NSObject* localException) {   // LCOV_EXCL_LINE
             PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
@@ -519,17 +519,6 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
         return NULL;
     }
 
-    /* FIXME: there should be a function for retrieving the call function */
-    if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
-        ((PyObjCNativeSelector*)attr)->sel_call_func = PyObjC_FindCallFunc(
-            ((PyObjCNativeSelector*)attr)->base.sel_class,
-            ((PyObjCNativeSelector*)attr)->base.sel_selector,
-            ((PyObjCNativeSelector*)attr)->base.sel_methinfo->signature);
-        if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
-            return NULL;
-        }
-    }
-
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
     if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -538,8 +527,17 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
         // LCOV_EXCL_STOP
     }
 
-    res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
-                        methinfo, PyObjCSelector_GetFlags(attr));
+    PyObjC_CallFunc call_func = PyObjCSelector_GetCallFunc((PyObjCNativeSelector*)attr);
+    if (call_func == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(attr);
+        Py_DECREF(methinfo);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
+    res = PyObjCIMP_New(retval, selector, call_func, methinfo,
+                        PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
     Py_DECREF(methinfo);
     return res;

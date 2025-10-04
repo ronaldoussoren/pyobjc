@@ -651,6 +651,35 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
     return PyObjCFFI_Caller_SimpleSEL((PyObject*)self, pyself, args, nargsf);
 }
 
+PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(PyObjCNativeSelector* obj)
+{
+    if (obj->sel_call_func != NULL) {
+        return obj->sel_call_func;
+    } else {
+        assert(obj->base.sel_class != NULL);
+
+        PyObjC_CallFunc execute =
+            PyObjC_FindCallFunc(obj->base.sel_class, obj->base.sel_selector,
+                                obj->base.sel_methinfo->signature);
+        if (execute == NULL) {
+            return NULL;
+        }
+
+        if (obj->sel_call_func == NULL) {
+            obj->sel_call_func = execute;
+            /* Update the vectorcall slot when a faster call is possible */
+            if (obj->base.sel_methinfo->shortcut_signature
+                && execute == PyObjCFFI_Caller) {
+                obj->base.sel_vectorcall = objcsel_vectorcall_simple;
+            }
+        } else {
+            execute = obj->sel_call_func;
+        }
+
+        return execute;
+    }
+}
+
 static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
                                               PyObject* _Nonnull const* _Nonnull args,
                                               size_t nargsf, PyObject* _Nullable kwnames)
@@ -711,28 +740,9 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         Py_CLEAR(methinfo);
     }
 
-    if (self->sel_call_func != NULL) {
-        execute = self->sel_call_func;
-    } else {
-        assert(self->base.sel_class != NULL);
-
-        execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector,
-                                      self->base.sel_methinfo->signature);
-        if (execute == NULL) {
-            return NULL;
-        }
-
-        if (self->sel_call_func == NULL) {
-            self->sel_call_func = execute;
-            /* Update the vectorcall slot when a faster call is possible */
-            if (self->base.sel_methinfo->shortcut_signature
-                && execute == PyObjCFFI_Caller) {
-                self->base.sel_vectorcall = objcsel_vectorcall_simple;
-            }
-        } else {
-            Py_CLEAR(execute);
-            execute = self->sel_call_func;
-        }
+    execute = PyObjCSelector_GetCallFunc(self);
+    if (execute == NULL) {
+        return NULL;
     }
 
     /* XXX: The if statement below can be simplified, both cases are mostly the same */

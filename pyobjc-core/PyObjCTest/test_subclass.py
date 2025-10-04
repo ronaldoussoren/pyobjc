@@ -1520,6 +1520,11 @@ class TestSubclassOptions(TestCase):
         self.assertEqual(OC_SubClassWithProtocols.__pyobjc_protocols__, (proto,))
 
     def test_class_version(self):
+
+        self.assertIs(objc.objc_object.__version__, None)
+        with self.assertRaisesRegex(TypeError, "immutable"):
+            objc.objc_object.__version__ = 42
+
         class OC_VersionedClass(NSObject):
             pass
 

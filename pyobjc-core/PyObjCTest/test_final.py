@@ -29,6 +29,13 @@ class TestFinal(TestCase):
 
         self.assertTrue(NonFinalClass.__objc_final__)
 
+        class NoCompare:
+            def __bool__(self):
+                raise RuntimeError("no compare")
+
+        with self.assertRaises(RuntimeError):
+            NonFinalClass.__objc_final__ = NoCompare()
+
         with self.assertRaisesRegex(
             TypeError, "Cannot delete __objc_final__ attribute"
         ):

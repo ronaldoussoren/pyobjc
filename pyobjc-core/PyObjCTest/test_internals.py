@@ -143,74 +143,82 @@ class TestRescanClass(TestCase):
         # aren't used elsewhere in the test suite.
 
         # Use '_updatingMetadata' to force a rescan
-        objc._updatingMetadata(True)
-        objc._updatingMetadata(False)
-        objc._rescanClass(name="NSObject")
 
-        objc._updatingMetadata(True)
-        objc._updatingMetadata(False)
-        objc._rescanClass("NSObject")
-
-        objc._updatingMetadata(True)
-        objc._updatingMetadata(False)
-        objc._rescanClass("SomeNonexistingClass")
-
-        def dummy_extender(klass, class_dict):
-            if klass.__name__ == "NSURLSession":
-                class_dict["_dummy_attribute_"] = 42
-
-        cls = objc.lookUpClass("NSURLSession")
-        self.assertNotHasAttr(cls, "_dummy_attribute_")
-        with pyobjc_options(_class_extender=dummy_extender):
+        with self.subTest("setup"):
             objc._updatingMetadata(True)
             objc._updatingMetadata(False)
-            objc._rescanClass("NSURLSession")
-            self.assertHasAttr(cls, "_dummy_attribute_")
+            objc._rescanClass(name="NSObject")
 
-        objc._updatingMetadata(True)
-        objc._updatingMetadata(False)
-
-        def dummy_extender(klass, class_dict):
-            if klass.__name__ == "NSURLSession":
-                class_dict[2001] = "spaces"
-                class_dict["__has_python_implementation__"] = 0
-
-        with pyobjc_options(_class_extender=dummy_extender):
             objc._updatingMetadata(True)
             objc._updatingMetadata(False)
+            objc._rescanClass("NSObject")
 
-            objc._rescanClass("NSURLSession")
-            self.assertIn(2001, cls.__dict__)
-            self.assertNotEqual(cls.init, 42)
+            objc._updatingMetadata(True)
+            objc._updatingMetadata(False)
+            objc._rescanClass("SomeNonexistingClass")
 
         objc._updatingMetadata(True)
         objc._updatingMetadata(False)
 
-        # XXX: Temporarily disabled
-        #      Test is used for test coverage, but does not work
-        #      reliably for both normal and free-threaded builds
-        #
-        # class NoCompare:
-        #    def __eq__(self, other):
-        #        raise TypeError("cannot compare")
-        #
-        # no_compare = NoCompare()
-        #
-        # with self.subTest("No compare  class extender"):
-        #    def dummy_extender(klass, class_dict):
-        #        class_dict["foo"] = no_compare
-        #
-        #    cls.foo = objc.python_method(lambda self: 99)
-        #    try:
-        #        with pyobjc_options(_class_extender=dummy_extender):
-        #            objc._updatingMetadata(True)
-        #            objc._updatingMetadata(False)
-        #
-        #            with self.assertRaisesRegex(TypeError, "cannot compare"):
-        #                objc._rescanClass("NSURLSession")
-        #
-        #    finally:
-        #        del cls.foo
+        with self.subTest("dummy attribute"):
+
+            def dummy_extender(klass, class_dict):
+                if klass.__name__ == "NSURLSession":
+                    class_dict["_dummy_attribute_"] = 42
+
+            cls = objc.lookUpClass("NSURLSession")
+            self.assertNotHasAttr(cls, "_dummy_attribute_")
+            with pyobjc_options(_class_extender=dummy_extender):
+                objc._updatingMetadata(True)
+                objc._updatingMetadata(False)
+                objc._rescanClass("NSURLSession")
+                self.assertHasAttr(cls, "_dummy_attribute_")
+
+        objc._updatingMetadata(True)
+        objc._updatingMetadata(False)
+
+        with self.subTest("weird attributes"):
+
+            def dummy_extender(klass, class_dict):
+                if klass.__name__ == "NSURLSession":
+                    class_dict[2001] = "spaces"
+                    class_dict["__has_python_implementation__"] = 0
+
+            with pyobjc_options(_class_extender=dummy_extender):
+                objc._updatingMetadata(True)
+                objc._updatingMetadata(False)
+
+                objc._rescanClass("NSURLSession")
+                self.assertIn(2001, cls.__dict__)
+                self.assertNotEqual(cls.init, 42)
+
+        objc._updatingMetadata(True)
+        objc._updatingMetadata(False)
+
+        class NoCompare:
+            def __eq__(self, other):
+                raise TypeError("cannot compare")
+
+        no_compare = NoCompare()
+
+        with self.subTest("No compare  class extender"):
+
+            def dummy_extender(klass, class_dict):
+                class_dict["foo"] = no_compare
+
+            cls.foo = objc.python_method(lambda self: 99)
+            try:
+                with pyobjc_options(_class_extender=dummy_extender):
+                    objc._updatingMetadata(True)
+                    objc._updatingMetadata(False)
+
+                    with self.assertRaisesRegex(TypeError, "cannot compare"):
+                        objc._rescanClass(cls.__name__)
+
+                        print(cls.foo)
+
+            finally:
+                del cls.foo
 
         objc._updatingMetadata(True)
         objc._updatingMetadata(False)
@@ -223,16 +231,21 @@ class TestRescanClass(TestCase):
 
         for attr in ("__dict__", "__bases__", "__slots__", "__mro__"):
 
-            def dummy_extender(klass, class_dict, attr=attr):
-                if klass.__name__ == "NSURLSession":
-                    class_dict[attr] = attr
+            with self.subTest("tweak attr", key=attr):
 
-            with pyobjc_options(_class_extender=dummy_extender):
-                objc._updatingMetadata(True)
-                objc._updatingMetadata(False)
+                def dummy_extender(klass, class_dict, attr=attr):
+                    if klass.__name__ == "NSURLSession":
+                        class_dict[attr] = attr
 
-                objc._rescanClass("NSURLSession")
-                self.assertNotEqual(getattr(cls, attr), attr)
+                with pyobjc_options(_class_extender=dummy_extender):
+                    objc._updatingMetadata(True)
+                    objc._updatingMetadata(False)
+
+                    objc._rescanClass("NSURLSession")
+                    self.assertNotEqual(getattr(cls, attr), attr)
+
+            objc._updatingMetadata(True)
+            objc._updatingMetadata(False)
 
     def test_rescan_raises(self):
         def raising_extender(*args, **kwds):

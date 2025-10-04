@@ -101,6 +101,13 @@ class TestUseKVO(TestCase):
 
         self.assertTrue(OCTestUseKVO5.__useKVO__)
 
+        class NoCompare:
+            def __bool__(self):
+                raise RuntimeError("no compare")
+
+        with self.assertRaises(RuntimeError):
+            OCTestUseKVO5.__useKVO__ = NoCompare()
+
         OCTestUseKVO5.__useKVO__ = False
 
         self.assertFalse(OCTestUseKVO5.__useKVO__)

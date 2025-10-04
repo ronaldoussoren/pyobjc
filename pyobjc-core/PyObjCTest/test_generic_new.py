@@ -27,6 +27,11 @@ class TestDefaultNewForPythonClass(TestCase):
         v = NSObject()
         self.assertIsInstance(v, NSObject)
 
+        with self.assertRaisesRegex(
+            TypeError, "does not support keyword arguments 'value'"
+        ):
+            NSObject(value=42)
+
         self.assertEqual(new_mod.NEW_MAP["NSObject"], {(): "init"})
 
         with self.assertRaisesRegex(

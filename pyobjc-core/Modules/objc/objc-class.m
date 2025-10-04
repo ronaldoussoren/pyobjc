@@ -235,7 +235,7 @@ objc_metaclass_register(PyTypeObject* meta_class, Class objc_class, Class objc_m
 
     Class existing_meta = NSMapGet(metaclass_to_class, meta_class);
     if (existing_meta) {
-        if (existing_class) {
+        if (existing_class) { // LCOV_BR_EXCL_LINE
             Py_INCREF(meta_class);
 #ifdef Py_GIL_DISABLED
             PyMutex_Unlock(&registry_lock);
@@ -243,6 +243,9 @@ objc_metaclass_register(PyTypeObject* meta_class, Class objc_class, Class objc_m
 #endif
             return meta_class;
         } else {
+            // LCOV_EXC_START
+            // XXX: Need better documentation here to better explain
+            //      why this cannot happen.
             PyErr_Format(PyObjCExc_InternalError, "Registering metaclass twice for '%s'",
                          class_getName(existing_meta));
 #ifdef Py_GIL_DISABLED
@@ -250,8 +253,8 @@ objc_metaclass_register(PyTypeObject* meta_class, Class objc_class, Class objc_m
             PyMutex_Unlock(&classmap_lock);
 #endif
             return NULL;
+            // LCOV_EXC_STOP
         }
-        // LCOV_EXCL_STOP
     }
 
     Py_INCREF(meta_class);
@@ -371,27 +374,48 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
     /* We now know the superclass of our metaclass, build the actual
      * metaclass.
      */
-    PyObject* dict  = PyDict_New();
-    PyObject* bases = PyTuple_New(1);
+    PyObject* dict = PyDict_New();
+    if (dict == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_CLEAR(py_super_class);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+    PyObject* bases = PyTuple_Pack(1, py_super_class);
+    if (bases == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_CLEAR(py_super_class);
+        Py_CLEAR(dict);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
 
-    PyTuple_SET_ITEM(bases, 0, (PyObject*)py_super_class);
-
-    PyObject* args = PyTuple_New(3);
-    PyTuple_SET_ITEM(args, 0, PyUnicode_FromString(class_getName(objc_class)));
-    PyTuple_SET_ITEM(args, 1, bases);
-    PyTuple_SET_ITEM(args, 2, dict);
+    PyObject* args =
+        PyTuple_Pack(3, PyUnicode_FromString(class_getName(objc_class)), bases, dict);
+    if (args == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_CLEAR(dict);
+        Py_CLEAR(bases);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
 
     result = (PyTypeObject*)PyType_Type.tp_new(&PyType_Type, args, NULL);
     Py_DECREF(args);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        /* Can only fail when running out of memory */
+        return NULL; // LCOV_EXCL_LINE
     }
 
     ((PyObjCClassObject*)result)->class = objc_meta_class;
 
     PyTypeObject* existing = objc_metaclass_register(result, objc_class, objc_meta_class);
-    if (existing == NULL) {
+    if (existing == NULL) { // LCOV_BR_EXCL_LINE
+        /* Should never happen */
+        // LCOV_EXCL_START
+        Py_CLEAR(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     Py_DECREF(result);
     return existing;
@@ -462,8 +486,8 @@ class_init(PyObject* cls, PyObject* args, PyObject* kwds)
 
             PyObject* v;
 
-            switch (
-                PyDict_GetItemRef(kwds, PyObjCNM_protocols, &v)) { // LCOV_BR_EXCL_LINE
+            switch ( // LCOV_BR_EXCL_LINE
+                PyDict_GetItemRef(kwds, PyObjCNM_protocols, &v)) {
             case -1:
                 return -1; // LCOV_EXCL_LINE
             /* case 0: pass */
@@ -471,7 +495,7 @@ class_init(PyObject* cls, PyObject* args, PyObject* kwds)
                 Py_DECREF(v);
                 return PyType_Type.tp_init(cls, args, NULL);
             }
-        }
+        } // LCOV_BR_EXCL_LINE
     } // LCOV_EXCL_LINE
     return PyType_Type.tp_init(cls, args, kwds);
 }
@@ -757,8 +781,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
      * variables.
      */
     PyObject* orig_slots;
-    switch (
-        PyDict_GetItemRef(dict, PyObjCNM___slots__, &orig_slots)) { // LCOV_BR_EXCL_LINE
+    switch ( // LCOV_BR_EXCL_LINE
+        PyDict_GetItemRef(dict, PyObjCNM___slots__, &orig_slots)) {
     case -1:
         // LCOV_EXCL_START
         Py_DECREF(protocols);
@@ -1168,8 +1192,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         info->dictoffset = ivar_getOffset(var);
     }
 
-    switch (
-        PyDict_GetItemRef(dict, PyObjCNM___useKVO__, &useKVOObj)) { // LCOV_BR_EXCL_LINE
+    switch ( // LCOV_BR_EXCL_LINE
+        PyDict_GetItemRef(dict, PyObjCNM___useKVO__, &useKVOObj)) {
     case -1:
         // LCOV_EXCL_START
         Py_DECREF(old_dict);
@@ -3000,10 +3024,13 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     result = PyType_Type.tp_new(metaclass, args, NULL);
     Py_DECREF(args);
     Py_DECREF(metaclass);
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        /* Can only fail when running out of memory */
+        // LCOV_EXCL_START
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     info                       = (PyObjCClassObject*)result;

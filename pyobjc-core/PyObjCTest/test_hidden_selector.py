@@ -291,3 +291,11 @@ class TestHiddenSelector(TestCase):
 
         method.isHidden = "foo"
         self.assertIs(method.isHidden, True)
+
+    def test_invalid_argument(self):
+        class NoCompare:
+            def __bool__(self):
+                raise RuntimeError("no compare")
+
+        with self.assertRaises(RuntimeError):
+            OCTestHidden.pyobjc_hiddenSelectors(NoCompare())
