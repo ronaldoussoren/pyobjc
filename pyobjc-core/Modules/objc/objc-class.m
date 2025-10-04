@@ -382,20 +382,24 @@ static PyTypeObject* _Nullable PyObjCClass_NewMetaClass(Class objc_class)
         // LCOV_EXCL_STOP
     }
     PyObject* bases = PyTuple_Pack(1, py_super_class);
+    Py_CLEAR(py_super_class);
     if (bases == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(py_super_class);
         Py_CLEAR(dict);
         return NULL;
         // LCOV_EXCL_STOP
     }
 
-    PyObject* args =
-        PyTuple_Pack(3, PyUnicode_FromString(class_getName(objc_class)), bases, dict);
+    PyObject* nm = PyUnicode_FromString(class_getName(objc_class));
+    if (nm == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;  // LCOV_EXCL_LINE
+    }
+    PyObject* args = PyTuple_Pack(3, nm, bases, dict);
+    Py_CLEAR(nm);
+    Py_CLEAR(dict);
+    Py_CLEAR(bases);
     if (args == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(dict);
-        Py_CLEAR(bases);
         return NULL;
         // LCOV_EXCL_STOP
     }
@@ -2973,7 +2977,23 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
         Py_DECREF(slots);
     }
 
-    bases = PyTuple_New(1);
+    if (class_getSuperclass(objc_class) == NULL) {
+        bases = PyTuple_Pack(1, (PyObject*)&PyObjCObject_Type);
+    } else {
+        PyObject* super_class =
+            PyObjCClass_New((Class _Nonnull)class_getSuperclass(objc_class));
+        if (super_class == NULL) { // LCOV_BR_ECXL_START
+            // LCOV_EXCL_START
+            Py_DECREF(hiddenSelectors);
+            Py_DECREF(hiddenClassSelectors);
+            Py_DECREF(metaclass);
+            Py_DECREF(dict);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        bases = PyTuple_Pack(1, super_class);
+        Py_CLEAR(super_class);
+    }
     if (bases == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(hiddenSelectors);
@@ -2984,42 +3004,31 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
         // LCOV_EXCL_STOP
     }
 
-    if (class_getSuperclass(objc_class) == NULL) {
-        PyTuple_SET_ITEM(bases, 0, (PyObject*)&PyObjCObject_Type);
-        Py_INCREF(((PyObject*)&PyObjCObject_Type));
-    } else {
-        PyObject* super_class =
-            PyObjCClass_New((Class _Nonnull)class_getSuperclass(objc_class));
-        if (super_class == NULL) { // LCOV_BR_ECXL_START
-            // LCOV_EXCL_START
-            Py_DECREF(hiddenSelectors);
-            Py_DECREF(hiddenClassSelectors);
-            Py_DECREF(metaclass);
-            Py_DECREF(dict);
-            Py_DECREF(bases);
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-        PyTuple_SET_ITEM(bases, 0, super_class);
-    }
-    args      = PyTuple_New(3);
-    className = class_getName(objc_class);
-    PyTuple_SET_ITEM(args, 0, PyUnicode_FromString(className));
-    if (PyTuple_GET_ITEM(args, 0) == NULL) { // LCOV_BR_EXLC_LINE
+    className    = class_getName(objc_class);
+    PyObject* nm = PyUnicode_FromString(className);
+    if (nm == NULL) { // LCOV_BR_EXLC_LINE
         // LCOV_EXCL_START
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         Py_DECREF(metaclass);
         Py_DECREF(dict);
         Py_DECREF(bases);
-        Py_DECREF(args);
         return NULL;
         // LCOV_EXCL_STOP
     }
-    PyTuple_SET_ITEM(args, 1, bases);
-    PyTuple_SET_ITEM(args, 2, dict);
-    bases = NULL;
-    dict  = NULL;
+
+    args = PyTuple_Pack(3, nm, bases, dict);
+    Py_CLEAR(nm);
+    Py_CLEAR(bases);
+    Py_CLEAR(dict);
+    if (args == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
+        Py_DECREF(metaclass);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
 
     result = PyType_Type.tp_new(metaclass, args, NULL);
     Py_DECREF(args);

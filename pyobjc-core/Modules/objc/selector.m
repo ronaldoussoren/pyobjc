@@ -2019,12 +2019,10 @@ PyObjCSelector_Setup(PyObject* module)
     Py_INCREF(PyObjCSelector_Type);
 
 #if PY_VERSION_HEX < 0x030a0000
-    PyObject* bases = PyTuple_New(1);
+    PyObject* bases = PyTuple_Pack(1, PyObjCSelector_Type);
     if (bases == NULL) { // LCOV_BR_EXCL_LINE
         return -1;       // LCOV_EXCL_LINE
     }
-    PyTuple_SET_ITEM(bases, 0, PyObjCSelector_Type);
-    Py_INCREF(PyObjCSelector_Type);
 #endif
 
     tmp = PyType_FromSpecWithBases(&pysel_spec,

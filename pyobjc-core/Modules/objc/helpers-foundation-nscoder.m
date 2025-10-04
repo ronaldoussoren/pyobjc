@@ -945,7 +945,8 @@ static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
 {
     char*             bytes;
     NSUInteger        size = 0;
-    PyObject*         v;
+    PyObject*         v1;
+    PyObject*         v2;
     PyObject*         result;
     PyObject*         py_buf;
     struct objc_super super;
@@ -986,48 +987,35 @@ static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
             return NULL;
         }
 
-        result = PyTuple_New(2);
-        if (result == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;      // LCOV_EXCL_LINE
-        }
-
-        PyTuple_SET_ITEM(result, 0, Py_None);
-        Py_INCREF(Py_None);
-
-        v = pythonify_c_value(@encode(NSUInteger), &size);
-        if (v == NULL) { // LCOV_BR_EXCL_LINE
+        v1 = pythonify_c_value(@encode(NSUInteger), &size);
+        if (v1 == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
-            Py_DECREF(result);
             return NULL;
             // LCOV_EXCL_STOP
         }
-        PyTuple_SET_ITEM(result, 1, v);
+        result = PyTuple_Pack(2, Py_None, v1);
+        Py_CLEAR(v1);
         return result;
     }
 
-    result = PyTuple_New(2);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
-    }
-
-    v = PyBytes_FromStringAndSize((char*)bytes, size);
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
+    v1 = PyBytes_FromStringAndSize((char*)bytes, size);
+    if (v1 == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_DECREF(result);
         return NULL;
         // LCOV_EXCL_STOP
     }
 
-    PyTuple_SET_ITEM(result, 0, v);
-
-    v = pythonify_c_value(@encode(unsigned), &size);
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
+    v2 = pythonify_c_value(@encode(unsigned), &size);
+    if (v2 == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_DECREF(result);
+        Py_DECREF(v1);
         return NULL;
         // LCOV_EXCL_STOP
     }
-    PyTuple_SET_ITEM(result, 1, v);
+
+    result = PyTuple_Pack(2, v1, v2);
+    Py_CLEAR(v1);
+    Py_CLEAR(v2);
 
     return result;
 }
@@ -1116,7 +1104,8 @@ static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
 {
     char*             bytes;
     NSUInteger        size = 0;
-    PyObject*         v;
+    PyObject*         v1;
+    PyObject*         v2;
     PyObject*         result;
     PyObject*         py_buf;
     id                key;
@@ -1161,48 +1150,36 @@ static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
             return NULL;
         }
 
-        result = PyTuple_New(2);
-        if (result == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;      // LCOV_EXCL_LINE
-        }
-
-        PyTuple_SET_ITEM(result, 0, Py_None);
-        Py_INCREF(Py_None);
-
-        v = pythonify_c_value(@encode(NSUInteger), &size);
-        if (v == NULL) { // LCOV_BR_EXCL_LINE
+        v1 = pythonify_c_value(@encode(NSUInteger), &size);
+        if (v1 == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
-            Py_DECREF(result);
             return NULL;
             // LCOV_EXCL_STOP
         }
-        PyTuple_SET_ITEM(result, 1, v);
+
+        result = PyTuple_Pack(2, Py_None, v1);
+        Py_CLEAR(v1);
         return result;
     }
 
-    result = PyTuple_New(2);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
-    }
-
-    v = PyBytes_FromStringAndSize(bytes, size);
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
+    v1 = PyBytes_FromStringAndSize(bytes, size);
+    if (v1 == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_DECREF(result);
         return NULL;
         // LCOV_EXCL_STOP
     }
 
-    PyTuple_SET_ITEM(result, 0, v);
-
-    v = pythonify_c_value(@encode(NSUInteger), &size);
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
+    v2 = pythonify_c_value(@encode(NSUInteger), &size);
+    if (v2 == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_DECREF(result);
+        Py_DECREF(v1);
         return NULL;
         // LCOV_EXCL_STOP
     }
-    PyTuple_SET_ITEM(result, 1, v);
+
+    result = PyTuple_Pack(2, v1, v2);
+    Py_CLEAR(v1);
+    Py_CLEAR(v2);
 
     return result;
 }

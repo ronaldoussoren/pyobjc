@@ -138,20 +138,15 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     v->call_to_objc              = call_to_objc;
     v->make_call_to_python_block = make_call_to_python_block;
 
-    entry = PyTuple_New(2);
+    entry = Py_BuildValue(
+        "(ON)", pyclass, PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup));
     if (entry == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(py_selname);
-        Py_DECREF(pyclass);
-        PyMem_Free(v);
         retval = -1;
         goto exit;
         // LCOV_EXCL_STOP
     }
-
-    PyTuple_SET_ITEM(entry, 0, pyclass);
-    PyTuple_SET_ITEM(entry, 1,
-                     PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup));
 
     if (PyTuple_GET_ITEM(entry, 1) == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START

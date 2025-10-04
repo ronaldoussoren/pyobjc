@@ -96,36 +96,8 @@ static PyObject* _Nullable unic_getattro(PyObject* o, PyObject* attr_name)
 
 static PyObject* _Nullable unic_reduce(PyObject* self)
 {
-    PyObject* retVal = NULL;
-    PyObject* v      = NULL;
-    PyObject* v2     = NULL;
-
-    retVal = PyTuple_New(2);
-    if (retVal == NULL) // LCOV_BR_EXCL_LINE
-        goto error;     // LCOV_EXCL_LINE
-
-    v = (PyObject*)&PyUnicode_Type;
-    Py_INCREF(v);
-    PyTuple_SET_ITEM(retVal, 0, v);
-
-    v = PyUnicode_FromObject(self);
-    if (v == NULL)  // LCOV_BR_EXCL_LINE
-        goto error; // LCOV_EXCL_LINE
-
-    v2 = PyTuple_New(1);
-    if (v2 == NULL) // LCOV_BR_EXCL_LINE
-        goto error; // LCOV_EXCL_LINE
-    PyTuple_SET_ITEM(v2, 0, v);
-    PyTuple_SET_ITEM(retVal, 1, v2);
-
-    return retVal;
-
-error:
-    // LCOV_EXCL_START
-    Py_XDECREF(retVal);
-    Py_XDECREF(v);
-    return NULL;
-    // LCOV_EXCL_STOP
+    return Py_BuildValue("(O(N))", (PyObject*)&PyUnicode_Type,
+                         PyUnicode_FromObject(self));
 }
 
 static PyMethodDef unic_methods[] = {{.ml_name  = "nsstring",
@@ -485,12 +457,10 @@ int
 PyObjCUnicode_Setup(PyObject* module)
 {
 #if PY_VERSION_HEX < 0x030a0000
-    PyObject* bases = PyTuple_New(1);
+    PyObject* bases = PyTuple_Pack(1, (PyObject*)&PyUnicode_Type);
     if (bases == NULL) {
         return -1;
     }
-    PyTuple_SET_ITEM(bases, 0, (PyObject*)&PyUnicode_Type);
-    Py_INCREF(&PyUnicode_Type);
 #endif
 
     PyObject* tmp = PyType_FromSpecWithBases(&unic_spec,
