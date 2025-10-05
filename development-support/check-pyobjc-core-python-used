@@ -38,7 +38,7 @@ IGNORE_NAMES = {
 }
 
 
-def _process_file(stream: typing.TextIO, symbols: typing.Set[str]) -> None:
+def _process_file(stream: typing.TextIO, symbols: set[str]) -> None:
     for line in stream:
         for nm in PY_NAME.findall(line):
             if nm.partition("_")[2].isupper():
@@ -71,9 +71,9 @@ def _process_file(stream: typing.TextIO, symbols: typing.Set[str]) -> None:
             symbols.add(nm)
 
 
-def _get_py_symbols(source_root: pathlib.Path) -> typing.Tuple[typing.Set[str], typing.Set[str]]:
-    api_used : typing.Set[str] = set()
-    symbols : typing.Set[str] = set()
+def _get_py_symbols(source_root: pathlib.Path) -> tuple[set[str], set[str]]:
+    api_used : set[str] = set()
+    symbols : set[str] = set()
 
     for dirpath, dirs, files in source_root.walk():
         if "test" in dirs:

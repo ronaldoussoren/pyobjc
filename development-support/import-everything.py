@@ -9,7 +9,6 @@ import functools
 import platform
 import traceback
 import sys
-import typing
 
 # Reconfigure stdout/stderr to be line buffered,
 # that # makes it easier to redirect output to a
@@ -66,7 +65,7 @@ def flatten_list(list_value: str, setup_ast: ast.AST) -> list[str]:
 
 def get_info(
     project: str,
-) -> typing.Tuple[typing.Optional[str], typing.Optional[str], list[str]]:
+) -> tuple[str | None, str | None, list[str]]:
     setup_py = os.path.join(TOP_DIR, project, "setup.py")
 
     with open(setup_py) as stream:
@@ -80,10 +79,10 @@ def get_info(
     assert isinstance(node.value, ast.Call)
     assert node.value.func.id == "setup"  # type: ignore
 
-    min_os_level: typing.Optional[str] = None
-    max_os_level: typing.Optional[str] = None
-    packages: typing.List[str] = []
-    modules: typing.List[str] = []
+    min_os_level: str | None = None
+    max_os_level: str | None = None
+    packages: list[str] = []
+    modules: list[str] = []
 
     for keyword in node.value.keywords:
         if keyword.arg == "min_os_level":
