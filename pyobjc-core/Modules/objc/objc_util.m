@@ -4,6 +4,8 @@
 
 #include "pyobjc.h"
 
+#undef PyObjCUtil_Strdup
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSNull* NSNull_null;
@@ -511,6 +513,10 @@ static NSException* _Nullable python_exception_to_objc(void)
     [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_type] autorelease]
                  forKey:@"__pyobjc_exc_type__"];
 
+    /* XXX: exc_value should always be non-NULL while handling
+     *      an exception, verify this an replace by an assertion.
+     *      (likewise other instances in this function)
+     */
     if (exc_value != NULL) { // LCOV_BR_EXCL_LINE
         [userInfo
             setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_value] autorelease]
@@ -535,7 +541,11 @@ static NSException* _Nullable python_exception_to_objc(void)
         } // LCOV_EXCL_LINE
     }
 
-    repr = PyObject_Str(exc_value);
+    if (exc_value != NULL) { // LCOV_BR_EXCL_LINE
+        repr = PyObject_Str(exc_value);
+    } else {
+        repr = PyUnicode_FromString("<<no exception value>>");
+    }
     if (repr) {                                                // LCOV_BR_EXCL_LINE
         if (depythonify_python_object(repr, &oc_repr) == -1) { // LCOV_BR_EXCL_LINE
             /* Ignore errors in conversion */
