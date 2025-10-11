@@ -49,11 +49,7 @@ SIGCallback(CFMachPortRef port __attribute__((__unused__)), void* msg,
                 Py_DECREF(py_signum);     // LCOV_EXCL_LINE
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
             case 1:
-#if PY_VERSION_HEX >= 0x03090000
                 result = PyObject_CallOneArg(callable, py_signum);
-#else
-                result = PyObject_CallFunction(callable, "O", py_signum);
-#endif
                 Py_DECREF(py_signum);
                 Py_DECREF(callable);
                 if (result == NULL) {
