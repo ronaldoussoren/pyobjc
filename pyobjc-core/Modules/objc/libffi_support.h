@@ -67,7 +67,6 @@ extern Py_ssize_t validate_callable_signature(PyObject* callable, SEL sel,
 
 extern int PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation);
 
-#if PY_VERSION_HEX >= 0x03090000
 /*
  * "Simple" variants that reduce calling overhead for a large subset
  * of APIs.
@@ -85,7 +84,6 @@ extern Py_ssize_t PyObjCFFI_ParseArguments_Simple(PyObjCMethodSignature*, Py_ssi
                                                   size_t, Py_ssize_t, unsigned char*,
                                                   Py_ssize_t, void* _Nullable* _Nonnull);
 extern PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature*, void*);
-#endif
 
 NS_ASSUME_NONNULL_END
 
