@@ -29,7 +29,6 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     char*                  flattened               = NULL;
     PyObject*              class_object;
     PyObjCMethodSignature* methinfo = NULL;
-
     if (name[0] == '_' && name[1] == '_') {
         /* There are no public methods that start with a double underscore,
          * and some Cocoa classes crash hard when looking for them.
@@ -200,7 +199,9 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     }
 
     Py_CLEAR(methinfo);
-    return PyObjCSelector_NewNative((Class)objc_object, sel, flattened, class_method);
+    PyObject* result =
+        PyObjCSelector_NewNative((Class)objc_object, sel, flattened, class_method);
+    return result;
 }
 
 static PyObject* _Nullable make_dict(PyObject* self, int class_method)
@@ -273,8 +274,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                 int cm = ((PyObjCSelector*)v)->sel_flags & PyObjCSelector_kCLASS_METHOD;
 
                 if (!cm != !class_method) {
-                    Py_DECREF(v);
-                    v = NULL;
+                    Py_CLEAR(v);
                 }
             }
 
@@ -318,7 +318,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
             }
 
             Py_CLEAR(py_name);
-            Py_DECREF(v);
+            Py_CLEAR(v);
         } // LCOV_BR_EXCL_LINE
 
         free(methods);
@@ -530,7 +530,10 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
     if (name_bytes == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;          // LCOV_EXCL_LINE
     }
-    result = find_selector(self->base, name_bytes, self->class_method);
+
+    @autoreleasepool {
+        result = find_selector(self->base, name_bytes, self->class_method);
+    }
     if (result == NULL) {
         return result;
     }
