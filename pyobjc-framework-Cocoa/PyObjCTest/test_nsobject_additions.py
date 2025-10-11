@@ -4,19 +4,13 @@ import Foundation
 from PyObjCTools.TestSupport import TestCase
 import objc
 
-if sys.version_info[0] == 2:
-    from StringIO import StringIO
+from io import StringIO
 
-    def _str(v):
+
+def _str(v):
+    if isinstance(v, str):
         return v
-
-else:
-    from io import StringIO
-
-    def _str(v):
-        if isinstance(v, str):
-            return v
-        return v.decode("ascii")
+    return v.decode("ascii")
 
 
 class TheadingHelperTestHelper(Foundation.NSObject):

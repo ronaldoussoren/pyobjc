@@ -1,20 +1,17 @@
-import sys
-
 import CoreFoundation
 from PyObjCTools.TestSupport import TestCase
 
-if sys.version_info[0] == 3:
 
-    def cmp(a, b):
-        try:
-            if a < b:
-                return -1
-            elif b < a:
-                return 1
-            return 0
+def cmp(a, b):
+    try:
+        if a < b:
+            return -1
+        elif b < a:
+            return 1
+        return 0
 
-        except TypeError:
-            return cmp(type(a).__name__, type(b).__name__)
+    except TypeError:
+        return cmp(type(a).__name__, type(b).__name__)
 
 
 class TestCFTree(TestCase):

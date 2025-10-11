@@ -12,8 +12,6 @@ sources or nibs.)
 See also the iClass demo.
 """
 
-import sys
-
 import objc
 from Foundation import NSObject
 from objc import getClassList, objc_object
@@ -41,21 +39,11 @@ def _sortClasses(classList):
     return [cls for name, cls in classes]
 
 
-if sys.version_info[0] == 2:
-
-    def formatSelector(selector):
-        if selector.isClassMethod:
-            return "+" + selector.selector
-        else:
-            return "-" + selector.selector
-
-else:
-
-    def formatSelector(selector):
-        if selector.isClassMethod:
-            return "+" + selector.selector.decode("ascii")
-        else:
-            return "-" + selector.selector.decode("ascii")
+def formatSelector(selector):
+    if selector.isClassMethod:
+        return "+" + selector.selector.decode("ascii")
+    else:
+        return "-" + selector.selector.decode("ascii")
 
 
 class ClassBrowserDelegate(NSObject):

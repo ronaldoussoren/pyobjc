@@ -1,17 +1,14 @@
-import sys
-
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
-if sys.version_info[0] == 3:
 
-    def cmp(a, b):
-        if a < b:
-            return -1
-        elif b < a:
-            return 1
-        return 0
+def cmp(a, b):
+    if a < b:
+        return -1
+    elif b < a:
+        return 1
+    return 0
 
 
 class TestNSArrayInteraction(TestCase):
@@ -354,11 +351,7 @@ class TestNSMutableArrayInteraction(TestCase):
         def cmpfunc(a, b):
             return -cmp(a, b)
 
-        if sys.version_info[0] == 2:
-            a.sort(cmp=cmpfunc)
-            self.assertEqual(a, (3, 2, 1, 0))
-        else:
-            self.assertRaises(TypeError, a.sort, cmp=cmpfunc)
+        self.assertRaises(TypeError, a.sort, cmp=cmpfunc)
 
         a.sort()
         self.assertEqual(a, (0, 1, 2, 3))

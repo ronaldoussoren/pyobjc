@@ -20,43 +20,23 @@ FIELD_NAMES = (
     ("E-mail", AddressBook.kABEmailProperty),
 )
 
-if sys.version_info[0] == 2:
 
-    def encodeField(value):
-        """
-        Encode a value into an UTF-8 string
-        """
-        if value is None:
-            return ""
+def encodeField(value):
+    """
+    Encode a value into an UTF-8 string
+    """
+    if value is None:
+        return ""
 
-        if isinstance(value, AddressBook.ABMultiValue):
-            # A multi-valued property, merge them into a single string
-            result = []
-            for i in range(value.count()):
-                result.append(value.valueAtIndex_(i).encode("utf-8"))
+    if isinstance(value, AddressBook.ABMultiValue):
+        # A multi-valued property, merge them into a single string
+        result = []
+        for i in range(value.count()):
+            result.append(value.valueAtIndex_(i))
 
-            return "; ".join(result)
+        return "; ".join(result)
 
-        return value.encode("utf-8")
-
-else:
-
-    def encodeField(value):
-        """
-        Encode a value into an UTF-8 string
-        """
-        if value is None:
-            return ""
-
-        if isinstance(value, AddressBook.ABMultiValue):
-            # A multi-valued property, merge them into a single string
-            result = []
-            for i in range(value.count()):
-                result.append(value.valueAtIndex_(i))
-
-            return "; ".join(result)
-
-        return value
+    return value
 
 
 def personToFields(person, fieldnames):
