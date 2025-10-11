@@ -352,7 +352,8 @@ static PyMethodDef file_methods[] = {{.ml_name  = "readline",
                                       .ml_flags = METH_NOARGS,
                                       .ml_doc   = "close the file"},
 
-                                     {.ml_name = NULL, /* Sentinel */}};
+                                     {.ml_name = NULL,
+                                      /* Sentinel */}};
 
 PyDoc_STRVAR(file_doc, "Wrapper around a FILE* object");
 
