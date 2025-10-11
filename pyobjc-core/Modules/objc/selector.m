@@ -33,6 +33,7 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
         /* XXX: likely needs atomic read for the mappingcounts */
         Py_BEGIN_CRITICAL_SECTION(self);
         Py_CLEAR(self->sel_methinfo);
+        /* XXX: This should also reset the CIF! */
         Py_END_CRITICAL_SECTION();
     }
 
@@ -71,7 +72,8 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
 #ifdef Py_GIL_DISABLED
     if (self->sel_methinfo == NULL) {
 #endif
-        self->sel_methinfo = result;
+        self->sel_methinfo     = result;
+        self->sel_mappingcount = PyObjC_MappingCount;
         if (PyObjCPythonSelector_Check(_self)) {
             Py_ssize_t i;
 
@@ -397,10 +399,8 @@ static void
 sel_dealloc(PyObject* object)
 {
     PyObjCSelector* self = (PyObjCSelector*)object;
-    Py_XDECREF(self->sel_self);
-    self->sel_self = NULL;
-    Py_XDECREF(self->sel_methinfo);
-    self->sel_methinfo = NULL;
+    Py_CLEAR(self->sel_self);
+    Py_CLEAR(self->sel_methinfo);
 
     PyMem_Free((char*)self->sel_python_signature);
 
@@ -658,9 +658,13 @@ PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(PyObjCNativeSelector* obj)
     } else {
         assert(obj->base.sel_class != NULL);
 
-        PyObjC_CallFunc execute =
-            PyObjC_FindCallFunc(obj->base.sel_class, obj->base.sel_selector,
-                                obj->base.sel_methinfo->signature);
+        PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)obj);
+        if (methinfo == NULL) {
+            return NULL;
+        }
+        PyObjC_CallFunc execute = PyObjC_FindCallFunc(
+            obj->base.sel_class, obj->base.sel_selector, methinfo->signature);
+        Py_CLEAR(methinfo);
         if (execute == NULL) {
             return NULL;
         }
@@ -837,6 +841,11 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     }
     result->base.sel_native_signature = tmp;
 
+    result->base.sel_methinfo = PyObjCSelector_GetMetadata(_self);
+    if (result->base.sel_methinfo == NULL) {
+        PyErr_Clear();
+    }
+
     if (meth->sel_call_func == NULL) {
         if (class_isMetaClass(meth->base.sel_class)) {
             PyObject* metaclass_obj = PyObjCClass_New(meth->base.sel_class);
@@ -887,16 +896,6 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
             Py_DECREF(result);
             return NULL;
         }
-    }
-
-    if (meth->base.sel_methinfo != NULL) {
-        result->base.sel_methinfo = meth->base.sel_methinfo;
-        Py_INCREF(result->base.sel_methinfo);
-    } else {
-        // result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
-        // if (!result->base.sel_methinfo) {
-        //     PyErr_Clear();
-        // }
     }
 
     /* XXX: 'sel_methinfo' should probably be _Nonnull */
@@ -1177,16 +1176,14 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     if (class_method) {
         result->base.sel_flags |= PyObjCSelector_kCLASS_METHOD;
     }
-    result->base.sel_methinfo       = NULL;
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
     if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
         // LCOV_EXCL_STOP
-    } else {
-        Py_CLEAR(methinfo);
     }
+    Py_CLEAR(methinfo);
     return (PyObject*)result;
 }
 
