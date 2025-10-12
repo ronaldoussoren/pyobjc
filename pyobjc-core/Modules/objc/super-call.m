@@ -458,9 +458,10 @@ static struct registry* _Nullable find_signature(const char* signature)
         goto exit; // LCOV_EXCL_LINE
     }
     if (PyDict_GetItemRef(signature_registry, key, &o) != 1) {
+        Py_DECREF(key);
         goto exit;
     }
-
+    Py_DECREF(key);
     result = PyCapsule_GetPointer(o, "objc.__memblock__");
     Py_DECREF(o);
 

@@ -4841,11 +4841,9 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     result = PyObjCFFI_BuildResult(methinfo, 2, msgResult, byref, byref_attr,
                                    byref_out_count, values);
 
-#if 1
     if (methinfo->initializer && (*(id*)msgResult != nil)) {
         [*(id*)msgResult release];
     }
-#endif
 
     if (unlikely(variadicAllArgs)) {
         PyObjCFFI_FreeByRef(Py_SIZE(methinfo) + nargs, byref, byref_attr);
@@ -5260,11 +5258,9 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
 
     PyObject* res = PyObjCFFI_BuildResult_Simple(methinfo, msgResult);
 
-#if 1
     if (methinfo->initializer && (*(id*)msgResult != nil)) {
         [*(id*)msgResult release];
     }
-#endif
 
     return res;
 
@@ -5376,8 +5372,9 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 void
 PyObjCFFI_FreeCIF(ffi_cif* cif)
 {
-    if (cif->arg_types)
+    if (cif->arg_types) {
         PyMem_Free(cif->arg_types);
+    }
     PyMem_Free(cif);
 }
 
