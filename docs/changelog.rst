@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 12.0a0
---------------
+Version 12.0
+------------
 
 * Drop support for Python 3.9, which will go out of support
   before PyObjC 3.12 is released.
@@ -236,6 +236,8 @@ Version 12.0a0
 
 * Fix edge cases in method accessors when some uses of ``SomeClass.pyobjc_instanceMethods.method``
   would result in a method object that's bound to a meta class.
+
+* Fix memory leak due to incorrect reference count handling in looking up metadata.
 
 Version 11.1.1
 --------------
