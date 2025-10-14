@@ -1137,7 +1137,6 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     result->base.sel_flags            = 0;
     result->base.sel_mappingcount     = 0;
     result->base.sel_methinfo         = NULL;
-    result->base.sel_methinfo         = NULL;
     result->base.sel_vectorcall       = objcsel_vectorcall;
     result->sel_call_func             = NULL;
     result->sel_cif                   = NULL;
@@ -1176,6 +1175,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     if (class_method) {
         result->base.sel_flags |= PyObjCSelector_kCLASS_METHOD;
     }
+
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
     if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
