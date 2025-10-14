@@ -1374,12 +1374,45 @@ class TestCase(_unittest.TestCase):
                     todo.extend(parent._ObjCLazyModule__parents or ())
                     module_names.extend(parent.__dict__.keys())
                 else:
-                    module_names.extend(dir(module))
+                    module_names.extend(dir(parent))
 
             # The module_names list might contain duplicates
             module_names = sorted(set(module_names))
         else:
-            module_names = sorted(set(dir(module)))
+
+            def is_pyobjc_lazy(module):
+                getter = getattr(module, "__getattr__", None)
+                if getter is None:
+                    return False
+                return hasattr(getter, "_pyobjc_parents")
+
+            if is_pyobjc_lazy(module):
+                getter = getattr(module, "__getattr__", None)
+                module_names = []
+                module_names.extend(
+                    cls.__name__
+                    for cls in objc.getClassList()
+                    if (not cls.__name__.startswith("_")) and ("." not in cls.__name__)
+                )
+                module_names.extend(getattr(getter, "_pyobjc_funcmap", None) or [])
+                todo = list(getter._pyobjc_parents)
+                while todo:
+                    parent = todo.pop()
+                    if is_pyobjc_lazy(parent):
+                        getter = getattr(parent, "__getattr__", None)
+                        module_names.extend(
+                            getattr(getter, "_pyobjc_funcmap", None) or []
+                        )
+                        todo.extend(getter._pyobjc_parents or ())
+                        module_names.extend(parent.__dict__.keys())
+
+                    else:
+                        module_names.extend(dir(parent))
+
+                module_names = sorted(set(module_names))
+
+            else:
+                module_names = sorted(set(dir(module)))
 
         for _idx, nm in enumerate(module_names):
             # print(f"{_idx}/{len(module_names)} {nm}")
@@ -1393,40 +1426,48 @@ class TestCase(_unittest.TestCase):
             except AttributeError:
                 continue
             if isinstance(value, objc.objc_class):
-                if value.__name__ == "Object":
-                    # Root class, does not conform to the NSObject
-                    # protocol and useless to test.
-                    continue
-                for attr_name, attr in value.pyobjc_instanceMethods.__dict__.items():
-                    if attr_name in exclude_method_names:
+                with objc.autorelease_pool():
+                    if value.__name__ == "Object":
+                        # Root class, does not conform to the NSObject
+                        # protocol and useless to test.
                         continue
-                    if (nm, attr_name) in exclude_attrs:
-                        continue
-                    if attr_name.startswith("_"):
-                        # Skip private names
-                        continue
+                    for (
+                        attr_name,
+                        attr,
+                    ) in value.pyobjc_instanceMethods.__dict__.items():
+                        if attr_name in exclude_method_names:
+                            continue
+                        if (nm, attr_name) in exclude_attrs:
+                            continue
+                        if attr_name.startswith("_"):
+                            # Skip private names
+                            continue
 
-                    with self.subTest(classname=nm, instance_method=attr_name):
-                        if isinstance(attr, objc.selector):  # pragma: no branch
-                            self._validateCallableMetadata(
-                                attr, nm, skip_simple_charptr_check=not exclude_cocoa
-                            )
+                        with self.subTest(classname=nm, instance_method=attr_name):
+                            if isinstance(attr, objc.selector):  # pragma: no branch
+                                self._validateCallableMetadata(
+                                    attr,
+                                    nm,
+                                    skip_simple_charptr_check=not exclude_cocoa,
+                                )
 
-                for attr_name, attr in value.pyobjc_classMethods.__dict__.items():
-                    if attr_name in exclude_method_names:
-                        continue
-                    if (nm, attr_name) in exclude_attrs:
-                        continue
-                    if attr_name.startswith("_"):
-                        # Skip private names
-                        continue
+                    for attr_name, attr in value.pyobjc_classMethods.__dict__.items():
+                        if attr_name in exclude_method_names:
+                            continue
+                        if (nm, attr_name) in exclude_attrs:
+                            continue
+                        if attr_name.startswith("_"):
+                            # Skip private names
+                            continue
 
-                    with self.subTest(classname=nm, instance_method=attr_name):
-                        attr = getattr(value.pyobjc_classMethods, attr_name, None)
-                        if isinstance(attr, objc.selector):  # pragma: no branch
-                            self._validateCallableMetadata(
-                                attr, nm, skip_simple_charptr_check=not exclude_cocoa
-                            )
+                        with self.subTest(classname=nm, instance_method=attr_name):
+                            attr = getattr(value.pyobjc_classMethods, attr_name, None)
+                            if isinstance(attr, objc.selector):  # pragma: no branch
+                                self._validateCallableMetadata(
+                                    attr,
+                                    nm,
+                                    skip_simple_charptr_check=not exclude_cocoa,
+                                )
             elif isinstance(value, objc.function):
                 with self.subTest(function=nm):
                     self._validateCallableMetadata(value)
