@@ -199,9 +199,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     }
 
     Py_CLEAR(methinfo);
-    PyObject* result =
-        PyObjCSelector_NewNative((Class)objc_object, sel, flattened, class_method);
-    return result;
+    return PyObjCSelector_NewNative((Class)objc_object, sel, flattened, class_method);
 }
 
 static PyObject* _Nullable make_dict(PyObject* self, int class_method)
@@ -258,6 +256,22 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                 // LCOV_EXCL_STOP
             }
 
+            /* Check if py_name is already in the dict to avoid
+             * replacing a more specific definition.
+             */
+            switch (PyDict_GetItemRef(res, py_name, &v)) {
+            case -1:
+                Py_CLEAR(py_name);
+                Py_CLEAR(res);
+                return NULL;
+            case 0:
+                break;
+            case 1:
+                Py_CLEAR(v);
+                Py_CLEAR(py_name);
+                continue;
+            }
+
             /* XXX: This needs some documentation. Basically resolve the method
              * through normal lookup first, that avoids replicating
              * objc_object.tp_getattro here.
@@ -267,8 +281,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                 PyErr_Clear();
 
             } else if (!PyObjCSelector_Check(v)) {
-                Py_DECREF(v);
-                v = NULL;
+                Py_CLEAR(v);
 
             } else {
                 int cm = ((PyObjCSelector*)v)->sel_flags & PyObjCSelector_kCLASS_METHOD;
