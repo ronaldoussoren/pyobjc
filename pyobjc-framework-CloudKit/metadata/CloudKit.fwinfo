@@ -1377,6 +1377,13 @@
        }
       },
       "selector": "notificationChangedBlock"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "moreComing"
      }
     ]
    },

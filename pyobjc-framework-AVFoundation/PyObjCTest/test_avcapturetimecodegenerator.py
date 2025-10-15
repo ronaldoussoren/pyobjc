@@ -61,10 +61,10 @@ class TestAVCaptureTimecodeGenerator(TestCase):
 
     @min_os_level("26.0")
     def test_functions(self):
-        self.assertIsCFRetained(
+        self.assertResultIsCFRetained(
             AVFoundation.AVCaptureTimecodeCreateMetadataSampleBufferAssociatedWithPresentationTimeStamp
         )
-        self.assertIsCFRetained(
+        self.assertResultIsCFRetained(
             AVFoundation.AVCaptureTimecodeCreateMetadataSampleBufferForDuration
         )
         AVFoundation.AVCaptureTimecodeAdvancedByFrames

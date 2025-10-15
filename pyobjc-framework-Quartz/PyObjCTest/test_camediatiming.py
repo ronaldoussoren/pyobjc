@@ -4,7 +4,7 @@ import objc
 
 
 class TestCAMediaTimingHelper(Quartz.NSObject):
-    __pyobjc_protocols__ = [objc.protocolNamed("CAMediaTiming")]
+    # __pyobjc_protocols__ = [objc.protocolNamed("CAMediaTiming")]
 
     def beginTime(self):
         return 1
@@ -82,10 +82,8 @@ class TestCAMediaTiming(TestCase):
         self.assertArgHasType(
             TestCAMediaTimingHelper.setRepeatDuration_, 0, objc._C_DBL
         )
-        self.assertResultHasType(TestCAMediaTimingHelper.autoreverses, objc._C_NSBOOL)
-        self.assertArgHasType(
-            TestCAMediaTimingHelper.setAutoreverses_, 0, objc._C_NSBOOL
-        )
+        self.assertResultIsBOOL(TestCAMediaTimingHelper.autoreverses)
+        self.assertArgIsBOOL(TestCAMediaTimingHelper.setAutoreverses_, 0)
         self.assertResultHasType(TestCAMediaTimingHelper.fillMode, objc._C_ID)
         self.assertArgHasType(TestCAMediaTimingHelper.setFillMode_, 0, objc._C_ID)
 

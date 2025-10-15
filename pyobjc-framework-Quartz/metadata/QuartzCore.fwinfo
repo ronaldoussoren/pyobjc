@@ -992,6 +992,14 @@
    "CIContext": {
     "methods": [
      {
+      "selector": "createCGImage:fromRect:format:colorSpace:deferred:calculateHDRStats:",
+      "class_method": false,
+      "args": {
+       "4": { "type_override": "Z" },
+       "5": { "type_override": "Z" }
+      }
+     },
+     {
       "selector": "writeOpenEXRRepresentationOfImage:toURL:options:error:",
       "class_method": false,
       "args": {
@@ -1172,7 +1180,7 @@
    "CIFilterGenerator": {
     "methods": [
      {
-      "selector": "writeToURL:atomically",
+      "selector": "writeToURL:atomically:",
       "class_method": true,
       "retval": { "type_override": "Z" },
       "args": {
@@ -1588,15 +1596,27 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "autoreverses",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setAutoreverses:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
       "selector": "roundedData",
       "class_method": false,
-      "retval": { "type_override": "B" }
+      "retval": { "type_override": "Z" }
      },
      {
       "selector": "setRoundedData:",
       "class_method": false,
       "args": {
-       "0": { "type_override": "B" }
+       "0": { "type_override": "Z" }
       }
      },
      {

@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import VideoToolbox
 
-VTRAWProcessingParameterChangeHandler = b"v@"
+VTRAWProcessingParameterChangeHandler = b"v^{__CFArray=}"
 VTRAWProcessingOutputHandler = b"vi@"
 
 

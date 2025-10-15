@@ -21,6 +21,19 @@
      }
     ]
    },
+   "CBService": {
+    "methods": [
+     {
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "selector": "setIsPrimary:"
+     }
+    ]
+   },
    "CBCentralManager": {
     "methods": [
      {
@@ -48,6 +61,13 @@
    },
    "CBPeripheral": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isConnected"
+     },
      {
       "class_method": false,
       "retval": {

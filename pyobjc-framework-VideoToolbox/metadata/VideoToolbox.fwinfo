@@ -88,6 +88,19 @@
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
+   "VTRAWProcessingSessionSetParameterChangedHandler": {
+    "args": {
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^{__CFArray=}" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
    "VTMotionEstimationSessionEstimateMotionVectors": {
     "args": {
      "5": {
@@ -535,7 +548,7 @@
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
-        "1": { "type": "@" }
+        "1": { "type": "^{__CFArray=}" }
        },
        "retval": { "type": "v" }
       }

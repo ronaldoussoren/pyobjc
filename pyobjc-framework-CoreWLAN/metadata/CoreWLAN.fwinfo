@@ -73,6 +73,45 @@
    "kCWPHYMode11N": { "value": 3 }
   },
   "classes": {
+   "CWNetwork": {
+    "methods": [
+     {
+      "selector": "isIBSS",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "CW8021XProfile": {
+    "methods": [
+     {
+      "selector": "alwaysPromptForPassword",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setAlwaysPromptForPassword:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isEqualToProfile:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "CWWirelessProfile": {
+    "methods": [
+     {
+      "selector": "isEqualToProfile:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "CWConfiguration": {
     "methods": [
      {
@@ -107,6 +146,11 @@
    },
    "CWInterface": {
     "methods": [
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "deviceAttached"
+     },
      {
       "args": {
        "1": { "type_override": "Z" },
