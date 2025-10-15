@@ -16,7 +16,7 @@
         return @{
             @"flags" : @(item->flags),
             @"value" : [NSData dataWithBytes:item->value length:item->valueLength],
-            @"name" : item->name ? [NSString stringWithUTF8String:item->name]
+            @"name" : item->name ? (id _Nonnull)[NSString stringWithUTF8String:item->name]
                                  : [NSNull null],
         };
     } else {
@@ -24,7 +24,7 @@
             @"flags" : @(item->flags),
             @"value" : [NSNull null],
             @"valueLength" : @(item->valueLength),
-            @"name" : item->name ? [NSString stringWithUTF8String:item->name]
+            @"name" : item->name ? (id _Nonnull)[NSString stringWithUTF8String:item->name]
                                  : [NSNull null],
         };
     }
@@ -34,7 +34,7 @@
 {
     switch (kind) {
     case 0:
-        item->name        = NULL;
+        item->name        = (char* _Nonnull)NULL;
         item->value       = NULL;
         item->valueLength = 32;
         item->flags       = 0;

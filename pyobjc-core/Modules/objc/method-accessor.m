@@ -259,11 +259,13 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
             /* Check if py_name is already in the dict to avoid
              * replacing a more specific definition.
              */
-            switch (PyDict_GetItemRef(res, py_name, &v)) {
+            switch (PyDict_GetItemRef(res, py_name, &v)) { // LCOV_BR_EXCL_LINE
             case -1:
+                // LCOV_EXCL_START
                 Py_CLEAR(py_name);
                 Py_CLEAR(res);
                 return NULL;
+                // LCOV_EXCL_STOP
             case 0:
                 break;
             case 1:
