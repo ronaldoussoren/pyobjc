@@ -1447,8 +1447,8 @@ static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
     PyObjCPythonSelector* self = (PyObjCPythonSelector*)_self;
     PyObject*             result;
 
-    if (self->callable == NULL) {
-        PyErr_Format(PyExc_TypeError, "Calling abstract methods with selector %s",
+    if (self->callable == NULL || self->callable == Py_None) {
+        PyErr_Format(PyExc_TypeError, "Calling abstract methods with selector '%s'",
                      sel_getName(self->base.sel_selector));
         return NULL;
     }
@@ -1457,7 +1457,7 @@ static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
         if (self->base.sel_self == NULL) {
             PyObject* self_arg;
             if (PyVectorcall_NARGS(nargsf) < 1) {
-                PyErr_SetString(PyObjCExc_Error, "need self argument");
+                PyErr_SetString(PyExc_TypeError, "need self argument");
                 return NULL;
             }
 
@@ -1556,9 +1556,12 @@ pysel_default_signature(SEL selector, PyObject* callable)
 
     if (!PyObjC_returns_value(callable)) {
         result[0] = _C_VOID;
-        if (PyErr_Occurred()) {
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            // XXX: This cannot fail in practice
+            // LCOV_EXCL_START
             PyMem_Free(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -1574,7 +1577,7 @@ static SEL _Nullable pysel_default_selector(PyObject* callable)
     if (name == NULL)
         return NULL;
 
-    if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
+    if (PyUnicode_Check(name)) {
         PyObject* bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
         if (bytes == NULL) {
             return NULL;
@@ -1584,7 +1587,8 @@ static SEL _Nullable pysel_default_selector(PyObject* callable)
 
     } else {
         /* The name of built-in callables is always a unicode string */
-        return NULL; // LCOV_EXCL_LINE
+        PyErr_Format(PyExc_TypeError, "%R: __name__ is not a string", callable);
+        return NULL;
     }
 
     if (buf[strlen(buf) - 1] != '_') {
@@ -1713,8 +1717,15 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
         }
     }
 
-    if (callable != Py_None && !PyCallable_Check(callable)) {
+    if (callable != Py_None && !PyCallable_Check(callable)
+        && !PyObject_TypeCheck(callable, &PyClassMethod_Type)) {
         PyErr_SetString(PyExc_TypeError, "argument 'method' must be callable");
+        return NULL;
+    }
+
+    if (PyObject_TypeCheck(callable, &PyStaticMethod_Type)) {
+        PyErr_SetString(PyExc_TypeError, "cannot use staticmethod as the "
+                                         "callable for a selector.");
         return NULL;
     }
 
@@ -1722,23 +1733,16 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
         /* Special treatment for 'classmethod' instances */
         PyObject* tmp =
             PyObject_CallMethod(callable, "__get__", "OO", Py_None, &PyList_Type);
-        if (tmp == NULL) {
-            return NULL;
-        }
-
-        if (PyObjC_is_pyfunction(tmp)) {
-            /* A 'staticmethod' instance, cannot convert */
-            Py_DECREF(tmp);
-            PyErr_SetString(PyExc_TypeError, "cannot use staticmethod as the "
-                                             "callable for a selector.");
-            return NULL;
+        if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;   // LCOV_EXCL_LINE
         }
 
         callable = PyObject_GetAttrString(tmp, "__func__");
         Py_DECREF(tmp);
-        if (callable == NULL) {
-            return NULL;
+        if (callable == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
+        class_method = 1;
 
     } else {
         Py_INCREF(callable);
@@ -1818,7 +1822,7 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     }
     result->base.sel_python_signature = tmp;
 
-    if (meth->base.sel_native_signature) {
+    if (meth->base.sel_native_signature) { // LCOV_BR_EXCL_LINE
         result->base.sel_native_signature =
             PyObjCUtil_Strdup(meth->base.sel_native_signature);
         if (result->base.sel_native_signature == NULL) { // LCOV_BR_EXCL_LINE
@@ -1829,7 +1833,7 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
         }
 
     } else {
-        result->base.sel_native_signature = NULL;
+        result->base.sel_native_signature = NULL; // LCOV_EXCL_LINE
     }
 
     result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);

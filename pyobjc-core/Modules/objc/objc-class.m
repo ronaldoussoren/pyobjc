@@ -243,7 +243,7 @@ objc_metaclass_register(PyTypeObject* meta_class, Class objc_class, Class objc_m
 #endif
             return meta_class;
         } else {
-            // LCOV_EXC_START
+            // LCOV_EXCL_START
             // XXX: Need better documentation here to better explain
             //      why this cannot happen.
             PyErr_Format(PyObjCExc_InternalError, "Registering metaclass twice for '%s'",
@@ -253,7 +253,7 @@ objc_metaclass_register(PyTypeObject* meta_class, Class objc_class, Class objc_m
             PyMutex_Unlock(&classmap_lock);
 #endif
             return NULL;
-            // LCOV_EXC_STOP
+            // LCOV_EXCL_STOP
         }
     }
 
