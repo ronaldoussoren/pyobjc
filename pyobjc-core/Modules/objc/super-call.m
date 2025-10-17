@@ -377,8 +377,8 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
             Py_CLEAR(special_class);
             Py_CLEAR(result);
             special_class = pyclass;
-            result        = PyTuple_GET_ITEM(entry, 1);
             Py_INCREF(special_class);
+            result = PyTuple_GET_ITEM(entry, 1);
             Py_INCREF(result);
             Py_DECREF(entry);
 
@@ -387,18 +387,19 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
             Py_DECREF(entry);
             continue;
 
-        } else if (PyType_IsSubtype((PyTypeObject*)special_class,
-                                    (PyTypeObject*)pyclass)) {
+        } else if (special_class == Py_None
+                   || PyType_IsSubtype((PyTypeObject*)pyclass,
+                                       (PyTypeObject*)search_class)) {
             /* special_type is a superclass of search_class,
              * but a subclass of the current match, hence it is
              * a more specific match or a similar match later in the
              * list.
              */
-            Py_CLEAR(result);
             Py_CLEAR(special_class);
-            Py_INCREF(pyclass);
+            Py_CLEAR(result);
             special_class = pyclass;
-            result        = PyTuple_GET_ITEM(entry, 1);
+            Py_INCREF(special_class);
+            result = PyTuple_GET_ITEM(entry, 1);
             Py_INCREF(result);
             Py_DECREF(entry);
         }

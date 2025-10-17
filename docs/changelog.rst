@@ -239,6 +239,9 @@ Version 12.0
 
 * Fix memory leak due to incorrect reference count handling in looking up metadata.
 
+* Fix edge case in handling registration of multiple custom helpers
+  to call a selector.
+
 Version 11.1.1
 --------------
 
