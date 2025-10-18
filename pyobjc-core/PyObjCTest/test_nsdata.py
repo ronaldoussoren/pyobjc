@@ -1041,8 +1041,10 @@ class TestBytearrayInterface(TestBytesInterface):
             self.assertEqual(oc, py)
             self.assertEqual(bytes(oc), py)
 
+        self.assertEqual(oc.length(), 7)
         oc.resize(20)
         py.resize(20)
+        self.assertEqual(oc.length(), 20)
 
         with objc.autorelease_pool():
             self.assertEqual(oc, py)
@@ -1050,6 +1052,15 @@ class TestBytearrayInterface(TestBytesInterface):
 
         oc.resize(2)
         py.resize(2)
+        self.assertEqual(oc.length(), 2)
+
+        with objc.autorelease_pool():
+            self.assertEqual(oc, py)
+            self.assertEqual(bytes(oc), py)
+
+        oc.resize(4)
+        py.resize(4)
+        self.assertEqual(oc.length(), 4)
 
         with objc.autorelease_pool():
             self.assertEqual(oc, py)

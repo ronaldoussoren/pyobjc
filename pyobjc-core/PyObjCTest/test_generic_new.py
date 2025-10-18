@@ -58,6 +58,11 @@ class TestDefaultNewForPythonClass(TestCase):
         self.assertEqual(NSObject.__new__._function.foo, 42)
         del NSObject.__new__._function.foo
 
+        new = NSObject.__new__
+        self.assertEqual(new.__qualname__, "objc.NSObject.__new__")
+        self.assertEqual(new.__name__, "__new__")
+        self.assertEqual(new.__module__, "objc")
+
     def test_function_wrapper_slots(self):
         value = NSObject.__new__
         self.assertIs(type(value), new_mod.function_wrapper)
@@ -136,6 +141,11 @@ class TestDefaultNewForPythonClass(TestCase):
             """
             ),
         )
+
+        new = OCPyNew1.__new__
+        self.assertEqual(new.__qualname__, f"{self.__module__}.OCPyNew1.__new__")
+        self.assertEqual(new.__name__, "__new__")
+        self.assertEqual(new.__module__, self.__module__)
 
     def test_no_new_in_options(self):
         orig = objc.options._setDunderNew

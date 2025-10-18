@@ -93,7 +93,9 @@ class function_wrapper:
 
     def __getattr__(self, name):
         if name == "__qualname__":
-            return self._cls.__name__ + ".__new__"
+            return (
+                (self._cls.__module__ or "objc") + "." + self._cls.__name__ + ".__new__"
+            )
         elif name == "__name__":
             return "__new__"
         elif name == "__module__":

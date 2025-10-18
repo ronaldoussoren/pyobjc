@@ -614,7 +614,7 @@ class TestCase(_unittest.TestCase):
 
     def assertIsInitializer(self, method, message=None):
         if not isinstance(method, objc.selector):
-            return
+            self.fail(message or f"{method!r} is not a selector")
 
         info = method.__metadata__()
         if not info.get("initializer", False):
@@ -622,7 +622,7 @@ class TestCase(_unittest.TestCase):
 
     def assertIsNotInitializer(self, method, message=None):
         if not isinstance(method, objc.selector):
-            return
+            self.fail(message or f"{method!r} is not a selector")
 
         info = method.__metadata__()
         if info.get("initializer", False):
@@ -630,7 +630,7 @@ class TestCase(_unittest.TestCase):
 
     def assertDoesFreeResult(self, method, message=None):
         if not isinstance(method, objc.selector):
-            return
+            self.fail(message or f"{method!r} is not a selector")
 
         info = method.__metadata__()
         if not info.get("free_result", False):
@@ -638,7 +638,7 @@ class TestCase(_unittest.TestCase):
 
     def assertDoesNotFreeResult(self, method, message=None):
         if not isinstance(method, objc.selector):
-            return
+            self.fail(message or f"{method!r} is not a selector")
 
         info = method.__metadata__()
         if info.get("free_result", False):

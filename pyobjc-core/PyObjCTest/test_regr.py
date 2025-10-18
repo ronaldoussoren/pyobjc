@@ -920,7 +920,14 @@ class TestSelectorDetails(TestCase):
             objc.selector(lambda x: 42, selector=b"method", signature=b"X@:")
 
         s = objc.selector(lambda x: 42, selector=b"method", signature=b"@@:")
+        self.assertEqual(s.native_signature, b"@@:")
         s.signature = b"X@:"
+        with self.assertRaisesRegex(objc.error, " Unhandled type"):
+            s.signature
+
+        with self.assertRaisesRegex(AttributeError, "not writable"):
+            s.native_signature = b"X@:"
+        self.assertEqual(s.native_signature, b"@@:")
         s.__get__(NSObject())
         with self.assertRaisesRegex(objc.error, " Unhandled type"):
             s.__metadata__()
