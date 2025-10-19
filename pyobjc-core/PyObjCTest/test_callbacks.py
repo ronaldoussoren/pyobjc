@@ -5,7 +5,7 @@ from PyObjCTest.test_metadata_function import makeArrayWithFormat_
 objc.registerMetaDataForSelector(
     b"OC_CallbackTest",
     b"selWithSEL:SEL:andObject:",
-    {"arguments": {2: {"sel_of_type": b"q@:q"}, 3: {"sel_of_type": b"v@:@@^v"}}},
+    {"arguments": {2: {"sel_of_type": b"q@:q"}, 3: {"sel_of_type": "v@:@@^v"}}},
 )
 
 objc.registerMetaDataForSelector(

@@ -2796,14 +2796,18 @@ class TestTestSupport(TestCase):
 
                 xoptions["gil"] = False
                 with self.subTest("GIL disabled build, -Xgil=0, gil is disabled"):
-                    with mock.patch("sys._is_gil_enabled", new=lambda: False):
+                    with mock.patch(
+                        "sys._is_gil_enabled", create=True, new=lambda: False
+                    ):
                         try:
                             self.assertFreeThreadedIfConfigured()
                         except self.failureException as exc:
                             self.fail(f"unexpected assertion failure: {exc}")
 
                 with self.subTest("GIL disabled build, -Xgil=0, gil is enabled"):
-                    with mock.patch("sys._is_gil_enabled", new=lambda: True):
+                    with mock.patch(
+                        "sys._is_gil_enabled", create=True, new=lambda: True
+                    ):
                         with self.assertRaisesRegex(
                             self.failureException, "GIL is enabled"
                         ):

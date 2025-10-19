@@ -447,11 +447,21 @@ class TestMisc(TestCase):
                     raise RuntimeError("do not compare me")
                 return self.value == other
 
+            def __lt__(self, other):
+                try:
+                    return self.value < other.value
+                except TypeError:
+                    return type(self.value).__name__ < type(other.value).__name__
+
             def __hash__(self):
                 return hash(self.value)
 
+        class myset(set):
+            def __iter__(self):
+                return iter(sorted(super().__iter__()))
+
         # XXX: This relies on the order of iteration of sets!
-        s = {Uncomparable(2), Uncomparable(None)}
+        s = myset({Uncomparable(2), Uncomparable(None)})
         with self.assertRaisesRegex(RuntimeError, "do not compare me"):
             OC_TestSet.set_member_(s, 2)
 

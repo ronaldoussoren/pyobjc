@@ -782,8 +782,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
                 descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(bytes));
                 Py_DECREF(bytes);
                 if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(d);
-                    return -1; // LCOV_EXCL_LINE
+                    return -1;
+                    // LCOV_EXCL_STOP
                 }
 
             } else if (PyBytes_Check(d)) {
@@ -794,8 +796,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
                 descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(d));
                 if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(d);
-                    return -1; // LCOV_EXCL_LINE
+                    return -1;
+                    // LCOV_EXCL_STOP
                 }
             }
             Py_CLEAR(d);
@@ -822,8 +826,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
             switch (PyDict_GetItemRef(d, PyObjCNM_arguments, &a)) { // LCOV_BR_EXCL_LINE
             case -1:
+                // LCOV_EXCL_START
                 Py_DECREF(d);
-                return -1; // LCOV_EXCL_LINE
+                return -1;
+                // LCOV_EXCL_STOP
             case 0:
                 buffer[0] = _C_ID;
                 buffer[1] = '\0';
@@ -1286,26 +1292,26 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                 }
                 assert(r != -2);
             }
+        }
+        Py_CLEAR(retval);
 
-            switch (PyDict_GetItemRef(metadata, PyObjCNM_free_result,
-                                      &av)) { // LCOV_BR_EXCL_LINE
-            case -1:
-                // LCOV_EXCL_START
-                Py_DECREF(retval);
+        switch (PyDict_GetItemRef(metadata, PyObjCNM_free_result,
+                                  &av)) { // LCOV_BR_EXCL_LINE
+        case -1:
+            // LCOV_EXCL_START
+            Py_DECREF(retval);
+            return -1;
+            // LCOV_EXCL_STOP
+        /* case 0: pass */
+        case 1:
+            r = PyObject_IsTrue(av);
+            if (r == -1) {
                 return -1;
-                // LCOV_EXCL_STOP
-            /* case 0: pass */
-            case 1:
-                r = PyObject_IsTrue(av);
-                if (r == -1) {
-                    return -1;
-                }
-                if (r) {
-                    methinfo->free_result = YES;
-                }
-                Py_CLEAR(av);
             }
-            Py_CLEAR(retval);
+            if (r) {
+                methinfo->free_result = YES;
+            }
+            Py_CLEAR(av);
         }
     }
 
