@@ -692,6 +692,7 @@
    "AVAudioConverter": {
     "methods": [
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "2": {
         "type_modifier": "o"
@@ -882,6 +883,7 @@
       "selector": "renderOffline:toBuffer:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "3": {
         "type_modifier": "o"
@@ -954,6 +956,7 @@
      },
      {
       "args": {
+       "2": { "type_override": "Z" },
        "3": {
         "type_modifier": "o"
        }
@@ -972,6 +975,7 @@
      },
      {
       "args": {
+       "3": { "type_override": "Z" },
        "4": {
         "type_modifier": "o"
        }
@@ -980,6 +984,7 @@
       "selector": "initForWriting:settings:commonFormat:interleaved:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -989,6 +994,7 @@
       "selector": "readIntoBuffer:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "2": {
         "type_modifier": "o"
@@ -998,6 +1004,7 @@
       "selector": "readIntoBuffer:frameCount:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -1049,6 +1056,7 @@
    "AVAudioIONode": {
     "methods": [
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -1100,6 +1108,7 @@
       "selector": "setMutedSpeechActivityEventListener:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "callable": {
@@ -1707,6 +1716,7 @@
    "AVAudioUnit": {
     "methods": [
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -1806,6 +1816,7 @@
    "AVAudioUnitSampler": {
     "methods": [
      {
+      "retval": { "type_overide": "Z" },
       "args": {
        "4": {
         "type_modifier": "o"
@@ -1815,6 +1826,7 @@
       "selector": "loadSoundBankInstrumentAtURL:program:bankMSB:bankLSB:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -1824,6 +1836,7 @@
       "selector": "loadInstrumentAtURL:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"

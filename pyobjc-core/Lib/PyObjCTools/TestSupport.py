@@ -29,7 +29,9 @@ _usepool = not _os.environ.get("PYOBJC_NO_AUTORELEASE")
 
 
 def _typemap(tp):
-    if tp is None:
+    if isinstance(tp, tuple):
+        return tuple(_typemap(x) for x in tp)
+    elif tp is None:
         return None
     return (
         tp.replace(b"_NSRect", b"CGRect")
@@ -301,7 +303,7 @@ def os_level_between(min_release, max_release):
 _poolclass = objc.lookUpClass("NSAutoreleasePool")
 
 # NOTE: On at least macOS 10.8 there are multiple proxy classes for CFTypeRef...
-_nscftype = tuple(cls for cls in objc.getClassList(1) if "NSCFType" in cls.__name__)
+_nscftype = tuple(cls for cls in objc.getClassList(True) if "NSCFType" in cls.__name__)
 
 _typealias = {}
 
@@ -669,6 +671,20 @@ class TestCase(_unittest.TestCase):
     def assertResultHasType(self, method, tp, message=None):
         info = method.__metadata__()
         typestr = info.get("retval").get("type", b"v")
+        if isinstance(tp, tuple):
+            for item in tp:
+                if (
+                    typestr == item
+                    or _typemap(typestr) == _typemap(tp)
+                    or _typealias.get(typestr, typestr) == _typealias.get(tp, tp)
+                ):
+                    break
+            else:
+                self.fail(
+                    message
+                    or f"result of {method!r} is not of type {tp!r}, but {typestr!r}"
+                )
+            return
         if (
             typestr != tp
             and _typemap(typestr) != _typemap(tp)
@@ -697,15 +713,28 @@ class TestCase(_unittest.TestCase):
         else:
             typestr = i.get("type", b"@")
 
+        if isinstance(tp, tuple):
+            for item in tp:
+                if (
+                    typestr == item
+                    or _typemap(typestr) == _typemap(tp)
+                    or _typealias.get(typestr, typestr) == _typealias.get(tp, tp)
+                ):
+                    break
+            else:
+                self.fail(
+                    message
+                    or f"arg {argno} of {method!r} is not of type {tp!r}, but {typestr!r}"
+                )
+            return
+
         if (
             typestr != tp
             and _typemap(typestr) != _typemap(tp)
             and _typealias.get(typestr, typestr) != _typealias.get(tp, tp)
         ):
             self.fail(
-                message
-                or "arg %d of %s is not of type %r, but %r"
-                % (argno, method, tp, typestr)
+                message or f"arg {argno} of {method} is not of type {tp}, but {typestr}"
             )
 
     def assertArgIsFunction(self, method, argno, sel_type, retained, message=None):
@@ -1357,11 +1386,11 @@ class TestCase(_unittest.TestCase):
         # Calculate all (interesting) names in the module. This pokes into
         # the implementation details of objc.ObjCLazyModule to avoid loading
         # all attributes (which is expensive for larger bindings).
-        if isinstance(module, objc.ObjCLazyModule) and False:
+        if isinstance(module, objc.ObjCLazyModule):
             module_names = []
             module_names.extend(
                 cls.__name__
-                for cls in objc.getClassList()
+                for cls in objc.getClassList(True)
                 if (not cls.__name__.startswith("_")) and ("." not in cls.__name__)
             )
             module_names.extend(module._ObjCLazyModule__funcmap or [])
@@ -1391,7 +1420,7 @@ class TestCase(_unittest.TestCase):
                 module_names = []
                 module_names.extend(
                     cls.__name__
-                    for cls in objc.getClassList()
+                    for cls in objc.getClassList(True)
                     if (not cls.__name__.startswith("_")) and ("." not in cls.__name__)
                 )
                 module_names.extend(getattr(getter, "_pyobjc_funcmap", None) or [])
