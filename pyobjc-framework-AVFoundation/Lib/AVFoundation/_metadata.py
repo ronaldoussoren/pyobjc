@@ -1582,7 +1582,7 @@ try:
     r(
         b"AVAudioConverter",
         b"convertToBuffer:fromBuffer:error:",
-        {"arguments": {4: {"type_modifier": b"o"}}},
+        {"arguments": {4: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioEngine",
@@ -1669,7 +1669,7 @@ try:
     r(
         b"AVAudioEngine",
         b"enableManualRenderingMode:format:maximumFrameCount:error:",
-        {"arguments": {5: {"type_modifier": b"o"}}},
+        {"arguments": {5: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioEngine",
@@ -1701,7 +1701,7 @@ try:
     r(
         b"AVAudioEnvironmentNode",
         b"isListenerHeadTrackingEnabled",
-        {"retval": {"type": "Z"}},
+        {"retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioEnvironmentNode",
@@ -1711,7 +1711,7 @@ try:
     r(
         b"AVAudioFile",
         b"initForReading:commonFormat:interleaved:error:",
-        {"arguments": {5: {"type_modifier": b"o"}}},
+        {"arguments": {4: {"type": b"Z"}, 5: {"type_modifier": b"o"}}},
     )
     r(
         b"AVAudioFile",
@@ -1721,7 +1721,7 @@ try:
     r(
         b"AVAudioFile",
         b"initForWriting:settings:commonFormat:interleaved:error:",
-        {"arguments": {6: {"type_modifier": b"o"}}},
+        {"arguments": {5: {"type": b"Z"}, 6: {"type_modifier": b"o"}}},
     )
     r(
         b"AVAudioFile",
@@ -1731,17 +1731,17 @@ try:
     r(
         b"AVAudioFile",
         b"readIntoBuffer:error:",
-        {"arguments": {3: {"type_modifier": b"o"}}},
+        {"arguments": {3: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioFile",
         b"readIntoBuffer:frameCount:error:",
-        {"arguments": {4: {"type_modifier": b"o"}}},
+        {"arguments": {4: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioFile",
         b"writeFromBuffer:error:",
-        {"arguments": {3: {"type_modifier": b"o"}}},
+        {"arguments": {3: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioFormat",
@@ -1761,12 +1761,13 @@ try:
     r(
         b"AVAudioIONode",
         b"setVoiceProcessingEnabled:error:",
-        {"arguments": {3: {"type_modifier": b"o"}}},
+        {"arguments": {3: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioInputNode",
         b"setManualRenderingInputPCMFormat:inputBlock:",
         {
+            "retval": {"type": b"Z"},
             "arguments": {
                 3: {
                     "callable": {
@@ -1776,7 +1777,7 @@ try:
                         "arguments": {0: {"type": b"^v"}, 1: {"type": b"I"}},
                     }
                 }
-            }
+            },
         },
     )
     r(
@@ -2127,7 +2128,7 @@ try:
     r(
         b"AVAudioUnit",
         b"loadAudioUnitPresetAtURL:error:",
-        {"arguments": {3: {"type_modifier": b"o"}}},
+        {"arguments": {3: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioUnitComponentManager",
@@ -2151,17 +2152,17 @@ try:
     r(
         b"AVAudioUnitSampler",
         b"loadAudioFilesAtURLs:error:",
-        {"arguments": {3: {"type_modifier": b"o"}}},
+        {"arguments": {3: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioUnitSampler",
         b"loadInstrumentAtURL:error:",
-        {"arguments": {3: {"type_modifier": b"o"}}},
+        {"arguments": {3: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVAudioUnitSampler",
         b"loadSoundBankInstrumentAtURL:program:bankMSB:bankLSB:error:",
-        {"arguments": {6: {"type_modifier": b"o"}}},
+        {"arguments": {6: {"type_modifier": b"o"}}, "retval": {"type": b"Z"}},
     )
     r(
         b"AVCameraCalibrationData",

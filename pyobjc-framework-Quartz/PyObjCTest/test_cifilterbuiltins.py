@@ -2173,7 +2173,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "roundedMarkers", objc._C_NSInteger
             )
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "roundedData", objc._C_BOOL)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "roundedData", (objc._C_BOOL, objc._C_NSBOOL)
+            )
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "centerSpaceSize", objc._C_FLT
             )

@@ -15,7 +15,17 @@ import typing
 from _topsort import topological_sort
 
 
-PY_VERSIONS = ["3.10", "3.11", "3.12", "3.13", "3.13t", "3.14", "3.14t"]
+PY_VERSIONS = [
+    "3.10",
+    "3.11",
+    "3.12",
+    "3.13",
+    "3.13t",
+    "3.14",
+    "3.14t",
+    "3.15",
+    "3.15t",
+]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
