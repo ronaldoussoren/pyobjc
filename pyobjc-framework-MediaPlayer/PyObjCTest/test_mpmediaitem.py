@@ -86,3 +86,17 @@ class TestMPMediaItem(TestCase):
             1,
             b"@" + Quartz.CGSize.__typestr__,
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        # XXX: Check interface of nested block as well.
+        self.assertArgIsBlock(
+            MediaPlayer.MPMediaItemAnimatedArtwork.initWithArtworkID_previewImageRequestHandler_videoAssetFileURLRequestHandler_,
+            1,
+            b"v" + Quartz.CGSize.__typestr__ + b"@?",
+        )
+        self.assertArgIsBlock(
+            MediaPlayer.MPMediaItemAnimatedArtwork.initWithArtworkID_previewImageRequestHandler_videoAssetFileURLRequestHandler_,
+            2,
+            b"v" + Quartz.CGSize.__typestr__ + b"@?",
+        )

@@ -42,6 +42,20 @@ class TestAVPlayerInterstitialEventController(TestCase):
         )
         self.assertEqual(AVFoundation.AVPlayerInterstitialEventTimelineOccupancyFill, 1)
 
+        self.assertIsEnumType(AVFoundation.AVPlayerInterstitialEventSkippableEventState)
+        self.assertEqual(
+            AVFoundation.AVPlayerInterstitialEventSkippableEventStateNotSkippable, 0
+        )
+        self.assertEqual(
+            AVFoundation.AVPlayerInterstitialEventSkippableEventStateNotYetEligible, 1
+        )
+        self.assertEqual(
+            AVFoundation.AVPlayerInterstitialEventSkippableEventStateEligible, 2
+        )
+        self.assertEqual(
+            AVFoundation.AVPlayerInterstitialEventSkippableEventStateNoLongerEligible, 3
+        )
+
     @min_os_level("11.3")
     def test_constants11_3(self):
         self.assertIsInstance(
@@ -72,6 +86,61 @@ class TestAVPlayerInterstitialEventController(TestCase):
         self.assertIsInstance(AVFoundation.AVPlayerInterstitialEventNoCue, str)
         self.assertIsInstance(AVFoundation.AVPlayerInterstitialEventJoinCue, str)
         self.assertIsInstance(AVFoundation.AVPlayerInterstitialEventLeaveCue, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorCurrentEventSkippableStateDidChangeNotification,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorCurrentEventSkippableStateDidChangeEventKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorCurrentEventSkippableStateDidChangeStateKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorCurrentEventSkippableStateDidChangeSkipControlLabelKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorCurrentEventSkippedNotification,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorCurrentEventSkippedEventKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorInterstitialEventWasUnscheduledNotification,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorInterstitialEventWasUnscheduledEventKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorInterstitialEventWasUnscheduledErrorKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorInterstitialEventDidFinishNotification,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorInterstitialEventDidFinishEventKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorInterstitialEventDidFinishPlayoutTimeKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorInterstitialEventDidFinishDidPlayEntireEventKey,
+            str,
+        )
 
     @min_os_level("11.3")
     def test_methods11_3(self):
@@ -111,4 +180,20 @@ class TestAVPlayerInterstitialEventController(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVPlayerInterstitialEvent.contentMayVary)
         self.assertArgIsBOOL(
             AVFoundation.AVPlayerInterstitialEvent.setContentMayVary_, 0
+        )
+
+        self.assertResultHasType(
+            AVFoundation.AVPlayerInterstitialEvent.plannedDuration,
+            AVFoundation.CMTime.__typestr__,
+        )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultHasType(
+            AVFoundation.AVPlayerInterstitialEvent.skipControlTimeRange,
+            AVFoundation.CMTimeRange.__typestr__,
+        )
+        self.assertResultHasType(
+            AVFoundation.AVPlayerInterstitialEvent.skipControlTimeRange,
+            AVFoundation.CMTimeRange.__typestr__,
         )

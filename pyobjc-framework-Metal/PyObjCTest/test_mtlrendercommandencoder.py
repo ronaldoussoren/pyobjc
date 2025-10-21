@@ -294,6 +294,9 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     def setVertexBytes_length_attributeStride_atIndex_(self, a, b, c, d):
         pass
 
+    def setDepthTestMinBound_maxBound_(self, a, b):
+        pass
+
 
 class TestMTLRenderCommandEncoder(TestCase):
     def test_enum_types(self):
@@ -2528,4 +2531,15 @@ class TestMTLRenderCommandEncoder2(TestCase):
             TestMTLRenderCommandEncoderHelper.setVertexBytes_length_attributeStride_atIndex_,
             3,
             objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setDepthTestMinBound_maxBound_,
+            0,
+            objc._C_FLT,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setDepthTestMinBound_maxBound_,
+            1,
+            objc._C_FLT,
         )

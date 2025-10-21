@@ -82,7 +82,7 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"unknownLengthArray",
-        {"retval": {"c_array_of_variable_length": True}},
+        {"retval": {"c_array_of_variable_length": True}, "arguments": None},
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
@@ -2751,3 +2751,57 @@ class TestSELArguments(TestCase):
                 b"methodWithSEL2:",
                 {"arguments": {2 + 0: {"sel_of_type": "@@:\udff0"}}},
             )
+
+
+class TestInvalidMetadata(TestCase):
+    def test_bad_types_for_arg_descriptor(self):
+        with self.assertRaisesRegex(TypeError, "metadata of type int: 42"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest", b"SomeMethod:", {"retval": 42}
+            )
+
+        with self.assertRaisesRegex(TypeError, "metadata of type int: 42"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest", b"SomeMethod:", {"arguments": {2: 42}}
+            )
+
+    def test_invalid_bool(self):
+        for key in (
+            "null_accepted",
+            "already_retained",
+            "already_cfretained",
+            "callable_retained",
+            "c_array_length_in_result",
+            "printf_format",
+            "c_array_delimited_by_null",
+            "c_array_of_variable_length",
+            "deref_result_pointer",
+        ):
+            with self.subTest(key):
+                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                    objc.registerMetaDataForSelector(
+                        b"OC_MetaDataTest",
+                        b"invalid%s" % (key.encode()),
+                        {"arguments": {0: {key: NotBool()}}},
+                    )
+
+        for key in ("free_result", "c_array_delimited_by_null", "variadic"):
+            with self.subTest(key):
+                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                    objc.registerMetaDataForSelector(
+                        b"OC_MetaDataTest",
+                        b"invalid%s" % (key.encode()),
+                        {key: NotBool()},
+                    )
+
+    def test_invalid_strings(self):
+        for key in ("type_modifier", "type", "sel_of_type"):
+            with self.subTest(key):
+                with self.assertRaisesRegex(
+                    UnicodeEncodeError, "surrogates not allowed"
+                ):
+                    objc.registerMetaDataForSelector(
+                        b"OC_MetaDataTest",
+                        b"invalid%s" % (key.encode()),
+                        {"arguments": {0: {key: "\udfff"}}},
+                    )

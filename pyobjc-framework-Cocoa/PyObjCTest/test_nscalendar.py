@@ -101,6 +101,8 @@ class TestNSCalendar(TestCase):
         )
         self.assertEqual(Foundation.NSCalendarUnitCalendar, (1 << 20))
         self.assertEqual(Foundation.NSCalendarUnitTimeZone, (1 << 21))
+        self.assertEqual(Foundation.NSCalendarUnitIsLeapMonth, (1 << 30))
+        self.assertEqual(Foundation.NSCalendarUnitIsRepeatedDay, (1 << 31))
         self.assertEqual(Foundation.NSCalendarWrapComponents, (1 << 0))
         self.assertEqual(Foundation.NSCalendarMatchStrictly, (1 << 1))
         self.assertEqual(Foundation.NSCalendarSearchBackwards, (1 << 2))
@@ -160,6 +162,20 @@ class TestNSCalendar(TestCase):
     def testConstants10_10(self):
         self.assertIsInstance(Foundation.NSCalendarIdentifierIslamicTabular, str)
         self.assertIsInstance(Foundation.NSCalendarIdentifierIslamicUmmAlQura, str)
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Foundation.NSCalendarIdentifierBangla, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierGujarati, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierKannada, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierMalayalam, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierMarathi, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierOdia, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierTamil, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierTelugu, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierVikram, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierDangi, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierVietnamese, str)
 
     @min_os_level("10.5")
     def testMethods10_5(self):
@@ -251,3 +267,8 @@ class TestNSCalendar(TestCase):
 
         self.assertResultIsBOOL(Foundation.NSDateComponents.isValidDate)
         self.assertResultIsBOOL(Foundation.NSDateComponents.isValidDateInCalendar_)
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(Foundation.NSDateComponents.isRepeatedDay)
+        self.assertArgIsBOOL(Foundation.NSDateComponents.setRepeatedDay_, 0)

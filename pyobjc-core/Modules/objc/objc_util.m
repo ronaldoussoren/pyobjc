@@ -4,6 +4,8 @@
 
 #include "pyobjc.h"
 
+#undef PyObjCUtil_Strdup
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSNull* NSNull_null;
@@ -422,7 +424,13 @@ static NSException* _Nullable python_exception_to_objc(void)
         return nil;         // LCOV_EXCL_LINE
     }
 
+    /* XXX: Switch to 'PyErr_GetRaisedException' */
     PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
+    /* XXX: The documentation is not very clear, but exc_value should
+     *      be non-NULL at this point
+     */
+    assert(exc_type != NULL);
+    assert(exc_value != NULL);
 
     args = PyObject_GetAttrString(exc_value, "_pyobjc_exc_");
     if (args == NULL) {
@@ -511,11 +519,8 @@ static NSException* _Nullable python_exception_to_objc(void)
     [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_type] autorelease]
                  forKey:@"__pyobjc_exc_type__"];
 
-    if (exc_value != NULL) { // LCOV_BR_EXCL_LINE
-        [userInfo
-            setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_value] autorelease]
-               forKey:@"__pyobjc_exc_value__"];
-    }
+    [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_value] autorelease]
+                 forKey:@"__pyobjc_exc_value__"];
 
     if (exc_traceback != NULL) {
         [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_traceback]
@@ -527,27 +532,22 @@ static NSException* _Nullable python_exception_to_objc(void)
     NSObject* oc_repr     = nil;
 
     typerepr = PyObject_Str(exc_type);
-    if (typerepr) { // LCOV_BR_EXCL_LINE
-        if (depythonify_python_object(typerepr, &oc_typerepr)
-            == -1) { // LCOV_BR_EXCL_LINE
+    if (typerepr) {                    // LCOV_BR_EXCL_LINE
+        if (depythonify_python_object( // LCOV_BR_EXCL_LINE
+                typerepr, &oc_typerepr)
+            == -1) {
             /* Ignore errors in conversion */
             PyErr_Clear(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
     }
 
-    if (exc_value != NULL) { // LCOV_BR_EXCL_LINE
-        repr = PyObject_Str(exc_value);
-        if (repr) {                                                // LCOV_BR_EXCL_LINE
-            if (depythonify_python_object(repr, &oc_repr) == -1) { // LCOV_BR_EXCL_LINE
-                /* Ignore errors in conversion */
-                PyErr_Clear(); // LCOV_EXCL_LINE
-            } // LCOV_EXCL_LINE
-        }
-    } else {
-        // LCOV_EXCL_START
-        repr    = NULL;
-        oc_repr = nil;
-        // LCOV_EXCL_STOP
+    assert(exc_value != NULL);
+    repr = PyObject_Str(exc_value);
+    if (repr) {                                                // LCOV_BR_EXCL_LINE
+        if (depythonify_python_object(repr, &oc_repr) == -1) { // LCOV_BR_EXCL_LINE
+            /* Ignore errors in conversion */
+            PyErr_Clear(); // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
     }
 
     val = [NSException
@@ -811,7 +811,8 @@ code_compatible(char array_code, char type_code)
         case _C_BOOL:
         case _C_NSBOOL:
             return YES;
-        } // LCOV_EXCL_LINE
+        }
+        break;
 
     case 'B':
         switch (type_code) {
@@ -823,7 +824,8 @@ code_compatible(char array_code, char type_code)
              * compatibility.
              */
             return YES;
-        } // LCOV_EXCL_LINE
+        }
+        break;
 
     case 'u':
 #if PY_VERSION_HEX >= 0x030d0000
@@ -837,6 +839,7 @@ code_compatible(char array_code, char type_code)
         case _C_UNICHAR:
             return YES;
         }
+        break;
 
     case 'H':
         return type_code == _C_USHT;
@@ -853,7 +856,8 @@ code_compatible(char array_code, char type_code)
         case _C_LNG:
         case _C_LNG_LNG:
             return YES;
-        } // LCOV_EXCL_LINE
+        }
+        break;
 
     case 'L':
     case 'Q':
@@ -861,7 +865,8 @@ code_compatible(char array_code, char type_code)
         case _C_ULNG:
         case _C_ULNG_LNG:
             return YES;
-        } // LCOV_EXCL_LINE
+        }
+        break;
 
     case 'f':
         return type_code == _C_FLT;
@@ -1446,7 +1451,7 @@ int
 PyObjCClass_Convert(PyObject* object, void* pvar)
 {
     if (!PyObjCClass_Check(object)) {
-        PyErr_SetString(PyExc_TypeError, "Expected objective-C class");
+        PyErr_Format(PyExc_TypeError, "Expected objective-C class, got %R", object);
         return 0;
     }
 

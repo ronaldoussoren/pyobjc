@@ -13,6 +13,7 @@ class TestCALayer(TestCase):
         self.assertIsTypedEnum(Quartz.CALayerContentsFormat, str)
         self.assertIsTypedEnum(Quartz.CALayerContentsGravity, str)
         self.assertIsTypedEnum(Quartz.CALayerCornerCurve, str)
+        self.assertIsTypedEnum(Quartz.CADynamicRange, str)
 
     @min_os_level("10.5")
     def testConstants(self):
@@ -123,6 +124,10 @@ class TestCALayer(TestCase):
         self.assertIsInstance(Quartz.kCAContentsFormatRGBA16Float, str)
         self.assertIsInstance(Quartz.kCAContentsFormatGray8Uint, str)
 
+    @min_os_level("10.14")
+    def testConstants10_14(self):
+        self.assertIsInstance(Quartz.kCAContentsFormatAutomatic, str)
+
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(Quartz.kCACornerCurveCircular, str)
@@ -134,6 +139,13 @@ class TestCALayer(TestCase):
         self.assertIsInstance(Quartz.CAToneMapModeAutomatic, str)
         self.assertIsInstance(Quartz.CAToneMapModeNever, str)
         self.assertIsInstance(Quartz.CAToneMapModeIfSupported, str)
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Quartz.CADynamicRangeAutomatic, str)
+        self.assertIsInstance(Quartz.CADynamicRangeStandard, str)
+        self.assertIsInstance(Quartz.CADynamicRangeConstrainedHigh, str)
+        self.assertIsInstance(Quartz.CADynamicRangeHigh, str)
 
     @min_sdk_level("10.6")
     def testProtocols(self):

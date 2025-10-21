@@ -69,7 +69,18 @@ class OCTestSubHidden(OCTestHidden):
         return False
 
 
+class OCTestHidden2(objc.lookUpClass("NSObject")):
+    method = hidden_method()
+
+
 class TestHiddenSelector(TestCase):
+    def testHiddenShadows(self):
+        o = OCTestHidden2.alloc().init()
+        self.assertIsInstance(o.method, hidden_method)
+
+        self.assertEqual(o.pyobjc_instanceMethods.method(), 42)
+        self.assertIn("method", o.pyobjc_instanceMethods.__dict__)
+
     def testHiddenInClassDef(self):
         o = OCTestHidden.alloc().init()
         with self.assertRaisesRegex(
@@ -102,6 +113,8 @@ class TestHiddenSelector(TestCase):
         self.assertResultIsBOOL(m)
         v = m()
         self.assertIs(v, True)
+
+        self.assertIn("boolMethod", o.pyobjc_instanceMethods.__dict__)
 
     def testHiddenCanBeIntrospected(self):
         # XXX: This test fails, and will also fail in versions
@@ -282,3 +295,11 @@ class TestHiddenSelector(TestCase):
 
         method.isHidden = "foo"
         self.assertIs(method.isHidden, True)
+
+    def test_invalid_argument(self):
+        class NoCompare:
+            def __bool__(self):
+                raise RuntimeError("no compare")
+
+        with self.assertRaises(RuntimeError):
+            OCTestHidden.pyobjc_hiddenSelectors(NoCompare())

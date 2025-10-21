@@ -9,3 +9,9 @@ class TestCMMagnetometer(TestCase):
         self.assertEqual(v.y, 0.0)
         self.assertEqual(v.z, 0.0)
         self.assertPickleRoundTrips(v)
+
+    def test_methods(self):
+        self.assertResultHasType(
+            CoreMotion.CMMagnetometerData.magneticField,
+            CoreMotion.CMMagneticField.__typestr__,
+        )

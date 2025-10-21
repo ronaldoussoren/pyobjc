@@ -73,3 +73,7 @@ class TestConnection(TestCase):
         self.assertArgIsNullTerminated(
             xpc.xpc_connection_set_peer_code_signing_requirement, 1
         )
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        xpc.xpc_connection_set_peer_requirement

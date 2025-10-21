@@ -2,6 +2,11 @@ import Metal
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
+class TestMTLCommandEncoderHelper(Metal.NSObject):
+    def barrierAfterQueueStages_beforeStages_(self, a, b):
+        pass
+
+
 class TestMTLCommandEncoder(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Metal.MTLBarrierScope)
@@ -19,3 +24,11 @@ class TestMTLCommandEncoder(TestCase):
     @min_sdk_level("10.11")
     def test_protocols(self):
         self.assertProtocolExists("MTLCommandEncoder")
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestMTLCommandEncoderHelper.barrierAfterQueueStages_beforeStages_, 0, b"Q"
+        )
+        self.assertArgHasType(
+            TestMTLCommandEncoderHelper.barrierAfterQueueStages_beforeStages_, 1, b"Q"
+        )

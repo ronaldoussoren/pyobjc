@@ -98,3 +98,81 @@ class TestMTLIndirectCommandBuffer(TestCase):
             .setSupportDynamicAttributeStride_,
             0,
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .supportColorAttachmentMapping
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .setSupportColorAttachmentMapping_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .inheritDepthStencilState
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .setInheritDepthStencilState_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc().init().inheritDepthBias
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .setInheritDepthBias_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc().init().inheritDepthClipMode
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .setInheritDepthClipMode_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc().init().inheritCullMode
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc().init().setInheritCullMode_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .inheritFrontFacingWinding
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .setInheritFrontFacingWinding_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .inheritTriangleFillMode
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLIndirectCommandBufferDescriptor.alloc()
+            .init()
+            .setInheritTriangleFillMode_,
+            0,
+        )

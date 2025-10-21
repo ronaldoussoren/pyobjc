@@ -1,5 +1,3 @@
-import sys
-
 import Cocoa
 
 # import DataProvidersAndConsumers
@@ -100,15 +98,8 @@ def exportImageWithMaskFromURLWithDestination(
         Images.exportCGImageToPNGFileWithDestination(imageMaskedWithImage, exportURL)
 
 
-if sys.version_info[0] == 2:
-
-    def make_bytes(values):
-        return "".join(map(chr, values))
-
-else:
-
-    def make_bytes(values):
-        return bytes(values)
+def make_bytes(values):
+    return bytes(values)
 
 
 _data = make_bytes(

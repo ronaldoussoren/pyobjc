@@ -205,6 +205,8 @@ class TestNSCell(TestCase):
         self.assertEqual(AppKit.NSControlSizeRegular, 0)
         self.assertEqual(AppKit.NSControlSizeSmall, 1)
         self.assertEqual(AppKit.NSControlSizeMini, 2)
+        self.assertEqual(AppKit.NSControlSizeLarge, 3)
+        self.assertEqual(AppKit.NSControlSizeExtraLarge, 4)
 
         self.assertEqual(AppKit.NSCellHitNone, 0)
         self.assertEqual(AppKit.NSCellHitContentArea, 1 << 0)

@@ -442,6 +442,9 @@ def createFrameworkDirAndGetattr(
     expressions_mapping = ChainMap(globals_dict, _GetAttrMap(__getattr__))
     load_cftypes(metadict.get("cftypes"))
 
+    __getattr__._pyobjc_parents = parents
+    __getattr__._pyobjc_funcmap = funcmap
+
     return __dir__, __getattr__
 
 

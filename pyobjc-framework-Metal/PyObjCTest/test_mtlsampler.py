@@ -25,6 +25,11 @@ class TestMTLSampler(TestCase):
         self.assertEqual(Metal.MTLSamplerBorderColorOpaqueBlack, 1)
         self.assertEqual(Metal.MTLSamplerBorderColorOpaqueWhite, 2)
 
+        self.assertIsEnumType(Metal.MTLSamplerReductionMode)
+        self.assertEqual(Metal.MTLSamplerReductionModeWeightedAverage, 0)
+        self.assertEqual(Metal.MTLSamplerReductionModeMinimum, 1)
+        self.assertEqual(Metal.MTLSamplerReductionModeMaximum, 2)
+
     @min_sdk_level("10.11")
     def test_protocols(self):
         self.assertProtocolExists("MTLSamplerState")

@@ -15,7 +15,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MetalKit`` package (that is, ``import MetalKit``).
 
-.. versionadded:: macOS 10.11
+.. macosadded:: 10.11
 
 API Notes
 ---------

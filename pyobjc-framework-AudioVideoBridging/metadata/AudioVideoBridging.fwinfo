@@ -1,7 +1,22 @@
 {
  "definitions": {
   "expressions": {
-   "kAVB17221EntityPropertyChangedCanChangeMask": { "value": "(AVB17221EntityPropertyChangedTimeToLive | AVB17221EntityPropertyChangedAvailableIndex | AVB17221EntityPropertyChangedGPTPGrandmasterID | AVB17221EntityPropertyChangedGPTPDomainNumber | AVB17221EntityPropertyChangedEntityCapabilities )" }
+   "kAVB17221EntityPropertyChangedCanChangeMask": { "value": "(AVB17221EntityPropertyChangedTimeToLive | AVB17221EntityPropertyChangedAvailableIndex | AVB17221EntityPropertyChangedGPTPGrandmasterID | AVB17221EntityPropertyChangedGPTPDomainNumber | AVB17221EntityPropertyChangedEntityCapabilities )" },
+   "kAVB17221EntityPropertyChangedShouldntChangeMask": { "value": "(AVB17221EntityPropertyChangedEntityID | AVB17221EntityPropertyChangedVendorID | AVB17221EntityPropertyChangedModelID | AVB17221EntityPropertyChangedTalkerStreamSources | AVB17221EntityPropertyChangedTalkerCapabilities | AVB17221EntityPropertyChangedListenerStreamSinks | AVB17221EntityPropertyChangedListenerCapabilities | AVB17221EntityPropertyChangedControllerCapabilities | AVB17221EntityPropertyChangedMACAddress | AVB17221EntityPropertyChangedAssociationID | AVB17221EntityPropertyChangedEntityType | AVB17221EntityPropertyChangedIdentifyControlIndex | AVB17221EntityPropertyChangedInterfaceIndex)" }
+  },
+  "enum": {
+   "AVB17221ADPControllerCapabilitiesHasLayer3Proxy": { "value": 2, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateAddKey": { "value": 55, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateAddKeyToChain": { "value": 59, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateAddToken": { "value": 63, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateDeleteKey": { "value": 56, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateDeleteKeyFromChain": { "value": 60, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateDeleteToken": { "value": 64, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateGetIdentity": { "value": 62, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateGetKey": { "value": 58, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateGetKeyList": { "value": 57, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeAuthenticateGetKeychainList": { "value": 61, "deprecated": 1200 },
+   "AVB17221AEMCommandTypeSetSampingRateRange": { "value": 78, "deprecated": 1200 }
   },
   "classes": {
    "AVBIPAddress": {

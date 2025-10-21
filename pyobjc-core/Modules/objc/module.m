@@ -639,6 +639,14 @@ static PyObject* _Nullable objc_splitSignature(PyObject* self __attribute__((__u
         Py_DECREF(str);
 
         signature = end;
+        if (*signature == '"') {
+            signature++;
+            while (*signature && *signature++ != '"') {
+            }
+            while (*signature && isdigit(*signature)) {
+                signature++;
+            }
+        }
     }
 
     tuple = PyList_AsTuple(result);

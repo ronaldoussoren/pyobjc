@@ -3,6 +3,8 @@
   "typed_enum": {
    "NSFontWidth": { "type": "d" },
    "NSPasteboardAccessBehavior": { "type": "q" },
+   "NSAccessibilityDateTimeComponentsFlags": { "type": "q" },
+   "NSAccessibilitySearchKey": { "type": "@", "type_name": "NSString" },
    "NSTextHighlightStyle": { "type": "@", "type_name": "NSString" },
    "NSPasteboardMetadataType": { "type": "@", "type_name": "NSString" },
    "NSPasteboardDetectionPattern": { "type": "@", "type_name": "NSString" },
@@ -103,6 +105,22 @@
    "NSStackViewVisibilityPriority": { "type": "f" }
   },
   "aliases": {
+   "NSModalPanelWindowLevel": { "alias": "kCGModalPanelWindowLevel" },
+   "NSSubmenuWindowLevel": { "alias": "kCGTornOffMenuWindowLevel" },
+   "NSTornOffMenuWindowLevel": { "alias": "kCGTornOffMenuWindowLevel" },
+   "NSPopUpMenuWindowLevel": { "alias": "kCGPopUpMenuWindowLevel" },
+   "NSMainMenuWindowLevel": { "alias": "kCGMainMenuWindowLevel" },
+   "NSScreenSaverWindowLevel": { "alias": "kCGScreenSaverWindowLevel" },
+   "NSNormalWindowLevel": { "alias": "kCGNormalWindowLevel" },
+   "NSFloatingWindowLevel": { "alias": "kCGFloatingWindowLevel" },
+   "NSDockWindowLevel": { "alias": "kCGDockWindowLevel" },
+   "NSStatusWindowLevel": { "alias": "kCGStatusWindowLevel" },
+   "NSFileHandlingPanelCancelButton": { "alias": "NSModalResponseCancel" },
+   "NSFileHandlingPanelOKButton": { "alias": "NSModalResponseOK" },
+   "NSTickMarkLeft": { "alias": "NSTickMarkAbove" },
+   "NSEventDurationForever": {
+    "alias": "DBL_MAX"
+   },
    "NSRightTextAlignment": {
     "alias": "NSTextAlignmentRight"
    },
@@ -11199,6 +11217,64 @@
    "NSObject": {
     "methods": [
      {
+      "class_method": false,
+      "selector": "accessibilityArrayAttributeCount:",
+      "retval": {"type_override": "Q"}
+     },
+     {
+      "class_method": false,
+      "selector": "accessibilityArrayAttributeValues:index:maxCount:",
+      "args": {
+       "2": {"type_override": "Q"}
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "accessibilityHitTest:",
+      "args": {
+       "0": {"type": "{CGPoint=dd}"}
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "accessibilityIndexOfChild:",
+      "retval": {"type_override": "Q"}
+     },
+     {
+      "class_method": false,
+      "selector": "rulerView:pointForLocation:",
+      "retval": {"type_override": "{CGPoint=dd}"},
+      "args": {
+       "1": {"type": "d"}
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setAllowsMultipleSelection:",
+      "args": {
+       "0": {"type_override": "Z"}
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "selectable",
+      "retval": {"type_override": "Z"}
+     },
+     {
+      "class_method": false,
+      "selector": "setFirstSelectedRange:",
+      "args": {
+       "0": {"type_override": "{_NSRange=QQ}"}
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setSelectable:",
+      "args": {
+       "0": {"type_override": "Z"}
+      }
+     },
+     {
       "selector": "selectionRect",
       "class_method": false,
       "retval":  { "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
@@ -15303,21 +15379,17 @@
    "NSOpenGLLayer": {
     "methods": [
      {
-      "args": {
-       "3": {
-        "type_modifier": "n"
-       }
-      },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "canDrawInOpenGLContext:pixelFormat:forLayerTime:displayTime:"
+      "selector": "canDrawInOpenGLContext:pixelFormat:forLayerTime:displayTime:",
+      "retval": {"type_override": "Z"},
+      "args": {
+       "3": { "type_override": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", "type_modifier": "n" }
+      }
      },
      {
       "args": {
        "3": {
-        "type_modifier": "n"
+        "type_modifier": "n", "type_override": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}"
        }
       },
       "class_method": false,
@@ -22680,6 +22752,11 @@
    "NSView": {
     "methods": [
      {
+      "retval": { "type_override": "{NSEdgeInsets=dddd}"},
+      "class_method": false,
+      "selector": "alignmetRectInsets"
+     },
+     {
       "args": {
        "1": {
         "sel_of_type": "v@:@",
@@ -25606,6 +25683,324 @@
    }
   },
   "enum": {
+   "NSAWTEventType": { "value": 16, "deprecated": 1008 },
+   "NSAlertFirstButtonReturn": { "value": 1000, "deprecated": 1008 },
+   "NSAlertSecondButtonReturn": { "value": 1001, "deprecated": 1008 },
+   "NSAlertThirdButtonReturn": { "value": 1002, "deprecated": 1008 },
+   "NSAlphaFirstBitmapFormat": { "value": 1, "deprecated": 1008 },
+   "NSAlphaNonpremultipliedBitmapFormat": { "value": 2, "deprecated": 1008 },
+   "NSAlphaShiftKeyMask": { "value": 65536, "deprecated": 1008 },
+   "NSAlternateKeyMask": { "value": 524288, "deprecated": 1008 },
+   "NSAnyEventMask": { "value": 18446744073709551615, "deprecated": 1008 },
+   "NSAppKitDefined": { "value": 13, "deprecated": 1008 },
+   "NSAppKitDefinedMask": { "value": 8192, "deprecated": 1008 },
+   "NSAppKitVersionNumber10_0": { "value": 577, "deprecated": 1008 },
+   "NSAppKitVersionNumber10_1": { "value": 620, "deprecated": 1008 },
+   "NSAppKitVersionNumber10_2": { "value": 663, "deprecated": 1008 },
+   "NSAppKitVersionNumber10_3": { "value": 743, "deprecated": 1008 },
+   "NSAppKitVersionNumber10_4": { "value": 824, "deprecated": 1008 },
+   "NSAppKitVersionNumber10_5": { "value": 949, "deprecated": 1008 },
+   "NSAppKitVersionNumber10_6": { "value": 1038, "deprecated": 1008 },
+   "NSApplicationActivatedEventType": { "value": 1, "deprecated": 1008 },
+   "NSApplicationDeactivatedEventType": { "value": 2, "deprecated": 1008 },
+   "NSApplicationDefined": { "value": 15, "deprecated": 1008 },
+   "NSApplicationDefinedMask": { "value": 32768, "deprecated": 1008 },
+   "NSAutoPagination": { "value": 0, "deprecated": 1008 },
+   "NSBMPFileType": { "value": 1, "deprecated": 1008 },
+   "NSBackgroundStyleDark": { "value": 1, "deprecated": 1008 },
+   "NSBackgroundStyleLight": { "value": 0, "deprecated": 1008 },
+   "NSBevelLineJoinStyle": { "value": 2, "deprecated": 1008 },
+   "NSBorderlessWindowMask": { "value": 0, "deprecated": 1008 },
+   "NSBoxOldStyle": { "value": 3, "deprecated": 1008 },
+   "NSBoxSecondary": { "value": 1, "deprecated": 1008 },
+   "NSButtLineCapStyle": { "value": 0, "deprecated": 1008 },
+   "NSCMYKColorSpaceModel": { "value": 2, "deprecated": 1008 },
+   "NSCMYKModeColorPanel": { "value": 2, "deprecated": 1008 },
+   "NSCircularBezelStyle": { "value": 7, "deprecated": 1008 },
+   "NSCircularSlider": { "value": 1, "deprecated": 1008 },
+   "NSClipPagination": { "value": 2, "deprecated": 1008 },
+   "NSClockAndCalendarDatePickerStyle": { "value": 1, "deprecated": 1008 },
+   "NSClosableWindowMask": { "value": 2, "deprecated": 1008 },
+   "NSClosePathBezierPathElement": { "value": 3, "deprecated": 1008 },
+   "NSColorListModeColorPanel": { "value": 5, "deprecated": 1008 },
+   "NSCommandKeyMask": { "value": 1048576, "deprecated": 1008 },
+   "NSCompositeClear": { "value": 0, "deprecated": 1008 },
+   "NSCompositeCopy": { "value": 1, "deprecated": 1008 },
+   "NSCompositeDestinationAtop": { "value": 9, "deprecated": 1008 },
+   "NSCompositeDestinationIn": { "value": 7, "deprecated": 1008 },
+   "NSCompositeDestinationOut": { "value": 8, "deprecated": 1008 },
+   "NSCompositeDestinationOver": { "value": 6, "deprecated": 1008 },
+   "NSCompositeHighlight": { "value": 12, "deprecated": 1008 },
+   "NSCompositePlusDarker": { "value": 11, "deprecated": 1008 },
+   "NSCompositePlusLighter": { "value": 13, "deprecated": 1008 },
+   "NSCompositeSourceAtop": { "value": 5, "deprecated": 1008 },
+   "NSCompositeSourceIn": { "value": 3, "deprecated": 1008 },
+   "NSCompositeSourceOut": { "value": 4, "deprecated": 1008 },
+   "NSCompositeSourceOver": { "value": 2, "deprecated": 1008 },
+   "NSCompositeXOR": { "value": 10, "deprecated": 1008 },
+   "NSContinuousCapacityLevelIndicatorStyle": { "value": 1, "deprecated": 1008 },
+   "NSControlKeyMask": { "value": 262144, "deprecated": 1008 },
+   "NSCrayonModeColorPanel": { "value": 7, "deprecated": 1008 },
+   "NSCriticalAlertStyle": { "value": 2, "deprecated": 1008 },
+   "NSCursorPointingDevice": { "value": 2, "deprecated": 1008 },
+   "NSCursorUpdate": { "value": 17, "deprecated": 1008 },
+   "NSCursorUpdateMask": { "value": 131072, "deprecated": 1008 },
+   "NSCurveToBezierPathElement": { "value": 2, "deprecated": 1008 },
+   "NSCustomPaletteModeColorPanel": { "value": 4, "deprecated": 1008 },
+   "NSDefaultTokenStyle": { "value": 0, "deprecated": 1008 },
+   "NSDeviceIndependentModifierFlagsMask": { "value": 4294901760, "deprecated": 1008 },
+   "NSDeviceNColorSpaceModel": { "value": 4, "deprecated": 1008 },
+   "NSDisclosureBezelStyle": { "value": 5, "deprecated": 1008 },
+   "NSDiscreteCapacityLevelIndicatorStyle": { "value": 2, "deprecated": 1008 },
+   "NSDocModalWindowMask": { "value": 64, "deprecated": 1008 },
+   "NSEraDatePickerElementFlag": { "value": 256, "deprecated": 1008 },
+   "NSEraserPointingDevice": { "value": 3, "deprecated": 1008 },
+   "NSEvenOddWindingRule": { "value": 1, "deprecated": 1008 },
+   "NSFileWrapperReadingImmediate": { "value": 1, "deprecated": 1008 },
+   "NSFileWrapperReadingWithoutMapping": { "value": 2, "deprecated": 1008 },
+   "NSFileWrapperWritingAtomic": { "value": 1, "deprecated": 1008 },
+   "NSFileWrapperWritingWithNameUpdating": { "value": 2, "deprecated": 1008 },
+   "NSFitPagination": { "value": 1, "deprecated": 1008 },
+   "NSFlagsChanged": { "value": 12, "deprecated": 1008 },
+   "NSFlagsChangedMask": { "value": 4096, "deprecated": 1008 },
+   "NSFloatingPointSamplesBitmapFormat": { "value": 4, "deprecated": 1008 },
+   "NSFullScreenWindowMask": { "value": 16384, "deprecated": 1008 },
+   "NSFunctionKeyMask": { "value": 8388608, "deprecated": 1008 },
+   "NSGIFFileType": { "value": 2, "deprecated": 1008 },
+   "NSGrayColorSpaceModel": { "value": 0, "deprecated": 1008 },
+   "NSGrayModeColorPanel": { "value": 0, "deprecated": 1008 },
+   "NSHSBModeColorPanel": { "value": 3, "deprecated": 1008 },
+   "NSHUDWindowMask": { "value": 8192, "deprecated": 1008 },
+   "NSHelpButtonBezelStyle": { "value": 9, "deprecated": 1008 },
+   "NSHelpKeyMask": { "value": 4194304, "deprecated": 1008 },
+   "NSHourMinuteDatePickerElementFlag": { "value": 12, "deprecated": 1008 },
+   "NSHourMinuteSecondDatePickerElementFlag": { "value": 14, "deprecated": 1008 },
+   "NSIndexedColorSpaceModel": { "value": 5, "deprecated": 1008 },
+   "NSInformationalAlertStyle": { "value": 1, "deprecated": 1008 },
+   "NSInlineBezelStyle": { "value": 15, "deprecated": 1008 },
+   "NSJPEG2000FileType": { "value": 5, "deprecated": 1008 },
+   "NSJPEGFileType": { "value": 3, "deprecated": 1008 },
+   "NSJustifiedTextAlignment": { "value": 3, "deprecated": 1008 },
+   "NSKeyDown": { "value": 10, "deprecated": 1008 },
+   "NSKeyDownMask": { "value": 1024, "deprecated": 1008 },
+   "NSKeyUp": { "value": 11, "deprecated": 1008 },
+   "NSKeyUpMask": { "value": 2048, "deprecated": 1008 },
+   "NSLABColorSpaceModel": { "value": 3, "deprecated": 1008 },
+   "NSLayoutPriorityDefaultHigh": { "value": 750, "deprecated": 1008 },
+   "NSLayoutPriorityDefaultLow": { "value": 250, "deprecated": 1008 },
+   "NSLayoutPriorityDragThatCanResizeWindow": { "value": 510, "deprecated": 1008 },
+   "NSLayoutPriorityDragThatCannotResizeWindow": { "value": 490, "deprecated": 1008 },
+   "NSLayoutPriorityFittingSizeCompression": { "value": 50, "deprecated": 1008 },
+   "NSLayoutPriorityRequired": { "value": 1000, "deprecated": 1008 },
+   "NSLayoutPriorityWindowSizeStayPut": { "value": 500, "deprecated": 1008 },
+   "NSLeftMouseDown": { "value": 1, "deprecated": 1008 },
+   "NSLeftMouseDownMask": { "value": 2, "deprecated": 1008 },
+   "NSLeftMouseDragged": { "value": 6, "deprecated": 1008 },
+   "NSLeftMouseDraggedMask": { "value": 64, "deprecated": 1008 },
+   "NSLeftMouseUp": { "value": 2, "deprecated": 1008 },
+   "NSLeftMouseUpMask": { "value": 4, "deprecated": 1008 },
+   "NSLeftTextAlignment": { "value": 0, "deprecated": 1008 },
+   "NSLineToBezierPathElement": { "value": 1, "deprecated": 1008 },
+   "NSLinearSlider": { "value": 0, "deprecated": 1008 },
+   "NSMiniControlSize": { "value": 2, "deprecated": 1008 },
+   "NSMiniaturizableWindowMask": { "value": 4, "deprecated": 1008 },
+   "NSMiterLineJoinStyle": { "value": 0, "deprecated": 1008 },
+   "NSMixedState": { "value": -1, "deprecated": 1008 },
+   "NSMomentaryChangeButton": { "value": 5, "deprecated": 1008 },
+   "NSMomentaryLight": { "value": 7, "deprecated": 1008 },
+   "NSMomentaryLightButton": { "value": 0, "deprecated": 1008 },
+   "NSMomentaryPushButton": { "value": 0, "deprecated": 1008 },
+   "NSMomentaryPushInButton": { "value": 7, "deprecated": 1008 },
+   "NSMouseEntered": { "value": 8, "deprecated": 1008 },
+   "NSMouseEnteredMask": { "value": 256, "deprecated": 1008 },
+   "NSMouseEventSubtype": { "value": 0, "deprecated": 1008 },
+   "NSMouseExited": { "value": 9, "deprecated": 1008 },
+   "NSMouseExitedMask": { "value": 512, "deprecated": 1008 },
+   "NSMouseMoved": { "value": 5, "deprecated": 1008 },
+   "NSMouseMovedMask": { "value": 32, "deprecated": 1008 },
+   "NSMoveToBezierPathElement": { "value": 0, "deprecated": 1008 },
+   "NSNaturalTextAlignment": { "value": 4, "deprecated": 1008 },
+   "NSNoModeColorPanel": { "value": -1, "deprecated": 1008 },
+   "NSNonZeroWindingRule": { "value": 0, "deprecated": 1008 },
+   "NSNonactivatingPanelMask": { "value": 128, "deprecated": 1008 },
+   "NSNumericPadKeyMask": { "value": 2097152, "deprecated": 1008 },
+   "NSOPENGL_CURRENT_VERSION": { "value": 1, "deprecated": 1008 },
+   "NSOffState": { "value": 0, "deprecated": 1008 },
+   "NSOnOffButton": { "value": 6, "deprecated": 1008 },
+   "NSOnState": { "value": 1, "deprecated": 1008 },
+   "NSOpenGLCPCurrentRendererID": { "value": 309, "deprecated": 1008 },
+   "NSOpenGLCPGPUFragmentProcessing": { "value": 311, "deprecated": 1008 },
+   "NSOpenGLCPGPUVertexProcessing": { "value": 310, "deprecated": 1008 },
+   "NSOpenGLCPHasDrawable": { "value": 314, "deprecated": 1008 },
+   "NSOpenGLCPMPSwapsInFlight": { "value": 315, "deprecated": 1008 },
+   "NSOpenGLCPRasterizationEnable": { "value": 221, "deprecated": 1008 },
+   "NSOpenGLCPReclaimResources": { "value": 308, "deprecated": 1008 },
+   "NSOpenGLCPStateValidation": { "value": 301, "deprecated": 1008 },
+   "NSOpenGLCPSurfaceBackingSize": { "value": 304, "deprecated": 1008 },
+   "NSOpenGLCPSurfaceOpacity": { "value": 236, "deprecated": 1008 },
+   "NSOpenGLCPSurfaceOrder": { "value": 235, "deprecated": 1008 },
+   "NSOpenGLCPSurfaceSurfaceVolatile": { "value": 306, "deprecated": 1008 },
+   "NSOpenGLCPSwapInterval": { "value": 222, "deprecated": 1008 },
+   "NSOpenGLCPSwapRectangle": { "value": 200, "deprecated": 1008 },
+   "NSOpenGLCPSwapRectangleEnable": { "value": 201, "deprecated": 1008 },
+   "NSOtherMouseDown": { "value": 25, "deprecated": 1008 },
+   "NSOtherMouseDownMask": { "value": 33554432, "deprecated": 1008 },
+   "NSOtherMouseDragged": { "value": 27, "deprecated": 1008 },
+   "NSOtherMouseDraggedMask": { "value": 134217728, "deprecated": 1008 },
+   "NSOtherMouseUp": { "value": 26, "deprecated": 1008 },
+   "NSOtherMouseUpMask": { "value": 67108864, "deprecated": 1008 },
+   "NSPNGFileType": { "value": 4, "deprecated": 1008 },
+   "NSPatternColorSpaceModel": { "value": 6, "deprecated": 1008 },
+   "NSPenLowerSideMask": { "value": 2, "deprecated": 1008 },
+   "NSPenPointingDevice": { "value": 1, "deprecated": 1008 },
+   "NSPenTipMask": { "value": 1, "deprecated": 1008 },
+   "NSPenUpperSideMask": { "value": 4, "deprecated": 1008 },
+   "NSPeriodic": { "value": 16, "deprecated": 1008 },
+   "NSPeriodicMask": { "value": 65536, "deprecated": 1008 },
+   "NSPlainTextTokenStyle": { "value": 1, "deprecated": 1008 },
+   "NSPowerOffEventType": { "value": 1, "deprecated": 1008 },
+   "NSProgressIndicatorBarStyle": { "value": 0, "deprecated": 1008 },
+   "NSProgressIndicatorSpinningStyle": { "value": 1, "deprecated": 1008 },
+   "NSPushOnPushOffButton": { "value": 1, "deprecated": 1008 },
+   "NSRGBColorSpaceModel": { "value": 1, "deprecated": 1008 },
+   "NSRGBModeColorPanel": { "value": 1, "deprecated": 1008 },
+   "NSRadioButton": { "value": 4, "deprecated": 1008 },
+   "NSRangeDateMode": { "value": 1, "deprecated": 1008 },
+   "NSRatingLevelIndicatorStyle": { "value": 3, "deprecated": 1008 },
+   "NSRecessedBezelStyle": { "value": 13, "deprecated": 1008 },
+   "NSRegularControlSize": { "value": 0, "deprecated": 1008 },
+   "NSRegularSquareBezelStyle": { "value": 2, "deprecated": 1008 },
+   "NSRelevancyLevelIndicatorStyle": { "value": 0, "deprecated": 1008 },
+   "NSResizableWindowMask": { "value": 8, "deprecated": 1008 },
+   "NSRightMouseDown": { "value": 3, "deprecated": 1008 },
+   "NSRightMouseDownMask": { "value": 8, "deprecated": 1008 },
+   "NSRightMouseDragged": { "value": 7, "deprecated": 1008 },
+   "NSRightMouseDraggedMask": { "value": 128, "deprecated": 1008 },
+   "NSRightMouseUp": { "value": 4, "deprecated": 1008 },
+   "NSRightMouseUpMask": { "value": 16, "deprecated": 1008 },
+   "NSRoundLineCapStyle": { "value": 1, "deprecated": 1008 },
+   "NSRoundLineJoinStyle": { "value": 1, "deprecated": 1008 },
+   "NSRoundRectBezelStyle": { "value": 12, "deprecated": 1008 },
+   "NSRoundedBezelStyle": { "value": 1, "deprecated": 1008 },
+   "NSRoundedDisclosureBezelStyle": { "value": 14, "deprecated": 1008 },
+   "NSRoundedTokenStyle": { "value": 2, "deprecated": 1008 },
+   "NSScreenChangedEventType": { "value": 8, "deprecated": 1008 },
+   "NSScrollWheel": { "value": 22, "deprecated": 1008 },
+   "NSScrollWheelMask": { "value": 4194304, "deprecated": 1008 },
+   "NSSearchFieldClearRecentsMenuItemTag": { "value": 1002, "deprecated": 1008 },
+   "NSSearchFieldNoRecentsMenuItemTag": { "value": 1003, "deprecated": 1008 },
+   "NSSearchFieldRecentsMenuItemTag": { "value": 1001, "deprecated": 1008 },
+   "NSSearchFieldRecentsTitleMenuItemTag": { "value": 1000, "deprecated": 1008 },
+   "NSShadowlessSquareBezelStyle": { "value": 6, "deprecated": 1008 },
+   "NSShiftKeyMask": { "value": 131072, "deprecated": 1008 },
+   "NSSingleDateMode": { "value": 0, "deprecated": 1008 },
+   "NSSmallControlSize": { "value": 1, "deprecated": 1008 },
+   "NSSmallIconButtonBezelStyle": { "value": 2, "deprecated": 1008 },
+   "NSSmallSquareBezelStyle": { "value": 10, "deprecated": 1008 },
+   "NSSquareLineCapStyle": { "value": 2, "deprecated": 1008 },
+   "NSSquareStatusItemLength": { "value": -2, "deprecated": 1008 },
+   "NSSwitchButton": { "value": 3, "deprecated": 1008 },
+   "NSSystemDefined": { "value": 14, "deprecated": 1008 },
+   "NSSystemDefinedMask": { "value": 16384, "deprecated": 1008 },
+   "NSTIFFFileType": { "value": 0, "deprecated": 1008 },
+   "NSTabletPoint": { "value": 23, "deprecated": 1008 },
+   "NSTabletPointEventSubtype": { "value": 1, "deprecated": 1008 },
+   "NSTabletPointMask": { "value": 8388608, "deprecated": 1008 },
+   "NSTabletProximity": { "value": 24, "deprecated": 1008 },
+   "NSTabletProximityEventSubtype": { "value": 2, "deprecated": 1008 },
+   "NSTabletProximityMask": { "value": 16777216, "deprecated": 1008 },
+   "NSTextFieldAndStepperDatePickerStyle": { "value": 0, "deprecated": 1008 },
+   "NSTextFieldDatePickerStyle": { "value": 2, "deprecated": 1008 },
+   "NSTexturedBackgroundWindowMask": { "value": 256, "deprecated": 1008 },
+   "NSTexturedRoundedBezelStyle": { "value": 11, "deprecated": 1008 },
+   "NSTexturedSquareBezelStyle": { "value": 8, "deprecated": 1008 },
+   "NSThickSquareBezelStyle": { "value": 3, "deprecated": 1008 },
+   "NSThickerSquareBezelStyle": { "value": 4, "deprecated": 1008 },
+   "NSTickMarkAbove": { "value": 1, "deprecated": 1008 },
+   "NSTickMarkBelow": { "value": 0, "deprecated": 1008 },
+   "NSTickMarkLeft": { "value": 1, "deprecated": 1008 },
+   "NSTickMarkRight": { "value": 0, "deprecated": 1008 },
+   "NSTimeZoneDatePickerElementFlag": { "value": 16, "deprecated": 1008 },
+   "NSTitledWindowMask": { "value": 1, "deprecated": 1008 },
+   "NSToggleButton": { "value": 2, "deprecated": 1008 },
+   "NSToolbarItemVisibilityPriorityHigh": { "value": 1000, "deprecated": 1008 },
+   "NSToolbarItemVisibilityPriorityLow": { "value": -1000, "deprecated": 1008 },
+   "NSToolbarItemVisibilityPriorityStandard": { "value": 0, "deprecated": 1008 },
+   "NSToolbarItemVisibilityPriorityUser": { "value": 2000, "deprecated": 1008 },
+   "NSTouchEventSubtype": { "value": 3, "deprecated": 1008 },
+   "NSUnderlinePatternDash": { "value": 512, "deprecated": 1008 },
+   "NSUnderlinePatternDashDot": { "value": 768, "deprecated": 1008 },
+   "NSUnderlinePatternDashDotDot": { "value": 1024, "deprecated": 1008 },
+   "NSUnderlinePatternDot": { "value": 256, "deprecated": 1008 },
+   "NSUnderlinePatternSolid": { "value": 0, "deprecated": 1008 },
+   "NSUnifiedTitleAndToolbarWindowMask": { "value": 4096, "deprecated": 1008 },
+   "NSUnknownColorSpaceModel": { "value": -1, "deprecated": 1008 },
+   "NSUnknownPointingDevice": { "value": 0, "deprecated": 1008 },
+   "NSUnscaledWindowMask": { "value": 2048, "deprecated": 1008 },
+   "NSUtilityWindowMask": { "value": 16, "deprecated": 1008 },
+   "NSVariableStatusItemLength": { "value": -1, "deprecated": 1008 },
+   "NSWarningAlertStyle": { "value": 0, "deprecated": 1008 },
+   "NSWheelModeColorPanel": { "value": 6, "deprecated": 1008 },
+   "NSWindowExposedEventType": { "value": 0, "deprecated": 1008 },
+   "NSWindowFullScreenButton": { "value": 7, "deprecated": 1008 },
+   "NSWindowMovedEventType": { "value": 4, "deprecated": 1008 },
+   "NSWindowSharingReadWrite": { "value": 2, "deprecated": 1008 },
+   "NSYearMonthDatePickerElementFlag": { "value": 192, "deprecated": 1008 },
+   "NSYearMonthDayDatePickerElementFlag": { "value": 224, "deprecated": 1008 },
+   "NSAppKitVersionNumber10_4_1": { "value": 824.1 },
+   "NSAppKitVersionNumber10_4_3": { "value": 824.23 },
+   "NSAppKitVersionNumber10_3_9": { "value": 743.36 },
+   "NSAppKitVersionNumberWithPatternColorLeakFix": { "value": 641.0 },
+   "NSAppKitVersionNumber10_4_4": { "value": 824.33 },
+   "NSAppKitVersionNumber10_4_7": { "value": 824.41 },
+   "NSAppKitVersionNumber10_3_2": { "value": 743.14 },
+   "NSAppKitVersionNumber10_3_3": { "value": 743.2 },
+   "NSAppKitVersionNumberWithDeferredWindowDisplaySupport": { "value": 1019.0 },
+   "NSAppKitVersionNumber10_7_2": { "value": 1138.23 },
+   "NSAppKitVersionNumber10_3_7": { "value": 743.33 },
+   "NSAppKitVersionNumberWithCustomSheetPosition": { "value": 686.0 },
+   "NSAppKitVersionNumber10_3_5": { "value": 743.24 },
+   "NSAppKitVersionNumber10_2_3": { "value": 663.6 },
+   "NSAppKitVersionNumberWithColumnResizingBrowser": { "value": 685.0 },
+   "NSAppKitVersionNumberWithDirectionalTabs": { "value": 631.0 },
+   "NSAppKitVersionNumberWithDockTilePlugInSupport": { "value": 1001.0 },
+   "NSAppKitVersionNumberWithCursorSizeSupport": { "value": 682.0 },
+   "NSAppKitVersionNumber10_5_2": { "value": 949.27 },
+   "NSAppKitVersionNumber10_5_3": { "value": 949.33 },
+   "NSAppKitVersionNumberWithContinuousScrollingBrowser": { "value": 680.0 },
+   "NSAppKitVersionNumber10_7": { "value": 1138 },
+   "NSAppKitVersionNumber10_7_4": { "value": 1138.47 },
+   "NSAppKitVersionNumber10_7_3": { "value": 1138.32 },
+   "NS16BitBigEndianBitmapFormat": { "value": 1024 },
+   "NS16BitLittleEndianBitmapFormat": { "value": 256 },
+   "NS32BitBigEndianBitmapFormat": { "value": 2048 },
+   "NS32BitLittleEndianBitmapFormat": { "value": 512 },
+   "NSAcceleratorButton": { "value": 8 },
+   "NSAppKitVersionNumber10_10": { "value": 1343 },
+   "NSAppKitVersionNumber10_8": { "value": 1187 },
+   "NSAppKitVersionNumber10_9": { "value": 1265 },
+   "NSCompositeColor": { "value": 27 },
+   "NSCompositeColorBurn": { "value": 20 },
+   "NSCompositeColorDodge": { "value": 19 },
+   "NSCompositeDarken": { "value": 17 },
+   "NSCompositeDifference": { "value": 23 },
+   "NSCompositeExclusion": { "value": 24 },
+   "NSCompositeHardLight": { "value": 22 },
+   "NSCompositeHue": { "value": 25 },
+   "NSCompositeLighten": { "value": 18 },
+   "NSCompositeLuminosity": { "value": 28 },
+   "NSCompositeMultiply": { "value": 14 },
+   "NSCompositeOverlay": { "value": 16 },
+   "NSCompositeSaturation": { "value": 26 },
+   "NSCompositeScreen": { "value": 15 },
+   "NSCompositeSoftLight": { "value": 21 },
+   "NSFullSizeContentViewWindowMask": { "value": 32768 },
+   "NSModalResponseAbort": { "value": -1001 },
+   "NSModalResponseCancel": { "value": 0 },
+   "NSModalResponseContinue": { "value": -1002 },
+   "NSModalResponseOK": { "value": 1 },
+   "NSModalResponseStop": { "value": -1000 },
+   "NSMultiLevelAcceleratorButton": { "value": 9 },
    "NSRightTextAlignment": { "ignore": true },
    "NSCenterTextAlignment": { "ignore": true },
    "NSAppKitVersionNumber10_15": { "value": 1894.0 },
@@ -27136,6 +27531,8 @@
    }
   },
   "externs": {
+   "NSAccessibilityHorizontialUnitDescriptionAttribute": { "typestr": "@" },
+   "NSAccessibilityHorizontialUnitsAttribute": { "typestr": "@" },
    "NSImageIPTCData": {
     "typestr": "@"
    },
@@ -28152,6 +28549,15 @@
    }
   },
   "functions": {
+   "NSEdgeInsetsMake": {
+    "retval": { "typestr": "{NSEdgeInsets=dddd}" },
+    "args": {
+     "0": { "typestr": "d" },
+     "1": { "typestr": "d" },
+     "2": { "typestr": "d" },
+     "3": { "typestr": "d" }
+    }
+   },
    "NSApplicationMain": {
     "args": {
      "1": {}
@@ -28419,6 +28825,18 @@
    }
   },
   "structs": {
+   "NSOpenGLPixelFormatAuxiliary": {
+    "typestr": "{_CGLPixelFormatObject=}",
+    "fieldnames": []
+   },
+   "NSScreenAuxiliaryOpaque": {
+    "typestr": "{NSScreenAuxiliary=}",
+    "fieldnames": []
+   },
+   "NSOpenGLContextAuxiliary": {
+    "typestr": "{_CGLContextObject=}",
+    "fieldnames": []
+   },
    "NSEdgeInsets": {
     "ignore": true
    },

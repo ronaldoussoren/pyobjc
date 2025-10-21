@@ -2,7 +2,6 @@ import contextlib
 import errno
 import os
 import socket
-import sys
 
 import CoreFoundation
 from PyObjCTools.TestSupport import (
@@ -234,14 +233,9 @@ class TestStream(TestCase):
         n = CoreFoundation.CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, 15)
 
-        if sys.version_info[0] == 3:
-            self.assertEqual(bytes(a[0:1]), b"0")
-            self.assertEqual(bytes(a[1:2]), b"1")
-            self.assertEqual(bytes(a[9:10]), b"9")
-        else:
-            self.assertEqual((a[0]), ord("0"))
-            self.assertEqual((a[1]), ord("1"))
-            self.assertEqual((a[9]), ord("9"))
+        self.assertEqual(bytes(a[0:1]), b"0")
+        self.assertEqual(bytes(a[1:2]), b"1")
+        self.assertEqual(bytes(a[9:10]), b"9")
 
         n = CoreFoundation.CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, -1)

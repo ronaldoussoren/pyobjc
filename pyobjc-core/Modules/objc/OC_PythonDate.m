@@ -225,7 +225,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
     /* XXX: Assert that type has the correct type */
 
-    switch (pytype) {
+    switch (pytype) { // LCOV_BR_EXCL_LINE
     case 1: {
         PyObjC_BEGIN_WITH_GIL
             NSDate* temp = [[NSDate alloc] initWithCoder:coder];

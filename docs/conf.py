@@ -21,6 +21,7 @@ import sys
 # -- General configuration -----------------------------------------------------
 
 sys.path.append(os.path.abspath("example-collector"))
+sys.path.append(os.path.abspath("sphinx-modules"))
 
 # If your documentation needs a minimal Sphinx version, state it here.
 # needs_sphinx = '1.0'
@@ -33,6 +34,7 @@ extensions = [
     "sphinx.ext.ifconfig",
     "sphinx.ext.extlinks",
     "examples",
+    "available",
     "sphinxcontrib.blockdiag",
     "sphinx_sitemap",
     "sphinx_copybutton",
@@ -70,7 +72,8 @@ copyright = "2017-2025, Ronald Oussoren"  # noqa: A001
 # built documents.
 #
 # The short X.Y version.
-version = "11.1.1"
+version = "12.0"
+
 # The full version, including alpha/beta/rc tags.
 release = version
 

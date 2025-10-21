@@ -42,6 +42,7 @@ class TestFSEvents(TestCase):
             ("kFSEventStreamEventFlagItemCloned", 0x00400000),
             ("kFSEventStreamCreateFlagFullHistory", 0x00000080),
             ("kFSEventStreamCreateWithDocID", 0x00000100),
+            ("kFSEventStreamCreateDeviceState", 0x00000200),
         ):
             with self.subTest(k):
                 self.assertHasAttr(FSEvents, k)

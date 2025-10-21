@@ -15,10 +15,6 @@ class TestVTFrameProcessor_FrameRateConversion(TestCase):
             VideoToolbox.VTFrameRateConversionConfigurationQualityPrioritizationQuality,
             2,
         )
-        self.assertEqual(
-            VideoToolbox.VTFrameRateConversionParametersSubmissionModeSequentialReferencesUnchanged,
-            3,
-        )
 
         self.assertIsEnumType(VideoToolbox.VTFrameRateConversionConfigurationRevision)
         self.assertEqual(VideoToolbox.VTFrameRateConversionConfigurationRevision1, 1)
@@ -32,6 +28,10 @@ class TestVTFrameProcessor_FrameRateConversion(TestCase):
         self.assertEqual(
             VideoToolbox.VTFrameRateConversionParametersSubmissionModeSequential, 2
         )
+        self.assertEqual(
+            VideoToolbox.VTFrameRateConversionParametersSubmissionModeSequentialReferencesUnchanged,
+            3,
+        )
 
     @min_os_level("15.4")
     def test_methods(self):
@@ -40,4 +40,10 @@ class TestVTFrameProcessor_FrameRateConversion(TestCase):
         )
         self.assertResultIsBOOL(
             VideoToolbox.VTFrameRateConversionConfiguration.processorSupported
+        )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            VideoToolbox.VTFrameRateConversionConfiguration.isSupported
         )

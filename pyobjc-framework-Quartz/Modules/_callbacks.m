@@ -1352,8 +1352,9 @@ m_CGPatternReleaseInfoCallback(void* _info)
 }
 
 static CGPatternCallbacks m_CGPatternCallbacks = {
-    0, m_CGPatternDrawPatternCallback, /* drawPattern */
-    m_CGPatternReleaseInfoCallback,    /* releaseInfo */
+    0,
+    m_CGPatternDrawPatternCallback, /* drawPattern */
+    m_CGPatternReleaseInfoCallback, /* releaseInfo */
 };
 
 static PyObject*

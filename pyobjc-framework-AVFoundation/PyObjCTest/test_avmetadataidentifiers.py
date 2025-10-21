@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMetadataIdentifiers(TestCase):
+    def test_enum_types(self):
+        self.assertIsTypedEnum(AVFoundation.AVMetadataIdentifier, str)
+
     @min_os_level("10.10")
     def testConstants10(self):
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierTitle, str)
@@ -919,5 +922,56 @@ class TestAVMetadataIdentifiers(TestCase):
     def testConstants15_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierQuickTimeMetadataFullFrameRatePlaybackIntent,
+            str,
+        )
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCinematicVideoIntent,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraLensModel,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraFocalLength35mmEquivalent,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataAIMEData,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataPresentationImmersiveMedia,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraISOSensitivity,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraWhiteBalance,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataWhiteBalanceByCCTWhiteBalanceFactors,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataWhiteBalanceByCCTColorMatrices,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraShutterSpeedAngle,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraShutterSpeedTime,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraLensIrisFNumber,
             str,
         )

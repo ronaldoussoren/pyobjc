@@ -28,6 +28,76 @@
      }
     ]
    },
+   "GKGridGraph": {
+    "methods": [
+     {
+      "selector": "nodeAtGridPosition:",
+      "class_method": false,
+      "retval": { "type_override": "@" }
+     }
+    ]
+   },
+   "GKOctree": {
+    "methods": [
+     {
+      "selector": "addElement:withBox:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "@" }
+      }
+     },
+     {
+      "selector": "addElement:withPoint:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "@" }
+      }
+     }
+    ]
+   },
+   "GKQuadtree": {
+    "methods": [
+     {
+      "selector": "addElement:withBox:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "@" }
+      }
+     },
+     {
+      "selector": "addElement:withQuad:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "@" }
+      }
+     },
+     {
+      "selector": "addElement:withPoint:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "@" }
+      }
+     }
+    ]
+   },
+   "GKRTree": {
+    "methods": [
+     {
+      "selector": "addElement:boundingRectMin:boundingRectMax:splitStrategy:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "@" }
+      }
+     },
+     {
+      "selector": "removeElement:boundingRectMin:boundingRectMax:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "@" }
+      }
+     }
+    ]
+   },
    "GKPath": {
     "methods": [
      {

@@ -8,16 +8,24 @@ nw_path_enumerate_gateways_block_t = b"B@"
 
 class TestPath(TestCase):
     def test_constants(self):
+        self.assertIsEnumType(Network.nw_path_status_t)
         self.assertEqual(Network.nw_path_status_invalid, 0)
         self.assertEqual(Network.nw_path_status_satisfied, 1)
         self.assertEqual(Network.nw_path_status_unsatisfied, 2)
         self.assertEqual(Network.nw_path_status_satisfiable, 3)
 
+        self.assertIsEnumType(Network.nw_path_unsatisfied_reason_t)
         self.assertEqual(Network.nw_path_unsatisfied_reason_not_available, 0)
         self.assertEqual(Network.nw_path_unsatisfied_reason_cellular_denied, 1)
         self.assertEqual(Network.nw_path_unsatisfied_reason_wifi_denied, 2)
         self.assertEqual(Network.nw_path_unsatisfied_reason_local_network_denied, 3)
         self.assertEqual(Network.nw_path_unsatisfied_reason_vpn_inactive, 4)
+
+        self.assertIsEnumType(Network.nw_link_quality_t)
+        self.assertEqual(Network.nw_link_quality_unknown, 0)
+        self.assertEqual(Network.nw_link_quality_minimal, 10)
+        self.assertEqual(Network.nw_link_quality_moderate, 20)
+        self.assertEqual(Network.nw_link_quality_good, 30)
 
     def test_functions(self):
         Network.nw_path_get_status
@@ -50,3 +58,8 @@ class TestPath(TestCase):
     @min_os_level("11.0")
     def test_functions11_0(self):
         Network.nw_path_get_unsatisfied_reason
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        Network.nw_path_is_ultra_constrained
+        Network.nw_path_get_link_quality

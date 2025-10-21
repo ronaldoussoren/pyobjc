@@ -632,10 +632,6 @@ Types
 
       Return an object representing the specialization of a generic class by type arguments found in key.
 
-      .. note::
-
-         This feature requires Python 3.9 or later.
-
    .. note::
 
       The wrapper classes for the :class:`NSString` class cluster aren't subclasses
@@ -698,9 +694,6 @@ Types
 
       .. versionadded:: 3.0
 
-      .. note::
-
-         Only available for Python 3.3 or later.
 
    .. method:: __metadata__
 
@@ -1132,10 +1125,6 @@ Types
 
       .. versionadded:: 3.0
 
-      .. note::
-
-         Only available for Python 3.3 or later.
-
    .. method:: __metadata__
 
       Returns a copy of the metadata dictionary for the selector.  See the
@@ -1177,10 +1166,6 @@ Types
       An :class:`inspect.Signature` for the object
 
       .. versionadded:: 3.0
-
-      .. note::
-
-         Only available for Python 3.3 or later.
 
    .. method:: __metadata__
 

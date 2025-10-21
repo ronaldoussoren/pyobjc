@@ -661,6 +661,84 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMFormatDescriptionProjectionKind_HalfEquirectangular, str
         )
 
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionProjectionKind_ParametricImmersive, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionProjectionKind_AppleImmersiveVideo, str
+        )
+
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_LensAlgorithmKind, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibrationLensAlgorithmKind_ParametricLens,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_LensDomain, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibrationLensDomain_Color, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_LensIdentifier, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_LensRole, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibrationLensRole_Mono, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibrationLensRole_Left, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibrationLensRole_Right, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_LensDistortions, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_LensFrameAdjustmentsPolynomialX,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_LensFrameAdjustmentsPolynomialY,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_RadialAngleLimit, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_IntrinsicMatrix, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_IntrinsicMatrixProjectionOffset,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_IntrinsicMatrixReferenceDimensions,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_ExtrinsicOriginSource, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibrationExtrinsicOriginSource_StereoCameraSystemBaseline,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionCameraCalibration_ExtrinsicOrientationQuaternion,
+            str,
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_ConvertedFromExternalSphericalTags,
+            str,
+        )
+
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()
         self.assertEqual(v.width, 0)

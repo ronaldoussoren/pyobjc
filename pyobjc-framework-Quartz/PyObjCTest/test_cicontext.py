@@ -76,6 +76,11 @@ class TestCIContext(TestCase):
     def testConstants15_0(self):
         self.assertIsInstance(Quartz.kCIImageRepresentationHDRImage, str)
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Quartz.kCIContextCVMetalTextureCache, str)
+        self.assertIsInstance(Quartz.kCIImageRepresentationHDRGainMapAsRGB, str)
+
     def testMethods(self):
         self.assertArgIsOut(
             Quartz.CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1
@@ -140,4 +145,15 @@ class TestCIContext(TestCase):
         self.assertArgIsOut(
             Quartz.CIContext.writeOpenEXRRepresentationOfImage_toURL_options_error_,
             3,
+        )
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertArgIsBOOL(
+            Quartz.CIContext.createCGImage_fromRect_format_colorSpace_deferred_calculateHDRStats_,
+            4,
+        )
+        self.assertArgIsBOOL(
+            Quartz.CIContext.createCGImage_fromRect_format_colorSpace_deferred_calculateHDRStats_,
+            5,
         )

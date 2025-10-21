@@ -329,6 +329,39 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newResidencySetWithDescriptor_error_(self, a, b):
         pass
 
+    def tensorSizeAndAlignWithDescriptor_(self, a):
+        return 1
+
+    def newTensorWithDescriptor_error_(self, a, b):
+        return 1
+
+    def newCommandAllocatorWithDescriptor_error_(self, a, b):
+        return 1
+
+    def newMTL4CommandQueueWithDescriptor_error_(self, a, b):
+        return 1
+
+    def newArgumentTableWithDescriptor_error_(self, a, b):
+        return 1
+
+    def newTextureViewPoolWithDescriptor_error_(self, a, b):
+        return 1
+
+    def newCompilerWithDescriptor_error_(self, a, b):
+        return 1
+
+    def newArchiveWithURL_error_(self, a, b):
+        return 1
+
+    def newBufferWithLength_options_placementSparsePageSize_(self, a, b, c):
+        return 1
+
+    def newCounterHeapWithDescriptor_error_(self, a, b):
+        return 1
+
+    def sizeOfCounterHeapEntry_(self, a):
+        return 1
+
 
 class TestMTLDevice(TestCase):
     def test_typed_enum(self):
@@ -399,6 +432,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLGPUFamilyApple7, 1007)
         self.assertEqual(Metal.MTLGPUFamilyApple8, 1008)
         self.assertEqual(Metal.MTLGPUFamilyApple9, 1009)
+        self.assertEqual(Metal.MTLGPUFamilyApple10, 1010)
 
         self.assertEqual(Metal.MTLGPUFamilyMac1, 2001)
         self.assertEqual(Metal.MTLGPUFamilyMac2, 2002)
@@ -411,6 +445,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLGPUFamilyMacCatalyst2, 4002)
 
         self.assertEqual(Metal.MTLGPUFamilyMetal3, 5001)
+        self.assertEqual(Metal.MTLGPUFamilyMetal4, 5002)
 
         self.assertEqual(Metal.MTLDeviceLocationBuiltIn, 0)
         self.assertEqual(Metal.MTLDeviceLocationSlot, 1)
@@ -1042,3 +1077,66 @@ class TestMTLDevice(TestCase):
             1,
             b"o^@",
         )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newTensorWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newCommandAllocatorWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newMTL4CommandQueueWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newArgumentTableWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newTextureViewPoolWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newCompilerWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newArchiveWithURL_error_,
+            1,
+            b"o^@",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newCounterHeapWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+
+        self.assertResultHasType(
+            TestMTLDeviceHelper.tensorSizeAndAlignWithDescriptor_,
+            Metal.MTLSizeAndAlign.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newBufferWithLength_options_placementSparsePageSize_,
+            1,
+            b"Q",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newBufferWithLength_options_placementSparsePageSize_,
+            2,
+            b"q",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newBufferWithLength_options_placementSparsePageSize_,
+            2,
+            b"q",
+        )
+        self.assertResultHasType(TestMTLDeviceHelper.sizeOfCounterHeapEntry_, b"Q")

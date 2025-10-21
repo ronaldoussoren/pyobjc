@@ -197,7 +197,7 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     }
     Py_DECREF(slots);
 
-    bases = PyTuple_New(1);
+    bases = PyTuple_Pack(1, PyObjC_NSCFTypeClass);
     if (bases == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(dict);
@@ -205,9 +205,6 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         return NULL;
         // LCOV_EXCL_STOP
     }
-
-    PyTuple_SET_ITEM(bases, 0, PyObjC_NSCFTypeClass);
-    Py_INCREF(PyObjC_NSCFTypeClass);
 
     PyObject* nm = PyUnicode_FromString(name);
     if (nm == NULL) { // LCOV_BR_EXCL_LINE
@@ -218,19 +215,16 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         return NULL;
         // LCOV_EXCL_STOP
     }
-    args = PyTuple_New(3);
+    args = PyTuple_Pack(3, nm, bases, dict);
+    Py_CLEAR(nm);
+    Py_CLEAR(bases);
+    Py_CLEAR(dict);
     if (args == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_DECREF(nm);
-        Py_DECREF(bases);
-        Py_DECREF(dict);
         Py_DECREF(cf);
         return NULL;
         // LCOV_EXCL_STOP
     }
-    PyTuple_SET_ITEM(args, 0, nm);
-    PyTuple_SET_ITEM(args, 1, bases);
-    PyTuple_SET_ITEM(args, 2, dict);
 
     /* XXX: Check if this always equivalent to PyObject_Call(PyObjCClass_Type, args, NULL)
      *      if so, switch to vectorcall.

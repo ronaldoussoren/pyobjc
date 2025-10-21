@@ -1,16 +1,17 @@
-minimum_pre_commit_version: "3.0"
+minimum_pre_commit_version: "4.2"
+default_language_version:
+    python: python3.12
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
+    rev: v3.21.0
     hooks:
     -   id: pyupgrade
-        args: ['--py38-plus']
+        args: ['--py310-plus']
 
   - repo: https://github.com/psf/black
-    rev: 25.1.0
+    rev: 25.9.0
     hooks:
       - id: black
-        language_version: python3.10
         # override until resolved: https://github.com/ambv/black/issues/402
         files: \.pyi?$
         types: []
@@ -20,7 +21,6 @@ repos:
     hooks:
       - id: flake8
         args: ["--config", ".flake8" ]
-        language_version: python3.10
         additional_dependencies:
         - flake8-bugbear
         - flake8-deprecated
@@ -35,11 +35,10 @@ repos:
 #    hooks:
 #      - id: isort
 #        additional_dependencies: [toml]
-#        language_version: python3.10
 #
 
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: 'v20.1.6'
+    rev: 'v21.1.2'
     hooks:
     - id: clang-format
 
@@ -53,22 +52,22 @@ repos:
 
   - repo: local
     hooks:
-    - id: lcov-annotations
-      name: lcov-annotations
-      language: script
-      pass_filenames: false
-      types: [c, objective-c]
-      entry: ./development-support/validate-lcov.sh
     - id: fwinfo-valid-json
       name: fwinfo-valid-json
       language: python
-      language_version: python3.10
+      always_run: true
       entry: ./development-support/validate-fwinfo
     - id: check-python-used
       name: check-python-used
       language: python
-      language_version: python3.10
+      always_run: true
       entry: ./development-support/check-pyobjc-core-python-used
+    - id: check-num-metadata-versions
+      name: check-num-metadata-versions
+      language: python
+      pass_filenames: false
+      always_run: true
+      entry: ./development-support/check-num-metadata-versions
 
 #  - repo: https://github.com/pre-commit/mirrors-clang-format
 #    rev: 'v13.0.0'
@@ -76,7 +75,7 @@ repos:
 #    -   id: clang-format
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer

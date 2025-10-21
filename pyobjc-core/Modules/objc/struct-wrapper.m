@@ -265,7 +265,7 @@ static PyObject* _Nullable struct_reduce(PyObject* self)
     Py_END_CRITICAL_SECTION();
 
     result = PyTuple_Pack(2, Py_TYPE(self), values);
-    Py_DECREF(values);
+    Py_CLEAR(values);
     return result;
 }
 

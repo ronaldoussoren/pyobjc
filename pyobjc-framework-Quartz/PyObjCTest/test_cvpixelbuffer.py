@@ -130,6 +130,9 @@ class TestCVPixelBuffer(TestCase):
         )
         self.assertEqual(Quartz.kCVPixelFormatType_16VersatileBayer, fourcc(b"bp16"))
         self.assertEqual(
+            Quartz.kCVPixelFormatType_96VersatileBayerPacked12, fourcc(b"btp2")
+        )
+        self.assertEqual(
             Quartz.kCVPixelFormatType_64RGBA_DownscaledProResRAW, fourcc(b"bp64")
         )
         self.assertEqual(
@@ -141,6 +144,10 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(
             Quartz.kCVPixelFormatType_444YpCbCr16VideoRange_16A_TriPlanar,
             fourcc(b"s4as"),
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_30RGBLE_8A_BiPlanar,
+            fourcc(b"b3a8"),
         )
 
         self.assertEqual(Quartz.kCVVersatileBayer_BayerPattern_RGGB, 0)
@@ -174,6 +181,14 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(
             Quartz.kCVPixelFormatType_Lossless_420YpCbCr10PackedBiPlanarFullRange,
             fourcc(b"&xf0"),
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_Lossless_30RGBLE_8A_BiPlanar,
+            fourcc(b"&b38"),
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_Lossless_30RGBLEPackedWideGamut,
+            fourcc(b"&w3r"),
         )
 
         self.assertEqual(Quartz.kCVPixelFormatType_Lossy_32BGRA, fourcc(b"-BGA"))
@@ -373,6 +388,10 @@ class TestCVPixelBuffer(TestCase):
     def testConstants12_0(self):
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_MetadataExtension, str)
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePurgeableKey, str)
+
     @min_os_level("10.6")
     def testFunctions10_6(self):
         self.assertResultHasType(Quartz.CVPixelBufferGetIOSurface, b"^{__IOSurface=}")
@@ -385,3 +404,7 @@ class TestCVPixelBuffer(TestCase):
     @min_os_level("12.0")
     def testFunctions12_0(self):
         self.assertResultIsCFRetained(Quartz.CVPixelBufferCopyCreationAttributes)
+
+    @min_os_level("26.0")
+    def testFunctions26_0(self):
+        self.assertResultIsBOOL(Quartz.CVPixelBufferIsCompatibleWithAttributes)

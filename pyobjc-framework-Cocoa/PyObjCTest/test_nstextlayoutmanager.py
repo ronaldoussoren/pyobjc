@@ -83,3 +83,13 @@ class TestNSTextLayoutManager(TestCase):
             3,
             b"Z@" + AppKit.NSRect.__typestr__ + b"d@",
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSTextLayoutManager.resolvesNaturalAlignmentWithBaseWritingDirection
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextLayoutManager.setResolvesNaturalAlignmentWithBaseWritingDirection_,
+            0,
+        )

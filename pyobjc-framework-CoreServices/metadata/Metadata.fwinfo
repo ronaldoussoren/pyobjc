@@ -395,12 +395,11 @@
     "args": {
      "0": {},
      "1": {
-      "callable": {
-       "arguments": {
-        "0": { "type": "^v" },
-        "1": { "type": "^@", "type_modifier": "n", "c_array_of_variable_length": true },
-        "2": { "type": "^@", "type_modifier": "n", "c_array_of_variable_length": true }
-       },
+      "block": {
+       "args": [
+        { "type": "^@", "type_modifier": "n", "c_array_of_variable_length": true },
+        { "type": "^@", "type_modifier": "n", "c_array_of_variable_length": true }
+       ],
        "retval": { "type": "q" }
       }
      }

@@ -62,6 +62,12 @@ def _setup():
         ("AXFeatureOverrideSession", b"new"),
         ("AXFeatureOverrideSessionManager", b"init"),
         ("AXFeatureOverrideSessionManager", b"new"),
+        ("AXBrailleTable", b"init"),
+        ("AXBrailleTable", b"new"),
+        ("AXBrailleTranslationResult", b"init"),
+        ("AXBrailleTranslationResult", b"new"),
+        ("AXBrailleTranslator", b"init"),
+        ("AXBrailleTranslator", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

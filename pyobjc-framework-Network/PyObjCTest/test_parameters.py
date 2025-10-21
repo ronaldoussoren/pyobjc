@@ -141,3 +141,8 @@ class TestParameters(TestCase):
         self.assertResultIsRetained(Network.nw_parameters_create_application_service)
         Network.nw_parameters_set_requires_dnssec_validation
         Network.nw_parameters_requires_dnssec_validation
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        Network.nw_parameters_set_allow_ultra_constrained
+        Network.nw_parameters_get_allow_ultra_constrained

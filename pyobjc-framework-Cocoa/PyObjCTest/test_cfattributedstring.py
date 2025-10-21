@@ -130,3 +130,18 @@ class TestAttributedString(TestCase):
         self.assertArgSizeInArg(
             CoreFoundation.CFAttributedStringGetBidiLevelsAndResolvedDirections, 4, 1
         )
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        self.assertArgIsOut(
+            CoreFoundation.CFAttributedStringGetStatisticalWritingDirections, 3
+        )
+        self.assertArgSizeInArg(
+            CoreFoundation.CFAttributedStringGetStatisticalWritingDirections, 3, 1
+        )
+        self.assertArgIsOut(
+            CoreFoundation.CFAttributedStringGetStatisticalWritingDirections, 4
+        )
+        self.assertArgSizeInArg(
+            CoreFoundation.CFAttributedStringGetStatisticalWritingDirections, 4, 1
+        )

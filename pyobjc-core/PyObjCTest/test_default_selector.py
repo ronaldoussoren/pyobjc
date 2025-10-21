@@ -18,6 +18,38 @@ class TestDefaultSelectors(TestCase):
         self.assertEqual(s.selector, b"method_pep8")
         self.assertEqual(s.signature, b"v@:")
 
+        class MyCallable:
+            def __call__(self, a):
+                pass
+
+        with self.assertRaisesRegex(
+            AttributeError, "'MyCallable' object has no attribute '__name__'"
+        ):
+            selector(MyCallable())
+
+        class MyCallable:
+            def __call__(self, a):
+                pass
+
+            @property
+            def __name__(self):
+                return "method"
+
+        s = selector(MyCallable())
+        self.assertEqual(s.selector, b"method")
+        self.assertEqual(s.signature, b"@@:")
+
+        class MyCallable:
+            def __call__(self, a):
+                pass
+
+            @property
+            def __name__(self):
+                return 42
+
+        with self.assertRaisesRegex(TypeError, "__name__ is not a string"):
+            selector(MyCallable())
+
     def test_objective_c(self):
         def foo_(self, a):
             pass

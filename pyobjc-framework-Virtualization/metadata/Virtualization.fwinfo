@@ -7,6 +7,17 @@
    "VZMacAuxiliaryStorageInitializationOptionAllowOverwrite": { "value": 1 }
   },
   "classes": {
+   "VZMacOSRestoreImage": {
+    "methods": [
+     {
+      "selector": "operatingSystemVersion",
+      "class_method": false,
+      "retval": {
+       "type_override": "{NSOperatingSystemVersion=qqq}"
+      }
+     }
+    ]
+   },
    "VZMacAuxiliaryStorage": {
     "methods": [
      {

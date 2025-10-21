@@ -89,3 +89,22 @@ class TestAVCaptureInput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureDeviceInput.setWindNoiseRemovalEnabled_, 0
         )
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.isCinematicVideoCaptureSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.isCinematicVideoCaptureEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.setCinematicVideoCaptureEnabled_, 0
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.isLockedVideoFrameDurationSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceInput.isExternalSyncSupported
+        )

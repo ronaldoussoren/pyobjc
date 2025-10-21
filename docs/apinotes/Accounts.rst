@@ -11,7 +11,7 @@ The framework is documented on `Apple's developer website`__
 
 These bindings are accessed through the ``Accounts`` package (that is, ``import Accounts``).
 
-.. versionadded:: macOS 12
+.. macosadded:: 12
 
 
 API Notes

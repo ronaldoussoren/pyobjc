@@ -24,6 +24,9 @@ static PyObjC_function_map function_map[] = {
      (PyObjC_Function_Pointer)&__CGPointApplyAffineTransform},
     {"__CGSizeApplyAffineTransform",
      (PyObjC_Function_Pointer)&__CGSizeApplyAffineTransform},
+#if PyObjC_BUILD_RELEASE >= 2600
+    {"CGBitmapInfoMake", (PyObjC_Function_Pointer)&CGBitmapInfoMake},
+#endif
     {0, 0}};
 
 #if PyObjC_BUILD_RELEASE >= 1013

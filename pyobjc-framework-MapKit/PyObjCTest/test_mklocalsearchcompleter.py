@@ -20,6 +20,15 @@ class TestMKLocalSearchCompleter(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(MapKit.MKLocalSearchCompleter.isSearching)
 
+        self.assertResultHasType(
+            MapKit.MKLocalSearchCompleter.region, MapKit.MKCoordinateRegion.__typestr__
+        )
+        self.assertArgHasType(
+            MapKit.MKLocalSearchCompleter.setRegion_,
+            0,
+            MapKit.MKCoordinateRegion.__typestr__,
+        )
+
     @min_sdk_level("10.12")
     def testProtocols(self):
         self.assertProtocolExists("MKLocalSearchCompleterDelegate")

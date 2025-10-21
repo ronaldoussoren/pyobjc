@@ -9,10 +9,6 @@ careful because the implementation of these methods won't catch exceptions
 for you and therefore an uncaught exception in your python code can cause
 the runloop to stop due to an exception, which might terminate your program.
 
-To make matters worse, due to a bug in Python 2.5 this will cause a hard
-crash (segmentation fault) when this happens with
-``performSelectorOnMainThread:withObject:waitUntilDone:``.
-
 Because of this PyObjC 2.1 provides a category on ``NSObject`` that implements
 safe alternatives to the stock ``NSObject`` methods.
 

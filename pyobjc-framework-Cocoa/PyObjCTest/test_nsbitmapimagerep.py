@@ -1,5 +1,4 @@
 import array
-import sys
 
 import AppKit
 from objc import NO, YES
@@ -85,10 +84,7 @@ class TestNSBitmapImageRep(TestCase):
 
         rPlane = array.array("B")
         rPlane.fromlist([y % 256 for y in range(0, height) for x in range(0, width)])
-        if sys.version_info[0] == 3:
-            buffer = memoryview
-        else:
-            from __builtin__ import buffer
+        buffer = memoryview
         rPlane = buffer(rPlane)
 
         gPlane = array.array("B")
@@ -112,21 +108,16 @@ class TestNSBitmapImageRep(TestCase):
         singlePlane = bytearray(width * height * 3)
         for i in range(0, width * height):
             si = i * 3
-            if sys.version_info[0] == 2:
-                singlePlane[si] = rPlane[i]
-                singlePlane[si + 1] = gPlane[i]
-                singlePlane[si + 2] = bPlane[i]
-            else:
 
-                def as_byte(v):
-                    if isinstance(v, int):
-                        return v
-                    else:
-                        return ord(v)
+            def as_byte(v):
+                if isinstance(v, int):
+                    return v
+                else:
+                    return ord(v)
 
-                singlePlane[si] = as_byte(rPlane[i])
-                singlePlane[si + 1] = as_byte(gPlane[i])
-                singlePlane[si + 2] = as_byte(bPlane[i])
+            singlePlane[si] = as_byte(rPlane[i])
+            singlePlane[si + 1] = as_byte(gPlane[i])
+            singlePlane[si + 2] = as_byte(bPlane[i])
 
         dataPlanes = (singlePlane, None, None, None, None)
         # test non-planar, premade buffer

@@ -1,5 +1,3 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
   "typed_enum": {
@@ -35,17 +33,175 @@
    "MKMapViewDefaultClusterAnnotationViewReuseIdentifier": { "typestr": "@" }
   },
   "classes": {
+   "NSValue": {
+    "methods": [
+     {
+      "selector": "MKCoordinateSpanValue",
+      "class_method": false,
+      "retval": {"type_override": "{MKCoordinateSpan=dd}"}
+     },
+     {
+      "selector": "valueWithMKCoordinateSpan:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKCoordinateSpan=dd}"}
+      }
+     }
+    ]
+   },
+   "MKCircle": {
+    "methods": [
+     {
+      "selector": "boundingMapRect",
+      "class_method": false,
+      "retval": { "type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}" }
+     },
+     {
+      "selector": "circleWithMapRect:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}" }
+      }
+     }
+    ]
+   },
+   "MKLocalPointsOfInterestRequest": {
+    "methods": [
+     {
+      "selector": "initWithCoordinateRegion:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+      }
+     },
+     {
+      "selector": "region",
+      "class_method": false,
+      "retval": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+     }
+    ]
+   },
    "MKLocalSearchCompleter": {
     "methods": [
      {
       "class_method": false,
       "selector": "isSearching",
       "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "region",
+      "retval": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+     },
+     {
+      "class_method": false,
+      "selector": "setRegion:",
+      "args": {
+       "0": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+      }
+     }
+    ]
+   },
+   "MKLocalSearchResponse": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "boundingRegion",
+      "retval": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
      }
     ]
    },
    "MKMapView": {
     "methods": [
+     {
+      "selector": "visibleMapRect:",
+      "class_method": false,
+      "retval": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+     },
+     {
+      "selector": "setVisibleMapRect:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "setVisibleMapRect:animated:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "setVisibleMapRect:edgePadding:animated:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "mapRectThatFits:",
+      "class_method": false,
+      "retval": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"},
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "mapRectThatFits:edgePadding:",
+      "class_method": false,
+      "retval": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"},
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "region",
+      "class_method": false,
+      "retval": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+     },
+     {
+      "selector": "regionThatFits:",
+      "class_method": false,
+      "retval": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" },
+      "args": {
+       "0": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+      }
+     },
+     {
+      "selector": "annotationsInMapRect:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "convertRect:toRegionFromView:",
+      "class_method": false,
+      "retval": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+     },
+     {
+      "selector": "convertRegion:toRectToView:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+      }
+     },
+     {
+      "selector": "setRegion:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+      }
+     },
+     {
+      "selector": "setRegion:animated:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" },
+       "1": { "type_override": "Z" }
+      }
+     },
      {
       "class_method": false,
       "selector": "showsTraffic",
@@ -100,7 +256,7 @@
     "methods": [
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1, "type_override": "^{MKMapPoint=dd}" }
       },
       "class_method": true,
       "selector": "polylineWithPoints:count:"
@@ -130,6 +286,34 @@
 	    "retval": { "typestr": "v" }
 	  }
 	}
+      }
+     }
+    ]
+   },
+   "MKMapSnapshotOptions": {
+    "methods": [
+     {
+      "selector": "mapRect",
+      "class_method": false,
+      "retval": { "type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}" }
+     },
+     {
+      "selector": "region",
+      "class_method": false,
+      "retval": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
+     },
+     {
+      "selector": "setMapRect:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}" }
+      }
+     },
+     {
+      "selector": "setRegion:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "{MKCoordinateRegion={CLLocationCoordinate2D=dd}{MKCoordinateSpan=dd}}" }
       }
      }
     ]
@@ -170,6 +354,65 @@
      }
     ]
    },
+   "MKOverlayRenderer": {
+    "methods": [
+     {
+      "selector": "canDrawMapRect:zoomScale:",
+      "class_method": false,
+      "retval": {"type": "Z"},
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "drawMapRect:zoomScale:inContext:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "mapPointForPoint:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapPoint=dd}"}
+      }
+     },
+     {
+      "selector": "mapRectForRect:",
+      "class_method": false,
+      "retval": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+     },
+     {
+      "selector": "pointForMapPoint:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapPoint=dd}"}
+      }
+     },
+     {
+      "selector": "rectForMapRect:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "setNeedsDisplayInMapRect:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     },
+     {
+      "selector": "setNeedsDisplayInMapRect:zoomScale:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{MKMapRect={MKMapPoint=dd}{MKMapSize=dd}}"}
+      }
+     }
+    ]
+   },
    "MKMultiPoint": {
     "methods": [
      {
@@ -181,7 +424,7 @@
      },
      {
        "class_method": false,
-       "retval": { "c_array_of_variable_length": true },
+       "retval": { "c_array_of_variable_length": true, "type_override": "^{MKMapPoint=dd}" },
        "selector": "points"
      }
     ]
@@ -190,14 +433,14 @@
     "methods": [
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1, "type_override": "^{MKMapPoint=dd}" }
       },
       "class_method": true,
       "selector": "polygonWithPoints:count:"
      },
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1, "type_override": "^{MKMapPoint=dd}" }
       },
       "class_method": true,
       "selector": "polygonWithPoints:count:interiorPolygons:"
@@ -222,7 +465,7 @@
     "methods": [
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1, "type_override": "^{MKMapPoint=dd}" }
       },
       "class_method": true,
       "selector": "polylineWithPoints:count:"
@@ -250,7 +493,15 @@
    "MKTileOverlay": {
      "methods": [
        {
+        "selector":  "URLForTilePath:",
+        "class_method": false,
+        "args": {
+         "0": {"type_override": "{MKTileOverlayPath=qqqd}"}
+        }
+       },
+       {
           "args": {
+            "0": {"type_override": "{MKTileOverlayPath=qqqd}"},
 	    "1": {
 	      "callable": {
 	        "arguments": {

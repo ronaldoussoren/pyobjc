@@ -371,4 +371,14 @@ use_protocols2(void)
     p = PyObjC_IdToPython(@protocol(CIBlurredRectangleGenerator));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 2600
+    p = PyObjC_IdToPython(@protocol(CISystemToneMap));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIBlurredRoundedRectangleGenerator));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIRoundedQRCodeGenerator));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(CIAreaAverageMaximumRed));
+    Py_XDECREF(p);
+#endif
 }

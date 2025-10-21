@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 import MapKit
+import CoreLocation
 
 
 class TestMKGeometry(TestCase):
@@ -37,6 +38,26 @@ class TestMKGeometry(TestCase):
         self.assertIsInstance(MapKit.MKMapSizeWorld, MapKit.MKMapSize)
         self.assertIsInstance(MapKit.MKMapRectWorld, MapKit.MKMapRect)
         self.assertIsInstance(MapKit.MKMapRectNull, MapKit.MKMapRect)
+
+    def test_methods(self):
+        self.assertResultHasType(
+            MapKit.NSValue.MKCoordinateValue,
+            CoreLocation.CLLocationCoordinate2D.__typestr__,
+        )
+        self.assertResultHasType(
+            MapKit.NSValue.MKCoordinateSpanValue, MapKit.MKCoordinateSpan.__typestr__
+        )
+
+        self.assertArgHasType(
+            MapKit.NSValue.valueWithMKCoordinate_,
+            0,
+            CoreLocation.CLLocationCoordinate2D.__typestr__,
+        )
+        self.assertArgHasType(
+            MapKit.NSValue.valueWithMKCoordinateSpan_,
+            0,
+            MapKit.MKCoordinateSpan.__typestr__,
+        )
 
     @min_os_level("10.9")
     def test_functions(self):

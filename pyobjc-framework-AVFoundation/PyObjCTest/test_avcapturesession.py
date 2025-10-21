@@ -64,6 +64,10 @@ class TestAVCaptureSession(TestCase):
     def test_protocools(self):
         self.assertProtocolExists("AVCaptureSessionControlsDelegate")
 
+    @min_sdk_level("26.0")
+    def test_protocools26_0(self):
+        self.assertProtocolExists("AVCaptureSessionDeferredStartDelegate")
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canSetSessionPreset_)
@@ -172,3 +176,12 @@ class TestAVCaptureSession(TestCase):
     def testMethods15_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.supportsControls)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canAddControl_)
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureSession.automaticallyRunsDeferredStart
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureSession.setAutomaticallyRunsDeferredStart_, 0
+        )

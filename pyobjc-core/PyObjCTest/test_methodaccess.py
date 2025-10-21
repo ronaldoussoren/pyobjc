@@ -71,7 +71,6 @@ class MethodAccessTest(TestCase):
         self.assertEqual(OCTestWithAttributes.clsmethod, -99)
         self.assertEqual(OCTestWithAttributes.pyobjc_classMethods.clsmethod(), 99)
 
-        # XXX: This test fails, but shouldn't.
         o = OCTestWithAttributes.alloc().init()
         self.assertEqual(o.pyobjc_instanceMethods.method(), 21)
         self.assertEqual(o.method, -21)
@@ -118,9 +117,11 @@ class MethodAccessTest(TestCase):
             self.assertGreater(len(d), 10)
             self.assertIn("init", d)
 
-        # d = o.pyobjc_classMethods.__dict__.keys()
-        # self.assertGreater(len(d), 10)
-        # self.assertIn("alloc", d)
+        NSObject.testhelper = 42
+        self.assertEqual(NSObject.testhelper, 42)
+        self.assertNotIn("testhelper", NSObject.pyobjc_instanceMethods.__dict__)
+        self.assertNotIn("testhelper", NSObject.pyobjc_classMethods.__dict__)
+        del NSObject.testhelper
 
     def testAttributes(self):
         o = NSObject.new()

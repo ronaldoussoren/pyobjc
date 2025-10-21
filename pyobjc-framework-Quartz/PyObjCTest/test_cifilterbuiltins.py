@@ -16,6 +16,18 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def setColor_(self, a):
         pass
 
+    def color0(self):
+        return 1
+
+    def setColor0_(self, a):
+        pass
+
+    def color1(self):
+        return 1
+
+    def setColor1_(self, a):
+        pass
+
     def inputImage(self):
         return 1
 
@@ -853,6 +865,48 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def setTargetHeadroom_(self, a):
         pass
 
+    def displayHeadroom(self):
+        return 1
+
+    def setDisplayHeadroom_(self, a):
+        pass
+
+    def preferredDynamicRange(self):
+        return 1
+
+    def setPreferredDynamicRange_(self, a):
+        pass
+
+    def smoothness(self):
+        return 1
+
+    def setSmoothness_(self, a):
+        pass
+
+    def message(self):
+        return 1
+
+    def setMessage_(self, a):
+        pass
+
+    def roundedMarkers(self):
+        return 1
+
+    def setRoundedMarkers_(self, a):
+        pass
+
+    def roundedData(self):
+        return 1
+
+    def setRoundedData_(self, a):
+        pass
+
+    def centerSpaceSize(self):
+        return 1
+
+    def setCenterSpaceSize_(self, a):
+        pass
+
 
 class TestCIFilterBuiltins(TestCase):
     @min_sdk_level("10.15")
@@ -1049,6 +1103,13 @@ class TestCIFilterBuiltins(TestCase):
         self.assertProtocolExists("CIMaximumScaleTransform")
         self.assertProtocolExists("CIToneMapHeadroom")
         self.assertProtocolExists("CIAreaBoundsRed")
+
+    @min_sdk_level("26.0")
+    def test_protocols26_0(self):
+        self.assertProtocolExists("CISystemToneMap")
+        self.assertProtocolExists("CIBlurredRoundedRectangleGenerator")
+        self.assertProtocolExists("CIRoundedQRCodeGenerator")
+        self.assertProtocolExists("CIAreaAverageMaximumRed")
 
     def assert_rw_prop(self, cls, name, typestr):
         self.assertResultHasType(getattr(cls, name), typestr)
@@ -1650,11 +1711,13 @@ class TestCIFilterBuiltins(TestCase):
                 TestCIBuiltinFilterHelper, "extent", Quartz.CGRect.__typestr__
             )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "smoothness", objc._C_FLT)
 
         with self.subTest("CIStarShineGenerator"):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
             )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "color", objc._C_ID)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "crossScale", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "crossAngle", objc._C_FLT)
@@ -2042,6 +2105,7 @@ class TestCIFilterBuiltins(TestCase):
             )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "smoothness", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "color", objc._C_ID)
 
         with self.subTest("CICannyEdgeDetector"):
@@ -2081,4 +2145,40 @@ class TestCIFilterBuiltins(TestCase):
             )
 
         with self.subTest("CIAreaBoundsRed"):
+            pass
+
+        with self.subTest("CISystemToneMap"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "inputImage", objc._C_ID)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "displayHeadroom", objc._C_FLT
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "preferredDynamicRange", objc._C_ID
+            )
+
+        with self.subTest("CIBlurredRoundedRectangleGenerator"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "extent", Quartz.CGRect.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "smoothness", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "sigma", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "color", objc._C_ID)
+
+        with self.subTest("CIRoundedQRCodeGenerator"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "message", objc._C_ID)
+            # XXX: There are two protocols with the same property, but different types
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "correctionLevel", objc._C_ID)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "roundedMarkers", objc._C_NSInteger
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "roundedData", (objc._C_BOOL, objc._C_NSBOOL)
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "centerSpaceSize", objc._C_FLT
+            )
+
+        with self.subTest("CIAreaAverageMaximumRed"):
             pass

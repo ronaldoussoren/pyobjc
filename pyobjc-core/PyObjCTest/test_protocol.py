@@ -278,32 +278,20 @@ class TestFormalProtocols(TestCase):
     def testImplementAnotherObject(self):
         anObject = NSObject.alloc().init()
 
-        try:
+        with self.assertRaisesRegex(TypeError, "metaclass conflict"):
 
             class MyClassImplementingAnotherObject(NSObject, anObject):
                 pass
 
-            self.fail()
-        except TypeError:
-            pass
-
-        try:
+        with self.assertRaisesRegex(TypeError, "metaclass conflict"):
 
             class MyClassImplementingAnotherObject2(NSObject, 10):
                 pass
 
-            self.fail()
-        except TypeError:
-            pass
+        with self.assertRaisesRegex(TypeError, "multiple bases"):
 
-        try:
-
-            class MyClassImplementingAnotherObject3(NSObject, int):
+            class MyClassImplementingAnotherObject3a(NSObject, int):
                 pass
-
-            self.fail()
-        except TypeError:
-            pass
 
     def dont_testDefiningingProtocols(self):
         # Pretty useless, but should work
@@ -805,7 +793,7 @@ class TestFormalProtocols2(TestCase):
             "protocols list contains object that isn't an Objective-C protocol, but type type",
         ):
 
-            class MyClassImplementingAnotherObject3(NSObject, protocols=[int]):
+            class MyClassImplementingAnotherObject3b(NSObject, protocols=[int]):
                 pass
 
     def testIncorrectlyDefiningFormalProtocols(self):

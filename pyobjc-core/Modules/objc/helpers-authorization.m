@@ -33,7 +33,8 @@ PyObject* _Nullable pythonify_authorizationitem(const void* _value)
         PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}", 27, NULL, &pack);
     if (result == NULL) {
         have_tuple = 1;
-        result     = PyTuple_New(4);
+        /* XXX: restructure this function to be able to use PyTuple_Pack */
+        result = PyTuple_New(4);
         if (result == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;      // LCOV_EXCL_LINE
         }

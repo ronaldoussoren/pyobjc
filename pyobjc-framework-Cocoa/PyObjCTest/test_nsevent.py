@@ -358,8 +358,12 @@ class TestNSEvent(TestCase):
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertEqual(AppKit.NSEventTypeChangeMode, 38)
+        self.assertEqual(AppKit.NSEventTypeMouseCancelled, 40)
         self.assertEqual(
             AppKit.NSEventMaskChangeMode, 1 << AppKit.NSEventTypeChangeMode
+        )
+        self.assertEqual(
+            AppKit.NSEventMaskMouseCancelled, 1 << AppKit.NSEventTypeMouseCancelled
         )
 
     def testFunctions(self):

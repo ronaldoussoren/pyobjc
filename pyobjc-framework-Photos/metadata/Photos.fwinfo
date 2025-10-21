@@ -116,6 +116,7 @@
    "PHAssetMediaSubtypeVideoStreamed": { "value": 65536 },
    "PHAssetMediaSubtypeVideoHighFrameRate": { "value": 131072 },
    "PHAssetMediaSubtypeVideoTimelapse": { "value": 262144 },
+   "PHAssetMediaSubtypeVideoScreenRecording": { "value": 524288 },
    "PHLivePhotoFrameTypePhoto": { "value": 0 },
    "PHLivePhotoFrameTypeVideo": { "value": 1 },
    "PHLivePhotoEditingErrorCodeUnknown": { "value": 0 },
@@ -746,6 +747,20 @@
    },
    "PHLivePhotoEditingContext": {
     "methods": [
+     {
+      "selector": "photoTime",
+      "class_method": false,
+      "retval": {
+       "type_override": "{CMTime=qiIq}"
+      }
+     },
+     {
+      "selector": "duration",
+      "class_method": false,
+      "retval": {
+       "type_override": "{CMTime=qiIq}"
+      }
+     },
      {
       "selector": "frameProcessor",
       "class_method": false,

@@ -75,9 +75,6 @@ class TestLSInfo(TestCase):
         self.assertPickleRoundTrips(v)
 
     def testFunctions(self):
-        CoreServices.LSInit(CoreServices.kLSInitializeDefaults)
-        CoreServices.LSTerm()
-
         url = CoreServices.CFURLCreateFromFileSystemRepresentation(
             None, self.bpath, len(self.bpath), True
         )

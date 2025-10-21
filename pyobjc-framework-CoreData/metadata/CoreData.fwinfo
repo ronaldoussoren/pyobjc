@@ -1,6 +1,7 @@
 {
  "definitions": {
   "enum": {
+   "NSFetchRequestExpressionType": { "value": 50 },
    "NSPersistentHistoryResultTypeStatusOnly": { "value": 0 },
    "NSPersistentHistoryResultTypeObjectIDs": { "value": 1 },
    "NSPersistentHistoryResultTypeCount": { "value": 2 },

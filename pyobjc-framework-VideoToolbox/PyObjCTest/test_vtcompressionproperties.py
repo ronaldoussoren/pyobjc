@@ -415,3 +415,123 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_MaximumRealTimeFrameRate, str
         )
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_VariableBitRate,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_VBVMaxBitRate,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_VBVBufferDuration,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_VBVInitialDelayPercentage,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTHeroEye_Left,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTHeroEye_Right,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTProjectionKind_Rectilinear,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTProjectionKind_Equirectangular,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTProjectionKind_HalfEquirectangular,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTProjectionKind_ParametricImmersive,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTViewPackingKind_SideBySide,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTViewPackingKind_OverUnder,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_CameraCalibrationDataLensCollection,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_LensAlgorithmKind,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCameraCalibrationLensAlgorithmKind_ParametricLens, str
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_LensDomain, str
+        )
+        self.assertIsInstance(VideoToolbox.kVTCameraCalibrationLensDomain_Color, str)
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_LensIdentifier, str
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_LensRole, str
+        )
+        self.assertIsInstance(VideoToolbox.kVTCameraCalibrationLensRole_Mono, str)
+        self.assertIsInstance(VideoToolbox.kVTCameraCalibrationLensRole_Left, str)
+        self.assertIsInstance(VideoToolbox.kVTCameraCalibrationLensRole_Right, str)
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_LensDistortions, str
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_RadialAngleLimit,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_LensFrameAdjustmentsPolynomialX,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_LensFrameAdjustmentsPolynomialY,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_IntrinsicMatrix, str
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_IntrinsicMatrixProjectionOffset,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_IntrinsicMatrixReferenceDimensions,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_ExtrinsicOriginSource,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCameraCalibrationExtrinsicOriginSource_StereoCameraSystemBaseline,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyCameraCalibrationKey_ExtrinsicOrientationQuaternion,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_SupportedPresetDictionaries, str
+        )
+        self.assertIsInstance(VideoToolbox.kVTCompressionPreset_HighQuality, str)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPreset_Balanced, str)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPreset_HighSpeed, str)
+        self.assertIsInstance(VideoToolbox.kVTCompressionPreset_VideoConferencing, str)

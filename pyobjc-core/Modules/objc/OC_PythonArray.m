@@ -362,8 +362,8 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        if (PyTuple_CheckExact(value)
-            && (NSUInteger)PyTuple_Size(value) == count) { // LCOV_BR_EXCL_LINE
+        if (PyTuple_CheckExact(value) // LCOV_BR_EXCL_LINE
+            && (NSUInteger)PyTuple_Size(value) == count) {
             for (i = 0; i < count; i++) {
                 PyObject* v;
 

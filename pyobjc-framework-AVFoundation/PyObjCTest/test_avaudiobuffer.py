@@ -24,3 +24,9 @@ class TestAVAudioBuffer(TestCase):
             2,
             b"v^{AudioBufferList=I[1{AudioBuffer=II^v}]}",
         )
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsVariableSize(
+            AVFoundation.AVAudioCompressedBuffer.packetDependencies
+        )

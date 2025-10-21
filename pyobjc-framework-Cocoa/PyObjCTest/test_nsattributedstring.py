@@ -339,6 +339,10 @@ class TestNSAttributedString(TestCase):
     def test_constants15_0(self):
         self.assertIsInstance(Foundation.NSLocalizedNumberFormatAttributeName, str)
 
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(Foundation.NSListItemDelimiterAttributeName, str)
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgHasType(

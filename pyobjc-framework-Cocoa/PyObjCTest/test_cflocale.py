@@ -126,6 +126,20 @@ class TestLocale(TestCase):
         self.assertIsInstance(CoreFoundation.kCFIslamicTabularCalendar, str)
         self.assertIsInstance(CoreFoundation.kCFIslamicUmmAlQuraCalendar, str)
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(CoreFoundation.kCFBanglaCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFGujaratiCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFKannadaCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFMalayalamCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFMarathiCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFOdiaCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFTamilCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFTeluguCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFVikramCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFDangiCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFVietnameseCalendar, str)
+
     @min_os_level("10.6")
     def testFunctions10_6(self):
         v = CoreFoundation.CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier("nl_NL")

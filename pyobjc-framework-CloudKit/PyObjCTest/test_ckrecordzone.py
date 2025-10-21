@@ -20,3 +20,7 @@ class TestCKRecordZone(TestCase):
         self.assertEqual(CloudKit.CKRecordZoneCapabilityZoneWideSharing, 1 << 3)
 
         self.assertIsInstance(CloudKit.CKRecordZoneDefaultName, str)
+
+        self.assertIsEnumType(CloudKit.CKRecordZoneEncryptionScope)
+        self.assertEqual(CloudKit.CKRecordZoneEncryptionScopePerRecord, 0)
+        self.assertEqual(CloudKit.CKRecordZoneEncryptionScopePerZone, 1)

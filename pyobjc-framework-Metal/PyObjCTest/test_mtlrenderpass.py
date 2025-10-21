@@ -35,6 +35,10 @@ class TestMTLRenderPass(TestCase):
         self.assertEqual(Metal.MTLMultisampleStencilResolveFilterSample0, 0)
         self.assertEqual(Metal.MTLMultisampleStencilResolveFilterDepthResolvedSample, 1)
 
+        self.assertIsEnumType(Metal.MTLVisibilityResultType)
+        self.assertEqual(Metal.MTLVisibilityResultTypeReset, 0)
+        self.assertEqual(Metal.MTLVisibilityResultTypeAccumulate, 1)
+
     def test_structs(self):
         v = Metal.MTLClearColor()
         self.assertEqual(v.red, 0.0)
@@ -61,4 +65,13 @@ class TestMTLRenderPass(TestCase):
         )
         self.assertArgSizeInResult(
             Metal.MTLRenderPassDescriptor.getSamplePositions_count_, 0
+        )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            Metal.MTLRenderPassDescriptor.supportColorAttachmentMapping
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLRenderPassDescriptor.setSupportColorAttachmentMapping_, 0
         )

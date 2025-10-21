@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MediaPlayer`` package (that is, ``import MediaPlayer``).
 
-.. versionadded:: macOS 10.12
+.. macosadded:: 10.12
 
 API Notes
 ---------

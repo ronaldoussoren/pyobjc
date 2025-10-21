@@ -79,6 +79,15 @@ class TestNSTextField(TestCase):
         self.assertResultIsBOOL(AppKit.NSTextField.allowsWritingToolsAffordance)
         self.assertArgIsBOOL(AppKit.NSTextField.setAllowsWritingToolsAffordance_, 0)
 
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSTextField.resolvesNaturalAlignmentWithBaseWritingDirection
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextField.setResolvesNaturalAlignmentWithBaseWritingDirection_, 0
+        )
+
     @min_sdk_level("10.6")
     def testProtocols(self):
         self.assertProtocolExists("NSTextFieldDelegate")

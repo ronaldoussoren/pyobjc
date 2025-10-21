@@ -2,11 +2,99 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "structs": {
+   "CLLocationCoordinate2D": {
+    "typestr": "{CLLocationCoordinate2D=dd}",
+    "fieldnames": [ "latitude", "longitude" ]
+   }
+  },
+  "externs": {
+   "kCLLocationAccuracyReduced": { "typestr": "d" },
+   "kCLLocationAccuracyBestForNavigation": { "typestr": "d" },
+   "kCLDistanceFilterNone": { "typestr": "d" },
+   "CLLocationDistanceMax": { "typestr": "d" },
+   "kCLLocationAccuracyBest": { "typestr": "d" },
+   "CLTimeIntervalMax": { "typestr": "d" },
+   "kCLLocationAccuracyNearestTenMeters": { "typestr": "d" },
+   "kCLLocationAccuracyHundredMeters": { "typestr": "d" },
+   "kCLLocationAccuracyKilometer": { "typestr": "d" },
+   "kCLLocationAccuracyThreeKilometers": { "typestr": "d" },
+   "kCLLocationCoordinate2DInvalid": { "typestr": "{CLLocationCoordinate2D=dd}" }
+  },
   "enum": {
     "CLActivityTypeAirborne": { "value": 5 },
     "kCLAuthorizationStatusAuthorizedAlways": { "value": 3 }
   },
   "classes": {
+   "CLRegion": {
+    "methods": [
+     {
+      "selector": "center",
+      "class_method": false,
+      "retval": {"type_override": "{CLLocationCoordinate2D=dd}"}
+     },
+     {
+      "selector": "containsCoordinate:",
+      "class_method": false,
+      "retval": {"type_override": "Z"},
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     },
+     {
+      "selector": "initCircularRegionWithCenter:radius:identifier:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     }
+    ]
+   },
+   "CLLocationSourceInformation": {
+    "methods": [
+     {
+      "selector": "isProducedByAccessory",
+      "class_method": false,
+      "retval": {"type_override": "Z"}
+     },
+     {
+      "selector": "isSimulatedBySoftware",
+      "class_method": false,
+      "retval": {"type_override": "Z"}
+     },
+     {
+      "selector": "initWithSoftwareSimulationState:andExternalAccessoryState:",
+      "class_method": false,
+      "args": {
+       "1": {"type_override": "Z"}
+      }
+     }
+    ]
+   },
+   "CLCircularRegion": {
+    "methods": [
+     {
+      "selector": "center",
+      "class_method": false,
+      "retval": { "type_override": "{CLLocationCoordinate2D=dd}"}
+     },
+     {
+      "selector": "containsCoordinate:",
+      "class_method": false,
+      "retval": {"type_override": "Z"},
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     },
+     {
+      "selector": "initWithCenter:radius:identifier:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     }
+    ]
+   },
    "CLMonitorConfiguration": {
     "methods": [
      {
@@ -176,6 +264,13 @@
    "CLLocation": {
     "methods": [
      {
+      "selector": "initWithCoordinate:altitude:horizontalAccuracy:verticalAccuracy:course:speed:timestamp:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "{CLLocationCoordinate2D=dd}"}
+      }
+     },
+     {
       "args": {
        "0": {
         "type_override": "{CLLocationCoordinate2D=dd}"
@@ -228,7 +323,25 @@
    }
   },
   "formal_protocols": {},
-  "functions": {},
+  "functions": {
+   "CLLocationCoordinate2DIsValid": {
+    "retval": {
+     "type_override": "Z"
+    },
+    "args": {
+     "0": { "type_override": "{CLLocationCoordinate2D=dd}" }
+    }
+   },
+   "CLLocationCoordinate2DMake": {
+    "retval": {
+     "type_override": "{CLLocationCoordinate2D=dd}"
+    },
+    "args": {
+     "0": { "type_override": "d" },
+     "1": { "type_override": "d" }
+    }
+   }
+  },
   "informal_protocols": {}
  }
 }

@@ -12,12 +12,32 @@
    "HKClinicalTypeIdentifier": { "type": "@", "type_name": "NSString" },
    "HKFHIRRelease": { "type": "@", "type_name": "NSString" },
    "HKFHIRResourceType": { "type": "@", "type_name": "NSString" },
+   "HKMedicationGeneralForm": { "type": "@", "type_name": "NSString" },
+   "HKHealthConceptDomain": { "type": "@", "type_name": "NSString" },
    "HKAudiogramConductionType": { "type": "q" }
   },
   "enum": {
    "HKObjectQueryNoLimit": { "value": 0 }
   },
   "classes": {
+   "HKSourceRevision": {
+    "methods": [
+     {
+      "selector": "initWithSource:version:productType:operatingSystemVersion:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "{NSOperatingSystemVersion=qqq}" }
+      }
+     },
+     {
+      "selector": "operatingSystemVersion",
+      "class_method": false,
+      "retval": {
+       "type_override": "{NSOperatingSystemVersion=qqq}"
+      }
+     }
+    ]
+   },
    "HKAudiogramSensitivityTest": {
     "methods": [
      {

@@ -46,4 +46,14 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSFileProviderExternalVolumeHandling));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 2600
+    p = PyObjC_IdToPython(@protocol(NSFileProviderSearchResult));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFileProviderSearchEnumerationObserver));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFileProviderSearchEnumerator));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFileProviderSearching));
+    Py_XDECREF(p);
+#endif
 }

@@ -11,6 +11,80 @@
    "CMFallDetectionEventUserResolutionUnresponsive": { "value": 3 }
   },
   "classes": {
+   "CMDeviceMotion": {
+    "methods": [
+     {
+      "selector": "gravity",
+      "class_method": false,
+      "retval": {"type_override": "{CMAcceleration=ddd}"}
+     },
+     {
+      "selector": "magneticField",
+      "class_method": false,
+      "retval": {"type_override": "{CMCalibratedMagneticField={CMMagneticField=ddd}i}"}
+     },
+     {
+      "selector": "rotationRate",
+      "class_method": false,
+      "retval": {"type_override": "{CMRotationRate=ddd}"}
+     },
+     {
+      "selector": "userAcceleration",
+      "class_method": false,
+      "retval": {"type_override": "{CMAcceleration=ddd}"}
+     }
+    ]
+   },
+   "CMGyroData": {
+    "methods": [
+     {
+      "selector": "rotationRate",
+      "class_method": false,
+      "retval": {"type_override": "{CMRotationRate=ddd}"}
+     }
+    ]
+   },
+   "CMMagnetometerData": {
+    "methods": [
+     {
+      "selector": "magneticField",
+      "class_method": false,
+      "retval": {"type_override": "{CMMagneticField=ddd}"}
+     }
+    ]
+   },
+   "CMRotationRateData": {
+    "methods": [
+     {
+      "selector": "rotationRate",
+      "class_method": false,
+      "retval": {"type_override": "{CMRotationRate=ddd}"}
+     }
+    ]
+   },
+   "CMAttitude": {
+    "methods": [
+     {
+      "selector": "quaternion",
+      "class_method": false,
+      "retval": {"type_override": "{CMQuaternion=dddd}"}
+     },
+     {
+      "selector": "rotationMatrix",
+      "class_method": false,
+      "retval": {"type_override": "{CMRotationMatrix=ddddddddd}"}
+     }
+    ]
+   },
+   "CMAccelerometerData": {
+    "methods": [
+     {
+      "selector": "acceleration",
+      "class_method": false,
+      "retval": {"type": "{CMAcceleration=ddd}"}
+     }
+    ]
+   },
    "CMPedometer": {
     "methods": [
      {

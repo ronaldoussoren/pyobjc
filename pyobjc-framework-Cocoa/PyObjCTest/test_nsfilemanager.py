@@ -109,6 +109,25 @@ class TestNSFileManager(TestCase):
         self.assertIsInstance(Foundation.NSFileSystemNodes, str)
         self.assertIsInstance(Foundation.NSFileSystemFreeNodes, str)
 
+        self.assertIsEnumType(Foundation.NSFileManagerSupportedSyncControls)
+        self.assertEqual(Foundation.NSFileManagerSupportedSyncControlsPauseSync, 1 << 0)
+        self.assertEqual(
+            Foundation.NSFileManagerSupportedSyncControlsFailUploadOnConflict, 1 << 1
+        )
+
+        self.assertIsEnumType(Foundation.NSFileManagerResumeSyncBehavior)
+        self.assertEqual(
+            Foundation.NSFileManagerResumeSyncBehaviorPreserveLocalChanges, 0
+        )
+        self.assertEqual(
+            Foundation.NSFileManagerResumeSyncBehaviorAfterUploadWithFailOnConflict, 1
+        )
+        self.assertEqual(Foundation.NSFileManagerResumeSyncBehaviorDropLocalChanges, 2)
+
+        self.assertIsEnumType(Foundation.NSFileManagerUploadLocalVersionConflictPolicy)
+        self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyDefault, 0)
+        self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyFailOnConflict, 1)
+
     @min_os_level("10.14")
     def testConstantsMissingOn10_9(self):
         self.assertIsInstance(Foundation.NSFileProtectionKey, str)
@@ -542,6 +561,29 @@ class TestNSFileManager(TestCase):
     def testMethods10_15(self):
         self.assertResultIsBOOL(
             Foundation.NSDirectoryEnumerator.isEnumeratingDirectoryPostOrder
+        )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertArgIsBlock(
+            Foundation.NSFileManager.pauseSyncForUbiquitousItemAtURL_completionHandler_,
+            1,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            Foundation.NSFileManager.resumeSyncForUbiquitousItemAtURL_withBehavior_completionHandler_,
+            2,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            Foundation.NSFileManager.fetchLatestRemoteVersionOfItemAtURL_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            Foundation.NSFileManager.uploadLocalVersionOfUbiquitousItemAtURL_withConflictResolutionPolicy_completionHandler_,
+            2,
+            b"v@@",
         )
 
     def testProtocolsMethods(self):

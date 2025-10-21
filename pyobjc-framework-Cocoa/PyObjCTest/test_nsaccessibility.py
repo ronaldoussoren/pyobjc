@@ -141,6 +141,16 @@ class TestNSAccessibility(TestCase):
         self.assertEqual(AppKit.NSAccessibilityUnitsPoints, 3)
         self.assertEqual(AppKit.NSAccessibilityUnitsPicas, 4)
 
+        self.assertIsEnumType(AppKit.NSAccessibilityDateTimeComponentsFlags)
+        self.assertEqual(AppKit.NSAccessibilityHourMinuteDateTimeComponentsFlag, 0x000C)
+        self.assertEqual(
+            AppKit.NSAccessibilityHourMinuteSecondDateTimeComponentsFlag, 0x000E
+        )
+        self.assertEqual(AppKit.NSAccessibilityYearMonthDateTimeComponentsFlag, 0x00C0)
+        self.assertEqual(
+            AppKit.NSAccessibilityYearMonthDayDateTimeComponentsFlag, 0x00E0
+        )
+
     @skipUnless(
         not (
             os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
@@ -485,6 +495,12 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityTimelineSubrole, str)
         self.assertIsInstance(AppKit.NSAccessibilityRelevanceIndicatorRole, str)
 
+        self.assertIsInstance(AppKit.NSAccessibilityAutoInteractableAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDateTimeComponentsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTextInputMarkedRangeAttribute, str)
+
+        self.assertIsInstance(AppKit.NSAccessibilityDateTimeAreaRole, str)
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(AppKit.NSAccessibilityUnknownOrientationValue, str)
@@ -543,6 +559,16 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityContentListSubrole, str)
         self.assertIsInstance(AppKit.NSAccessibilityDefinitionListSubrole, str)
 
+        self.assertIsInstance(
+            AppKit.NSAccessibilityTextInputMarkingSessionBeganNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityTextInputMarkingSessionEndedNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityDraggingDestinationDragAcceptedNotification, str
+        )
+
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(AppKit.NSAccessibilityAutocorrectedTextAttribute, str)
@@ -573,6 +599,8 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityUIElementsKey, str)
         self.assertIsInstance(AppKit.NSAccessibilityPriorityKey, str)
 
+        self.assertIsInstance(AppKit.NSAccessibilityPathAttribute, str)
+
         self.assertEqual(AppKit.NSAccessibilityPriorityLow, 10)
         self.assertEqual(AppKit.NSAccessibilityPriorityMedium, 50)
         self.assertEqual(AppKit.NSAccessibilityPriorityHigh, 90)
@@ -589,6 +617,19 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityMenuBarItemRole, str)
         self.assertIsInstance(AppKit.NSAccessibilityTextAlignmentAttribute, str)
 
+        self.assertIsInstance(
+            AppKit.NSAccessibilityChildrenInNavigationOrderAttribute, str
+        )
+
+        self.assertIsInstance(
+            AppKit.NSAccessibilityResultsForSearchPredicateParameterizedAttribute, str
+        )
+
+        self.assertIsInstance(AppKit.NSAccessibilitySearchDirectionNext, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySearchDirectionPrevious, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySearchResultElementKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySearchResultRangeKey, str)
+
     @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(AppKit.NSAccessibilityAnnotationLabel, str)
@@ -602,6 +643,113 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityTabButtonSubrole, str)
         self.assertIsInstance(AppKit.NSAccessibilityCollectionListSubrole, str)
         self.assertIsInstance(AppKit.NSAccessibilitySectionListSubrole, str)
+
+        self.assertIsInstance(
+            AppKit.NSAccessibilitySearchResultDescriptionOverrideKey, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilitySearchResultLoaderKey, str)
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(
+            AppKit.NSAccessibilityEmbeddedImageDescriptionAttribute, str
+        )
+
+    @min_os_level("14.0")
+    def testConstants14_0(self):
+        self.assertIsInstance(AppKit.NSAccessibilityTextCompletionAttribute, str)
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(AppKit.NSAccessibilityBlockQuoteLevelAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingLevelAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLanguageAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVisitedAttribute, str)
+
+        self.assertIsInstance(AppKit.NSAccessibilityFontBoldAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFontItalicAttribute, str)
+
+        self.assertIsInstance(
+            AppKit.NSAccessibilityIndexForChildUIElementAttribute, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityIndexForChildUIElementInNavigationOrderAttribute, str
+        )
+
+        self.assertIsInstance(AppKit.NSAccessibilityScrollToVisibleAction, str)
+
+        self.assertIsInstance(
+            AppKit.NSAccessibilityAutocorrectionOccurredNotification, str
+        )
+
+        self.assertIsInstance(
+            AppKit.NSAccessibilityDraggingSourceDragBeganNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityDraggingSourceDragEndedNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityDraggingDestinationDropAllowedNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityDraggingDestinationDropNotAllowedNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityDraggingDestinationDragNotAcceptedNotification, str
+        )
+
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityListMarkerRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityWebAreaRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySuggestionSubrole, str)
+
+        self.assertIsInstance(
+            AppKit.NSAccessibilityUIElementsForSearchPredicateParameterizedAttribute,
+            str,
+        )
+
+        self.assertIsInstance(AppKit.NSAccessibilityAnyTypeSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityArticleSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityBlockquoteSameLevelSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityBlockquoteSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityBoldFontSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityButtonSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCheckBoxSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityControlSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDifferentTypeSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFontChangeSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFontColorChangeSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFrameSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityGraphicSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingLevel1SearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingLevel2SearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingLevel3SearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingLevel4SearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingLevel5SearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingLevel6SearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingSameLevelSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadingSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityItalicFontSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityKeyboardFocusableSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLandmarkSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLinkSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityListSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLiveRegionSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMisspelledWordSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityOutlineSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPlainTextSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRadioGroupSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySameTypeSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityStaticTextSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityStyleChangeSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTableSameLevelSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTableSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTextFieldSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTextStateChangeTypeKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTextStateSyncKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUnderlineSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUnvisitedLinkSearchKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVisitedLinkSearchKey, str)
 
     @min_os_level("10.7")
     def testFunctions10_7(self):
@@ -628,3 +776,4 @@ class TestNSAccessibility(TestCase):
         self.assertIsTypedEnum(AppKit.NSAccessibilityRulerUnitValue, str)
         self.assertIsTypedEnum(AppKit.NSAccessibilitySortDirectionValue, str)
         self.assertIsTypedEnum(AppKit.NSAccessibilitySubrole, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilitySearchKey, str)

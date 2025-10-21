@@ -49,6 +49,8 @@ def _setup():
         ("MPNowPlayingInfoCenter", b"new"),
         ("MPMediaItemArtwork", b"init"),
         ("MPMediaItemArtwork", b"new"),
+        ("MPMediaItemAnimatedArtwork", b"init"),
+        ("MPMediaItemAnimatedArtwork", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

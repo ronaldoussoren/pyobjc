@@ -20,4 +20,8 @@ use_protocols(void)
     // Not exposed on macOS
     // p = PyObjC_IdToPython(@protocol(BEAccessibilityTextMarker)); Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1502 */
+#if PyObjC_BUILD_RELEASE >= 2600
+    p = PyObjC_IdToPython(@protocol(BEExtensionProcess));
+    Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 2600 */
 }

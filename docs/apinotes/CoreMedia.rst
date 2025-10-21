@@ -12,6 +12,8 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``CoreMedia`` package (that is, ``import CoreMedia``).
 
+.. macosadded:: 10.7
+
 API Notes
 ---------
 

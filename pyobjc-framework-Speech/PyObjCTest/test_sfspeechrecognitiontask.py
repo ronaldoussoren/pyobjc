@@ -12,10 +12,9 @@ class TestSFSpeechRecognitionTaskHelper(Speech.NSObject):
 
 
 class TestSFSpeechRecognitionTask(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Speech.SFSpeechRecognitionTaskState)
 
     def test_constants(self):
+        self.assertIsEnumType(Speech.SFSpeechRecognitionTaskState)
         self.assertEqual(Speech.SFSpeechRecognitionTaskStateStarting, 0)
         self.assertEqual(Speech.SFSpeechRecognitionTaskStateRunning, 1)
         self.assertEqual(Speech.SFSpeechRecognitionTaskStateFinishing, 2)

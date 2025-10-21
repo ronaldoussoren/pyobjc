@@ -18,6 +18,10 @@ class TestMPSNeuralNetwork_MPSCNNKernel(TestCase):
             3,
         )
 
+        self.assertResultHasType(
+            MetalPerformanceShaders.MPSCNNBinaryKernel.clipRect,
+            MetalPerformanceShaders.MTLRegion.__typestr__,
+        )
         self.assertResultIsBOOL(MetalPerformanceShaders.MPSCNNBinaryKernel.isBackwards)
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSCNNBinaryKernel.isStateModified

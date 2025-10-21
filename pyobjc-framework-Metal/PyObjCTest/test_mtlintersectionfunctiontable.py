@@ -37,6 +37,16 @@ class TestMTLIntersectionFunctionTable(TestCase):
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureExtendedLimits, 1 << 5)
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureMaxLevels, 1 << 6)
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureCurveData, 1 << 7)
+        self.assertEqual(
+            Metal.MTLIntersectionFunctionSignatureIntersectionFunctionBuffer, 1 << 8
+        )
+        self.assertEqual(Metal.MTLIntersectionFunctionSignatureUserData, 1 << 9)
+
+    def test_structs(self):
+        v = Metal.MTLIntersectionFunctionBufferArguments()
+        self.assertIsInstance(v.intersectionFunctionBuffer, int)
+        self.assertIsInstance(v.intersectionFunctionBufferSize, int)
+        self.assertIsInstance(v.intersectionFunctionStride, int)
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):

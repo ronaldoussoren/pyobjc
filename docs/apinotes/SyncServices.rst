@@ -8,7 +8,7 @@ API Notes: SyncServices framework
 
 These bindings are accessed through the ``SyncServices`` package (that is, ``import SyncServices``).
 
-.. deprecated:: macOS 10.7
+.. macosdeprecated:: 10.7
 
 API Notes
 ---------

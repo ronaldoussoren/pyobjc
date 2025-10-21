@@ -486,6 +486,13 @@ class TestCArray(TestCase):
         o = carrayMaker(objc._C_CHAR_AS_INT, a, 4, True)
         self.assertEqual(o, (1, 2, 3, 4))
 
+        a = array.array("f", [1, 2, 3, 4])
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of f and and C array of \[2c\]",
+        ):
+            carrayMaker(b"[2c]", a, 2, True)
+
         with self.assertRaisesRegex(
             ValueError, "Need array of small integers, got byte string"
         ):
@@ -599,6 +606,16 @@ class TestCArray(TestCase):
             ValueError, "type mismatch between array.array of h and and C array of i"
         ):
             carrayMaker(objc._C_INT, arr3, None)
+
+        with self.assertRaisesRegex(
+            ValueError, "type mismatch between array.array of q and and C array of i"
+        ):
+            carrayMaker(objc._C_INT, arr7, None)
+
+        with self.assertRaisesRegex(
+            ValueError, "type mismatch between array.array of Q and and C array of i"
+        ):
+            carrayMaker(objc._C_INT, arr8, None)
 
         res = carrayMaker(objc._C_UINT, arr4, None)
         self.assertEqual(res, tuple(arr4))
@@ -949,6 +966,11 @@ class TestCArray(TestCase):
 
         with self.assertRaisesRegex(UnicodeDecodeError, "illegal UTF-16 surrogate"):
             OC_ArrayTest.baduniarrayOf12()
+
+        self.assertEqual(carrayMaker(objc._C_UNICHAR, "hello", 3), "hel")
+
+        with self.assertRaisesRegex(UnicodeEncodeError, "surrogates not allowed"):
+            carrayMaker(objc._C_UNICHAR, "h\udfffllo", 3)
 
     def test_invalidobjects(self):
         with self.assertRaisesRegex(ValueError, "cannot have Python representation"):

@@ -1505,6 +1505,106 @@ class TestTestSupport(TestCase):
         except self.failureExeption:
             self.fail("Unexpected assertion failure")
 
+    def test_assertDoesFreeResult(self):
+        with self.assertRaisesRegex(self.failureException, "is not a selector"):
+            self.assertIsInitializer(42)
+
+        m = Method(
+            None,
+            {},
+            selector=True,
+        )
+        m._meta["free_result"] = True
+
+        try:
+            self.assertDoesFreeResult(m)
+        except self.failureException as exc:
+            self.fail(f"Unexpected assertion failure: {exc}")
+
+        m = Method(
+            None,
+            {},
+            selector=True,
+        )
+
+        with self.assertRaisesRegex(self.failureException, "does not call free"):
+            self.assertDoesFreeResult(m)
+
+    def test_assertDoesNotFreeResult(self):
+        with self.assertRaisesRegex(self.failureException, "is not a selector"):
+            self.assertIsNotInitializer(42)
+
+        m = Method(
+            None,
+            {},
+            selector=True,
+        )
+
+        try:
+            self.assertDoesNotFreeResult(m)
+        except self.failureException as exc:
+            self.fail(f"Unexpected assertion failure: {exc}")
+
+        m = Method(
+            None,
+            {},
+            selector=True,
+        )
+        m._meta["free_result"] = True
+
+        with self.assertRaisesRegex(self.failureException, "calls free"):
+            self.assertDoesNotFreeResult(m)
+
+    def test_assertIsInitializer(self):
+        with self.assertRaisesRegex(self.failureException, "is not a selector"):
+            self.assertIsInitializer(42)
+
+        m = Method(
+            None,
+            {},
+            selector=True,
+        )
+        m._meta["initializer"] = True
+
+        try:
+            self.assertIsInitializer(m)
+        except self.failureException as exc:
+            self.fail(f"Unexpected assertion failure: {exc}")
+
+        m = Method(
+            None,
+            {},
+            selector=True,
+        )
+
+        with self.assertRaisesRegex(self.failureException, "is not an initializer"):
+            self.assertIsInitializer(m)
+
+    def test_assertIsNotInitializer(self):
+        with self.assertRaisesRegex(self.failureException, "is not a selector"):
+            self.assertIsNotInitializer(42)
+
+        m = Method(
+            None,
+            {},
+            selector=True,
+        )
+
+        try:
+            self.assertIsNotInitializer(m)
+        except self.failureException as exc:
+            self.fail(f"Unexpected assertion failure: {exc}")
+
+        m = Method(
+            None,
+            {},
+            selector=True,
+        )
+        m._meta["initializer"] = True
+
+        with self.assertRaisesRegex(self.failureException, "is an initializer"):
+            self.assertIsNotInitializer(m)
+
     def test_ClassIsFinal(self):
         class FinalTesetClass(objc.lookUpClass("NSObject"), final=True):
             __objc_final__ = True
@@ -2664,6 +2764,54 @@ class TestTestSupport(TestCase):
                 self.assertIsNot(
                     entry.args[0], NSObject.pyobjc_classMethods.description
                 )
+
+    def test_assertFreeThreadedIfConfigured(self):
+        orig_get_config = TestSupport._get_config_var
+        gil_disabled = False
+
+        def mock_get_config(key):
+            if key == "Py_GIL_DISABLED":
+                return gil_disabled
+            return orig_get_config(key)
+
+        with mock.patch("PyObjCTools.TestSupport._get_config_var", new=mock_get_config):
+
+            with self.subTest("GIL enabled build"):
+                try:
+                    self.assertFreeThreadedIfConfigured()
+                except self.failureException as exc:
+                    self.fail(f"unexpected assertion failure: {exc}")
+
+            gil_disabled = True
+
+            xoptions = sys._xoptions.copy()
+
+            with mock.patch("sys._xoptions", new=xoptions):
+                xoptions["gil"] = True
+                with self.subTest("GIL disabled build, -Xgil=1"):
+                    try:
+                        self.assertFreeThreadedIfConfigured()
+                    except self.failureException as exc:
+                        self.fail(f"unexpected assertion failure: {exc}")
+
+                xoptions["gil"] = False
+                with self.subTest("GIL disabled build, -Xgil=0, gil is disabled"):
+                    with mock.patch(
+                        "sys._is_gil_enabled", create=True, new=lambda: False
+                    ):
+                        try:
+                            self.assertFreeThreadedIfConfigured()
+                        except self.failureException as exc:
+                            self.fail(f"unexpected assertion failure: {exc}")
+
+                with self.subTest("GIL disabled build, -Xgil=0, gil is enabled"):
+                    with mock.patch(
+                        "sys._is_gil_enabled", create=True, new=lambda: True
+                    ):
+                        with self.assertRaisesRegex(
+                            self.failureException, "GIL is enabled"
+                        ):
+                            self.assertFreeThreadedIfConfigured()
 
     @no_autorelease_pool
     def test_without_pool(self):

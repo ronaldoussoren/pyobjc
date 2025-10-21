@@ -14,7 +14,7 @@ The framework is documented on `Apple's developer website`__
 
 These bindings are accessed through the ``UserNotifications`` package (that is, ``import UserNotifications``).
 
-.. versionadded:: macOS 10.14
+.. macosadded:: 10.14
 
 API Notes
 ---------

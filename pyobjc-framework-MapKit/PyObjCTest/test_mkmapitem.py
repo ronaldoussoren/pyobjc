@@ -30,6 +30,7 @@ class TestMKMapItem(TestCase):
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeTransit, str)
+        self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeCycling, str)
 
     @min_os_level("10.12")
     def testConstants10_12(self):

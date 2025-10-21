@@ -138,20 +138,15 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     v->call_to_objc              = call_to_objc;
     v->make_call_to_python_block = make_call_to_python_block;
 
-    entry = PyTuple_New(2);
+    entry = Py_BuildValue(
+        "(ON)", pyclass, PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup));
     if (entry == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(py_selname);
-        Py_DECREF(pyclass);
-        PyMem_Free(v);
         retval = -1;
         goto exit;
         // LCOV_EXCL_STOP
     }
-
-    PyTuple_SET_ITEM(entry, 0, pyclass);
-    PyTuple_SET_ITEM(entry, 1,
-                     PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup));
 
     if (PyTuple_GET_ITEM(entry, 1) == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
@@ -395,14 +390,37 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
             }
         }
 
-        /* pyclass is a new most specific match */
-        Py_CLEAR(special_class);
-        Py_CLEAR(result);
-        special_class = pyclass;
-        result        = PyTuple_GET_ITEM(entry, 1);
-        Py_INCREF(special_class);
-        Py_INCREF(result);
-        Py_DECREF(entry);
+        if (!special_class) {
+            /* No match yet, use */
+            Py_CLEAR(special_class);
+            Py_CLEAR(result);
+            special_class = pyclass;
+            Py_INCREF(special_class);
+            result = PyTuple_GET_ITEM(entry, 1);
+            Py_INCREF(result);
+            Py_DECREF(entry);
+
+        } else if (pyclass == Py_None) {
+            /* Already have a match, Py_None is less specific */
+            Py_DECREF(entry);
+            continue;
+
+        } else if (special_class == Py_None
+                   || PyType_IsSubtype((PyTypeObject*)pyclass,
+                                       (PyTypeObject*)search_class)) {
+            /* special_type is a superclass of search_class,
+             * but a subclass of the current match, hence it is
+             * a more specific match or a similar match later in the
+             * list.
+             */
+            Py_CLEAR(special_class);
+            Py_CLEAR(result);
+            special_class = pyclass;
+            Py_INCREF(special_class);
+            result = PyTuple_GET_ITEM(entry, 1);
+            Py_INCREF(result);
+            Py_DECREF(entry);
+        }
     }
     if (!result)
         goto error;
@@ -459,9 +477,10 @@ static struct registry* _Nullable find_signature(const char* signature)
         goto exit; // LCOV_EXCL_LINE
     }
     if (PyDict_GetItemRef(signature_registry, key, &o) != 1) {
+        Py_DECREF(key);
         goto exit;
     }
-
+    Py_DECREF(key);
     result = PyCapsule_GetPointer(o, "objc.__memblock__");
     Py_DECREF(o);
 

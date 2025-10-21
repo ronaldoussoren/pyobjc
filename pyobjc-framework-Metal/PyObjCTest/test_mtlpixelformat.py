@@ -131,6 +131,7 @@ class TestMTLPixelFormat(TestCase):
         self.assertEqual(Metal.MTLPixelFormatDepth32Float_Stencil8, 260)
         self.assertEqual(Metal.MTLPixelFormatX32_Stencil8, 261)
         self.assertEqual(Metal.MTLPixelFormatX24_Stencil8, 262)
+        self.assertEqual(Metal.MTLPixelFormatUnspecialized, 263)
         self.assertEqual(Metal.MTLPixelFormatASTC_4x4_HDR, 222)
         self.assertEqual(Metal.MTLPixelFormatASTC_5x4_HDR, 223)
         self.assertEqual(Metal.MTLPixelFormatASTC_5x5_HDR, 224)

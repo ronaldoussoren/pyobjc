@@ -1,14 +1,18 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 import MetalFX
 import objc
 
 
 class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
+    # MTLFXTemporalScalerBase
     def colorTextureUsage(self):
         return 1
 
     def depthTextureUsage(self):
+        return 1
+
+    def reactiveTextureUsage(self):
         return 1
 
     def motionTextureUsage(self):
@@ -68,6 +72,9 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
     def motionTextureFormat(self):
         return 1
 
+    def reactiveMaskTextureFormat(self):
+        return 1
+
     def outputTextureFormat(self):
         return 1
 
@@ -95,14 +102,27 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
     def setDepthReversed_(self, a):
         pass
 
+    # MTLFXTemporalScaler
+    # ... empty ...
+
 
 class TestMTLFXTemporalScaler(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTLFXTemporalScaler")
 
+    @min_sdk_level("26.0")
+    def test_protocols26_0(self):
+        self.assertProtocolExists("MTLFXTemporalScalerBase")
+
     def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLFXTemporalScalerHelper.colorTextureUsage, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.depthTextureUsage, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.reactiveTextureUsage, objc._C_NSUInteger
         )
         self.assertResultHasType(
             TestMTLFXTemporalScalerHelper.outputTextureUsage, objc._C_NSUInteger
@@ -161,6 +181,9 @@ class TestMTLFXTemporalScaler(TestCase):
         )
         self.assertResultHasType(
             TestMTLFXTemporalScalerHelper.motionTextureFormat, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.reactiveMaskTextureFormat, objc._C_NSUInteger
         )
         self.assertResultHasType(
             TestMTLFXTemporalScalerHelper.outputTextureFormat, objc._C_NSUInteger
@@ -226,3 +249,7 @@ class TestMTLFXTemporalScaler(TestCase):
             0,
             objc._C_NSUInteger,
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(MetalFX.MTLFXTemporalScalerDescriptor.supportsMetal4FX_)

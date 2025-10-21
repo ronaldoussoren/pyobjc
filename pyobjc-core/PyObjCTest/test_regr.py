@@ -962,7 +962,7 @@ class TestSelectorEdgeCases(TestCase):
             objc.selector(func)
 
         func.__name__ = 42
-        with self.assertRaisesRegex(TypeError, "__name__ of .* is not a string"):
+        with self.assertRaisesRegex(TypeError, "__name__ is not a string"):
             objc.selector(func)
 
     def test_calling_abstract(self):
@@ -971,7 +971,7 @@ class TestSelectorEdgeCases(TestCase):
         sel = objc.selector(None, selector=b"hello:", signature=b"@@:n^f")
 
         with self.assertRaisesRegex(
-            TypeError, "Calling abstract methods with selector hello:"
+            TypeError, "Calling abstract methods with selector 'hello:'"
         ):
             sel(obj, None)
 
@@ -1097,3 +1097,95 @@ class TestClasses(TestCase):
             TypeError, "not supported between instances of 'int' and 'NSObject'"
         ):
             42 < NSObject  # noqa: B015
+
+
+class TestSelectorDetails(TestCase):
+    def test_selector_no_compare(self):
+        class C:
+            def __call__(self, a):
+                pass
+
+            def __eq__(self, b):
+                raise RuntimeError("no compare")
+
+        s = objc.selector(C(), selector=b"method:")
+        t = objc.selector(lambda x, y: 42, selector=b"method:")
+
+        with self.assertRaisesRegex(RuntimeError, "no compare"):
+            s == t  # noqa: B015
+
+        with self.assertRaisesRegex(RuntimeError, "no compare"):
+            s != t  # noqa: B015
+
+    def test_calling_abstract_selector(self):
+        o = NSObject.alloc().init()
+        s = objc.selector(None, selector=b"method:", signature=b"@@:@")
+        with self.assertRaisesRegex(
+            TypeError, "Calling abstract methods with selector 'method:'"
+        ):
+            s(o, 1)
+
+    def test_calling_without_self(self):
+        s = objc.selector(lambda s: 42, selector=b"method", signature=b"@@:")
+
+        with self.assertRaisesRegex(TypeError, "need self argument"):
+            s()
+
+    def test_selector_classmethod(self):
+        @classmethod
+        def classMethod(cls):
+            pass
+
+        s = objc.selector(classMethod)
+        self.assertTrue(s.isClassMethod)
+        self.assertEqual(s.selector, b"classMethod")
+        self.assertEqual(s.signature, b"v@:")
+
+    def test_selector_staticmethod(self):
+        @staticmethod
+        def classMethod(cls):
+            pass
+
+        with self.assertRaisesRegex(
+            TypeError, "cannot use staticmethod as the callable for a selector."
+        ):
+            objc.selector(classMethod)
+
+    def test_descr_get_instance(self):
+        @objc.selector
+        def method(self):
+            return 42
+
+        bound = method.__get__(NSObject.alloc().init())
+
+        class MyClass:
+            method = bound
+
+        self.assertIs(MyClass().method, bound)
+
+    def test_descr_get_class(self):
+        @objc.selector
+        @classmethod
+        def method(self):
+            return 42
+
+        with self.assertRaisesRegex(TypeError, "class is NULL"):
+            # XXX: This doesn't match the behaviour of classmethod()
+            method.__get__(NSObject)
+
+    def test_invalid_signature(self):
+        with self.assertRaisesRegex(ValueError, "invalid signature"):
+            objc.selector(lambda x: 42, selector=b"method", signature=b"X@:")
+
+        s = objc.selector(lambda x: 42, selector=b"method", signature=b"@@:")
+        self.assertEqual(s.native_signature, b"@@:")
+        s.signature = b"X@:"
+        with self.assertRaisesRegex(objc.error, " Unhandled type"):
+            s.signature
+
+        with self.assertRaisesRegex(AttributeError, "not writable"):
+            s.native_signature = b"X@:"
+        self.assertEqual(s.native_signature, b"@@:")
+        s.__get__(NSObject())
+        with self.assertRaisesRegex(objc.error, " Unhandled type"):
+            s.__metadata__()

@@ -12,6 +12,7 @@ def _setup():
     import CoreAudio
     import CoreMedia
     import Foundation
+    import AVFAudio
     import objc
     from . import _AVFoundation, _metadata
     from ._inlines import _inline_list_
@@ -24,7 +25,7 @@ def _setup():
         ),
         globals_dict=globals(),
         inline_list=_inline_list_,
-        parents=(_AVFoundation, CoreAudio, CoreMedia, Foundation),
+        parents=(_AVFoundation, AVFAudio, CoreAudio, CoreMedia, Foundation),
         metadict=_metadata.__dict__,
     )
 
@@ -288,6 +289,16 @@ def _setup():
         ("AVCaptureSession", b"init"),
         ("AVExposureBiasRange", b"new"),
         ("AVExposureBiasRange", b"init"),
+        ("AVMetricMediaRendition", b"new"),
+        ("AVMetricMediaRendition", b"init"),
+        ("AVMetricDownloadSummaryEvent", b"new"),
+        ("AVMetricDownloadSummaryEvent", b"init"),
+        ("AVCaptureExternalDisplayConfigurator", b"new"),
+        ("AVCaptureExternalDisplayConfigurator", b"init"),
+        ("AVExternalSyncDevice", b"new"),
+        ("AVExternalSyncDevice", b"init"),
+        ("AVExternalSyncDeviceDiscoverySession", b"new"),
+        ("AVExternalSyncDeviceDiscoverySession", b"init"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

@@ -15,7 +15,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``SensitiveContentAnalysis`` package (that is, ``import SensitiveContentAnalysis``).
 
-.. versionadded:: macOS 14
+.. macosadded:: 14
 
 API Notes
 ---------

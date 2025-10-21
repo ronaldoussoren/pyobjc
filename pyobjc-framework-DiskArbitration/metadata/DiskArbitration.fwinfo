@@ -18,6 +18,12 @@
     "gettypeid_func": "DASessionGetTypeID"
    }
   },
+  "enum": {
+   "kDADiskOptionEjectUponLogout": { "value": 1 },
+   "kDADiskOptionMountAutomatic": { "value": 16 },
+   "kDADiskOptionMountAutomaticNoDefer": { "value": 32 },
+   "kDADiskOptionPrivate": { "value": 256 }
+  },
   "externs": {
    "kDADiskDescriptionDeviceTDMLockedKey": { "typestr": "@" },
    "kDADiskDescriptionMediaEncryptionDetailKey": { "typestr": "@" },

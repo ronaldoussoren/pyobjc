@@ -86,3 +86,7 @@ class TestNERelayManager(TestCase):
     def test_methods15_4(self):
         self.assertResultIsBOOL(NetworkExtension.NERelayManager.isUIToggleEnabled)
         self.assertArgIsBOOL(NetworkExtension.NERelayManager.setUIToggleEnabled_, 0)
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(NetworkExtension.NERelayManager.isDNSFailoverAllowed)

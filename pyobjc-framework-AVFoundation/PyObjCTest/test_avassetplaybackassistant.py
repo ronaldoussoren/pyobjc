@@ -18,6 +18,15 @@ class TestAVAssetPlaybackAssistant(TestCase):
             AVFoundation.AVAssetPlaybackConfigurationOptionSpatialVideo, str
         )
 
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVAssetPlaybackConfigurationOptionNonRectilinearProjection, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetPlaybackConfigurationOptionAppleImmersiveVideo, str
+        )
+
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertArgIsBlock(

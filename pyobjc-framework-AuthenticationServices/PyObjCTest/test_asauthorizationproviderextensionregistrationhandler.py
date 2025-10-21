@@ -1,5 +1,5 @@
 import AuthenticationServices
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 import objc
 
 
@@ -15,6 +15,12 @@ class TestASAuthorizationProviderExtensionRegistrationHandlerHelper(
         pass
 
     def keyWillRotateForKeyType_newKey_loginManager_completion_(self, a, b, c, d):
+        pass
+
+    def displayNamesForGroups_loginManager_completion_(self, a, b, c):
+        pass
+
+    def profilePictureForUserUsingLoginManager_completion_(self, a, b):
         pass
 
 
@@ -55,8 +61,16 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
             1 << 3,
         )
         self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionRequestOptionsStrongerKeyAvailable,
+            1 << 4,
+        )
+        self.assertEqual(
             AuthenticationServices.ASAuthorizationProviderExtensionRequestOptionsUserKeyInvalid,
             1 << 5,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionRequestOptionsSetupAssistant,
+            1 << 6,
         )
 
         self.assertIsEnumType(
@@ -150,4 +164,17 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.keyWillRotateForKeyType_newKey_loginManager_completion_,
             3,
             b"vZ",
+        )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertArgIsBlock(
+            TestASAuthorizationProviderExtensionRegistrationHandlerHelper.displayNamesForGroups_loginManager_completion_,
+            2,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            TestASAuthorizationProviderExtensionRegistrationHandlerHelper.profilePictureForUserUsingLoginManager_completion_,
+            1,
+            b"v@",
         )

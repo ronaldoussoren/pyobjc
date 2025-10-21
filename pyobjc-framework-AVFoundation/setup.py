@@ -16,14 +16,19 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = "11.1.1"
+VERSION = "12.0"
 
 setup(
     name="pyobjc-framework-AVFoundation",
     description="Wrappers for the framework AVFoundation on macOS",
     min_os_level="10.7",
-    packages=["AVFoundation"],
+    packages=["AVFoundation", "AVFAudio"],
     ext_modules=[
+        Extension(
+            "AVFAudio._inlines",
+            ["Modules/_AVFAudio_inlines.m"],
+            extra_link_args=["-framework", "AVFAudio"],
+        ),
         Extension(
             "AVFoundation._inlines",
             ["Modules/_AVFoundation_inlines.m"],

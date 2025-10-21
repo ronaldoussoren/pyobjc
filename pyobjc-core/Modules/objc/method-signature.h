@@ -44,8 +44,8 @@ struct _PyObjC_ArgDescr {
     unsigned int             printfFormat : 1;
     unsigned int             alreadyRetained : 1;
     unsigned int             alreadyCFRetained : 1;
-    unsigned int
-        callableRetained : 1; /* False iff the closure can be cleaned up after the call */
+    unsigned int             callableRetained
+        : 1; /* False iff the closure can be cleaned up after the call */
     unsigned int tmpl : 1;
 };
 

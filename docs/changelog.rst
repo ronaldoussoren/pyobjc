@@ -3,6 +3,245 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 12.0
+------------
+
+* Drop support for Python 3.9, which will go out of support
+  before PyObjC 3.12 is released.
+
+* Added ``AVFAudio`` as a separate toplevel package, instead of keeping
+  it merged in into ``AVFoundation``.
+
+  The package is included in the ``pyobjc-framework-AVFoundation`` distribution.
+
+* Updated metadata for the macOS 26 SDK.
+
+  As part of this introduce bindings for the following new framework bindings:
+
+  - ARKit
+  - CompositorServices
+  - GameSave
+
+  There are no bindings for the ``MetalPerformancePrimitives`` at this time, it is
+  a low-level C++ library that would require a lot of work to create bindings.
+
+* In macOS 26 a number of type encodings for block arguments include a signature
+  for the block interface. Update PyObjC runtime introspection to ignore that
+  information.
+
+* Dropped old metadata scans. That is, all framework bindings are now created
+  from the most recent macOS SDK headers with some manual additions and annotations.
+
+  This change required adding manual entries for, in particular, constants that were
+  renamed in by now old versions of macOS and have been removed from Apple's headers
+  by now. These will be removed from PyObjC in a future update as well (but after
+  a transition period where using them will raise a warning).
+
+  This has the following user visible side effects (as far as they are
+  visible, most of the the changes below affect versions of macOS that are long gone):
+
+  - Accounts: The following constants are no longer available (on the old versions
+    of macOS where these were available): ``ACFacebookAppVersionKey``,
+    ``ACFacebookPermissionGroupKey``, ``ACFacebookPermissionGroupRead``,
+    ``ACFacebookPermissionGroupReadWrite``, and ``ACFacebookPermissionGroupWrite``.
+
+  - AppKit: The NSFileWrapper class no longer supports with keyword arguments ``path``,
+    and ``serializedRepresentation``, and the keyword set ``(URL, options, error)``.
+
+  - AuthenticationServices: The classes
+    ``ASAccountAuthenticationModificationReplacePasswordWithSignInWithAppleRequest``
+    and ``ASAccountAuthenticationModificationUpgradePasswordToStrongPasswordRequest``
+    no longer have a keyword argument set named ``(user, serviceIdentifier)``.
+
+  - Automator: class ``AMBundleAction`` no longer accepts the keyword set ``(definition, fromArchive)``.
+
+  - CFNetwork: The following functions were deprecated before macOS 10.6  and were removed
+    in the macOS 10.15 SDK: ``CFHTTPReadStreamSetRedirectsAutomatically``, and
+    ``CFNetServiceSetProtocolSpecificInformation``.
+
+  - CloudKit: ``CKDiscoverUserInfosOperation`` no longer recognizes the keyword
+    set ``(emailAddresses, userRecordIDs)``. ``CKFetchDatabaseChangesOperation``
+    no longer recognizes the keyword argument ``previousServerChangeToken``.
+    ``CKShare`` no longer recognizes the keyword arguments ``recordZoneID``,
+    ``rootRecord``, and the keyword set ``(rootRecord, shareID)``.
+    ``CKSubscription`` no longer recognizes the keyword argument ``coder``,
+    and the keyword sets ``(recordType, predicate, options)``,
+    ``(recordType, predicate, subscriptionID, options)``,
+    ``(zoneID, options)`` and ``zoneID, subscriptionID, options)``.
+
+  - CoreAudio: The following functions are no longer available (all were deprecated between
+    macOS 10.5 and 10.8, and removed from the macOS 10.15 SDK):
+    ``AudioHardwareClaimAudioDeviceID``, ``AudioHardwareDevicesDied``,
+    ``AudioHardwareDevicePropertyChanged``, ``AudioHardwareDevicesCreated``, ``AudioObjectCreate``,
+    ``AudioHardwareStreamPropertyChanged``, ``AudioHardwareClaimAudioStreamID``, ``AudioObjectPropertiesChanged``,
+    ``AudioHardwareStreamsCreated``, ``AudioObjectsPublishedAndDied``,
+    ``AudioHardwareStreamsDied``.
+
+    The following constants are no longer available because they are not useful
+    in python code: ``CA_PREFER_FIXED_POINT`` and ``COREAUDIOTYPES_VERSION``.
+
+  - CoreData: The constant ``NSFetchRequestExpressionType`` is no longer available.
+
+  - CoreLocation: ``CLBeaconIdentityConstraint`` no longer supports the
+    keyword ``UUID`` and the keyword sets ``(UUID, major)`` and ``(UUID, major, minor)``.
+
+  - CoreServices: The following functions are no longer available (all were removed
+    in the macOS 10.7 SDK): ``LSInit`` and ``LSTerm``.
+
+  - CoreText: The constant ``kCTVersionNumber10_6_7`` is no longer available.
+
+  - CryptoTokenKit: The following constants are no longer available. Use the modern
+    names instead: ``TKSmartCardNoSlot``, ``TKSmartCardSlotEmpty``,
+    ``TKSmartCardSlotProbing``, ``TKSmartCardSlotMuteCard``, and ``TKSmartCardSlotValidCard``.
+
+  - DiscRecording: The following constants are no longer available:
+    ``DRCDTextEncodingASCII``, ``kDRCDTextEncodingASCII``,
+    ``DRCDTextEncodingISOLatin1Modified``, and ``kDRCDTextEncodingISOLatin1Modified``.
+
+  - DiskArbitration: The following constants are no longer available:
+    ``kDADiskOptionEjectUponLogout``, ``kDADiskOptionMountAutomatic``,
+    ``kDADiskOptionMountAutomaticNoDefer``, and ``kDADiskOptionPrivate``.
+
+  - GameController: The struct type registration ``GCExtendedGamepadValueChangedHandler``
+    is gone (the existence of this type was a bug).
+
+  - ImageCaptureCore: Constant ``ICCameraDeviceSupportsFastPTP`` is no longer
+    available (only affects macOS 10.11).
+
+  - Intents: Removed constant ``INMessageReactionTypeEmojiReaction``, use
+    ``INMessageReactionTypeEmoji`` instead.
+
+  - Intents: ``INAggregatedMessageReaction`` no longer accepts the keyword set
+    ``reactionType, emoji, reactionCount)``. ``INMessage`` no longer accepts
+    the keyword sets ``(identifier, conversationIdentifier, content, dateSent,
+    sender, recipients, groupName, serviceName, messageType, referencedMessage, reaction, aggregatedReactions)``
+    and
+    ``(identifier, conversationIdentifier, content, dateSent, sender, recipients, groupName,
+    serviceName, messageType, referencedMessage, sticker, reaction, aggregatedReactions)``. It
+    does accept these keyword sets without the ``aggregatedReactions`` keyword though.
+
+  - Intents: The ``INColor`` class no longer accepts the keyword set ``(read, green, blue)``.
+
+  - Intents: The ``INHeadUnit`` class no longer accepts the keyword set ``(bluetoothIdentifier, iap2Identifier)``.
+
+  - Intents: The ``INMediaSearch`` class no longer accepts the keyword set
+    ``(mediaType, sortOrder, mediaName, artistName, albumName, genreNames, moodNames, activityNames, releaseDate,
+    reference, mediaIdentifier)``.
+
+  - Intents: The ``INStartCallIntent`` class no longer accepts the keyword set
+    ``(audioRoute, destinationType, contacts, callCapability)``.
+
+  - JavaScriptCore: Constants ``WEBKIT_VERSION_*`` are no longer available.
+
+  - LocalAuthentication: The following constants are no longer available:
+    ``kLAOptionAuthenticationReason`` and ``kLAOptionUserFallback``.
+  - Metal: The constant ``MTLStitchedLibraryOptionStoreLibraryInMetalScript``
+    is no longer available (was only present in a beta SDK)
+
+  - MLCompute: Class ``MLCOptimizer`` no longer has a keyword argument named ``descriptor``.
+
+  - PassKit: The following constants are no longer available:
+    ``PKDisbursementRequestScheduleFuture`` and ``PKDisbursementRequestScheduleOneTime``.
+
+    Because of this the type ``PKDisbursementRequestSchedule`` has been removed as well.
+
+    The metadata for ``PKDisbursementAuthorizationController`` has been removed.
+
+    Class ``PKShareablePassMetadataPreview`` no longer accepts the
+    keyword set ``(passThumbnail, localizedDescription)``.
+
+  - PubSub: Class ``PSFeed`` no longer accepts the keyword ``URL`` and
+    the keyword set ``(data, URL)``.
+
+    Note that the entire framework was removed in macOS 10.15, and the Python
+    bindings will be removed in PyObjC 13 at the latest.
+
+  - Quartz: The following constants are no longer available: ``CGFLOAT_EPSILON``,
+    ``CA_TEST``, ``CA_TESTABLE_CLASS``, ``CA_TESTABLE``, ``kCGErrorLast``.
+
+  - Quartz: The following structs are no longer available (all of them contain
+    callback pointers which aren't used in PyObjC's bindings for the APIs that use
+    those structs): ``CGFunctionCallbacks``, ``CGDataProviderCallbacks``,
+    ``CGPatternCallbacks``, ``CGDataConsumerCallbacks``, ``CGDataProviderDirectAccessCallbacks``,
+    ``CGDataProviderSequentialCallbacks``, and ``CGPSConverterCallbacks``.
+
+  - Quartz: The CIColor class no longer accepts the keyword argument ``CGColor``.
+
+  - Quartz: The CIFilterGenerator class no longer accepts the keyword argument ``contentsOfURL``.
+
+  - Quartz: The CIFilterShape  class no longer accepts the keyword argument ``rect``.
+
+  - Quartz: The CImage  class no longer accepts the keyword sets ``(bitmapData, bytesPerRow, size, format, colorSpace)``,
+    ``(CGImage, options)``, ``(CGLayer, options)``, ``(CVImageBuffer, options)``, ``(CVPixelBuffer, options)``,
+    ``(contentsOfURL, options)``, ``(data, options)``, ``(IOSurface, options)``, ``(IOSurface, plance, format, options)``,
+    ``(imageProvider, size, format, colorSpace, options)``, ``(texture, size, flipped, colorSpace)``,
+    ``(texture, size, flipped, options)``,
+    and keywords ``CGImage``, ``CGLayer``, ``CVImageBuffer``, ``CVPixelBuffer``, ``color``, ``contentsOfURL``,
+    ``data`` and ``IOSurface``.
+
+  - Quartz: The CIImageAcculator class no longer accepts the keyword set ``(extent, format, colorSpace)``.
+
+  - Quartz: The CISampler class no longer accepts the keyword sets
+    ``(image, keysAndValues)``, ``(image, options)``, ``(values, count)``, ``(x, y)``,
+    ``(x, y, z)``, ``(x, y, z, w)``,
+    and keywords ``image``, ``CGAfineTransform``, ``CGPoint``, ``CGRect``, ``string``,
+    and ``x``.
+
+  - ScreenSaver: Class ``ScreenSaverView`` no longer accepts ``frame`` as its
+    sole keyword argument (always use it in combination with ``isPreview``).
+
+  - Security: The constant ``SEC_PROTOCOL_CERT_COMPRESSION_DEFAULT`` is no longer
+    available.
+
+  - ServiceManagement: The following constants are no longer available:
+    ``kSMInfoKeyAuthorizedClients`` and ``kSMInfoKeyPrivilegedExecutables``.
+
+  - SharedWithYouCore: ``SWCollaborationOption`` no longer has a keyword argument
+    named ``coder``.
+
+  - SyncServices: Informal protocol ``ISyncSessionDriverDataSourceOptionalMethods`` is
+    no longer available.
+
+  - SystemConfiguration: The following constants are no longer available:
+    ``kSCEntNetAppleTalk``, ``kSCEntNetNetInfo``, ``kSCNetworkProtocolTypeAppleTalk``,
+    ``kSCPropNetAppleTalkComputerName``, ``kSCPropNetAppleTalkComputerNameEncoding``,
+    ``kSCPropNetAppleTalkConfigMethod``, ``kSCPropNetAppleTalkDefaultZone``,
+    ``kSCPropNetAppleTalkNetworkID``, ``kSCPropNetAppleTalkNetworkRange``,
+    ``kSCPropNetAppleTalkNodeID``, ``kSCPropNetAppleTalkSeedNetworkRange``,
+    ``kSCPropNetAppleTalkSeedZones``, ``kSCPropNetNetInfoBindingMethods``,
+    ``kSCPropNetNetInfoBroadcastServerTag``, ``kSCPropNetNetInfoServerAddresses``,
+    ``kSCPropNetNetInfoServerTags``, ``kSCValNetAppleTalkConfigMethodNode``,
+    ``kSCValNetAppleTalkConfigMethodRouter``, ``kSCValNetAppleTalkConfigMethodSeedRouter``,
+    ``kSCValNetNetInfoBindingMethodsBroadcast``, ``kSCValNetNetInfoBindingMethodsDHCP``,
+    ``kSCValNetNetInfoBindingMethodsManual``, and ``kSCValNetNetInfoDefaultServerTag``.
+
+
+  - WebKit: : The following constants are no longer available:
+    ``DOM_VARIABLES_RULE`` and ``WK_API_ENABLED``.
+
+  - WebKit: ``-[WKWebView callAsyncJavaScript:arguments:inContentWorld:completionHandler:]``,
+    ``-[WKWebView evaluateJavaScript:inContentWorld:completionHandler:]`` block
+    arguments are no longer supported.
+
+    These methods were in a beta version of the macOS 11 SDK, but are no longer
+    present in SDKs.
+
+  - WebKit: A number of informal protocol definitions were removed. This should not affect
+    using the library: ``WebUIDelegate``, ``WebViewEditingDelegate``, ``WebPolicyDelegate``,
+    ``WebDownloadDelegate``, ``WebResourceLoadDelegate``, ``WebFrameLoadDelegate``,
+    and ``WebJavaPlugIn``.
+
+* Added ``objc.NSInteger``, ``objc.NSUInteger`` and ``objc.CGFloat`` that will make
+  it easier to use type annotations that match Apple's type information.
+
+* Fix edge cases in method accessors when some uses of ``SomeClass.pyobjc_instanceMethods.method``
+  would result in a method object that's bound to a meta class.
+
+* Fix memory leak due to incorrect reference count handling in looking up metadata.
+
+* Fix edge case in handling registration of multiple custom helpers
+  to call a selector.
+
 Version 11.1.1
 --------------
 

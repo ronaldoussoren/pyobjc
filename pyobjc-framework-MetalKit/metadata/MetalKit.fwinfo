@@ -231,23 +231,15 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
-      "selector": "colorspace"
+      "retval": { "type_override": "{MTLClearColor=dddd}" },
+      "selector": "clearColor"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_override": "{MTLClearColor=dddd}" }
       },
       "class_method": false,
-      "selector": "setColorspace:"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "nonatomic"
-      ],
-      "name": "colorspace"
+      "selector": "setClearColor:"
      }
     ]
    }

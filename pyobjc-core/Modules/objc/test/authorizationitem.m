@@ -18,14 +18,16 @@
         return @{
             @"flags" : @(item->flags),
             @"value" : [NSData dataWithBytes:item->value length:item->valueLength],
-            @"name" : name_value ? name_value : [NSNull null],
+            @"name" : item->name ? (id _Nonnull)[NSString stringWithUTF8String:item->name]
+                                 : [NSNull null],
         };
     } else {
         return @{
             @"flags" : @(item->flags),
             @"value" : [NSNull null],
             @"valueLength" : @(item->valueLength),
-            @"name" : name_value ? name_value : [NSNull null],
+            @"name" : item->name ? (id _Nonnull)[NSString stringWithUTF8String:item->name]
+                                 : [NSNull null],
         };
     }
 }
@@ -34,10 +36,6 @@
 {
     switch (kind) {
     case 0:
-        /* The _Nonnull cast is required because the name
-         * cannot be NULL according to Apple's headers. For
-         * testing we want to set it to a NULL value anyway.
-         */
         item->name        = (char* _Nonnull)NULL;
         item->value       = NULL;
         item->valueLength = 32;

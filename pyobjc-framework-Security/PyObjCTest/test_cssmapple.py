@@ -344,6 +344,7 @@ class TestMDS(TestCase):
         self.assertFalse(hasattr(Security, "CSSM_APPLE_PRIVATE_CSPDL_CODE_25"))
         self.assertFalse(hasattr(Security, "CSSM_APPLE_PRIVATE_CSPDL_CODE_26"))
         self.assertFalse(hasattr(Security, "CSSM_APPLE_PRIVATE_CSPDL_CODE_27"))
+        self.assertFalse(hasattr(Security, "CSSM_APPLE_PRIVATE_CSPDL_CODE_28"))
         self.assertFalse(hasattr(Security, "CSSM_APPLECSP_KEYDIGEST"))
         self.assertFalse(hasattr(Security, "CSSM_APPLECSPDL_DB_SETTINGS_PARAMETERS"))
         self.assertFalse(hasattr(Security, "CSSM_APPLECSPDL_DB_IS_LOCKED_PARAMETERS"))

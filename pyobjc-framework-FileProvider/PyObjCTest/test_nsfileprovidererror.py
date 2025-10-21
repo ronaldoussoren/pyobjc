@@ -40,3 +40,6 @@ class TestNSFileProviderError(TestCase):
         self.assertEqual(
             FileProvider.NSFileProviderErrorApplicationExtensionNotFound, -2014
         )
+        self.assertEqual(
+            FileProvider.NSFileProviderErrorLocalVersionConflictingWithServer, -2015
+        )

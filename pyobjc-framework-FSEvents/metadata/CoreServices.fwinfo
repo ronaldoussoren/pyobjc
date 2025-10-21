@@ -20,7 +20,8 @@
    "kFSEventStreamCreateFlagFullHistory": { "value": 128  },
    "kFSEventStreamEventFlagOwnEvent": { "value": 524288 },
    "kFSEventStreamEventFlagItemIsHardlink": { "value": 1048576 },
-   "kFSEventStreamEventFlagItemIsLastHardlink": { "value": 2097152 }
+   "kFSEventStreamEventFlagItemIsLastHardlink": { "value": 2097152 },
+   "kFSEventStreamCreateDeviceState": { "value": 512 }
   },
   "cftypes": {
     "ConstFSEventStreamRef": {
@@ -48,7 +49,6 @@
      }
     },
     "retval": {
-     "already_retained": true,
      "type_override": "^{__CFString=}"
     }
    },
@@ -259,7 +259,6 @@
    },
    "FSEventsCopyUUIDForDevice": {
     "retval": {
-     "already_retained": true,
      "type_override": "^{__CFUUID=}"
     }
    }

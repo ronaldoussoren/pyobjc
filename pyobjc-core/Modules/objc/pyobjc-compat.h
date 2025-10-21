@@ -123,34 +123,6 @@ NS_ASSUME_NONNULL_BEGIN
     } while (0)
 #endif
 
-#if PY_VERSION_HEX < 0x03090000
-
-/* For use on Python 3.8 and earlier. PyObjC doesn't use the
- * "flag" bit internally.
- */
-
-#ifndef PY_VECTORCALL_ARGUMENTS_OFFSET
-#define PY_VECTORCALL_ARGUMENTS_OFFSET ((size_t)1 << (8 * sizeof(size_t) - 1))
-#endif
-
-#define PyVectorcall_NARGS(nargsf) ((nargsf) & ~PY_VECTORCALL_ARGUMENTS_OFFSET)
-
-#ifdef OBJC_VERSION
-/* Don't use PyObject prefixed symbols in our binaries */
-#define PyObject_Vectorcall PyObjC_Vectorcall
-#define PyObject_VectorcallMethod PyObjC_VectorcallMethod
-
-extern PyObject* _Nullable PyObject_Vectorcall(PyObject* callable,
-                                               PyObject* _Nonnull const* _Nonnull args,
-                                               size_t nargsf,
-                                               PyObject* _Nullable kwnames);
-extern PyObject* _Nullable PyObject_VectorcallMethod(
-    PyObject* name, PyObject* _Nonnull const* _Nonnull args, size_t nargsf,
-    PyObject* _Nullable kwnames);
-#endif
-
-#endif /* Python < 3.9 */
-
 /* Use CLINIC_SEP between the prototype and
  * description in doc strings, to get clean
  * docstrings.

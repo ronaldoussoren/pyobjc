@@ -133,7 +133,7 @@ def nsarray__getitem__(self, idx):
         return [self[i] for i in range(start, stop, step)]
 
     elif not isinstance(idx, int):
-        raise TypeError("index must be a number")
+        raise TypeError("list indices must be integers or slices")
 
     if idx < 0:
         idx += len(self)

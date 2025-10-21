@@ -418,6 +418,17 @@
      }
     ]
    },
+   "DOMHTMLDocument": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hasFocus"
+     }
+    ]
+   },
    "DOMHTMLAreaElement": {
     "methods": [
      {
@@ -1859,15 +1870,24 @@
        "1": {
         "type_override": "Z"
        },
+       "2": {
+        "type_override": "i"
+       },
        "3": {
         "type_override": "^{_jmethodID=}"
        },
        "4": {
         "type_override": "^(jvalue=CcSsiqfd^{_jobject})"
        },
+       "5": {
+        "type_override": "@"
+       },
        "6": {
-        "type_modifier": "o"
+        "type_modifier": "o", "type_override": "^@"
        }
+      },
+      "retval": {
+       "type_override": "(jvalue=CcSsiqfd^{_jobject=})"
       },
       "class_method": false,
       "selector": "webPlugInCallJava:isStatic:returnType:method:arguments:callingURL:exceptionDescription:"
@@ -2441,6 +2461,23 @@
    },
    "WKPreferences": {
     "methods": [
+     {
+       "selector": "isSafeBrowsingEnabled",
+       "class_method": false,
+       "arguments": {},
+       "retval": {
+        "type_override": "Z"
+       },
+       "deprecated": 1015
+     },
+     {
+       "selector": "setSafeBrowsingEnabled:",
+       "class_method": false,
+       "arguments": {
+        "0": { "type_override": "Z" }
+       },
+       "deprecated": 1015
+     },
      {
       "args": {
        "0": {
@@ -3489,6 +3526,17 @@
    }
   },
   "enum": {
+   "WebJNIReturnTypeBoolean": { "value": 3, "deprecated": 1008 },
+   "WebJNIReturnTypeByte": { "value": 4, "deprecated": 1008 },
+   "WebJNIReturnTypeChar": { "value": 5, "deprecated": 1008 },
+   "WebJNIReturnTypeDouble": { "value": 10, "deprecated": 1008 },
+   "WebJNIReturnTypeFloat": { "value": 9, "deprecated": 1008 },
+   "WebJNIReturnTypeInt": { "value": 7, "deprecated": 1008 },
+   "WebJNIReturnTypeInvalid": { "value": 0, "deprecated": 1008 },
+   "WebJNIReturnTypeLong": { "value": 8, "deprecated": 1008 },
+   "WebJNIReturnTypeObject": { "value": 2, "deprecated": 1008 },
+   "WebJNIReturnTypeShort": { "value": 6, "deprecated": 1008 },
+   "WebJNIReturnTypeVoid": { "value": 1, "deprecated": 1008 },
    "WKDownloadRedirectPolicyCancel": { "value": 0 },
    "WKDownloadRedirectPolicyAllow": { "value": 1 },
    "WKNavigationActionPolicyDownload": { "value": 2 },

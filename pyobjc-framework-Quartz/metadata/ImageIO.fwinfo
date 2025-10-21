@@ -45,6 +45,7 @@
    }
   },
   "externs": {
+   "kCGImagePropertyOpenEXRCompression": { "typestr": "@" },
    "kCGImagePropertyImageIndex": { "typestr": "@" },
    "kCGImagePropertyGroups": { "typestr": "@" },
    "kCGImagePropertyGroupIndex": { "typestr": "@" },

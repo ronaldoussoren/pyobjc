@@ -15,7 +15,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``MetalPerformanceShadersGraph`` package (that is, ``import MetalPerformanceShadersGraph``).
 
-.. versionadded:: macOS 11
+.. macosadded:: 11
 
 
 API Notes

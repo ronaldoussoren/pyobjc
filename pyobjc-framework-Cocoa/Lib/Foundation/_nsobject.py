@@ -6,26 +6,15 @@ import sys
 
 import objc
 
-if sys.version_info[0] == 2:
 
-    def _str(v):
+def _str(v):
+    if isinstance(v, str):
         return v
+    return v.decode("ascii")
 
-    exec(
-        """\
+
 def _raise(exc_type, exc_value, exc_trace):
-    raise exc_type, exc_value, exc_trace
-"""
-    )
-else:
-
-    def _str(v):
-        if isinstance(v, str):
-            return v
-        return v.decode("ascii")
-
-    def _raise(exc_type, exc_value, exc_trace):
-        raise exc_type(exc_value).with_traceback(exc_trace)
+    raise exc_type(exc_value).with_traceback(exc_trace)
 
 
 NSObject = objc.lookUpClass("NSObject")

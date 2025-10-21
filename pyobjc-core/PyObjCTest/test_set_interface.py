@@ -491,7 +491,8 @@ class TestVariousIteratorArgs(test.test_set.TestVariousIteratorArgs):
                         getattr(set("january"), methname)(test.test_set.X(data))
 
                     with self.assertRaisesRegex(
-                        TypeError, r"iter\(\) returned non-iterator of type 'N'"
+                        TypeError,
+                        r"(iter\(\) returned non-iterator of type 'N')|(must return an iterator, not test.test_set.N)",
                     ):
                         getattr(set("january"), methname)(test.test_set.N(data))
 

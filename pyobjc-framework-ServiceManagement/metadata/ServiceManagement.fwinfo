@@ -4,6 +4,10 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "externs": {
+   "kSMInfoKeyPrivilegedExecutables": { "typestr": "@" },
+   "kSMInfoKeyAuthorizedClients": { "typestr": "@" }
+  },
   "functions": {
    "SMCopyAllJobDictionaries": {
     "args": {

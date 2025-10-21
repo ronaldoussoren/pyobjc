@@ -2,15 +2,116 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "aliases": {
+   "kCWParamErr": { "alias":  "kCWInvalidParameterErr" },
+   "kCWNoMemErr": { "alias": "kCWNoMemoryErr" },
+   "kCWUknownErr": { "alias": "kCWUnknownErr" },
+   "kCWFormatErr": { "alias": "kCWInvalidFormatErr" },
+   "kCWAuthAlgUnsupportedErr":  { "alias": "kCWAuthenticationAlgorithmUnsupportedErr" },
+   "kCWInvalidAuthSeqNumErr":  { "alias": "kCWInvalidAuthenticationSequenceNumberErr" },
+   "kCWInvalidInfoElementErr":  { "alias": "kCWInvalidInformationElementErr" },
+   "kCWHTFeaturesNotSupported":  { "alias": "kCWHTFeaturesNotSupportedErr" },
+   "kCWPCOTransitionTimeNotSupported":  { "alias": "kCWPCOTransitionTimeNotSupportedErr" },
+   "kCWRefNotBoundErr":  { "alias": "kCWReferenceNotBoundErr" },
+   "kCWIPCError":  { "alias": "kCWIPCFailureErr" },
+   "kCWOpNotPermitted":  { "alias": "kCWOperationNotPermittedErr" },
+   "kCWError":  { "alias": "kCWErr" }
+  },
+  "externs": {
+   "CWServiceDidChangeNotification": { "typestr": "@" },
+   "CoreWLANFrameworkVersionNumber": { "typestr": "d" },
+   "kCWAssocKey8021XProfile": { "typestr": "@" },
+   "kCWAssocKeyPassphrase": { "typestr": "@" },
+   "kCWBSSIDDidChangeNotification": { "typestr": "@" },
+   "kCWCountryCodeDidChangeNotification": { "typestr": "@" },
+   "kCWErrorDomain": { "typestr": "@" },
+   "kCWIBSSKeyChannel": { "typestr": "@" },
+   "kCWIBSSKeyPassphrase": { "typestr": "@" },
+   "kCWIBSSKeySSID": { "typestr": "@" },
+   "kCWLinkDidChangeNotification": { "typestr": "@" },
+   "kCWModeDidChangeNotification": { "typestr": "@" },
+   "kCWPowerDidChangeNotification": { "typestr": "@" },
+   "kCWSSIDDidChangeNotification": { "typestr": "@" },
+   "kCWScanKeyBSSID": { "typestr": "@" },
+   "kCWScanKeyDwellTime": { "typestr": "@" },
+   "kCWScanKeyMerge": { "typestr": "@" },
+   "kCWScanKeyRestTime": { "typestr": "@" },
+   "kCWScanKeySSID": { "typestr": "@" },
+   "kCWScanKeyScanType": { "typestr": "@" }
+  },
   "enum": {
+   "kCWScanTypeActive": { "value": 0 },
+   "kCWScanTypePassive": { "value": 1 },
+   "kCWScanTypeFast": { "value": 2 },
+   "kCWInterfaceStateInactive": { "value": 0 },
+   "kCWInterfaceStateScanning": { "value": 1 },
+   "kCWInterfaceStateAuthenticating": { "value": 2 },
+   "kCWInterfaceStateAssociating": { "value": 3 },
+   "kCWInterfaceStateRunning": { "value": 4 },
+   "kCWSecurityModeOpen": { "value": 0 },
+   "kCWSecurityModeWEP": { "value": 1 },
+   "kCWSecurityModeWPA_PSK": { "value": 2 },
+   "kCWSecurityModeWPA2_PSK": { "value": 3 },
+   "kCWSecurityModeDynamicWEP": { "value": 4 },
+   "kCWSecurityModeWPA_Enterprise": { "value": 5 },
+   "kCWSecurityModeWPA2_Enterprise": { "value": 6 },
+   "kCWSecurityModeWPS": { "value": 7 },
+   "kCWOpModeStation": { "value": 0 },
+   "kCWOpModeIBSS": { "value": 1 },
+   "kCWOpModeHostAP": { "value": 2 },
+   "kCWOpModeMonitorMode": { "value": 3 },
+   "CoreWLANFrameworkVersionNumber2_0": { "value": 200 },
    "CWEventTypeVirtualInterfaceStateChanged": { "value": 9 },
    "CWEventTypeRangingReportEvent": { "value": 10 },
    "kCWSecurityWPA3Personal": { "value": 11 },
    "kCWSecurityWPA3Enterprise": { "value": 12 },
    "kCWSecurityWPA3Transition": { "value": 13 },
-   "kCWPHYMode11ax": { "value": 6 }
+   "kCWPHYMode11ax": { "value": 6 },
+   "kCWPHYMode11A": { "value": 0 },
+   "kCWPHYMode11B": { "value": 1 },
+   "kCWPHYMode11G": { "value": 2 },
+   "kCWPHYMode11N": { "value": 3 }
   },
   "classes": {
+   "CWNetwork": {
+    "methods": [
+     {
+      "selector": "isIBSS",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "CW8021XProfile": {
+    "methods": [
+     {
+      "selector": "alwaysPromptForPassword",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setAlwaysPromptForPassword:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isEqualToProfile:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "CWWirelessProfile": {
+    "methods": [
+     {
+      "selector": "isEqualToProfile:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "CWConfiguration": {
     "methods": [
      {
@@ -45,6 +146,11 @@
    },
    "CWInterface": {
     "methods": [
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "deviceAttached"
+     },
      {
       "args": {
        "1": { "type_override": "Z" },

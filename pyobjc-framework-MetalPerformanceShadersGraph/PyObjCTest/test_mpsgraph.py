@@ -35,6 +35,25 @@ class TestMPSGraph(TestCase):
             MetalPerformanceShadersGraph.MPSGraphExecutionStageCompleted, 0
         )
 
+        self.assertIsEnumType(
+            MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMath
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMathNone, 0
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMathAllowFP16Conv2DWinogradTransformIntermediate,
+            1 << 1,
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMathAllowFP16Intermediates,
+            MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMathAllowFP16Conv2DWinogradTransformIntermediate,
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMathDefault,
+            MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMathNone,
+        )
+
     @min_os_level("11.0")
     def test_methods(self):
         self.assertResultIsBOOL(

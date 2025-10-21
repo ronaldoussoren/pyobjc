@@ -36,10 +36,8 @@ typedef struct {
     Class _Nullable sel_class;
     int sel_flags;
     PyObjCMethodSignature* _Nullable sel_methinfo;
-    Py_ssize_t sel_mappingcount;
-#if PY_VERSION_HEX >= 0x03090000
+    Py_ssize_t     sel_mappingcount;
     vectorcallfunc sel_vectorcall;
-#endif
 } PyObjCSelector;
 
 typedef struct {
@@ -91,6 +89,8 @@ extern PyObject* _Nullable PyObjCSelector_New(PyObject* callable, SEL selector,
 extern SEL PyObjCSelector_DefaultSelector(const char* methname);
 
 extern int PyObjCSelector_Setup(PyObject* module);
+
+extern PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(PyObjCNativeSelector* obj);
 
 NS_ASSUME_NONNULL_END
 

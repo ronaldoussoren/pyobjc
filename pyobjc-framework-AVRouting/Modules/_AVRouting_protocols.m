@@ -12,4 +12,8 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(AVCustomRoutingControllerDelegate));
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1300 */
+#if PyObjC_BUILD_RELEASE >= 2600
+    p = PyObjC_IdToPython(@protocol(AVRoutingPlaybackParticipant));
+    Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 2600 */
 }

@@ -1,5 +1,70 @@
 import Metal
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+
+
+class TestMTLRenderPipelineHelper(Metal.NSObject):
+    def functionHandleWithName_stage_(self, a, b):
+        pass
+
+    def functionHandleWithBinaryFunction_stage_(self, a, b):
+        pass
+
+    def newRenderPipelineStateWithBinaryFunctions_error_(self, a, b):
+        pass
+
+    def maxTotalThreadsPerThreadgroup(self):
+        return 1
+
+    def threadgroupSizeMatchesTileSize(self):
+        return 1
+
+    def imageblockSampleLength(self):
+        return 1
+
+    def supportIndirectCommandBuffers(self):
+        return 1
+
+    def maxTotalThreadsPerObjectThreadgroup(self):
+        return 1
+
+    def maxTotalThreadsPerMeshThreadgroup(self):
+        return 1
+
+    def objectThreadExecutionWidth(self):
+        return 1
+
+    def meshThreadExecutionWidth(self):
+        return 1
+
+    def maxTotalThreadgroupsPerMeshGrid(self):
+        return 1
+
+    def gpuResourceID(self):
+        return 1
+
+    def functionHandleWithFunction_stage_(self, a, b):
+        return 1
+
+    def newVisibleFunctionTableWithDescriptor_stage_(self, a, b):
+        return 1
+
+    def newIntersectionFunctionTableWithDescriptor_stage_(self, a, b):
+        return 1
+
+    def newRenderPipelineStateWithAdditionalBinaryFunctions_error_(self, a, b):
+        return 1
+
+    def shaderValidation(self):
+        return 1
+
+    def requiredThreadsPerTileThreadgroup(self):
+        return 1
+
+    def requiredThreadsPerObjectThreadgroup(self):
+        return 1
+
+    def requiredThreadsPerMeshThreadgroup(self):
+        return 1
 
 
 class TestMTLRenderPipeline(TestCase):
@@ -117,6 +182,73 @@ class TestMTLRenderPipeline(TestCase):
         self.assertEqual(Metal.MTLArgumentAccessReadWrite, 1)
         self.assertEqual(Metal.MTLArgumentAccessWriteOnly, 2)
 
+        self.assertIsEnumType(Metal.MTLBlendFactor)
+        self.assertEqual(Metal.MTLBlendFactorZero, 0)
+        self.assertEqual(Metal.MTLBlendFactorOne, 1)
+        self.assertEqual(Metal.MTLBlendFactorSourceColor, 2)
+        self.assertEqual(Metal.MTLBlendFactorOneMinusSourceColor, 3)
+        self.assertEqual(Metal.MTLBlendFactorSourceAlpha, 4)
+        self.assertEqual(Metal.MTLBlendFactorOneMinusSourceAlpha, 5)
+        self.assertEqual(Metal.MTLBlendFactorDestinationColor, 6)
+        self.assertEqual(Metal.MTLBlendFactorOneMinusDestinationColor, 7)
+        self.assertEqual(Metal.MTLBlendFactorDestinationAlpha, 8)
+        self.assertEqual(Metal.MTLBlendFactorOneMinusDestinationAlpha, 9)
+        self.assertEqual(Metal.MTLBlendFactorSourceAlphaSaturated, 10)
+        self.assertEqual(Metal.MTLBlendFactorBlendColor, 11)
+        self.assertEqual(Metal.MTLBlendFactorOneMinusBlendColor, 12)
+        self.assertEqual(Metal.MTLBlendFactorBlendAlpha, 13)
+        self.assertEqual(Metal.MTLBlendFactorOneMinusBlendAlpha, 14)
+        self.assertEqual(Metal.MTLBlendFactorSource1Color, 15)
+        self.assertEqual(Metal.MTLBlendFactorOneMinusSource1Color, 16)
+        self.assertEqual(Metal.MTLBlendFactorSource1Alpha, 17)
+        self.assertEqual(Metal.MTLBlendFactorOneMinusSource1Alpha, 18)
+        self.assertEqual(Metal.MTLBlendFactorUnspecialized, 19)
+
+        self.assertIsEnumType(Metal.MTLBlendOperation)
+        self.assertEqual(Metal.MTLBlendOperationAdd, 0)
+        self.assertEqual(Metal.MTLBlendOperationSubtract, 1)
+        self.assertEqual(Metal.MTLBlendOperationReverseSubtract, 2)
+        self.assertEqual(Metal.MTLBlendOperationMin, 3)
+        self.assertEqual(Metal.MTLBlendOperationMax, 4)
+        self.assertEqual(Metal.MTLBlendOperationUnspecialized, 5)
+
+        self.assertIsEnumType(Metal.MTLColorWriteMask)
+        self.assertEqual(Metal.MTLColorWriteMaskNone, 0)
+        self.assertEqual(Metal.MTLColorWriteMaskRed, 0x1 << 3)
+        self.assertEqual(Metal.MTLColorWriteMaskGreen, 0x1 << 2)
+        self.assertEqual(Metal.MTLColorWriteMaskBlue, 0x1 << 1)
+        self.assertEqual(Metal.MTLColorWriteMaskAlpha, 0x1 << 0)
+        self.assertEqual(Metal.MTLColorWriteMaskAll, 0xF)
+        self.assertEqual(Metal.MTLColorWriteMaskUnspecialized, 0x10)
+
+        self.assertIsEnumType(Metal.MTLPrimitiveTopologyClass)
+        self.assertEqual(Metal.MTLPrimitiveTopologyClassUnspecified, 0)
+        self.assertEqual(Metal.MTLPrimitiveTopologyClassPoint, 1)
+        self.assertEqual(Metal.MTLPrimitiveTopologyClassLine, 2)
+        self.assertEqual(Metal.MTLPrimitiveTopologyClassTriangle, 3)
+
+        self.assertIsEnumType(Metal.MTLTessellationPartitionMode)
+        self.assertEqual(Metal.MTLTessellationPartitionModePow2, 0)
+        self.assertEqual(Metal.MTLTessellationPartitionModeInteger, 1)
+        self.assertEqual(Metal.MTLTessellationPartitionModeFractionalOdd, 2)
+        self.assertEqual(Metal.MTLTessellationPartitionModeFractionalEven, 3)
+
+        self.assertIsEnumType(Metal.MTLTessellationFactorStepFunction)
+        self.assertEqual(Metal.MTLTessellationFactorStepFunctionConstant, 0)
+        self.assertEqual(Metal.MTLTessellationFactorStepFunctionPerPatch, 1)
+        self.assertEqual(Metal.MTLTessellationFactorStepFunctionPerInstance, 2)
+        self.assertEqual(
+            Metal.MTLTessellationFactorStepFunctionPerPatchAndPerInstance, 3
+        )
+
+        self.assertIsEnumType(Metal.MTLTessellationFactorFormat)
+        self.assertEqual(Metal.MTLTessellationFactorFormatHalf, 0)
+
+        self.assertIsEnumType(Metal.MTLTessellationControlPointIndexType)
+        self.assertEqual(Metal.MTLTessellationControlPointIndexTypeNone, 0)
+        self.assertEqual(Metal.MTLTessellationControlPointIndexTypeUInt16, 1)
+        self.assertEqual(Metal.MTLTessellationControlPointIndexTypeUInt32, 2)
+
     @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isActive)
@@ -128,6 +260,32 @@ class TestMTLRenderPipeline(TestCase):
         )
         self.assertResultIsBOOL(
             Metal.MTLTextureReferenceType.alloc().init().isDepthTexture
+        )
+
+    @min_os_level("11.0")
+    def test_methods11_0(self):
+        self.assertResultIsBOOL(
+            Metal.MTLTileRenderPipelineDescriptor.alloc()
+            .init()
+            .threadgroupSizeMatchesTileSize
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLTileRenderPipelineDescriptor.alloc()
+            .init()
+            .setThreadgroupSizeMatchesTileSize_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLTileRenderPipelineDescriptor.alloc()
+            .init()
+            .supportAddingBinaryFunctions
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLTileRenderPipelineDescriptor.alloc()
+            .init()
+            .setSupportAddingBinaryFunctions_,
+            0,
         )
 
     @min_os_level("13.0")
@@ -190,4 +348,84 @@ class TestMTLRenderPipeline(TestCase):
             .init()
             .setSupportIndirectCommandBuffers_,
             0,
+        )
+
+    @min_sdk_level("10.11")
+    def test_protocols(self):
+        self.assertProtocolExists("MTLRenderPipelineState")
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.functionHandleWithName_stage_, 1, b"Q"
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.functionHandleWithBinaryFunction_stage_, 1, b"Q"
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.newRenderPipelineStateWithBinaryFunctions_error_,
+            1,
+            b"o^@",
+        )
+
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.maxTotalThreadsPerThreadgroup, b"Q"
+        )
+        self.assertResultIsBOOL(
+            TestMTLRenderPipelineHelper.threadgroupSizeMatchesTileSize
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.imageblockSampleLength, b"q"
+        )
+        self.assertResultIsBOOL(
+            TestMTLRenderPipelineHelper.supportIndirectCommandBuffers
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.maxTotalThreadsPerObjectThreadgroup, b"Q"
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.maxTotalThreadsPerMeshThreadgroup, b"Q"
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.objectThreadExecutionWidth, b"Q"
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.meshThreadExecutionWidth, b"Q"
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.maxTotalThreadgroupsPerMeshGrid, b"Q"
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.gpuResourceID, Metal.MTLResourceID.__typestr__
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.functionHandleWithFunction_stage_, 1, b"Q"
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.newVisibleFunctionTableWithDescriptor_stage_,
+            1,
+            b"Q",
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.newIntersectionFunctionTableWithDescriptor_stage_,
+            1,
+            b"Q",
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.newRenderPipelineStateWithAdditionalBinaryFunctions_error_,
+            1,
+            b"o^@",
+        )
+
+        self.assertResultHasType(TestMTLRenderPipelineHelper.shaderValidation, b"q")
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.requiredThreadsPerTileThreadgroup,
+            Metal.MTLSize.__typestr__,
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.requiredThreadsPerObjectThreadgroup,
+            Metal.MTLSize.__typestr__,
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.requiredThreadsPerMeshThreadgroup,
+            Metal.MTLSize.__typestr__,
         )

@@ -219,11 +219,8 @@ PyObject*      input;
 struct Struct1 output;
 int            r;
 
-input = PyTuple_New(2);
+input = PyTuple_Pack(2, PyLong_FromLong(1), PyFloat_FromDouble(2));
 FAIL_IF(input == NULL);
-
-PyTuple_SetItem(input, 0, PyLong_FromLong(1));
-PyTuple_SetItem(input, 1, PyFloat_FromDouble(2));
 
 r = depythonify_c_value(@encode(struct Struct1), input, &output);
 FAIL_IF(r < 0);
@@ -242,19 +239,13 @@ PyObject*      v;
 struct Struct2 output;
 int            r;
 
-input = PyTuple_New(3);
+v = PyTuple_Pack(5, PyLong_FromLong(10), PyLong_FromLong(11), PyLong_FromLong(12),
+                 PyLong_FromLong(13), PyLong_FromLong(14));
+FAIL_IF(v == NULL);
+
+input = PyTuple_Pack(3, PyLong_FromLong(1), PyFloat_FromDouble(2), v);
+Py_CLEAR(v);
 FAIL_IF(input == NULL);
-
-v = PyTuple_New(5);
-PyTuple_SetItem(v, 0, PyLong_FromLong(10));
-PyTuple_SetItem(v, 1, PyLong_FromLong(11));
-PyTuple_SetItem(v, 2, PyLong_FromLong(12));
-PyTuple_SetItem(v, 3, PyLong_FromLong(13));
-PyTuple_SetItem(v, 4, PyLong_FromLong(14));
-
-PyTuple_SetItem(input, 0, PyLong_FromLong(1));
-PyTuple_SetItem(input, 1, PyFloat_FromDouble(2));
-PyTuple_SetItem(input, 2, v);
 
 r = depythonify_c_value(@encode(struct Struct2), input, &output);
 FAIL_IF(r < 0);
@@ -277,11 +268,8 @@ PyObject*      input;
 struct Struct3 output;
 int            r;
 
-input = PyTuple_New(2);
+input = PyTuple_Pack(2, PyBytes_FromStringAndSize("\001", 1), PyLong_FromLong(2));
 FAIL_IF(input == NULL);
-
-PyTuple_SetItem(input, 0, PyBytes_FromStringAndSize("\001", 1));
-PyTuple_SetItem(input, 1, PyLong_FromLong(2));
 
 r = depythonify_c_value(@encode(struct Struct3), input, &output);
 FAIL_IF(r < 0);
@@ -299,11 +287,8 @@ PyObject*      input;
 struct Struct4 output;
 int            r;
 
-input = PyTuple_New(2);
+input = PyTuple_Pack(2, PyBytes_FromStringAndSize("\001", 1), PyLong_FromLong(500000));
 FAIL_IF(input == NULL);
-
-PyTuple_SetItem(input, 0, PyBytes_FromStringAndSize("\001", 1));
-PyTuple_SetItem(input, 1, PyLong_FromLong(500000));
 
 r = depythonify_c_value(@encode(struct Struct4), input, &output);
 FAIL_IF(r < 0);
@@ -318,22 +303,20 @@ END_UNITTEST
 BEGIN_UNITTEST(FillStruct5Array)
 
 PyObject*    input;
-PyObject*    v;
+PyObject*    v1;
+PyObject*    v2;
 Struct5Array output;
 int          r;
 
-input = PyTuple_New(2);
+v1 = PyTuple_Pack(2, PyLong_FromLong(500000), PyBytes_FromStringAndSize("\001", 1));
+FAIL_IF(v1 == NULL);
+v2 = PyTuple_Pack(2, PyLong_FromLong(1000000), PyBytes_FromStringAndSize("\002", 1));
+FAIL_IF(v2 == NULL);
+
+input = PyTuple_Pack(2, v1, v2);
+Py_CLEAR(v1);
+Py_CLEAR(v2);
 FAIL_IF(input == NULL);
-
-v = PyTuple_New(2);
-PyTuple_SetItem(v, 0, PyLong_FromLong(500000));
-PyTuple_SetItem(v, 1, PyBytes_FromStringAndSize("\001", 1));
-PyTuple_SetItem(input, 0, v);
-
-v = PyTuple_New(2);
-PyTuple_SetItem(v, 0, PyLong_FromLong(1000000));
-PyTuple_SetItem(v, 1, PyBytes_FromStringAndSize("\002", 1));
-PyTuple_SetItem(input, 1, v);
 
 r = depythonify_c_value(@encode(Struct5Array), input, &output);
 FAIL_IF(r < 0);
@@ -758,19 +741,16 @@ int           r;
 output.before = 0xDEADBEEF;
 output.after  = 0xBEEFDEAD;
 
-input = PyTuple_New(2);
+v = PyTuple_Pack(2, PyLong_FromLong(10), PyLong_FromLong(11));
+FAIL_IF(v == NULL);
+
+t = PyTuple_Pack(2, PyLong_FromLong(20), PyLong_FromLong(21));
+FAIL_IF(t == NULL);
+
+input = PyTuple_Pack(2, v, t);
+Py_CLEAR(v);
+Py_CLEAR(t);
 FAIL_IF(input == NULL);
-
-v = PyTuple_New(2);
-PyTuple_SetItem(v, 0, PyLong_FromLong(10));
-PyTuple_SetItem(v, 1, PyLong_FromLong(11));
-
-t = PyTuple_New(2);
-PyTuple_SetItem(t, 0, PyLong_FromLong(20));
-PyTuple_SetItem(t, 1, PyLong_FromLong(21));
-
-PyTuple_SetItem(input, 0, v);
-PyTuple_SetItem(input, 1, t);
 
 r = depythonify_c_value(@encode(NSRect), input, &output.rect);
 FAIL_IF(r < 0);

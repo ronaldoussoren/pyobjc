@@ -94,4 +94,50 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(MTLResidencySet));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1500
+    p = PyObjC_IdToPython(@protocol(MTL4Archive));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4ArgumentTable));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4BinaryFunction));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4CommandAllocator));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4CommandBuffer));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4CommandEncoder));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4CommandQueue));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4CommitFeedback));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4Compiler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4CompilerTask));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4ComputeCommandEncoder));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4CounterHeap));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4MachineLearningCommandEncoder));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4MachineLearningPipelineState));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4PipelineDataSetSerializer));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLTensorBinding));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLComputePipelineState));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLRenderPipelineState));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLResourceViewPool));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLTensor));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLTextureViewPool));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTL4RenderCommandEncoder));
+    Py_XDECREF(p);
+#endif
 }

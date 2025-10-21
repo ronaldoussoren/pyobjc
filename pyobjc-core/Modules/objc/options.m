@@ -1014,8 +1014,8 @@ PyObjC_CallClassExtender(PyObject* cls)
              * That race condition is fixed in 3.15, but that makes updating
              * slots expensive, making it important to avoid spurious updates.
              *
-             * The check is not necessary for the regular build, but does avoid
-             * setting attributes unnecessarily.
+             * The comparison code is active for the regular build as well
+             * to maintain the same semantics in both builds.
              */
             PyObject* c;
             int       r = PyDict_GetItemRef(((PyTypeObject*)cls)->tp_dict, k, &c);
@@ -1050,12 +1050,13 @@ PyObjC_CallClassExtender(PyObject* cls)
             Py_CLEAR(k);
             Py_CLEAR(v);
 
-        } else {
+        } else { // LCOV_BR_EXCL_LINE
             /* 'cls' is known to be an PyObjCClass instance, hence the tp_dict
              * slot is usable directly.
              */
-            if (PyDict_SetItem(((PyTypeObject*)cls)->tp_dict, k, v)
-                == -1) {       // LCOV_BR_EXCL_LINE
+            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                    ((PyTypeObject*)cls)->tp_dict, k, v)
+                == -1) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         }
@@ -1095,7 +1096,7 @@ PyObjCErr_SetGAIError(int error)
         Py_DECREF(v);
     }
     Py_DECREF(type);
-}
+} // LCOV_BR_EXCL_LINE
 
 PyObject* _Nullable PyObjCErr_SetSocketError(const char* message)
 {
@@ -1225,7 +1226,7 @@ PyObjC_IsGenericNew(PyObject* value)
     UNLOCK(PyObjC_genericNewClass);
 
     if (!PyType_Check(type)) {
-        PyErr_Format(PyExc_TypeError, "'%R' is not a type", type);
+        PyErr_Format(PyExc_TypeError, "%R is not a type", type);
         Py_DECREF(type);
         return -1;
     }
@@ -1244,6 +1245,7 @@ PyObjC_ArrayTypeCheck(PyObject* value)
     UNLOCK(PyObjC_genericNewClass);
 
     if (type == Py_None) {
+        Py_DECREF(type);
         return 0;
     }
 

@@ -27,6 +27,11 @@ class TestDefaultNewForPythonClass(TestCase):
         v = NSObject()
         self.assertIsInstance(v, NSObject)
 
+        with self.assertRaisesRegex(
+            TypeError, "does not support keyword arguments 'value'"
+        ):
+            NSObject(value=42)
+
         self.assertEqual(new_mod.NEW_MAP["NSObject"], {(): "init"})
 
         with self.assertRaisesRegex(
@@ -52,6 +57,20 @@ class TestDefaultNewForPythonClass(TestCase):
         NSObject.__new__.foo = 42
         self.assertEqual(NSObject.__new__._function.foo, 42)
         del NSObject.__new__._function.foo
+
+        new = NSObject.__new__
+        self.assertEqual(new.__qualname__, "objc.NSObject.__new__")
+        self.assertEqual(new.__name__, "__new__")
+        self.assertEqual(new.__module__, "objc")
+
+    def test_function_wrapper_slots(self):
+        value = NSObject.__new__
+        self.assertIs(type(value), new_mod.function_wrapper)
+        self.assertIn("_cls", new_mod.function_wrapper.__dict__)
+        self.assertIn("_function", new_mod.function_wrapper.__dict__)
+        self.assertNotIn("__dict__", new_mod.function_wrapper.__dict__)
+
+        self.assertIs(value.__dict__, value._function.__dict__)
 
     def test_basic(self):
         class OCPyNew1(NSObject):
@@ -123,6 +142,11 @@ class TestDefaultNewForPythonClass(TestCase):
             ),
         )
 
+        new = OCPyNew1.__new__
+        self.assertEqual(new.__qualname__, f"{self.__module__}.OCPyNew1.__new__")
+        self.assertEqual(new.__name__, "__new__")
+        self.assertEqual(new.__module__, self.__module__)
+
     def test_no_new_in_options(self):
         orig = objc.options._setDunderNew
         try:
@@ -149,6 +173,23 @@ class TestDefaultNewForPythonClass(TestCase):
 
         finally:
             objc.options._setDunderNew = orig
+
+    def test_invalid_new_class_option(self):
+        class OC_GenericNewWithInit(NSObject):
+            def __init__(self):
+                self.foo = 42
+
+        o = OC_GenericNewWithInit()
+        self.assertNotHasAttr(o, "foo")
+
+        with pyobjc_options(_genericNewClass=float):
+            o = OC_GenericNewWithInit()
+            self.assertEqual(o.foo, 42)
+
+        with pyobjc_options(_genericNewClass=42):
+            with self.assertRaisesRegex(TypeError, "42 is not a type"):
+                o = OC_GenericNewWithInit()
+                print(o)
 
     def test_explicit_new(self):
         # Test that an explicit __new__ overrides the default

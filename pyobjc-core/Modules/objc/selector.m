@@ -33,6 +33,7 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
         /* XXX: likely needs atomic read for the mappingcounts */
         Py_BEGIN_CRITICAL_SECTION(self);
         Py_CLEAR(self->sel_methinfo);
+        /* XXX: This should also reset the CIF! */
         Py_END_CRITICAL_SECTION();
     }
 
@@ -71,7 +72,8 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
 #ifdef Py_GIL_DISABLED
     if (self->sel_methinfo == NULL) {
 #endif
-        self->sel_methinfo = result;
+        self->sel_methinfo     = result;
+        self->sel_mappingcount = PyObjC_MappingCount;
         if (PyObjCPythonSelector_Check(_self)) {
             Py_ssize_t i;
 
@@ -650,6 +652,39 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
     return PyObjCFFI_Caller_SimpleSEL((PyObject*)self, pyself, args, nargsf);
 }
 
+PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(PyObjCNativeSelector* obj)
+{
+    if (obj->sel_call_func != NULL) {
+        return obj->sel_call_func;
+    } else {
+        assert(obj->base.sel_class != NULL);
+
+        PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)obj);
+        if (methinfo == NULL) {
+            return NULL;
+        }
+        PyObjC_CallFunc execute = PyObjC_FindCallFunc(
+            obj->base.sel_class, obj->base.sel_selector, methinfo->signature);
+        Py_CLEAR(methinfo);
+        if (execute == NULL) {
+            return NULL;
+        }
+
+        if (obj->sel_call_func == NULL) {
+            obj->sel_call_func = execute;
+            /* Update the vectorcall slot when a faster call is possible */
+            if (obj->base.sel_methinfo->shortcut_signature
+                && execute == PyObjCFFI_Caller) {
+                obj->base.sel_vectorcall = objcsel_vectorcall_simple;
+            }
+        } else {
+            execute = obj->sel_call_func;
+        }
+
+        return execute;
+    }
+}
+
 static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
                                               PyObject* _Nonnull const* _Nonnull args,
                                               size_t nargsf, PyObject* _Nullable kwnames)
@@ -710,31 +745,9 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         Py_CLEAR(methinfo);
     }
 
-    if (self->sel_call_func != NULL) {
-        execute = self->sel_call_func;
-    } else {
-        assert(self->base.sel_class != NULL);
-
-        execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector,
-                                      self->base.sel_methinfo->signature);
-        if (execute == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;       // LCOV_EXCL_LINE
-        }
-
-        if (self->sel_call_func == NULL) {
-            self->sel_call_func = execute;
-            /* Update the vectorcall slot when a faster call is possible */
-            if (self->base.sel_methinfo->shortcut_signature
-                && execute == PyObjCFFI_Caller) {
-                self->base.sel_vectorcall = objcsel_vectorcall_simple;
-            }
-        } else {
-            /* XXX: Hitting this requires a race condition between two initial calls */
-            // LCOV_EXCL_START
-            Py_CLEAR(execute);
-            execute = self->sel_call_func;
-            // LCOV_EXCL_STOP
-        }
+    execute = PyObjCSelector_GetCallFunc(self);
+    if (execute == NULL) {
+        return NULL;
     }
 
     /* XXX: The if statement below can be simplified, both cases are mostly the same */
@@ -829,6 +842,11 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     }
     result->base.sel_native_signature = tmp;
 
+    result->base.sel_methinfo = PyObjCSelector_GetMetadata(_self);
+    if (result->base.sel_methinfo == NULL) {
+        PyErr_Clear();
+    }
+
     if (meth->sel_call_func == NULL) {
         if (class_isMetaClass(meth->base.sel_class)) {
             PyObject* metaclass_obj = PyObjCClass_New(meth->base.sel_class);
@@ -879,16 +897,6 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
             Py_DECREF(result);
             return NULL;
         }
-    }
-
-    if (meth->base.sel_methinfo != NULL) {
-        result->base.sel_methinfo = meth->base.sel_methinfo;
-        Py_INCREF(result->base.sel_methinfo);
-    } else {
-        // result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
-        // if (!result->base.sel_methinfo) {
-        //     PyErr_Clear();
-        // }
     }
 
     /* XXX: 'sel_methinfo' should probably be _Nonnull */
@@ -1134,7 +1142,6 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     result->base.sel_flags            = 0;
     result->base.sel_mappingcount     = 0;
     result->base.sel_methinfo         = NULL;
-    result->base.sel_methinfo         = NULL;
     result->base.sel_vectorcall       = objcsel_vectorcall;
     result->sel_call_func             = NULL;
     result->sel_cif                   = NULL;
@@ -1173,16 +1180,15 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     if (class_method) {
         result->base.sel_flags |= PyObjCSelector_kCLASS_METHOD;
     }
-    result->base.sel_methinfo       = NULL;
+
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
     if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
         // LCOV_EXCL_STOP
-    } else {
-        Py_CLEAR(methinfo);
     }
+    Py_CLEAR(methinfo);
     return (PyObject*)result;
 }
 
@@ -1441,9 +1447,8 @@ static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
     PyObjCPythonSelector* self = (PyObjCPythonSelector*)_self;
     PyObject*             result;
 
-    assert(self->callable != NULL);
-    if (self->callable == Py_None) {
-        PyErr_Format(PyExc_TypeError, "Calling abstract methods with selector %s",
+    if (self->callable == NULL || self->callable == Py_None) {
+        PyErr_Format(PyExc_TypeError, "Calling abstract methods with selector '%s'",
                      sel_getName(self->base.sel_selector));
         return NULL;
     }
@@ -1452,7 +1457,7 @@ static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
         if (self->base.sel_self == NULL) {
             PyObject* self_arg;
             if (PyVectorcall_NARGS(nargsf) < 1) {
-                PyErr_SetString(PyObjCExc_Error, "need self argument");
+                PyErr_SetString(PyExc_TypeError, "need self argument");
                 return NULL;
             }
 
@@ -1551,6 +1556,13 @@ pysel_default_signature(SEL selector, PyObject* callable)
 
     if (!PyObjC_returns_value(callable)) {
         result[0] = _C_VOID;
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            // XXX: This cannot fail in practice
+            // LCOV_EXCL_START
+            PyMem_Free(result);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
     }
 
     return result;
@@ -1577,7 +1589,8 @@ static SEL _Nullable pysel_default_selector(PyObject* callable)
         Py_DECREF(bytes);
 
     } else {
-        PyErr_Format(PyExc_TypeError, "__name__ of %R is not a string", callable);
+        /* The name of built-in callables is always a unicode string */
+        PyErr_Format(PyExc_TypeError, "%R: __name__ is not a string", callable);
         return NULL;
     }
 
@@ -1707,6 +1720,18 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
         }
     }
 
+    if (callable != Py_None && !PyCallable_Check(callable)
+        && !PyObject_TypeCheck(callable, &PyClassMethod_Type)) {
+        PyErr_SetString(PyExc_TypeError, "argument 'method' must be callable");
+        return NULL;
+    }
+
+    if (PyObject_TypeCheck(callable, &PyStaticMethod_Type)) {
+        PyErr_SetString(PyExc_TypeError, "cannot use staticmethod as the "
+                                         "callable for a selector.");
+        return NULL;
+    }
+
     if (PyObject_TypeCheck(callable, &PyClassMethod_Type)) {
         /* Special treatment for 'classmethod' instances */
         PyObject* tmp =
@@ -1715,20 +1740,12 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
             return NULL;   // LCOV_EXCL_LINE
         }
 
-        callable     = PyObject_GetAttrString(tmp, "__func__");
-        class_method = 1;
+        callable = PyObject_GetAttrString(tmp, "__func__");
         Py_DECREF(tmp);
         if (callable == NULL) { // LCOV_BR_EXCL_LINE
             return NULL;        // LCOV_EXCL_LINE
         }
-    } else if (PyObject_TypeCheck(callable, &PyStaticMethod_Type)) {
-        PyErr_SetString(PyExc_TypeError, "cannot use staticmethod as the "
-                                         "callable for a selector.");
-        return NULL;
-
-    } else if (callable != Py_None && !PyCallable_Check(callable)) {
-        PyErr_SetString(PyExc_TypeError, "argument 'method' must be callable");
-        return NULL;
+        class_method = 1;
 
     } else {
         Py_INCREF(callable);
@@ -1810,7 +1827,7 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     }
     result->base.sel_python_signature = tmp;
 
-    if (meth->base.sel_native_signature) {
+    if (meth->base.sel_native_signature) { // LCOV_BR_EXCL_LINE
         result->base.sel_native_signature =
             PyObjCUtil_Strdup(meth->base.sel_native_signature);
         if (result->base.sel_native_signature == NULL) { // LCOV_BR_EXCL_LINE
@@ -1821,7 +1838,7 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
         }
 
     } else {
-        result->base.sel_native_signature = NULL;
+        result->base.sel_native_signature = NULL; // LCOV_EXCL_LINE
     }
 
     result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)meth);
@@ -2008,12 +2025,10 @@ PyObjCSelector_Setup(PyObject* module)
     Py_INCREF(PyObjCSelector_Type);
 
 #if PY_VERSION_HEX < 0x030a0000
-    PyObject* bases = PyTuple_New(1);
+    PyObject* bases = PyTuple_Pack(1, PyObjCSelector_Type);
     if (bases == NULL) { // LCOV_BR_EXCL_LINE
         return -1;       // LCOV_EXCL_LINE
     }
-    PyTuple_SET_ITEM(bases, 0, PyObjCSelector_Type);
-    Py_INCREF(PyObjCSelector_Type);
 #endif
 
     tmp = PyType_FromSpecWithBases(&pysel_spec,

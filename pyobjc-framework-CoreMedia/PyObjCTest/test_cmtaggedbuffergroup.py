@@ -62,3 +62,14 @@ class TestCMTaggedBufferGroup(TestCase):
         )
 
         CoreMedia.CMSampleBufferGetTaggedBufferGroup
+
+    @min_os_level("26.0")
+    def test_functions26(self):
+        self.assertArgIsOut(
+            CoreMedia.CMTaggedBufferGroupFormatDescriptionCreateForTaggedBufferGroupWithExtensions,
+            3,
+        )
+        self.assertArgIsCFRetained(
+            CoreMedia.CMTaggedBufferGroupFormatDescriptionCreateForTaggedBufferGroupWithExtensions,
+            3,
+        )

@@ -28,6 +28,12 @@ def _setup():
         metadict=_metadata.__dict__,
     )
 
+    for cls, sel in (
+        ("NEURLFilter", b"init"),
+        ("NEURLFilter", b"new"),
+    ):
+        objc.registerUnavailableMethod(cls, sel)
+
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
 

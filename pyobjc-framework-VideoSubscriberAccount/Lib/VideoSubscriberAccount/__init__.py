@@ -37,6 +37,10 @@ def _setup():
         ("VSAccountManagerResult", b"new"),
         ("VSUserAccount", b"init"),
         ("VSUserAccount", b"new"),
+        ("VSAutoSignInToken", b"init"),
+        ("VSAutoSignInToken", b"new"),
+        ("VSAutoSignInTokenUpdateContext", b"init"),
+        ("VSAutoSignInTokenUpdateContext", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

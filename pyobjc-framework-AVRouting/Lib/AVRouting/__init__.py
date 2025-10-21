@@ -31,6 +31,8 @@ def _setup():
     for cls, sel in (
         ("AVCustomRoutingPartialIP", b"init"),
         ("AVCustomRoutingPartialIP", b"new"),
+        ("AVRoutingPlaybackArbiter", b"init"),
+        ("AVRoutingPlaybackArbiter", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

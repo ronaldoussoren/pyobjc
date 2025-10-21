@@ -36,7 +36,6 @@ def _setup():
     globals()["__getattr__"] = getattr_func
 
     for cls in (
-        "VTFrameProcessor",
         "VTFrameProcessorFrame",
         "VTFrameProcessorOpticalFlow",
         "VTFrameRateConversionConfiguration",
@@ -68,6 +67,22 @@ def _setup():
         ("VTOpticalFlowConfiguration", b"new"),
         ("VTOpticalFlowParameters", b"init"),
         ("VTOpticalFlowParameters", b"new"),
+        ("VTLowLatencyFrameInterpolationConfiguration", b"init"),
+        ("VTLowLatencyFrameInterpolationConfiguration", b"new"),
+        ("VTLowLatencyFrameInterpolationParameters", b"init"),
+        ("VTLowLatencyFrameInterpolationParameters", b"new"),
+        ("VTLowLatencySuperResolutionScalerConfiguration", b"init"),
+        ("VTLowLatencySuperResolutionScalerConfiguration", b"new"),
+        ("VTLowLatencySuperResolutionScalerParameters", b"init"),
+        ("VTLowLatencySuperResolutionScalerParameters", b"new"),
+        ("VTSuperResolutionScalerConfiguration", b"init"),
+        ("VTSuperResolutionScalerConfiguration", b"new"),
+        ("VTSuperResolutionScalerParameters", b"init"),
+        ("VTSuperResolutionScalerParameters", b"new"),
+        ("VTTemporalNoiseFilterConfiguration", b"init"),
+        ("VTTemporalNoiseFilterConfiguration", b"new"),
+        ("VTTemporalNoiseFilterParameters", b"init"),
+        ("VTTemporalNoiseFilterParameters", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

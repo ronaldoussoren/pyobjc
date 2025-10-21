@@ -50,3 +50,15 @@ class TestGCDualSenseAdaptiveTrigger(TestCase):
 
         v = GameController.GCDualSenseAdaptiveTriggerPositionalResistiveStrengths()
         self.assertIs(v.values, None)
+
+    def test_methods(self):
+        self.assertArgHasType(
+            GameController.GCDualSenseAdaptiveTrigger.setModeFeedbackWithResistiveStrengths_,
+            0,
+            GameController.GCDualSenseAdaptiveTriggerPositionalResistiveStrengths.__typestr__,
+        )
+        self.assertArgHasType(
+            GameController.GCDualSenseAdaptiveTrigger.setModeVibrationWithAmplitudes_frequency_,
+            0,
+            GameController.GCDualSenseAdaptiveTriggerPositionalAmplitudes.__typestr__,
+        )

@@ -19,6 +19,9 @@ class TestMTLBufferHelper(Metal.NSObject):
     def addDebugMarker_range_(self, a, b):
         pass
 
+    def newTensorWithDescriptor_offset_error_(self, a, b, c):
+        return 1
+
 
 class TestMTLBuffer(TestCase):
     @min_sdk_level("10.13")
@@ -50,4 +53,11 @@ class TestMTLBuffer(TestCase):
 
         self.assertArgHasType(
             TestMTLBufferHelper.addDebugMarker_range_, 1, Metal.NSRange.__typestr__
+        )
+
+        self.assertArgHasType(
+            TestMTLBufferHelper.newTensorWithDescriptor_offset_error_, 1, b"Q"
+        )
+        self.assertArgHasType(
+            TestMTLBufferHelper.newTensorWithDescriptor_offset_error_, 2, b"o^@"
         )

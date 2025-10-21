@@ -1,0 +1,1067 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "ar_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_device_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_anchor_get_identifier": {
+    "args": {
+     "1": { "type_modifier": "o"}
+    }
+   },
+   "ar_authorization_results_enumerate_results": {
+    "args": {
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "B" }
+      }
+     }
+    }
+   },
+   "ar_authorization_results_enumerate_results_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_barcode_anchor_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_barcode_anchor_get_payload_string_value": {
+    "retval": {}
+   },
+   "ar_barcode_anchors_enumerate_anchors_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_barcode_detection_provider_set_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_camera_frame_provider_set_update_handler_f": {
+    "args": {
+     "3": {},
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_camera_frame_sample_get_pixel_buffer": {
+    "retval": {}
+   },
+   "ar_camera_frame_samples_enumerate_frame_samples_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_camera_video_formats_enumerate_video_formats_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_data_get_bytes": {
+    "retval": {}
+   },
+   "ar_device_anchor_create": {
+    "retval": {  "already_retained": true }
+   },
+   "ar_world_tracking_configuration_create": {
+    "retval": {  "already_retained": true }
+   },
+   "ar_data_providers_create": {
+    "retval": {  "already_retained": true }
+   },
+   "ar_world_tracking_provider_create": {
+    "retval": {  "already_retained": true }
+   },
+   "ar_data_providers_create_with_data_providers": {
+    "variadic": true,
+    "c_array_delimited_by_null": true,
+    "retval": {  "already_retained": true }
+   },
+   "ar_data_providers_enumerate_data_providers": {
+    "args": {
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "B" }
+      }
+     }
+    }
+   },
+   "ar_data_providers_enumerate_data_providers_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_device_anchor_get_identifier": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "ar_environment_light_estimation_provider_set_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_environment_probe_anchor_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_environment_probe_anchors_enumerate_anchors_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_error_copy_cf_error": {
+    "retval": { "already_cfretained": true }
+   },
+   "ar_hand_anchor_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_hand_skeleton_enumerate_joints_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_hand_tracking_provider_set_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_identifiers_enumerate_identifiers_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^C"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_image_anchor_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_image_anchors_enumerate_anchors_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_image_tracking_provider_set_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_mesh_anchor_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_mesh_anchors_enumerate_anchors_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_mesh_geometries_enumerate_geometries_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_object_anchor_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_object_anchors_enumerate_anchors_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_object_tracking_provider_set_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_plane_anchor_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_plane_anchors_enumerate_anchors_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_plane_detection_provider_set_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_reference_image_create_from_cgimage": {
+    "retval": {  "already_retained": true },
+    "args": {
+     "0": {}
+    }
+   },
+   "ar_reference_image_create_from_pixel_buffer": {
+    "retval": {  "already_retained": true },
+    "args": {
+     "0": {}
+    }
+   },
+   "ar_reference_image_get_name": {
+    "retval": {}
+   },
+   "ar_reference_image_get_resource_group_name": {
+    "retval": {}
+   },
+   "ar_reference_image_set_name": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_reference_images_enumerate_images_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_reference_images_load_reference_images_in_group": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "ar_reference_object_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_reference_object_get_input_file_path": {
+    "retval": {}
+   },
+   "ar_reference_object_get_name": {
+    "retval": {}
+   },
+   "ar_reference_object_get_usdz_file_path": {
+    "retval": {}
+   },
+   "ar_reference_object_load_from_url": {
+    "args": {
+     "0": {}
+    }
+   },
+   "ar_reference_object_load_from_url_f": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^{__CFURL=}"
+        },
+        {
+         "typestr": "B"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_reference_object_load_with_name": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "ar_reference_object_load_with_name_f": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^c"
+        },
+        {
+         "typestr": "^{__CFBundle=}"
+        },
+        {
+         "typestr": "B"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_reference_objects_enumerate_objects_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_release": {
+    "args": {
+     "0": {}
+    }
+   },
+   "ar_retain": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "ar_room_anchor_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_room_anchors_enumerate_anchors_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_room_tracking_provider_set_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_scene_reconstruction_provider_set_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_session_query_authorization_results_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_session_request_authorization_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_session_set_authorization_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_session_set_data_provider_state_change_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "q"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_strings_enumerate_strings_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^c"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_world_anchor_get_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_world_anchors_enumerate_anchors_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "B"
+       }
+      }
+     }
+    }
+   },
+   "ar_world_tracking_provider_add_anchor_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "B"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_world_tracking_provider_copy_all_world_anchors_f": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_world_tracking_provider_remove_all_anchors_f": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_world_tracking_provider_remove_anchor_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "B"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_world_tracking_provider_remove_anchor_with_identifier": {
+    "args": {
+     "1": {}
+    }
+   },
+   "ar_world_tracking_provider_remove_anchor_with_identifier_f": {
+    "args": {
+     "1": {},
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "B"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   },
+   "ar_world_tracking_provider_set_anchor_update_handler_f": {
+    "args": {
+     "2": {},
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        },
+        {
+         "typestr": "@"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

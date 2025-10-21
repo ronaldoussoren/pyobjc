@@ -1,0 +1,377 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "enum": {
+   "cp_tracking_area_render_value_invalid": { "value": 0 },
+   "cp_tracking_area_identifier_invalid": { "value": "0" }
+  },
+  "aliases": {
+   "cp_layer_renderer_properties_t": {"alias": "CP_OBJECT_cp_layer_renderer_properties" },
+   "cp_layer_renderer_t": {"alias": "CP_OBJECT_cp_layer_renderer" }
+  },
+  "cftypes": {
+   "cp_view_t": { "opaque": true, "typestr": "^{cp_view=}" },
+   "cp_hover_effect_t": { "opaque": true, "typestr": "^{cp_hover_effect=}" },
+   "cp_drawable_array_t": { "opaque": true, "typestr": "^{cp_drawable_array=}" },
+   "cp_drawable_t": { "opaque": true, "typestr": "^{cp_drawable=}" },
+   "cp_layer_renderer_configuration_t": { "opaque": true, "typestr": "^{cp_layer_renderer_configuration=}" },
+   "cp_drawable_render_context_t": { "opaque": true, "typestr": "^{cp_drawable_render_context=}" },
+   "cp_texture_topology_t": { "opaque": true, "typestr": "^{cp_texture_topology=}" },
+   "cp_frame_timing_t": { "opaque": true, "typestr": "^{cp_frame_timing=}" },
+   "cp_view_texture_map_t": { "opaque": true, "typestr": "^{cp_view_texture_map=}" },
+   "cp_frame_timing_t": { "opaque": true, "typestr": "^{cp_frame_timing=}" },
+   "cp_frame_t": { "opaque": true, "typestr": "^{cp_frame=}" },
+   "cp_layer_renderer_capabilities_t": { "opaque": true, "typestr": "^{cp_layer_renderer_capabilities=}" },
+   "cp_drawable_render_context_t": { "opaque": true, "typestr": "^{cp_drawable_render_context=}" },
+   "cp_tracking_area_t": { "opaque": true, "typestr": "^{cp_tracking_area=}" }
+  },
+  "functions": {
+   "cp_layer_renderer_configuration_get_default_depth_range": { "ignore": true },
+   "cp_layer_renderer_configuration_set_default_depth_range": { "ignore": true },
+   "cp_view_get_transform": { "ignore": true },
+   "cp_drawable_add_mtl4_render_context": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_drawable_add_render_context": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_drawable_add_tracking_area": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_drawable_array_get_count": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_array_get_drawable": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_drawable_compute_projection": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_encode_present": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_color_texture": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_depth_range": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_depth_texture": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_device_anchor": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_flipped_rasterization_rate_map": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_frame_timing": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_drawable_get_presentation_frame_index": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_rasterization_rate_map": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_rasterization_rate_map_count": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_state": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_target": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_texture_count": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_tracking_areas_texture": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_tracking_areas_texture_count": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_get_view": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_drawable_get_view_count": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_is_content_capture_protected": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_mtl4_encode_present": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_render_context_draw_mask_on_stencil_attachment": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_render_context_end_encoding": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_render_context_mtl4_draw_mask_on_stencil_attachment": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_render_context_mtl4_end_encoding": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_set_depth_range": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_drawable_set_device_anchor": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_binocular_frustum_matrix": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_binocular_frustum_matrix_for_drawable_target": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_end_submission": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_end_update": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_get_drawable_target_view_count": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_get_frame_index": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_monocular_frustum_matrix": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_monocular_frustum_matrix_for_drawable_target": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_predict_timing": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_frame_query_drawable": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_frame_query_drawables": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_frame_start_submission": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_start_update": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_timing_get_optimal_input_time": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_timing_get_presentation_time": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_timing_get_rendering_deadline": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_frame_timing_get_trackable_anchor_time": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_layer_renderer_properties_create_using_configuration": {
+    "retval": {
+     "already_retained": true
+    },
+    "args": {
+     "1": {
+      "already_cfretained": true,
+      "null_accepted": true,
+      "type_modifier": "o"
+     }
+    }
+   },
+   "cp_layer_renderer_properties_get_texture_topology": {
+    "retval": {}
+   },
+   "cp_layer_renderer_query_next_frame": {
+    "retval": {}
+   },
+   "cp_release": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_retain": {
+    "ignore": true,
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_texture_topology_get_array_length": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_texture_topology_get_texture_type": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_tracking_area_add_automatic_hover_effect": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_tracking_area_get_identifier": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_tracking_area_get_render_value": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_view_get_tangents": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_view_get_view_texture_map": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "cp_view_texture_map_get_slice_index": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_view_texture_map_get_texture_index": {
+    "args": {
+     "0": {}
+    }
+   },
+   "cp_view_texture_map_get_viewport": {
+    "args": {
+     "0": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

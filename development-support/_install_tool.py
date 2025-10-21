@@ -9,7 +9,6 @@ import shlex
 import shutil
 import subprocess
 import sys
-import typing
 from sysconfig import get_config_var
 from _common_definitions import RED, BOLD, RESET, sort_framework_wrappers
 
@@ -88,7 +87,7 @@ def build_project(project: str, extra_arg: str | None) -> bool:
     return True
 
 
-def version_key(version: str) -> typing.Tuple[int, ...]:
+def version_key(version: str) -> tuple[int, ...]:
     return tuple(int(x) for x in version.split("."))
 
 

@@ -22,3 +22,20 @@ class TestCMDeviceMotion(TestCase):
         self.assertEqual(v.field, CoreMotion.CMMagneticField())
         self.assertEqual(v.accuracy, 0)
         self.assertPickleRoundTrips(v)
+
+    def test_methods(self):
+        self.assertResultHasType(
+            CoreMotion.CMDeviceMotion.gravity, CoreMotion.CMAcceleration.__typestr__
+        )
+        self.assertResultHasType(
+            CoreMotion.CMDeviceMotion.magneticField,
+            CoreMotion.CMCalibratedMagneticField.__typestr__,
+        )
+        self.assertResultHasType(
+            CoreMotion.CMDeviceMotion.rotationRate,
+            CoreMotion.CMRotationRate.__typestr__,
+        )
+        self.assertResultHasType(
+            CoreMotion.CMDeviceMotion.userAcceleration,
+            CoreMotion.CMAcceleration.__typestr__,
+        )

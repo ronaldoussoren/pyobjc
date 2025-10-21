@@ -52,6 +52,24 @@
    }
   },
   "externs": {
+   "kCFHTTPAuthenticationSchemeOAuth1": { "typestr": "@" },
+   "kCFStreamErrorDomainSOCKS": { "typestr": "i" },
+   "kCFStreamErrorDomainSSL": { "typestr": "i" },
+   "kCFStreamPropertySOCKSPassword": { "typestr": "@" },
+   "kCFStreamPropertySOCKSProxy": { "typestr": "@" },
+   "kCFStreamPropertySOCKSProxyHost": { "typestr": "@" },
+   "kCFStreamPropertySOCKSProxyPort": { "typestr": "@" },
+   "kCFStreamPropertySOCKSUser": { "typestr": "@" },
+   "kCFStreamPropertySOCKSVersion": { "typestr": "@" },
+   "kCFStreamPropertyShouldCloseNativeSocket": { "typestr": "@" },
+   "kCFStreamPropertySocketSecurityLevel": { "typestr": "@" },
+   "kCFStreamSocketSOCKSVersion4": { "typestr": "@" },
+   "kCFStreamSocketSOCKSVersion5": { "typestr": "@" },
+   "kCFStreamSocketSecurityLevelNegotiatedSSL": { "typestr": "@" },
+   "kCFStreamSocketSecurityLevelNone": { "typestr": "@" },
+   "kCFStreamSocketSecurityLevelSSLv2": { "typestr": "@" },
+   "kCFStreamSocketSecurityLevelSSLv3": { "typestr": "@" },
+   "kCFStreamSocketSecurityLevelTLSv1": { "typestr": "@" },
    "kCFHTTPVersion2_0": {
     "typestr": "^{__CFString=}"
    },

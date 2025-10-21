@@ -1,8 +1,12 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
   "aliases": {
+   "kCGBitmapByteOrder16Host": { "alias": "kCGBitmapByteOrder16Little" },
+   "kCGGlyphMax": { "alias": "kCGFontIndexMax" },
+   "CGFLOAT_MIN": { "alias": "DBL_MIN" },
+   "CGFLOAT_MAX": { "alias": "DBL_MAX" },
+   "kCGBitmapByteOrderMask": { "alias": "kCGImageByteOrderMask" },
+   "kCGBitmapByteOrder32Host": { "alias": "kCGBitmapByteOrder32Little" },
    "CGColorConverterRef": {
     "alias": "CGColorConversionInfoRef"
    },
@@ -110,6 +114,7 @@
   },
   "classes": {},
   "typed_enum": {
+   "CIDynamicRangeOption": { "type": "@", "type_name": "NSString" },
    "CIContextOption": { "type": "@", "type_name": "NSString" },
    "CIImageRepresentationOption": { "type": "@", "type_name": "NSString" },
    "CIFormat": { "type": "q" },
@@ -120,9 +125,25 @@
   },
 
   "enum_type": {
-   "CIRenderDestinationAlphaMode": { "type": "Q" }
+   "CIRenderDestinationAlphaMode": { "type": "Q" },
+   "CGRectEdge": { "type": "Q" }
   },
   "enum": {
+   "kCGErrorNameTooLong": { "value":1005 },
+   "kCGErrorNoCurrentPoint": { "value":1009 },
+   "kCGErrorApplicationRequiresNewerSystem": { "value":1015 },
+   "kCGErrorApplicationNotPermittedToExecute": { "value":1016 },
+   "kCGErrorApplicationIncorrectExecutableFormatFound": { "value":1023 },
+   "kCGErrorApplicationIsLaunching": { "value":1024 },
+   "kCGErrorApplicationAlreadyRunning": { "value":1025 },
+   "kCGErrorApplicationCanOnlyBeRunInOneSessionAtATime": { "value":1026 },
+   "kCGErrorClassicApplicationsMustBeLaunchedByClassic": { "value":1027 },
+   "kCGErrorForkFailed": { "value":1028 },
+   "kCGErrorRetryRegistration": { "value":1029 },
+   "kCGFontIndexInvalid": { "value": 65535 },
+   "kCGErrorFirst": { "value": 1000 },
+   "kCGEventMaskForAllEvents": { "value": 18446744073709551615 },
+   "kCGFontIndexMax": { "value": 65534 },
    "kCGEventUnacceleratedPointerMovementX": {
     "value": 170
    },
@@ -215,21 +236,67 @@
    }
   },
   "expressions": {
+   "kCGOverlayWindowLevel": { "value": "CGWindowLevelForKey(kCGOverlayWindowLevelKey)" },
+   "kCGMainMenuWindowLevel": { "value": "CGWindowLevelForKey(kCGMainMenuWindowLevelKey)" },
+   "kCGBaseWindowLevel": { "value": "CGWindowLevelForKey(kCGBaseWindowLevelKey)" },
+   "kCGStatusWindowLevel": { "value": "CGWindowLevelForKey(kCGStatusWindowLevelKey)" },
+   "kCGHelpWindowLevel": { "value": "CGWindowLevelForKey(kCGHelpWindowLevelKey)" },
+   "kCGNormalWindowLevel": { "value": "CGWindowLevelForKey(kCGNormalWindowLevelKey)" },
+   "kCGScreenSaverWindowLevel": { "value": "CGWindowLevelForKey(kCGScreenSaverWindowLevelKey)" },
+   "kCGMaximumWindowLevel": { "value": "CGWindowLevelForKey(kCGMaximumWindowLevelKey)" },
+   "kCGUtilityWindowLevel": { "value": "CGWindowLevelForKey(kCGUtilityWindowLevelKey)" },
+   "kCGCursorWindowLevel": { "value": "CGWindowLevelForKey(kCGCursorWindowLevelKey)" },
+   "kCGAssistiveTechHighWindowLevel": { "value": "CGWindowLevelForKey(kCGAssistiveTechHighWindowLevelKey)" },
+   "kCGModalPanelWindowLevel": { "value": "CGWindowLevelForKey(kCGModalPanelWindowLevelKey)" },
+   "kCGMinimumWindowLevel": { "value": "CGWindowLevelForKey(kCGMinimumWindowLevelKey)" },
+   "kCGPopUpMenuWindowLevel": { "value": "CGWindowLevelForKey(kCGPopUpMenuWindowLevelKey)" },
+   "kCGDesktopWindowLevel": { "value": "CGWindowLevelForKey(kCGDesktopWindowLevelKey)" },
+   "kCGFloatingWindowLevel": { "value": "CGWindowLevelForKey(kCGFloatingWindowLevelKey)" },
+   "kCGDraggingWindowLevel": { "value": "CGWindowLevelForKey(kCGDraggingWindowLevelKey)" },
+   "kCGDockWindowLevel": { "value": "CGWindowLevelForKey(kCGDockWindowLevelKey)" },
+   "kCGDesktopIconWindowLevel": { "value": "CGWindowLevelForKey(kCGDesktopIconWindowLevelKey)" },
+   "kCGBackstopMenuLevel": { "value": "CGWindowLevelForKey(kCGBackstopMenuLevelKey)" },
+   "kCGTornOffMenuWindowLevel": { "value": "CGWindowLevelForKey(kCGTornOffMenuWindowLevelKey)" },
    "kCGDirectMainDisplay": {
     "ignore": true
    }
   },
   "externs": {
+   "kCIInputCountKey": { "typestr": "@" },
+   "kCIInputThresholdKey": { "typestr": "@" },
+   "kCIInputRadius0Key": { "typestr": "@" },
+   "kCIInputRadius1Key": { "typestr": "@" },
+   "kCIInputColor0Key": { "typestr": "@" },
+   "kCIInputColor1Key": { "typestr": "@" },
+   "kCIInputColorSpaceKey": { "typestr": "@" },
+   "kCIInputExtrapolateKey": { "typestr": "@" },
+   "kCIInputPerceptualKey": { "typestr": "@" },
+   "kCIInputBiasVectorKey": { "typestr": "@" },
+   "kCIInputBacksideImageKey": { "typestr": "@" },
+   "kCIInputPaletteImageKey": { "typestr": "@" },
+   "kCIInputPoint0Key": { "typestr": "@" },
+   "kCIInputPoint1Key": { "typestr": "@" },
+   "kCIDynamicRangeConstrainedHigh": { "typestr": "@" },
+   "kCIDynamicRangeHigh": { "typestr": "@" },
    "kCGColorSpaceLinearDisplayP3": {
     "typestr": "@"
    },
    "kCGColorSpaceLinearITUR_2020": {
     "typestr": "@"
    },
+   "kCIImageApplyCleanAperture": {
+    "typestr": "@"
+   },
+   "kCIImageContentAverageLightLevel": {
+    "typestr": "@"
+   },
    "kCIInputLocalToneMapAmountKey": {
     "typestr": "@"
    },
    "kCIImageAuxiliarySemanticSegmentationSkyMatte": {
+    "typestr": "@"
+   },
+   "kCIImageRepresentationHDRGainMapAsRGB": {
     "typestr": "@"
    },
    "kCIImageRepresentationSemanticSegmentationSkyMatteImage": {
@@ -325,10 +392,33 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGRenderingBufferLockBytePtr": {
+    "retval": { "c_array_of_variable_length": true }
+   },
+   "CGBitmapContextCreateAdaptive": {
+    "args": {
+     "3": {
+      "callable": {
+       "arguments": {
+        "0": { "typestr": "^v" },
+        "1": { "typestr": "^{CGContentInfo=QQBBf}", "type_modifier": "N" },
+        "2": { "typestr": "^{CGBitmapParameters=QQQQQQQQ^{__CGColorSpace=}Bqf}", "type_modifier": "N" }
+       },
+       "retval": { "typestr": "B" }
+      }
+     }
+    }
+   },
    "CGErrorSetCallback": {
     "args": {
      "0": { "callable_retained": true }
     }
+   },
+   "CGRenderingBufferProviderCreate": {
+    "args": {
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    },
+    "retval": { "already_cfretained": true }
    },
    "CGColorConversionInfoConvertData": {
     "args": {
@@ -498,11 +588,6 @@
     }
    },
    "CGColorCreateSRGB": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateWithPattern": {
     "retval": {
      "already_cfretained": true
     }
@@ -745,8 +830,11 @@
     }
    },
    "CGDisplayBaseAddress": {
+    "args": {
+     "0": { "type_override": "I" }
+    },
     "retval": {
-     "c_array_of_variable_length": true
+     "c_array_of_variable_length": true, "type_override": "^v"
     }
    },
    "CGConvertColorDataWithFormat": {
@@ -754,14 +842,6 @@
      "2": { "type_modifier": "o", "c_array_of_variable_length": true },
      "4": { "type_modifier": "n", "c_array_of_variable_length": true }
     }
-   },
-   "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
-    "args": {
-     "6": {
-      "type_modifier": "o"
-     }
-    },
-    "retval": {}
    },
    "CGDisplayCopyAllDisplayModes": {
     "args": {
@@ -1067,8 +1147,9 @@
     }
    },
    "CGEventGetTimestamp": {
+    "retval": { "type_override": "Q" },
     "args": {
-     "0": {}
+     "0": { "type_override": "^{__CGEvent=}"}
     }
    },
    "CGEventGetType": {
@@ -1530,11 +1611,22 @@
    },
    "CGGLContextCreate": {
     "args": {
-     "0": {},
-     "2": {}
+     "0": {
+      "name": "glContext",
+      "typestr": "^v"
+     },
+     "1": {
+      "name": "size",
+      "typestr": "{CGSize=dd}"
+     },
+     "2": {
+      "name": "colorspace",
+      "typestr": "^{CGColorSpace=}"
+     }
     },
     "retval": {
-     "already_cfretained": true
+     "already_cfretained": true,
+     "typestr": "^{CGContext=}"
     }
    },
    "CGGLContextUpdateViewportSize": {
@@ -2121,11 +2213,6 @@
      "2": {}
     }
    },
-   "CGPDFDocumentAllowsCopying": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGPDFDocumentAllowsPrinting": {
     "args": {
      "0": {}
@@ -2480,163 +2567,85 @@
      "0": {}
     }
    },
-   "CGPaletteCreateCopy": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGPaletteCreateDefaultColorPalette": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPaletteCreateFromPaletteBlendedWithColor": {
     "args": {
-     "0": {}
     },
     "retval": {
-     "already_cfretained": true
+     "already_cfretained": true, "type_override": "^{_CGDirectPaletteRef=}"
     }
    },
    "CGPaletteCreateWithByteSamples": {
     "args": {
      "0": {
+      "name": "samples",
+      "typestr": "^{CGDeviceByteColor=CCC}",
       "c_array_length_in_arg": 1,
       "type_modifier": "n"
+     },
+     "1": {
+      "name": "count",
+      "typestr": "I"
      }
     },
     "retval": {
-     "already_cfretained": true
+     "already_cfretained": true,
+     "typestr": "^{_CGDirectPaletteRef=}"
     }
    },
    "CGPaletteCreateWithCapacity": {
+    "args": {
+     "0": { "type_override": "I" }
+    },
     "retval": {
-     "already_cfretained": true
+     "already_cfretained": true, "type_override": "^{_CGDirectPaletteRef=}"
     }
    },
    "CGPaletteCreateWithDisplay": {
+    "args": {
+     "0": { "type_override": "I" }
+    },
     "retval": {
-     "already_cfretained": true
+     "already_cfretained": true, "type_override": "^{_CGDirectPaletteRef=}"
     }
    },
    "CGPaletteCreateWithSamples": {
     "args": {
      "0": {
+      "name": "samples",
       "c_array_length_in_arg": 1,
-      "type_modifier": "n"
+      "type_modifier": "n",
+      "typestr": "^{CGDeviceColor=fff}"
+     },
+     "1": {
+      "name": "count",
+      "typestr": "I"
      }
     },
     "retval": {
-     "already_cfretained": true
+     "already_cfretained": true,
+     "typestr": "^{_CGDirectPaletteRef=}"
     }
    },
    "CGPaletteGetColorAtIndex": {
+    "retval": { "type_override": "{CGDeviceColor=fff}" },
     "args": {
-     "0": {}
+     "0": { "type_override": "^{_CGDirectPaletteRef=}" },
+     "1": { "type_override": "I" }
     }
    },
    "CGPaletteGetIndexForColor": {
+    "retval": { "type_override": "I" },
     "args": {
-     "0": {}
-    }
-   },
-   "CGPaletteGetNumberOfSamples": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPaletteIsEqualToPalette": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPaletteRelease": {
-    "args": {
-     "0": {}
+     "0": { "type_override": "^{_CGDirectPaletteRef=}" },
+     "1": { "type_override": "{CGDeviceColor=fff}" }
     }
    },
    "CGPaletteSetColorAtIndex": {
+    "retval": { "type_override": "v" },
     "args": {
-     "0": {}
-    }
-   },
-   "CGPathAddArc": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathAddArcToPoint": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathAddCurveToPoint": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathAddEllipseInRect": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathAddLineToPoint": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathAddLines": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPathAddPath": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPathAddQuadCurveToPoint": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathAddRect": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathAddRects": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPathAddRelativeArc": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathAddRoundedRect": {
-    "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_override": "^{_CGDirectPaletteRef=}"},
+     "1": { "type_override": "{CGDeviceColor=fff}"},
+     "2": { "type_override": "I"}
     }
    },
    "CGPathApply": {
@@ -2662,19 +2671,18 @@
    },
    "CGPathApplyWithBlock": {
     "args": {
-     "0": {}
-    }
-   },
-   "CGPathCloseSubpath": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathContainsPoint": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
+     "0": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "typestr": "^v" },
+        "1": { "typestr": "^{CGPathElement=}" }
+       },
+       "retval": { "typestr": "v" }
+      }
+     }
+    },
+    "retval": { "type_override": "v" }
    },
    "CGPathCreateCopy": {
     "args": {
@@ -3331,10 +3339,11 @@
     }
    },
    "CGColorCreateWithPattern": {
+    "retval": { "type_override": "^{CGColor=}", "already_cfretained": true },
     "args": {
-     "0": {},
-     "1": {},
-     "2": { "type_modifier": "n", "c_array_of_variable_length": true }
+     "0": { "type_override": "^{CGColorSpace=}" },
+     "1": { "type_override": "^{CGPattern=}" },
+     "2": { "type_modifier": "n", "c_array_of_variable_length": true, "type_override": "^d" }
     },
     "retval": {
      "already_cfretained": true
@@ -4393,17 +4402,17 @@
     "retval": {}
    },
    "CGDisplayAddressForPosition": {
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "i" },
+     "2": { "type_override": "i" }
+    },
     "retval": {
-     "c_array_of_variable_length": true
+     "c_array_of_variable_length": true, "type_override": "^v"
     }
    },
    "CGDisplayAvailableModes": {
     "retval": {}
-   },
-   "CGDisplayBaseAddress": {
-    "retval": {
-     "c_array_of_variable_length": true
-    }
    },
    "CGDisplayBestModeForParameters": {
     "args": {
@@ -4418,11 +4427,16 @@
     "retval": {}
    },
    "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
+    "retval": { "type_override": "^{__CFDictionary=}" },
     "args": {
-     "5": {},
-     "6": { "type_modifier": "o" }
-    },
-    "retval": {}
+     "0": { "type_override": "I" },
+     "1": { "type_override": "Q" },
+     "2": { "type_override": "Q" },
+     "3": { "type_override": "Q" },
+     "4": { "type_override": "d" },
+     "5": { "type_override": "^{__CFString=}" },
+     "6": { "type_modifier": "o", "type_override": "^I" }
+    }
    },
    "CGDisplayCopyAllDisplayModes": {
     "args": {
@@ -4570,8 +4584,10 @@
     }
    },
    "CGDisplaySetPalette": {
+    "retval": { "type_override": "i" },
     "args": {
-     "1": {}
+     "0": { "type_override": "I" },
+     "1": { "type_override": "^{_CGDirectPaletteRef=}"}
     }
    },
    "CGDisplayStreamCreate": {
@@ -4756,8 +4772,9 @@
     }
    },
    "CGEventGetLocation": {
+    "retval": { "type_override": "{CGPoint=dd}" },
     "args": {
-     "0": {}
+     "0": { "type_override": "^{__CGEvent=}"}
     }
    },
    "CGEventGetTimestamp": {
@@ -5187,18 +5204,11 @@
     },
     "retval": {}
    },
-   "CGGLContextCreate": {
-    "args": {
-     "0": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGGLContextUpdateViewportSize": {
+    "retval": { "type_override": "v" },
     "args": {
-     "0": {}
+     "0": { "type_override": "^{CGContext=}" },
+     "1": { "type_override": "{CGSize=dd}" }
     }
    },
    "CGGetActiveDisplayList": {
@@ -5267,8 +5277,18 @@
    "CGGradientCreateWithColorComponents": {
     "args": {
      "0": {},
-     "1": { "c_array_length_in_arg": 3, "type_modifier": "n" },
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" },
      "2": { "c_array_length_in_arg": 3, "type_modifier": "n"  }
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "CGGradientCreateWithContentHeadroom": {
+    "args": {
+     "0": {},
+     "2": { "c_array_of_variable_length": true, "type_modifier": "n" },
+     "3": { "c_array_length_in_arg": 4, "type_modifier": "n"  }
     },
     "retval": {
      "already_cfretained": true
@@ -5396,9 +5416,9 @@
    },
    "CGImageGetDecode": {
     "args": {
-     "0": {}
+     "0": { "type_override": "^{CGImage=}"}
     },
-    "retval": { "c_array_of_variable_length": true }
+    "retval": { "c_array_of_variable_length": true, "type_override": "^d"  }
    },
    "CGImageGetHeight": {
     "args": {
@@ -5765,8 +5785,9 @@
     }
    },
    "CGPDFDocumentAllowsCopying": {
+    "retval": { "type_override": "B" },
     "args": {
-     "0": {}
+     "0": { "type_override": "^{CGPDFDocument=}" }
     }
    },
    "CGPDFDocumentAllowsPrinting": {
@@ -6140,80 +6161,59 @@
    },
    "CGPaletteCreateCopy": {
     "args": {
-     "0": {}
+     "0": {
+      "name": "palette",
+      "typestr": "^{_CGDirectPaletteRef=}"
+     }
     },
     "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPaletteCreateDefaultColorPalette": {
-    "retval": {
-     "already_cfretained": true
+     "already_cfretained": true,
+     "typestr": "^{_CGDirectPaletteRef=}"
     }
    },
    "CGPaletteCreateFromPaletteBlendedWithColor": {
     "args": {
-     "0": {}
+     "0": {
+      "name": "palette",
+      "typestr": "^{_CGDirectPaletteRef=}"
+     },
+     "1": {
+      "name": "fraction",
+      "typestr": "f"
+     },
+     "2": {
+      "name": "color",
+      "typestr": "{CGDeviceColor=fff}"
+     }
     },
     "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPaletteCreateWithByteSamples": {
-    "args": {
-     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPaletteCreateWithCapacity": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPaletteCreateWithDisplay": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPaletteCreateWithSamples": {
-    "args": {
-     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPaletteGetColorAtIndex": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPaletteGetIndexForColor": {
-    "args": {
-     "0": {}
+     "already_cfretained": true,
+     "typestr": "^{_CGDirectPaletteRef=}"
     }
    },
    "CGPaletteGetNumberOfSamples": {
+    "retval": { "type_override": "I" },
     "args": {
-     "0": {}
+     "0": { "type_override": "^{_CGDirectPaletteRef=}" }
     }
    },
    "CGPaletteIsEqualToPalette": {
+    "retval": { "type_override": "B" },
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_override": "^{_CGDirectPaletteRef=}"},
+     "1": { "type_override": "^{_CGDirectPaletteRef=}"}
+    }
+   },
+   "CGDisplayCanSetPalette": {
+    "retval": { "type_override": "I" },
+    "args": {
+     "0": { "type_override": "I" }
     }
    },
    "CGPaletteRelease": {
+    "retval": {"type_override": "v" },
     "args": {
-     "0": {}
-    }
-   },
-   "CGPaletteSetColorAtIndex": {
-    "args": {
-     "0": {}
+     "0": { "type_override": "^{_CGDirectPaletteRef=}"}
     }
    },
    "CGPathAddArc": {
@@ -6710,6 +6710,65 @@
     "retval": {
      "already_cfretained": true
     }
+   },
+   "CGDisplayBitsPerPixel": {
+    "args": {
+     "0": { "type_override": "I" }
+    },
+    "retval": {
+     "type_override": "Q"
+    }
+   },
+   "CGDisplaySamplesPerPixel": {
+    "args": {
+     "0": { "type_override": "I" }
+    },
+    "retval": {
+     "type_override": "Q"
+    }
+   },
+   "CGAffineTransformEqualToTransform": {
+    "args": {
+     "0": { "type_override": "{CGAffineTransform=dddddd}" },
+     "1": { "type_override": "{CGAffineTransform=dddddd}" }
+    },
+    "retval": {
+     "type_override": "B"
+    }
+   },
+   "CGDisplayWaitForBeamPositionOutsideLines": {
+    "args": {
+     "0": { "type_override": "I" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "I" }
+    },
+    "retval": {
+     "type_override": "i"
+    }
+   },
+   "CGDisplayBeamPosition": {
+    "args": {
+     "0": { "type_override": "I" }
+    },
+    "retval": {
+     "type_override": "I"
+    }
+   },
+   "CGDisplayBitsPerSample": {
+    "args": {
+     "0": { "type_override": "I" }
+    },
+    "retval": {
+     "type_override": "Q"
+    }
+   },
+   "CGDisplayBytesPerRow": {
+    "args": {
+     "0": { "type_override": "I" }
+    },
+    "retval": {
+     "type_override": "Q"
+    }
    }
   },
   "informal_protocols": {},
@@ -6833,6 +6892,7 @@
     "ignore": true
    },
    "CGDeviceByteColor": {
+    "typestr": "{CGDeviceByteColor=CCC}",
     "fieldnames": [
      "red",
      "green",

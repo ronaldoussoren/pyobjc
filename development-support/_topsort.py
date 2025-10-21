@@ -11,8 +11,8 @@ import typing
 
 
 def topological_sort(
-    items: typing.Sequence[str], partial_order: typing.Sequence[typing.Tuple[str, str]]
-) -> typing.List[str]:
+    items: typing.Sequence[str], partial_order: typing.Sequence[tuple[str, str]]
+) -> list[str]:
     """
     Perform topological sort.
     items is a list of items to be sorted.
@@ -24,18 +24,18 @@ def topological_sort(
 
     class GraphNode:
         numincoming: int
-        outgoing: typing.List[str]
+        outgoing: list[str]
 
         def __init__(self) -> None:
             self.numincoming = 0
             self.outgoing = []
 
-    def add_node(graph: typing.Dict[str, GraphNode], node: str) -> None:
+    def add_node(graph: dict[str, GraphNode], node: str) -> None:
         """Add a node to the graph if not already exists."""
         if node not in graph:
             graph[node] = GraphNode()
 
-    def add_arc(graph: typing.Dict[str, GraphNode], fromnode: str, tonode: str) -> None:
+    def add_arc(graph: dict[str, GraphNode], fromnode: str, tonode: str) -> None:
         """Add an arc to a graph. Can create multiple arcs.
         The end nodes must already exist."""
         graph[fromnode].outgoing.append(tonode)
@@ -53,7 +53,7 @@ def topological_sort(
     # Note that our representation does not contain reference loops to
     # cause GC problems even when the represented graph contains loops,
     # because we keep the node names rather than references to the nodes.
-    graph: typing.Dict[str, GraphNode] = {}
+    graph: dict[str, GraphNode] = {}
     for v in items:
         add_node(graph, v)
     for a, b in partial_order:

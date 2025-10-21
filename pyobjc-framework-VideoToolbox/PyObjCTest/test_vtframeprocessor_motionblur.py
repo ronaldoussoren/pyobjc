@@ -29,3 +29,7 @@ class TestVTFrameProcessor_MotionBlur(TestCase):
         self.assertResultIsBOOL(
             VideoToolbox.VTMotionBlurConfiguration.processorSupported
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(VideoToolbox.VTMotionBlurConfiguration.isSupported)

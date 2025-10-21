@@ -51,6 +51,7 @@ class TestCKError(TestCase):
         self.assertEqual(CloudKit.CKErrorServerResponseLost, 34)
         self.assertEqual(CloudKit.CKErrorAssetNotAvailable, 35)
         self.assertEqual(CloudKit.CKErrorAccountTemporarilyUnavailable, 36)
+        self.assertEqual(CloudKit.CKErrorParticipantAlreadyInvited, 37)
 
     @min_os_level("12.0")
     def testConstants12_0(self):

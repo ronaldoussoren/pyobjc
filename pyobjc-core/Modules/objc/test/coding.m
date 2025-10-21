@@ -205,7 +205,7 @@
 - (nullable const uint8_t*)decodeBytesForKey:(NSString*)key
                               returnedLength:(nullable NSUInteger*)lengthp
 {
-    if (lengthp != NULL) {
+    if (lengthp) {
         *lengthp = 21;
     }
     return NULL;

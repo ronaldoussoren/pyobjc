@@ -23,7 +23,11 @@
    }
   },
   "formal_protocols": {},
-  "functions": {},
+  "functions": {
+   "NSExceptionHandlerResume": {
+    "variadic": false
+   }
+  },
   "informal_protocols": {}
  }
 }

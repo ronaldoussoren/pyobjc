@@ -110,6 +110,27 @@ class TestCIFilter(TestCase):
         self.assertIsInstance(Quartz.kCIInputAmountKey, str)
         self.assertIsInstance(Quartz.kCIInputMatteImageKey, str)
 
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(Quartz.kCIInputCountKey, str)
+        self.assertIsInstance(Quartz.kCIInputThresholdKey, str)
+        self.assertIsInstance(Quartz.kCIInputRadius0Key, str)
+        self.assertIsInstance(Quartz.kCIInputRadius1Key, str)
+        self.assertIsInstance(Quartz.kCIInputColor0Key, str)
+        self.assertIsInstance(Quartz.kCIInputColor1Key, str)
+        self.assertIsInstance(Quartz.kCIInputColorSpaceKey, str)
+        self.assertIsInstance(Quartz.kCIInputExtrapolateKey, str)
+        self.assertIsInstance(Quartz.kCIInputPerceptualKey, str)
+        self.assertIsInstance(Quartz.kCIInputBiasVectorKey, str)
+        self.assertIsInstance(Quartz.kCIInputBacksideImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputPaletteImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputPoint0Key, str)
+        self.assertIsInstance(Quartz.kCIInputPoint1Key, str)
+
+        self.assertIsTypedEnum(Quartz.CIDynamicRangeOption, str)
+        self.assertIsInstance(Quartz.kCIDynamicRangeConstrainedHigh, str)
+        self.assertIsInstance(Quartz.kCIDynamicRangeHigh, str)
+
     def testMethods(self):
         self.assertIsNullTerminated(Quartz.CIFilter.apply_)
         self.assertIsNullTerminated(Quartz.CIFilter.filterWithName_keysAndValues_)

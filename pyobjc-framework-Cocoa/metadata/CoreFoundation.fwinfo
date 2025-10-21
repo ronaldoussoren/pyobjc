@@ -13,6 +13,7 @@
    "kCFISO8601DateFormatWithInternetDateTime": { "value": "kCFISO8601DateFormatWithFullDate | kCFISO8601DateFormatWithFullTime" }
   },
   "enum": {
+   "kCFNotFound": { "value": -1 },
    "kCFISO8601DateFormatWithYear": { "value": 1 },
    "kCFISO8601DateFormatWithMonth": { "value": 2 },
    "kCFISO8601DateFormatWithWeekOfYear": { "value": 4 },
@@ -341,6 +342,9 @@
    "CFAllocatorReallocate": {
     "ignore": true
    },
+   "CFAllocatorCreateWithZone": {
+    "ignore": true
+   },
    "CFAllocatorAllocateTyped": {
     "ignore": true
    },
@@ -596,6 +600,12 @@
     }
    },
    "CFAttributedStringGetBidiLevelsAndResolvedDirections": {
+    "args": {
+     "3": { "type_modifier": "o", "c_array_length_in_arg": 1 },
+     "4": { "type_modifier": "o", "c_array_length_in_arg": 1 }
+    }
+   },
+   "CFAttributedStringGetStatisticalWritingDirections": {
     "args": {
      "3": { "type_modifier": "o", "c_array_length_in_arg": 1 },
      "4": { "type_modifier": "o", "c_array_length_in_arg": 1 }
@@ -3935,7 +3945,7 @@
    "CFStringAppendFormat": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "printf_format": false },
      "2": {
       "printf_format": true
      }

@@ -1109,7 +1109,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
 
         case '@':
         case 'K':
-            /* object (%K is only used by NSPredicate */
+            /* format %K is only used by NSPredicate */
             typecode      = _C_ID;
             byref[curarg] = PyMem_Malloc(sizeof(char*));
             if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
@@ -1632,7 +1632,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         count = extract_count(
                             methinfo->argtype[methinfo->rettype->arrayArg]->type,
                             args[methinfo->rettype->arrayArg]);
-                        if (count == -1 && PyErr_Occurred()) { // LOCV_BR_EXCL_LINE
+                        if (count == -1 && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                             goto error;
                         }
                         err = depythonify_c_return_array_count(
@@ -1727,10 +1727,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                 case _C_OUT:
                     if (argtype[1] == _C_PTR) {
                         argtype += 2;
-                    } else if (argtype[1] == _C_CHARPTR) {
+                    } else if (argtype[1] == _C_CHARPTR) { // LCOV_BR_EXCL_LINE
                         argtype = gCharEncoding;
                     } else {
-                        continue;
+                        /* Should never happen in practice */
+                        continue; // LCOV_EXCL_LINE
                     }
                     break;
                 default:
@@ -4796,11 +4797,9 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     result = PyObjCFFI_BuildResult(methinfo, 2, msgResult, byref, byref_attr,
                                    byref_out_count, values);
 
-#if 1
     if (methinfo->initializer && (*(id*)msgResult != nil)) {
         [*(id*)msgResult release];
     }
-#endif
 
     if (unlikely(variadicAllArgs)) {
         PyObjCFFI_FreeByRef(Py_SIZE(methinfo) + nargs, byref, byref_attr);
@@ -5218,11 +5217,9 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
 
     PyObject* res = PyObjCFFI_BuildResult_Simple(methinfo, msgResult);
 
-#if 1
     if (methinfo->initializer && (*(id*)msgResult != nil)) {
         [*(id*)msgResult release];
     }
-#endif
 
     return res;
 
@@ -5334,8 +5331,9 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 void
 PyObjCFFI_FreeCIF(ffi_cif* cif)
 {
-    if (cif->arg_types)
+    if (cif->arg_types) {
         PyMem_Free(cif->arg_types);
+    }
     PyMem_Free(cif);
 }
 

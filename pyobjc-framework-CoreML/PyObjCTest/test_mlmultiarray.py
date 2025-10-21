@@ -14,6 +14,7 @@ class TestMLMultiArray(TestCase):
         self.assertEqual(CoreML.MLMultiArrayDataTypeFloat16, 0x10000 | 16)
         self.assertEqual(CoreML.MLMultiArrayDataTypeFloat, 0x10000 | 32)
         self.assertEqual(CoreML.MLMultiArrayDataTypeInt32, 0x20000 | 32)
+        self.assertEqual(CoreML.MLMultiArrayDataTypeInt8, 0x20000 | 8)
 
     @min_os_level("10.13")
     def testMethods(self):

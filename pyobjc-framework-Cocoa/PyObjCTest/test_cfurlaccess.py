@@ -1,5 +1,4 @@
 import os
-import sys
 
 import CoreFoundation
 from PyObjCTools.TestSupport import TestCase
@@ -60,13 +59,8 @@ class TestURLAccess(TestCase):
             None, __file__ + "TEST", CoreFoundation.kCFURLPOSIXPathStyle, False
         )
 
-        if sys.version_info[0] == 3:
-
-            def buffer(value):
-                return value
-
-        else:
-            from __builtin__ import buffer
+        def buffer(value):
+            return value
 
         ok, errorCode = CoreFoundation.CFURLWriteDataAndPropertiesToResource(
             url, buffer(b"foobar"), None, None

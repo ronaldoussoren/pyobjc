@@ -85,3 +85,12 @@ class TestMPNowPlayingInfoCenter(TestCase):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyExcludeFromSuggestions, str
         )
+
+    @min_os_level("26.0")
+    def testConstants26_0(self):
+        self.assertIsInstance(
+            MediaPlayer.MPNowPlayingInfoProperty1x1AnimatedArtwork, str
+        )
+        self.assertIsInstance(
+            MediaPlayer.MPNowPlayingInfoProperty3x4AnimatedArtwork, str
+        )

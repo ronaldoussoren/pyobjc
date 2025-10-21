@@ -48,6 +48,13 @@ class TestPHLivePhotoEditingContext(TestCase):
         )
 
         self.assertResultHasType(
+            Photos.PHLivePhotoEditingContext.duration, b"{CMTime=qiIq}"
+        )
+        self.assertResultHasType(
+            Photos.PHLivePhotoEditingContext.photoTime, b"{CMTime=qiIq}"
+        )
+
+        self.assertResultHasType(
             TestPHLivePhotoEditingContextHelper.time, b"{CMTime=qiIq}"
         )  # Photos.CMTime.__typestr__
         self.assertResultHasType(

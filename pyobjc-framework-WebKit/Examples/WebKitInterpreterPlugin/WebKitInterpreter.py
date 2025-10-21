@@ -37,11 +37,6 @@ except ImportError:
 FLT_MAX = 3.402_823_47e38
 
 try:
-    unicode
-except NameError:
-    unicode = str
-
-try:
     sys.ps1
 except AttributeError:
     sys.ps1 = ">>> "
@@ -58,7 +53,7 @@ class PseudoUTF8Output:
         self._write = writemethod
 
     def write(self, s):
-        if not isinstance(s, unicode):
+        if not isinstance(s, str):
             s = s.decode("utf-8", "replace")
         self._write(s)
 

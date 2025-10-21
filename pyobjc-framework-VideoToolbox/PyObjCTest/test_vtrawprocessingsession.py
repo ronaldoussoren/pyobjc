@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import VideoToolbox
 
-VTRAWProcessingParameterChangeHandler = b"v@"
+VTRAWProcessingParameterChangeHandler = b"v^{__CFArray=}"
 VTRAWProcessingOutputHandler = b"vi@"
 
 
@@ -79,3 +79,11 @@ class TestVTRAWProcessingSession(TestCase):
         )
 
         VideoToolbox.VTRAWProcessingSessionSetProcessingParameters
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        self.assertArgIsBlock(
+            VideoToolbox.VTRAWProcessingSessionSetParameterChangedHandler,
+            1,
+            VTRAWProcessingParameterChangeHandler,
+        )

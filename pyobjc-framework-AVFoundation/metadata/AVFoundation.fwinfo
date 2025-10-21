@@ -114,6 +114,17 @@
      }
     ]
    },
+   "AVPlayerPlaybackCoordinator": {
+    "methods": [
+     {
+      "selector": "coordinateUsingCoordinationMedium:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVAssetExportSession": {
     "methods": [
      {
@@ -681,6 +692,7 @@
    "AVAudioConverter": {
     "methods": [
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "2": {
         "type_modifier": "o"
@@ -871,6 +883,7 @@
       "selector": "renderOffline:toBuffer:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "3": {
         "type_modifier": "o"
@@ -943,6 +956,7 @@
      },
      {
       "args": {
+       "2": { "type_override": "Z" },
        "3": {
         "type_modifier": "o"
        }
@@ -961,6 +975,7 @@
      },
      {
       "args": {
+       "3": { "type_override": "Z" },
        "4": {
         "type_modifier": "o"
        }
@@ -969,6 +984,7 @@
       "selector": "initForWriting:settings:commonFormat:interleaved:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -978,6 +994,7 @@
       "selector": "readIntoBuffer:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "2": {
         "type_modifier": "o"
@@ -987,6 +1004,7 @@
       "selector": "readIntoBuffer:frameCount:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -1038,6 +1056,7 @@
    "AVAudioIONode": {
     "methods": [
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -1089,6 +1108,7 @@
       "selector": "setMutedSpeechActivityEventListener:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "callable": {
@@ -1696,6 +1716,7 @@
    "AVAudioUnit": {
     "methods": [
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -1795,6 +1816,7 @@
    "AVAudioUnitSampler": {
     "methods": [
      {
+      "retval": { "type_overide": "Z" },
       "args": {
        "4": {
         "type_modifier": "o"
@@ -1804,6 +1826,7 @@
       "selector": "loadSoundBankInstrumentAtURL:program:bankMSB:bankLSB:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -1813,6 +1836,7 @@
       "selector": "loadInstrumentAtURL:error:"
      },
      {
+      "retval": { "type_override": "Z" },
       "args": {
        "1": {
         "type_modifier": "o"
@@ -4515,24 +4539,6 @@
    }
   },
   "enum": {
-   "AVAudioSessionMicrophoneInjectionModeNone": {
-    "value": 0
-   },
-   "AVAudioSessionMicrophoneInjectionModeSpokenAudio": {
-    "value": 1
-   },
-   "AVAudioApplicationMicrophoneInjectionPermissionServiceDisabled": {
-    "value": 1936876659
-   },
-   "AVAudioApplicationMicrophoneInjectionPermissionUndetermined": {
-    "value": 1970168948
-   },
-   "AVAudioApplicationMicrophoneInjectionPermissionDenied": {
-    "value": 1684369017
-   },
-   "AVAudioApplicationMicrophoneInjectionPermissionGranted": {
-    "value": 1735552628
-   },
    "AVAudio3DMixingRenderingAlgorithmEqualPowerPanning": {
     "value": 0
    },
@@ -4547,6 +4553,18 @@
    },
    "AVAudio3DMixingRenderingAlgorithmStereoPassThrough": {
     "value": 5
+   },
+   "AVAudioApplicationMicrophoneInjectionPermissionDenied": {
+    "value": 1684369017
+   },
+   "AVAudioApplicationMicrophoneInjectionPermissionGranted": {
+    "value": 1735552628
+   },
+   "AVAudioApplicationMicrophoneInjectionPermissionServiceDisabled": {
+    "value": 1936876659
+   },
+   "AVAudioApplicationMicrophoneInjectionPermissionUndetermined": {
+    "value": 1970168948
    },
    "AVAudioApplicationRecordPermissionDenied": {
     "value": 1684369017
@@ -4592,6 +4610,12 @@
    },
    "AVAudioSessionInterruptionReasonDeviceUnauthenticated": {
     "value": 5
+   },
+   "AVAudioSessionMicrophoneInjectionModeNone": {
+    "value": 0
+   },
+   "AVAudioSessionMicrophoneInjectionModeSpokenAudio": {
+    "value": 1
    },
    "AVAudioSessionRenderingModeDolbyAtmos": {
     "value": 5
@@ -4889,12 +4913,6 @@
    }
   },
   "enum_type": {
-   "AVAudioSessionMicrophoneInjectionMode": {
-    "type": "q"
-   },
-   "AVAudioApplicationMicrophoneInjectionPermission": {
-    "type": "q"
-   },
    "AVAudio3DMixingPointSourceInHeadMode": {
     "type": "q"
    },
@@ -4902,6 +4920,9 @@
     "type": "q"
    },
    "AVAudio3DMixingSourceMode": {
+    "type": "q"
+   },
+   "AVAudioApplicationMicrophoneInjectionPermission": {
     "type": "q"
    },
    "AVAudioApplicationRecordPermission": {
@@ -4963,6 +4984,9 @@
    },
    "AVAudioSessionInterruptionType": {
     "type": "Q"
+   },
+   "AVAudioSessionMicrophoneInjectionMode": {
+    "type": "q"
    },
    "AVAudioSessionPortOverride": {
     "type": "Q"
@@ -5518,6 +5542,22 @@
    }
   },
   "typed_enum": {
+   "AVCaptureSceneMonitoringStatus": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "AVMetadataIdentifier": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "AVMetadataKey": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "AVMediaCharacteristic": {
+    "type": "@",
+    "type_name": "NSString"
+   },
    "AVAssetDownloadedAssetEvictionPriority": {
     "type": "@",
     "type_name": "NSString"

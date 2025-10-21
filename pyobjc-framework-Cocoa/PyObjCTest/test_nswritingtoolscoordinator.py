@@ -265,3 +265,12 @@ class TestNSWritingToolsCoordinator(TestCase):
         self.assertResultIsBOOL(
             AppKit.NSWritingToolsCoordinator.isWritingToolsAvailable
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSWritingToolsCoordinator.includesTextListMarkers
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSWritingToolsCoordinator.setIncludesTextListMarkers_, 0
+        )

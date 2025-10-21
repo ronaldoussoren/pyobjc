@@ -122,14 +122,15 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
     switch (PyDict_GetItemRef(registry, k, &sublist)) {
     case -1:
         // LCOV_EXCL_START
-        Py_DECREF(k);
+        Py_CLEAR(k);
         return NULL;
         // LCOV_EXCL_STOP
     case 0: // XXX: differentiate from error case.
-        Py_DECREF(k);
+        Py_CLEAR(k);
         return NULL;
 
-        /* default: fallthrough */
+    default:
+        Py_CLEAR(k);
     }
 
     len = PyList_Size(sublist);

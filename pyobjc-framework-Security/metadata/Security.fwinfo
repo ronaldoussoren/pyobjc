@@ -100,6 +100,7 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "SEC_PROTOCOL_CERT_COMPRESSION_DEFAULT": { "value": 1 },
    "kSecSubjectItemAttr": { "ignore": true },
    "kSecIssuerItemAttr": { "ignore": true },
    "kSecSerialNumberItemAttr": { "ignore": true },
@@ -1960,6 +1961,8 @@
   "classes": {
   },
   "functions": {
+   "SecIdentityCopyPreference": { "ignore": true },
+   "SecIdentitySetPreference": { "ignore": true },
    "SecKeychainItemCreateFromContent": { "ignore": true },
    "SecKeychainGetCSPHandle": { "ignore": true },
    "SecKeychainGetDLDBHandle": { "ignore": true },

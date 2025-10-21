@@ -38,6 +38,11 @@ and an Objective-C class.
 API Notes
 ---------
 
+CFAllocatorCreateWithZone
+.........................
+
+This API is not available, it interacs with a low-level malloc(3) interface
+that's not exposed to python.
 
 CFArrayRef
 ..........

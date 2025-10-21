@@ -24,3 +24,11 @@ class TestVTFrameProcessor(TestCase):
             1,
             b"v@@",
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertArgIsBlock(
+            VideoToolbox.VTFrameProcessor.processWithParameters_frameOutputHandler_,
+            1,
+            b"v@" + VideoToolbox.CMTime.__typestr__ + b"Z@",
+        )

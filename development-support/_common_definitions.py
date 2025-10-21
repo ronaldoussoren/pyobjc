@@ -15,7 +15,17 @@ import typing
 from _topsort import topological_sort
 
 
-PY_VERSIONS = ["3.9", "3.10", "3.11", "3.12", "3.13", "3.13t", "3.14", "3.14t"]
+PY_VERSIONS = [
+    "3.10",
+    "3.11",
+    "3.12",
+    "3.13",
+    "3.13t",
+    "3.14",
+    "3.14t",
+    "3.15",
+    "3.15t",
+]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -62,7 +72,7 @@ def is_usable_release(ver: str, *, include_alpha: bool = False) -> bool:
     return True
 
 
-def detect_pyversions(*, include_alpha: bool = False) -> typing.List[str]:
+def detect_pyversions(*, include_alpha: bool = False) -> list[str]:
     global _detected_versions
     if _detected_versions is not None:
         return _detected_versions
@@ -128,7 +138,7 @@ def py_version(ver: str) -> str:
 
 
 def system_report(
-    path: typing.Union[str, os.PathLike[str]], py_versions: typing.Sequence[str]
+    path: str | os.PathLike[str], py_versions: typing.Sequence[str]
 ) -> None:
     with open(path, "w") as fp:
         fp.write(f"Build at:           {time.ctime()}\n")
@@ -204,7 +214,7 @@ def virtualenv(interpreter: str, silent: bool = True) -> typing.Iterator[str]:
 def variants(
     ver: str,
     permitted_variants: typing.Sequence[str] = ("universal2", "x86_64", "arm64"),
-) -> typing.List[str]:
+) -> list[str]:
     if ver.endswith("t"):
         fwk_path = "/Library/Frameworks/PythonT.framework/Versions"
     else:
@@ -246,7 +256,7 @@ def setup_variant(ver: str, variant: str) -> None:
     os.symlink(variant, tgt)
 
 
-def sort_framework_wrappers() -> typing.List[str]:
+def sort_framework_wrappers() -> list[str]:
     """
     Returns a list of framework wrappers in the order they should
     be build in.

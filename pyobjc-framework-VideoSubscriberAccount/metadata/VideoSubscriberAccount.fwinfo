@@ -7,6 +7,26 @@
    "VSErrorCodeUnsupported": { "value": 7 }
   },
   "externs": {
+  },
+  "classes": {
+   "VSUserAccount": {
+    "methods": [
+     {
+      "selector": "isDeleted",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "selector": "setDeleted:",
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "Z" }
+      }
+     }
+    ]
+   }
   }
  }
 }

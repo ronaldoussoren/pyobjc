@@ -67,3 +67,12 @@ class TestWKWebViewConfiguration(TestCase):
         self.assertArgIsBOOL(
             WebKit.WKWebViewConfiguration.setSupportsAdaptiveImageGlyph_, 0
         )
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(
+            WebKit.WKWebViewConfiguration.showsSystemScreenTimeBlockingView
+        )
+        self.assertArgIsBOOL(
+            WebKit.WKWebViewConfiguration.setShowsSystemScreenTimeBlockingView_, 0
+        )

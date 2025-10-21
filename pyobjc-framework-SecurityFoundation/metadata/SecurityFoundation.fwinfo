@@ -6,6 +6,22 @@
    "SFAuthorization": {
     "methods": [
      {
+      "selector": "initWithFlags:rights:environment:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}"},
+       "2": { "type_override": "^{_AuthorizationEnvironment=I^{_AuthorizationItem=^cQ^vI}}"}
+      }
+     },
+     {
+      "selector": "authorizationWithFlags:rights:environment:",
+      "class_method": true,
+      "args": {
+       "1": { "type_override": "^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}"},
+       "2": { "type_override": "^{_AuthorizationEnvironment=I^{_AuthorizationItem=^cQ^vI}}"}
+      }
+     },
+     {
       "selector": "obtainWithRight:flags:error:",
       "class_method": false,
       "retval": {
@@ -22,8 +38,19 @@
        "type_override": "Z"
       },
       "args": {
-       "3": { "type_modifier": "o" },
+       "0": {"type_override": "^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}"},
+       "4": { "type_override": "^{_AuthorizationEnvironment=I^{_AuthorizationItem=^cQ^vI}}" },
+       "3": { "type_modifier": "o", "type_override": "^^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}" },
        "4": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "permitWithRights:flags:environment:authorizedRights:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}" },
+       "2": { "type_override": "^{_AuthorizationEnvironment=I^{_AuthorizationItem=^cQ^vI}}" },
+       "3": { "type_override": "^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}", "type_modifier": "o" }
       }
      }
     ]

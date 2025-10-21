@@ -26,7 +26,6 @@ class TestAVCaptureDevice(TestCase):
         self.assertIsEnumType(AVFoundation.AVCaptureVideoStabilizationMode)
         self.assertIsEnumType(AVFoundation.AVCaptureWhiteBalanceMode)
 
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertEqual(AVFoundation.AVCaptureColorSpace_sRGB, 0)
         self.assertEqual(AVFoundation.AVCaptureColorSpace_P3_D65, 1)
@@ -90,6 +89,25 @@ class TestAVCaptureDevice(TestCase):
         self.assertEqual(AVFoundation.AVCaptureAutoFocusSystemContrastDetection, 1)
         self.assertEqual(AVFoundation.AVCaptureAutoFocusSystemPhaseDetection, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureCinematicVideoFocusMode)
+        self.assertEqual(AVFoundation.AVCaptureCinematicVideoFocusModeNone, 0)
+        self.assertEqual(AVFoundation.AVCaptureCinematicVideoFocusModeStrong, 1)
+        self.assertEqual(AVFoundation.AVCaptureCinematicVideoFocusModeWeak, 2)
+
+        self.assertIsEnumType(AVFoundation.AVCaptureCameraLensSmudgeDetectionStatus)
+        self.assertEqual(
+            AVFoundation.AVCaptureCameraLensSmudgeDetectionStatusDisabled, 0
+        )
+        self.assertEqual(
+            AVFoundation.AVCaptureCameraLensSmudgeDetectionStatusSmudgeNotDetected, 1
+        )
+        self.assertEqual(
+            AVFoundation.AVCaptureCameraLensSmudgeDetectionStatusSmudged, 2
+        )
+        self.assertEqual(
+            AVFoundation.AVCaptureCameraLensSmudgeDetectionStatusUnknown, 3
+        )
+
     @min_os_level("10.15")
     def test_constants10_15(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, str)
@@ -145,6 +163,13 @@ class TestAVCaptureDevice(TestCase):
         )
         self.assertIsInstance(
             AVFoundation.AVSpatialCaptureDiscomfortReasonSubjectTooClose, str
+        )
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsTypedEnum(AVFoundation.AVCaptureSceneMonitoringStatus, str)
+        self.assertIsInstance(
+            AVFoundation.AVCaptureSceneMonitoringStatusNotEnoughLight, str
         )
 
     @min_os_level("10.7")
@@ -388,3 +413,40 @@ class TestAVCaptureDevice(TestCase):
     @min_os_level("15.2")
     def testMethods15_2(self):
         self.assertResultIsBOOL(AVFoundation.AVExposureBiasRange.containsExposureBias_)
+
+    @min_os_level("26.0")
+    def testMethods26_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isExposureRectOfInterestSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isCinematicVideoCaptureSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isCameraLensSmudgeDetectionSupported
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureDevice.setCameraLensSmudgeDetectionEnabled_detectionInterval_,
+            0,
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isCameraLensSmudgeDetectionEnabled
+        )
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isVideoFrameDurationLocked)
+        self.assertResultHasType(
+            AVFoundation.AVCaptureDevice.minSupportedLockedVideoFrameDuration,
+            AVFoundation.CMTime.__typestr__,
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isFollowingExternalSyncDevice
+        )
+        self.assertResultHasType(
+            AVFoundation.AVCaptureDevice.minSupportedExternalSyncFrameDuration,
+            AVFoundation.CMTime.__typestr__,
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVCaptureDevice.setWhiteBalanceModeLockedWithDeviceWhiteBalanceTemperatureAndTintValues_completionHandler_,
+            1,
+            b"v" + AVFoundation.CMTime.__typestr__,
+        )

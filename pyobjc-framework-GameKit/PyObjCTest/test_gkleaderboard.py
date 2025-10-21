@@ -72,3 +72,7 @@ class TestGKLeaderboard(TestCase):
             4,
             b"v@",
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(GameKit.GKLeaderboard.isHidden)

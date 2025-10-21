@@ -3,6 +3,16 @@
 {
  "definitions": {
   "classes": {
+   "CKQueryNotification": {
+    "methods": [
+     {
+      "selector":  "isPublicDatabase",
+      "class_method": false,
+      "deprecated": 1012,
+      "retval": {"type_override": "Z"}
+     }
+    ]
+   },
    "CKAcceptSharesOperation": {
     "methods": [
      {
@@ -1367,6 +1377,13 @@
        }
       },
       "selector": "notificationChangedBlock"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "moreComing"
      }
     ]
    },
@@ -3351,6 +3368,20 @@
    "CKOperation": {
     "methods": [
      {
+      "selector": "setUsesBackgroundSession:",
+      "deprecated": 1011,
+      "class_method": false,
+      "args": {
+       "0": {"type_override": "Z"}
+      }
+     },
+     {
+      "selector": "usesBackgroundSession",
+      "class_method": false,
+      "deprecated": 1011,
+      "retval": {"type_override": "Z"}
+     },
+     {
       "args": {
        "0": {
         "type_override": "Z"
@@ -3593,6 +3624,10 @@
    }
   },
   "enum": {
+   "CKSubscriptionOptionsFiresOnRecordCreation": { "value": 1 },
+   "CKSubscriptionOptionsFiresOnRecordDeletion": { "value": 4 },
+   "CKSubscriptionOptionsFiresOnRecordUpdate": { "value": 2 },
+   "CKSubscriptionOptionsFiresOnce": { "value": 8 },
    "CKShareParticipantRoleUnknown": { "value": 0 },
    "CKShareParticipantRoleOwner": { "value": 1 },
    "CKShareParticipantRolePrivateUser": { "value": 3 },

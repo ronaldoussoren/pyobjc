@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 import objc
 
 import MetalFX
@@ -55,6 +55,10 @@ class TestMTLFXSpatialScaler(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTLFXSpatialScaler")
 
+    @min_sdk_level("26.0")
+    def test_protocols26_0(self):
+        self.assertProtocolExists("MTLFXSpatialScalerBase")
+
     def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLFXSpatialScalerHelper.colorTextureUsage, objc._C_NSUInteger
@@ -95,3 +99,8 @@ class TestMTLFXSpatialScaler(TestCase):
         self.assertResultHasType(
             TestMTLFXSpatialScalerHelper.colorProcessingMode, objc._C_NSInteger
         )
+
+    @min_os_level("26.0")
+    def test_methods(self):
+        self.assertResultIsBOOL(MetalFX.MTLFXSpatialScalerDescriptor.supportsMetal4FX_)
+        self.assertResultIsBOOL(MetalFX.MTLFXSpatialScalerDescriptor.supportsDevice_)

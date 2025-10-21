@@ -136,6 +136,23 @@ static PyObject* _Nullable sig_str(PyObject* _self)
 }
 
 static void
+free_argdescr(struct _PyObjC_ArgDescr* descr)
+{
+    if (descr == NULL || descr->tmpl) {
+        return;
+    }
+
+    if (descr->typeOverride) {
+        PyMem_Free((char*)descr->type);
+    }
+
+    if (descr->sel_type != NULL) {
+        PyMem_Free((char*)descr->sel_type);
+    }
+    PyMem_Free(descr);
+}
+
+static void
 sig_dealloc(PyObject* _self)
 {
     PyObjCMethodSignature* self = (PyObjCMethodSignature*)_self;
@@ -146,26 +163,11 @@ sig_dealloc(PyObject* _self)
     }
 
     if (self->rettype && !self->rettype->tmpl) {
-        if (self->rettype->typeOverride) {
-            PyMem_Free((char*)self->rettype->type);
-        }
-        PyMem_Free(self->rettype);
+        free_argdescr(self->rettype);
     }
 
     for (i = 0; i < Py_SIZE(self); i++) {
-        if (self->argtype[i] == NULL) // LCOV_BR_EXCL_LINE
-            continue;                 // LCOV_EXCL_LINE
-        if (self->argtype[i]->tmpl)
-            continue;
-
-        if (self->argtype[i]->typeOverride) {
-            PyMem_Free((char*)self->argtype[i]->type);
-        }
-
-        if (self->argtype[i]->sel_type != NULL) {
-            PyMem_Free((char*)self->argtype[i]->sel_type);
-        }
-        PyMem_Free(self->argtype[i]);
+        free_argdescr(self->argtype[i]);
     }
 #if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(self);
@@ -1328,8 +1330,26 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                 }
                 assert(r != -2);
             }
+        }
+        Py_CLEAR(retval);
 
-            Py_CLEAR(retval);
+        switch (PyDict_GetItemRef(metadata, PyObjCNM_free_result,
+                                  &av)) { // LCOV_BR_EXCL_LINE
+        case -1:
+            // LCOV_EXCL_START
+            Py_DECREF(retval);
+            return -1;
+            // LCOV_EXCL_STOP
+        /* case 0: pass */
+        case 1:
+            r = PyObject_IsTrue(av);
+            if (r == -1) {
+                return -1;
+            }
+            if (r) {
+                methinfo->free_result = YES;
+            }
+            Py_CLEAR(av);
         }
         switch (PyDict_GetItemRef(metadata, PyObjCNM_free_result,
                                   &av)) { // LCOV_BR_EXCL_LINE

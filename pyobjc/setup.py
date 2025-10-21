@@ -13,7 +13,7 @@ import re
 from setuptools import setup, Command
 from setuptools.command import egg_info
 
-VERSION = "11.1.1"
+VERSION = "12.0"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -28,6 +28,7 @@ FRAMEWORK_WRAPPERS = [
     ("AdServices", "11.0", None),
     ("AdSupport", "10.14", None),
     ("AppTrackingTransparency", "11.0", None),
+    ("ARKit", "26.0", None),
     ("AudioVideoBridging", "10.8", None),
     ("AuthenticationServices", "10.15", None),
     ("AutomaticAssessmentConfiguration", "10.15", None),
@@ -51,6 +52,7 @@ FRAMEWORK_WRAPPERS = [
     ("ClassKit", "11.0", None),
     ("CloudKit", "10.10", None),
     ("Cocoa", None, None),
+    ("CompositorServices", "26.0", None),
     ("Collaboration", "10.5", None),
     ("ColorSync", "10.13", None),
     ("Contacts", "10.11", None),
@@ -91,6 +93,7 @@ FRAMEWORK_WRAPPERS = [
     ("FinderSync", "10.10", None),
     ("GameCenter", "10.8", None),
     ("GameController", "10.9", None),
+    ("GameSave", "26.0", None),
     ("HealthKit", "13.0", None),
     ("InputMethodKit", "10.5", None),
     ("ImageCaptureCore", "10.6", None),
@@ -207,6 +210,7 @@ MACOS_TO_DARWIN = {
     "15.1": "24.1",
     "15.2": "24.2",
     "15.4": "24.4",
+    "26.0": "25.0",
 }
 
 

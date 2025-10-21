@@ -31,7 +31,7 @@ class TestCGError(TestCase):
         )
         self.assertEqual(Quartz.kCGErrorForkFailed, 1028)
         self.assertEqual(Quartz.kCGErrorRetryRegistration, 1029)
-        self.assertEqual(Quartz.kCGErrorLast, Quartz.kCGErrorRetryRegistration)
+        self.assertNotHasAttr(Quartz, "kCGErrorLast")
 
     @min_os_level("12.0")
     def testFunctions(self):

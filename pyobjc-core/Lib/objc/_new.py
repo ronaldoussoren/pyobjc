@@ -87,12 +87,24 @@ class function_wrapper:
     def __doc__(self):
         return calculate_new_doc(self._cls)
 
+    @property
+    def __module__(self):
+        return self._cls.__module__
+
     def __getattr__(self, name):
+        if name == "__qualname__":
+            return (
+                (self._cls.__module__ or "objc") + "." + self._cls.__name__ + ".__new__"
+            )
+        elif name == "__name__":
+            return "__new__"
+        elif name == "__module__":
+            return self._cls.__module__
         return getattr(self._function, name)
 
     def __setattr__(self, name, value):
         if name in ("_function", "_cls"):
-            object.__setattr__(self, name, value)
+            return object.__setattr__(self, name, value)
         return setattr(self._function, name, value)
 
     def __call__(self, *args, **kwds):
@@ -154,25 +166,8 @@ def new_func(cls, *args, **kwds):
         raise TypeError(f"{cls.__name__}() requires keyword arguments")
 
 
-FunctionType = type(new_func)
-
-
-def make_generic_new(cls, *, FunctionType=FunctionType, new_func=new_func):
-
-    # XXX: Settings these helps, but does not yet result in the correct
-    #      output from help()
-
-    result = FunctionType(
-        new_func.__code__,
-        new_func.__globals__,
-        cls.__name__ + ".__new__",
-        new_func.__defaults__,
-        new_func.__closure__,
-    )
-    result.__qualname__ = result.__name__
-    result.__module__ = cls.__module__
-    result = function_wrapper(result, cls)
-    return result
+def make_generic_new(cls):
+    return function_wrapper(new_func, cls)
 
 
 objc.options._genericNewClass = function_wrapper

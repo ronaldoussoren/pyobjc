@@ -3,7 +3,6 @@ import subprocess
 import pathlib
 import configparser
 import glob
-import typing
 
 from _common_definitions import RED, BOLD, RESET
 
@@ -22,8 +21,8 @@ SDK_VERSION = subprocess.check_output(
 
 
 def main() -> None:
-    scan_failed: typing.List[typing.Tuple[str, str]] = []
-    compile_failed: typing.List[typing.Tuple[str, str]] = []
+    scan_failed: list[tuple[str, str]] = []
+    compile_failed: list[tuple[str, str]] = []
     all_frameworks = sorted(BASE.glob("pyobjc-framework-*"))
     for idx, nm in enumerate(all_frameworks):
         cfg = configparser.RawConfigParser()

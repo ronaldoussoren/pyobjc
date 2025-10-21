@@ -12,7 +12,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``ReplayKit`` package (that is, ``import ReplayKit``).
 
-.. versionadded:: macOS 11
+.. macosadded:: 11
 
 API Notes
 ---------

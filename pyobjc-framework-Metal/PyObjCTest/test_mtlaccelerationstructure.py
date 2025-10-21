@@ -64,6 +64,10 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertEqual(Metal.MTLAccelerationStructureUsageRefit, 1 << 0)
         self.assertEqual(Metal.MTLAccelerationStructureUsagePreferFastBuild, 1 << 1)
         self.assertEqual(Metal.MTLAccelerationStructureUsageExtendedLimits, 1 << 2)
+        self.assertEqual(
+            Metal.MTLAccelerationStructureUsagePreferFastIntersection, 1 << 4
+        )
+        self.assertEqual(Metal.MTLAccelerationStructureUsageMinimizeMemory, 1 << 5)
 
         self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionNone, 0)
         self.assertEqual(
@@ -112,6 +116,12 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertIsEnumType(Metal.MTLTransformType)
         self.assertEqual(Metal.MTLTransformTypePackedFloat4x3, 0)
         self.assertEqual(Metal.MTLTransformTypeComponent, 1)
+
+        self.assertIsEnumType(Metal.MTLAccelerationStructureRefitOptions)
+        self.assertEqual(Metal.MTLAccelerationStructureRefitOptionVertexData, 1 << 0)
+        self.assertEqual(
+            Metal.MTLAccelerationStructureRefitOptionPerPrimitiveData, 1 << 1
+        )
 
     @min_os_level("11.0")
     def test_methods11_0(self):

@@ -124,6 +124,20 @@ class TestMTLResource(TestCase):
             Metal.MTLResourceCPUCacheModeWriteCombined,
         )
 
+        self.assertIsEnumType(Metal.MTLSparsePageSize)
+        self.assertEqual(Metal.MTLSparsePageSize16, 101)
+        self.assertEqual(Metal.MTLSparsePageSize64, 102)
+        self.assertEqual(Metal.MTLSparsePageSize256, 103)
+
+        self.assertIsEnumType(Metal.MTLBufferSparseTier)
+        self.assertEqual(Metal.MTLBufferSparseTierNone, 0)
+        self.assertEqual(Metal.MTLBufferSparseTier1, 1)
+
+        self.assertIsEnumType(Metal.MTLTextureSparseTier)
+        self.assertEqual(Metal.MTLTextureSparseTierNone, 0)
+        self.assertEqual(Metal.MTLTextureSparseTier1, 1)
+        self.assertEqual(Metal.MTLTextureSparseTier2, 2)
+
     @min_sdk_level("10.11")
     def test_protocols(self):
         self.assertProtocolExists("MTLResource")

@@ -15,3 +15,22 @@ class TestSFSpeechLanguageModel(TestCase):
             4,
             b"v@",
         )
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertArgIsBlock(
+            Speech.SFSpeechLanguageModel.prepareCustomLanguageModelForUrl_configuration_completion_,
+            2,
+            b"v@",
+        )
+
+        self.assertArgIsBOOL(
+            Speech.SFSpeechLanguageModel.prepareCustomLanguageModelForUrl_configuration_ignoresCache_completion_,
+            2,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            Speech.SFSpeechLanguageModel.prepareCustomLanguageModelForUrl_configuration_ignoresCache_completion_,
+            3,
+            b"v@",
+        )

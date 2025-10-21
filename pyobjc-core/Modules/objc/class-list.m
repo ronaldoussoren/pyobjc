@@ -469,9 +469,22 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
         if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
             goto error;        // LCOV_EXCL_LINE
         }
-        if (PyList_Append(result, pyclass) == -1) { // LCOV_BR_EXCL_LINE
-            goto error;                             // LCOV_EXCL_LINE
+
+        if (!PyObjCClass_Check(pyclass)) {
+            /* XXX: On macOS 26.0.1 a partially build meta class ends up
+             *      in the copied list during testing. This may be a bug
+             *      in PyObjC!
+             */
+            Py_DECREF(pyclass);
+            continue;
         }
+        if (PyList_Append(result, pyclass) == -1) { // LCOV_BR_EXCL_LINE
+            // LCOV_BR_EXCL_START
+            Py_DECREF(pyclass);
+            goto error;
+            // LCOV_BR_EXCL_STOP
+        }
+        Py_DECREF(pyclass);
     }
 
     free(buffer);

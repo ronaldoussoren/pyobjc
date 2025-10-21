@@ -6,6 +6,42 @@
    "SNClassifierIdentifier": { "type": "@", "type_name": "NSString" }
   },
   "classes": {
+   "SNTimeDurationConstraint": {
+    "methods": [
+     {
+      "retval": {
+       "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
+      },
+      "class_method": false,
+      "selector": "durationRange"
+     },
+     {
+      "args": {
+       "0": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" }
+      },
+      "class_method": false,
+      "selector": "initWithDurationRange:"
+     }
+    ]
+   },
+   "SNClassificationResult": {
+    "methods": [
+     {
+      "retval": {
+       "type_override": "{_CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
+      },
+      "class_method": false,
+      "selector": "analyzeWithCompletionHandler:"
+     },
+     {
+      "retval": {
+       "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
+      },
+      "class_method": false,
+      "selector": "timeRange"
+     }
+    ]
+   },
    "SNAudioFileAnalyzer": {
     "methods": [
      {
@@ -58,6 +94,20 @@
       },
       "class_method": false,
       "selector": "initWithMLModel:error:"
+     },
+     {
+      "args": {
+       "0": { "type_override": "{CMTime=qiIq}" }
+      },
+      "class_method": false,
+      "selector": "setWindowDuration:"
+     },
+     {
+      "retval": {
+       "type_override": "{CMTime=qiIq}"
+      },
+      "class_method": false,
+      "selector": "windowDuration"
      }
     ]
    }

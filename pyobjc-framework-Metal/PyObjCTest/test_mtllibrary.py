@@ -81,6 +81,7 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLLanguageVersion3_0, (3 << 16) + 0)
         self.assertEqual(Metal.MTLLanguageVersion3_1, (3 << 16) + 1)
         self.assertEqual(Metal.MTLLanguageVersion3_2, (3 << 16) + 2)
+        self.assertEqual(Metal.MTLLanguageVersion4_0, (4 << 16) + 0)
 
         self.assertEqual(Metal.MTLLibraryErrorUnsupported, 1)
         self.assertEqual(Metal.MTLLibraryErrorInternal, 2)
