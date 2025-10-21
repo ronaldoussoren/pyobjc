@@ -68,7 +68,7 @@ PyObjC
       :link: changelog
       :link-type: doc
 
-      PyObjC 12.0 was released on 2025-10-20.  See the :doc:`changelog <changelog>` for more information.
+      PyObjC 12.0 was released on 2025-10-21.  See the :doc:`changelog <changelog>` for more information.
 
 
    .. grid-item-card:: Supported Platforms
