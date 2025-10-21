@@ -13,7 +13,7 @@ import re
 from setuptools import setup, Command
 from setuptools.command import egg_info
 
-VERSION = "12.0"
+VERSION = "12.0.1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column

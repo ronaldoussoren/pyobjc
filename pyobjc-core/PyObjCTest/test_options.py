@@ -601,6 +601,33 @@ class TestOptions(TestCase):
             objc.options._date_types = orig_date_types
             objc.options._path_types = orig_path_types
 
+    def test_proxy_with_invalid_types(self):
+
+        orig_mapping_types = objc.options._mapping_types
+        orig_sequence_types = objc.options._sequence_types
+        orig_set_types = objc.options._set_types
+        orig_date_types = objc.options._date_types
+        orig_path_types = objc.options._path_types
+
+        for nm in ("_mapping_types", "_sequence_types"):
+            try:
+                setattr(objc.options, nm, 42)
+
+                with objc.autorelease_pool():
+                    a = NSMutableArray.alloc().init()
+
+                    with self.assertRaisesRegex(TypeError, "isinstance"):
+                        a.addObject_(object())
+
+                    del a
+
+            finally:
+                objc.options._mapping_types = orig_mapping_types
+                objc.options._sequence_types = orig_sequence_types
+                objc.options._set_types = orig_set_types
+                objc.options._date_types = orig_date_types
+                objc.options._path_types = orig_path_types
+
     def test_date_proxy_without_options(self):
         orig_date = objc.options._datetime_date_type
         orig_datetime = objc.options._datetime_datetime_type

@@ -328,11 +328,13 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
             return NULL;  /* LCOV_EXCL_LINE */                                           \
         }                                                                                \
                                                                                          \
-        for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
+        for (Py_ssize_t i = 0; i < elemcount; i++) { /* LCOV_BR_EXCL_LINE */             \
             PyObject* elem = convertelem(value[i]);                                      \
-            if (elem == NULL) {                                                          \
+            if (elem == NULL) { /* LCOV_BR_EXCL_LINE */                                  \
+                /* LCOV_BR_EXCL_START */                                                 \
                 Py_DECREF(rv);                                                           \
                 return NULL;                                                             \
+                /* LCOV_BR_EXCL_STOP */                                                  \
             }                                                                            \
             PyTuple_SET_ITEM(rv, i, elem);                                               \
         }                                                                                \
@@ -351,22 +353,44 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
             return -1;                                                                   \
         }                                                                                \
                                                                                          \
-        for (Py_ssize_t i = 0; i < elemcount; i++) {                                     \
+        for (Py_ssize_t i = 0; i < elemcount; i++) { /* LCOV_BR_EXCL_LINE */             \
             PyObject* e = PySequence_GetItem(py, i);                                     \
             if (e == NULL) { /* LCOV_BR_EXCL_LINE */                                     \
                 return -1;   /* LCOV_EXCL_LINE */                                        \
             }                                                                            \
             value[i] = convertelem(e);                                                   \
             Py_DECREF(e);                                                                \
-            if (PyErr_Occurred()) {                                                      \
-                return -1;                                                               \
+            if (PyErr_Occurred()) { /* LCOV_BR_EXCL_LINE */                              \
+                return -1;          /* LCOV_EXC_LINE */                                  \
             }                                                                            \
         }                                                                                \
         memcpy(_pvalue, (void*)&value, sizeof(ctype));                                   \
         return 0;                                                                        \
     }
 
-VECTOR_TO_PYTHON(vector_uchar16, 16, PyLong_FromLong)
+// VECTOR_TO_PYTHON(vector_uchar16, 16, PyLong_FromLong)
+static PyObject* _Nullable vector_uchar16_as_tuple(const void* _pvalue)
+{
+    const vector_uchar16 value;
+    memcpy((void*)&value, _pvalue, sizeof(vector_uchar16));
+    PyObject* rv = PyTuple_New(16);
+    if (rv == NULL) { /* LCOV_BR_EXCL_LINE */
+        return NULL;  /* LCOV_EXCL_LINE */
+    }
+
+    for (Py_ssize_t i = 0; i < 16; i++) { // LCOV_BR_EXCL_LINE
+        PyObject* elem = PyLong_FromLong(value[i]);
+        if (elem == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(rv);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        PyTuple_SET_ITEM(rv, i, elem);
+    }
+
+    return rv;
+}
 VECTOR_TO_PYTHON(vector_short2, 2, PyLong_FromLong)
 VECTOR_TO_PYTHON(vector_ushort2, 2, PyLong_FromLong)
 VECTOR_TO_PYTHON(vector_ushort3, 3, PyLong_FromLong)
@@ -383,7 +407,31 @@ VECTOR_TO_PYTHON(vector_double2, 2, PyFloat_FromDouble)
 VECTOR_TO_PYTHON(vector_double3, 3, PyFloat_FromDouble)
 VECTOR_TO_PYTHON(vector_double4, 4, PyFloat_FromDouble)
 
-VECTOR_FROM_PYTHON(vector_uchar16, 16, PyLong_AsLong)
+// VECTOR_FROM_PYTHON(vector_uchar16, 16, PyLong_AsLong)
+static int
+vector_uchar16_from_python(PyObject* py, void* _pvalue)
+{
+    vector_uchar16 value;
+
+    if (!PySequence_Check(py) || PySequence_Length(py) != 16) {
+        PyErr_SetString(PyExc_ValueError, "Expecting value with 16 elements");
+        return -1;
+    }
+
+    for (Py_ssize_t i = 0; i < 16; i++) { /* LCOV_BR_EXCL_LINE */
+        PyObject* e = PySequence_GetItem(py, i);
+        if (e == NULL) { /* LCOV_BR_EXCL_LINE */
+            return -1;   /* LCOV_EXCL_LINE */
+        }
+        value[i] = PyLong_AsLong(e);
+        Py_DECREF(e);
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return -1;          // LCOV_EXCL_LINE
+        }
+    }
+    memcpy(_pvalue, (void*)&value, sizeof(vector_uchar16));
+    return 0;
+}
 VECTOR_FROM_PYTHON(vector_short2, 2, PyLong_AsLong)
 VECTOR_FROM_PYTHON(vector_ushort2, 2, PyLong_AsLong)
 VECTOR_FROM_PYTHON(vector_ushort3, 3, PyLong_AsLong)
@@ -1881,28 +1929,39 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
         return -1;
     }
 
-    if (sizeofitem == 1 && PyBytes_Check(value)) {
+    if (sizeofitem == 1 && (PyBytes_Check(value) || PyByteArray_Check(value))) {
         /* Special casing for strings */
+        Py_ssize_t  value_size;
+        const char* value_bytes;
+
+        if (PyBytes_Check(value)) {
+            value_size  = PyBytes_GET_SIZE(value);
+            value_bytes = PyBytes_AS_STRING(value);
+        } else {
+            value_size  = PyByteArray_GET_SIZE(value);
+            value_bytes = PyByteArray_AS_STRING(value);
+        }
+
         if (strict) {
-            if (PyBytes_Size(value) != nitems) {
+            if (value_size != nitems) {
                 PyErr_Format(PyExc_ValueError,
                              "depythonifying array of %" PY_FORMAT_SIZE_T
                              "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                             nitems, PyBytes_Size(value));
+                             nitems, value_size);
                 return -1;
             }
 
         } else {
-            if (PyBytes_Size(value) < nitems) {
+            if (value_size < nitems) {
                 PyErr_Format(PyExc_ValueError,
                              "depythonifying array of %" PY_FORMAT_SIZE_T
                              "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                             nitems, PyBytes_Size(value));
+                             nitems, value_size);
                 return -1;
             }
         }
 
-        memcpy(datum, PyBytes_AS_STRING(value), nitems);
+        memcpy(datum, value_bytes, nitems);
         return 0;
 #if 0
     } else if (*type == _C_UNICHAR && PyUnicode_Check(value)) {
@@ -2856,14 +2915,16 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
         if (PyBytes_Check(argument)) {
             char* v = PyBytes_AsString(argument);
-            if (v == NULL) {
-                return -1;
+            if (v == NULL) { // LCOV_BR_EXCL_LINE
+                /* Can only fail due to type check that we already did */
+                return -1; // LCOV_EXCL_LINE
             }
             memcpy(datum, (void*)&v, sizeof(char*));
         } else if (PyByteArray_Check(argument)) {
             char* v = PyByteArray_AsString(argument);
-            if (v == NULL) {
-                return -1;
+            if (v == NULL) { // LCOV_BR_EXCL_LINE
+                /* Can only fail due to type check that we already did */
+                return -1; // LCOV_EXCL_LINE
             }
             memcpy(datum, (void*)&v, sizeof(char*));
         } else if (argument == Py_None) {

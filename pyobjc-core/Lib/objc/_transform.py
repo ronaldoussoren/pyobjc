@@ -605,9 +605,11 @@ def returns_value(func):
             elif prev.opname != "LOAD_CONST":
                 return True
 
-        elif inst.opname == "RETURN_CONST" and consts[inst.arg] is not None:
-            # New in Python 3.12.
-            return True
+        elif (  # pragma: no branch
+            inst.opname == "RETURN_CONST" and consts[inst.arg] is not None
+        ):
+            # New in Python 3.12, dropped in 3.14
+            return True  # pragma: no cover
         prev = inst
 
     return False

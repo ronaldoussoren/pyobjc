@@ -1226,7 +1226,7 @@ PyObjC_IsGenericNew(PyObject* value)
     UNLOCK(PyObjC_genericNewClass);
 
     if (!PyType_Check(type)) {
-        PyErr_Format(PyExc_TypeError, "%R is not a type", type);
+        PyErr_Format(PyExc_TypeError, "'%R' is not a type", type);
         Py_DECREF(type);
         return -1;
     }

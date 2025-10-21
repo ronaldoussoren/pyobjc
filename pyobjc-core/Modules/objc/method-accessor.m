@@ -406,17 +406,14 @@ methacc_clear(PyObject* _self)
 
 static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 {
-    PyObjCMethodAccessor* self       = (PyObjCMethodAccessor*)_self;
-    PyObject*             result     = NULL;
-    const char*           name_bytes = NULL;
+    PyObjCMethodAccessor* self   = (PyObjCMethodAccessor*)_self;
+    PyObject*             result = NULL;
 
     assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base));
 
-    if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
-        name_bytes = PyUnicode_AsUTF8(name);
-        if (name_bytes == NULL) {
-            PyErr_SetObject(PyExc_AttributeError, name);
-            return NULL;
+    if (PyUnicode_Check(name)) {              // LCOV_BR_EXCL_LINE
+        if (PyUnicode_AsUTF8(name) == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;                      // LCOV_EXCL_LINE
         }
 
     } else { // LCOV_BR_EXCL_LINE
@@ -544,7 +541,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
     }
 
     /* Didn't find the selector the first trip around, try harder. */
-    const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
+    const char* name_bytes = PyUnicode_AsUTF8(name);
     if (name_bytes == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;          // LCOV_EXCL_LINE
     }

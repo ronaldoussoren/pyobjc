@@ -189,6 +189,11 @@ class TestTypeCode_UniChar(TestCase):
         ):
             o.UniCharArg_andUniCharArg_(400, 401)
 
+        with self.assertRaisesRegex(
+            ValueError, "Expecting string of length 1, got a 'str'"
+        ):
+            o.UniCharArg_andUniCharArg_(chr(70000), 401)
+
     def testStringArgument(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 

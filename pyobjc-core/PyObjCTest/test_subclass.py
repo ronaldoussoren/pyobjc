@@ -1064,7 +1064,7 @@ class TestSelectorAttributes(TestCase):
         def method(self):
             return 42
 
-        with self.assertRaisesRegex(objc.error, "need self argument"):
+        with self.assertRaisesRegex(TypeError, "need self argument"):
             method()
 
     def test_native_compare(self):

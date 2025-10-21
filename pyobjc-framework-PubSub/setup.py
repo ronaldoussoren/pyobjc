@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import setup  # noqa: E402
 
-VERSION = "12.0"
+VERSION = "12.0.1"
 
 setup(
     name="pyobjc-framework-PubSub",

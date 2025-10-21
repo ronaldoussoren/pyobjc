@@ -48,7 +48,13 @@ class TestRepythonify(TestCase):
                 self.assertIsInstance(value, simd_type)
                 self.assertEqual(value, expected)
 
-    def test_from_sime_type(self):
+            with self.subTest(type=simd_type, args=args):
+                with self.assertRaisesRegex(
+                    ValueError, f"Expecting value with {len(args)} elements"
+                ):
+                    objc.repythonify(args[:-1], simd_type.__typestr__)
+
+    def test_from_same_type(self):
         for simd_type, args in CASES:
             with self.subTest(type=simd_type, args=args):
                 expected = simd_type(*args)

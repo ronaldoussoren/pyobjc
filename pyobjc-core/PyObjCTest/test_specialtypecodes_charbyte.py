@@ -181,7 +181,7 @@ class TestTypeCode_byte(TestCase):
     def testSimpleArg(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        v = o.byteArg_andbyteArg_(b"\x44", b"\x99")
+        v = o.byteArg_andbyteArg_(bytearray(b"\x44"), b"\x99")
         self.assertEqual(v, (chr(0x44), chr(0x99)))
 
         v = o.byteArg_andbyteArg_(b"a", b"b")
@@ -197,6 +197,10 @@ class TestTypeCode_byte(TestCase):
 
         v = o.byteStringArg_(b"hello world")
         self.assertEqual(v, "hello world")
+        self.assertIsInstance(v, str)
+
+        v = o.byteStringArg_(bytearray(b"cheese"))
+        self.assertEqual(v, "cheese")
         self.assertIsInstance(v, str)
 
         v = o.byteStringArg_([b"a", b"b"])
@@ -216,6 +220,9 @@ class TestTypeCode_byte(TestCase):
 
         v = o.byteArrayOf4In_(b"work")
         self.assertEqual(v, "work")
+
+        v = o.byteArrayOf4In_(bytearray(b"life"))
+        self.assertEqual(v, "life")
 
         v = o.byteArrayOf4In_([b"a", b"b", b"c", b"d"])
         self.assertEqual(v, "abcd")
@@ -245,3 +252,11 @@ class TestTypeCode_byte(TestCase):
         v, w = o.byteArrayOf4InOut_(b"foot")
         self.assertEqual(v, "foot")
         self.assertEqual(w, b"hand")
+
+        n = bytearray(b"arms")
+        v, w = o.byteArrayOf4InOut_(n)
+        self.assertEqual(v, "arms")
+        self.assertEqual(w, b"hand")
+
+        # Check that the mutable imput was actually updated:
+        self.assertEqual(n, b"hand")

@@ -3301,6 +3301,21 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                     ((char*)(byref[i]))[PyBytes_Size(argument)] = '\0';
                                 }
 
+                            } else if (*resttype == _C_CHAR_AS_TEXT
+                                       && PyByteArray_Check(argument)) {
+                                byref[i] = PyMem_Malloc(PyByteArray_Size(argument) + 1);
+                                if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                                    // LCOV_EXCL_START
+                                    PyErr_NoMemory();
+                                    error = -1;
+                                    // LCOV_EXCL_STOP
+                                } else { // LCOV_EXCL_LINE
+                                    memcpy(byref[i], PyByteArray_AsString(argument),
+                                           PyByteArray_Size(argument));
+                                    ((char*)(byref[i]))[PyByteArray_Size(argument)] =
+                                        '\0';
+                                }
+
                             } else if (*resttype == _C_UNICHAR
                                        && PyUnicode_Check(argument)) {
                                 PyObject* as_utf16 = PyUnicode_AsUTF16String(argument);

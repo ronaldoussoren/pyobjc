@@ -187,7 +187,7 @@ class TestDefaultNewForPythonClass(TestCase):
             self.assertEqual(o.foo, 42)
 
         with pyobjc_options(_genericNewClass=42):
-            with self.assertRaisesRegex(TypeError, "42 is not a type"):
+            with self.assertRaisesRegex(TypeError, "'42' is not a type"):
                 o = OC_GenericNewWithInit()
                 print(o)
 

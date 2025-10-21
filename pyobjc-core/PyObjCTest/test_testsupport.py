@@ -9,6 +9,7 @@ except ImportError:
 import pickle
 import typing
 import enum
+import contextlib
 
 import objc
 from PyObjCTools import TestSupport
@@ -680,6 +681,12 @@ class TestTestSupport(TestCase):
         self.assertIsInitializer(m)
 
     def test_free_result(self):
+        m = Method(None, {}, selector=False)
+        with self.assertRaisesRegex(self.failureException, "is not a selector"):
+            self.assertDoesFreeResult(m)
+        with self.assertRaisesRegex(self.failureException, "is not a selector"):
+            self.assertDoesNotFreeResult(m)
+
         m = Method(None, {}, selector=True)
         self.assertDoesNotFreeResult(m)
         with self.assertRaisesRegex(
@@ -1095,6 +1102,14 @@ class TestTestSupport(TestCase):
         ):
             self.assertArgHasType(m, 3, objc._C_ID)
 
+        self.assertArgHasType(m, 3, (objc._C_ID, objc._C_ULNG))
+
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"arg 3 of <.*> is not of type \\({objc._C_ID}, {objc._C_BOOL}\\), but {objc._C_ULNG_LNG}",
+        ):
+            self.assertArgHasType(m, 3, (objc._C_ID, objc._C_BOOL))
+
     def test_result_type(self):
         m = Method(None, {})
         self.assertResultHasType(m, objc._C_VOID)
@@ -1147,6 +1162,14 @@ class TestTestSupport(TestCase):
             f"result of <.*> is not of type {objc._C_ID}, but {objc._C_ULNG_LNG}",
         ):
             self.assertResultHasType(m, objc._C_ID)
+
+        self.assertResultHasType(m, (objc._C_ID, objc._C_ULNG))
+
+        with self.assertRaisesRegex(
+            self.failureException,
+            f"result of <.*> is not of type \\({objc._C_ID}, {objc._C_BOOL}\\), but {objc._C_ULNG_LNG}",
+        ):
+            self.assertResultHasType(m, (objc._C_ID, objc._C_BOOL))
 
     def test_arg_fixed_size(self):
         m = Method(3, {"c_array_of_fixed_length": 42}, selector=True)
@@ -2743,11 +2766,13 @@ class TestTestSupport(TestCase):
                             exclude_cocoa=False,
                             exclude_attrs=[
                                 "function",
+                                "resolveInstanceMethod_",
                                 ("NSObject", "description"),
+                                ("NSObject", "resolveInstanceMethod_"),
                             ],
                         )
-                    except self.failureException:
-                        self.fail("Unexpected failure")
+                    except self.failureException as exc:
+                        self.fail(f"Unexpected failure: {exc!r}")
             finally:
                 objc.function = orig_function
 
@@ -2764,6 +2789,117 @@ class TestTestSupport(TestCase):
                 self.assertIsNot(
                     entry.args[0], NSObject.pyobjc_classMethods.description
                 )
+
+        with self.subTest("ignore bits for selectors"):
+            fn = objc.selector(
+                None, selector=b"returningWeirdPointer", signature=b"^I@:"
+            )
+
+            m = Mod()
+            m.function = fn
+            m.NSObject = NSObject
+
+            try:
+                self.assertCallableMetadataIsSane(m)
+            except self.failureException as exc:
+                self.fail(f"Unexpected failure: {exc!r}")
+
+        with self.subTest("function with pointer without metadata"):
+            m = Mod()
+
+            # The actual metadata is invalid, just using these for testing a test
+            # calling these will cause problems...
+            objc.loadBundleFunctions(
+                None,
+                m.__dict__,
+                [("printf", b"^ti"), ("getpid", b"^{__CFArray=}")],
+            )
+
+            @contextlib.contextmanager
+            def subTest(*args, **kwds):
+                yield
+
+            with self.assertRaisesRegex(
+                self.failureException, "printf.*no by-ref annotation"
+            ):
+                self.subTest = subTest
+                try:
+                    self.assertCallableMetadataIsSane(m)
+                finally:
+                    del self.subTest
+
+        with self.subTest("function with pointer without metadata (2)"):
+            m = Mod()
+
+            # The actual metadata is invalid, just using these for testing a test
+            # calling these will cause problems...
+            objc.loadBundleFunctions(
+                None,
+                m.__dict__,
+                [
+                    ("scanf", b"^{SomeStruct=ff}i"),
+                ],
+            )
+
+            @contextlib.contextmanager
+            def subTest(*args, **kwds):
+                yield
+
+            with self.assertRaisesRegex(
+                self.failureException, "scanf.*no by-ref annotation"
+            ):
+                self.subTest = subTest
+                try:
+                    self.assertCallableMetadataIsSane(m)
+                finally:
+                    del self.subTest
+
+        with self.subTest("function with pointer without metadata (3)"):
+            m = Mod()
+
+            # The actual metadata is invalid, just using these for testing a test
+            # calling these will cause problems...
+            objc.loadBundleFunctions(
+                None,
+                m.__dict__,
+                [
+                    ("scanf", b"^ii", "", {"retval": {"deref_result_pointer": True}}),
+                ],
+            )
+
+            @contextlib.contextmanager
+            def subTest(*args, **kwds):
+                yield
+
+            self.subTest = subTest
+            try:
+                try:
+                    self.assertCallableMetadataIsSane(m)
+                except self.failureException as exc:
+                    self.fail(f"Unexpected failure: {exc!r}")
+            finally:
+                del self.subTest
+
+        with self.subTest("lazy importer support"):
+            # XXX: This is not ideal, should somehow verify that the
+            #      right values are tested
+            def getClassList(ignore=False):
+                return [objc.lookUpClass("NSObject")]
+
+            with mock.patch("objc.getClassList", new=getClassList):
+                m = Mod()
+                m2 = Mod()
+                m.__getattr__ = lambda s: None
+                m.__getattr__._pyobjc_parents = (sys, m2)
+                m.__getattr__._pyobjc_funcmap = []
+                m2.__getattr__ = lambda s: None
+                m2.__getattr__._pyobjc_parents = []
+                m2.__getattr__._pyobjc_funcmap = []
+
+            try:
+                self.assertCallableMetadataIsSane(m)
+            except self.failureException as exc:
+                self.fail(f"Unexpected failure: {exc!r}")
 
     def test_assertFreeThreadedIfConfigured(self):
         orig_get_config = TestSupport._get_config_var

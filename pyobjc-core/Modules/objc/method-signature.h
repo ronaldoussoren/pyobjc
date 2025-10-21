@@ -87,11 +87,11 @@ extern PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* m
     do {                                                                                 \
         assert(methinfo->signature != NULL);                                             \
         for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) { /* LCOV_BR_EXCL_LINE */     \
-            assert(methinfo->argtype[i] != NULL);                                        \
-            assert(methinfo->argtype[i]->type != NULL);                                  \
+            assert(methinfo->argtype[i] != NULL);            /* LCOV_BR_EXCL_LINE */     \
+            assert(methinfo->argtype[i]->type != NULL);      /* LCOV_BR_EXCL_LINE */     \
         }                                                                                \
-        assert(methinfo->rettype != NULL);                                               \
-        assert(methinfo->rettype->type != NULL);                                         \
+        assert(methinfo->rettype != NULL);       /* LCOV_BR_EXCL_LINE */                 \
+        assert(methinfo->rettype->type != NULL); /* LCOV_BR_EXCL_LINE */                 \
     } while (0)
 #endif /* NDEBUG */
 

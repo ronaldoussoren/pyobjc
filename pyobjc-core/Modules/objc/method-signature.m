@@ -21,8 +21,6 @@ static const char _ptr_in_typecodes[256][4] = {
 };
 #undef TC
 
-#if 0
-
 #define TC(VAL) [VAL] = {_C_OUT, _C_PTR, VAL, 0}
 static const char _ptr_out_typecodes[256][4] = {
     TC(_C_VOID),     TC(_C_ID),   TC(_C_CLASS), TC(_C_SEL),          TC(_C_BOOL),
@@ -42,8 +40,6 @@ static const char _ptr_inout_typecodes[256][4] = {
     TC(_C_UNICHAR),
 };
 #undef TC
-
-#endif
 
 static const char _block_typecode[] = {_C_ID, _C_UNDEF, 0};
 
@@ -67,7 +63,6 @@ static const struct _PyObjC_ArgDescr ptr_templates[256] = {
 };
 #undef TC
 
-#if 0
 #define TC(VAL)                                                                          \
     [VAL] = {.type      = _ptr_in_typecodes[VAL],                                        \
              .tmpl      = 1,                                                             \
@@ -109,8 +104,6 @@ static const struct _PyObjC_ArgDescr ptr_inout_templates[256] = {
     TC(_C_UNICHAR),
 };
 #undef TC
-
-#endif
 
 static const struct _PyObjC_ArgDescr block_template = {
     .type      = _block_typecode,
@@ -346,7 +339,6 @@ static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
     return retval;
 }
 
-#if 0
 static BOOL
 is_default_descr(struct _PyObjC_ArgDescr* descr)
 {
@@ -371,7 +363,6 @@ is_default_descr(struct _PyObjC_ArgDescr* descr)
         return NO;
     return YES;
 }
-#endif
 
 static int
 setup_type(struct _PyObjC_ArgDescr* meta, const char* type)
@@ -1867,7 +1858,6 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     }
 
     for (i = 0; i < len; i++) {
-#if 0
         /*
          * XXX: This code doesn't work, the test suite doesn't cover this
          * code even with metadata that should...
@@ -1899,10 +1889,7 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
             /* No 'else': the metadata is default and hence won't update what we already
              * have */
 
-        }  else {
-#else
-        {
-#endif
+        } else {
             assert(methinfo->argtype[i]);
             if (metadata->argtype[i] != NULL) {
                 tmp = merge_descr(methinfo->argtype[i], metadata->argtype[i], is_native);

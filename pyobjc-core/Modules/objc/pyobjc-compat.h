@@ -275,7 +275,7 @@ static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
 
 static inline int
 PyDict_SetDefaultRef(PyObject* p, PyObejct* key, PyObject* default_value3,
-                     PyObject* _NonNull* _Nullable result)
+                     PyObject * _NonNull * _Nullable result)
 {
     *result = PyDict_SetDefault(p, key, default_value);
     if (*result == NULL) {

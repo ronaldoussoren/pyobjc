@@ -167,13 +167,13 @@ class MethodAccessTest(TestCase):
         )
 
     def test_invalid_string(self):
-        with self.assertRaises(AttributeError):
+        with self.assertRaises(UnicodeEncodeError):
             getattr(NSObject.pyobjc_classMethods, "\udfff")
 
-        with self.assertRaises(AttributeError):
+        with self.assertRaises(UnicodeEncodeError):
             getattr(NSObject.pyobjc_instanceMethods, "\udfff")
 
-        with self.assertRaises(AttributeError):
+        with self.assertRaises(UnicodeEncodeError):
             getattr(NSObject.alloc().init().pyobjc_instanceMethods, "\udfff")
 
     def test_python_category_override_attribute(self):

@@ -122,6 +122,8 @@ class TestLazyImport(TestCase):
             mod.Foo
         with self.assertRaisesRegex(AttributeError, "Foo"):
             mod.Foo
+        with self.assertRaisesRegex(AttributeError, "_Foo"):
+            mod._Foo
         with self.assertRaisesRegex(AttributeError, "42"):
             getattr(mod, "42")
 

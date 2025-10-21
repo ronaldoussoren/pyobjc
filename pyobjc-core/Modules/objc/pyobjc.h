@@ -6,7 +6,7 @@
  *
  */
 
-#define OBJC_VERSION "12.0"
+#define OBJC_VERSION "12.0.1"
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>

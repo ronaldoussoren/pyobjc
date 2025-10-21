@@ -98,8 +98,6 @@ class function_wrapper:
             )
         elif name == "__name__":
             return "__new__"
-        elif name == "__module__":
-            return self._cls.__module__
         return getattr(self._function, name)
 
     def __setattr__(self, name, value):

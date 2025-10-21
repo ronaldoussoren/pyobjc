@@ -12,8 +12,6 @@
 
 + (NSDictionary*)dictWithAuthorizationItem:(AuthorizationItem*)item
 {
-    NSObject* name_value =
-        item->name != NULL ? [NSString stringWithUTF8String:item->name] : nil;
     if (item->value) {
         return @{
             @"flags" : @(item->flags),

@@ -368,11 +368,7 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
         }
 
         if (pyclass == Py_None) {
-            if (special_class != NULL) {
-                /* Already have a match, Py_None is less specific */
-                Py_DECREF(entry);
-                continue;
-            }
+            /* pass */
         } else if (!PyType_IsSubtype((PyTypeObject*)search_class,
                                      (PyTypeObject*)pyclass)) {
             /* Current entry is not for a superclass of search_class */
@@ -390,7 +386,7 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
             }
         }
 
-        if (!special_class) {
+        if (special_class == NULL) {
             /* No match yet, use */
             Py_CLEAR(special_class);
             Py_CLEAR(result);

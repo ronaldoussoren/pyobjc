@@ -3,6 +3,12 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 12.0.1
+--------------
+
+* Instances of :type:`bytearray` can be used as the argument for
+  a function or selector that expects a null-terminated C char array.
+
 Version 12.0
 ------------
 

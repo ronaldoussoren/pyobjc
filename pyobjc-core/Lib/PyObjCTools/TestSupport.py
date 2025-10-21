@@ -29,9 +29,7 @@ _usepool = not _os.environ.get("PYOBJC_NO_AUTORELEASE")
 
 
 def _typemap(tp):
-    if isinstance(tp, tuple):
-        return tuple(_typemap(x) for x in tp)
-    elif tp is None:
+    if tp is None:
         return None
     return (
         tp.replace(b"_NSRect", b"CGRect")
@@ -675,8 +673,8 @@ class TestCase(_unittest.TestCase):
             for item in tp:
                 if (
                     typestr == item
-                    or _typemap(typestr) == _typemap(tp)
-                    or _typealias.get(typestr, typestr) == _typealias.get(tp, tp)
+                    or _typemap(typestr) == _typemap(item)
+                    or _typealias.get(typestr, typestr) == _typealias.get(item, item)
                 ):
                     break
             else:
@@ -717,8 +715,8 @@ class TestCase(_unittest.TestCase):
             for item in tp:
                 if (
                     typestr == item
-                    or _typemap(typestr) == _typemap(tp)
-                    or _typealias.get(typestr, typestr) == _typealias.get(tp, tp)
+                    or _typemap(typestr) == _typemap(item)
+                    or _typealias.get(typestr, typestr) == _typealias.get(item, item)
                 ):
                     break
             else:
@@ -1386,62 +1384,37 @@ class TestCase(_unittest.TestCase):
         # Calculate all (interesting) names in the module. This pokes into
         # the implementation details of objc.ObjCLazyModule to avoid loading
         # all attributes (which is expensive for larger bindings).
-        if isinstance(module, objc.ObjCLazyModule):
+        def is_pyobjc_lazy(module):
+            getter = getattr(module, "__getattr__", None)
+            if getter is None:
+                return False
+            return hasattr(getter, "_pyobjc_parents")
+
+        if is_pyobjc_lazy(module):
+            getter = getattr(module, "__getattr__", None)
             module_names = []
             module_names.extend(
                 cls.__name__
                 for cls in objc.getClassList(True)
                 if (not cls.__name__.startswith("_")) and ("." not in cls.__name__)
             )
-            module_names.extend(module._ObjCLazyModule__funcmap or [])
-            module_names.extend(module.__dict__.keys())
-            todo = list(module._ObjCLazyModule__parents or [])
+            module_names.extend(getattr(getter, "_pyobjc_funcmap", None) or [])
+            todo = list(getter._pyobjc_parents)
             while todo:
                 parent = todo.pop()
-                if isinstance(parent, objc.ObjCLazyModule):
-                    module_names.extend(parent._ObjCLazyModule__funcmap or ())
-                    todo.extend(parent._ObjCLazyModule__parents or ())
+                if is_pyobjc_lazy(parent):
+                    getter = getattr(parent, "__getattr__", None)
+                    module_names.extend(getattr(getter, "_pyobjc_funcmap", None) or [])
+                    todo.extend(getter._pyobjc_parents or ())
                     module_names.extend(parent.__dict__.keys())
+
                 else:
                     module_names.extend(dir(parent))
 
-            # The module_names list might contain duplicates
             module_names = sorted(set(module_names))
+
         else:
-
-            def is_pyobjc_lazy(module):
-                getter = getattr(module, "__getattr__", None)
-                if getter is None:
-                    return False
-                return hasattr(getter, "_pyobjc_parents")
-
-            if is_pyobjc_lazy(module):
-                getter = getattr(module, "__getattr__", None)
-                module_names = []
-                module_names.extend(
-                    cls.__name__
-                    for cls in objc.getClassList(True)
-                    if (not cls.__name__.startswith("_")) and ("." not in cls.__name__)
-                )
-                module_names.extend(getattr(getter, "_pyobjc_funcmap", None) or [])
-                todo = list(getter._pyobjc_parents)
-                while todo:
-                    parent = todo.pop()
-                    if is_pyobjc_lazy(parent):
-                        getter = getattr(parent, "__getattr__", None)
-                        module_names.extend(
-                            getattr(getter, "_pyobjc_funcmap", None) or []
-                        )
-                        todo.extend(getter._pyobjc_parents or ())
-                        module_names.extend(parent.__dict__.keys())
-
-                    else:
-                        module_names.extend(dir(parent))
-
-                module_names = sorted(set(module_names))
-
-            else:
-                module_names = sorted(set(dir(module)))
+            module_names = sorted(set(dir(module)))
 
         for _idx, nm in enumerate(module_names):
             # print(f"{_idx}/{len(module_names)} {nm}")
@@ -1452,18 +1425,16 @@ class TestCase(_unittest.TestCase):
 
             try:
                 value = getattr(module, nm)
-            except AttributeError:
-                continue
+            except AttributeError:  # pragma: no cover
+                continue  # pragma: no cover
             if isinstance(value, objc.objc_class):
                 with objc.autorelease_pool():
                     if value.__name__ == "Object":
                         # Root class, does not conform to the NSObject
                         # protocol and useless to test.
                         continue
-                    for (
-                        attr_name,
-                        attr,
-                    ) in value.pyobjc_instanceMethods.__dict__.items():
+                    instanceMethodDict = value.pyobjc_instanceMethods.__dict__
+                    for attr_name, attr in instanceMethodDict.items():
                         if attr_name in exclude_method_names:
                             continue
                         if (nm, attr_name) in exclude_attrs:
@@ -1481,8 +1452,8 @@ class TestCase(_unittest.TestCase):
                                 )
 
                     for attr_name, attr in value.pyobjc_classMethods.__dict__.items():
-                        if attr_name in exclude_method_names:
-                            continue
+                        if attr_name in exclude_method_names:  # pragma: no branch
+                            continue  # pragma: no cover
                         if (nm, attr_name) in exclude_attrs:
                             continue
                         if attr_name.startswith("_"):
