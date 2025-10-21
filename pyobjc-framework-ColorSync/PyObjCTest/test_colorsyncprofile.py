@@ -119,9 +119,17 @@ class TestColorSyncProfile(TestCase):
         self.assertResultHasType(ColorSync.ColorSyncProfileIsPQBased, objc._C_BOOL)
         self.assertResultHasType(ColorSync.ColorSyncProfileIsHLGBased, objc._C_BOOL)
 
+    @min_os_level("26.1")
+    def testFunctions26_1(self):
+        self.assertResultIsCFRetained(ColorSync.ColorSyncProfileCreateWithURLAndOptions)
+        self.assertArgIsOut(ColorSync.ColorSyncProfileCreateWithURLAndOptions, 2)
+
+        ColorSync.ColorSyncProfileGetTagCount
+
     @min_os_level("10.13")
     def testConstants(self):
         self.assertEqual(ColorSync.icVersion4Number, 0x04000000)
+        self.assertEqual(ColorSync.icVersion4Point4Number, 0x04400000)
         self.assertIsInstance(ColorSync.kColorSyncGenericGrayProfile, str)
         self.assertIsInstance(ColorSync.kColorSyncGenericGrayGamma22Profile, str)
         self.assertIsInstance(ColorSync.kColorSyncGenericRGBProfile, str)
@@ -202,6 +210,10 @@ class TestColorSyncProfile(TestCase):
     def testConstants13_0(self):
         self.assertIsInstance(ColorSync.kColorSyncProfileIsValid, str)
         self.assertIsInstance(ColorSync.kColorSyncWebSafeColorsProfile, str)
+
+    @min_os_level("26.1")
+    def testConstants26_1(self):
+        self.assertIsInstance(ColorSync.kColorSyncDoNotSubstituteProfiles, str)
 
     def testStructs(self):
         v = ColorSync.ColorSyncMD5()

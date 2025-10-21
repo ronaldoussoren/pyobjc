@@ -3,8 +3,10 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 12.0.1
---------------
+Version 12.1
+------------
+
+* Update framework bindings for the macOS 26.1 SDK (beta 2)
 
 * Instances of :type:`bytearray` can be used as the argument for
   a function or selector that expects a null-terminated C char array.

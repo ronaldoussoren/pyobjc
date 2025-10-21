@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = "12.0.1"
+VERSION = "12.1"
 
 
 distutils.unixccompiler.UnixCCompiler.src_extensions.append(".mm")

@@ -39,3 +39,11 @@ class TestASAuthorizationWebBrowserPublicKeyCredentialManager(TestCase):
             1,
             b"v@",
         )
+
+    @min_os_level("26.1")
+    def test_methods26_1(self):
+        self.assertArgIsBlock(
+            AuthenticationServices.ASAuthorizationWebBrowserPublicKeyCredentialManager.platformCredentialsForRelyingParty_completionHandler_,
+            1,
+            b"vZ",
+        )

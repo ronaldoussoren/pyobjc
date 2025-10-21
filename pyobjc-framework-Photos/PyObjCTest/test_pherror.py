@@ -21,6 +21,7 @@ class TestPHError(TestCase):
         self.assertEqual(Photos.PHPhotosErrorMissingResource, 3303)
         self.assertEqual(Photos.PHPhotosErrorNotEnoughSpace, 3305)
         self.assertEqual(Photos.PHPhotosErrorRequestNotSupportedForAsset, 3306)
+        self.assertEqual(Photos.PHPhotosErrorLimitExceeded, 3307)
 
         self.assertEqual(Photos.PHPhotosErrorAccessRestricted, 3310)
         self.assertEqual(Photos.PHPhotosErrorAccessUserDenied, 3311)

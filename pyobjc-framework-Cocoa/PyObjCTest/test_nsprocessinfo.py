@@ -136,3 +136,7 @@ class TestNSProcessInfo(TestCase):
     @min_os_level("12.0")
     def testMethods12_0(self):
         self.assertResultIsBOOL(Foundation.NSProcessInfo.isLowPowerModeEnabled)
+
+    @min_os_level("26.1")
+    def testMethods26_1(self):
+        self.assertResultIsBOOL(Foundation.NSProcessInfo.isiOSAppOnVision)

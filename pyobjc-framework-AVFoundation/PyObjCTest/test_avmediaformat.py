@@ -143,3 +143,4 @@ class TestAVMediaFormat(TestCase):
             AVFoundation.AVMediaCharacteristicIndicatesNonRectilinearProjection, str
         )
         self.assertIsInstance(AVFoundation.AVMediaCharacteristicMachineGenerated, str)
+        self.assertIsInstance(AVFoundation.AVFileTypeQuickTimeAudio, str)

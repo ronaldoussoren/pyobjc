@@ -88,6 +88,15 @@ class TestNSURLRequest(TestCase):
         self.assertResultIsBOOL(Foundation.NSURLRequest.allowsPersistentDNS)
         self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAllowsPersistentDNS_, 0)
 
+    @min_os_level("26.1")
+    def testMethods26_1(self):
+        self.assertResultIsBOOL(
+            Foundation.NSURLRequest.allowsUltraConstrainedNetworkAccess
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSMutableURLRequest.setAllowsUltraConstrainedNetworkAccess_, 0
+        )
+
     @min_sdk_level("10.15")
     def test_protocols(self):
         self.assertProtocolExists("NSURLSessionWebSocketDelegate")

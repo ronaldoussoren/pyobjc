@@ -109,3 +109,6 @@ class TestNSURLError(TestCase):
         self.assertEqual(Foundation.NSURLErrorNetworkUnavailableReasonCellular, 0)
         self.assertEqual(Foundation.NSURLErrorNetworkUnavailableReasonExpensive, 1)
         self.assertEqual(Foundation.NSURLErrorNetworkUnavailableReasonConstrained, 2)
+        self.assertEqual(
+            Foundation.NSURLErrorNetworkUnavailableReasonUltraConstrained, 3
+        )
