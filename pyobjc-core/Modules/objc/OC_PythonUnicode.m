@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
         @try {
-            [realObject release];
+            [realObject release];  // LCOV_BR_EXCL_LINE
         } @catch (NSObject* exc) { // LCOV_EXCL_LINE
             // LCOV_EXCL_START
             PyObjC_LEAVE_GIL;

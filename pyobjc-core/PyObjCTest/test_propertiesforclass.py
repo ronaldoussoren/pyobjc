@@ -135,3 +135,21 @@ class TestPropertiesForClass(TestCase):
             if item["name"] == name:
                 return item
         self.fail(f"property not found: {name}")
+
+    def test_protocol(self):
+        props = objc.propertiesForClass(objc.protocolNamed("NSObject"))
+        self.assertIsInstance(props, list)
+        self.assertGreater(len(props), 0)
+        # This test doesn't check the contents of 'prop's because
+        # we don't control the protocol value. Should be fine given
+        # the implementation of this API...
+
+    def test_null_class(self):
+        props = objc.propertiesForClass(objc.objc_object)
+        self.assertEqual(props, [])
+
+    def test_no_objectivec(self):
+        with self.assertRaisesRegex(
+            TypeError, "class must be an Objective-C class or formal protocol"
+        ):
+            objc.propertiesForClass(42)

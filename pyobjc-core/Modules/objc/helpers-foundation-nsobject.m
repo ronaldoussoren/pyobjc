@@ -467,6 +467,26 @@ PyObjC_setup_nsobject(PyObject* module __attribute__((__unused__)))
     if (r != 0)    // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
 
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSProxy"), @selector(alloc),
+                                     call_NSObject_alloc, mkimp_NSObject_alloc);
+    if (r != 0)    // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSProxy"), @selector(dealloc),
+                                     call_NSObject_dealloc, mkimp_NSObject_dealloc);
+    if (r != 0)    // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSProxy"), @selector(retain),
+                                     call_NSObject_retain, mkimp_NSObject_retain);
+    if (r != 0)    // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSProxy"), @selector(release),
+                                     call_NSObject_release, mkimp_NSObject_release);
+    if (r != 0)    // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+
     return 0;
 }
 

@@ -1189,3 +1189,38 @@ class TestSelectorDetails(TestCase):
         s.__get__(NSObject())
         with self.assertRaisesRegex(objc.error, " Unhandled type"):
             s.__metadata__()
+
+
+class TestClassComparisons(TestCase):
+    def test_compare_class_with_non_class(self):
+        self.assertTrue(NSObject != 42)
+        self.assertTrue(42 != NSObject)
+        self.assertFalse(NSObject == 42)
+        self.assertFalse(42 == NSObject)
+
+    def test_compare_class_with_class(self):
+        self.assertTrue(NSObject != objc.objc_object)
+        self.assertFalse(NSObject == objc.objc_object)
+        self.assertTrue(objc.objc_object != NSObject)
+        self.assertFalse(objc.objc_object == NSObject)
+
+        self.assertTrue(NSObject != NSString)
+        self.assertFalse(NSObject == NSString)
+
+        self.assertTrue(NSObject == NSObject)
+        self.assertFalse(NSObject != NSObject)
+
+        self.assertFalse(NSObject < NSObject)
+        self.assertTrue(NSObject <= NSObject)
+        self.assertFalse(NSObject > NSObject)
+        self.assertTrue(NSObject >= NSObject)
+
+        self.assertTrue(NSObject < NSString)
+        self.assertTrue(NSObject <= NSString)
+        self.assertFalse(NSObject > NSString)
+        self.assertFalse(NSObject >= NSString)
+
+        self.assertFalse(NSString < NSObject)
+        self.assertFalse(NSString <= NSObject)
+        self.assertTrue(NSString > NSObject)
+        self.assertTrue(NSString >= NSObject)

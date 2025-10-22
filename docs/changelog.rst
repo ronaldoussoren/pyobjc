@@ -11,6 +11,11 @@ Version 12.1
 * Instances of :type:`bytearray` can be used as the argument for
   a function or selector that expects a null-terminated C char array.
 
+* Automatically disable KVO usage for subclasses of NSProxy defined
+  in Python.
+
+* Fix :exc:`SystemError` when calling ``objc.propertiesForClass(objc.objc_object)``.
+
 Version 12.0
 ------------
 

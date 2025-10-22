@@ -82,7 +82,7 @@ c-coverage:
 	lcov --rc lcov_branch_coverage=1 --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert|assert|PyObjC_END_WITH_GIL"  --no-external --capture --directory . --output-file build/coverage.info
 	genhtml --legend --branch-coverage --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert|assert|PyObjC_END_WITH_GIL" --legend build/coverage.info --output-directory dist/c-coverage # --rc "genhtml_med_limit=80" --rc "genhtml_hi_limit=95"
 	build/cov-env/bin/python3 -mcoverage html --omit='PyObjCTest/*,setup.py'
-	open dist/c-coverage/Modules/objc/index-sort-l.html htmlcov/index.html
+	open htmlcov/index.html dist/c-coverage/Modules/objc/index-sort-l.html
 
 # XXX: Maybe use this to run the tests to test both architectures, should lead to better coverage info:
 #-arch -arm64 build/cov-env/bin/python3 setup.py test -v

@@ -343,7 +343,7 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
 
     result->flags = flags;
 
-    if (signature && signature->shortcut_signature
+    if (signature->shortcut_signature
         && (callfunc == PyObjCFFI_Caller)) { // LCOV_BR_EXCL_LINE
         assert(signature->shortcut_signature);
         result->vectorcall = imp_vectorcall_simple;

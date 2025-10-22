@@ -1208,6 +1208,10 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         // LCOV_EXCL_STOP
     case 0:
         info->useKVO = PyObjC_UseKVO;
+        if (info->useKVO && PyObjC_class_isSubclassOf(objc_class, [NSProxy class])) {
+            /* NSProxy does not support KVO */
+            info->useKVO = NO;
+        }
         break;
     case 1: {
         int useKVO = PyObject_IsTrue(useKVOObj);
@@ -1602,14 +1606,16 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
 
         } else if (PyType_Check(base)) { // LCOV_BR_EXCL_LINE
             dict = PyType_GetDict((PyTypeObject*)base);
-            if (dict == NULL) {
-                continue;
+            if (dict == NULL) { // LCOV_BR_EXCL_LINE
+                continue;       // LCOV_EXCL_LINE
             }
 
         } else {
             /* Cannot happen: non-class on MRO  */
+            // LCOV_EXCL_START
             Py_CLEAR(mro);
-            return NULL; // LCOV_EXCL_LINE
+            return NULL;
+            // LCOV_EXCL_STOP
         }
 
         assert(dict && PyDict_Check(dict));
@@ -1644,8 +1650,11 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
     PyObject *  mro, *base;
     PyObject*   descr      = NULL;
     const char* name_bytes = PyUnicode_AsUTF8(name);
-    if (name_bytes == NULL)
-        return NULL;
+    if (name_bytes == NULL) // LCOV_BR_EXCL_LINE
+        /* Should never happen because this function is called only
+         * after trying other lookup functions.
+         */
+        return NULL; // LCOV_EXCL_LINE
 
     /* Look in tp_dict of types in MRO */
     Py_BEGIN_CRITICAL_SECTION(tp);
@@ -1719,7 +1728,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
             }
             int same = PyObject_RichCompareBool(sel_name, name, Py_EQ);
             Py_CLEAR(sel_name);
-            if (same == -1) { // LCOV_BR_EXCL_START
+            if (same == -1) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_Clear();
                 continue;
@@ -1788,8 +1797,8 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
         /* XXX: Fix for a sporadic crash when resolving methods */
         m = nil;
     } else {
-        @try { /* XXX: Can this raise? */
-            m = class_getClassMethod(cls, sel);
+        @try {                                  /* XXX: Can this raise? */
+            m = class_getClassMethod(cls, sel); // LCOV_BR_EXCL_LINE
 
             // LCOV_EXCL_START
         } @catch (NSObject* localException) {
@@ -1984,8 +1993,11 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
     Py_ssize_t  i, n;
     PyObject *  mro, *base;
     const char* name_bytes = PyUnicode_AsUTF8(name);
-    if (name_bytes == NULL) {
-        return NULL;
+    if (name_bytes == NULL) { // LCOV_BR_EXCL_LINE
+        /* This cannot happen because we've already tried other lookup
+         * functions that accessed 'name' like this.
+         */
+        return NULL; // LCOV_EXCL_LINE
     }
     SEL sel = PyObjCSelector_DefaultSelector(name_bytes);
 
@@ -2267,14 +2279,14 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
         /* XXX: Should store the protocols on the class object instead */
         PyObject* protocols = PyObject_GetAttrString(self, "__pyobjc_protocols__");
         if (protocols == NULL) {
-            if (PyErr_ExceptionMatches(PyExc_AttributeError)) {
+            if (PyErr_ExceptionMatches(PyExc_AttributeError)) { // LCOV_BR_EXCL_LINE
                 PyErr_Clear();
                 protocols = PyList_New(0);
                 if (protocols == NULL) { // LCOV_BR_EXCL_LINE
                     return -1;           // LCOV_EXCL_LINE
                 }
             } else {
-                return -1;
+                return -1; // LCOV_EXCL_LINE
             }
         }
         PyObject* old_value = value;
@@ -3001,7 +3013,7 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
     } else {
         PyObject* super_class =
             PyObjCClass_New((Class _Nonnull)class_getSuperclass(objc_class));
-        if (super_class == NULL) { // LCOV_BR_ECXL_START
+        if (super_class == NULL) { // LCOV_BR_ECXL_LINE
             // LCOV_EXCL_START
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
@@ -3147,7 +3159,8 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
     if (PyObjCClass_Check(aClass)) {
         cls = PyObjCClass_GetClass(aClass);
         if (cls == Nil) {
-            return NULL;
+            assert(!PyErr_Occurred());
+            return PyList_New(0);
         }
 
     } else if (PyObjCFormalProtocol_Check(aClass)) {
@@ -3163,9 +3176,7 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
     unsigned int     propcount, i;
     char             buf[128];
 
-    if (cls == Nil) {
-        return NULL;
-    }
+    assert(cls != Nil || proto != nil);
 
     PyObject* result = PyList_New(0);
     if (result == NULL) { // LCOV_BR_EXCL_LINE
@@ -3179,8 +3190,9 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
         props = protocol_copyPropertyList(proto, &propcount);
     }
 
-    if (props == NULL) {
-        return result;
+    if (props == NULL) { // LCOV_BR_EXCL_LINE
+        /* API is documented to always return a NULL terminated array */
+        return result; // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < propcount; i++) {
@@ -3190,8 +3202,9 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
         const char* attr = property_getAttributes(props[i]);
         const char* e;
 
-        if (!attr)
-            continue;
+        if (!attr) // LCOV_BR_EXCL_LINE
+            // Can only happen with invalid ObjC runtime information
+            continue; // LCOV_EXCL_LINE
 
         item = Py_BuildValue("{sssy}", "name", name, "raw_attr", attr);
         if (item == NULL) { // LCOV_BR_EXCL_LINE
@@ -3205,19 +3218,25 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
         }
         Py_DECREF(item);
 
-        if (*attr != 'T') {
+        if (*attr != 'T') { // LCOV_BR_EXCL_LINE
             /* Attribute string doesn't conform to the
              * 2.0 protocol, don't try to process it.
              */
-            continue;
+            continue; // LCOV_EXCL_LINE
         }
 
         e = PyObjCRT_SkipTypeSpec(attr + 1);
         if (e == NULL) {
             goto error;
         }
-        if (e - (attr + 1) > 127) { /* XXX: What does this do??? */
+        if (e - (attr + 1) > 127) { // LCOV_BR_EXCL_LINE
+            /* The attribute description is too large for 'buf', just
+             * copy as-is. Should never happen with realistic runtime
+             * information.
+             */
+            // LCOV_EXCL_START
             v = PyBytes_FromStringAndSize(attr + 1, e - (attr + 1));
+            // LCOV_EXCL_STOP
         } else {
             PyObjCRT_RemoveFieldNames(buf, attr + 1);
             v = PyBytes_FromString(buf);
@@ -3253,9 +3272,9 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
             attr = e + 1;
         }
 
-        if (*attr++ != ',') {
+        if (*attr++ != ',') { // LCOV_BR_EXCL_LINE
             /* Value doesn't conform to 2.0 protocol */
-            continue;
+            continue; // LCOV_EXCL_LINE
         }
 
         while (attr && *attr != '\0') {
@@ -3309,12 +3328,15 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
                 break;
 
             case 'P':
-                if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                        item, PyObjCNM_collectable, Py_True)
-                    == -1) {
-                    goto error; // LCOV_EXCL_LINE
+                /* Remnant of Objective-C GC, which isn't supported
+                 * on modern systems.
+                 */
+                // LCOV_EXC_START
+                if (PyDict_SetItem(item, PyObjCNM_collectable, Py_True) == -1) {
+                    goto error;
                 }
                 break;
+                // LCOV_EXC_STOP
 
             case 'G':
                 e = strchr(attr, ',');
@@ -3398,7 +3420,8 @@ Class _Nullable PyObjCClass_GetClass(PyObject* cls)
 
         return result;
 
-    } else if (PyObjCMetaClass_Check(cls)) {
+    } else if (PyObjCMetaClass_Check(cls)) { // LCOV_BR_EXCL_LINE
+        /* XXX: Is this branch ever hit? */
         Class result = objc_metaclass_locate(cls);
         if (result == Nil) {
             PyErr_Format(PyObjCExc_InternalError, "Cannot find class for meta class %R",
@@ -3408,10 +3431,12 @@ Class _Nullable PyObjCClass_GetClass(PyObject* cls)
         return result;
 
     } else {
+        // LCOV_EXC_START
         PyErr_Format(PyObjCExc_InternalError,
                      "PyObjCClass_GetClass called for non-class (%s)",
                      Py_TYPE(cls)->tp_name);
         return Nil;
+        // LCOV_EXC_STOP
     }
 }
 
@@ -3538,14 +3563,16 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
 
             if (sel_isEqual(PyObjCSelector_GetSelector(value), selector)) {
                 PyObject* py_name = PyUnicode_FromString((char*)sel_getName(selector));
-                if (py_name == NULL) {
-                    return NULL;
+                if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+                    return NULL;       // LCOV_EXCL_LINE
                 }
                 if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
                         info->sel_to_py, py_name, value)
                     == -1) {
+                    // LCOV_EXC_START
                     Py_DECREF(py_name);
-                    return NULL; // LCOV_EXCL_LINE
+                    return NULL;
+                    // LCOV_EXCL_STOP
                 }
                 Py_DECREF(py_name);
                 Py_INCREF(value);
@@ -3583,12 +3610,12 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
     }
 
     PyObject* py_name = PyUnicode_FromString((char*)sel_getName(selector));
-    if (py_name == NULL) {
-        PyErr_Clear();
+    if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+        PyErr_Clear();     // LCOV_EXCL_LINE
     } else if (PyDict_SetItem(info->sel_to_py, py_name, Py_None)
                == -1) { // LCOV_BR_EXCL_LINE
         PyErr_Clear();  // LCOV_EXCL_LINE
-    }
+    } // LCOV_EXCL_LINE
     PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
     return NULL;
 }
@@ -3654,8 +3681,8 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     if (protocols == NULL) {
         PyErr_Clear();
         protocols = PyList_New(0);
-        if (protocols == NULL) {
-            return -1;
+        if (protocols == NULL) { // LCOV_BR_EXCL_LINE
+            return -1;           // LCOV_EXCL_LINE
         }
     }
 

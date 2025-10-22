@@ -132,13 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (PyObject* _Nullable)__pyobjc_PythonObject__
 {
-    PyObject* rval;
-
-    rval = NULL;
-    if (rval == NULL) {
-        rval = (PyObject*)PyObjCClass_New(self);
-    }
-    return rval;
+    return (PyObject*)PyObjCClass_New(self);
 }
 
 - (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
@@ -318,6 +312,9 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
     }
 }
 
+/* The  LCOV annotations in the macro's below don't work (known limitation of the tool),
+ * but do document what parts are covered by testing.
+ */
 #define VECTOR_TO_PYTHON(ctype, elemcount, convertelem)                                  \
     static PyObject* _Nullable ctype##_as_tuple(const void* _pvalue)                     \
     {                                                                                    \
@@ -337,7 +334,7 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
                 /* LCOV_BR_EXCL_STOP */                                                  \
             }                                                                            \
             PyTuple_SET_ITEM(rv, i, elem);                                               \
-        }                                                                                \
+        } /* LCOV_BR_EXCL_LINE */                                                        \
                                                                                          \
         return rv;                                                                       \
     }
@@ -363,90 +360,44 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
             if (PyErr_Occurred()) { /* LCOV_BR_EXCL_LINE */                              \
                 return -1;          /* LCOV_EXC_LINE */                                  \
             }                                                                            \
-        }                                                                                \
+        } /* LCOV_BR_EXCL_LINE */                                                        \
         memcpy(_pvalue, (void*)&value, sizeof(ctype));                                   \
         return 0;                                                                        \
     }
 
-// VECTOR_TO_PYTHON(vector_uchar16, 16, PyLong_FromLong)
-static PyObject* _Nullable vector_uchar16_as_tuple(const void* _pvalue)
-{
-    const vector_uchar16 value;
-    memcpy((void*)&value, _pvalue, sizeof(vector_uchar16));
-    PyObject* rv = PyTuple_New(16);
-    if (rv == NULL) { /* LCOV_BR_EXCL_LINE */
-        return NULL;  /* LCOV_EXCL_LINE */
-    }
+VECTOR_TO_PYTHON(vector_uchar16, 16, PyLong_FromLong)   // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_short2, 2, PyLong_FromLong)     // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_ushort2, 2, PyLong_FromLong)    // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_ushort3, 3, PyLong_FromLong)    // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_ushort4, 4, PyLong_FromLong)    // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_int2, 2, PyLong_FromLong)       // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_int3, 3, PyLong_FromLong)       // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_int4, 4, PyLong_FromLong)       // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_uint2, 2, PyLong_FromLong)      // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_uint3, 3, PyLong_FromLong)      // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_float2, 2, PyFloat_FromDouble)  // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_float3, 3, PyFloat_FromDouble)  // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_float4, 4, PyFloat_FromDouble)  // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_double2, 2, PyFloat_FromDouble) // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_double3, 3, PyFloat_FromDouble) // LCOV_BR_EXCL_LINE
+VECTOR_TO_PYTHON(vector_double4, 4, PyFloat_FromDouble) // LCOV_BR_EXCL_LINE
 
-    for (Py_ssize_t i = 0; i < 16; i++) { // LCOV_BR_EXCL_LINE
-        PyObject* elem = PyLong_FromLong(value[i]);
-        if (elem == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(rv);
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-        PyTuple_SET_ITEM(rv, i, elem);
-    }
-
-    return rv;
-}
-VECTOR_TO_PYTHON(vector_short2, 2, PyLong_FromLong)
-VECTOR_TO_PYTHON(vector_ushort2, 2, PyLong_FromLong)
-VECTOR_TO_PYTHON(vector_ushort3, 3, PyLong_FromLong)
-VECTOR_TO_PYTHON(vector_ushort4, 4, PyLong_FromLong)
-VECTOR_TO_PYTHON(vector_int2, 2, PyLong_FromLong)
-VECTOR_TO_PYTHON(vector_int3, 3, PyLong_FromLong)
-VECTOR_TO_PYTHON(vector_int4, 4, PyLong_FromLong)
-VECTOR_TO_PYTHON(vector_uint2, 2, PyLong_FromLong)
-VECTOR_TO_PYTHON(vector_uint3, 3, PyLong_FromLong)
-VECTOR_TO_PYTHON(vector_float2, 2, PyFloat_FromDouble)
-VECTOR_TO_PYTHON(vector_float3, 3, PyFloat_FromDouble)
-VECTOR_TO_PYTHON(vector_float4, 4, PyFloat_FromDouble)
-VECTOR_TO_PYTHON(vector_double2, 2, PyFloat_FromDouble)
-VECTOR_TO_PYTHON(vector_double3, 3, PyFloat_FromDouble)
-VECTOR_TO_PYTHON(vector_double4, 4, PyFloat_FromDouble)
-
-// VECTOR_FROM_PYTHON(vector_uchar16, 16, PyLong_AsLong)
-static int
-vector_uchar16_from_python(PyObject* py, void* _pvalue)
-{
-    vector_uchar16 value;
-
-    if (!PySequence_Check(py) || PySequence_Length(py) != 16) {
-        PyErr_SetString(PyExc_ValueError, "Expecting value with 16 elements");
-        return -1;
-    }
-
-    for (Py_ssize_t i = 0; i < 16; i++) { /* LCOV_BR_EXCL_LINE */
-        PyObject* e = PySequence_GetItem(py, i);
-        if (e == NULL) { /* LCOV_BR_EXCL_LINE */
-            return -1;   /* LCOV_EXCL_LINE */
-        }
-        value[i] = PyLong_AsLong(e);
-        Py_DECREF(e);
-        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return -1;          // LCOV_EXCL_LINE
-        }
-    }
-    memcpy(_pvalue, (void*)&value, sizeof(vector_uchar16));
-    return 0;
-}
-VECTOR_FROM_PYTHON(vector_short2, 2, PyLong_AsLong)
-VECTOR_FROM_PYTHON(vector_ushort2, 2, PyLong_AsLong)
-VECTOR_FROM_PYTHON(vector_ushort3, 3, PyLong_AsLong)
-VECTOR_FROM_PYTHON(vector_ushort4, 4, PyLong_AsLong)
-VECTOR_FROM_PYTHON(vector_int2, 2, (int)PyLong_AsLong)
-VECTOR_FROM_PYTHON(vector_int3, 3, (int)PyLong_AsLong)
-VECTOR_FROM_PYTHON(vector_int4, 4, (int)PyLong_AsLong)
-VECTOR_FROM_PYTHON(vector_uint2, 2, (unsigned int)PyLong_AsLong)
-VECTOR_FROM_PYTHON(vector_uint3, 3, (unsigned int)PyLong_AsLong)
-VECTOR_FROM_PYTHON(vector_float2, 2, PyFloat_AsDouble)
-VECTOR_FROM_PYTHON(vector_float3, 3, PyFloat_AsDouble)
-VECTOR_FROM_PYTHON(vector_float4, 4, PyFloat_AsDouble)
-VECTOR_FROM_PYTHON(vector_double2, 2, PyFloat_AsDouble)
-VECTOR_FROM_PYTHON(vector_double3, 3, PyFloat_AsDouble)
-VECTOR_FROM_PYTHON(vector_double4, 4, PyFloat_AsDouble)
+VECTOR_FROM_PYTHON(vector_uchar16, 16, PyLong_AsLong)            // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_short2, 2, PyLong_AsLong)              // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_ushort2, 2, PyLong_AsLong)             // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_ushort3, 3, PyLong_AsLong)             // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_ushort4, 4, PyLong_AsLong)             // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_int2, 2, (int)PyLong_AsLong)           // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_int3, 3, (int)PyLong_AsLong)           // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_int4, 4, (int)PyLong_AsLong)           // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_uint2, 2, (unsigned int)PyLong_AsLong) // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_uint3, 3, (unsigned int)PyLong_AsLong) // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_float2, 2, PyFloat_AsDouble)           // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_float3, 3, PyFloat_AsDouble)           // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_float4, 4, PyFloat_AsDouble)           // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_double2, 2, PyFloat_AsDouble)          // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_double3, 3, PyFloat_AsDouble)          // LCOV_BR_EXCL_LINE
+VECTOR_FROM_PYTHON(vector_double4, 4, PyFloat_AsDouble)          // LCOV_BR_EXCL_LINE
 
 static struct vector_info {
     char*      encoding;
@@ -1778,7 +1729,7 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datu
         if (*item == '"') {
             item = strchr(item + 1, '"');
             if (item == NULL) {
-                /* Invalid emmbedded name */
+                /* Invalid embedded name */
                 PyErr_Format(PyObjCExc_InternalError,
                              "Encoding with invalid embedded name");
                 Py_DECREF(ret);
@@ -3543,9 +3494,11 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
     switch (*type1) {
     case _C_FLT:
     case _C_DBL:
+    case _C_LNG_DBL:
         switch (*type2) {
         case _C_FLT:
         case _C_DBL:
+        case _C_LNG_DBL:
             return YES;
 
         default:

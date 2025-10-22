@@ -511,7 +511,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
 
         @try {
-            argcount = [msign numberOfArguments];
+            argcount = [msign numberOfArguments]; // LCOV_BR_EXCL_LINE
 
             // LCOV_EXCL_START
         } @catch (NSObject* exc) {
@@ -534,7 +534,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             PyObject*   pyarg;
 
             @try {
-                argtype = [msign getArgumentTypeAtIndex:i];
+                argtype = [msign getArgumentTypeAtIndex:i]; // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
             } @catch (NSObject* exc) {
                 PyObjC_LEAVE_GIL;
@@ -557,7 +557,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
             Py_BEGIN_ALLOW_THREADS
                 @try {
-                    [invocation getArgument:argbuffer atIndex:i];
+                    [invocation getArgument:argbuffer atIndex:i]; // LCOV_BR_EXCL_LINE
 
                     // LCOV_EXCL_START
                 } @catch (NSObject* exc) {
@@ -593,7 +593,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         } else { // LCOV_EXCL_LINE
             Py_BEGIN_ALLOW_THREADS
                 @try {
-                    [invocation setReturnValue:retbuffer];
+                    [invocation setReturnValue:retbuffer]; // LCOV_BR_EXCL_LINE
 
                     // LCOV_EXCL_START
                 } @catch (NSObject* localException) {
@@ -605,7 +605,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         }
 
     PyObjC_END_WITH_GIL
-}
+} // LCOV_BR_EXCL_LINE
 
 - (PyObject* _Nullable)__pyobjc_PythonObject__
 {
@@ -984,11 +984,9 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             // LCOV_EXCL_STOP
         } // LCOV_EXCL_LINE
 
-        if (temp != (NSObject*)self) {
-            [temp retain];
-            [self release];
-            self = (OC_PythonObject*)temp;
-        }
+        [temp retain];
+        [self release];
+        self = (OC_PythonObject*)temp;
         Py_DECREF(pyObject);
 
     PyObjC_END_WITH_GIL

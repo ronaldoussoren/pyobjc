@@ -86,7 +86,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (unbound_instance_method) {
-                methsig = [objc_object
+                methsig = [objc_object                       // LCOV_BR_EXCL_LINE
                     instanceMethodSignatureForSelector:sel]; // LCOV_BR_EXCL_LINE
             } else {
                 methsig =
@@ -320,7 +320,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                     continue;
                     // LCOV_EXCL_STOP
                 }
-            }
+            } // LCOV_BR_EXCL_LINE
 
             if (PyDict_SetItem(res, py_name, v) == -1) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
@@ -456,7 +456,9 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
         result = PyObject_GetAttr(self->base, name);
 
     } else {
-        if (PyObjCClass_Check(self->base) || PyObjCObject_Check(self->base)) {
+        /* XXX: The check below should always be true */
+        if ( // LCOV_BR_EXCL_LINE
+            PyObjCClass_Check(self->base) || PyObjCObject_Check(self->base)) {
             /* Walk the mro and look in the class dict */
             PyObject* mro;
             PyObject* descr_arg;
@@ -506,8 +508,8 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                     Py_CLEAR(dict);
                     break;
                 }
-            }
-        }
+            } // LCOV_BR_EXCL_LINE
+        } // LCOV_BR_EXCL_LINE
     }
 
     if (result != NULL) {

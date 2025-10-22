@@ -10,6 +10,7 @@ import pickle
 import typing
 import enum
 import contextlib
+import math
 
 import objc
 from PyObjCTools import TestSupport
@@ -2596,7 +2597,16 @@ class TestTestSupport(TestCase):
 
     def test_assert_callable_metadata(self):
         class Mod:
-            pass
+            def __getattribute__(self, nm):
+                try:
+                    return super().__getattribute__(nm)
+                except AttributeError as exc:
+                    try:
+                        getter = super().__getattribute__("__getattr__")
+                    except AttributeError:
+                        raise exc
+
+                    return getter(nm)
 
         try:
             m = Mod()
@@ -2881,25 +2891,48 @@ class TestTestSupport(TestCase):
                 del self.subTest
 
         with self.subTest("lazy importer support"):
-            # XXX: This is not ideal, should somehow verify that the
-            #      right values are tested
+
             def getClassList(ignore=False):
                 return [objc.lookUpClass("NSObject")]
 
             with mock.patch("objc.getClassList", new=getClassList):
                 m = Mod()
                 m2 = Mod()
-                m.__getattr__ = lambda s: None
+
+                def m_getattr(name):
+                    try:
+                        return getattr(sys, name)
+                    except AttributeError:
+                        return m2_getattr(name)
+
+                m.__getattr__ = m_getattr
                 m.__getattr__._pyobjc_parents = (sys, m2)
-                m.__getattr__._pyobjc_funcmap = []
+                m.__getattr__._pyobjc_funcmap = {}
+
+                sin_fetched = False
+
+                def m2_getattr(name):
+                    nonlocal sin_fetched
+                    if name == "sin":
+                        sin_fetched = True
+                        return math.sin
+                    elif name == "NSObject":
+                        return objc.lookUpClass("NSObject")
+
+                    raise AttributeError(name)
+
                 m2.__getattr__ = lambda s: None
                 m2.__getattr__._pyobjc_parents = []
-                m2.__getattr__._pyobjc_funcmap = []
+                m2.__getattr__._pyobjc_funcmap = {
+                    "sin": (b"dd",),
+                }
 
             try:
                 self.assertCallableMetadataIsSane(m)
             except self.failureException as exc:
                 self.fail(f"Unexpected failure: {exc!r}")
+
+            self.assertTrue(sin_fetched)
 
     def test_assertFreeThreadedIfConfigured(self):
         orig_get_config = TestSupport._get_config_var

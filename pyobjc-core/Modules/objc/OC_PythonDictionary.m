@@ -515,7 +515,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 - (Class)classForCoder
 {
-    if (value && PyDict_CheckExact(value)) {
+    if (value && PyDict_CheckExact(value)) { // LCOV_BR_EXCL_LINE
         return [NSMutableDictionary class];
     } else {
         return [OC_PythonDictionary class];
