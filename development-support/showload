@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+"""
+Should process information from process running
+from a virtualenv in the PyObjC source tree.
+"""
+
+import psutil
+import pathlib
+import time
+import collections
+
+
+def format_bytes(count):
+    if count > 1024 * 1024 * 1024:
+        return f"{count / (1024 * 1014 * 1024):.1f} GB"
+    elif count > 1024 * 1024:
+        return f"{count / (1024 * 1014):.1f} MB"
+    elif count > 1024:
+        return f"{count / (1024):.1f} KB"
+    else:
+        return f"{count} B"
+
+
+root = pathlib.Path(__file__).parent.parent
+
+
+uss_max = collections.defaultdict(int)
+rss_max = collections.defaultdict(int)
+
+while True:
+    print("\x1b[2J")
+    print(f"{time.ctime()} {format_bytes(max(uss_max.values() or [0])):>9s}")
+    for p in psutil.process_iter():
+        try:
+            cwd = pathlib.Path(p.cwd())
+            if not cwd.is_relative_to(root):
+                continue
+            if not p.name().lower().startswith("python"):
+                continue
+
+            mem = p.memory_full_info()
+            uss_max[p.pid] = max(uss_max[p.pid], mem.uss)
+            rss_max[p.pid] = max(rss_max[p.pid], mem.rss)
+
+            print(
+                f"{p.name():12s} CPU: {p.cpu_percent():5.1f}%    RSS: {format_bytes(mem.rss):>9s}   "
+                f"USS: {format_bytes(mem.uss):>9s}   MAX: {format_bytes(uss_max[p.pid])}"
+            )
+        except psutil.Error:
+            continue
+
+    time.sleep(1)
