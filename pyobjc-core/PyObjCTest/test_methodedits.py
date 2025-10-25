@@ -70,6 +70,10 @@ class TestFromObjCSuperToObjCClass(TestCase):
         ):
             objc.classAddMethods(NSObject, [NSObject.description])
 
+    def test_add_to_objc_object(self):
+        with self.assertRaisesRegex(objc.error, "Cannot add methods to Nil class"):
+            objc.classAddMethods(objc.objc_object, [])
+
     def testClassAddMethod(self):
         import objc._category as mod
 
@@ -216,6 +220,10 @@ class TestFromObjCSuperToObjCClass(TestCase):
 
         self.assertEqual(MEClass.anotherNewClassMethod.__doc__, "CLS DOC STRING")
         self.assertEqual(MEClass.anotherNewMethod.__doc__, "INST DOC STRING")
+
+    def testNoUpdates(self):
+        # Nothing to test beyond checking that the call doesn't fail
+        objc.classAddMethods(NSObject, [])
 
 
 class TestFromPythonClassToObjCClass(TestCase):

@@ -481,10 +481,26 @@ class TestCArray(TestCase):
         o = carrayMaker(objc._C_CHR, a, 4, True)
         self.assertEqual(o, b"\x01\x02\x03\x04")
 
+        b = array.array("b", [1, 2, 3, 4])
+        o = carrayMaker(objc._C_CHR, b, 4, True)
+        self.assertEqual(o, b"\x01\x02\x03\x04")
+
         o = carrayMaker(objc._C_CHAR_AS_TEXT, a, 4, True)
         self.assertEqual(o, b"\x01\x02\x03\x04")
         o = carrayMaker(objc._C_CHAR_AS_INT, a, 4, True)
         self.assertEqual(o, (1, 2, 3, 4))
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of B and and C array of \[2f\]",
+        ):
+            carrayMaker(b"[2f]", a, 2, True)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"type mismatch between array.array of b and and C array of \[2f\]",
+        ):
+            carrayMaker(b"[2f]", b, 2, True)
 
         a = array.array("f", [1, 2, 3, 4])
         with self.assertRaisesRegex(
@@ -949,6 +965,7 @@ class TestCArray(TestCase):
 
     def test_bool_array(self):
         a = array.array("B", [1, 2, 3, 4, 5, 6])
+        b = array.array("b", [1, 2, 3, 4, 5, 6])
         v = carrayMaker(b"[2" + objc._C_UCHR + b"]", a, None)
         self.assertEqual(v, ((1, 2), (3, 4), (5, 6)))
 
@@ -957,7 +974,15 @@ class TestCArray(TestCase):
             v, ((b"\x01", b"\x02"), (b"\x03", b"\x04"), (b"\x05", b"\x06"))
         )
 
+        v = carrayMaker(b"[2" + objc._C_CHAR_AS_TEXT + b"]", b, None)
+        self.assertEqual(
+            v, ((b"\x01", b"\x02"), (b"\x03", b"\x04"), (b"\x05", b"\x06"))
+        )
+
         v = carrayMaker(objc._C_CHAR_AS_INT, a, None)
+        self.assertEqual(v, (1, 2, 3, 4, 5, 6))
+
+        v = carrayMaker(objc._C_CHAR_AS_INT, b, None)
         self.assertEqual(v, (1, 2, 3, 4, 5, 6))
 
     def test_unichararray(self):
@@ -984,6 +1009,15 @@ class TestCArray(TestCase):
 
         with self.assertRaisesRegex(ValueError, "0 sized struct or array: {T=}"):
             carrayMaker(b"{T=}", a, 2)
+
+    def test_carray_no_size(self):
+        a = array.array("i", [1, 2, 3, 4])
+
+        with self.assertRaisesRegex(ValueError, "0 sized"):
+            carrayMaker(b"[0i]", a, 2)
+
+        with self.assertRaisesRegex(ValueError, "0 sized"):
+            carrayMaker(b"{struct=}", a, 2)
 
 
 class PyOCTestTypeStr(TestCase):

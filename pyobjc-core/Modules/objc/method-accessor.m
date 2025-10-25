@@ -456,59 +456,56 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
         result = PyObject_GetAttr(self->base, name);
 
     } else {
-        /* XXX: The check below should always be true */
-        if ( // LCOV_BR_EXCL_LINE
-            PyObjCClass_Check(self->base) || PyObjCObject_Check(self->base)) {
-            /* Walk the mro and look in the class dict */
-            PyObject* mro;
-            PyObject* descr_arg;
+        assert(PyObjCClass_Check(self->base) || PyObjCObject_Check(self->base));
+        /* Walk the mro and look in the class dict */
+        PyObject* mro;
+        PyObject* descr_arg;
 
-            if (PyObjCClass_Check(self->base)) {
-                mro       = ((PyTypeObject*)self->base)->tp_mro;
-                descr_arg = NULL;
-            } else {
-                mro       = (Py_TYPE(self->base))->tp_mro;
-                descr_arg = self->base;
-            }
-            Py_ssize_t i, len;
+        if (PyObjCClass_Check(self->base)) {
+            mro       = ((PyTypeObject*)self->base)->tp_mro;
+            descr_arg = NULL;
+        } else {
+            mro       = (Py_TYPE(self->base))->tp_mro;
+            descr_arg = self->base;
+        }
+        Py_ssize_t i, len;
 
-            len = PyTuple_GET_SIZE(mro);
-            for (i = 0; i < len && result == NULL; i++) {
-                PyObject* c = PyTuple_GET_ITEM(mro, i);
-                if (!PyObjCClass_Check(c))
-                    continue;
+        len = PyTuple_GET_SIZE(mro);
+        for (i = 0; i < len && result == NULL; i++) {
+            PyObject* c = PyTuple_GET_ITEM(mro, i);
+            if (!PyObjCClass_Check(c))
+                continue;
 
-                PyObject* dict = PyType_GetDict((PyTypeObject*)c);
-                PyObject* v;
+            PyObject* dict = PyType_GetDict((PyTypeObject*)c);
+            PyObject* v;
 
-                int r = PyDict_GetItemRef(dict, name, &v);
-                if (r == -1) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_CLEAR(dict);
-                    return NULL;
-                    // LCOV_EXCL_STOP
-                } else if (r == 1) {
-                    if (PyObjCSelector_Check(v)) {
-                        /* Found it, use the
-                         * descriptor mechanism to
-                         * fetch the actual result
-                         */
-                        v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
-                        if (v == NULL) {    // LCOV_BR_EXCL_LINE
-                            Py_CLEAR(dict); // LCOV_EXCL_LINE
-                            return NULL;    // LCOV_EXCL_LINE
-                        }
-                        result = v;
-                    } else {
-                        Py_DECREF(v);
-                    }
-                    /* Found an item with the specified
-                     * name, abort the search.
+            int r = PyDict_GetItemRef(dict, name, &v);
+            if (r == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_CLEAR(dict);
+                return NULL;
+                // LCOV_EXCL_STOP
+            } else if (r == 1) {
+                if (PyObjCSelector_Check(v)) {
+                    /* Found it, use the
+                     * descriptor mechanism to
+                     * fetch the actual result
                      */
-                    Py_CLEAR(dict);
-                    break;
+                    v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
+                    if (v == NULL) {    // LCOV_BR_EXCL_LINE
+                        Py_CLEAR(dict); // LCOV_EXCL_LINE
+                        return NULL;    // LCOV_EXCL_LINE
+                    }
+                    result = v;
+                } else {
+                    Py_DECREF(v);
                 }
-            } // LCOV_BR_EXCL_LINE
+                /* Found an item with the specified
+                 * name, abort the search.
+                 */
+                Py_CLEAR(dict);
+                break;
+            }
         } // LCOV_BR_EXCL_LINE
     }
 

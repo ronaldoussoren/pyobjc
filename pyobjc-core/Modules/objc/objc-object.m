@@ -259,9 +259,9 @@ object_verify_type(PyObject* obj)
                     // LCOV_EXCL_STOP
                 }
             }
-        }
+        } // LCOV_EXCL_LINE
         Py_CLEAR(tp);
-    }
+    } // LCOV_EXCL_LINE
     return 0;
 }
 
@@ -516,7 +516,8 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
 
                 /* add to __dict__ 'cache' */
                 /* 'base' is a PyObjClass instance, using tp_dict is safe */
-                if (PyDict_SetItem(((PyTypeObject*)base)->tp_dict, name, descr)
+                if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                        ((PyTypeObject*)base)->tp_dict, name, descr)
                     == -1) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_DECREF(descr);
@@ -563,8 +564,8 @@ static PyObject* _Nullable object_getattro(PyObject* obj, PyObject* name)
         return NULL;       // LCOV_EXCL_LINE
     }
 
-    if (object_verify_type(obj) == -1) {
-        goto done;
+    if (object_verify_type(obj) == -1) { // LCOV_BR_EXCL_LINE
+        goto done;                       // LCOV_EXCL_LINE
     }
 
     tp = Py_TYPE(obj);
@@ -724,10 +725,15 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
     NSString*     obj_name;
     const char*   namestr;
 
-    if (!PyUnicode_Check(name)) {
+    if (!PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
+        /* The CPython runtime ensures that 'name' is a string unless someone
+         * directly invokes the ``tp_setattro`` slot.
+         */
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_TypeError, "attribute name must be string, got %s",
                      Py_TYPE(name)->tp_name);
         return -1;
+        // LCOV_EXCL_STOP
     }
     namestr = PyUnicode_AsUTF8(name);
     if (namestr == NULL) {
@@ -742,10 +748,12 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
             obj_name = [NSString
                 stringWithUTF8String:(const char* _Nonnull)PyUnicode_AsUTF8(name)];
 
-            if (obj_name == nil) {
+            if (obj_name == nil) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_SetString(PyObjCExc_Error,
                                 "Cannot convert attribute name to NSString");
                 return -1;
+                // LCOV_EXCL_STOP
             }
 
             @try {
@@ -779,9 +787,11 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
 
         if (dict == NULL && value != NULL) {
             dict = PyDict_New();
-            if (dict == NULL) {
+            if (dict == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 res = -1;
                 goto done;
+                // LCOV_EXCL_STOP
             }
 
             /* free-threading: setting *dictptr must
@@ -808,7 +818,7 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
                 res = PyDict_SetItem(dict, name, value);
             }
 
-            if (res < 0 && PyErr_ExceptionMatches(PyExc_KeyError)) {
+            if (res < 0 && PyErr_ExceptionMatches(PyExc_KeyError)) { // LCOV_BR_EXCL_LINE
                 PyErr_SetObject(PyExc_AttributeError, name);
             }
             goto done;
@@ -1113,7 +1123,7 @@ static PyObject* _Nullable meth_dir(PyObject* self)
                 // LCOV_EXCL_STOP
             }
             Py_DECREF(item);
-        }
+        } // LCOV_EXCL_LINE
         free(methods);
 
         cls = class_getSuperclass(cls);

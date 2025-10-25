@@ -600,8 +600,13 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
     switch (*type) {
     case '"':
         /* Embedded name in ivar or compound type */
+        /* XXX: Will this ever be used? AFAIK all callers that need to handle
+         *      embedded names already do so.
+         */
         type++;
         while (*type != '\0' && *type != '"')
+            type++;
+        if (*type == '"')
             type++;
         break;
 

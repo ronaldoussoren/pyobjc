@@ -16,6 +16,9 @@ Version 12.1
 
 * Fix :exc:`SystemError` when calling ``objc.propertiesForClass(objc.objc_object)``.
 
+* :func:`objc.classAddMethods` no longer supports callable's whose ``__name__``
+  attribute is a byte string.
+
 Version 12.0
 ------------
 

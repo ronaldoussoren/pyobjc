@@ -1137,9 +1137,21 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1; // LCOV_EXCL_LINE
         }
 
-        if (eltsize == 0) {
+        /*
+         * eltsize cannot be 0 at this point:
+         * - empty C arrays and structs have been filtered out at the top,
+         * - other types have a non-zero size
+         *
+         * Keeping the test to be 100% sure we don't trigger undefined behaviour
+         * below.
+         *
+         * XXX: Restructure the code to not require this test.
+         */
+        if (eltsize == 0) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyExc_ValueError, "array.array with elements without a size");
             return -1;
+            // LCOV_EXCL_STOP
         }
 
         if ((view->len % eltsize) != 0) {

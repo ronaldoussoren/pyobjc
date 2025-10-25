@@ -342,7 +342,12 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 - (NSEnumerator*)keyEnumerator
 {
-    if (value && PyDict_CheckExact(value)) {
+    if (value == NULL) { // LCOV_BR_EXCL_LINE
+        /* Value could be NULL during ``initWithCoder:``, but AFAIK it
+         * is not possible to invoke arbitrary methods in that state.
+         */
+        return nil; // LCOV_EXCL_LINE
+    } else if (PyDict_CheckExact(value)) {
         return [OC_PythonDictionaryEnumerator enumeratorWithWrappedDictionary:self];
 
     } else {
@@ -446,8 +451,13 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = id_to_python(other);
 
-        if (v != NULL) {
-            SET_FIELD(value, v);
+        /* 'other' is a serialized python mapping value
+         * (not a 'real' Cocoa instance). Those can
+         * always be converted back into the corresponding
+         * Python value.
+         */
+        if (v != NULL) {         // LCOV_BR_EXCL_LINE
+            SET_FIELD(value, v); // LCOV_EXCL_LINE
         }
     PyObjC_END_WITH_GIL
 }

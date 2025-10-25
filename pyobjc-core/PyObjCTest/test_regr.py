@@ -1,3 +1,4 @@
+# XXX: This file needs to be refactored
 import functools
 import sys
 import gc
@@ -778,12 +779,41 @@ class TestDelRevives(TestCase):
         finally:
             sys.stderr = orig_stderr
 
+        stderr_value = captured_stderr.getvalue()
         self.assertIn(
             "revived Objective-C object of type DeallocRevives. Object is zero-ed out.",
-            captured_stderr.getvalue(),
+            stderr_value,
         )
+        self.assertNotIn("Exception ignored in", stderr_value)
 
         self.assertEqual(repr(VALUE), "<null>")
+
+    def test_basic_error(self):
+        global VALUE
+
+        VALUE = None
+        o = DeallocRevives()
+
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "error", category=objc.RevivedObjectiveCObjectWarning
+            )
+            orig_stderr = sys.stderr
+            try:
+                sys.stderr = captured_stderr = io.StringIO()
+                del o
+
+            finally:
+                sys.stderr = orig_stderr
+
+            stderr_value = captured_stderr.getvalue()
+            self.assertIn(
+                "revived Objective-C object of type DeallocRevives. Object is zero-ed out.",
+                stderr_value,
+            )
+            self.assertIn("Exception ignored in", stderr_value)
+
+            self.assertEqual(repr(VALUE), "<null>")
 
 
 class TestMisCConversions(TestCase):
@@ -1068,26 +1098,24 @@ class TestStringSpecials(TestCase):
 
 
 class TestClasses(TestCase):
+    def test_setting_invalid_attribute(self):
+        # XXX: This is a side effect of supporting KVO. Consider adding
+        #      the same limitation to classes for consistency.
+        name = "\udfffname"
+        o = OCTestRegrWithGetItem.alloc().init()
+        with self.assertRaisesRegex(UnicodeEncodeError, "surrogates not allowed"):
+            setattr(o, name, 42)
+
+    def test_attributes(self):
+        o = OCTestRegrWithGetItem.alloc().init()
+        o.key = 42
+        self.assertEqual(o.key, 42)
+
+        del o.key
+        with self.assertRaises(AttributeError):
+            del o.nosuchkey
+
     def test_class_comparisons(self):
-        self.assertTrue(NSObject == NSObject)
-        self.assertFalse(NSObject == NSArray)
-        self.assertFalse(NSObject == 42)
-        self.assertFalse(42 == NSObject)
-        self.assertFalse(NSObject != NSObject)
-        self.assertTrue(NSObject != NSArray)
-        self.assertFalse(NSObject == objc.objc_object)
-        self.assertFalse(objc.objc_object == NSObject)
-
-        self.assertFalse(NSObject < NSArray)
-        self.assertTrue(NSArray < NSObject)
-        self.assertFalse(NSObject <= NSArray)
-        self.assertTrue(NSArray <= NSObject)
-
-        self.assertTrue(NSObject > NSArray)
-        self.assertFalse(NSArray > NSObject)
-        self.assertTrue(NSObject >= NSArray)
-        self.assertFalse(NSArray >= NSObject)
-
         with self.assertRaisesRegex(
             TypeError, "not supported between instances of 'NSArray' and 'int'"
         ):
@@ -1097,6 +1125,49 @@ class TestClasses(TestCase):
             TypeError, "not supported between instances of 'int' and 'NSObject'"
         ):
             42 < NSObject  # noqa: B015
+
+    def test_compare_class_with_non_class(self):
+        self.assertTrue(NSObject != 42)
+        self.assertTrue(42 != NSObject)
+        self.assertFalse(NSObject == 42)
+        self.assertFalse(42 == NSObject)
+
+    def test_compare_class_with_class(self):
+        self.assertTrue(NSObject != objc.objc_object)
+        self.assertFalse(NSObject == objc.objc_object)
+        self.assertTrue(objc.objc_object != NSObject)
+        self.assertFalse(objc.objc_object == NSObject)
+
+        self.assertTrue(NSObject != NSString)
+        self.assertFalse(NSObject == NSString)
+
+        self.assertTrue(NSObject == NSObject)
+        self.assertFalse(NSObject != NSObject)
+
+        self.assertFalse(NSObject < NSObject)
+        self.assertTrue(NSObject <= NSObject)
+        self.assertFalse(NSObject > NSObject)
+        self.assertTrue(NSObject >= NSObject)
+
+        self.assertTrue(NSObject < NSString)
+        self.assertTrue(NSObject <= NSString)
+        self.assertFalse(NSObject > NSString)
+        self.assertFalse(NSObject >= NSString)
+
+        self.assertFalse(NSString < NSObject)
+        self.assertFalse(NSString <= NSObject)
+        self.assertTrue(NSString > NSObject)
+        self.assertTrue(NSString >= NSObject)
+
+        self.assertTrue(objc.objc_object < NSObject)
+        self.assertTrue(objc.objc_object <= NSObject)
+        self.assertFalse(objc.objc_object > NSObject)
+        self.assertFalse(objc.objc_object >= NSObject)
+
+        self.assertFalse(NSObject < objc.objc_object)
+        self.assertFalse(NSObject <= objc.objc_object)
+        self.assertTrue(NSObject > objc.objc_object)
+        self.assertTrue(NSObject >= objc.objc_object)
 
 
 class TestSelectorDetails(TestCase):
@@ -1189,38 +1260,3 @@ class TestSelectorDetails(TestCase):
         s.__get__(NSObject())
         with self.assertRaisesRegex(objc.error, " Unhandled type"):
             s.__metadata__()
-
-
-class TestClassComparisons(TestCase):
-    def test_compare_class_with_non_class(self):
-        self.assertTrue(NSObject != 42)
-        self.assertTrue(42 != NSObject)
-        self.assertFalse(NSObject == 42)
-        self.assertFalse(42 == NSObject)
-
-    def test_compare_class_with_class(self):
-        self.assertTrue(NSObject != objc.objc_object)
-        self.assertFalse(NSObject == objc.objc_object)
-        self.assertTrue(objc.objc_object != NSObject)
-        self.assertFalse(objc.objc_object == NSObject)
-
-        self.assertTrue(NSObject != NSString)
-        self.assertFalse(NSObject == NSString)
-
-        self.assertTrue(NSObject == NSObject)
-        self.assertFalse(NSObject != NSObject)
-
-        self.assertFalse(NSObject < NSObject)
-        self.assertTrue(NSObject <= NSObject)
-        self.assertFalse(NSObject > NSObject)
-        self.assertTrue(NSObject >= NSObject)
-
-        self.assertTrue(NSObject < NSString)
-        self.assertTrue(NSObject <= NSString)
-        self.assertFalse(NSObject > NSString)
-        self.assertFalse(NSObject >= NSString)
-
-        self.assertFalse(NSString < NSObject)
-        self.assertFalse(NSString <= NSObject)
-        self.assertTrue(NSString > NSObject)
-        self.assertTrue(NSString >= NSObject)

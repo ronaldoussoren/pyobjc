@@ -1417,13 +1417,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                 }
 
             } else {
-                if (argtype[1] == _C_ARY_B) {
-                    // v = pythonify_c_value(argtype, *(void**)(args[i]));
-                    v = pythonify_c_value(argtype + 1, args[i]);
-
-                } else {
-                    v = pythonify_c_value(argtype + 1, args[i]);
-                }
+                v = pythonify_c_value(argtype + 1, args[i]);
             }
             break;
 
@@ -2262,8 +2256,14 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
 
     if (PyObjC_is_pyfunction(callable) || PyObjC_is_pymethod(callable)) {
         func_code = PyObjC_get_code(callable);
-        if (func_code == NULL) {
-            return -2;
+        if (func_code == NULL) { // LCOV_BR_EXCL_LINE
+            /* PyObjC_get_code always passes for function and
+             * method objects.
+             *
+             * The test is mostly here to not crash when CPython's
+             * implementation changes in unexpected ways.
+             */
+            return -2; // LCOV_EXCL_LINE
         }
         *haveVarArgs  = (func_code->co_flags & CO_VARARGS) != 0;
         *haveVarKwds  = (func_code->co_flags & CO_VARKEYWORDS) != 0;
@@ -2272,9 +2272,12 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
         *defaultCount = 0;
 
         *defaultCount = PyObjC_num_defaults(callable);
-        if (*defaultCount == -1) {
+        if (*defaultCount == -1) { // LCOV_BR_EXCL_LINE
+            /* Cannot fail for a builtin function or method */
+            // LCOV_EXCL_START
             Py_DECREF(func_code);
             return -2;
+            // LCOV_EXCL_STOP
         }
 
         Py_ssize_t argcount = func_code->co_argcount;
@@ -2613,8 +2616,6 @@ PyObjCBlockFunction _Nullable PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature*
     PyObjCBlockFunction    closure;
 
     assert(callable != NULL);
-    if (!callable)
-        abort();
 
     stubUserdata = PyMem_Malloc(sizeof(*stubUserdata));
     if (stubUserdata == NULL) { // LCOV_BR_EXCL_LINE
@@ -2676,11 +2677,7 @@ PyObjCBlockFunction _Nullable PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature*
 
     if (closure == NULL) {
         Py_DECREF(methinfo);
-
-        if (stubUserdata->callable) {
-            Py_DECREF(stubUserdata->callable);
-        }
-
+        Py_CLEAR(stubUserdata->callable);
         PyMem_Free(stubUserdata);
         return NULL;
     }
@@ -3906,7 +3903,7 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
 
         tp = PyObjCRT_SkipTypeQualifiers(tp);
         if (tp == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;  // LCOV_EXC_LINE
+            return NULL;  // LCOV_EXCL_LINE
         }
 
         /* Pointer values: */

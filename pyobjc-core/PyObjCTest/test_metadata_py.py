@@ -1257,7 +1257,7 @@ class TestArraysIn(TestCase):
         self.assertIs(v[0], p)
         self.assertIs(v[1], q)
 
-        (v,) = OC_MetaDataTest.makeStringArray_on_((), o)
+        (v,) = OC_MetaDataTest.makeObjectArray_on_((), o)
         self.assertEqual(len(v), 0)
 
         with self.assertRaisesRegex(ValueError, "depythonifying 'charptr', got 'int'"):

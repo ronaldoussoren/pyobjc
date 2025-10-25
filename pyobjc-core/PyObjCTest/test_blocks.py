@@ -8,6 +8,7 @@ from PyObjCTest.block2 import OCTestBlock2
 from PyObjCTools.TestSupport import TestCase, min_os_level
 from .fnd import NSMutableArray, NSException
 from .test_metadata import NoObjCClass
+import functools
 
 NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"
 
@@ -556,6 +557,30 @@ class TestBlocks(TestCase):
         self.assertEqual(
             obj.callOptionalBlock_withValue_(lambda x: x + x, "hello"), "hellohello"
         )
+
+        def callback(value, *, repeat=6):
+            return value * repeat
+
+        self.assertEqual(
+            obj.callOptionalBlock_withValue_(callback, "hello"), "hello" * 6
+        )
+
+        def callback(value, *, repeat):
+            return value * repeat
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "keyword-only arguments without defaults"
+        ):
+            obj.callOptionalBlock_withValue_(callback, "hello")
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "Sorry, cannot create IMP for instances of type functools.partial",
+        ):
+            # XXX: See comment in libffi_support.m, this is not ideal...
+            obj.callOptionalBlock_withValue_(
+                functools.partial(callback, repeat=2), "hello"
+            )
 
     def test_block_is_collected(self):
 

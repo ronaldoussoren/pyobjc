@@ -1084,7 +1084,7 @@ FAIL_IF(PyObjCRT_IsValidEncoding("(p=ii)", 6));
 END_UNITTEST
 
 static int
-exception_text_matches(const char* text)
+exception_text_contains(const char* text)
 {
     PyObject* type;
     PyObject* value;
@@ -1115,7 +1115,7 @@ exception_text_matches(const char* text)
         return 0;
     }
 
-    int r = PyObject_RichCompareBool(repr, expected, Py_EQ);
+    int r = PySequence_Contains(repr, expected);
     if (r == -1) {
         Py_CLEAR(repr);
         Py_CLEAR(expected);
@@ -1129,8 +1129,9 @@ exception_text_matches(const char* text)
         return 1;
     }
 
-    _PyObject_Dump(repr);
-    _PyObject_Dump(expected);
+    PyErr_Format(PyExc_ValueError, "%R does not contain %R", repr, expected);
+    Py_CLEAR(expected);
+    Py_CLEAR(repr);
 
     return 0;
 }
@@ -1156,12 +1157,11 @@ FAIL_IF(PyErr_Occurred());
 
 r = PyObjC_CheckArgCount(callable, 1, 1, 2);
 FAIL_IF(r != -1);
-FAIL_IF(!exception_text_matches("TypeError('None expected 1 arguments, got 2')"));
+FAIL_IF(!exception_text_contains("None expected 1 arguments, got 2"));
 
 r = PyObjC_CheckArgCount(callable, 1, 3, 4);
 FAIL_IF(r != -1);
-FAIL_IF(!exception_text_matches(
-    "TypeError('None expected between 1 and 3 arguments, got 4')"));
+FAIL_IF(!exception_text_contains("None expected between 1 and 3 arguments, got 4"));
 
 END_UNITTEST
 
@@ -1198,7 +1198,7 @@ if (PyList_Append(kwnames, Py_None) == -1) {
 r = PyObjC_CheckNoKwnames(callable, kwnames);
 Py_CLEAR(kwnames);
 FAIL_IF(r != -1);
-FAIL_IF(!exception_text_matches("TypeError('None does not accept keyword arguments')"));
+FAIL_IF(!exception_text_contains("None does not accept keyword arguments"));
 
 r = PyObjC_CheckNoKwnames(callable, callable);
 Py_CLEAR(kwnames);
@@ -1223,6 +1223,41 @@ PyErr_Clear();
 result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 4);
 ASSERT(result == NULL);
 ASSERT(PyErr_Occurred());
+PyErr_Clear();
+
+END_UNITTEST
+
+BEGIN_UNITTEST(SkippingTypeSpec)
+/* Some tests for 'PyObjCRT_SkipTypeSpec' that hit edge cases that
+ * aren't hit in regular code.
+ */
+const char* ts;
+const char* end;
+ts = "\"name\"id";
+
+end = PyObjCRT_SkipTypeSpec(ts);
+ASSERT(end != NULL);
+ASSERT(*end == 'i');
+ASSERT(!PyErr_Occurred());
+
+ts  = "@?<v@?@\"BAAssetPack\"@\"NSError\">24f";
+end = PyObjCRT_SkipTypeSpec(ts);
+ASSERT(end != NULL);
+ASSERT(*end == 'f');
+ASSERT(!PyErr_Occurred());
+
+ts  = "@?<v@?@\"BAAssetPack\"X\"NSError\">24f";
+end = PyObjCRT_SkipTypeSpec(ts);
+ASSERT(end == NULL);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("Unhandled type"));
+PyErr_Clear();
+
+ts  = "@?<v@?@\"BAAssetPack\"@\"NSError\"";
+end = PyObjCRT_SkipTypeSpec(ts);
+ASSERT(end == NULL);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("invalid block encoding"));
 PyErr_Clear();
 
 END_UNITTEST
@@ -1269,6 +1304,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(CheckArgCount),
                                     TESTDEF(NoKwNames),
                                     TESTDEF(PyObjC_NSMethodSignatureToTypeString_Errors),
+                                    TESTDEF(SkippingTypeSpec),
                                     {0, 0, 0, 0}};
 
 int
