@@ -771,13 +771,17 @@ class TestDelRevives(TestCase):
         VALUE = None
         o = DeallocRevives()
 
-        orig_stderr = sys.stderr
-        try:
-            sys.stderr = captured_stderr = io.StringIO()
-            del o
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "default", category=objc.RevivedObjectiveCObjectWarning
+            )
+            orig_stderr = sys.stderr
+            try:
+                sys.stderr = captured_stderr = io.StringIO()
+                del o
 
-        finally:
-            sys.stderr = orig_stderr
+            finally:
+                sys.stderr = orig_stderr
 
         stderr_value = captured_stderr.getvalue()
         self.assertIn(
@@ -787,6 +791,7 @@ class TestDelRevives(TestCase):
         self.assertNotIn("Exception ignored in", stderr_value)
 
         self.assertEqual(repr(VALUE), "<null>")
+        VALUE = None
 
     def test_basic_error(self):
         global VALUE
@@ -814,6 +819,7 @@ class TestDelRevives(TestCase):
             self.assertIn("Exception ignored in", stderr_value)
 
             self.assertEqual(repr(VALUE), "<null>")
+            VALUE = None
 
 
 class TestMisCConversions(TestCase):

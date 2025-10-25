@@ -19,6 +19,22 @@ Version 12.1
 * :func:`objc.classAddMethods` no longer supports callable's whose ``__name__``
   attribute is a byte string.
 
+* Clearer error messages when an entry in the methods added with
+  :func:`objc.classAddMethod` is invalid.
+
+* Using :func:`objc.classAddMethods` to add a method for which a custom
+  IMP helper has been registered now works correctly (previously
+  the default libffi IMP implementation was used in these cases).
+
+* It is no longer possible to use :func:`objc.classAddMethods` to
+  override an existing method with an incompatible Objective-C signature.
+
+  It was already not possible to override a method from a super class
+  with an incompatible Objective-C signature.
+
+* It is now possible to use an :class:`objc.objc_method` instance
+  in the method list argument for :func:`objc.classAddMethod`.
+
 Version 12.0
 ------------
 

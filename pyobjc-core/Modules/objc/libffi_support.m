@@ -2590,22 +2590,8 @@ IMP _Nullable PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector* aSelector)
         return method_getImplementation(aMeth);
 
     } else {
-        IMP result;
-
-        PyObjCPythonSelector*  pythonSelector = (PyObjCPythonSelector*)aSelector;
-        PyObjCMethodSignature* methinfo       = PyObjCMethodSignature_ForSelector(
-            pythonSelector->base.sel_class,
-            (pythonSelector->base.sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
-            pythonSelector->base.sel_selector, pythonSelector->base.sel_python_signature,
-            PyObjCNativeSelector_Check((PyObject*)pythonSelector));
-        if (methinfo == NULL) {
-            return NULL;
-        }
-
-        result = PyObjCFFI_MakeIMPForSignature(
-            methinfo, pythonSelector->base.sel_selector, pythonSelector->callable);
-        Py_DECREF(methinfo);
-        return result;
+        PyObjCPythonSelector* pythonSelector = (PyObjCPythonSelector*)aSelector;
+        return PyObjC_MakeIMP(pythonSelector->base.sel_class, (PyObject*)aSelector);
     }
 }
 

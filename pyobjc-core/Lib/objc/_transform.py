@@ -676,6 +676,10 @@ class objc_method:
         self.signature = signature
         self.isclass = isclass
 
+    @property
+    def __name__(self):
+        return self.__wrapped__.__name__
+
     def __call__(self, *args, **kwds):
         if self.__wrapped__ is None:
             if len(kwds) != 0:

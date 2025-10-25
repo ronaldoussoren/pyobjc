@@ -480,43 +480,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         /* Make sure that the selector is bound to the newly created class */
         ((PyObjCSelector*)value)->sel_class = new_class;
 
-        Method meth;
-        int    is_override = 0;
-        IMP    imp;
-
-        meth = class_getInstanceMethod(super_class, PyObjCSelector_GetSelector(value));
-        if (meth) {
-            is_override               = 1;
-            const char* meth_encoding = method_getTypeEncoding(meth);
-            if (meth_encoding == NULL) { // LCOV_BR_EXCL_LINE
-                /* method_getTypeEncoding should only return NULL when
-                 * meth is NULL.
-                 */
-                // LCOV_EXCL_START
-                PyErr_Format(PyObjCExc_BadPrototypeError,
-                             "%R cannot determine super_class type encoding", value);
-                goto error_cleanup;
-                // LCOV_EXCL_STOP
-            }
-
-            if (!PyObjCRT_SignaturesEqual(meth_encoding,
-                                          PyObjCSelector_GetNativeSignature(value))) {
-
-                PyErr_Format(
-                    PyObjCExc_BadPrototypeError,
-                    "%R has signature that is not compatible with super-class: %s != %s",
-                    value, meth_encoding, PyObjCSelector_GetNativeSignature(value));
-                goto error_cleanup;
-            }
-        }
-
-        if (is_override) {
-            imp = PyObjC_MakeIMP(new_class, super_class, value, value);
-
-        } else {
-            imp = PyObjC_MakeIMP(new_class, nil, value, value);
-        }
-
+        IMP imp = PyObjC_MakeIMP(super_class, value);
         if (imp == NULL) {
             goto error_cleanup;
         }
@@ -541,39 +505,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         /* Make sure that the selector is bound to the newly created class */
         ((PyObjCSelector*)value)->sel_class = new_class;
 
-        Method meth;
-        int    is_override = 0;
-        IMP    imp;
-
-        meth = class_getClassMethod(super_class, PyObjCSelector_GetSelector(value));
-        if (meth) {
-            is_override               = 1;
-            const char* meth_encoding = method_getTypeEncoding(meth);
-            if (meth_encoding == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                PyErr_Format(PyObjCExc_BadPrototypeError,
-                             "%R: Cannot determine superclass type encoding", value);
-                goto error_cleanup;
-                // LCOV_EXCL_STOP
-            }
-
-            if (!PyObjCRT_SignaturesEqual(meth_encoding,
-                                          PyObjCSelector_GetNativeSignature(value))) {
-
-                PyErr_Format(
-                    PyObjCExc_BadPrototypeError,
-                    "%R has signature that is not compatible with super-class: %s != %s",
-                    value, meth_encoding, PyObjCSelector_GetNativeSignature(value));
-                goto error_cleanup;
-            }
-        }
-
-        if (is_override) {
-            imp = PyObjC_MakeIMP(new_meta_class, super_class, value, value);
-        } else {
-            imp = PyObjC_MakeIMP(new_meta_class, nil, value, value);
-        }
-
+        IMP imp = PyObjC_MakeIMP(super_class, value);
         if (imp == NULL) {
             goto error_cleanup;
         }

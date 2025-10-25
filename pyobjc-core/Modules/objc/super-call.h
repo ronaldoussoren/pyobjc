@@ -63,9 +63,7 @@ extern PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class aClass, SEL sel,
  * @function PyObjC_MakeIMP
  * @abstract Create an IMP for calling the specified method from Objective-C
  * @param aClass  An Objective-C class
- * @param aSuperClass  An Objective-C super class
  * @param sel     A selector object
- * @param imp     The Python implementation for sel
  * @result  A method stub or NULL
  * @discussion
  *      Objective-C classes have method dispatch tables. This function creates
@@ -73,8 +71,7 @@ extern PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class aClass, SEL sel,
  *      function will convert it's arguments to Python objects and call 'imp'.
  *      The result of 'imp' will be converted back to Objective-C.
  */
-extern _Nullable IMP PyObjC_MakeIMP(Class aClass, _Nullable Class aSuperClass,
-                                    PyObject* sel, PyObject* imp);
+extern _Nullable IMP PyObjC_MakeIMP(Class aClass, PyObject* sel);
 
 /*!
  * @constant PyObjCUnsupportedMethod_IMP

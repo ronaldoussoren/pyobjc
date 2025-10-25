@@ -159,7 +159,7 @@ class TestSubclassing(TestCase):
 
         with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            "signature that is not compatible with super-class: @@: != d@:",
+            "signature that is not compatible with ObjC runtime: @@: != d@:",
         ):
 
             class OC_SubClassingMethodSignatureChild(OC_SubClassingMethodSignatureBase):
@@ -169,7 +169,7 @@ class TestSubclassing(TestCase):
 
         with self.assertRaisesRegex(
             objc.BadPrototypeError,
-            "signature that is not compatible with super-class",
+            "signature that is not compatible with ObjC runtime",
         ):
 
             class OC_SubClassingMethodSignatureChild2(

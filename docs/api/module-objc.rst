@@ -432,6 +432,8 @@ Dynamic modification of classes
 
                                   * unbound methods
 
+                                  * instances for :class:`objc_method`
+
                                   For the last two the method selector is calculated
                                   using the regular algorithm for this (e.g. as if
                                   ``selector(item)`` was called). The last two are

@@ -39,6 +39,7 @@ class TestObjCMethod(TestCase):
         self.assertIs(my_method.selector, None)
         self.assertIs(my_method.signature, None)
         self.assertIs(my_method.isclass, None)
+        self.assertEqual(my_method.__name__, "my_method")
 
         with self.assertRaisesRegex(TypeError, "is not a callable"):
             _transform.objc_method(42)
@@ -73,6 +74,7 @@ class TestObjCMethod(TestCase):
         self.assertEqual(my_method.selector, b"foo")
         self.assertEqual(my_method.signature, b"bar")
         self.assertIs(my_method.isclass, False)
+        self.assertEqual(my_method.__name__, "my_method")
 
         with self.assertRaisesRegex(TypeError, "is not a callable"):
             _transform.objc_method(selector=b"hello")(42)

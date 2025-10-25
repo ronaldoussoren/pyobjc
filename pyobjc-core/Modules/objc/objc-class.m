@@ -2343,6 +2343,8 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
             int    r;
             BOOL   b;
 
+            assert(PyObjCPythonSelector_Check(value));
+
             if (PyObjCSelector_IsClassMethod(value)) {
                 curMethod = class_getClassMethod(PyObjCClass_GetClass(self),
                                                  PyObjCSelector_GetSelector(value));
@@ -3774,11 +3776,18 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         aMethod = PyObjC_TransformAttribute(name, aMethod, classObject, protocols);
         Py_CLEAR(name);
         if (aMethod == NULL) {
-            PyErr_Format(PyExc_TypeError, "All objects in methodArray must be of "
-                                          "type <objc.selector>, <function>, "
-                                          " <method> or <classmethod>");
+            assert(PyErr_Occurred());
             goto cleanup_and_return_error;
         }
+
+        if (!PyObjCPythonSelector_Check(aMethod)) {
+            PyErr_Format(PyObjCExc_InternalError, "%R not converted to a selector",
+                         methods[methodIndex]);
+            Py_CLEAR(aMethod);
+            goto cleanup_and_return_error;
+        }
+
+        ((PyObjCSelector*)aMethod)->sel_class = targetClass;
 
         /* install in methods to add */
         if (PyObjCSelector_IsClassMethod(aMethod)) {
@@ -3794,8 +3803,10 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
             goto cleanup_and_return_error; // LCOV_EXCL_LINE
         }
 
-        if (PyObjC_RemoveInternalTypeCodes((char*)(objcMethod->type)) == -1) {
-            goto cleanup_and_return_error;
+        if (PyObjC_RemoveInternalTypeCodes( // LCOV_BR_EXCL_LINE
+                (char*)(objcMethod->type))
+            == -1) {
+            goto cleanup_and_return_error; // LCOV_EXCL_LINE
         }
 
         IMP imp = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)aMethod);
@@ -3829,8 +3840,6 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
             }
         }
         Py_CLEAR(hidden);
-
-        ((PyObjCSelector*)aMethod)->sel_class = targetClass;
 
         Py_DECREF(name);
         name = NULL;

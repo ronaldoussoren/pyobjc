@@ -520,8 +520,7 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
  * XXX: Remove class argument
  */
 extern IMP
-PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_class,
-               PyObject* sel, PyObject* imp)
+PyObjC_MakeIMP(Class class, PyObject* sel)
 {
     struct registry*        generic;
     struct registry*        special;
@@ -535,8 +534,8 @@ PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_cl
         return NULL;        // LCOV_EXCL_LINE
     }
 
-    if (super_class != nil) {
-        special = search_special(super_class, aSelector);
+    if (class != nil) {
+        special = search_special(class, aSelector);
         if (special) {
             func = special->make_call_to_python_block;
         } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
@@ -560,14 +559,43 @@ PyObjC_MakeIMP(Class class __attribute__((__unused__)), Class _Nullable super_cl
         return NULL;
     }
 
+    Method meth;
+    if (PyObjCSelector_IsClassMethod(sel)) {
+        meth = class_getClassMethod(class, PyObjCSelector_GetSelector(sel));
+    } else {
+        meth = class_getInstanceMethod(class, PyObjCSelector_GetSelector(sel));
+    }
+    if (meth) {
+        const char* meth_encoding = method_getTypeEncoding(meth);
+        if (meth_encoding == NULL) { // LCOV_BR_EXCL_LINE
+            /* method_getTypeEncoding should only return NULL when
+             * meth is NULL.
+             */
+            // LCOV_EXCL_START
+            PyErr_Format(PyObjCExc_BadPrototypeError,
+                         "%R cannot determine class type encoding", sel);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+
+        if (!PyObjCRT_SignaturesEqual(meth_encoding,
+                                      PyObjCSelector_GetNativeSignature(sel))) {
+
+            PyErr_Format(
+                PyObjCExc_BadPrototypeError,
+                "%R has signature that is not compatible with ObjC runtime: %s != %s",
+                sel, meth_encoding, PyObjCSelector_GetNativeSignature(sel));
+            return NULL;
+        }
+    }
+
     if (func != NULL) {
-        retval = func(imp, methinfo);
-        return retval;
+        return func(sel, methinfo);
     } else {
         PyErr_Clear();
 
         retval =
-            PyObjCFFI_MakeIMPForSignature(methinfo, PyObjCSelector_GetSelector(sel), imp);
+            PyObjCFFI_MakeIMPForSignature(methinfo, PyObjCSelector_GetSelector(sel), sel);
 
         if (retval == NULL && PyErr_ExceptionMatches(PyExc_NotImplementedError)) {
             PyObject* exc       = NULL;
