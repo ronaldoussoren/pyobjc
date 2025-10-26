@@ -119,7 +119,7 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
         }
         Py_DECREF(py_val);
         Py_DECREF(py_name);
-    }
+    } // LCOV_BR_EXCL_LINE
 
     Py_RETURN_NONE;
 }

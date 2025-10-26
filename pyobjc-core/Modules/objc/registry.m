@@ -33,7 +33,7 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
         if (r == -1) { // LCOV_BR_EXCL_LINE
             return -1; // LCOV_EXCL_LINE
         }
-    }
+    } // LCOV_BR_EXCL_LINE
         /* case 1: fallthrough */
     }
 
@@ -119,7 +119,7 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
 
     PyObject* k = PyBytes_FromString(sel_getName(selector));
 
-    switch (PyDict_GetItemRef(registry, k, &sublist)) {
+    switch (PyDict_GetItemRef(registry, k, &sublist)) { // LCOV_BR_EXCL_LINE
     case -1:
         // LCOV_EXCL_START
         Py_CLEAR(k);
@@ -272,9 +272,9 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
                 // LCOV_EXCL_STOP
             }
             Py_DECREF(new_item);
-        }
-    }
-    Py_END_CRITICAL_SECTION();
+        } // LCOV_BR_EXCL_LINE
+    } // LCOV_BR_EXCL_LINE
+    Py_END_CRITICAL_SECTION(); // LCOV_BR_EXCL_LINE
 
     return result;
 }

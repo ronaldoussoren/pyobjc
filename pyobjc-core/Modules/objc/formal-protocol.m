@@ -164,7 +164,7 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
                 goto error; // LCOV_EXCL_LINE
             }
             protocol_addProtocol(theProtocol, p);
-        }
+        } // LCOV_BR_EXCL_LINE
     }
 
     len = PyTuple_GET_SIZE(selectors);
@@ -186,7 +186,7 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
                     theProtocol, theSel, theSignature,
                     !!PyObjCSelector_Required(PyTuple_GET_ITEM(sel, i)),
                     PyObjCSelector_IsClassMethod(PyTuple_GET_ITEM(sel, i)) ? NO : YES);
-            }
+            } // LCOV_BR_EXCL_LINE
 
         } else {
             SEL         theSel       = PyObjCSelector_GetSelector(sel);
@@ -200,8 +200,8 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
             protocol_addMethodDescription(theProtocol, theSel, theSignature,
                                           !!PyObjCSelector_Required(sel),
                                           PyObjCSelector_IsClassMethod(sel) ? NO : YES);
-        }
-    }
+        } // LCOV_BR_EXCL_LINE
+    } // LCOV_BR_EXCL_LINE
     objc_registerProtocol(theProtocol);
 
     result = (PyObjCFormalProtocol*)PyObject_New(
@@ -512,8 +512,9 @@ PyObjCFormalProtocol_Setup(PyObject* module)
         return -1;                           // LCOV_EXCL_LINE
     }
 
-    if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "formal_protocol", PyObjCFormalProtocol_Type) == -1) {
+    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
+            module, "formal_protocol", PyObjCFormalProtocol_Type)
+        == -1) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFormalProtocol_Type);

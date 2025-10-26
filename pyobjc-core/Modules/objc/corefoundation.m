@@ -99,7 +99,10 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
             rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
         }
 
-        if (rval) {
+        /* rval can be NULL for memory errors and the like, but not
+         * in normal circumstances
+         */
+        if (rval) { // LCOV_BR_EXCL_LINE
             PyObject* actual = PyObjC_RegisterPythonProxy(self, rval);
             Py_DECREF(rval);
             return actual;

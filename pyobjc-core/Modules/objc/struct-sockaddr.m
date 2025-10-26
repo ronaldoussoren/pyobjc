@@ -142,7 +142,7 @@ PyObjC_SockAddrToPython(const void* value)
             /* see comment in makeipaddr */
             return NULL; // LCOV_EXCL_LINE
         }
-        return Py_BuildValue("Ni", addrobj, ntohs(a->sin_port));
+        return Py_BuildValue("Ni", addrobj, ntohs(a->sin_port)); // LCOV_BR_EXCL_LINE
     }
 
     case AF_INET6: {
@@ -152,8 +152,8 @@ PyObjC_SockAddrToPython(const void* value)
             /* see comment in makeipaddr */
             return NULL; // LCOV_EXCL_LINE
         }
-        return Py_BuildValue("Niii", addrobj, ntohs(a->sin6_port), a->sin6_flowinfo,
-                             a->sin6_scope_id);
+        return Py_BuildValue("Niii", addrobj, ntohs(a->sin6_port), // LCOV_BR_EXCL_LINE
+                             a->sin6_flowinfo, a->sin6_scope_id);
     }
 
     case AF_UNIX: {
@@ -221,7 +221,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             return -1;
         }
         addr->sin_family = AF_INET;
-        addr->sin_port   = htons((short)port);
+        addr->sin_port   = htons((short)port); // LCOV_BR_EXCL_LINE
         return 0;
 
     } else {
@@ -242,7 +242,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             return -1;
         }
         addr->sin6_family   = AF_INET6;
-        addr->sin6_port     = htons((short)port);
+        addr->sin6_port     = htons((short)port); // LCOV_BR_EXCL_LINE
         addr->sin6_flowinfo = flowinfo;
         addr->sin6_scope_id = scope_id;
         return 0;

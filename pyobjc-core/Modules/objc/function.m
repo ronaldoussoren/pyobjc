@@ -142,7 +142,7 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     if (version_is_deprecated(self->methinfo->deprecated)) {
         char buf[128];
 
-        snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)",
+        snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)", // LCOV_BR_EXCL_LINE
                  (self->name ? PyUnicode_AsUTF8(self->name) : "objc.function instance"),
                  self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
 
@@ -257,8 +257,8 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
         @try {
             ffi_call(cifptr, FFI_FN(self->function), argbuf, values);
 
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -277,10 +277,8 @@ error:
         PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr);
     }
 
-    if (argbuf) {
-        PyMem_Free(argbuf);
-        argbuf = NULL;
-    }
+    assert(argbuf != NULL);
+    PyMem_Free(argbuf);
     return retval;
 }
 
@@ -343,8 +341,8 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
     Py_BEGIN_ALLOW_THREADS
         @try {
             ffi_call(self->cif, FFI_FN(self->function), argbuf, values);
-        } @catch (id localException) {
-            PyObjCErr_FromObjC((NSObject*)localException);
+        } @catch (id localException) {                     // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC((NSObject*)localException); // LCOV_BR_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
