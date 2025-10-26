@@ -186,6 +186,13 @@ class TestConversion(TestCase):
             v = Conversion.pythonCollectionFromPropertyList(value)
             self.assertIsInstance(v, datetime.datetime)
 
+        with self.subTest("date prior year 1970"):
+            value = Cocoa.NSDate.dateWithTimeIntervalSince1970_(-10000000000)
+            self.assertIsInstance(value, Cocoa.NSDate)
+
+            v = Conversion.pythonCollectionFromPropertyList(value)
+            self.assertIsInstance(v, datetime.datetime)
+
         with self.subTest("decimal"):
             value = Cocoa.NSDecimalNumber.decimalNumberWithString_("42.5")
             self.assertIsInstance(value, Cocoa.NSDecimalNumber)
