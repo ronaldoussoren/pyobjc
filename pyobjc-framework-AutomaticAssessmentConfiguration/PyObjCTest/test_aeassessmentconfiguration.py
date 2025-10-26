@@ -9,3 +9,29 @@ class TestAEAssessmentConfiguration(TestCase):
         self.assertIsInstance(
             AutomaticAssessmentConfiguration.AEAssessmentConfiguration, objc.objc_class
         )
+
+    @min_os_level("26.1")
+    def test_methods26_1(self):
+        self.assertResultIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsAccessibilityKeyboard
+        )
+        self.assertArgIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsAccessibilityKeyboard_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsAccessibilityLiveCaptions
+        )
+        self.assertArgIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsAccessibilityLiveCaptions_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsAccessibilityReader
+        )
+        self.assertArgIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsAccessibilityReader_,
+            0,
+        )

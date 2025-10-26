@@ -30,6 +30,17 @@ class TestAXSettings(TestCase):
             str,
         )
 
+    @min_os_level("26.1")
+    def testConstants26_1(self):
+        self.assertIsInstance(
+            Accessibility.AXPrefersActionSliderAlternativeDidChangeNotification,
+            str,
+        )
+        self.assertIsInstance(
+            Accessibility.AXShowBordersEnabledStatusDidChangeNotification,
+            str,
+        )
+
     @min_os_level("14.0")
     def test_functions(self):
         self.assertResultIsBOOL(Accessibility.AXAnimatedImagesEnabled)
