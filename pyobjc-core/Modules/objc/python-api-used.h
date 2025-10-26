@@ -11,6 +11,9 @@
  * 2) Make sure return values are used
  * 3) Make some APIs unavailable (most APIs returning borrowed references)
  *
+ * See also ``development-support/check-pyobjc-core-python-used`` (from the
+ * root of the repo) which checks that the list of functions in this file
+ * is complete.
  */
 
 #if defined(USE_STATIC_ANALYZER)
