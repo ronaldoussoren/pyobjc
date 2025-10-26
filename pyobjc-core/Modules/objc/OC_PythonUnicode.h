@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @discussion  Instances of this class are used as proxies for Python
  *              unicode when these are passed to Objective-C code.
  */
-/* XXX: Cannot be PyObjC_FINAL_CLASS */
 @interface OC_PythonUnicode : NSString {
     PyObject* value;
     id        realObject;

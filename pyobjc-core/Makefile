@@ -31,7 +31,7 @@ clean:
 # Run a build with clang's static analyzer.
 scan-build:
 	test -d build || mkdir build
-	env CFLAGS="-DPyObjC_DEBUG -UNDEBUG -DUSE_STATIC_ANALYZER -O2" scan-build -o build   \
+	env CFLAGS="-DPyObjC_DEBUG -UNDEBUG -O2" scan-build -o build   \
 	    --enable-checker nullability.NullPassedToNonnull \
 	    --enable-checker nullability.NullReturnedFromNonnull \
 	    --enable-checker nullability.NullableDereferenced \

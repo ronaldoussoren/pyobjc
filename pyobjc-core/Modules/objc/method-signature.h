@@ -64,7 +64,7 @@ struct _PyObjCMethodSignature {
     int16_t       arrayArg;
     int           deprecated;
     struct _PyObjC_ArgDescr* _Nullable rettype;
-    struct _PyObjC_ArgDescr* _Nullable argtype[1]; /* XXX: [1] to be replaced by [] */
+    struct _PyObjC_ArgDescr* _Nullable argtype[1];
 };
 
 extern PyObjCMethodSignature* _Nullable PyObjCMethodSignature_WithMetaData(

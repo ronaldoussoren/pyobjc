@@ -15,6 +15,7 @@ extern PyObject* PyObjCExc_UnknownPointerError;
 extern PyObject* PyObjCExc_DeprecationWarning;
 extern PyObject* PyObjCExc_ObjCPointerWarning;
 extern PyObject* PyObjCExc_ObjCSuperWarning;
+extern PyObject* PyObjCExc_InternalError;
 
 extern int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args,
                                 size_t nargsf);
@@ -38,7 +39,6 @@ extern int  PyObjC_PythonToCArray(BOOL, BOOL, const char*, PyObject*,
                                   PyObject* _Nullable* _Nonnull, Py_buffer*);
 extern PyObject* _Nullable PyObjC_CArrayToPython(const char*, const void*, Py_ssize_t);
 
-/* XXX: the '2' at the end of the name should be replaced by something more useful */
 extern PyObject* _Nullable PyObjC_CArrayToPython2(const char*, const void*, Py_ssize_t,
                                                   bool already_retained,
                                                   bool already_cfretained);

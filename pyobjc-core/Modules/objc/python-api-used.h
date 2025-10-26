@@ -11,10 +11,10 @@
  * 2) Make sure return values are used
  * 3) Make some APIs unavailable (most APIs returning borrowed references)
  *
- * XXX: 'USE_STATIC_ANALYZER' is used because I haven't found another way
- *      to detect that the analyzer is used.
  */
-#ifdef USE_STATIC_ANALYZER
+
+#if __has_feature(attribute_analyzer_noreturn)
+/* clang static analyzer detected */
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -518,4 +518,4 @@ PyAPI_FUNC(int) PyUnstable_TryIncRef(PyObject* obj);
 #endif
 
 NS_ASSUME_NONNULL_END
-#endif /* USE_STATIC_ANALYZER */
+#endif /* static analyzer */

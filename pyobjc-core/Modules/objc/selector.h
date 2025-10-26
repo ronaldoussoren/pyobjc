@@ -50,7 +50,6 @@ typedef struct {
     PyObjCSelector base;
     PyObject*      callable;
     Py_ssize_t     argcount;
-    Py_ssize_t     numoutput; /* XXX: To be removed, only set and never read */
 } PyObjCPythonSelector;
 
 extern PyObject* PyObjCSelector_Type;

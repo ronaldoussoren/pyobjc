@@ -12,21 +12,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /*
- * Locking in a free threaded build
+ * Locking patterns for the proxy registry
  *
- * The GIL protects against a couple of races that can
- * cause problems in maintaining these registries. For the
- * free threaded build a mutex is used to protect against
- * these races.
- *
- * XXX: Need to rephrase this comment, the race is also present
- *      in regular builds due to invoking Python code while
- *      creating proxies. Also keeping the code patterns the same
- *      should result in cleaner code overall.
- *
- * Otherwise the GIL and no-GIL builds use the same code patterns to
- * protect against races due to giving up the GIL when calling back
- * into the interpreter (for the no-GIL build).
+ * The patterns are needed for both the regular and
+ * free-threading build. PyObjC calls back into Python
+ * at a number of places, which means that we cannot
+ * fully rely on the GIL to maintain consistency without
+ * following these patterns.
  *
  * * For the Objective-C to Python registry:
  *
@@ -58,10 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
  *     A snag here is that reviving Objective-C values is not
  *     allowed. Because of this the race is also present while using
  *     the GIL and the GIL is taken in ``-release``.
- *
- *     TODO: Switch to a weak value mapping that removes the race in
- *     both build types, with at worse a need to lock the mapping itself
- *     while using it.
  *
  *   + As with the other registry there is a race between creating a
  *     new proxy object and registering it.

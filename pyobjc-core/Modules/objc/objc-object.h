@@ -45,9 +45,6 @@ extern PyObjCMethodSignature* _Nullable PyObjCObject_GetBlockSignature(PyObject*
 extern PyObjCMethodSignature*
 PyObjCObject_SetBlockSignature(PyObject* object, PyObjCMethodSignature* methinfo);
 
-/*
- * XXX: these defines should be in the .m file
- */
 #define PyObjCObject_FLAGS(object) (((PyObjCObject*)(object))->flags)
 #define PyObjCObject_OBJECT(object) (((PyObjCObject*)(object))->objc_object)
 

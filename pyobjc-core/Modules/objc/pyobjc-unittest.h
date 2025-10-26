@@ -35,7 +35,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* XXX: Remove { and } from the BEGIN and END macros to get nicer formatting  */
 #define BEGIN_UNITTEST(name)                                                             \
     static PyObject* _Nullable test_##name(PyObject* self __attribute__((__unused__)))   \
     {

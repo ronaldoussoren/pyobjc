@@ -54,7 +54,6 @@
 #import "python-api-used.h"
 #endif
 
-#import "pyobjc-assert.h"
 #import "pyobjc-compat.h"
 
 /* When this is defined the bridge adds a category to NSCFType (and known variants)
@@ -168,11 +167,6 @@
 #if __has_feature(objc_arc_weak)
 #error "It is not possible to compile PyObjC with ARC enabled"
 #endif
-
-/*
- * XXX: All definitions below here should be moved to different/new
- * headers
- */
 
 /* module.m */
 NS_ASSUME_NONNULL_BEGIN

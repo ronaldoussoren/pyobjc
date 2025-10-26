@@ -251,8 +251,7 @@ PyObject* _Nullable PyObjC_FindPythonProxy(id original)
 {
     PyObject* current;
 
-    if (original == nil)           // LCOV_BR_EXCL_LINE
-        PyObjCErr_InternalError(); // LCOV_EXCL_LINE
+    assert(original != nil);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&proxy_mutex);
@@ -284,8 +283,7 @@ PyObjC_FindObjCProxy(PyObject* original)
 {
     id result;
 
-    if (original == Py_None)       // LCOV_BR_EXCL_LINE
-        PyObjCErr_InternalError(); // LCOV_EXCL_LINE
+    assert(original != Py_None);
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&proxy_mutex);

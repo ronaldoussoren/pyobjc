@@ -16,7 +16,6 @@ extern PyObject* PyObjCPointer_Type;
 extern PyObject* _Nullable PyObjCPointer_New(void* ptr, const char* type)
     __attribute__((__warn_unused_result__));
 
-/* XXX: Nullable because of type checking */
 extern void* _Nullable PyObjCPointer_Ptr(PyObject* object);
 
 extern int PyObjCPointer_Setup(PyObject* module);

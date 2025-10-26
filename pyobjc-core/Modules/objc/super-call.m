@@ -60,11 +60,7 @@ memblock_capsule_cleanup(PyObject* ptr)
 {
     void* mem = PyCapsule_GetPointer(ptr, "objc.__memblock__");
 
-#ifdef PyObjC_DEBUG
-    if (mem == NULL)
-        PyObjCErr_InternalError();
-#endif
-
+    assert(mem != NULL);
     PyMem_Free(mem);
 }
 // LCOV_EXCL_STOP

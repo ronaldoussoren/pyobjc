@@ -26,7 +26,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* XXX: Also implement <NSObject>? */
 PyObjC_FINAL_CLASS @interface OC_PythonObject : NSProxy<NSCopying> {
     PyObject* pyObject;
 }

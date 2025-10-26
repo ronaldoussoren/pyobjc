@@ -33,7 +33,7 @@ struct PyObjC_method {
  *  Both are a prefix for a basic type
  */
 #define _C_ATOMIC 'A'
-#define _C_COMPLEX 'j' /* XXX: Requires more work to support */
+#define _C_COMPLEX 'j'
 
 #ifndef _C_LNG_DBL
 #define _C_LNG_DBL 'D'

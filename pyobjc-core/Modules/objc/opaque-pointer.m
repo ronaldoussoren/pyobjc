@@ -180,8 +180,7 @@ opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** arg
     PyTypeObject*        opaque_type   = (PyTypeObject*)userdata;
     OpaquePointerObject* result;
 
-    if (pointer_value == NULL)     // LCOV_BR_EXCL_LINE
-        PyObjCErr_InternalError(); // LCOV_EXCL_LINE
+    assert(pointer_value != NULL);
 
     result = PyObject_GC_New(OpaquePointerObject, opaque_type);
     if (result == NULL) { // LCOV_BR_EXCL_LINE

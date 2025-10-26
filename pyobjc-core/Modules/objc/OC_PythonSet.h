@@ -1,6 +1,5 @@
 NS_ASSUME_NONNULL_BEGIN
 
-/* XXX: Cannot be PyObjC_FINAL_CLASS */
 @interface OC_PythonSet : NSMutableSet {
     PyObject* value;
 }

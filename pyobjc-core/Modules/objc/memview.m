@@ -29,16 +29,14 @@ memview_dealloc(PyObject* self)
     /* Users or this type must release the buffer after use */
 
 #ifdef PyObjC_DEBUG
-    if (((((struct pyobjc_memview*)self))->view).obj != NULL) { // LCOV_BR_EXCL_LINE
-        /* Users of this API must release the buffer, enforce this
-         * at runtime.
-         *
-         * This code is only active in debug builds because the check
-         * above is not a documented API invariant for PyBuffer_Release
-         * (but does match the behaviour of that function).
-         */
-        PyObjCErr_InternalError(); // LCOV_EXCL_LINE
-    } // LCOV_EXCL_LINE
+    /* Users of this API must release the buffer, enforce this
+     * at runtime.
+     *
+     * This code is only active in debug builds because the check
+     * above is not a documented API invariant for PyBuffer_Release
+     * (but does match the behaviour of that function).
+     */
+    assert(((((struct pyobjc_memview*)self))->view).obj == NULL);
 #endif
 
 #if PY_VERSION_HEX >= 0x030a0000

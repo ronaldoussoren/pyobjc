@@ -74,18 +74,6 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
 #endif
         self->sel_methinfo     = result;
         self->sel_mappingcount = PyObjC_MappingCount;
-        if (PyObjCPythonSelector_Check(_self)) {
-            Py_ssize_t i;
-
-            ((PyObjCPythonSelector*)_self)->numoutput = 0;
-            for (i = 0; i < Py_SIZE(((PyObjCPythonSelector*)_self)->base.sel_methinfo);
-                 i++) {
-                if (((PyObjCPythonSelector*)_self)->base.sel_methinfo->argtype[i]->type[0]
-                    == _C_OUT) {
-                    ((PyObjCPythonSelector*)_self)->numoutput++;
-                }
-            }
-        }
 #ifdef Py_GIL_DISABLED
     } else {
         to_clear = result;
@@ -1815,7 +1803,6 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     result->base.sel_python_signature = (const char* _Nonnull)NULL;
     result->base.sel_native_signature = (const char* _Nonnull)NULL;
     result->argcount                  = 0;
-    result->numoutput                 = 0;
     result->base.sel_vectorcall       = pysel_vectorcall;
 
     const char* tmp = PyObjCUtil_Strdup(meth->base.sel_python_signature);
@@ -1845,8 +1832,7 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     if (result->base.sel_methinfo == NULL) {
         PyErr_Clear();
     }
-    result->argcount  = meth->argcount;
-    result->numoutput = meth->numoutput;
+    result->argcount = meth->argcount;
 
     result->base.sel_self  = obj;
     result->base.sel_flags = meth->base.sel_flags;
