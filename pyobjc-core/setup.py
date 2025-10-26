@@ -585,6 +585,9 @@ class oc_build_ext(build_ext.build_ext):
 
     def finalize_options(self):
         build_ext.build_ext.finalize_options(self)
+        if self.parallel is None:
+            # Override default: build extensions in parallel
+            self.parallel = True
         if self.no_lto:
             for var in CFLAGS, EXT_CFLAGS, OBJC_LDFLAGS:
                 to_remove = []
