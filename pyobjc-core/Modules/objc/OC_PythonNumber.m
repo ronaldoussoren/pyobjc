@@ -521,11 +521,32 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 
 - (id)copyWithZone:(NSZone* _Nullable)__attribute__((__unused__)) zone
 {
-    /* XXX: This is ok if value is a python builtin
-     *      but not for arbitrary python objects.
-     */
-    [self retain];
-    return self;
+    id result;
+    PyObjC_BEGIN_WITH_GIL
+        if (PyLong_CheckExact(value) || PyFloat_CheckExact(value)
+            || Py_TYPE(value) == &PyBool_Type) {
+            /* The value is immutable, no need to copy */
+            result = self;
+        } else {
+            /* The value might be mutable, perform a copy */
+            PyObject* copied = PyObjC_Copy(value);
+            if (copied == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_BR_EXCL_LINE
+
+            if (depythonify_python_object(copied, &result) == -1) {
+                Py_CLEAR(copied);
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_BR_EXCL_LINE
+            Py_CLEAR(copied);
+        }
+
+        /* The result of copy should have +1 retainCount */
+        [result retain];
+
+    PyObjC_END_WITH_GIL
+
+    return result;
 }
 
 @end

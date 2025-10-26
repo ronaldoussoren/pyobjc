@@ -13,8 +13,7 @@
  *
  */
 
-#if __has_feature(attribute_analyzer_noreturn)
-/* clang static analyzer detected */
+#if defined(USE_STATIC_ANALYZER)
 
 NS_ASSUME_NONNULL_BEGIN
 

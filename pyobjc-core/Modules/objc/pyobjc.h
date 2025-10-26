@@ -49,10 +49,8 @@
 #define PyObjC_DEBUG 1
 #endif
 
-#ifdef USE_STATIC_ANALYZER
 /* Add some annotations to the CPython API functions we use */
 #import "python-api-used.h"
-#endif
 
 #import "pyobjc-compat.h"
 

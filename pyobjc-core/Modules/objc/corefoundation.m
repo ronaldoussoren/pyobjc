@@ -229,9 +229,6 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         // LCOV_EXCL_STOP
     }
 
-    /* XXX: Check if this always equivalent to PyObject_Call(PyObjCClass_Type, args, NULL)
-     *      if so, switch to vectorcall.
-     */
     result = PyType_Type.tp_new(&PyObjCClass_Type, args, NULL);
     Py_DECREF(args);
     if (result == NULL) { // LCOV_BR_EXCL_LINE

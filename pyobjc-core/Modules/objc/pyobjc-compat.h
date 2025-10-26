@@ -22,11 +22,13 @@ NS_ASSUME_NONNULL_BEGIN
  * Start of compiler definitions
  *
  */
+#if 0
 #ifndef __has_feature
 #define __has_feature(x) 0
 #endif
 #ifndef __has_extension
 #define __has_extension(x) __has_feature(x)
+#endif
 #endif
 
 #if __has_extension(c_static_assert)
@@ -240,8 +242,8 @@ static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
 }
 
 static inline int
-PyDict_SetDefaultRef(PyObject* p, PyObejct* key, PyObject* default_value3,
-                     PyObject * _NonNull * _Nullable result)
+PyDict_SetDefaultRef(PyObject* p, PyObject* key, PyObject* default_value,
+                     PyObject* _Nonnull* _Nullable result)
 {
     *result = PyDict_SetDefault(p, key, default_value);
     if (*result == NULL) {

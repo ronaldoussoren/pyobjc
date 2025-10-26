@@ -21,9 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (PyObject*)__pyobjc_PythonObject__
 {
-    /* XXX: Can value ever be NULL? */
     if (value == NULL) { // LCOV_BR_EXCL_LINE
-        Py_RETURN_NONE;  // LCOV_EXCL_LINE
+        /* Value can be NULL during initWithCoder: */
+        Py_RETURN_NONE; // LCOV_EXCL_LINE
     }
     Py_INCREF(value);
     return value;
@@ -165,8 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
                   freeWhenDone:(BOOL)flag
 {
     int byteorder = 0;
-    /* XXX: Call super? */
-    self = [super init];
+    self          = [super init];
     if (self == nil) { // LCOV_BR_EXCL_LINE
         return nil;    // LCOV_EXCL_LINE
     }
@@ -176,7 +175,6 @@ NS_ASSUME_NONNULL_BEGIN
         value =
             PyUnicode_DecodeUTF16((const char*)characters, length * 2, NULL, &byteorder);
         if (value == NULL) {
-            /* XXX: Maybe just return nil? */
             PyObjC_GIL_FORWARD_EXC();
         }
 

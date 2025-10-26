@@ -8,6 +8,8 @@ extern Class _Nullable PyObjCClass_BuildClass(Class, PyObject*, char*, PyObject*
 extern int PyObjCClass_UnbuildClass(Class);
 extern int PyObjCClass_FinishClass(Class);
 
+extern int PyObjCClassbuilder_Setup(PyObject* mod);
+
 NS_ASSUME_NONNULL_END
 
 #endif /* OBJC_CLASS_BUILDER */

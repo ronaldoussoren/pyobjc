@@ -72,7 +72,7 @@
 
 + (id*)newrefsOfClass:(Class)aClass
 {
-    /* XXX: This leaks, but that's ok for a test */
+    /* This leaks, but that's ok for a test */
     id* buf = malloc(sizeof(id) * 3);
     if (buf == NULL) {
         NSLog(@"Cannot allocate buffer");

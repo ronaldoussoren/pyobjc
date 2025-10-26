@@ -58,16 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
 
-        /* XXX: This is different from other proxies
-         *      to make it easier to hit a race in
-         *      proxy-registry.m for testing.
-         *
-         *      With the current implementation of
-         *      proxy-registry (using weak refs) either
-         *      order works correctly.
-         */
         PyObjC_UnregisterObjCProxy(value, self);
-        Py_XDECREF(value);
+        Py_CLEAR(value);
 
     PyObjC_END_WITH_GIL
 

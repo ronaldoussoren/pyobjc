@@ -10,10 +10,6 @@
 
 #include "pyobjc.h"
 
-/* XXX: Are these includes still needed */
-#include "compile.h" /* From Python */
-#include <dlfcn.h>
-
 #include <stdarg.h>
 
 #import <Foundation/NSDictionary.h>
@@ -36,9 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id _Nullable)initWithPyObject:(PyObject*)obj
 {
-    // XXX: Fix callers to do the registration for us.
     SET_FIELD_INCREF(pyObject, obj);
 
+    // XXX: Fix callers to do the registration for us.
     id actual = PyObjC_RegisterObjCProxy(obj, self);
     [self release];
     self = actual;
@@ -497,10 +493,6 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 
         retbuffer = alloca(retsize);
 
-        /* XXX: Convert this to vectorcall, needs with some
-         * luck this can be done without creating a bound
-         * method.
-         */
         pymethod = get_method_for_selector(pyObject, aSelector);
 
         if (!pymethod) {

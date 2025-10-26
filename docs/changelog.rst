@@ -37,6 +37,10 @@ Version 12.1
 * It is now possible to use an :class:`objc.objc_method` instance
   in the method list argument for :func:`objc.classAddMethod`.
 
+* ``-[OC_PythonObject copy]`` now actually copies the value if the
+  value is not known to be immutable (such as subclasses of the
+  builtin number types).
+
 Version 12.0
 ------------
 

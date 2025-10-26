@@ -51,17 +51,15 @@ struct method_info {
 
 #define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789"
 
-/*
- * XXX: Move this to module setup
- */
-static void
-setup_gMethods_selectors(void)
+int
+PyObjCClassbuilder_Setup(PyObject* mod __attribute__((__unused__)))
 {
     for (struct method_info* cur = gMethods; cur->method_name != NULL; cur++) {
         if (cur->selector == NULL) {
             cur->selector = sel_registerName(cur->sel_name);
         }
     }
+    return 0;
 }
 
 /*
@@ -143,7 +141,6 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
         // LCOV_EXCL_STOP
     }
 
-    setup_gMethods_selectors();
     for (struct method_info* cur = gMethods; cur->method_name != NULL; cur++) {
         if (cur->override_only) {
             if (![base_class instancesRespondToSelector:cur->selector]) {
@@ -581,33 +578,26 @@ free_ivars(id self, PyObject* cls)
 
     cur_cls = cls;
     while (cur_cls != NULL) {
+        assert(PyObjCClass_Check(cur_cls));
         Class     objcClass = PyObjCClass_GetClass(cur_cls);
         PyObject* clsDict;
         PyObject* clsValues;
         PyObject* o;
 
-        if (objcClass == nil) {
-            break;
+        if (objcClass == nil) { // LCOV_BR_EXCL_LINE
+            /* The test at the end of the loop
+             * breaks out of the loop before we
+             * can get here.
+             */
+            break; // LCOV_EXCL_LINE
         }
 
-        /* XXX: Why does this not access the dict slot directly? */
-        clsDict = PyObject_GetAttrString(cur_cls, "__dict__");
-        if (clsDict == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_Clear();
-            break;
-            // LCOV_EXCL_STOP
-        }
+        /* cur_cls is a PyObjCClass_Type instance */
+        clsDict = ((PyTypeObject*)cur_cls)->tp_dict;
+        assert(clsDict != NULL);
+        assert(PyDict_Check(clsDict));
 
-        /* Class.__dict__ is a dictproxy, which is not a dict and
-         * therefore PyDict_Values doesn't work.
-         *
-         * XXX: PyMapping_Values?
-         */
-        PyObject* args[2] = {NULL, clsDict};
-        clsValues         = PyObject_VectorcallMethod(PyObjCNM_values, args + 1,
-                                                      1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-        Py_DECREF(clsDict);
+        clsValues = PyDict_Values(clsDict);
         if (clsValues == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_Clear();
@@ -615,25 +605,21 @@ free_ivars(id self, PyObject* cls)
             // LCOV_EXCL_STOP
         }
 
-        PyObject* iter = PyObject_GetIter(clsValues);
-        Py_DECREF(clsValues);
-        if (iter == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyErr_Clear();
-            continue;
-            // LCOV_EXCL_STOP
-        }
-
-        /* Check type */
-        while ((o = PyIter_Next(iter)) != NULL) {
-            PyObjCInstanceVariable* iv;
+        for (Py_ssize_t i = 0; i < PyList_GET_SIZE(clsValues); i++) {
+            o = PyList_GetItemRef(clsValues, i);
+            if (o == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                PyErr_Clear();
+                break;
+                // LCOV_EXCL_STOP
+            }
 
             if (!PyObjCInstanceVariable_Check(o)) {
                 Py_DECREF(o);
                 continue;
             }
 
-            iv = ((PyObjCInstanceVariable*)o);
+            PyObjCInstanceVariable* iv = (PyObjCInstanceVariable*)o;
 
             if (iv->isOutlet) {
                 Py_DECREF(o);
@@ -674,39 +660,21 @@ free_ivars(id self, PyObject* cls)
             }
             Py_DECREF(o);
         }
-        Py_DECREF(iter);
+        Py_CLEAR(clsValues);
 
-        /* XXX: Why does this use cls.__bases__()[0] instead of
-         *      the type slot with the primary superclass?
+        /*
+         * cur_cls is a PyObjCClass_Type instance, and hence has
+         * a parent class.
          */
-        o = PyObject_GetAttrString(cur_cls, "__bases__");
-        if (o == NULL) { // LCOV_BR_EXCL_LINE
-            /* type has an __bases__ attribute, and
-             * PyObjC's subclasses don't do anything
-             * that changes that.
-             */
-            // LCOV_EXCL_START
-            PyErr_Clear();
-            cur_cls = NULL;
-            // LCOV_EXCL_STOP
+        cur_cls = (PyObject*)((PyTypeObject*)cur_cls)->tp_base;
+        assert(cur_cls != NULL);
 
-        } else if (PyTuple_Size(o) == 0) { // LCOV_BR_EXCL_LINE
-            /* It should be impossible to have and empty
-             * __bases__ for PyObjC's classes.
+        if (cur_cls == (PyObject*)&PyObjCObject_Type) {
+            /* This class and it's parents are not proxies for
+             * an Objective-C class.
              */
-            // LCOV_EXCL_START
-            PyErr_Clear();
-            cur_cls = NULL;
-            Py_DECREF(o);
-            // LCOV_EXCL_STOP
-
-        } else { // LCOV_EXCL_LINE
-            cur_cls = PyTuple_GET_ITEM(o, 0);
-            if (cur_cls == (PyObject*)&PyObjCClass_Type) { // LCOV_BR_EXCL_LINE
-                cur_cls = NULL;                            // LCOV_EXCL_LINE
-            } // LCOV_EXCL_LINE
-            Py_DECREF(o);
-        } // LCOV_EXCL_LINE
+            break;
+        }
     }
 }
 
@@ -791,10 +759,7 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
     if (!PyObjC_class_isSubclassOf((Class _Nonnull)object_getClass(copy), userdata)) {
         /* The copy is not a subclass of the defining class, this
          * can happen in (for example) class clusters.
-         *
-         * XXX: Need explicit test case for this!
          */
-        // NSLog(@"not a subclass %@ %@", object_getClass(copy), userdata);
         *(id*)resp = copy;
         return;
     }
@@ -872,9 +837,6 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
  *      because it reimplements the logic in the regular
  *      path, and only does so when upcalling doesn't require
  *      a manual implementation.
- *
- *      This implementation is also fairly large at over
- *      460 lines of code.
  */
 static void
 object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),

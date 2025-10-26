@@ -2209,6 +2209,7 @@ typedef int (*setup_function)(PyObject*);
  */
 static setup_function _Nullable setup_functions[] = {
     PyObjC_InitProxyRegistry, /* Must be first */
+    PyObjCClassbuilder_Setup,
     PyObjCClass_Setup,
 
     PyObjCFFI_Setup,

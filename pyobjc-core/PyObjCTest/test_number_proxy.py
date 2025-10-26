@@ -1199,9 +1199,44 @@ class TestComparsionMethods(TestCase):
             objc.options._nsnumber_wrapper = orig
 
     def test_number_copy(self):
-        v = 2**128
-        w = OC_ObjectInt.copyObject_(v)
-        self.assertIs(v, w)
+        with self.subTest("builtin number"):
+            v = 2**128
+            w = OC_ObjectInt.copyObject_(v)
+            self.assertIs(v, w)
+
+        with self.subTest("number subclass"):
+
+            class MyNumber(int):
+                pass
+
+            v = MyNumber(9)
+            self.assertIsInstance(v, MyNumber)
+            v.extra = 42
+
+            w = OC_ObjectInt.copyObject_(v)
+            self.assertIsNot(v, w)
+            self.assertIsInstance(w, MyNumber)
+            self.assertEqual(w.extra, 42)
+
+        with self.subTest("number subclass, copy.copy fails"):
+
+            class NonCopyNumber(int):
+                def __copy__(self):
+                    raise RuntimeError("copy failure")
+
+            v = NonCopyNumber(40)
+            with self.assertRaisesRegex(RuntimeError, "copy failure"):
+                OC_ObjectInt.copyObject_(v)
+
+        with self.subTest("number subclass, copy cannot be converted to objc"):
+
+            class CopyNonObjC(int):
+                def __copy__(self):
+                    return NoObjectiveC()
+
+            v = CopyNonObjC(92)
+            with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+                OC_ObjectInt.copyObject_(v)
 
     def test_coding(self):
         class myint(int):

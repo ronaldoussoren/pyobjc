@@ -289,7 +289,7 @@
 
 #pragma clang diagnostic pop
 
-/* XXX: Some private methods that need to be implemented to be compabitible
+/* Some private methods that need to be implemented to be compatible
  * with NSObject
  */
 + (NSString*)copyDescriptionOf:(NSObject*)object

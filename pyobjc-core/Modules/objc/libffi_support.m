@@ -2663,7 +2663,7 @@ PyObjCBlockFunction _Nullable PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature*
 
     if (closure == NULL) {
         Py_DECREF(methinfo);
-        Py_CLEAR(stubUserdata->callable);
+        Py_DECREF(stubUserdata->callable);
         PyMem_Free(stubUserdata);
         return NULL;
     }
