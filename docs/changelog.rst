@@ -24,10 +24,12 @@ Version 12.1
 
 * Using :func:`objc.classAddMethods` to add a method for which a custom
   IMP helper has been registered now works correctly (previously
-  the default libffi IMP implementation was used in these cases).
+  the default libffi IMP implementation was used in these cases),
+  and likewise for using :func`setattr` to assign methods.
 
 * It is no longer possible to use :func:`objc.classAddMethods` to
-  override an existing method with an incompatible Objective-C signature.
+  override an existing method with an incompatible Objective-C signature,
+  and likewise for using :func:`setattr` to do the same.
 
   It was already not possible to override a method from a super class
   with an incompatible Objective-C signature.

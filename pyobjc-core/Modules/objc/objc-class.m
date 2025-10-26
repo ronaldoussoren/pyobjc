@@ -2355,19 +2355,27 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
                 curClass  = PyObjCClass_GetClass(self);
             }
 
-            if (curMethod) {
-                IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)value);
-                if (newIMP == NULL) {
-                    Py_DECREF(value);
-                    return -1;
-                }
+            IMP newIMP = PyObjC_MakeIMP(PyObjCClass_GetClass(self), value);
+            if (newIMP == NULL) {
+                Py_CLEAR(value);
+                return -1;
+            }
 
+            if (curMethod != NULL) {
                 method_setImplementation(curMethod, newIMP);
 
             } else {
-                /* XXX: Why use "strdup" here and not the pyobjc_util variant? */
+                /*
+                 * The Objective-C runtime documentation does not mention
+                 * if the type encoding string is copied by class_addMethods.
+                 *
+                 * Create a copy just in case it doesn't, otherwise we cannot
+                 * guarantee that the value stays alive until the process ends.
+                 *
+                 * XXX: Apple's github repo indicates that the value is copied,
+                 *      consider dropping the strdup.
+                 */
                 char* types = strdup(PyObjCSelector_Signature(value));
-
                 if (types == NULL) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_DECREF(value);
@@ -2375,12 +2383,6 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
                     // LCOV_EXCL_STOP
                 }
 
-                IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)value);
-                if (newIMP == NULL) {
-                    free(types);
-                    Py_DECREF(value);
-                    return -1;
-                }
                 b = class_addMethod(curClass, PyObjCSelector_GetSelector(value), newIMP,
                                     types);
 

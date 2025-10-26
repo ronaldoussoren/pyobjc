@@ -287,6 +287,34 @@ class TestFromObjCSuperToObjCClass(TestCase):
         # Nothing to test beyond checking that the call doesn't fail
         objc.classAddMethods(NSObject, [])
 
+    def test_setting_invalid_method_attributes(self):
+        def helpermethod(self, *, key):
+            return key
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "has 1 keyword-only arguments without a default"
+        ):
+            NSObject.helpermethod = helpermethod
+        self.assertNotHasAttr(NSObject.pyobjc_instanceMethods, "helpermethod")
+
+        def ocRegisterCallerFirst(self):
+            pass
+
+        with self.assertRaisesRegex(
+            TypeError, "Implementing ocRegisterCallerFirst in Python is not supported"
+        ):
+            NSObject.ocRegisterCallerFirst = ocRegisterCallerFirst
+
+        @objc.objc_method(signature=b"q@:")
+        def description(self):
+            return 42
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError,
+            "has signature that is not compatible with ObjC runtime",
+        ):
+            NSObject.description = description
+
 
 class TestFromPythonClassToObjCClass(TestCase):
     def testPythonSourcedFunctions(self):
