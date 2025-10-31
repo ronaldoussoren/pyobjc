@@ -1843,7 +1843,6 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
 #endif
 
         /* Create (unbound) selector */
-        /* XXX: Add check for method_getTypeEncoding */
         const char* encoding = method_getTypeEncoding(m);
         if (encoding == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
@@ -2224,19 +2223,7 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
     if (name_bytes == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;          // LCOV_EXCL_LINE
     }
-    PyObject* hidden = PyObjCClass_HiddenSelector(self, sel_getUid(name_bytes), YES);
-    if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;                          // LCOV_EXCL_LINE
-    } else if (hidden) {
-        Py_CLEAR(hidden);
-        PyErr_SetObject(PyExc_AttributeError, name);
-        return NULL;
-    }
 
-    name_bytes = PyUnicode_AsUTF8(name);
-    if (name_bytes == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;          // LCOV_EXCL_LINE
-    }
     result = PyObjCSelector_FindNative(self, name_bytes);
 
     if (result != NULL) {

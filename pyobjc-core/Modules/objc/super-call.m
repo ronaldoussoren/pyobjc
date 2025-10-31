@@ -6,21 +6,17 @@
  *
  * - Call the method from python
  * - Call the python implementation of a method from Objective-C
- *
- * XXX: Add API to dump the registry for inspection.
  */
 #include "pyobjc.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* XXX: Use a minimal python type instead of a capsule */
 struct registry {
     PyObjC_CallFunc         call_to_objc;
     PyObjC_MakeIMPBlockFunc make_call_to_python_block;
 };
 
 #ifdef Py_GIL_DISABLED
-/* XXX: Consider using two mutexes */
 static PyMutex registry_mutex = {0};
 #endif
 
@@ -506,15 +502,15 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
         }
     }
 
+    if (result == &PyObjCUnsupportedMethod_Caller) {
+        PyErr_Format(PyExc_TypeError, "Cannot call '%s' on instance of '%s' from Python",
+                     sel_getName(sel), class_getName(class));
+        result = NULL;
+    }
+
     return result;
 }
 
-/*
- * XXX: Ideally there'd be a function to clean up the IMP, that requires
- *      additional state though.
- *
- * XXX: Remove class argument
- */
 extern IMP
 PyObjC_MakeIMP(Class class, PyObject* sel)
 {
@@ -639,8 +635,16 @@ PyObjCUnsupportedMethod_Caller(PyObject* meth, PyObject* self,
                                PyObject* const* args __attribute__((__unused__)),
                                size_t           nargs __attribute__((__unused__)))
 {
+    SEL sel;
+    if (PyObjCSelector_Check(meth)) {
+        sel = PyObjCSelector_GetSelector(meth);
+    } else {
+        assert(PyObjCIMP_Check(meth));
+        sel = PyObjCIMP_GetSelector(meth);
+    }
+
     PyErr_Format(PyExc_TypeError, "Cannot call '%s' on '%R' from Python",
-                 sel_getName(PyObjCSelector_GetSelector(meth)), self);
+                 sel_getName(sel), self);
     return NULL;
 }
 // LCOV_EXCL_STOP

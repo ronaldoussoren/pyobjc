@@ -119,8 +119,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_EXC(PyObjCExc_Error, "error", NULL);
     NEW_EXC(PyObjCExc_NoSuchClassError, "nosuchclass_error", PyObjCExc_Error);
     NEW_EXC(PyObjCExc_InternalError, "internal_error", PyObjCExc_Error);
-    NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning",
-            PyExc_Warning); /* XXX */
+    NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning);
     NEW_EXC(PyObjCExc_ObjCRevivalWarning, "RevivedObjectiveCObjectWarning",
             PyExc_Warning);
     NEW_EXC(PyObjCExc_LockError, "LockError", PyObjCExc_Error);

@@ -118,14 +118,13 @@ PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL sel
     assert(registry != NULL);
 
     PyObject* k = PyBytes_FromString(sel_getName(selector));
+    if (k == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
+    }
 
     switch (PyDict_GetItemRef(registry, k, &sublist)) { // LCOV_BR_EXCL_LINE
     case -1:
-        // LCOV_EXCL_START
-        Py_CLEAR(k);
-        return NULL;
-        // LCOV_EXCL_STOP
-    case 0: // XXX: differentiate from error case.
+    case 0:
         Py_CLEAR(k);
         return NULL;
 

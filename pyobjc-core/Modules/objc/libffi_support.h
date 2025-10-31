@@ -85,6 +85,8 @@ extern Py_ssize_t PyObjCFFI_ParseArguments_Simple(PyObjCMethodSignature*, Py_ssi
                                                   Py_ssize_t, void* _Nullable* _Nonnull);
 extern PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature*, void*);
 
+extern const char* PyObjC_ffi_status_str(ffi_status rv);
+
 NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_FFI_SUPPORT_H */

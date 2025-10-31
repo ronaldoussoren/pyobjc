@@ -1199,10 +1199,10 @@ class TestComparsionMethods(TestCase):
             objc.options._nsnumber_wrapper = orig
 
     def test_number_copy(self):
-        with self.subTest("builtin number"):
-            v = 2**128
-            w = OC_ObjectInt.copyObject_(v)
-            self.assertIs(v, w)
+        for v in (2**128, 6, 5.6, True, False):
+            with self.subTest("builtin number {v!r}"):
+                w = OC_ObjectInt.copyObject_(v)
+                self.assertIs(v, w)
 
         with self.subTest("number subclass"):
 

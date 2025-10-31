@@ -640,33 +640,25 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
     return PyObjCFFI_Caller_SimpleSEL((PyObject*)self, pyself, args, nargsf);
 }
 
-PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(PyObjCNativeSelector* obj)
+PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(PyObjCNativeSelector*  obj,
+                                                     PyObjCMethodSignature* methinfo)
 {
     if (obj->sel_call_func != NULL) {
         return obj->sel_call_func;
     } else {
         assert(obj->base.sel_class != NULL);
+        assert(methinfo != NULL);
 
-        PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)obj);
-        if (methinfo == NULL) {
-            return NULL;
-        }
         PyObjC_CallFunc execute = PyObjC_FindCallFunc(
             obj->base.sel_class, obj->base.sel_selector, methinfo->signature);
-        Py_CLEAR(methinfo);
         if (execute == NULL) {
             return NULL;
         }
 
-        if (obj->sel_call_func == NULL) {
-            obj->sel_call_func = execute;
-            /* Update the vectorcall slot when a faster call is possible */
-            if (obj->base.sel_methinfo->shortcut_signature
-                && execute == PyObjCFFI_Caller) {
-                obj->base.sel_vectorcall = objcsel_vectorcall_simple;
-            }
-        } else {
-            execute = obj->sel_call_func;
+        obj->sel_call_func = execute;
+        /* Update the vectorcall slot when a faster call is possible */
+        if (obj->base.sel_methinfo->shortcut_signature && execute == PyObjCFFI_Caller) {
+            obj->base.sel_vectorcall = objcsel_vectorcall_simple;
         }
 
         return execute;
@@ -707,33 +699,31 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         }
     }
 
-    {
-        PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-        if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;        // LCOV_EXCL_LINE
-        }
-
-        if (version_is_deprecated(methinfo->deprecated)) {
-            char  buf[128];
-            Class cls = PyObjCSelector_GetClass(_self);
-            SEL   sel = PyObjCSelector_GetSelector(_self);
-
-            assert(cls);
-            assert(sel);
-
-            snprintf(buf, 128, "%c[%s %s] is a deprecated API (macOS %d.%d)",
-                     PyObjCSelector_IsClassMethod(_self) ? '+' : '-', class_getName(cls),
-                     sel_getName(sel), methinfo->deprecated / 100,
-                     methinfo->deprecated % 100);
-            if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
-                Py_CLEAR(methinfo);
-                return NULL;
-            }
-        }
-        Py_CLEAR(methinfo);
+    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
+    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
-    execute = PyObjCSelector_GetCallFunc(self);
+    if (version_is_deprecated(methinfo->deprecated)) {
+        char  buf[128];
+        Class cls = PyObjCSelector_GetClass(_self);
+        SEL   sel = PyObjCSelector_GetSelector(_self);
+
+        assert(cls);
+        assert(sel);
+
+        snprintf(buf, 128, "%c[%s %s] is a deprecated API (macOS %d.%d)",
+                 PyObjCSelector_IsClassMethod(_self) ? '+' : '-', class_getName(cls),
+                 sel_getName(sel), methinfo->deprecated / 100,
+                 methinfo->deprecated % 100);
+        if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
+            Py_CLEAR(methinfo);
+            return NULL;
+        }
+    }
+
+    execute = PyObjCSelector_GetCallFunc(self, methinfo);
+    Py_CLEAR(methinfo);
     if (execute == NULL) {
         return NULL;
     }
@@ -791,8 +781,9 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
         obj = class;
     } else {
-        if (obj && PyObjCClass_Check(obj)) {
-            obj = NULL;
+        if (!obj || (obj && PyObjCClass_Check(obj))) {
+            Py_INCREF(meth);
+            return (PyObject*)meth;
         }
     }
     result = PyObject_New(PyObjCNativeSelector, (PyTypeObject*)PyObjCNativeSelector_Type);
@@ -808,9 +799,10 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     result->base.sel_mappingcount     = meth->base.sel_mappingcount;
     result->base.sel_self             = NULL;
     result->sel_cif                   = NULL;
-    result->base.sel_vectorcall       = objcsel_vectorcall;
+    // result->base.sel_vectorcall       = objcsel_vectorcall;
 
-    result->sel_call_func = meth->sel_call_func;
+    result->sel_call_func       = meth->sel_call_func;
+    result->base.sel_vectorcall = meth->base.sel_vectorcall;
 
     const char* tmp = PyObjCUtil_Strdup(meth->base.sel_python_signature);
     if (tmp == NULL) { // LCOV_BR_EXCL_LINE
@@ -835,65 +827,12 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
         PyErr_Clear();
     }
 
-    if (meth->sel_call_func == NULL) {
-        if (class_isMetaClass(meth->base.sel_class)) {
-            PyObject* metaclass_obj = PyObjCClass_New(meth->base.sel_class);
-            if (metaclass_obj == NULL) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(result);
-                return NULL;
-                // LCOV_EXCL_STOP
-            }
-            PyObject* class_obj = PyObjCClass_ClassForMetaClass(metaclass_obj);
-            Py_CLEAR(metaclass_obj);
-
-            if (class_obj == NULL) {
-                Py_DECREF(result);
-                return NULL;
-            }
-
-            /* PyObjCClass_ClassForMetaClass will only return a class proxy for a non-Nil
-             * class */
-            PyObjC_CallFunc func = PyObjC_FindCallFunc(
-                (Class _Nonnull)PyObjCClass_GetClass(class_obj), meth->base.sel_selector,
-                meth->base.sel_methinfo->signature);
-
-#ifdef Py_GIL_DISABLED
-            if (meth->sel_call_func == NULL) {
-#endif
-                meth->sel_call_func = func;
-#ifdef Py_GIL_DISABLED
-            }
-#endif
-
-            Py_CLEAR(class_obj);
-
-        } else {
-            PyObjC_CallFunc func =
-                PyObjC_FindCallFunc(meth->base.sel_class, meth->base.sel_selector,
-                                    meth->base.sel_methinfo->signature);
-
-#ifdef Py_GIL_DISABLED
-            if (meth->sel_call_func == NULL) {
-#endif
-                meth->sel_call_func = func;
-#ifdef Py_GIL_DISABLED
-            }
-#endif
-        }
-        if (meth->sel_call_func == NULL) {
-            Py_DECREF(result);
-            return NULL;
-        }
+    result->sel_call_func = PyObjCSelector_GetCallFunc(meth, result->base.sel_methinfo);
+    if (result->sel_call_func == NULL) {
+        Py_CLEAR(result);
+        return NULL;
     }
-
-    /* XXX: 'sel_methinfo' should probably be _Nonnull */
-    if (result->base.sel_methinfo && result->base.sel_methinfo->shortcut_signature
-        && result->sel_call_func == PyObjCFFI_Caller) {
-        result->base.sel_vectorcall = objcsel_vectorcall_simple;
-    } else {
-        result->base.sel_vectorcall = objcsel_vectorcall;
-    }
+    result->base.sel_vectorcall = meth->base.sel_vectorcall;
 
     result->base.sel_self = obj;
     if (result->base.sel_self) {
@@ -1018,15 +957,13 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
             // LCOV_EXCL_STOP
         }
 
-        if (
-#ifndef __LP64__
-            strcmp(class_getName(cls), "Object") == 0 ||
-#endif /* !__LP64__ */
-            strcmp(class_getName(cls), "NSProxy") == 0) {
-            if (sel == @selector(methodSignatureForSelector:)) {
+        if (strcmp(class_getName(cls), "NSProxy") == 0) {
+            if (sel == @selector(methodSignatureForSelector:)) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_Format(PyExc_AttributeError, "Accessing %s.%s is not supported",
                              class_getName(cls), name);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
         }
 
@@ -1041,19 +978,6 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
                     return NULL;       // LCOV_EXCL_LINE
                 }
                 retval = PyObjCSelector_NewNative(cls, sel, typestr, 1);
-            } else if ((class_getClassMethod(cls, @selector(methodSignatureForSelector:))
-                        != NULL)
-                       && nil
-                              != (methsig =
-                                      [(NSObject*)cls methodSignatureForSelector:sel])) {
-
-                const char* typestr =
-                    PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
-                if (typestr == NULL) { // LCOV_BR_EXCL_LINE
-                    retval = NULL;     // LCOV_EXCL_LINE
-                } else {
-                    retval = PyObjCSelector_NewNative(cls, sel, typestr, 1);
-                }
             } else {
                 PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
                 retval = NULL;

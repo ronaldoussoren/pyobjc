@@ -432,13 +432,12 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         return NULL;        // LCOV_EXCL_LINE
     }
 
-    PyObjC_CallFunc call_func = PyObjCSelector_GetCallFunc((PyObjCNativeSelector*)attr);
-    if (call_func == NULL) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
+    PyObjC_CallFunc call_func =
+        PyObjCSelector_GetCallFunc((PyObjCNativeSelector*)attr, methinfo);
+    if (call_func == NULL) {
         Py_DECREF(attr);
         Py_DECREF(methinfo);
         return NULL;
-        // LCOV_EXCL_STOP
     }
 
     res = PyObjCIMP_New(retval, selector, call_func, methinfo,
@@ -527,13 +526,12 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
         // LCOV_EXCL_STOP
     }
 
-    PyObjC_CallFunc call_func = PyObjCSelector_GetCallFunc((PyObjCNativeSelector*)attr);
-    if (call_func == NULL) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
+    PyObjC_CallFunc call_func =
+        PyObjCSelector_GetCallFunc((PyObjCNativeSelector*)attr, methinfo);
+    if (call_func == NULL) {
         Py_DECREF(attr);
         Py_DECREF(methinfo);
         return NULL;
-        // LCOV_EXCL_STOP
     }
 
     res = PyObjCIMP_New(retval, selector, call_func, methinfo,

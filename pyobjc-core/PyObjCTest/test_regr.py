@@ -195,7 +195,9 @@ class TestRegressions(TestCase):
 
         # libffi doesn't support calling functions with an empty struct
         # arguments (e.g. "struct empty {}", even if C compilers do.
-        with self.assertRaisesRegex(objc.error, "Cannot setup FFI CIF: bad typedef"):
+        with self.assertRaisesRegex(
+            objc.error, "Cannot create FFI CIF for i@:{empty=}: bad typedef"
+        ):
             self.assertEqual(o.callWithEmpty_(()), 99)
 
     def testInitialize(self):
@@ -1177,6 +1179,50 @@ class TestClasses(TestCase):
 
 
 class TestSelectorDetails(TestCase):
+    def test_selector_unbound(self):
+        o = NSString.alloc().initWithString_("hello")
+        m = o.description.definingClass.__dict__["description"]
+        r1 = m(o)
+        r2 = m(o)
+        self.assertEqual(r1, r2)
+        self.assertIsInstance(r1, str)
+
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            m()
+
+        r3 = m(o.nsstring())
+        self.assertEqual(r1, r3)
+
+        m = o.getCharacters_range_.definingClass.__dict__["getCharacters_range_"]
+        with self.assertRaisesRegex(TypeError, "Missing argument: self"):
+            m()
+
+        m = NSObject.alloc().init().description.definingClass.__dict__["description"]
+        with self.assertRaisesRegex(
+            TypeError,
+            "Expecting instance of NSObject as self, got one of objc.pyobjc_unicode",
+        ):
+            m(o)
+        with self.assertRaisesRegex(
+            TypeError,
+            "Expecting instance of NSObject as self, got one of objc.pyobjc_unicode",
+        ):
+            m(o)
+
+    def test_selector_invalid_typestr(self):
+        o = NSArray.array()
+        m = o.reversedArray
+        m.signature = b"X@:"
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
+            m()
+        m.signature = b"@@:"
+
+        NSArray.__dict__["reversedArray"].signature = b"X@:"
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
+            self.assertEqual(o.reversedArray.signature, b"X@:")
+        NSArray.__dict__["reversedArray"].signature = b"@@:"
+        self.assertEqual(o.reversedArray.signature, b"@@:")
+
     def test_selector_no_compare(self):
         class C:
             def __call__(self, a):

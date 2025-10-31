@@ -243,7 +243,8 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
 
         if (r != FFI_OK) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
-            PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
+            PyErr_Format(PyObjCExc_Error, "Cannot create FFI CIF for %s: %s",
+                         self->methinfo->signature, PyObjC_ffi_status_str((ffi_status)r));
             goto error;
             // LCOV_EXCL_STOP
         }

@@ -89,7 +89,8 @@ extern SEL PyObjCSelector_DefaultSelector(const char* methname);
 
 extern int PyObjCSelector_Setup(PyObject* module);
 
-extern PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(PyObjCNativeSelector* obj);
+extern PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(
+    PyObjCNativeSelector* obj, PyObjCMethodSignature* methinfo);
 
 NS_ASSUME_NONNULL_END
 

@@ -14,6 +14,16 @@
 - (int)method7;
 - (int)method8;
 - (int)method9;
+
+- (int)method1:(int*)value;
+- (int)method2:(int*)value;
+- (int)method3:(int*)value;
+- (int)method4:(int*)value;
+- (int)method5:(int*)value;
+- (int)method6:(int*)value;
+- (int)method7:(int*)value;
+- (int)method8:(int*)value;
+- (int)method9:(int*)value;
 @end
 
 @implementation OCTestDeprecations
@@ -53,6 +63,43 @@
 - (int)method9
 {
     return 9;
+}
+
+- (int)method1:(int*)value
+{
+    return 1 + *value;
+}
+- (int)method2:(int*)value
+{
+    return 2 + *value;
+}
+- (int)method3:(int*)value
+{
+    return 3 + *value;
+}
+- (int)method4:(int*)value
+{
+    return 4 + *value;
+}
+- (int)method5:(int*)value
+{
+    return 5 + *value;
+}
+- (int)method6:(int*)value
+{
+    return 6 + *value;
+}
+- (int)method7:(int*)value
+{
+    return 7 + *value;
+}
+- (int)method8:(int*)value
+{
+    return 8 + *value;
+}
+- (int)method9:(int*)value
+{
+    return 9 + *value;
 }
 
 @end

@@ -54,6 +54,14 @@
 {
     return 7;
 }
+- (int)customcallers8
+{
+    return 8;
+}
+- (int)customcallers8:(int*)pvalue
+{
+    return 8 + *pvalue;
+}
 @end
 
 @implementation OC_CustomCallerChild1
@@ -242,6 +250,11 @@ mod_exec_module(PyObject* m)
                     call_customcallers7);
     REGISTER_CALLER([OC_CustomCallerChild2 class], @selector(customcallers7),
                     call_customcallers7b);
+
+    REGISTER_CALLER([OC_CustomCaller class], @selector(customcallers8),
+                    PyObjCUnsupportedMethod_Caller);
+    REGISTER_CALLER([OC_CustomCaller class], @selector(customcallers8:),
+                    PyObjCUnsupportedMethod_Caller);
 
     return 0;
 }

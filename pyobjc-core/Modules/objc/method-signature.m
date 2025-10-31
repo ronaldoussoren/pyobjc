@@ -319,7 +319,7 @@ static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
         return NULL;
         // LCOV_EXCL_STOP
     }
-    memset(retval, 0, sizeof(*retval)); /* XXX */
+    memset(retval, 0, sizeof(*retval));
     /* XXX: Try to refactor this to ensure the type value can be _Nonnull */
     retval->type              = tmpl ? tmpl->type : NULL;
     retval->typeOverride      = NO;
@@ -1342,24 +1342,6 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
             }
             Py_CLEAR(av);
         }
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_free_result,
-                                  &av)) { // LCOV_BR_EXCL_LINE
-        case -1:
-            // LCOV_EXCL_START
-            Py_DECREF(retval);
-            return -1;
-            // LCOV_EXCL_STOP
-        /* case 0: pass */
-        case 1:
-            r = PyObject_IsTrue(av);
-            if (r == -1) {
-                return -1;
-            }
-            if (r) {
-                methinfo->free_result = YES;
-            }
-            Py_CLEAR(av);
-        }
     }
 
     if (metadata) {
@@ -1907,8 +1889,7 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     return 0;
 }
 
-PyObjCMethodSignature*
-PyObjCMethodSignature_GetRegistered(Class cls, SEL sel)
+PyObjCMethodSignature* _Nullable PyObjCMethodSignature_GetRegistered(Class cls, SEL sel)
 {
     return (PyObjCMethodSignature*)PyObjC_FindInRegistry(registry, cls, sel);
 }
@@ -1922,6 +1903,10 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
 
     metadata = PyObjC_FindInRegistry(registry, cls, sel);
     assert(metadata == NULL || PyObjCMethodSignature_Check(metadata));
+
+    if (metadata == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;                            // LCOV_EXCL_LINE
+    }
 
     if (metadata != NULL && ((PyObjCMethodSignature*)metadata)->signature) {
         methinfo = new_methodsignature(((PyObjCMethodSignature*)metadata)->signature);

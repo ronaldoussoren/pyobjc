@@ -532,12 +532,12 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
             PyObject* copied = PyObjC_Copy(value);
             if (copied == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            } // LCOV_BR_EXCL_LINE
+            } // LCOV_EXCL_LINE
 
             if (depythonify_python_object(copied, &result) == -1) {
                 Py_CLEAR(copied);
                 PyObjC_GIL_FORWARD_EXC();
-            } // LCOV_BR_EXCL_LINE
+            } // LCOV_EXCL_LINE
             Py_CLEAR(copied);
         }
 

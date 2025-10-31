@@ -5,6 +5,13 @@ from .customcallers import (
     OC_CustomCallerGrandchild,
 )
 from PyObjCTools.TestSupport import TestCase
+import objc
+
+objc.registerMetaDataForSelector(
+    b"OC_CustomCaller",
+    b"customcaller8:",
+    {"arguments": {2 + 0: {"type_modifier": objc._C_IN}}},
+)
 
 
 class TestRegistrationOrder(TestCase):
@@ -39,3 +46,33 @@ class TestRegistrationOrder(TestCase):
         self.assertEqual(OC_CustomCallerChild1.alloc().init().customcallers7(), 17)
         self.assertEqual(OC_CustomCallerGrandchild.alloc().init().customcallers7(), 117)
         self.assertEqual(OC_CustomCallerChild2.alloc().init().customcallers7(), -70)
+
+    def test_not_callable(self):
+        with self.assertRaisesRegex(TypeError, "Cannot call 'customcallers8'"):
+            OC_CustomCaller.alloc().init().customcallers8()
+
+        with self.assertRaisesRegex(TypeError, "Cannot call 'customcallers8:'"):
+            OC_CustomCaller.alloc().init().customcallers8_(1)
+
+    def test_not_callable_sel_and_imp(self):
+        o = OC_CustomCaller.alloc().init()
+        m = OC_CustomCaller.pyobjc_instanceMethods.customcallers8
+
+        with self.assertRaisesRegex(TypeError, "Cannot call 'customcallers8'"):
+            m(o)
+
+        m = OC_CustomCaller.pyobjc_instanceMethods.customcallers8_
+        with self.assertRaisesRegex(TypeError, "Cannot call 'customcallers8:'"):
+            m(o, 1)
+
+        with self.assertRaisesRegex(TypeError, "Cannot call 'customcallers8'"):
+            OC_CustomCaller.instanceMethodForSelector_(b"customcallers8")
+
+        with self.assertRaisesRegex(TypeError, "Cannot call 'customcallers8:'"):
+            OC_CustomCaller.instanceMethodForSelector_(b"customcallers8:")
+
+        with self.assertRaisesRegex(TypeError, "Cannot call 'customcallers8'"):
+            o.methodForSelector_(b"customcallers8")
+
+        with self.assertRaisesRegex(TypeError, "Cannot call 'customcallers8:'"):
+            o.methodForSelector_(b"customcallers8:")

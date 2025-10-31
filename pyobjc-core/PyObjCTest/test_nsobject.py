@@ -4,7 +4,11 @@ import tempfile
 
 # from objc import super
 from PyObjCTools.TestSupport import TestCase
-from PyObjCTest.helpernsobject import OC_AllocRaises, OC_RefcountRaises
+from PyObjCTest.helpernsobject import (
+    OC_AllocRaises,
+    OC_RefcountRaises,
+    OC_CustomMethods,
+)
 from objc import super  # noqa: A004
 from .test_metadata import NoObjCClass
 
@@ -287,3 +291,34 @@ class MemoryManagedThroughIMPs(TestCase):
         v = OC_SuperThroughIMP.alloc().init()
         del v
         self.assertEqual(cnt, 1)
+
+
+class TestVirtualSelector(TestCase):
+    def test_virtual_selector(self):
+        with self.assertRaisesRegex(AttributeError, "virtualmethod"):
+            OC_CustomMethods.pyobjc_instanceMethods.virtualmethod
+
+        o = OC_CustomMethods.alloc().init()
+        self.assertEqual(o.virtualmethod(), 99)
+
+        self.assertEqual(o.pyobjc_instanceMethods.virtualmethod(), 99)
+
+        with self.assertRaisesRegex(AttributeError, "virtualmethod"):
+            OC_CustomMethods.pyobjc_instanceMethods.virtualmethod
+
+        with self.assertRaisesRegex(
+            AttributeError,
+            "'OC_CustomMethods' object has no attribute 'novirtualmethod'",
+        ):
+            o.novirtualmethod
+
+    def test_virtual_class_selector(self):
+        self.assertEqual(OC_CustomMethods.virtualclassmethod(), -3.14)
+        self.assertEqual(
+            OC_CustomMethods.pyobjc_classMethods.virtualclassmethod(), -3.14
+        )
+
+        with self.assertRaisesRegex(
+            AttributeError, "No attribute novirtualclassmethod"
+        ):
+            OC_CustomMethods.novirtualclassmethod

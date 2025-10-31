@@ -30,20 +30,12 @@
 
 #include <CoreFoundation/CFNumber.h>
 
-#ifndef __LP64__
-#error "Requires LP64"
-#endif
-
 NS_ASSUME_NONNULL_BEGIN
 
 /*
  * Category on NSObject to make sure that every object supports
  * the method  __pyobjc_PythonObject__, this helps to simplify
  * pythonify_c_value.
- *
- * XXX: Are these categories really necessary? Check if
- *      hardcoding the result (including the various OC_.. classes
- *      leads to faster code)
  */
 @interface NSObject (PyObjCSupport)
 - (PyObject* _Nullable)__pyobjc_PythonObject__;
@@ -962,15 +954,6 @@ const char* _Nullable PyObjCRT_NextField(const char* start_type)
     return type;
 }
 
-/*
-Return the alignment of an object specified by type
-
-XXX: The embedded align function is used for the first
-member of a struct, and is no longer necessary.
-*/
-
-#define PyObjC_EmbeddedAlignOfType PyObjCRT_AlignOfType
-
 Py_ssize_t
 PyObjCRT_AlignOfType(const char* start_type)
 {
@@ -1055,7 +1038,7 @@ PyObjCRT_AlignOfType(const char* start_type)
                 }
 
                 if (have_align) {
-                    align = MAX(align, PyObjC_EmbeddedAlignOfType(type));
+                    align = MAX(align, PyObjCRT_AlignOfType(type));
 
                 } else {
                     align      = PyObjCRT_AlignOfType(type);
@@ -1253,7 +1236,7 @@ PyObjCRT_SizeOfType(const char* start_type)
             }
 
             if (have_align) {
-                align = PyObjC_EmbeddedAlignOfType(type);
+                align = PyObjCRT_AlignOfType(type);
                 if (align == -1)
                     return -1;
 
@@ -1749,7 +1732,7 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datu
             have_align = 1;
 
         } else {
-            align = PyObjC_EmbeddedAlignOfType(item);
+            align = PyObjCRT_AlignOfType(item);
         }
 
         if (pack != -1 && pack < align) {
@@ -2196,7 +2179,7 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
             have_align = 1;
 
         } else {
-            align = PyObjC_EmbeddedAlignOfType(type);
+            align = PyObjCRT_AlignOfType(type);
         }
 
         if (pack != -1 && pack < align) {
@@ -2620,7 +2603,7 @@ depythonify_signed_int_value(PyObject* argument, char* descr, long long* out,
     }
 }
 
-int /* XXX: No longer necessary */
+int /* XXX: No longer necessary. Is this true given PyObjCRT_SizeOfReturnType  */
 depythonify_c_return_value(const char* type, PyObject* argument, void* datum)
 {
     assert(type != NULL);
@@ -2630,8 +2613,9 @@ depythonify_c_return_value(const char* type, PyObject* argument, void* datum)
     return depythonify_c_value(type, argument, datum);
 }
 
-PyObject* _Nullable /*  XXX: No longer necessary */
-    pythonify_c_return_value(const char* type, const void* datum) /* XXX */
+PyObject* _Nullable /*  XXX: No longer necessary. Is this true given
+                       PyObjCRT_SizeOfReturnType */
+    pythonify_c_return_value(const char* type, const void* datum)
 {
     assert(type != NULL);
     assert(datum != NULL);

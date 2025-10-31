@@ -90,6 +90,102 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface OC_CustomMethods : NSObject {
+}
+@end
+
+@implementation OC_CustomMethods
+- (NSMethodSignature* _Nullable)methodSignatureForSelector:(SEL)aSel
+{
+    if (sel_isEqual(aSel, @selector(virtualmethod))) {
+        return [NSMethodSignature signatureWithObjCTypes:"q@:"];
+    }
+    return [super methodSignatureForSelector:aSel];
+}
+
+- (BOOL)respondsToSelector:(SEL)aSel
+{
+    if (sel_isEqual(aSel, @selector(virtualmethod))) {
+        return YES;
+    }
+    if (sel_isEqual(aSel, @selector(novirtualmethod))) {
+        @throw [NSException exceptionWithName:@"noselector" reason:nil userInfo:nil];
+    }
+    return [super respondsToSelector:aSel];
+}
+
++ (NSMethodSignature* _Nullable)methodSignatureForSelector:(SEL)aSel
+{
+    if (sel_isEqual(aSel, @selector(virtualclassmethod))) {
+        return [NSMethodSignature signatureWithObjCTypes:"d@:"];
+    }
+    return [super methodSignatureForSelector:aSel];
+}
+
++ (BOOL)respondsToSelector:(SEL)aSel
+{
+    if (sel_isEqual(aSel, @selector(virtualclassmethod))) {
+        return YES;
+    }
+    if (sel_isEqual(aSel, @selector(novirtualclassmethod))) {
+        @throw [NSException exceptionWithName:@"noselector" reason:nil userInfo:nil];
+    }
+    return [super respondsToSelector:aSel];
+}
+
+static long
+virtual_imp(id self __attribute__((__unused__)), SEL _sel __attribute__((__unused__)))
+{
+    return 99;
+}
+
+static double
+virtual_class_imp(id  self __attribute__((__unused__)),
+                  SEL _sel __attribute__((__unused__)))
+{
+    return -3.14;
+}
+
+- (IMP)methodForSelector:(SEL)aSel
+{
+    if (sel_isEqual(aSel, @selector(virtualmethod))) {
+        return (IMP)virtual_imp;
+    }
+    return [super methodForSelector:aSel];
+}
+
++ (IMP)methodForSelector:(SEL)aSel
+{
+    if (sel_isEqual(aSel, @selector(virtualclassmethod))) {
+        return (IMP)virtual_class_imp;
+    }
+    return [super methodForSelector:aSel];
+}
+
+- (void)forwardInvocation:(NSInvocation*)invocation
+{
+    SEL aSel = [invocation selector];
+    if (sel_isEqual(aSel, @selector(virtualmethod))) {
+        long value = virtual_imp(self, aSel);
+        [invocation setReturnValue:&value];
+        return;
+    }
+    [super forwardInvocation:invocation];
+}
+
++ (void)forwardInvocation:(NSInvocation*)invocation
+{
+    SEL aSel = [invocation selector];
+    if (sel_isEqual(aSel, @selector(virtualclassmethod))) {
+        double value = virtual_class_imp(self, aSel);
+        [invocation setReturnValue:&value];
+        return;
+    }
+    [super forwardInvocation:invocation];
+}
+
+@end
+
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int
@@ -107,6 +203,12 @@ mod_exec_module(PyObject* m)
     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
                            "OC_RefcountRaises",
                            PyObjC_IdToPython([OC_RefcountRaises class]))
+        < 0) {
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
+                           "OC_CustomMethods",
+                           PyObjC_IdToPython([OC_CustomMethods class]))
         < 0) {
         return -1; // LCOV_EXCL_LINE
     }

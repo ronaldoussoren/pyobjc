@@ -32,6 +32,53 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"OCTestDeprecations", b"method9", {"deprecated": 1010}
 )
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method1:",
+    {
+        "arguments": {2: {"type_modifier": "n"}},
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method2:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": 1004},
+)
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method3:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": 1004},
+)
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method4:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": 1005},
+)
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method5:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": 1005},
+)
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method6:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": 1006},
+)
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method7:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": 1006},
+)
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method8:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": 1010},
+)
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method9:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": 1010},
+)
 
 _FunctionTable = [
     ("func1", b"i", "", {}),
@@ -59,10 +106,10 @@ def deprecation_warnings(level):
 
 
 class TestDeprecationWarnings(TestCase):
-    def assertDeprecationWarning(self, func):
+    def assertDeprecationWarning(self, func, *args):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
-            func()
+            func(*args)
 
         self.assertEqual(len(w), 1)
         self.assertTrue(issubclass(w[-1].category, objc.ApiDeprecationWarning))
@@ -70,12 +117,12 @@ class TestDeprecationWarnings(TestCase):
         with self.assertRaises(objc.ApiDeprecationWarning):
             with warnings.catch_warnings(record=True) as w:
                 warnings.simplefilter("error")
-                func()
+                func(*args)
 
-    def assertNoDeprecationWarning(self, func):
+    def assertNoDeprecationWarning(self, func, *args):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
-            func()
+            func(*args)
 
         if w:
             print([(x.category, x.message) for x in w])
@@ -90,6 +137,8 @@ class TestDeprecationWarnings(TestCase):
         with deprecation_warnings(None):
             self.assertNoDeprecationWarning(o.method1)
             self.assertNoDeprecationWarning(o.method2)
+            self.assertNoDeprecationWarning(o.method1_, 0)
+            self.assertNoDeprecationWarning(o.method2_, 0)
             self.assertNoDeprecationWarning(func1)  # noqa: F821
             self.assertNoDeprecationWarning(func2)  # noqa: F821
 
@@ -102,6 +151,11 @@ class TestDeprecationWarnings(TestCase):
             self.assertDeprecationWarning(o.method4)
             self.assertDeprecationWarning(o.method6)
             self.assertNoDeprecationWarning(o.method8)
+            self.assertNoDeprecationWarning(o.method1_, 0)
+            self.assertDeprecationWarning(o.method2_, 0)
+            self.assertDeprecationWarning(o.method4_, 0)
+            self.assertDeprecationWarning(o.method6_, 0)
+            self.assertNoDeprecationWarning(o.method8_, 0)
 
             self.assertNoDeprecationWarning(func1)  # noqa: F821
             self.assertDeprecationWarning(func2)  # noqa: F821
@@ -121,3 +175,9 @@ class TestDeprecationWarnings(TestCase):
                     r"-\[OCTestDeprecations method2\] is a deprecated API \(macOS 10\.4\)",
                 ):
                     o.method2()
+
+                with self.assertRaisesRegex(
+                    objc.ApiDeprecationWarning,
+                    r"-\[OCTestDeprecations method2:\] is a deprecated API \(macOS 10\.4\)",
+                ):
+                    o.method2_(0)

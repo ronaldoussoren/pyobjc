@@ -95,7 +95,8 @@ extern PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* m
     } while (0)
 #endif /* NDEBUG */
 
-extern PyObjCMethodSignature* PyObjCMethodSignature_GetRegistered(Class cls, SEL sel);
+extern PyObjCMethodSignature* _Nullable PyObjCMethodSignature_GetRegistered(Class cls,
+                                                                            SEL   sel);
 
 extern int PyObjCMethodSignature_Setup(PyObject* module);
 

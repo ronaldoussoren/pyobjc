@@ -44,8 +44,8 @@ static const char gCharEncoding[] = {_C_CHR, 0};
 #endif
 
 // LCOV_EXCL_START
-static const char*
-ffi_status_str(ffi_status rv)
+const char*
+PyObjC_ffi_status_str(ffi_status rv)
 {
     switch (rv) {
     case FFI_OK:
@@ -4752,8 +4752,8 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
         r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist);
     }
     if (r != FFI_OK) {
-        PyErr_Format(PyObjCExc_Error, "Cannot setup FFI CIF: %s",
-                     ffi_status_str((ffi_status)r));
+        PyErr_Format(PyObjCExc_Error, "Cannot create FFI CIF for %s: %s",
+                     methinfo->signature, PyObjC_ffi_status_str((ffi_status)r));
         goto error_cleanup;
     }
 
@@ -5315,7 +5315,7 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
         PyMem_Free(cif);
         PyMem_Free(cl_arg_types);
         PyErr_Format(PyObjCExc_Error, "Cannot create FFI CIF for %s: %s",
-                     methinfo->signature, ffi_status_str(rv));
+                     methinfo->signature, PyObjC_ffi_status_str(rv));
         return NULL;
         // LCOV_EXCL_STOP
     }

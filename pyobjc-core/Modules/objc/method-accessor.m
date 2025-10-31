@@ -45,7 +45,6 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
             unbound_instance_method = 1;
         }
 
-        /* XXX: Check if PyObjCClass_GetClass can return Nil */
         if (objc_object == nil) {
             PyErr_Format(PyExc_AttributeError, "<nil> doesn't have attribute %s", name);
             return NULL;

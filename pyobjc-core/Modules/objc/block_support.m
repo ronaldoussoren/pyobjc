@@ -145,7 +145,7 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
                                      PyObject* func_args)
 {
     PyObject*              self;
-    PyObjCMethodSignature* signature;
+    PyObjCMethodSignature* methinfo;
     PyObject*              args;
     PyObject*              kwds;
     NSObject*              block_ptr;
@@ -165,7 +165,7 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
     ffi_cif                cif;
     PyObject*              retval;
 
-    if (!PyArg_ParseTuple(func_args, "OOOO", &self, &signature, &args, &kwds)) {
+    if (!PyArg_ParseTuple(func_args, "OOOO", &self, &methinfo, &args, &kwds)) {
         return NULL;
     }
 
@@ -174,12 +174,12 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
         return NULL;
     }
 
-    if ((PyObject*)signature == Py_None) {
+    if ((PyObject*)methinfo == Py_None) {
         PyErr_SetString(PyExc_TypeError, "cannot call block without a signature");
         return NULL;
     }
 
-    if (!PyObjCMethodSignature_Check(signature)) {
+    if (!PyObjCMethodSignature_Check(methinfo)) {
         PyErr_SetString(PyExc_TypeError, "signature is not a signature object");
         return NULL;
     }
@@ -194,25 +194,25 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 
     call_func = PyObjCBlock_GetFunction(block_ptr);
 
-    argbuf_len = PyObjCRT_SizeOfReturnType(signature->rettype->type);
+    argbuf_len = PyObjCRT_SizeOfReturnType(methinfo->rettype->type);
     argbuf_len = align(argbuf_len, sizeof(void*));
 
 #ifndef __arm64__
-    int useStret = PyObjCRT_ResultUsesStret(signature->rettype->type);
+    int useStret = PyObjCRT_ResultUsesStret(methinfo->rettype->type);
     if (useStret == -1) {
         goto error;
     }
 #endif
 
     argbuf_len += sizeof(void*); /* Argument 0: the block itself */
-    r = PyObjCFFI_CountArguments(signature, 1, &byref_in_count, &byref_out_count,
+    r = PyObjCFFI_CountArguments(methinfo, 1, &byref_in_count, &byref_out_count,
                                  &plain_count, &argbuf_len, &variadicAllArgs);
     if (r == -1) {
         return NULL;
     }
 
-    variadicAllArgs |= signature->variadic
-                       && (signature->null_terminated_array || signature->arrayArg != -1);
+    variadicAllArgs |= methinfo->variadic
+                       && (methinfo->null_terminated_array || methinfo->arrayArg != -1);
 
     if (variadicAllArgs) {
         if (byref_in_count != 0 || byref_out_count != 0) {
@@ -220,18 +220,18 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
             return NULL;
         }
 
-        if (PyTuple_Size(args) < Py_SIZE(signature) - 1) {
+        if (PyTuple_Size(args) < Py_SIZE(methinfo) - 1) {
             PyErr_Format(PyExc_TypeError,
                          "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
                          "d",
-                         Py_SIZE(signature) - 1, PyTuple_Size(args));
+                         Py_SIZE(methinfo) - 1, PyTuple_Size(args));
             return NULL;
         }
 
-    } else if (PyTuple_Size(args) != Py_SIZE(signature) - 1) {
+    } else if (PyTuple_Size(args) != Py_SIZE(methinfo) - 1) {
         PyErr_Format(PyExc_TypeError,
                      "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
-                     Py_SIZE(signature) - 1, PyTuple_Size(args));
+                     Py_SIZE(methinfo) - 1, PyTuple_Size(args));
         return NULL;
     }
 
@@ -251,14 +251,14 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 
 #ifdef __arm64__
     cif_arg_count = PyObjCFFI_ParseArguments(
-        signature, 1, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
-        align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*))
+        methinfo, 1, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
+        align(PyObjCRT_SizeOfReturnType(methinfo->rettype->type), sizeof(void*))
             + sizeof(void*),
         argbuf, argbuf_len, byref, byref_attr, arglist, values);
 #else
     cif_arg_count = PyObjCFFI_ParseArguments(
-        signature, 1, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
-        align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*))
+        methinfo, 1, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
+        align(PyObjCRT_SizeOfReturnType(methinfo->rettype->type), sizeof(void*))
             + sizeof(void*),
         argbuf, argbuf_len, byref, byref_attr, useStret ? arglist + 1 : arglist,
         useStret ? values + 1 : values);
@@ -275,13 +275,13 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
 
-    if (signature->variadic) {
-        r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(signature),
+    if (methinfo->variadic) {
+        r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo),
                              (int)cif_arg_count,
-                             PyObjCFFI_Typestr2FFI(signature->rettype->type), arglist);
+                             PyObjCFFI_Typestr2FFI(methinfo->rettype->type), arglist);
     } else {
         r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
-                         PyObjCFFI_Typestr2FFI(signature->rettype->type), arglist);
+                         PyObjCFFI_Typestr2FFI(methinfo->rettype->type), arglist);
     }
 #pragma clang diagnostic pop
 
@@ -299,19 +299,19 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 
 #if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
-        if (signature->variadic) {
+        if (methinfo->variadic) {
             r = ffi_prep_cif_var(
                 &cif, FFI_DEFAULT_ABI,
-                (int)(useStret ? Py_SIZE(signature) + 1 : Py_SIZE(signature)),
+                (int)(useStret ? Py_SIZE(methinfo) + 1 : Py_SIZE(methinfo)),
                 (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
                 useStret ? &ffi_type_void
-                         : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+                         : PyObjCFFI_Typestr2FFI(methinfo->rettype->type),
                 arglist);
         } else {
             r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI,
                              (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
                              useStret ? &ffi_type_void
-                                      : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+                                      : PyObjCFFI_Typestr2FFI(methinfo->rettype->type),
                              arglist);
         }
     } else
@@ -319,7 +319,7 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
     {
         r = ffi_prep_cif(
             &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
-            useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+            useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(methinfo->rettype->type),
             arglist);
     }
 
@@ -327,7 +327,8 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 
     if (r != FFI_OK) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
+        PyErr_Format(PyObjCExc_Error, "Cannot create FFI CIF for %s: %s", methinfo,
+                     PyObjC_ffi_status_str((ffi_status)r));
         goto error;
         // LCOV_EXCL_STOP
     }
@@ -352,18 +353,18 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
     }
 
 #ifdef __arm64__
-    retval = PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr,
+    retval = PyObjCFFI_BuildResult(methinfo, 1, argbuf, byref, byref_attr,
                                    byref_out_count, values);
 #else
-    retval = PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr,
+    retval = PyObjCFFI_BuildResult(methinfo, 1, argbuf, byref, byref_attr,
                                    byref_out_count, useStret ? values + 1 : values);
 #endif
 
     if (variadicAllArgs) {
-        PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref, byref_attr);
+        PyObjCFFI_FreeByRef(Py_SIZE(methinfo) + PyTuple_Size(args), byref, byref_attr);
 
     } else {
-        PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr);
+        PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr);
     }
 
     PyMem_Free(argbuf);
@@ -372,9 +373,9 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 
 error:
     if (variadicAllArgs) {
-        PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref, byref_attr);
+        PyObjCFFI_FreeByRef(Py_SIZE(methinfo) + PyTuple_Size(args), byref, byref_attr);
     } else {
-        PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr);
+        PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr);
     }
     if (argbuf) { // LCOV_BR_EXCL_LINE
         PyMem_Free(argbuf);
@@ -393,16 +394,16 @@ PyObjCBlock_CleanupCapsule(PyObject* ptr)
     PyObjCFFI_FreeBlockFunction(block_func);
 } // LCOV_BR_EXCL_LINE
 
-static PyObject* _Nullable block_signature(PyObjCMethodSignature* signature)
+static PyObject* _Nullable block_signature(PyObjCMethodSignature* methinfo)
 {
     Py_ssize_t i;
     Py_ssize_t buflen = 1;
     PyObject*  buf;
     char*      cur;
 
-    buflen += strlen(signature->rettype->type);
-    for (i = 0; i < Py_SIZE(signature); i++) {
-        buflen += strlen(signature->argtype[i]->type);
+    buflen += strlen(methinfo->rettype->type);
+    for (i = 0; i < Py_SIZE(methinfo); i++) {
+        buflen += strlen(methinfo->argtype[i]->type);
     }
 
     buf = PyBytes_FromStringAndSize(NULL, buflen);
@@ -417,14 +418,14 @@ static PyObject* _Nullable block_signature(PyObjCMethodSignature* signature)
         return NULL;
         // LCOV_EXCL_STOP
     }
-    strlcpy(cur, signature->rettype->type, buflen);
-    for (i = 0; i < Py_SIZE(signature); i++) {
-        strlcat(cur, signature->argtype[i]->type, buflen);
+    strlcpy(cur, methinfo->rettype->type, buflen);
+    for (i = 0; i < Py_SIZE(methinfo); i++) {
+        strlcat(cur, methinfo->argtype[i]->type, buflen);
     }
     return buf;
 }
 
-void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
+void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* methinfo, PyObject* callable)
 {
     struct block_literal block = gLiteralTemplate;
 
@@ -440,13 +441,13 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* c
         (struct block_descriptor*)PyBytes_AsString(block.descriptor_memory);
     *(block.descriptor) = *(gLiteralTemplate.descriptor);
 
-    /* The value of "signature->signature" cannot be trusted, it
+    /* The value of "methinfo->signature" cannot be trusted, it
      * contains the raw signature without any updates from metadata.
      * Furthermore the value is bogus for block signatures in metadata.
      *
      * The function below only fails when running out of memory
      */
-    block.signature_memory = block_signature(signature);
+    block.signature_memory = block_signature(methinfo);
     if (block.signature_memory == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_CLEAR(block.descriptor_memory);
@@ -456,7 +457,7 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* c
     block.descriptor->signature = PyBytes_AsString(block.signature_memory);
     block.flags |= BLOCK_HAS_SIGNATURE;
     block.isa                      = gStackBlockClass;
-    PyObjCBlockFunction block_func = PyObjCFFI_MakeBlockFunction(signature, callable);
+    PyObjCBlockFunction block_func = PyObjCFFI_MakeBlockFunction(methinfo, callable);
     if (block_func == NULL) {
         Py_CLEAR(block.descriptor_memory);
         Py_CLEAR(block.signature_memory);

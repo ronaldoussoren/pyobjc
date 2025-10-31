@@ -1857,7 +1857,10 @@ static PyObject* _Nullable mod_registeredMetadataForSelector(PyObject* _Nullable
 
     PyObjCMethodSignature* sig = PyObjCMethodSignature_GetRegistered(cls, sel);
     if (sig == NULL) {
-        PyErr_Clear();
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            /* Can only fail due to bugs or memory errors */
+            return NULL; // LCOV_EXCL_LINE
+        }
         Py_RETURN_NONE;
     }
     return PyObjCMethodSignature_AsDict(sig);
@@ -2201,12 +2204,6 @@ struct objc_string_values {
 
 typedef int (*setup_function)(PyObject*);
 
-/* XXX: Consider generating this table with a helper script:
- * - Naming convention (e.g. all function names ending with _Setup)
- * - Encode dependencies somehow
- * - Script that extracts function names and dependencies,
- *   using topsort to generate this array.
- */
 static setup_function _Nullable setup_functions[] = {
     PyObjC_InitProxyRegistry, /* Must be first */
     PyObjCClassbuilder_Setup,
