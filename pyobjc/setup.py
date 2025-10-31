@@ -280,7 +280,6 @@ Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
 Programming Language :: Python :: 3
-Programming Language :: Python :: 3.9
 Programming Language :: Python :: 3.10
 Programming Language :: Python :: 3.11
 Programming Language :: Python :: 3.12
@@ -720,7 +719,7 @@ setup(
     extras_require={
         "allbindings": BASE_REQUIRES + framework_requires(include_all=True)
     },
-    python_requires=">=3.9",
+    python_requires=">=3.10",
     setup_requires=[],
     classifiers=CLASSIFIERS,
     license="MIT",
