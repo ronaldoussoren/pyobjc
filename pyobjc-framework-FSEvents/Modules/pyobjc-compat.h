@@ -22,11 +22,13 @@ NS_ASSUME_NONNULL_BEGIN
  * Start of compiler definitions
  *
  */
+#if 0
 #ifndef __has_feature
 #define __has_feature(x) 0
 #endif
 #ifndef __has_extension
 #define __has_extension(x) __has_feature(x)
+#endif
 #endif
 
 #if __has_extension(c_static_assert)
@@ -59,42 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
  * XXX: Are these needed?
  */
 
-#ifdef __GNUC__
 #define unlikely(x) __builtin_expect(!!(x), 0)
 #define likely(x) __builtin_expect(!!(x), 1)
-#else
-#define likely(x) x
-#define likely(x) x
-#endif
-
-/* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX, compensate.
- */
-#ifndef LLONG_MIN
-#ifdef LONG_LONG_MIN
-#define LLONG_MIN LONG_LONG_MIN
-#define LLONG_MAX LONG_LONG_MAX
-#define ULLONG_MAX ULONG_LONG_MAX
-#endif
-#endif
-
-/*
- *
- * End of compiler support helpers
- *
- * XXX: These two are no longer needed, all supported platforms
- *      are 64-bit
- */
-
-#if __LP64__
-#define Py_ARG_NSInteger "l"
-#define Py_ARG_NSUInteger "k"
-#else
-#define Py_ARG_NSInteger "i"
-#define Py_ARG_NSUInteger "I"
-#endif
-
-#define PyObjC__STR(x) #x
-#define PyObjC_STR(x) PyObjC__STR(x)
 
 /*
  *
@@ -274,8 +242,8 @@ static inline PyObject* _Nullable PyList_GetItemRef(PyObject* l, Py_ssize_t i)
 }
 
 static inline int
-PyDict_SetDefaultRef(PyObject* p, PyObejct* key, PyObject* default_value3,
-                     PyObject * _NonNull * _Nullable result)
+PyDict_SetDefaultRef(PyObject* p, PyObject* key, PyObject* default_value,
+                     PyObject* _Nonnull* _Nullable result)
 {
     *result = PyDict_SetDefault(p, key, default_value);
     if (*result == NULL) {
