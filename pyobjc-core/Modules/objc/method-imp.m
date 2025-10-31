@@ -37,7 +37,8 @@ PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
     return 0;
 }
 
-SEL _Nullable PyObjCIMP_GetSelector(PyObject* self)
+SEL
+PyObjCIMP_GetSelector(PyObject* self)
 {
     assert(PyObjCIMP_Check(self));
 

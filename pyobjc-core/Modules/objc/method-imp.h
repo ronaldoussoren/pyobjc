@@ -32,8 +32,7 @@ extern _Nullable IMP PyObjCIMP_GetIMP(PyObject* self) __attribute__((warn_unused
 extern PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)
     __attribute__((warn_unused_result));
 extern int PyObjCIMP_GetFlags(PyObject* self) __attribute__((warn_unused_result));
-extern _Nullable SEL PyObjCIMP_GetSelector(PyObject* self)
-    __attribute__((warn_unused_result));
+extern SEL PyObjCIMP_GetSelector(PyObject* self) __attribute__((warn_unused_result));
 extern ffi_cif* _Nullable PyObjCIMP_GetCIF(PyObject* self)
     __attribute__((warn_unused_result));
 extern int PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
