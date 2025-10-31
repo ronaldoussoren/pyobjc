@@ -18,8 +18,7 @@ mod_CFCalendarAddComponents(PyObject* self __attribute__((__unused__)), PyObject
     int            r;
 
     if (PyTuple_Size(args) < 4) {
-        PyErr_Format(PyExc_TypeError,
-                     "Expecting at least 4 arguments, got %" PY_FORMAT_SIZE_T "d",
+        PyErr_Format(PyExc_TypeError, "Expecting at least 4 arguments, got %ld",
                      PyTuple_Size(args));
         return NULL;
     }
@@ -45,9 +44,7 @@ mod_CFCalendarAddComponents(PyObject* self __attribute__((__unused__)), PyObject
     }
 
     if ((size_t)PyTuple_Size(args) != 4 + strlen(componentDesc)) {
-        PyErr_Format(PyExc_TypeError,
-                     "Expecting %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
-                     "d",
+        PyErr_Format(PyExc_TypeError, "Expecting %ld arguments, got %ld",
                      4 + strlen(componentDesc), PyTuple_Size(args));
         return NULL;
     }
@@ -109,8 +106,7 @@ mod_CFCalendarComposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
     int            r;
 
     if (PyTuple_Size(args) < 3) {
-        PyErr_Format(PyExc_TypeError,
-                     "Expecting at least 3 arguments, got %" PY_FORMAT_SIZE_T "d",
+        PyErr_Format(PyExc_TypeError, "Expecting at least 3 arguments, got %ld",
                      PyTuple_Size(args));
         return NULL;
     }
@@ -131,9 +127,7 @@ mod_CFCalendarComposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
     }
 
     if ((size_t)PyTuple_Size(args) != 3 + strlen(componentDesc)) {
-        PyErr_Format(PyExc_TypeError,
-                     "Expecting %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
-                     "d",
+        PyErr_Format(PyExc_TypeError, "Expecting %ld arguments, got %ld",
                      3 + strlen(componentDesc), PyTuple_Size(args));
         return NULL;
     }
@@ -194,8 +188,7 @@ mod_CFCalendarDecomposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
     int            r;
 
     if (PyTuple_Size(args) < 3) {
-        PyErr_Format(PyExc_TypeError,
-                     "Expecting at least 3 arguments, got %" PY_FORMAT_SIZE_T "d",
+        PyErr_Format(PyExc_TypeError, "Expecting at least 3 arguments, got %ld",
                      PyTuple_Size(args));
         return NULL;
     }
@@ -223,9 +216,7 @@ mod_CFCalendarDecomposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
 
     if (PyTuple_Size(args) != 3) {
         if ((size_t)PyTuple_Size(args) != 3 + strlen(componentDesc)) {
-            PyErr_Format(PyExc_TypeError,
-                         "Expecting %" PY_FORMAT_SIZE_T
-                         "d arguments, got %" PY_FORMAT_SIZE_T "d",
+            PyErr_Format(PyExc_TypeError, "Expecting %ld arguments, got %ld",
                          3 + strlen(componentDesc), PyTuple_Size(args));
             return NULL;
         }
@@ -296,8 +287,7 @@ mod_CFCalendarGetComponentDifference(PyObject* self __attribute__((__unused__)),
     int            r;
 
     if (PyTuple_Size(args) < 5) {
-        PyErr_Format(PyExc_TypeError,
-                     "Expecting at least 5 arguments, got %" PY_FORMAT_SIZE_T "d",
+        PyErr_Format(PyExc_TypeError, "Expecting at least 5 arguments, got %ld",
                      PyTuple_Size(args));
         return NULL;
     }
@@ -336,9 +326,7 @@ mod_CFCalendarGetComponentDifference(PyObject* self __attribute__((__unused__)),
 
     if (PyTuple_Size(args) != 5) {
         if ((size_t)PyTuple_Size(args) != 5 + strlen(componentDesc)) {
-            PyErr_Format(PyExc_TypeError,
-                         "Expecting %" PY_FORMAT_SIZE_T
-                         "d arguments, got %" PY_FORMAT_SIZE_T "d",
+            PyErr_Format(PyExc_TypeError, "Expecting %ld arguments, got %ld",
                          3 + strlen(componentDesc), PyTuple_Size(args));
             return NULL;
         }

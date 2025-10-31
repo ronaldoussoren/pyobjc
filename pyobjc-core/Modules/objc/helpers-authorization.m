@@ -151,8 +151,8 @@ depythonify_authorizationitem(PyObject* value, void* _out)
 
     if (PyTuple_GET_SIZE(seq) != 4) {
         PyErr_Format(PyExc_ValueError,
-                     "depythonifying struct of %" PY_FORMAT_SIZE_T
-                     "d members, got tuple of %" PY_FORMAT_SIZE_T "d",
+                     "depythonifying struct of %ld "
+                     "members, got tuple of %ld",
                      4, PyTuple_GET_SIZE(seq));
         Py_DECREF(seq);
         return -1;

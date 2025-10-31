@@ -947,9 +947,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                     if ((exactSize && *size != view->len)
                         || (!exactSize && *size > view->len)) {
                         PyErr_Format(PyExc_ValueError,
-                                     "Requesting buffer of %" PY_FORMAT_SIZE_T
-                                     "d, have buffer "
-                                     "of %" PY_FORMAT_SIZE_T "d",
+                                     "Requesting buffer of %ld, have buffer of %ld",
                                      *size, view->len);
                         return -1;
                     }
@@ -993,10 +991,8 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                 if ((exactSize && *size != view->len)
                     || (!exactSize && *size > view->len)) {
                     PyErr_Format(PyExc_ValueError,
-                                 "Requesting buffer of %" PY_FORMAT_SIZE_T
-                                 "d, have buffer "
-                                 "of %" PY_FORMAT_SIZE_T "d",
-                                 *size, view->len);
+                                 "Requesting buffer of %ld, have buffer of %ld", *size,
+                                 view->len);
                     return -1;
                 }
 
@@ -1032,9 +1028,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
              * problems with characters outside of the BMP.
              */
             PyErr_Format(PyExc_ValueError,
-                         "Requesting unicode buffer of %" PY_FORMAT_SIZE_T
-                         "d, have unicode buffer "
-                         "of %" PY_FORMAT_SIZE_T "d",
+                         "Requesting unicode buffer of %ld, have unicode buffer of %ld",
                          *size, bufsize);
             return -1;
         }
@@ -1170,9 +1164,8 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
 
             if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
                 PyErr_Format(PyExc_ValueError,
-                             "Requesting buffer of %" PY_FORMAT_SIZE_T "d, have buffer "
-                             "of %" PY_FORMAT_SIZE_T "d",
-                             *size, bufsize);
+                             "Requesting buffer of %ld, have buffer of %ld", *size,
+                             bufsize);
                 return -1;
             }
             *array = view->buf;
@@ -1216,15 +1209,12 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         if ((exactSize && seqlen != pycount) || (!exactSize && seqlen < pycount)) {
             Py_DECREF(seq);
             if (exactSize) {
-                PyErr_Format(PyExc_ValueError,
-                             "expecting %" PY_FORMAT_SIZE_T "d values "
-                             "got %" PY_FORMAT_SIZE_T "d",
-                             pycount, seqlen);
+                PyErr_Format(PyExc_ValueError, "expecting %ld values got %ld", pycount,
+                             seqlen);
             } else {
                 PyErr_Format(PyExc_ValueError,
-                             "too few values (%" PY_FORMAT_SIZE_T "d) expecting at "
-                             "least %" PY_FORMAT_SIZE_T "d",
-                             seqlen, pycount);
+                             "too few values (%ld) expecting at least %ld", seqlen,
+                             pycount);
             }
             return -1;
         }

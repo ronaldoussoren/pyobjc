@@ -221,24 +221,20 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
         }
 
         if (PyTuple_Size(args) < Py_SIZE(methinfo) - 1) {
-            PyErr_Format(PyExc_TypeError,
-                         "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
-                         "d",
+            PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
                          Py_SIZE(methinfo) - 1, PyTuple_Size(args));
             return NULL;
         }
 
     } else if (PyTuple_Size(args) != Py_SIZE(methinfo) - 1) {
-        PyErr_Format(PyExc_TypeError,
-                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+        PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
                      Py_SIZE(methinfo) - 1, PyTuple_Size(args));
         return NULL;
     }
 
     if (PyTuple_Size(args) > MAX_ARGCOUNT - 1) {
         PyErr_Format(PyExc_TypeError,
-                     "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
-                     "d arguments",
+                     "At most %d arguments are supported, got %ld arguments",
                      MAX_ARGCOUNT, PyTuple_Size(args));
         return NULL;
     }

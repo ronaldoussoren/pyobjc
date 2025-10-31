@@ -169,8 +169,7 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
         NSString* name;
 
         if (!PyTuple_Check(item)) {
-            PyErr_Format(PyExc_TypeError,
-                         "item %" PY_FORMAT_SIZE_T "d has type %s not tuple", i,
+            PyErr_Format(PyExc_TypeError, "item %ld has type %s not tuple", i,
                          Py_TYPE(item)->tp_name);
             Py_DECREF(seq);
             if (cfBundle != NULL)
@@ -314,8 +313,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
         PyObject* meta = NULL;
 
         if (!PyTuple_Check(item)) {
-            PyErr_Format(PyExc_TypeError,
-                         "item %" PY_FORMAT_SIZE_T "d has type %s not tuple", i,
+            PyErr_Format(PyExc_TypeError, "item %ld has type %s not tuple", i,
                          Py_TYPE(item)->tp_name);
             Py_DECREF(seq);
             if (cfBundle != NULL) {
@@ -480,8 +478,7 @@ PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unus
         PyObject* meta = NULL;
 
         if (!PyTuple_Check(item)) {
-            PyErr_Format(PyExc_TypeError,
-                         "item %" PY_FORMAT_SIZE_T "d has type %s not tuple", i,
+            PyErr_Format(PyExc_TypeError, "item %ld has type %s not tuple", i,
                          Py_TYPE(item)->tp_name);
             Py_DECREF(seq);
             return NULL;

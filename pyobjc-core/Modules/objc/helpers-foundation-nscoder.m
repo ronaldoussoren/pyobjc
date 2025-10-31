@@ -842,9 +842,7 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_(PyObject*        met
         release_view = true;
     }
     if (length > (size_t)view.len) {
-        PyErr_Format(PyExc_ValueError,
-                     "length %" PY_FORMAT_SIZE_T "d > len(buf) %" PY_FORMAT_SIZE_T "d",
-                     length, view.len);
+        PyErr_Format(PyExc_ValueError, "length %ld > len(buf) %ld", length, view.len);
         if (release_view) {
             PyBuffer_Release(&view);
         }

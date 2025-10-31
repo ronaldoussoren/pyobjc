@@ -799,8 +799,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
         if (*format == '*') {
             if (argoffset >= maxarg) {
                 PyErr_Format(PyExc_ValueError,
-                             "Too few arguments for format string [cur:%" PY_FORMAT_SIZE_T
-                             "d/len:%" PY_FORMAT_SIZE_T "d]",
+                             "Too few arguments for format string [cur:%ld/len:%ld]",
                              argoffset, maxarg);
                 Py_DECREF(encoded);
                 return -1;
@@ -835,11 +834,9 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
             if (*format == '*') {
                 format++;
                 if (argoffset >= maxarg) {
-                    PyErr_Format(
-                        PyExc_ValueError,
-                        "Too few arguments for format string [cur:%" PY_FORMAT_SIZE_T
-                        "d/len:%" PY_FORMAT_SIZE_T "d]",
-                        argoffset, maxarg);
+                    PyErr_Format(PyExc_ValueError,
+                                 "Too few arguments for format string [cur:%ld/len:%ld]",
+                                 argoffset, maxarg);
                     Py_DECREF(encoded);
                     return -1;
                 }
@@ -907,8 +904,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
 
         if (argoffset >= maxarg) {
             PyErr_Format(PyExc_ValueError,
-                         "Too few arguments for format string [cur:%" PY_FORMAT_SIZE_T
-                         "d/len:%" PY_FORMAT_SIZE_T "d]",
+                         "Too few arguments for format string [cur:%ld/len:%ld]",
                          argoffset, maxarg);
             Py_DECREF(encoded);
             return -1;
@@ -1160,9 +1156,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
     Py_DECREF(encoded);
 
     if (argoffset != maxarg) {
-        PyErr_Format(PyExc_ValueError,
-                     "Too many arguments for format string [%" PY_FORMAT_SIZE_T
-                     "d/%" PY_FORMAT_SIZE_T "d]",
+        PyErr_Format(PyExc_ValueError, "Too many arguments for format string [%ld/%ld]",
                      argoffset, maxarg);
         return -1;
     }
@@ -1183,9 +1177,8 @@ parse_varargs_array(PyObjCMethodSignature* methinfo, PyObject* const* args, size
     if (count != -1) {
         if (maxarg - argoffset != count) {
             PyErr_Format(PyExc_ValueError,
-                         "Wrong number of variadic arguments, need %" PY_FORMAT_SIZE_T
-                         "d, got %" PY_FORMAT_SIZE_T "d",
-                         count, maxarg - argoffset);
+                         "Wrong number of variadic arguments, need %ld, got %ld", count,
+                         maxarg - argoffset);
             return -1;
         }
     }
@@ -2396,11 +2389,10 @@ PyObjC_callback_function _Nullable PyObjCFFI_MakeFunctionClosure(
 
         } else {
             /* Wrong number of arguments, raise an error */
-            PyErr_Format(PyObjCExc_BadPrototypeError,
-                         "Objective-C expects %" PY_FORMAT_SIZE_T
-                         "d arguments, %R has %" PY_FORMAT_SIZE_T
-                         "d positional arguments",
-                         Py_SIZE(methinfo), callable, stubUserdata->argCount);
+            PyErr_Format(
+                PyObjCExc_BadPrototypeError,
+                "Objective-C expects %ld arguments, %R has %ld positional arguments",
+                Py_SIZE(methinfo), callable, stubUserdata->argCount);
             Py_DECREF(methinfo);
             PyMem_Free(stubUserdata);
             return NULL;
@@ -2470,17 +2462,15 @@ validate_callable_signature(PyObject* callable, SEL sel, PyObjCMethodSignature* 
         /* Wrong number of arguments, raise an error */
         if (defaultCount) {
             PyErr_Format(PyObjCExc_BadPrototypeError,
-                         "Objective-C expects %" PY_FORMAT_SIZE_T
-                         "d arguments, %R has between %" PY_FORMAT_SIZE_T
-                         "d and %" PY_FORMAT_SIZE_T "d positional arguments",
+                         "Objective-C expects %ld arguments, %R has between %ld and %ld "
+                         "positional arguments",
                          Py_SIZE(methinfo) - 2, callable, nargs - defaultCount - 1,
                          nargs - 1);
         } else {
-            PyErr_Format(PyObjCExc_BadPrototypeError,
-                         "Objective-C expects %" PY_FORMAT_SIZE_T
-                         "d arguments, %R has %" PY_FORMAT_SIZE_T
-                         "d positional arguments",
-                         Py_SIZE(methinfo) - 2, callable, nargs - 1);
+            PyErr_Format(
+                PyObjCExc_BadPrototypeError,
+                "Objective-C expects %ld arguments, %R has %ld positional arguments",
+                Py_SIZE(methinfo) - 2, callable, nargs - 1);
         }
         return -1;
     }
@@ -2646,10 +2636,10 @@ PyObjCBlockFunction _Nullable PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature*
 
     } else {
         /* Wrong number of arguments, raise an error */
-        PyErr_Format(PyObjCExc_BadPrototypeError,
-                     "Objective-C expects %" PY_FORMAT_SIZE_T
-                     "d arguments, Python argument has %d arguments for %R",
-                     Py_SIZE(methinfo) - 1, stubUserdata->argCount, callable);
+        PyErr_Format(
+            PyObjCExc_BadPrototypeError,
+            "Objective-C expects %ld arguments, Python argument has %d arguments for %R",
+            Py_SIZE(methinfo) - 1, stubUserdata->argCount, callable);
         Py_DECREF(methinfo);
         PyMem_Free(stubUserdata);
         return NULL;
@@ -2958,9 +2948,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
                 } else {
                     PyErr_Format(PyExc_ValueError,
-                                 "argument %" PY_FORMAT_SIZE_T
-                                 "d isn't allowed to be NULL",
-                                 i - argOffset);
+                                 "argument %ld isn't allowed to be NULL", i - argOffset);
                     error = -1;
                 }
 
@@ -2983,9 +2971,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
                 default:
                     PyErr_Format(PyExc_ValueError,
-                                 "argument %" PY_FORMAT_SIZE_T
-                                 "d must be None or objc.NULL",
-                                 i - argOffset);
+                                 "argument %ld must be None or objc.NULL", i - argOffset);
                     error = -1;
                 }
             }
@@ -3224,8 +3210,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                             error    = 0;
                         } else {
                             PyErr_Format(PyExc_ValueError,
-                                         "argument %" PY_FORMAT_SIZE_T
-                                         "d isn't allowed to be NULL",
+                                         "argument %ld isn't allowed to be NULL",
                                          i - argOffset);
                             error = -1;
                         }
@@ -3397,8 +3382,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
                     } else {
                         PyErr_Format(PyExc_ValueError,
-                                     "argument %" PY_FORMAT_SIZE_T
-                                     "d isn't allowed to be NULL",
+                                     "argument %ld isn't allowed to be NULL",
                                      i - argOffset);
                         error = -1;
                     }
@@ -3584,10 +3568,9 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                         *(void**)arg = NULL;
                     } else {
                         if (methinfo->argtype[i]->callable == NULL) {
-                            PyErr_Format(PyExc_TypeError,
-                                         "Argument %" PY_FORMAT_SIZE_T
-                                         "d is a block, but no signature available",
-                                         i);
+                            PyErr_Format(
+                                PyExc_TypeError,
+                                "Argument %ld is a block, but no signature available", i);
                             return -1;
                         }
                         argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(argtype));
@@ -4545,8 +4528,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
 
     if (Py_SIZE(methinfo) >= 127) {
         PyErr_Format(PyObjCExc_Error,
-                     "wrapping a function with %" PY_FORMAT_SIZE_T
-                     "d arguments, at most 126 "
+                     "wrapping a function with %ld arguments, at most 126 "
                      "are supported",
                      Py_SIZE(methinfo));
         Py_CLEAR(methinfo);
@@ -4583,25 +4565,20 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
 
         if (methinfo->null_terminated_array) {
             if (nargs < (size_t)Py_SIZE(methinfo) - 3) {
-                PyErr_Format(PyExc_TypeError,
-                             "Need %" PY_FORMAT_SIZE_T
-                             "d arguments, got %" PY_FORMAT_SIZE_T "d",
+                PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
                              Py_SIZE(methinfo) - 3, nargs);
                 goto error_cleanup;
             }
 
         } else if (nargs < (size_t)Py_SIZE(methinfo) - 2) {
-            PyErr_Format(PyExc_TypeError,
-                         "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
-                         "d",
+            PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
                          Py_SIZE(methinfo) - 2, nargs);
             goto error_cleanup;
         }
 
         if (nargs > MAX_ARGCOUNT - 1) {
             PyErr_Format(PyExc_TypeError,
-                         "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
-                         "d arguments",
+                         "At most %d arguments are supported, got %ld arguments",
                          MAX_ARGCOUNT, nargs);
             goto error_cleanup;
         }
@@ -4609,14 +4586,12 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     } else if (nargs != (size_t)Py_SIZE(methinfo) - 2) {
         if (Py_SIZE(methinfo) > MAX_ARGCOUNT) {
             PyErr_Format(PyExc_TypeError,
-                         "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
-                         "d arguments",
+                         "At most %d arguments are supported, got %ld arguments",
                          MAX_ARGCOUNT, nargs);
             goto error_cleanup;
         }
 
-        PyErr_Format(PyExc_TypeError,
-                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+        PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
                      Py_SIZE(methinfo) - 2, nargs);
         goto error_cleanup;
     }
@@ -4899,8 +4874,7 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
     resultSize = methinfo->shortcut_result_size;
 
     if (nargs != (size_t)Py_SIZE(methinfo) - 2) { /* XXX: can this underflow? */
-        PyErr_Format(PyExc_TypeError,
-                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+        PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
                      Py_SIZE(methinfo) - 1, nargs);
         goto error_cleanup;
     }
@@ -5092,8 +5066,7 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
 
     resultSize = methinfo->shortcut_result_size;
     if (unlikely(PyVectorcall_NARGS(nargsf) != Py_SIZE(methinfo) - 2)) {
-        PyErr_Format(PyExc_TypeError,
-                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+        PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
                      Py_SIZE(methinfo) - 2, PyVectorcall_NARGS(nargsf));
         goto error_cleanup;
     }

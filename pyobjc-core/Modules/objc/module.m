@@ -1419,8 +1419,7 @@ static PyObject* _Nullable _makeClosure(PyObject* self __attribute__((__unused__
         }
 
         if (methinfo->argtype[argIndex]->callable == NULL) {
-            PyErr_Format(PyExc_ValueError,
-                         "Argument %" PY_FORMAT_SIZE_T "d is not callable", argIndex);
+            PyErr_Format(PyExc_ValueError, "Argument %ld is not callable", argIndex);
             Py_CLEAR(methinfo);
             return NULL;
         }

@@ -1884,42 +1884,22 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
         if (strict) {
             if (value_size != nitems) {
                 PyErr_Format(PyExc_ValueError,
-                             "depythonifying array of %" PY_FORMAT_SIZE_T
-                             "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                             nitems, value_size);
+                             "depythonifying array of %ld items, got one of %ld", nitems,
+                             value_size);
                 return -1;
             }
 
         } else {
             if (value_size < nitems) {
                 PyErr_Format(PyExc_ValueError,
-                             "depythonifying array of %" PY_FORMAT_SIZE_T
-                             "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                             nitems, value_size);
+                             "depythonifying array of %ld items, got one of %ld", nitems,
+                             value_size);
                 return -1;
             }
         }
 
         memcpy(datum, value_bytes, nitems);
         return 0;
-#if 0
-    } else if (*type == _C_UNICHAR && PyUnicode_Check(value)) {
-        PyObject* as_utf16 = PyUnicode_AsUTF16String(value);
-        if (as_utf16 == NULL) {
-            return -1;
-        }
-        if (PyBytes_Size(as_utf16)/2-1 < nitems) {
-            PyErr_Format(PyExc_ValueError,
-                         "depythonifying unichar array of %" PY_FORMAT_SIZE_T
-                         "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                         nitems, PyBytes_Size(as_utf16)/2-1);
-            Py_CLEAR(as_utf16);
-            return -1;
-        }
-        memcpy(datum, PyBytes_AS_STRING(value) + 2, nitems*2);
-        Py_CLEAR(as_utf16);
-        return 0;
-#endif
     }
 
     seq = PyObjCSequence_Tuple(value, "depythonifying array, got no sequence");
@@ -1930,9 +1910,8 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
     if (strict) {
         if (PyTuple_GET_SIZE(seq) != nitems) {
             PyErr_Format(PyExc_ValueError,
-                         "depythonifying array of %" PY_FORMAT_SIZE_T
-                         "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                         nitems, PyTuple_GET_SIZE(seq));
+                         "depythonifying array of %ld items, got one of %ld", nitems,
+                         PyTuple_GET_SIZE(seq));
             Py_DECREF(seq);
             return -1;
         }
@@ -1940,9 +1919,8 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
     } else {
         if (PyTuple_GET_SIZE(seq) < nitems) {
             PyErr_Format(PyExc_ValueError,
-                         "depythonifying array of %" PY_FORMAT_SIZE_T
-                         "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                         nitems, PyTuple_GET_SIZE(seq));
+                         "depythonifying array of %ld items, got one of %ld", nitems,
+                         PyTuple_GET_SIZE(seq));
             Py_DECREF(seq);
             return -1;
         }
@@ -2049,9 +2027,8 @@ depythonify_c_array(const char* type, PyObject* arg, void* datum)
 
     if (nitems != PyTuple_GET_SIZE(seq)) {
         PyErr_Format(PyExc_ValueError,
-                     "depythonifying array of %" PY_FORMAT_SIZE_T
-                     "d items, got one of %" PY_FORMAT_SIZE_T "d",
-                     nitems, PyTuple_GET_SIZE(seq));
+                     "depythonifying array of %ld items, got one of %ld", nitems,
+                     PyTuple_GET_SIZE(seq));
         Py_DECREF(seq);
         return -1;
     }
@@ -2154,9 +2131,8 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
 
     if (nitems != PyTuple_GET_SIZE(seq)) {
         PyErr_Format(PyExc_ValueError,
-                     "depythonifying struct of %" PY_FORMAT_SIZE_T
-                     "d members, got tuple of %" PY_FORMAT_SIZE_T "d",
-                     nitems, PyTuple_GET_SIZE(seq));
+                     "depythonifying struct of %ld members, got tuple of %ld", nitems,
+                     PyTuple_GET_SIZE(seq));
         Py_DECREF(seq);
         return -1;
     }
@@ -2577,8 +2553,7 @@ depythonify_signed_int_value(PyObject* argument, char* descr, long long* out,
         if (PyBytes_Check(argument) || PyByteArray_Check(argument)
             || PyUnicode_Check(argument)) {
 
-            PyErr_Format(PyExc_ValueError,
-                         "depythonifying '%s', got '%s' of %" PY_FORMAT_SIZE_T "d", descr,
+            PyErr_Format(PyExc_ValueError, "depythonifying '%s', got '%s' of %ld", descr,
                          Py_TYPE(argument)->tp_name, PyObject_Size(argument));
             return -1;
         }
@@ -3289,8 +3264,8 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
             } else if (expected_size != PyBytes_Size(argument)) {
                 PyErr_Format(PyExc_ValueError,
-                             "depythonifying 'union' of size %" PY_FORMAT_SIZE_T "d, "
-                             "got byte string of %" PY_FORMAT_SIZE_T "d",
+                             "depythonifying 'union' of size %ld, "
+                             "got byte string of %ld",
                              expected_size, PyBytes_Size(argument));
                 return -1;
 

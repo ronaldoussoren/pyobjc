@@ -36,8 +36,7 @@ check_index(PyObjCVarList* self, Py_ssize_t idx)
 
     if (idx >= PY_SSIZE_T_MAX / self->itemsize) {
         /* Integer overflow, index cannot be correct */
-        PyErr_Format(PyExc_IndexError, "Index '%" PY_FORMAT_SIZE_T "d' out of range",
-                     idx);
+        PyErr_Format(PyExc_IndexError, "Index '%ld' out of range", idx);
         return -1;
     }
     return 0;
@@ -59,8 +58,7 @@ static PyObject* _Nullable varlist_as_tuple(PyObject* _self, PyObject* args,
 
     if (length >= PY_SSIZE_T_MAX / self->itemsize) {
         /* Integer overflow, index cannot be correct */
-        PyErr_Format(PyExc_OverflowError, "Index '%" PY_FORMAT_SIZE_T "d' out of range",
-                     length);
+        PyErr_Format(PyExc_OverflowError, "Index '%ld' out of range", length);
         return NULL;
     }
 
@@ -102,8 +100,7 @@ static PyObject* _Nullable varlist_as_buffer(PyObject* _self, PyObject* args,
 
     if (length >= PY_SSIZE_T_MAX / self->itemsize) {
         /* Calculating the buffer size would overflow */
-        PyErr_Format(PyExc_OverflowError, "Index '%" PY_FORMAT_SIZE_T "d' out of range",
-                     length);
+        PyErr_Format(PyExc_OverflowError, "Index '%ld' out of range", length);
 
         return NULL;
     }

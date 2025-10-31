@@ -158,8 +158,7 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
 
     if (Py_SIZE(self->methinfo) >= 63) {
         PyErr_Format(PyObjCExc_Error,
-                     "wrapping a function with %" PY_FORMAT_SIZE_T
-                     "d arguments, at most 62 "
+                     "wrapping a function with %ld arguments, at most 62 "
                      "are supported",
                      Py_SIZE(self->methinfo));
         return NULL;
@@ -184,14 +183,13 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
         }
 
         if (nargsf < (size_t)Py_SIZE(self->methinfo)) {
-            PyErr_Format(PyExc_TypeError,
-                         "Need at least %" PY_FORMAT_SIZE_T "d arguments, got %zu",
+            PyErr_Format(PyExc_TypeError, "Need at least %ld arguments, got %zu",
                          Py_SIZE(self->methinfo), nargsf);
             return NULL;
         }
 
     } else if (nargsf != (size_t)Py_SIZE(self->methinfo)) {
-        PyErr_Format(PyExc_TypeError, "Need %" PY_FORMAT_SIZE_T "d arguments, got %zu",
+        PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %zu",
                      Py_SIZE(self->methinfo), nargsf);
         return NULL;
     }
@@ -324,8 +322,7 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
     }
 
     if (unlikely(nargsf != (size_t)Py_SIZE(self->methinfo))) {
-        PyErr_Format(PyExc_TypeError,
-                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+        PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
                      Py_SIZE(self->methinfo), nargsf);
         return NULL;
     }

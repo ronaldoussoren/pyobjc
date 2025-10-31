@@ -139,8 +139,7 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* _Nullable newVal
     assert(PyObjC_StructsWritable);
 
     if (newVal == NULL) {
-        PyErr_Format(PyExc_TypeError,
-                     "Cannot delete item '%" PY_FORMAT_SIZE_T "d' in a %.100s instance",
+        PyErr_Format(PyExc_TypeError, "Cannot delete item '%ld' in a %.100s instance",
                      offset, Py_TYPE(self)->tp_name);
         return -1;
     }
@@ -877,8 +876,7 @@ struct_init(ffi_cif* cif __attribute__((__unused__)), void* retval,
         len = PyTuple_GET_SIZE(args);
         if (len > STRUCT_LENGTH(self)) {
             PyErr_Format(PyExc_TypeError,
-                         "%.100s() takes at most %" PY_FORMAT_SIZE_T
-                         "d %sarguments (%" PY_FORMAT_SIZE_T "d given)",
+                         "%.100s() takes at most %ld %sarguments (%ld given)",
                          Py_TYPE(self)->tp_name, STRUCT_LENGTH(self),
                          kwds ? "non-keyword " : "", len);
             *(int*)retval = -1;
