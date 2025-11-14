@@ -1,26 +1,20 @@
 #!/usr/bin/env python3.12
 
-import configparser
-import os
+import pathlib
 import subprocess
 
-from _common_definitions import TOP_DIR
+TOP_DIR = pathlib.Path(__file__).parent.parent
 
 
 def main() -> None:
-    for nm in sorted(os.listdir(TOP_DIR), key=lambda x: x.lower()):
-        if not nm.startswith("pyobjc-framework-"):
+    for item in TOP_DIR.iterdir():
+        if not item.name.startswith("pyobjc-framework-"):
             continue
-        if nm == "pyobjc-framework-InterfaceBuilderKit":
+        if not (item / "metadata").exists():
             continue
 
-        p = configparser.ConfigParser()
-        p.read(os.path.join(TOP_DIR, nm, "metadata", "metadata.ini"))
-        for s in p.sections():
-            subprocess.check_call(
-                ["objective-metadata-tool", "--ini-section=" + s, "compile"],
-                cwd=os.path.join(TOP_DIR, nm),
-            )
+        print(item.name)
+        subprocess.check_call(["objective-metadata-tool", "compile"], cwd=str(item))
 
 
 if __name__ == "__main__":
