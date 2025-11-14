@@ -44,6 +44,8 @@ extensions = [
     "sphinxcontrib.mermaid",
     "sphinx_reredirects",
     "sphinxext.opengraph",
+    "sphinxcontrib.jquery",
+    "sphinx_datatables",
 ]
 
 extlinks = {
@@ -264,3 +266,10 @@ ogp_site_url = "https://pyobjc.readthedocs.io/"
 ogp_image = "https://pyobjc.readthedocs.io/en/latest/_static/pyobjc-logo.jpg"
 ogp_type = "article"
 ogp_enable_meta_description = True
+
+datatables_class = "sphinx-datatable"
+datatables_options = {
+    "pageLength": -1,
+    "language": {"lengthLabels": {"-1": "Show all"}},
+    "lengthMenu": [10, 25, 50, 100, -1],
+}

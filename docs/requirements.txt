@@ -11,3 +11,4 @@ sphinx-docsearch
 sphinxcontrib-mermaid
 sphinx-reredirects
 sphinxext-opengraph[social-cards]
+sphinx-datatables
