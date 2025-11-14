@@ -215,7 +215,7 @@
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
-        "1": { "type": "@" },
+        "1": { "type": "^{__CFArray=}" },
         "2": { "type": "B" }
        },
        "retval": { "type": "B" }
@@ -229,7 +229,7 @@
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
-        "1": { "type": "@" },
+        "1": { "type": "^{__CFArray=}" },
         "2": { "type": "B" }
        },
        "retval": { "type": "B" }
@@ -243,7 +243,7 @@
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
-        "1": { "type": "@" },
+        "1": { "type": "^{__CFArray=}" },
         "2": { "type": "B" }
        },
        "retval": { "type": "B" }
@@ -257,7 +257,7 @@
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
-        "1": { "type": "@" },
+        "1": { "type": "^{__CFArray=}" },
         "2": { "type": "B" }
        },
        "retval": { "type": "B" }
@@ -1026,10 +1026,10 @@
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
-        "1": { "type": "@" },
+        "1": { "type": "^{__CFDictionary=}" },
         "2": { "type": "i" }
        },
-       "retval": { "type": "@" }
+       "retval": { "type": "^{__CFArray=}" }
       }
      }
     },
@@ -1762,7 +1762,7 @@
        "arguments": {
         "0": { "type": "^v" },
         "1": { "type": "d" },
-        "2": { "type": "L" },
+        "2": { "type": "q" },
         "3": { "type": "B" },
         "4": { "type": "o^B" }
        },
