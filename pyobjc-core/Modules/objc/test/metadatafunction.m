@@ -649,6 +649,7 @@ static struct function {
                     {"returnPointerArray", (F)returnPointerArray},
                     {"return2ndPointerArray", (F)returnPointerArray},
                     {"makeCountArrayWithObjects_", (F)makeCountArrayWithObjects_},
+                    {"makeCountArrayWithObjects2_", (F)makeCountArrayWithObjects_},
                     {"makeArrayWithObjects_", (F)makeArrayWithObjects_},
                     {"add_integers", (F)add_integers},
                     {"get_integer", (F)get_integer},

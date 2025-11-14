@@ -409,7 +409,7 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
             Py_INCREF(result);
             Py_DECREF(entry);
         }
-    }
+    } // LCOV_BR_EXCL_LINE
     if (!result)
         goto error;
 

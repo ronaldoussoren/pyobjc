@@ -1274,7 +1274,7 @@ PyObjCRT_SizeOfType(const char* start_type)
             ;
 
         /* Calculate size: */
-        while (*type != _C_UNION_E) {
+        while (*type && *type != _C_UNION_E) {
             itemSize = PyObjCRT_SizeOfType(type);
             if (itemSize == -1)
                 return -1;
@@ -1283,6 +1283,10 @@ PyObjCRT_SizeOfType(const char* start_type)
             if (type == NULL) {
                 return -1;
             }
+        }
+        if (*type != _C_UNION_E) {
+            PyErr_Format(PyObjCExc_Error, "invalid union encoding");
+            return -1;
         }
 
         return max_size;
@@ -2653,7 +2657,8 @@ depythonify_python_object(PyObject* argument, id* datum)
             *datum = [NSNumber numberWithBool:NO];
         }
 
-    } else if (PyFloat_CheckExact(argument) || PyLong_CheckExact(argument)) {
+    } else if (PyFloat_CheckExact(argument) || PyLong_CheckExact(argument)
+               || Py_TYPE(argument) == &PyBool_Type) {
         *datum = [OC_BuiltinPythonNumber numberWithPythonObject:argument];
 
     } else if (PyFloat_Check(argument) || PyLong_Check(argument)) {

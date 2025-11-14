@@ -570,6 +570,11 @@ class TestStructs(TestCase):
             with self.assertRaisesRegex(
                 IndexError, "cannot fit 'int' into an index-sized integer"
             ):
+                v[2**128]
+
+            with self.assertRaisesRegex(
+                IndexError, "cannot fit 'int' into an index-sized integer"
+            ):
                 v[2**68]
 
             self.assertEqual(v[2**68 :], ())

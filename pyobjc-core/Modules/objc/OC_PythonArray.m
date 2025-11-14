@@ -370,15 +370,10 @@ NS_ASSUME_NONNULL_BEGIN
                     } // LCOV_EXCL_LINE
                 }
 
-                /* XXX: Can this every be true? */
-                if (PyTuple_GET_ITEM(value, i) != NULL) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    /* use temporary object to avoid race condition */
-                    PyObject* t = PyTuple_GET_ITEM(value, i);
-                    PyTuple_SET_ITEM(value, i, NULL);
-                    Py_DECREF(t);
-                    // LCOV_EXCL_STOP
-                } // LCOV_EXCL_LINE
+                /* use temporary object to avoid race condition */
+                PyObject* t = PyTuple_GET_ITEM(value, i);
+                PyTuple_SET_ITEM(value, i, NULL);
+                Py_XDECREF(t);
                 PyTuple_SET_ITEM(value, i, v);
             }
         } else {
@@ -418,8 +413,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
-        /* XXX: What if "other" cannot be proxied? */
         PyObject* v = id_to_python(other);
+        if (v == NULL) {              // LCOV_BR_EXCL_LINE
+            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+        }
         SET_FIELD(value, v);
 
     PyObjC_END_WITH_GIL

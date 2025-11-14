@@ -506,7 +506,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                 break;
             }
         } // LCOV_BR_EXCL_LINE
-    }
+    } // LCOV_BR_EXCL_LINE
 
     if (result != NULL) {
         if (!PyObjCSelector_Check(result)) {

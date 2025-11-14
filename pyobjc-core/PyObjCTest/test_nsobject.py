@@ -73,6 +73,45 @@ class Py_DeallocReturns(NSObject):
         return 42
 
 
+class OC_WithProperty(NSObject):
+    @property
+    def value(self):
+        return self._value + 4
+
+    def init(self):
+        self = super().init()
+        if self is None:
+            return None
+
+        self._value = 9
+        return self
+
+    @property
+    def value2(self):
+        return self._value * 2
+
+    @value2.setter
+    def value2(self):
+        raise RuntimeError("cannot set")
+
+
+class Py_WithProperty:
+    def __init__(self):
+        self._value = 9
+
+    @property
+    def value(self):
+        return self._value + 4
+
+    @property
+    def value2(self):
+        return self._value * 2
+
+    @value2.setter
+    def value2(self):
+        raise RuntimeError("cannot set")
+
+
 class TestNSObjectSupport(TestCase):
     def test_invalid_alloc(self):
         with self.assertRaisesRegex(TypeError, ".*expected no arguments, got 1"):
@@ -262,6 +301,25 @@ class TestNSObjectSupport(TestCase):
         self.assertIn("Exception during dealloc of proxy: ", capture)
         self.assertIn("PyObjCTest.test_nsobject.SomeException", capture)
 
+    def test_getting_property(self):
+        with self.subTest("Objective-C"):
+            o = OC_WithProperty.alloc().init()
+            self.assertEqual(o.value, 9 + 4)
+            self.assertEqual(o.value2, 9 * 2)
+
+            o.__dict__["value"] = 40
+            self.assertEqual(o.value, 9 + 4)
+            self.assertEqual(o.value2, 9 * 2)
+
+        with self.subTest("Python"):
+            o = Py_WithProperty()
+            self.assertEqual(o.value, 9 + 4)
+            self.assertEqual(o.value2, 9 * 2)
+
+            o.__dict__["value"] = 40
+            self.assertEqual(o.value, 9 + 4)
+            self.assertEqual(o.value2, 9 * 2)
+
 
 class MemoryManagedThroughIMPs(TestCase):
     def test_retain_release(self):
@@ -291,6 +349,28 @@ class MemoryManagedThroughIMPs(TestCase):
         v = OC_SuperThroughIMP.alloc().init()
         del v
         self.assertEqual(cnt, 1)
+
+    def test_del_resolving_fails(self):
+        o = NSObject.alloc().init()
+        with self.assertRaisesRegex(
+            AttributeError, "'NSObject' object has no attribute '__del__'"
+        ):
+            o.__del__
+
+    def test_class_resolving_fails(self):
+        o = NSObject.alloc().init()
+        with self.assertRaisesRegex(
+            AttributeError, "'NSObject' object has no attribute 'alloc'"
+        ):
+            o.alloc
+
+        o = Py_RefCountRaises.alloc().init()
+        with self.assertRaisesRegex(
+            AttributeError, "'Py_RefCountRaises' object has no attribute 'alloc'"
+        ):
+            o.alloc
+        o.alloc = Py_RefCountRaises.alloc
+        self.assertEqual(o.alloc, Py_RefCountRaises.alloc)
 
 
 class TestVirtualSelector(TestCase):

@@ -1015,7 +1015,13 @@ class TestBlocks(TestCase):
             sig, (objc._C_DBL, objc._C_ID + b"?", objc._C_DBL, objc._C_DBL)
         )
 
+        float_sig = block.__block_signature__
+
         block = obj.getStructBlock()
+
+        with self.assertRaisesRegex(objc.error, "Cannot reset __block_signature__"):
+            block.__block_signature__ = float_sig
+
         sig = objc.splitSignature(objc._block_signature(block))
         self.assertEqual(
             sig,

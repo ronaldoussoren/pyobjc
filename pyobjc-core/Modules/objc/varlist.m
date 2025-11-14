@@ -215,7 +215,7 @@ varlist__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop,
             result = -1;
             break;
         }
-    }
+    } // LCOV_BR_EXCL_LINE
     Py_END_CRITICAL_SECTION();
     Py_DECREF(seq);
     return result;
@@ -472,7 +472,7 @@ PyObjCVarList_New(const char* tp, void* array)
     (void)PyObject_Init((PyObject*)result, (PyTypeObject*)PyObjCVarList_Type);
     result->array    = array;
     result->itemsize = PyObjCRT_AlignedSize(tp);
-    if (unlikely(result->itemsize == -1)) {
+    if (unlikely(result->itemsize == -1)) { // LCOV_BR_EXCL_LINE
         /* Should never happen, type is already validated */
         // LCOV_EXCL_START
         Py_DECREF(result);

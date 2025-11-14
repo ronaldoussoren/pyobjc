@@ -28,6 +28,16 @@ _FunctionTable = [
         },
     ),
     (
+        "makeCountArrayWithObjects2_",
+        b"@^Q@",
+        "",
+        {
+            "variadic": True,
+            "c_array_delimited_by_null": True,
+            "arguments": {0: {"type_modifier": b"N"}},
+        },
+    ),
+    (
         "makeArrayWithFormat_",
         b"@@",
         "",
@@ -917,6 +927,11 @@ class TestByReference(TestCase):
             TypeError, "variadic with by-ref args not supported"
         ):
             makeCountArrayWithObjects_(None, 1, "b", 3)  # noqa: F821
+
+        with self.assertRaisesRegex(
+            TypeError, "variadic with by-ref args not supported"
+        ):
+            makeCountArrayWithObjects2_(None, 1, "b", 3)  # noqa: F821
 
     def test_variadic_null_delimited(self):
         v = makeArrayWithObjects_(1, "b", 3)  # noqa: F821

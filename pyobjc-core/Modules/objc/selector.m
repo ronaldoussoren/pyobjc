@@ -60,8 +60,8 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
      * objects).
      */
 
-    PyObjCMethodSignature* to_clear = NULL;
-    result                          = PyObjCMethodSignature_ForSelector(
+    PyObjCMethodSignature* to_clear;
+    result = to_clear = PyObjCMethodSignature_ForSelector(
         self->sel_class, (self->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
         self->sel_selector, self->sel_python_signature, PyObjCNativeSelector_Check(self));
 
@@ -75,12 +75,11 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
         self->sel_methinfo     = result;
         self->sel_mappingcount = PyObjC_MappingCount;
 #ifdef Py_GIL_DISABLED
-    } else {
-        to_clear = result;
+        to_clear = NULL;
     }
+    result = self->sel_methinfo;
 #endif
 
-    result = self->sel_methinfo;
     Py_INCREF(result);
 
     Py_END_CRITICAL_SECTION();

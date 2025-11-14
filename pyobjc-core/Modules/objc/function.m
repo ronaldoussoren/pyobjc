@@ -1,10 +1,6 @@
 /*
  * Wrapper for simple global functions. Simple functions are those without
  * arguments that require additional effort.
- *
- * TODO:
- * - Cache FFI for non-variadic functions (calculate on first call)
- * - "Simple" variant
  */
 #include "pyobjc.h"
 
@@ -297,9 +293,7 @@ static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* 
 
     assert(self->methinfo->shortcut_signature);
 
-    if (unlikely(kwnames != NULL
-                 && (PyTuple_CheckExact(kwnames) && PyTuple_GET_SIZE(kwnames) != 0))) {
-        PyErr_Format(PyExc_TypeError, "%R does not accept keyword arguments", s);
+    if (PyObjC_CheckNoKwnames(s, kwnames) == -1) {
         return NULL;
     }
 

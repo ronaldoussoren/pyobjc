@@ -913,6 +913,27 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     }
 }
 
+struct float_values {
+    double a;
+    double b;
+    double c;
+    double d;
+    double e;
+    double f;
+    double g;
+    double h;
+};
+- (double)sumA:(struct float_values)a
+             B:(struct float_values)b
+             C:(struct float_values)c
+             D:(struct float_values)d
+             E:(struct float_values)e
+             F:(struct float_values)f
+{
+    _Static_assert(sizeof(struct float_values) * 6 > 256, "too small");
+    return a.a + b.b + c.c + d.d + e.e + f.f;
+}
+
 @end
 
 /*

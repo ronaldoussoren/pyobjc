@@ -23,6 +23,12 @@ NSInvocation = objc.lookUpClass("NSInvocation")
 NSArray = objc.lookUpClass("NSArray")
 NSString = objc.lookUpClass("NSString")
 
+# This metata will be ignored, overriding return value 'double'
+# with a much smaller type ('char')
+objc.registerMetaDataForSelector(
+    b"OC_TestClass1", b"sumA:B:C:D:E:F:", {"retval": {"type": b"c"}}
+)
+
 
 class OCTestRegrWithGetItem(NSObject):
     def objectForKey_(self, k):
@@ -422,6 +428,24 @@ class TestTypedefedClass(TestCase):
 
         o = v.parent()
         self.assertIsInstance(o, objc.lookUpClass("NSArray"))
+
+
+class TestLargeSimpleMethod(TestCase):
+    def test_large_but_simple_signature(self):
+        o = OC_TestClass1.alloc().init()
+
+        a = (1.0,) * 8
+        b = (2.0,) * 8
+        c = (3.0,) * 8
+        d = (4.0,) * 8
+        e = (5.0,) * 8
+        f = (6.0,) * 8
+
+        self.assertEqual(
+            o.sumA_B_C_D_E_F_(a, b, c, d, e, f), 1.0 + 2.0 + 3.0 + 4.0 + 5.0 + 6.0
+        )
+
+        self.assertResultHasType(o.sumA_B_C_D_E_F_, objc._C_DBL)
 
 
 class TestReboundMethod(TestCase):
@@ -871,6 +895,9 @@ class TestMisCConversions(TestCase):
         ):
             objc.repythonify(inval[:-1], b"(p=fi)")
 
+        with self.assertRaisesRegex(objc.error, "invalid union encoding"):
+            objc.repythonify(inval, b"(p=fi")
+
     def test_vector(self):
         out = objc.repythonify((42,) * 4, b"<4i>")
         self.assertEqual(out, objc.simd.vector_int4(42, 42, 42, 42))
@@ -880,17 +907,28 @@ class TestMisCConversions(TestCase):
 
     def test_float(self):
         for encoding in (objc._C_FLT, objc._C_DBL, objc._C_LNG_DBL):
-            self.assertEqual(objc.repythonify(2.5, encoding), 2.5)
+            with self.subTest(encoding=encoding):
+                self.assertEqual(objc.repythonify(2.5, encoding), 2.5)
 
-            f = fractions.Fraction(1, 2)
-            self.assertEqual(float(f), 0.5)
+                f = fractions.Fraction(1, 2)
+                self.assertEqual(float(f), 0.5)
 
-            self.assertEqual(objc.repythonify(f, encoding), 0.5)
+                self.assertEqual(objc.repythonify(f, encoding), 0.5)
 
-            with self.assertRaisesRegex(
-                ValueError, "depythonifying '[a-z ]*', got 'str'"
-            ):
-                objc.repythonify("2.5", encoding)
+                with self.assertRaisesRegex(
+                    ValueError, "depythonifying '[a-z ]*', got 'str'"
+                ):
+                    objc.repythonify("2.5", encoding)
+
+                with self.assertRaisesRegex(
+                    OverflowError, "int too large to convert to float"
+                ):
+                    objc.repythonify(2**10000, encoding)
+
+                with self.assertRaisesRegex(
+                    ValueError, "depythonifying '.*', got 'object'"
+                ):
+                    objc.repythonify(object(), encoding)
 
 
 class TestConvertNegativeToUnsigedWarns(TestCase):

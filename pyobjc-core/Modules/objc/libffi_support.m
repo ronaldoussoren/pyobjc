@@ -2933,18 +2933,12 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
             } else if (argument == PyObjC_NULL) {
                 if (methinfo->argtype[i]->allowNULL) {
-                    if (unlikely(byref == NULL)) {
-                        /* XXX: internal error */
-                        PyErr_SetString(PyExc_TypeError, "byref == NULL");
-                        error = -1;
-                    } else {
+                    assert(byref != NULL);
+                    byref[i]   = NULL;
+                    arglist[i] = &ffi_type_pointer;
+                    values[i]  = byref + i;
 
-                        byref[i]   = NULL;
-                        arglist[i] = &ffi_type_pointer;
-                        values[i]  = byref + i;
-
-                        error = 0;
-                    }
+                    error = 0;
 
                 } else {
                     PyErr_Format(PyExc_ValueError,
@@ -3297,7 +3291,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                         PyErr_NoMemory();
                                         error = -1;
                                         // LCOV_EXCL_STOP
-                                    } else {
+                                    } else { // LCOV_EXCL_LINE
                                         memcpy(byref[i], PyBytes_AsString(as_utf16) + 2,
                                                PyBytes_Size(as_utf16) - 2);
                                         *(unichar*)(((char*)byref[i])
@@ -3348,7 +3342,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                          methinfo->argtype[i]->ptrType);
                             error = -1;
                             // LCOV_EXCL_STOP
-                        }
+                        } // LCOV_EXCL_LINE
                     }
 
                     arglist[i] = &ffi_type_pointer;

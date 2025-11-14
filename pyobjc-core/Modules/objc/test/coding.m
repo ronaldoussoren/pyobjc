@@ -16,6 +16,7 @@
 + (double)fetchDouble:(NSCoder*)coder;
 + (NSObject*)fetchData:(NSCoder*)coder;
 + (NSArray*)fetchArray:(NSCoder*)coder;
++ (bool)classSupportsSecureCoding:(id)value;
 @end
 
 @interface NSObject (IKnowWhatImDoing)
@@ -121,6 +122,11 @@
 + (NSString*)fetchObjectDescription:(NSObject*)value
 {
     return [value description];
+}
+
++ (bool)classSupportsSecureCoding:(id)value
+{
+    return [[value class] supportsSecureCoding];
 }
 
 @end

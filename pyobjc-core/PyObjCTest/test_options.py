@@ -609,7 +609,13 @@ class TestOptions(TestCase):
         orig_date_types = objc.options._date_types
         orig_path_types = objc.options._path_types
 
-        for nm in ("_mapping_types", "_sequence_types"):
+        for nm in (
+            "_mapping_types",
+            "_sequence_types",
+            "_set_types",
+            "_date_types",
+            "_path_types",
+        ):
             try:
                 setattr(objc.options, nm, 42)
 

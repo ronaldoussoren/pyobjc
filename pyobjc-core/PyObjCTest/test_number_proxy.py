@@ -19,6 +19,8 @@ from PyObjCTest.objectint import OC_ObjectInt
 from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
 from PyObjCTest.test_object_proxy import NoObjectiveC
 
+from .coding import PyObjC_TestCodingClass
+
 OC_PythonNumber = objc.lookUpClass("OC_PythonNumber")
 OC_BuiltinPythonNumber = objc.lookUpClass("OC_BuiltinPythonNumber")
 NSDecimalNumber = objc.lookUpClass("NSDecimalNumber")
@@ -480,6 +482,7 @@ class TestPyNumber(TestCase):
         # Ensure that python numbers are proxied using the right proxy type
         for v in (0, 1, 2**32 + 1, 2**64 + 1, 42.5):
             self.assertIs(OC_NumberInt.numberClass_(v), OC_BuiltinPythonNumber)
+            self.assertTrue(PyObjC_TestCodingClass.classSupportsSecureCoding_(v))
 
         # The booleans True and False must be proxied as the corresponding
         # NSNumber constants, otherwise lowlevel Cocoa/CoreFoundation code
@@ -838,6 +841,7 @@ class TestPyNumber(TestCase):
             pass
 
         self.assertIs(OC_NumberInt.numberClass_(myint(1)), OC_PythonNumber)
+        self.assertFalse(PyObjC_TestCodingClass.classSupportsSecureCoding_(myint(1)))
 
 
 class TestInteractions(TestCase):

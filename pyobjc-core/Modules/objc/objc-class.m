@@ -1935,11 +1935,12 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
                 @try {
                     m = class_getInstanceMethod(cls, sel);
 
-                } @catch (NSObject* localException) {
-                    /* Annoyingly enough this can result in callbacks to ObjC
-                     * that can raise an exception.
+                } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+                    /* According to the ObjC runtime sources the
+                     * function cannot raise. Keep the catch block
+                     * around just in case...
                      */
-                    m = NULL;
+                    m = NULL; // LCOV_EXCL_LINE
                 }
             Py_END_ALLOW_THREADS
 
@@ -2243,7 +2244,7 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
             }
             PyErr_Clear();
             // LCOV_EXCL_STOP
-        } // LCOV_BR_EXCL_LINE
+        } // LCOV_EXCL_LINE
     } // LCOV_BR_EXCL_LINE
 done:
     Py_CLEAR(descr);

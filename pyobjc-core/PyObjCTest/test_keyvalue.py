@@ -45,6 +45,7 @@ from PyObjCTest.keyvaluehelper import (
 )
 from .objectint import OC_ObjectInt
 from .test_metadata import NoObjCClass
+from .keyvalue import OC_RaisingKVC
 
 # Native code is needed to access the python class from Objective-C, otherwise
 # the Key-Value support cannot be tested.
@@ -754,6 +755,7 @@ if PyObjCTest_KeyValueObserver is not None:
             with objc.autorelease_pool():
                 observer = PyObjCTestObserver.alloc().init()
                 o = PyObjCTestObserved2.alloc().init()
+                self.assertIs(o.pyobjc_ISA, PyObjCTestObserved2)
                 with objc.autorelease_pool():
                     self.assertEqual(o.foo, None)
                     self.assertEqual(o.bar, None)
@@ -770,6 +772,7 @@ if PyObjCTest_KeyValueObserver is not None:
                         (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
                         0,
                     )
+                    self.assertIsNot(o.pyobjc_ISA, PyObjCTestObserved2)
                     o.addObserver_forKeyPath_options_context_(
                         observer,
                         "foo",
@@ -1071,3 +1074,33 @@ class TestKeyValueObjC(TestCase):
             KeyError, "this class is not key value coding-compliant for the key b."
         ):
             OC_ObjectInt.valueForKey_of_("b", o)
+
+
+class OC_PyRaisingKVC(OC_RaisingKVC):
+    pass
+
+
+class TestRaisingNotifications(TestCase):
+    def test_will_change_raises_no_key(self):
+        o = OC_RaisingKVC.alloc().init()
+        o.setScenario_(1)
+        with self.assertRaisesRegex(objc.error, "willchange"):
+            o.key = 42
+
+    def test_will_change_raises_no_key2(self):
+        o = OC_PyRaisingKVC.alloc().init()
+        o.key = 21
+        o.setScenario_(1)
+        with self.assertRaisesRegex(objc.error, "willchange"):
+            o.key = 42
+
+        self.assertEqual(o.key, 21)
+
+    def test_did_change_raises_no_key(self):
+        o = OC_PyRaisingKVC.alloc().init()
+        o.key = 21
+        o.setScenario_(2)
+        with self.assertRaisesRegex(objc.error, "didchange"):
+            o.key = 42
+
+        self.assertEqual(o.key, 42)

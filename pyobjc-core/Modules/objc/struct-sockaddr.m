@@ -157,7 +157,6 @@ PyObjC_SockAddrToPython(const void* value)
     }
 
     case AF_UNIX: {
-        /* XXX: Check for correctness */
         struct sockaddr_un* a = (struct sockaddr_un*)value;
         return PyUnicode_DecodeFSDefault(a->sun_path);
     }
@@ -195,7 +194,9 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             return -1;
             // LCOV_EXCL_STOP
         }
-        /* XXX: Check for correctless (NUL byte at end, embedded NUL?) */
+        /* XXX: Needs more work to support sockaddr_un arguments
+         *      with a longer path.
+         */
         if (len >= (Py_ssize_t)sizeof(addr->sun_path) - 1) {
             PyErr_SetString(PyExc_OSError, "AF_UNIX path too long");
             Py_DECREF(value);

@@ -137,14 +137,14 @@ class TestHiddenSelector(TestCase):
         self.assertIn("boolMethod", o.pyobjc_instanceMethods.__dict__)
 
     def testHiddenCanBeIntrospected(self):
-        # XXX: This test fails, and will also fail in versions
-        #      before 9.1. It would be better if the test didn't
-        #      fail though...
         o = OCTestHidden.alloc().init()
         m = o.pyobjc_instanceMethods.body
         self.assertIsInstance(m, objc.selector)
         self.assertNotIsInstance(m, objc.native_selector)
         self.assertTrue(m.isHidden)
+
+        self.assertNotIn("body", dir(o))
+        self.assertIn("init", dir(o))
 
     def testHiddenInSetupHook(self):
         o = OCTestHidden.alloc().init()
