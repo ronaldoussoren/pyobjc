@@ -496,7 +496,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MetalKit </apinotes/MetalKit>`                                                 | `pyobjc-framework-MetalKit`_                         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| MetalPerformancePrimitives                                                           | -                                                    | Low-level C++ API                          |
+| MetalPerformancePrimitives                                                           | -                                                    | Low-level C++ API                       |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MetalPerformanceShaders </apinotes/MetalPerformanceShaders>`                   | `pyobjc-framework-MetalPerformanceShaders`_          |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -942,4 +942,4 @@ prioritizing work.
 .. _`pyobjc-framework-MediaExtension`: https://pypi.org/project/pyobjc-framework-MediaExtension/
 .. _`pyobjc-framework-Carbon`: https://pypi.org/project/pyobjc-framework-Carbon/
 .. _`pyobjc-framework-ARKit`: https://pypi.org/project/pyobjc-framework-ARKit/
-.. _`pyobjc-framework-CompositorServices`: https://pypi.org/project/pyobjc-framework-CompositorServices/
+.. _`pyobjc-framewor-CompositorServices`: https://pypi.org/project/pyobjc-framewor-CompositorServices/
