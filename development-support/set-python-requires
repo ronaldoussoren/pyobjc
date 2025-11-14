@@ -1,0 +1,76 @@
+#!/usr/bin/env python3.13
+"""
+Helper script to set the "python-requires" metadata in
+PyObjC's distribution PKGINFO to the correct value.
+
+The script also updates the pre-commit configuration.
+"""
+
+import pathlib
+import sys
+import re
+
+ROOT = pathlib.Path(__file__).parent.parent
+
+
+def update_precommit(version):
+    data = (ROOT / ".pre-commit-config.yaml").read_text()
+    data = re.sub(r"--py3\d\d-plus", f"--py{version.replace('.', '')}-plus", data)
+
+    (ROOT / ".pre-commit-config.yaml").write_text(data)
+
+
+def update_pyobjc(version):
+    lines = []
+    with open(ROOT / "pyobjc/setup.py") as stream:
+        for ln in stream:
+            if "python_requires=" in ln:
+                start, _, end = ln.partition(">=")
+
+                lines.append(f'{start}>={version}",\n')
+            else:
+                lines.append(ln)
+    with open(ROOT / "pyobjc/setup.py", "w") as stream:
+        for ln in lines:
+            stream.write(ln)
+            stream.write(ln)
+
+
+def update_setup_py(path, version):
+    lines = []
+    with open(path) as stream:
+        for ln in stream:
+            if ln.startswith("python_requires"):
+                lines.append(f"python_requires = >={version}\n")
+            else:
+                lines.append(ln)
+
+    with open(path) as stream:
+        for ln in lines:
+            stream.write(ln)
+
+
+def update_pyobjc_core(version):
+    update_setup_py(ROOT / "pyobjc-core/setup.cfg", version)
+
+
+def update_pyobjc_frameworks(version):
+    for fn in ROOT.glob("**/pyobjc_setup.py"):
+        update_setup_py(fn, version)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print(f"Usage: {sys.argv[0]} VERSION", file=sys.stderr)
+        sys.exit(1)
+
+    version = sys.argv[1]
+    update_precommit(version)
+    update_pyobjc(version)
+    update_pyobjc_core(version)
+    update_pyobjc_frameworks(version)
+
+    print("Sources updated")
+    print("")
+    print("Manually update docs/index.rst and docs/supported-versions.rst")
+    print("Run 'pre-commit run --all-files before committing")
