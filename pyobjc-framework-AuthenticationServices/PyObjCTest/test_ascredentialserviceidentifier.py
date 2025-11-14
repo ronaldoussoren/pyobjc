@@ -11,3 +11,4 @@ class TestASCredentialServiceIdentifier(TestCase):
             AuthenticationServices.ASCredentialServiceIdentifierTypeDomain, 0
         )
         self.assertEqual(AuthenticationServices.ASCredentialServiceIdentifierTypeURL, 1)
+        self.assertEqual(AuthenticationServices.ASCredentialServiceIdentifierTypeApp, 2)

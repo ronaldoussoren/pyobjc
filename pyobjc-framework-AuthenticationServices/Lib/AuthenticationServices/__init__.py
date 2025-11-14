@@ -97,6 +97,8 @@ def _setup():
         ("ASAuthorizationPublicKeyCredentialLargeBlobAssertionOutput", b"new"),
         ("ASAuthorizationPublicKeyCredentialParameters", b"init"),
         ("ASAuthorizationPublicKeyCredentialParameters", b"new"),
+        ("ASGeneratedPassword", b"init"),
+        ("ASGeneratedPassword", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

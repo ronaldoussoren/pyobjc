@@ -3,6 +3,22 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 12.2
+------------
+
+* Update framework bindings for macOS 26.2 SDK
+
+* The following code failed at the last line in previous versions:
+
+  .. sourcecode:: python
+
+     class MyObject(NSObject):
+         pass
+
+     obj = MyObject()
+     obj.alloc = MyObject.alloc
+     print(obj.alloc) # Raised AttributeError
+
 Version 12.1
 ------------
 

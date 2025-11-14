@@ -73,3 +73,9 @@ class TestGKAccessPoint(TestCase):
         self.assertArgIsBlock(
             GameKit.GKAccessPoint.triggerAccessPointForFriendingWithHandler_, 0, b"v"
         )
+
+    @min_os_level("26.2")
+    def test_methods26_2(self):
+        self.assertArgIsBlock(
+            GameKit.GKAccessPoint.triggerAccessPointForArcadeWithHandler_, 0, b"v"
+        )

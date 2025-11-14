@@ -53,4 +53,8 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(GCPhysicalInputSource));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 2602
+    p = PyObjC_IdToPython(@protocol(GCPhysicalInputExtents));
+    Py_XDECREF(p);
+#endif
 }
