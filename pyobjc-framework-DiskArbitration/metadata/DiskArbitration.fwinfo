@@ -413,7 +413,8 @@
         }
        ],
        "retval": {
-        "typestr": "^{__DADissenter=}"
+        "typestr": "^{__DADissenter=}",
+        "already_cfretained": true
        }
       }
      },
@@ -436,7 +437,8 @@
         }
        ],
        "retval": {
-        "typestr": "^{__DADissenter=}"
+        "typestr": "^{__DADissenter=}",
+        "already_cfretained": true
        }
       }
      },
@@ -482,7 +484,8 @@
         }
        ],
        "retval": {
-        "typestr": "^{__DADissenter=}"
+        "typestr": "^{__DADissenter=}",
+        "already_cfretained": true
        }
       }
      },

@@ -19,6 +19,13 @@ Version 12.2
      obj.alloc = MyObject.alloc
      print(obj.alloc) # Raised AttributeError
 
+* :issue:`663`: Fix retain count management for the callbacks registered
+  with :func:`DARegisterDiskEjectApprovalCallback <DiskArbitration.DARegisterDiskEjectApprovalCallback>`,
+  :func:`DARegisterDiskMountApprovalCallback <DiskArbitration.DARegisterDiskMountApprovalCallback>`, and
+  :func:`DARegisterDiskUnmountApprovalCallback <DiskArbitration.DARegisterDiskUnmountApprovalCallback>` in
+  :doc:`DiskArbitration </apinotes/DiskArbitration>` bindings.
+
+
 Version 12.1
 ------------
 

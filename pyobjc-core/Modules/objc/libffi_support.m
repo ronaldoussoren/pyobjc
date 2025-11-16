@@ -1580,6 +1580,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                             Py_DECREF(res);
                             goto error;
                         }
+                        if (methinfo->rettype->alreadyCFRetained) {
+                            CFRetain(*(id*)resp);
+                        }
+                        if (methinfo->rettype->alreadyRetained) {
+                            [*(id*)resp retain];
+                        }
                         break;
 
                     case PyObjC_kFixedLengthArray:
@@ -1863,6 +1869,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         if (err == -1) {
                             Py_DECREF(res);
                             goto error;
+                        }
+                        if (methinfo->rettype->alreadyCFRetained) {
+                            CFRetain(*(id*)resp);
+                        }
+                        if (methinfo->rettype->alreadyRetained) {
+                            [*(id*)resp retain];
                         }
                         break;
 
