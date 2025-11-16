@@ -32,6 +32,9 @@ Version 12.1
 * :issue:`661`: 12.0 incorrectly has support for Python 3.9 in
   packaging metadata.
 
+  Because of this the 12.0 release has been yanked for
+  the packages ``pyobjc`` and ``pyobjc-core`` on PyPI.
+
 * Update framework bindings for the macOS 26.1 SDK
 
 * Instances of :type:`bytearray` can be used as the argument for
