@@ -82,7 +82,6 @@ PyObject* _Nullable PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL class
             }
         }
     }
-
     return NULL;
 }
 
@@ -1888,10 +1887,20 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
                     continue;
 #endif
 
+                PyObject* hidden = PyObjCClass_HiddenSelector((PyObject*)tp, sel, NO);
+                if (hidden == NULL && PyErr_Occurred()) {
+                    Py_CLEAR(mro);
+                    return NULL;
+                } else if (hidden) {
+                    Py_CLEAR(mro);
+                    return NULL;
+                }
+
                 /* Create (unbound) selector */
                 const char* encoding = method_getTypeEncoding(m);
                 if (encoding == NULL) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
+                    Py_CLEAR(mro);
                     PyErr_SetString(PyObjCExc_Error, "Native method with NIL selector");
                     return NULL;
                     // LCOV_EXCL_STOP
@@ -1986,14 +1995,26 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
             }
 
             if (same) {
+                PyObject* hidden =
+                    PyObjCClass_HiddenSelector((PyObject*)tp, method_getName(m), NO);
+                if (hidden == NULL && PyErr_Occurred()) {
+                    Py_CLEAR(mro);
+                    free(methods);
+                    return NULL;
+                } else if (hidden) {
+                    Py_CLEAR(mro);
+                    free(methods);
+                    return NULL;
+                }
+
                 /* Create (unbound) selector */
                 const char* encoding = method_getTypeEncoding(m);
                 if (encoding == NULL) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     PyErr_SetString(PyObjCExc_Error,
                                     "Native selector with Nil type encoding");
-                    free(methods);
                     Py_DECREF(mro);
+                    free(methods);
                     return NULL;
                     // LCOV_EXCL_STOP
                 }
@@ -2002,6 +2023,7 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
                 if (result == NULL) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_DECREF(mro);
+                    free(methods);
                     return NULL;
                     // LCOV_EXCL_STOP
                 }
@@ -2011,6 +2033,7 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
                     // LCOV_EXCL_START
                     Py_DECREF(result);
                     Py_DECREF(mro);
+                    free(methods);
                     return NULL;
                     // LCOV_EXCL_STOP
                 }
@@ -2234,6 +2257,9 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
                                 "Assigning native selectors is not supported");
                 return -1;
             }
+            res = PyType_Type.tp_setattro(self, name, value);
+            Py_CLEAR(value);
+            return res;
 
         } else if (((PyObjCClassObject*)self)->isCFWrapper) {
             /* This is a wrapper class for a CoreFoundation type
@@ -2720,8 +2746,8 @@ static PyObject* _Nullable meth_dir(PyObject* self)
             PyObject* item;
 
             /* Check if the selector should be hidden */
-            PyObject* hidden = PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self),
-                                                          method_getName(methods[i]), NO);
+            PyObject* hidden =
+                PyObjCClass_HiddenSelector(self, method_getName(methods[i]), NO);
             if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(methods);

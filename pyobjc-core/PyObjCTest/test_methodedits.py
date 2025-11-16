@@ -394,6 +394,12 @@ class TestClassAsignments(TestCase):
     def testSettingNativeSelector(self):
         theClass = NSObject
 
+        # XXX: Needed due to unexpected behaviour
+        #      Issue: #664
+        theClass = objc.lookUpClass("NSURL")
+
+        o = theClass.alloc().init()
+
         with self.assertRaisesRegex(
             TypeError, "Assigning native selectors is not supported"
         ):
@@ -401,6 +407,8 @@ class TestClassAsignments(TestCase):
 
         theClass.selectorAlias = objc.python_method(theClass.description)
         self.assertEqual(theClass.selectorAlias(), theClass.description())
+
+        print(o.description)
 
 
 class TestCategory(TestCase):

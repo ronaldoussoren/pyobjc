@@ -268,13 +268,13 @@ class TestGettingIMPs(TestCase):
 
     def test_not_found(self):
         o = NSMutableArray.alloc().init()
-        with self.assertRaisesRegex(AttributeError, "No selector doesnotexist"):
+        with self.assertRaisesRegex(AttributeError, "No attribute doesnotexist"):
             o.methodForSelector_(b"doesnotexist")
 
-        with self.assertRaisesRegex(AttributeError, "No selector doesnotexist"):
+        with self.assertRaisesRegex(AttributeError, "No attribute doesnotexist"):
             NSMutableArray.instanceMethodForSelector_(b"doesnotexist")
 
-        with self.assertRaisesRegex(AttributeError, "No selector doesnotexist"):
+        with self.assertRaisesRegex(AttributeError, "No attribute doesnotexist"):
             NSMutableArray.methodForSelector_(b"doesnotexist")
 
     def test_python_selector(self):

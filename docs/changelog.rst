@@ -25,6 +25,13 @@ Version 12.2
   :func:`DARegisterDiskUnmountApprovalCallback <DiskArbitration.DARegisterDiskUnmountApprovalCallback>` in
   :doc:`DiskArbitration </apinotes/DiskArbitration>` bindings.
 
+* "Hidden" instance methods were not hidden when looking them
+  up as an attribute on the class, but found an unbound method
+  as if the method was not hidden.
+
+* "Hidden" instance methods were visible in ``dir(SomeClass)``.
+
+* Fixed some memory leaks on unlikely error paths.
 
 Version 12.1
 ------------
