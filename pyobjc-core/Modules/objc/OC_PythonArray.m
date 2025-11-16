@@ -416,7 +416,7 @@ NS_ASSUME_NONNULL_BEGIN
         PyObject* v = id_to_python(other);
         if (v == NULL) {              // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
-        }
+        } // LCOV_EXCL_LINE
         SET_FIELD(value, v);
 
     PyObjC_END_WITH_GIL

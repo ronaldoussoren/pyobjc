@@ -816,6 +816,7 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
         return NULL;
     }
 
+    assert(PyObjCClass_Check(self));
     Py_BEGIN_ALLOW_THREADS
         @try {
             super.super_class = (Class _Nonnull)object_getClass(

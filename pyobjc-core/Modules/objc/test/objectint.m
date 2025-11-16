@@ -100,6 +100,26 @@
     return [value class];
 }
 
++ (Class)newClass
+{
+    static Class aClass = Nil;
+
+    if (aClass == Nil) {
+        aClass = objc_allocateClassPair([NSObject class], "OC_NewClass", 0);
+        if (aClass == Nil) { // LCOV_BR_EXCL_LINE
+            return Nil;      // LCOV_EXCL_LINE
+        }
+        objc_registerClassPair(aClass);
+    }
+    return aClass;
+}
+
++ (Class)newMetaClass
+{
+    Class aClass = [self newClass];
+    return object_getClass(aClass);
+}
+
 /* copying */
 + (id)copyObject:(NSObject<NSCopying>*)object withZone:(NSZone*)zone
 {

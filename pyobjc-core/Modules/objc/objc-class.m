@@ -1310,26 +1310,18 @@ PyObjCClass_CheckMethodList(PyObject* start_cls, int recursive)
              *      should be enough to avoid unnecessary duplicate
              *      updates.
              *
+             *  XXX: See below: due to a race we can only
+             *       update the generation after calling the
+             *       class extender.
+             *
+             *       This can cause races in the extender function
+             *       itself, but that should be harmless other than
+             *       doing unnecessary work.
              */
             int should_call;
 
             Py_BEGIN_CRITICAL_SECTION(info);
-            if (info->generation != PyObjC_MappingCount) {
-                should_call = 1;
-#endif
-
-                // XXX: See below: due to a race we can only
-                //      update the generation after calling the
-                //      class extender.
-                //
-                //      This can cause races in the extender function
-                //      itself, but that should be harmless other than
-                //      doing unnecessary work.
-                // info->generation = PyObjC_MappingCount;
-#ifdef Py_GIL_DISABLED
-            } else {
-                should_call = 0;
-            }
+            should_call = (info->generation != PyObjC_MappingCount);
             Py_END_CRITICAL_SECTION();
 
             if (should_call) {
@@ -1512,15 +1504,37 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
-        if (PyObjCClass_Check(base)) {
-            if (PyObjCClass_CheckMethodList(base, 0) < 0) {
-                Py_CLEAR(mro);
-                return NULL;
+        if (PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
+            PyObject* base_class = PyObjCClass_ClassForMetaClass(base);
+            if (base_class == NULL) {
+                /* base_class is NULL without an error for the root
+                 * of the mete class hierarchy.
+                 */
+                if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_CLEAR(mro);
+                    return NULL;
+                    // LCOV_EXCL_STOP
+                }
+            } else {
+                if (PyObjCClass_CheckMethodList( // LCOV_BR_EXCL_LINE
+                        base_class, 0)
+                    < 0) {
+                    // LCOV_EXCL_START
+                    Py_CLEAR(mro);
+                    Py_CLEAR(base_class);
+                    return NULL;
+                    // LCOV_EXCL_STOP
+                }
             }
             dict = PyType_GetDict((PyTypeObject*)base);
-            if (dict == NULL) {
+            if (dict == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_CLEAR(base_class);
                 continue;
+                // LCOV_EXCL_STOP
             }
+            Py_CLEAR(base_class);
 
         } else if (PyType_Check(base)) { // LCOV_BR_EXCL_LINE
             dict = PyType_GetDict((PyTypeObject*)base);
@@ -1552,9 +1566,12 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
             descr = PyObjCMetaClass_TryResolveSelector(base, name, sel);
             if (descr != NULL) {
                 break;
-            } else if (PyErr_Occurred()) {
+            } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                /* Only raises due to invalid ObjC runtime data */
+                // LCOV_EXCL_START
                 Py_CLEAR(mro);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
         }
     }
@@ -2057,8 +2074,12 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
     }
 
     descr = _type_lookup(Py_TYPE(self), name);
-    if (descr == NULL && PyErr_Occurred()) {
-        return NULL;
+    if (descr == NULL // LCOV_BR_EXCL_LINE
+        && PyErr_Occurred()) {
+        /* Can only raise with internal errors or invalid
+         * ObjC runtime information.
+         */
+        return NULL; // LCOV_EXCL_LINE
     }
 
     if (descr != NULL) {
@@ -2067,13 +2088,6 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
             result = f(descr, self, (PyObject*)Py_TYPE(self));
             goto done;
         }
-    }
-
-    if (strcmp(PyUnicode_AsUTF8(name), "__dict__") == 0) {
-        /* XXX: Is this correct */
-        result = ((PyTypeObject*)self)->tp_dict;
-        Py_INCREF(result);
-        goto done;
     }
 
     if (descr == NULL) {
@@ -2085,13 +2099,11 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
                 result = f(descr, NULL, self);
                 goto done;
             }
-        } else if (descr != NULL) {
-            result = descr;
-            descr  = NULL;
-            goto done;
-        } else if (PyErr_Occurred()) {
+        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             result = NULL;
             goto done;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -2099,10 +2111,11 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
         descr = _type_lookup_harder(Py_TYPE(self), name);
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
-        }
-        if (PyErr_Occurred()) {
+        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             result = NULL;
             goto done;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -2111,11 +2124,11 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
                                              (PyTypeObject*)self, name);
         if (descr != NULL) {
             f = Py_TYPE(descr)->tp_descr_get;
-        }
-        if (PyErr_Occurred()) {
-            /* XXX: can this happen without descr being NULL? */
+        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             result = NULL;
             goto done;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -2382,8 +2395,12 @@ static PyObject* _Nullable class_richcompare(PyObject* self, PyObject* other, in
     if (self_class == other_class) {
         v = 0;
 
-    } else if (!self_class) {
-        v = -1;
+    } else if (!self_class) { // LCOV_BR_EXCL_LINE
+        /* Never hit because the interpreter calls
+         * the reflected operator when 'self' is
+         * a subclass of 'other'
+         */
+        v = -1; // LCOV_EXCL_LINE
 
     } else if (!other_class) {
         v = 1;
@@ -3336,7 +3353,7 @@ error:
 
 Class _Nullable PyObjCClass_GetClass(PyObject* cls)
 {
-    if (PyObjCClass_Check(cls)) {
+    if (PyObjCClass_Check(cls)) { // LCOV_BR_EXCL_LINE
         Class result = Nil;
 
         result = ((PyObjCClassObject*)cls)->class;
@@ -3349,23 +3366,14 @@ Class _Nullable PyObjCClass_GetClass(PyObject* cls)
 
         return result;
 
-    } else if (PyObjCMetaClass_Check(cls)) { // LCOV_BR_EXCL_LINE
-        /* XXX: Is this branch ever hit? */
-        Class result = objc_metaclass_locate(cls);
-        if (result == Nil) {
-            PyErr_Format(PyObjCExc_InternalError, "Cannot find class for meta class %R",
-                         cls);
-            return Nil;
-        }
-        return result;
-
     } else { // LCOV_EXCL_LINE
         // LCOV_EXCL_START
+        assert(!PyObjCMetaClass_Check(cls));
         PyErr_Format(PyObjCExc_InternalError,
                      "PyObjCClass_GetClass called for non-class (%s)",
                      Py_TYPE(cls)->tp_name);
         return Nil;
-        // LCOV_EXC_STOP
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -3382,11 +3390,11 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
                      "PyObjCClass_FindSelector called for non-class (%s)",
                      Py_TYPE(cls)->tp_name);
         return NULL;
-        // LCIV_EXCL_STOP
+        // LCOV_EXCL_STOP
     }
 
-    if (PyObjCClass_CheckMethodList(cls, 1) < 0) {
-        return NULL;
+    if (PyObjCClass_CheckMethodList(cls, 1) < 0) { // LCOV_BR_EXCL_LINE
+        return NULL;                               // LCOV_EXCL_LINE
     }
 
     info = (PyObjCClassObject*)cls;
@@ -3526,18 +3534,25 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
             Py_CLEAR(py_name);
             if (value != NULL) {
                 return value;
-            } else if (PyErr_Occurred()) {
-                return NULL;
+            } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                /* Only raises due to invalid ObjC runtime data */
+                return NULL; // LCOV_EXCL_LINE
             }
         }
     }
 
     /* If all else fails, ask the actual class (getattro also does this) */
     result = PyObjCSelector_FindNative(cls, sel_getName(selector));
+#if 1
+    return result;
+#else
+    /* XXX: The negative cache isn't used. Also needs work to not update
+     *      the negative cache when FindNative raises something that isn't
+     *      AttributeError.
+     */
     if (result) {
         return result;
     }
-
     PyObject* py_name = PyUnicode_FromString((char*)sel_getName(selector));
     if (py_name == NULL) { // LCOV_BR_EXCL_LINE
         PyErr_Clear();     // LCOV_EXCL_LINE
@@ -3547,6 +3562,7 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
     } // LCOV_EXCL_LINE
     PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
     return NULL;
+#endif
 }
 
 Py_ssize_t

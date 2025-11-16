@@ -391,6 +391,17 @@ class TestClassAsignments(TestCase):
         with self.assertRaisesRegex(AttributeError, "i_do_not_exist"):
             del theClass.i_do_not_exist
 
+    def testSettingNativeSelector(self):
+        theClass = NSObject
+
+        with self.assertRaisesRegex(
+            TypeError, "Assigning native selectors is not supported"
+        ):
+            theClass.selectorAlias = theClass.description
+
+        theClass.selectorAlias = objc.python_method(theClass.description)
+        self.assertEqual(theClass.selectorAlias(), theClass.description())
+
 
 class TestCategory(TestCase):
     # Tests of objc.Category

@@ -171,6 +171,25 @@ class TestHiddenSelector(TestCase):
         with self.assertRaisesRegex(AttributeError, "anotherclsmethod"):
             OCTestHidden.anotherclsmethod()
 
+        cls_dict = OCTestHidden.__dict__
+        self.assertNotIn("method", cls_dict)
+        self.assertNotIn("clsmehod", cls_dict)
+        self.assertNotIn("clsmehod2", cls_dict)
+        self.assertNotIn("anotherclsmethod", cls_dict)
+
+        cls_dir = dir(OCTestHidden)
+        # XXX
+        # self.assertNotIn("method", cls_dir)
+        self.assertNotIn("clsmehod", cls_dir)
+        self.assertNotIn("clsmehod2", cls_dir)
+        self.assertNotIn("anotherclsmethod", cls_dir)
+
+        cls_dir = dir(type(OCTestHidden))
+        self.assertNotIn("method", cls_dir)
+        self.assertNotIn("clsmehod", cls_dir)
+        self.assertNotIn("clsmehod2", cls_dir)
+        self.assertNotIn("anotherclsmethod", cls_dir)
+
         v = OCTestHidden.performSelector_(b"clsmethod")
         self.assertEqual(v, 99)
 

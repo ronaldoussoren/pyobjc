@@ -1664,3 +1664,76 @@ class TestSubclassOptions(TestCase):
 
         with self.assertRaisesRegex(TypeError, "Cannot delete __version__ attribute"):
             del OC_VersionedClass.__version__
+
+    def test_subclass_check_errors(self):
+        # XXX: Test primarily targets a specific error case in
+        #      defining new subclasses, as such could fail with
+        #      code restructuring.
+        cur_extender = objc.options._class_extender
+
+        def extender(*args, **kwds):
+            if args[0].__name__ == "_PyObjCIntermediate_NSObject":
+                raise RuntimeError("extender failure")
+            return cur_extender(*args, **kwds)
+
+        with pyobjc_options(_class_extender=extender):
+            objc._updatingMetadata(True)
+            objc._updatingMetadata(False)
+
+            with self.assertRaisesRegex(RuntimeError, "extender failure"):
+
+                class OC_ExtenderFailsOnSuper(NSObject):
+                    pass
+
+            with self.assertRaises(objc.error):
+                objc.lookUpClass("OC_ExtenderFailsOnSuper")
+
+    def test_extender_sets_mro(self):
+        # XXX: Test primarily targets a specific error case in
+        #      defining new subclasses, as such could fail with
+        #      code restructuring.
+        #
+        # XXX: This feels wrong to me: setting the class __mro__
+        #      attribute this way actually works, even if setting
+        #      this from the outside fails.
+
+        with self.subTest("set MRO through processor"):
+            cur_processor = objc.options._processClassDict
+
+            def processor(*args, **kwds):
+                result = cur_processor(*args, **kwds)
+                if args[0] == "OC_ExtenderSetsMRO":
+                    args[1]["__mro__"] = 99
+                    args[1]["__add__"] = lambda self, other: (self, other)
+                return result
+
+            with pyobjc_options(_processClassDict=processor):
+
+                class OC_ExtenderSetsMRO(NSObject):
+                    pass
+
+                self.assertIs(
+                    objc.lookUpClass("OC_ExtenderSetsMRO"), OC_ExtenderSetsMRO
+                )
+
+            self.assertEqual(OC_ExtenderSetsMRO.__dict__["__mro__"], 99)
+            self.assertIsInstance(OC_ExtenderSetsMRO.__mro__, tuple)
+
+            o = OC_ExtenderSetsMRO.alloc().init()
+            self.assertEqual(o + 42, (o, 42))
+
+        with self.subTest("native class behaviour"):
+
+            class PyMRO:
+                __mro__ = 42
+
+            self.assertEqual(PyMRO.__dict__["__mro__"], 42)
+            self.assertIsInstance(PyMRO.__mro__, tuple)
+
+        with self.subTest("objective-c class behaviour"):
+
+            class OCMRO(NSObject):
+                __mro__ = 21
+
+            self.assertEqual(OCMRO.__dict__["__mro__"], 21)
+            self.assertIsInstance(OCMRO.__mro__, tuple)

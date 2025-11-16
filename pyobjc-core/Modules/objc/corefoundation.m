@@ -146,6 +146,9 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
         // LCOV_EXCL_STOP
     }
 
+    assert(PyObjC_NSCFTypeClass != NULL);
+    assert(PyObjCClass_Check(PyObjC_NSCFTypeClass));
+
     Class cf_class = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
     if (cf_class == Nil) { // LCOV_BR_EXCL_LINE
         return NULL;       // LCOV_EXCL_LINE

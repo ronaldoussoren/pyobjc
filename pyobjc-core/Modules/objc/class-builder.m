@@ -568,6 +568,8 @@ free_ivars(id self, PyObject* cls)
     Ivar      var;
     PyObject* cur_cls;
 
+    assert(PyObjCClass_Check(cls));
+
     var = class_getInstanceVariable(PyObjCClass_GetClass(cls), "__dict__");
     if (var != NULL) {
         ptrdiff_t offset                      = ivar_getOffset(var);

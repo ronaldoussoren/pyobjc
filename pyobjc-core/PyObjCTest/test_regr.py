@@ -16,6 +16,7 @@ from PyObjCTest.fnd import NSAutoreleasePool, NSObject
 from PyObjCTest.testbndl import OC_TestClass1
 from PyObjCTest.properties import OCPropertyDefinitions
 from PyObjCTools.TestSupport import TestCase
+from .objectint import OC_ObjectInt
 
 rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 
@@ -850,7 +851,6 @@ class TestDelRevives(TestCase):
 
 class TestMisCConversions(TestCase):
     def test_sel(self):
-        # XXX: Fix me for PyObjC 12:
         self.assertEqual(objc.repythonify(b"hello", objc._C_SEL), "hello")
         self.assertEqual(objc.repythonify("hello", objc._C_SEL), "hello")
         self.assertEqual(
@@ -1211,9 +1211,20 @@ class TestClasses(TestCase):
         self.assertFalse(objc.objc_object >= NSObject)
 
         self.assertFalse(NSObject < objc.objc_object)
+        self.assertFalse(NSObject < objc.objc_object)
         self.assertFalse(NSObject <= objc.objc_object)
         self.assertTrue(NSObject > objc.objc_object)
         self.assertTrue(NSObject >= objc.objc_object)
+
+        self.assertTrue(NSArray < NSString)
+        self.assertTrue(NSArray <= NSString)
+        self.assertFalse(NSArray >= NSString)
+        self.assertFalse(NSArray > NSString)
+
+        self.assertFalse(NSString < NSArray)
+        self.assertFalse(NSString <= NSArray)
+        self.assertTrue(NSString >= NSArray)
+        self.assertTrue(NSString > NSArray)
 
 
 class TestSelectorDetails(TestCase):
@@ -1350,3 +1361,22 @@ class TestSelectorDetails(TestCase):
         s.__get__(NSObject())
         with self.assertRaisesRegex(objc.error, " Unhandled type"):
             s.__metadata__()
+
+
+class TestMetaClasses(TestCase):
+    def test_class_of_class(self):
+        NSPort = objc.lookUpClass("NSPort")
+        cls = OC_ObjectInt.classOf_(NSPort)
+        self.assertIs(cls, NSPort)
+        self.assertIsNot(NSPort, type(NSPort))
+
+    def test_new_metaclass(self):
+        cls1 = OC_ObjectInt.newMetaClass()
+        cls2 = OC_ObjectInt.newClass()
+        cls3 = OC_ObjectInt.classOf_(cls2)
+        self.assertIs(cls3, cls2)
+        self.assertIs(cls1, type(cls2))
+        self.assertIsSubclass(cls2, objc.objc_object)
+        self.assertIsSubclass(cls2, NSObject)
+        self.assertIsSubclass(cls1, objc.objc_class)
+        self.assertIsSubclass(cls1, type(NSObject))
