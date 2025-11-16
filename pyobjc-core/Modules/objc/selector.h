@@ -81,6 +81,7 @@ extern PyObject* _Nullable PyObjCSelector_FindNative(PyObject* self, const char*
 #define PyObjCSelector_GET_SELECTOR(obj) (((PyObjCSelector*)(obj))->sel_selector)
 #define PyObjCSelector_GET_CIF(obj) (((PyObjCNativeSelector*)(obj))->sel_cif)
 #define PyObjCSelector_SET_CIF(obj, cif) (((PyObjCNativeSelector*)(obj))->sel_cif = (cif))
+#define PyObjCSelector_GET_SELF(obj) (((PyObjCSelector*)(obj))->sel_self)
 
 extern PyObject* _Nullable PyObjCSelector_New(PyObject* callable, SEL selector,
                                               const char* _Nullable signature,

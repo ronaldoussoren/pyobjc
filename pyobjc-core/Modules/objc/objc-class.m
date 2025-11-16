@@ -3484,7 +3484,10 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
 #endif
             Py_CLEAR(result);
         } else {
-            return result;
+            if (!!PyObjCSelector_IsClassMethod(result) == !!class_method) {
+                return result;
+            }
+            Py_CLEAR(result);
         }
     } // LCOV_EXCL_LINE
 
@@ -3523,6 +3526,16 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
         while (PyDict_Next(dict, &pos, NULL, &value)) {
             if (!PyObjCSelector_Check(value))
                 continue;
+
+            if (PyObjCSelector_GET_SELF(value) != NULL) {
+                /* Bound selector, not what this function tries to find */
+                continue;
+            }
+#if 0
+            if (!!PyObjCSelector_IsClassMethod(value) != !!class_method) {
+                continue;
+            }
+#endif
 
             if (sel_isEqual(PyObjCSelector_GetSelector(value), selector)) {
                 PyObject* py_name = PyUnicode_FromString((char*)sel_getName(selector));

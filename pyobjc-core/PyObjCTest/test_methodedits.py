@@ -398,7 +398,7 @@ class TestClassAsignments(TestCase):
         #      Issue: #664
         theClass = objc.lookUpClass("NSURL")
 
-        o = theClass.alloc().init()
+        o = theClass.alloc().initFileURLWithPath_("/etc/")
 
         with self.assertRaisesRegex(
             TypeError, "Assigning native selectors is not supported"
@@ -408,7 +408,7 @@ class TestClassAsignments(TestCase):
         theClass.selectorAlias = objc.python_method(theClass.description)
         self.assertEqual(theClass.selectorAlias(), theClass.description())
 
-        print(o.description)
+        self.assertEqual(o.description(), o.methodForSelector_(b"description")(o))
 
 
 class TestCategory(TestCase):

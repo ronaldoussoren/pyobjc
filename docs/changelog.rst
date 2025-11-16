@@ -31,6 +31,10 @@ Version 12.2
 
 * "Hidden" instance methods were visible in ``dir(SomeClass)``.
 
+* :issue:`664`: Fix ``anObject.methodForSelector_(some_selector)`` resolving
+  to a class method IMP when a bound selector object for ``some_selector``
+  is a class attribute.
+
 * Fixed some memory leaks on unlikely error paths.
 
 Version 12.1
