@@ -513,9 +513,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     char*              name;
     PyObject*          bases;
     PyObject*          dict;
-    PyObject*          old_dict;
     PyObject*          res;
-    PyObject*          k;
     PyObject*          metadict;
     PyObject*          v;
     Py_ssize_t         i;
@@ -524,7 +522,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     Class              super_class; /* XXX    = NULL; */
     PyObject*          py_super_class = NULL;
     PyObjCClassObject* info;
-    PyObject*          keys;
     PyObject*          protocols;
     PyObject*          real_bases;
     PyObject*          delmethod;
@@ -978,26 +975,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         }
     }
 
-    /* Add convenience methods like '__eq__'. Must do it before
-     * call to super-class implementation, because '__*' methods
-     * are treated specially there.
-     */
-    old_dict = PyDict_Copy(dict);
-    if (old_dict == NULL) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        if (objc_class != nil) {
-            (void)PyObjCClass_UnbuildClass(objc_class);
-        }
-        Py_XDECREF(orig_slots);
-        Py_DECREF(protocols);
-        Py_DECREF(real_bases);
-        Py_DECREF(metadict);
-        Py_DECREF(hiddenSelectors);
-        Py_DECREF(hiddenClassSelectors);
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
-
     PyObject* bundleForClass = PyObjC_GetBundleForClassMethod();
     if (bundleForClass != NULL) {
         if (PyObjCPythonSelector_Check(bundleForClass)) {
@@ -1012,7 +989,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
                 (void)PyObjCClass_UnbuildClass(objc_class);
             }
             Py_XDECREF(orig_slots);
-            Py_DECREF(old_dict);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
             Py_DECREF(metadict);
@@ -1027,7 +1003,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             (void)PyObjCClass_UnbuildClass(objc_class);
         }
         Py_XDECREF(orig_slots);
-        Py_DECREF(old_dict);
         Py_DECREF(protocols);
         Py_DECREF(real_bases);
         Py_DECREF(metadict);
@@ -1042,7 +1017,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         if (metatype == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_XDECREF(orig_slots);
-            Py_DECREF(old_dict);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
             Py_DECREF(metadict);
@@ -1057,7 +1031,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             == -1) {
             // LCOV_EXCL_START
             Py_XDECREF(orig_slots);
-            Py_DECREF(old_dict);
             Py_DECREF(protocols);
             Py_DECREF(real_bases);
             Py_DECREF(metadict);
@@ -1082,7 +1055,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(metatype);
         Py_DECREF(real_bases);
         Py_DECREF(protocols);
-        Py_DECREF(old_dict);
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         if (objc_class != Nil) {
@@ -1103,7 +1075,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         Py_DECREF(args);
         Py_DECREF(real_bases);
         Py_DECREF(protocols);
-        Py_DECREF(old_dict);
         Py_DECREF(hiddenSelectors);
         Py_DECREF(hiddenClassSelectors);
         if (objc_class != Nil) {
@@ -1122,7 +1093,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             == -1) {
             // LCOV_EXCL_START
             Py_XDECREF(orig_slots);
-            Py_DECREF(old_dict);
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
             if (objc_class != Nil) {
@@ -1207,7 +1177,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         PyDict_GetItemRef(dict, PyObjCNM___useKVO__, &useKVOObj)) {
     case -1:
         // LCOV_EXCL_START
-        Py_DECREF(old_dict);
         return NULL;
         // LCOV_EXCL_STOP
     case 0:
@@ -1231,62 +1200,6 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         /* Disable automatic KVO on pure CoreFoundation types */
         info->useKVO = 0;
     }
-    keys = PyDict_Keys(dict);
-    if (keys == NULL) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        Py_DECREF(old_dict);
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
-
-    /* Merge the "difference" to pick up new selectors */
-    for (i = 0; i < PyList_Size(keys); i++) {
-        k = PyList_GetItemRef(keys, i);
-        if (k == NULL) { // LCOV_BR_EXCL_LINE
-            /* This failing requires changes to 'keys'
-             * while iterating, while 'keys' is a new
-             * list returned from 'PyDict_Keys'.
-             */
-            // LCOV_EXCL_START
-            Py_DECREF(old_dict);
-            Py_DECREF(keys);
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-
-        PyObject* old_v;
-        switch (PyDict_GetItemRef(old_dict, k, &old_v)) { // LCOV_BR_EXCL_LINE
-        case -1:
-            // LCOV_EXCL_START
-            /* XXX: Check refcounts, old_dict */
-            return NULL;
-            // LCOV_EXCL_STOP
-        case 0:
-
-            switch (PyDict_GetItemRef(dict, k, &v)) { // LCOV_BR_EXCL_LINE
-            case -1:
-                // LCOV_EXCL_START
-                /* XXX: Check refcounts, old_dict */
-                return NULL;
-                // LCOV_EXCL_STOP
-            /* case 0: pass */
-            case 1:
-                if (PyObject_SetAttr(res, k, v) == -1) {
-                    PyErr_Clear();
-                }
-                Py_CLEAR(v);
-            }
-            break;
-
-        case 1:
-            Py_CLEAR(old_v);
-        }
-
-        Py_DECREF(k);
-    }
-
-    Py_DECREF(keys);
-    Py_DECREF(old_dict);
 
     if (PyObjCClass_CheckMethodList(res, 1) < 0) {
         Py_DECREF(res);
