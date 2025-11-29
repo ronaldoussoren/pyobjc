@@ -143,7 +143,7 @@ def new_func(cls, *args, **kwds):
             raise TypeError(f"{cls.__name__}() does not accept positional arguments")
 
         args = [kwds[n] for n in key]
-        if name.startswith("init") and len(name) == 4 or name[4].isupper():
+        if name.startswith("init") and (len(name) == 4 or name[4].isupper()):
             return getattr(cls.alloc(), name)(*args)
 
         else:
