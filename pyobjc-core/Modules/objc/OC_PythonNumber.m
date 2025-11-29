@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
             PyObjC_GIL_RETURN(@encode(double));
-        } else { // LCOV_EXCL_LINE
+        } else if (PyLong_Check(value)) { // LCOV_EXCL_LINE
             (void)PyLong_AsLongLong(value);
             if (!PyErr_Occurred()) {
                 PyObjC_GIL_RETURN(@encode(long long));
@@ -77,7 +77,10 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_GIL_RETURN(@encode(unsigned long long));
             } // LCOV_EXCL_LINE
             PyErr_Clear();
+        } else {
+            PyObjC_GIL_RETURN(@encode(double));
         }
+
     PyObjC_END_WITH_GIL
 
     /* Wrap on overflow */
@@ -133,12 +136,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (double)doubleValue
 {
+    double result;
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_Check(value)) {
-            PyObjC_GIL_RETURN(PyFloat_AsDouble(value));
-        } // LCOV_EXCL_LINE
+            result = PyFloat_AsDouble(value);
+        } else if (PyNumber_Check(value)) { // LCOV_BR_EXCL_LINE
+            PyObject* float_value = PyNumber_Float(value);
+            if (float_value == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
+            assert(PyFloat_Check(float_value));
+            result = PyFloat_AsDouble(float_value);
+            if (PyErr_Occurred()) {       // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
+            Py_CLEAR(float_value);
+        } else { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            PyErr_SetString(PyObjCExc_Error, "OC_PythonNumber value is not a number");
+            PyObjC_GIL_FORWARD_EXC();
+            // LCOV_EXCL_STOP
+        }
     PyObjC_END_WITH_GIL
-    return (double)[self longLongValue];
+    return result;
 }
 
 - (float)floatValue
@@ -205,9 +225,21 @@ NS_ASSUME_NONNULL_BEGIN
         if (PyFloat_Check(value)) {
             double float_result = PyFloat_AsDouble(value);
             result              = (long long)float_result;
-        } else {
+        } else if (PyLong_Check(value)) {
             result = PyLong_AsUnsignedLongLongMask(value);
+        } else {
+            PyObject* long_value = PyNumber_Long(value);
+            if (long_value == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
+            assert(PyLong_Check(long_value));
+            result = PyLong_AsUnsignedLongLongMask(long_value);
+            if (PyErr_Occurred()) {       // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
+            Py_CLEAR(long_value);
         }
+
     PyObjC_END_WITH_GIL
     return result;
 }
@@ -240,6 +272,17 @@ NS_ASSUME_NONNULL_BEGIN
             } else {
                 result = (unsigned long long)temp;
             }
+        } else if (PyNumber_Check(value)) {
+            PyObject* long_value = PyNumber_Long(value);
+            if (long_value == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            } // LCOV_EXCL_LINE
+            assert(PyLong_Check(long_value));
+            result = PyLong_AsUnsignedLongLongMask(long_value);
+            if (PyErr_Occurred()) {       // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
+            Py_CLEAR(long_value);
         } else {
             // LCOV_EXCL_START
             @throw [NSException

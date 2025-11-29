@@ -37,6 +37,8 @@ Version 12.2
 
 * Fixed some memory leaks on unlikely error paths.
 
+* :issue:`637`: ``numbers.Number`` values are proxies as an ``NSNumber`` value.
+
 Version 12.1
 ------------
 
