@@ -369,3 +369,7 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(
             HealthKit.HKDataTypeIdentifierUserAnnotatedMedicationConcept, str
         )
+
+    @min_os_level("26.2")
+    def test_constants26_2(self):
+        self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierHypertensionEvent, str)

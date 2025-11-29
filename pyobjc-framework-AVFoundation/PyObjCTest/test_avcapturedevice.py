@@ -450,3 +450,10 @@ class TestAVCaptureDevice(TestCase):
             1,
             b"v" + AVFoundation.CMTime.__typestr__,
         )
+
+    @min_os_level("26.2")
+    def testMethods26_2(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isEdgeLightEnabled)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isEdgeLightActive)
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isEdgeLightSupported)
