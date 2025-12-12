@@ -225,6 +225,7 @@ OBJECT_PROP_STATIC(_sequence_types, PyObjC_ListLikeTypes)
 OBJECT_PROP_STATIC(_set_types, PyObjC_SetLikeTypes)
 OBJECT_PROP_STATIC(_date_types, PyObjC_DateLikeTypes)
 OBJECT_PROP_STATIC(_path_types, PyObjC_PathLikeTypes)
+OBJECT_PROP_STATIC(_number_types, PyObjC_NumberLikeTypes)
 OBJECT_PROP_STATIC(_datetime_date_type, PyObjC_DateTime_Date_Type)
 OBJECT_PROP_STATIC(_datetime_datetime_type, PyObjC_DateTime_DateTime_Type)
 OBJECT_PROP_STATIC(_getKey, PyObjC_getKey)
@@ -369,6 +370,7 @@ static PyGetSetDef options_getset[] = {
     GETSET(_set_types, "Private list of types that proxied as instances of NSMutableSet"),
     GETSET(_date_types, "Private list of types that proxied as instances of NSDate"),
     GETSET(_path_types, "Private list of types that proxied as instances of NSURL"),
+    GETSET(_number_types, "Private list of types that proxied as instances of NSNumber"),
     GETSET(_datetime_date_type, "Prive config for datetime.date"),
     GETSET(_datetime_datetime_type, "Prive config for datetime.datetime"),
     GETSET(_callable_signature,
@@ -878,6 +880,25 @@ PyObjC_IsDateLike(PyObject* object)
     type = PyObjC_DateLikeTypes;
     Py_INCREF(type);
     UNLOCK(PyObjC_DateLikeTypes);
+
+    if (type == Py_None) {
+        Py_DECREF(type);
+        return 0;
+    }
+    int result = PyObject_IsInstance(object, type);
+    Py_DECREF(type);
+    return result;
+}
+
+int
+PyObjC_IsNumberLike(PyObject* object)
+{
+    PyObject* type;
+
+    LOCK(PyObjC_NumberLikeTypes);
+    type = PyObjC_NumberLikeTypes;
+    Py_INCREF(type);
+    UNLOCK(PyObjC_NumberLikeTypes);
 
     if (type == Py_None) {
         Py_DECREF(type);
@@ -1462,8 +1483,12 @@ PyObjC_SetupOptions(PyObject* m)
         return -1;                      // LCOV_EXCL_LINE
     }
     PyObjC_PathLikeTypes = PyTuple_New(0);
-    if (PyObjC_DictLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
+    if (PyObjC_PathLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
         return -1;                      // LCOV_EXCL_LINE
+    }
+    PyObjC_NumberLikeTypes = PyTuple_New(0);
+    if (PyObjC_NumberLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;                        // LCOV_EXCL_LINE
     }
 
     return PyModule_AddObject(m, "options", o);

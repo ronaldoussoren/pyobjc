@@ -491,7 +491,7 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
         result = special->call_to_objc;
     } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
         result = NULL;             // LCOV_EXCL_LINE
-    } else {
+    } else {                       // LCOV_EXCL_LINE
         special = find_signature(signature);
         if (special) {
             result = special->call_to_objc;

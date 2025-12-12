@@ -34,6 +34,7 @@ extern int  PyObjC_IsListLike(PyObject* object);
 extern int  PyObjC_IsSetLike(PyObject* object);
 extern int  PyObjC_IsDateLike(PyObject* object);
 extern int  PyObjC_IsPathLike(PyObject* object);
+extern int  PyObjC_IsNumberLike(PyObject* object);
 extern PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp)
     __attribute__((warn_unused_result));
 extern PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp,

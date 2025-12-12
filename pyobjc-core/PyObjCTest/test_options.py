@@ -408,6 +408,21 @@ class TestOptions(TestCase):
         finally:
             objc.options._path_types = orig
 
+    def test_number_types(self):
+        orig = objc.options._number_types
+        value = object()
+        try:
+            objc.options._number_types = value
+            self.assertIs(objc.options._number_types, value)
+
+            with self.assertRaisesRegex(
+                AttributeError, "Cannot delete option '_number_types'"
+            ):
+                del objc.options._number_types
+
+        finally:
+            objc.options._number_types = orig
+
     def test_datetime_date_type(self):
         orig = objc.options._datetime_date_type
         value = object()
@@ -580,6 +595,7 @@ class TestOptions(TestCase):
         orig_set_types = objc.options._set_types
         orig_date_types = objc.options._date_types
         orig_path_types = objc.options._path_types
+        orig_number_types = objc.options._number_types
 
         try:
             objc.options._mapping_types = None
@@ -587,6 +603,7 @@ class TestOptions(TestCase):
             objc.options._set_types = None
             objc.options._date_types = None
             objc.options._path_types = None
+            objc.options._number_types = None
 
             with objc.autorelease_pool():
                 a = NSMutableArray.alloc().init()
@@ -600,6 +617,7 @@ class TestOptions(TestCase):
             objc.options._set_types = orig_set_types
             objc.options._date_types = orig_date_types
             objc.options._path_types = orig_path_types
+            objc.options._number_types = orig_number_types
 
     def test_proxy_with_invalid_types(self):
 
@@ -608,6 +626,7 @@ class TestOptions(TestCase):
         orig_set_types = objc.options._set_types
         orig_date_types = objc.options._date_types
         orig_path_types = objc.options._path_types
+        orig_number_types = objc.options._number_types
 
         for nm in (
             "_mapping_types",
@@ -615,6 +634,7 @@ class TestOptions(TestCase):
             "_set_types",
             "_date_types",
             "_path_types",
+            "_number_types",
         ):
             try:
                 setattr(objc.options, nm, 42)
@@ -633,6 +653,7 @@ class TestOptions(TestCase):
                 objc.options._set_types = orig_set_types
                 objc.options._date_types = orig_date_types
                 objc.options._path_types = orig_path_types
+                objc.options._number_types = orig_number_types
 
     def test_date_proxy_without_options(self):
         orig_date = objc.options._datetime_date_type

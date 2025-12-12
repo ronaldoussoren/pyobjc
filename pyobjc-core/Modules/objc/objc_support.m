@@ -2661,7 +2661,8 @@ depythonify_python_object(PyObject* argument, id* datum)
                || Py_TYPE(argument) == &PyBool_Type) {
         *datum = [OC_BuiltinPythonNumber numberWithPythonObject:argument];
 
-    } else if (PyFloat_Check(argument) || PyLong_Check(argument)) {
+    } else if (PyFloat_Check(argument) || PyLong_Check(argument)
+               || PyObjC_IsNumberLike(argument)) {
         *datum = [OC_PythonNumber numberWithPythonObject:argument];
 
     } else if (PyList_CheckExact(argument) || PyTuple_CheckExact(argument)) {

@@ -12,6 +12,7 @@ import textwrap
 
 NSObject = objc.lookUpClass("NSObject")
 
+objc.registerNewKeywords("OC_GenericNew", ("address",), "valueWithAddress_")
 objc.registerNewKeywordsFromSelector("OC_GenericNew", b"initWithValue:")
 objc.registerNewKeywordsFromSelector("OC_GenericNew", b"initWithURL:")
 objc.registerNewKeywordsFromSelector("OC_GenericNew", b"initWithFirst:second:")
@@ -274,6 +275,9 @@ class TestDefaultNewForObjectiveCClass(TestCase):
         v = OC_GenericNew()
         self.assertEqual(v.value(), None)
 
+        v = OC_GenericNew(address=42)
+        self.assertEqual(v.value(), 42)
+
         v = OC_GenericNew(value=42)
         self.assertEqual(v.value(), 42)
 
@@ -330,6 +334,9 @@ class TestDefaultNewForObjectiveCClass(TestCase):
             OC_GenericNewChild2(*, URL):
                returns cls.alloc().initWithURL_(URL)
 
+            OC_GenericNewChild2(*, address):
+               returns cls.valueWithAddress_(address)
+
             OC_GenericNewChild2(*, first, second):
                returns cls.alloc().initWithFirst_second_(first, second)
 
@@ -360,6 +367,9 @@ class TestDefaultNewForObjectiveCClass(TestCase):
 
             OC_GenericNewChild3(*, a, b):
                returns cls.valueWithA_b_(a, b)
+
+            OC_GenericNewChild3(*, address):
+               returns cls.valueWithAddress_(address)
 
             OC_GenericNewChild3(*, first, second):
                returns cls.alloc().initWithFirst_second_(first, second)

@@ -34,6 +34,13 @@
     return self;
 }
 
++ (instancetype)valueWithAddress:(NSObject*)address
+{
+    OC_GenericNew* value = [[OC_GenericNew alloc] init];
+    value->value         = [address retain];
+    return value;
+}
+
 - (instancetype)initWithValue:(NSObject*)v
 {
     self = [super init];
