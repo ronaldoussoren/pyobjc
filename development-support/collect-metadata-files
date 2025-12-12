@@ -34,7 +34,7 @@ def main() -> None:
                 continue
             print()
             if len(all_sections) == 1:
-                print(f"{BOLD}[{idx + 1}/{len(all_frameworks)}] Processing {nm}{RESET}")
+                print(f"{BOLD}[{idx + 1}/{len(all_frameworks)}] Processing {nm} for {SDK_VERSION}{RESET}")
             else:
                 print(
                     f"{BOLD}[{idx + 1}/{len(all_frameworks)}; {sec_idx + 1}/{len(all_sections)}] Processing {nm} - {section}{RESET}"
