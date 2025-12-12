@@ -549,7 +549,7 @@ static inline PyObject* _Nullable _type_lookup_harder(PyTypeObject* tp, PyObject
  * Create the __dict__ for 'obj' by writing to '*pdict'
  */
 static int
-create_object_dict(PyObject* obj, PyObject** pdict)
+create_object_dict(PyObject* obj __attribute__((__unused__)), PyObject** pdict)
 {
     assert(obj != NULL);
     assert(pdict != NULL);
