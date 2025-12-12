@@ -74,10 +74,11 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
 #endif
         self->sel_methinfo     = result;
         self->sel_mappingcount = PyObjC_MappingCount;
+        to_clear               = NULL;
 #ifdef Py_GIL_DISABLED
-        to_clear = NULL;
+    } else {
+        result = self->sel_methinfo;
     }
-    result = self->sel_methinfo;
 #endif
 
     Py_INCREF(result);
