@@ -934,7 +934,6 @@ obj_set_blocksignature(PyObject* self, PyObject* _Nullable newVal,
 
     PyObjCMethodSignature* result =
         PyObjCObject_SetBlockSignature(self, (PyObjCMethodSignature*)newVal);
-    Py_DECREF(newVal);
     Py_XDECREF(result);
     if (result != NULL && newVal != (PyObject*)result) {
         PyErr_SetString(PyObjCExc_Error, "Cannot reset __block_signature__");
