@@ -1,3 +1,4 @@
+PYTHON=python3.14t
 info:
 	@echo "all               - build and develop"
 	@echo "test              - build, develop and test"
@@ -23,7 +24,7 @@ test-no-gil:
 # sanitizer library is loaded.
 sanitize-test:
 	rm -rf build dist
-	env ASAN_OPTIONS=allocator_may_return_null=1 DYLD_INSERT_LIBRARIES="$(shell echo `xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/[0-9][0-9]/lib/darwin/libclang_rt.asan_osx_dynamic.dylib)" CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" LDFLAGS="-fsanitize-thread-atomics  -fsanitize-thread-func-entry-exit -fsanitize-thread-memory-access" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/PythonT setup.py build_ext test -v
+	env ASAN_OPTIONS=allocator_may_return_null=1 DYLD_INSERT_LIBRARIES="$(shell echo `xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/[0-9][0-9]/lib/darwin/libclang_rt.asan_osx_dynamic.dylib)" CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" LDFLAGS="-fsanitize-thread-atomics  -fsanitize-thread-func-entry-exit -fsanitize-thread-memory-access" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/$(shell python -c 'import sys; print(sys._framework)') setup.py build_ext test -v
 
 clean:
 	rm -rf build dist
@@ -68,7 +69,7 @@ coverage:
 c-coverage:
 	rm -rf build dist
 	mkdir build dist
-	python3.14t -mvenv build/cov-env
+	$(PYTHON) -mvenv build/cov-env
 	build/cov-env/bin/python -m pip install -U 'setuptools==79.0'  wheel pip setuptools coverage
 	env ARCHFLAGS="-arch arm64" CFLAGS="-DCOVERAGE --coverage -fprofile-arcs -ftest-coverage -O1" LDFLAGS="--coverage -fprofile-arcs -ftest-coverage -O1" build/cov-env/bin/python3 setup.py build_ext -j 4 develop
 	#cd ../pyobjc-framework-Cocoa && ../pyobjc-core/build/cov-env/bin/python setup.py develop
