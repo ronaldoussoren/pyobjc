@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 12.2
 ------------
 
-* Update framework bindings for macOS 26.2 SDK
+* Update framework bindings for macOS 26.2 SDK (beta 2)
 
 * The following code failed at the last line in previous versions:
 
@@ -38,6 +38,17 @@ Version 12.2
 * Fixed some memory leaks on unlikely error paths.
 
 * :issue:`637`: ``numbers.Number`` values are proxies as an ``NSNumber`` value.
+
+* :issue:`665`: the ``__new__`` of Objective-C classes now also support keyword
+  arguments derived from class selectors of the form ``valueWithKey1:key2:`` (with
+  an arbitrary prefix instead of ``value``).
+
+  The following calls are now possible (as examples):
+
+  - ``Foundation.NSHost(address="www.python.org")``, returns ``Foundation.NSHost.hostWithAddress_("www.python.org")``.
+
+  - ``AppKit.NSImage(systemSymbolName="multiply.circle.fill", accessibilityDescription="multiply icon")``, returns
+    ``AppKit.NSColor.colorWithSystemSymbolName_accessibilityDescription_("multiply.circle.fill", "multiply icon")``.
 
 Version 12.1
 ------------
