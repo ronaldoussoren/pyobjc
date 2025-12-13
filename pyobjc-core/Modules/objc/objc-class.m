@@ -2019,7 +2019,6 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
                     // LCOV_EXCL_STOP
                 }
                 PyObject* result = PyObjCSelector_NewNative(cls, sel, encoding, 0);
-                free(methods);
                 if (result == NULL) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_DECREF(mro);
