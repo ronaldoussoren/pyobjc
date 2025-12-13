@@ -1816,7 +1816,7 @@
    "AVAudioUnitSampler": {
     "methods": [
      {
-      "retval": { "type_overide": "Z" },
+      "retval": { "type": "Z" },
       "args": {
        "4": {
         "type_modifier": "o"

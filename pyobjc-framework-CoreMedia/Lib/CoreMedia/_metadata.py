@@ -1222,7 +1222,7 @@ functions = {
             "arguments": {
                 1: {
                     "callable": {
-                        "retval": {"type": b"v"},
+                        "retval": {"type": b"i"},
                         "arguments": {
                             0: {"type": b"^v"},
                             1: {"type": b"^{opaqueCMSampleBuffer=}"},

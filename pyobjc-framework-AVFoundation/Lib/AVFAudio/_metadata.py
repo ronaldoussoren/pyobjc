@@ -1017,7 +1017,7 @@ try:
     r(
         b"AVAudioUnitSampler",
         b"loadSoundBankInstrumentAtURL:program:bankMSB:bankLSB:error:",
-        {"retval": {"type": b"Z"}},
+        {"retval": {"type": b"Z"}, "arguments": {"6": {"type_modifier": "o"}}},
     )
     r(b"AVAudioUnitTimeEffect", b"bypass", {"retval": {"type": b"Z"}})
     r(b"AVAudioUnitTimeEffect", b"setBypass:", {"arguments": {2: {"type": b"Z"}}})

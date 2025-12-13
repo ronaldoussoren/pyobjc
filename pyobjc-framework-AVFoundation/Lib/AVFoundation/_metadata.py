@@ -2162,7 +2162,7 @@ try:
     r(
         b"AVAudioUnitSampler",
         b"loadSoundBankInstrumentAtURL:program:bankMSB:bankLSB:error:",
-        {"retval": {"type_overide": "Z"}, "arguments": {6: {"type_modifier": b"o"}}},
+        {"retval": {"type": "Z"}, "arguments": {6: {"type_modifier": b"o"}}},
     )
     r(
         b"AVCameraCalibrationData",

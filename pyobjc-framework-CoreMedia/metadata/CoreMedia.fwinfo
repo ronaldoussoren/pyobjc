@@ -1188,7 +1188,7 @@
         "1": { "type": "^{opaqueCMSampleBuffer=}" },
         "2": { "type": "q" }
        },
-       "retval": { "typestr": "v" }
+       "retval": { "typestr": "i" }
       }
      }
     }

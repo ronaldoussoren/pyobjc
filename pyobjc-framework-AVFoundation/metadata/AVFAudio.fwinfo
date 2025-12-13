@@ -747,8 +747,9 @@
    "AVAudioUnitSampler": {
     "methods": [
      {
+      "retval": { "type_override": "Z" },
       "args": {
-       "4": {}
+       "4": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "loadSoundBankInstrumentAtURL:program:bankMSB:bankLSB:error:"

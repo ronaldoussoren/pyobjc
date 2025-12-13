@@ -148,9 +148,9 @@ class TestCGBitmapContext(TestCase):
         self.assertArgIsBlock(
             Quartz.CGBitmapContextCreateAdaptive,
             3,
-            b"B^"
+            b"BN^"
             + Quartz.CGContentInfo.__typestr__
-            + b"^"
+            + b"N^"
             + Quartz.CGBitmapParameters.__typestr__,
         )
         self.assertArgIsBlock(

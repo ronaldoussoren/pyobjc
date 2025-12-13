@@ -45,5 +45,5 @@ class TestASAuthorizationWebBrowserPublicKeyCredentialManager(TestCase):
         self.assertArgIsBlock(
             AuthenticationServices.ASAuthorizationWebBrowserPublicKeyCredentialManager.platformCredentialsForRelyingParty_completionHandler_,
             1,
-            b"vZ",
+            b"v@",
         )
