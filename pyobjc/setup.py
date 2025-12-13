@@ -655,6 +655,7 @@ def frameworks_in_table(filename):
     in_table = False
     with open(filename) as stream:
         for line in stream:
+            line = line.lstrip()
             if not in_table:
                 if line.startswith("+--") or line.startswith("+=="):
                     in_table = True
