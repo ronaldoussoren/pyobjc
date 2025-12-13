@@ -94,11 +94,10 @@ CFLAGS = [
     "-Wno-cast-function-type-mismatch",
     "-I/usr/include/ffi",
     "-fvisibility=hidden",
-    # "-O0",
     "-g",
-    # "-O0",
-    "-O3",
-    "-flto=thin",
+    "-O0",
+    # "-O3",
+    # "-flto=thin",
     # XXX: Use object_path_lto (during linking?)
     # "-fsanitize-thread-atomics",
 ]
@@ -119,9 +118,9 @@ OBJC_LDFLAGS = [
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    "-O3",
-    "-flto=thin",
-    # "-O0",
+    "-O0",
+    # "-O3",
+    # "-flto=thin",
     "-fexceptions",
     # "-fsanitize-thread-atomics",
 ]
@@ -670,6 +669,13 @@ class oc_build_ext(build_ext.build_ext):
                 )
 
         build_ext.build_ext.run(self)
+
+        for ext in self.extensions:
+            fullname = self.get_ext_fullname(ext.name)
+            filename = self.get_ext_filename(fullname)
+            full_path = os.path.join(self.build_lib, filename)
+            print("dsymutil", full_path)
+            subprocess.check_call(["/usr/bin/dsymutil", full_path])
         extensions = self.extensions
         self.extensions = [e for e in extensions if e.name.startswith("PyObjCTest")]
         self.copy_extensions_to_source()
