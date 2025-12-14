@@ -95,9 +95,9 @@ CFLAGS = [
     "-I/usr/include/ffi",
     "-fvisibility=hidden",
     "-g",
-    "-O0",
-    # "-O3",
-    # "-flto=thin",
+    # "-O0",
+    "-O3",
+    "-flto=thin",
     # XXX: Use object_path_lto (during linking?)
     # "-fsanitize-thread-atomics",
 ]
@@ -112,17 +112,14 @@ OBJC_LDFLAGS = [
     "-framework",
     "Foundation",
     # "-fvisibility=protected",
-    "-g",
     "-lffi",
-    # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     "-fvisibility=hidden",
     # "-O0",
     "-g",
-    "-O0",
-    # "-O3",
-    # "-flto=thin",
+    # "-O0",
+    "-O3",
+    "-flto=thin",
     "-fexceptions",
-    # "-fsanitize-thread-atomics",
 ]
 
 
