@@ -1824,13 +1824,13 @@ depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, vo
     if (*rettype == _C_CHR || *rettype == _C_CHAR_AS_TEXT || *rettype == _C_VOID) {
         if (PyBytes_Check(arg)) {
             NSMutableData* data = [NSMutableData dataWithBytes:PyBytes_AsString(arg)
-                                                        length:PyBytes_Size(arg)];
+                                                        length:PyBytes_Size(arg) + 1];
             *(void**)resp       = [data mutableBytes];
             return 0;
 
         } else if (PyByteArray_Check(arg)) {
             NSMutableData* data = [NSMutableData dataWithBytes:PyByteArray_AsString(arg)
-                                                        length:PyByteArray_Size(arg)];
+                                                        length:PyByteArray_Size(arg) + 1];
             *(void**)resp       = [data mutableBytes];
             return 0;
         }
