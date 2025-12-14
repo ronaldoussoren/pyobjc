@@ -401,8 +401,8 @@
       "callable": {
        "arguments": {
         "0": { "typestr": "^v" },
-        "1": { "typestr": "^{CGContentInfo=QQBBf}", "type_modifier": "N" },
-        "2": { "typestr": "^{CGBitmapParameters=QQQQQQQQ^{__CGColorSpace=}Bqf}", "type_modifier": "N" }
+        "1": { "typestr": "^{CGContentInfo=IIBBf}", "type_modifier": "N" },
+        "2": { "typestr": "^{CGBitmapParameters=QQQQIII^{CGColorSpace=}Bqf}", "type_modifier": "N" }
        },
        "retval": { "typestr": "B" }
       }
