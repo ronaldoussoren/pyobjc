@@ -1073,3 +1073,60 @@ class TestBytearrayInterface(TestBytesInterface):
         with objc.autorelease_pool():
             self.assertEqual(oc, py)
             self.assertEqual(bytes(oc), py)
+
+    @min_python_release("3.14")
+    def test_take_bytes(self):
+        value = b"abcdefg"
+
+        with self.subTest("take_bytes(None)"):
+            oc = self.oc_cls.dataWithData_(value)
+            py = self.py_cls(value)
+
+            oc_b = oc.take_bytes()
+            py_b = py.take_bytes()
+
+            self.assertEqual(oc_b, py_b)
+            self.assertEqual(len(py), 0)
+            self.assertEqual(len(oc), 0)
+
+        with self.subTest("take_bytes(5)"):
+            oc = self.oc_cls.dataWithData_(value)
+            py = self.py_cls(value)
+
+            oc_b = oc.take_bytes(5)
+            py_b = py.take_bytes(5)
+
+            self.assertEqual(oc_b, py_b)
+            self.assertEqual(len(py), len(value) - 5)
+            self.assertEqual(len(oc), len(value) - 5)
+
+        with self.subTest("take_bytes(-3)"):
+            oc = self.oc_cls.dataWithData_(value)
+            py = self.py_cls(value)
+
+            oc_b = oc.take_bytes(-3)
+            py_b = py.take_bytes(-3)
+
+            self.assertEqual(oc_b, py_b)
+            self.assertEqual(len(py), 3)
+            self.assertEqual(len(oc), 3)
+
+        with self.subTest("take_bytes(50)"):
+            oc = self.oc_cls.dataWithData_(value)
+            py = self.py_cls(value)
+
+            with self.assertRaises(IndexError):
+                oc.take_bytes(50)
+
+            with self.assertRaises(IndexError):
+                py.take_bytes(50)
+
+        with self.subTest("take_bytes(-50)"):
+            oc = self.oc_cls.dataWithData_(value)
+            py = self.py_cls(value)
+
+            with self.assertRaises(IndexError):
+                oc.take_bytes(-50)
+
+            with self.assertRaises(IndexError):
+                py.take_bytes(-50)

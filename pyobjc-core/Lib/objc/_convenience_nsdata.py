@@ -10,6 +10,7 @@ from objc._convenience import addConvenienceForClass
 from objc._objc import registerMetaDataForSelector
 from ._new import NEW_MAP
 import operator
+import sys
 
 registerMetaDataForSelector(
     b"NSData",
@@ -422,6 +423,25 @@ def nsmutabledata_resize(self, size):
     elif cursize > size:
         self.replaceBytesInRange_withBytes_length_((size, cursize - size), b"", 0)
 
+
+if sys.version_info[:2] >= (3, 15):
+
+    def nsmutabledata_take_bytes(self, n=None, /):
+        if n is None:
+            result = bytes(self)
+            self.setData_(b"")
+            return result
+        else:
+            if n < 0:
+                n += len(self)
+            if n < 0 or n >= len(self):
+                raise IndexError(n)
+
+            result = bytes(self.bytes()[:n])
+            self.replaceBytesInRange_withBytes_length_((0, n), b"", 0)
+            return result
+
+    addConvenienceForClass("NSMutableData", (("take_bytes", nsmutabledata_take_bytes),))
 
 addConvenienceForClass(
     "NSMutableData",

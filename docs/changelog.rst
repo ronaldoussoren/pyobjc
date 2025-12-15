@@ -50,6 +50,9 @@ Version 12.2
   - ``AppKit.NSImage(systemSymbolName="multiply.circle.fill", accessibilityDescription="multiply icon")``, returns
     ``AppKit.NSColor.colorWithSystemSymbolName_accessibilityDescription_("multiply.circle.fill", "multiply icon")``.
 
+* Add ``NSMutableData.take_bytes`` on Python 3.15 to mirror the new :class:`bytearray` method
+  of the same name.
+
 Version 12.1
 ------------
 
