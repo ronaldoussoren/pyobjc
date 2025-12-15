@@ -78,8 +78,8 @@ static NSString* _Nullable weak_value_describe(NSMapTable* table
 static struct weak_value* _Nullable weak_value_alloc(id value)
 {
     struct weak_value* result = malloc(sizeof(struct weak_value));
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
     result->refcnt = 1;
     result->value  = nil;
@@ -99,7 +99,7 @@ PyObjC_InitProxyRegistry(PyObject* module __attribute__((__unused__)))
     python_proxies = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
                                       PyObjCUtil_PointerValueCallBacks, 0);
 
-    if (python_proxies == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(python_proxies == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_SetString(PyExc_RuntimeError,
                         "Cannot create NSMapTable for python_proxies");
@@ -109,7 +109,7 @@ PyObjC_InitProxyRegistry(PyObject* module __attribute__((__unused__)))
 
     objc_proxies =
         NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks, weak_value_callbacks, 0);
-    if (objc_proxies == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(objc_proxies == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_SetString(PyExc_RuntimeError, "Cannot create NSMapTable for objc_proxies");
         return -1;
@@ -165,7 +165,7 @@ id NS_RETURNS_RETAINED _Nullable PyObjC_RegisterObjCProxy(PyObject* original, id
     struct weak_value* weak = NSMapGet(objc_proxies, original);
     if (weak != NULL) {
         id current = objc_loadWeakRetained(&weak->value);
-        if (current != nil) { // LCOV_BR_EXCL_LINE
+        if (likely(current != nil)) { // LCOV_BR_EXCL_LINE
             result = current;
         } else {
             // LCOV_EXCL_START
@@ -184,9 +184,9 @@ id NS_RETURNS_RETAINED _Nullable PyObjC_RegisterObjCProxy(PyObject* original, id
         }
     } else {
         weak = weak_value_alloc(proxy);
-        if (weak == NULL) { // LCOV_BR_EXCL_LINE
-            result = nil;   // LCOV_EXCL_LINE
-        } else {            // LCOV_EXCL_LINE
+        if (unlikely(weak == NULL)) { // LCOV_BR_EXCL_LINE
+            result = nil;             // LCOV_EXCL_LINE
+        } else {                      // LCOV_EXCL_LINE
             NSMapInsert(objc_proxies, original, weak);
             objc_retain(proxy);
             weak_value_release(objc_proxies, weak);

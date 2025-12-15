@@ -38,8 +38,8 @@ static PyObject* _Nullable proto_repr(PyObject* object)
     const char*           name;
 
     name = protocol_getName(self->objc);
-    if (name == NULL)   // LCOV_BR_EXCL_LINE
-        name = "<nil>"; // LCOV_EXCL_LINE
+    if (unlikely(name == NULL)) // LCOV_BR_EXCL_LINE
+        name = "<nil>";         // LCOV_EXCL_LINE
 
     return PyUnicode_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name, name,
                                 (void*)self);
@@ -58,7 +58,7 @@ static PyObject* _Nullable proto_get__name__(PyObject* object,
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     const char*           name = protocol_getName(self->objc);
 
-    if (name == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(name == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_RETURN_NONE;
         // LCOV_EXCL_STOP
@@ -145,7 +145,7 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     }
 
     theProtocol = objc_allocateProtocol(name);
-    if (theProtocol == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(theProtocol == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         goto error;
@@ -209,8 +209,8 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
     Py_DECREF(selectors);
     Py_DECREF(supers);
 
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     result->objc     = theProtocol;
@@ -233,7 +233,7 @@ static PyObject* _Nullable proto_name(PyObject* object)
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     const char*           name = protocol_getName(self->objc);
 
-    if (name == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(name == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_RETURN_NONE;
         // LCOV_EXCL_STOP
@@ -253,8 +253,8 @@ static PyObject* _Nullable proto_conformsTo_(PyObject* object, PyObject* _Nullab
     }
 
     objc_protocol = PyObjCFormalProtocol_GetProtocol(protocol);
-    if (objc_protocol == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;             // LCOV_EXCL_LINE
+    if (unlikely(objc_protocol == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                       // LCOV_EXCL_LINE
     }
 
     if (protocol_conformsToProtocol(self->objc, objc_protocol)) {
@@ -282,13 +282,13 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
         PyObject* item =
             Py_BuildValue("{sysysO}", "selector", sel_getName(methods[i].name), "typestr",
                           buf, "required", isRequired ? Py_True : Py_False);
-        if (item == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(item == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             free(methods);
             return -1;
             // LCOV_EXCL_STOP
         }
-        if (PyList_Append(lst, item) < 0) { // LCOV_BR_EXCL_LINE
+        if (unlikely(PyList_Append(lst, item) < 0)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(item);
             free(methods);
@@ -308,12 +308,12 @@ static PyObject* _Nullable instanceMethods(PyObject* object)
     int                   r;
 
     PyObject* result = PyList_New(0);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     r = append_method_list(result, self->objc, YES, YES);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -321,7 +321,7 @@ static PyObject* _Nullable instanceMethods(PyObject* object)
     }
 
     r = append_method_list(result, self->objc, NO, YES);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -337,12 +337,12 @@ static PyObject* _Nullable classMethods(PyObject* object)
     int                   r;
 
     PyObject* result = PyList_New(0);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     r = append_method_list(result, self->objc, YES, NO);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -350,7 +350,7 @@ static PyObject* _Nullable classMethods(PyObject* object)
     }
 
     r = append_method_list(result, self->objc, NO, NO);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -484,8 +484,8 @@ PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
 
     result = (PyObjCFormalProtocol*)PyObject_New(
         PyObjCFormalProtocol, (PyTypeObject*)PyObjCFormalProtocol_Type);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     result->objc     = protocol;
@@ -508,13 +508,13 @@ int
 PyObjCFormalProtocol_Setup(PyObject* module)
 {
     PyObjCFormalProtocol_Type = PyType_FromSpec(&proto_spec);
-    if (PyObjCFormalProtocol_Type == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                           // LCOV_EXCL_LINE
+    if (unlikely(PyObjCFormalProtocol_Type == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                                     // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "formal_protocol", PyObjCFormalProtocol_Type)
-        == -1) {
+    if (unlikely(PyModule_AddObject( // LCOV_BR_EXCL_LINE
+                     module, "formal_protocol", PyObjCFormalProtocol_Type)
+                 == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFormalProtocol_Type);

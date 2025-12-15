@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (PyObject*)__pyobjc_PythonObject__
 {
-    if (value == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
         /* Value can be NULL during initWithCoder: */
         Py_RETURN_NONE; // LCOV_EXCL_LINE
     }
@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (id _Nullable)__realObject__
 {
 #ifdef Py_DEBUG
-    if (!PyUnicode_IS_READY(value)) { // LCOV_BR_EXCL_LINE
+    if (unlikely(!PyUnicode_IS_READY(value))) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         /* Object should be ready, ensure we crash with the GIL
          * held when it's not.
@@ -166,8 +166,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
     int byteorder = 0;
     self          = [super init];
-    if (self == nil) { // LCOV_BR_EXCL_LINE
-        return nil;    // LCOV_EXCL_LINE
+    if (unlikely(self == nil)) { // LCOV_BR_EXCL_LINE
+        return nil;              // LCOV_EXCL_LINE
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -195,8 +195,8 @@ NS_ASSUME_NONNULL_BEGIN
      * Call the super initializer first.
      */
     self = [super init];
-    if (self == nil) { // LCOV_BR_EXCL_LINE
-        return nil;    // LCOV_EXCL_LINE
+    if (unlikely(self == nil)) { // LCOV_BR_EXCL_LINE
+        return nil;              // LCOV_EXCL_LINE
     }
 
     /*
@@ -206,8 +206,8 @@ NS_ASSUME_NONNULL_BEGIN
     if (encoding == NSUTF8StringEncoding) {
         PyObjC_BEGIN_WITH_GIL
             value = PyUnicode_DecodeUTF8(bytes, length, NULL);
-            if (value == NULL) {          // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();  // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
@@ -232,7 +232,7 @@ NS_ASSUME_NONNULL_BEGIN
      */
     unichar* chars = malloc(charcount * 2);
 
-    if (chars == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(chars == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         [tmpval release];
         [self release];
@@ -247,7 +247,7 @@ NS_ASSUME_NONNULL_BEGIN
         byteorder = 0;
         value = PyUnicode_DecodeUTF16((const char*)chars, length * 2, NULL, &byteorder);
         free(chars);
-        if (value == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
             //  LCOV_EXCL_START
             PyObjC_GIL_FORWARD_EXC();
             //  LCOV_EXCL_STOP
@@ -298,7 +298,7 @@ NS_ASSUME_NONNULL_BEGIN
          */
         self = [super initWithCoder:coder];
         return self;
-    } else if (ver == 2) { // LCOV_BR_EXCL_LINE
+    } else if (unlikely(ver == 2)) { // LCOV_BR_EXCL_LINE
 
         PyObjC_BEGIN_WITH_GIL
             PyObject* decoder = PyObjC_decodeWithCoder(coder, self);

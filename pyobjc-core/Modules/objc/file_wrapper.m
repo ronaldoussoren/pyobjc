@@ -387,8 +387,8 @@ PyObject* _Nullable FILE_create(FILE* fp)
     assert(fp != NULL);
 
     self = PyObject_NEW(struct file_object, (PyTypeObject*)FILE_Type);
-    if (self == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(self == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
     }
     self->fp = fp;
     return (PyObject*)self;
@@ -409,12 +409,13 @@ int
 FILE_Setup(PyObject* module)
 {
     FILE_Type = PyType_FromSpec(&file_spec);
-    if (FILE_Type == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;           // LCOV_EXCL_LINE
+    if (unlikely(FILE_Type == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                     // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(module, "FILE", FILE_Type) == -1) { // LCOV_BR_EXCL_LINE
-        return -1;                                             // LCOV_EXCL_LINE
+    if (unlikely(PyModule_AddObject(module, "FILE", FILE_Type)
+                 == -1)) { // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
     }
     Py_INCREF(FILE_Type);
 

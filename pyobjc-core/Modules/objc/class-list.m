@@ -15,12 +15,12 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
     unsigned int i;
 
     result = PyList_New(0);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        goto error;       // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        goto error;                 // LCOV_EXCL_LINE
     }
 
     buffer = objc_copyClassList(&bufferLen);
-    if (buffer == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(buffer == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "getting class list failed");
         return result;
@@ -466,8 +466,8 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
         }
 #endif /* PyObjC_BUILD_RELEASE > 1011 */
         pyclass = PyObjCClass_New(buffer[i]);
-        if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
-            goto error;        // LCOV_EXCL_LINE
+        if (unlikely(pyclass == NULL)) { // LCOV_BR_EXCL_LINE
+            goto error;                  // LCOV_EXCL_LINE
         }
 
         if (!PyObjCClass_Check(pyclass)) {
@@ -478,11 +478,11 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
             Py_DECREF(pyclass);
             continue;
         }
-        if (PyList_Append(result, pyclass) == -1) { // LCOV_BR_EXCL_LINE
-            // LCOV_BR_EXCL_START
+        if (unlikely(PyList_Append(result, pyclass) == -1)) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(pyclass);
             goto error;
-            // LCOV_BR_EXCL_STOP
+            // LCOV_EXCL_STOP
         }
         Py_DECREF(pyclass);
     }

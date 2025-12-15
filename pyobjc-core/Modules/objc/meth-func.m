@@ -22,8 +22,8 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
 {
     if (PyObjC_is_pyfunction(value)) {
         PyObject* code = PyObject_GetAttrString(value, "__code__");
-        if (code == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;    // LCOV_EXCL_LINE
+        if (unlikely(code == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;              // LCOV_EXCL_LINE
         } else if (!PyCode_Check(code)) {
             PyErr_Format(PyExc_ValueError,
                          "%R does not have a valid '__code__' attribute", value);
@@ -34,15 +34,15 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
 
     } else if (PyObjC_is_pymethod(value)) {
         PyObject* func = PyObject_GetAttrString(value, "__func__");
-        if (func == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;    // LCOV_EXCL_LINE
+        if (unlikely(func == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;              // LCOV_EXCL_LINE
         }
         if (PyObjC_is_pyfunction(func)) {
             PyObject* code = PyObject_GetAttrString(func, "__code__");
             Py_DECREF(func);
-            if (code == NULL) {               // LCOV_BR_EXCL_LINE
-                return NULL;                  // LCOV_EXCL_LINE
-            } else if (!PyCode_Check(code)) { // LCOV_BR_EXCL_LINE
+            if (unlikely(code == NULL)) {               // LCOV_BR_EXCL_LINE
+                return NULL;                            // LCOV_EXCL_LINE
+            } else if (unlikely(!PyCode_Check(code))) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_Format(PyExc_ValueError,
                              "%R does not have a valid '__code__' attribute", value);
@@ -73,7 +73,7 @@ PyObjC_returns_value(PyObject* value)
     }
 
     PyCodeObject* func_code = PyObjC_get_code(value);
-    if (func_code == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(func_code == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Clear();
         return true;
@@ -82,7 +82,7 @@ PyObjC_returns_value(PyObject* value)
 #if PY_VERSION_HEX >= 0x030b0000
     PyObject* co = PyCode_GetCode(func_code);
 
-    if (co == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(co == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Clear();
         Py_DECREF(func_code);
@@ -102,9 +102,9 @@ PyObjC_returns_value(PyObject* value)
     }
 #endif /* PY_VERSION_HEX < 0x030e0000 */
 
-    if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
-            co, &buf, PyBUF_CONTIG_RO)
-        == -1) {
+    if (unlikely(PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
+                     co, &buf, PyBUF_CONTIG_RO)
+                 == -1)) {
         /* This should not happened: A function where co_code does not implement
          * the buffer protocol.
          *
@@ -123,9 +123,9 @@ PyObjC_returns_value(PyObject* value)
     Py_DECREF(co);
 
 #else
-    if (PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
-            func_code->co_code, &buf, PyBUF_CONTIG_RO)
-        == -1) {
+    if (unlikely(PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
+                     func_code->co_code, &buf, PyBUF_CONTIG_RO)
+                 == -1)) {
         /* This should not happened: A function where co_code does not implement
          * the buffer protocol.
          */
@@ -212,14 +212,14 @@ PyObjC_num_defaults(PyObject* value)
     assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value));
 
     PyObject* defaults = PyObject_GetAttrString(value, "__defaults__");
-    if (defaults == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;          // LCOV_EXCL_LINE
+    if (unlikely(defaults == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                    // LCOV_EXCL_LINE
     }
-    if (PyTuple_Check(defaults)) {
+    if (likely(PyTuple_Check(defaults))) {
         Py_ssize_t num = PyTuple_Size(defaults);
         Py_DECREF(defaults);
         return num;
-    } else if (defaults != Py_None) { // LCOV_BR_EXCL_LINE
+    } else if (likely(defaults != Py_None)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(defaults);
         PyErr_Format(PyExc_ValueError, "%R has an invalid '__defaults__' attribute",
@@ -238,16 +238,16 @@ PyObjC_num_kwdefaults(PyObject* value)
     assert(PyObjC_is_pyfunction(value) || PyObjC_is_pymethod(value));
 
     PyObject* defaults = PyObject_GetAttrString(value, "__kwdefaults__");
-    if (defaults == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;          // LCOV_EXCL_LINE
+    if (unlikely(defaults == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                    // LCOV_EXCL_LINE
     }
-    if (PyDict_Check(defaults)) { // LCOV_BR_EXCL_LINE
+    if (likely(PyDict_Check(defaults))) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_ssize_t num = PyDict_Size(defaults);
         Py_DECREF(defaults);
         return num;
         // LCOV_EXCL_STOP
-    } else if (defaults != Py_None) { // LCOV_BR_EXCL_LINE
+    } else if (unlikely(defaults != Py_None)) { // LCOV_BR_EXCL_LINE
         /* This cannot happen without poking into CPython internals */
         // LCOV_EXCL_START
         Py_DECREF(defaults);

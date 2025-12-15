@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     PyObject* repr;
 
-    if (pyObject == NULL)           // LCOV_BR_EXCL_LINE
+    if (unlikely(pyObject == NULL)) // LCOV_BR_EXCL_LINE
         return @"no python object"; // LCOV_EXCL_LINE
 
     NSString* result = nil;
@@ -139,8 +139,8 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 
     if (PyObjC_is_pyfunction(pymethod)) {
         func_code = (PyCodeObject*)PyObjC_get_code(pymethod);
-        if (func_code == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;           // LCOV_EXCL_LINE
+        if (unlikely(func_code == NULL)) { // LCOV_BR_EXCL_LINE
+            return -1;                     // LCOV_EXCL_LINE
         }
         if (argcount == func_code->co_argcount) {
             Py_DECREF(func_code);
@@ -150,8 +150,8 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 
     } else if (PyObjC_is_pymethod(pymethod)) {
         func_code = PyObjC_get_code(pymethod);
-        if (func_code == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;           // LCOV_EXCL_LINE
+        if (unlikely(func_code == NULL)) { // LCOV_BR_EXCL_LINE
+            return -1;                     // LCOV_EXCL_LINE
         }
         if (argcount == func_code->co_argcount - 1) {
             Py_DECREF(func_code);
@@ -173,7 +173,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObject*   pymethod;
     const char* p;
 
-    if (!aSelector) { // LCOV_BR_EXCL_LINE
+    if (unlikely(!aSelector)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         @throw [NSException exceptionWithName:NSInvalidArgumentException
                                        reason:@"nil selector"
@@ -190,7 +190,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     }
 
     PyObject* py_meth_name = PyObjC_SELToPythonName(aSelector);
-    if (py_meth_name == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(py_meth_name == NULL)) { // LCOV_BR_EXCL_LINE
         /* Can only fail due to memory errors */
         return NULL; // LCOV_EXCL_LINE
     }
@@ -245,8 +245,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     if (m) {
         /* A real Objective-C method */
         const char* typestr = method_getTypeEncoding(m);
-        if (typestr == NULL) { // LCOV_BR_EXCL_LINE
-            return nil;        // LCOV_EXCL_LINE
+        if (unlikely(typestr == NULL)) { // LCOV_BR_EXCL_LINE
+            return nil;                  // LCOV_EXCL_LINE
         }
         return [NSMethodSignature signatureWithObjCTypes:typestr];
     }
@@ -270,8 +270,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     if (m != NULL) {
         /* A real Objective-C method */
         const char* typestr = method_getTypeEncoding(m);
-        if (typestr == NULL) { // LCOV_BR_EXCL_LINE
-            return nil;        // LCOV_EXCL_LINE
+        if (unlikely(typestr == NULL)) { // LCOV_BR_EXCL_LINE
+            return nil;                  // LCOV_EXCL_LINE
         }
         return [NSMethodSignature signatureWithObjCTypes:typestr];
     }
@@ -291,7 +291,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             argcount = PyObjC_num_arguments(pymethod);
         }
         Py_DECREF(pymethod);
-        if (argcount < 0) { // LCOV_BR_EXCL_LINE
+        if (unlikely(argcount < 0)) { // LCOV_BR_EXCL_LINE
             /* Cannot fail because get_method_for_selector
              * will only return a method or function for which
              * the number of arguments can be calculated.
@@ -484,7 +484,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_BEGIN_WITH_GIL
 
         retsize = PyObjCRT_SizeOfType(rettype);
-        if (retsize == -1) { // LCOV_BR_EXCL_LINE
+        if (unlikely(retsize == -1)) { // LCOV_BR_EXCL_LINE
             /* Cannot happen unless the ObjC runtime contains
              * invalid data.
              */
@@ -513,7 +513,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         // LCOV_EXCL_STOP
 
         args = PyTuple_New(argcount - 2);
-        if (args == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(args == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(pymethod);
             PyObjC_GIL_FORWARD_EXC();
@@ -535,7 +535,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             // LCOV_EXCL_STOP
 
             argsize = PyObjCRT_SizeOfType(argtype);
-            if (argsize == -1) { // LCOV_BR_EXCL_LINE
+            if (unlikely(argsize == -1)) { // LCOV_BR_EXCL_LINE
                 /* Cannot happen unless the ObjC runtime
                  * contains invalid data.
                  */
@@ -860,7 +860,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
             PyErr_Clear();
             PyObjC_GIL_RETURN(NO);
         } // LCOV_EXCL_LINE
-        if (otherPyObject == pyObject) { // LCOV_BR_EXCL_LINE
+        if (unlikely(otherPyObject == pyObject)) { // LCOV_BR_EXCL_LINE
             /* Should never happen because of the test if
              * self is other earlier in the method.
              */
@@ -897,7 +897,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
         if (otherPyObject == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         } // LCOV_EXCL_LINE
-        if (otherPyObject == pyObject) { // LCOV_BR_EXCL_LINE
+        if (unlikely(otherPyObject == pyObject)) { // LCOV_BR_EXCL_LINE
             /* Should never happen because of checking if self is other
              * earlier in this method.
              */
@@ -965,7 +965,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
          * of PyObjC, and in some error cases.
          */
         NSObject* temp;
-        if (depythonify_python_object(decoded, &temp) == -1) { // LCOV_BR_EXCL_LINE
+        if (unlikely(depythonify_python_object(decoded, &temp)
+                     == -1)) { // LCOV_BR_EXCL_LINE
             /* Cannot get here with testing, the decoder invokes
              * 'setValue' above and that call has already depythonified
              * the value.

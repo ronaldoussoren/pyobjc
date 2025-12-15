@@ -39,22 +39,22 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
     assert(cur != NULL);
 
     result = PyList_New(0);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return result;    // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return result;              // LCOV_EXCL_LINE
     }
 
     /* Handle 'isa' specially, due to Objective-C 2.0 weirdness */
     v = Py_BuildValue("(sy)", "isa", @encode(Class));
-    if (v == NULL) {       // LCOV_BR_EXCL_LINE
-        Py_DECREF(result); // LCOV_EXCL_LINE
-        return result;     // LCOV_EXCL_LINE
+    if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(result);     // LCOV_EXCL_LINE
+        return result;         // LCOV_EXCL_LINE
     }
 
     r = PyList_Append(result, v);
     Py_DECREF(v);
-    if (r == -1) {         // LCOV_BR_EXCL_LINE
-        Py_DECREF(result); // LCOV_EXCL_LINE
-        return result;     // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(result);   // LCOV_EXCL_LINE
+        return result;       // LCOV_EXCL_LINE
     }
 
     do {
@@ -72,8 +72,8 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
             ivar                  = ivarList[i];
             const char* ivar_name = ivar_getName(ivar);
 
-            if (ivar == NULL) // LCOV_BR_EXCL_LINE
-                continue;     // LCOV_EXCL_LINE
+            if (unlikely(ivar == NULL)) // LCOV_BR_EXCL_LINE
+                continue;               // LCOV_EXCL_LINE
 
             if (strcmp(ivar_name, "isa") == 0) {
                 /* See comment above */
@@ -82,7 +82,7 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
 
             v = Py_BuildValue("(sy)", ivar_name, ivar_getTypeEncoding(ivar));
 
-            if (v == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(ivarList);
                 Py_DECREF(result);
@@ -92,7 +92,7 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
 
             r = PyList_Append(result, v);
             Py_DECREF(v);
-            if (r == -1) { // LCOV_BR_EXCL_LINE
+            if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(ivarList);
                 Py_DECREF(result);
@@ -104,7 +104,7 @@ PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
         free(ivarList);
 
         cur = class_getSuperclass(cur);
-    } while (cur != NULL); // LCOV_BR_EXCL_LINE
+    } while (likely(cur != NULL)); // LCOV_BR_EXCL_LINE
 
     return result;
 }
@@ -213,8 +213,8 @@ PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
          * __pyobjc_object__ when converting to ObjC.
          */
         pycls = PyObjCClass_New(cls);
-        if (pycls == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;     // LCOV_EXCL_LINE
+        if (unlikely(pycls == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;               // LCOV_EXCL_LINE
         }
 
         /* XXX: See comment in objc-object.m, change python

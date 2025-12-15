@@ -36,7 +36,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
         /* We want __class__ to return the class of the super object
          * (i.e. super, or a subclass), not the class of su->obj.
          */
-        if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
+        if (likely(PyUnicode_Check(name))) { // LCOV_BR_EXCL_LINE
             skip = PyObjC_is_ascii_string(name, "__class__");
 
         } else {
@@ -47,15 +47,15 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
         }
     }
 
-    if (PyUnicode_Check(name)) { // LCOV_BR_EXCL_LINE
+    if (likely(PyUnicode_Check(name))) { // LCOV_BR_EXCL_LINE
         const char* b = PyUnicode_AsUTF8(name);
-        if (b == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+        if (unlikely(b == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;           // LCOV_EXCL_LINE
         }
 
         sel = PyObjCSelector_DefaultSelector(b);
 
-    } else if (!skip) { // LCOV_BR_EXCL_LINE
+    } else if (unlikely(!skip)) { // LCOV_BR_EXCL_LINE
         /* This should hever happen, Python's attribute machinery
          * rejects attribute names of the wrong type
          */
@@ -74,7 +74,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
         starttype = su->obj_type;
         mro       = starttype->tp_mro;
 
-        if (mro != NULL) { // LCOV_BR_EXCL_LINE
+        if (likely(mro != NULL)) { // LCOV_BR_EXCL_LINE
             assert(PyTuple_Check(mro));
             n = PyTuple_GET_SIZE(mro);
         }
@@ -94,15 +94,16 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
              * Also make sure that the method tables are up-to-date.
              */
             if (PyObjCClass_Check(tmp)) {
-                if (PyObjCClass_CheckMethodList(tmp, NO) < 0) { // LCOV_BR_EXCL_LINE
-                    return NULL;                                // LCOV_EXCL_LINE
+                if (unlikely(PyObjCClass_CheckMethodList(tmp, NO)
+                             < 0)) { // LCOV_BR_EXCL_LINE
+                    return NULL;     // LCOV_EXCL_LINE
                 }
             }
 
             if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj)) {
                 dict = PyType_GetDict(Py_TYPE(tmp));
 
-            } else if (PyType_Check(tmp)) { // LCOV_BR_EXCL_LINE
+            } else if (likely(PyType_Check(tmp))) { // LCOV_BR_EXCL_LINE
                 dict = PyType_GetDict((PyTypeObject*)tmp);
 
             } else {
@@ -164,9 +165,9 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
                     Py_CLEAR(dict);
                     return res;
 
-                } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-                    Py_CLEAR(dict);            // LCOV_EXCL_LINE
-                    return NULL;               // LCOV_EXCL_LINE
+                } else if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+                    Py_CLEAR(dict);                      // LCOV_EXCL_LINE
+                    return NULL;                         // LCOV_EXCL_LINE
                 }
             }
             Py_CLEAR(dict);
@@ -199,27 +200,14 @@ PyObjCSuper_Setup(PyObject* module)
 
     super_slots[1].pfunc = (void*)(PySuper_Type.tp_doc);
 
-#if PY_VERSION_HEX < 0x030a0000
-    PyObject* bases = PyTuple_Pack(1, (PyObject*)&PySuper_Type);
-    if (bases == NULL) {
-        return -1;
-    }
-#endif
-
-    PyObject* tmp = PyType_FromSpecWithBases(&super_spec,
-#if PY_VERSION_HEX >= 0x030a0000
-                                             (PyObject*)&PySuper_Type);
-#else
-                                             bases);
-    Py_CLEAR(bases);
-#endif
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    PyObject* tmp = PyType_FromSpecWithBases(&super_spec, (PyObject*)&PySuper_Type);
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCSuper_Type = tmp;
-    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "super", PyObjCSuper_Type)
-        < 0) {
+    if (unlikely(PyModule_AddObject( // LCOV_BR_EXCL_LINE
+                     module, "super", PyObjCSuper_Type)
+                 < 0)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCSuper_Type);

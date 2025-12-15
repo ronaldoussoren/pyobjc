@@ -58,12 +58,13 @@ PyObjCAPI_Register(PyObject* module)
     objc_api.imp_type = (PyTypeObject*)PyObjCIMP_Type;
     PyObject* API     = PyCapsule_New(&objc_api, "objc." PYOBJC_API_NAME, NULL);
 
-    if (API == NULL) // LCOV_BR_EXCL_LINE
-        return -1;   // LCOV_EXCL_LINE
+    if (unlikely(API == NULL)) // LCOV_BR_EXCL_LINE
+        return -1;             // LCOV_EXCL_LINE
 
-    if (PyModule_AddObject(module, PYOBJC_API_NAME, API) < 0) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(API);                                         // LCOV_EXCL_LINE
-        return -1;                                              // LCOV_EXCL_LINE
+    if (unlikely(PyModule_AddObject(module, PYOBJC_API_NAME, API)
+                 < 0)) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(API);  // LCOV_EXCL_LINE
+        return -1;       // LCOV_EXCL_LINE
     }
     return 0;
 }

@@ -143,9 +143,9 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_BEGIN_WITH_GIL
                 PyObject* tzinfo = PyObject_GetAttr(value, PyObjCNM_tzinfo);
                 if (tzinfo != NULL && tzinfo != Py_None) {
-                    if (depythonify_python_object( // LCOV_BR_EXCL_LINE
-                            tzinfo, &c_info)
-                        == -1) {
+                    if (unlikely(depythonify_python_object( // LCOV_BR_EXCL_LINE
+                                     tzinfo, &c_info)
+                                 == -1)) {
                         // LCOV_EXCL_START
                         Py_DECREF(tzinfo);
                         PyObjC_GIL_FORWARD_EXC();
@@ -220,8 +220,8 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     self = [super init];
-    if (!self) {    // LCOV_BR_EXCL_LINE
-        return nil; // LCOV_EXCL_LINE
+    if (unlikely(!self)) { // LCOV_BR_EXCL_LINE
+        return nil;        // LCOV_EXCL_LINE
     }
     /* XXX: Assert that type has the correct type */
 
@@ -246,8 +246,8 @@ NS_ASSUME_NONNULL_BEGIN
 
             value = PyObjC_DatetimeFromTimestamp([temp timeIntervalSince1970], c_info);
             [temp release];
-            if (value == NULL) {          // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();  // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;

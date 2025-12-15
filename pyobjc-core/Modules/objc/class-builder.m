@@ -134,7 +134,7 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
     }
 
     intermediate_class = objc_allocateClassPair(base_class, name, 0);
-    if (intermediate_class == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(intermediate_class == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         goto error_cleanup;
@@ -149,12 +149,12 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
         }
         PyObjCMethodSignature* methinfo =
             PyObjCMethodSignature_WithMetaData(cur->typestr, NULL, NO);
-        if (methinfo == NULL)   // LCOV_BR_EXCL_LINE
-            goto error_cleanup; // LCOV_EXCL_LINE
+        if (unlikely(methinfo == NULL)) // LCOV_BR_EXCL_LINE
+            goto error_cleanup;         // LCOV_EXCL_LINE
         IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, intermediate_class);
         Py_CLEAR(methinfo);
-        if (closure == NULL)    // LCOV_BR_EXCL_LINE
-            goto error_cleanup; // LCOV_EXCL_LINE
+        if (unlikely(closure == NULL)) // LCOV_BR_EXCL_LINE
+            goto error_cleanup;        // LCOV_EXCL_LINE
 
         class_addMethod(intermediate_class, cur->selector, (IMP)closure, cur->typestr);
         closure = NULL;
@@ -228,8 +228,8 @@ static int
 is_class_method(PyObject* value)
 {
     // XXX: 'bytes' values are ignored???
-    if (PyBytes_Check(value)) { // LCOV_BR_EXCL_LINE
-        return 1;               // LCOV_EXCL_LINE
+    if (unlikely(PyBytes_Check(value))) { // LCOV_BR_EXCL_LINE
+        return 1;                         // LCOV_EXCL_LINE
     }
     if (!PyObjCSelector_Check(value)) {
         return 0;
@@ -291,8 +291,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     }
 
     py_superclass = PyObjCClass_New(super_class);
-    if (py_superclass == NULL) { // LCOV_BR_EXCL_LINE
-        return Nil;              // LCOV_EXCL_LINE
+    if (unlikely(py_superclass == NULL)) { // LCOV_BR_EXCL_LINE
+        return Nil;                        // LCOV_EXCL_LINE
     }
 
     PyObject* rv =
@@ -351,7 +351,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
         r = snprintf(buf, sizeof(buf), "_PyObjCIntermediate_%s",
                      class_getName(super_class));
-        if (r < 0 || r >= (int)sizeof(buf)) { // LCOV_BR_EXCL_LINE
+        if (unlikely(r < 0 || r >= (int)sizeof(buf))) { // LCOV_BR_EXCL_LINE
             /* Formatting the name failed, which is unlikely to happen */
             // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_InternalError,
@@ -361,7 +361,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         }
 
         intermediate_class = build_intermediate_class(super_class, buf);
-        if (intermediate_class == Nil) { // LCOV_BR_EXCL_LINE
+        if (unlikely(intermediate_class == Nil)) { // LCOV_BR_EXCL_LINE
             /* build_intermediate_class can only fail when
              * running out of resources.
              */
@@ -371,14 +371,14 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
         super_class   = intermediate_class;
         py_superclass = PyObjCClass_New(super_class);
-        if (py_superclass == Nil) { // LCOV_BR_EXCL_LINE
-            goto error_cleanup;     // LCOV_EXCL_LINE
+        if (unlikely(py_superclass == Nil)) { // LCOV_BR_EXCL_LINE
+            goto error_cleanup;               // LCOV_EXCL_LINE
         }
     } // LCOV_BR_EXCL_LINE
 
     /* Allocate the class as soon as possible, for new selector objects */
     new_class = objc_allocateClassPair(super_class, name, 0);
-    if (new_class == Nil) { // LCOV_BR_EXCL_LINE
+    if (unlikely(new_class == Nil)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Format(PyObjCExc_Error, "Cannot allocateClassPair for %s", name);
         goto error_cleanup;
@@ -390,22 +390,22 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
 
     /* 0th round: protocols */
     protocol_count = PyList_Size(protocols);
-    if (protocol_count == -1) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup;     // LCOV_EXCL_LINE
+    if (unlikely(protocol_count == -1)) { // LCOV_BR_EXCL_LINE
+        goto error_cleanup;               // LCOV_EXCL_LINE
     }
     for (i = 0; i < protocol_count; i++) {
         PyObject* wrapped_protocol;
         wrapped_protocol = PyList_GetItemRef(protocols, i);
-        if (wrapped_protocol == NULL) { // LCOV_BR_EXCL_LINE
-            goto error_cleanup;         // LCOV_EXCL_LINE
+        if (unlikely(wrapped_protocol == NULL)) { // LCOV_BR_EXCL_LINE
+            goto error_cleanup;                   // LCOV_EXCL_LINE
         }
         if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
             Py_DECREF(wrapped_protocol);
             continue;
         }
 
-        if (!class_addProtocol( // LCOV_BR_EXCL_LINE
-                new_class, PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+        if (unlikely(!class_addProtocol( // LCOV_BR_EXCL_LINE
+                new_class, PyObjCFormalProtocol_GetProtocol(wrapped_protocol)))) {
             // LCOV_EXCL_START
             Py_DECREF(wrapped_protocol);
             goto error_cleanup;
@@ -418,8 +418,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     for (i = 0; i < PyTuple_GET_SIZE(instance_variables); i++) {
         value = PyTuple_GET_ITEM(instance_variables, i);
 
-        if (!PyObjCInstanceVariable_Check(value)) { // LCOV_BR_EXCL_LINE
-            continue;                               // LCOV_EXCL_LINE
+        if (unlikely(!PyObjCInstanceVariable_Check(value))) { // LCOV_BR_EXCL_LINE
+            continue;                                         // LCOV_EXCL_LINE
         }
 
         char*      type;
@@ -431,7 +431,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             size = sizeof(PyObject*);
         } else {
             type = PyObjCInstanceVariable_GetType(value);
-            if (type == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(type == NULL)) { // LCOV_BR_EXCL_LINE
                 /* XXX: check if this can happen */
                 // LCOV_EXCL_START
                 PyErr_SetString(PyObjCExc_InternalError,
@@ -440,7 +440,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
                 // LCOV_EXCL_STOP
             }
             size = PyObjCRT_SizeOfType(type);
-            if (size == -1) { // LCOV_BR_EXCL_LINE
+            if (unlikely(size == -1)) { // LCOV_BR_EXCL_LINE
                 /* This cannot happen, the ivar.__init__ method
                  * checks that the encoding is valid.
                  */
@@ -448,8 +448,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             }
         }
         align = PyObjCRT_AlignOfType(type);
-        if (align == -1) {      // LCOV_BR_EXCL_LINE
-            goto error_cleanup; // LCOV_EXCL_LINE
+        if (unlikely(align == -1)) { // LCOV_BR_EXCL_LINE
+            goto error_cleanup;      // LCOV_EXCL_LINE
         }
 
         if (PyObjCInstanceVariable_GetName(value) == NULL) {
@@ -457,8 +457,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             goto error_cleanup;
         }
 
-        if (!class_addIvar( // LCOV_BR_EXCL_LINE
-                new_class, PyObjCInstanceVariable_GetName(value), size, align, type)) {
+        if (unlikely(!class_addIvar( // LCOV_BR_EXCL_LINE
+                new_class, PyObjCInstanceVariable_GetName(value), size, align, type))) {
             /* class_addIvar should never fail with the checks we've done
              * earlier.
              */
@@ -482,9 +482,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             goto error_cleanup;
         }
 
-        if (!class_addMethod( // LCOV_BR_EXCL_LINE
+        if (unlikely(!class_addMethod( // LCOV_BR_EXCL_LINE
                 new_class, PyObjCSelector_GetSelector(value), imp,
-                PyObjCSelector_GetNativeSignature(value))) {
+                PyObjCSelector_GetNativeSignature(value)))) {
             /* should never fail */
             goto error_cleanup; // LCOV_EXCL_LINE
         }
@@ -494,7 +494,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     for (i = 0; i < PyTuple_GET_SIZE(class_methods); i++) {
         value = PyTuple_GET_ITEM(class_methods, i);
 
-        if (!PyObjCSelector_Check(value)) { // LCOV_BR_EXCL_LINE
+        if (unlikely(!PyObjCSelector_Check(value))) { // LCOV_BR_EXCL_LINE
             /* Cannot happen, sequence items were validated earlier */
             continue; // LCOV_EXCL_LINE
         }
@@ -507,9 +507,9 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             goto error_cleanup;
         }
 
-        if (!class_addMethod( // LCOV_BR_EXCL_LINE
+        if (unlikely(!class_addMethod( // LCOV_BR_EXCL_LINE
                 new_meta_class, PyObjCSelector_GetSelector(value), imp,
-                PyObjCSelector_GetNativeSignature(value))) {
+                PyObjCSelector_GetNativeSignature(value)))) {
             goto error_cleanup; // LCOV_EXCL_LINE
         }
     }
@@ -586,7 +586,7 @@ free_ivars(id self, PyObject* cls)
         PyObject* clsValues;
         PyObject* o;
 
-        if (objcClass == nil) { // LCOV_BR_EXCL_LINE
+        if (unlikely(objcClass == nil)) { // LCOV_BR_EXCL_LINE
             /* The test at the end of the loop
              * breaks out of the loop before we
              * can get here.
@@ -600,7 +600,7 @@ free_ivars(id self, PyObject* cls)
         assert(PyDict_Check(clsDict));
 
         clsValues = PyDict_Values(clsDict);
-        if (clsValues == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(clsValues == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_Clear();
             break;
@@ -609,7 +609,7 @@ free_ivars(id self, PyObject* cls)
 
         for (Py_ssize_t i = 0; i < PyList_GET_SIZE(clsValues); i++) {
             o = PyList_GetItemRef(clsValues, i);
-            if (o == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(o == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_Clear();
                 break;
@@ -634,7 +634,7 @@ free_ivars(id self, PyObject* cls)
             }
 
             var = class_getInstanceVariable(objcClass, iv->name);
-            if (var == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(var == NULL)) { // LCOV_BR_EXCL_LINE
                 /* This should never fail, we're walking the instance variables
                  * of a class we created earlier.
                  */
@@ -701,11 +701,11 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
         /* object_getClass will only return Nil if its argument is nil */
         cls = PyObjCClass_New((Class _Nonnull)object_getClass(self));
         /* Note: In practice 'cls' will never be null */
-        if (cls != NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(cls != NULL)) { // LCOV_BR_EXCL_LINE
             delmethod = PyObjCClass_GetDelMethod(cls);
             if (delmethod != NULL) {
                 PyObject* s = _PyObjCObject_NewDeallocHelper(self);
-                if (s != NULL) { // LCOV_BR_EXCL_LINE
+                if (unlikely(s != NULL)) { // LCOV_BR_EXCL_LINE
                     PyObject* args[2] = {NULL, s};
                     obj               = PyObject_Vectorcall(delmethod, args + 1,
                                                             1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
@@ -801,7 +801,7 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
                 if (strcmp(ivar_getName(v), "__dict__") == 0) {
                     /* copy __dict__ */
                     *p = PyDict_Copy(*p);
-                    if (*p == NULL) { // LCOV_BR_EXCL_LINE
+                    if (unlikely(*p == NULL)) { // LCOV_BR_EXCL_LINE
                         // LCOV_EXCL_START
                         [copy release];
                         PyObjCErr_ToObjCWithGILState(&state);
@@ -854,7 +854,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
 
     /* XXX: Shouldn't this use id_to_python? */
     PyObject* pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-    if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(pyself == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyObjCErr_ToObjCWithGILState(&state);
         return;
@@ -915,7 +915,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         @throw;
         // LCOV_EXCL_STOP
     }
-    if (method == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(method == NULL)) { // LCOV_BR_EXCL_LINE
         /* The method is found by PyObjCObject_FindSelector, but not
          * by methodForSelector. That should never happen.
          */
@@ -1049,7 +1049,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
 
             PyGILState_STATE state = PyGILState_Ensure();
             PyObject*        val   = id_to_python(value);
-            if (val == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(val == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_Clear();
                 PyGILState_Release(state);

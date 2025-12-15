@@ -64,7 +64,8 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         assert(objc_object != nil);
     }
 
-    if (strcmp(object_getClassName(objc_object), "_NSZombie") == 0) { // LCOV_BR_EXCL_LINE
+    if (unlikely(strcmp(object_getClassName(objc_object), "_NSZombie")
+                 == 0)) { // LCOV_BR_EXCL_LINE
         /* Impossible to hit in regular testing */
         // LCOV_EXCL_START
         PyErr_Format(PyExc_AttributeError, "Cannot access '%s' on deallocated object",
@@ -74,7 +75,8 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     }
 
     if (class_method && strcmp(class_getName((Class)objc_object), "NSProxy") == 0) {
-        if (sel == @selector(methodSignatureForSelector:)) { // LCOV_BR_EXCL_LINE
+        if (unlikely(sel ==
+                     @selector(methodSignatureForSelector:))) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_Format(PyExc_AttributeError, "Cannot access NSProxy.%s", name);
             return NULL;
@@ -116,8 +118,8 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
      * - method signature: Overridden method signature for a hidden method
      */
     PyObject* meta = PyObjCClass_HiddenSelector(class_object, sel, class_method);
-    if (meta == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;                        // LCOV_EXCL_LINE
+    if (unlikely(meta == NULL && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                                  // LCOV_EXCL_LINE
     }
 
     if (meta) {
@@ -151,7 +153,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                  */
                 if (PyObjCObject_Check(self)) {
                     cur_imp = [PyObjCObject_GetObject(self) methodForSelector:sel];
-                } else if (PyObjCClass_Check(self)) { // LCOV_BR_EXCL_LINE
+                } else if (likely(PyObjCClass_Check(self))) { // LCOV_BR_EXCL_LINE
                     cur_imp = [PyObjCClass_GetClass(self) methodForSelector:sel];
                 } else {
                     // LCOV_EXCL_START
@@ -165,7 +167,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                     return meta;
                 } else {
                     methinfo = PyObjCSelector_GetMetadata(meta);
-                    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+                    if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
                         // LCOV_EXCL_START
                         Py_DECREF(meta);
                         return NULL;
@@ -186,7 +188,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         flattened = PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
     }
 
-    if (flattened == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(flattened == NULL)) { // LCOV_BR_EXCL_LINE
         /* PyObjC_NSMethodSignatureToTypeString can only fail when
          * the NSMethodSignature is invalid, or if the encoded
          * signature would not fit buffer.
@@ -229,8 +231,8 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
     }
 
     res = PyDict_New();
-    if (res == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;   // LCOV_EXCL_LINE
+    if (unlikely(res == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;             // LCOV_EXCL_LINE
     }
 
     for (; objc_class != NULL && cls != NULL;
@@ -238,8 +240,8 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
          cls        = class_getSuperclass((Class)cls)) {
         methods = class_copyMethodList(objc_class, &method_count);
 
-        if (methods == NULL) { // LCOV_BR_EXCL_LINE
-            continue;          // LCOV_EXCL_LINE
+        if (unlikely(methods == NULL)) { // LCOV_BR_EXCL_LINE
+            continue;                    // LCOV_EXCL_LINE
         }
 
         for (i = 0; i < method_count; i++) {
@@ -247,7 +249,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
             PyObject* py_name;
 
             py_name = PyObjC_SELToPythonName(method_getName(methods[i]));
-            if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(py_name == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 free(methods);
                 Py_DECREF(res);
@@ -294,7 +296,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
 
             if (v == NULL) {
                 const char* type_encoding = method_getTypeEncoding(methods[i]);
-                if (type_encoding == NULL) { // LCOV_BR_EXCL_LINE
+                if (unlikely(type_encoding == NULL)) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     PyErr_SetString(PyObjCExc_Error,
                                     "Native selector with Nil type encoding");
@@ -308,7 +310,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                 v = PyObjCSelector_NewNative(cls, method_getName(methods[i]),
                                              type_encoding, class_method);
 
-                if (v == NULL) { // LCOV_BR_EXCL_LINE
+                if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
                     /* This can fail for methods with an unknown encoding.
                      *
                      * Ignoring the error is more useful than raising.
@@ -321,7 +323,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                 }
             } // LCOV_BR_EXCL_LINE
 
-            if (PyDict_SetItem(res, py_name, v) == -1) { // LCOV_BR_EXCL_LINE
+            if (unlikely(PyDict_SetItem(res, py_name, v) == -1)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(v);
                 Py_DECREF(res);
@@ -410,9 +412,9 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 
     assert(PyObjCObject_Check(self->base) || PyObjCClass_Check(self->base));
 
-    if (PyUnicode_Check(name)) {              // LCOV_BR_EXCL_LINE
-        if (PyUnicode_AsUTF8(name) == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;                      // LCOV_EXCL_LINE
+    if (likely(PyUnicode_Check(name))) {                // LCOV_BR_EXCL_LINE
+        if (unlikely(PyUnicode_AsUTF8(name) == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                                // LCOV_EXCL_LINE
         }
 
     } else { // LCOV_BR_EXCL_LINE
@@ -429,8 +431,8 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 
         PyObject* dict;
         dict = make_dict(self->base, self->class_method);
-        if (dict == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;    // LCOV_EXCL_LINE
+        if (unlikely(dict == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;              // LCOV_EXCL_LINE
         }
 
         result = PyDictProxy_New(dict);
@@ -479,7 +481,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
             PyObject* v;
 
             int r = PyDict_GetItemRef(dict, name, &v);
-            if (r == -1) { // LCOV_BR_EXCL_LINE
+            if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_CLEAR(dict);
                 return NULL;
@@ -491,9 +493,9 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                      * fetch the actual result
                      */
                     v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
-                    if (v == NULL) {    // LCOV_BR_EXCL_LINE
-                        Py_CLEAR(dict); // LCOV_EXCL_LINE
-                        return NULL;    // LCOV_EXCL_LINE
+                    if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
+                        Py_CLEAR(dict);        // LCOV_EXCL_LINE
+                        return NULL;           // LCOV_EXCL_LINE
                     }
                     result = v;
                 } else {
@@ -521,7 +523,7 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
     }
 
     if (result) {
-        if (self->class_method) { // LCOV_BR_EXCL_LINE
+        if (self->class_method) {
             if (!PyObjCSelector_IsClassMethod(result)) {
                 Py_DECREF(result);
                 result = NULL;
@@ -540,8 +542,8 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 
     /* Didn't find the selector the first trip around, try harder. */
     const char* name_bytes = PyUnicode_AsUTF8(name);
-    if (name_bytes == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;          // LCOV_EXCL_LINE
+    if (unlikely(name_bytes == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                    // LCOV_EXCL_LINE
     }
 
     @autoreleasepool {
@@ -585,8 +587,8 @@ static PyObject* _Nullable methacc_dir(PyObject* self)
                                ((PyObjCMethodAccessor*)self)->class_method);
     PyObject* result;
 
-    if (dict == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(dict == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
     }
 
     result = PyMapping_Keys(dict);
@@ -643,8 +645,8 @@ PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method)
 
     result =
         PyObject_GC_New(PyObjCMethodAccessor, (PyTypeObject*)PyObjCMethodAccessor_Type);
-    if (result == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
 
     result->base = base;
     Py_XINCREF(base);
@@ -659,8 +661,8 @@ int
 PyObjCMethodAccessor_Setup(PyObject* module __attribute__((__unused__)))
 {
     PyObject* tmp = PyType_FromSpec(&methacc_spec);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCMethodAccessor_Type = tmp;
     return 0;

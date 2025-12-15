@@ -180,8 +180,8 @@ decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable 
     DecimalObject* self;
 
     self = PyObject_New(DecimalObject, (PyTypeObject*)Decimal_Type);
-    if (self == NULL) {          // LCOV_BR_EXCL_LINE
-        return PyErr_NoMemory(); // LCOV_EXCL_LINE
+    if (unlikely(self == NULL)) { // LCOV_BR_EXCL_LINE
+        return PyErr_NoMemory();  // LCOV_EXCL_LINE
     }
 
     memset(&self->value, 0, sizeof(self->value));
@@ -192,7 +192,7 @@ decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable 
         return (PyObject*)self;
     }
 
-    if (decimal_init((PyObject*)self, args, kwds) == -1) {
+    if (unlikely(decimal_init((PyObject*)self, args, kwds) == -1)) {
         Py_DECREF(self);
         self = NULL;
         return NULL;
@@ -223,7 +223,8 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
 
     if (PyLong_Check(pyValue)) {
         mantissa = PyLong_AsUnsignedLongLong(pyValue);
-        if (mantissa == (unsigned long long)-1 && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        if (unlikely(mantissa == (unsigned long long)-1
+                     && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
             long long lng;
             PyErr_Clear();
             lng = PyLong_AsLongLong(pyValue);
@@ -232,7 +233,7 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
                 return -1;
             }
 
-            if (lng < 0) { // LCOV_BR_EXCL_LINE
+            if (likely(lng < 0)) { // LCOV_BR_EXCL_LINE
                 mantissa = -lng;
                 exponent = 0;
                 negative = YES;
@@ -281,7 +282,7 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
                                                      __DECIMAL_DIG__,
 #endif
                                                      PyFloat_AsDouble(pyValue)];
-        if (stringVal == nil) { // LCOV_BR_EXCL_LINE
+        if (unlikely(stringVal == nil)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_Error, "Converting double to NSString failed");
             return -1;
@@ -302,15 +303,15 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
 
         [stringVal release];
 
-        if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
-            return -1;        // LCOV_EXCL_LINE
+        if (unlikely(PyErr_Occurred())) // LCOV_BR_EXCL_LINE
+            return -1;                  // LCOV_EXCL_LINE
         return 0;
     }
 
     if (_NSDecimalNumber_Class == NULL) {
         _NSDecimalNumber_Class = PyObjCClass_New([NSDecimalNumber class]);
-        if (_NSDecimalNumber_Class == NULL) { // LCOV_BR_EXCL_LINE
-            PyErr_Clear();                    // LCOV_EXCL_LINE
+        if (unlikely(_NSDecimalNumber_Class == NULL)) { // LCOV_BR_EXCL_LINE
+            PyErr_Clear();                              // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
     }
 
@@ -376,8 +377,8 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
                 // LCOV_EXCL_STOP
             Py_END_ALLOW_THREADS
 
-            if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
-                return -1;        // LCOV_EXCL_LINE
+            if (unlikely(PyErr_Occurred())) // LCOV_BR_EXCL_LINE
+                return -1;                  // LCOV_EXCL_LINE
             return 0;
 
         } else {
@@ -408,7 +409,7 @@ decimal_hash(PyObject* self)
     NSString*  strrepr = NSDecimalString(&Decimal_Value(self), nil);
     NSUInteger hash    = [strrepr hash];
 
-    if ((Py_hash_t)hash == (Py_hash_t)-1) { // LCOV_BR_EXCL_LINE
+    if (unlikely((Py_hash_t)hash == (Py_hash_t)-1)) { // LCOV_BR_EXCL_LINE
         /* hash -1 is not used by Python */
         return -2; // LCOV_EXCL_LINE
     } else {
@@ -546,7 +547,7 @@ static PyObject* _Nullable decimal_result_to_python(NSCalculationError status,
 #define TRY_COERCE(left, right)                                                          \
     int r = decimal_coerce(&left, &right);                                               \
     if (r == 1) {                                                                        \
-        if (PyErr_Occurred())                                                            \
+        if (unlikely(PyErr_Occurred()))                                                  \
             PyErr_Clear();                                                               \
         Py_RETURN_NOTIMPLEMENTED;                                                        \
     }
@@ -670,12 +671,12 @@ decimal_coerce(PyObject** l, PyObject** r)
             goto error;
 
         left = (PyObject*)PyObject_New(DecimalObject, (PyTypeObject*)Decimal_Type);
-        if (left == NULL) // LCOV_BR_EXCL_LINE
-            goto error;   // LCOV_EXCL_LINE
+        if (unlikely(left == NULL)) // LCOV_BR_EXCL_LINE
+            goto error;             // LCOV_EXCL_LINE
 
         args = PyTuple_Pack(1, *l);
-        if (args == NULL) // LCOV_BR_EXCL_LINE
-            goto error;   // LCOV_EXCL_LINE
+        if (unlikely(args == NULL)) // LCOV_BR_EXCL_LINE
+            goto error;             // LCOV_EXCL_LINE
 
         res = decimal_init(left, args, NULL);
         if (res == -1)
@@ -691,12 +692,12 @@ decimal_coerce(PyObject** l, PyObject** r)
             goto error;
 
         right = (PyObject*)PyObject_New(DecimalObject, (PyTypeObject*)Decimal_Type);
-        if (right == NULL) // LCOV_BR_EXCL_LINE
-            goto error;    // LCOV_EXCL_LINE
+        if (unlikely(right == NULL)) // LCOV_BR_EXCL_LINE
+            goto error;              // LCOV_EXCL_LINE
 
         args = PyTuple_Pack(1, *r);
-        if (args == NULL) // LCOV_BR_EXCL_LINE
-            goto error;   // LCOV_EXCL_LINE
+        if (unlikely(args == NULL)) // LCOV_BR_EXCL_LINE
+            goto error;             // LCOV_EXCL_LINE
 
         res = decimal_init(right, args, NULL);
         if (res == -1)
@@ -733,8 +734,8 @@ decimal_coerce_compare(PyObject** l, PyObject** r)
     assert(Decimal_Check(*l)); /* documented guarantee */
     if (PyFloat_Check(*r)) {
         NSDecimal tmp;
-        if (PyObjC_number_to_decimal(*r, &tmp) == -1) { // LCOV_BR_EXCL_LINE
-            return 1;                                   // LCOV_EXCL_LINE
+        if (unlikely(PyObjC_number_to_decimal(*r, &tmp) == -1)) { // LCOV_BR_EXCL_LINE
+            return 1;                                             // LCOV_EXCL_LINE
         }
         *r = Decimal_New(&tmp);
     }
@@ -746,8 +747,8 @@ decimal_repr(PyObject* self)
 {
     NSString* val = NSDecimalString(&Decimal_Value(self), NULL);
     PyObject* tmp = id_to_python(val);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;   // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;             // LCOV_EXCL_LINE
     }
     PyObject* repr = PyObject_Str(tmp);
     Py_XDECREF(tmp);
@@ -760,8 +761,8 @@ Decimal_New(const NSDecimal* aDecimal)
     DecimalObject* result;
 
     result = PyObject_New(DecimalObject, (PyTypeObject*)Decimal_Type);
-    if (result == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
 
     result->objc_value = nil;
     result->value      = *aDecimal;
@@ -837,8 +838,8 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
         // LCOV_EXCL_STOP
     Py_END_ALLOW_THREADS
 
-    if (res == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;                      // LCOV_EXCL_LINE
+    if (unlikely(res == nil && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                                // LCOV_EXCL_LINE
     }
 
     return id_to_python(res);
@@ -886,8 +887,8 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
         // LCOV_EXCL_STOP
     Py_END_ALLOW_THREADS
 
-    if (res == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;                      // LCOV_EXCL_LINE
+    if (unlikely(res == nil && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                                // LCOV_EXCL_LINE
     }
 
     return id_to_python(res);
@@ -926,8 +927,8 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        me
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     return Decimal_New(&aDecimal);
@@ -937,16 +938,17 @@ int
 PyObjC_setup_nsdecimal(PyObject* m)
 {
     Decimal_Type = PyType_FromSpec(&decimal_spec);
-    if (Decimal_Type == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;              // LCOV_EXCL_LINE
+    if (unlikely(Decimal_Type == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                        // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(m, "NSDecimal", Decimal_Type) == -1) { // LCOV_BR_EXCL_LINE
-        return -1;                                                // LCOV_EXCL_LINE
+    if (unlikely(PyModule_AddObject(m, "NSDecimal", Decimal_Type)
+                 == -1)) { // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
     }
     Py_INCREF(Decimal_Type);
 
-    if (@encode(NSDecimal)[1] == '?') { // LCOV_BR_EXCL_LINE
+    if (likely(@encode(NSDecimal)[1] == '?')) { // LCOV_BR_EXCL_LINE
         Decimal_Encoding[0] = '{';
         Decimal_Encoding[1] = '\0';
         strlcat(Decimal_Encoding, "_NSDecimal", sizeof(Decimal_Encoding));
@@ -957,37 +959,39 @@ PyObjC_setup_nsdecimal(PyObject* m)
     Class classNSDecimalNumber = objc_lookUpClass("NSDecimalNumber");
     Class classNSNumber        = objc_lookUpClass("NSNumber");
 
-    if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
-            classNSDecimalNumber, @selector(initWithDecimal:),
-            call_NSDecimalNumber_initWithDecimal_, PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (unlikely(PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+                     classNSDecimalNumber, @selector(initWithDecimal:),
+                     call_NSDecimalNumber_initWithDecimal_, PyObjCUnsupportedMethod_IMP)
+                 < 0)) {
         return -1; // LCOV_EXCL_LINE
     }
 
     Class classNSDecimalNumberPlaceholder =
         objc_lookUpClass("NSDecimalNumberPlaceholder");
-    if (classNSDecimalNumberPlaceholder != Nil) { // LCOV_BR_EXCL_LINE
-        if (PyObjC_RegisterMethodMapping(         // LCOV_BR_EXCL_LINE
-                classNSDecimalNumberPlaceholder, @selector(initWithDecimal:),
-                call_NSDecimalNumber_initWithDecimal_, PyObjCUnsupportedMethod_IMP)
-            < 0) {
+    if (likely(classNSDecimalNumberPlaceholder != Nil)) { // LCOV_BR_EXCL_LINE
+        if (unlikely(PyObjC_RegisterMethodMapping(        // LCOV_BR_EXCL_LINE
+                         classNSDecimalNumberPlaceholder, @selector(initWithDecimal:),
+                         call_NSDecimalNumber_initWithDecimal_,
+                         PyObjCUnsupportedMethod_IMP)
+                     < 0)) {
 
             return -1; // LCOV_EXCL_LINE
         }
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSDecimalNumber, // LCOV_BR_EXCL_LINE
-                                     @selector(decimalNumberWithDecimal:),
-                                     call_NSDecimalNumber_decimalNumberWithDecimal_,
-                                     PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (unlikely(
+            PyObjC_RegisterMethodMapping(classNSDecimalNumber, // LCOV_BR_EXCL_LINE
+                                         @selector(decimalNumberWithDecimal:),
+                                         call_NSDecimalNumber_decimalNumberWithDecimal_,
+                                         PyObjCUnsupportedMethod_IMP)
+            < 0)) {
         return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
-            classNSNumber, @selector(decimalValue), call_NSDecimalNumber_decimalValue,
-            PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (unlikely(PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+                     classNSNumber, @selector(decimalValue),
+                     call_NSDecimalNumber_decimalValue, PyObjCUnsupportedMethod_IMP)
+                 < 0)) {
         return -1; // LCOV_EXCL_LINE
     }
 

@@ -67,12 +67,12 @@ int
 PyObjCFFI_Setup(PyObject* m __attribute__((__unused__)))
 {
     array_types = PyDict_New();
-    if (array_types == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;             // LCOV_EXCL_LINE
+    if (unlikely(array_types == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                       // LCOV_EXCL_LINE
     }
     struct_types = PyDict_New();
-    if (struct_types == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;              // LCOV_EXCL_LINE
+    if (unlikely(struct_types == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                        // LCOV_EXCL_LINE
     }
     return 0;
 }
@@ -186,7 +186,7 @@ num_struct_fields(const char* orig_argtype)
 
     argtype++;
     while (*argtype != _C_STRUCT_E) {
-        if (*argtype == '"') { // LCOV_BR_EXCL_LINE
+        if (unlikely(*argtype == '"')) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             /* Skip field name */
             argtype++;
@@ -196,8 +196,8 @@ num_struct_fields(const char* orig_argtype)
         } // LCOV_EXCL_LINE
 
         argtype = PyObjCRT_SkipTypeSpec(argtype);
-        if (argtype == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;         // LCOV_EXCL_LINE
+        if (unlikely(argtype == NULL)) { // LCOV_BR_EXCL_LINE
+            return -1;                   // LCOV_EXCL_LINE
         }
         res++;
     }
@@ -238,8 +238,8 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     assert(array_types != NULL);
 
     PyObject* typestr = PyUnicode_FromString(argtype);
-    if (typestr == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;       // LCOV_EXCL_LINE
+    if (unlikely(typestr == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                 // LCOV_EXCL_LINE
     }
     switch (PyDict_GetItemRef(array_types, typestr, &v)) { // LCOV_BR_EXCL_LINE
     case -1:
@@ -258,7 +258,7 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     field_count = atoi(argtype + 1);
 
     type = PyMem_Malloc(sizeof(*type));
-    if (type == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(type == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(typestr);
         PyErr_NoMemory();
@@ -275,7 +275,7 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
      */
     type->type     = FFI_TYPE_STRUCT;
     type->elements = PyMem_Malloc((1 + field_count) * sizeof(ffi_type*));
-    if (type->elements == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(type->elements == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(typestr);
         PyMem_Free(type);
@@ -287,7 +287,7 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     while (isdigit(*++argtype))
         ;
     type->elements[0] = PyObjCFFI_Typestr2FFI(argtype);
-    if (type->elements[0] == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(type->elements[0] == NULL)) { // LCOV_BR_EXCL_LINE
         /* Unsupported element type */
         // LCOV_EXCL_START
         Py_DECREF(typestr);
@@ -302,7 +302,7 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
     type->elements[field_count] = 0;
 
     v = PyCapsule_New(type, "objc.__ffi_type__", cleanup_ffitype_capsule);
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(typestr);
         free_type(type);
@@ -319,7 +319,7 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
      */
     PyObject* actual = NULL;
     r                = PyDict_SetDefaultRef(array_types, typestr, v, &actual);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(v);
         Py_DECREF(typestr);
@@ -329,7 +329,7 @@ static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
 
     type = (ffi_type*)PyCapsule_GetPointer(actual, "objc.__ffi_type__");
     Py_CLEAR(actual);
-    if (type == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(type == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(v);
         Py_DECREF(typestr);
@@ -352,8 +352,8 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
     int         r;
 
     PyObject* typestr = PyUnicode_FromString(argtype);
-    if (typestr == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;       // LCOV_EXCL_LINE
+    if (unlikely(typestr == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                 // LCOV_EXCL_LINE
     }
     switch (PyDict_GetItemRef(struct_types, typestr, &v)) { // LCOV_BR_EXCL_LINE
     case -1:
@@ -372,7 +372,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
      * create it.
      */
     field_count = num_struct_fields(argtype);
-    if (field_count == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(field_count == -1)) { // LCOV_BR_EXCL_LINE
         /* NOTE: this cannot happen, the code calling this function has
          * already checked the validity of 'argtype'
          */
@@ -384,7 +384,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
     }
 
     type = PyMem_Malloc(sizeof(*type));
-    if (type == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(type == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(typestr);
         PyErr_NoMemory();
@@ -397,7 +397,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
     type->type      = FFI_TYPE_STRUCT;
     type->elements  = PyMem_Malloc((1 + field_count) * sizeof(ffi_type*));
 
-    if (type->elements == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(type->elements == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(typestr);
         PyMem_Free(type);
@@ -415,7 +415,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
         curtype++;
 
         while (*curtype != _C_STRUCT_E) {
-            if (*curtype == '"') { // LCOV_BR_EXCL_LINE
+            if (unlikely(*curtype == '"')) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 /* Skip field name */
                 curtype++;
@@ -426,7 +426,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
 
             type->elements[field_count] = PyObjCFFI_Typestr2FFI(curtype);
 
-            if (type->elements[field_count] == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(type->elements[field_count] == NULL)) { // LCOV_BR_EXCL_LINE
                 /* NOTE: Can only happen when running out of memory, or
                  * when the type string is invalid. The type string has
                  * already been checked by our caller.
@@ -441,7 +441,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
             field_count++;
             curtype = PyObjCRT_SkipTypeSpec(curtype);
 
-            if (curtype == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(curtype == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(typestr);
                 PyMem_Free(type->elements);
@@ -454,7 +454,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
     type->elements[field_count] = NULL;
 
     v = PyCapsule_New(type, "objc.__ffi_type__", cleanup_ffitype_capsule);
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(typestr);
         free_type(type);
@@ -464,7 +464,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
 
     PyObject* actual = NULL;
     r                = PyDict_SetDefaultRef(struct_types, typestr, v, &actual);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(typestr);
         Py_DECREF(v);
@@ -474,7 +474,7 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
 
     type = (ffi_type*)PyCapsule_GetPointer(actual, "objc.__ffi_type__");
     Py_CLEAR(actual);
-    if (type == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(type == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(typestr);
         Py_DECREF(v);
@@ -491,8 +491,8 @@ static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
 ffi_type* _Nullable PyObjCFFI_Typestr2FFI(const char* argtype)
 {
     const char* _Nullable t = PyObjCRT_SkipTypeQualifiers(argtype);
-    if (t == NULL)   // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+    if (unlikely(t == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     argtype = t;
     switch (*argtype) { // LCOV_BR_EXCL_LINE
     case _C_VOID:
@@ -660,26 +660,26 @@ extract_count(const char* type, void* pvalue)
             return (Py_ssize_t)((*(CFRange**)pvalue)->length);
         }
 
-        if (strncmp(type + 1, // LCOV_BR_EXCL_LINE
-                    "{_CFRange=qq}", sizeof("{_CFRange=qq}") - 1)
-            == 0) {
+        if (unlikely(strncmp(type + 1, // LCOV_BR_EXCL_LINE
+                             "{_CFRange=qq}", sizeof("{_CFRange=qq}") - 1)
+                     == 0)) {
             return (Py_ssize_t)((*(CFRange**)pvalue)->length); // LCOV_EXCL_LINE
         }
 
-        if (strncmp(type + 1, // LCOV_BR_EXCL_LINE
-                    "{_CFRange=ll}", sizeof("{_CFRange=ll}") - 1)
-            == 0) {
+        if (unlikely(strncmp(type + 1, // LCOV_BR_EXCL_LINE
+                             "{_CFRange=ll}", sizeof("{_CFRange=ll}") - 1)
+                     == 0)) {
             return (Py_ssize_t)((*(CFRange**)pvalue)->length); // LCOV_EXCL_LINE
         }
-        if (strncmp(type + 1, // LCOV_BR_EXCL_LINE
-                    "{CFRange=qq}", sizeof("{CFRange=qq}") - 1)
-            == 0) {
+        if (unlikely(strncmp(type + 1, // LCOV_BR_EXCL_LINE
+                             "{CFRange=qq}", sizeof("{CFRange=qq}") - 1)
+                     == 0)) {
             return (Py_ssize_t)((*(CFRange**)pvalue)->length); // LCOV_EXCL_LINE
         }
 
-        if (strncmp(type + 1, // LCOV_BR_EXCL_LINE
-                    "{CFRange=ll}", sizeof("{CFRange=ll}") - 1)
-            == 0) {
+        if (unlikely(strncmp(type + 1, // LCOV_BR_EXCL_LINE
+                             "{CFRange=ll}", sizeof("{CFRange=ll}") - 1)
+                     == 0)) {
             return (Py_ssize_t)((*(CFRange**)pvalue)->length); // LCOV_EXCL_LINE
         }
 
@@ -694,15 +694,15 @@ extract_count(const char* type, void* pvalue)
         return (Py_ssize_t)(((CFRange*)pvalue)->length);
     }
 
-    if (strncmp(type, // LCOV_BR_EXCL_LINE
-                "{CFRange=qq}", sizeof("{CFRange=qq}") - 1)
-        == 0) {
+    if (unlikely(strncmp(type, // LCOV_BR_EXCL_LINE
+                         "{CFRange=qq}", sizeof("{CFRange=qq}") - 1)
+                 == 0)) {
         return (Py_ssize_t)(((CFRange*)pvalue)->length); // LCOV_EXCL_LINE
     }
 
-    if (strncmp(type, // LCOV_BR_EXCL_LINE
-                "{CFRange=ll}", sizeof("{CFRange=ll}") - 1)
-        == 0) {
+    if (unlikely(strncmp(type, // LCOV_BR_EXCL_LINE
+                         "{CFRange=ll}", sizeof("{CFRange=ll}") - 1)
+                 == 0)) {
         return (Py_ssize_t)(((CFRange*)pvalue)->length); // LCOV_EXCL_LINE
     }
 
@@ -750,7 +750,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
 
     } else if (PyUnicode_Check(py_format)) {
         format = PyUnicode_AsUTF8(py_format);
-        if (format != NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(format != NULL)) { // LCOV_BR_EXCL_LINE
             encoded = py_format;
             Py_INCREF(encoded);
 
@@ -806,7 +806,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
             }
             format++;
             byref[curarg] = PyMem_Malloc(sizeof(int));
-            if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(encoded);
                 return -1;
@@ -841,7 +841,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
                     return -1;
                 }
                 byref[curarg] = PyMem_Malloc(sizeof(long long));
-                if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+                if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_DECREF(encoded);
                     return -1;
@@ -917,7 +917,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
             STATIC_ASSERT(sizeof(wchar_t) == 4, "size of wchar_t must be 4");
 
             byref[curarg] = PyMem_Malloc(sizeof(int));
-            if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_NoMemory();
                 Py_DECREF(encoded);
@@ -964,7 +964,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
                 typecode      = _C_INT;
                 byref[curarg] = PyMem_Malloc(sizeof(int));
             }
-            if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_NoMemory();
                 return -1;
@@ -1007,7 +1007,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
                 byref[curarg] = PyMem_Malloc(sizeof(int));
                 typecode      = _C_UINT;
             }
-            if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_NoMemory();
                 Py_DECREF(encoded);
@@ -1040,7 +1040,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
             } else {
                 byref[curarg] = PyMem_Malloc(sizeof(long double));
             }
-            if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_NoMemory();
                 Py_DECREF(encoded);
@@ -1071,7 +1071,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
                 }
 
                 byref[curarg] = PyUnicode_AsWideCharString(v, NULL);
-                if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+                if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_DECREF(encoded);
                     return -1;
@@ -1084,7 +1084,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
                 /* char */
                 typecode      = _C_CHARPTR;
                 byref[curarg] = PyMem_Malloc(sizeof(char*));
-                if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+                if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     PyErr_NoMemory();
                     Py_DECREF(encoded);
@@ -1108,7 +1108,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
             /* format %K is only used by NSPredicate */
             typecode      = _C_ID;
             byref[curarg] = PyMem_Malloc(sizeof(char*));
-            if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_NoMemory();
                 Py_DECREF(encoded);
@@ -1129,7 +1129,7 @@ parse_printf_args(PyObject* py_format, PyObject* const* args, size_t nargs,
         case 'p':
             /* pointer */
             byref[curarg] = PyMem_Malloc(sizeof(char*));
-            if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_NoMemory();
                 Py_DECREF(encoded);
@@ -1200,8 +1200,8 @@ parse_varargs_array(PyObjCMethodSignature* methinfo, PyObject* const* args, size
 
     for (; argoffset < maxarg; curarg++, argoffset++) {
         byref[curarg] = PyMem_Malloc(argSize);
-        if (byref[curarg] == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;               // LCOV_EXCL_LINE
+        if (unlikely(byref[curarg] == NULL)) { // LCOV_BR_EXCL_LINE
+            return -1;                         // LCOV_EXCL_LINE
         }
         if (depythonify_c_value(argType->type, args[argoffset], byref[curarg]) < 0) {
 
@@ -1258,7 +1258,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     Py_ssize_t curArg = 1; /* Leave space for PY_VECTORCALL_ARGUMENTS_OFFSET */
 
     rettype = methinfo->rettype->type;
-    if (rettype == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(rettype == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_InternalError, "closure has NULL returntype");
         goto error;
@@ -1289,13 +1289,13 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         startArg = 2;
 
         pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
-        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-            goto error;       // LCOV_EXCL_LINE
+        if (unlikely(pyself == NULL)) { // LCOV_BR_EXCL_LINE
+            goto error;                 // LCOV_EXCL_LINE
         }
 
         pyself = PyObjC_AdjustSelf(pyself);
-        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
-            goto error;       // LCOV_EXCL_LINE
+        if (unlikely(pyself == NULL)) { // LCOV_BR_EXCL_LINE
+            goto error;                 // LCOV_EXCL_LINE
         }
         if (insertArg) {
             arglist[curArg++] = insertArg;
@@ -1324,7 +1324,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     for (i = startArg; i < methinfo_size; i++) {
 
         const char* argtype = methinfo->argtype[i]->type;
-        if (argtype == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(argtype == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_SetString(PyObjCExc_InternalError, "closure has NULL argtype");
             goto error;
@@ -1515,7 +1515,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                             PyObjCMethodSignature* sig =
                                 PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
 
-                            if (sig == NULL) { // LCOV_BR_EXCL_LINE
+                            if (unlikely(sig == NULL)) { // LCOV_BR_EXCL_LINE
                                 // LCOV_EXCL_START
                                 Py_DECREF(v);
                                 v = NULL;
@@ -1625,7 +1625,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         count = extract_count(
                             methinfo->argtype[methinfo->rettype->arrayArg]->type,
                             args[methinfo->rettype->arrayArg]);
-                        if (count == -1 && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                        if (unlikely(count == -1
+                                     && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
                             goto error;
                         }
                         err = depythonify_c_return_array_count(
@@ -1720,7 +1721,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                 case _C_OUT:
                     if (argtype[1] == _C_PTR) {
                         argtype += 2;
-                    } else if (argtype[1] == _C_CHARPTR) { // LCOV_BR_EXCL_LINE
+                    } else if (likely(argtype[1] == _C_CHARPTR)) { // LCOV_BR_EXCL_LINE
                         argtype = gCharEncoding;
                     } else {
                         /* Should never happen in practice */
@@ -2261,7 +2262,7 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
 
     if (PyObjC_is_pyfunction(callable) || PyObjC_is_pymethod(callable)) {
         func_code = PyObjC_get_code(callable);
-        if (func_code == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(func_code == NULL)) { // LCOV_BR_EXCL_LINE
             /* PyObjC_get_code always passes for function and
              * method objects.
              *
@@ -2277,7 +2278,7 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
         *defaultCount = 0;
 
         *defaultCount = PyObjC_num_defaults(callable);
-        if (*defaultCount == -1) { // LCOV_BR_EXCL_LINE
+        if (unlikely(*defaultCount == -1)) { // LCOV_BR_EXCL_LINE
             /* Cannot fail for a builtin function or method */
             // LCOV_EXCL_START
             Py_DECREF(func_code);
@@ -2361,8 +2362,8 @@ PyObjC_callback_function _Nullable PyObjCFFI_MakeFunctionClosure(
     PyObjC_callback_function closure;
 
     stubUserdata = PyMem_Malloc(sizeof(*stubUserdata));
-    if (stubUserdata == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;            // LCOV_EXCL_LINE
+    if (unlikely(stubUserdata == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                      // LCOV_EXCL_LINE
     }
 
     stubUserdata->methinfo = methinfo;
@@ -2509,8 +2510,8 @@ IMP _Nullable PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL
     IMP                    closure;
 
     stubUserdata = PyMem_Malloc(sizeof(*stubUserdata));
-    if (stubUserdata == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;            // LCOV_EXCL_LINE
+    if (unlikely(stubUserdata == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                      // LCOV_EXCL_LINE
     }
 
     stubUserdata->methinfo = methinfo;
@@ -2606,8 +2607,8 @@ PyObjCBlockFunction _Nullable PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature*
     assert(callable != NULL);
 
     stubUserdata = PyMem_Malloc(sizeof(*stubUserdata));
-    if (stubUserdata == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;            // LCOV_EXCL_LINE
+    if (unlikely(stubUserdata == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                      // LCOV_EXCL_LINE
     }
 
     stubUserdata->methinfo = methinfo;
@@ -2994,7 +2995,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(resttype));
                 sz         = PyObjCRT_SizeOfType(resttype);
                 byref[i]   = PyMem_Malloc(sz);
-                if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     PyErr_NoMemory();
                     return -1;
@@ -3034,7 +3035,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
                     sz = PyObjCRT_SizeOfType(resttype) * methinfo->argtype[i]->arrayArg;
                     byref[i] = PyMem_Malloc(sz);
-                    if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                    if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                         // LCOV_EXCL_START
                         PyErr_NoMemory();
                         return -1;
@@ -3094,7 +3095,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
                 sz       = PyObjCRT_SizeOfType(argtype);
                 byref[i] = PyMem_Malloc(sz);
-                if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     PyErr_NoMemory();
                     return -1;
@@ -3225,7 +3226,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                         switch (methinfo->argtype[i]->ptrType) { // LCOV_BR_EXCL_LINE
                         case PyObjC_kPointerPlain:
                             byref[i] = PyMem_Malloc(PyObjCRT_SizeOfType(resttype));
-                            if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                            if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                                 // LCOV_EXCL_START
                                 PyErr_NoMemory();
                                 error = -1;
@@ -3264,7 +3265,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                         case PyObjC_kNullTerminatedArray:
                             if (*resttype == _C_CHAR_AS_TEXT && PyBytes_Check(argument)) {
                                 byref[i] = PyMem_Malloc(PyBytes_Size(argument) + 1);
-                                if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                                if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                                     // LCOV_EXCL_START
                                     PyErr_NoMemory();
                                     error = -1;
@@ -3278,7 +3279,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                             } else if (*resttype == _C_CHAR_AS_TEXT
                                        && PyByteArray_Check(argument)) {
                                 byref[i] = PyMem_Malloc(PyByteArray_Size(argument) + 1);
-                                if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                                if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                                     // LCOV_EXCL_START
                                     PyErr_NoMemory();
                                     error = -1;
@@ -3297,7 +3298,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                     error = -1;
                                 } else {
                                     byref[i] = PyMem_Malloc(PyBytes_Size(as_utf16));
-                                    if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                                    if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                                         // LCOV_EXCL_START
                                         Py_CLEAR(as_utf16);
                                         PyErr_NoMemory();
@@ -3320,7 +3321,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                 } else {
                                     byref[i] = PyMem_Malloc(
                                         count * PyObjCRT_SizeOfType(resttype));
-                                    if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                                    if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                                         // LCOV_EXCL_START
                                         PyErr_NoMemory();
                                         error = -1;
@@ -3431,7 +3432,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                         if (error != -1) {
                             byref[i] = PyMem_Malloc(view.len);
 
-                            if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                            if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                                 // LCOV_EXCL_START
                                 PyErr_NoMemory();
                                 error = -1;
@@ -3668,7 +3669,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                         PyErr_Clear();
 
                         byref[i] = PyMem_Malloc(count * PyObjCRT_SizeOfType(resttype));
-                        if (byref[i] == NULL) { // LCOV_BR_EXCL_LINE
+                        if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                             // LCOV_EXCL_START
                             PyErr_NoMemory();
                             return -1;
@@ -3877,8 +3878,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
         const char* tp = methinfo->rettype->type;
 
         tp = PyObjCRT_SkipTypeQualifiers(tp);
-        if (tp == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;  // LCOV_EXCL_LINE
+        if (unlikely(tp == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;            // LCOV_EXCL_LINE
         }
 
         /* Pointer values: */
@@ -4014,8 +4015,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                 id v        = [*(id*)pRetval copy];
                 objc_result = pythonify_c_return_value(tp, &v);
                 [v release];
-                if (objc_result == NULL) { // LCOV_BR_EXCL_LINE
-                    return NULL;           // LCOV_EXCL_LINE
+                if (unlikely(objc_result == NULL)) { // LCOV_BR_EXCL_LINE
+                    return NULL;                     // LCOV_EXCL_LINE
                 }
 
                 if (PyObjCObject_Check(objc_result)
@@ -4099,8 +4100,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
         if (*methinfo->rettype->type == _C_VOID) {
             if (byref_out_count > 1) {
                 result = PyTuple_New(byref_out_count);
-                if (result == NULL) { // LCOV_BR_EXCL_LINE
-                    return NULL;      // LCOV_EXCL_LINE
+                if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+                    return NULL;                // LCOV_EXCL_LINE
                 }
             } else {
                 result = NULL;
@@ -4110,8 +4111,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
 
         } else {
             result = PyTuple_New(byref_out_count + 1);
-            if (result == NULL) { // LCOV_BR_EXCL_LINE
-                return NULL;      // LCOV_EXCL_LINE
+            if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+                return NULL;                // LCOV_EXCL_LINE
             }
             PyTuple_SET_ITEM(result, 0, objc_result);
             py_arg = 1;
@@ -4285,8 +4286,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                     }
 
                     if (result != NULL) {
-                        if (PyTuple_SetItem(result, py_arg++, v)
-                            < 0) { // LCOV_BR_EXCL_LINE
+                        if (unlikely(PyTuple_SetItem(result, py_arg++, v)
+                                     < 0)) { // LCOV_BR_EXCL_LINE
                             /* XXX: Recheck the code and replace with
                              *      PyTuple_SET_ITEM + assertion.
                              */
@@ -4603,7 +4604,7 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     }
 
     argbuf = PyMem_Malloc(argbuf_len);
-    if (argbuf == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(argbuf == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         goto error_cleanup;
@@ -5055,11 +5056,11 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
 
     if (unlikely(cif == NULL)) {
         cif = PyObjCFFI_CIFForSignature(methinfo);
-        if (cif == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;   // LCOV_EXCL_LINE
+        if (unlikely(cif == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;             // LCOV_EXCL_LINE
         }
         if (PyObjCIMP_Check(aMeth)) {
-            if (PyObjCIMP_SetCIF(aMeth, cif) == -1) { // LCOV_BR_EXCL_LINE
+            if (unlikely(PyObjCIMP_SetCIF(aMeth, cif) == -1)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyObjCFFI_FreeCIF(cif);
                 return NULL;
@@ -5123,7 +5124,7 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
         }
     }
 
-    if (self_obj == nil) { // LCOV_BR_EXCL_LINE
+    if (unlikely(self_obj == nil)) { // LCOV_BR_EXCL_LINE
         /* XXX: At the moment the only way to get here is a meta class
          * has a Nil Class value, which should never happen.
          */
@@ -5231,7 +5232,7 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 
     /* Build FFI argumentlist description */
     cl_arg_types = PyMem_Malloc(sizeof(ffi_type*) * (2 + Py_SIZE(methinfo)));
-    if (cl_arg_types == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(cl_arg_types == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyMem_Free(cl_ret_type);
         PyErr_NoMemory();
@@ -5241,7 +5242,7 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 
     for (i = 0; i < Py_SIZE(methinfo); i++) {
         cl_arg_types[i] = PyObjCFFI_Typestr2FFI(methinfo->argtype[i]->type);
-        if (cl_arg_types[i] == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(cl_arg_types[i] == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyMem_Free(cl_arg_types);
             return NULL;
@@ -5251,7 +5252,7 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 
     /* Create the invocation description */
     cif = PyMem_Malloc(sizeof(*cif));
-    if (cif == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(cif == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyMem_Free(cl_arg_types);
         PyErr_NoMemory();
@@ -5289,7 +5290,7 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
                           cl_arg_types);
     }
 
-    if (rv != FFI_OK) { // LCOV_BR_EXCL_LINE
+    if (unlikely(rv != FFI_OK)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyMem_Free(cif);
         PyMem_Free(cl_arg_types);
@@ -5332,9 +5333,9 @@ IMP _Nullable PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo,
         return NULL;
     }
 
-    if (alloc_prepped_closure // LCOV_BR_EXCL_LINE
-        (&cl, cif, &codeloc, (void*)func, userdata)
-        == -1) {
+    if (unlikely(alloc_prepped_closure // LCOV_BR_EXCL_LINE
+                 (&cl, cif, &codeloc, (void*)func, userdata)
+                 == -1)) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
         return NULL;
@@ -5397,8 +5398,8 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
     assert(typestr != NULL);
 
     arglist[0] = PyObjCFFI_Typestr2FFI(typestr);
-    if (arglist[0] == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;            // LCOV_EXCL_LINE
+    if (unlikely(arglist[0] == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
     }
     if (*typestr == _C_VOID) {
         values[0] = NULL;
@@ -5410,7 +5411,7 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
          */
         values[0] =
             PyMem_Malloc(MAX(PyObjCRT_SizeOfType(typestr), (Py_ssize_t)sizeof(long)));
-        if (values[0] == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(values[0] == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             rv = -1;
             goto cleanup;
@@ -5421,7 +5422,7 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
     for (i = 0; i < [signature numberOfArguments]; i++) {
         typestr        = [signature getArgumentTypeAtIndex:i];
         arglist[i + 1] = PyObjCFFI_Typestr2FFI(typestr);
-        if (arglist[i + 1] == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(arglist[i + 1] == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             rv = -1;
             goto cleanup;
@@ -5431,7 +5432,7 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
         /* See above, allocate at least enough memory for a long */
         values[i + 1] =
             PyMem_Malloc(MAX(PyObjCRT_SizeOfType(typestr), (Py_ssize_t)sizeof(long)));
-        if (values[i + 1] == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(values[i + 1] == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             rv = -1;
             goto cleanup;
@@ -5445,7 +5446,7 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
     int     r =
         ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (unsigned int)[signature numberOfArguments],
                      arglist[0], arglist + 1);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r != FFI_OK)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         rv = -1;
         goto cleanup;

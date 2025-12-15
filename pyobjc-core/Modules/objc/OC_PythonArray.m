@@ -201,8 +201,8 @@ NS_ASSUME_NONNULL_BEGIN
 
         PyObject* args[4] = {NULL, value, NULL, v};
         args[2]           = PyLong_FromUnsignedLong(idx);
-        if (args[2] == NULL) {        // LCOV_BR_EXCL_LINE
-            PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+        if (unlikely(args[2] == NULL)) { // LCOV_BR_EXCL_LINE
+            PyObjC_GIL_FORWARD_EXC();    // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
 
         w = PyObject_VectorcallMethod(PyObjCNM_insert, args + 1,
@@ -278,7 +278,7 @@ NS_ASSUME_NONNULL_BEGIN
         Py_ssize_t size = PyTuple_Size(value);
 
         if ([coder allowsKeyedCoding]) {
-            if (size > INT_MAX) { // LCOV_BR_EXCL_LINE
+            if (unlikely(size > INT_MAX)) { // LCOV_BR_EXCL_LINE
                 /* Excluded from coverage tests because this would require creating
                  * rather huge tuples, with corresponding memory usage.
                  */
@@ -346,7 +346,7 @@ NS_ASSUME_NONNULL_BEGIN
      */
     NSUInteger i;
 
-    if (count > 0 && objects == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(count > 0 && objects == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         [self release];
         return nil;
@@ -354,8 +354,8 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        if (PyTuple_CheckExact(value) // LCOV_BR_EXCL_LINE
-            && (NSUInteger)PyTuple_Size(value) == count) {
+        if (unlikely(PyTuple_CheckExact(value) // LCOV_BR_EXCL_LINE
+                     && (NSUInteger)PyTuple_Size(value) == count)) {
             for (i = 0; i < count; i++) {
                 PyObject* v;
 
@@ -394,7 +394,7 @@ NS_ASSUME_NONNULL_BEGIN
                 }
 
                 r = PyList_Append(value, v);
-                if (r == -1) {                // LCOV_BR_EXCL_LINE
+                if (unlikely(r == -1)) {      // LCOV_BR_EXCL_LINE
                     PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
                 } // LCOV_EXCL_LINE
 
@@ -414,7 +414,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = id_to_python(other);
-        if (v == NULL) {              // LCOV_BR_EXCL_LINE
+        if (unlikely(v == NULL)) {    // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
         SET_FIELD(value, v);
@@ -461,8 +461,8 @@ NS_ASSUME_NONNULL_BEGIN
         // LCOV_EXCL_START
         PyObjC_BEGIN_WITH_GIL
             value = PyList_New(0);
-            if (value == NULL) {          // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();  // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
@@ -478,8 +478,8 @@ NS_ASSUME_NONNULL_BEGIN
             t     = value;
             value = PyList_AsTuple(t);
             Py_DECREF(t);
-            if (value == NULL) {          // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();  // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         PyObjC_END_WITH_GIL
         return self;
@@ -488,8 +488,8 @@ NS_ASSUME_NONNULL_BEGIN
     case 2:
         PyObjC_BEGIN_WITH_GIL
             value = PyList_New(0);
-            if (value == NULL) {          // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();  // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
@@ -501,8 +501,8 @@ NS_ASSUME_NONNULL_BEGIN
     case 3:
         PyObjC_BEGIN_WITH_GIL
             value = PyList_New(0);
-            if (value == NULL) {          // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();  // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
 
             PyObject* decoded = PyObjC_decodeWithCoder(coder, self);
@@ -547,8 +547,8 @@ NS_ASSUME_NONNULL_BEGIN
 
         PyObjC_BEGIN_WITH_GIL
             value = PyTuple_New(size);
-            if (value == NULL) {          // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();  // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
@@ -587,8 +587,8 @@ NS_ASSUME_NONNULL_BEGIN
 
         PyObjC_BEGIN_WITH_GIL
             value = PyTuple_New(size);
-            if (value == NULL) {          // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();  // LCOV_EXCL_LINE
             }
 
         PyObjC_END_WITH_GIL
@@ -646,7 +646,8 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         } // LCOV_EXCL_LINE
 
-        if (depythonify_python_object(copy, &result) == -1) { // LCOV_BR_EXCL_LINE
+        if (unlikely(depythonify_python_object(copy, &result)
+                     == -1)) { // LCOV_BR_EXCL_LINE
             /* Should never fail, 'copy' is an instance of PyList_Type */
             // LCOV_EXCL_START
             Py_DECREF(copy);

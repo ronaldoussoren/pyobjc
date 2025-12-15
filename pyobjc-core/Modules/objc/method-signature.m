@@ -115,7 +115,7 @@ static PyObject* _Nullable sig_str(PyObject* _self)
 {
     PyObjCMethodSignature* self = (PyObjCMethodSignature*)_self;
     PyObject*              v    = PyObjCMethodSignature_AsDict(self);
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Clear();
         return PyUnicode_FromString(self->signature);
@@ -276,7 +276,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     }
 
     Py_ssize_t result_size = PyObjCRT_SizeOfReturnType(methinfo->rettype->type);
-    if (result_size == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(result_size == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Clear();
         return;
@@ -285,7 +285,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
 
     int r = PyObjCFFI_CountArguments(methinfo, 0, &byref_in_count, &byref_out_count,
                                      &plain_count, &argbuf_len, &variadic_args);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         /* Setting up the methinfo already validated the type
          * encodings, which means the function cannot fail.
          */
@@ -295,7 +295,8 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
         // LCOV_EXCL_STOP
     }
 
-    if (byref_in_count || byref_out_count || variadic_args) { // LCOV_BR_EXCL_LINE
+    if (unlikely(byref_in_count || byref_out_count
+                 || variadic_args)) { // LCOV_BR_EXCL_LINE
         /* All of these are caught by earlier checks */
         return; // LCOV_EXCL_LINE
     }
@@ -313,7 +314,7 @@ static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
     struct _PyObjC_ArgDescr* _Nullable tmpl)
 {
     struct _PyObjC_ArgDescr* retval = PyMem_Malloc(sizeof(*retval));
-    if (retval == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(retval == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
@@ -383,8 +384,8 @@ setup_type(struct _PyObjC_ArgDescr* meta, const char* type)
         e                  = PyObjCRT_SkipTypeSpec(c);
         meta->typeOverride = YES;
         meta->type         = PyMem_Malloc((withoutModifiers - type) + (e - c) + 3);
-        if (meta->type == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;            // LCOV_EXCL_LINE
+        if (unlikely(meta->type == NULL)) { // LCOV_BR_EXCL_LINE
+            return -1;                      // LCOV_EXCL_LINE
         }
 
         char* cur;
@@ -450,14 +451,14 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
     }
 
     char* signature_copy = PyObjCUtil_Strdup(signature);
-    if (signature_copy == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;              // LCOV_EXCL_LINE
+    if (unlikely(signature_copy == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                        // LCOV_EXCL_LINE
     }
 
     retval = PyObject_NewVar(PyObjCMethodSignature,
                              (PyTypeObject*)PyObjCMethodSignature_Type, nargs /*+1*/);
 
-    if (retval == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(retval == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyMem_Free(signature_copy);
         PyErr_NoMemory();
@@ -499,7 +500,7 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
 
     if (unlikely(retval->rettype->type == NULL)) {
         retval->rettype = alloc_descr(NULL);
-        if (retval->rettype == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(retval->rettype == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(retval);
             return NULL;
@@ -510,7 +511,7 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
          * to avoid crapping out one (oneway void) methods.
          */
         assert(retval->signature != NULL);
-        if (setup_type(retval->rettype, cur) < 0) { // LCOV_BR_EXCL_LINE
+        if (unlikely(setup_type(retval->rettype, cur) < 0)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(retval);
             return NULL;
@@ -552,7 +553,8 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
                 // LCOV_EXCL_STOP
             }
             assert(cur != NULL);
-            if (setup_type(retval->argtype[nargs], cur) < 0) { // LCOV_BR_EXCL_LINE
+            if (unlikely(setup_type(retval->argtype[nargs], cur)
+                         < 0)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(retval);
                 return NULL;

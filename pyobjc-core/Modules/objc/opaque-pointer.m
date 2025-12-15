@@ -92,8 +92,8 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
         }
 
         result = PyObject_GC_New(OpaquePointerObject, type);
-        if (result == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;      // LCOV_EXCL_LINE
+        if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                // LCOV_EXCL_LINE
         }
 
         result->pointer_value = p;
@@ -138,8 +138,8 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
         }
 
         result = PyObject_GC_New(OpaquePointerObject, type);
-        if (result == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;      // LCOV_EXCL_LINE
+        if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                // LCOV_EXCL_LINE
         }
 
         result->pointer_value = p;
@@ -183,7 +183,7 @@ opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** arg
     assert(pointer_value != NULL);
 
     result = PyObject_GC_New(OpaquePointerObject, opaque_type);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         *(PyObject**)retval = NULL;
         // LCOV_EXCL_STOP
@@ -245,26 +245,26 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     if (new_cif == NULL) {
         PyObjCMethodSignature* signature;
         signature = PyObjCMethodSignature_WithMetaData(new_cif_signature, NULL, NO);
-        if (signature == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;         // LCOV_EXCL_LINE
+        if (unlikely(signature == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                   // LCOV_EXCL_LINE
         }
         new_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
-        if (new_cif == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;       // LCOV_EXCL_LINE
+        if (unlikely(new_cif == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                 // LCOV_EXCL_LINE
         }
     } // LCOV_BR_EXCL_LINE
 
     if (convert_cif == NULL) {
         PyObjCMethodSignature* signature;
         signature = PyObjCMethodSignature_WithMetaData(convert_cif_signature, NULL, YES);
-        if (signature == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;         // LCOV_EXCL_LINE
+        if (unlikely(signature == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                   // LCOV_EXCL_LINE
         }
         convert_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
-        if (convert_cif == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;           // LCOV_EXCL_LINE
+        if (unlikely(convert_cif == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                     // LCOV_EXCL_LINE
         }
     } // LCOV_BR_EXCL_LINE
 
@@ -301,7 +301,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     if (docstr == NULL) {
         /* Set slot with Py_tp_doc to NULL */
         PyType_Slot* docslot = opaque_slots + 5;
-        if (docslot->slot != Py_tp_doc) { // LCOV_BR_EXCL_LINE
+        if (unlikely(docslot->slot != Py_tp_doc)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_SetString(PyExc_RuntimeError, "tp_doc not in expected slot");
             goto error_cleanup;
@@ -329,23 +329,24 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
         .slots     = opaque_slots,
     };
 
-    if (opaque_spec.name == NULL) { // LCOV_BR_EXCL_LINE
-        goto error_cleanup;         // LCOV_EXCL_LINE
+    if (unlikely(opaque_spec.name == NULL)) { // LCOV_BR_EXCL_LINE
+        goto error_cleanup;                   // LCOV_EXCL_LINE
     } // LCOV_EXCL_LINE
 
     newType = PyType_FromSpec(&opaque_spec);
-    if (newType == NULL) {                   // LCOV_BR_EXCL_LINE
+    if (unlikely(newType == NULL)) {         // LCOV_BR_EXCL_LINE
         PyMem_Free((char*)opaque_spec.name); // LCOV_EXCL_LINE
         goto error_cleanup;                  // LCOV_EXCL_LINE
     }
 
     w = PyBytes_FromString(typestr);
-    if (w == NULL) {                         // LCOV_BR_EXCL_LINE
+    if (unlikely(w == NULL)) {               // LCOV_BR_EXCL_LINE
         PyMem_Free((char*)opaque_spec.name); // LCOV_EXCL_LINE
         goto error_cleanup;                  // LCOV_EXCL_LINE
     }
 
-    if (PyObject_SetAttrString(newType, "__typestr__", w) == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(PyObject_SetAttrString(newType, "__typestr__", w)
+                 == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_CLEAR(newType);
         PyMem_Free((char*)opaque_spec.name);
@@ -354,9 +355,9 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     }
     Py_CLEAR(w);
 
-    if (alloc_prepped_closure( // LCOV_BR_EXCL_LINE
-            &cl_to_c, convert_cif, &codeloc, (void*)opaque_to_c, newType)
-        == -1) {
+    if (unlikely(alloc_prepped_closure( // LCOV_BR_EXCL_LINE
+                     &cl_to_c, convert_cif, &codeloc, (void*)opaque_to_c, newType)
+                 == -1)) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
         PyMem_Free((char*)opaque_spec.name);
@@ -366,9 +367,9 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 
     to_c = (PyObjCPointerWrapper_FromPythonFunc)codeloc;
 
-    if (alloc_prepped_closure( // LCOV_BR_EXCL_LINE
-            &cl_from_c, new_cif, &codeloc, (void*)opaque_from_c, newType)
-        == -1) {
+    if (unlikely(alloc_prepped_closure( // LCOV_BR_EXCL_LINE
+                     &cl_from_c, new_cif, &codeloc, (void*)opaque_from_c, newType)
+                 == -1)) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error, "Cannot create libffi closure");
         PyMem_Free((char*)opaque_spec.name);
@@ -380,7 +381,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     from_c = (PyObjCPointerWrapper_ToPythonFunc)codeloc;
 
     r = PyObjCPointerWrapper_Register(name, typestr, from_c, to_c);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_XDECREF(newType);
         Py_XDECREF(newType);
@@ -417,11 +418,11 @@ error_cleanup:
 #else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
-    if (cl_to_c) {                 // LCOV_BR_EXCL_LINE
+    if (unlikely(cl_to_c)) {       // LCOV_BR_EXCL_LINE
         ffi_closure_free(cl_to_c); // LCOV_EXCL_LINE
     } // LCOV_EXCL_LINE
 
-    if (cl_from_c) {                 // LCOV_BR_EXCL_LINE
+    if (unlikely(cl_from_c)) {       // LCOV_BR_EXCL_LINE
         ffi_closure_free(cl_from_c); // LCOV_EXCL_LINE
     } // LCOV_EXCL_LINE
 #pragma clang diagnostic pop

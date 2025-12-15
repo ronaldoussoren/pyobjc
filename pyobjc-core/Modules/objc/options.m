@@ -247,8 +247,8 @@ bundle_hack_get(PyObject* s __attribute__((__unused__)),
                 void*     c __attribute__((__unused__)))
 {
     /* XXX: Need to test on a 10.9 VM to check if this option is still needed... */
-    if ([OC_NSBundleHack bundleHackUsed]) { // LCOV_BR_EXCL_LINE
-        Py_RETURN_TRUE;                     // LCOV_EXCL_LINE
+    if (unlikely([OC_NSBundleHack bundleHackUsed])) { // LCOV_BR_EXCL_LINE
+        Py_RETURN_TRUE;                               // LCOV_EXCL_LINE
     } else {
         Py_RETURN_FALSE;
     }
@@ -293,8 +293,8 @@ deprecation_warnings_set(PyObject* s __attribute__((__unused__)), PyObject* newV
          * needed due to the harebrained interface of strtoul
          */
         char* text = (char*)PyUnicode_AsUTF8(newVal);
-        if (text == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;      // LCOV_EXCL_LINE
+        if (unlikely(text == NULL)) { // LCOV_BR_EXCL_LINE
+            return -1;                // LCOV_EXCL_LINE
         }
 
         unsigned long major = 0;
@@ -422,8 +422,8 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
 
     if (encoder != Py_None) {
         PyObject* cdr = id_to_python(coder);
-        if (cdr == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;     // LCOV_EXCL_LINE
+        if (unlikely(cdr == NULL)) { // LCOV_BR_EXCL_LINE
+            return -1;               // LCOV_EXCL_LINE
         }
 
         PyObject* args[3] = {NULL, pyObject, cdr};
@@ -458,7 +458,7 @@ PyObject* _Nullable PyObjC_decodeWithCoder(NSCoder* coder, id self)
 
     if (decoder != Py_None) {
         PyObject* cdr = id_to_python(coder);
-        if (cdr == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(cdr == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(decoder);
             return NULL;
@@ -466,7 +466,7 @@ PyObject* _Nullable PyObjC_decodeWithCoder(NSCoder* coder, id self)
         }
 
         PyObject* self_as_python = PyObjCObject_New(self, 0, YES);
-        if (self_as_python == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(self_as_python == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(cdr);
             Py_DECREF(decoder);
@@ -477,7 +477,7 @@ PyObject* _Nullable PyObjC_decodeWithCoder(NSCoder* coder, id self)
         PyObject* setvalue_method =
             PyObject_GetAttr(self_as_python, PyObjCNM_pyobjcSetValue_);
         Py_CLEAR(self_as_python);
-        if (setvalue_method == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(setvalue_method == NULL)) { // LCOV_BR_EXCL_LINE
             /* Cannot fail with the classes we use this function in */
             // LCOV_EXCL_START
             Py_DECREF(cdr);
@@ -545,7 +545,7 @@ PyObjC_GetKey(PyObject* object, id key, id* value)
     }
 
     PyObject* keyName = id_to_python(key);
-    if (keyName == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(keyName == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(func);
         return -1;
@@ -585,7 +585,7 @@ PyObjC_GetKeyPath(PyObject* object, id keypath, id* value)
     }
 
     PyObject* keyName = id_to_python(keypath);
-    if (keyName == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(keyName == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(func);
         return -1;
@@ -625,7 +625,7 @@ PyObjC_SetKey(PyObject* object, id key, id value)
     }
 
     PyObject* keyName = id_to_python(key);
-    if (keyName == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(keyName == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(func);
         return -1;
@@ -633,7 +633,7 @@ PyObjC_SetKey(PyObject* object, id key, id value)
     }
 
     PyObject* pyValue = id_to_python(value);
-    if (pyValue == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(pyValue == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(keyName);
         Py_DECREF(func);
@@ -674,7 +674,7 @@ PyObjC_SetKeyPath(PyObject* object, id keypath, id value)
     }
 
     PyObject* keyName = id_to_python(keypath);
-    if (keyName == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(keyName == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(func);
         return -1;
@@ -682,7 +682,7 @@ PyObjC_SetKeyPath(PyObject* object, id keypath, id value)
     }
 
     PyObject* pyValue = id_to_python(value);
-    if (pyValue == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(pyValue == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(keyName);
         Py_DECREF(func);
@@ -739,7 +739,7 @@ PyObject* _Nullable PyObjC_DateFromTimestamp(double timestamp)
         type,
         PyFloat_FromDouble(timestamp),
     };
-    if (args[2] == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(args[2] == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(type);
         return NULL;
@@ -784,7 +784,7 @@ PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id _Nullable 
 
     if (c_info != nil) {
         tzinfo = id_to_python(c_info);
-        if (tzinfo == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(tzinfo == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(type);
             return NULL;
@@ -798,7 +798,7 @@ PyObject* _Nullable PyObjC_DatetimeFromTimestamp(double timestamp, id _Nullable 
         PyFloat_FromDouble(timestamp),
         tzinfo,
     };
-    if (args[2] == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(args[2] == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(type);
         return NULL;
@@ -989,9 +989,9 @@ PyObjC_CallClassExtender(PyObject* cls)
     }
 
     PyObject* dict = PyDict_New();
-    if (dict == NULL) {  // LCOV_BR_EXCL_LINE
-        Py_DECREF(func); // LCOV_EXCL_LINE
-        return -1;       // LCOV_EXCL_LINE
+    if (unlikely(dict == NULL)) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(func);          // LCOV_EXCL_LINE
+        return -1;                // LCOV_EXCL_LINE
     }
 
     PyObject* args[3] = {NULL, cls, dict};
@@ -1010,7 +1010,7 @@ PyObjC_CallClassExtender(PyObject* cls)
     Py_ssize_t pos = 0;
 
     while (PyDict_Next(dict, &pos, &k, &v)) {
-        if (PyUnicode_Check(k)) {
+        if (likely(PyUnicode_Check(k))) {
             if (PyObjC_is_ascii_string(k, "__dict__")
                 || PyObjC_is_ascii_string(k, "__bases__")
                 || PyObjC_is_ascii_string(k, "__slots__")
@@ -1040,7 +1040,7 @@ PyObjC_CallClassExtender(PyObject* cls)
              */
             PyObject* c;
             int       r = PyDict_GetItemRef(((PyTypeObject*)cls)->tp_dict, k, &c);
-            if (r == -1) { // LCOV_BR_EXCL_LINE
+            if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_CLEAR(k);
                 Py_CLEAR(v);
@@ -1075,9 +1075,9 @@ PyObjC_CallClassExtender(PyObject* cls)
             /* 'cls' is known to be an PyObjCClass instance, hence the tp_dict
              * slot is usable directly.
              */
-            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                    ((PyTypeObject*)cls)->tp_dict, k, v)
-                == -1) {
+            if (unlikely(PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                             ((PyTypeObject*)cls)->tp_dict, k, v)
+                         == -1)) {
                 PyErr_Clear(); // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
         }
@@ -1091,7 +1091,7 @@ PyObjCErr_SetGAIError(int error)
 {
     PyObject* type;
 
-    if (error == EAI_SYSTEM) { // LCOV_BR_EXCL_LINE
+    if (unlikely(error == EAI_SYSTEM)) { // LCOV_BR_EXCL_LINE
         /* This can happen, but haven't found a way to trigger
          * this in testing.
          */
@@ -1112,7 +1112,7 @@ PyObjCErr_SetGAIError(int error)
     UNLOCK(PyObjC_socket_gaierror);
 
     PyObject* v = Py_BuildValue("is", error, gai_strerror(error));
-    if (v != NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(v != NULL)) { // LCOV_BR_EXCL_LINE
         PyErr_SetObject(type, v);
         Py_DECREF(v);
     }
@@ -1169,8 +1169,8 @@ PyObject* _Nullable PyObjC_GetBundleForClassMethod(void)
 PyObject* _Nullable PyObjC_CreateNSNumberProxy(NSNumber* value)
 {
     PyObject* rval = PyObjCObject_New(value, PyObjCObject_kDEFAULT, YES);
-    if (rval == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(rval == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
     }
 
     LOCK(PyObjC_NSNumberWrapper);
@@ -1272,7 +1272,7 @@ PyObjC_ArrayTypeCheck(PyObject* value)
 
     int r = PyObject_TypeCheck(value, (PyTypeObject*)type);
     Py_DECREF(type);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Clear();
         return 0;
@@ -1291,8 +1291,8 @@ PyObject* _Nullable PyObjC_MakeCVoidP(void* ptr)
     UNLOCK(PyObjC_c_void_p);
 
     PyObject* pyptr = PyLong_FromVoidPtr(ptr);
-    if (pyptr == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;     // LCOV_EXCL_LINE
+    if (unlikely(pyptr == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;               // LCOV_EXCL_LINE
     }
     PyObject* args[2] = {NULL, pyptr};
     PyObject* res =
@@ -1341,7 +1341,7 @@ extern PyObject* _Nullable PyObjC_ProcessClassDict(
     }
 
     PyObject* py_name = PyUnicode_FromString(name);
-    if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(py_name == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(func);
         return NULL;
@@ -1424,14 +1424,14 @@ int
 PyObjC_SetupOptions(PyObject* m)
 {
     PyObjCOptions_Type = PyType_FromSpec(&options_spec);
-    if (PyObjCOptions_Type == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                    // LCOV_EXCL_LINE
+    if (unlikely(PyObjCOptions_Type == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                              // LCOV_EXCL_LINE
     }
 
     PyObject* o =
         (PyObject*)PyObject_New(struct object, (PyTypeObject*)PyObjCOptions_Type);
-    if (o == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;   // LCOV_EXCL_LINE
+    if (unlikely(o == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;             // LCOV_EXCL_LINE
     }
 
 #define INIT(VAR)                                                                        \
@@ -1467,28 +1467,28 @@ PyObjC_SetupOptions(PyObject* m)
 
     // LCOV_BR_EXCL_START
     PyObjC_DictLikeTypes = PyTuple_New(0);
-    if (PyObjC_DictLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                      // LCOV_EXCL_LINE
+    if (unlikely(PyObjC_DictLikeTypes == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                                // LCOV_EXCL_LINE
     }
     PyObjC_ListLikeTypes = PyTuple_New(0);
-    if (PyObjC_ListLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                      // LCOV_EXCL_LINE
+    if (unlikely(PyObjC_ListLikeTypes == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                                // LCOV_EXCL_LINE
     }
     PyObjC_SetLikeTypes = PyTuple_New(0);
-    if (PyObjC_SetLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                     // LCOV_EXCL_LINE
+    if (unlikely(PyObjC_SetLikeTypes == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
     }
     PyObjC_DateLikeTypes = PyTuple_New(0);
-    if (PyObjC_DateLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                      // LCOV_EXCL_LINE
+    if (unlikely(PyObjC_DateLikeTypes == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                                // LCOV_EXCL_LINE
     }
     PyObjC_PathLikeTypes = PyTuple_New(0);
-    if (PyObjC_PathLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                      // LCOV_EXCL_LINE
+    if (unlikely(PyObjC_PathLikeTypes == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                                // LCOV_EXCL_LINE
     }
     PyObjC_NumberLikeTypes = PyTuple_New(0);
-    if (PyObjC_NumberLikeTypes == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                        // LCOV_EXCL_LINE
+    if (unlikely(PyObjC_NumberLikeTypes == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                                  // LCOV_EXCL_LINE
     }
 
     return PyModule_AddObject(m, "options", o);

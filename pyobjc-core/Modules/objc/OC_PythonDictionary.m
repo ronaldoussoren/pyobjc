@@ -161,8 +161,8 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 - (NSUInteger)count
 {
     Py_ssize_t result;
-    if (value == NULL) { // LCOV_BR_EXCL_LINE
-        return 0;        // LCOV_EXCL_LINE
+    if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+        return 0;                  // LCOV_EXCL_LINE
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -189,8 +189,8 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     PyObject* k;
     id        result;
 
-    if (value == NULL) { // LCOV_BR_EXCL_LINE
-        return nil;      // LCOV_EXCL_LINE
+    if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+        return nil;                // LCOV_EXCL_LINE
     }
 
     PyObjC_BEGIN_WITH_GIL
@@ -342,7 +342,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 - (NSEnumerator*)keyEnumerator
 {
-    if (value == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
         /* Value could be NULL during ``initWithCoder:``, but AFAIK it
          * is not possible to invoke arbitrary methods in that state.
          */
@@ -383,7 +383,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
      */
     NSUInteger i;
 
-    if (count > 0 && (keys == NULL || objects == NULL)) { // LCOV_BR_EXCL_LINE
+    if (unlikely(count > 0 && (keys == NULL || objects == NULL))) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         [self release];
         return nil;
@@ -418,7 +418,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
                 } // LCOV_EXCL_LINE
                 if (PyObjCUnicode_Check(k)) {
                     PyObject* k2 = PyObject_Str(k);
-                    if (k2 == NULL) { // LCOV_BR_EXCL_LINE
+                    if (unlikely(k2 == NULL)) { // LCOV_BR_EXCL_LINE
                         // LCOV_EXCL_START
                         Py_DECREF(k);
                         PyObjC_GIL_FORWARD_EXC();
@@ -456,8 +456,8 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
          * always be converted back into the corresponding
          * Python value.
          */
-        if (v != NULL) {         // LCOV_BR_EXCL_LINE
-            SET_FIELD(value, v); // LCOV_EXCL_LINE
+        if (unlikely(v != NULL)) { // LCOV_BR_EXCL_LINE
+            SET_FIELD(value, v);   // LCOV_EXCL_LINE
         }
     PyObjC_END_WITH_GIL
 }
@@ -489,8 +489,8 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     case 1:
         PyObjC_BEGIN_WITH_GIL
             value = PyDict_New();
-            if (value == NULL) {          // LCOV_BR_EXCL_LINE
-                PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+            if (unlikely(value == NULL)) { // LCOV_BR_EXCL_LINE
+                PyObjC_GIL_FORWARD_EXC();  // LCOV_EXCL_LINE
             } // LCOV_EXCL_LINE
 
         PyObjC_END_WITH_GIL
@@ -525,7 +525,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 - (Class)classForCoder
 {
-    if (value && PyDict_CheckExact(value)) { // LCOV_BR_EXCL_LINE
+    if (unlikely(value && PyDict_CheckExact(value))) { // LCOV_BR_EXCL_LINE
         return [NSMutableDictionary class];
     } else {
         return [OC_PythonDictionary class];
@@ -595,7 +595,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
     PyObjC_BEGIN_WITH_GIL
         PyObject* copy = PyDict_New();
-        if (copy == NULL) {           // LCOV_BR_EXCL_LINE
+        if (unlikely(copy == NULL)) { // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
 
@@ -604,9 +604,9 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             PyObjC_GIL_FORWARD_EXC();
         } // LCOV_EXCL_LINE
 
-        if (depythonify_python_object( // LCOV_BR_EXCL_LINE
-                copy, &result)
-            == -1) {
+        if (unlikely(depythonify_python_object( // LCOV_BR_EXCL_LINE
+                         copy, &result)
+                     == -1)) {
             // LCOV_EXCL_START
             Py_DECREF(copy);
             PyObjC_GIL_FORWARD_EXC();

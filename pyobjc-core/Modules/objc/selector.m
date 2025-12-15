@@ -65,8 +65,8 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
         self->sel_class, (self->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
         self->sel_selector, self->sel_python_signature, PyObjCNativeSelector_Check(self));
 
-    if (result == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
 
     Py_BEGIN_CRITICAL_SECTION(self);
 #ifdef Py_GIL_DISABLED
@@ -77,7 +77,7 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
         to_clear               = NULL;
 #ifdef Py_GIL_DISABLED
     } else {
-        result = self->sel_methinfo;
+        result = self->sel_methinfo; //  LCOV_EXCL_LINE
     }
 #endif
 
@@ -98,21 +98,21 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
 {
     int                    r;
     PyObjCMethodSignature* mi = PyObjCSelector_GetMetadata(self);
-    if (mi == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;  // LCOV_EXCL_LINE
+    if (unlikely(mi == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;            // LCOV_EXCL_LINE
     }
 
     PyObject* result = PyObjCMethodSignature_AsDict(mi);
     Py_CLEAR(mi);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     r = PyDict_SetItem(result, PyObjCNM_classmethod,
                        (((PyObjCSelector*)self)->sel_flags & PyObjCSelector_kCLASS_METHOD)
                            ? Py_True
                            : Py_False);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -124,7 +124,7 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
                            ? Py_True
                            : Py_False);
 
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -166,8 +166,8 @@ static PyObject* _Nullable base_signature(PyObject* self,
                                           void*     closure __attribute__((__unused__)))
 {
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(self);
-    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     PyObject* result = PyBytes_FromString(methinfo->signature);
@@ -184,7 +184,7 @@ base_native_signature(PyObject* _self, void* closure __attribute__((__unused__))
      * initialization.
      */
     PyObjCSelector* self = (PyObjCSelector*)_self;
-    if (self->sel_native_signature == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(self->sel_native_signature == NULL)) { // LCOV_BR_EXCL_LINE
         // Cannot happen, leaving test in just in case...
         Py_RETURN_NONE; // LCOV_EXCL_LINE
     }
@@ -210,7 +210,7 @@ base_signature_setter(PyObject* _self, PyObject* newVal,
     }
 
     t = PyObjCUtil_Strdup(PyBytes_AsString(newVal));
-    if (t == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(t == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         return -1;
@@ -591,8 +591,8 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
 
     {
         PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-        if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;        // LCOV_EXCL_LINE
+        if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                  // LCOV_EXCL_LINE
         }
 
         if (version_is_deprecated(methinfo->deprecated)) {
@@ -619,8 +619,8 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
          */
         assert(self->base.sel_class != Nil);
         PyObject* myClass = PyObjCClass_New(self->base.sel_class);
-        if (myClass == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;       // LCOV_EXCL_LINE
+        if (unlikely(myClass == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                 // LCOV_EXCL_LINE
         }
 
         if (!(PyObject_IsInstance(pyself, myClass)
@@ -693,15 +693,15 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         }
 
         pyself = args[0];
-        if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(pyself == NULL)) { // LCOV_BR_EXCL_LINE
             // Guard against invalid input data
             return NULL; // LCOV_EXCL_LINE
         }
     }
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     if (version_is_deprecated(methinfo->deprecated)) {
@@ -739,8 +739,8 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         assert(self->base.sel_class != Nil);
 
         myClass = PyObjCClass_New(self->base.sel_class);
-        if (myClass == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;       // LCOV_EXCL_LINE
+        if (unlikely(myClass == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                 // LCOV_EXCL_LINE
         }
         if (!(PyObject_IsInstance(pyself, myClass)
               || (PyObjCUnicode_Check(pyself)
@@ -787,8 +787,8 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
         }
     }
     result = PyObject_New(PyObjCNativeSelector, (PyTypeObject*)PyObjCNativeSelector_Type);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
     result->base.sel_selector         = meth->base.sel_selector;
     result->base.sel_flags            = meth->base.sel_flags;
@@ -805,7 +805,7 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     result->base.sel_vectorcall = meth->base.sel_vectorcall;
 
     const char* tmp = PyObjCUtil_Strdup(meth->base.sel_python_signature);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -814,7 +814,7 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
     result->base.sel_python_signature = tmp;
 
     tmp = PyObjCUtil_Strdup(meth->base.sel_native_signature);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -905,8 +905,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
     if (PyObjCObject_Check(self)) {
         PyObject* hidden = PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO);
-        if (hidden == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return NULL;                          // LCOV_EXCL_LINE
+        if (unlikely(hidden == NULL && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+            return NULL;                                    // LCOV_EXCL_LINE
         }
         if (PyObjCObject_IsMagic(self) || hidden) {
             Py_CLEAR(hidden);
@@ -923,8 +923,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
             Py_CLEAR(hidden);
             PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
             return NULL;
-        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return NULL;               // LCOV_EXCL_LINE
+        } else if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+            return NULL;                         // LCOV_EXCL_LINE
         }
     }
 
@@ -938,7 +938,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
         return NULL;
     }
 
-    if (PyObjCClass_Check(self)) {
+    if (unlikely(PyObjCClass_Check(self))) {
         Class cls = PyObjCClass_GetClass(self);
 
         if (!cls) {
@@ -949,8 +949,9 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
         /* XXX: Class doesn't exist in modern versions of macOS, check
          * when it was removed.
          */
-        if (strcmp(class_getName(cls), "_NSZombie") == 0        // LCOV_BR_EXCL_LINE
-            || strcmp(class_getName(cls), "_CNZombie_") == 0) { // LCOV_BR_EXCL_LINE
+        if (unlikely(strcmp(class_getName(cls), "_NSZombie") == 0 // LCOV_BR_EXCL_LINE
+                     || strcmp(class_getName(cls), "_CNZombie_")
+                            == 0)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
             return NULL;
@@ -958,7 +959,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
         }
 
         if (strcmp(class_getName(cls), "NSProxy") == 0) {
-            if (sel == @selector(methodSignatureForSelector:)) { // LCOV_BR_EXCL_LINE
+            if (unlikely(sel ==
+                         @selector(methodSignatureForSelector:))) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_Format(PyExc_AttributeError, "Accessing %s.%s is not supported",
                              class_getName(cls), name);
@@ -974,8 +976,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
                 const char* typestr =
                     PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf));
-                if (typestr == NULL) { // LCOV_BR_EXCL_LINE
-                    return NULL;       // LCOV_EXCL_LINE
+                if (unlikely(typestr == NULL)) { // LCOV_BR_EXCL_LINE
+                    return NULL;                 // LCOV_EXCL_LINE
                 }
                 retval = PyObjCSelector_NewNative(cls, sel, typestr, 1);
             } else {
@@ -991,7 +993,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
         return retval;
 
-    } else if (PyObjCObject_Check(self)) { // LCOV_BR_EXCL_LINE
+    } else if (likely(PyObjCObject_Check(self))) { // LCOV_BR_EXCL_LINE
         id object;
 
         object = PyObjCObject_GetObject(self);
@@ -1046,8 +1048,8 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     assert(signature != NULL);
 
     result = PyObject_New(PyObjCNativeSelector, (PyTypeObject*)PyObjCNativeSelector_Type);
-    if (result == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
 
     result->base.sel_self             = NULL;
     result->base.sel_class            = class;
@@ -1064,7 +1066,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
 
     Py_ssize_t len = strlen(signature) + 1;
     char*      tmp = PyMem_Malloc(len);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         PyErr_NoMemory();
@@ -1081,8 +1083,8 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
 
     result->base.sel_python_signature = tmp;
     result->base.sel_native_signature = PyObjCUtil_Strdup(native_signature);
-    if (result->base.sel_native_signature == NULL // LCOV_BR_EXCL_LINE
-    ) {
+    if (unlikely( // LCOV_BR_EXCL_LINE
+            result->base.sel_native_signature == NULL)) {
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -1094,7 +1096,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     }
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
-    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -1141,12 +1143,12 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     } else {
         signature = PyObjCUtil_Strdup(signature);
     }
-    if (signature == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;       // LCOV_EXCL_LINE
+    if (unlikely(signature == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;                 // LCOV_EXCL_LINE
 
     result = PyObject_New(PyObjCPythonSelector, (PyTypeObject*)PyObjCPythonSelector_Type);
-    if (result == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
     result->base.sel_self  = NULL;
     result->base.sel_class = cls;
     result->base.sel_flags = 0;
@@ -1158,7 +1160,7 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     result->base.sel_selector         = selector;
     result->base.sel_python_signature = signature;
     char* tmp                         = PyObjCUtil_Strdup(signature);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -1167,8 +1169,8 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     result->base.sel_native_signature = tmp;
     result->base.sel_vectorcall       = pysel_vectorcall;
 
-    if (PyObjC_RemoveInternalTypeCodes((char*)result->base.sel_native_signature)
-        == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(PyObjC_RemoveInternalTypeCodes((char*)result->base.sel_native_signature)
+                 == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -1185,7 +1187,7 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     } else if (PyMethod_Check(callable)) {
         assert(PyMethod_Self(callable) != NULL);
         result->argcount = PyObjC_num_arguments(callable) - 1;
-        if (result->argcount == -2) { // LCOV_BR_EXCL_LINE
+        if (unlikely(result->argcount == -2)) { // LCOV_BR_EXCL_LINE
             /* 'PyObjC_num_arguments' can only fail if 'callable'
              * is not a valid function, and we already checked that.
              */
@@ -1197,7 +1199,7 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
 
     } else if (PyObjC_is_pymethod(callable)) {
         result->argcount = PyObjC_num_arguments(callable) - 1;
-        if (result->argcount == -2) { // LCOV_BR_EXCL_LINE
+        if (unlikely(result->argcount == -2)) { // LCOV_BR_EXCL_LINE
             /* 'PyObjC_num_arguments' can only fail if 'callable'
              * is not a valid method, and we already checked that.
              */
@@ -1409,7 +1411,7 @@ static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
              */
             PyObject** temp_args =
                 malloc((PyVectorcall_NARGS(nargsf) + 2) * sizeof(PyObject*));
-            if (temp_args == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(temp_args == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_NoMemory();
                 return NULL;
@@ -1437,7 +1439,8 @@ pysel_default_signature(SEL selector, PyObject* callable)
     char*       result;
     const char* selname = sel_getName(selector);
 
-    if (selname == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(selname == NULL)) { // LCOV_BR_EXCL_LINE
+        /* XXX: replace by assert */
         // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "Cannot extract string from selector");
         return NULL;
@@ -1454,7 +1457,7 @@ pysel_default_signature(SEL selector, PyObject* callable)
 
     /* arguments + return-type + selector */
     result = PyMem_Malloc(arg_count + 4);
-    if (result == 0) { // LCOV_BR_EXCL_LINE
+    if (unlikely(result == 0)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
@@ -1468,7 +1471,7 @@ pysel_default_signature(SEL selector, PyObject* callable)
 
     if (!PyObjC_returns_value(callable)) {
         result[0] = _C_VOID;
-        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
             // XXX: This cannot fail in practice
             // LCOV_EXCL_START
             PyMem_Free(result);
@@ -1648,14 +1651,14 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
         /* Special treatment for 'classmethod' instances */
         PyObject* tmp =
             PyObject_CallMethod(callable, "__get__", "OO", Py_None, &PyList_Type);
-        if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;   // LCOV_EXCL_LINE
+        if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;             // LCOV_EXCL_LINE
         }
 
         callable = PyObject_GetAttrString(tmp, "__func__");
         Py_DECREF(tmp);
-        if (callable == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;        // LCOV_EXCL_LINE
+        if (unlikely(callable == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                  // LCOV_EXCL_LINE
         }
         class_method = 1;
 
@@ -1717,8 +1720,8 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     }
 
     result = PyObject_New(PyObjCPythonSelector, (PyTypeObject*)PyObjCPythonSelector_Type);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
     result->base.sel_self             = NULL;
     result->base.sel_methinfo         = NULL;
@@ -1730,7 +1733,7 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     result->base.sel_vectorcall       = pysel_vectorcall;
 
     const char* tmp = PyObjCUtil_Strdup(meth->base.sel_python_signature);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
@@ -1738,10 +1741,10 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
     }
     result->base.sel_python_signature = tmp;
 
-    if (meth->base.sel_native_signature) { // LCOV_BR_EXCL_LINE
+    if (unlikely(meth->base.sel_native_signature)) { // LCOV_BR_EXCL_LINE
         result->base.sel_native_signature =
             PyObjCUtil_Strdup(meth->base.sel_native_signature);
-        if (result->base.sel_native_signature == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(result->base.sel_native_signature == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
@@ -1922,22 +1925,22 @@ int
 PyObjCSelector_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&sel_spec);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCSelector_Type = tmp;
 
-    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "selector", PyObjCSelector_Type)
-        == -1) {
+    if (unlikely(PyModule_AddObject( // LCOV_BR_EXCL_LINE
+                     module, "selector", PyObjCSelector_Type)
+                 == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCSelector_Type);
 
 #if PY_VERSION_HEX < 0x030a0000
     PyObject* bases = PyTuple_Pack(1, PyObjCSelector_Type);
-    if (bases == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;       // LCOV_EXCL_LINE
+    if (unlikely(bases == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 #endif
 
@@ -1947,14 +1950,14 @@ PyObjCSelector_Setup(PyObject* module)
 #else
                                    bases);
 #endif
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCPythonSelector_Type = tmp;
 
-    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "python_selector", PyObjCPythonSelector_Type)
-        == -1) {
+    if (unlikely(PyModule_AddObject( // LCOV_BR_EXCL_LINE
+                     module, "python_selector", PyObjCPythonSelector_Type)
+                 == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCPythonSelector_Type);
@@ -1966,14 +1969,14 @@ PyObjCSelector_Setup(PyObject* module)
                                    bases);
     Py_CLEAR(bases);
 #endif
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCNativeSelector_Type = tmp;
 
-    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "native_selector", PyObjCNativeSelector_Type)
-        == -1) {
+    if (unlikely(PyModule_AddObject( // LCOV_BR_EXCL_LINE
+                     module, "native_selector", PyObjCNativeSelector_Type)
+                 == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCNativeSelector_Type);

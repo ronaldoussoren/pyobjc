@@ -85,8 +85,8 @@ PyObject* _Nullable PyObjCMemView_New(void)
 {
     struct pyobjc_memview* result =
         PyObject_New(struct pyobjc_memview, (PyTypeObject*)PyObjCMemView_Type);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
     memset(&result->view, 0, sizeof(result->view));
     return (PyObject*)result;
@@ -112,8 +112,8 @@ int
 PyObjCMemView_Setup(PyObject* module __attribute__((__unused__)))
 {
     PyObjCMemView_Type = PyType_FromSpec(&memview_spec);
-    if (PyObjCMemView_Type == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                    // LCOV_EXCL_LINE
+    if (unlikely(PyObjCMemView_Type == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                              // LCOV_EXCL_LINE
     }
 
     return 0;

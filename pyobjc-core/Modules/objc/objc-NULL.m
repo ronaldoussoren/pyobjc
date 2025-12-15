@@ -52,17 +52,18 @@ int
 PyObjCInitNULL(PyObject* module)
 {
     PyObjC_NULL_Type = PyType_FromSpec(&null_spec);
-    if (PyObjC_NULL_Type == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                  // LCOV_EXCL_LINE
+    if (unlikely(PyObjC_NULL_Type == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                            // LCOV_EXCL_LINE
     }
 
     PyObjC_NULL = PyObject_New(PyObject, (PyTypeObject*)PyObjC_NULL_Type);
-    if (PyObjC_NULL == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;             // LCOV_EXCL_LINE
+    if (unlikely(PyObjC_NULL == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                       // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(module, "NULL", PyObjC_NULL) == -1) { // LCOV_BR_EXCL_LINE
-        return -1;                                               // LCOV_EXCL_LINE
+    if (unlikely(PyModule_AddObject(module, "NULL", PyObjC_NULL)
+                 == -1)) { // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjC_NULL);
 

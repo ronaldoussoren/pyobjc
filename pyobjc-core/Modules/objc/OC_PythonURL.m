@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
     Py_ssize_t  utf8_size;
 
     utf8 = PyUnicode_AsUTF8AndSize(fspath, &utf8_size);
-    if (utf8 == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(utf8 == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(fspath);
         [self release];
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     NSString* path = [[NSString alloc] initWithUTF8String:utf8];
     Py_DECREF(fspath);
-    if (path == nil) { // LCOV_BR_EXCL_LINE
+    if (unlikely(path == nil)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         [self release];
         return nil;

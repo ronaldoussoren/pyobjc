@@ -153,12 +153,12 @@ int
 PyObjCWeakRef_Setup(PyObject* module)
 {
     PyObjCWeakRef_Type = PyType_FromSpec(&weakref_spec);
-    if (PyObjCWeakRef_Type == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                    // LCOV_EXCL_LINE
+    if (unlikely(PyObjCWeakRef_Type == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                              // LCOV_EXCL_LINE
     }
 
     if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "WeakRef", PyObjCWeakRef_Type) == -1) {
+        unlikely(PyModule_AddObject(module, "WeakRef", PyObjCWeakRef_Type) == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCWeakRef_Type);

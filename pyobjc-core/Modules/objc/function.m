@@ -29,13 +29,13 @@ static PyObject* _Nullable func_metadata(PyObject* _self)
     func_object* self = (func_object*)_self;
     PyObject*    result;
     result = PyObjCMethodSignature_AsDict(self->methinfo);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
     if (self->doc) {
-        if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                result, PyObjCNM___doc__, self->doc)
-            == -1) {
+        if (unlikely(PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                         result, PyObjCNM___doc__, self->doc)
+                     == -1)) {
             Py_DECREF(result); // LCOV_EXCL_LINE
             return NULL;       // LCOV_EXCL_LINE
         }
@@ -164,8 +164,8 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     argbuf_len = align(argbuf_len, sizeof(void*));
     r = PyObjCFFI_CountArguments(self->methinfo, 0, &byref_in_count, &byref_out_count,
                                  &plain_count, &argbuf_len, &variadicAllArgs);
-    if (r == -1) {   // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     variadicAllArgs |=
@@ -191,9 +191,9 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
     }
 
     argbuf = PyMem_Malloc(argbuf_len);
-    if (argbuf == NULL) { // LCOV_BR_EXCL_LINE
-        PyErr_NoMemory(); // LCOV_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(argbuf == NULL)) { // LCOV_BR_EXCL_LINE
+        PyErr_NoMemory();           // LCOV_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     cif_arg_count = PyObjCFFI_ParseArguments(
@@ -235,7 +235,7 @@ static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
 #pragma clang diagnostic pop
 #endif
 
-        if (r != FFI_OK) { // LCOV_BR_EXCL_LINE
+        if (unlikely(r != FFI_OK)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_Format(PyObjCExc_Error, "Cannot create FFI CIF for %s: %s",
                          self->methinfo->signature, PyObjC_ffi_status_str((ffi_status)r));
@@ -425,8 +425,8 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
     assert(!name || PyUnicode_Check(name));
 
     result = PyObject_NEW(func_object, (PyTypeObject*)PyObjCFunc_Type);
-    if (result == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
 
     result->vectorcall = func_vectorcall;
     result->function   = func;
@@ -463,8 +463,8 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     }
 
     result = PyObject_New(func_object, (PyTypeObject*)PyObjCFunc_Type);
-    if (result == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
 
     result->vectorcall = func_vectorcall;
     result->function   = func;
@@ -492,9 +492,9 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     SET_FIELD_INCREF(result->name, name);
 
     result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
-    if (result->cif == NULL) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(result);     // LCOV_EXCL_LINE
-        return NULL;           // LCOV_EXCL_LINE
+    if (unlikely(result->cif == NULL)) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(result);               // LCOV_EXCL_LINE
+        return NULL;                     // LCOV_EXCL_LINE
     }
 
     return (PyObject*)result;
@@ -510,13 +510,13 @@ int
 PyObjCFunc_Setup(PyObject* module)
 {
     PyObjCFunc_Type = PyType_FromSpec(&func_spec);
-    if (PyObjCFunc_Type == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                 // LCOV_EXCL_LINE
+    if (unlikely(PyObjCFunc_Type == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                           // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "function", PyObjCFunc_Type)
-        == -1) {
+    if (unlikely(PyModule_AddObject( // LCOV_BR_EXCL_LINE
+                     module, "function", PyObjCFunc_Type)
+                 == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFunc_Type);

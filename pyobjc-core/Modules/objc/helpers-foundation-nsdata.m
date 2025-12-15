@@ -42,9 +42,9 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
         return PyBytes_FromStringAndSize("", 0);
     }
 
-    if (PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
-            &info, self, (void*)bytes, bytes_len, 1, PyBUF_FULL_RO)
-        < 0) {
+    if (unlikely(PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
+                     &info, self, (void*)bytes, bytes_len, 1, PyBUF_FULL_RO)
+                 < 0)) {
         return NULL; // LCOV_EXCL_LINE
     }
     return PyMemoryView_FromBuffer(&info);
@@ -63,8 +63,8 @@ mkimp_NSData_bytes(PyObject*              callable,
       PyGILState_STATE state = PyGILState_Ensure();
 
       pyself = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL) // LCOV_BR_EXCL_LINE
-          goto error;     // LCOV_EXCL_LINE
+      if (unlikely(pyself == NULL)) // LCOV_BR_EXCL_LINE
+          goto error;               // LCOV_EXCL_LINE
 
       PyObject* arglist[2] = {NULL, pyself};
 
@@ -145,9 +145,9 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
         return PyMemoryView_FromMemory("", 0, PyBUF_WRITE);
     }
 
-    if (PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
-            &info, self, bytes, bytes_len, 0, PyBUF_FULL)
-        < 0) {
+    if (unlikely(PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
+                     &info, self, bytes, bytes_len, 0, PyBUF_FULL)
+                 < 0)) {
         return NULL; // LCOV_EXCL_LINE
     }
     result = PyMemoryView_FromBuffer(&info);
@@ -207,21 +207,23 @@ PyObjC_setup_nsdata(PyObject* module __attribute__((__unused__)))
     Class classNSData        = objc_lookUpClass("NSData");
     Class classNSMutableData = objc_lookUpClass("NSMutableData");
 
-    if (classNSData != NULL) { // LCOV_BR_EXCL_LINE
+    if (likely(classNSData != NULL)) { // LCOV_BR_EXCL_LINE
 
-        if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
-                classNSData, @selector(bytes), call_NSData_bytes, mkimp_NSData_bytes)
-            < 0) {
+        if (unlikely(
+                PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+                    classNSData, @selector(bytes), call_NSData_bytes, mkimp_NSData_bytes)
+                < 0)) {
             return -1; // LCOV_EXCL_LINE
         }
     }
 
-    if (classNSMutableData != NULL) { // LCOV_BR_EXCL_LINE
+    if (likely(classNSMutableData != NULL)) { // LCOV_BR_EXCL_LINE
 
-        if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
-                classNSMutableData, @selector(mutableBytes),
-                call_NSMutableData_mutableBytes, mkimp_NSMutableData_mutableBytes)
-            < 0) {
+        if (unlikely(PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+                         classNSMutableData, @selector(mutableBytes),
+                         call_NSMutableData_mutableBytes,
+                         mkimp_NSMutableData_mutableBytes)
+                     < 0)) {
             return -1; // LCOV_EXCL_LINE
         }
     }

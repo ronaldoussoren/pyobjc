@@ -33,7 +33,7 @@ static CFBundleRef _Nullable CreateCFBundleFromNSBundle(NSBundle* bundle)
         }
     Py_END_ALLOW_THREADS
 
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         if (PyErr_Occurred()) {
             return NULL;
@@ -73,8 +73,8 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
     }
 
     cfBundle = CreateCFBundleFromNSBundle(bundle);
-    if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(cfBundle == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     if (![name isKindOfClass:[NSString class]]) {
@@ -93,7 +93,7 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
 
     } else {
         PyObject* py_val = PyObjCCF_NewSpecialFromTypeID(typeid, *(id*)value);
-        if (py_val == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(py_val == NULL)) { // LCOV_BR_EXCL_LINE
             /* PyObjCCF_NewSpecialFromTypeID can basically only fail
              * due to running out of memory.
              */
@@ -101,16 +101,16 @@ PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused
         }
 
         PyObject* py_name = id_to_python(name);
-        if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(py_name == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(py_val);
             return NULL;
             // LCOV_EXCL_STOP
         }
 
-        if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                module_globals, py_name, py_val)
-            == -1) {
+        if (unlikely(PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                         module_globals, py_name, py_val)
+                     == -1)) {
             // LCOV_EXCL_START
             Py_DECREF(py_val);
             Py_DECREF(py_name);
@@ -150,8 +150,8 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
     }
 
     cfBundle = CreateCFBundleFromNSBundle(bundle);
-    if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(cfBundle == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     seq = PyObjCSequence_Tuple(variableInfo, "variableInfo not a sequence");
@@ -227,7 +227,7 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
             }
 
             PyObject* py_name = id_to_python(name);
-            if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(py_name == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 if (cfBundle != NULL)
                     CFRelease(cfBundle);
@@ -237,9 +237,9 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                 // LCOV_EXCL_STOP
             }
 
-            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                    module_globals, py_name, py_val)
-                == -1) {
+            if (unlikely(PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                             module_globals, py_name, py_val)
+                         == -1)) {
                 // LCOV_EXCL_START
                 if (cfBundle != NULL)
                     CFRelease(cfBundle);
@@ -289,8 +289,8 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             return NULL;
         }
         cfBundle = CreateCFBundleFromNSBundle(bundle);
-        if (cfBundle == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;        // LCOV_EXCL_LINE
+        if (unlikely(cfBundle == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                  // LCOV_EXCL_LINE
         }
     }
 
@@ -373,7 +373,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                 py_name = id_to_python(name);
             }
 
-            if (py_name == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(py_name == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(seq);
                 if (cfBundle != NULL) {
@@ -393,9 +393,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                 return NULL;
             }
 
-            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                    module_globals, py_name, py_val)
-                == -1) {
+            if (unlikely(PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                             module_globals, py_name, py_val)
+                         == -1)) {
                 // LCOV_EXCL_START
                 Py_DECREF(seq);
                 Py_DECREF(py_name);
@@ -506,9 +506,9 @@ PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unus
                 return NULL;
             }
 
-            if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                    module_globals, name, py_val)
-                == -1) {
+            if (unlikely(PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                             module_globals, name, py_val)
+                         == -1)) {
                 // LCOV_EXCL_START
                 Py_DECREF(seq);
                 Py_DECREF(py_val);

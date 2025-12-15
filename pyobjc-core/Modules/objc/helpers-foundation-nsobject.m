@@ -49,7 +49,7 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
     } else {
         spr.super_class =
             (Class _Nonnull)object_getClass(PyObjCSelector_GetClass(method));
-        if (PyObjCClass_Check(self)) { // LCOV_BR_EXCL_LINE
+        if (likely(PyObjCClass_Check(self))) { // LCOV_BR_EXCL_LINE
             spr.receiver = (id _Nonnull)PyObjCClass_GetClass(self);
         } else {
             /* It is not possible to resolve class methods through an instance */
@@ -83,7 +83,8 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
         /* Found an existing proxy
          * Compensate for the +1 retainCount from +alloc
          */
-        if (object_getClass(result) != NSAutoreleasePool_class) { // LCOV_BR_EXCL_LINE
+        if (unlikely(object_getClass(result)
+                     != NSAutoreleasePool_class)) { // LCOV_BR_EXCL_LINE
             [result release];
         }
         return rval;
@@ -93,8 +94,8 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
      * compensates for the +1 from +alloc
      */
     rval = PyObjCObject_New(result, PyObjCObject_kDEFAULT, NO);
-    if (rval == NULL) { // LCOV_BR_EXCL_LINE
-        return rval;    // LCOV_EXCL_LINE
+    if (unlikely(rval == NULL)) { // LCOV_BR_EXCL_LINE
+        return rval;              // LCOV_EXCL_LINE
     }
 
     PyObject* actual = PyObjC_RegisterPythonProxy(result, rval);
@@ -200,9 +201,9 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
      * deallocated.
      */
     PyObjC_UnregisterPythonProxy(((PyObjCObject*)self)->objc_object, self);
-    if (!(((PyObjCObject*)self)->flags
-          & PyObjCObject_kSHOULD_NOT_RELEASE)) { // LCOV_BR_EXCL_LINE
-        [NSNull_null retain];                    // LCOV_EXCL_LINE
+    if (unlikely(!(((PyObjCObject*)self)->flags
+                   & PyObjCObject_kSHOULD_NOT_RELEASE))) { // LCOV_BR_EXCL_LINE
+        [NSNull_null retain];                              // LCOV_EXCL_LINE
     } // LCOV_EXCL_LINE
     ((PyObjCObject*)self)->objc_object = NSNull_null;
 
@@ -225,15 +226,15 @@ mkimp_NSObject_dealloc(PyObject*              callable,
 
       PyObjC_BEGIN_WITH_GIL
           pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {         // LCOV_BR_EXCL_LINE
-              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          if (unlikely(pyself == NULL)) { // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC();   // LCOV_EXCL_LINE
           } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, pyself};
           result            = PyObject_Vectorcall(callable, args + 1,
                                                   1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           PyObjCObject_ReleaseTransient(pyself, cookie);
-          if (result == NULL) {
+          if (unlikely(result == NULL)) {
               PyObjC_GIL_FORWARD_EXC();
           } // LCOV_EXCL_LINE
 
@@ -357,8 +358,8 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
         // Py_END_ALLOW_THREADS
     }
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     return id_to_python(retval);
@@ -376,8 +377,8 @@ mkimp_NSObject_release(PyObject*              callable,
 
       PyObjC_BEGIN_WITH_GIL
           pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {         // LCOV_BR_EXCL_LINE
-              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          if (unlikely(pyself == NULL)) { // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC();   // LCOV_EXCL_LINE
           } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, pyself};
@@ -418,8 +419,8 @@ mkimp_NSObject_retain(PyObject*              callable,
 
       PyObjC_BEGIN_WITH_GIL
           pyself = PyObjCObject_NewTransient(self, &cookie);
-          if (pyself == NULL) {         // LCOV_BR_EXCL_LINE
-              PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+          if (unlikely(pyself == NULL)) { // LCOV_BR_EXCL_LINE
+              PyObjC_GIL_FORWARD_EXC();   // LCOV_EXCL_LINE
           } // LCOV_EXCL_LINE
 
           PyObject* pyargs[2] = {NULL, pyself};
@@ -449,43 +450,43 @@ PyObjC_setup_nsobject(PyObject* module __attribute__((__unused__)))
 
     r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(alloc),
                                      call_NSObject_alloc, mkimp_NSObject_alloc);
-    if (r != 0)    // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r != 0)) // LCOV_BR_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
 
     r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(dealloc),
                                      call_NSObject_dealloc, mkimp_NSObject_dealloc);
-    if (r != 0)    // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r != 0)) // LCOV_BR_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
 
     r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(retain),
                                      call_NSObject_retain, mkimp_NSObject_retain);
-    if (r != 0)    // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r != 0)) // LCOV_BR_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
 
     r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(release),
                                      call_NSObject_release, mkimp_NSObject_release);
-    if (r != 0)    // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r != 0)) // LCOV_BR_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
 
     r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSProxy"), @selector(alloc),
                                      call_NSObject_alloc, mkimp_NSObject_alloc);
-    if (r != 0)    // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r != 0)) // LCOV_BR_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
 
     r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSProxy"), @selector(dealloc),
                                      call_NSObject_dealloc, mkimp_NSObject_dealloc);
-    if (r != 0)    // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r != 0)) // LCOV_BR_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
 
     r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSProxy"), @selector(retain),
                                      call_NSObject_retain, mkimp_NSObject_retain);
-    if (r != 0)    // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r != 0)) // LCOV_BR_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
 
     r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSProxy"), @selector(release),
                                      call_NSObject_release, mkimp_NSObject_release);
-    if (r != 0)    // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r != 0)) // LCOV_BR_EXCL_LINE
+        return -1;        // LCOV_EXCL_LINE
 
     return 0;
 }

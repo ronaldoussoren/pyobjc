@@ -36,12 +36,12 @@ PyObjC_InitSuperCallRegistry(void)
     assert(special_registry == NULL);
 
     signature_registry = PyDict_New();
-    if (signature_registry == NULL) // LCOV_BR_EXCL_LINE
-        return -1;                  // LCOV_EXCL_LINE
+    if (unlikely(signature_registry == NULL)) // LCOV_BR_EXCL_LINE
+        return -1;                            // LCOV_EXCL_LINE
 
     special_registry = PyDict_New();
-    if (special_registry == NULL) // LCOV_BR_EXCL_LINE
-        return -1;                // LCOV_EXCL_LINE
+    if (unlikely(special_registry == NULL)) // LCOV_BR_EXCL_LINE
+        return -1;                          // LCOV_EXCL_LINE
 
     return 0;
 }
@@ -85,7 +85,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
 #endif
 
 #ifdef PyObjC_DEBUG
-    if (!make_call_to_python_block) { // LCOV_BR_EXCL_LINE
+    if (unlikely(!make_call_to_python_block)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_Error,
                         "PyObjC_RegisterMethodMapping: all functions required");
@@ -96,7 +96,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
 #endif
 
     py_selname = PyUnicode_FromString(sel_getName(sel));
-    if (py_selname == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(py_selname == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         retval = -1;
         goto exit;
@@ -108,7 +108,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
         Py_INCREF(Py_None);
     } else {
         pyclass = PyObjCClass_New(class);
-        if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(pyclass == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(py_selname);
             retval = -1;
@@ -118,7 +118,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
     }
 
     v = PyMem_Malloc(sizeof(*v));
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(py_selname);
         Py_DECREF(pyclass);
@@ -132,7 +132,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
 
     entry = Py_BuildValue(
         "(ON)", pyclass, PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup));
-    if (entry == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(entry == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(py_selname);
         retval = -1;
@@ -140,7 +140,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
         // LCOV_EXCL_STOP
     }
 
-    if (PyTuple_GET_ITEM(entry, 1) == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(PyTuple_GET_ITEM(entry, 1) == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(py_selname);
         Py_DECREF(entry);
@@ -161,7 +161,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
         // LCOV_EXCL_STOP
     case 0:
         lst = PyList_New(0);
-        if (lst == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(lst == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(py_selname);
             Py_DECREF(entry);
@@ -169,9 +169,9 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
             goto exit;
             // LCOV_EXCL_STOP
         }
-        if (PyDict_SetItem( // LCOV_BR_EXCL_LINE
-                special_registry, py_selname, lst)
-            == -1) {
+        if (unlikely(PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                         special_registry, py_selname, lst)
+                     == -1)) {
             // LCOV_EXCL_START
             Py_DECREF(py_selname);
             Py_DECREF(lst);
@@ -185,7 +185,7 @@ PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc cal
         /* case 1: fallthrough */
     }
 
-    if (PyList_Append(lst, entry) < 0) { // LCOV_BR_EXCL_LINE
+    if (unlikely(PyList_Append(lst, entry) < 0)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(lst);
         Py_DECREF(entry);
@@ -221,7 +221,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 #endif
 
     PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
-    if (key == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(key == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         retval = -1;
         goto exit;
@@ -230,7 +230,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 
     r = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
                                    PyBytes_GET_SIZE(key));
-    if (r == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(key);
         PyErr_Format(PyObjCExc_Error, "cannot simplify signature '%s'", signature);
@@ -240,7 +240,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
     }
 
 #ifdef PyObjC_DEBUG
-    if (!call_to_objc || !make_call_to_python_block) { // LCOV_BR_EXCL_LINE
+    if (unlikely(!call_to_objc || !make_call_to_python_block)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(key);
         PyErr_SetString(PyObjCExc_Error,
@@ -252,7 +252,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 #endif
 
     v = PyMem_Malloc(sizeof(*v));
-    if (v == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(key);
         PyErr_NoMemory();
@@ -264,7 +264,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
     v->make_call_to_python_block = make_call_to_python_block;
 
     entry = PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup);
-    if (entry == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(entry == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(key);
         PyMem_Free(v);
@@ -273,7 +273,8 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
         // LCOV_EXCL_STOP
     }
 
-    if (_PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1)) { // LCOV_BR_EXCL_LINE
+    if (unlikely(_PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key))
+                                           + 1))) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(entry);
         retval = -1;
@@ -281,7 +282,8 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
         // LCOV_EXCL_STOP
     }
 
-    if (PyDict_SetItem(signature_registry, key, entry) < 0) { // LCOV_BR_EXCL_LINE
+    if (unlikely(PyDict_SetItem(signature_registry, key, entry)
+                 < 0)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(key);
         Py_DECREF(entry);
@@ -320,13 +322,13 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
 #endif
 
     py_selname = PyUnicode_FromString(sel_getName(sel));
-    if (py_selname == NULL) { // LCOV_BR_EXCL_LINE
-        goto error;           // LCOV_EXCL_LINE
+    if (unlikely(py_selname == NULL)) { // LCOV_BR_EXCL_LINE
+        goto error;                     // LCOV_EXCL_LINE
     }
 
     search_class = PyObjCClass_New(class);
-    if (search_class == NULL) // LCOV_BR_EXCL_LINE
-        goto error;           // LCOV_EXCL_LINE
+    if (unlikely(search_class == NULL)) // LCOV_BR_EXCL_LINE
+        goto error;                     // LCOV_EXCL_LINE
 
     r = PyDict_GetItemRef(special_registry, py_selname, &lst);
     switch (r) { // LCOV_BR_EXCL_LINE
@@ -349,14 +351,14 @@ static struct registry* _Nullable search_special(Class class, SEL sel)
     Py_ssize_t len = PyList_Size(lst);
     for (i = 0; i < len; i++) {
         PyObject* entry = PyList_GetItemRef(lst, i);
-        if (entry == NULL) { // LCOV_BR_EXCL_LINE
-            goto error;      // LCOV_EXCL_LINE
+        if (unlikely(entry == NULL)) { // LCOV_BR_EXCL_LINE
+            goto error;                // LCOV_EXCL_LINE
         }
         PyObject* pyclass = PyTuple_GET_ITEM(entry, 0);
 
-        if (pyclass == NULL) { // LCOV_BR_EXCL_LINE
-            Py_DECREF(entry);  // LCOV_EXCL_LINE
-            continue;          // LCOV_EXCL_LINE
+        if (unlikely(pyclass == NULL)) { // LCOV_BR_EXCL_LINE
+            Py_DECREF(entry);            // LCOV_EXCL_LINE
+            continue;                    // LCOV_EXCL_LINE
         }
 
         if (pyclass == Py_None) {
@@ -446,13 +448,13 @@ static struct registry* _Nullable find_signature(const char* signature)
     PyMutex_Lock(&registry_mutex);
 #endif
     PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
-    if (key == NULL) { // LCOV_BR_EXCL_LINE
-        goto exit;     // LCOV_EXCL_LINE
+    if (unlikely(key == NULL)) { // LCOV_BR_EXCL_LINE
+        goto exit;               // LCOV_EXCL_LINE
     }
 
     res = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
                                      PyBytes_GET_SIZE(key));
-    if (res == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(res == -1)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(key);
         PyErr_Format(PyObjCExc_Error, "cannot simplify signature '%s'", signature);
@@ -461,8 +463,8 @@ static struct registry* _Nullable find_signature(const char* signature)
     }
 
     int r = _PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
-        goto exit; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+        goto exit;           // LCOV_EXCL_LINE
     }
     if (PyDict_GetItemRef(signature_registry, key, &o) != 1) {
         Py_DECREF(key);
@@ -489,15 +491,15 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
     special = search_special(class, sel);
     if (special) {
         result = special->call_to_objc;
-    } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        result = NULL;             // LCOV_EXCL_LINE
-    } else {                       // LCOV_EXCL_LINE
+    } else if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        result = NULL;                       // LCOV_EXCL_LINE
+    } else {                                 // LCOV_EXCL_LINE
         special = find_signature(signature);
         if (special) {
             result = special->call_to_objc;
-        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            result = NULL;             // LCOV_EXCL_LINE
-        } else {                       // LCOV_EXCL_LINE
+        } else if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+            result = NULL;                       // LCOV_EXCL_LINE
+        } else {                                 // LCOV_EXCL_LINE
             result = PyObjCFFI_Caller;
         }
     }
@@ -522,17 +524,17 @@ PyObjC_MakeIMP(Class class, PyObject* sel)
     PyObjCMethodSignature*  methinfo;
 
     methinfo = PyObjCSelector_GetMetadata(sel);
-    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     if (class != nil) {
         special = search_special(class, aSelector);
         if (special) {
             func = special->make_call_to_python_block;
-        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            Py_CLEAR(methinfo);        // LCOV_EXCL_LINE
-            return NULL;               // LCOV_EXCL_LINE
+        } else if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+            Py_CLEAR(methinfo);                  // LCOV_EXCL_LINE
+            return NULL;                         // LCOV_EXCL_LINE
         }
     }
 
@@ -540,8 +542,8 @@ PyObjC_MakeIMP(Class class, PyObject* sel)
         generic = find_signature(methinfo->signature);
         if (generic != NULL) {
             func = generic->make_call_to_python_block;
-        } else if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return NULL;               // LCOV_EXCL_LINE
+        } else if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+            return NULL;                         // LCOV_EXCL_LINE
         }
     }
 
@@ -559,7 +561,7 @@ PyObjC_MakeIMP(Class class, PyObject* sel)
     }
     if (meth) {
         const char* meth_encoding = method_getTypeEncoding(meth);
-        if (meth_encoding == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(meth_encoding == NULL)) { // LCOV_BR_EXCL_LINE
             /* method_getTypeEncoding should only return NULL when
              * meth is NULL.
              */

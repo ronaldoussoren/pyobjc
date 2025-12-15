@@ -35,12 +35,12 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     sz = PyObjCRT_SizeOfType(tp);
-    if (sz == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(sz == -1)) { // LCOV_BR_EXCL_LINE
         /* Should not happen unless a new encoding is introduced in
          * Apple's implementation.
          */
@@ -48,7 +48,7 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
     }
 
     buf = PyMem_Malloc(sz);
-    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(buf == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
@@ -80,8 +80,8 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
 
     PyMem_Free(buf);
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     Py_RETURN_NONE;
@@ -118,17 +118,17 @@ call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     sz = PyObjCRT_SizeOfType(tp);
-    if (sz == -1) {  // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+    if (unlikely(sz == -1)) { // LCOV_BR_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
 
     buf = PyMem_Malloc(sz);
-    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(buf == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
@@ -159,8 +159,8 @@ call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self,
 
     PyMem_Free(buf);
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     Py_RETURN_NONE;
@@ -205,12 +205,12 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     sz = PyObjCRT_SizeOfType(tp);
-    if (sz == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(sz == -1)) { // LCOV_BR_EXCL_LINE
         /* This can only be reached if an NSInvocation value returns
          * a bogus signature string.
          */
@@ -218,7 +218,7 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
     }
 
     buf = PyMem_Malloc(sz);
-    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(buf == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
@@ -243,7 +243,7 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyMem_Free(buf);
         return NULL;
@@ -295,17 +295,17 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     sz = PyObjCRT_SizeOfType(tp);
-    if (sz == -1) {  // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+    if (unlikely(sz == -1)) { // LCOV_BR_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
 
     buf = PyMem_Malloc(sz);
-    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(buf == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
@@ -329,7 +329,7 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+    if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyMem_Free(buf);
         return NULL;
@@ -350,35 +350,35 @@ PyObjC_setup_nsinvocation(PyObject* module __attribute__((__unused__)))
 {
     Class classNSInvocation = objc_lookUpClass("NSInvocation");
 
-    if (PyObjC_RegisterMethodMapping(classNSInvocation, // LCOV_BR_EXCL_LINE
-                                     @selector(setArgument:atIndex:),
-                                     call_NSInvocation_setArgument_atIndex_,
-                                     PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (unlikely(PyObjC_RegisterMethodMapping(classNSInvocation, // LCOV_BR_EXCL_LINE
+                                              @selector(setArgument:atIndex:),
+                                              call_NSInvocation_setArgument_atIndex_,
+                                              PyObjCUnsupportedMethod_IMP)
+                 < 0)) {
         return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSInvocation, // LCOV_BR_EXCL_LINE
-                                     @selector(setReturnValue:),
-                                     call_NSInvocation_setReturnValue_,
-                                     PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (unlikely(PyObjC_RegisterMethodMapping(classNSInvocation, // LCOV_BR_EXCL_LINE
+                                              @selector(setReturnValue:),
+                                              call_NSInvocation_setReturnValue_,
+                                              PyObjCUnsupportedMethod_IMP)
+                 < 0)) {
         return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSInvocation, // LCOV_BR_EXCL_LINE
-                                     @selector(getArgument:atIndex:),
-                                     call_NSInvocation_getArgument_atIndex_,
-                                     PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (unlikely(PyObjC_RegisterMethodMapping(classNSInvocation, // LCOV_BR_EXCL_LINE
+                                              @selector(getArgument:atIndex:),
+                                              call_NSInvocation_getArgument_atIndex_,
+                                              PyObjCUnsupportedMethod_IMP)
+                 < 0)) {
         return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(classNSInvocation, // LCOV_BR_EXCL_LINE
-                                     @selector(getReturnValue:),
-                                     call_NSInvocation_getReturnValue_,
-                                     PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (unlikely(PyObjC_RegisterMethodMapping(classNSInvocation, // LCOV_BR_EXCL_LINE
+                                              @selector(getReturnValue:),
+                                              call_NSInvocation_getReturnValue_,
+                                              PyObjCUnsupportedMethod_IMP)
+                 < 0)) {
         return -1; // LCOV_EXCL_LINE
     }
 

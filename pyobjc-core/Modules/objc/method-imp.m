@@ -253,8 +253,8 @@ static PyObject* _Nullable imp_metadata(PyObject* self)
     PyObject* result = PyObjCMethodSignature_AsDict(((PyObjCIMPObject*)self)->signature);
     int       r;
 
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kCLASS_METHOD) {
@@ -264,9 +264,11 @@ static PyObject* _Nullable imp_metadata(PyObject* self)
         r = PyDict_SetItem(result, PyObjCNM_classmethod, Py_False);
     }
 
-    if (r == -1) {         // LCOV_BR_EXCL_LINE
-        Py_DECREF(result); // LCOV_EXCL_LINE
-        return NULL;       // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(result);
+        return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return result;
@@ -332,8 +334,8 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
     assert(signature != NULL);
 
     result = PyObject_New(PyObjCIMPObject, (PyTypeObject*)PyObjCIMP_Type);
-    if (result == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
 
     result->imp       = imp;
     result->selector  = selector;
@@ -344,8 +346,8 @@ static PyObject* _Nullable PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc 
 
     result->flags = flags;
 
-    if (signature->shortcut_signature
-        && (callfunc == PyObjCFFI_Caller)) { // LCOV_BR_EXCL_LINE
+    if (likely(signature->shortcut_signature
+               && (callfunc == PyObjCFFI_Caller))) { // LCOV_BR_EXCL_LINE
         assert(signature->shortcut_signature);
         result->vectorcall = imp_vectorcall_simple;
     } else {
@@ -376,7 +378,7 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         return NULL;
     }
 
-    if (!PyObjCClass_Check(self)) { // LCOV_BR_EXCL_LINE
+    if (unlikely(!PyObjCClass_Check(self))) { // LCOV_BR_EXCL_LINE
         /* AFAIK it is not possible to get an unbound objc.selector
          * for a class method.
          */
@@ -402,10 +404,10 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         }
     Py_END_ALLOW_THREADS
 
-    if (retval == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(retval == NULL)) { // LCOV_BR_EXCL_LINE
         /* AFAIK the method in practice never returns NULL */
         // LCOV_EXCL_START
-        if (PyErr_Occurred()) {
+        if (unlikely(PyErr_Occurred())) {
             return NULL;
         }
         Py_RETURN_NONE;
@@ -429,8 +431,8 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
     }
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
-    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;        // LCOV_EXCL_LINE
+    if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
     }
 
     PyObjC_CallFunc call_func =
@@ -491,9 +493,9 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
         }
     Py_END_ALLOW_THREADS
 
-    if (retval == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(retval == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        if (PyErr_Occurred()) {
+        if (likely(PyErr_Occurred())) {
             return NULL;
         }
         Py_RETURN_NONE;
@@ -520,7 +522,7 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
     }
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
-    if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(attr);
         return NULL;
@@ -548,26 +550,27 @@ PyObjCIMP_SetUp(PyObject* module)
     int r;
 
     PyObjCIMP_Type = PyType_FromSpec(&imp_spec);
-    if (PyObjCIMP_Type == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;                // LCOV_EXCL_LINE
+    if (unlikely(PyObjCIMP_Type == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                          // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddObject(module, "IMP", PyObjCIMP_Type) == -1) { // LCOV_BR_EXCL_LINE
-        return -1;                                                 // LCOV_EXCL_LINE
+    if (unlikely(PyModule_AddObject(module, "IMP", PyObjCIMP_Type)
+                 == -1)) { // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCIMP_Type);
 
     r = PyObjC_RegisterMethodMapping(nil, @selector(instanceMethodForSelector:),
                                      call_instanceMethodForSelector_,
                                      PyObjCUnsupportedMethod_IMP);
-    if (r == -1)   // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
 
     r = PyObjC_RegisterMethodMapping(nil, @selector(methodForSelector:),
                                      call_methodForSelector_,
                                      PyObjCUnsupportedMethod_IMP);
-    if (r == -1)   // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
 
     return 0;
 }

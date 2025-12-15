@@ -78,8 +78,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSObject*       cur;
 
     array = [NSMutableArray array];
-    if (array == nil) // LCOV_BR_EXCL_LINE
-        return nil;   // LCOV_EXCL_LINE
+    if (unlikely(array == nil)) // LCOV_BR_EXCL_LINE
+        return nil;             // LCOV_EXCL_LINE
 
     while ((cur = [self nextObject]) != nil) {
         [array addObject:cur];

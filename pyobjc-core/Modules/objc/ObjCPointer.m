@@ -117,8 +117,8 @@ PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
     // spurious digits.
     //
     // The loop is left in just in case...
-    while (isdigit(typeend[-1])) { // LCOV_BR_EXCL_LINE
-        typeend--;                 // LCOV_EXCL_LINE
+    while (unlikely(isdigit(typeend[-1]))) { // LCOV_BR_EXCL_LINE
+        typeend--;                           // LCOV_EXCL_LINE
     }
     PyObjCPointer* self;
 
@@ -133,16 +133,16 @@ PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
     }
 
     self = PyObject_NEW(PyObjCPointer, (PyTypeObject*)PyObjCPointer_Type);
-    if (self == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;    // LCOV_EXCL_LINE
+    if (unlikely(self == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
     }
 
     self->typestr = PyBytes_FromStringAndSize((char*)t, typeend - t);
     self->ptr     = p;
 
-    if (self->typestr == NULL) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(self);         // LCOV_EXCL_LINE
-        return NULL;             // LCOV_EXCL_LINE
+    if (unlikely(self->typestr == NULL)) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(self);                   // LCOV_EXCL_LINE
+        return NULL;                       // LCOV_EXCL_LINE
     }
 
     return (PyObject*)self;
@@ -152,14 +152,14 @@ int
 PyObjCPointer_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&ptr_spec);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCPointer_Type = tmp;
 
     int r = PyModule_AddObject(module, "ObjCPointer", PyObjCPointer_Type);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+        return -1;           // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCPointer_Type);
     return 0;

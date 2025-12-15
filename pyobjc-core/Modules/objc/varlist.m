@@ -63,8 +63,8 @@ static PyObject* _Nullable varlist_as_tuple(PyObject* _self, PyObject* args,
     }
 
     result = PyTuple_New(length);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < length; i++) {
@@ -107,9 +107,9 @@ static PyObject* _Nullable varlist_as_buffer(PyObject* _self, PyObject* args,
 
     buffer_size = length * self->itemsize;
 
-    if (PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
-            &info, _self, self->array, buffer_size, 0, PyBUF_FULL)
-        < 0) {
+    if (unlikely(PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
+                     &info, _self, self->array, buffer_size, 0, PyBUF_FULL)
+                 < 0)) {
         return NULL; // LCOV_EXCL_LINE
     }
 
@@ -148,8 +148,8 @@ static PyObject* _Nullable varlist__getslice__(PyObject* _self, Py_ssize_t start
     }
 
     result = PyTuple_New(stop - start);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
     for (idx = start; idx < stop; idx++) {
@@ -453,7 +453,7 @@ PyObjCVarList_New(const char* tp, void* array)
     const char*    end;
 
     end = PyObjCRT_SkipTypeSpec(tp);
-    if (end == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(end == NULL)) { // LCOV_BR_EXCL_LINE
         /* This should never happen because the 'tp' argument
          * is either from the ObjC runtime, or is validated before
          * we get here.
@@ -466,8 +466,8 @@ PyObjCVarList_New(const char* tp, void* array)
 
     result = (PyObjCVarList*)PyObject_Malloc(
         _PyObject_SIZE((PyTypeObject*)PyObjCVarList_Type) + (end - tp) + 1);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
     (void)PyObject_Init((PyObject*)result, (PyTypeObject*)PyObjCVarList_Type);
     result->array    = array;
@@ -494,14 +494,14 @@ int
 PyObjCVarList_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&varlist_spec);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCVarList_Type = tmp;
 
     int r = PyModule_AddObject(module, "varlist", PyObjCVarList_Type);
-    if (r == -1) { // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+        return -1;           // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCVarList_Type);
     return 0;

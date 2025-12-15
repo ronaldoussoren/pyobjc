@@ -183,8 +183,8 @@ PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
 {
     Py_ssize_t i;
     PyObject*  result = PyList_New(0);
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&items_mutex);
@@ -192,7 +192,7 @@ PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
     for (i = 0; i < item_count; i++) {
         if (items[i].pythonify == (PyObjCPointerWrapper_ToPythonFunc)&ID_to_py) {
             PyObject* cur = PyBytes_FromString(items[i].signature);
-            if (cur == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(cur == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(result);
 #ifdef Py_GIL_DISABLED
@@ -201,7 +201,7 @@ PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
                 return NULL;
                 // LCOV_EXCL_STOP
             }
-            if (PyList_Append(result, cur) == -1) { // LCOV_BR_EXCL_LINE
+            if (unlikely(PyList_Append(result, cur) == -1)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(cur);
                 Py_DECREF(result);
@@ -258,8 +258,8 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     }
 #else
     if (FindWrapper(signature, &cur_pythonify, &cur_depythonify, NULL) == 0) {
-        if (cur_pythonify != pythonify
-            || cur_depythonify != depythonify) { // LCOV_BR_EXCL_LINE
+        if (unlikely(cur_pythonify != pythonify
+                     || cur_depythonify != depythonify)) { // LCOV_BR_EXCL_LINE
             /* Hitting this would be a bug in PyObjC (aka, this is a fancy spelling of
              * PyObjC_Assert) */
             // LCOV_EXCL_START
@@ -275,9 +275,11 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     PyMutex_Lock(&items_mutex);
 #endif
     struct wrapper* tmp = PyMem_Realloc(items, sizeof(struct wrapper) * (item_count + 1));
-    if (tmp == NULL) {    // LCOV_BR_EXCL_LINE
-        PyErr_NoMemory(); // LCOV_EXCL_LINE
-        return -1;        // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_NoMemory();
+        return -1;
+        // LCOV_EXCL_STOP
     }
     items = tmp;
 #ifdef Py_GIL_DISABLED
@@ -285,7 +287,7 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
 #endif
 
     char* tmp_name = PyObjCUtil_Strdup(name);
-    if (tmp_name == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(tmp_name == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         return -1;
@@ -294,7 +296,7 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     items[item_count].name = tmp_name;
 
     char* tmp_sig = PyObjCUtil_Strdup(signature);
-    if (tmp_sig == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(tmp_sig == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyMem_Free((void*)items[item_count].name);
         PyErr_NoMemory();
@@ -394,22 +396,22 @@ PyObjCPointerWrapper_Init(PyObject* module __attribute__((__unused__)))
 
     r = PyObjCPointerWrapper_Register("PyObject*", @encode(PyObject*), PyObjectPtr_New,
                                       PyObjectPtr_Convert);
-    if (r == -1)   // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
 
     r = PyObjCPointerWrapper_Register("PyObject*", "^{PyObject=}", PyObjectPtr_New,
                                       PyObjectPtr_Convert);
-    if (r == -1)   // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
 
     r = PyObjCPointerWrapper_Register("Class", "^{objc_class=}", class_new,
                                       class_convert);
-    if (r == -1)   // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
 
     r = PyObjCPointerWrapper_Register("FILE*", @encode(FILE*), FILE_New, FILE_Convert);
-    if (r == -1)   // LCOV_BR_EXCL_LINE
-        return -1; // LCOV_EXCL_LINE
+    if (unlikely(r == -1)) // LCOV_BR_EXCL_LINE
+        return -1;         // LCOV_EXCL_LINE
 
     /* Issue #298, at least in Xcode 11.3 the following code results in
      * a type encoding of "^{NSObject=#}" instead of "@" for the property:
@@ -420,9 +422,9 @@ PyObjCPointerWrapper_Init(PyObject* module __attribute__((__unused__)))
      * @property ObjectClass* value;
      * ...
      */
-    if (PyObjCPointerWrapper_RegisterID( // LCOV_BR_EXCL_LINE
-            "NSObject", "^{NSObject=#}")
-        < 0) {
+    if (unlikely(PyObjCPointerWrapper_RegisterID( // LCOV_BR_EXCL_LINE
+                     "NSObject", "^{NSObject=#}")
+                 < 0)) {
         return -1; // LCOV_EXCL_LINE
     }
 

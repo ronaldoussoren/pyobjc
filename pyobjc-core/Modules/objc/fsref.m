@@ -190,8 +190,8 @@ PyObject* _Nullable PyObjC_decode_fsref(const void* buffer)
     PyObjCFSRefObject* result =
         PyObject_New(PyObjCFSRefObject, (PyTypeObject*)PyObjCFSRef_Type);
 
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
     result->ref = *(const FSRef*)buffer;
     return (PyObject*)result;
@@ -201,14 +201,14 @@ int
 PyObjCFSRef_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&fsref_spec);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCFSRef_Type = tmp;
 
-    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "FSRef", PyObjCFSRef_Type)
-        == -1) {
+    if (unlikely(PyModule_AddObject( // LCOV_BR_EXCL_LINE
+                     module, "FSRef", PyObjCFSRef_Type)
+                 == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCFSRef_Type);

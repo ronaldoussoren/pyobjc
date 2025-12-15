@@ -68,8 +68,8 @@ static PyObject* _Nullable unic_nsstring(PyObject* self)
     if (uobj->py_nsstr == NULL) {
         uobj->py_nsstr = PyObjCObject_New(
             uobj->nsstr, PyObjCObject_kDEFAULT | PyObjCObject_kNEW_WRAPPER, YES);
-        if (uobj->py_nsstr == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;              // LCOV_EXCL_LINE
+        if (unlikely(uobj->py_nsstr == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                        // LCOV_EXCL_LINE
         }
     }
     Py_INCREF(uobj->py_nsstr);
@@ -85,8 +85,8 @@ static PyObject* _Nullable unic_getattro(PyObject* o, PyObject* attr_name)
 
         PyErr_Clear();
         py_nsstr = unic_nsstring(o);
-        if (py_nsstr == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;        // LCOV_EXCL_LINE
+        if (unlikely(py_nsstr == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;                  // LCOV_EXCL_LINE
         }
         res = PyObject_GetAttr(py_nsstr, attr_name);
         Py_DECREF(py_nsstr);
@@ -211,7 +211,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     length = [value length];
 
     characters = PyMem_Malloc(sizeof(unichar) * (length + 1));
-    if (characters == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(characters == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
@@ -242,7 +242,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     // Using PyObject_Malloc instead of PyObject_New matches the
     // implementation of PyUnicode_New
     result = PyObject_Malloc(sizeof(PyObjCUnicodeObject));
-    if (result == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyMem_Free(characters);
         characters = NULL;
@@ -328,8 +328,8 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
         result->base.data.latin1 =
             PyMem_Malloc(sizeof(Py_UCS1) * (length + 1 - nr_surrogates));
-        if (result->base.data.latin1 == NULL) // LCOV_BR_EXCL_LINE
-            goto error;                       // LCOV_EXCL_LINE
+        if (unlikely(result->base.data.latin1 == NULL)) // LCOV_BR_EXCL_LINE
+            goto error;                                 // LCOV_EXCL_LINE
 
         latin1_cur = result->base.data.latin1;
         for (i = 0; i < length; i++) {
@@ -370,8 +370,8 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
             result->base.data.ucs2 =
                 PyMem_Malloc(sizeof(Py_UCS2) * (length + 1 - nr_surrogates));
-            if (result->base.data.ucs2 == NULL) // LCOV_BR_EXCL_LINE
-                goto error;                     // LCOV_EXCL_LINE
+            if (unlikely(result->base.data.ucs2 == NULL)) // LCOV_BR_EXCL_LINE
+                goto error;                               // LCOV_EXCL_LINE
 
             ucs2_cur = result->base.data.ucs2;
             for (i = 0; i < length; i++) {
@@ -395,8 +395,8 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
         result->base.data.ucs4 =
             PyMem_Malloc(sizeof(Py_UCS4) * (length + 1 - nr_surrogates));
-        if (result->base.data.ucs4 == NULL) { // LCOV_BR_EXCL_LINE
-            goto error;                       // LCOV_EXCL_LINE
+        if (unlikely(result->base.data.ucs4 == NULL)) { // LCOV_BR_EXCL_LINE
+            goto error;                                 // LCOV_EXCL_LINE
         }
 
         ucs4_cur = result->base.data.ucs4;
@@ -405,7 +405,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
                 && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
                 Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
 
-                if (ch > 0x10ffff) { // LCOV_BR_EXCL_LINE
+                if (unlikely(ch > 0x10ffff)) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     /* XXX: Cannot happen */
                     /* Unicode spec has a maximum code point value and
@@ -470,13 +470,14 @@ PyObjCUnicode_Setup(PyObject* module)
                                              bases);
     Py_CLEAR(bases);
 #endif
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCUnicode_Type = tmp;
 
     if ( // LCOV_BR_EXCL_LINE
-        PyModule_AddObject(module, "pyobjc_unicode", PyObjCUnicode_Type) == -1) {
+        unlikely(PyModule_AddObject(module, "pyobjc_unicode", PyObjCUnicode_Type)
+                 == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCUnicode_Type);

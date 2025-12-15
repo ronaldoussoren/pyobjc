@@ -114,7 +114,7 @@ static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable o
     } else {
         const char* encoding = ivar_getTypeEncoding(var);
 
-        if (encoding == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(encoding == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             // Guards against invalid data in the ObjC runtime
             PyErr_SetString(PyObjCExc_Error, "Cannot extract type encoding from ivar");
@@ -257,7 +257,7 @@ ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable val
     res = depythonify_c_value((const char* _Nonnull)ivar_getTypeEncoding(var), value,
                               (void*)(((char*)objc) + ivar_getOffset(var)));
     Py_END_CRITICAL_SECTION();
-    if (res == -1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(res == -1)) { // LCOV_BR_EXCL_LINE
         // [objc didChangeValueForKey:ocName];
         return -1;
     }
@@ -288,8 +288,8 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
 
     if (name) {
         self->name = PyObjCUtil_Strdup(name);
-        if (self->name == NULL) { // LCOV_BR_EXCL_LINE
-            return -1;            // LCOV_EXCL_LINE
+        if (unlikely(self->name == NULL)) { // LCOV_BR_EXCL_LINE
+            return -1;                      // LCOV_EXCL_LINE
         }
 
     } else {
@@ -297,7 +297,7 @@ ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
     }
 
     char* type_copy = PyObjCUtil_Strdup(type);
-    if (type_copy == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(type_copy == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         if (name) {
             PyMem_Free(self->name);
@@ -354,7 +354,7 @@ static PyObject* _Nullable ivar_class_setup(PyObject* _self, PyObject* _Nullable
 
     if (self->name == NULL) {
         self->name = PyObjCUtil_Strdup(name);
-        if (self->name == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(self->name == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_NoMemory();
             return NULL;
@@ -393,8 +393,8 @@ ivar_hash(PyObject* o)
         result ^= 0x20;
     }
 
-    if (result == -1) { // LCOV_BR_EXCL_LINE
-        result = -2;    // LCOV_EXCL_LINE
+    if (unlikely(result == -1)) { // LCOV_BR_EXCL_LINE
+        result = -2;              // LCOV_EXCL_LINE
     } // LCOV_EXCL_LINE
 
     return result;
@@ -420,13 +420,15 @@ static PyObject* _Nullable ivar_richcompare(PyObject* a, PyObject* b, int op)
             }
 
             /* XXX: ..._GetType cannot be NULL */
-            if (PyObjCInstanceVariable_GetType(a) == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(PyObjCInstanceVariable_GetType(a)
+                         == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 if (PyObjCInstanceVariable_GetType(b) != NULL) {
                     same = 0;
                 }
                 // LCOV_EXCL_STOP
-            } else if (PyObjCInstanceVariable_GetType(b) != NULL) { // LCOV_BR_EXCL_LINE
+            } else if (unlikely(PyObjCInstanceVariable_GetType(b)
+                                != NULL)) { // LCOV_BR_EXCL_LINE
                 same = same
                        && (strcmp(PyObjCInstanceVariable_GetType(a),
                                   PyObjCInstanceVariable_GetType(b))
@@ -588,14 +590,14 @@ int
 PyObjCInstanceVariable_Setup(PyObject* module)
 {
     PyObject* tmp = PyType_FromSpec(&ivar_spec);
-    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-        return -1;     // LCOV_EXCL_LINE
+    if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
     }
     PyObjCInstanceVariable_Type = tmp;
 
-    if (PyModule_AddObject( // LCOV_BR_EXCL_LINE
-            module, "ivar", PyObjCInstanceVariable_Type)
-        == -1) {
+    if (unlikely(PyModule_AddObject( // LCOV_BR_EXCL_LINE
+                     module, "ivar", PyObjCInstanceVariable_Type)
+                 == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
 

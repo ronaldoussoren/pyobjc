@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSUInteger i;
 
-    if (cnt > 0 && objects == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(cnt > 0 && objects == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         [self release];
         return nil;
@@ -262,11 +262,12 @@ NS_ASSUME_NONNULL_BEGIN
     PyObjC_BEGIN_WITH_GIL
 
         PyObject* tmp = PySet_New(value);
-        if (tmp == NULL) {            // LCOV_BR_EXCL_LINE
+        if (unlikely(tmp == NULL)) {  // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
 
-        if (depythonify_python_object(tmp, &result) == -1) { // LCOV_BR_EXCL_LINE
+        if (unlikely(depythonify_python_object(tmp, &result)
+                     == -1)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();
@@ -286,13 +287,13 @@ NS_ASSUME_NONNULL_BEGIN
 
     PyObjC_BEGIN_WITH_GIL
         PyObject* tmp = PySequence_List(value);
-        if (tmp == NULL) {            // LCOV_BR_EXCL_LINE
+        if (unlikely(tmp == NULL)) {  // LCOV_BR_EXCL_LINE
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
 
-        if (depythonify_python_object( // LCOV_BR_EXCL_LINE
-                tmp, &result)
-            == -1) {
+        if (unlikely(depythonify_python_object( // LCOV_BR_EXCL_LINE
+                         tmp, &result)
+                     == -1)) {
             // LCOV_EXCL_START
             Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();

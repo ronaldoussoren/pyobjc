@@ -23,7 +23,7 @@ static PyObject* _Nullable makeipaddr(struct sockaddr* addr, int addrlen)
     int  r;
 
     r = getnameinfo(addr, addrlen, buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
-    if (r != 0) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r != 0)) { // LCOV_BR_EXCL_LINE
         /*
          * This should never fail due to NI_NUMERICHOST and having
          * a large enough buffer.
@@ -51,7 +51,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         hints.ai_socktype = SOCK_DGRAM; /*dummy*/
         hints.ai_flags    = AI_PASSIVE;
         error             = getaddrinfo(NULL, "0", &hints, &res);
-        if (error) { // LCOV_BR_EXCL_LINE
+        if (unlikely(error)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyObjCErr_SetGAIError(error);
             return -1;
@@ -73,15 +73,15 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
             return -1;
             // LCOV_EXCL_STOP
         }
-        if (res->ai_next) { // LCOV_BR_EXCL_LINE
+        if (unlikely(res->ai_next)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             freeaddrinfo(res);
             PyObjCErr_SetSocketError("wildcard resolved to multiple address");
             return -1;
             // LCOV_EXCL_STOP
         }
-        if (res->ai_addrlen < addr_ret_size) // LCOV_BR_EXCL_LINE
-            addr_ret_size = res->ai_addrlen; // LCOV_EXCL_LINE
+        if (unlikely(res->ai_addrlen < addr_ret_size)) // LCOV_BR_EXCL_LINE
+            addr_ret_size = res->ai_addrlen;           // LCOV_EXCL_LINE
         memcpy(addr_ret, res->ai_addr, addr_ret_size);
         freeaddrinfo(res);
         return size;
@@ -113,8 +113,8 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         PyObjCErr_SetGAIError(error);
         return -1;
     }
-    if (res->ai_addrlen < addr_ret_size) { // LCOV_BR_EXCL_LINE
-        addr_ret_size = res->ai_addrlen;   // LCOV_EXCL_LINE
+    if (unlikely(res->ai_addrlen < addr_ret_size)) { // LCOV_BR_EXCL_LINE
+        addr_ret_size = res->ai_addrlen;             // LCOV_EXCL_LINE
     } // LCOV_EXCL_LINE
     memcpy((char*)addr_ret, res->ai_addr, addr_ret_size);
     freeaddrinfo(res);
@@ -138,7 +138,7 @@ PyObjC_SockAddrToPython(const void* value)
     case AF_INET: {
         struct sockaddr_in* a       = (struct sockaddr_in*)value;
         PyObject*           addrobj = makeipaddr((struct sockaddr*)a, sizeof(*a));
-        if (addrobj == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(addrobj == NULL)) { // LCOV_BR_EXCL_LINE
             /* see comment in makeipaddr */
             return NULL; // LCOV_EXCL_LINE
         }
@@ -148,7 +148,7 @@ PyObjC_SockAddrToPython(const void* value)
     case AF_INET6: {
         struct sockaddr_in6* a       = (struct sockaddr_in6*)value;
         PyObject*            addrobj = makeipaddr((struct sockaddr*)a, sizeof(*a));
-        if (addrobj == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(addrobj == NULL)) { // LCOV_BR_EXCL_LINE
             /* see comment in makeipaddr */
             return NULL; // LCOV_EXCL_LINE
         }
@@ -188,7 +188,8 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             Py_INCREF(value);
         }
 
-        if (PyBytes_AsStringAndSize(value, &path, &len) == -1) { // LCOV_BR_EXCL_LINE
+        if (unlikely(PyBytes_AsStringAndSize(value, &path, &len)
+                     == -1)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(value);
             return -1;

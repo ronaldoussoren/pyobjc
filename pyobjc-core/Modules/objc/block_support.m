@@ -64,7 +64,7 @@ const char* _Nullable PyObjCBlock_GetSignature(void* _block)
 {
     struct block_literal* block = (struct block_literal*)_block;
 
-    if (((intptr_t)(block->isa)) & 0x1) { // LCOV_BR_EXCL_LINE
+    if (unlikely(((intptr_t)(block->isa)) & 0x1)) { // LCOV_BR_EXCL_LINE
         /* XXX: Hack to avoid a hard crash that I haven't been able
          * to pintpoint yet (test doesn't fail reliably, and I haven't
          * been able to trigger it with a unittest.
@@ -240,9 +240,9 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
     }
 
     argbuf = PyMem_Malloc(argbuf_len);
-    if (argbuf == NULL) { // LCOV_BR_EXCL_LINE
-        PyErr_NoMemory(); // LCOV_EXCL_LINE
-        return NULL;      // LCOV_EXCL_LINE
+    if (unlikely(argbuf == NULL)) { // LCOV_BR_EXCL_LINE
+        PyErr_NoMemory();           // LCOV_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
 
 #ifdef __arm64__
@@ -321,7 +321,7 @@ PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)
 
 #endif
 
-    if (r != FFI_OK) { // LCOV_BR_EXCL_LINE
+    if (unlikely(r != FFI_OK)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Format(PyObjCExc_Error, "Cannot create FFI CIF for %s: %s", methinfo,
                      PyObjC_ffi_status_str((ffi_status)r));
@@ -373,7 +373,7 @@ error:
     } else {
         PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr);
     }
-    if (argbuf) { // LCOV_BR_EXCL_LINE
+    if (unlikely(argbuf)) { // LCOV_BR_EXCL_LINE
         PyMem_Free(argbuf);
     }
     return NULL;
@@ -384,8 +384,8 @@ PyObjCBlock_CleanupCapsule(PyObject* ptr)
 {
     PyObjCBlockFunction block_func =
         (PyObjCBlockFunction)PyCapsule_GetPointer(ptr, "objc.__block_release__");
-    if (block_func == NULL) // LCOV_BR_EXCL_LINE
-        return;             // LCOV_EXCL_LINE
+    if (unlikely(block_func == NULL)) // LCOV_BR_EXCL_LINE
+        return;                       // LCOV_EXCL_LINE
 
     PyObjCFFI_FreeBlockFunction(block_func);
 } // LCOV_BR_EXCL_LINE
@@ -403,12 +403,12 @@ static PyObject* _Nullable block_signature(PyObjCMethodSignature* methinfo)
     }
 
     buf = PyBytes_FromStringAndSize(NULL, buflen);
-    if (buf == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;   // LCOV_EXCL_LINE
+    if (unlikely(buf == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;             // LCOV_EXCL_LINE
     }
 
     cur = PyBytes_AsString(buf);
-    if (cur == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(cur == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_CLEAR(buf);
         return NULL;
@@ -430,8 +430,8 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* methinfo, PyObject* ca
 
     block.descriptor_memory =
         PyBytes_FromStringAndSize(NULL, sizeof(struct block_descriptor));
-    if (block.descriptor_memory == NULL) { // LCOV_BR_EXCL_LINE
-        return NULL;                       // LCOV_EXCL_LINE
+    if (unlikely(block.descriptor_memory == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                                 // LCOV_EXCL_LINE
     }
     block.descriptor =
         (struct block_descriptor*)PyBytes_AsString(block.descriptor_memory);
@@ -444,7 +444,7 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* methinfo, PyObject* ca
      * The function below only fails when running out of memory
      */
     block.signature_memory = block_signature(methinfo);
-    if (block.signature_memory == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(block.signature_memory == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_CLEAR(block.descriptor_memory);
         return NULL;
@@ -463,7 +463,7 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* methinfo, PyObject* ca
 
     block.invoke_cleanup = PyCapsule_New((void*)(block.invoke), "objc.__block_release__",
                                          PyObjCBlock_CleanupCapsule);
-    if (block.invoke_cleanup == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(block.invoke_cleanup == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyObjCFFI_FreeBlockFunction(block.invoke);
         Py_CLEAR(block.descriptor_memory);
@@ -504,7 +504,7 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
 
     rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
     [self release];
-    if (rval == NULL) { // LCOV_BR_EXCL_LINE
+    if (unlikely(rval == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         return NULL;
         // LCOV_EXCL_STOP
@@ -546,7 +546,7 @@ PyObjCBlock_Setup(PyObject* module __attribute__((__unused__)))
 {
     Class StackBlock;
     Class GlobalBlock = objc_lookUpClass("__NSGlobalBlock__");
-    if (GlobalBlock == Nil) { // LCOV_BR_EXCL_LINE
+    if (unlikely(GlobalBlock == Nil)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         /* This should never happen... */
         PyErr_SetString(PyObjCExc_InternalError, "Cannot find __NSGlobalBlock__ class");
@@ -556,7 +556,7 @@ PyObjCBlock_Setup(PyObject* module __attribute__((__unused__)))
     gGlobalBlockClass = GlobalBlock;
 
     StackBlock = objc_lookUpClass("__NSStackBlock__");
-    if (StackBlock == Nil) { // LCOV_BR_EXCL_LINE
+    if (unlikely(StackBlock == Nil)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         /* This should never happen... */
         PyErr_SetString(PyObjCExc_InternalError, "Cannot find __NSGlobalBlock__ class");
@@ -565,33 +565,33 @@ PyObjCBlock_Setup(PyObject* module __attribute__((__unused__)))
     }
     gStackBlockClass = StackBlock;
 
-    if (!class_addMethod(StackBlock, // LCOV_BR_EXCL_LINE
-                         @selector(__pyobjc_PythonObject__), (IMP)pyobjc_PythonObject,
-                         "^{_object}@:")) {
+    if (unlikely(!class_addMethod(StackBlock, // LCOV_BR_EXCL_LINE
+                                  @selector(__pyobjc_PythonObject__),
+                                  (IMP)pyobjc_PythonObject, "^{_object}@:"))) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
         return -1;
         // LCOV_EXCL_STOP
     }
-    if (!class_addMethod(StackBlock, // LCOV_BR_EXCL_LINE
-                         @selector(__pyobjc_PythonTransient__:),
-                         (IMP)pyobjc_PythonTransient, "^{_object}@:^i")) {
+    if (unlikely(!class_addMethod(StackBlock, // LCOV_BR_EXCL_LINE
+                                  @selector(__pyobjc_PythonTransient__:),
+                                  (IMP)pyobjc_PythonTransient, "^{_object}@:^i"))) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
         return -1;
         // LCOV_EXCL_STOP
     }
-    if (!class_addMethod(GlobalBlock, // LCOV_BR_EXCL_LINE
-                         @selector(__pyobjc_PythonObject__), (IMP)pyobjc_PythonObject,
-                         "^{_object}@:")) {
+    if (unlikely(!class_addMethod(GlobalBlock, // LCOV_BR_EXCL_LINE
+                                  @selector(__pyobjc_PythonObject__),
+                                  (IMP)pyobjc_PythonObject, "^{_object}@:"))) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
         return -1;
         // LCOV_EXCL_STOP
     }
-    if (!class_addMethod(GlobalBlock, // LCOV_BR_EXCL_LINE
-                         @selector(__pyobjc_PythonTransient__:),
-                         (IMP)pyobjc_PythonTransient, "^{_object}@:^i")) {
+    if (unlikely(!class_addMethod(GlobalBlock, // LCOV_BR_EXCL_LINE
+                                  @selector(__pyobjc_PythonTransient__:),
+                                  (IMP)pyobjc_PythonTransient, "^{_object}@:^i"))) {
         // LCOV_EXCL_START
         PyErr_SetString(PyObjCExc_InternalError, "Cannot initialize block support");
         return -1;

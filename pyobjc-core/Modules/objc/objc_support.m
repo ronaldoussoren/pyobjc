@@ -61,8 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 
     if (rval == NULL) {
         rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
-        if (rval == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;    // LCOV_EXCL_LINE
+        if (unlikely(rval == NULL)) { // LCOV_BR_EXCL_LINE
+            return NULL;              // LCOV_EXCL_LINE
         }
     }
 
@@ -313,13 +313,13 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
         const ctype value;                                                               \
         memcpy((void*)&value, _pvalue, sizeof(ctype));                                   \
         PyObject* rv = PyTuple_New(elemcount);                                           \
-        if (rv == NULL) { /* LCOV_BR_EXCL_LINE */                                        \
-            return NULL;  /* LCOV_EXCL_LINE */                                           \
+        if (unlikely(rv == NULL)) { /* LCOV_BR_EXCL_LINE */                              \
+            return NULL;            /* LCOV_EXCL_LINE */                                 \
         }                                                                                \
                                                                                          \
         for (Py_ssize_t i = 0; i < elemcount; i++) { /* LCOV_BR_EXCL_LINE */             \
             PyObject* elem = convertelem(value[i]);                                      \
-            if (elem == NULL) { /* LCOV_BR_EXCL_LINE */                                  \
+            if (unlikely(elem == NULL)) { /* LCOV_BR_EXCL_LINE */                        \
                 /* LCOV_BR_EXCL_START */                                                 \
                 Py_DECREF(rv);                                                           \
                 return NULL;                                                             \
@@ -344,13 +344,13 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
                                                                                          \
         for (Py_ssize_t i = 0; i < elemcount; i++) { /* LCOV_BR_EXCL_LINE */             \
             PyObject* e = PySequence_GetItem(py, i);                                     \
-            if (e == NULL) { /* LCOV_BR_EXCL_LINE */                                     \
-                return -1;   /* LCOV_EXCL_LINE */                                        \
+            if (unlikely(e == NULL)) { /* LCOV_BR_EXCL_LINE */                           \
+                return -1;             /* LCOV_EXCL_LINE */                              \
             }                                                                            \
             value[i] = convertelem(e);                                                   \
             Py_DECREF(e);                                                                \
-            if (PyErr_Occurred()) { /* LCOV_BR_EXCL_LINE */                              \
-                return -1;          /* LCOV_EXC_LINE */                                  \
+            if (unlikely(PyErr_Occurred())) { /* LCOV_BR_EXCL_LINE */                    \
+                return -1;                    /* LCOV_EXC_LINE */                        \
             }                                                                            \
         } /* LCOV_BR_EXCL_LINE */                                                        \
         memcpy(_pvalue, (void*)&value, sizeof(ctype));                                   \
@@ -575,7 +575,7 @@ PyObjCRT_SkipTypeQualifiers(const char* type)
            || *type == 'O' || *type == _C_ATOMIC) {
         type++;
     }
-    while (*type && isdigit(*type)) { // LCOV_BR_EXCL_LINE
+    while (unlikely(*type && isdigit(*type))) { // LCOV_BR_EXCL_LINE
         /* XXX: There are no digits in after type qualifiers!. */
         type++; // LCOV_EXCL_LINE
     }
@@ -1067,8 +1067,8 @@ PyObjCRT_AlignOfType(const char* start_type)
             }
             maxalign = MAX(maxalign, item_align);
             type     = PyObjCRT_SkipTypeSpec(type);
-            if (type == NULL) { // LCOV_BR_EXCL_LINE
-                return -1;      // LCOV_EXCL_LINE
+            if (unlikely(type == NULL)) { // LCOV_BR_EXCL_LINE
+                return -1;                // LCOV_EXCL_LINE
             }
         }
         return maxalign;
@@ -1251,12 +1251,12 @@ PyObjCRT_SizeOfType(const char* start_type)
             acc_size  = ROUND(acc_size, align);
 
             itemSize = PyObjCRT_SizeOfType(type);
-            if (itemSize == -1) // LCOV_BR_EXCL_LINE
-                return -1;      // LCOV_EXCL_LINE
+            if (unlikely(itemSize == -1)) // LCOV_BR_EXCL_LINE
+                return -1;                // LCOV_EXCL_LINE
             acc_size += itemSize;
             type = PyObjCRT_SkipTypeSpec(type);
-            if (type == NULL) { // LCOV_BR_EXCL_LINE
-                return -1;      // LCOV_EXCL_LINE
+            if (unlikely(type == NULL)) { // LCOV_BR_EXCL_LINE
+                return -1;                // LCOV_EXCL_LINE
             }
         }
 
@@ -1387,7 +1387,7 @@ PyObjCRT_IsValidEncoding(const char* _type, Py_ssize_t type_length)
             return false;
         }
         type = PyObjCRT_SkipTypeSpec(type);
-        if (type == NULL) { // LCOV_BR_EXCL_LINE
+        if (unlikely(type == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             PyErr_Clear();
             return false;
@@ -1421,7 +1421,7 @@ PyObjCRT_IsValidEncoding(const char* _type, Py_ssize_t type_length)
             }
 
             type = PyObjCRT_SkipTypeSpec(type);
-            if (type == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(type == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_Clear();
                 return false;
@@ -1597,8 +1597,8 @@ static PyObject* _Nullable pythonify_c_array(const char* type, const void* datum
         return NULL;
 
     ret = PyTuple_New(nitems);
-    if (!ret)        // LCOV_BR_EXCL_LINE
-        return NULL; // LCOV_EXCL_LINE
+    if (unlikely(ret == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;           // LCOV_EXCL_LINE
 
     curdatum = datum;
     for (itemidx = 0; itemidx < nitems; itemidx++) {
@@ -1695,8 +1695,8 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datu
 
         haveTuple = 1;
         ret       = PyTuple_New(nitems);
-        if (!ret)        // LCOV_BR_EXCL_LINE
-            return NULL; // LCOV_EXCL_LINE
+        if (unlikely(ret == NULL)) // LCOV_BR_EXCL_LINE
+            return NULL;           // LCOV_EXCL_LINE
 
         item = type;
 
@@ -2090,7 +2090,7 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
 
         } else {
             pack = PyNumber_AsSsize_t(seq, NULL);
-            if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
                 // The attribute will always be an int unless
                 // someone pokes directly into the interpreter.
                 return -1; // LCOV_EXCL_LINE
@@ -2703,8 +2703,8 @@ depythonify_python_object(PyObject* argument, id* datum)
 
             if (r) {
                 *datum = [OC_PythonArray arrayWithPythonObject:argument];
-                if (*datum == nil) { // LCOV_BR_EXCL_LINE
-                    return -1;       // LCOV_EXCL_LINE
+                if (unlikely(*datum == nil)) { // LCOV_BR_EXCL_LINE
+                    return -1;                 // LCOV_EXCL_LINE
                 }
             }
         }
@@ -2718,8 +2718,8 @@ depythonify_python_object(PyObject* argument, id* datum)
 
             if (r) {
                 *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
-                if (*datum == nil) { // LCOV_BR_EXCL_LINE
-                    return -1;       // LCOV_EXCL_LINE
+                if (unlikely(*datum == nil)) { // LCOV_BR_EXCL_LINE
+                    return -1;                 // LCOV_EXCL_LINE
                 }
             }
         }
@@ -2732,35 +2732,35 @@ depythonify_python_object(PyObject* argument, id* datum)
 
             if (r) {
                 *datum = [OC_PythonSet setWithPythonObject:argument];
-                if (*datum == nil) { // LCOV_BR_EXCL_LINE
-                    return -1;       // LCOV_EXCL_LINE
+                if (unlikely(*datum == nil)) { // LCOV_BR_EXCL_LINE
+                    return -1;                 // LCOV_EXCL_LINE
                 }
             }
         }
 
         if (*datum == nil && PyObjC_IsBuiltinDate(argument)) {
             *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
-            if (*datum == nil) { // LCOV_BR_EXCL_LINE
-                return -1;       // LCOV_EXCL_LINE
+            if (unlikely(*datum == nil)) { // LCOV_BR_EXCL_LINE
+                return -1;                 // LCOV_EXCL_LINE
             }
         }
 
         if (*datum == nil && PyObjC_IsBuiltinDatetime(argument)) {
             *datum = [OC_BuiltinPythonDate dateWithPythonObject:argument];
-            if (*datum == nil) { // LCOV_BR_EXCL_LINE
-                return -1;       // LCOV_EXCL_LINE
+            if (unlikely(*datum == nil)) { // LCOV_BR_EXCL_LINE
+                return -1;                 // LCOV_EXCL_LINE
             }
         }
 
         if (*datum == nil) {
             int r = PyObjC_IsDateLike(argument);
-            if (r == -1) {
+            if (unlikely(r == -1)) {
                 return -1;
             }
 
             if (r) {
                 *datum = [OC_PythonDate dateWithPythonObject:argument];
-                if (*datum == nil) {
+                if (unlikely(*datum == nil)) {
                     return -1;
                 }
             }
@@ -2770,14 +2770,14 @@ depythonify_python_object(PyObject* argument, id* datum)
             int r;
 
             r = PyObjC_IsPathLike(argument);
-            if (r == -1) { // LCOV_BR_EXCL_LINE
-                return -1; // LCOV_EXCL_LINE
+            if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+                return -1;           // LCOV_EXCL_LINE
             }
 
             if (r) {
                 *datum = [OC_PythonURL URLWithPythonObject:argument];
-                if (*datum == nil) {
-                    if (!PyErr_Occurred()) {
+                if (unlikely(*datum == nil)) {
+                    if (unlikely(!PyErr_Occurred())) {
                         PyErr_SetString(PyObjCExc_Error,
                                         "Cannot convert path-like to URL");
                     }
@@ -2792,10 +2792,10 @@ depythonify_python_object(PyObject* argument, id* datum)
         }
     }
 
-    if (*datum) { // LCOV_BR_EXCL_LINE
+    if (unlikely(*datum)) { // LCOV_BR_EXCL_LINE
         id actual = PyObjC_RegisterObjCProxy(argument, *datum);
         if (actual != nil) {
-            if (actual == *datum) {
+            if (likely(actual == *datum)) {
                 [actual release];
             } else {
                 /* The original '*datum' is autoreleased according to the
@@ -2836,14 +2836,14 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
 
         if (PyBytes_Check(argument)) {
             char* v = PyBytes_AsString(argument);
-            if (v == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
                 /* Can only fail due to type check that we already did */
                 return -1; // LCOV_EXCL_LINE
             }
             memcpy(datum, (void*)&v, sizeof(char*));
         } else if (PyByteArray_Check(argument)) {
             char* v = PyByteArray_AsString(argument);
-            if (v == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
                 /* Can only fail due to type check that we already did */
                 return -1; // LCOV_EXCL_LINE
             }
@@ -3029,7 +3029,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
         } else if (PyType_Check(argument)
                    && PyType_IsSubtype((PyTypeObject*)argument, &PyObjCClass_Type)) {
             PyObject* class_object = PyObjCClass_ClassForMetaClass(argument);
-            if (class_object == NULL) { // LCOV_BR_EXCL_LINE
+            if (unlikely(class_object == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 PyErr_Format(PyObjCExc_Error, "Cannot locate class for metaclass %R",
                              argument);
@@ -3068,7 +3068,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
                 sel = sel_getUid(selname);
                 Py_DECREF(bytes);
 
-                if (sel) { // LCOV_BR_EXCL_LINE
+                if (likely(sel)) { // LCOV_BR_EXCL_LINE
                     *(SEL*)datum = sel;
 
                 } else {
@@ -3090,7 +3090,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             } else {
                 sel = sel_getUid(selname);
 
-                if (sel) { // LCOV_BR_EXCL_LINE
+                if (likely(sel)) { // LCOV_BR_EXCL_LINE
                     *(SEL*)datum = sel;
 
                 } else {
@@ -3111,7 +3111,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
             } else {
                 sel = sel_getUid(selname);
 
-                if (sel) { // LCOV_BR_EXCL_LINE
+                if (likely(sel)) { // LCOV_BR_EXCL_LINE
                     *(SEL*)datum = sel;
 
                 } else {
