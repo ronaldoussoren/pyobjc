@@ -2000,7 +2000,7 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
             if (same) {
                 PyObject* hidden =
                     PyObjCClass_HiddenSelector((PyObject*)tp, method_getName(m), NO);
-                if (unlikely(hidden == NULL && PyErr_Occurred())0 {
+                if (unlikely(hidden == NULL && PyErr_Occurred())) {
                     Py_CLEAR(mro);
                     free(methods);
                     return NULL;
