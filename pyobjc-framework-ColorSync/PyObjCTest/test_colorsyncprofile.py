@@ -124,8 +124,6 @@ class TestColorSyncProfile(TestCase):
         self.assertResultIsCFRetained(ColorSync.ColorSyncProfileCreateWithURLAndOptions)
         self.assertArgIsOut(ColorSync.ColorSyncProfileCreateWithURLAndOptions, 2)
 
-        ColorSync.ColorSyncProfileGetTagCount
-
     @min_os_level("10.13")
     def testConstants(self):
         self.assertEqual(ColorSync.icVersion4Number, 0x04000000)
