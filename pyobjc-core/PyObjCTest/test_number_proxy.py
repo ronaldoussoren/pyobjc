@@ -651,16 +651,16 @@ class TestPyNumber(TestCase):
             v = FractionNotDouble(1, 2)
             self.assertEqual(OC_NumberInt.numberAsInt_(v), 0)
             self.assertEqual(OC_NumberInt.numberAsUnsignedLongLong_(v), 0)
-            with self.assertRaisesRegex(TypeError, "non-float"):
+            with self.assertRaisesRegex(TypeError, r"non-float|(must return a float)"):
                 OC_NumberInt.numberAsFloat_(v)
-            with self.assertRaisesRegex(TypeError, "non-float"):
+            with self.assertRaisesRegex(TypeError, r"non-float|(must return a float)"):
                 OC_NumberInt.numberAsDouble_(v)
 
         with self.subTest("FractionNotInt"):
             v = FractionNotInt(1, 2)
-            with self.assertRaisesRegex(TypeError, "non-int"):
+            with self.assertRaisesRegex(TypeError, r"non-int|(must return an int)"):
                 OC_NumberInt.numberAsInt_(v)
-            with self.assertRaisesRegex(TypeError, "non-int"):
+            with self.assertRaisesRegex(TypeError, r"non-int|(must return an int)"):
                 OC_NumberInt.numberAsUnsignedLongLong_(v)
             self.assertEqual(OC_NumberInt.numberAsFloat_(v), 0.5)
             self.assertEqual(OC_NumberInt.numberAsDouble_(v), 0.5)
