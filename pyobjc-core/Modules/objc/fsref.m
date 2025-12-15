@@ -102,16 +102,6 @@ static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unuse
     return PyObjC_decode_fsref(&result);
 }
 
-#if PY_VERSION_HEX < 0x030a0000
-static PyObject* _Nullable fsref_new(PyObject* self __attribute__((__unused__)),
-                                     PyObject* args __attribute__((__unused__)),
-                                     PyObject* kwds __attribute__((__unused__)))
-{
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.FSRef' instances");
-    return NULL;
-}
-#endif
-
 static PyGetSetDef fsref_getset[] = {{
                                          .name = "data",
                                          .get  = fsref_as_bytes,
@@ -150,9 +140,6 @@ static PyType_Slot fsref_slots[] = {
     {.slot = Py_tp_setattro, .pfunc = (void*)&PyObject_GenericSetAttr},
     {.slot = Py_tp_methods, .pfunc = (void*)&fsref_methods},
     {.slot = Py_tp_getset, .pfunc = (void*)&fsref_getset},
-#if PY_VERSION_HEX < 0x030a0000
-    {.slot = Py_tp_new, .pfunc = (void*)&fsref_new},
-#endif
 
     {0, NULL} /* sentinel */
 };
@@ -161,13 +148,8 @@ static PyType_Spec fsref_spec = {
     .name      = "objc.FSRef",
     .basicsize = sizeof(PyObjCFSRefObject),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
-
     .slots = fsref_slots,
 };
 

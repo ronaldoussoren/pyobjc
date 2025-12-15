@@ -8,16 +8,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if PY_VERSION_HEX < 0x030a0000
-static PyObject* _Nullable methacc_new(PyObject* self __attribute__((__unused__)),
-                                       PyObject* args __attribute__((__unused__)),
-                                       PyObject* kwds __attribute__((__unused__)))
-{
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc._method_access' instances");
-    return NULL;
-}
-#endif
-
 static PyObject* _Nullable find_selector(PyObject* self, const char* name,
                                          int class_method)
 {
@@ -366,13 +356,9 @@ methacc_dealloc(PyObject* _self)
     Py_DECREF(self->base);
     self->base = (PyObject* _Nonnull)NULL;
 
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(self);
-#endif
     PyObject_GC_Del(_self);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 static int
@@ -613,10 +599,6 @@ static PyType_Slot methacc_slots[] = {
     {.slot = Py_tp_repr, .pfunc = (void*)&methacc_repr},
     {.slot = Py_tp_getattro, .pfunc = (void*)&methacc_getattro},
     {.slot = Py_tp_methods, .pfunc = (void*)&methacc_methods},
-#if PY_VERSION_HEX < 0x030a0000
-    {.slot = Py_tp_new, .pfunc = (void*)&methacc_new},
-#endif
-
     {0, NULL} /* sentinel */
 };
 
@@ -624,12 +606,8 @@ static PyType_Spec methacc_spec = {
     .name      = "objc._method_access",
     .basicsize = sizeof(PyObjCMethodAccessor),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION | Py_TPFLAGS_HAVE_GC,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_GC,
-#endif
     .slots = methacc_slots,
 };
 

@@ -849,8 +849,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             }
         }
 
-        if (unlikely(PyList_SetItem(real_bases, 0, py_super_class)
-                     < 0)) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                PyList_SetItem(real_bases, 0, py_super_class) < 0)) {
             // LCOV_EXCL_START
             assert(objc_class != Nil);
             (void)PyObjCClass_UnbuildClass(objc_class);
@@ -957,8 +957,8 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             return NULL;
 
         } else {
-            if (unlikely(PyDict_DelItem(dict, PyObjCNM___del__)
-                         < 0)) { // LCOV_BR_EXCL_LINE
+            if (unlikely( // LCOV_BR_EXCL_LINE
+                    PyDict_DelItem(dict, PyObjCNM___del__) < 0)) {
                 // LCOV_EXCL_START
                 if (objc_class != nil) {
                     (void)PyObjCClass_UnbuildClass(objc_class);
@@ -1149,7 +1149,7 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
         }
 
         PyObjCClass_FinishClass(objc_class);
-    }
+    } // LCOV_BR_EXCL_LINE
 
     info        = (PyObjCClassObject*)res;
     info->class = objc_class;
@@ -1575,7 +1575,7 @@ static inline PyObject* _Nullable _type_lookup(PyTypeObject* tp, PyObject* name)
                 // LCOV_EXCL_STOP
             }
         }
-    }
+    } // LCOV_BR_EXCL_LINE
 
     Py_CLEAR(mro);
     return descr;
@@ -1751,7 +1751,7 @@ PyObject* _Nullable PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject*
 
     hidden = PyObjCClass_HiddenSelector(
         (PyObject* _Nonnull)PyObjCClass_ClassForMetaClass(base), sel, YES);
-    if (hidden || PyErr_Occurred()) {
+    if (unlikely(hidden || PyErr_Occurred())) {
         Py_CLEAR(hidden);
         return NULL;
     }
@@ -1890,7 +1890,7 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
 #endif
 
                 PyObject* hidden = PyObjCClass_HiddenSelector((PyObject*)tp, sel, NO);
-                if (hidden == NULL && PyErr_Occurred()) {
+                if (unlikely(hidden == NULL && PyErr_Occurred())) {
                     Py_CLEAR(mro);
                     return NULL;
                 } else if (hidden) {
@@ -1916,8 +1916,8 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
                 }
 
                 /* add to __dict__ 'cache' */
-                if (unlikely(PyDict_SetItem(class_dict, name, result)
-                             == -1)) { // LCOV_BR_EXCL_LINE
+                if (unlikely( // LCOV_BR_EXCL_LINE
+                        PyDict_SetItem(class_dict, name, result) == -1)) {
                     // LCOV_EXCL_START
                     Py_DECREF(result);
                     Py_CLEAR(mro);
@@ -2000,7 +2000,7 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
             if (same) {
                 PyObject* hidden =
                     PyObjCClass_HiddenSelector((PyObject*)tp, method_getName(m), NO);
-                if (hidden == NULL && PyErr_Occurred()) {
+                if (unlikely(hidden == NULL && PyErr_Occurred())0 {
                     Py_CLEAR(mro);
                     free(methods);
                     return NULL;
@@ -2031,8 +2031,8 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
                 }
 
                 /* add to __dict__ 'cache' */
-                if (unlikely(PyDict_SetItem(class_dict, name, result)
-                             == -1)) { // LCOV_BR_EXCL_LINE
+                if (unlikely( // LCOV_BR_EXCL_LINE
+                        PyDict_SetItem(class_dict, name, result) == -1)) {
                     // LCOV_EXCL_START
                     Py_DECREF(result);
                     Py_DECREF(mro);
@@ -2227,8 +2227,8 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
         /* XXX: Should store the protocols on the class object instead */
         PyObject* protocols = PyObject_GetAttrString(self, "__pyobjc_protocols__");
         if (protocols == NULL) {
-            if (likely(
-                    PyErr_ExceptionMatches(PyExc_AttributeError))) { // LCOV_BR_EXCL_LINE
+            if (likely( // LCOV_BR_EXCL_LINE
+                    PyErr_ExceptionMatches(PyExc_AttributeError))) {
                 PyErr_Clear();
                 protocols = PyList_New(0);
                 if (protocols == NULL) { // LCOV_BR_EXCL_LINE
@@ -2957,8 +2957,8 @@ PyObject* _Nullable PyObjCClass_New(Class objc_class)
             return NULL;
             // LCOV_EXCL_STOP
         }
-        if (unlikely(PyDict_SetItem(dict, PyObjCNM___slots__, slots)
-                     == -1)) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                PyDict_SetItem(dict, PyObjCNM___slots__, slots) == -1)) {
             // LCOV_EXCL_START
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
@@ -3212,8 +3212,8 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
             goto error;            // LCOV_EXCL_LINE
         }
 
-        if (unlikely(PyDict_SetItem(item, PyObjCNM_typestr, v)
-                     == -1)) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                PyDict_SetItem(item, PyObjCNM_typestr, v) == -1)) {
             // LCOV_EXCL_START
             Py_DECREF(v);
             goto error;
@@ -3229,8 +3229,8 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
             if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
                 goto error;            // LCOV_EXCL_LINE
             }
-            if (unlikely(PyDict_SetItem(item, PyObjCNM_classname, v)
-                         == -1)) { // LCOV_BR_EXCL_LINE
+            if (unlikely( // LCOV_BR_EXCL_LINE
+                    PyDict_SetItem(item, PyObjCNM_classname, v) == -1)) {
                 // LCOV_EXCL_START
                 Py_DECREF(v);
                 goto error;
@@ -3327,8 +3327,8 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
                     goto error;            // LCOV_EXCL_LINE
                 }
 
-                if (unlikely(PyDict_SetItem(item, PyObjCNM_getter, v)
-                             == -1)) { // LCOV_BR_EXCL_LINE
+                if (unlikely( // LCOV_BR_EXCL_LINE
+                        PyDict_SetItem(item, PyObjCNM_getter, v) == -1)) {
                     // LCOV_EXCL_START
                     Py_DECREF(v);
                     goto error;
@@ -3356,8 +3356,8 @@ PyObject* _Nullable PyObjCClass_ListProperties(PyObject* aClass)
                     goto error;            // LCOV_EXCL_LINE
                 }
 
-                if (unlikely(PyDict_SetItem(item, PyObjCNM_setter, v)
-                             == -1)) { // LCOV_BR_EXCL_LINE
+                if (unlikely( // LCOV_BR_EXCL_LINE
+                        PyDict_SetItem(item, PyObjCNM_setter, v) == -1)) {
                     // LCOV_EXCL_START
                     Py_DECREF(v);
                     goto error;
@@ -3447,13 +3447,12 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
     } else if (hidden) {
         Py_CLEAR(hidden);
         PyObject* py_name = PyUnicode_FromString((char*)sel_getName(selector));
-        if (py_name == NULL) {
+        if (unlikely(py_name == NULL)) {
             PyErr_Clear();
         } else {
             int r = PyDict_SetItem(info->sel_to_py, py_name, Py_None);
-            if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
-                PyErr_Clear();       // LCOV_EXCL_LINE
-            }
+            if (unlikely(r == -1)) // LCOV_BR_EXCL_LINE
+                PyErr_Clear();     // LCOV_EXCL_LINE
             Py_DECREF(py_name);
         }
         PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
@@ -3478,7 +3477,7 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
         break;
     case 1:
         Py_DECREF(k);
-        if (result == Py_None) {
+        if (unlikely(result == Py_None)) {
             /* negative cache entry */
             /* XXX: This is buggy: first looking for a class method where
              *      there's only an instance method will fail and add a negative

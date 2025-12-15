@@ -39,32 +39,14 @@ memview_dealloc(PyObject* self)
     assert(((((struct pyobjc_memview*)self))->view).obj == NULL);
 #endif
 
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(self);
-#endif
     PyObject_Free(self);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
-
-#if PY_VERSION_HEX < 0x030a0000
-static PyObject* _Nullable memview_new(PyObject* self __attribute__((__unused__)),
-                                       PyObject* args __attribute__((__unused__)),
-                                       PyObject* kwds __attribute__((__unused__)))
-{
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.NULL_type' instances");
-    return NULL;
-}
-#endif
 
 static PyType_Slot memview_slots[] = {
     {.slot = Py_tp_repr, .pfunc = (void*)&memview_repr},
     {.slot = Py_tp_dealloc, .pfunc = (void*)&memview_dealloc},
-#if PY_VERSION_HEX < 0x030a0000
-    {.slot = Py_tp_new, .pfunc = (void*)&memview_new},
-#endif
-
     {0, NULL} /* sentinel */
 };
 
@@ -72,12 +54,8 @@ static PyType_Spec memview_spec = {
     .name      = "objc._memview_type",
     .basicsize = sizeof(struct pyobjc_memview),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
     .slots = memview_slots,
 };
 

@@ -52,13 +52,9 @@ unic_dealloc(PyObject* obj)
 
     [uobj->nsstr release];
 
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(obj);
-#endif
     PyUnicode_Type.tp_dealloc(obj);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 static PyObject* _Nullable unic_nsstring(PyObject* self)
@@ -140,17 +136,6 @@ static PyMemberDef unic_members[] = {
         .name = NULL /* SENTINEL */
     }};
 
-#if PY_VERSION_HEX < 0x030a0000
-
-static PyObject* _Nullable unic_new(PyTypeObject* type __attribute__((__unused__)),
-                                    PyObject*     args __attribute__((__unused__)),
-                                    PyObject*     kwds __attribute__((__unused__)))
-{
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.pyobjc_unicode' instances");
-    return NULL;
-}
-#endif
-
 static PyType_Slot unic_slots[] = {
     {.slot = Py_tp_dealloc, .pfunc = (void*)&unic_dealloc},
     {.slot = Py_tp_getattro, .pfunc = (void*)&unic_getattro},
@@ -158,9 +143,6 @@ static PyType_Slot unic_slots[] = {
     {.slot = Py_tp_methods, .pfunc = (void*)&unic_methods},
     {.slot = Py_tp_members, .pfunc = (void*)&unic_members},
     {.slot = Py_tp_getset, .pfunc = (void*)&unic_getset},
-#if PY_VERSION_HEX < 0x030a0000
-    {.slot = Py_tp_new, .pfunc = (void*)&unic_new},
-#endif
     {0, NULL} /* sentinel */
 };
 
@@ -168,12 +150,8 @@ static PyType_Spec unic_spec = {
     .name      = "objc.pyobjc_unicode",
     .basicsize = sizeof(PyObjCUnicodeObject),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
     .slots = unic_slots,
 };
 
@@ -456,20 +434,7 @@ error:
 int
 PyObjCUnicode_Setup(PyObject* module)
 {
-#if PY_VERSION_HEX < 0x030a0000
-    PyObject* bases = PyTuple_Pack(1, (PyObject*)&PyUnicode_Type);
-    if (bases == NULL) {
-        return -1;
-    }
-#endif
-
-    PyObject* tmp = PyType_FromSpecWithBases(&unic_spec,
-#if PY_VERSION_HEX >= 0x030a0000
-                                             (PyObject*)&PyUnicode_Type);
-#else
-                                             bases);
-    Py_CLEAR(bases);
-#endif
+    PyObject* tmp = PyType_FromSpecWithBases(&unic_spec, (PyObject*)&PyUnicode_Type);
     if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
         return -1;               // LCOV_EXCL_LINE
     }

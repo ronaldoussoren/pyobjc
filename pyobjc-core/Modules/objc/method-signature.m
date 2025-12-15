@@ -162,34 +162,16 @@ sig_dealloc(PyObject* _self)
     for (i = 0; i < Py_SIZE(self); i++) {
         free_argdescr(self->argtype[i]);
     }
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(self);
-#endif
     PyObject_Free(self);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
-
-#if PY_VERSION_HEX < 0x030a0000
-static PyObject* _Nullable sig_new(PyObject* self __attribute__((__unused__)),
-                                   PyObject* args __attribute__((__unused__)),
-                                   PyObject* kwds __attribute__((__unused__)))
-{
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc._method_signature' instances");
-    return NULL;
-}
-#endif
 
 static PyType_Slot sig_slots[] = {
     {.slot = Py_tp_dealloc, .pfunc = (void*)&sig_dealloc},
     {.slot = Py_tp_repr, .pfunc = (void*)&sig_str},
     {.slot = Py_tp_str, .pfunc = (void*)&sig_str},
     {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
-#if PY_VERSION_HEX < 0x030a0000
-    {.slot = Py_tp_new, .pfunc = (void*)&sig_new},
-#endif
-
     {0, NULL} /* sentinel */
 };
 
@@ -197,12 +179,8 @@ static PyType_Spec sig_spec = {
     .name      = "objc._method_signature",
     .basicsize = sizeof(PyObjCMethodSignature),
     .itemsize  = sizeof(struct _PyObjC_ArgDescr*),
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
     .slots = sig_slots,
 };
 

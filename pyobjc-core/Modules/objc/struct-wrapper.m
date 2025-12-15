@@ -1354,7 +1354,6 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc, Py_ssize_t nu
         // LCOV_EXCL_STOP
     }
 
-#if PY_VERSION_HEX >= 0x030a0000
     if (unlikely(PyDict_SetItem( // LCOV_BR_EXCL_LINE
                      result->base.tp_dict, PyObjCNM___match_args__, fields)
                  == -1)) {
@@ -1365,7 +1364,6 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc, Py_ssize_t nu
         return NULL;
         // LCOV_EXCL_STOP
     }
-#endif
 
     Py_CLEAR(fields);
 

@@ -9,7 +9,6 @@ framework wrappers.
 from objc._convenience import addConvenienceForClass
 from objc._objc import registerMetaDataForSelector
 from ._new import NEW_MAP
-import sys
 import operator
 
 registerMetaDataForSelector(
@@ -251,6 +250,14 @@ def nsdata_isascii(self, *args, **kwds):
     return bytes(self.bytes()).isascii(*args, **kwds)
 
 
+def nsdata_removeprefix(self, *args, **kwds):
+    return bytes(self.bytes()).removeprefix(*args, **kwds)
+
+
+def nsdata_removesuffix(self, *args, **kwds):
+    return bytes(self.bytes()).removesuffix(*args, **kwds)
+
+
 addConvenienceForClass(
     "NSData",
     (
@@ -302,24 +309,10 @@ addConvenienceForClass(
         ("translate", nsdata_translate),
         ("upper", nsdata_upper),
         ("zfill", nsdata_zfill),
+        ("removeprefix", nsdata_removeprefix),
+        ("removesuffix", nsdata_removesuffix),
     ),
 )
-
-if sys.version_info[:2] >= (3, 9):  # pragma: no branch
-
-    def nsdata_removeprefix(self, *args, **kwds):
-        return bytes(self.bytes()).removeprefix(*args, **kwds)
-
-    def nsdata_removesuffix(self, *args, **kwds):
-        return bytes(self.bytes()).removesuffix(*args, **kwds)
-
-    addConvenienceForClass(
-        "NSData",
-        (
-            ("removeprefix", nsdata_removeprefix),
-            ("removesuffix", nsdata_removesuffix),
-        ),
-    )
 
 
 def nsmutabledata__setitem__(self, item, value):

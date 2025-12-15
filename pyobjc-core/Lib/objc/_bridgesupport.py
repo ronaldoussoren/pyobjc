@@ -669,29 +669,16 @@ def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):  # noqa: A
         )
 
 
-if sys.version_info[:2] >= (3, 9):  # pragma: no branch
+def resource_exists(package, resource):
+    try:
+        return resources.files(package).joinpath(resource).is_file()
 
-    def resource_exists(package, resource):
-        try:
-            return resources.files(package).joinpath(resource).is_file()
+    except ImportError:
+        return False
 
-        except ImportError:
-            return False
 
-    def resource_string(package, resource):
-        return resources.files(package).joinpath(resource).read_text()
-
-else:  # pragma: no cover
-
-    def resource_exists(package, resource):
-        try:
-            return resources.is_resource(package, resource)
-
-        except ImportError:
-            return False
-
-    def resource_string(package, resource):
-        return resources.read_text(package, resource)
+def resource_string(package, resource):
+    return resources.files(package).joinpath(resource).read_text()
 
 
 def initFrameworkWrapper(

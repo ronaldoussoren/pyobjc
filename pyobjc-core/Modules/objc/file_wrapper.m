@@ -48,13 +48,9 @@ file_dealloc(PyObject* self)
     /* Don't close the file, we don't own the
      * FILE* reference.
      */
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(self);
-#endif
     PyObject_Free(self);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 static PyObject* _Nullable file_close(PyObject* _self)
@@ -372,12 +368,8 @@ static PyType_Spec file_spec = {
     .name      = "objc.FILE",
     .basicsize = sizeof(struct file_object),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
-    .slots = file_slots,
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE,
+    .slots     = file_slots,
 };
 
 PyObject* _Nullable FILE_create(FILE* fp)

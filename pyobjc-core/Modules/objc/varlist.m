@@ -9,16 +9,6 @@ typedef struct {
     char       typestr[];
 } PyObjCVarList;
 
-#if PY_VERSION_HEX < 0x030a0000
-static PyObject* _Nullable varlist_new(PyObject* self __attribute__((__unused__)),
-                                       PyObject* args __attribute__((__unused__)),
-                                       PyObject* kwds __attribute__((__unused__)))
-{
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.varlist' instances");
-    return NULL;
-}
-#endif
-
 PyDoc_STRVAR(varlist_as_tuple_doc,
              "as_tuple(count)\n" CLINIC_SEP "\n"
              "Return a tuple containing the first ``count`` elements of "
@@ -366,13 +356,9 @@ varlist_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable value)
 static void
 varlist_dealloc(PyObject* self)
 {
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(self);
-#endif
     PyObject_Del(self);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 PyDoc_STRVAR(varlist_doc,
@@ -424,10 +410,6 @@ static PyType_Slot varlist_slots[] = {
     {.slot = Py_sq_ass_item, .pfunc = (void*)&varlist__setitem__},
     {.slot = Py_mp_subscript, .pfunc = (void*)&varlist_subscript},
     {.slot = Py_mp_ass_subscript, .pfunc = (void*)&varlist_ass_subscript},
-#if PY_VERSION_HEX < 0x030a0000
-    {.slot = Py_tp_new, .pfunc = (void*)&varlist_new},
-#endif
-
     {0, NULL} /* sentinel */
 };
 
@@ -435,12 +417,8 @@ static PyType_Spec varlist_spec = {
     .name      = "objc.varlist",
     .basicsize = sizeof(PyObjCVarList),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
     .slots = varlist_slots,
 };
 

@@ -31,28 +31,14 @@ void* _Nullable PyObjCPointer_Ptr(PyObject* obj)
     return ((PyObjCPointer*)(obj))->ptr;
 }
 
-#if PY_VERSION_HEX < 0x030a0000
-static PyObject* _Nullable ptr_new(PyObject* self __attribute__((__unused__)),
-                                   PyObject* args __attribute__((__unused__)),
-                                   PyObject* kwds __attribute__((__unused__)))
-{
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc.PyObjCPointer' instances");
-    return NULL;
-}
-#endif
-
 static void
 ptr_dealloc(PyObject* _self)
 {
     PyObjCPointer* self = (PyObjCPointer*)_self;
     Py_XDECREF(self->typestr);
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(self);
-#endif
     PyObject_Free((PyObject*)self);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 static PyMemberDef ptr_members[] = {{
@@ -78,9 +64,6 @@ static PyType_Slot ptr_slots[] = {
     {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
     {.slot = Py_tp_members, .pfunc = (void*)&ptr_members},
     {.slot = Py_tp_doc, .pfunc = (void*)&ptr_doc},
-#if PY_VERSION_HEX < 0x030a0000
-    {.slot = Py_tp_new, .pfunc = (void*)&ptr_new},
-#endif
 
     {0, NULL} /* sentinel */
 };
@@ -89,12 +72,8 @@ static PyType_Spec ptr_spec = {
     .name      = "objc.PyObjCPointer",
     .basicsize = sizeof(PyObjCPointer),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
     .slots = ptr_slots,
 };
 

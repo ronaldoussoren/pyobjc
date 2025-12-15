@@ -545,8 +545,8 @@ static NSException* _Nullable python_exception_to_objc(void)
     assert(exc_value != NULL);
     repr = PyObject_Str(exc_value);
     if (likely(repr)) { // LCOV_BR_EXCL_LINE
-        if (unlikely(depythonify_python_object(repr, &oc_repr)
-                     == -1)) { // LCOV_BR_EXCL_LINE
+        if (unlikely(   // LCOV_BR_EXCL_LINE
+                depythonify_python_object(repr, &oc_repr) == -1)) {
             /* Ignore errors in conversion */
             PyErr_Clear(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE

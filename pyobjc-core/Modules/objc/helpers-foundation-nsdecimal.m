@@ -138,12 +138,8 @@ static PyType_Spec decimal_spec = {
     .name      = "objc.NSDecimal",
     .basicsize = sizeof(DecimalObject),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
-    .slots = decimal_slots,
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE,
+    .slots     = decimal_slots,
 };
 
 #define Decimal_Check(obj) PyObject_TypeCheck(obj, (PyTypeObject*)Decimal_Type)
@@ -205,13 +201,9 @@ static void
 decimal_dealloc(PyObject* self)
 {
     [((DecimalObject*)self)->objc_value release];
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(self);
-#endif
     PyObject_Free(self);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 int

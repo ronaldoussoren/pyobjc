@@ -27,9 +27,7 @@ ivar_dealloc(PyObject* _ivar)
     }
     PyTypeObject* tp = Py_TYPE(ivar);
     tp->tp_base->tp_dealloc(_ivar);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 static PyObject* _Nullable ivar_repr(PyObject* _self)

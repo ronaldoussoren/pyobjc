@@ -396,13 +396,9 @@ sel_dealloc(PyObject* object)
         PyMem_Free((char*)self->sel_native_signature);
         self->sel_native_signature = NULL;
     }
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(object);
-#endif
     PyObject_Del(object);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 PyDoc_STRVAR(base_selector_type_doc,
@@ -452,12 +448,8 @@ static PyType_Spec sel_spec = {
     .name      = "objc.selector",
     .basicsize = sizeof(PyObjCSelector),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_BASETYPE,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_BASETYPE,
-#endif
     .slots = sel_slots,
 };
 
@@ -884,13 +876,9 @@ static PyType_Spec objcsel_spec = {
     .name      = "objc.native_selector",
     .basicsize = sizeof(PyObjCNativeSelector),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_HAVE_VECTORCALL,
 
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
-#endif
     .slots = objcsel_slots,
 };
 
@@ -1856,13 +1844,9 @@ static PyType_Spec pysel_spec = {
     .name      = "objc.python_selector",
     .basicsize = sizeof(PyObjCPythonSelector),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_HAVE_VECTORCALL,
 
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
-#endif
     .slots = pysel_slots,
 };
 
@@ -1937,19 +1921,7 @@ PyObjCSelector_Setup(PyObject* module)
     }
     Py_INCREF(PyObjCSelector_Type);
 
-#if PY_VERSION_HEX < 0x030a0000
-    PyObject* bases = PyTuple_Pack(1, PyObjCSelector_Type);
-    if (unlikely(bases == NULL)) { // LCOV_BR_EXCL_LINE
-        return -1;                 // LCOV_EXCL_LINE
-    }
-#endif
-
-    tmp = PyType_FromSpecWithBases(&pysel_spec,
-#if PY_VERSION_HEX >= 0x030a0000
-                                   PyObjCSelector_Type);
-#else
-                                   bases);
-#endif
+    tmp = PyType_FromSpecWithBases(&pysel_spec, PyObjCSelector_Type);
     if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
         return -1;               // LCOV_EXCL_LINE
     }
@@ -1962,13 +1934,7 @@ PyObjCSelector_Setup(PyObject* module)
     }
     Py_INCREF(PyObjCPythonSelector_Type);
 
-    tmp = PyType_FromSpecWithBases(&objcsel_spec,
-#if PY_VERSION_HEX >= 0x030a0000
-                                   PyObjCSelector_Type);
-#else
-                                   bases);
-    Py_CLEAR(bases);
-#endif
+    tmp = PyType_FromSpecWithBases(&objcsel_spec, PyObjCSelector_Type);
     if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
         return -1;               // LCOV_EXCL_LINE
     }

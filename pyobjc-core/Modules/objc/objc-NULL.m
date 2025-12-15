@@ -14,35 +14,16 @@ null_repr(PyObject* self __attribute__((__unused__)))
     return PyObjCNM_objc_NULL;
 }
 
-#if PY_VERSION_HEX < 0x030a0000
-static PyObject* _Nullable null_new(PyObject* self __attribute__((__unused__)),
-                                    PyObject* args __attribute__((__unused__)),
-                                    PyObject* kwds __attribute__((__unused__)))
-{
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc._NULL_type' instances");
-    return NULL;
-}
-#endif
-
 static PyType_Slot null_slots[] = {
-    {.slot = Py_tp_repr, .pfunc = (void*)&null_repr},
-#if PY_VERSION_HEX < 0x030a0000
-    {.slot = Py_tp_new, .pfunc = (void*)&null_new},
-#endif
-
-    {0, NULL} /* sentinel */
+    {.slot = Py_tp_repr, .pfunc = (void*)&null_repr}, {0, NULL} /* sentinel */
 };
 
 static PyType_Spec null_spec = {
     .name      = "objc._NULL_type",
     .basicsize = sizeof(PyObject),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
     .slots = null_slots,
 };
 

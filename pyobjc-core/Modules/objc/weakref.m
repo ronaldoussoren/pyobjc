@@ -36,13 +36,9 @@ weakref_dealloc(PyObject* object)
     PyObjC_WeakRef* self = (PyObjC_WeakRef*)object;
 
     objc_storeWeak(&self->object, nil);
-#if PY_VERSION_HEX >= 0x030a0000
     PyTypeObject* tp = Py_TYPE(object);
-#endif
     PyObject_Del(object);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 static PyObject* _Nullable weakref_vectorcall(PyObject* object,
@@ -140,12 +136,8 @@ static PyType_Spec weakref_spec = {
     .name      = "objc.WeakRef",
     .basicsize = sizeof(PyObjC_WeakRef),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_HAVE_VECTORCALL,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_HAVE_VECTORCALL,
-#endif
     .slots = weakref_slots,
 };
 

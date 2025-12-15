@@ -1361,18 +1361,6 @@ extern PyObject* _Nullable PyObjC_ProcessClassDict(
     return rv;
 }
 
-#if PY_VERSION_HEX < 0x030a0000
-static PyObject* _Nullable options_new(PyTypeObject* tp __attribute__((__unused__)),
-                                       PyObject* _Nullable args
-                                       __attribute__((__unused__)),
-                                       PyObject* _Nullable kwds
-                                       __attribute__((__unused__)))
-{
-    PyErr_SetString(PyExc_TypeError, "cannot create 'objc._OptionsType' instances");
-    return NULL;
-}
-#endif
-
 static PyObject* _Nullable options_dont_call(PyObject* self __attribute__((__unused__)),
                                              PyObject* _Nullable args
                                              __attribute__((__unused__)),
@@ -1400,10 +1388,6 @@ static PyMethodDef options_methods[] = {{
 static PyType_Slot options_slots[] = {
     {.slot = Py_tp_methods, .pfunc = (void*)&options_methods},
     {.slot = Py_tp_getset, .pfunc = (void*)&options_getset},
-#if PY_VERSION_HEX < 0x030a0000
-    {.slot = Py_tp_new, .pfunc = (void*)&options_new},
-#endif
-
     {0, NULL} /* sentinel */
 };
 
@@ -1411,12 +1395,8 @@ static PyType_Spec options_spec = {
     .name      = "objc._OptionsType",
     .basicsize = sizeof(struct options),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
              | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
     .slots = options_slots,
 };
 

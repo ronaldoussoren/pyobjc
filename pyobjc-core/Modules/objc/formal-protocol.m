@@ -27,9 +27,7 @@ proto_dealloc(PyObject* object)
     PyObjC_UnregisterPythonProxy(self->objc, object);
     PyTypeObject* tp = Py_TYPE(object);
     tp->tp_free(object);
-#if PY_VERSION_HEX >= 0x030a0000
     Py_DECREF(tp);
-#endif
 }
 
 static PyObject* _Nullable proto_repr(PyObject* object)
@@ -468,12 +466,8 @@ static PyType_Spec proto_spec = {
     .name      = "objc.formal_protocol",
     .basicsize = sizeof(PyObjCFormalProtocol),
     .itemsize  = 0,
-#if PY_VERSION_HEX >= 0x030a0000
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE,
-#else
-    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-#endif
-    .slots = proto_slots,
+    .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE,
+    .slots     = proto_slots,
 };
 
 PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
