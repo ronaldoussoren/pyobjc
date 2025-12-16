@@ -266,8 +266,8 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
         } // LCOV_EXCL_LINE
 
-        if (unlikely(depythonify_python_object(tmp, &result)
-                     == -1)) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                depythonify_python_object(tmp, &result) == -1)) {
             // LCOV_EXCL_START
             Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();

@@ -423,7 +423,7 @@ static PyObject* _Nullable struct_asdict(PyObject* self)
         if (unlikely(py_name == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_CLEAR(result);
-            goto exit;
+            break;
             // LCOV_EXCL_STOP
         }
 
@@ -433,13 +433,11 @@ static PyObject* _Nullable struct_asdict(PyObject* self)
             // LCOV_EXCL_START
             Py_CLEAR(result);
             Py_DECREF(py_name);
-            goto exit;
+            break;
             // LCOV_EXCL_STOP
         }
         Py_DECREF(py_name);
     } // LCOV_BR_EXCL_LINE
-exit:
-    (void)0;
     Py_END_CRITICAL_SECTION();
 
     return result;
@@ -518,7 +516,7 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable valu
     if (PyIndex_Check(item)) {
         Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);
 
-        if (i == -1 && PyErr_Occurred()) {
+        if (unlikely(i == -1 && PyErr_Occurred())) {
             return -1;
         }
 
@@ -673,7 +671,7 @@ static PyObject* _Nullable struct_new(PyTypeObject* type, PyObject* args, PyObje
     if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
         return NULL;              // LCOV_EXCL_LINE
 
-    for (PyMemberDef* member = type->tp_members; member && member->name; member++) {
+    for (PyMemberDef* member = type->tp_members; member->name; member++) {
         assert(member->type == T_OBJECT);
         *((PyObject**)(((char*)result) + member->offset)) = Py_None;
         Py_INCREF(Py_None);
@@ -709,9 +707,9 @@ set_defaults(PyObject* self, const char* typestr)
     int        r;
     PyObject*  v;
 
-    while (*typestr != _C_STRUCT_E && *typestr++ != '=')
+    while (*typestr != _C_STRUCT_E && *typestr++ != '=') // LCOV_BR_EXCL_LINE
         ;
-    while (typestr && *typestr != _C_STRUCT_E) {
+    while (*typestr != _C_STRUCT_E) {
         const char* next;
 
         /* The encoding cannot have embedded field names,
@@ -778,7 +776,7 @@ set_defaults(PyObject* self, const char* typestr)
                     // LCOV_EXCL_STOP
                 }
 
-            } else if (!PyErr_Occurred()) {
+            } else if (unlikely(!PyErr_Occurred())) {
                 /* this is a struct-type without a struct
                  * wrapper. Default to None
                  */
@@ -1645,8 +1643,8 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
             return NULL;
             // LCOV_EXCL_STOP
         }
-        if (unlikely(PyObjCRT_RemoveFieldNames(sigtmp, signature)
-                     == NULL)) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                PyObjCRT_RemoveFieldNames(sigtmp, signature) == NULL)) {
             /* This should never fail, we've just scanned the field
              * names and would have found any problems.
              */

@@ -438,7 +438,7 @@ PyObjCVarList_New(const char* tp, void* array)
          */
         return NULL; // LCOV_EXCL_LINE
     }
-    while (end > tp && isdigit(end[-1])) {
+    while (end > tp && isdigit(end[-1])) { // LCOV_BR_EXCL_LINE
         end--;
     }
 

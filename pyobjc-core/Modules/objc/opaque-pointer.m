@@ -345,8 +345,8 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
         goto error_cleanup;                  // LCOV_EXCL_LINE
     }
 
-    if (unlikely(PyObject_SetAttrString(newType, "__typestr__", w)
-                 == -1)) { // LCOV_BR_EXCL_LINE
+    if (unlikely( // LCOV_BR_EXCL_LINE
+            PyObject_SetAttrString(newType, "__typestr__", w) == -1)) {
         // LCOV_EXCL_START
         Py_CLEAR(newType);
         PyMem_Free((char*)opaque_spec.name);

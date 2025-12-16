@@ -424,7 +424,7 @@ def nsmutabledata_resize(self, size):
         self.replaceBytesInRange_withBytes_length_((size, cursize - size), b"", 0)
 
 
-if sys.version_info[:2] >= (3, 15):
+if sys.version_info[:2] >= (3, 15):  # pragma: no branch
 
     def nsmutabledata_take_bytes(self, n=None, /):
         if n is None:

@@ -272,7 +272,7 @@ NS_ASSUME_NONNULL_BEGIN
             } else {
                 result = (unsigned long long)temp;
             }
-        } else if (PyNumber_Check(value)) {
+        } else if (likely(PyNumber_Check(value))) { // LCOV_BR_EXCL_LINE
             PyObject* long_value = PyNumber_Long(value);
             if (long_value == NULL) {
                 PyObjC_GIL_FORWARD_EXC();

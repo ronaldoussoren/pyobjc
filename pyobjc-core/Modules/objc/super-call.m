@@ -273,8 +273,8 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
         // LCOV_EXCL_STOP
     }
 
-    if (unlikely(_PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key))
-                                           + 1))) { // LCOV_BR_EXCL_LINE
+    if (unlikely( // LCOV_BR_EXCL_LINE
+            _PyBytes_Resize(&key, strlen(PyBytes_AS_STRING(key)) + 1))) {
         // LCOV_EXCL_START
         Py_DECREF(entry);
         retval = -1;
@@ -282,8 +282,8 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
         // LCOV_EXCL_STOP
     }
 
-    if (unlikely(PyDict_SetItem(signature_registry, key, entry)
-                 < 0)) { // LCOV_BR_EXCL_LINE
+    if (unlikely( // LCOV_BR_EXCL_LINE
+            PyDict_SetItem(signature_registry, key, entry) < 0)) {
         // LCOV_EXCL_START
         Py_DECREF(key);
         Py_DECREF(entry);

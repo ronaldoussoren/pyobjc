@@ -965,8 +965,8 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
          * of PyObjC, and in some error cases.
          */
         NSObject* temp;
-        if (unlikely(depythonify_python_object(decoded, &temp)
-                     == -1)) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                depythonify_python_object(decoded, &temp) == -1)) {
             /* Cannot get here with testing, the decoder invokes
              * 'setValue' above and that call has already depythonified
              * the value.

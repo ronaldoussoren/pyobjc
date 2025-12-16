@@ -1,13 +1,11 @@
 import objc
-import sys
-from PyObjCTools.TestSupport import TestCase, skipUnless
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 NSArray = objc.lookUpClass("NSArray")
 
 
 class TestGenericClasses(TestCase):
-    @skipUnless(sys.version_info[:2] >= (3, 9), "Feature requires python 3.9")
     def test_generic_classes(self):
         with self.subTest("NSObject"):
             int_object = NSObject[int]

@@ -83,8 +83,8 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
         /* Found an existing proxy
          * Compensate for the +1 retainCount from +alloc
          */
-        if (unlikely(object_getClass(result)
-                     != NSAutoreleasePool_class)) { // LCOV_BR_EXCL_LINE
+        if (unlikely(object_getClass(result) // LCOV_BR_EXCL_LINE
+                     != NSAutoreleasePool_class)) {
             [result release];
         }
         return rval;
@@ -201,9 +201,9 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
      * deallocated.
      */
     PyObjC_UnregisterPythonProxy(((PyObjCObject*)self)->objc_object, self);
-    if (unlikely(!(((PyObjCObject*)self)->flags
-                   & PyObjCObject_kSHOULD_NOT_RELEASE))) { // LCOV_BR_EXCL_LINE
-        [NSNull_null retain];                              // LCOV_EXCL_LINE
+    if (unlikely(!(((PyObjCObject*)self)->flags // LCOV_BR_EXCL_LINE
+                   & PyObjCObject_kSHOULD_NOT_RELEASE))) {
+        [NSNull_null retain]; // LCOV_EXCL_LINE
     } // LCOV_EXCL_LINE
     ((PyObjCObject*)self)->objc_object = NSNull_null;
 

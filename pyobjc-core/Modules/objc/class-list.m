@@ -485,7 +485,7 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
             // LCOV_EXCL_STOP
         }
         Py_DECREF(pyclass);
-    }
+    } // LCOV_BR_EXCL_LINE
 
     free(buffer);
     buffer = NULL;

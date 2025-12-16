@@ -188,8 +188,8 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             Py_INCREF(value);
         }
 
-        if (unlikely(PyBytes_AsStringAndSize(value, &path, &len)
-                     == -1)) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                PyBytes_AsStringAndSize(value, &path, &len) == -1)) {
             // LCOV_EXCL_START
             Py_DECREF(value);
             return -1;

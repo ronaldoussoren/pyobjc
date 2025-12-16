@@ -54,8 +54,9 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
         assert(objc_object != nil);
     }
 
-    if (unlikely(strcmp(object_getClassName(objc_object), "_NSZombie")
-                 == 0)) { // LCOV_BR_EXCL_LINE
+    if (unlikely(strcmp( // LCOV_BR_EXCL_LINE
+                     object_getClassName(objc_object), "_NSZombie")
+                 == 0)) {
         /* Impossible to hit in regular testing */
         // LCOV_EXCL_START
         PyErr_Format(PyExc_AttributeError, "Cannot access '%s' on deallocated object",
@@ -65,8 +66,8 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     }
 
     if (class_method && strcmp(class_getName((Class)objc_object), "NSProxy") == 0) {
-        if (unlikely(sel ==
-                     @selector(methodSignatureForSelector:))) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                sel == @selector(methodSignatureForSelector:))) {
             // LCOV_EXCL_START
             PyErr_Format(PyExc_AttributeError, "Cannot access NSProxy.%s", name);
             return NULL;

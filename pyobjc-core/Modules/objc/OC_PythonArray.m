@@ -646,8 +646,8 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         } // LCOV_EXCL_LINE
 
-        if (unlikely(depythonify_python_object(copy, &result)
-                     == -1)) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                depythonify_python_object(copy, &result) == -1)) {
             /* Should never fail, 'copy' is an instance of PyList_Type */
             // LCOV_EXCL_START
             Py_DECREF(copy);

@@ -2103,6 +2103,38 @@ class TestVariableLengthValue(TestCase):
         ):
             v[-1] = 1
 
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[-1:8]
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[-1:8] = (1,)
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[:-1]
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist does not support negative indexes"
+        ):
+            v[:-1] = (1,)
+
+        with self.assertRaises(IndexError):
+            v[: 2**80 + 2]
+
+        with self.assertRaises(IndexError):
+            v[: 2**80 + 2] = (1, 2)
+
+        with self.assertRaises(IndexError):
+            v[: 10 : 2**80]
+
+        with self.assertRaises(IndexError):
+            v[: 10 : 2**80] = (1, 2)
+
         # self.fail((type(v), v))
         # self.fail((v[0:2], type(v[0:2])))
         self.assertEqual(v[0:2], (1, 3))
@@ -2154,6 +2186,8 @@ class TestVariableLengthValue(TestCase):
             v[4:2:-1]
         with self.assertRaisesRegex(ValueError, ".*slice steps other than 1"):
             v[0:1:2]
+        with self.assertRaises(IndexError):
+            v[4 : 2 : 2**80]
         with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
             v[slice(0, "vier")]
         with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):

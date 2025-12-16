@@ -258,8 +258,8 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     }
 #else
     if (FindWrapper(signature, &cur_pythonify, &cur_depythonify, NULL) == 0) {
-        if (unlikely(cur_pythonify != pythonify
-                     || cur_depythonify != depythonify)) { // LCOV_BR_EXCL_LINE
+        if (unlikely(cur_pythonify != pythonify // LCOV_BR_EXCL_LINE
+                     || cur_depythonify != depythonify)) {
             /* Hitting this would be a bug in PyObjC (aka, this is a fancy spelling of
              * PyObjC_Assert) */
             // LCOV_EXCL_START

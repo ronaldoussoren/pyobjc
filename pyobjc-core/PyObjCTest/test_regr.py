@@ -747,7 +747,7 @@ class TestSuperClassAttr(TestCase):
             getattr(objc.super(NSObject, NSObject.new()), 42)
 
 
-class TestSuperDealloc(TestCase):
+class TestSuperMisc(TestCase):
     def test_super_dealloc(self):
         deleted = False
 
@@ -759,6 +759,19 @@ class TestSuperDealloc(TestCase):
         s = super(D, D())
         del s
         assert deleted
+
+    def test_super_invalid_class(self):
+        with self.assertRaisesRegex(TypeError, "not an instance"):
+            objc.super(list, ()).index
+
+    def test_non_method(self):
+        class Base:
+            attr = 42
+
+        class Sub(Base):
+            pass
+
+        self.assertEqual(objc.super(Sub, Sub()).attr, 42)
 
 
 class TestMagic(TestCase):

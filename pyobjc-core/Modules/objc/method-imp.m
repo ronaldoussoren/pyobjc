@@ -531,9 +531,9 @@ PyObjCIMP_SetUp(PyObject* module)
         return -1;                          // LCOV_EXCL_LINE
     }
 
-    if (unlikely(PyModule_AddObject(module, "IMP", PyObjCIMP_Type)
-                 == -1)) { // LCOV_BR_EXCL_LINE
-        return -1;         // LCOV_EXCL_LINE
+    if (unlikely( // LCOV_BR_EXCL_LINE
+            PyModule_AddObject(module, "IMP", PyObjCIMP_Type) == -1)) {
+        return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCIMP_Type);
 

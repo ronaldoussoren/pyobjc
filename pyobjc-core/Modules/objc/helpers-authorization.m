@@ -191,10 +191,10 @@ depythonify_authorizationitem(PyObject* value, void* _out)
 
     } else if (PyBytes_Check(PyTuple_GET_ITEM(seq, 2))) {
         Py_ssize_t len;
-        if (unlikely(PyBytes_AsStringAndSize(PyTuple_GET_ITEM(seq, 2),
-                                             (char**)&out->value, // LCOV_BR_EXCL_LINE
-                                             &len)
-                     == -1)) {
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                PyBytes_AsStringAndSize(PyTuple_GET_ITEM(seq, 2), (char**)&out->value,
+                                        &len)
+                == -1)) {
             // LCOV_EXCL_START
             Py_DECREF(seq);
             return -1;

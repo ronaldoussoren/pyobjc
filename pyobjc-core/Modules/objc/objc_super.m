@@ -94,9 +94,9 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
              * Also make sure that the method tables are up-to-date.
              */
             if (PyObjCClass_Check(tmp)) {
-                if (unlikely(PyObjCClass_CheckMethodList(tmp, NO)
-                             < 0)) { // LCOV_BR_EXCL_LINE
-                    return NULL;     // LCOV_EXCL_LINE
+                if (unlikely( // LCOV_BR_EXCL_LINE
+                        PyObjCClass_CheckMethodList(tmp, NO) < 0)) {
+                    return NULL; // LCOV_EXCL_LINE
                 }
             }
 

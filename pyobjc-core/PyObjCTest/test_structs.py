@@ -350,6 +350,12 @@ class TestStructs(TestCase):
             self.assertEqual(v[2], tp(5, 6))
             self.assertEqual(v[3], tp(7, 8))
 
+            with self.assertRaises(IndexError):
+                v[2**90] = 1
+
+            with self.assertRaises(IndexError):
+                v[2**90]
+
     def testStructSize(self):
         tp0 = objc.createStructType("FooStruct", b"{FooStruct=}", None)
         tp1 = objc.createStructType("FooStruct", b'{FooStruct="first"i}', None)
