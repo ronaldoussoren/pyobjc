@@ -1,4 +1,4 @@
-PYTHON=python3.14t
+PYTHON=python3.15t
 info:
 	@echo "all               - build and develop"
 	@echo "test              - build, develop and test"
