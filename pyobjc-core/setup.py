@@ -659,11 +659,18 @@ class oc_build_ext(build_ext.build_ext):
             or any(cmd in sys.argv for cmd in ["develop", "test"])
         )
 
+        prebuild_mtimes = {}
         for ext in self.extensions:
             if ext.name.startswith("PyObjCTest"):
                 ext.extra_compile_args = ext.extra_compile_args + extra_compile_args(
                     ext.sources[0]
                 )
+
+            fullname = self.get_ext_fullname(ext.name)
+            filename = self.get_ext_filename(fullname)
+            full_path = os.path.join(self.build_lib, filename)
+            if os.path.exists(full_path):
+                prebuild_mtimes[full_path] = os.stat(full_path).st_mtime
 
         build_ext.build_ext.run(self)
 
@@ -671,8 +678,12 @@ class oc_build_ext(build_ext.build_ext):
             fullname = self.get_ext_fullname(ext.name)
             filename = self.get_ext_filename(fullname)
             full_path = os.path.join(self.build_lib, filename)
-            print("dsymutil", full_path)
-            subprocess.check_call(["/usr/bin/dsymutil", full_path])
+
+            if full_path not in prebuild_mtimes or (
+                prebuild_mtimes[full_path] != os.stat(full_path).st_mtime
+            ):
+                subprocess.check_call(["/usr/bin/dsymutil", full_path])
+
         extensions = self.extensions
         self.extensions = [e for e in extensions if e.name.startswith("PyObjCTest")]
         self.copy_extensions_to_source()
