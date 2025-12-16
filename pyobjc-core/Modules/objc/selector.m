@@ -616,7 +616,7 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
         }
 
         if (!(PyObject_IsInstance(pyself, myClass)
-              || (PyObjCUnicode_Check(pyself)
+              || (PyUnicode_Check(pyself)
                   && PyObjC_class_isSubclassOf(self->base.sel_class,
                                                [NSString class])))) {
 
@@ -735,7 +735,7 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
             return NULL;                 // LCOV_EXCL_LINE
         }
         if (!(PyObject_IsInstance(pyself, myClass)
-              || (PyObjCUnicode_Check(pyself)
+              || (PyUnicode_Check(pyself)
                   && PyObjC_class_isSubclassOf(self->base.sel_class,
                                                [NSString class])))) {
 

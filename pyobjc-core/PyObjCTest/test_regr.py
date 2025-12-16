@@ -1104,10 +1104,6 @@ class TestStringSpecials(TestCase):
 
         self.assertEqual(m(o), 5)
         self.assertEqual(m(o.nsstring()), 5)
-        with self.assertRaisesRegex(
-            TypeError, "Expecting instance of .* as self, got one of str"
-        ):
-            m("Theo")
 
         with self.assertRaisesRegex(
             TypeError, "Expecting instance of .* as self, got one of int"
@@ -1146,14 +1142,19 @@ class TestStringSpecials(TestCase):
         self.assertEqual(m(o.nsstring(), None, (0, 3)), "hel")
 
         with self.assertRaisesRegex(
-            TypeError, "Expecting instance of .* as self, got one of str"
-        ):
-            m("Theo", None, (0, 3))
-
-        with self.assertRaisesRegex(
             TypeError, "Expecting instance of .* as self, got one of int"
         ):
             m(42, None, (0, 3))
+
+    def test_using_str_with_nsstring(self):
+        self.assertTrue(
+            NSString.localizedCaseInsensitiveCompare_("foo", "bar") == 1,
+            "NSString doesn't compare correctly",
+        )
+        self.assertTrue(
+            NSString.localizedCaseInsensitiveCompare_("foo", "Foo") == 0,
+            "NSString doesn't compare correctly",
+        )
 
 
 class TestClasses(TestCase):

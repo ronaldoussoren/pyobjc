@@ -20,11 +20,11 @@ class TestNSString(TestCase):
     def testCompare(self):
         self.assertTrue(
             Foundation.NSString.localizedCaseInsensitiveCompare_("foo", "bar") == 1,
-            b"NSString doesn'.decode('ascii')t compare correctly",
+            "NSString doesn't compare correctly",
         )
         self.assertTrue(
             Foundation.NSString.localizedCaseInsensitiveCompare_("foo", "Foo") == 0,
-            b"NSString doesn'.decode('ascii')t compare correctly",
+            "NSString doesn't compare correctly",
         )
 
     def testFormatting(self):
