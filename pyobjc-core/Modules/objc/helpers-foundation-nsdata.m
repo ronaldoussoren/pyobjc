@@ -209,9 +209,9 @@ PyObjC_setup_nsdata(PyObject* module __attribute__((__unused__)))
 
     if (likely(classNSData != NULL)) { // LCOV_BR_EXCL_LINE
 
-        if (unlikely(
-                PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
-                    classNSData, @selector(bytes), call_NSData_bytes, mkimp_NSData_bytes)
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                PyObjC_RegisterMethodMapping(classNSData, @selector(bytes),
+                                             call_NSData_bytes, mkimp_NSData_bytes)
                 < 0)) {
             return -1; // LCOV_EXCL_LINE
         }

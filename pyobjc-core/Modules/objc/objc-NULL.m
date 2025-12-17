@@ -42,9 +42,9 @@ PyObjCInitNULL(PyObject* module)
         return -1;                       // LCOV_EXCL_LINE
     }
 
-    if (unlikely(PyModule_AddObject(module, "NULL", PyObjC_NULL)
-                 == -1)) { // LCOV_BR_EXCL_LINE
-        return -1;         // LCOV_EXCL_LINE
+    if (unlikely( // LCOV_BR_EXCL_LINE
+            PyModule_AddObject(module, "NULL", PyObjC_NULL) == -1)) {
+        return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjC_NULL);
 

@@ -528,7 +528,8 @@ PyObjC_MakeIMP(Class class, PyObject* sel)
         return NULL;                  // LCOV_EXCL_LINE
     }
 
-    if (class != nil) {
+    /* XXX: class will always be non-Nil given the function interface */
+    if (class != nil) { // LCOV_BR_EXCL_LINE
         special = search_special(class, aSelector);
         if (special) {
             func = special->make_call_to_python_block;

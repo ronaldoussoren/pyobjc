@@ -86,7 +86,7 @@ static PyObject* _Nullable unic_getattro(PyObject* o, PyObject* attr_name)
         }
         res = PyObject_GetAttr(py_nsstr, attr_name);
         Py_DECREF(py_nsstr);
-    }
+    } // LCOV_BR_EXCL_LINE
     return res;
 }
 
@@ -199,14 +199,14 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     bool have_exception = false;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            range = NSMakeRange(0, length);
+            range = (NSRange){.location = 0, .length = length};
 
             [value getCharacters:characters range:range];
             characters[length] = 0;
 
-        } @catch (NSObject* localException) {
+        } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
             have_exception = true;
-            PyObjCErr_FromObjC(localException);
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -266,14 +266,14 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     for (i = 0; i < length; i++) {
         Py_UCS4 cur = (Py_UCS4)characters[i];
 
-        if (Py_UNICODE_IS_HIGH_SURROGATE(cur) && (i < length - 1)
+        if (Py_UNICODE_IS_HIGH_SURROGATE(cur) && (i < length - 1) // LCOV_BR_EXCL_LINE
             && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
 
             Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
             i++;
             nr_surrogates++;
 
-            if (ch > maxchar) {
+            if (ch > maxchar) { // LCOV_BR_EXCL_LINE
                 maxchar = ch;
             }
 
@@ -330,8 +330,8 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
             compact->utf8        = (char*)result->base.data.latin1;
         }
 
-    } else if (ascii->state.kind == PyUnicode_2BYTE_KIND) {
-        if (nr_surrogates == 0) {
+    } else if (ascii->state.kind == PyUnicode_2BYTE_KIND) { // LCOV_BR_EXCL_LINE
+        if (nr_surrogates == 0) {                           // LCOV_BR_EXCL_LINE
             /* No surrogates and 2BYTE_KIND, this means the unichar buffer
              * can be reused as storage for the python unicode string
              */
@@ -379,8 +379,10 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 
         ucs4_cur = result->base.data.ucs4;
         for (i = 0; i < length; i++) {
-            if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1)
-                && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
+            if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) // LCOV_BR_EXCL_LINE
+                && (i < length - 1)                         // LCOV_BR_EXCL_LINE
+                && (Py_UNICODE_IS_LOW_SURROGATE(            // LCOV_BR_EXCL_LINE
+                    characters[i + 1]))) {
                 Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
 
                 if (unlikely(ch > 0x10ffff)) { // LCOV_BR_EXCL_LINE
@@ -412,7 +414,7 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
         ascii->wstr          = (wchar_t*)result->base.data.ucs4;
         compact->wstr_length = ascii->length;
 #endif
-    }
+    } // LCOV_BR_EXCL_LINE
 
     if (characters != NULL) {
         PyMem_Free(characters);
@@ -440,9 +442,8 @@ PyObjCUnicode_Setup(PyObject* module)
     }
     PyObjCUnicode_Type = tmp;
 
-    if ( // LCOV_BR_EXCL_LINE
-        unlikely(PyModule_AddObject(module, "pyobjc_unicode", PyObjCUnicode_Type)
-                 == -1)) {
+    if (unlikely( // LCOV_BR_EXCL_LINE
+            PyModule_AddObject(module, "pyobjc_unicode", PyObjCUnicode_Type) == -1)) {
         return -1; // LCOV_EXCL_LINE
     }
     Py_INCREF(PyObjCUnicode_Type);

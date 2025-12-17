@@ -127,10 +127,10 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
     PyObjCClassObject* info;
     int                r;
 
-    if (encoding[0] != _C_ID) {
-        if (unlikely(PyObjCPointerWrapper_RegisterID(name, encoding)
-                     == -1)) { // LCOV_BR_EXCL_LINE
-            return NULL;       // LCOV_EXCL_LINE
+    if (encoding[0] != _C_ID) { // LCOV_BR_EXCL_LINE
+        if (unlikely(           // LCOV_BR_EXCL_LINE
+                PyObjCPointerWrapper_RegisterID(name, encoding) == -1)) {
+            return NULL; // LCOV_EXCL_LINE
         }
     }
 
@@ -307,9 +307,9 @@ PyObjCCFType_Setup(PyObject* module __attribute__((__unused__)))
         /* Add a __pyobjc_PythonObject__ method to NSCFType. Can't use a
          * category because the type isn't public.
          */
-        if (unlikely(!class_addMethod(
-                cls, @selector(__pyobjc_PythonObject__), // LCOV_BR_EXCL_LINE
-                (IMP)pyobjc_PythonObject, encodingBuf))) {
+        if (unlikely(!class_addMethod( // LCOV_BR_EXCL_LINE
+                cls, @selector(__pyobjc_PythonObject__), (IMP)pyobjc_PythonObject,
+                encodingBuf))) {
 
             return -1; // LCOV_EXCL_LINE
         }
@@ -363,8 +363,8 @@ PyObject* _Nullable PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* dat
                      typestr);
         return NULL;
     default:
-        if (unlikely(depythonify_c_value(@encode(CFTypeID), v, &typeid)
-                     < 0)) { // LCOV_BR_EXCL_LINE
+        if (unlikely( // LCOV_BR_EXCL_LINE
+                depythonify_c_value(@encode(CFTypeID), v, &typeid) < 0)) {
             // LCOV_EXCL_START
             Py_DECREF(v);
             return NULL;

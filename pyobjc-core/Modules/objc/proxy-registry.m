@@ -237,7 +237,7 @@ PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
     record = NSMapGet(objc_proxies, original);
     if (record != NULL) {
         v = objc_loadWeak(&record->value);
-        if (v == proxy || v == nil) {
+        if (v == proxy || v == nil) { // LCOV_BR_EXCL_LINE
             NSMapRemove(objc_proxies, original);
         }
     }

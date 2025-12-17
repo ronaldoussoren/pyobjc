@@ -160,7 +160,7 @@ static PyObject* _Nullable ID_to_py(const void* idValue)
 
         result = PyObjCCF_NewSpecialFromTypeID(CFAllocatorGetTypeID(), (void*)idValue);
 
-        if (result != NULL) {
+        if (likely(result != NULL)) { // LCOV_BR_EXCL_LINE
             PyObject* actual = PyObjC_RegisterPythonProxy(idValue, result);
             Py_DECREF(result);
             return actual;
@@ -212,7 +212,7 @@ PyObject* _Nullable PyObjCPointer_GetIDEncodings(void)
                 // LCOV_EXCL_STOP
             }
             Py_DECREF(cur);
-        }
+        } // LCOV_BR_EXCL_LINE
     }
 #ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&items_mutex);

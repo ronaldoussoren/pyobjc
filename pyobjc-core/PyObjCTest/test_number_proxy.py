@@ -812,16 +812,22 @@ class TestPyNumber(TestCase):
             self.assertEqual(OC_NumberInt.numberAsUnsignedShort_(v), 0)
 
     def testCompare(self):
+        self.assertEqual(OC_NumberInt.compareA_andB_(-1, 1), NSOrderedAscending)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 1), NSOrderedAscending)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 2**64), NSOrderedAscending)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 42.0), NSOrderedAscending)
 
         self.assertEqual(OC_NumberInt.compareA_andB_(0, -1), NSOrderedDescending)
+        self.assertEqual(OC_NumberInt.compareA_andB_(-1, -2), NSOrderedDescending)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, -(2**64)), NSOrderedDescending)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, -42.0), NSOrderedDescending)
 
+        self.assertEqual(OC_NumberInt.compareA_andB_(-1, -1), NSOrderedSame)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 0), NSOrderedSame)
         self.assertEqual(OC_NumberInt.compareA_andB_(0, 0.0), NSOrderedSame)
+
+        self.assertEqual(OC_NumberInt.compareA_andB_(0.0, 0), NSOrderedSame)
+        self.assertEqual(OC_NumberInt.compareA_andB_(0.0, 0.0), NSOrderedSame)
 
         self.assertEqual(
             OC_NumberInt.compareA_andB_(

@@ -149,14 +149,18 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
 
                 if (res) {
                     f = Py_TYPE(res)->tp_descr_get;
-                    if (f != NULL) {
+                    if (f != NULL) { // LCOV_BR_EXCL_LINE
+                        /* ^^^ test is always true because 'res' is
+                         *     a selector.
+                         */
                         tmp = f(res,
                                 /* Only pass 'obj' param if
                                    this is instance-mode super
                                    (See SF ID #743627)
                                 */
-                                (su->obj == (PyObject*)su->obj_type ? (PyObject*)NULL
-                                                                    : su->obj),
+                                (su->obj == (PyObject*)su->obj_type
+                                     ? (PyObject*)NULL // LCOV_BR_EXCL_LINE
+                                     : su->obj),
                                 (PyObject*)starttype);
                         Py_DECREF(res);
                         res = tmp;

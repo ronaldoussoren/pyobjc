@@ -66,6 +66,31 @@ class SomeBytes(bytes):
     __str__ = __repr__
 
 
+class SomeByteArray(bytearray):
+    def __init__(self, value=None, encoding=None):
+        if encoding is not None:
+            super().__init__(value, encoding)
+        else:
+            super().__init__(value)
+        self.y = next(_counter)
+
+    def __eq__(self, other):
+        if not isinstance(other, SomeByteArray):
+            return False
+        r = super().__eq__(other)
+        if r:
+            return other.y == self.y
+        return r
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __repr__(self):
+        return f"{super().__repr__()} y={self.y}"
+
+    __str__ = __repr__
+
+
 class TestDataReading(TestCase):
     bytes_class = bytes
 
@@ -146,6 +171,21 @@ class TestReadingNonBytes(TestDataReading):
         self.assertIsInstance(v2.x, int)
 
         self.assertNotEqual(v1.x, v2.x)
+        self.assertNotEqual(v1, v2)
+        self.assertEqual(bytes(v1), b"hello")
+
+
+class TestReadingNonByteArray(TestDataReading):
+    bytes_class = SomeByteArray
+
+    def test_non_equal_defaults(self):
+        v1 = self.bytes_class(b"hello")
+        v2 = self.bytes_class(b"hello")
+
+        self.assertIsInstance(v1.y, int)
+        self.assertIsInstance(v2.y, int)
+
+        self.assertNotEqual(v1.y, v2.y)
         self.assertNotEqual(v1, v2)
         self.assertEqual(bytes(v1), b"hello")
 

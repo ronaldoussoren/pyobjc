@@ -488,12 +488,12 @@ NS_ASSUME_NONNULL_BEGIN
         return rv;                                                                       \
     }
 
-COMPARE_METHOD(isEqualTo, Py_EQ)
-COMPARE_METHOD(isNotEqualTo, Py_NE)
-COMPARE_METHOD(isGreaterThan, Py_GT)
-COMPARE_METHOD(isGreaterThanOrEqualTo, Py_GE)
-COMPARE_METHOD(isLessThan, Py_LT)
-COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
+COMPARE_METHOD(isEqualTo, Py_EQ)              // LCOV_BR_EXCL_LINE
+COMPARE_METHOD(isNotEqualTo, Py_NE)           // LCOV_BR_EXCL_LINE
+COMPARE_METHOD(isGreaterThan, Py_GT)          // LCOV_BR_EXCL_LINE
+COMPARE_METHOD(isGreaterThanOrEqualTo, Py_GE) // LCOV_BR_EXCL_LINE
+COMPARE_METHOD(isLessThan, Py_LT)             // LCOV_BR_EXCL_LINE
+COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)    // LCOV_BR_EXCL_LINE
 
 - (BOOL)isEqualToNumber:(NSNumber*)number
 {

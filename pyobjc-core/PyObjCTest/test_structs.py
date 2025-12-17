@@ -276,6 +276,11 @@ class TestStructs(TestCase):
         ):
             objc.createStructType("Foo4", b'^{_Foo="a"f}', None)
 
+        with self.assertRaisesRegex(
+            ValueError, "invalid signature: not a complete struct encoding"
+        ):
+            objc.createStructType("Test", b"{Test}", None)
+
     def testPointerFields(self):
         # Note: the created type won't be all that useful unless the pointer
         # happens to be something that PyObjC knows how to deal with, this is
@@ -1046,6 +1051,11 @@ class TestStructs(TestCase):
             ValueError, "invalid signature: not a complete struct encoding"
         ):
             objc.createStructType("InvStruct", b"{_FooStruct}", None)
+
+        with self.assertRaisesRegex(
+            ValueError, "invalid signature: not a complete struct encoding"
+        ):
+            objc.createStructType("InvStruct", b"{_FooStruct", None)
 
     def test_repr(self):
         v = GlobalType("a", 4)

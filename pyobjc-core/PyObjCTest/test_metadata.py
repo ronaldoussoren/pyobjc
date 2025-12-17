@@ -2123,6 +2123,16 @@ class TestVariableLengthValue(TestCase):
         ):
             v[:-1] = (1,)
 
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist doesn't support slice steps other than 1"
+        ):
+            v[:10:-1]
+
+        with self.assertRaisesRegex(
+            ValueError, "objc.varlist doesn't support slice steps other than 1"
+        ):
+            v[:10:-1] = (1,)
+
         with self.assertRaises(IndexError):
             v[: 2**80 + 2]
 

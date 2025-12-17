@@ -55,9 +55,7 @@ int
 PyObjCClassbuilder_Setup(PyObject* mod __attribute__((__unused__)))
 {
     for (struct method_info* cur = gMethods; cur->method_name != NULL; cur++) {
-        if (cur->selector == NULL) {
-            cur->selector = sel_registerName(cur->sel_name);
-        }
+        cur->selector = sel_registerName(cur->sel_name);
     }
     return 0;
 }
@@ -141,7 +139,8 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
         // LCOV_EXCL_STOP
     }
 
-    for (struct method_info* cur = gMethods; cur->method_name != NULL; cur++) {
+    for (struct method_info* cur = gMethods; // LCOV_BR_EXCL_LINE
+         cur->method_name != NULL; cur++) {
         if (cur->override_only) {
             if (![base_class instancesRespondToSelector:cur->selector]) {
                 continue;
@@ -158,7 +157,7 @@ static Class _Nullable build_intermediate_class(Class base_class, char* name)
 
         class_addMethod(intermediate_class, cur->selector, (IMP)closure, cur->typestr);
         closure = NULL;
-    }
+    } // LCOV_BR_EXCL_LINE
 
     objc_registerClassPair(intermediate_class);
 #ifdef Py_GIL_DISABLED
@@ -579,7 +578,7 @@ free_ivars(id self, PyObject* cls)
     }
 
     cur_cls = cls;
-    while (cur_cls != NULL) {
+    while (cur_cls != NULL) { // LCOV_BR_EXCL_LINE
         assert(PyObjCClass_Check(cur_cls));
         Class     objcClass = PyObjCClass_GetClass(cur_cls);
         PyObject* clsDict;
@@ -651,7 +650,8 @@ free_ivars(id self, PyObject* cls)
             } else {
                 Py_BEGIN_ALLOW_THREADS
                     @try {
-                        [*(id*)(((char*)self) + ivar_getOffset(var)) autorelease];
+                        [*(id*)(((char*)self) + ivar_getOffset(var)) // LCOV_BR_EXCL_LINE
+                            autorelease];
 
                     } @catch (NSObject* localException) {             // LCOV_EXCL_LINE
                         NSLog(@"ignoring exception %@ in destructor", // LCOV_EXCL_LINE
@@ -869,7 +869,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
      */
 
     @try {
-        theSelector = [invocation selector];
+        theSelector = [invocation selector]; // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
     } @catch (NSObject* localException) {
         Py_DECREF(pyself);
@@ -908,8 +908,8 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
 
     IMP method;
     @try {
-        method = [self methodForSelector:theSelector];
-    } @catch (NSObject* localException) { // LCOV_EXCL_LINE
+        method = [self methodForSelector:theSelector]; // LCOV_BR_EXCL_LINE
+    } @catch (NSObject* localException) {              // LCOV_EXCL_LINE
         // LCOV_EXCL_START
         PyGILState_Release(state);
         @throw;
@@ -932,7 +932,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         return;
     }
     PyGILState_Release(state);
-}
+} // LCOV_BR_EXCL_LINE
 
 static void
 object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retval,
@@ -1073,9 +1073,9 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
                 rawkey = (char*)[key UTF8String];
                 r      = PyObject_SetAttrString(selfObj, rawkey, val);
             } while (0);
-            Py_DECREF(selfObj);
-            Py_DECREF(val);
-            Py_XDECREF(res);
+            Py_CLEAR(selfObj);
+            Py_CLEAR(val);
+            Py_CLEAR(res);
             if (r == -1) {
                 PyErr_Clear();
                 PyGILState_Release(state);

@@ -776,14 +776,18 @@ set_defaults(PyObject* self, const char* typestr)
                     // LCOV_EXCL_STOP
                 }
 
-            } else if (unlikely(!PyErr_Occurred())) {
+            } else if (likely(!PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
                 /* this is a struct-type without a struct
                  * wrapper. Default to None
+                 *
+                 * Note that !PyErr_Occurred() is almost certainly
+                 * true, it will only be false for internal errors or
+                 * memory errors. The 'typestr' value will be correct,
+                 * otherwise the type creation would have failed.
                  */
                 v = Py_None;
                 Py_INCREF(Py_None);
             }
-
             break;
 
         default:
@@ -1457,6 +1461,8 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
     }
 
     v = PyUnicode_FromStringAndSize(signature, len);
+    if (unlikely(v == NULL)) // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
 
     r = PyDict_GetItemRef(structRegistry, v, (PyObject**)&type);
 
@@ -1584,10 +1590,10 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
                                 "invalid signature: not a complete struct encoding");
                 return NULL;
             }
-            if (*sigcur == '"') {
+            if (likely(*sigcur == '"')) {
                 sigcur++;
                 sigcur = strchr(sigcur, '"');
-                if (sigcur == NULL) {
+                if (unlikely(sigcur == NULL)) {
                     PyErr_SetString(PyExc_ValueError,
                                     "invalid signature: embedded field name without end");
                     return NULL;
@@ -1613,7 +1619,8 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
 
         sigcur = fieldstart;
         while (*sigcur != _C_STRUCT_E) {
-            if (*sigcur == '"') {
+            if (likely(*sigcur == '"')) { // LCOV_BR_EXCL_LINE
+                // Test will always be true due to first pass
                 char* end;
 
                 sigcur++;

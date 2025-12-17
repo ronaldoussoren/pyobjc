@@ -61,10 +61,10 @@ PyObjCAPI_Register(PyObject* module)
     if (unlikely(API == NULL)) // LCOV_BR_EXCL_LINE
         return -1;             // LCOV_EXCL_LINE
 
-    if (unlikely(PyModule_AddObject(module, PYOBJC_API_NAME, API)
-                 < 0)) { // LCOV_BR_EXCL_LINE
-        Py_DECREF(API);  // LCOV_EXCL_LINE
-        return -1;       // LCOV_EXCL_LINE
+    if (unlikely( // LCOV_BR_EXCL_LINE
+            PyModule_AddObject(module, PYOBJC_API_NAME, API) < 0)) {
+        Py_DECREF(API); // LCOV_EXCL_LINE
+        return -1;      // LCOV_EXCL_LINE
     }
     return 0;
 }

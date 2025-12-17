@@ -20,7 +20,7 @@ PyObjC_is_pymethod(PyObject* value)
 
 PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
 {
-    if (PyObjC_is_pyfunction(value)) {
+    if (likely(PyObjC_is_pyfunction(value))) {
         PyObject* code = PyObject_GetAttrString(value, "__code__");
         if (unlikely(code == NULL)) { // LCOV_BR_EXCL_LINE
             return NULL;              // LCOV_EXCL_LINE
@@ -32,7 +32,7 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
         }
         return (PyCodeObject*)code;
 
-    } else if (PyObjC_is_pymethod(value)) {
+    } else if (likely(PyObjC_is_pymethod(value))) { // LCOV_BR_EXCL_LINE
         PyObject* func = PyObject_GetAttrString(value, "__func__");
         if (unlikely(func == NULL)) { // LCOV_BR_EXCL_LINE
             return NULL;              // LCOV_EXCL_LINE
@@ -54,7 +54,7 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
         } else {
             Py_DECREF(func);
         }
-    }
+    } // LCOV_BR_EXCL_LINE
     PyErr_Format(PyExc_TypeError, "%R is not a python function or method", value);
     return NULL;
 }
@@ -92,7 +92,7 @@ PyObjC_returns_value(PyObject* value)
 
 #if PY_VERSION_HEX >= 0x030e0000
     PyObject* consts = PyObject_GetAttr((PyObject*)func_code, PyObjCNM_co_consts);
-    if (consts == NULL) {
+    if (unlikely(consts == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_Clear();
         Py_DECREF(func_code);
