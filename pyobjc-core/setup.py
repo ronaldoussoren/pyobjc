@@ -97,13 +97,11 @@ CFLAGS = [
     "-g",
     # "-O0",
     "-O3",
-    "-flto=thin",
-    # XXX: Use object_path_lto (during linking?)
-    # "-fsanitize-thread-atomics",
 ]
 
 # CFLAGS for other (test) extensions:
 EXT_CFLAGS = CFLAGS + ["-IModules/objc"]
+CFLAGS += ["-flto=thin"]
 
 # LDFLAGS for the objc._objc extension
 OBJC_LDFLAGS = [
@@ -114,13 +112,13 @@ OBJC_LDFLAGS = [
     # "-fvisibility=protected",
     "-lffi",
     "-fvisibility=hidden",
-    # "-O0",
     "-g",
     # "-O0",
     "-O3",
-    "-flto=thin",
     "-fexceptions",
 ]
+EXT_LDFLAGS = OBJC_LDFLAGS + []
+OBJC_LDFLAGS += ["-flto=thin"]
 
 
 #
@@ -466,7 +464,6 @@ def _working_compiler(executable):
             if "-flto=thin" in CFLAGS:
                 cflags.remove("-flto=thin")
                 CFLAGS.remove("-flto=thin")
-                EXT_CFLAGS.remove("-flto=thin")
                 OBJC_LDFLAGS.remove("-flto=thin")
                 p = subprocess.Popen(
                     [executable, "-c", fp.name] + cflags,
@@ -585,7 +582,7 @@ class oc_build_ext(build_ext.build_ext):
             # Override default: build extensions in parallel
             self.parallel = True
         if self.no_lto:
-            for var in CFLAGS, EXT_CFLAGS, OBJC_LDFLAGS:
+            for var in CFLAGS, EXT_CFLAGS, OBJC_LDFLAGS, EXT_LDFLAGS:
                 to_remove = []
                 for idx, val in enumerate(var):
                     if val == "-O3" or val.startswith("-flto"):
@@ -633,11 +630,18 @@ class oc_build_ext(build_ext.build_ext):
                 CFLAGS.extend(["-isysroot", self.sdk_root])
                 EXT_CFLAGS.extend(["-isysroot", self.sdk_root])
                 OBJC_LDFLAGS.extend(["-isysroot", self.sdk_root])
+                EXT_LDFLAGS.extend(["-isysroot", self.sdk_root])
 
         cflags = get_config_var("CFLAGS")
         if "-mno-fused-madd" in cflags:
             cflags = cflags.replace("-mno-fused-madd", "")
             get_config_vars()["CFLAGS"] = cflags
+
+        if "-flto=thin" in OBJC_LDFLAGS:
+            lto_path = os.path.join(self.build_temp, "lto-temp")
+            OBJC_LDFLAGS.append(f"-Wl,-object_path_lto,{lto_path}")
+            if not os.path.exists(lto_path):
+                os.makedirs(lto_path)
 
         CFLAGS.append(
             "-DPyObjC_BUILD_RELEASE=%02d%02d"
@@ -682,7 +686,7 @@ class oc_build_ext(build_ext.build_ext):
             if full_path not in prebuild_mtimes or (
                 prebuild_mtimes[full_path] != os.stat(full_path).st_mtime
             ):
-                subprocess.check_call(["/usr/bin/dsymutil", full_path])
+                subprocess.check_call(["/usr/bin/dsymutil", "-q", full_path])
 
         extensions = self.extensions
         self.extensions = [e for e in extensions if e.name.startswith("PyObjCTest")]
@@ -803,7 +807,7 @@ setup(
             "objc._machsignals",
             ["Modules/_machsignals.m"],
             extra_compile_args=EXT_CFLAGS,
-            extra_link_args=OBJC_LDFLAGS,
+            extra_link_args=EXT_LDFLAGS,
         ),
     ]
     + [
@@ -811,7 +815,7 @@ setup(
             "PyObjCTest." + os.path.splitext(os.path.basename(test_source))[0],
             [test_source],
             extra_compile_args=EXT_CFLAGS,
-            extra_link_args=OBJC_LDFLAGS,
+            extra_link_args=EXT_LDFLAGS,
         )
         for test_source in glob.glob(os.path.join("Modules", "objc", "test", "*.[mc]"))
     ],
