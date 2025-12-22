@@ -79,6 +79,16 @@ objc.registerMetaDataForSelector(
     b"method9:",
     {"arguments": {2: {"type_modifier": "n"}}, "deprecated": 1010},
 )
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method10:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": "not"},
+)
+objc.registerMetaDataForSelector(
+    b"OCTestDeprecations",
+    b"method11:",
+    {"arguments": {2: {"type_modifier": "n"}}, "deprecated": -1},
+)
 
 _FunctionTable = [
     ("func1", b"i", "", {}),
@@ -90,6 +100,8 @@ _FunctionTable = [
     ("func7", b"i", "", {"deprecated": 1006}),
     ("func8", b"i", "", {"deprecated": 1010}),
     ("func9", b"i", "", {"deprecated": 1010}),
+    ("func10", b"i", "", {"deprecated": "not"}),
+    ("func11", b"i", "", {"deprecated": -1}),
 ]
 
 objc.loadFunctionList(function_list, globals(), _FunctionTable, False)
@@ -151,17 +163,22 @@ class TestDeprecationWarnings(TestCase):
             self.assertDeprecationWarning(o.method4)
             self.assertDeprecationWarning(o.method6)
             self.assertNoDeprecationWarning(o.method8)
+            self.assertNoDeprecationWarning(o.method10)
             self.assertNoDeprecationWarning(o.method1_, 0)
             self.assertDeprecationWarning(o.method2_, 0)
             self.assertDeprecationWarning(o.method4_, 0)
             self.assertDeprecationWarning(o.method6_, 0)
             self.assertNoDeprecationWarning(o.method8_, 0)
+            self.assertNoDeprecationWarning(o.method10_, 0)
+            self.assertDeprecationWarning(o.method11_, 0)
 
             self.assertNoDeprecationWarning(func1)  # noqa: F821
             self.assertDeprecationWarning(func2)  # noqa: F821
             self.assertDeprecationWarning(func4)  # noqa: F821
             self.assertDeprecationWarning(func6)  # noqa: F821
             self.assertNoDeprecationWarning(func8)  # noqa: F821
+            self.assertNoDeprecationWarning(func10)  # noqa: F821
+            self.assertDeprecationWarning(func11)  # noqa: F821
 
     def test_deprecation_error(self):
         o = OCTestDeprecations.alloc().init()
@@ -181,3 +198,9 @@ class TestDeprecationWarnings(TestCase):
                     r"-\[OCTestDeprecations method2:\] is a deprecated API \(macOS 10\.4\)",
                 ):
                     o.method2_(0)
+
+    def test_invalid_registration(self):
+        with self.assertRaises(OverflowError):
+            objc.registerMetaDataForSelector(
+                b"OCTestDeprecations", b"method99", {"deprecated": 2**66}
+            )

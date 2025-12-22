@@ -656,6 +656,35 @@ class TestTestSupport(TestCase):
         ):
             self.assertArgIsNullTerminated(m, 3)
 
+    def test_assert_arg_not_nullterminated(self):
+        m = Method(3, {"c_array_delimited_by_null": True}, selector=True)
+        self.assertArgIsNotNullTerminated(m, 0)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 1 of <.*> is a null-terminated array",
+        ):
+            self.assertArgIsNotNullTerminated(m, 1)
+
+        m = Method(3, {"c_array_delimited_by_null": False}, selector=True)
+        self.assertArgIsNotNullTerminated(m, 1)
+
+        m = Method(3, {}, selector=True)
+        self.assertArgIsNotNullTerminated(m, 1)
+
+        m = Method(1, {"c_array_delimited_by_null": True}, selector=False)
+        self.assertArgIsNotNullTerminated(m, 0)
+        with self.assertRaisesRegex(
+            self.failureException,
+            "argument 1 of <.*> is a null-terminated array",
+        ):
+            self.assertArgIsNotNullTerminated(m, 1)
+
+        m = Method(1, {"c_array_delimited_by_null": False}, selector=False)
+        self.assertArgIsNotNullTerminated(m, 1)
+
+        m = Method(1, {}, selector=False)
+        self.assertArgIsNotNullTerminated(m, 1)
+
     def test_selector_initializer(self):
         m = Method(None, {}, selector=True)
         self.assertIsNotInitializer(m)
@@ -855,6 +884,33 @@ class TestTestSupport(TestCase):
         ):
             self.assertArgSizeInResult(m, 3)
 
+    def test_argsize_not_in_result(self):
+        m = Method(3, {"c_array_length_in_result": True}, selector=True)
+        self.assertArgSizeNotInResult(m, 0)
+        with self.assertRaisesRegex(
+            self.failureException, "argument 1 of .* does have size in result"
+        ):
+            self.assertArgSizeNotInResult(m, 1)
+
+        m = Method(3, {"c_array_length_in_result": False}, selector=True)
+        self.assertArgSizeNotInResult(m, 1)
+
+        m = Method(3, {}, selector=True)
+        self.assertArgSizeNotInResult(m, 1)
+
+        m = Method(1, {"c_array_length_in_result": True}, selector=False)
+        self.assertArgSizeNotInResult(m, 0)
+        with self.assertRaisesRegex(
+            self.failureException, "argument 1 of .* does have size in result"
+        ):
+            self.assertArgSizeNotInResult(m, 1)
+
+        m = Method(1, {"c_array_length_in_result": False}, selector=False)
+        self.assertArgSizeNotInResult(m, 1)
+
+        m = Method(1, {}, selector=False)
+        self.assertArgSizeNotInResult(m, 1)
+
     def test_arg_printf(self):
         m = Method(3, {"printf_format": True}, selector=True)
         m._meta["variadic"] = True
@@ -864,7 +920,7 @@ class TestTestSupport(TestCase):
         ):
             self.assertArgIsPrintf(m, 0)
 
-        m._meta["variadic"] = False
+        del m._meta["variadic"]
         with self.assertRaisesRegex(
             self.failureException, "<.*> is not a variadic function"
         ):
@@ -911,6 +967,51 @@ class TestTestSupport(TestCase):
             self.failureException, "<.*> argument 3 is not a printf format string"
         ):
             self.assertArgIsPrintf(m, 3)
+
+    def test_arg_not_printf(self):
+        m = Method(3, {"printf_format": True}, selector=True)
+        m._meta["variadic"] = True
+        self.assertArgIsNotPrintf(m, 0)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> argument 1 is a printf format string"
+        ):
+            self.assertArgIsNotPrintf(m, 1)
+
+        del m._meta["variadic"]
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> is not a variadic function"
+        ):
+            self.assertArgIsNotPrintf(m, 1)
+
+        m._meta["variadic"] = True
+        m._meta["arguments"][3]["printf_format"] = False
+        self.assertArgIsNotPrintf(m, 1)
+
+        m._meta["variadic"] = True
+        del m._meta["arguments"][3]["printf_format"]
+        self.assertArgIsNotPrintf(m, 1)
+
+        m = Method(1, {"printf_format": True}, selector=False)
+        m._meta["variadic"] = True
+        self.assertArgIsNotPrintf(m, 0)
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> argument 1 is a printf format string"
+        ):
+            self.assertArgIsNotPrintf(m, 1)
+
+        m._meta["variadic"] = False
+        with self.assertRaisesRegex(
+            self.failureException, "<.*> is not a variadic function"
+        ):
+            self.assertArgIsPrintf(m, 1)
+
+        m._meta["variadic"] = True
+        m._meta["arguments"][1]["printf_format"] = False
+        self.assertArgIsNotPrintf(m, 1)
+
+        m._meta["variadic"] = True
+        del m._meta["arguments"][1]["printf_format"]
+        self.assertArgIsNotPrintf(m, 1)
 
     def test_arg_cfretained(self):
 

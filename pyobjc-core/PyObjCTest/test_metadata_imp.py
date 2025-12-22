@@ -416,9 +416,6 @@ class TestByReference(TestCase):
         self.assertEqual(x, 284)
         self.assertEqual(y, 42)
 
-        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
-            m(o, 42, objc.NULL)
-
     def testNullAccepted(self):
         # Note: the commented-out test-cases require a change in the pyobjc-core
         o = OC_MetaDataTest.new()

@@ -147,6 +147,21 @@ use_id(id x __attribute__((__unused__)))
 
 @implementation OC_MetaDataTest
 
++ (id)newWithDummyInt:(int)dummy __attribute__((__unused__))
+{
+    return [self new];
+}
+
++ (id)newWithDummyFloat:(int)dummy __attribute__((__unused__))
+{
+    return [self new];
+}
+
+- (id)descriptionWithValue:(id)value __attribute__((__unused__))
+{
+    return [super description];
+}
+
 + (id)methodWithSEL1:(SEL)sel
 {
     return [NSString stringWithUTF8String:sel_getName(sel)];
@@ -360,6 +375,32 @@ typedef id (*callfunc)(void);
     array = [NSMutableArray array];
 
     for (i = 0; i < 4; i++) {
+        [array addObject:[NSNumber numberWithDouble:data[i]]];
+    }
+    return array;
+}
+
+- (NSArray*)make5Tuple:(double*)data
+{
+    NSMutableArray* array;
+    unsigned        i;
+
+    array = [NSMutableArray array];
+
+    for (i = 0; i < 5; i++) {
+        [array addObject:[NSNumber numberWithDouble:data[i]]];
+    }
+    return array;
+}
+
+- (NSArray*)make6Tuple:(double*)data
+{
+    NSMutableArray* array;
+    unsigned        i;
+
+    array = [NSMutableArray array];
+
+    for (i = 0; i < 6; i++) {
         [array addObject:[NSNumber numberWithDouble:data[i]]];
     }
     return array;
@@ -1553,6 +1594,20 @@ static intfunc gIntFunc = NULL;
         return -1;
     }
     return gIntFunc(value);
+}
+
++ (unsigned long)pointerAsInt:(void*)p
+{
+    return (unsigned long)p;
+}
+
+struct sumfields {
+    unsigned int a;
+    unsigned int b;
+};
++ (unsigned long)sumfields:(struct sumfields*)value
+{
+    return value->a + value->b;
 }
 
 @end

@@ -46,12 +46,18 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"methodWithSEL1:",
-        {"arguments": {2 + 0: {"sel_of_type": b"@@:@"}}},
+        {"arguments": {2 + 0: {"sel_of_type": b"@@:@"}, "two": {"ignore": 1}}},
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"methodWithSEL2:",
         {"arguments": {2 + 0: {"sel_of_type": "i@:i"}}},
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"methodWithSEL3:",
+        {"arguments": {2 + 0: {"sel_of_type": 42}}},
     )
 
     objc.registerMetaDataForSelector(
@@ -161,7 +167,11 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeArrayWithArguments:",
-        {"variadic": True, "c_array_delimited_by_null": True},
+        {
+            "variadic": True,
+            "c_array_lenght_in_arg": "hello",
+            "c_array_delimited_by_null": True,
+        },
     )
 
     objc.registerMetaDataForSelector(
@@ -182,7 +192,11 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeNullDelimitedIntArray:",
-        {"variadic": True, "c_array_delimited_by_null": True},
+        {
+            "variadic": True,
+            "c_array_delimited_by_null": True,
+            "arguments": {2 + 0: {"printf_format": False}},
+        },
     )
 
     objc.registerMetaDataForSelector(
@@ -194,6 +208,37 @@ def setupMetaData():
                 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_of_fixed_length": 4,
+                    "c_array_of_variable_length": False,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"make5Tuple:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    # Invalid:
+                    "c_array_of_fixed_length": "5",
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"make6Tuple:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    # Invalid:
+                    "c_array_of_fixed_length": -1,
                     "null_accepted": False,
                 }
             }
@@ -230,13 +275,17 @@ def setupMetaData():
         b"OC_MetaDataTest",
         b"make8Tuple:on:",
         {
+            "free_result": False,
             "arguments": {
                 2
                 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_of_fixed_length": 8,
                 }
-            }
+            },
+            "retval": {
+                "deref_result_pointer": False,
+            },
         },
     )
     objc.registerMetaDataForSelector(
@@ -330,6 +379,7 @@ def setupMetaData():
                 + 0: {
                     "type_modifier": objc._C_IN,
                     "c_array_length_in_arg": (2 + 1,),
+                    "c_array_delimited_by_null": False,
                     "null_accepted": False,
                 }
             }
@@ -496,6 +546,7 @@ def setupMetaData():
                 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_length_in_arg": 2 + 1,
+                    "c_array_length_in_result": False,
                     "null_accepted": False,
                 }
             }
@@ -728,7 +779,7 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeIntArrayOf5",
-        {"retval": {"c_array_of_fixed_length": 5}},
+        {"retval": {"c_array_of_fixed_length": 5, "type_modifier": 42}},
     )
 
     objc.registerMetaDataForSelector(
@@ -781,8 +832,8 @@ def setupMetaData():
         b"swapX:andY:",
         {
             "arguments": {
-                2 + 0: {"type_modifier": objc._C_INOUT, "null_accepted": False},
-                2 + 1: {"type_modifier": objc._C_INOUT, "null_accepted": False},
+                2 + 0: {"type_modifier": objc._C_INOUT},
+                2 + 1: {"type_modifier": objc._C_INOUT},
             }
         },
     )
@@ -950,6 +1001,41 @@ def setupMetaData():
         },
     )
 
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"descriptionWithValue:",
+        {
+            "arguments": {
+                2 + 0: {"already_retained": False, "type_modifier": 42},
+            },
+            "retval": {"already_cfretained": False, "type": 42},
+        },
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest", b"newWithDummyInt:", {"retval": {"already_retained": True}}
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"pointerAsInt:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": b"n"},
+            },
+        },
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"sumfields:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": b"n"},
+            },
+        },
+    )
+
 
 setupMetaData()
 
@@ -1017,6 +1103,9 @@ class TestArraysOut(TestCase):
         self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
+        self.assertArgSizeInArg(OC_MetaDataTest.fillArray_count_, 0, 1)
+        self.assertArgSizeNotInResult(OC_MetaDataTest.fillArray_count_, 0)
+
         o = OC_MetaDataTest.new()
 
         v = o.fillArray_count_(None, 3)
@@ -1227,6 +1316,12 @@ class TestArraysIn(TestCase):
         v = o.make4Tuple_(a)
         self.assertEqual(list(v), [2.5, 3.5, 4.5, 5.5])
 
+    def test_fixed_size_invalid(self):
+        m = OC_MetaDataTest.make5Tuple_.__metadata__()
+        self.assertNotIn("c_array_of_fixed_length", m["arguments"][2])
+
+        self.assertArgIsFixedSize(OC_MetaDataTest.make6Tuple_, 0, -1)
+
     @expectedFailureIf(objc.arch == "x86_64")
     def testFixedSizeSubclass(self):
         class OC_MetaDataTestArrayArg(OC_MetaDataTest):
@@ -1284,6 +1379,9 @@ class TestArraysIn(TestCase):
 
     def testWithCount(self):
         o = OC_MetaDataTest.new()
+
+        self.assertArgSizeInArg(o.makeIntArray_count_, 0, 1)
+        self.assertArgIsNotNullTerminated(o.makeIntArray_count_, 0)
 
         v = o.makeIntArray_count_((1, 2, 3, 4), 3)
         self.assertEqual(len(v), 3)
@@ -1453,13 +1551,16 @@ class TestByReference(TestCase):
             o.divBy5_remainder_(42, objc.NULL)
 
     def testInputOutput(self):
+        self.assertArgHasType(
+            OC_MetaDataTest.swapX_andY_, 0, objc._C_INOUT + objc._C_PTR + objc._C_DBL
+        )
+        self.assertArgHasType(
+            OC_MetaDataTest.swapX_andY_, 1, objc._C_INOUT + objc._C_PTR + objc._C_DBL
+        )
         o = OC_MetaDataTest.new()
         x, y = o.swapX_andY_(42, 284)
         self.assertEqual(x, 284)
         self.assertEqual(y, 42)
-
-        with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
-            o.swapX_andY_(42, objc.NULL)
 
     def testNullAccepted(self):
         o = OC_MetaDataTest.new()
@@ -1860,6 +1961,9 @@ class TestVariadicNullDelimited(TestCase):
 
     def test_int(self):
         o = OC_MetaDataTest.new()
+
+        self.assertArgIsNotPrintf(o.makeNullDelimitedIntArray_, 0)
+        self.assertIsNullTerminated(o.makeNullDelimitedIntArray_)
 
         with self.assertRaisesRegex(
             TypeError, "variadic null-terminated arrays only supported for type"
@@ -2787,6 +2891,7 @@ class TestSELArguments(TestCase):
     def test_basic(self):
         self.assertArgIsSEL(OC_MetaDataTest.methodWithSEL1_, 0, b"@@:@")
         self.assertArgIsSEL(OC_MetaDataTest.methodWithSEL2_, 0, b"i@:i")
+        self.assertArgIsSEL(OC_MetaDataTest.methodWithSEL3_, 0, None)
 
     def test_invalid_string(self):
         with self.assertRaisesRegex(UnicodeEncodeError, "surrogates not allowed"):
@@ -2849,3 +2954,307 @@ class TestInvalidMetadata(TestCase):
                         b"invalid%s" % (key.encode()),
                         {"arguments": {0: {key: "\udfff"}}},
                     )
+
+    def test_c_array_length_in_arg_edgecases(self):
+        with self.subTest("unexpected type"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"invalidLengthInArgType:",
+                {
+                    "arguments": {
+                        0: {"c_array_length_in_arg": "one", "type_modifier": b"n"}
+                    }
+                },
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"invalidLengthInArgType:"
+            )
+            self.assertNotIn("c_array_length_in_arg", m["arguments"][0])
+
+        with self.subTest("single value"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"invalidLengthInArg:",
+                {"arguments": {0: {"c_array_length_in_arg": -1}}},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"invalidLengthInArg:"
+            )
+            self.assertEqual(m["arguments"][0]["c_array_length_in_arg"], -1)
+
+        with self.subTest("empty tuple"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"invalidLengthInArgEmpty:",
+                {"arguments": {0: {"c_array_length_in_arg": ()}}},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"invalidLengthInArgEmpty:"
+            )
+            self.assertNotIn("c_array_length_in_arg", m["arguments"])
+
+        with self.subTest("tuple of one"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"invalidLengthInArgTuple0:",
+                {"arguments": {0: {"c_array_length_in_arg": (-1,)}}},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"invalidLengthInArgTuple0:"
+            )
+            self.assertEqual(m["arguments"][0]["c_array_length_in_arg"], -1)
+
+        with self.subTest("tuple of two first negative"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"invalidLengthInArgTuple20:",
+                {"arguments": {0: {"c_array_length_in_arg": (-1, 1)}}},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"invalidLengthInArgTuple20:"
+            )
+            self.assertEqual(m["arguments"][0]["c_array_length_in_arg"], (-1, 1))
+
+        with self.subTest("tuple of two second negative"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"invalidLengthInArgTuple21:",
+                {"arguments": {0: {"c_array_length_in_arg": (1, -1)}}},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"invalidLengthInArgTuple21:"
+            )
+            self.assertEqual(m["arguments"][0]["c_array_length_in_arg"], (1, -1))
+
+        with self.subTest("tuple of three second negative"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"invalidLengthInArgTuple21:",
+                {"arguments": {0: {"c_array_length_in_arg": (2, -1, 4)}}},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"invalidLengthInArgTuple21:"
+            )
+            self.assertEqual(m["arguments"][0]["c_array_length_in_arg"], (2, -1))
+
+    def test_null_delimited_varargs_edgecases(self):
+        with self.subTest(True):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"nulldelimitedvarargsTrue:",
+                {"variadic": True, "c_array_delimited_by_null": True},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"nulldelimitedvarargsTrue:"
+            )
+            self.assertEqual(m["variadic"], True)
+            self.assertEqual(m["c_array_delimited_by_null"], True)
+
+        with self.subTest(False):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"nulldelimitedvarargsFalse:",
+                {"variadic": True, "c_array_delimited_by_null": False},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"nulldelimitedvarargsFalse:"
+            )
+            self.assertEqual(m["variadic"], True)
+            self.assertNotIn("c_array_delimited_by_null", m)
+
+    def test_variadic_with_length_edgecases(self):
+        with self.subTest("basic"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"countedvariadic:",
+                {"variadic": True, "c_array_length_in_arg": 1},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"countedvariadic:"
+            )
+            self.assertEqual(m["variadic"], True)
+            self.assertEqual(m["c_array_length_in_arg"], 1)
+
+        with self.subTest("overflow"):
+            with self.assertRaises(OverflowError):
+                objc.registerMetaDataForSelector(
+                    b"OC_MetaDataTest",
+                    b"countedvariadictoolarge:",
+                    {"variadic": True, "c_array_length_in_arg": 2**66},
+                )
+
+        with self.subTest("negative two"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"countedvariadicnegative:",
+                {"variadic": True, "c_array_length_in_arg": -2},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"countedvariadicnegative:"
+            )
+            self.assertEqual(m["variadic"], True)
+            self.assertEqual(m["c_array_length_in_arg"], -2)
+
+        with self.subTest("negative one"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"countedvariadicnegativeone:",
+                {"variadic": True, "c_array_length_in_arg": -1},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"countedvariadicnegativeone:"
+            )
+            self.assertEqual(m["variadic"], True)
+            self.assertNotIn("c_array_length_in_arg", m)
+
+        with self.subTest("wrong type"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"countedvariadicnegative:",
+                {"variadic": True, "c_array_length_in_arg": "one"},
+            )
+            m = objc._registeredMetadataForSelector(
+                OC_MetaDataTest, b"countedvariadicnegative:"
+            )
+            self.assertEqual(m["variadic"], True)
+            self.assertNotIn("c_array_length_in_arg", m)
+
+    def test_variadic_edgecases(self):
+        with self.subTest("not variadic"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest", b"variadic0:", {"variadic": False}
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"variadic0:")
+            self.assertNotIn("variadic", m)
+
+        with self.subTest("unhandled"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest", b"variadic1:", {"variadic": True}
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"variadic1:")
+            self.assertTrue(m["variadic"])
+            self.assertEqual(
+                m["suggestion"], "Variadic functions/methods are not supported"
+            )
+
+        with self.subTest("unhandled with suggestion"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"variadic2:",
+                {"variadic": True, "suggestion": "do not use this"},
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"variadic2:")
+            self.assertTrue(m["variadic"])
+            self.assertEqual(m["suggestion"], "do not use this")
+
+        with self.subTest("null delimited"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"variadic3:",
+                {"variadic": True, "c_array_delimited_by_null": True},
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"variadic3:")
+            self.assertTrue(m["variadic"])
+            self.assertNotIn("suggestion", m)
+
+        with self.subTest("counted"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"variadic3:",
+                {"variadic": True, "c_array_length_in_arg": 0},
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"variadic3:")
+            self.assertTrue(m["variadic"])
+            self.assertNotIn("suggestion", m)
+
+        with self.subTest("printf"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"variadic4:",
+                {"variadic": True, "arguments": {2: {"printf_format": True}}},
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"variadic4:")
+            self.assertTrue(m["variadic"])
+            self.assertTrue(m["arguments"][2]["printf_format"])
+            self.assertNotIn("suggestion", m)
+
+    def test_invalid_argument_offsets(self):
+        with self.subTest("much too large"):
+            with self.assertRaises(OverflowError):
+                objc.registerMetaDataForSelector(
+                    b"OC_MetaDataTest",
+                    b"arguments1:",
+                    {"arguments": {2**65: {"printf_format": True}}},
+                )
+
+        with self.subTest("too large"):
+            with self.assertRaisesRegex(
+                objc.error, "Maximum argument index is metadata is larger than 64"
+            ):
+                objc.registerMetaDataForSelector(
+                    b"OC_MetaDataTest",
+                    b"arguments1:",
+                    {"arguments": {200: {"printf_format": True}}},
+                )
+
+        with self.subTest("negative ten"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"arguments2:",
+                {"arguments": {-10: {"printf_format": True}}},
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"arguments2:")
+            self.assertEqual(m["arguments"], ())
+
+        with self.subTest("negative one"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest",
+                b"arguments3:",
+                {"arguments": {-1: {"printf_format": True}}},
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"arguments3:")
+            self.assertEqual(m["arguments"], ())
+
+    def test_full_signature(self):
+        with self.subTest("correct"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest", b"fullsignature1:", {"full_signature": b"<2f>@:"}
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"fullsignature1:")
+            self.assertEqual(m["full_signature"], b"<2f>@:")
+
+        with self.subTest("invalid type"):
+            objc.registerMetaDataForSelector(
+                b"OC_MetaDataTest", b"fullsignature2:", {"full_signature": "<2f>@:"}
+            )
+            m = objc._registeredMetadataForSelector(OC_MetaDataTest, b"fullsignature2:")
+            self.assertNotIn("full_signature", m)
+
+    def test_unretained(self):
+        self.assertArgIsNotRetained(
+            OC_MetaDataTest.alloc().init().descriptionWithValue_, 0
+        )
+        self.assertArgIsNotCFRetained(
+            OC_MetaDataTest.alloc().init().descriptionWithValue_, 0
+        )
+        self.assertResultIsNotRetained(
+            OC_MetaDataTest.alloc().init().descriptionWithValue_
+        )
+        self.assertResultIsNotCFRetained(
+            OC_MetaDataTest.alloc().init().descriptionWithValue_
+        )
+
+        self.assertArgHasType(OC_MetaDataTest.descriptionWithValue_, 0, b"@")
+        self.assertResultHasType(OC_MetaDataTest.descriptionWithValue_, b"@")
+
+    def test_new_methods(self):
+        self.assertResultIsRetained(OC_MetaDataTest.newWithDummyInt_)
+        self.assertResultIsRetained(OC_MetaDataTest.newWithDummyFloat_)
+
+    def test_handle(self):
+        self.assertArgHasType(OC_MetaDataTest.pointerAsInt_, 0, b"^v")
+        self.assertEqual(OC_MetaDataTest.pointerAsInt_(999), 999)
+
+    def test_sumfields(self):
+        self.assertArgIsIn(OC_MetaDataTest.sumfields_, 0)
+        self.assertEqual(OC_MetaDataTest.sumfields_((9, 4)), 13)

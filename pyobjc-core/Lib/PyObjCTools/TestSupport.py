@@ -497,6 +497,21 @@ class TestCase(_unittest.TestCase):
                 or "argument %d of %r is not a null-terminated array" % (argno, method)
             )
 
+    def assertArgIsNotNullTerminated(self, method, argno, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        try:
+            if info["arguments"][argno + offset].get("c_array_delimited_by_null"):
+                self.fail(
+                    message
+                    or "argument %d of %r is a null-terminated array" % (argno, method)
+                )
+        except (KeyError, IndexError):
+            pass
+
     def assertArgIsVariableSize(self, method, argno, message=None):
         if isinstance(method, objc.selector):
             offset = 2
@@ -540,6 +555,21 @@ class TestCase(_unittest.TestCase):
                 or "argument %d of %r does not have size in result" % (argno, method)
             )
 
+    def assertArgSizeNotInResult(self, method, argno, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        try:
+            if info["arguments"][argno + offset].get("c_array_length_in_result"):
+                self.fail(
+                    message
+                    or "argument %d of %r does have size in result" % (argno, method)
+                )
+        except (KeyError, IndexError):
+            pass
+
     def assertArgIsPrintf(self, method, argno, message=None):
         if isinstance(method, objc.selector):
             offset = 2
@@ -560,6 +590,24 @@ class TestCase(_unittest.TestCase):
                 message
                 or "%r argument %d is not a printf format string" % (method, argno)
             )
+
+    def assertArgIsNotPrintf(self, method, argno, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        if not info.get("variadic"):
+            self.fail(message or f"{method!r} is not a variadic function")
+
+        try:
+            if info["arguments"][argno + offset].get("printf_format"):
+                self.fail(
+                    message
+                    or "%r argument %d is a printf format string" % (method, argno)
+                )
+        except (KeyError, IndexError):
+            pass
 
     def assertArgIsCFRetained(self, method, argno, message=None):
         if isinstance(method, objc.selector):

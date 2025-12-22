@@ -146,29 +146,90 @@ class TestFunctions(TestCase):
         self.assertIs(Foo.func, NSRectClipList)  # noqa: F821
 
     def test_invalid_typestr(self):
-        with self.assertRaisesRegex(
-            objc.internal_error, r"Incomplete type signature: '\^'"
-        ):
-            m = {}
-            objc.loadBundleFunctions(
-                bundle,
-                m,
-                [
-                    (
-                        "NSGetWindowServerMemory",
-                        b"qq^q^q^",
-                        "NSGetWindowServerMemory docs",
-                        {
-                            "arguments": {
-                                "1": {"type_modifier": b"o"},
-                                "2": {"type_modifier": b"o"},
-                                "3": {"type_modifier": b"o"},
-                            }
-                        },
-                    ),
-                ],
-                False,
-            )
+        with self.subTest("incomplete arguments"):
+            with self.assertRaisesRegex(
+                objc.internal_error, r"Incomplete type signature: '\^'"
+            ):
+                m = {}
+                objc.loadBundleFunctions(
+                    bundle,
+                    m,
+                    [
+                        (
+                            "NSGetWindowServerMemory",
+                            b"qq^q^q^",
+                            "NSGetWindowServerMemory docs",
+                            {
+                                "arguments": {
+                                    "1": {"type_modifier": b"o"},
+                                    "2": {"type_modifier": b"o"},
+                                    "3": {"type_modifier": b"o"},
+                                }
+                            },
+                        ),
+                    ],
+                    False,
+                )
+
+        with self.subTest("invalid return name"):
+            with self.assertRaisesRegex(objc.error, r'Invalid encoding: q"name'):
+                m = {}
+                objc.loadBundleFunctions(
+                    bundle,
+                    m,
+                    [
+                        (
+                            "NSGetWindowServerMemory",
+                            b'q"name',
+                        ),
+                    ],
+                    False,
+                )
+
+        with self.subTest("invalid argument name"):
+            with self.assertRaisesRegex(objc.error, r'Invalid encoding: qq"id'):
+                m = {}
+                objc.loadBundleFunctions(
+                    bundle,
+                    m,
+                    [
+                        (
+                            "NSGetWindowServerMemory",
+                            b'qq"id',
+                        ),
+                    ],
+                    False,
+                )
+
+        with self.subTest("invalid argument name (2)"):
+            with self.assertRaisesRegex(objc.error, r'Invalid encoding: q"name"q"id'):
+                m = {}
+                objc.loadBundleFunctions(
+                    bundle,
+                    m,
+                    [
+                        (
+                            "NSGetWindowServerMemory",
+                            b'q"name"q"id',
+                        ),
+                    ],
+                    False,
+                )
+
+        with self.subTest("invalid type"):
+            with self.assertRaisesRegex(objc.error, r"Unhandled type.*X"):
+                m = {}
+                objc.loadBundleFunctions(
+                    bundle,
+                    m,
+                    [
+                        (
+                            "NSGetWindowServerMemory",
+                            b"qX",
+                        ),
+                    ],
+                    False,
+                )
 
     def test_invalid_metadata(self):
         with self.assertRaisesRegex(
@@ -503,3 +564,67 @@ class TestFunctions(TestCase):
         self.assertEqual(m["double_integer"](99), 2 * 99)
 
         self.assertArgHasType(m["double_integer"], 0, b"N^i")
+
+    def test_function_byref_edgecases(self):
+        with self.subTest("in void*, no specials"):
+            m = {}
+            objc.loadBundleFunctions(
+                None,
+                m,
+                [
+                    (
+                        "write",
+                        b"q^vQ",
+                        "write(2)",
+                        {
+                            "arguments": {
+                                0: {"type_modifier": b"n"},
+                            }
+                        },
+                    ),
+                ],
+                False,
+            )
+            self.assertArgHasType(m["write"], 0, b"^v")
+
+        with self.subTest("in uchar*, no specials"):
+            m = {}
+            objc.loadBundleFunctions(
+                None,
+                m,
+                [
+                    (
+                        "write",
+                        b"q^CQ",
+                        "write(2)",
+                        {
+                            "arguments": {
+                                0: {"type_modifier": b"n"},
+                            }
+                        },
+                    ),
+                ],
+                False,
+            )
+            self.assertArgHasType(m["write"], 0, b"n^C")
+
+        with self.subTest("non-pointer byref"):
+            m = {}
+            objc.loadBundleFunctions(
+                None,
+                m,
+                [
+                    (
+                        "kill",
+                        b"ii",
+                        "kill(2)",
+                        {
+                            "arguments": {
+                                0: {"type_modifier": b"n"},
+                            }
+                        },
+                    ),
+                ],
+                False,
+            )
+            self.assertArgHasType(m["kill"], 0, b"i")

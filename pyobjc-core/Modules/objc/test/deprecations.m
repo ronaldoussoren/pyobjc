@@ -14,6 +14,8 @@
 - (int)method7;
 - (int)method8;
 - (int)method9;
+- (int)method10;
+- (int)method11;
 
 - (int)method1:(int*)value;
 - (int)method2:(int*)value;
@@ -24,6 +26,8 @@
 - (int)method7:(int*)value;
 - (int)method8:(int*)value;
 - (int)method9:(int*)value;
+- (int)method10:(int*)value;
+- (int)method11:(int*)value;
 @end
 
 @implementation OCTestDeprecations
@@ -65,6 +69,15 @@
     return 9;
 }
 
+- (int)method10
+{
+    return 10;
+}
+- (int)method11
+{
+    return 11;
+}
+
 - (int)method1:(int*)value
 {
     return 1 + *value;
@@ -100,6 +113,14 @@
 - (int)method9:(int*)value
 {
     return 9 + *value;
+}
+- (int)method10:(int*)value
+{
+    return 10 + *value;
+}
+- (int)method11:(int*)value
+{
+    return 11 + *value;
 }
 
 @end
@@ -149,15 +170,25 @@ func9(void)
 {
     return 9;
 }
+static int
+func10(void)
+{
+    return 10;
+}
+static int
+func11(void)
+{
+    return 11;
+}
 
 typedef void (*F)(void);
 static struct function {
     char* name;
     F     function;
-} gFunctionMap[] = {{"func1", (F)func1}, {"func2", (F)func2}, {"func3", (F)func3},
-                    {"func4", (F)func4}, {"func5", (F)func5}, {"func6", (F)func6},
-                    {"func7", (F)func7}, {"func8", (F)func8}, {"func9", (F)func9},
-                    {NULL, NULL}};
+} gFunctionMap[] = {{"func1", (F)func1},   {"func2", (F)func2},   {"func3", (F)func3},
+                    {"func4", (F)func4},   {"func5", (F)func5},   {"func6", (F)func6},
+                    {"func7", (F)func7},   {"func8", (F)func8},   {"func9", (F)func9},
+                    {"func10", (F)func10}, {"func11", (F)func11}, {NULL, NULL}};
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 

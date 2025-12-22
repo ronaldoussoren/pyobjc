@@ -38,7 +38,7 @@
 {
     OC_GenericNew* value = [[OC_GenericNew alloc] init];
     value->value         = [address retain];
-    return value;
+    return [value autorelease];
 }
 
 - (instancetype)initWithValue:(NSObject*)v

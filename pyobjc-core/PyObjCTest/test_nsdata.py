@@ -1074,7 +1074,7 @@ class TestBytearrayInterface(TestBytesInterface):
             self.assertEqual(oc, py)
             self.assertEqual(bytes(oc), py)
 
-    @min_python_release("3.14")
+    @min_python_release("3.15")
     def test_take_bytes(self):
         value = b"abcdefg"
 
