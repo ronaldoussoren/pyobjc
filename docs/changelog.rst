@@ -53,6 +53,9 @@ Version 12.2
 * Add ``NSMutableData.take_bytes`` on Python 3.15 to mirror the new :class:`bytearray` method
   of the same name.
 
+* Rewrite the construction of objects representing method and function metadata, this should result in
+  (slightly) less memory usage.
+
 Version 12.1
 ------------
 

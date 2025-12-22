@@ -67,6 +67,7 @@ static const struct _PyObjC_ArgDescr ptr_templates[256] = {
     [VAL] = {.type      = _ptr_in_typecodes[VAL],                                        \
              .tmpl      = 1,                                                             \
              .allowNULL = 1,                                                             \
+             .modifier  = _C_IN,                                                         \
              .ptrType   = PyObjC_kPointerPlain}
 static const struct _PyObjC_ArgDescr ptr_in_templates[256] = {
     TC(_C_VOID),     TC(_C_ID),   TC(_C_CLASS), TC(_C_SEL),          TC(_C_BOOL),
@@ -81,6 +82,7 @@ static const struct _PyObjC_ArgDescr ptr_in_templates[256] = {
     [VAL] = {.type      = _ptr_out_typecodes[VAL],                                       \
              .tmpl      = 1,                                                             \
              .allowNULL = 1,                                                             \
+             .modifier  = _C_OUT,                                                        \
              .ptrType   = PyObjC_kPointerPlain}
 static const struct _PyObjC_ArgDescr ptr_out_templates[256] = {
     TC(_C_VOID),     TC(_C_ID),   TC(_C_CLASS), TC(_C_SEL),          TC(_C_BOOL),
@@ -95,6 +97,7 @@ static const struct _PyObjC_ArgDescr ptr_out_templates[256] = {
     [VAL] = {.type      = _ptr_inout_typecodes[VAL],                                     \
              .tmpl      = 1,                                                             \
              .allowNULL = 1,                                                             \
+             .modifier  = _C_INOUT,                                                      \
              .ptrType   = PyObjC_kPointerPlain}
 static const struct _PyObjC_ArgDescr ptr_inout_templates[256] = {
     TC(_C_VOID),     TC(_C_ID),   TC(_C_CLASS), TC(_C_SEL),          TC(_C_BOOL),
@@ -110,6 +113,77 @@ static const struct _PyObjC_ArgDescr block_template = {
     .tmpl      = 1,
     .allowNULL = 1,
 };
+
+static const struct _PyObjC_ArgDescr in_template = {
+    .tmpl      = 1,
+    .allowNULL = 1,
+    .modifier  = _C_IN,
+};
+
+static const struct _PyObjC_ArgDescr out_template = {
+    .tmpl      = 1,
+    .allowNULL = 1,
+    .modifier  = _C_OUT,
+};
+
+static const struct _PyObjC_ArgDescr inout_template = {
+    .tmpl      = 1,
+    .allowNULL = 1,
+    .modifier  = _C_INOUT,
+};
+
+static struct _PyObjC_ArgDescr* _Nullable default_descr(const char* _Nullable typestr,
+                                                        const char modifier)
+{
+    struct _PyObjC_ArgDescr* result;
+
+    if (typestr == NULL) {
+        switch (modifier) {
+        case _C_IN:
+            return (struct _PyObjC_ArgDescr*)&in_template;
+        case _C_OUT:
+            return (struct _PyObjC_ArgDescr*)&out_template;
+        case _C_INOUT:
+            return (struct _PyObjC_ArgDescr*)&inout_template;
+        default:
+            return NULL;
+        }
+    }
+
+    if (unlikely(typestr[0] == _C_ID && typestr[1] == _C_UNDEF)) {
+        return (struct _PyObjC_ArgDescr*)&block_template;
+
+    } else if (unlikely(typestr[0] == _C_PTR)) {
+        switch (modifier) {
+        case _C_IN:
+            result = (struct _PyObjC_ArgDescr*)&ptr_in_templates[*(unsigned char*)(typestr
+                                                                                   + 1)];
+            break;
+
+        case _C_OUT:
+            result = (struct _PyObjC_ArgDescr*)&ptr_out_templates[*(
+                unsigned char*)(typestr + 1)];
+            break;
+
+        case _C_INOUT:
+            result = (struct _PyObjC_ArgDescr*)&ptr_inout_templates[*(
+                unsigned char*)(typestr + 1)];
+            break;
+
+        default:
+            result =
+                (struct _PyObjC_ArgDescr*)&ptr_templates[*(unsigned char*)(typestr + 1)];
+        }
+
+    } else {
+        result = (struct _PyObjC_ArgDescr*)&descr_templates[*(unsigned char*)(typestr)];
+    }
+    if (result->type == NULL) {
+        return NULL;
+    } else {
+        return result;
+    }
+}
 
 static PyObject* _Nullable sig_str(PyObject* _self)
 {
@@ -137,10 +211,12 @@ free_argdescr(struct _PyObjC_ArgDescr* descr)
 
     if (descr->typeOverride) {
         PyMem_Free((char*)descr->type);
+        descr->type = NULL;
     }
 
     if (descr->sel_type != NULL) {
         PyMem_Free((char*)descr->sel_type);
+        descr->sel_type = NULL;
     }
     PyMem_Free(descr);
 }
@@ -153,11 +229,10 @@ sig_dealloc(PyObject* _self)
 
     if (self->signature) {
         PyMem_Free((char*)self->signature);
+        self->signature = NULL;
     }
 
-    if (self->rettype && !self->rettype->tmpl) {
-        free_argdescr(self->rettype);
-    }
+    free_argdescr(self->rettype);
 
     for (i = 0; i < Py_SIZE(self); i++) {
         free_argdescr(self->argtype[i]);
@@ -210,7 +285,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     Py_ssize_t byref_in_count = 0, byref_out_count = 0, plain_count = 0, argbuf_len = 0;
     BOOL       variadic_args = NO;
 
-    if (methinfo == NULL || methinfo->variadic) {
+    if (methinfo->variadic) {
         return;
     }
 
@@ -273,11 +348,12 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
         // LCOV_EXCL_STOP
     }
 
-    if (unlikely(byref_in_count || byref_out_count
-                 || variadic_args)) { // LCOV_BR_EXCL_LINE
-        /* All of these are caught by earlier checks */
-        return; // LCOV_EXCL_LINE
-    }
+    /*
+     * All of these were checked before the call to CountArguments.
+     */
+    assert(!byref_in_count);
+    assert(!byref_out_count);
+    assert(!variadic_args);
 
     if (argbuf_len + result_size >= SHORTCUT_MAX_ARGBUF) {
         return;
@@ -299,8 +375,17 @@ static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
         // LCOV_EXCL_STOP
     }
     memset(retval, 0, sizeof(*retval));
-    /* XXX: Try to refactor this to ensure the type value can be _Nonnull */
-    retval->type              = tmpl ? tmpl->type : NULL;
+    if (tmpl && tmpl->type) {
+        retval->type = PyObjCUtil_Strdup(tmpl->type);
+        if (retval->type == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            PyMem_Free(retval);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+    } else {
+        retval->type = NULL;
+    }
     retval->typeOverride      = NO;
     retval->modifier          = '\0';
     retval->ptrType           = PyObjC_kPointerPlain;
@@ -316,31 +401,6 @@ static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
     retval->arrayArg          = 0;
     retval->arrayArgOut       = 0;
     return retval;
-}
-
-static BOOL
-is_default_descr(struct _PyObjC_ArgDescr* descr)
-{
-    /* ignore modifier */
-    if (descr->ptrType != PyObjC_kPointerPlain)
-        return NO;
-    if (descr->allowNULL != YES)
-        return NO;
-    if (descr->arraySizeInRetval != NO)
-        return NO;
-    if (descr->printfFormat != NO)
-        return NO;
-    if (descr->alreadyRetained != NO)
-        return NO;
-    if (descr->alreadyCFRetained != NO)
-        return NO;
-    if (descr->callableRetained != NO)
-        return NO;
-    if (descr->callable != NULL)
-        return NO;
-    if (descr->sel_type != NULL)
-        return NO;
-    return YES;
 }
 
 static int
@@ -405,6 +465,10 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
         while (*cur != '\0' && *cur != '"') {
             cur++;
         }
+        if (*cur != '"') {
+            PyErr_Format(PyObjCExc_Error, "Invalid encoding: %s", signature);
+            return NULL;
+        }
         cur++;
         while (isdigit(*cur))
             cur++;
@@ -418,13 +482,18 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
             while (*cur != '\0' && *cur != '"') {
                 cur++;
             }
+            if (*cur != '"') {
+                PyErr_Format(PyObjCExc_Error, "Invalid encoding: %s", signature);
+                return NULL;
+            }
             cur++;
             while (isdigit(*cur))
                 cur++;
         }
         nargs++;
     }
-    if (cur == NULL && PyErr_Occurred()) {
+    if (cur == NULL) {
+        assert(PyErr_Occurred());
         return NULL;
     }
 
@@ -464,19 +533,8 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
 
     cur = PyObjCRT_SkipTypeQualifiers(retval->signature);
     assert(cur != NULL);
-    if (unlikely(cur[0] == _C_ID && cur[1] == _C_UNDEF)) {
-        retval->rettype = (__typeof__(retval->rettype))&block_template;
-
-    } else if (unlikely(cur[0] == _C_PTR)) {
-        retval->rettype =
-            (__typeof__(retval->rettype))&ptr_templates[*(unsigned char*)(cur + 1)];
-
-    } else {
-        retval->rettype =
-            (__typeof__(retval->rettype))&descr_templates[*(unsigned char*)(cur)];
-    }
-
-    if (unlikely(retval->rettype->type == NULL)) {
+    retval->rettype = default_descr(cur, *retval->signature);
+    if (unlikely(retval->rettype == NULL)) {
         retval->rettype = alloc_descr(NULL);
         if (unlikely(retval->rettype == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
@@ -500,9 +558,13 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
     assert(retval->rettype->type != NULL);
 
     cur = PyObjCRT_SkipTypeSpec(retval->signature);
-    if (cur && *cur == '"') {
+    assert(cur);
+    if (*cur == '"') {
+        /* Second pass over the signature, which therefore
+         * must be valid.
+         */
         cur++;
-        while (*cur != '\0' && *cur != '"') {
+        while (*cur != '"') {
             cur++;
         }
         cur++;
@@ -510,19 +572,13 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
             cur++;
     }
     nargs = 0;
-    while (cur && *cur) {
+    while (*cur) {
         if (unlikely(*cur == _C_CONST)) {
             /* Ignore a 'const' qualifier, not used by the bridge */
             cur++;
         }
-        if (unlikely(cur[0] == _C_ID && cur[1] == _C_UNDEF)) {
-            retval->argtype[nargs] = (__typeof__(retval->argtype[nargs]))&block_template;
-        } else {
-            retval->argtype[nargs] =
-                (__typeof__(retval
-                                ->argtype[nargs]))&descr_templates[*(unsigned char*)cur];
-        }
-        if (unlikely(retval->argtype[nargs]->type == NULL)) {
+        retval->argtype[nargs] = default_descr(PyObjCRT_SkipTypeQualifiers(cur), *cur);
+        if (unlikely(retval->argtype[nargs] == NULL)) {
             retval->argtype[nargs] = alloc_descr(NULL);
             if (unlikely(retval->argtype[nargs] == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
@@ -531,8 +587,8 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
                 // LCOV_EXCL_STOP
             }
             assert(cur != NULL);
-            if (unlikely(setup_type(retval->argtype[nargs], cur)
-                         < 0)) { // LCOV_BR_EXCL_LINE
+            if (unlikely( // LCOV_BR_EXCL_LINE
+                    setup_type(retval->argtype[nargs], cur) < 0)) {
                 // LCOV_EXCL_START
                 Py_DECREF(retval);
                 return NULL;
@@ -542,9 +598,18 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
         }
 
         cur = PyObjCRT_SkipTypeSpec(cur);
-        if (cur && *cur == '"') {
+        if (cur == NULL) { // LCOV_BR_EXCL_LINE
+            /* Cannot fail because this is the second pass
+             * over the type encoding.
+             */
+            // LCOV_EXCL_START
+            Py_CLEAR(retval);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        if (*cur == '"') {
             cur++;
-            while (*cur != '\0' && *cur != '"') {
+            while (*cur != '"') {
                 cur++;
             }
             cur++;
@@ -556,8 +621,6 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
 
     assert(Py_SIZE(retval) == nargs);
     PyObjCMethodSignature_Validate(retval);
-
-    determine_if_shortcut(retval);
 
     return retval;
 }
@@ -597,7 +660,7 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
  *       can be easility turned into an error.
  */
 static int
-setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_native)
+setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_native)
 {
     PyObject* d;
     int       r;
@@ -607,188 +670,136 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
         return 0;
     }
 
-    if (meta != NULL && !PyDict_Check(meta)) {
+    if (!PyDict_Check(meta)) {
         PyErr_Format(PyExc_TypeError, "metadata of type %s: %R", Py_TYPE(meta)->tp_name,
                      meta);
 
         return -1;
     }
 
-    assert(meta == NULL || PyDict_Check(meta));
-    assert(descr == NULL || descr->allowNULL);
+    assert(meta != NULL);
 
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_null_accepted, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-                       /* case 0: pass */
-        case 1:
-            r = PyObject_IsTrue(d);
-            if (r == -1) {
-                return -1;
-            }
-            if (!r) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-                descr->allowNULL = NO;
-            }
-            Py_CLEAR(d);
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_null_accepted, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+                   /* case 0: pass */
+    case 1:
+        r = PyObject_IsTrue(d);
+        if (r == -1) {
+            return -1;
         }
-    }
-
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_already_retained, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-        case 0:
-            if (descr == NULL // LCOV_BR_EXCL_LINE
-                || (descr->tmpl && descr->alreadyRetained)) {
+        if (descr == NULL || !!descr->allowNULL != !!r) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
+                Py_DECREF(d);
                 return -2;
                 // LCOV_EXCL_STOP
             }
-            // descr may be loaded into read-only memory, so only
-            // write if truly necessary
-            if (descr->alreadyRetained)      // LCOV_BR_EXCL_LINE
-                descr->alreadyRetained = NO; // LCOV_EXCL_LINE
-            break;
-        case 1:
-            r = PyObject_IsTrue(d);
-            if (r == -1) {
-                return -1;
+            descr->allowNULL = r;
+        }
+        Py_CLEAR(d);
+    }
+
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_already_retained, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    case 1:
+        r = PyObject_IsTrue(d);
+        if (r == -1) {
+            return -1;
+        }
+        if (r) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
             }
-            if (r) {
-                if (descr == NULL // LCOV_BR_EXCL_LINE
-                    || (descr->tmpl && !descr->alreadyRetained)) {
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-                // descr may be loaded into read-only memory, so only
-                // write if truly necessary
-                if (!descr->alreadyRetained)
-                    descr->alreadyRetained = YES;
-            }
+            descr->alreadyRetained = YES;
             Py_CLEAR(d);
-            break;
         }
     }
 
     assert(descr == NULL || !descr->alreadyCFRetained);
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_already_cfretained, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_already_cfretained, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
 
-        /* case 0: pass */
-        case 1:
-            r = PyObject_IsTrue(d);
-            if (r == -1) {
-                return -1;
+    /* case 0: pass */
+    case 1:
+        r = PyObject_IsTrue(d);
+        if (r == -1) {
+            return -1;
+        }
+        if (r) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
             }
-            if (r) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-                descr->alreadyCFRetained = YES;
-                Py_CLEAR(d);
-            }
+            descr->alreadyCFRetained = YES;
+            Py_CLEAR(d);
         }
     }
 
     assert(descr == NULL || !descr->callableRetained);
-    if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_callable_retained,
-                                  &d)) { // LCOV_BR_EXCL_LINE
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-                       /* case 0: pass */
-        case 1:
-            r = PyObject_IsTrue(d);
-            if (r == -1) {
-                return -1;
-            }
-            if (r) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-                descr->callableRetained = YES;
-            }
-            Py_CLEAR(d);
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_callable_retained, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+                   /* case 0: pass */
+    case 1:
+        r = PyObject_IsTrue(d);
+        if (r == -1) {
+            return -1;
         }
+        if (r) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+            descr->callableRetained = YES;
+        }
+        Py_CLEAR(d);
     }
 
     assert(descr == NULL || descr->sel_type == NULL);
-    if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_sel_of_type, &d)) { // LCOV_BR_EXCL_LINE
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-        /* case 0: pass */
-        case 1:
-            if (PyUnicode_Check(d)) {
-                PyObject* bytes = PyUnicode_AsEncodedString(d, NULL, NULL);
-                if (bytes == NULL) {
-                    Py_DECREF(d);
-                    return -1;
-                }
-
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    Py_DECREF(bytes);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(bytes));
-                Py_DECREF(bytes);
-                if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -1;
-                    // LCOV_EXCL_STOP
-                }
-
-            } else if (PyBytes_Check(d)) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(d));
-                if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -1;
-                    // LCOV_EXCL_STOP
-                }
+    switch (PyDict_GetItemRef(meta, PyObjCNM_sel_of_type, &d)) { // LCOV_BR_EXCL_LINE
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    /* case 0: pass */
+    case 1:
+        if (PyUnicode_Check(d)) {
+            PyObject* bytes = PyUnicode_AsEncodedString(d, NULL, NULL);
+            if (bytes == NULL) {
+                Py_DECREF(d);
+                return -1;
             }
-            Py_CLEAR(d);
-        }
-    }
 
-    if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_callable, &d)) { // LCOV_BR_EXCL_LINE
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-                       /* case 0: pass */
-        case 1:
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                Py_DECREF(bytes);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+
+            descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(bytes));
+            Py_DECREF(bytes);
+            if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -1;
+                // LCOV_EXCL_STOP
+            }
+
+        } else if (PyBytes_Check(d)) {
             if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(d);
@@ -796,347 +807,344 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
                 // LCOV_EXCL_STOP
             }
 
-            if (!PyDict_Check(d)) {
-                PyErr_Format(PyExc_ValueError, "expecting dict for 'callable', got %R",
-                             d);
-                return -1;
-            }
-
-            /* Make up a dummy signature, will be overridden by
-             * the metadata.
-             */
-            char       buffer[128];
-            PyObject*  a = NULL;
-            Py_ssize_t i, len;
-
-            switch (PyDict_GetItemRef(d, PyObjCNM_arguments, &a)) { // LCOV_BR_EXCL_LINE
-            case -1:
+            descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(d));
+            if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(d);
                 return -1;
                 // LCOV_EXCL_STOP
-            case 0:
-                buffer[0] = _C_ID;
-                buffer[1] = '\0';
-                break;
-            case 1:
-                len = PyObject_Length(a);
-                if (len == -1) {
-                    Py_DECREF(a);
-                    Py_DECREF(d);
-                    return -1;
-                }
-                if ((size_t)len >= sizeof(buffer) - 2) {
-                    Py_DECREF(a);
-                    Py_DECREF(d);
-                    PyErr_SetString(PyObjCExc_Error,
-                                    "Callable metadata with too many arguments");
-                    return -1;
-                }
-
-                for (i = 0; i < len; i++) {
-                    buffer[i] = _C_ID;
-                }
-                buffer[len]     = _C_ID;
-                buffer[len + 1] = '\0';
-                Py_CLEAR(a);
             }
+        }
+        Py_CLEAR(d);
+    }
 
-            descr->callable = PyObjCMethodSignature_WithMetaData(buffer, d, NO);
-            if (descr->callable == NULL) {
+    switch (PyDict_GetItemRef(meta, PyObjCNM_callable, &d)) { // LCOV_BR_EXCL_LINE
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+                   /* case 0: pass */
+    case 1:
+        if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(d);
+            return -2;
+            // LCOV_EXCL_STOP
+        }
+
+        if (!PyDict_Check(d)) {
+            PyErr_Format(PyExc_ValueError, "expecting dict for 'callable', got %R", d);
+            return -1;
+        }
+
+        /* Make up a dummy signature, will be overridden by
+         * the metadata.
+         */
+        char       buffer[128];
+        PyObject*  a = NULL;
+        Py_ssize_t i, len;
+
+        switch (PyDict_GetItemRef(d, PyObjCNM_arguments, &a)) { // LCOV_BR_EXCL_LINE
+        case -1:
+            // LCOV_EXCL_START
+            Py_DECREF(d);
+            return -1;
+            // LCOV_EXCL_STOP
+        case 0:
+            buffer[0] = _C_ID;
+            buffer[1] = '\0';
+            break;
+        case 1:
+            len = PyObject_Length(a);
+            if (len == -1) {
+                Py_DECREF(a);
                 Py_DECREF(d);
                 return -1;
             }
-            Py_CLEAR(d);
+            if ((size_t)len >= sizeof(buffer) - 2) {
+                Py_DECREF(a);
+                Py_DECREF(d);
+                PyErr_SetString(PyObjCExc_Error,
+                                "Callable metadata with too many arguments");
+                return -1;
+            }
+
+            for (i = 0; i < len; i++) {
+                buffer[i] = _C_ID;
+            }
+            buffer[len]     = _C_ID;
+            buffer[len + 1] = '\0';
+            Py_CLEAR(a);
         }
+
+        descr->callable = PyObjCMethodSignature_WithMetaData(buffer, d, NO);
+        if (descr->callable == NULL) {
+            Py_DECREF(d);
+            return -1;
+        }
+        Py_CLEAR(d);
     }
 
     assert(descr == NULL || !descr->arraySizeInRetval);
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_c_array_length_in_result, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-        /* case 0: pass */
-        case 1:
-            r = PyObject_IsTrue(d);
-            if (r == -1) {
-                return -1;
-            }
-            if (r) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                descr->arraySizeInRetval = YES;
-            }
-            Py_CLEAR(d);
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_c_array_length_in_result, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    /* case 0: pass */
+    case 1:
+        r = PyObject_IsTrue(d);
+        if (r == -1) {
+            return -1;
         }
+        if (r) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+
+            descr->arraySizeInRetval = YES;
+        }
+        Py_CLEAR(d);
     }
 
     assert(descr == NULL || !descr->printfFormat);
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_printf_format, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-        /*case 0: pass */
-        case 1:
-            r = PyObject_IsTrue(d);
-            if (r == -1) {
-                return -1;
-            }
-            if (r) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                descr->printfFormat = YES;
-            }
-            Py_CLEAR(d);
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_printf_format, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    /*case 0: pass */
+    case 1:
+        r = PyObject_IsTrue(d);
+        if (r == -1) {
+            return -1;
         }
+        if (r) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+
+            descr->printfFormat = YES;
+        }
+        Py_CLEAR(d);
     }
 
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_c_array_delimited_by_null, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-        /* case 0: pass */
-        case 1:
-            r = PyObject_IsTrue(d);
-            if (r == -1) {
-                return -1;
-            }
-            if (r) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                descr->ptrType = PyObjC_kNullTerminatedArray;
-            }
-            Py_CLEAR(d);
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_c_array_delimited_by_null, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    /* case 0: pass */
+    case 1:
+        r = PyObject_IsTrue(d);
+        if (r == -1) {
+            return -1;
         }
+        if (r) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+
+            descr->ptrType = PyObjC_kNullTerminatedArray;
+        }
+        Py_CLEAR(d);
     }
 
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_c_array_of_fixed_length, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-        /* case 0: pass */
-        case 1:
-            if (PyLong_Check(d)) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_c_array_of_fixed_length, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    /* case 0: pass */
+    case 1:
+        if (PyLong_Check(d)) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
 
-                descr->ptrType     = PyObjC_kFixedLengthArray;
-                descr->arrayArg    = PyLong_AsLong(d);
+            descr->ptrType     = PyObjC_kFixedLengthArray;
+            descr->arrayArg    = PyLong_AsLong(d);
+            descr->arrayArgOut = descr->arrayArg;
+            if (descr->arrayArg == -1 && PyErr_Occurred()) {
+                Py_DECREF(d);
+                return -1;
+            }
+        }
+        Py_CLEAR(d);
+    }
+
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_c_array_of_variable_length, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    /* case 0: pass */
+    case 1:
+        r = PyObject_IsTrue(d);
+        if (r == -1) {
+            return -1;
+        }
+        if (r) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+
+            descr->ptrType  = PyObjC_kVariableLengthArray;
+            descr->arrayArg = 0;
+            descr->arrayArg = 0;
+        }
+        Py_CLEAR(d);
+    }
+
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_deref_result_pointer, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    /* case 0: pass */
+    case 1:
+        r = PyObject_IsTrue(d);
+        if (r == -1) {
+            return -1;
+        }
+        if (r) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+
+            descr->ptrType  = PyObjC_kDerefResultPointer;
+            descr->arrayArg = 0;
+            descr->arrayArg = 0;
+        }
+        Py_CLEAR(d);
+    }
+
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_c_array_length_in_arg, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    /* case 0: pass */
+    case 1:
+        if (PyLong_Check(d)) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+
+            descr->ptrType  = PyObjC_kArrayCountInArg;
+            descr->arrayArg = PyLong_AsLong(d);
+            if (descr->arrayArg == -1 && PyErr_Occurred()) {
+                Py_DECREF(d);
+                return -1;
+            }
+            descr->arrayArgOut = descr->arrayArg;
+
+        } else if (PyTuple_Check(d)) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+
+            if (PyTuple_GET_SIZE(d) == 1) {
+                descr->ptrType = PyObjC_kArrayCountInArg;
+                if (PyLong_Check(PyTuple_GET_ITEM(d, 0))) {
+                    descr->arrayArg = PyLong_AsLong(PyTuple_GET_ITEM(d, 0));
+                    if (descr->arrayArg == -1 && PyErr_Occurred()) {
+                        return -1;
+                    }
+                } else {
+                    Py_DECREF(d);
+                    PyErr_SetString(PyExc_TypeError, "array_out argument not integer");
+                    return -1;
+                }
                 descr->arrayArgOut = descr->arrayArg;
-                if (descr->arrayArg == -1 && PyErr_Occurred()) {
+            } else if (PyTuple_GET_SIZE(d) >= 2) {
+                descr->ptrType = PyObjC_kArrayCountInArg;
+                if (PyLong_Check(PyTuple_GET_ITEM(d, 0))) {
+                    descr->arrayArg = PyLong_AsLong(PyTuple_GET_ITEM(d, 0));
+                    if (descr->arrayArg == -1 && PyErr_Occurred()) {
+                        Py_DECREF(d);
+                        return -1;
+                    }
+                } else {
                     Py_DECREF(d);
+                    PyErr_SetString(PyExc_TypeError, "array_out argument not integer");
+                    return -1;
+                }
+
+                if (PyLong_Check(PyTuple_GET_ITEM(d, 1))) {
+                    descr->arrayArgOut = PyLong_AsLong(PyTuple_GET_ITEM(d, 1));
+                    if (descr->arrayArgOut == -1 && PyErr_Occurred()) {
+                        Py_DECREF(d);
+                        return -1;
+                    }
+                } else {
+                    Py_DECREF(d);
+                    PyErr_SetString(PyExc_TypeError, "array_out argument not integer");
                     return -1;
                 }
             }
-            Py_CLEAR(d);
         }
+        Py_CLEAR(d);
     }
 
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_c_array_of_variable_length, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-        /* case 0: pass */
-        case 1:
-            r = PyObject_IsTrue(d);
-            if (r == -1) {
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        meta, PyObjCNM_type_modifier, &d)) {
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    /* case 0: pass */
+    case 1:
+        if (PyUnicode_Check(d)) {
+            PyObject* bytes = PyUnicode_AsEncodedString(d, NULL, NULL);
+            if (bytes == NULL) {
+                Py_DECREF(d);
                 return -1;
             }
-            if (r) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
 
-                descr->ptrType  = PyObjC_kVariableLengthArray;
-                descr->arrayArg = 0;
-                descr->arrayArg = 0;
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                Py_DECREF(bytes);
+                return -2;
+                // LCOV_EXCL_STOP
             }
-            Py_CLEAR(d);
+
+            typeModifier = *PyBytes_AsString(bytes);
+            assert(!PyErr_Occurred());
+            Py_CLEAR(bytes);
+        } else if (PyBytes_Check(d)) {
+            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_DECREF(d);
+                return -2;
+                // LCOV_EXCL_STOP
+            }
+
+            typeModifier = *PyBytes_AsString(d);
+            assert(!PyErr_Occurred());
         }
+        Py_CLEAR(d);
     }
 
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_deref_result_pointer, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
+    switch (PyDict_GetItemRef(meta, PyObjCNM_type, &d)) { // LCOV_BR_EXCL_LINE
+    case -1:
+        return -1; // LCOV_EXCL_LINE
         /* case 0: pass */
-        case 1:
-            r = PyObject_IsTrue(d);
-            if (r == -1) {
-                return -1;
-            }
-            if (r) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                descr->ptrType  = PyObjC_kDerefResultPointer;
-                descr->arrayArg = 0;
-                descr->arrayArg = 0;
-            }
-            Py_CLEAR(d);
-        }
-    }
-
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_c_array_length_in_arg, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-        /* case 0: pass */
-        case 1:
-            if (PyLong_Check(d)) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                descr->ptrType  = PyObjC_kArrayCountInArg;
-                descr->arrayArg = PyLong_AsLong(d);
-                if (descr->arrayArg == -1 && PyErr_Occurred()) {
-                    Py_DECREF(d);
-                    return -1;
-                }
-                descr->arrayArgOut = descr->arrayArg;
-
-            } else if (PyTuple_Check(d)) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                if (PyTuple_GET_SIZE(d) == 1) {
-                    descr->ptrType = PyObjC_kArrayCountInArg;
-                    if (PyLong_Check(PyTuple_GET_ITEM(d, 0))) {
-                        descr->arrayArg = PyLong_AsLong(PyTuple_GET_ITEM(d, 0));
-                        if (descr->arrayArg == -1 && PyErr_Occurred()) {
-                            return -1;
-                        }
-                    } else {
-                        Py_DECREF(d);
-                        PyErr_SetString(PyExc_TypeError,
-                                        "array_out argument not integer");
-                        return -1;
-                    }
-                    descr->arrayArgOut = descr->arrayArg;
-                } else if (PyTuple_GET_SIZE(d) >= 2) {
-                    descr->ptrType = PyObjC_kArrayCountInArg;
-                    if (PyLong_Check(PyTuple_GET_ITEM(d, 0))) {
-                        descr->arrayArg = PyLong_AsLong(PyTuple_GET_ITEM(d, 0));
-                        if (descr->arrayArg == -1 && PyErr_Occurred()) {
-                            Py_DECREF(d);
-                            return -1;
-                        }
-                    } else {
-                        Py_DECREF(d);
-                        PyErr_SetString(PyExc_TypeError,
-                                        "array_out argument not integer");
-                        return -1;
-                    }
-
-                    if (PyLong_Check(PyTuple_GET_ITEM(d, 1))) {
-                        descr->arrayArgOut = PyLong_AsLong(PyTuple_GET_ITEM(d, 1));
-                        if (descr->arrayArgOut == -1 && PyErr_Occurred()) {
-                            Py_DECREF(d);
-                            return -1;
-                        }
-                    } else {
-                        Py_DECREF(d);
-                        PyErr_SetString(PyExc_TypeError,
-                                        "array_out argument not integer");
-                        return -1;
-                    }
-                }
-            }
-            Py_CLEAR(d);
-        }
-    }
-
-    if (meta) {
-        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
-            meta, PyObjCNM_type_modifier, &d)) {
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-        /* case 0: pass */
-        case 1:
-            if (PyUnicode_Check(d)) {
-                PyObject* bytes = PyUnicode_AsEncodedString(d, NULL, NULL);
-                if (bytes == NULL) {
-                    Py_DECREF(d);
-                    return -1;
-                }
-
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    Py_DECREF(bytes);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                typeModifier = *PyBytes_AsString(bytes);
-                assert(!PyErr_Occurred());
-                Py_CLEAR(bytes);
-            } else if (PyBytes_Check(d)) {
-                if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_DECREF(d);
-                    return -2;
-                    // LCOV_EXCL_STOP
-                }
-
-                typeModifier = *PyBytes_AsString(d);
-                assert(!PyErr_Occurred());
-            }
-            Py_CLEAR(d);
-        }
-    }
-
-    if (meta) {
-        switch (PyDict_GetItemRef(meta, PyObjCNM_type, &d)) { // LCOV_BR_EXCL_LINE
-        case -1:
-            return -1; // LCOV_EXCL_LINE
-            /* case 0: pass */
-            /* case 1: pass */
-        }
-
-    } else {
-        d = NULL;
+        /* case 1: pass */
     }
 
     if (d && (PyBytes_Check(d) || PyUnicode_Check(d))) {
@@ -1171,12 +1179,17 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
         assert(!is_native || descr->type != NULL);
         assert(type != NULL);
 
-        if (is_native && !PyObjC_signatures_compatible(descr->type, type)) {
-            /* The new signature is not compatible enough, ignore the
+        if (is_native                                           // LCOV_BR_EXCL_LINE
+            && !PyObjC_signatures_compatible(descr->type, type) // LCOV_BR_EXCL_LINE
+        ) {
+            /* Note: 'is_native' is never true, all callers that pass a true value
+             * don't pass a metadata dict.
+             *
+             * The new signature is not compatible enough, ignore the
              * override.
              */
-            type = descr->type;
-        }
+            type = descr->type; // LCOV_EXCL_LINE
+        } // LCOV_EXCL_LINE
 
         const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(type);
         size_t      bufsize          = strlen(withoutModifiers) + 2;
@@ -1202,58 +1215,130 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
         descr->type         = tp;
         Py_XDECREF(bytes);
 
-    } else if (descr != NULL && descr->type == NULL) {
-        if (typeModifier != '\0') {
-            if (descr->tmpl) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_XDECREF(d);
-                return -2;
-                // LCOV_EXCL_STOP
+    } else if (descr != NULL) {
+        if (descr->type == NULL) {
+            if (typeModifier != '\0') {
+                if (descr->modifier != typeModifier) {
+                    if (descr->tmpl) { // LCOV_BR_EXCL_LINE
+                        // LCOV_EXCL_START
+                        Py_XDECREF(d);
+                        return -2;
+                        // LCOV_EXCL_STOP
+                    }
+                }
+                descr->modifier = typeModifier;
             }
-        }
-        descr->modifier = typeModifier;
+        } else {
+            const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(descr->type);
+            assert(*withoutModifiers != _C_ARY_B);
+            if (descr->type[0] == _C_PTR && descr->type[1] == _C_VOID
+                && descr->ptrType == PyObjC_kPointerPlain) {
 
-    } else if (descr != NULL && descr->type != NULL) {
-        /* XXX: Is this case still needed? */
-        const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(descr->type);
-        assert(*withoutModifiers != _C_ARY_B);
-        if (descr->type[0] == _C_PTR && descr->type[1] == _C_VOID
-            && descr->ptrType == PyObjC_kPointerPlain) {
+                /* Plain old void*, ignore type modifiers */
 
-            /* Plain old void*, ignore type modifiers */
+            } else if (typeModifier != '\0' && withoutModifiers[0] == _C_PTR) {
+                if (descr->tmpl) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_XDECREF(d);
+                    return -2;
+                    // LCOV_EXCL_STOP
+                }
 
-        } else if (typeModifier != '\0' && withoutModifiers[0] == _C_PTR) {
-            if (descr->tmpl) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_XDECREF(d);
-                return -2;
-                // LCOV_EXCL_STOP
+                size_t bufsize = strlen(withoutModifiers) + 2;
+                char*  tp      = PyMem_Malloc(bufsize);
+                if (tp == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_XDECREF(d);
+                    PyErr_NoMemory();
+                    return -1;
+                    // LCOV_EXCL_STOP
+                }
+
+                tp[0] = typeModifier;
+                strlcpy(tp + 1, withoutModifiers, bufsize - 1);
+
+                assert(!descr->typeOverride);
+
+                descr->typeOverride = YES;
+                descr->type         = tp;
             }
-
-            size_t bufsize = strlen(withoutModifiers) + 2;
-            char*  tp      = PyMem_Malloc(bufsize);
-            if (tp == NULL) { // LCOV_BR_EXCL_START
-                // LCOV_EXCL_START
-                Py_XDECREF(d);
-                PyErr_NoMemory();
-                return -1;
-                // LCOV_EXCL_STOP
-            }
-
-            tp[0] = typeModifier;
-            strlcpy(tp + 1, withoutModifiers, bufsize - 1);
-
-            if (descr->typeOverride) {
-                PyMem_Free((void*)(descr->type));
-            }
-
-            /* Skip existing modifiers, we're overriding those */
-            descr->typeOverride = YES;
-            descr->type         = tp;
         }
     }
     Py_CLEAR(d);
     return 0;
+}
+
+static struct _PyObjC_ArgDescr* _Nullable default_descr_from_meta(PyObject* metadata)
+{
+    /* Try to find a static definition of the encoded type */
+    int                      r;
+    PyObject*                type;
+    const char*              typestr;
+    PyObject*                modifier;
+    const char*              modifierstr;
+    struct _PyObjC_ArgDescr* result = NULL;
+
+    r = PyDict_GetItemRef(metadata, PyObjCNM_type, &type);
+    if (r != 1) {
+        typestr = NULL;
+    } else {
+        if (unlikely(PyUnicode_Check(type))) {
+            PyObject* tmp = PyUnicode_AsEncodedString(type, NULL, NULL);
+            if (tmp == NULL) {
+                PyErr_Clear();
+                return NULL;
+            }
+            Py_CLEAR(type);
+            type = tmp;
+        }
+
+        if (likely(PyBytes_Check(type))) {
+            typestr = PyBytes_AsString(type);
+            if (typestr == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                PyErr_Clear();
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
+        } else {
+            Py_CLEAR(type);
+            return NULL;
+        }
+    }
+
+    r = PyDict_GetItemRef(metadata, PyObjCNM_type_modifier, &modifier);
+    if (r != 1) {
+        PyErr_Clear();
+        modifierstr = "";
+    } else {
+        if (unlikely(PyUnicode_Check(modifier))) {
+            PyObject* tmp = PyUnicode_AsEncodedString(modifier, NULL, NULL);
+            if (tmp == NULL) {
+                PyErr_Clear();
+                return NULL;
+            }
+            Py_CLEAR(modifier);
+            modifier = tmp;
+        }
+
+        if (likely(PyBytes_Check(modifier))) {
+            modifierstr = PyBytes_AsString(modifier);
+            if (modifierstr == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                PyErr_Clear();
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
+        } else {
+            modifierstr = "";
+        }
+    }
+
+    result = default_descr(typestr, *modifierstr);
+
+    Py_CLEAR(type);
+    Py_CLEAR(modifier);
+    return result;
 }
 
 static int
@@ -1275,12 +1360,16 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
         PyObject* av;
         int       r;
 
-        switch (
-            PyDict_GetItemRef(metadata, PyObjCNM_retval, &retval)) { // LCOV_BR_EXCL_LINE
+        switch ( // LCOV_BR_EXCL_LINE
+            PyDict_GetItemRef(metadata, PyObjCNM_retval, &retval)) {
         case -1:
             return -1; // LCOV_EXCL_LINE
         /* case 0: pass */
         case 1:
+            if (methinfo->rettype == NULL) {
+                methinfo->rettype = default_descr_from_meta(retval);
+            }
+
             r = setup_descr(methinfo->rettype, retval, is_native);
             if (r == -1) {
                 Py_DECREF(retval);
@@ -1304,11 +1393,10 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
         }
         Py_CLEAR(retval);
 
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_free_result,
-                                  &av)) { // LCOV_BR_EXCL_LINE
+        switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+            metadata, PyObjCNM_free_result, &av)) {
         case -1:
             // LCOV_EXCL_START
-            Py_DECREF(retval);
             return -1;
             // LCOV_EXCL_STOP
         /* case 0: pass */
@@ -1351,41 +1439,49 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                         // LCOV_EXCL_STOP
                         /* case 0: pass */
                         /* case 1: pass */
-                    }
-                    Py_CLEAR(k);
+                    case 0:
+                        Py_CLEAR(k);
+                        break;
+                    case 1:
+                        Py_CLEAR(k);
 
-                    r = setup_descr(methinfo->argtype[i], d, is_native);
-                    if (r == -1) {
-                        Py_XDECREF(d);
-                        Py_DECREF(args);
-                        return -1;
-
-                    } else if (r == -2) {
-                        methinfo->argtype[i] = alloc_descr(methinfo->argtype[i]);
-                        if (methinfo->argtype[i] == NULL) { // LCOV_BR_EXCL_LINE
-                            // LCOV_EXCL_START
-                            Py_XDECREF(d);
-                            Py_DECREF(args);
-                            Py_DECREF(methinfo);
-                            return -1;
-                            // LCOV_EXCL_STOP
+                        if (methinfo->argtype[i] == NULL) {
+                            methinfo->argtype[i] = default_descr_from_meta(d);
                         }
+
                         r = setup_descr(methinfo->argtype[i], d, is_native);
                         if (r == -1) {
                             Py_XDECREF(d);
                             Py_DECREF(args);
                             return -1;
+
+                        } else if (r == -2) {
+                            methinfo->argtype[i] = alloc_descr(methinfo->argtype[i]);
+                            if (methinfo->argtype[i] == NULL) { // LCOV_BR_EXCL_LINE
+                                // LCOV_EXCL_START
+                                Py_XDECREF(d);
+                                Py_DECREF(args);
+                                Py_DECREF(methinfo);
+                                return -1;
+                                // LCOV_EXCL_STOP
+                            }
+                            r = setup_descr(methinfo->argtype[i], d, is_native);
+                            if (r == -1) {
+                                Py_XDECREF(d);
+                                Py_DECREF(args);
+                                return -1;
+                            }
+                            assert(r != -2);
                         }
-                        assert(r != -2);
+                        Py_CLEAR(d);
                     }
-                    Py_CLEAR(d);
                 }
                 Py_CLEAR(args);
             }
         }
 
-        switch (
-            PyDict_GetItemRef(metadata, PyObjCNM_suggestion, &v)) { // LCOV_BR_EXCL_LINE
+        switch ( // LCOV_BR_EXCL_LINE
+            PyDict_GetItemRef(metadata, PyObjCNM_suggestion, &v)) {
         case -1:
             return -1; // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1394,8 +1490,8 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
             v                    = NULL;
         }
 
-        switch (
-            PyDict_GetItemRef(metadata, PyObjCNM_deprecated, &v)) { // LCOV_BR_EXCL_LINE
+        switch ( // LCOV_BR_EXCL_LINE
+            PyDict_GetItemRef(metadata, PyObjCNM_deprecated, &v)) {
         case -1:;
             return -1; // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1410,8 +1506,8 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
         }
 
         methinfo->null_terminated_array = NO;
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_c_array_delimited_by_null,
-                                  &v)) { // LCOV_BR_EXCL_LINE
+        switch ( // LCOV_BR_EXCL_LINE
+            PyDict_GetItemRef(metadata, PyObjCNM_c_array_delimited_by_null, &v)) {
         case -1:
             return -1; // LCOV_EXCL_LINE
         /*case 0: pass */
@@ -1427,8 +1523,8 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
         }
 
         methinfo->arrayArg = -1;
-        switch (PyDict_GetItemRef(metadata, PyObjCNM_c_array_length_in_arg,
-                                  &v)) { // LCOV_BR_EXCL_LINE
+        switch ( // LCOV_BR_EXCL_LINE
+            PyDict_GetItemRef(metadata, PyObjCNM_c_array_length_in_arg, &v)) {
         case -1:
             return -1; // LCOV_EXCL_LINE
         /* case 0: pass */
@@ -1504,8 +1600,8 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
     assert(PyDict_Check(metadata));
 
     PyObject* arguments;
-    switch (PyDict_GetItemRef(metadata, PyObjCNM_arguments,
-                              &arguments)) { // LCOV_BR_EXCL_LINE
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        metadata, PyObjCNM_arguments, &arguments)) {
     case -1:
         return NULL; // LCOV_EXCL_LINE
     case 0:
@@ -1554,7 +1650,6 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
         return NULL;      // LCOV_EXCL_LINE
     }
     Py_SET_SIZE(result, max_idx);
-    /* XXX: This will be set to a non-null value in all non-error paths */
     result->signature             = (const char* _Nonnull)NULL;
     result->suggestion            = NULL;
     result->variadic              = NO;
@@ -1566,14 +1661,13 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
     result->shortcut_result_size  = 0;
     result->arrayArg              = 0;
     result->deprecated            = 0;
-    /* XXX: This will be set to a non-null value in all non-error paths */
-    result->rettype = (struct _PyObjC_ArgDescr* _Nonnull)NULL;
+    result->rettype               = (struct _PyObjC_ArgDescr* _Nonnull)NULL;
     for (i = 0; i < max_idx; i++) {
         result->argtype[i] = NULL;
     }
 
-    switch (PyDict_GetItemRef(metadata, PyObjCNM_full_signature,
-                              &value)) { // LCOV_BR_EXCL_LINE
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        metadata, PyObjCNM_full_signature, &value)) {
     case -1:
         // LCOV_EXCL_START
         Py_DECREF(result);
@@ -1593,18 +1687,16 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
     }
 
     /*
-     * XXX: Setting 'tmpl' is dodgy, but required
-     * to pass tests. Either ensure that setting 'tmpl'
-     * is not necessary, or properly document why it
-     * is needed.
+     * Treat compiled metadata as templates because entries
+     * can be reused when applying the metadata.
      */
-    if (result->rettype != NULL && !result->rettype->tmpl) {
+    if (result->rettype != NULL && !result->rettype->tmpl) { // LCOV_BR_EXCL_LINE
         result->rettype->tmpl = YES;
     }
     for (i = 0; i < max_idx; i++) {
         if (result->argtype[i] == NULL)
             continue;
-        if (!result->argtype[i]->tmpl) {
+        if (!result->argtype[i]->tmpl) { // LCOV_BR_EXCL_LINE
             result->argtype[i]->tmpl = YES;
         }
     }
@@ -1633,12 +1725,17 @@ PyObjC_registerMetaData(PyObject* class_name, PyObject* selector, PyObject* meta
     r = PyObjC_AddToRegistry(registry, class_name, selector, compiled);
 
     /*
-     * Leak a reference to 'compiled' to ensure it stays alive
-     * even when someone registers new metadata for the same
-     * selector.
+     * This leaks a reference to 'compiled', and that's intentional.
      *
-     * XXX: Why is this needed?
-     * -- Py_DECREF(compiled); --
+     * The compiled metadata is assumed to live "forever", this
+     * file reuses 'struct _ArgDescr' references when building full
+     * metadata objects for selectors to reduce memory usage.
+     *
+     * In practice this is not a problem because PyObjC itself does
+     * not duplicate metadata registrations and the PyObjC extension
+     * module cannot be unloaded because it affects process-global state.
+     *
+     * XXX: This needs to be benchmarked.
      */
     return r;
 }
@@ -1668,31 +1765,21 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_WithMetaData(
 
 static struct _PyObjC_ArgDescr* _Nullable merge_descr(
     struct _PyObjC_ArgDescr* _Nonnull descr, struct _PyObjC_ArgDescr* _Nonnull meta,
-    BOOL is_native)
+    BOOL is_native __attribute__((__unused__)))
 {
+    assert(descr != meta);
     if (meta->type != NULL) {
         assert(descr->type != NULL);
         assert(meta->type != NULL);
         if (!is_native || PyObjC_signatures_compatible(descr->type, meta->type)) {
-            if (!descr->tmpl) {
-                if (descr->typeOverride) {
-                    PyMem_Free((void*)descr->type);
-                }
-                PyMem_Free(descr);
-            }
             return meta;
         }
     }
 
     /* Copy argdescr, assume there is no trivial metadata */
-    BOOL copied = NO;
-
-    if (descr->tmpl) {
-        descr = alloc_descr(descr);
-        if (descr == NULL) { // LCOV_BR_EXCL_LINE
-            return NULL;     // LCOV_EXCL_LINE
-        }
-        copied = YES;
+    descr = alloc_descr(descr);
+    if (descr == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;     // LCOV_EXCL_LINE
     }
     if (meta->callable) {
         Py_XINCREF(meta->callable);
@@ -1700,17 +1787,12 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(
         descr->callable = meta->callable;
     }
 
-    if (descr->sel_type) {
-        PyMem_Free((void*)descr->sel_type);
-    }
+    assert(descr->sel_type == NULL);
     if (meta->sel_type) {
         descr->sel_type = PyObjCUtil_Strdup(meta->sel_type);
         if (descr->sel_type == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
-            if (copied) {
-                PyMem_Free(descr);
-            }
-            PyErr_NoMemory();
+            PyMem_Free(descr);
             return NULL;
             // LCOV_EXCL_STOP
         }
@@ -1735,30 +1817,25 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(
     descr->callableRetained  = meta->callableRetained;
 
     if (meta->modifier != '\0') {
-        const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(descr->type);
-        assert(*withoutModifiers != _C_ARY_B);
         if (descr->type[0] == _C_PTR && descr->type[1] == _C_VOID
             && descr->ptrType == PyObjC_kPointerPlain) {
 
             /* Plain old void*, ignore type modifiers */
 
         } else { // LCOV_EXCL_LINE
+            const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(descr->type);
+            assert(*withoutModifiers != '\0' && *withoutModifiers != _C_ARY_B);
+
             size_t bufsize = strlen(withoutModifiers) + 2;
             char*  tp      = PyMem_Malloc(bufsize);
-            char*  to_free = NULL;
             if (tp == NULL) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
-                if (copied) {
-                    PyMem_Free(descr);
-                }
-                PyErr_NoMemory();
+                PyMem_Free(descr);
                 return NULL;
                 // LCOV_EXCL_STOP
             }
 
-            if (descr->typeOverride) {
-                to_free = (char*)(descr->type);
-            }
+            assert(!descr->typeOverride);
 
             /* Skip existing modifiers, we're overriding those */
             assert(tp != NULL);
@@ -1773,10 +1850,6 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(
             default:
                 strlcpy(tp, withoutModifiers, bufsize);
                 descr->type = tp;
-            }
-
-            if (to_free) {
-                PyMem_Free(to_free);
             }
         }
     }
@@ -1811,6 +1884,7 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
         if (tmp == NULL) { // LCOV_BR_EXCL_LINE
             return -1;     // LCOV_EXCL_LINE
         }
+        free_argdescr(methinfo->rettype);
         methinfo->rettype = tmp;
     }
 
@@ -1820,52 +1894,19 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     }
 
     for (i = 0; i < len; i++) {
-        /*
-         * XXX: This code doesn't work, the test suite doesn't cover this
-         * code even with metadata that should...
-         *
-         * The other '#if 0' blocks are dependencies of this code.
-         */
-        if (methinfo->argtype[i]->tmpl && metadata->argtype[i] != NULL
-            && metadata->argtype[i]->modifier != '\0'
-            && is_default_descr(metadata->argtype[i])) {
-            const char* withoutModifiers =
-                PyObjCRT_SkipTypeQualifiers(methinfo->argtype[i]->type);
-            if (withoutModifiers[0] == _C_PTR) {
-                switch (metadata->argtype[i]->modifier) {
-                case _C_IN:
-                    metadata->argtype[i] = (struct _PyObjC_ArgDescr*)&ptr_in_templates[(
-                        unsigned char)(withoutModifiers[1])];
-                    break;
-                case _C_OUT:
-                    metadata->argtype[i] = (struct _PyObjC_ArgDescr*)&ptr_out_templates[(
-                        unsigned char)(withoutModifiers[1])];
-                    break;
-                case _C_INOUT:
-                    metadata->argtype[i] =
-                        (struct _PyObjC_ArgDescr*)&ptr_inout_templates[(
-                            unsigned char)(withoutModifiers[1])];
-                    break;
-                }
+        assert(methinfo->argtype[i]);
+        if (metadata->argtype[i] != NULL) {
+            tmp = merge_descr(methinfo->argtype[i], metadata->argtype[i], is_native);
+            if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+                return -1;     // LCOV_EXCL_LINE
             }
-            /* No 'else': the metadata is default and hence won't update what we already
-             * have */
-
-        } else {
-            assert(methinfo->argtype[i]);
-            if (metadata->argtype[i] != NULL) {
-                tmp = merge_descr(methinfo->argtype[i], metadata->argtype[i], is_native);
-                if (tmp == NULL) { // LCOV_BR_EXCL_LINE
-                    return -1;     // LCOV_EXCL_LINE
-                }
-                assert(tmp->type);
-                methinfo->argtype[i] = tmp;
-            }
+            assert(methinfo->argtype[i]->type);
+            free_argdescr(methinfo->argtype[i]);
+            methinfo->argtype[i] = tmp;
         }
     }
 
     PyObjCMethodSignature_Validate(methinfo);
-    determine_if_shortcut(methinfo);
     return 0;
 }
 
@@ -1924,8 +1965,9 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
         }
     }
 
-    if (methinfo->rettype != NULL && methinfo->rettype->type != NULL
-        && methinfo->rettype->type[0] == _C_ID) {
+    assert(methinfo->rettype);
+    assert(methinfo->rettype->type);
+    if (methinfo->rettype->type[0] == _C_ID) {
         const char* nm = sel_getName(sel);
         // The check below matches the calculation of the default objc_method_family in
         // clang (other than the special casing of NSAutoreleasePool)
@@ -1942,6 +1984,7 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
     }
 
     PyObjCMethodSignature_Validate(methinfo);
+    determine_if_shortcut(methinfo);
 
     Py_XDECREF(metadata);
     return methinfo;
