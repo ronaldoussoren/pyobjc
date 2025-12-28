@@ -202,6 +202,45 @@ static PyObject* _Nullable sig_str(PyObject* _self)
     }
 }
 
+static struct _PyObjC_ArgDescr* _Nullable alloc_argdescr(
+    struct _PyObjC_ArgDescr* _Nullable tmpl)
+{
+    struct _PyObjC_ArgDescr* retval = PyMem_Malloc(sizeof(*retval));
+    if (unlikely(retval == NULL)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_NoMemory();
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+    memset(retval, 0, sizeof(*retval));
+    if (tmpl && tmpl->type) {
+        retval->type = PyObjCUtil_Strdup(tmpl->type);
+        if (retval->type == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            PyMem_Free(retval);
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+    } else {
+        retval->type = NULL;
+    }
+    retval->typeOverride      = NO;
+    retval->modifier          = '\0';
+    retval->ptrType           = PyObjC_kPointerPlain;
+    retval->allowNULL         = YES;
+    retval->arraySizeInRetval = NO;
+    retval->printfFormat      = NO;
+    retval->alreadyRetained   = NO;
+    retval->alreadyCFRetained = NO;
+    retval->callableRetained  = NO;
+    retval->tmpl              = NO;
+    retval->callable          = NULL;
+    retval->sel_type          = NULL;
+    retval->arrayArg          = 0;
+    retval->arrayArgOut       = 0;
+    return retval;
+}
+
 static void
 free_argdescr(struct _PyObjC_ArgDescr* descr)
 {
@@ -274,8 +313,6 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
      * Note that shortcut_argbuf_size has a limited size, this will also not work when
      * there are a lot, or large, arguments/return values.
      */
-    /* TODO: simple pass-by-reference objects args should work (NSError** arguments) */
-    /* FIXME: structs/unions/... also use byref */
 
     assert(methinfo);
     methinfo->shortcut_signature   = NO;
@@ -362,45 +399,6 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     methinfo->shortcut_signature   = YES;
     methinfo->shortcut_argbuf_size = (unsigned int)argbuf_len;
     methinfo->shortcut_result_size = (unsigned int)result_size;
-}
-
-static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
-    struct _PyObjC_ArgDescr* _Nullable tmpl)
-{
-    struct _PyObjC_ArgDescr* retval = PyMem_Malloc(sizeof(*retval));
-    if (unlikely(retval == NULL)) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        PyErr_NoMemory();
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
-    memset(retval, 0, sizeof(*retval));
-    if (tmpl && tmpl->type) {
-        retval->type = PyObjCUtil_Strdup(tmpl->type);
-        if (retval->type == NULL) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            PyMem_Free(retval);
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-    } else {
-        retval->type = NULL;
-    }
-    retval->typeOverride      = NO;
-    retval->modifier          = '\0';
-    retval->ptrType           = PyObjC_kPointerPlain;
-    retval->allowNULL         = YES;
-    retval->arraySizeInRetval = NO;
-    retval->printfFormat      = NO;
-    retval->alreadyRetained   = NO;
-    retval->alreadyCFRetained = NO;
-    retval->callableRetained  = NO;
-    retval->tmpl              = NO;
-    retval->callable          = NULL;
-    retval->sel_type          = NULL;
-    retval->arrayArg          = 0;
-    retval->arrayArgOut       = 0;
-    return retval;
 }
 
 static int
@@ -535,7 +533,7 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
     assert(cur != NULL);
     retval->rettype = default_descr(cur, *retval->signature);
     if (unlikely(retval->rettype == NULL)) {
-        retval->rettype = alloc_descr(NULL);
+        retval->rettype = alloc_argdescr(NULL);
         if (unlikely(retval->rettype == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(retval);
@@ -579,7 +577,7 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
         }
         retval->argtype[nargs] = default_descr(PyObjCRT_SkipTypeQualifiers(cur), *cur);
         if (unlikely(retval->argtype[nargs] == NULL)) {
-            retval->argtype[nargs] = alloc_descr(NULL);
+            retval->argtype[nargs] = alloc_argdescr(NULL);
             if (unlikely(retval->argtype[nargs] == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(retval);
@@ -1376,7 +1374,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                 return -1;
 
             } else if (r == -2) {
-                methinfo->rettype = alloc_descr(methinfo->rettype);
+                methinfo->rettype = alloc_argdescr(methinfo->rettype);
                 if (methinfo->rettype == NULL) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_DECREF(retval);
@@ -1456,7 +1454,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
                             return -1;
 
                         } else if (r == -2) {
-                            methinfo->argtype[i] = alloc_descr(methinfo->argtype[i]);
+                            methinfo->argtype[i] = alloc_argdescr(methinfo->argtype[i]);
                             if (methinfo->argtype[i] == NULL) { // LCOV_BR_EXCL_LINE
                                 // LCOV_EXCL_START
                                 Py_XDECREF(d);
@@ -1777,7 +1775,7 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(
     }
 
     /* Copy argdescr, assume there is no trivial metadata */
-    descr = alloc_descr(descr);
+    descr = alloc_argdescr(descr);
     if (descr == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;     // LCOV_EXCL_LINE
     }
@@ -1952,7 +1950,7 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
         const char* nm = sel_getName(sel);
         if (strncmp(nm, "new", 3) == 0 && ((nm[3] == 0) || isupper(nm[3]))) {
             if (methinfo->rettype->tmpl) {
-                methinfo->rettype = alloc_descr(methinfo->rettype);
+                methinfo->rettype = alloc_argdescr(methinfo->rettype);
                 if (methinfo->rettype == NULL) { // LCOV_BR_EXCL_LINE
                     // LCOV_EXCL_START
                     Py_XDECREF(methinfo);
