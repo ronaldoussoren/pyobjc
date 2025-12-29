@@ -2314,8 +2314,8 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
 
     } else if (PyObjCNativeSelector_Check(callable)) {
         PyObjCMethodSignature* sig = PyObjCSelector_GetMetadata(callable);
-        if (sig == NULL) {
-            return -2;
+        if (sig == NULL) { // LCOV_BR_EXCL_LINE
+            return -2;     // LCOV_EXCL_LINE
         }
         Py_ssize_t result = Py_SIZE(sig) - 1;
         *haveVarArgs      = NO;
@@ -2361,6 +2361,8 @@ PyObjC_callback_function _Nullable PyObjCFFI_MakeFunctionClosure(
     _method_stub_userdata*   stubUserdata;
     PyObjC_callback_function closure;
 
+    assert(callable != NULL);
+
     stubUserdata = PyMem_Malloc(sizeof(*stubUserdata));
     if (unlikely(stubUserdata == NULL)) { // LCOV_BR_EXCL_LINE
         return NULL;                      // LCOV_EXCL_LINE
@@ -2370,53 +2372,47 @@ PyObjC_callback_function _Nullable PyObjCFFI_MakeFunctionClosure(
     Py_INCREF(methinfo);
     stubUserdata->closureType = PyObjC_Function;
 
-    if (callable) {
-        BOOL       haveVarArgs  = NO;
-        BOOL       haveVarKwds  = NO;
-        BOOL       haveKwOnly   = NO;
-        Py_ssize_t defaultCount = 0;
+    BOOL       haveVarArgs  = NO;
+    BOOL       haveVarKwds  = NO;
+    BOOL       haveKwOnly   = NO;
+    Py_ssize_t defaultCount = 0;
 
-        stubUserdata->argCount =
-            _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
-        if (stubUserdata->argCount <= -1) {
-            Py_DECREF(methinfo);
-            PyMem_Free(stubUserdata);
-            return NULL;
-        }
-
-        if (haveKwOnly) {
-            PyErr_Format(PyObjCExc_BadPrototypeError,
-                         "%R has keyword-only arguments without defaults", callable);
-            Py_DECREF(methinfo);
-            PyMem_Free(stubUserdata);
-            return NULL;
-        }
-
-        if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo))
-            && (stubUserdata->argCount >= Py_SIZE(methinfo))) {
-            /* OK */
-
-        } else if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo))
-                   && haveVarArgs) {
-            /* OK */
-
-        } else {
-            /* Wrong number of arguments, raise an error */
-            PyErr_Format(
-                PyObjCExc_BadPrototypeError,
-                "Objective-C expects %ld arguments, %R has %ld positional arguments",
-                Py_SIZE(methinfo), callable, stubUserdata->argCount);
-            Py_DECREF(methinfo);
-            PyMem_Free(stubUserdata);
-            return NULL;
-        }
-
-        stubUserdata->callable = callable;
-        Py_INCREF(stubUserdata->callable);
-    } else {
-        stubUserdata->callable = NULL;
-        stubUserdata->argCount = 0;
+    stubUserdata->argCount =
+        _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
+    if (stubUserdata->argCount <= -1) {
+        Py_DECREF(methinfo);
+        PyMem_Free(stubUserdata);
+        return NULL;
     }
+
+    if (haveKwOnly) {
+        PyErr_Format(PyObjCExc_BadPrototypeError,
+                     "%R has keyword-only arguments without defaults", callable);
+        Py_DECREF(methinfo);
+        PyMem_Free(stubUserdata);
+        return NULL;
+    }
+
+    if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo))
+        && (stubUserdata->argCount >= Py_SIZE(methinfo))) {
+        /* OK */
+
+    } else if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo))
+               && haveVarArgs) {
+        /* OK */
+
+    } else {
+        /* Wrong number of arguments, raise an error */
+        PyErr_Format(PyObjCExc_BadPrototypeError,
+                     "Objective-C expects %ld arguments, %R has %ld positional arguments",
+                     Py_SIZE(methinfo), callable, stubUserdata->argCount);
+        Py_DECREF(methinfo);
+        PyMem_Free(stubUserdata);
+        return NULL;
+    }
+
+    stubUserdata->callable = callable;
+    Py_INCREF(stubUserdata->callable);
 
     closure = (PyObjC_callback_function)PyObjCFFI_MakeClosure(methinfo, method_stub,
                                                               stubUserdata);
@@ -2509,6 +2505,8 @@ IMP _Nullable PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL
     _method_stub_userdata* stubUserdata;
     IMP                    closure;
 
+    assert(callable != NULL);
+
     stubUserdata = PyMem_Malloc(sizeof(*stubUserdata));
     if (unlikely(stubUserdata == NULL)) { // LCOV_BR_EXCL_LINE
         return NULL;                      // LCOV_EXCL_LINE
@@ -2518,27 +2516,21 @@ IMP _Nullable PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL
     Py_INCREF(methinfo);
     stubUserdata->closureType = PyObjC_Method;
 
-    if (callable) {
-        stubUserdata->argCount = validate_callable_signature(callable, sel, methinfo);
-        if (stubUserdata->argCount == -1) {
-            Py_DECREF(methinfo);
-            PyMem_Free(stubUserdata);
-            return NULL;
-        } else if (stubUserdata->argCount == -2) {
-            /* Cannot determine attributes, assume this is some
-             * other callable with the correct signature.
-             */
-            PyErr_Clear();
-            stubUserdata->argCount = Py_SIZE(methinfo) - 1;
-        }
-
-        stubUserdata->callable = callable;
-        Py_INCREF(stubUserdata->callable);
-    } else {
-        // XXX: Can this ever be reached?
-        stubUserdata->callable = NULL;
-        stubUserdata->argCount = 0;
+    stubUserdata->argCount = validate_callable_signature(callable, sel, methinfo);
+    if (stubUserdata->argCount == -1) {
+        Py_DECREF(methinfo);
+        PyMem_Free(stubUserdata);
+        return NULL;
+    } else if (stubUserdata->argCount == -2) {
+        /* Cannot determine attributes, assume this is some
+         * other callable with the correct signature.
+         */
+        PyErr_Clear();
+        stubUserdata->argCount = Py_SIZE(methinfo) - 1;
     }
+
+    stubUserdata->callable = callable;
+    Py_INCREF(stubUserdata->callable);
 
     closure = PyObjCFFI_MakeClosure(methinfo, method_stub, stubUserdata);
     if (closure == NULL) {
@@ -2567,35 +2559,9 @@ PyObjCFFI_FreeIMP(IMP imp)
 
 IMP _Nullable PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector* aSelector)
 {
-    if (PyObjCNativeSelector_Check((PyObject*)aSelector)) {
-        /* XXX: Check if this can ever be used, current test suite doesn't test this
-         * path.
-         */
-        PyObjCNativeSelector* nativeSelector = (PyObjCNativeSelector*)aSelector;
-        Method                aMeth;
-
-        if (nativeSelector->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
-            aMeth = class_getClassMethod(nativeSelector->base.sel_class,
-                                         nativeSelector->base.sel_selector);
-
-        } else {
-            aMeth = class_getInstanceMethod(nativeSelector->base.sel_class,
-                                            nativeSelector->base.sel_selector);
-        }
-
-        if (aMeth == NULL) {
-            PyErr_SetString(
-                PyObjCExc_Error,
-                "Native selector unexpectedly has no equivalent in Objective-C runtime");
-            return NULL;
-        }
-
-        return method_getImplementation(aMeth);
-
-    } else {
-        PyObjCPythonSelector* pythonSelector = (PyObjCPythonSelector*)aSelector;
-        return PyObjC_MakeIMP(pythonSelector->base.sel_class, (PyObject*)aSelector);
-    }
+    assert(PyObjCPythonSelector_Check(aSelector));
+    PyObjCPythonSelector* pythonSelector = (PyObjCPythonSelector*)aSelector;
+    return PyObjC_MakeIMP(pythonSelector->base.sel_class, (PyObject*)aSelector);
 }
 
 PyObjCBlockFunction _Nullable PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature* methinfo,
@@ -3633,10 +3599,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
         for (i = argOffset; i < meth_arg_count; i++) {
             PyObject*   argument = NULL;
             const char* argtype  = methinfo->argtype[i]->type;
-            if (argtype == NULL) {
-                PyErr_SetString(PyObjCExc_InternalError, "NULL argument type");
-                return -1;
-            }
+            assert(argtype != NULL);
 
             if (argtype[0] == _C_OUT
                 && (argtype[1] == _C_PTR || argtype[1] == _C_CHARPTR)) {
@@ -4430,27 +4393,26 @@ void
 PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_attr)
 {
     Py_ssize_t i;
-    if (byref) {
-        for (i = 0; i < argcount; i++) {
-            if (byref[i] == NULL) {
-                Py_XDECREF(byref_attr[i].obj);
-                continue;
-            }
+    assert(byref != NULL);
+    for (i = 0; i < argcount; i++) {
+        if (byref[i] == NULL) {
+            Py_XDECREF(byref_attr[i].obj);
+            continue;
+        }
 
-            if (byref_attr[i].token != 0) {
-                PyObjC_FreeCArray(byref_attr[i].token, &(byref_attr[i].view));
-                byref[i] = NULL;
+        if (byref_attr[i].token != 0) {
+            PyObjC_FreeCArray(byref_attr[i].token, &(byref_attr[i].view));
+            byref[i] = NULL;
 
-                /* XXX: Check if this is correct, .obj is sometimes set
-                 * without using the CArray functions.
-                 */
-                Py_XDECREF(byref_attr[i].obj);
-                byref_attr[i].obj = (PyObject* _Nonnull)NULL;
+            /* XXX: Check if this is correct, .obj is sometimes set
+             * without using the CArray functions.
+             */
+            Py_XDECREF(byref_attr[i].obj);
+            byref_attr[i].obj = (PyObject* _Nonnull)NULL;
 
-            } else {
-                PyMem_Free(byref[i]);
-                byref[i] = NULL;
-            }
+        } else {
+            PyMem_Free(byref[i]);
+            byref[i] = NULL;
         }
     }
 }
@@ -4516,8 +4478,8 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
 
     } else {
         methinfo = PyObjCSelector_GetMetadata(aMeth);
-        if (methinfo == NULL) {
-            return NULL;
+        if (methinfo == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
         flags = meth->base.sel_flags;
     }
@@ -4533,18 +4495,20 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
         return NULL;
     }
 
-    if (Py_SIZE(methinfo) >= 127) {
+    if (Py_SIZE(methinfo) >= 127) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyObjCExc_Error,
                      "wrapping a function with %ld arguments, at most 126 "
                      "are supported",
                      Py_SIZE(methinfo));
         Py_CLEAR(methinfo);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     resultSize = PyObjCRT_SizeOfReturnType(rettype);
-    if (resultSize == -1) {
-        return NULL;
+    if (resultSize == -1) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     /* First count the number of by reference parameters, and the number
@@ -4554,9 +4518,11 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     argbuf_len = align(resultSize, sizeof(void*));
     r          = PyObjCFFI_CountArguments(methinfo, 2, &byref_in_count, &byref_out_count,
                                           &plain_count, &argbuf_len, &variadicAllArgs);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(methinfo);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     /*
@@ -4565,64 +4531,72 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
      */
     if (unlikely(variadicAllArgs)) {
         if (byref_in_count != 0 || byref_out_count != 0) {
-            PyErr_Format(PyExc_TypeError,
-                         "Sorry, printf format with by-ref args not supported");
-            goto error_cleanup;
+            PyErr_Format(PyExc_TypeError, "printf format with by-ref args not supported");
+            Py_CLEAR(methinfo);
+            return NULL;
         }
 
         if (methinfo->null_terminated_array) {
             if (nargs < (size_t)Py_SIZE(methinfo) - 3) {
-                PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
+                PyErr_Format(PyExc_TypeError, "Need at least %ld arguments, got %ld",
                              Py_SIZE(methinfo) - 3, nargs);
-                goto error_cleanup;
+                Py_CLEAR(methinfo);
+                return NULL;
             }
 
         } else if (nargs < (size_t)Py_SIZE(methinfo) - 2) {
-            PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
+            PyErr_Format(PyExc_TypeError, "Need at least %ld arguments, got %ld",
                          Py_SIZE(methinfo) - 2, nargs);
-            goto error_cleanup;
+            Py_CLEAR(methinfo);
+            return NULL;
         }
 
         if (nargs > MAX_ARGCOUNT - 1) {
             PyErr_Format(PyExc_TypeError,
                          "At most %d arguments are supported, got %ld arguments",
                          MAX_ARGCOUNT, nargs);
-            goto error_cleanup;
+            Py_CLEAR(methinfo);
+            return NULL;
         }
 
     } else if (nargs != (size_t)Py_SIZE(methinfo) - 2) {
-        if (Py_SIZE(methinfo) > MAX_ARGCOUNT) {
-            PyErr_Format(PyExc_TypeError,
-                         "At most %d arguments are supported, got %ld arguments",
-                         MAX_ARGCOUNT, nargs);
-            goto error_cleanup;
-        }
-
         PyErr_Format(PyExc_TypeError, "Need %ld arguments, got %ld",
                      Py_SIZE(methinfo) - 2, nargs);
-        goto error_cleanup;
+        Py_CLEAR(methinfo);
+        return NULL;
     }
 
     argbuf = PyMem_Malloc(argbuf_len);
     if (unlikely(argbuf == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();
-        goto error_cleanup;
+        return NULL;
         // LCOV_EXCL_STOP
     }
 
     /* Set 'self' argument, for class methods we use the class */
     if (flags & PyObjCSelector_kCLASS_METHOD) {
-        if (PyObjCObject_Check(self)) {
+        assert(!PyObjCObject_Check(self));
+        if (likely(PyObjCClass_Check(self))) {
+            self_obj = PyObjCClass_GetClass(self);
+        } else if (unlikely(PyObjCObject_Check(self))) { // LCOV_BR_EXCL_LINE
+            /* XXX: Calling class methods through an instance should
+             * not be possible, needs further verification before
+             * dropping this code path.
+             */
+            // LCOV_EXCL_START
             self_obj = PyObjCObject_GetObject(self);
             assert(self_obj != nil);
             self_obj = object_getClass(self_obj);
+            // LCOV_EXCL_STOP
 
-        } else if (PyObjCClass_Check(self)) {
-            self_obj = PyObjCClass_GetClass(self);
-
-        } else if (PyType_Check(self)
-                   && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
+        } else if (unlikely(PyType_Check(self)   // LCOV_BR_EXCL_LINE
+                            && PyType_IsSubtype( // LCOV_BR_EXCL_LINE
+                                (PyTypeObject*)self, &PyObjCMetaClass_Type))) {
+            /* XXX: Calling class methods through instances is not possible,
+             *      do more checking before removing this code path.
+             */
+            // LCOV_EXCL_START
             PyObject* c = PyObjCClass_ClassForMetaClass(self);
             if (c == NULL) {
                 self_obj = nil;
@@ -4630,13 +4604,15 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
             } else {
                 self_obj = PyObjCClass_GetClass(c);
             }
+            // LCOV_EXCL_STOP
 
         } else {
             PyErr_Format(
                 PyExc_TypeError,
                 "Need objective-C object or class as self, not an instance of '%s'",
                 Py_TYPE(self)->tp_name);
-            goto error_cleanup;
+            Py_CLEAR(methinfo);
+            return NULL;
         }
 
     } else {
@@ -4702,8 +4678,11 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
 
     PyErr_Clear();
     ffi_type* retsig = PyObjCFFI_Typestr2FFI(rettype);
-    if (retsig == NULL)
-        goto error_cleanup;
+    if (retsig == NULL) // LCOV_BR_EXCL_LINE
+        /* Can only fail if CountArguments succeeded with
+         * a type that doesn't have a libffi representation
+         */
+        goto error_cleanup; // LCOV_EXCL_LINE
 
     if (methinfo->variadic) {
 #if PyObjC_BUILD_RELEASE >= 1015
@@ -4733,10 +4712,12 @@ PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
     } else {
         r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist);
     }
-    if (r != FFI_OK) {
+    if (r != FFI_OK) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyObjCExc_Error, "Cannot create FFI CIF for %s: %s",
                      methinfo->signature, PyObjC_ffi_status_str((ffi_status)r));
         goto error_cleanup;
+        // LCOV_EXCL_STOP
     }
 
     /*
@@ -4839,18 +4820,23 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
     SEL      theSel;
     ffi_cif* cif;
 
-    if (PyObjCIMP_Check(aMeth)) {
+    if (PyObjCIMP_Check(aMeth)) { // LCOV_BR_EXCL_LINE
         methinfo = (PyObjCMethodSignature* _Nonnull)PyObjCIMP_GetSignature(aMeth);
         flags    = PyObjCIMP_GetFlags(aMeth);
         cif      = PyObjCIMP_GetCIF(aMeth);
 
     } else {
+        /* XXX: This function is only used for IMP's, not selectors.
+         *      try merging with PyObjCFFI_Caller_SimpleSEL
+         */
+        // LCOV_EXCL_START
         methinfo = PyObjCSelector_GetMetadata(aMeth);
         if (methinfo == NULL) {
             return NULL;
         }
         flags = meth->base.sel_flags;
         cif   = meth->sel_cif;
+        // LCOV_EXCL_STOP
     }
 
     assert(methinfo->shortcut_signature);
@@ -4863,18 +4849,22 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
 
     if (unlikely(cif == NULL)) {
         cif = PyObjCFFI_CIFForSignature(methinfo);
-        if (cif == NULL) {
+        if (cif == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_CLEAR(methinfo);
             return NULL;
+            // LCOV_EXCL_STOP
         }
-        if (PyObjCIMP_Check(aMeth)) {
-            if (PyObjCIMP_SetCIF(aMeth, cif) == -1) {
+        if (PyObjCIMP_Check(aMeth)) {                 // LCOV_BR_EXCL_LINE
+            if (PyObjCIMP_SetCIF(aMeth, cif) == -1) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyObjCFFI_FreeCIF(cif);
                 Py_CLEAR(methinfo);
                 return NULL;
+                // LCOV_EXCL_STOP
             }
         } else {
-            PyObjCSelector_SET_CIF(aMeth, cif);
+            PyObjCSelector_SET_CIF(aMeth, cif); // LCOV_EXCL_LINE
         }
     }
 
@@ -4897,12 +4887,12 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
             self_obj = PyObjCClass_GetClass(self);
 
         } else if (PyType_Check(self)
-                   && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
+                   && PyType_IsSubtype((PyTypeObject*)self, &PyObjCMetaClass_Type)) {
             PyObject* c = PyObjCClass_ClassForMetaClass(self);
-            if (c == NULL) {
-                self_obj = nil;
+            if (c == NULL) {    // LCOV_BR_EXCL_LINE
+                self_obj = nil; // LCOV_EXCL_LINE
 
-            } else {
+            } else { // LCOV_EXCL_LINE
                 self_obj = PyObjCClass_GetClass(c);
             }
 
@@ -4931,11 +4921,11 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
 #endif
 
     if (self_obj == NULL) {
-        PyErr_SetString(PyObjCExc_Error, "Cannot call methods on  'nil'");
+        PyErr_SetString(PyObjCExc_Error, "Cannot call methods on 'nil'");
         goto error_cleanup;
     }
 
-    if (unlikely(PyObjCIMP_Check(aMeth))) {
+    if (unlikely(PyObjCIMP_Check(aMeth))) { // LCOV_BR_EXCL_LINE
         theSel     = PyObjCIMP_GetSelector(aMeth);
         values[0]  = &self_obj;
         values[1]  = &theSel;
@@ -4943,6 +4933,7 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
         argbuf_cur = align(resultSize, sizeof(void*));
 
     } else {
+        // LCOV_EXCL_START
         if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
             super.super_class = (Class _Nonnull)object_getClass(meth->base.sel_class);
         } else {
@@ -4962,6 +4953,7 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
         // theSel     = meth->base.sel_selector;
         msgResult  = argbuf;
         argbuf_cur = align(resultSize, sizeof(void*));
+        // LCOV_EXCL_STOP
     }
 
     /* Ignore 'self' while parsing arguments */
@@ -4980,9 +4972,10 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            if (unlikely(PyObjCIMP_Check(aMeth))) {
+            if (unlikely(PyObjCIMP_Check(aMeth))) { // LCOV_BR_EXCL_LINE
                 ffi_call(cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)), msgResult, values);
             } else {
+                // LCOV_EXCL_START
 
 #ifdef __arm64__
                 ffi_call(cif, FFI_FN(objc_msgSendSuper), msgResult, values);
@@ -4993,6 +4986,7 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
                     ffi_call(cif, FFI_FN(objc_msgSendSuper), msgResult, values);
                 }
 #endif
+                // LCOV_EXCL_STOP
             }
 
         } @catch (NSObject* localException) {
@@ -5004,7 +4998,7 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) /* XXX: Should this before the previous check? */
+    if (PyErr_Occurred())
         goto error_cleanup;
 
     PyObject* result = PyObjCFFI_BuildResult_Simple(methinfo, msgResult);
@@ -5080,22 +5074,27 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
 
     /* Set 'self' argument, for class methods we use the class */
     if (flags & PyObjCSelector_kCLASS_METHOD) {
-        if (PyObjCObject_Check(self)) {
+        assert(!PyObjCObject_Check(self));
+        if (likely(PyObjCClass_Check(self))) {
+            self_obj = PyObjCClass_GetClass(self);
+        } else if (unlikely(PyObjCObject_Check(self))) { // LCOV_BR_EXCL_LINE
+            /* XXX: Calling a class method through an instance should
+             * not be possible, needs more validation before I remove this
+             * code
+             */
+            // LCOV_EXCL_START
             self_obj = PyObjCObject_GetObject(self);
             assert(self_obj != nil);
             self_obj = object_getClass(self_obj);
-
-        } else if (PyObjCClass_Check(self)) {
-            self_obj = PyObjCClass_GetClass(self);
+            // LCOV_EXCL_STOP
 
         } else if (PyType_Check(self)
-                   && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
-            /* XXX: ^^^^ is this check correct? */
+                   && PyType_IsSubtype((PyTypeObject*)self, &PyObjCMetaClass_Type)) {
             PyObject* c = PyObjCClass_ClassForMetaClass(self);
-            if (c == NULL) {
-                self_obj = nil;
+            if (c == NULL) {    // LCOV_BR_EXCL_LINE
+                self_obj = nil; // LCOV_EXCL_LINE
 
-            } else {
+            } else { // LCOV_EXCL_LINE
                 self_obj = PyObjCClass_GetClass(c);
             }
 
@@ -5113,13 +5112,9 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
             self_obj = PyObjCObject_GetObject(self);
 
         } else {
-            /* XXX: Is there a way to get here?
-             *      -> possibly through unbound NSString method
-             *          + pyobjc_unicode
-             */
             err = depythonify_c_value(@encode(id), self, &self_obj);
-            if (err == -1) {
-                goto error_cleanup;
+            if (err == -1) {        // LCOV_BR_EXCL_LINE
+                goto error_cleanup; // LCOV_EXCL_LINE
             }
         }
     }
@@ -5181,7 +5176,7 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
             }
 #endif
 
-        } @catch (NSObject* localException) {
+        } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
 
             /* XXX: This is allowed because the function acquires the GIL, but
              * that's fairly expensive. Maybe avoid doing that?
@@ -5309,7 +5304,10 @@ ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 void
 PyObjCFFI_FreeCIF(ffi_cif* cif)
 {
-    if (cif->arg_types) {
+    if (likely(cif->arg_types)) { // LCOV_BR_EXCL_LINE
+        /* ^^^ test is always true due to the context
+         * the function is called in.
+         */
         PyMem_Free(cif->arg_types);
     }
     PyMem_Free(cif);
@@ -5455,7 +5453,7 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
     Py_BEGIN_ALLOW_THREADS
         @try {
             ffi_call(&cif, FFI_FN(method), values[0], values + 1);
-        } @catch (NSObject* localException) {
+        } @catch (NSObject* localException) { // LCOV_BR_EXCL_LINE
 
             PyObjCErr_FromObjC(localException);
         }
@@ -5468,7 +5466,7 @@ PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation)
 
     if (values[0] != NULL) {
         @try {
-            [invocation setReturnValue:values[0]];
+            [invocation setReturnValue:values[0]]; // LCOV_BR_EXCL_LINE
 
             // LCOV_EXCL_START
         } @catch (NSObject* localException) {

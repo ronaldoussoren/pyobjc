@@ -233,6 +233,24 @@ class TestRegressions(TestCase):
         v = o.someRect()
         self.assertEqual(v, ((1, 2), (3, 4)))
 
+    def test_use_metaclass_as_self(self):
+        NSArray.array()
+        m = type(NSArray).__dict__["array"]
+
+        o = m(type(NSArray))
+        self.assertIsInstance(o, NSArray)
+        self.assertEqual(o, [])
+
+    def test_use_invalid__as_self_for_classmethod(self):
+        NSArray.array()
+        m = type(NSArray).__dict__["array"]
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "Need objective-C object or class as self, not an instance of 'int'",
+        ):
+            m(42)
+
 
 if sys.byteorder == "little":
     # i386 has specific stack alignment requirements.

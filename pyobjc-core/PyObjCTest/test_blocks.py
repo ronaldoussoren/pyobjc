@@ -30,6 +30,25 @@ objc.registerMetaDataForSelector(
         }
     },
 )
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"callVectorBlock:",
+    {
+        "arguments": {
+            2
+            + 0: {
+                "callable": {
+                    "retval": {"type": b"@"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"<2f>"},
+                    },
+                },
+            },
+        },
+    },
+)
+
 
 # The metadata for this method has been disabled
 # intentionally, the compiler adds metadata to the
@@ -1282,3 +1301,13 @@ class TestInvalidCalling(TestCase):
 
         with self.assertRaisesRegex(TypeError, "New value must be a method signature"):
             block.__block_signature__ = None
+
+
+class TestBlocksWithSIMD(TestCase):
+    def test_calling_block(self):
+        # This is fine for now, Cocoa frameworks don't have such blocks.
+        o = OCTestBlock.alloc().init()
+        with self.assertRaisesRegex(
+            NotImplementedError, "Vector types not supported by libffi caller"
+        ):
+            o.callVectorBlock_(lambda x: str(x))

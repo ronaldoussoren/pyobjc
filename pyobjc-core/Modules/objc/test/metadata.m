@@ -932,6 +932,23 @@ typedef id (*callfunc)(void);
     return [NSArray arrayWithObjects:fmt, [NSString stringWithUTF8String:buffer], NULL];
 }
 
+- (NSArray*)makeArrayFromBuffer:(void*)value withFormat:(NSString*)fmt, ...
+{
+    va_list ap;
+    char    buffer[2048];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
+    va_start(ap, fmt);
+    vsnprintf(buffer, sizeof(buffer), [fmt UTF8String], ap);
+    va_end(ap);
+
+#pragma clang diagnostic pop
+
+    return [NSArray arrayWithObjects:fmt, [NSString stringWithUTF8String:buffer], NULL];
+}
+
 #pragma GCC diagnostic push
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"
@@ -1081,6 +1098,27 @@ typedef id (*callfunc)(void);
 
     while (value != nil) {
         [result addObject:value];
+
+        value = va_arg(ap, id);
+    }
+
+    va_end(ap);
+    return result;
+}
+
+- (NSArray* _Nullable)makeArrayWithRepeats:(int)repeat values:(id)value, ...
+{
+    va_list         ap;
+    NSMutableArray* result = [NSMutableArray array];
+    if (!result)
+        return nil;
+
+    va_start(ap, value);
+
+    while (value != nil) {
+        for (int i = 0; i < repeat; i++) {
+            [result addObject:value];
+        }
 
         value = va_arg(ap, id);
     }

@@ -1,5 +1,6 @@
 #include "Python.h"
 #include "pyobjc-api.h"
+#include <simd/simd.h>
 
 #import <Foundation/Foundation.h>
 
@@ -65,6 +66,10 @@ static int (^gIntBlock)(void) = nil;
     return self;
 }
 
+- (id)callVectorBlock:(id (^)(vector_float2))block
+{
+    return block((vector_float2){1, 2});
+}
 - (NSRect (^)(double, double, double, double))getStructBlock
 {
     return [[^(double a, double b, double c, double d) {

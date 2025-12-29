@@ -166,6 +166,18 @@ def setupMetaData():
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"makeArrayFromBuffer:withFormat:",
+        {
+            "variadic": True,
+            "arguments": {
+                2 + 0: {"type_modifier": b"n", "c_array_of_fixed_length": 4},
+                2 + 1: {"printf_format": True},
+            },
+        },
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"makeArrayWithArguments:",
         {
             "variadic": True,
@@ -187,6 +199,11 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeNullDelimitedObjectArray:",
+        {"variadic": True, "c_array_delimited_by_null": True},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeArrayWithRepeats:values:",
         {"variadic": True, "c_array_delimited_by_null": True},
     )
     objc.registerMetaDataForSelector(
@@ -1888,6 +1905,14 @@ class TestPrintfFormat(TestCase):
             v = NSPredicate.predicateWithFormat_("%K like %@", "key", "value")
             self.assertEqual(repr(v), 'key LIKE "value"')
 
+    def test_printf_with_byref(self):
+        o = OC_MetaDataTest.new()
+
+        with self.assertRaisesRegex(
+            TypeError, "printf format with by-ref args not supported"
+        ):
+            o.makeArrayFromBuffer_withFormat_(b"1234", "%.2f", 22 / 7)
+
 
 class TestVariadic(TestCase):
     def testRaises(self):
@@ -1959,6 +1984,20 @@ class TestVariadicNullDelimited(TestCase):
         v = o.makeNullDelimitedObjectArray_(None)
         self.assertEqual(v, [])
 
+        with self.assertRaisesRegex(
+            TypeError, "At most 64 arguments are supported, got 200 arguments"
+        ):
+            o.makeNullDelimitedObjectArray_(*(["a"] * 200))
+
+    def test_repeated_object(self):
+        o = OC_MetaDataTest.new()
+
+        v = o.makeArrayWithRepeats_values_(2, "a", "b", "c", "d")
+        self.assertEqual(v, ["a", "a", "b", "b", "c", "c", "d", "d"])
+
+        with self.assertRaisesRegex(TypeError, "Need at least 1 arguments, got 0"):
+            o.makeArrayWithRepeats_values_()
+
     def test_int(self):
         o = OC_MetaDataTest.new()
 
@@ -1977,6 +2016,10 @@ class TestIgnore(TestCase):
 
         with self.assertRaisesRegex(TypeError, "please ignore me"):
             o.ignoreMethod()
+
+        m = o.methodForSelector_(b"ignoreMethod")
+        with self.assertRaisesRegex(TypeError, "please ignore me"):
+            m(o)
 
     def testClassmethods(self):
         self.assertResultIsBOOL(OC_MetaDataTest.boolClassMethod)
