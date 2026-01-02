@@ -1262,6 +1262,72 @@ PyErr_Clear();
 
 END_UNITTEST
 
+BEGIN_UNITTEST(Pythonify)
+/* Some edge cases that aren't hit in regular code */
+int       buffer[2] = {1, 2};
+PyObject* o         = pythonify_c_value("[2x]", buffer);
+ASSERT(o == NULL);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("Unhandled type"));
+PyErr_Clear();
+
+o = pythonify_c_value("{struct=i", buffer);
+ASSERT(o == NULL);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("Invalid struct definition in type signature"));
+PyErr_Clear();
+
+char outbuf[256];
+int  r = depythonify_c_array_count("x", 0, YES, Py_None, outbuf, NO, NO);
+ASSERT(r == -1);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("of unknown type"));
+PyErr_Clear();
+
+r = depythonify_c_value("[2x]", Py_None, outbuf);
+ASSERT(r == -1);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("of unknown type"));
+PyErr_Clear();
+
+r = depythonify_c_value("{invalid=f", Py_None, outbuf);
+ASSERT(r == -1);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("invalid struct encoding"));
+PyErr_Clear();
+
+r = depythonify_c_value("{invalid=fx}", Py_None, outbuf);
+ASSERT(r == -1);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("Unhandled type"));
+PyErr_Clear();
+
+o = pythonify_c_value("(invalid=x)", outbuf);
+ASSERT(o == NULL);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("Unhandled type"));
+PyErr_Clear();
+
+o = pythonify_c_value("<33f>", outbuf);
+ASSERT(o == NULL);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("Unsupported SIMD encoding"));
+PyErr_Clear();
+
+r = depythonify_c_value("<33f>", Py_None, outbuf);
+ASSERT(r == -1);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("Unsupported SIMD encoding"));
+PyErr_Clear();
+
+r = depythonify_c_value("x", Py_None, outbuf);
+ASSERT(r == -1);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("depythonifying unknown typespec"));
+PyErr_Clear();
+
+END_UNITTEST
+
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
 
                                     TESTDEF(VectorSize),
@@ -1305,6 +1371,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(NoKwNames),
                                     TESTDEF(PyObjC_NSMethodSignatureToTypeString_Errors),
                                     TESTDEF(SkippingTypeSpec),
+                                    TESTDEF(Pythonify),
                                     {0, 0, 0, 0}};
 
 int

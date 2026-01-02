@@ -961,6 +961,24 @@ class TestMisCConversions(TestCase):
                 ):
                     objc.repythonify(object(), encoding)
 
+    def test_invalid_struct(self):
+        with self.assertRaisesRegex(objc.error, "invalid struct encoding"):
+            objc.repythonify([1, 2], type=b"{name=[2f]")
+
+        with self.assertRaisesRegex(
+            objc.error, r"Invalid array definition in type signature: \[2f}"
+        ):
+            objc.repythonify([1, 2], type=b"{name=[2f}")
+
+        with self.assertRaisesRegex(objc.error, r"Unhandled type"):
+            objc.repythonify([1, 2], type=b"{name=[2x]}")
+
+        with self.assertRaisesRegex(objc.error, r"Unhandled type"):
+            objc.repythonify([1, 2], type=b"{name=fx}")
+
+        y = objc.repythonify([1, 2], type=b"{name=ff}44")
+        self.assertEqual(y, (1.0, 2.0))
+
 
 class TestConvertNegativeToUnsigedWarns(TestCase):
     def test_repythonify_negative_int(self):

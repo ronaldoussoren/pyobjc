@@ -268,7 +268,6 @@ sig_dealloc(PyObject* _self)
 
     if (self->signature) {
         PyMem_Free((char*)self->signature);
-        self->signature = NULL;
     }
 
     free_argdescr(self->rettype);
@@ -1815,6 +1814,7 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(
     descr->callableRetained  = meta->callableRetained;
 
     if (meta->modifier != '\0') {
+        assert(descr->type != NULL);
         if (descr->type[0] == _C_PTR && descr->type[1] == _C_VOID
             && descr->ptrType == PyObjC_kPointerPlain) {
 

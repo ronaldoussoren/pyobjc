@@ -360,13 +360,15 @@ class TestBasicArraySizes(TestCase):
         self.assertEqual(v, [])
 
         with self.assertRaisesRegex(
-            TypeError, "Don't know how to extract count from encoding: @"
+            TypeError,
+            "Don't know how to extract count from argument 2 with encoding: @",
         ):
             v = OC_ArgSizeInArg.id_array_(objc.lookUpClass("NSObject").new(), range(50))
 
     def test_float(self):
         with self.assertRaisesRegex(
-            TypeError, "Don't know how to extract count from encoding: f"
+            TypeError,
+            "Don't know how to extract count from argument 2 with encoding: f",
         ):
             OC_ArgSizeInArg.float_array_(5.0, range(50))
 
@@ -459,6 +461,7 @@ class TestIndirectArraySizes(TestCase):
 
     def test_float(self):
         with self.assertRaisesRegex(
-            TypeError, "Don't know how to extract count from encoding: f"
+            TypeError,
+            "Don't know how to extract count from argument 2 with encoding: f",
         ):
             OC_ArgSizeInArg.float_array_(5.0, range(50))

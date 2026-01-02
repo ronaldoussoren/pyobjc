@@ -589,8 +589,7 @@ PyObjC_MakeIMP(Class class, PyObject* sel)
     } else {
         PyErr_Clear();
 
-        retval =
-            PyObjCFFI_MakeIMPForSignature(methinfo, PyObjCSelector_GetSelector(sel), sel);
+        retval = PyObjCFFI_MakeIMPForSignature(methinfo, sel);
 
         if (retval == NULL && PyErr_ExceptionMatches(PyExc_NotImplementedError)) {
             PyObject* exc       = NULL;

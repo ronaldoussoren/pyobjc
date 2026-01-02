@@ -183,6 +183,22 @@ typedef id (*callfunc)(void);
     return func();
 }
 
+static id
+func(void)
+{
+    return @"hello";
+}
+
+- (callfunc)getFunction
+{
+    return func;
+}
+
+- (callfunc _Nullable)getNoFunction
+{
+    return NULL;
+}
+
 - (id (^)(int, float))getAnonBlock
 {
     return ^(int a, float b) {
@@ -232,6 +248,11 @@ typedef id (*callfunc)(void);
 }
 
 - (id)derefResultArgument:(int*)value
+{
+    return @"shouldn't happen";
+}
+
+- (id)derefResultArgument2:(int*)value
 {
     return @"shouldn't happen";
 }
@@ -505,10 +526,52 @@ typedef id (*callfunc)(void);
     }
 }
 
+- (void)fillRetainedArray:(id*)buffer count:(int)count class:(Class)class
+{
+    for (int i = 0; i < count; i++) {
+        buffer[i] = [[class alloc] init];
+    }
+}
+
+- (void)fillCFRetainedArray:(id*)buffer count:(int)count class:(Class)class
+{
+    for (int i = 0; i < count; i++) {
+        buffer[i] = [[class alloc] init];
+        CFRetain(buffer[i]);
+        [buffer[i] release];
+    }
+}
+
+- (int)fillRetainedArray2:(id*)buffer count:(int)count class:(Class)class
+{
+    for (int i = 0; i < count; i++) {
+        buffer[i] = [[class alloc] init];
+    }
+    return count;
+}
+
+- (int)fillCFRetainedArray2:(id*)buffer count:(int)count class:(Class)class
+{
+    for (int i = 0; i < count; i++) {
+        buffer[i] = [[class alloc] init];
+        CFRetain(buffer[i]);
+        [buffer[i] release];
+    }
+    return count;
+}
+
 - (void)fill4Tuple:(int*)data
 {
     int i;
     for (i = 0; i < 4; i++) {
+        data[i] = -i * i * i;
+    }
+}
+
+- (void)fill5Tuple:(int*)data
+{
+    int i;
+    for (i = 0; i < 5; i++) {
         data[i] = -i * i * i;
     }
 }
@@ -820,6 +883,38 @@ typedef id (*callfunc)(void);
     [obj fillArray:data count:count];
 }
 
++ (void)fillRetainedArray:(id*)data
+                    count:(int)count
+                    class:(Class)class
+                       on:(OC_MetaDataTest*)obj
+{
+    [obj fillRetainedArray:data count:count class:class];
+}
+
++ (void)fillCFRetainedArray:(id*)data
+                      count:(int)count
+                      class:(Class)class
+                         on:(OC_MetaDataTest*)obj
+{
+    [obj fillCFRetainedArray:data count:count class:class];
+}
+
++ (int)fillRetainedArray2:(id*)data
+                    count:(int)count
+                    class:(Class)class
+                       on:(OC_MetaDataTest*)obj
+{
+    return [obj fillRetainedArray2:data count:count class:class];
+}
+
++ (int)fillCFRetainedArray2:(id*)data
+                      count:(int)count
+                      class:(Class)class
+                         on:(OC_MetaDataTest*)obj
+{
+    return [obj fillCFRetainedArray2:data count:count class:class];
+}
+
 + (int)nullfillArray:(int*)data count:(int)count on:(OC_MetaDataTest*)obj
 {
     return [obj nullfillArray:data count:count];
@@ -1058,6 +1153,15 @@ typedef id (*callfunc)(void);
     return theValue;
 }
 
+- (void)fillVariableLengthBuffer:(int*)array halfCount:(int)cnt
+{
+    int i;
+
+    for (i = 0; i < cnt * 2; i++) {
+        array[i] = i * i;
+    }
+}
+
 - (NSArray*)makeVariableLengthArray:(int*)array halfCount:(int)cnt
 {
     cnt *= 2;
@@ -1140,6 +1244,25 @@ typedef id (*callfunc)(void);
         [result addObject:[NSNumber numberWithInt:value]];
 
         value = va_arg(ap, int);
+    }
+
+    va_end(ap);
+    return result;
+}
+
+- (NSArray* _Nullable)makeInvalidCountedArray:(float)count values:(id)value, ...
+{
+    va_list         ap;
+    int             i;
+    NSMutableArray* result = [NSMutableArray array];
+    if (!result)
+        return nil;
+
+    va_start(ap, value);
+
+    for (i = 0; i < (int)count; i++) {
+        [result addObject:value];
+        value = va_arg(ap, id);
     }
 
     va_end(ap);

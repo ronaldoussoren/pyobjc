@@ -1269,10 +1269,9 @@ static struct StructTypeObject StructTemplate_Type = {
         },
     .pack = -1};
 
-PyObject*
-PyObjC_MakeStructType(const char* name, const char* _Nullable doc, Py_ssize_t numFields,
-                      const char* _Nonnull* _Nonnull fieldnames, const char* typestr,
-                      Py_ssize_t pack)
+static PyObject* _Nullable PyObjC_MakeStructType(
+    const char* name, const char* _Nullable doc, Py_ssize_t numFields,
+    const char* _Nonnull* _Nonnull fieldnames, const char* typestr, Py_ssize_t pack)
 {
     struct StructTypeObject* result;
     PyMemberDef*             members;
@@ -1409,6 +1408,7 @@ PyObjC_MakeStructType(const char* name, const char* _Nullable doc, Py_ssize_t nu
 PyMutex registry_mutex = {0};
 #endif
 static PyObject* _Nonnull structRegistry = (PyObject* _Nonnull)NULL;
+static PyObject* _Nonnull allStructs     = (PyObject* _Nonnull)NULL;
 
 int
 PyObjC_DropRegisteredStruct(PyObject* key)
@@ -1607,7 +1607,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
                 return NULL;
             }
 
-            sigcur = PyObjCRT_NextField(sigcur);
+            sigcur = PyObjCRT_SkipTypeSpec(sigcur);
             if (sigcur == NULL) {
                 return NULL;
             }
@@ -1633,7 +1633,7 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
                 sigcur                                       = end + 1;
             } // LCOV_BR_EXCL_LINE
             numFields++;
-            sigcur = PyObjCRT_NextField(sigcur);
+            sigcur = PyObjCRT_SkipTypeSpec(sigcur);
             assert(sigcur != NULL);
         }
         fieldnames[numFields] = NULL;
@@ -1781,8 +1781,17 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
         // LCOV_EXCL_STOP
         goto exit; // LCOV_EXCL_LINE
     }
-    Py_DECREF(py_signature);
 
+    if (PySet_Add(allStructs, structType) == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        (void)PyDict_DelItem(structRegistry, py_signature);
+        Py_DECREF(py_signature);
+        structType = NULL;
+        // LCOV_EXCL_STOP
+        goto exit; // LCOV_EXCL_LINE
+    }
+
+    Py_DECREF(py_signature);
 exit:
 #ifdef Py_GIL_DISABLED
     PyMutex_Unlock(&registry_mutex);
@@ -1798,6 +1807,14 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
     int  r;
     int  retval = 0;
 
+    switch (PySet_Contains(allStructs, structType)) { // LCOV_BR_EXCL_LINE
+    case -1:
+        return -1; // LCOV_EXCL_LINE
+    case 0:
+        PyErr_Format(PyExc_ValueError, "%R is not a struct type", structType);
+        return -1;
+    }
+
     if (strlen(signature) > 1023) {
         PyErr_SetString(PyExc_ValueError, "typestr too long");
         return -1;
@@ -1806,10 +1823,6 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
         return -1;
     }
 
-    if (!PyObject_HasAttr(structType, PyObjCNM___typestr__)) {
-        PyErr_SetString(PyExc_TypeError, "struct type is not valid");
-        return -1;
-    }
     /* XXX: This should check that the two structs have a
      * compatible encoding (some number of fields, compatible types)
      */
@@ -1923,11 +1936,18 @@ PyObjCStruct_Init(PyObject* module __attribute__((__unused__)))
         return -1;                          // LCOV_EXCL_LINE
     }
 
+    allStructs = PySet_New(NULL);
+    if (unlikely(allStructs == NULL)) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(structRegistry);      // LCOV_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    }
+
     PyObjCMethodSignature* signature =
         PyObjCMethodSignature_WithMetaData("i^v^v^v", NULL, YES);
     if (unlikely(signature == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(structRegistry);
+        Py_DECREF(allStructs);
         structRegistry = (PyObject* _Nonnull)NULL;
         return -1;
         // LCOV_EXCL_STOP
@@ -1938,6 +1958,7 @@ PyObjCStruct_Init(PyObject* module __attribute__((__unused__)))
     if (unlikely(temp_cif == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(structRegistry);
+        Py_DECREF(allStructs);
         structRegistry = (PyObject* _Nonnull)NULL;
         return -1;
         // LCOV_EXCL_STOP

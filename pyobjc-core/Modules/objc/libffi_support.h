@@ -34,8 +34,7 @@ extern ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature*);
 extern IMP _Nullable PyObjCFFI_MakeClosure(PyObjCMethodSignature*, PyObjCFFI_ClosureFunc,
                                            void*);
 extern void* PyObjCFFI_FreeClosure(IMP);
-extern IMP _Nullable PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature*, SEL,
-                                                   PyObject*);
+extern IMP _Nullable PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature*, PyObject*);
 extern IMP _Nullable PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector*);
 extern PyObject* _Nullable PyObjCFFI_Caller(PyObject*, PyObject*,
                                             PyObject* _Nonnull const* _Nonnull, size_t);
@@ -62,9 +61,6 @@ extern void PyObjCFFI_FreeByRef(Py_ssize_t, void* _Nullable* _Nonnull,
 extern ffi_type* _Nullable PyObjCFFI_Typestr2FFI(const char*);
 extern PyObjC_callback_function _Nullable PyObjCFFI_MakeFunctionClosure(
     PyObjCMethodSignature*, PyObject*);
-extern Py_ssize_t validate_callable_signature(PyObject* callable, SEL sel,
-                                              PyObjCMethodSignature* methinfo);
-
 extern int PyObjCFFI_CallUsingInvocation(IMP method, NSInvocation* invocation);
 
 /*

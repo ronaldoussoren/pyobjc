@@ -294,6 +294,8 @@ PyAPI_FUNC(PyObject* _Nullable) PySequence_Tuple(PyObject* o)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PySet_Add(PyObject* set, PyObject* key)
     __attribute__((warn_unused_result));
+PyAPI_FUNC(int) PySet_Contains(PyObject* set, PyObject* key)
+    __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PySet_Clear(PyObject* set) __attribute__((warn_unused_result));
 PyAPI_FUNC(int) PySet_Discard(PyObject* set, PyObject* key)
     __attribute__((warn_unused_result));

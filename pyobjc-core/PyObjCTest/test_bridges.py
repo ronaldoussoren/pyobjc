@@ -19,6 +19,10 @@ class TestBridges(TestCase):
     # the default registrations (which are made through those two
     # functions) work properly.
 
+    def test_object(self):
+        v = NSMutableArray
+        self.assertIs(classOfProxy(v), v)
+
     def test_range(self):
         v = range(0, 10)
         self.assertIsSubclass(classOfProxy(v), NSMutableArray)

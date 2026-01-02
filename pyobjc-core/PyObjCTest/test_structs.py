@@ -1037,9 +1037,7 @@ class TestStructs(TestCase):
         ):
             objc.createStructType("InvStruct", b'{_FooStruct="af}', None)
 
-        with self.assertRaisesRegex(
-            ValueError, "invalid signature: unknown type coding 0x21"
-        ):
+        with self.assertRaisesRegex(objc.error, "Unhandled type"):
             objc.createStructType("InvStruct", b'{_FooStruct="a"f"b"!"c"q}', None)
 
         with self.assertRaisesRegex(
@@ -1131,7 +1129,7 @@ class TestStructAlias(TestCase):
         ):
             objc.registerStructAlias("{foo=ff}")
 
-        with self.assertRaisesRegex(TypeError, "struct type is not valid"):
+        with self.assertRaisesRegex(ValueError, "None is not a struct type"):
             objc.registerStructAlias(b"{foo=ff}", None)
 
         with self.assertRaisesRegex(ValueError, "typestr too long"):
@@ -1160,6 +1158,13 @@ class TestStructAlias(TestCase):
 
         v = objc.repythonify((1, 2, 3), b"{_OtherShaped=fff}")
         self.assertEqual(v, GlobalType(1, 2))
+
+    def test_alias_for_invalid_type(self):
+        class MyStruct:
+            __typestr__ = b"{name=ff}"
+
+        with self.assertRaisesRegex(ValueError, "MyStruct.*is not a struct type"):
+            objc.registerStructAlias(b"{invalid=ff}", MyStruct)
 
     def test_gc(self):
         flag = False

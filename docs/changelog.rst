@@ -56,6 +56,19 @@ Version 12.2
 * Rewrite the construction of objects representing method and function metadata, this should result in
   (slightly) less memory usage.
 
+* Fix error message for invalid argument to a callable with a variable length output buffer argument.
+
+* Fix error handlign for incomplete struct encodings.
+
+* Raise better error when specifying a negative array size for (Objective-)C arguments
+  where the size of a buffer is passed as one of the arguments to a method or function.
+
+  A side effect of this is that a number of manual bindings no longer support passing
+  -1 as the size of a buffer to derive the size from the Python sequence.
+
+* A Python implementation for a method that returns ``void`` and has a single output
+  parameter used to leak a reference to the return value.
+
 Version 12.1
 ------------
 

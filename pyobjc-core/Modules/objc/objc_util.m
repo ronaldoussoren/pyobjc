@@ -905,6 +905,10 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
     if (eltsize == -1) {
         return -1;
     }
+    if (size != NULL && *size < 0) {
+        PyErr_SetString(PyObjCExc_Error, "array with negative size");
+        return -1;
+    }
     if (eltsize == 0 && ((elementType[0] == _C_STRUCT_B || elementType[0] == _C_ARY_B))) {
         PyErr_Format(PyExc_ValueError, "0 sized struct or array: %s", elementType);
         return -1;
@@ -964,8 +968,9 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                     return -1;                      // LCOV_EXCL_LINE
                 }
 
-                if (unlikely(PyObject_GetBuffer(byte_array, view, PyBUF_CONTIG)
-                             == -1)) { // LCOV_BR_EXCL_LINE
+                if (unlikely(PyObject_GetBuffer( // LCOV_BR_EXCL_LINE
+                                 byte_array, view, PyBUF_CONTIG)
+                             == -1)) {
                     // LCOV_EXCL_START
                     Py_DECREF(byte_array);
                     return -1;
@@ -981,12 +986,6 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         if (have_buffer != -1) {
             if (size == NULL) {
                 *array  = view->buf;
-                *bufobj = pythonList;
-                Py_INCREF(pythonList);
-
-            } else if (*size == -1) {
-                *array  = view->buf;
-                *size   = view->len;
                 *bufobj = pythonList;
                 Py_INCREF(pythonList);
 
@@ -1023,8 +1022,6 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
 
         if (size == NULL) {
             /* pass */
-        } else if (*size == -1) {
-            *size = bufsize;
 
         } else if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
             /* NOTE: The size check is performed after the conversion to UTF16 to avoid
@@ -1159,9 +1156,6 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         if (size == NULL) {
             /* pass */
 
-        } else if (*size == -1) {
-            *size = view->len / eltsize;
-
         } else {
             Py_ssize_t bufsize = view->len / eltsize;
 
@@ -1202,7 +1196,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         }
 
         seqlen = PyTuple_GET_SIZE(seq);
-        if (size == NULL || *size == -1) {
+        if (size == NULL) {
             pycount = seqlen;
 
         } else {
@@ -1273,6 +1267,9 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
     }
 }
 
+/* XXX: Function is only used in a test module and some framework bindings,
+ *      drop entire function and replace with PyObjC_CArrayToPython2
+ */
 PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, const void* array,
                                           Py_ssize_t size)
 {
@@ -1310,9 +1307,11 @@ PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, const void* a
 
     for (i = 0; i < size; i++) {
         PyObject* elt = pythonify_c_value(elementType, array);
-        if (elt == NULL) {
+        if (elt == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         PyTuple_SET_ITEM(result, i, elt);
@@ -1385,10 +1384,9 @@ PyObject* _Nullable PyObjC_CArrayToPython2(const char* elementType, const void* 
     Py_ssize_t i;
     Py_ssize_t eltsize;
 
-    if (size == -1) {
-        /* XXX: Can this happen? */
-        size = 0;
-    }
+    assert(size >= 0);
+    assert(array != NULL);
+    assert(elementType != NULL);
 
     eltsize = PyObjCRT_SizeOfType(elementType);
     if (unlikely(eltsize == -1)) { // LCOV_BR_EXCL_LINE
@@ -1494,8 +1492,15 @@ PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_
 
 PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object)
 {
-    if (PyType_Check(object)
-        && PyType_IsSubtype((PyTypeObject*)object, &PyObjCClass_Type)) {
+    /* XXX: This function is a noop, all paths converting from ObjC to Python
+     *      should already (implicitly) check for meta classes.
+     *
+     *      Do a full analysis before removing this function.
+     */
+    if (PyType_Check(object) // LCOV_BR_EXCL_LINE
+        && PyType_IsSubtype( // LCOV_BR_EXCL_LINE
+            (PyTypeObject*)object, &PyObjCMetaClass_Type)) {
+        // LCOV_EXCL_START
         PyObject* temp = PyObjCClass_ClassForMetaClass(object);
         if (temp == NULL) {
             Py_DECREF(object);
@@ -1505,7 +1510,8 @@ PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object)
         Py_INCREF(temp);
         Py_DECREF(object);
         return temp;
-    }
+        // LCOV_EXCL_STOP
+    } // LCOV_EXCL_LINE
     return object;
 }
 
@@ -1679,8 +1685,8 @@ exit:
             if (*buf == '"') {
                 /* embedded field name */
                 buf = strchr(buf + 1, '"');
-                if (buf == NULL) {
-                    return -1;
+                if (buf == NULL) { // LCOV_BR_EXCL_LINE
+                    return -1;     // LCOV_EXCL_LINE
                 }
                 buf++;
             }
@@ -1700,15 +1706,15 @@ exit:
             if (*buf == '"') {
                 /* embedded field name */
                 buf = strchr(buf + 1, '"');
-                if (buf == NULL) {
-                    return -1;
+                if (buf == NULL) { // LCOV_BR_EXCL_LINE
+                    return -1;     // LCOV_EXCL_LINE
                 }
                 buf++;
             }
             tc2tc(buf);
             char* new_buf = (char*)PyObjCRT_SkipTypeSpec(buf);
-            if (new_buf == NULL) {
-                return -1;
+            if (new_buf == NULL) { // LCOV_BR_EXCL_LINE
+                return -1;         // LCOV_EXCL_LINE
             }
             buf = new_buf;
         }

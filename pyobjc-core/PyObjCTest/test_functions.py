@@ -565,6 +565,9 @@ class TestFunctions(TestCase):
 
         self.assertArgHasType(m["double_integer"], 0, b"N^i")
 
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str' of 3"):
+            m["add_integers"]("one", "two")
+
     def test_function_byref_edgecases(self):
         with self.subTest("in void*, no specials"):
             m = {}

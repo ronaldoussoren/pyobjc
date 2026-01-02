@@ -789,171 +789,6 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
     return type;
 }
 
-/* XXX: How is this different from SKipTypeSpec (prev. function) */
-const char* _Nullable PyObjCRT_NextField(const char* start_type)
-{
-    assert(start_type != NULL);
-
-    const char* type = start_type;
-
-    type = PyObjCRT_SkipTypeQualifiers(type);
-
-    switch (*type) { // LCOV_BR_EXCL_LINE
-    /* The following are one character type codes */
-    case _C_UNDEF:
-    case _C_CLASS:
-    case _C_SEL:
-    case _C_CHR:
-    case _C_UCHR:
-    case _C_CHARPTR:
-#ifdef _C_ATOM
-    case _C_ATOM:
-#endif
-    case _C_BOOL:
-    case _C_NSBOOL:
-    case _C_SHT:
-    case _C_USHT:
-    case _C_INT:
-    case _C_UINT:
-    case _C_LNG:
-    case _C_ULNG:
-    case _C_FLT:
-    case _C_DBL:
-    case _C_LNG_DBL:
-    case _C_VOID:
-    case _C_LNG_LNG:
-    case _C_ULNG_LNG:
-    case _C_UNICHAR:
-    case _C_CHAR_AS_TEXT:
-    case _C_CHAR_AS_INT:
-    case _C_BFLD: /* Not really 1 character, but close enough  */
-        ++type;
-        break;
-
-    case _C_ID:
-        ++type;
-        break;
-
-    case _C_ARY_B:
-        /* skip digits, typespec and closing ']' */
-
-        while (isdigit(*++type))
-            ;
-        type = (const char* _Nonnull)PyObjCRT_SkipTypeSpec(type);
-        if (unlikely(type == NULL)) {
-            if (!PyErr_Occurred()) {
-                /* XXX: Can this happen? */
-                PyErr_SetString(PyObjCExc_InternalError,
-                                "Unexpected NULL while parsing array encoding type");
-            }
-            return NULL;
-        } else if (unlikely(*type != _C_ARY_E)) {
-            PyErr_Format(PyObjCExc_InternalError,
-                         "PyObjCRT_SkipTypeSpec: Got '0x%x' at end of array encoding, "
-                         "expecting '0x%x'",
-                         *type, _C_ARY_E);
-            return NULL;
-        }
-        if (type)
-            type++;
-        break;
-
-    case _C_STRUCT_B:
-        /* skip name, and elements until closing '}'  */
-        while (*type && *type != _C_STRUCT_E && *type++ != '=')
-            ;
-        while (type && *type && *type != _C_STRUCT_E) {
-            if (*type == '"') {
-                /* embedded field names */
-                type = strchr(type + 1, '"');
-                if (type != NULL) {
-                    type++;
-                } else {
-                    PyErr_SetString(PyObjCExc_InternalError,
-                                    "Struct encoding with invalid embedded field name");
-                    return NULL;
-                }
-            }
-            type = PyObjCRT_SkipTypeSpec(type);
-        }
-        if (unlikely(type == NULL)) {
-            if (!PyErr_Occurred()) {
-                PyErr_SetString(PyObjCExc_InternalError,
-                                "Unexpected NULL while parsing struct encoding type");
-            }
-            return NULL;
-        } else if (unlikely(*type != _C_STRUCT_E)) {
-            PyErr_Format(PyObjCExc_InternalError,
-                         "PyObjCRT_SkipTypeSpec: Got '0x%x' at end of struct encoding, "
-                         "expecting '0x%x'",
-                         *type, _C_STRUCT_E);
-            return NULL;
-        }
-        type++;
-        break;
-
-    case _C_UNION_B:
-        /* skip name, and elements until closing ')'  */
-        while (*type && *type != _C_UNION_E && *type++ != '=')
-            ;
-        while (type && *type && *type != _C_UNION_E) {
-            if (*type == '"') {
-                /* embedded field names */
-                type = strchr(type + 1, '"');
-                if (type != NULL) {
-                    type++;
-                } else {
-                    return NULL;
-                }
-            }
-            type = PyObjCRT_SkipTypeSpec(type);
-        }
-        if (unlikely(type == NULL)) {
-            if (!PyErr_Occurred()) {
-                PyErr_SetString(PyObjCExc_InternalError,
-                                "Unexpected NULL while parsing union encoding type");
-            }
-            return NULL;
-        } else if (unlikely(*type != _C_UNION_E)) {
-            PyErr_Format(PyObjCExc_InternalError,
-                         "PyObjCRT_SkipTypeSpec: Got '0x%x' at end of union encoding, "
-                         "expecting '0x%x'",
-                         *type, _C_UNION_E);
-            return NULL;
-        }
-        break;
-
-    case _C_PTR:
-    case _C_CONST:
-    case _C_IN:
-    case _C_INOUT:
-    case _C_OUT:
-    case _C_BYCOPY:
-    case _C_BYREF:
-    case _C_ONEWAY:
-
-        /* Just skip the following typespec */
-        type = PyObjCRT_NextField(type + 1);
-        if (type == NULL) {
-            return NULL;
-        }
-        break;
-
-    default:
-        PyErr_Format(PyExc_ValueError, "invalid signature: unknown type coding 0x%x",
-                     (int)*type);
-        return NULL;
-    }
-
-    /* The compiler inserts a number after the actual signature,
-     * this number may or may not be useful depending on the compiler
-     * version. We never use it.
-     */
-    while (type && *type && isdigit(*type))
-        type++;
-    return type;
-}
-
 Py_ssize_t
 PyObjCRT_AlignOfType(const char* start_type)
 {
@@ -1676,21 +1511,19 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datu
 
         nitems = 0;
         item   = type;
+        /* Note that the start of this function already scans
+         * the entire encoding, the cannot be invalid or incomplete
+         * definitions in the struct at this point.
+         */
         while (*item != _C_STRUCT_E) {
             nitems++;
             if (*item == '"') {
                 item = strchr(item + 1, '"');
-                if (item == NULL) {
-                    PyErr_SetString(PyObjCExc_InternalError,
-                                    "Struct encoding with invalid embedded field");
-                    return NULL;
-                }
+                assert(item != NULL);
                 item++;
             }
             item = PyObjCRT_SkipTypeSpec(item);
-            if (item == NULL) {
-                return NULL;
-            }
+            assert(item != NULL);
         }
 
         haveTuple = 1;
@@ -1720,15 +1553,8 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datu
 
         if (*item == '"') {
             item = strchr(item + 1, '"');
-            if (item == NULL) {
-                /* Invalid embedded name */
-                PyErr_Format(PyObjCExc_InternalError,
-                             "Encoding with invalid embedded name");
-                Py_DECREF(ret);
-                return NULL;
-            } else {
-                item++;
-            }
+            assert(item != NULL);
+            item++;
         }
 
         if (!have_align) {
@@ -1747,7 +1573,7 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datu
 
         pyitem = pythonify_c_value(item, ((char*)datum) + offset);
 
-        if (pyitem) {
+        if (likely(pyitem)) {
             if (haveTuple) {
                 PyTuple_SET_ITEM(ret, itemidx, pyitem);
 
@@ -1756,9 +1582,15 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datu
                 r = PyObjC_SetStructField(ret, itemidx, pyitem);
                 Py_DECREF(pyitem);
 
-                if (r == -1) {
+                if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+                    /* The type encoding is fetched from
+                     * the struct type and therefore consistent
+                     * with it.
+                     */
+                    // LCOV_EXCL_START
                     Py_DECREF(ret);
                     return NULL;
+                    // LCOV_EXCL_START
                 }
             }
 
@@ -1770,9 +1602,12 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, const void* datu
         itemidx++;
         offset += PyObjCRT_SizeOfType(item);
         item = PyObjCRT_SkipTypeSpec(item);
-        if (item == NULL) {
+        if (unlikely(item == NULL)) { // LCOV_BR_EXCL_LINE
+            /* Encoding was validated earlier */
+            // LCOV_EXCL_START
             Py_DECREF(ret);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 
@@ -2107,12 +1942,12 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
         return depythonify_nsdecimal(arg, datum);
     }
 
-    while (*types != _C_STRUCT_E && *types++ != '=')
+    while (*types != '\0' && *types != _C_STRUCT_E && *types++ != '=')
         ; /* skip "<name>=" */
 
     type   = types;
     nitems = 0;
-    while (*type != _C_STRUCT_E) {
+    while (*type != '\0' && *type != _C_STRUCT_E) {
         if (*type == '"') {
             type = strchr(type + 1, '"');
             type++;
@@ -2122,6 +1957,11 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
         if (type == NULL) {
             return -1;
         }
+    }
+
+    if (*type != _C_STRUCT_E) {
+        PyErr_SetString(PyObjCExc_Error, "invalid struct encoding");
+        return -1;
     }
 
     if (PyObjCStruct_Check(arg)) {
@@ -2144,7 +1984,7 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
     type   = types;
     offset = itemidx = 0;
 
-    while (*type != _C_STRUCT_E) {
+    while (*type != _C_STRUCT_E && *type != '\0') {
         PyObject* argument;
 
         if (*type == '"') {
@@ -2177,8 +2017,9 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
         itemidx++;
         offset += PyObjCRT_SizeOfType(type);
         type = PyObjCRT_SkipTypeSpec(type);
-        if (type == NULL) {
-            return -1;
+        if (type == NULL) { // LCOV_BR_EXCL_LINE
+            /* This is the second pass over the encoding */
+            return -1; // LCOV_EXCL_LINE
         }
     }
     Py_DECREF(seq);
@@ -2379,11 +2220,11 @@ pythonify_c_value(const char* type, const void* datum)
             return NULL;
         }
         PyObject* args = info->as_tuple(datum);
-        if (args == NULL) {
-            return NULL;
+        if (args == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;    // LCOV_EXCL_LINE
         }
-        if (info->pytype == NULL) {
-            return args;
+        if (info->pytype == NULL) { // LCOV_BR_EXCL_LINE
+            return args;            // LCOV_EXCL_LINE
         } else {
             PyObject* retval = PyObject_Call(info->pytype, args, NULL);
             Py_DECREF(args);

@@ -2015,7 +2015,10 @@ carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
     }
 
     if (o2 == Py_None) {
-        buflen = -1;
+        buflen = PyObject_Length(o1);
+        if (buflen == -1) {
+            return NULL;
+        }
     } else {
         r = PyObjC_PythonToObjC(@encode(Py_ssize_t), o2, &buflen);
         if (r == -1) {

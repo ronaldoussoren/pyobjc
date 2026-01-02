@@ -65,6 +65,14 @@
     return buffer;
 }
 
+struct objectvalue {
+    id value;
+};
+- (struct objectvalue)unpythonificStruct
+{
+    return (struct objectvalue){[[[OC_NoPythonRepresentation alloc] init] autorelease]};
+}
+
 + (id)invokeSelector:(SEL)sel of:(NSObject*)object
 {
     return ((id (*)(id, SEL))objc_msgSend)(object, sel);

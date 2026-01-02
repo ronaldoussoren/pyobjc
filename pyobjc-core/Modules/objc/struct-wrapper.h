@@ -25,24 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 /*!
- * @function PyObjC_MakeStructType
- * @abstract Create a mutable struct-like type
- * @param name       Name of the type, should include the module name
- * @param doc        Docstring for the type
- * @param numFields  Number of fields in the type
- * @param fieldnames Field names, there should be exactly numFields names.
- * @param pack       Value of 'pragma pack', use -1 for default packing
- * @result Returns a newly allocated type or NULL
- * @discussion
- *    The name, doc and fieldnames should be pointers to static strings,
- *    this function will not copy them.
- */
-PyObject* _Nullable PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
-                                          Py_ssize_t  numFields,
-                                          const char* _Nonnull* _Nonnull fieldnames,
-                                          const char* typestr, Py_ssize_t pack);
-
-/*!
  * @function PyObjC_RegisterStructType
  * @abstract Create a new struct-like type and register it with the bridge
  * @param signature  Objective-C signature for the struct

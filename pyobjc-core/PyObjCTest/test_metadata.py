@@ -34,6 +34,16 @@ class NoObjCClass:
         raise TypeError("Cannot proxy")
 
 
+deallocated = 0
+
+
+class ValueWithDealloc(NSObject):
+    def dealloc(self):
+        global deallocated
+        deallocated += 1
+        super().dealloc()
+
+
 def setupMetaData():
     # Note to self: what we think of as the first argument of a method is
     # actually the third one, the objc runtime implicitly passed 'self' and
@@ -82,7 +92,16 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"derefResultArgument:",
-        {"arguments": {2: {"deref_result_pointer": True, "type_modifier": "n"}}},
+        {"arguments": {2: {"deref_result_pointer": True, "type_modifier": objc._C_IN}}},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"derefResultArgument2:",
+        {
+            "arguments": {
+                2: {"deref_result_pointer": True, "type_modifier": objc._C_OUT}
+            }
+        },
     )
 
     objc.registerMetaDataForSelector(
@@ -101,6 +120,16 @@ def setupMetaData():
         {
             "arguments": {
                 2 + 0: {"c_array_of_variable_length": True, "type_modifier": objc._C_IN}
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillVariableLengthBuffer:halfCount:",
+        {
+            "arguments": {
+                2
+                + 0: {"c_array_of_variable_length": True, "type_modifier": objc._C_OUT}
             }
         },
     )
@@ -181,11 +210,16 @@ def setupMetaData():
         b"makeArrayWithArguments:",
         {
             "variadic": True,
-            "c_array_lenght_in_arg": "hello",
+            "c_array_length_in_arg": "hello",
             "c_array_delimited_by_null": True,
         },
     )
 
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeInvalidCountedArray:values:",
+        {"variadic": True, "c_array_length_in_arg": 2},
+    )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeCountedIntArray:values:",
@@ -569,6 +603,62 @@ def setupMetaData():
             }
         },
     )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillRetainedArray:count:class:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "already_retained": True,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillRetainedArray2:count:class:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "already_retained": True,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillCFRetainedArray:count:class:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "already_retained": True,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillCFRetainedArray2:count:class:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "already_retained": True,
+                }
+            }
+        },
+    )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
@@ -628,6 +718,20 @@ def setupMetaData():
                 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_of_fixed_length": 4,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fill5Tuple:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": -1,
                     "null_accepted": False,
                 }
             }
@@ -1003,6 +1107,18 @@ def setupMetaData():
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"getFunction",
+        {"retval": {"callable": {"args": {}, "retval": {"type": "@"}}}},
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"getNoFunction",
+        {"retval": {"callable": {"args": {}, "retval": {"type": "@"}}}},
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"storeIntFunc:",
         {
             "arguments": {
@@ -1096,6 +1212,13 @@ class TestArraysOut(TestCase):
         ):
             o.fill4Tuple_(a)
 
+        with self.assertRaisesRegex(objc.error, "array with negative size"):
+            a = array.array("i", [0] * 5)
+            o.fill5Tuple_(a)
+
+        with self.assertRaisesRegex(objc.error, "array with negative size"):
+            o.fill5Tuple_(None)
+
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
 
@@ -1140,6 +1263,19 @@ class TestArraysOut(TestCase):
         with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
             o.fillArray_count_(objc.NULL, 0)
 
+        with self.assertRaisesRegex(ValueError, "argument 0 must be None or objc.NULL"):
+            o.fillArray_count_(b"hello world", 4)
+
+        with self.assertRaisesRegex(ValueError, "negative count in argument 3"):
+            o.fillArray_count_(None, -2)
+
+        buf = array.array("i", (0, 0, 0, 0))
+        o.fillArray_count_(buf, 4)
+        self.assertEqual(buf[0], 0)
+        self.assertEqual(buf[1], 1)
+        self.assertEqual(buf[2], 4)
+        self.assertEqual(buf[3], 9)
+
         n, v = o.nullfillArray_count_(None, 4)
         self.assertEqual(n, 1)
         self.assertEqual(list(v), [0, 1, 4, 9])
@@ -1178,6 +1314,44 @@ class TestArraysOut(TestCase):
         c, v = o.maybeFillArray_(None)
         self.assertEqual(c, 2)
         self.assertEqual(list(v), [10, 11])
+
+    def test_array_retained(self):
+        o = OC_MetaDataTest.new()
+
+        before = deallocated
+        with objc.autorelease_pool():
+            v = o.fillRetainedArray_count_class_(None, 4, ValueWithDealloc)
+
+        self.assertEqual(deallocated, before)
+        del v
+        self.assertNotEqual(deallocated, before)
+
+        before = deallocated
+        with objc.autorelease_pool():
+            _, v = o.fillRetainedArray2_count_class_(None, 4, ValueWithDealloc)
+
+        self.assertEqual(deallocated, before)
+        del v
+        self.assertNotEqual(deallocated, before)
+
+    def test_array_cfretained(self):
+        o = OC_MetaDataTest.new()
+
+        before = deallocated
+        with objc.autorelease_pool():
+            v = o.fillCFRetainedArray_count_class_(None, 4, ValueWithDealloc)
+
+        self.assertEqual(deallocated, before)
+        del v
+        self.assertNotEqual(deallocated, before)
+
+        before = deallocated
+        with objc.autorelease_pool():
+            _, v = o.fillCFRetainedArray2_count_class_(None, 4, ValueWithDealloc)
+
+        self.assertEqual(deallocated, before)
+        del v
+        self.assertNotEqual(deallocated, before)
 
 
 class TestArraysInOut(TestCase):
@@ -1418,6 +1592,9 @@ class TestArraysIn(TestCase):
         with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
             o.makeIntArray_count_(objc.NULL, 1)
 
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str' of 5"):
+            o.makeIntArray_count_([1, 2, "three", 4], 4)
+
         v = o.nullIntArray_count_(objc.NULL, 0)
         self.assertEqual(v, None)
 
@@ -1444,7 +1621,8 @@ class TestArraysIn(TestCase):
         self.assertEqual(a, [10, 20, 30, 40])
 
         with self.assertRaisesRegex(
-            TypeError, "Don't know how to extract count from encoding: @"
+            TypeError,
+            "Don't know how to extract count from argument 3 with encoding: @",
         ):
             o.makeIntArray_sameSize_([10, 20, 30, 40, 50], NSObject.alloc().init())
 
@@ -1463,12 +1641,14 @@ class TestArraysIn(TestCase):
         self.assertEqual(a, ())
 
         with self.assertRaisesRegex(
-            TypeError, r"Don't know how to extract count from encoding: \^@"
+            TypeError,
+            r"Don't know how to extract count from argument 3 with encoding: \^@",
         ):
             o.makeIntArray_sameSizeAs_([10, 20, 30, 40, 50], NSObject.alloc().init())
 
         with self.assertRaisesRegex(
-            TypeError, "Don't know how to extract count from encoding: f"
+            TypeError,
+            "Don't know how to extract count from argument 3 with encoding: f",
         ):
             o.makeIntArray_floatcount_([10, 20, 30, 40, 50], 3.0)
 
@@ -1484,7 +1664,8 @@ class TestArraysIn(TestCase):
         )
 
         with self.assertRaisesRegex(
-            TypeError, "Don't know how to extract count from encoding: f"
+            TypeError,
+            "Don't know how to extract count from argument 3 with encoding: f",
         ):
             OC_MetaDataTest.makeIntArray_floatcount_on_([10, 20, 30, 40, 50], 3, obj)
 
@@ -1967,6 +2148,14 @@ class TestVariadicCounted(TestCase):
         ):
             o.makeCountedIntArray_values_(3, 10, 20, 30, 40, 50, 60)
 
+    def test_invalid_count(self):
+        o = OC_MetaDataTest.new()
+        with self.assertRaisesRegex(
+            TypeError,
+            "Don't know how to extract count from argument 2 with encoding: f",
+        ):
+            o.makeInvalidCountedArray_values_(4.2, 1, 2)
+
 
 class TestVariadicNullDelimited(TestCase):
     def test_object(self):
@@ -1997,6 +2186,9 @@ class TestVariadicNullDelimited(TestCase):
 
         with self.assertRaisesRegex(TypeError, "Need at least 1 arguments, got 0"):
             o.makeArrayWithRepeats_values_()
+
+        with self.assertRaisesRegex(TypeError, "Need at least 1 arguments, got 0"):
+            NSString.stringWithFormat_()
 
     def test_int(self):
         o = OC_MetaDataTest.new()
@@ -2560,6 +2752,19 @@ class TestVariableLengthValue(TestCase):
         result = o.makeVariableLengthBuffer_halfCount_(b"abcdef", 3)
         self.assertEqual(result, list(b"abcdef"))
 
+    def test_output(self):
+        o = OC_MetaDataTest.alloc().init()
+
+        buf = array.array("i", (0,) * 10)
+        result = o.fillVariableLengthBuffer_halfCount_(buf, 5)
+        self.assertIs(buf, result)
+        self.assertEqual(list(buf), [i * i for i in range(10)])
+
+        with self.assertRaisesRegex(
+            TypeError, "Need explicit buffer for variable-length array output argument"
+        ):
+            o.fillVariableLengthBuffer_halfCount_([0] * 3, 3)
+
 
 class TestVariadicArray(TestCase):
     def testObjects(self):
@@ -2790,6 +2995,11 @@ class TestMisc(TestCase):
         ):
             obj.derefResultArgument_(42)
 
+        with self.assertRaisesRegex(
+            objc.error, "using 'deref_result' metadata for an argument"
+        ):
+            obj.derefResultArgument2_(None)
+
         class OC_MetaDataTestDerefRresult(OC_MetaDataTest):
             def derefResultArgument_(self, value):
                 return [value]
@@ -2867,6 +3077,18 @@ class TestMisc(TestCase):
         v = OC_Object42.alloc().init()
 
         self.assertEqual(o.callFunction_(v.method), 99)
+
+    def test_function_result(self):
+        o = OC_MetaDataTest.alloc().init()
+
+        fun = o.getFunction()
+        self.assertEqual(fun(), "hello")
+
+        with self.assertRaisesRegex(TypeError, "Need 0 arguments, got 1"):
+            fun(1)
+
+        fun = o.getNoFunction()
+        self.assertIs(fun, None)
 
     def test_stored_function(self):
         self.assertArgIsFunction(OC_MetaDataTest.storeIntFunc_, 0, b"ii", True)

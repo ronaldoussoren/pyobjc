@@ -839,6 +839,15 @@ class TestOverridingSpecials(TestCase):
                 def method(self, *, arg):
                     pass
 
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "has keyword-only arguments without defaults"
+        ):
+
+            class OC_KwonlySelector2(NSObject):
+                @objc.selector
+                def method2(self, *, arg):
+                    pass
+
     def test_selector_too_few_defaults(self):
         with self.assertRaisesRegex(
             objc.BadPrototypeError, "has between 2 and 4 positional arguments"
@@ -846,6 +855,15 @@ class TestOverridingSpecials(TestCase):
 
             class OC_TooFewDefaults(NSObject):
                 def method_(self, arg, arg1, arg2=3, arg3=4):
+                    pass
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "has between 2 and 4 positional arguments"
+        ):
+
+            class OC_TooFewDefaults2(NSObject):
+                @objc.selector
+                def method2_(self, arg, arg1, arg2=3, arg3=4):
                     pass
 
 
@@ -1183,6 +1201,34 @@ class TestSelectorEdgeCases(TestCase):
 
             class OC_MismatchWithDefaults(NSObject):
                 def method_x_y_z_(self, a, b=3):
+                    pass
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "has between 1 and 2 positional arguments"
+        ):
+
+            class OC_MismatchWithDefaults2(NSObject):
+                @objc.selector
+                def method2_x_y_z_(self, a, b=3):
+                    pass
+
+    def test_implied_signature(self):
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "'method:' expects 1 arguments,.*has 2 positional"
+        ):
+
+            class OC_ImpliedSignature(NSObject):
+                def method_(self, a, b):
+                    pass
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError, "Objective-C expects 1 arguments,.*has 2 positional"
+        ):
+
+            class OC_ImpliedSignature2(NSObject):
+                @objc.selector
+                def method2_(self, a, b):
                     pass
 
     def test_no_keywords(self):
@@ -1737,3 +1783,44 @@ class TestSubclassOptions(TestCase):
 
             self.assertEqual(OCMRO.__dict__["__mro__"], 21)
             self.assertIsInstance(OCMRO.__mro__, tuple)
+
+
+class TestEncodings(TestCase):
+    def test_struct_with_embedded_field_names(self):
+        class OC_StructArgument(NSObject):
+            @objc.objc_method(signature=b'v@:{name="field"i}')
+            def structArgument_(self, a):
+                pass
+
+        self.assertArgHasType(OC_StructArgument.structArgument_, 0, b'{name="field"i}')
+
+    def test_union_in_signature(self):
+        class OC_UnionArrayArgument(NSObject):
+            @objc.objc_method(signature=b'v@:[2(name="field"fi)]')
+            def unionArgument_(self, a):
+                pass
+
+        self.assertArgHasType(
+            OC_UnionArrayArgument.unionArgument_, 0, b'n^(name="field"fi)'
+        )
+
+    def test_union_argument(self):
+        # XXX: This fixable, but not needed at the moment for Apple's APIs
+        #      (https://www.chiark.greenend.org.uk/doc/libffi-dev/html/Arrays-Unions-Enums.html)
+        with self.assertRaisesRegex(
+            NotImplementedError, "Cannot generate IMP for unionArgument:"
+        ):
+
+            class OC_UnionArgument(NSObject):
+                @objc.objc_method(signature=b'v@:(name="field"fi)')
+                def unionArgument_(self, a):
+                    pass
+
+        with self.assertRaisesRegex(
+            NotImplementedError, "Cannot generate IMP for unionArgument:"
+        ):
+
+            class OC_UnionArgument2(NSObject):
+                @objc.objc_method(signature=b'v@:(name="field"fi)')
+                def unionArgument_(self, a):
+                    pass

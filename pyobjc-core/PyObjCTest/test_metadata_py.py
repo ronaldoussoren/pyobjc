@@ -12,6 +12,7 @@ TODO:
 
 import warnings
 import objc
+import gc
 
 # To ensure we have the right metadata
 import PyObjCTest.test_metadata  # noqa: F401
@@ -20,6 +21,7 @@ from PyObjCTools.TestSupport import TestCase
 from .fnd import NSArray, NSObject
 from objc import super  # noqa: A004
 from .test_metadata import NoObjCClass
+from . import test_metadata
 
 
 def setupMetaData():
@@ -301,6 +303,62 @@ def setupMetaData():
                     "type_modifier": objc._C_OUT,
                     "c_array_length_in_arg": 2 + 1,
                     "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillRetainedArray:count:class:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "already_retained": True,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillRetainedArray2:count:class:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "already_retained": True,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillCFRetainedArray:count:class:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "already_cfretained": True,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillCFRetainedArray2:count:class:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "already_cfretained": True,
                 }
             }
         },
@@ -843,6 +901,9 @@ class Py_MetaDataTest_AllArgs_Invalid(OC_MetaDataTest):
     def fillStringArray_(self, a):
         return 42
 
+    def swapX_andY_(self, x, y):
+        return str(y * 2), x * 2
+
 
 class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
     # Return value arrays:
@@ -895,6 +956,18 @@ class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
             return range(10, count + 10)
         else:
             return range(20, count + 20)
+
+    def fillRetainedArray_count_class_(self, value, count, cls):
+        return [cls.alloc().init() for _ in range(count)]
+
+    def fillCFRetainedArray_count_class_(self, value, count, cls):
+        return [cls.alloc().init() for _ in range(count)]
+
+    def fillRetainedArray2_count_class_(self, value, count, cls):
+        return -count, [cls.alloc().init() for _ in range(count)]
+
+    def fillCFRetainedArray2_count_class_(self, value, count, cls):
+        return -count, [cls.alloc().init() for _ in range(count)]
 
     def nullfillArray_count_(self, data, count):
         if data is objc.NULL:
@@ -1108,6 +1181,57 @@ class TestArraysOut(TestCase):
         n, v = OC_MetaDataTest.nullfillArray_count_on_(objc.NULL, 3, o)
         self.assertEqual(n, 1)
         self.assertIs(v, objc.NULL)
+
+    def test_array_retained(self):
+        o = Py_MetaDataTest_AllArgs.new()
+
+        before = test_metadata.deallocated
+
+        with objc.autorelease_pool():
+            v = OC_MetaDataTest.fillRetainedArray_count_class_on_(
+                None, 3, test_metadata.ValueWithDealloc, o
+            )
+            gc.collect()
+
+        self.assertEqual(test_metadata.deallocated, before)
+        del v
+        self.assertNotEqual(test_metadata.deallocated, before)
+
+        before = test_metadata.deallocated
+
+        with objc.autorelease_pool():
+            c, v = OC_MetaDataTest.fillRetainedArray2_count_class_on_(
+                None, 3, test_metadata.ValueWithDealloc, o
+            )
+
+        self.assertEqual(c, -3)
+        self.assertEqual(test_metadata.deallocated, before)
+        del v
+        self.assertNotEqual(test_metadata.deallocated, before)
+
+    def test_array_cfretained(self):
+        o = Py_MetaDataTest_AllArgs.new()
+
+        before = test_metadata.deallocated
+        with objc.autorelease_pool():
+            v = OC_MetaDataTest.fillCFRetainedArray_count_class_on_(
+                None, 3, test_metadata.ValueWithDealloc, o
+            )
+
+        self.assertEqual(test_metadata.deallocated, before)
+        del v
+        self.assertNotEqual(test_metadata.deallocated, before)
+
+        before = test_metadata.deallocated
+        with objc.autorelease_pool():
+            c, v = OC_MetaDataTest.fillCFRetainedArray2_count_class_on_(
+                None, 3, test_metadata.ValueWithDealloc, o
+            )
+
+        self.assertEqual(c, -3)
+        self.assertEqual(test_metadata.deallocated, before)
+        del v
+        self.assertNotEqual(test_metadata.deallocated, before)
 
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -1404,6 +1528,10 @@ class TestByReference(TestCase):
         with self.assertRaisesRegex(ValueError, "argument 1 isn't allowed to be NULL"):
             OC_MetaDataTest.swapX_andY_on_(42, objc.NULL, o)
 
+        o = Py_MetaDataTest_AllArgs_Invalid.new()
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'str'"):
+            OC_MetaDataTest.swapX_andY_on_(1, 2, o)
+
     def testNullAccepted(self):
         # Note: the commented-out test-cases require a change in the pyobjc-core
         o = Py_MetaDataTest_AllArgs.new()
@@ -1541,7 +1669,8 @@ class TestCharPArgumentsIn(TestCase):
         self.assertEqual(v, [b"hello\0wo", 8])
 
         with self.assertRaisesRegex(
-            TypeError, "Don't know how to extract count from encoding: f"
+            TypeError,
+            "Don't know how to extract count from argument 3 with encoding: f",
         ):
             OC_MetaDataTest.charpArgCounted_floatcount_on_(b"hello\0world", 8, o)
 
@@ -1749,7 +1878,8 @@ class TestPointerResultPython(TestCase):
         self.assertEqual(v, (5,) * 5)
 
         with self.assertRaisesRegex(
-            TypeError, "Don't know how to extract count from encoding: f"
+            TypeError,
+            "Don't know how to extract count from argument 2 with encoding: f",
         ):
             OC_MetaDataTest.returnPointerFloatCounted_on_(5.5, obj)
 
