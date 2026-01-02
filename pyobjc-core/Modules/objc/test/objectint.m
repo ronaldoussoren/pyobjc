@@ -73,6 +73,16 @@ struct objectvalue {
     return (struct objectvalue){[[[OC_NoPythonRepresentation alloc] init] autorelease]};
 }
 
+struct objectvaluearray {
+    id value[2];
+};
+- (struct objectvaluearray)unpythonificStructArray
+{
+    return (struct objectvaluearray){
+        {[[[NSObject alloc] init] autorelease],
+         [[[OC_NoPythonRepresentation alloc] init] autorelease]}};
+}
+
 + (id)invokeSelector:(SEL)sel of:(NSObject*)object
 {
     return ((id (*)(id, SEL))objc_msgSend)(object, sel);

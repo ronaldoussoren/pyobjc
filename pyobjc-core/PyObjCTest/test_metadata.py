@@ -640,7 +640,7 @@ def setupMetaData():
                 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_length_in_arg": 2 + 1,
-                    "already_retained": True,
+                    "already_cfretained": True,
                 }
             }
         },
@@ -654,7 +654,7 @@ def setupMetaData():
                 + 0: {
                     "type_modifier": objc._C_OUT,
                     "c_array_length_in_arg": 2 + 1,
-                    "already_retained": True,
+                    "already_cfretained": True,
                 }
             }
         },
@@ -704,6 +704,20 @@ def setupMetaData():
                     "type_modifier": objc._C_OUT,
                     "c_array_of_fixed_length": 4,
                     "c_array_length_in_result": True,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fill4Chars:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 4,
                     "null_accepted": False,
                 }
             }

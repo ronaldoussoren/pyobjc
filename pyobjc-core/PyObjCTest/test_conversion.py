@@ -1050,6 +1050,9 @@ class TestCArray(TestCase):
         with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
             OC_ObjectInt.new().unpythonificStruct()
 
+        with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
+            OC_ObjectInt.new().unpythonificStructArray()
+
     def test_size_mismatch(self):
         a = array.array("i", [1, 2, 3])
 

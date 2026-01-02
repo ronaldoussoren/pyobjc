@@ -1112,6 +1112,27 @@ class TestStructs(TestCase):
                 "InvalidPackedStruct", b"{_InvalidPackedStruct=hi}", ["a", "b"], pack=1
             )
 
+    def test_nested_struct(self):
+        tp = objc.createStructType(
+            "NestedStruct",
+            b'{_Nested="field1"{NSRange="offset"q"length"q}"field2"i}',
+            None,
+        )
+        self.assertEqual(tp.__typestr__, b"{_Nested={NSRange=qq}i}")
+        v = tp()
+        self.assertEqual(v.field1, None)
+        self.assertEqual(v.field2, 0)
+
+        tp = objc.createStructType(
+            "NestedStruct2", b'{_Nested2="field1"{_empty_}}', None
+        )
+        self.assertEqual(tp.__typestr__, b"{_Nested2={_empty_}}")
+
+        tp = objc.createStructType(
+            "NestedStruct3", b'{_Nested3="field1"{_missing="a"ii}}', None
+        )
+        self.assertEqual(tp.__typestr__, b"{_Nested3={_missing=ii}}")
+
 
 class TestStructAlias(TestCase):
     def test_register_struct_alias(self):

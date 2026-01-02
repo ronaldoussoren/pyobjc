@@ -17,6 +17,7 @@ from PyObjCTest.testbndl import OC_TestClass1
 from PyObjCTest.properties import OCPropertyDefinitions
 from PyObjCTools.TestSupport import TestCase
 from .objectint import OC_ObjectInt
+from .test_metadata import NoObjCClass, OC_MetaDataTest
 
 rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 
@@ -979,6 +980,28 @@ class TestMisCConversions(TestCase):
         y = objc.repythonify([1, 2], type=b"{name=ff}44")
         self.assertEqual(y, (1.0, 2.0))
 
+    def test_struct_conversion_failures(self):
+        o = ((object(), True),)
+        v = objc.repythonify(o, type=b"{name=[2@]}")
+        self.assertEqual(v, o)
+
+        o = ((object(), NoObjCClass()),)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            objc.repythonify(o, type=b"{name=[2@]}")
+
+    def test_int(self):
+        class NumberLike:
+            def __int__(self):
+                return 2**128
+
+        for typecode in (objc._C_INT, objc._C_LNG, objc._C_LNG_LNG):
+            v = objc.repythonify(1, type=typecode)
+            self.assertEqual(v, 1)
+
+            with self.assertRaises(OverflowError):
+                objc.repythonify(NumberLike(), type=typecode)
+
 
 class TestConvertNegativeToUnsigedWarns(TestCase):
     def test_repythonify_negative_int(self):
@@ -1430,3 +1453,32 @@ class TestMetaClasses(TestCase):
         self.assertIsSubclass(cls2, NSObject)
         self.assertIsSubclass(cls1, objc.objc_class)
         self.assertIsSubclass(cls1, type(NSObject))
+
+
+class TestTransientHelper(OC_MetaDataTest):
+    def performAction_(self, a):
+        self.action = a
+
+
+class TestTransient(TestCase):
+    def test_transient_value(self):
+        o = TestTransientHelper.alloc().init()
+
+        with objc.autorelease_pool():
+            OC_MetaDataTest.performActionOn_class_(o, NSObject)
+
+        str(o.action)
+        del o.action
+
+    def test_transient_value2(self):
+        o = TestTransientHelper.alloc().init()
+
+        before = gDeallocCounter
+        with objc.autorelease_pool():
+            OC_MetaDataTest.performActionOn_class_(o, OC_LeakTest_20090704_noinit)
+
+        self.assertEqual(gDeallocCounter, before)
+
+        str(o.action)
+        del o.action
+        self.assertEqual(gDeallocCounter, before + 1)

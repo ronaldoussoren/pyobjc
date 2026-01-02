@@ -2641,8 +2641,11 @@ depythonify_python_object(PyObject* argument, id* datum)
             } else {
                 /* The original '*datum' is autoreleased according to the
                  * create rule.
+                 *
+                 * XXX: Marked EXCL because the window for hitting
+                 *      this branch is extremely small.
                  */
-                *datum = [actual autorelease];
+                *datum = [actual autorelease]; // LCOV_EXCL_LINE
             }
         }
         return 0;
@@ -3169,9 +3172,12 @@ const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type)
             end++;
         }
 
-        if (*end == '\0') {
+        if (*end == '\0') { // LCOV_BR_EXCL_LINE
+            /* This function is only called with valid encodings */
+            // LCOV_EXCL_START
             PyErr_SetString(PyExc_ValueError, "Bad type string");
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         if (*end == _C_STRUCT_E) {
@@ -3189,8 +3195,8 @@ const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type)
         /* RemoveFieldNames until reaching end of struct */
         while (*type && *type != _C_STRUCT_E) {
             end = PyObjCRT_RemoveFieldNames(buf, type);
-            if (end == NULL)
-                return NULL;
+            if (end == NULL) // LCOV_BR_EXCL_LINE
+                return NULL; // LCOV_EXCL_LINE
             buf += strlen(buf);
             type = end;
         }
@@ -3213,20 +3219,16 @@ const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type)
         memcpy(buf, type, end - type);
         buf += end - type;
         type = end;
-        if (*type == _C_ARY_E) {
-            buf[0] = _C_ARY_E;
-            buf[1] = '\0';
-            return type;
-        }
 
-        /* RemoveFieldName until reaching end of array */
         end = PyObjCRT_RemoveFieldNames(buf, type);
-        if (end == NULL)
-            return NULL;
+        if (end == NULL) // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
 
-        if (*end != _C_ARY_E) {
+        if (*end != _C_ARY_E) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_SetString(PyExc_ValueError, "bad type string");
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         buf += strlen(buf);
@@ -3238,8 +3240,8 @@ const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type)
 
     default:
         end = PyObjCRT_SkipTypeSpec(end);
-        if (end == NULL)
-            return NULL;
+        if (end == NULL) // LCOV_BR_EXCL_LINE
+            return NULL; // LCOV_EXCL_LINE
 
         memcpy(buf, type, end - type);
         buf[end - type] = '\0';
@@ -3253,8 +3255,14 @@ PyObject* _Nullable PyObjCObject_NewTransient(id objc_object, int* cookie)
 }
 
 void
-PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
+PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie __attribute__((__unused__)))
 {
+#if 0
+    /*
+     * XXX: This can cause a crash when overriding retain/release in Python.
+     *
+     * Disabled for now until a review of "transient" references is finished.
+     */
 #ifdef Py_GIL_DISABLED
     if (cookie && PyUnstable_Object_IsUniquelyReferenced(proxy))
 #else
@@ -3263,8 +3271,10 @@ PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
     {
         Py_BEGIN_ALLOW_THREADS
             [PyObjCObject_GetObject(proxy) retain];
+            ((PyObjCObject*)proxy)->flags &= ~PyObjCObject_kSHOULD_NOT_RELEASE;
         Py_END_ALLOW_THREADS
     }
+#endif
     Py_DECREF(proxy);
 }
 
@@ -3296,6 +3306,11 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
             return PyObjC_signatures_compatible(type1, type2);
         }
         return NO;
+    } else if (*type1 == _C_PTR && *type2 == _C_ARY_B) {
+        type2++;
+        while (isdigit(*type2))
+            type2++;
+        return PyObjC_signatures_compatible(type1 + 1, type2);
     }
 
     if (PyObjCRT_SizeOfType(type1) != PyObjCRT_SizeOfType(type2)) {
@@ -3348,13 +3363,6 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
 
         if (*type2 == _C_CHARPTR) {
             return PyObjC_signatures_compatible(type1 + 1, CHAR);
-        }
-
-        if (*type2 == _C_ARY_B) {
-            type2++;
-            while (isdigit(*type2))
-                type2++;
-            return PyObjC_signatures_compatible(type1 + 1, type2);
         }
 
         if (*type2 != _C_PTR) {

@@ -1326,6 +1326,48 @@ ASSERT(PyErr_Occurred());
 FAIL_IF(!exception_text_contains("depythonifying unknown typespec"));
 PyErr_Clear();
 
+PyObject* t = PyBytes_FromStringAndSize("", 0);
+ASSERT(t != NULL);
+r = depythonify_c_value("(name=ix)", t, outbuf);
+Py_CLEAR(t);
+ASSERT(r == -1);
+ASSERT(PyErr_Occurred());
+FAIL_IF(!exception_text_contains("of unknown size"));
+PyErr_Clear();
+
+END_UNITTEST
+
+BEGIN_UNITTEST(SignaturesCompatible)
+ASSERT(PyObjC_signatures_compatible("l", "q"));
+ASSERT(!PyObjC_signatures_compatible("l", "i"));
+ASSERT(PyObjC_signatures_compatible("[2f]", "^f"));
+ASSERT(!PyObjC_signatures_compatible("[2f]", "^d"));
+ASSERT(PyObjC_signatures_compatible("[2f]", "[2f]"));
+ASSERT(PyObjC_signatures_compatible("[2f]", "[3f]"));
+ASSERT(!PyObjC_signatures_compatible("[2f]", "[3d]"));
+ASSERT(!PyObjC_signatures_compatible("[2f]", "f"));
+ASSERT(PyObjC_signatures_compatible("d", "D"));
+ASSERT(!PyObjC_signatures_compatible("d", "q"));
+ASSERT(!PyObjC_signatures_compatible("d", "f"));
+ASSERT(!PyObjC_signatures_compatible("f", "i"));
+ASSERT(!PyObjC_signatures_compatible("@", "q"));
+ASSERT(PyObjC_signatures_compatible("@", "^v"));
+ASSERT(PyObjC_signatures_compatible("@", "@"));
+ASSERT(PyObjC_signatures_compatible("*", "*"));
+ASSERT(PyObjC_signatures_compatible("*", "^c"));
+ASSERT(PyObjC_signatures_compatible("*", "^t"));
+ASSERT(PyObjC_signatures_compatible("^c", "*"));
+ASSERT(!PyObjC_signatures_compatible("^c", "q"));
+ASSERT(!PyObjC_signatures_compatible("*", "q"));
+ASSERT(!PyObjC_signatures_compatible("#", "^v"));
+ASSERT(PyObjC_signatures_compatible("#", "^{objc_class=}"));
+ASSERT(PyObjC_signatures_compatible("#", "#"));
+ASSERT(PyObjC_signatures_compatible("^{objc_class=}", "#"));
+ASSERT(PyObjC_signatures_compatible("^q", "[4q]"));
+ASSERT(PyObjC_signatures_compatible("^q", "^l"));
+ASSERT(!PyObjC_signatures_compatible("q", "@"));
+ASSERT(!PyObjC_signatures_compatible("q", "d"));
+
 END_UNITTEST
 
 static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
@@ -1372,6 +1414,7 @@ static PyMethodDef mod_methods[] = {TESTDEF(CheckNSInvoke),
                                     TESTDEF(PyObjC_NSMethodSignatureToTypeString_Errors),
                                     TESTDEF(SkippingTypeSpec),
                                     TESTDEF(Pythonify),
+                                    TESTDEF(SignaturesCompatible),
                                     {0, 0, 0, 0}};
 
 int

@@ -395,6 +395,20 @@ def setupMetaData():
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"fill4Chars:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 4,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"fill4Tuple:on:",
         {
             "arguments": {
@@ -784,6 +798,35 @@ def setupMetaData():
         },
     )
 
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillBuffer:count:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillVoids:count:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+
     for pfx in (b"void", b"int"):
         for sfx in (b"CharPtr", b"Id"):
             objc.registerMetaDataForSelector(
@@ -904,6 +947,25 @@ class Py_MetaDataTest_AllArgs_Invalid(OC_MetaDataTest):
     def swapX_andY_(self, x, y):
         return str(y * 2), x * 2
 
+    def fillBuffer_count_(self, buf, cnt):
+        return b"\xce" * (cnt - 2)
+
+    def fillVoids_count_(self, buf, cnt):
+        # Too many bytes, but is accepted by bridge
+        return b"\xaf" * (cnt + 2)
+
+    def fillArray_count_(self, buf, cnt):
+        return 42
+
+    def nullfillArray_count_(self, buf, cnt):
+        return 1, (10,) * (cnt - 2)
+
+    def fill4Tuple_(self, a):
+        return (1, 2)
+
+    def fill4Chars_(self, a):
+        return b"ab"
+
 
 class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
     # Return value arrays:
@@ -968,6 +1030,12 @@ class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
 
     def fillCFRetainedArray2_count_class_(self, value, count, cls):
         return -count, [cls.alloc().init() for _ in range(count)]
+
+    def fillBuffer_count_(self, buf, cnt):
+        return b"\xab" * cnt
+
+    def fillVoids_count_(self, buf, cnt):
+        return bytearray(b"\xde" * cnt)
 
     def nullfillArray_count_(self, data, count):
         if data is objc.NULL:
@@ -1114,6 +1182,7 @@ class TestArrayDefault(TestCase):
 class TestArraysOut(TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
+        p = Py_MetaDataTest_AllArgs_Invalid.alloc().init()
 
         v = OC_MetaDataTest.fill4Tuple_on_(None, o)
         self.assertEqual(list(v), list(range(9, 13)))
@@ -1123,6 +1192,16 @@ class TestArraysOut(TestCase):
 
         with self.assertRaisesRegex(ValueError, "argument 0 isn't allowed to be NULL"):
             OC_MetaDataTest.fill4Tuple_on_(objc.NULL, o)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 4 items, got one of 2"
+        ):
+            OC_MetaDataTest.fill4Tuple_on_(None, p)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 4 items, got one of 2"
+        ):
+            OC_MetaDataTest.fill4Chars_on_(None, p)
 
         n, v = OC_MetaDataTest.nullfill4Tuple_on_(None, o)
         self.assertEqual(n, 1)
@@ -1181,6 +1260,30 @@ class TestArraysOut(TestCase):
         n, v = OC_MetaDataTest.nullfillArray_count_on_(objc.NULL, 3, o)
         self.assertEqual(n, 1)
         self.assertIs(v, objc.NULL)
+
+        v = OC_MetaDataTest.fillBuffer_count_on_(None, 10, o)
+        self.assertEqual(v, b"\xab" * 10)
+
+        v = OC_MetaDataTest.fillVoids_count_on_(None, 10, o)
+        self.assertEqual(v, b"\xde" * 10)
+
+        p = Py_MetaDataTest_AllArgs_Invalid.alloc().init()
+
+        with self.assertRaisesRegex(TypeError, "depythonifying array, got no sequence"):
+            OC_MetaDataTest.fillArray_count_on_(None, 10, p)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 10 items, got one of 8"
+        ):
+            OC_MetaDataTest.nullfillArray_count_on_(None, 10, p)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying array of 10 items, got one of 8"
+        ):
+            OC_MetaDataTest.fillBuffer_count_on_(None, 10, p)
+
+        v = OC_MetaDataTest.fillVoids_count_on_(None, 10, p)
+        self.assertEqual(v, b"\xaf" * 10)
 
     def test_array_retained(self):
         o = Py_MetaDataTest_AllArgs.new()

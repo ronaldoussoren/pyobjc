@@ -827,6 +827,19 @@ func(void)
     return [obj makeIntArray:array sameSizeAs:cnt];
 }
 
+- (void)fill4Chars:(char*)data
+{
+    data[0] = 0;
+    data[1] = 42;
+    data[2] = 99;
+    data[3] = 127;
+}
+
++ (void)fill4Chars:(char*)data on:(OC_MetaDataTest*)obj
+{
+    [obj fill4Chars:data];
+}
+
 + (NSArray* _Nullable)makeIntArray:(int*)array sameSizeAsNilOn:(OC_MetaDataTest*)obj
 {
     NSArray* cnt = nil;
@@ -1742,6 +1755,16 @@ func(void)
     return [obj intOutInt:outval add:inval];
 }
 
++ (void)fillBuffer:(char*)data count:(int)count on:(OC_MetaDataTest*)obj
+{
+    return [obj fillBuffer:data count:count];
+}
+
++ (void)fillVoids:(void*)data count:(int)count on:(OC_MetaDataTest*)obj
+{
+    return [obj fillVoids:data count:count];
+}
+
 typedef int (*intfunc)(int);
 static intfunc gIntFunc = NULL;
 + (void)storeIntFunc:(intfunc)func
@@ -1769,6 +1792,20 @@ struct sumfields {
 + (unsigned long)sumfields:(struct sumfields*)value
 {
     return value->a + value->b;
+}
+
+- (void)performAction:(id)action
+{
+    NSLog(@"action %@", action);
+}
+
++ (void)performActionOn:(OC_MetaDataTest*)object class:(Class)cls
+{
+    @autoreleasepool {
+        NSObject* value = [[cls alloc] init];
+        [object performAction:value];
+        [value release];
+    }
 }
 
 @end
