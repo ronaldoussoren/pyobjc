@@ -1261,8 +1261,6 @@ setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_na
                 descr->type         = tp;
             }
         }
-    } else if (typeModifier != 0) {
-        return -2;
     }
     Py_CLEAR(d);
     return 0;

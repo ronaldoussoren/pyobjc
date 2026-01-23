@@ -47,6 +47,7 @@ extern PyObject* _Nullable pythonify_c_array_nullterminated(const char* type,
 extern int depythonify_c_array_count(const char* type, Py_ssize_t count, BOOL strict,
                                      PyObject* value, void* datum, BOOL already_retained,
                                      BOOL already_cfretained);
+//__attribute__((diagnose_if(count < 0, "count must be positive", "error")));
 extern Py_ssize_t c_array_nullterminated_size(PyObject* object,
                                               PyObject* _Nullable* _Nonnull seq);
 extern int        depythonify_c_array_nullterminated(const char* type, Py_ssize_t count,

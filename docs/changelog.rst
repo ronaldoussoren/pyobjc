@@ -96,6 +96,12 @@ Version 12.2
   argument handling (none of which happen are used in bindings for
   Cocoa frameworks)
 
+* Metadata with a tuple as the value for ``c_array_length_in_arg`` for
+  an output argument is now honored for methods implemented in Python.
+
+* Fix crash when ``c_array_length_in_arg`` metadata refers to
+  an non-existing argument.
+
 Version 12.1
 ------------
 

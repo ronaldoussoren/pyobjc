@@ -218,6 +218,71 @@ def setupMetaData():
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"charpArgCounted2:count:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type": objc._C_CHARPTR,
+                    "c_array_length_in_arg": -1,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"charpArgCounted3:count:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type": objc._C_CHARPTR,
+                    "c_array_length_in_arg": 7,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"charpArgCounted:count:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type": objc._C_CHARPTR,
+                    "c_array_length_in_arg": 3,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"charpArgCounted2:count:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type": objc._C_CHARPTR,
+                    "c_array_length_in_arg": 3,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"charpArgCounted3:count:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type": objc._C_CHARPTR,
+                    "c_array_length_in_arg": 3,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"charpArgCounted:floatcount:",
         {
             "arguments": {
@@ -1206,83 +1271,281 @@ def setupMetaData():
             },
         )
 
-        objc.registerMetaDataForSelector(
-            b"OC_MetaDataTest",
-            b"makeIntArrayOf5DummyOut:on:",
-            {
-                "retval": {"c_array_of_fixed_length": 5, "type_modifier": 42},
-                "arguments": {2 + 0: {"type_modifier": b"o"}},
-            },
-        )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeIntArrayOf5DummyOut:on:",
+        {
+            "retval": {"c_array_of_fixed_length": 5, "type_modifier": 42},
+            "arguments": {2 + 0: {"type_modifier": b"o"}},
+        },
+    )
 
-        objc.registerMetaDataForSelector(
-            b"OC_MetaDataTest",
-            b"makeStringArrayDummyOut:on:",
-            {
-                "retval": {"c_array_delimited_by_null": True},
-                "arguments": {2 + 0: {"type_modifier": b"o"}},
-            },
-        )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeStringArrayDummyOut:on:",
+        {
+            "retval": {"c_array_delimited_by_null": True},
+            "arguments": {2 + 0: {"type_modifier": b"o"}},
+        },
+    )
 
-        objc.registerMetaDataForSelector(
-            b"OC_MetaDataTest",
-            b"makeIntArrayOf:dummyOut:on:",
-            {
-                "retval": {"c_array_length_in_arg": 2 + 0},
-                "arguments": {2 + 1: {"type_modifier": b"o"}},
-            },
-        )
-        objc.registerMetaDataForSelector(
-            b"OC_MetaDataTest",
-            b"makeIntArrayOf2:dummyOut:on:",
-            {
-                "retval": {"c_array_length_in_arg": 2 + 0},
-                "arguments": {2 + 1: {"type_modifier": b"o"}},
-            },
-        )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeIntArrayOf:dummyOut:on:",
+        {
+            "retval": {"c_array_length_in_arg": 2 + 0},
+            "arguments": {2 + 1: {"type_modifier": b"o"}},
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"makeIntArrayOf2:dummyOut:on:",
+        {
+            "retval": {"c_array_length_in_arg": 2 + 0},
+            "arguments": {2 + 1: {"type_modifier": b"o"}},
+        },
+    )
 
-        objc.registerMetaDataForSelector(
-            b"OC_MetaDataTest",
-            b"nullIntArrayOf5DummyOut:on:",
-            {
-                "retval": {"c_array_of_fixed_length": 5},
-                "arguments": {2 + 0: {"type_modifier": b"o"}},
-            },
-        )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"nullIntArrayOf5DummyOut:on:",
+        {
+            "retval": {"c_array_of_fixed_length": 5},
+            "arguments": {2 + 0: {"type_modifier": b"o"}},
+        },
+    )
 
-        objc.registerMetaDataForSelector(
-            b"OC_MetaDataTest",
-            b"nullStringArrayDummyOut:on:",
-            {
-                "retval": {"c_array_delimited_by_null": True},
-                "arguments": {2 + 0: {"type_modifier": b"o"}},
-            },
-        )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"nullStringArrayDummyOut:on:",
+        {
+            "retval": {"c_array_delimited_by_null": True},
+            "arguments": {2 + 0: {"type_modifier": b"o"}},
+        },
+    )
 
-        objc.registerMetaDataForSelector(
-            b"OC_MetaDataTest",
-            b"nullIntArrayOf:dummyOut:on:",
-            {
-                "retval": {"c_array_length_in_arg": 2 + 0},
-                "arguments": {2 + 1: {"type_modifier": b"o"}},
-            },
-        )
-        objc.registerMetaDataForSelector(
-            b"OC_MetaDataTest",
-            b"unknownLengthArrayOn:",
-            {"retval": {"c_array_of_variable_length": True}, "arguments": None},
-        )
-        objc.registerMetaDataForSelector(
-            b"OC_MetaDataTest",
-            b"unknownLengthArrayDummyOut:on:",
-            {
-                "retval": {"c_array_of_variable_length": True},
-                "arguments": {2 + 0: {"type_modifier": objc._C_OUT}},
-            },
-        )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"nullIntArrayOf:dummyOut:on:",
+        {
+            "retval": {"c_array_length_in_arg": 2 + 0},
+            "arguments": {2 + 1: {"type_modifier": b"o"}},
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"unknownLengthArrayOn:",
+        {"retval": {"c_array_of_variable_length": True}, "arguments": None},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"unknownLengthArrayDummyOut:on:",
+        {
+            "retval": {"c_array_of_variable_length": True},
+            "arguments": {2 + 0: {"type_modifier": objc._C_OUT}},
+        },
+    )
 
-        # XXX: Add test for output buffer (bytearray/array, various length types) where we pass in a buffer instead of None
-        #      (should update and return the bytearray/array instead of returning a new value)
+    # XXX: Add test for output buffer (bytearray/array, various length types) where we pass in a buffer instead of None
+    #      (should update and return the bytearray/array instead of returning a new value)
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRange:on:",
+        {"retval": {"c_array_length_in_arg": 2 + 0}},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRange2:on:",
+        {"retval": {"c_array_length_in_arg": 2 + 0}},
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeFill:size:on:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_OUT, "c_array_length_in_arg": 2 + 1}
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeFill2:size:on:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_OUT, "c_array_length_in_arg": 2 + 1}
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeFill3:size:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeFill4:size:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeMake:size:on:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_IN, "c_array_length_in_arg": 2 + 1}
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeMake2:size:on:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_IN, "c_array_length_in_arg": 2 + 1}
+            }
+        },
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRange:dummyOut:on:",
+        {
+            "retval": {"c_array_length_in_arg": 2 + 1},
+            "arguments": {2 + 1: {"type_modifier": objc._C_OUT}},
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRange2:dummyOut:on:",
+        {
+            "retval": {"c_array_length_in_arg": 2 + 1},
+            "arguments": {2 + 1: {"type_modifier": objc._C_OUT}},
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeFill:size:dummyOut:on:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_OUT, "c_array_length_in_arg": 2 + 1},
+                2 + 2: {"type_modifier": objc._C_OUT},
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeFill2:size:dummyOut:on:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_OUT, "c_array_length_in_arg": 2 + 1},
+                2 + 2: {"type_modifier": objc._C_OUT},
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeFill3:size:dummyOut:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                },
+                2 + 2: {"type_modifier": objc._C_OUT},
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeFill4:size:dummyOut:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                },
+                2 + 2: {"type_modifier": objc._C_OUT},
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeMake:size:dummyOut:on:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_IN, "c_array_length_in_arg": 2 + 1}
+            },
+            2 + 2: {"type_modifier": objc._C_OUT},
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"outOfRangeMake2:size:dummyOut:on:",
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_IN, "c_array_length_in_arg": 2 + 1}
+            },
+            2 + 2: {"type_modifier": objc._C_OUT},
+        },
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillarray:incount:outcount:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": (2 + 1, 2 + 2),
+                }
+            },
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillarray:incount:outcount:dummyOut:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": (2 + 1, 2 + 2),
+                },
+                2 + 3: {"type_modifier": objc._C_OUT},
+            },
+        },
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"updatearray:incount:outcount:on:",
+        {
+            "arguments": {
+                # The metadata doesn't match test_metadata on purpose
+                2 + 0: {"type_modifier": objc._C_INOUT, "c_array_length_in_arg": 2 + 1},
+                2 + 2: {"type_modifier": objc._C_OUT},
+            },
+        },
+    )
 
 
 setupMetaData()
@@ -1452,6 +1715,18 @@ class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
     def returnPointerDerefDummyOut_(self, a):
         return 42, 1
 
+    def outOfRange_(self, count):
+        return [1] * count
+
+    def outOfRange2_(self, count):
+        return [1] * count
+
+    def outOfRange_dummyOut_(self, count, arg):
+        return [1] * count, 1
+
+    def outOfRange2_dummyOut_(self, count, arg):
+        return [1] * count, 1
+
     # In arrays:
     def makeIntArray_count_(self, data, count):
         return [data, count]
@@ -1482,6 +1757,18 @@ class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
 
     def unknownLengthArrayDummyOut_(self, a):
         return range(10), 10
+
+    def outOfRangeMake_size_(self, buf, count):
+        return [9] * count
+
+    def outOfRangeMake2_size_(self, buf, count):
+        return [9] * count
+
+    def outOfRangeMake_size_dummyOut_(self, buf, count, a):
+        return buf, 1
+
+    def outOfRangeMake2_size_dummyOut_(self, buf, count, a):
+        return buf, 1
 
     # Out arrays:
     def fillArray_count_dummyOut_(self, data, count, out):
@@ -1591,6 +1878,40 @@ class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
             return 9, objc.NULL
 
         return 8, [b"ef", b"gh"]
+
+    def outOfRangeFill_size_(self, buf, count):
+        return [2] * count
+
+    def outOfRangeFill2_size_(self, buf, count):
+        return [2] * count
+
+    def outOfRangeFill3_size_(self, buf, count):
+        return [2] * count
+
+    def outOfRangeFill4_size_(self, buf, count):
+        return [2] * count
+
+    def outOfRangeFill_size_dummyOut_(self, buf, count, a):
+        return [2] * count, 1
+
+    def outOfRangeFill2_size_dummyOut_(self, buf, count, a):
+        return [2] * count, 1
+
+    def outOfRangeFill3_size_dummyOut_(self, buf, count, a):
+        return [2] * count, 1
+
+    def outOfRangeFill4_size_dummyOut_(self, buf, count, a):
+        return [2] * count, 1
+
+    def fillarray_incount_outcount_(self, buf, incnt, outcnt):
+        return [incnt] * outcnt
+
+    def fillarray_incount_outcount_dummyOut_(self, buf, incnt, outcnt, pval):
+        return [incnt] * outcnt, incnt * outcnt
+
+    def updatearray_incount_outcount_(self, buf, incnt, outcnt):
+        outcnt = incnt - 5
+        return [-buf[i] for i in range(outcnt)], outcnt
 
     # In/out arrays:
     def reverseArray_count_(self, data, count):
@@ -1865,6 +2186,40 @@ class TestArraysOut(TestCase):
         self.assertEqual(v1, (42,) * 10)
         self.assertEqual(v2, objc.NULL)
 
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeFill_size_on_(None, 10, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeFill2_size_on_(None, 10, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeFill3_size_on_(None, 10, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeFill4_size_on_(None, 10, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeFill_size_dummyOut_on_(None, 10, None, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeFill2_size_dummyOut_on_(None, 10, None, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeFill3_size_dummyOut_on_(None, 10, None, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeFill4_size_dummyOut_on_(None, 10, None, o)
+
+        self.assertArgSizeInArg(OC_MetaDataTest.fillarray_incount_outcount_, 0, (1, 2))
+        v = OC_MetaDataTest.fillarray_incount_outcount_on_(None, 20, 10, o)
+        self.assertEqual(v, tuple(20 for _ in range(10)))
+
+        v, c = OC_MetaDataTest.fillarray_incount_outcount_dummyOut_on_(
+            None, 20, 10, None, o
+        )
+        self.assertEqual(v, tuple(20 for _ in range(10)))
+        self.assertEqual(c, 200)
+
     def test_array_retained(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -2073,6 +2428,10 @@ class TestArraysInOut(TestCase):
         self.assertEqual(n, 2)
         self.assertIs(v, objc.NULL)
 
+        n, c = OC_MetaDataTest.updatearray_incount_outcount_on_(range(20), 20, None, o)
+        self.assertEqual(c, 15)
+        self.assertEqual(n, (*[-i for i in range(15)], 15, 16, 17, 18, 19))
+
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -2170,6 +2529,18 @@ class TestArraysIn(TestCase):
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v), [1, 2, 3, 4])
 
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeMake_size_on_(range(10), 10, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeMake2_size_on_(range(10), 10, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeMake_size_dummyOut_on_(range(10), 10, None, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRangeMake2_size_dummyOut_on_(range(10), 10, None, o)
+
 
 class TestArrayReturns(TestCase):
     # TODO:
@@ -2246,6 +2617,18 @@ class TestArrayReturns(TestCase):
         v, c = OC_MetaDataTest.makeCharArrayOfCount_dummyOut_on_(5, None, o)
         self.assertEqual(c, 25)
         self.assertEqual(v, b"xxxxx")
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRange_on_(10, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRange2_on_(10, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRange_dummyOut_on_(10, None, o)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            OC_MetaDataTest.outOfRange2_dummyOut_on_(10, None, o)
 
     def testNULLterminated(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -2469,6 +2852,12 @@ class OC_MetaDataTestCharPArgs(OC_MetaDataTest):
     def charpArgCounted_count_(self, a, b):
         return [a, b]
 
+    def charpArgCounted2_count_(self, a, b):
+        return [a, b]
+
+    def charpArgCounted3_count_(self, a, b):
+        return [a, b]
+
     def charpArgCounted_floatcount_(self, a, b):
         return [a, b]
 
@@ -2583,6 +2972,11 @@ class TestCharPArgumentsIn(TestCase):
             ValueError, "Requesting buffer of 12, have buffer of 11"
         ):
             p.charpArgCounted_count_(b"hello world", 12)
+
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            v = OC_MetaDataTest.charpArgCounted2_count_on_(b"hello world", 8, o)
+        with self.assertRaisesRegex(objc.error, "array size in invalid argument"):
+            v = OC_MetaDataTest.charpArgCounted3_count_on_(b"hello world", 8, o)
 
 
 class OC_MetaDataTestPointerResult(OC_MetaDataTest):

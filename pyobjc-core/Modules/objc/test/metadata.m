@@ -1528,11 +1528,16 @@ func(void)
     return theValue;
 }
 
+- (void)fillVarialbleLengthBytes:(char*)array halfCount:(int)cnt
+{
+    for (int i = 0; i < cnt * 2; i++) {
+        array[i] = (char)((i * i) % 128);
+    }
+}
+
 - (void)fillVariableLengthBuffer:(int*)array halfCount:(int)cnt
 {
-    int i;
-
-    for (i = 0; i < cnt * 2; i++) {
+    for (int i = 0; i < cnt * 2; i++) {
         array[i] = i * i;
     }
 }
@@ -1706,6 +1711,16 @@ func(void)
 
     va_end(ap);
     return result;
+}
+
+- (NSArray* _Nullable)outOfRangeObjectArray:(int)count values:(id)value, ...
+{
+    return nil;
+}
+
+- (NSArray* _Nullable)outOfRangeObjectArray2:(int)count values:(id)value, ...
+{
+    return nil;
 }
 
 - (NSArray* _Nullable)makeCountedObjectArray:(int)count values:(id)value, ...
@@ -2036,6 +2051,21 @@ func(void)
     ;
 }
 
+- (id _Nullable)charpArgCounted2:(char* _Nullable)arg count:(int)c
+{
+    if (arg == NULL)
+        return nil;
+    return [NSString stringWithFormat:@"%c%c", arg[0], arg[c]];
+    ;
+}
+- (id _Nullable)charpArgCounted3:(char* _Nullable)arg count:(int)c
+{
+    if (arg == NULL)
+        return nil;
+    return [NSString stringWithFormat:@"%c%c", arg[0], arg[c]];
+    ;
+}
+
 - (id _Nullable)charpArgCounted:(char*)arg floatcount:(float)c
 {
     return nil;
@@ -2079,6 +2109,14 @@ func(void)
 + (id _Nullable)charpArgCounted:(char*)arg count:(int)c on:(OC_MetaDataTest*)value
 {
     return [value charpArgCounted:arg count:c];
+}
++ (id _Nullable)charpArgCounted2:(char*)arg count:(int)c on:(OC_MetaDataTest*)value
+{
+    return [value charpArgCounted2:arg count:c];
+}
++ (id _Nullable)charpArgCounted3:(char*)arg count:(int)c on:(OC_MetaDataTest*)value
+{
+    return [value charpArgCounted3:arg count:c];
 }
 
 + (id _Nullable)charpArgCounted:(char*)arg floatcount:(int)c on:(OC_MetaDataTest*)value
@@ -2356,6 +2394,243 @@ struct vectorstruct {
     return 1;
 }
 
+- (int* _Nullable)outOfRange:(int)size
+{
+    int* result = malloc(size * sizeof(int));
+    for (int i = 0; i < size; i++) {
+        result[i] = i;
+    }
+    return result;
+}
+- (int* _Nullable)outOfRange2:(int)size
+{
+    int* result = malloc(size * sizeof(int));
+    for (int i = 0; i < size; i++) {
+        result[i] = i;
+    }
+    return result;
+}
++ (int* _Nullable)outOfRange:(int)size on:(OC_MetaDataTest*)obj
+{
+    return [obj outOfRange:size];
+}
++ (int* _Nullable)outOfRange2:(int)size on:(OC_MetaDataTest*)obj
+{
+    return [obj outOfRange2:size];
+}
+
+- (int* _Nullable)outOfRange:(int)size dummyOut:(int*)pval
+{
+    *pval       = -size;
+    int* result = malloc(size * sizeof(int));
+    for (int i = 0; i < size; i++) {
+        result[i] = i;
+    }
+    return result;
+}
+- (int* _Nullable)outOfRange2:(int)size dummyOut:(int*)pval
+{
+    *pval       = -size;
+    int* result = malloc(size * sizeof(int));
+    for (int i = 0; i < size; i++) {
+        result[i] = i;
+    }
+    return result;
+}
++ (int* _Nullable)outOfRange:(int)size dummyOut:(int*)pval on:(OC_MetaDataTest*)obj
+{
+    return [obj outOfRange:size dummyOut:pval];
+}
++ (int* _Nullable)outOfRange2:(int)size dummyOut:(int*)pval on:(OC_MetaDataTest*)obj
+{
+    return [obj outOfRange2:size dummyOut:pval];
+}
+
+- (void)outOfRangeFill:(int*)buffer size:(int)size
+{
+    for (int i = 0; i < size; i++) {
+        buffer[i] = i;
+    }
+}
+- (void)outOfRangeFill2:(int*)buffer size:(int)size
+{
+    for (int i = 0; i < size; i++) {
+        buffer[i] = i;
+    }
+}
+- (void)outOfRangeFill3:(int*)buffer size:(int)size
+{
+    for (int i = 0; i < size; i++) {
+        buffer[i] = i;
+    }
+}
+- (void)outOfRangeFill4:(int*)buffer size:(int)size
+{
+    for (int i = 0; i < size; i++) {
+        buffer[i] = i;
+    }
+}
+
++ (void)outOfRangeFill:(int*)buffer size:(int)size on:(OC_MetaDataTest*)obj
+{
+    [obj outOfRangeFill:buffer size:size];
+}
++ (void)outOfRangeFill2:(int*)buffer size:(int)size on:(OC_MetaDataTest*)obj
+{
+    [obj outOfRangeFill2:buffer size:size];
+}
++ (void)outOfRangeFill3:(int*)buffer size:(int)size on:(OC_MetaDataTest*)obj
+{
+    [obj outOfRangeFill3:buffer size:size];
+}
++ (void)outOfRangeFill4:(int*)buffer size:(int)size on:(OC_MetaDataTest*)obj
+{
+    [obj outOfRangeFill4:buffer size:size];
+}
+
+- (void)outOfRangeFill:(int*)buffer size:(int)size dummyOut:(int*)pval
+{
+    for (int i = 0; i < size; i++) {
+        buffer[i] = i;
+    }
+    *pval = -size;
+}
+- (void)outOfRangeFill2:(int*)buffer size:(int)size dummyOut:(int*)pval
+{
+    for (int i = 0; i < size; i++) {
+        buffer[i] = i;
+    }
+    *pval = -size;
+}
+- (void)outOfRangeFill3:(int*)buffer size:(int)size dummyOut:(int*)pval
+{
+    for (int i = 0; i < size; i++) {
+        buffer[i] = i;
+    }
+    *pval = -size;
+}
+- (void)outOfRangeFill4:(int*)buffer size:(int)size dummyOut:(int*)pval
+{
+    for (int i = 0; i < size; i++) {
+        buffer[i] = i;
+    }
+    *pval = -size;
+}
+
++ (void)outOfRangeFill:(int*)buffer
+                  size:(int)size
+              dummyOut:(int*)pval
+                    on:(OC_MetaDataTest*)obj
+{
+    [obj outOfRangeFill:buffer size:size dummyOut:pval];
+}
++ (void)outOfRangeFill2:(int*)buffer
+                   size:(int)size
+               dummyOut:(int*)pval
+                     on:(OC_MetaDataTest*)obj
+{
+    [obj outOfRangeFill2:buffer size:size dummyOut:pval];
+}
++ (void)outOfRangeFill3:(int*)buffer
+                   size:(int)size
+               dummyOut:(int*)pval
+                     on:(OC_MetaDataTest*)obj
+{
+    [obj outOfRangeFill3:buffer size:size dummyOut:pval];
+}
++ (void)outOfRangeFill4:(int*)buffer
+                   size:(int)size
+               dummyOut:(int*)pval
+                     on:(OC_MetaDataTest*)obj
+{
+    [obj outOfRangeFill4:buffer size:size dummyOut:pval];
+}
+
+- (id _Nullable)outOfRangeMake:(int*)buffer size:(int)size
+{
+    return nil;
+}
+- (id _Nullable)outOfRangeMake2:(int*)buffer size:(int)size
+{
+    return nil;
+}
+
++ (id _Nullable)outOfRangeMake:(int*)buffer size:(int)size on:(OC_MetaDataTest*)obj
+{
+    return [obj outOfRangeMake:buffer size:size];
+}
++ (id _Nullable)outOfRangeMake2:(int*)buffer size:(int)size on:(OC_MetaDataTest*)obj
+{
+    return [obj outOfRangeMake2:buffer size:size];
+}
+
+- (id _Nullable)outOfRangeMake:(int*)buffer size:(int)size dummyOut:(int*)pval
+{
+    *pval = -size;
+    return nil;
+}
+- (id _Nullable)outOfRangeMake2:(int*)buffer size:(int)size dummyOut:(int*)pval
+{
+    *pval = -size;
+    return nil;
+}
+
++ (id _Nullable)outOfRangeMake:(int*)buffer
+                          size:(int)size
+                      dummyOut:(int*)pval
+                            on:(OC_MetaDataTest*)obj
+{
+    return [obj outOfRangeMake:buffer size:size dummyOut:pval];
+}
++ (id _Nullable)outOfRangeMake2:(int*)buffer
+                           size:(int)size
+                       dummyOut:(int*)pval
+                             on:(OC_MetaDataTest*)obj
+{
+    return [obj outOfRangeMake2:buffer size:size dummyOut:pval];
+}
+
+- (void)fillarray:(int*)buf incount:(int)cnt1 outcount:(int)cnt2
+{
+    for (int i = 0; i < cnt2; i++) {
+        buf[i] = -i;
+    }
+}
++ (void)fillarray:(int*)buf incount:(int)cnt1 outcount:(int)cnt2 on:(OC_MetaDataTest*)obj
+{
+    [obj fillarray:buf incount:cnt1 outcount:cnt2];
+}
+
+- (void)fillarray:(int*)buf incount:(int)cnt1 outcount:(int)cnt2 dummyOut:(int*)pval
+{
+    for (int i = 0; i < cnt2; i++) {
+        buf[i] = -i;
+    }
+    *pval = cnt1;
+}
++ (void)fillarray:(int*)buf
+          incount:(int)cnt1
+         outcount:(int)cnt2
+         dummyOut:(int*)pval
+               on:(OC_MetaDataTest*)obj
+{
+    [obj fillarray:buf incount:cnt1 outcount:cnt2 dummyOut:pval];
+}
+
+- (void)updatearray:(int*)buf incount:(int)cnt1 outcount:(int*)cnt2
+{
+    *cnt2 = cnt1 / 2;
+    for (int i = 0; i < *cnt2; i++) {
+        buf[i] = -i;
+    }
+}
++ (void)updatearray:(int*)buf
+            incount:(int)cnt1
+           outcount:(int*)cnt2
+                 on:(OC_MetaDataTest*)obj
+{
+    [obj updatearray:buf incount:cnt1 outcount:cnt2];
+}
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

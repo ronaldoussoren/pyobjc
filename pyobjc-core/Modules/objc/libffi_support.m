@@ -1439,17 +1439,24 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         break;
 
                     case PyObjC_kArrayCountInArg:
-                        count = extract_count(
-                            methinfo->argtype[i]->arrayArg - (int)startArg,
-                            methinfo->argtype[methinfo->argtype[i]->arrayArg]->type,
-                            args[methinfo->argtype[i]->arrayArg]);
-                        if (count == -1) {
+                        if (methinfo->argtype[i]->arrayArg < 0
+                            || methinfo->argtype[i]->arrayArg >= Py_SIZE(methinfo)) {
+                            PyErr_SetString(PyObjCExc_Error,
+                                            "array size in invalid argument");
                             v = NULL;
                         } else {
-                            v = PyObjC_CArrayToPython2(
-                                resttype, *(void**)args[i], count,
-                                methinfo->argtype[i]->alreadyRetained,
-                                methinfo->argtype[i]->alreadyCFRetained);
+                            count = extract_count(
+                                methinfo->argtype[i]->arrayArg - (int)startArg,
+                                methinfo->argtype[methinfo->argtype[i]->arrayArg]->type,
+                                args[methinfo->argtype[i]->arrayArg]);
+                            if (count == -1) {
+                                v = NULL;
+                            } else {
+                                v = PyObjC_CArrayToPython2(
+                                    resttype, *(void**)args[i], count,
+                                    methinfo->argtype[i]->alreadyRetained,
+                                    methinfo->argtype[i]->alreadyCFRetained);
+                            }
                         }
                         break;
 
@@ -1521,16 +1528,23 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     break;
 
                 case PyObjC_kArrayCountInArg:
-                    count = extract_count(
-                        methinfo->argtype[i]->arrayArg - (int)startArg,
-                        methinfo->argtype[methinfo->argtype[i]->arrayArg]->type,
-                        args[methinfo->argtype[i]->arrayArg]);
-
-                    if (count == -1) {
+                    if (methinfo->argtype[i]->arrayArg < 0
+                        || methinfo->argtype[i]->arrayArg >= Py_SIZE(methinfo)) {
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "array size in invalid argument");
                         v = NULL;
-
                     } else {
-                        v = PyBytes_FromStringAndSize(*(void**)args[i], count);
+                        count = extract_count(
+                            methinfo->argtype[i]->arrayArg - (int)startArg,
+                            methinfo->argtype[methinfo->argtype[i]->arrayArg]->type,
+                            args[methinfo->argtype[i]->arrayArg]);
+
+                        if (count == -1) {
+                            v = NULL;
+
+                        } else {
+                            v = PyBytes_FromStringAndSize(*(void**)args[i], count);
+                        }
                     }
                     break;
 
@@ -1681,6 +1695,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     case PyObjC_kArrayCountInArg:
                         /* We don't have output arguments, thus can calculate the response
                          * immediately */
+                        if (methinfo->rettype->arrayArg < 0
+                            || methinfo->rettype->arrayArg >= Py_SIZE(methinfo)) {
+                            PyErr_SetString(PyObjCExc_Error,
+                                            "array size in invalid argument");
+                            goto error;
+                        }
                         count = extract_count(
                             methinfo->rettype->arrayArg - (int)startArg,
                             methinfo->argtype[methinfo->rettype->arrayArg]->type,
@@ -1869,10 +1889,16 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     /* XXX: This needs to be  in a second pass, the 'count' may
                      *      not be converted yet if it is also an _C_OUT pointer.
                      */
+                    if (methinfo->argtype[i]->arrayArgOut < 0
+                        || methinfo->argtype[i]->arrayArgOut >= Py_SIZE(methinfo)) {
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "array size in invalid argument");
+                        goto error;
+                    }
                     count = extract_count(
-                        methinfo->argtype[i]->arrayArg - (int)startArg,
-                        methinfo->argtype[methinfo->argtype[i]->arrayArg]->type,
-                        args[methinfo->argtype[i]->arrayArg]);
+                        methinfo->argtype[i]->arrayArgOut - (int)startArg,
+                        methinfo->argtype[methinfo->argtype[i]->arrayArgOut]->type,
+                        args[methinfo->argtype[i]->arrayArgOut]);
 
                     if (count == -1 && PyErr_Occurred()) {
                         goto error;
@@ -1998,6 +2024,10 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         if (*PyObjCRT_SkipTypeQualifiers(
                                 methinfo->argtype[methinfo->rettype->arrayArg]->type)
                             != _C_PTR) {
+                            if (methinfo->rettype->arrayArg < 0 || methinfo->rettype->arrayArg >= Py_SIZE(methinfo)) {
+                                PyErr_SetString(PyObjCExc_Error, "array size in invalid argument");
+                                goto error;
+                            }
                             count = extract_count(
                                 methinfo->rettype->arrayArg-(int)startArg,
                                 methinfo->argtype[methinfo->rettype->arrayArg]->type,
@@ -2255,10 +2285,16 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     break;
 
                 case PyObjC_kArrayCountInArg:
+                    if (methinfo->argtype[i]->arrayArgOut < 0
+                        || methinfo->argtype[i]->arrayArgOut >= Py_SIZE(methinfo)) {
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "array size in invalid argument");
+                        goto error;
+                    }
                     count = extract_count(
-                        methinfo->argtype[i]->arrayArg - (int)startArg,
-                        methinfo->argtype[methinfo->argtype[i]->arrayArg]->type,
-                        args[methinfo->argtype[i]->arrayArg]);
+                        methinfo->argtype[i]->arrayArgOut - (int)startArg,
+                        methinfo->argtype[methinfo->argtype[i]->arrayArgOut]->type,
+                        args[methinfo->argtype[i]->arrayArgOut]);
                     if (count == -1 && PyErr_Occurred()) {
                         goto error;
                     }
@@ -2286,6 +2322,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     if (real_res == PyObjC_NULL) {
                         *(void**)resp = NULL;
                     } else {
+                        if (methinfo->rettype->arrayArg < 0
+                            || methinfo->rettype->arrayArg >= Py_SIZE(methinfo)) {
+                            PyErr_SetString(PyObjCExc_Error,
+                                            "array size in invalid argument");
+                            goto error;
+                        }
                         count = extract_count(
                             methinfo->rettype->arrayArg - (int)startArg,
                             methinfo->argtype[methinfo->rettype->arrayArg]->type,
@@ -3667,6 +3709,12 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 }
 
                 if (methinfo->argtype[i]->ptrType == PyObjC_kArrayCountInArg) {
+                    if (methinfo->argtype[i]->arrayArg < 0
+                        || methinfo->argtype[i]->arrayArg >= Py_SIZE(methinfo)) {
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "array size in invalid argument");
+                        return -1;
+                    }
                     count = extract_count(
                         methinfo->argtype[i]->arrayArg - (int)argOffset,
                         methinfo->argtype[methinfo->argtype[i]->arrayArg]->type,
@@ -3737,6 +3785,13 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                 break;
 
                             case PyObjC_kArrayCountInArg:
+                                if (methinfo->argtype[i]->arrayArg < 0
+                                    || methinfo->argtype[i]->arrayArg
+                                           >= Py_SIZE(methinfo)) {
+                                    PyErr_SetString(PyObjCExc_Error,
+                                                    "array size in invalid argument");
+                                    return -1;
+                                }
                                 count = extract_count(
                                     methinfo->argtype[i]->arrayArg - (int)argOffset,
                                     methinfo->argtype[methinfo->argtype[i]->arrayArg]
@@ -3794,6 +3849,10 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
     } else if (methinfo->variadic && methinfo->arrayArg != -1) {
         Py_ssize_t r;
+        if (methinfo->arrayArg < 0 || methinfo->arrayArg >= Py_SIZE(methinfo)) {
+            PyErr_SetString(PyObjCExc_Error, "array size in invalid argument");
+            return -1;
+        }
         Py_ssize_t cnt = extract_count(methinfo->arrayArg - (int)argOffset,
                                        methinfo->argtype[methinfo->arrayArg]->type,
                                        values[methinfo->arrayArg]);
@@ -3946,6 +4005,12 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                     objc_result = PyObjC_NULL;
 
                 } else {
+                    if (methinfo->rettype->arrayArg < 0
+                        || methinfo->rettype->arrayArg >= Py_SIZE(methinfo)) {
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "array size in invalid argument");
+                        return NULL;
+                    }
                     count = extract_count(
                         methinfo->rettype->arrayArg - (int)argOffset,
                         methinfo->argtype[methinfo->rettype->arrayArg]->type,
@@ -4210,7 +4275,7 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                              * buffer of the correct size, which means we never get here
                              */
                             // LCOV_EXCL_START
-                            assert(0);
+                            // assert(0);
                             PyErr_SetString(PyObjCExc_InternalError,
                                             "variable length out without buffer");
                             goto error_cleanup;
@@ -4230,8 +4295,15 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
                                     extract_count(-1, methinfo->rettype->type, pRetval);
 
                             } else {
+                                if (methinfo->argtype[i]->arrayArgOut < 0
+                                    || methinfo->argtype[i]->arrayArgOut
+                                           >= Py_SIZE(methinfo)) {
+                                    PyErr_SetString(PyObjCExc_Error,
+                                                    "array size in invalid argument");
+                                    goto error_cleanup;
+                                }
                                 count = extract_count(
-                                    methinfo->argtype[i]->arrayArg - (int)argOffset,
+                                    methinfo->argtype[i]->arrayArgOut - (int)argOffset,
                                     methinfo->argtype[methinfo->argtype[i]->arrayArgOut]
                                         ->type,
                                     argvalues[methinfo->argtype[i]->arrayArgOut]);
