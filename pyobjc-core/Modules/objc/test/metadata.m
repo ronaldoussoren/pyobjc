@@ -26,6 +26,9 @@ use_id(id x __attribute__((__unused__)))
 @interface OC_MetaDataTest : NSObject {
 }
 
+@property(nonatomic, assign) void* context;
+@property(nonatomic, assign) void* context2;
+
 - (id _Nullable)makeBuffer:(void*)buffer len:(size_t)bufsize;
 
 + (BOOL)boolClassMethod;
@@ -37,6 +40,14 @@ use_id(id x __attribute__((__unused__)))
 - (char**)nullStringArray;
 - (int*)nullIntArrayOf:(int)count;
 - (int*)unknownLengthArray;
+
+- (int*)makeIntArrayOf5DummyOut:(int*)outvalue;
+- (char**)makeStringArrayDummyOut:(int*)outvalue;
+- (int*)makeIntArrayOf:(int)count dummyOut:(int*)outvalue;
+- (const int*)nullIntArrayOf5DummyOut:(int*)outvalue;
+- (char**)nullStringArrayDummyOut:(int*)outvalue;
+- (int*)nullIntArrayOf:(int)count dummyOut:(int*)outvalue;
+- (int*)unknownLengthArrayDummyOut:(int*)outvalue;
 
 /* In arrays: */
 - (NSArray* _Nullable)makeIntArray:(int*)data count:(unsigned char)count;
@@ -52,6 +63,7 @@ use_id(id x __attribute__((__unused__)))
 - (NSArray* _Nullable)null4Tuple:(double*)data;
 - (NSArray* _Nullable)makeVariableLengthArray:(int*)array halfCount:(int)cnt;
 - (NSArray* _Nullable)makeVariableLengthBuffer:(unsigned char*)array halfCount:(int)cnt;
+- (id*)arrayWithCount:(int)count of:(Class)class;
 
 /* Out arrays: */
 - (void)fillArray:(int*)data count:(int)count;
@@ -60,6 +72,7 @@ use_id(id x __attribute__((__unused__)))
 - (int)nullfill4Tuple:(int*)data;
 - (int)fillArray:(int*)data uptoCount:(int)count;
 - (int)maybeFillArray:(int*)data;
+- (int)make4Objects:(id*)buffer ofClass:(Class)class;
 
 /* NULL-terminated output arrays can't work, these are just here to check that the
  * bridge knows this too.
@@ -99,6 +112,14 @@ use_id(id x __attribute__((__unused__)))
 + (const int*)nullIntArrayOf5On:(OC_MetaDataTest*)obj;
 + (char**)nullStringArrayOn:(OC_MetaDataTest*)obj;
 + (int*)nullIntArrayOf:(int)count on:(OC_MetaDataTest*)obj;
+
++ (int*)makeIntArrayOf5DummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj;
++ (char**)makeStringArrayDummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj;
++ (int*)makeIntArrayOf:(int)count dummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj;
++ (const int*)nullIntArrayOf5DummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj;
++ (char**)nullStringArrayDummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj;
++ (int*)nullIntArrayOf:(int)count dummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj;
+
 + (NSArray*)makeIntArray:(int*)data count:(unsigned char)count on:(OC_MetaDataTest*)obj;
 + (NSArray* _Nullable)makeIntArray:(int*)array
                           sameSize:(NSArray*)cnt
@@ -157,6 +178,11 @@ use_id(id x __attribute__((__unused__)))
     return [self new];
 }
 
+- (id)cfretainedValue
+{
+    return (id)CFErrorCreate(kCFAllocatorDefault, CFSTR("pyobjcdomain"), 999, NULL);
+}
+
 - (id)descriptionWithValue:(id)value __attribute__((__unused__))
 {
     return [super description];
@@ -178,7 +204,40 @@ use_id(id x __attribute__((__unused__)))
 }
 
 typedef id (*callfunc)(void);
-- (id)callFunction:(callfunc)func
+- (id)callFunction:(callfunc _Nullable)func
+{
+    if (func == NULL) {
+        return nil;
+    }
+    return func();
+}
+
+- (id)callVectorFunction:(id (*)(vector_float3))func
+{
+    if (func == NULL) {
+        return nil;
+    }
+    return func((vector_float3){1.5, 2.5, 3.5});
+}
+
+- (id)callFunction2:(callfunc)func
+{
+    return func();
+}
+
+- (id)callFunction3:(callfunc)func
+{
+    return func();
+}
+
+- (id)callFunction4:(callfunc)func
+{
+    if (func == NULL) {
+        return nil;
+    }
+    return func();
+}
+- (id)callFunction5:(callfunc)func
 {
     return func();
 }
@@ -206,6 +265,13 @@ func(void)
     };
 }
 
+- (id (^)(int, float))getAnonBlock2
+{
+    return ^(int a, float b) {
+      return [NSString stringWithFormat:@"%d %f", a, b];
+    };
+}
+
 - (id)callBlock:(id (^)(void))block
 {
     return block();
@@ -218,16 +284,16 @@ func(void)
     }];
 }
 
-- (int)intInArg:(int)a
+- (int)intInArg:(in int)a
 {
     return -a;
 }
 
-- (int)intOutArg:(int)a
+- (int)intOutArg:(out int)a
 {
     return 2 - a;
 }
-- (int)intInOutArg:(int)a
+- (int)intInOutArg:(inout int)a
 {
     return 2 + a;
 }
@@ -262,6 +328,11 @@ func(void)
     return [obj derefResultArgument:&value];
 }
 
++ (id)derefResultArgument2:(int)value on:(OC_MetaDataTest*)obj
+{
+    return [obj derefResultArgument2:&value];
+}
+
 + (BOOL)boolClassMethod
 {
     return YES;
@@ -283,6 +354,20 @@ func(void)
     return result;
 }
 
+- (char*)makeCharArrayOfCount:(int)count dummyOut:(int*)pval
+{
+    static char result[100];
+    for (int i = 0; i < count; i++) {
+        result[i] = 'a' + i;
+    }
+    *pval = -count;
+    return result;
+}
++ (char*)makeCharArrayOfCount:(int)count dummyOut:(int*)pval on:(OC_MetaDataTest*)obj
+{
+    return [obj makeCharArrayOfCount:count dummyOut:pval];
+}
+
 - (int*)makeIntArrayOf:(int)count
 {
     static int* result = NULL;
@@ -300,6 +385,10 @@ func(void)
     }
     return result;
 }
+- (int*)makeIntArrayOf2:(float)count
+{
+    return [self makeIntArrayOf:(int)count];
+}
 - (const int*)nullIntArrayOf5
 {
     return NULL;
@@ -314,6 +403,53 @@ func(void)
 {
     use_int(count);
     return NULL;
+}
+
+- (int*)makeIntArrayOf5DummyOut:(int*)outvalue
+{
+    *outvalue = 1;
+    return [self makeIntArrayOf5];
+}
+
+- (char**)makeStringArrayDummyOut:(int*)outvalue
+{
+    *outvalue = 2;
+    return [self makeStringArray];
+}
+
+- (int*)makeIntArrayOf:(int)count dummyOut:(int*)outvalue
+{
+    *outvalue = 3;
+    return [self makeIntArrayOf:count];
+}
+- (int*)makeIntArrayOf2:(float)count dummyOut:(int*)outvalue
+{
+    *outvalue = 9;
+    return [self makeIntArrayOf2:count];
+}
+
+- (const int*)nullIntArrayOf5DummyOut:(int*)outvalue
+{
+    *outvalue = 4;
+    return [self nullIntArrayOf5];
+}
+
+- (char**)nullStringArrayDummyOut:(int*)outvalue
+{
+    *outvalue = 5;
+    return [self nullStringArray];
+}
+
+- (int*)nullIntArrayOf:(int)count dummyOut:(int*)outvalue
+{
+    *outvalue = 6;
+    return [self nullIntArrayOf:count];
+}
+
+- (int*)unknownLengthArrayDummyOut:(int*)outvalue
+{
+    *outvalue = 7;
+    return [self unknownLengthArray];
 }
 
 - (NSArray*)nullIntArray:(int*)data count:(unsigned)count
@@ -500,12 +636,51 @@ func(void)
     return array;
 }
 
+- (void)fillArray:(int*)data count:(int)count dummyOut:(int*)pval
+{
+    int i;
+    for (i = 0; i < count; i++) {
+        data[i] = i * i;
+    }
+    *pval = -count;
+}
+
 - (void)fillArray:(int*)data count:(int)count
 {
     int i;
     for (i = 0; i < count; i++) {
         data[i] = i * i;
     }
+}
+- (void)fillArray2:(int*)data count:(float)count
+{
+    int i;
+    for (i = 0; i < (int)count; i++) {
+        data[i] = i * i;
+    }
+}
+
+- (int)fillArray3:(int*)data count:(float)count
+{
+    int i;
+    for (i = 0; i < (int)count; i++) {
+        data[i] = i * i;
+    }
+    return (int)(count * 2);
+}
+
+- (int)fillArray:(int* _Nullable)data
+           count:(unsigned)count
+          array2:(int* _Nullable)data2
+          count2:(unsigned)count2
+{
+    if (data) {
+        [self fillArray:data count:count];
+    }
+    if (data2) {
+        [self fillArray:data2 count:count2];
+    }
+    return 21;
 }
 
 + (void)fillArray:(int*)data size:(int)size written:(int*)written
@@ -643,6 +818,25 @@ func(void)
     return 1;
 }
 
+- (int)replaceObjects:(id*)objects withClass:(Class)class
+{
+    int count, i;
+    for (count = 0; objects[count] != nil; count++)
+        ;
+
+    for (i = 0; i < count; i++) {
+        objects[i] = [[[class alloc] init] autorelease];
+    }
+    return 9;
+}
+- (int)replaceObjects:(id*)objects count:(int)count withClass:(Class)class
+{
+    for (int i = 0; i < count; i++) {
+        objects[i] = [[[class alloc] init] autorelease];
+    }
+    return 9;
+}
+
 - (void)reverse4Tuple:(short*)data
 {
     short t;
@@ -667,6 +861,13 @@ func(void)
 - (int)sumX:(int*)x andY:(int*)y /* in */
 {
     return *x + *y;
+}
+
+- (int)multiplyA:(inout int*)a andB:(inout int*)b
+{
+    *a = -*a;
+    *b = -*b;
+    return *a * *b;
 }
 
 - (int)divBy5:(int)x remainder:(int*)r /* out */
@@ -743,6 +944,16 @@ func(void)
     return count / 2;
 }
 
+- (int)negatedFillArray:(int*)data uptoCount:(int)count
+{
+    return -[self fillArray:data uptoCount:count];
+}
+
+- (float)floatFillArray:(int*)data uptoCount:(int)count
+{
+    return (float)[self fillArray:data uptoCount:count];
+}
+
 - (int)maybeFillArray:(int*)data
 {
     int i;
@@ -753,6 +964,19 @@ func(void)
         data[i] = -42;
     }
     return 2;
+}
+
+- (int)make4Objects:(id*)buffer ofClass:(Class)class
+{
+    for (int i = 0; i < 4; i++) {
+        buffer[i] = [[[class alloc] init] autorelease];
+    }
+    return 42;
+}
+
+- (float)maybeFillArray2:(int*)data
+{
+    return (int)[self maybeFillArray:data];
 }
 
 - (int)reverseArray:(float*)data uptoCount:(int)count
@@ -793,6 +1017,11 @@ func(void)
     return [obj makeIntArrayOf:count];
 }
 
++ (int*)makeIntArrayOf2:(int)count on:(OC_MetaDataTest*)obj
+{
+    return [obj makeIntArrayOf2:(float)count];
+}
+
 + (const int*)nullIntArrayOf5On:(OC_MetaDataTest*)obj
 {
     return [obj nullIntArrayOf5];
@@ -806,6 +1035,35 @@ func(void)
 + (int*)nullIntArrayOf:(int)count on:(OC_MetaDataTest*)obj
 {
     return [obj nullIntArrayOf:count];
+}
+
++ (int*)makeIntArrayOf5DummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj
+{
+    return [obj makeIntArrayOf5DummyOut:outvalue];
+}
++ (char**)makeStringArrayDummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj
+{
+    return [obj makeStringArrayDummyOut:outvalue];
+}
++ (int*)makeIntArrayOf:(int)count dummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj
+{
+    return [obj makeIntArrayOf:count dummyOut:outvalue];
+}
++ (int*)makeIntArrayOf2:(int)count dummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj
+{
+    return [obj makeIntArrayOf2:count dummyOut:outvalue];
+}
++ (const int*)nullIntArrayOf5DummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj
+{
+    return [obj nullIntArrayOf5DummyOut:outvalue];
+}
++ (char**)nullStringArrayDummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj
+{
+    return [obj nullStringArrayDummyOut:outvalue];
+}
++ (int*)nullIntArrayOf:(int)count dummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj
+{
+    return [obj nullIntArrayOf:count dummyOut:outvalue];
 }
 
 + (NSArray*)makeIntArray:(int*)data count:(unsigned char)count on:(OC_MetaDataTest*)obj
@@ -825,6 +1083,34 @@ func(void)
                                 on:(OC_MetaDataTest*)obj
 {
     return [obj makeIntArray:array sameSizeAs:cnt];
+}
+
+- (void)fillChars:(char*)data count:(unsigned)count
+{
+    for (unsigned i = 0; i < count; i++) {
+        data[i] = 'a' + i;
+    }
+}
+
+- (void)fillChars:(char*)data count:(unsigned)count dummyOut:(int*)pval
+{
+    for (unsigned i = 0; i < count; i++) {
+        data[i] = 'a' + i;
+    }
+    *pval = -(int)count;
+}
+
++ (void)fillChars:(char*)data count:(unsigned)count on:(OC_MetaDataTest*)obj
+{
+    [obj fillChars:data count:count];
+}
+
++ (void)fillChars:(char*)data
+            count:(unsigned)count
+         dummyOut:(int*)pval
+               on:(OC_MetaDataTest*)obj
+{
+    [obj fillChars:data count:count dummyOut:pval];
 }
 
 - (void)fill4Chars:(char*)data
@@ -891,9 +1177,33 @@ func(void)
     return [obj null4Tuple:data];
 }
 
++ (void)fillArray:(int*)data count:(int)count dummyOut:(int*)pval on:(OC_MetaDataTest*)obj
+{
+    [obj fillArray:data count:count dummyOut:pval];
+}
+
 + (void)fillArray:(int*)data count:(int)count on:(OC_MetaDataTest*)obj
 {
     [obj fillArray:data count:count];
+}
+
++ (void)fillArray2:(int*)data count:(int)count on:(OC_MetaDataTest*)obj
+{
+    [obj fillArray2:data count:(float)count];
+}
+
++ (int)fillArray3:(int*)data count:(int)count on:(OC_MetaDataTest*)obj
+{
+    return [obj fillArray3:data count:(float)count];
+}
+
++ (int)fillArray:(int* _Nullable)data
+           count:(unsigned)count
+          array2:(int* _Nullable)data2
+          count2:(unsigned)count2
+              on:(OC_MetaDataTest*)obj
+{
+    return [obj fillArray:data count:count array2:data2 count2:count2];
 }
 
 + (void)fillRetainedArray:(id*)data
@@ -948,9 +1258,19 @@ func(void)
     return [obj fillArray:data uptoCount:count];
 }
 
++ (int)floatFillArray:(int*)data uptoCount:(int)count on:(OC_MetaDataTest*)obj
+{
+    return (int)[obj floatFillArray:data uptoCount:count];
+}
+
 + (int)maybeFillArray:(int*)data on:(OC_MetaDataTest*)obj
 {
     return [obj maybeFillArray:data];
+}
+
++ (int)maybeFillArray2:(int*)data on:(OC_MetaDataTest*)obj
+{
+    return (int)[obj maybeFillArray2:data];
 }
 
 + (void)fillStringArray:(char**)data on:(OC_MetaDataTest*)obj
@@ -1008,6 +1328,11 @@ func(void)
     return [obj sumX:x andY:y];
 }
 
++ (int)multiplyA:(inout int*)a andB:(inout int*)b on:(OC_MetaDataTest*)obj
+{
+    return [obj multiplyA:a andB:b];
+}
+
 + (int)divBy5:(int)x remainder:(int*)r on:(OC_MetaDataTest*)obj
 {
     return [obj divBy5:x remainder:r];
@@ -1038,6 +1363,11 @@ func(void)
 #pragma clang diagnostic pop
 
     return [NSArray arrayWithObjects:fmt, [NSString stringWithUTF8String:buffer], NULL];
+}
+
+- (NSArray*)makeArrayWithInvalidFormat:(int)format, ...
+{
+    return nil;
 }
 
 - (NSArray*)makeArrayFromBuffer:(void*)value withFormat:(NSString*)fmt, ...
@@ -1113,9 +1443,36 @@ func(void)
     return 42;
 }
 
-- (NSData*)makeDataForBytes:(char*)data count:(int)count
+- (NSData*)makeDataFor10Bytes:(char*)data dummyOut:(int*)pval
 {
+    *pval = 5;
+    return [NSData dataWithBytes:data length:10];
+}
+
+- (NSData*)makeDataForBytes:(char* _Nullable)data count:(int)count
+{
+    if (data == NULL) {
+        return nil;
+    }
     return [NSData dataWithBytes:data length:count];
+}
+
+- (NSData*)makeDataForBytes:(char* _Nullable)data count:(int)count dummyOut:(int*)pval
+{
+    *pval = -count;
+    if (data == NULL) {
+        return nil;
+    }
+    return [NSData dataWithBytes:data length:count];
+}
+
+- (NSData*)makeDataForBytes:(char* _Nullable)data halfcount:(int)count dummyOut:(int*)pval
+{
+    *pval = -count;
+    if (data == NULL) {
+        return nil;
+    }
+    return [NSData dataWithBytes:data length:count * 2];
 }
 
 - (NSData*)makeDataForVoids:(void*)data count:(int)count
@@ -1160,6 +1517,11 @@ func(void)
     return theValue;
 }
 
+- (int* _Nullable)unknownLengthNil
+{
+    return NULL;
+}
+
 - (int*)unknownLengthMutable
 {
     static int theValue[20];
@@ -1173,6 +1535,42 @@ func(void)
     for (i = 0; i < cnt * 2; i++) {
         array[i] = i * i;
     }
+}
+- (int)fillVariableLengthBuffer2:(int*)array halfCount:(int)cnt
+{
+    int i;
+    int result = 0;
+
+    for (i = 0; i < cnt * 2; i++) {
+        array[i] = i * i;
+        result += array[i];
+    }
+    return result;
+}
+- (int)fillVariableLengthBuffer2:(int*)array count:(float)cnt
+{
+    return [self fillVariableLengthBuffer2:array halfCount:(int)(cnt / 2)];
+}
+- (int)fillVariableLengthBuffer3:(int*)array capacity:(int)cnt
+{
+    if (cnt > 3) {
+        cnt = 3;
+    }
+    for (int i = 0; i < cnt; i++) {
+        array[i] = i;
+    }
+    return cnt;
+}
+
+- (float)fltfillVariableLengthBuffer3:(int*)array capacity:(int)cnt
+{
+    if (cnt > 3) {
+        cnt = 3;
+    }
+    for (int i = 0; i < cnt; i++) {
+        array[i] = i;
+    }
+    return cnt;
 }
 
 - (NSArray*)makeVariableLengthArray:(int*)array halfCount:(int)cnt
@@ -1204,6 +1602,34 @@ func(void)
     }
     return result;
 }
+- (id*)arrayWithCount:(int)count of:(Class)class
+{
+    static id buffer[1024];
+    for (int i = 0; i < count; i++) {
+        buffer[i] = [[class alloc] init];
+    }
+    return buffer;
+}
+
+- (NSString* _Nullable)makeString:(const char*)value
+{
+    if (value == NULL)
+        return nil;
+
+    return [NSString stringWithUTF8String:value];
+}
+
+- (NSString* _Nullable)makeString:(const char*)value dummyOut:(int*)pval
+{
+    if (value == NULL) {
+        *pval = -1;
+        return nil;
+    }
+
+    *pval = (int)strlen(value);
+    return [NSString stringWithUTF8String:value];
+}
+
 - (NSArray* _Nullable)makeNullDelimitedObjectArray:(id)value, ...
 {
     va_list         ap;
@@ -1320,6 +1746,32 @@ func(void)
     return result;
 }
 
++ (void)fillVariableLengthBuffer:(int*)array halfCount:(int)cnt on:(OC_MetaDataTest*)value
+{
+    [value fillVariableLengthBuffer:array halfCount:cnt];
+}
++ (int)fillVariableLengthBuffer2:(int*)array halfCount:(int)cnt on:(OC_MetaDataTest*)value
+{
+    return [value fillVariableLengthBuffer2:array halfCount:cnt];
+}
+
++ (void)fillVariableLengthBuffer2:(int*)array count:(int)cnt on:(OC_MetaDataTest*)value
+{
+    [value fillVariableLengthBuffer2:array count:(float)cnt];
+}
+
++ (int)fillVariableLengthBuffer3:(int*)array capacity:(int)cnt on:(OC_MetaDataTest*)value
+{
+    return [value fillVariableLengthBuffer3:array capacity:cnt];
+}
+
++ (int)fltfillVariableLengthBuffer3:(int*)array
+                           capacity:(int)cnt
+                                 on:(OC_MetaDataTest*)value
+{
+    return (int)[value fltfillVariableLengthBuffer3:array capacity:cnt];
+}
+
 + (NSArray*)makeVariableLengthArray:(int*)array
                           halfCount:(int)cnt
                                  on:(OC_MetaDataTest*)value
@@ -1421,6 +1873,28 @@ func(void)
     return &value;
 }
 
+- (int* _Nullable)returnPointerDeref2
+{
+    return NULL;
+}
+
+- (int* _Nullable)returnPointerDerefDummyOut:(int*)outvalue
+{
+    static int value = 99;
+    *outvalue        = -42;
+    return &value;
+}
+
+- (id*)returnIdPointerDerefForClass:(Class)class
+{
+    static id value = nil;
+
+    if (value == nil) {
+        value = [[class alloc] init];
+    }
+    return &value;
+}
+
 - (int* _Nullable)returnPointerToFree
 {
     int* result = malloc(4 * sizeof(int));
@@ -1507,6 +1981,11 @@ func(void)
     return [value returnPointerDeref];
 }
 
++ (int* _Nullable)returnPointerDerefDummyOut:(int*)outvalue on:(OC_MetaDataTest*)value
+{
+    return [value returnPointerDerefDummyOut:outvalue];
+}
+
 + (int* _Nullable)returnPointerToFreeOn:(OC_MetaDataTest*)value
 {
     return [value returnPointerToFree];
@@ -1525,17 +2004,18 @@ func(void)
 
 - (id _Nullable)charpArgNullTerminated:(char*)arg
 {
-    return nil;
+    return [NSString stringWithUTF8String:arg];
 }
 
 - (id _Nullable)charpArg5Chars:(char*)arg
 {
-    return nil;
+    return
+        [NSString stringWithFormat:@"%c%c%c%c%c", arg[0], arg[1], arg[2], arg[3], arg[4]];
 }
 
 - (id _Nullable)charpArgVariadic:(char*)arg
 {
-    return nil;
+    return [NSString stringWithFormat:@"%c%c", arg[0], arg[4]];
 }
 
 - (id _Nullable)charpArgDeref:(char*)arg
@@ -1543,9 +2023,17 @@ func(void)
     return nil;
 }
 
-- (id _Nullable)charpArgCounted:(char*)arg count:(int)c
+- (id _Nullable)charpArgDeref2:(char*)arg
 {
     return nil;
+}
+
+- (id _Nullable)charpArgCounted:(char* _Nullable)arg count:(int)c
+{
+    if (arg == NULL)
+        return nil;
+    return [NSString stringWithFormat:@"%c%c", arg[0], arg[c]];
+    ;
 }
 
 - (id _Nullable)charpArgCounted:(char*)arg floatcount:(float)c
@@ -1583,6 +2071,11 @@ func(void)
     return [value charpArgDeref:arg];
 }
 
++ (id _Nullable)charpArgDeref2:(char*)arg on:(OC_MetaDataTest*)value
+{
+    return [value charpArgDeref2:arg];
+}
+
 + (id _Nullable)charpArgCounted:(char*)arg count:(int)c on:(OC_MetaDataTest*)value
 {
     return [value charpArgCounted:arg count:c];
@@ -1599,19 +2092,45 @@ func(void)
     return [[NSArray alloc] init];
 }
 
+- (id _Nullable)NS_RETURNS_RETAINED retainedObjCObjectWithDummyOutput:(int*)value
+{
+    *value = -20;
+    return [[NSArray alloc] init];
+}
+
 - (id _Nullable)NS_RETURNS_RETAINED retainedCFObject
 {
     return (id)CFArrayCreate(kCFAllocatorDefault, NULL, 0, &kCFTypeArrayCallBacks);
 }
 
-+ (id _Nullable)NS_RETURNS_RETAINED retainedObjCObjectOn:(OC_MetaDataTest*)value
+- (id _Nullable)NS_RETURNS_RETAINED retainedCFObjectWithDummyOutput:(int*)value
 {
-    return [value retainedObjCObject];
+    *value = -21;
+    return (id)CFArrayCreate(kCFAllocatorDefault, NULL, 0, &kCFTypeArrayCallBacks);
 }
 
-+ (id _Nullable)NS_RETURNS_RETAINED retainedCFObjectOn:(OC_MetaDataTest*)value
++ (id _Nullable)NS_RETURNS_RETAINED retainedObjCObjectOn:(OC_MetaDataTest*)obj
 {
-    return [value retainedCFObject];
+    return [obj retainedObjCObject];
+}
+
++ (id _Nullable)NS_RETURNS_RETAINED
+retainedObjCObjectWithDummyOutput:(int*)value
+on:(OC_MetaDataTest*)obj
+{
+    return [obj retainedObjCObjectWithDummyOutput:value];
+}
+
++ (id _Nullable)NS_RETURNS_RETAINED retainedCFObjectOn:(OC_MetaDataTest*)obj
+{
+    return [obj retainedCFObject];
+}
+
++ (id _Nullable)NS_RETURNS_RETAINED
+retainedCFObjectWithDummyOutput:(int*)value
+on:(OC_MetaDataTest*)obj
+{
+    return [obj retainedCFObjectWithDummyOutput:value];
 }
 
 /* Handling by-ref output arguments */
@@ -1765,9 +2284,23 @@ func(void)
     return [obj fillVoids:data count:count];
 }
 
++ (int*)unknownLengthArrayOn:(OC_MetaDataTest*)obj
+{
+    return [obj unknownLengthArray];
+}
+
++ (int*)unknownLengthArrayDummyOut:(int*)outvalue on:(OC_MetaDataTest*)obj
+{
+    return [obj unknownLengthArrayDummyOut:outvalue];
+}
+
 typedef int (*intfunc)(int);
 static intfunc gIntFunc = NULL;
 + (void)storeIntFunc:(intfunc)func
+{
+    gIntFunc = func;
+}
++ (void)storeIntFunc2:(intfunc)func
 {
     gIntFunc = func;
 }
@@ -1806,6 +2339,21 @@ struct sumfields {
         [object performAction:value];
         [value release];
     }
+}
+
+struct vectorstruct {
+    float vector[12];
+};
++ (int)methodWithVectorStruct:(struct vectorstruct)value __attribute__((unused))
+{
+    return 1;
+}
+
++ (int)methodWithVectorStruct:(struct vectorstruct)value
+                     dummyOut:(int*)pval __attribute__((unused))
+{
+    *pval = 2;
+    return 1;
 }
 
 @end

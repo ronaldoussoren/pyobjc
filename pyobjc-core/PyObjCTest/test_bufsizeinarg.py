@@ -277,6 +277,46 @@ for tp in ("id", "cfarray", "nsrange", "cfrange", "float"):
         },
     )
 
+for idx, encoding in enumerate(
+    [
+        b"{_CFRange=qq}",
+        b"{_CFRange=ll}",
+        b"{CFRange=qq}",
+        b"{CFRange=ll}",
+    ]
+):
+    objc.registerMetaDataForSelector(
+        b"OC_ArgSizeInArg",
+        f"cfrange{idx + 2}:array:".encode(),
+        {
+            "arguments": {
+                2 + 0: {"type": encoding},
+                2
+                + 1: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 0,
+                    "null_accepted": False,
+                },
+            }
+        },
+    )
+
+    objc.registerMetaDataForSelector(
+        b"OC_ArgSizeInArg",
+        f"pcfrange{idx + 2}:array:".encode(),
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_IN, "type": b"^" + encoding},
+                2
+                + 1: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 0,
+                    "null_accepted": False,
+                },
+            }
+        },
+    )
+
 
 class TestBasicArraySizes(TestCase):
     def test_char_as_int(self):
@@ -340,6 +380,22 @@ class TestBasicArraySizes(TestCase):
         self.assertIsInstance(v, NSArray)
         self.assertEqual(v, range(5))
 
+        v = OC_ArgSizeInArg.cfrange2_array_((3, 5), range(50))
+        self.assertIsInstance(v, NSArray)
+        self.assertEqual(v, range(5))
+
+        v = OC_ArgSizeInArg.cfrange3_array_((3, 5), range(50))
+        self.assertIsInstance(v, NSArray)
+        self.assertEqual(v, range(5))
+
+        v = OC_ArgSizeInArg.cfrange4_array_((3, 5), range(50))
+        self.assertIsInstance(v, NSArray)
+        self.assertEqual(v, range(5))
+
+        v = OC_ArgSizeInArg.cfrange5_array_((3, 5), range(50))
+        self.assertIsInstance(v, NSArray)
+        self.assertEqual(v, range(5))
+
     def test_nsrange(self):
         v = OC_ArgSizeInArg.nsrange_array_((3, 5), range(50))
         self.assertIsInstance(v, NSArray)
@@ -361,14 +417,14 @@ class TestBasicArraySizes(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
-            "Don't know how to extract count from argument 2 with encoding: @",
+            "Don't know how to extract count from argument 0 with encoding: @",
         ):
             v = OC_ArgSizeInArg.id_array_(objc.lookUpClass("NSObject").new(), range(50))
 
     def test_float(self):
         with self.assertRaisesRegex(
             TypeError,
-            "Don't know how to extract count from argument 2 with encoding: f",
+            "Don't know how to extract count from argument 0 with encoding: f",
         ):
             OC_ArgSizeInArg.float_array_(5.0, range(50))
 
@@ -438,6 +494,22 @@ class TestIndirectArraySizes(TestCase):
         self.assertIsInstance(v, NSArray)
         self.assertEqual(v, range(5))
 
+        v = OC_ArgSizeInArg.pcfrange2_array_((3, 5), range(50))
+        self.assertIsInstance(v, NSArray)
+        self.assertEqual(v, range(5))
+
+        v = OC_ArgSizeInArg.pcfrange3_array_((3, 5), range(50))
+        self.assertIsInstance(v, NSArray)
+        self.assertEqual(v, range(5))
+
+        v = OC_ArgSizeInArg.pcfrange4_array_((3, 5), range(50))
+        self.assertIsInstance(v, NSArray)
+        self.assertEqual(v, range(5))
+
+        v = OC_ArgSizeInArg.pcfrange5_array_((3, 5), range(50))
+        self.assertIsInstance(v, NSArray)
+        self.assertEqual(v, range(5))
+
     def test_nsrange(self):
         v = OC_ArgSizeInArg.pnsrange_array_((3, 5), range(50))
         self.assertIsInstance(v, NSArray)
@@ -462,6 +534,6 @@ class TestIndirectArraySizes(TestCase):
     def test_float(self):
         with self.assertRaisesRegex(
             TypeError,
-            "Don't know how to extract count from argument 2 with encoding: f",
+            "Don't know how to extract count from argument 0 with encoding: f",
         ):
             OC_ArgSizeInArg.float_array_(5.0, range(50))

@@ -1720,7 +1720,9 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
             value_bytes = PyByteArray_AS_STRING(value);
         }
 
-        if (strict) {
+        if (nitems == -1) {
+            nitems = value_size;
+        } else if (strict) {
             if (value_size != nitems) {
                 PyErr_Format(PyExc_ValueError,
                              "depythonifying array of %ld items, got one of %ld", nitems,
@@ -1746,7 +1748,9 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict,
         return -1;
     }
 
-    if (strict) {
+    if (nitems == -1) {
+        nitems = PyTuple_GET_SIZE(seq);
+    } else if (strict) {
         if (PyTuple_GET_SIZE(seq) != nitems) {
             PyErr_Format(PyExc_ValueError,
                          "depythonifying array of %ld items, got one of %ld", nitems,

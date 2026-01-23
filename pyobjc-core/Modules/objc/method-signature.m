@@ -345,6 +345,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
         case _C_ID:
             if (methinfo->argtype[i]->type[1] == '?') {
                 /* Blocks are not simple */
+                /* XXX: Remove this limitation */
                 return;
             }
         }
@@ -1215,8 +1216,8 @@ setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_na
     } else if (descr != NULL) {
         if (descr->type == NULL) {
             if (typeModifier != '\0') {
-                if (descr->modifier != typeModifier) {
-                    if (descr->tmpl) { // LCOV_BR_EXCL_LINE
+                if (descr->modifier != typeModifier) { // LCOV_BR_EXCL_LINE
+                    if (descr->tmpl) {                 // LCOV_BR_EXCL_LINE
                         // LCOV_EXCL_START
                         Py_XDECREF(d);
                         return -2;
@@ -1260,6 +1261,8 @@ setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_na
                 descr->type         = tp;
             }
         }
+    } else if (typeModifier != 0) {
+        return -2;
     }
     Py_CLEAR(d);
     return 0;
@@ -2033,6 +2036,15 @@ static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
         Py_DECREF(v);
         if (r == -1)    // LCOV_BR_EXCL_LINE
             goto error; // LCOV_EXCL_LINE
+    } else if (descr->modifier != '\0') {
+        v = PyBytes_FromStringAndSize(&descr->modifier, 1);
+        if (v == NULL)  // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+
+        r = PyDict_SetItem(result, PyObjCNM_type_modifier, v);
+        Py_DECREF(v);
+        if (r == -1)    // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
     }
 
     if (descr->printfFormat) {
@@ -2156,6 +2168,7 @@ PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo
     if (result == NULL) { // LCOV_BR_EXCL_LINE
         return NULL;      // LCOV_EXCL_LINE
     }
+
     if (methinfo->signature) {
         v = PyBytes_FromString(methinfo->signature);
         r = PyDict_SetItem(result, PyObjCNM_full_signature, v);

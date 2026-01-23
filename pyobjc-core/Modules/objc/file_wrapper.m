@@ -394,7 +394,12 @@ FILE* _Nullable FILE_get(PyObject* fp)
         return NULL;
     }
 
-    return ((struct file_object*)fp)->fp;
+    FILE* result = ((struct file_object*)fp)->fp;
+    if (result == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Using closed objc.FILE");
+        return NULL;
+    }
+    return result;
 }
 
 int

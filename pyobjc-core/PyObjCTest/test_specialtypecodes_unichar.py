@@ -91,6 +91,19 @@ def setupMetaData():
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
+        b"invalidUniCharArrayOf4Out:",
+        {
+            "arguments": {
+                2: {
+                    "type": objc._C_PTR + objc._C_UNICHAR,
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 4,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
         b"UniCharArrayOf4InOut:",
         {
             "arguments": {
@@ -125,6 +138,20 @@ def setupMetaData():
                     "type": objc._C_PTR + objc._C_UNICHAR,
                     "type_modifier": objc._C_OUT,
                     "c_array_length_in_arg": 2,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"fillUniChars:count:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type": objc._C_PTR + objc._C_UNICHAR,
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
                 }
             }
         },
@@ -254,6 +281,12 @@ class TestTypeCode_UniChar(TestCase):
         v = o.UniCharArrayOf4Out_(None)
         self.assertEqual(v, "boat")
 
+        with self.assertRaisesRegex(
+            UnicodeDecodeError,
+            "'utf-16-le' codec can't decode bytes in position 6-7: illegal encoding",
+        ):
+            o.invalidUniCharArrayOf4Out_(None)
+
         o = OC_TestSpecialTypeCode.alloc().init()
         a = array.array("h", [0] * 4)
         v = o.UniCharArrayOf4Out_(a)
@@ -277,3 +310,7 @@ class TestTypeCode_UniChar(TestCase):
         self.assertArgSizeInArg(o.UniCharArrayOfCount_In_, 1, 0)
         r = o.UniCharArrayOfCount_In_(4, "hello there")
         self.assertEqual(r, "hell")
+
+        self.assertArgIsOut(o.fillUniChars_count_, 0)
+        with self.assertRaisesRegex(UnicodeDecodeError, "'utf-16-le'"):
+            o.fillUniChars_count_(None, 4)

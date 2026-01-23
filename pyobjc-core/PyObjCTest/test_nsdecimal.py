@@ -13,7 +13,7 @@ from PyObjCTools.TestSupport import TestCase, skipUnless
 
 class TestNSDecimalWrapper(TestCase):
     def test_creation(self):
-        for value in (0, 5, (2**62) + 5):
+        for value in (0, 5, (2**62) + 5, -1):
             d = objc.NSDecimal(value)
             self.assertIsInstance(d, objc.NSDecimal)
             self.assertEqual(str(d), str(value))
@@ -73,6 +73,11 @@ class TestNSDecimalWrapper(TestCase):
             TypeError, "cannot convert instance of NSObject to NSDecimal"
         ):
             objc.NSDecimal(objc.lookUpClass("NSObject").new())
+
+        with self.assertRaisesRegex(
+            TypeError, "cannot convert instance of list to NSDecimal"
+        ):
+            objc.NSDecimal([])
 
         with self.assertRaisesRegex(TypeError, r"unsupported operand type\(s\) for \+"):
             objc.NSDecimal(1) + set()
@@ -432,6 +437,9 @@ class TestUsingNSDecimalNumber(TestCase):
         n = cls.decimalNumberWithDecimal_(d)
         self.assertIsInstance(n, cls)
         self.assertEqual(str(n), str(d))
+
+        o = objc.NSDecimal(n)
+        self.assertEqual(o, d)
 
         e = objc.NSDecimal(n)
         self.assertEqual(e, d)

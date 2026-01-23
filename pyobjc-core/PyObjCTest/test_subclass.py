@@ -234,6 +234,31 @@ class TestSelectors(TestCase):
         ):
             m(o)
 
+    def test_selector_as_selector_impl(self):
+
+        class MyBaseClass(NSObject):
+            def value_(self, arg):
+                return f"{type(self).__name__}: {type(arg).__name__}"
+
+        o1 = MyBaseClass.alloc().init()
+        m1 = o1.value_
+
+        o2 = NSArray.arrayWithArray_([1, 2, 3])
+        m2 = o2.containsObject_
+
+        class MyClass(NSObject):
+            someValue = objc.selector(m1, selector=b"someValue", signature=b"@@:")
+            otherValue = objc.selector(m2, selector=b"otherValue", signature=b"@@:")
+
+        v = MyClass.alloc().init()
+        self.assertEqual(v.someValue(), "MyBaseClass: MyClass")
+        self.assertEqual(v.otherValue(), False)
+
+        self.assertEqual(
+            OC_ObjectInt.invokeSelector_of_(b"someValue", v), "MyBaseClass: MyClass"
+        )
+        self.assertEqual(OC_ObjectInt.invokeSelector_of_(b"otherValue", v), False)
+
 
 class TestCopying(TestCase):
     def testCopy(self):

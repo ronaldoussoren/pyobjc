@@ -17,6 +17,8 @@ static void erase_signature(id _block);
 }
 
 - (int (^)(void))getIntBlock;
+- (int (^)(void))getIntBlockWithDummy:(int*)dummy __attribute__((__unused__));
+- (int)fetchIntBlock:(int (^*)(void))blockptr;
 - (double (^)(double, double))getFloatBlock;
 - (NSRect (^)(double, double, double, double))getStructBlock;
 - (void)callIntBlock:(void (^)(int))block withValue:(int)value;
@@ -45,7 +47,8 @@ static void erase_signature(id _block);
 
 @end
 
-static int (^gIntBlock)(void) = nil;
+static int (^gIntBlock)(void)  = nil;
+static int (^gIntBlock2)(void) = nil;
 
 @implementation OCTestBlock
 
@@ -61,9 +64,19 @@ static int (^gIntBlock)(void) = nil;
           return 42;
         } copy];
     }
+    if (gIntBlock2 == nil) {
+        gIntBlock2 = [^{
+          return 21;
+        } copy];
+    }
 
     stored_block = nil;
     return self;
+}
+
+- (int)invokeBlock:(int (^)(int, int))block a:(int)a b:(int)b
+{
+    return block(a, b);
 }
 
 - (id)callVectorBlock:(id (^)(vector_float2))block
@@ -80,6 +93,38 @@ static int (^gIntBlock)(void) = nil;
 - (int (^)(void))getIntBlock
 {
     return gIntBlock;
+}
+
+- (int (^)(void))getInvalidIntBlock
+{
+    return (int (^)(void))[[NSArray new] autorelease];
+}
+
+- (int (^)(void))getIntBlockWithDummy:(int*)dummy __attribute__((__unused__))
+{
+    return gIntBlock2;
+}
+
+- (int)fetchIntBlock:(int (^*)(void))blockptr
+{
+    *blockptr = [[^(void) {
+      return 21;
+    } copy] autorelease];
+    return 1;
+}
+
+- (int)fetchIntBlock2:(int (^*)(void))blockptr
+{
+    *blockptr = [[^(void) {
+      return 23;
+    } copy] autorelease];
+    return 1;
+}
+
+- (int)fetchIntBlock3:(int (^*)(void))blockptr
+{
+    *blockptr = (int (^)(void))[[NSArray new] autorelease];
+    return 1;
 }
 
 - (int (^)(int))getIntBlock2

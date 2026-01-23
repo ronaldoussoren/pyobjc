@@ -3,6 +3,7 @@
  */
 #include "Python.h"
 #include "pyobjc-api.h"
+#include <stdarg.h>
 
 #import <Foundation/Foundation.h>
 
@@ -15,14 +16,35 @@
 @end
 
 @implementation OC_TestFilePointer
-- (FILE*)openFile:(char*)path withMode:(char*)mode
++ (FILE* _Nullable)openFile:(char*)path withMode:(char*)mode on:(OC_TestFilePointer*)o
+{
+    return [o openFile:path withMode:mode];
+}
+
+- (FILE* _Nullable)openFile:(char*)path withMode:(char*)mode
 {
     return fopen(path, mode);
 }
 
-- (FILE*)openNoFile
++ (FILE* _Nullable)openNoFileOn:(OC_TestFilePointer*)o
+{
+    return [o openNoFile];
+}
+
+- (FILE* _Nullable)openNoFile
 {
     return NULL;
+}
+
+- (FILE* _Nullable)openFileMode:(out char**)mode
+{
+    *mode = "w";
+    return [self openFile:"/etc/resolve.conf" withMode:*mode];
+}
+
++ (FILE* _Nullable)openFileMode:(out char**)mode on:(OC_TestFilePointer*)o
+{
+    return [o openFileMode:mode];
 }
 
 - (NSString*)readline:(FILE*)fp
@@ -36,6 +58,46 @@
     return [NSString stringWithCString:fgets(buf, sizeof(buf), fp)
                               encoding:NSASCIIStringEncoding];
 }
+
+- (NSString*)readline2:(FILE*)fp
+{
+    return [self readline:fp];
+}
+
+- (NSString*)readline3:(FILE*)fp
+{
+    return [self readline:fp];
+}
+
+- (NSString*)readline4:(FILE*)fp
+{
+    return [self readline:fp];
+}
+
+- (void)printTo:(FILE*)fp format:(char*)fmt, ...
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+    vfprintf(fp, fmt, ap);
+#pragma clang diagnostic pop
+    va_end(ap);
+}
+
+- (void)printTo2:(FILE*)fp format:(char*)fmt, ...
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+    vfprintf(fp, fmt, ap);
+#pragma clang diagnostic pop
+    va_end(ap);
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

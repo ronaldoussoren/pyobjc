@@ -2,10 +2,12 @@ import objc
 from PyObjCTools.TestSupport import TestCase
 from PyObjCTest.test_metadata_function import makeArrayWithFormat_
 
+# XXX: Tests in this file fail unless run after test_internals
+
 objc.registerMetaDataForSelector(
     b"OC_CallbackTest",
     b"selWithSEL:SEL:andObject:",
-    {"arguments": {2: {"sel_of_type": b"q@:q"}, 3: {"sel_of_type": "v@:@@^v"}}},
+    {"arguments": {2: {"sel_of_type": b"q@:q"}, 3: {"sel_of_type": b"v@:@@^v"}}},
 )
 
 objc.registerMetaDataForSelector(
@@ -14,10 +16,11 @@ objc.registerMetaDataForSelector(
     {
         "arguments": {
             2: {
+                "type": b"^?",
                 "callable": {
                     "retval": {"type": b"q"},
-                    "arguments": {"0": {"type": b"@"}, "1": {"type": b"i"}},
-                }
+                    "arguments": {0: {"type": b"@"}, 1: {"type": b"i"}},
+                },
             }
         }
     },
@@ -27,6 +30,22 @@ objc.registerMetaDataForSelector(
     b"OC_CallbackTest",
     b"selWithCallback2:",
     {"arguments": {2: {"callable": {"retval": {"type": b"d"}, "arguments": {}}}}},
+)
+
+objc.registerMetaDataForSelector(
+    b"OC_CallbackTest",
+    b"selWithCallback3:",
+    {
+        "arguments": {
+            2: {
+                "type": b"^?",
+                "callable": {
+                    "retval": {"type": b"q"},
+                    "arguments": {0: {"type": b"<2f>"}},
+                },
+            }
+        }
+    },
 )
 
 objc.registerMetaDataForSelector(
@@ -55,15 +74,19 @@ class OC_CallbackTest(objc.lookUpClass("NSObject")):
     def selWithoutSEL_(self, o):
         pass
 
-    @objc.typedSelector(b"v@:?")
+    @objc.typedSelector(b"v@:^?")
     def selWithCallback_(self, cb):
         pass
 
-    @objc.typedSelector(b"v@:?")
+    @objc.typedSelector(b"v@:^?")
     def selWithCallback2_(self, cb):
         pass
 
-    @objc.typedSelector(b"v@:??")
+    @objc.typedSelector(b"v@:^?")
+    def selWithCallback3_(self, cb):
+        pass
+
+    @objc.typedSelector(b"v@:^?^?")
     def selWithCallback_andCallback_(self, cb1, cb2):
         pass
 
@@ -141,6 +164,35 @@ class TestClosure(TestCase):
                 OC_CallbackTest.selWithCallback_,
                 -1,
             )
+
+        with self.assertRaisesRegex(
+            objc.BadPrototypeError,
+            "has keyword-only arguments without defaults",
+        ):
+            objc._makeClosure(
+                (lambda a, *, b: None),
+                OC_CallbackTest.selWithCallback_,
+                -1,
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot create native callable for instances of type type"
+        ):
+            objc._makeClosure(
+                object,
+                OC_CallbackTest.selWithCallback_,
+                -1,
+            )
+
+        with self.assertRaisesRegex(
+            NotImplementedError, "Vector types not supported by libffi caller"
+        ):
+            o = objc._makeClosure(
+                lambda a: 42,
+                OC_CallbackTest.selWithCallback3_,
+                -1,
+            )
+            print(o)
 
 
 class TestCallbackFor(TestCase):

@@ -477,6 +477,27 @@ objcsel_repr(PyObject* _self)
     return rval;
 }
 
+static Py_hash_t
+objcsel_hash(PyObject* o)
+{
+    PyObjCNativeSelector* self    = (PyObjCNativeSelector*)o;
+    Py_hash_t             h       = 0;
+    const char*           selname = sel_getName(self->base.sel_selector);
+
+    if (self->base.sel_self) {
+        h ^= PyObject_Hash(self->base.sel_self);
+    }
+    h ^= (long)(self->base.sel_class);
+#if PY_VERSION_HEX >= 0x030e0000
+    h ^= Py_HashBuffer(selname, strlen(selname));
+#else
+    PyHash_FuncDef* hashfunc = PyHash_GetFuncDef();
+    h ^= hashfunc->hash(selname, strlen(selname));
+#endif
+
+    return h;
+}
+
 static PyObject*
 objcsel_richcompare(PyObject* a, PyObject* b, int op)
 {
@@ -868,6 +889,7 @@ static PyType_Slot objcsel_slots[] = {
     {.slot = Py_tp_descr_get, .pfunc = (void*)&objcsel_descr_get},
     {.slot = Py_tp_members, .pfunc = (void*)&objcsel_members},
     {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
+    {.slot = Py_tp_hash, .pfunc = (void*)&objcsel_hash},
 
     {0, NULL} /* sentinel */
 };

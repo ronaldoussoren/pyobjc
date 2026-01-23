@@ -377,6 +377,11 @@ class PyOCTestSimpleArguments(TestCase):
 
         # TODO: Out of range values
 
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str' of 3"
+        ):
+            self.obj.longlongArg_("foo")
+
     def testULongLong(self):
         self.assertEqual(self.obj.ulonglongArg_(0), 0)
         self.assertEqual(self.obj.ulonglongArg_(10), 5)

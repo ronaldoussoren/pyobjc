@@ -234,6 +234,13 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     buffer[2] = 'a';
     buffer[3] = 't';
 }
+- (void)invalidUniCharArrayOf4Out:(UniChar*)buffer
+{
+    buffer[0] = 'b';
+    buffer[1] = 'o';
+    buffer[2] = 'a';
+    buffer[3] = 0xDFFF;
+}
 - (NSObject* _Nullable)UniCharArrayOf4InOut:(UniChar*)buffer
 {
     NSObject* result = [NSString stringWithCharacters:buffer length:4];
@@ -251,6 +258,14 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
 - (NSObject* _Nullable)byteStringArg:(char*)value
 {
     return [NSString stringWithCString:value encoding:NSISOLatin1StringEncoding];
+}
+
+- (int)fillUniChars:(UniChar*)buffer count:(int)count
+{
+    for (int i = 0; i < count; i++) {
+        buffer[i] = 0xDFFF;
+    }
+    return 2;
 }
 
 - (NSObject* _Nullable)byteArg:(char)a andbyteArg:(char)b

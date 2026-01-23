@@ -8,8 +8,80 @@ from PyObjCTest.filepointer import OC_TestFilePointer
 from PyObjCTools.TestSupport import TestCase
 
 fp = objc.FILE("/etc/passwd", "r")
-gFirstPasswdLine = fp.readline()
+gPassword = [fp.readline() for _ in range(4)]
 fp.close()
+
+objc.registerMetaDataForSelector(
+    b"OC_TestFilePointer",
+    b"openFile2:",
+    {"arguments": {2 + 0: {"type_modifier": objc._C_INOUT}}},
+)
+
+objc.registerMetaDataForSelector(
+    b"OC_TestFilePointer",
+    b"readline2:",
+    {"arguments": {2 + 0: {"type_modifier": objc._C_OUT}}},
+)
+objc.registerMetaDataForSelector(
+    b"OC_TestFilePointer",
+    b"readline3:",
+    {"arguments": {2 + 0: {"type_modifier": objc._C_IN}}},
+)
+objc.registerMetaDataForSelector(
+    b"OC_TestFilePointer",
+    b"readline4:",
+    {"arguments": {2 + 0: {"type_modifier": objc._C_INOUT}}},
+)
+
+objc.registerMetaDataForSelector(
+    b"OC_TestFilePointer",
+    b"printTo:format:",
+    {"variadic": True, "arguments": {2 + 1: {"printf_format": True}}},
+)
+objc.registerMetaDataForSelector(
+    b"OC_TestFilePointer",
+    b"printTo2:format:",
+    {
+        "variadic": True,
+        "arguments": {2 + 0: {"printf_format": True, "type_modifier": objc._C_CONST}},
+    },
+)
+
+
+class Py_TestFilePointer(OC_TestFilePointer):
+    # XXX: The 'objc_method' decorator is necessary because the default
+    #      signature somehow doesn't work. Needs fix.
+    @objc.objc_method(signature=OC_TestFilePointer.openFile_withMode_.signature)
+    def openFile_withMode_(self, path, mode):
+        return objc.FILE(path.decode(), mode.decode())
+
+    @objc.objc_method(signature=OC_TestFilePointer.openNoFile.signature)
+    def openNoFile(self):
+        return None
+
+    @objc.objc_method(signature=OC_TestFilePointer.openFileMode_.signature)
+    def openFileMode_(self, m):
+        return (objc.FILE(__file__, "r"), b"x")
+
+
+class Py_TestFilePointer2(OC_TestFilePointer):
+    @objc.objc_method(signature=OC_TestFilePointer.openFile_withMode_.signature)
+    def openFile_withMode_(self, path, mode):
+        return object
+
+    @objc.objc_method(signature=OC_TestFilePointer.openNoFile.signature)
+    def openNoFile(self):
+        return objc.NULL
+
+    @objc.objc_method(signature=OC_TestFilePointer.openFileMode_.signature)
+    def openFileMode_(self, m):
+        return (None, b"y")
+
+
+class Py_TestFilePointer3(OC_TestFilePointer):
+    @objc.objc_method(signature=OC_TestFilePointer.openFileMode_.signature)
+    def openFileMode_(self, m):
+        return (object, b"y")
 
 
 class TestFilePointer(TestCase):
@@ -18,14 +90,28 @@ class TestFilePointer(TestCase):
         line = o.readline_(objc.NULL)
         self.assertIs(line, None)
 
+    def test_use_closed_file(self):
+        fp = objc.FILE("/etc/passwd", "r")
+        fp.close()
+
+        o = OC_TestFilePointer.new()
+        with self.assertRaisesRegex(ValueError, "Using closed objc.FILE"):
+            o.readline_(fp)
+
     def testOpenInPython(self):
         with self.subTest("positional"):
             fp = objc.FILE("/etc/passwd", "r")
             o = OC_TestFilePointer.new()
-            line = o.readline_(fp)
+            line0 = o.readline_(fp)
+            line1 = o.readline2_(fp)
+            line2 = o.readline3_(fp)
+            line3 = o.readline4_(fp)
             fp.close()
 
-            self.assertEqual(line, gFirstPasswdLine.decode("utf-8"))
+            self.assertEqual(line0, gPassword[0].decode("utf-8"))
+            self.assertEqual(line1, gPassword[1].decode("utf-8"))
+            self.assertEqual(line2, gPassword[2].decode("utf-8"))
+            self.assertEqual(line3, gPassword[3].decode("utf-8"))
 
         with self.subTest("keyword"):
             fp = objc.FILE(path="/etc/passwd", mode="r")
@@ -33,7 +119,7 @@ class TestFilePointer(TestCase):
             line = o.readline_(fp)
             fp.close()
 
-            self.assertEqual(line, gFirstPasswdLine.decode("utf-8"))
+            self.assertEqual(line, gPassword[0].decode("utf-8"))
 
         with self.subTest("no file"):
             with open("/etc/passwd") as fp:
@@ -50,7 +136,7 @@ class TestFilePointer(TestCase):
             line = fp.readline()
             fp.close()
 
-            self.assertEqual(line, gFirstPasswdLine)
+            self.assertEqual(line, gPassword[0])
 
         with self.subTest("NULL file"):
             o = OC_TestFilePointer.new()
@@ -63,11 +149,21 @@ class TestFilePointer(TestCase):
         self.assertIsInstance(fp, objc.FILE)
 
         fp.write(b"foobar\n")
+        self.assertArgIsPrintf(o.printTo_format_, 1)
+        o.printTo_format_(fp, b"hello %d\n", 42)
+
+        self.assertArgIsPrintf(o.printTo2_format_, 0)
+        self.assertTrue(o.printTo2_format_.__metadata__()["variadic"])
+        with self.assertRaisesRegex(
+            TypeError, "Unsupported format string type, objc.FILE"
+        ):
+            o.printTo2_format_(fp, b"hello %d\n", 42)
+
         fp.close()
 
         fp = open("/tmp/pyobjc.filepointer.txt")
         data = fp.read()
-        self.assertEqual(data, "foobar\n")
+        self.assertEqual(data, "foobar\nhello 42\n")
         fp.close()
 
     def testOpenReadWriteInObjC(self):
@@ -233,7 +329,7 @@ class TestFilePointer(TestCase):
         fp = objc.FILE("/etc/passwd", "r")
         line = fp.readline()
 
-        self.assertEqual(line, gFirstPasswdLine)
+        self.assertEqual(line, gPassword[0])
 
         fp.read(100000)
         self.assertTrue(fp.at_eof())
@@ -279,3 +375,33 @@ class TestFilePointer(TestCase):
 
         with self.assertRaisesRegex(ValueError, "Using closed file"):
             fp.read(10)
+
+    def test_return_filepointer_in_python(self):
+        o = Py_TestFilePointer.alloc().init()
+
+        r = OC_TestFilePointer.openFile_withMode_on_(__file__.encode(), b"r", o)
+        self.assertIsInstance(r, objc.FILE)
+        r.close()
+
+        r = OC_TestFilePointer.openNoFileOn_(o)
+        self.assertIs(r, None)
+
+        r, m = OC_TestFilePointer.openFileMode_on_(None, o)
+        self.assertIsInstance(r, objc.FILE)
+        r.close()
+        self.assertEqual(m, b"x")
+
+        o = Py_TestFilePointer2.alloc().init()
+        with self.assertRaisesRegex(TypeError, "Expecting objc.FILE, got type"):
+            r = OC_TestFilePointer.openFile_withMode_on_(__file__.encode(), b"r", o)
+
+        r = OC_TestFilePointer.openNoFileOn_(o)
+        self.assertIs(r, None)
+
+        r, m = OC_TestFilePointer.openFileMode_on_(None, o)
+        self.assertIs(r, None)
+        self.assertEqual(m, b"y")
+
+        o = Py_TestFilePointer3.alloc().init()
+        with self.assertRaisesRegex(TypeError, "Expecting objc.FILE, got type"):
+            OC_TestFilePointer.openFileMode_on_(None, o)

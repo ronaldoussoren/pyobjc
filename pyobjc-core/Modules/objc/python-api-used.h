@@ -519,6 +519,7 @@ static inline Py_ALWAYS_INLINE void(Py_INCREF)(PyObject* _Nonnull op);
 PyAPI_FUNC(int) PyUnstable_Object_IsUniquelyReferenced(PyObject*);
 PyAPI_FUNC(void) PyUnstable_EnableTryIncRef(PyObject* obj);
 PyAPI_FUNC(int) PyUnstable_TryIncRef(PyObject* obj);
+PyAPI_FUNC(Py_hash_t) Py_HashBuffer(const void* ptr, Py_ssize_t len);
 #endif
 
 NS_ASSUME_NONNULL_END

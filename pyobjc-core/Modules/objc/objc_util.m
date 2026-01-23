@@ -978,7 +978,8 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                 }
 
                 Py_DECREF(byte_array); /* Reference is kept by the view */
-                *array = view->buf;
+                *array  = view->buf;
+                *bufobj = NULL;
                 return SHOULD_FREE;
             }
         }
@@ -1060,26 +1061,6 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
     }
 
     /* A more complex array */
-
-    if (PyObject_CheckBuffer(pythonList)) {
-        /* An object that implements the new-style buffer interface.
-         * Use the buffer interface description to check if the buffer
-         * type is compatible with what we expect.
-         *
-         * Specifically:
-         * - If the C code expects an array of basic types:
-         *   the buffer must be a single-dimensional array of
-         *   a compatible type.
-         * - If the C code expects and array of structures:
-         *   The python array must be two dimensional, one row
-         *   in the python array corresponds to one struct "instance"
-         * - If the C code expects a multi-dimensional array:
-         *   the python buffer must have a compatible dimension.
-         *
-         * The array must be large enough and  mustn't contain holes
-         * in the fragment that gets used by us.
-         */
-    }
 
     if (PyObjC_ArrayTypeCheck(pythonList)) {
         /* An array.array. Only convert if the typestr describes an
@@ -1169,6 +1150,43 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
         }
         *bufobj = pythonList;
         Py_INCREF(pythonList);
+        return SHOULD_FREE;
+
+    } else if (PyObject_CheckBuffer(pythonList)
+               && !(*elementType == _C_NSBOOL || *elementType == _C_BOOL
+                    || *elementType == _C_CHAR_AS_INT)) {
+        /* An object that implements the new-style buffer interface.
+         * Use the buffer interface description to check if the buffer
+         * type is compatible with what we expect.
+         *
+         * Specifically:
+         * - If the C code expects an array of basic types:
+         *   the buffer must be a single-dimensional array of
+         *   a compatible type.
+         * - If the C code expects and array of structures:
+         *   The python array must be two dimensional, one row
+         *   in the python array corresponds to one struct "instance"
+         * - If the C code expects a multi-dimensional array:
+         *   the python buffer must have a compatible dimension.
+         *
+         * The array must be large enough and  mustn't contain holes
+         * in the fragment that gets used by us.
+         *
+         * XXX: implement me, the implementation below is too minimal...
+         *      with some luck this can replace explicit support for array.array
+         *      while adding 'free' support for numpy arrays.
+         */
+        if (unlikely(PyObject_GetBuffer(pythonList, view, // LCOV_BR_EXCL_LINE
+                                        writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO)
+                     == -1)) {
+            return -1; // LCOV_EXCL_LINE
+        }
+        if (view->ndim != 1 || view->itemsize != eltsize) {
+            PyErr_SetString(PyExc_ValueError, "buffer not compatible");
+            return -1;
+        }
+        *array  = view->buf;
+        *bufobj = pythonList;
         return SHOULD_FREE;
 
     } else {
@@ -1263,6 +1281,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                 return -1;
             }
         }
+        Py_CLEAR(seq);
         return SHOULD_FREE;
     }
 }

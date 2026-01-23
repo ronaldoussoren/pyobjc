@@ -19,6 +19,22 @@
     } copy] autorelease];
 }
 
+- (id (^)(int, float))getObjectBlockWithDummyOut:(out int*)a
+{
+    *a = 9;
+    return [[^(int a, float b) {
+      return [NSString stringWithFormat:@"a:%d b:%f", a, b];
+    } copy] autorelease];
+}
+
+- (id (^)(int, float))getObjectBlockWithDummyOut2:(out int*)a
+{
+    *a = 9;
+    return [[^(int a, float b) {
+      return [NSString stringWithFormat:@"a:%d b:%f", a, b];
+    } copy] autorelease];
+}
+
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

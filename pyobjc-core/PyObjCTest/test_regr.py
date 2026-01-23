@@ -977,6 +977,9 @@ class TestMisCConversions(TestCase):
         with self.assertRaisesRegex(objc.error, r"Unhandled type"):
             objc.repythonify([1, 2], type=b"{name=fx}")
 
+        with self.assertRaisesRegex(ValueError, "depythonifying unknown typespec 0x3f"):
+            objc.repythonify([1, 2], type=b"{name=f?}")
+
         y = objc.repythonify([1, 2], type=b"{name=ff}44")
         self.assertEqual(y, (1.0, 2.0))
 
@@ -1021,12 +1024,6 @@ class TestConvertNegativeToUnsigedWarns(TestCase):
                 DeprecationWarning, "converting negative value to unsigned integer"
             ):
                 objc.repythonify(Number(), b"I")
-
-
-class TestKeywordArgumentsForSelect(TestCase):
-    def test_kwargs_not_allowed(self):
-        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
-            NSArray.arrayWithArray_(a=4)
 
 
 class TestInvokingMethods(TestCase):
@@ -1139,6 +1136,15 @@ class TestSelectorEdgeCases(TestCase):
 
         with self.assertRaisesRegex(TypeError, "cannot use staticmethod"):
             objc.selector(func)
+
+    def test_kwargs_not_allowed(self):
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            NSArray.arrayWithArray_(a=4)
+
+    def test_object_arg_cannot_be_converted(self):
+        a = NSArray.array()
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            a.containsObject_(NoObjCClass())
 
 
 class TestStringSpecials(TestCase):

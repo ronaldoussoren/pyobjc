@@ -188,7 +188,7 @@ static PyObject* _Nullable call_NSObject_dealloc(PyObject* method, PyObject* sel
 
         Py_BEGIN_ALLOW_THREADS
             @try {
-                ((void (*)(struct objc_super*,
+                ((void (*)(struct objc_super*,      // LCOV_BR_EXCL_LINE
                            SEL))objc_msgSendSuper)( // LCOV_BR_EXCL_LINE
                     &spr, aSel);
 

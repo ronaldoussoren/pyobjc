@@ -141,6 +141,14 @@ class TestBasicIMP(TestCase):
         ):
             imp(o, value=42)
 
+    def test_argument_cannot_be_converted(self):
+        o = NSArray.arrayWithArray_([1, 2, 3])
+        m = o.methodForSelector_(b"objectAtIndex:")
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'type'"
+        ):
+            m(o, object)
+
     def test_too_few(self):
         o = NSObject.alloc().init()
 

@@ -56,6 +56,26 @@
     return result;
 }
 
++ (NSArray*)cfrange2:(CFRange)count array:(int*)values
+{
+    return [self cfrange:count array:values];
+}
+
++ (NSArray*)cfrange3:(CFRange)count array:(int*)values
+{
+    return [self cfrange:count array:values];
+}
+
++ (NSArray*)cfrange4:(CFRange)count array:(int*)values
+{
+    return [self cfrange:count array:values];
+}
+
++ (NSArray*)cfrange5:(CFRange)count array:(int*)values
+{
+    return [self cfrange:count array:values];
+}
+
 + (NSArray*)id:(NSArray*)count array:(int*)values
 {
     size_t          i, len = [count count];
@@ -102,6 +122,26 @@
         [result addObject:[NSNumber numberWithInt:values[i]]];
     }
     return result;
+}
+
++ (NSArray*)pcfrange2:(CFRange*)count array:(int*)values
+{
+    return [self pcfrange:count array:values];
+}
+
++ (NSArray*)pcfrange3:(CFRange*)count array:(int*)values
+{
+    return [self pcfrange:count array:values];
+}
+
++ (NSArray*)pcfrange4:(CFRange*)count array:(int*)values
+{
+    return [self pcfrange:count array:values];
+}
+
++ (NSArray*)pcfrange5:(CFRange*)count array:(int*)values
+{
+    return [self pcfrange:count array:values];
 }
 
 + (NSArray*)pid:(NSArray**)count array:(int*)values

@@ -14,6 +14,50 @@ NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"
 
 objc.registerMetaDataForSelector(
     b"OCTestBlock",
+    b"fetchIntBlock:",
+    {"arguments": {2 + 0: {"type_modifier": b"o", "type": b"^@?"}}},
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"fetchIntBlock2:",
+    {
+        "arguments": {
+            2
+            + 0: {
+                "type_modifier": b"o",
+                "type": b"^@?",
+                "callable": {
+                    "retval": {"type": "i"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                    },
+                },
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"fetchIntBlock3:",
+    {
+        "arguments": {
+            2
+            + 0: {
+                "type_modifier": b"o",
+                "type": b"^@?",
+                "callable": {
+                    "retval": {"type": "i"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                    },
+                },
+            }
+        }
+    },
+)
+
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
     b"getStructBlock",
     {
         "retval": {
@@ -49,6 +93,23 @@ objc.registerMetaDataForSelector(
     },
 )
 
+objc.registerMetaDataForSelector(
+    b"OCTestBlock2",
+    b"getObjectBlockWithDummyOut2:",
+    {
+        "retval": {
+            "type": b"@?",
+            "callable": {
+                "retval": {"type": b"@"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                    1: {"type": b"i"},
+                    2: {"type": b"f"},
+                },
+            },
+        },
+    },
+)
 
 # The metadata for this method has been disabled
 # intentionally, the compiler adds metadata to the
@@ -68,6 +129,12 @@ objc.registerMetaDataForSelector(
 #        }
 #    },
 # )
+
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getIntBlockWithDummy:",
+    {"arguments": {2 + 0: {"type_modifier": objc._C_IN}}},
+)
 
 # The metadata for this method has been disabled
 # intentionally, the compiler adds metadata to the
@@ -594,7 +661,7 @@ class TestBlocks(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
-            "Sorry, cannot create IMP for instances of type functools.partial",
+            "Cannot create native callable for instances of type functools.partial",
         ):
             # XXX: See comment in libffi_support.m, this is not ideal...
             obj.callOptionalBlock_withValue_(
@@ -917,6 +984,38 @@ class TestBlocks(TestCase):
 
         block2 = obj.getIntBlock()
         self.assertIs(block, block2)
+
+        block = obj.getIntBlockWithDummy_(42)
+        value = block()
+        self.assertEqual(value, 21)
+
+        block2 = obj.getIntBlockWithDummy_(42)
+        value = block2()
+        self.assertEqual(value, 21)
+
+        self.assertIs(block, block2)
+
+        self.assertArgIsOut(obj.fetchIntBlock_, 0)
+        self.assertArgHasType(obj.fetchIntBlock_, 0, b"o^@?")
+        v, block = obj.fetchIntBlock_(None)
+        self.assertEqual(v, 1)
+
+        v = block()
+        self.assertEqual(v, 21)
+
+        v, block = obj.fetchIntBlock2_(None)
+        self.assertEqual(v, 1)
+
+        v = block()
+        self.assertEqual(v, 23)
+
+        v, block = obj.fetchIntBlock3_(None)
+        self.assertEqual(v, 1)
+
+        self.assertIsInstance(block, objc.lookUpClass("NSArray"))
+
+        v = obj.getInvalidIntBlock()
+        self.assertIsInstance(v, objc.lookUpClass("NSArray"))
 
     def test_block_multiple_proxy(self):
         obj = OCTestBlock.alloc().init()
@@ -1287,6 +1386,13 @@ class TestInvalidCalling(TestCase):
         with self.assertRaisesRegex(TypeError, "cannot call block without a signature"):
             block(1, 2)
 
+        block, v = OCTestBlock2().getObjectBlockWithDummyOut_(None)
+        self.assertIs(block.__block_signature__, None)
+        self.assertEqual(v, 9)
+
+        with self.assertRaisesRegex(TypeError, "cannot call block without a signature"):
+            block(1, 2)
+
         obj = OCTestBlock.alloc().init()
         block2 = obj.getIntBlock()
         self.assertIs(block.__block_signature__, None)
@@ -1301,6 +1407,19 @@ class TestInvalidCalling(TestCase):
 
         with self.assertRaisesRegex(TypeError, "New value must be a method signature"):
             block.__block_signature__ = None
+
+        block, v = OCTestBlock2().getObjectBlockWithDummyOut2_(None)
+        self.assertEqual(v, 9)
+
+        v = block(1, 2)
+        self.assertEqual(v, "a:1 b:2.000000")
+
+    def test_block_argument_without_signature(self):
+        o = OCTestBlock.alloc().init()
+        with self.assertRaisesRegex(
+            TypeError, "Argument 2 is a block, but no signature available"
+        ):
+            o.invokeBlock_a_b_(lambda a, b: a + b, 1, 2)
 
 
 class TestBlocksWithSIMD(TestCase):

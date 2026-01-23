@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 12.2
 ------------
 
-* Update framework bindings for macOS 26.2 SDK (beta 2)
+* Update framework bindings for macOS 26.2 SDK
 
 * The following code failed at the last line in previous versions:
 
@@ -56,6 +56,16 @@ Version 12.2
 * Rewrite the construction of objects representing method and function metadata, this should result in
   (slightly) less memory usage.
 
+* This release gets the testsuite for pyobjc-core to a point where there is
+  comprehensive test coverage for the entire bridge. All extension modules now
+  have 100% test coverage according to lcov, although with use for exclusion comments
+  to ignore code blocks that cannot be reached for various reasons (e.g. ``PyDict_New``
+  can fail, but that only happens when running out of memory and it not preproducable
+  during testing).
+
+  This enables refactoring the code in pyobjc-core with more confidence that this won't
+  result in unexpected changes in behaviour.
+
 * Fix error message for invalid argument to a callable with a variable length output buffer argument.
 
 * Fix error handlign for incomplete struct encodings.
@@ -68,6 +78,23 @@ Version 12.2
 
 * A Python implementation for a method that returns ``void`` and has a single output
   parameter used to leak a reference to the return value.
+
+* Fix crash when a Python implementation with a pass-by-reference output argument
+  or return value returns an Objective-C instance that is no longer referenced in
+  Python when the function returns, e.g.:
+
+  .. sourcecode:: python
+
+     @objc.objc_method(signature=b"@@:o^@")
+     def myOutput_(self, a):
+         return (1, NSObject.alloc().init())
+
+* The bridge could pass a null pointer for a function pointer argument
+  in some (unlikely) edge cases instead of raising an error.
+
+* Fix various crashes related to edge cases in pass-by-reference
+  argument handling (none of which happen are used in bindings for
+  Cocoa frameworks)
 
 Version 12.1
 ------------
