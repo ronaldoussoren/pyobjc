@@ -1,7 +1,7 @@
 sphinx-sitemap
 sphinxcontrib.blockdiag
 sphinxcontrib.spelling
-sphinx>=7.3
+sphinx>=7.3,<9
 shibuya
 sphinx-copybutton
 sphinx-design
