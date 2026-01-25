@@ -684,6 +684,34 @@ def setupMetaData():
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"fill5Tuple:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 5,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fill5TupleB:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 5,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"nullfill4Tuple:on:",
         {
             "arguments": {
@@ -1546,6 +1574,16 @@ def setupMetaData():
             },
         },
     )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillVariableLengthBytes:halfCount:on:",
+        {
+            "arguments": {
+                2
+                + 0: {"type_modifier": objc._C_OUT, "c_array_of_variable_length": True},
+            },
+        },
+    )
 
 
 setupMetaData()
@@ -1749,6 +1787,9 @@ class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
     def make4Tuple_(self, data):
         return [data]
 
+    def make7Tuple_(self, data):
+        return [data]
+
     def null4Tuple_(self, data):
         return [data]
 
@@ -1791,6 +1832,9 @@ class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
 
     def fillVariableLengthBuffer_halfCount_(self, data, cnt):
         return b"i" * (cnt * 2)
+
+    def fillVariableLengthBytes_halfCount_(self, data, cnt):
+        return b"j" * (cnt * 2)
 
     def fillVariableLengthBuffer2_halfCount_(self, data, cnt):
         return 1, b"i" * (cnt * 2)
@@ -1843,6 +1887,12 @@ class Py_MetaDataTest_AllArgs(OC_MetaDataTest):
             return range(9, 13)
         else:
             return range(14, 18)
+
+    def fill5Tuple_(self, data):
+        return range(5)
+
+    def fill5TupleB_(self, data):
+        return 1, range(5)
 
     def nullfill4Tuple_(self, data):
         if data is None:
@@ -2052,6 +2102,16 @@ class TestArraysOut(TestCase):
         w, c = OC_MetaDataTest.fillChars_count_dummyOut_on_(None, 10, None, o)
         self.assertEqual(w, b"A" * 10)
         self.assertEqual(c, 92)
+
+        with self.assertRaisesRegex(
+            objc.error, "metadata specified negative size for argument"
+        ):
+            OC_MetaDataTest.fill5Tuple_on_(None, o)
+
+        with self.assertRaisesRegex(
+            objc.error, "metadata specified negative size for argument"
+        ):
+            OC_MetaDataTest.fill5TupleB_on_(None, o)
 
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -2337,6 +2397,10 @@ class TestArraysOut(TestCase):
         ):
             OC_MetaDataTest.fltfillVariableLengthBuffer3_capacity_on_(a, 12, o)
 
+        ba = bytearray(120)
+        OC_MetaDataTest.fillVariableLengthBytes_halfCount_on_(ba, 50, o)
+        self.assertEqual(ba, b"j" * 100 + b"\x00" * 20)
+
 
 class TestArraysInOut(TestCase):
     def testFixedSize(self):
@@ -2467,6 +2531,9 @@ class TestArraysIn(TestCase):
 
         (v,) = OC_MetaDataTest.null4Tuple_on_(objc.NULL, o)
         self.assertIs(v, objc.NULL)
+
+        with self.assertRaisesRegex(objc.error, "array with negative size"):
+            OC_MetaDataTest.make7Tuple_on_(range(7), o)
 
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()

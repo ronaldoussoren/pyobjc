@@ -563,6 +563,19 @@ func(void)
     return array;
 }
 
+- (NSArray*)make7Tuple:(double*)data
+{
+    NSMutableArray* array;
+    unsigned        i;
+
+    array = [NSMutableArray array];
+
+    for (i = 0; i < 7; i++) {
+        [array addObject:[NSNumber numberWithDouble:data[i]]];
+    }
+    return array;
+}
+
 - (NSArray*)make8Tuple:(double*)data
 {
     NSMutableArray* array;
@@ -735,6 +748,18 @@ func(void)
     return count;
 }
 
+- (void)fillVariableLengthBytes:(void*)buffer halfCount:(int)count
+{
+    memset(buffer, 2, count * 2);
+}
+
++ (void)fillVariableLengthBytes:(void*)buffer
+                      halfCount:(int)count
+                             on:(OC_MetaDataTest*)obj
+{
+    [obj fillVariableLengthBytes:buffer halfCount:count];
+}
+
 - (void)fill4Tuple:(int*)data
 {
     int i;
@@ -749,6 +774,27 @@ func(void)
     for (i = 0; i < 5; i++) {
         data[i] = -i * i * i;
     }
+}
+
++ (void)fill5Tuple:(int*)data on:(OC_MetaDataTest*)obj
+{
+    [obj fill5Tuple:data];
+}
+
+- (int)fill5TupleB:(int*)data
+{
+    int i;
+    int result = 0;
+    for (i = 0; i < 5; i++) {
+        data[i] = -i * i * i;
+        result += data[i];
+    }
+    return result;
+}
+
++ (int)fill5TupleB:(int*)data on:(OC_MetaDataTest*)obj
+{
+    return [obj fill5TupleB:data];
 }
 
 - (int)nullfill4Tuple:(int*)data
@@ -1160,6 +1206,11 @@ func(void)
 + (NSArray*)make4Tuple:(double*)data on:(OC_MetaDataTest*)obj
 {
     return [obj make4Tuple:data];
+}
+
++ (NSArray*)make7Tuple:(double*)data on:(OC_MetaDataTest*)obj
+{
+    return [obj make7Tuple:data];
 }
 
 + (NSArray*)make8Tuple:(double*)data on:(OC_MetaDataTest*)obj

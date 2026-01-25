@@ -1462,10 +1462,15 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
 
                     case PyObjC_kFixedLengthArray:
                         count = methinfo->argtype[i]->arrayArg;
-                        v     = PyObjC_CArrayToPython2(
-                            resttype, *(void**)args[i], count,
-                            methinfo->argtype[i]->alreadyRetained,
-                            methinfo->argtype[i]->alreadyCFRetained);
+                        if (count < 0) {
+                            PyErr_SetString(PyObjCExc_Error, "array with negative size");
+                            v = NULL;
+                        } else {
+                            v = PyObjC_CArrayToPython2(
+                                resttype, *(void**)args[i], count,
+                                methinfo->argtype[i]->alreadyRetained,
+                                methinfo->argtype[i]->alreadyCFRetained);
+                        }
                         break;
 
                     case PyObjC_kVariableLengthArray:
@@ -1900,7 +1905,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         methinfo->argtype[methinfo->argtype[i]->arrayArgOut]->type,
                         args[methinfo->argtype[i]->arrayArgOut]);
 
-                    if (count == -1 && PyErr_Occurred()) {
+                    if (count == -1) {
                         goto error;
                     }
 
@@ -1915,7 +1920,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
 
                 case PyObjC_kFixedLengthArray:
                     count = methinfo->argtype[i]->arrayArg;
-                    err   = depythonify_c_array_count(
+                    if (count < 0) {
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "metadata specified negative size for argument");
+                        goto error;
+                    }
+                    err = depythonify_c_array_count(
                         argtype, count, YES, res, *(void**)args[i],
                         methinfo->argtype[i]->alreadyRetained,
                         methinfo->argtype[i]->alreadyCFRetained);
@@ -2210,6 +2220,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
 
                 } else {
                     count = methinfo->argtype[i]->arrayArg;
+                    if (count < 0) {
+                        PyErr_SetString(PyObjCExc_Error,
+                                        "metadata specified negative size for argument");
+                        goto error;
+                    }
                 }
                 err = depythonify_c_array_count(
                     argtype, count, YES, PyTuple_GET_ITEM(res, idx++), *(void**)args[i],
@@ -2295,7 +2310,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                         methinfo->argtype[i]->arrayArgOut - (int)startArg,
                         methinfo->argtype[methinfo->argtype[i]->arrayArgOut]->type,
                         args[methinfo->argtype[i]->arrayArgOut]);
-                    if (count == -1 && PyErr_Occurred()) {
+                    if (count == -1) {
                         goto error;
                     }
                     err = depythonify_c_array_count(
@@ -3092,9 +3107,12 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 return -1;
 
             case PyObjC_kFixedLengthArray:
+                count = methinfo->argtype[i]->arrayArg;
+                if (count < 0) {
+                    PyErr_SetString(PyObjCExc_Error, "array with negative size");
+                    return -1;
+                }
                 if (PyObject_CheckBuffer(argument)) {
-
-                    count               = methinfo->argtype[i]->arrayArg;
                     byref_attr[i].token = PyObjC_PythonToCArray(
                         YES, YES, resttype, argument, byref + i, &count,
                         &byref_attr[i].obj, &byref_attr[i].view);
@@ -3106,12 +3124,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 } else {
                     PyErr_Clear();
 
-                    if (methinfo->argtype[i]->arrayArg < 0) {
-                        PyErr_SetString(PyObjCExc_Error, "array with negative size");
-                        return -1;
-                    }
-
-                    sz = PyObjCRT_SizeOfType(resttype) * methinfo->argtype[i]->arrayArg;
+                    sz       = PyObjCRT_SizeOfType(resttype) * count;
                     byref[i] = PyMem_Malloc(sz);
                     if (unlikely(byref[i] == NULL)) { // LCOV_BR_EXCL_LINE
                         // LCOV_EXCL_START

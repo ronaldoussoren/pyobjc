@@ -112,9 +112,7 @@ class TestCoreFoundation(TestCase):
         self.assertIsInstance(obj, CFUUIDRef)
 
         formatted = OC_TestCoreFoundation.formatUUID2_(obj)
-        self.assertIsInstance(formatted, tuple)
-        self.assertIsInstance(formatted[0], str)
-        self.assertIsInstance(formatted[1], type(None))
+        self.assertIsInstance(formatted, str)
 
     def test_default_bridged(self):
         value = OC_TestCoreFoundation.runloop()

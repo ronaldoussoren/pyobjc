@@ -410,6 +410,34 @@ def setupMetaData():
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
+        b"make7Tuple:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_fixed_length": -1,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"make7Tuple:on:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_fixed_length": 7,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
         b"make8Tuple:",
         {
             "arguments": {
@@ -1031,6 +1059,20 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"fill5Tuple:",
+        {
+            "arguments": {
+                2
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": -1,
+                    "null_accepted": False,
+                }
+            }
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fill5TupleB:",
         {
             "arguments": {
                 2
@@ -1916,6 +1958,17 @@ def setupMetaData():
         },
     )
 
+    objc.registerMetaDataForSelector(
+        b"OC_MetaDataTest",
+        b"fillVariableLengthBytes:halfCount:",
+        {
+            "arguments": {
+                2
+                + 0: {"type_modifier": objc._C_OUT, "c_array_of_variable_length": True},
+            },
+        },
+    )
+
 
 setupMetaData()
 
@@ -1965,6 +2018,13 @@ class TestArraysOut(TestCase):
 
         with self.assertRaisesRegex(objc.error, "array with negative size"):
             o.fill5Tuple_(None)
+
+        with self.assertRaisesRegex(objc.error, "array with negative size"):
+            a = array.array("i", [0] * 5)
+            o.fill5TupleB_(a)
+
+        with self.assertRaisesRegex(objc.error, "array with negative size"):
+            o.fill5TupleB_(None)
 
         with self.assertRaisesRegex(ValueError, "cannot have Python representation"):
             o.make4Objects_ofClass_(None, OC_NoPythonRepresentation)
@@ -2168,6 +2228,13 @@ class TestArraysOut(TestCase):
         del v
         self.assertNotEqual(deallocated, before)
 
+    def test_variable_size(self):
+        o = OC_MetaDataTest.new()
+
+        b = bytearray(100)
+        o.fillVariableLengthBytes_halfCount_(b, 50)
+        self.assertEqual(b, b"\x02" * 100)
+
 
 class TestArraysInOut(TestCase):
     def testFixedSize(self):
@@ -2347,6 +2414,9 @@ class TestArraysIn(TestCase):
             ValueError, "Requesting buffer of 10, have buffer of 11"
         ):
             o.makeDataFor10Bytes_dummyOut_(b"y" * 11, None)
+
+        with self.assertRaisesRegex(objc.error, "array with negative size"):
+            o.make7Tuple_(range(7))
 
     def test_fixed_size_invalid(self):
         m = OC_MetaDataTest.make5Tuple_.__metadata__()
