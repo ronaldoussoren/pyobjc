@@ -76,6 +76,8 @@ extern id _Nullable NS_RETURNS_RETAINED PyObjC_FindObjCProxy(PyObject* original)
 extern PyObject* _Nullable PyObjC_FindPythonProxy(id original)
     __attribute__((warn_unused_result));
 
+extern void PyObjC_MaybeKeepAlivePythonProxy(PyObject* proxy);
+
 NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_PROXY_REGISTRY_H */

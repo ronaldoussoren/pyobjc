@@ -80,8 +80,8 @@ c-coverage:
 	-build/cov-env/bin/python3 Tools/run-free-threading-tests.py
 	#-cd ../pyobjc-framework-Security && ../pyobjc-core/build/cov-env/bin/python3 setup.py test -v
 	#-cd ../pyobjc-framework-Cocoa && ../pyobjc-core/build/cov-env/bin/python3 -m unittest PyObjCTest.test_nscoder -v
-	lcov --rc lcov_branch_coverage=1 --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert|assert|PyObjC_END_WITH_GIL|PyObjCMethodSignature_Validate|PyMutex_Lock|PyMutex_Unlock|PyObjCErr_FromObjC|^[ ]*}\$$"  --no-external --capture --directory . --output-file build/coverage.info
-	genhtml --legend --branch-coverage --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert|assert|PyObjC_END_WITH_GIL|PyObjCMethodSignature_Validate|PyMutex_Lock|PyMutex_Unlock|PyObjCErr_FromObjC|^[ ]*}\$$" --legend build/coverage.info --output-directory dist/c-coverage # --rc "genhtml_med_limit=80" --rc "genhtml_hi_limit=95"
+	lcov --rc lcov_branch_coverage=1 --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert|assert|PyObjC_END_WITH_GIL|PyObjCMethodSignature_Validate|PyMutex_Lock|PyMutex_Unlock|PyObjCErr_FromObjC|^[ ]*}\$$|^[ ]*} else {\$$"  --rc "lcov_excl_line=LCOV_EXCL_LINE|^[ ]*} else {\$$" --no-external --capture --directory . --output-file build/coverage.info
+	genhtml --legend --branch-coverage --rc "lcov_excl_br_line=LCOV_BR_EXCL_LINE|Py_VISIT|Py_CLEAR|NEW_EXC|NEW_STR|PyObjC_Assert|assert|PyObjC_END_WITH_GIL|PyObjCMethodSignature_Validate|PyMutex_Lock|PyMutex_Unlock|PyObjCErr_FromObjC|^[ ]*}\$$|^[ ]*} else {\$$" --rc "lcov_excl_line=LCOV_EXCL_LINE|^[ ]*} else {\$$" --legend build/coverage.info --output-directory dist/c-coverage # --rc "genhtml_med_limit=80" --rc "genhtml_hi_limit=95"
 	build/cov-env/bin/python3 -mcoverage html --omit='PyObjCTest/*,setup.py'
 	open htmlcov/index.html dist/c-coverage/Modules/objc/index-sort-l.html
 

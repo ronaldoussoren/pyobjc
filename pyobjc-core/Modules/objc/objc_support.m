@@ -85,7 +85,8 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     *cookie = 1;
-    return PyObjCObject_New(self, PyObjCObject_kSHOULD_NOT_RELEASE, NO);
+    result  = PyObjCObject_New(self, PyObjCObject_kSHOULD_NOT_RELEASE, NO);
+    return result;
 }
 
 + (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
@@ -3259,26 +3260,11 @@ PyObject* _Nullable PyObjCObject_NewTransient(id objc_object, int* cookie)
 }
 
 void
-PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie __attribute__((__unused__)))
+PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 {
-#if 0
-    /*
-     * XXX: This can cause a crash when overriding retain/release in Python.
-     *
-     * Disabled for now until a review of "transient" references is finished.
-     */
-#ifdef Py_GIL_DISABLED
-    if (cookie && PyUnstable_Object_IsUniquelyReferenced(proxy))
-#else
-    if (cookie && Py_REFCNT(proxy) != 1)
-#endif
-    {
-        Py_BEGIN_ALLOW_THREADS
-            [PyObjCObject_GetObject(proxy) retain];
-            ((PyObjCObject*)proxy)->flags &= ~PyObjCObject_kSHOULD_NOT_RELEASE;
-        Py_END_ALLOW_THREADS
+    if (cookie != 0) {
+        PyObjC_MaybeKeepAlivePythonProxy(proxy);
     }
-#endif
     Py_DECREF(proxy);
 }
 

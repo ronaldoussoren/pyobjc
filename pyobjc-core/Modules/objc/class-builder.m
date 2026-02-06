@@ -852,8 +852,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    /* XXX: Shouldn't this use id_to_python? */
-    PyObject* pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+    PyObject* pyself = id_to_python(self);
     if (unlikely(pyself == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyObjCErr_ToObjCWithGILState(&state);
@@ -975,7 +974,7 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
             [[self class] accessInstanceVariablesDirectly]) {
 
             PyGILState_STATE state   = PyGILState_Ensure();
-            PyObject*        selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+            PyObject*        selfObj = id_to_python(self);
             PyObject*        res     = NULL;
             r                        = -1;
             do {
@@ -1058,7 +1057,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
                 // LCOV_EXCL_STOP
             }
             PyObject* res     = NULL;
-            PyObject* selfObj = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+            PyObject* selfObj = id_to_python(self);
             r                 = -1;
             do {
                 char* rawkey = (char*)[[@"_" stringByAppendingString:key] UTF8String];

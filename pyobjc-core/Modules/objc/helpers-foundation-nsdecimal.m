@@ -71,7 +71,7 @@ Decimal_ObjCValue(PyObject* self)
 static PyObject* _Nullable decimal_get__pyobjc_object__(PyObject* self, void* closure
                                                         __attribute__((__unused__)))
 {
-    return PyObjCObject_New(Decimal_ObjCValue(self), 0, YES);
+    return PyObjCObject_New(Decimal_ObjCValue(self), PyObjCObject_kDEFAULT, YES);
 }
 
 static PyGetSetDef decimal_getset[] = {{

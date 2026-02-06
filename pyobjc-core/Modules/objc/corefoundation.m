@@ -386,6 +386,7 @@ PyObject*
 PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
 {
     PyObject* rval = NULL;
+    PyObject* actual;
     int       r;
 
     assert(gTypeid2class != NULL);
@@ -400,8 +401,15 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
     case -1:
         return NULL; // LCOV_EXCL_LINE
     case 0:
-        return (PyObject*)PyObjCObject_New(
+        rval = (PyObject*)PyObjCObject_New(
             datum, PyObjCObject_kMAGIC_COOKIE | PyObjCObject_kSHOULD_NOT_RELEASE, NO);
+        if (rval == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;    // LCOV_EXCL_LINE
+        }
+        actual = PyObjC_RegisterPythonProxy(datum, rval);
+        Py_CLEAR(rval);
+        return actual;
+
     default:
         rval = tp->tp_alloc(tp, 0);
         Py_DECREF(tp);

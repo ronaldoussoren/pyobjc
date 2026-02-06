@@ -31,7 +31,6 @@ def run_in_threads(func, args):
 
 
 def run_multiple_in_threads(*func_args):
-
     bar = threading.Barrier(len(func_args))
     for func, args in func_args:
         t = threading.Thread(target=func, args=args + (bar,))

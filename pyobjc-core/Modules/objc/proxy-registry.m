@@ -156,6 +156,103 @@ PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
 #endif /* ! Py_GIL_DISABLED */
 }
 
+/*
+ * This function is used to release a "transient" proxy value.
+ *
+ * It converts a transient proxy value into a full proxy with a
+ * strong reference to the value when the proxy will stay alive
+ * (refcount > 1 in the GIL build).
+ *
+ * This has some challenges in the free threaded build.
+ */
+void
+PyObjC_MaybeKeepAlivePythonProxy(PyObject* proxy)
+{
+    assert(PyObjCObject_Check(proxy));
+#ifdef Py_GIL_DISABLED
+    PyMutex_Lock(&proxy_mutex);
+#endif
+
+#if 0
+        printf("\nRT %#x %d %#x %#x %p %p\n", PyObjCObject_FLAGS(proxy) & PyObjCObject_kSHOULD_NOT_RELEASE,
+            _Py_IsOwnedByCurrentThread(proxy),
+            _Py_atomic_load_uint32_relaxed(&proxy->ob_ref_local),
+            _Py_atomic_load_uint32_relaxed(&proxy->ob_ref_shared),
+            PyObjC_FindPythonProxy(PyObjCObject_OBJECT(proxy)),
+            proxy
+            );
+#endif
+
+#ifdef Py_GIL_DISABLED
+    /* XXX: This is needs work: relies on private Python API and its not clear if the code
+     * is race free.
+     *
+     *      ``PyUnstable_Object_IsUniquelyReferenced`` returns false
+     *      for objects that were used with ``PyUnstable_EnableTryIncRef``, even if the
+     *      value has only one reference.
+     *
+     *      The code below open codes a variant on
+     * ``!PyUnstable_Object_IsUniquelyReferenced()``, and tries to avoid race conditions
+     * that could result in a long living proxy object only has a weak reference to the
+     * Objective-C value.
+     *
+     *      Notes:
+     *      - Current thread should own 'proxy', it was created locally in
+     * __pyobjc_PythonTransient__
+     *      - The WEAKREF flag is set due to using PyUnstable_EnableTryIncRef()
+     *      - I'm not convinced yet that this code is race-free. Probably:
+     *        * ob_ref_shared going from 1 to 0 while this runs should be fine, value is
+     * still alive
+     *        * ob_ref_shared going from 0 to 1 would be problematic, but shouldn't happen
+     *          as we're not doing anything that passes a reference to a different thread
+     * (????) and other threads cannot fetch a reference from the mapping because we own
+     * proxy_mutex.
+     */
+
+    assert(_Py_IsOwnedByCurrentThread(proxy));
+    assert(_Py_atomic_load_uint32_relaxed(&proxy->ob_ref_local) >= 1);
+    if ((PyObjCObject_FLAGS(proxy) & PyObjCObject_kSHOULD_NOT_RELEASE) != 0
+        && (!_Py_IsOwnedByCurrentThread(proxy)
+            || _Py_atomic_load_uint32_relaxed(&proxy->ob_ref_local) != 1
+            || (_Py_atomic_load_ssize_relaxed(&proxy->ob_ref_shared)
+                & ~_Py_REF_SHARED_FLAG_MASK)
+                   != 0))
+#else
+    if ((PyObjCObject_FLAGS(proxy) & PyObjCObject_kSHOULD_NOT_RELEASE) != 0
+        && Py_REFCNT(proxy) != 1)
+#endif
+    {
+        /* Proxy value will stay alive, convert to a strong reference
+         *
+         * The mutex is unlocked before calling -retain to avoid reentry issues
+         * when there's a Python implementation for that method.
+         *
+         * This is safe because out caller owns a reference to proxy, it
+         * cannot deallocate behind our back.
+         */
+#ifdef Py_GIL_DISABLED
+        PyMutex_Unlock(&proxy_mutex);
+#endif
+        @try {
+            [PyObjCObject_OBJECT(proxy) retain];
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            return;
+        }
+        PyObjCObject_FLAGS(proxy) &= ~PyObjCObject_kSHOULD_NOT_RELEASE;
+    } else {
+        /* Make sure that 'proxy' doesn't get used while deallocating the weak reference
+         */
+        PyObject* current = NSMapGet(python_proxies, PyObjCObject_OBJECT(proxy));
+        if (current == proxy) {
+            NSMapRemove(python_proxies, PyObjCObject_OBJECT(proxy));
+        }
+#ifdef Py_GIL_DISABLED
+        PyMutex_Unlock(&proxy_mutex);
+#endif
+    }
+}
+
 id NS_RETURNS_RETAINED _Nullable PyObjC_RegisterObjCProxy(PyObject* original, id proxy)
 {
     id _Nullable result;

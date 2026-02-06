@@ -1122,10 +1122,9 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
             // LCOV_EXCL_START
             Py_DECREF(res);
             Py_DECREF(actual);
-            return PyErr_Format(
-                PyObjCExc_Error,
-                "Race between creating and registering an ObjC class '%s'\n",
-                class_getName(objc_class));
+            return PyErr_Format(PyObjCExc_Error,
+                                "Race between creating and registering ObjC class '%s'\n",
+                                class_getName(objc_class));
             // LCOV_EXCL_STOP
         }
         Py_DECREF(actual);

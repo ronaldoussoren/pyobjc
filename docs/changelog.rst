@@ -102,6 +102,14 @@ Version 12.2
 * Fix crash when ``c_array_length_in_arg`` metadata refers to
   an non-existing argument.
 
+* Fix handling of transient proxy value, such as when Objective-C
+  calls a Python method when the object is kept alive from Objective-C
+  (no active reference in Python).
+
+  Edge case found while debugging an unexpected crash in the
+  free-threaded build which uncovered a bug that also affected
+  the regular build (but was not triggered there in the test suite).
+
 Version 12.1
 ------------
 

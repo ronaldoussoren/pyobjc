@@ -465,7 +465,7 @@ PyObject* _Nullable PyObjC_decodeWithCoder(NSCoder* coder, id self)
             // LCOV_EXCL_STOP
         }
 
-        PyObject* self_as_python = PyObjCObject_New(self, 0, YES);
+        PyObject* self_as_python = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
         if (unlikely(self_as_python == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             Py_DECREF(cdr);
