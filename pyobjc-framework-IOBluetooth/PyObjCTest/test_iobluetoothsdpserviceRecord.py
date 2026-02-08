@@ -15,3 +15,8 @@ class TestIOBluetoothSDPServiceRecord(TestCase):
         self.assertResultIsBOOL(
             IOBluetooth.IOBluetoothSDPServiceRecord.hasServiceFromArray_
         )
+
+        self.assertArgIsOut(
+            IOBluetooth.IOBluetoothSDPServiceRecord.getRFCOMMChannelID_, 0
+        )
+        self.assertArgIsOut(IOBluetooth.IOBluetoothSDPServiceRecord.getL2CAPPSM_, 0)
