@@ -4448,7 +4448,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo
                         assert(tmp != NULL);
                         Py_CLEAR(tmp);
                     } else {
-                        const char* signature = PyObjCBlock_GetSignature(objc_result);
+                        const char* signature =
+                            PyObjCBlock_GetSignature(PyObjCObject_OBJECT(objc_result));
                         if (signature != NULL) { // LCOV_BR_EXCL_LINE
                             // LCOV_EXCL_START
                             PyObjCMethodSignature* sig =

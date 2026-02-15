@@ -60,7 +60,7 @@ struct block_literal {
     PyObject* _Nullable signature_memory;
 };
 
-const char* _Nullable PyObjCBlock_GetSignature(void* _block)
+const char* _Nullable PyObjCBlock_GetSignature(id _block)
 {
     struct block_literal* block = (struct block_literal*)_block;
 
@@ -484,7 +484,7 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* methinfo, PyObject* ca
 }
 
 _block_func_ptr
-PyObjCBlock_GetFunction(void* block)
+PyObjCBlock_GetFunction(id block)
 {
     return ((struct block_literal*)block)->invoke;
 }

@@ -4,8 +4,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (*_block_func_ptr)(void*, ...);
-extern _block_func_ptr PyObjCBlock_GetFunction(void* block);
-extern const char* _Nullable PyObjCBlock_GetSignature(void* _block);
+extern _block_func_ptr PyObjCBlock_GetFunction(id block);
+extern const char* _Nullable PyObjCBlock_GetSignature(id _block);
 extern void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature,
                                           PyObject*              callable)
     __attribute__((__warn_unused_result__));
