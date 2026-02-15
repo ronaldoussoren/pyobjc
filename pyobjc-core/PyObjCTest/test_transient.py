@@ -37,11 +37,16 @@ class TestTransient(TestCase):
 
     def test_array_of_values(self):
         cleared = False
+        calls = 0
         stored = None
 
         class PyTransient3(OC_Transient):
             def method(self):
                 nonlocal stored
+                nonlocal calls
+                if calls == 0:
+                    assert self.__flags__ & 0x8, "should not release flag not set"
+                calls += 1
                 stored = self
 
             def beforeDealloc(self):
