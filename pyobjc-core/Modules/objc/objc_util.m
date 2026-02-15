@@ -1186,7 +1186,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
         *array  = view->buf;
-        *bufobj = pythonList;
+        *bufobj = NULL;
         return SHOULD_FREE;
 
     } else {
@@ -1234,19 +1234,9 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        PyObject* bytes_array = PyByteArray_FromStringAndSize(NULL, 0);
+        PyObject* bytes_array = PyByteArray_FromStringAndSize(NULL, eltsize * pycount);
         if (unlikely(bytes_array == NULL)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
-            Py_DECREF(seq);
-            return -1;
-            // LCOV_EXCL_STOP
-        }
-
-        if (unlikely(PyByteArray_Resize( // LCOV_BR_EXCL_LINE
-                         bytes_array, eltsize * pycount)
-                     == -1)) {
-            // LCOV_EXCL_START
-            Py_DECREF(bytes_array);
             Py_DECREF(seq);
             return -1;
             // LCOV_EXCL_STOP
