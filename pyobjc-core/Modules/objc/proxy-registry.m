@@ -173,16 +173,6 @@ PyObjC_MaybeKeepAlivePythonProxy(PyObject* proxy)
     PyMutex_Lock(&proxy_mutex);
 #endif
 
-#if 0
-        printf("\nRT %#x %d %#x %#x %p %p\n", PyObjCObject_FLAGS(proxy) & PyObjCObject_kSHOULD_NOT_RELEASE,
-            _Py_IsOwnedByCurrentThread(proxy),
-            _Py_atomic_load_uint32_relaxed(&proxy->ob_ref_local),
-            _Py_atomic_load_uint32_relaxed(&proxy->ob_ref_shared),
-            PyObjC_FindPythonProxy(PyObjCObject_OBJECT(proxy)),
-            proxy
-            );
-#endif
-
 #ifdef Py_GIL_DISABLED
     /* XXX: This is needs work: relies on private Python API and its not clear if the code
      * is race free.
@@ -240,6 +230,7 @@ PyObjC_MaybeKeepAlivePythonProxy(PyObject* proxy)
             return;
         }
         PyObjCObject_FLAGS(proxy) &= ~PyObjCObject_kSHOULD_NOT_RELEASE;
+#ifdef Py_GIL_DISABLED
     } else {
         /* Make sure that 'proxy' doesn't get used while deallocating the weak reference
          */
@@ -247,7 +238,6 @@ PyObjC_MaybeKeepAlivePythonProxy(PyObject* proxy)
         if (current == proxy) {
             NSMapRemove(python_proxies, PyObjCObject_OBJECT(proxy));
         }
-#ifdef Py_GIL_DISABLED
         PyMutex_Unlock(&proxy_mutex);
 #endif
     }
