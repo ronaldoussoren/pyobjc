@@ -1260,10 +1260,10 @@ PyObjC_IsGenericNew(PyObject* value)
 int
 PyObjC_ArrayTypeCheck(PyObject* value)
 {
-    LOCK(PyObjC_genericNewClass);
+    LOCK(PyObjC_ArrayType);
     PyObject* type = PyObjC_ArrayType;
     Py_INCREF(type);
-    UNLOCK(PyObjC_genericNewClass);
+    UNLOCK(PyObjC_ArrayType);
 
     if (type == Py_None) {
         Py_DECREF(type);
