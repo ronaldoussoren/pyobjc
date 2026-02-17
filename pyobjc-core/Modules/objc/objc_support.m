@@ -311,7 +311,7 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
 #define VECTOR_TO_PYTHON(ctype, elemcount, convertelem)                                  \
     static PyObject* _Nullable ctype##_as_tuple(const void* _pvalue)                     \
     {                                                                                    \
-        const ctype value = {0};                                                         \
+        ctype value;                                                                     \
         memcpy((void*)&value, _pvalue, sizeof(ctype));                                   \
         PyObject* rv = PyTuple_New(elemcount);                                           \
         if (unlikely(rv == NULL)) { /* LCOV_BR_EXCL_LINE */                              \
