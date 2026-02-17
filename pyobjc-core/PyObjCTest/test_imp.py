@@ -332,12 +332,8 @@ class TestGettingIMPs(TestCase):
 
     def test_python_selector(self):
         o = OC_InstanceMethod.alloc().init()
-        with self.assertRaisesRegex(
-            TypeError, "Cannot locate Python representation of instanceMethod"
-        ):
-            o.methodForSelector_(b"instanceMethod")
+        imp = o.methodForSelector_(b"instanceMethod")
+        self.assertEqual(imp, o.instanceMethod.callable)
 
-        with self.assertRaisesRegex(
-            TypeError, "Cannot locate Python representation of instanceMethod"
-        ):
-            OC_InstanceMethod.instanceMethodForSelector_(b"instanceMethod")
+        imp = OC_InstanceMethod.instanceMethodForSelector_(b"instanceMethod")
+        self.assertEqual(imp, o.instanceMethod.callable)

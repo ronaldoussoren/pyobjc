@@ -396,16 +396,13 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
         return NULL;
     }
 
-    /*
-     * XXX: what if the method is implemented in Python. We should be able to deal with
-     * that!!!
-     */
-
-    if (!PyObjCNativeSelector_Check(attr)) {
-        PyErr_Format(PyExc_TypeError, "Cannot locate Python representation of %s",
-                     sel_getName(selector));
-        return NULL;
+    /* The IMP of a python selector is its callable */
+    if (PyObjCPythonSelector_Check(attr)) {
+        return Py_NewRef(((PyObjCPythonSelector*)attr)->callable);
     }
+
+    /* *_FindSelector always returns an objc.selector */
+    assert(PyObjCNativeSelector_Check(attr));
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
     if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
@@ -490,13 +487,13 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
         return NULL;
     }
 
-    /* FIXME:  We should be able to deal with Python methods as well */
-
-    if (!PyObjCNativeSelector_Check(attr)) {
-        PyErr_Format(PyExc_TypeError, "Cannot locate Python representation of %s",
-                     sel_getName(selector));
-        return NULL;
+    /* The IMP of a python selector is its callable */
+    if (PyObjCPythonSelector_Check(attr)) {
+        return Py_NewRef(((PyObjCPythonSelector*)attr)->callable);
     }
+
+    /* *_FindSelector always returns an objc.selector */
+    assert(PyObjCNativeSelector_Check(attr));
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(attr);
     if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE

@@ -1889,12 +1889,21 @@ static inline PyObject* _Nullable _type_lookup_instance(PyObject*     class_dict
 #endif
 
                 PyObject* hidden = PyObjCClass_HiddenSelector((PyObject*)tp, sel, NO);
-                if (unlikely(hidden == NULL && PyErr_Occurred())) {
+                /* XXX: The coverage exclusion needs more work, I'm fairly sure this
+                 *      cannot be hit because an earlier code path will have checked
+                 *      for a hidden method. Needs more verification before removing
+                 *      this code path.
+                 */
+                if (unlikely(hidden == NULL && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_CLEAR(mro);
                     return NULL;
-                } else if (hidden) {
+                    // LCOV_EXCL_STOP
+                } else if (hidden) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_CLEAR(mro);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 /* Create (unbound) selector */
@@ -1999,14 +2008,23 @@ static inline PyObject* _Nullable _type_lookup_instance_harder(PyObject*     cla
             if (same) {
                 PyObject* hidden =
                     PyObjCClass_HiddenSelector((PyObject*)tp, method_getName(m), NO);
-                if (unlikely(hidden == NULL && PyErr_Occurred())) {
+                /* XXX: The coverage exclusion needs more work, I'm fairly sure this
+                 *      cannot be hit because an earlier code path will have checked
+                 *      for a hidden method. Needs more verification before removing
+                 *      this code path.
+                 */
+                if (unlikely(hidden == NULL && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_CLEAR(mro);
                     free(methods);
                     return NULL;
-                } else if (hidden) {
+                    // LCOV_EXCL_STOP
+                } else if (hidden) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_CLEAR(mro);
                     free(methods);
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
 
                 /* Create (unbound) selector */
@@ -3444,18 +3462,7 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
     if (unlikely(hidden == NULL && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
         return NULL;                                    // LCOV_EXCL_LINE
     } else if (hidden) {
-        Py_CLEAR(hidden);
-        PyObject* py_name = PyUnicode_FromString((char*)sel_getName(selector));
-        if (unlikely(py_name == NULL)) {
-            PyErr_Clear();
-        } else {
-            int r = PyDict_SetItem(info->sel_to_py, py_name, Py_None);
-            if (unlikely(r == -1)) // LCOV_BR_EXCL_LINE
-                PyErr_Clear();     // LCOV_EXCL_LINE
-            Py_DECREF(py_name);
-        }
-        PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
-        return NULL;
+        return hidden;
     }
 
     /* First check the cache */
@@ -3489,7 +3496,10 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
             PyErr_Format(PyExc_AttributeError, "No selector %s", sel_getName(selector));
             return NULL;
 #endif
-            Py_CLEAR(result);
+            /* This cannot happen at the moment because the negative cache is
+             * never filled.
+             */
+            Py_CLEAR(result); // LCOV_EXCL_LINE
         } else {
             if (!!PyObjCSelector_IsClassMethod(result) == !!class_method) {
                 return result;

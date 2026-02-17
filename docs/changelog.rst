@@ -110,6 +110,18 @@ Version 12.2
   free-threaded build which uncovered a bug that also affected
   the regular build (but was not triggered there in the test suite).
 
+* ``aValue.methodForSelector_`` now works when the selector is implemented
+  in Python, the result will be the Python callable (not wrapped in an
+  :type:`objc.IMP` value).
+
+* A small milestone over the last couple of releases is that test coverage
+  of the C extension in ``pyobjc-core`` is now at 100%, although with a
+  liberal sprinkling of coverage exclusions for conditions that cannot
+  be triggered during testing (such as memory errors).
+
+  This makes it possible to refactor parts of this extension module with
+  more confidence, and has fixed a number of issues in edge conditions.
+
 Version 12.1
 ------------
 
