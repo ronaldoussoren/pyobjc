@@ -270,3 +270,10 @@ class TestNSPersistentStoreCoordinator(TestCase):
             0,
             1,
         )
+
+    @min_os_level("26.4")
+    def testMethods26_4(self):
+        self.assertArgIsOut(
+            CoreData.NSPersistentStoreCoordinator.cachedModelForPersistentStoreAtURL_options_error_,
+            2,
+        )

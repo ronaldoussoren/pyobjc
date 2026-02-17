@@ -26,4 +26,8 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(AVPictureInPictureSampleBufferPlaybackDelegate));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 2604
+    p = PyObjC_IdToPython(@protocol(AVLegibleMediaOptionsMenuControllerDelegate));
+    Py_XDECREF(p);
+#endif
 }

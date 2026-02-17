@@ -121,6 +121,9 @@ class TestAVError(TestCase):
         self.assertEqual(AVFoundation.AVErrorMediaExtensionDisabled, -11886)
         self.assertEqual(AVFoundation.AVErrorMediaExtensionConflict, -11887)
         self.assertEqual(AVFoundation.AVErrorNoSmartFramingsEnabled, -11890)
+        self.assertEqual(
+            AVFoundation.AVErrorContentKeyRequestFulfilledWithAdvisoryKey, -11893
+        )
 
     @min_os_level("10.10")
     def testConstants10_10(self):

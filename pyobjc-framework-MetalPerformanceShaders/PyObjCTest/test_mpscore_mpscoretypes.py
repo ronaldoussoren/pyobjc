@@ -146,6 +146,14 @@ class TestMPSCore_MPSCoreTypes(TestCase):
             | MetalPerformanceShaders.MPSDataTypeFloat16,
         )
 
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDataTypeComplexBFloat16,
+            MetalPerformanceShaders.MPSDataTypeAlternateEncodingBit
+            | MetalPerformanceShaders.MPSDataTypeFloatBit
+            | MetalPerformanceShaders.MPSDataTypeComplexBit
+            | 32,
+        )
+
         self.assertIsEnumType(MetalPerformanceShaders.MPSFloatDataTypeBit)
         self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeSignBit, 0x00800000)
         self.assertEqual(

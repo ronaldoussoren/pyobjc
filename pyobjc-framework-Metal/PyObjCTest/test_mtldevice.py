@@ -204,9 +204,6 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newDynamicLibraryWithURL_errror_(self, a, b):
         return 1
 
-    def newBinaryArchiveWithDescriptor_errror_(self, a, b):
-        return 1
-
     def supportsRaytracing(self):
         return 1
 
@@ -244,6 +241,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
         return 1
 
     def newBinaryArchiveWithDescriptor_error_(self, a, b):
+        return 1
+
+    def supportsPlacementSparse(self):
         return 1
 
     def supports32BitFloatFiltering(self):
@@ -484,11 +484,19 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLSparsePageSize64, 102)
         self.assertEqual(Metal.MTLSparsePageSize256, 103)
 
+        self.assertIsEnumType(Metal.MTLDeviceError)
+        self.assertEqual(Metal.MTLDeviceErrorNone, 0)
+        self.assertEqual(Metal.MTLDeviceErrorNotSupported, 1)
+
     @min_os_level("10.13")
     def test_constants10_13(self):
         self.assertIsInstance(Metal.MTLDeviceWasAddedNotification, str)
         self.assertIsInstance(Metal.MTLDeviceRemovalRequestedNotification, str)
         self.assertIsInstance(Metal.MTLDeviceWasRemovedNotification, str)
+
+    @min_os_level("26.4")
+    def test_constants26_4(self):
+        self.assertIsInstance(Metal.MTLDeviceErrorDomain, str)
 
     def test_structs(self):
         v = Metal.MTLSizeAndAlign()
@@ -851,6 +859,8 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(
             TestMTLDeviceHelper.newBinaryArchiveWithDescriptor_error_, 1, b"o^@"
         )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsPlacementSparse)
+
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsRaytracing)
         self.assertResultHasType(
             TestMTLDeviceHelper.accelerationStructureSizesWithDescriptor_,

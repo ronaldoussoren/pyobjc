@@ -13,6 +13,7 @@ class TestAXSettings(TestCase):
         self.assertEqual(Accessibility.AXSettingsFeatureAssistiveTouch, 3)
         self.assertEqual(Accessibility.AXSettingsFeatureAssistiveTouchDevices, 4)
         self.assertEqual(Accessibility.AXSettingsFeatureDwellControl, 5)
+        self.assertEqual(Accessibility.AXSettingsFeatureCaptionStyles, 6)
 
     @min_os_level("14.0")
     def testConstants(self):
@@ -54,3 +55,7 @@ class TestAXSettings(TestCase):
         )
 
         self.assertArgIsBlock(Accessibility.AXOpenSettingsFeature, 1, b"v@")
+
+    @min_os_level("26.4")
+    def test_functions26_4(self):
+        self.assertResultIsBOOL(Accessibility.AXOpenSettingsFeatureIsSupported)

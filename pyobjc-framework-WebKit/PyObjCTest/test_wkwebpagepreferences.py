@@ -24,6 +24,11 @@ class TestWebPagePreferences(TestCase):
             WebKit.WKWebpagePreferencesUpgradeToHTTPSPolicyErrorOnFailure, 3
         )
 
+        self.assertIsEnumType(WebKit.WKSecurityRestrictionMode)
+        self.assertEqual(WebKit.WKSecurityRestrictionModeNone, 0)
+        self.assertEqual(WebKit.WKSecurityRestrictionModeMaximizeCompatibility, 1)
+        self.assertEqual(WebKit.WKSecurityRestrictionModeLockdown, 2)
+
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertResultIsBOOL(WebKit.WKWebpagePreferences.allowsContentJavaScript)

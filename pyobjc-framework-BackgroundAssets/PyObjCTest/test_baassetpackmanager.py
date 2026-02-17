@@ -39,3 +39,29 @@ class TestBAAssetPackManager(TestCase):
             2,
         )
         self.assertArgIsOut(BackgroundAssets.BAAssetPackManager.URLForPath_error_, 1)
+
+    @min_os_level("26.4")
+    def test_methods26_4(self):
+        self.assertArgIsBlock(
+            BackgroundAssets.BAAssetPackManager.getStatusRelativeToAssetPack_completionHandler_,
+            1,
+            b"vQ@",
+        )
+        self.assertArgIsBlock(
+            BackgroundAssets.BAAssetPackManager.getLocalStatusOfAssetPackWithIdentifier_completionHandler_,
+            1,
+            b"vQ",
+        )
+        self.assertResultIsBOOL(
+            BackgroundAssets.BAAssetPackManager.assetPackIsAvailableLocallyWithIdentifier_,
+        )
+
+        self.assertArgIsBOOL(
+            BackgroundAssets.BAAssetPackManager.ensureLocalAvailabilityOfAssetPack_requiresLatestVersion_completionHandler_,
+            1,
+        )
+        self.assertArgIsBlock(
+            BackgroundAssets.BAAssetPackManager.ensureLocalAvailabilityOfAssetPack_requiresLatestVersion_completionHandler_,
+            2,
+            b"v@",
+        )

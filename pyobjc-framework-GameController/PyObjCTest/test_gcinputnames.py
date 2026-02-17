@@ -58,6 +58,11 @@ class TestGCInputNames(TestCase):
         self.assertIsInstance(GameController.GCInputStylusPrimaryButton, str)
         self.assertIsInstance(GameController.GCInputStylusSecondaryButton, str)
 
+    @min_os_level("26.4")
+    def test_constants26_4(self):
+        self.assertIsInstance(GameController.GCInputLeftSideButton, str)
+        self.assertIsInstance(GameController.GCInputRightSideButton, str)
+
     def test_enum_types(self):
         self.assertIsTypedEnum(GameController.GCInputElementName, str)
         self.assertIsTypedEnum(GameController.GCInputButtonName, str)

@@ -142,6 +142,25 @@ class TestAVPlayerInterstitialEventController(TestCase):
             str,
         )
 
+    @min_os_level("26.4")
+    def test_constants26_4(self):
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorScheduleRequestCompletedNotification,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorScheduleRequestIdentifierKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorScheduleRequestResponseKey,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorScheduleRequestErrorKey,
+            str,
+        )
+
     @min_os_level("11.3")
     def test_methods11_3(self):
         self.assertResultIsBOOL(

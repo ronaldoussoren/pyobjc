@@ -59,3 +59,8 @@ class TestPKPaymentRequest(TestCase):
     def test_methods12_0(self):
         self.assertResultIsBOOL(PassKit.PKPaymentRequest.supportsCouponCode)
         self.assertArgIsBOOL(PassKit.PKPaymentRequest.setSupportsCouponCode_, 0)
+
+    @min_os_level("26.4")
+    def test_methods26_4(self):
+        self.assertResultIsBOOL(PassKit.PKPaymentRequest.isDelegatedRequest)
+        self.assertArgIsBOOL(PassKit.PKPaymentRequest.setIsDelegatedRequest_, 0)

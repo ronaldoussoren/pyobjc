@@ -34,6 +34,8 @@ def _setup():
         ("AVPictureInPictureControllerContentSource", b"new"),
         ("AVPlaybackSpeed", b"init"),
         ("AVPlaybackSpeed", b"new"),
+        ("AVLegibleMediaOptionsMenuController", b"init"),
+        ("AVLegibleMediaOptionsMenuController", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

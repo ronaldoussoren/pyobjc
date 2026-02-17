@@ -46,6 +46,10 @@ class TestMPSGraph(TestCase):
             1 << 1,
         )
         self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMathAllowConvertingOperandsFromFP32ToFP19,
+            1 << 2,
+        )
+        self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMathAllowFP16Intermediates,
             MetalPerformanceShadersGraph.MPSGraphReducedPrecisionFastMathAllowFP16Conv2DWinogradTransformIntermediate,
         )

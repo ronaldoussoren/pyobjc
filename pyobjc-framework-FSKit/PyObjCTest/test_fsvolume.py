@@ -128,6 +128,12 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def setEnableOpenUnlinkEmulation_(self, a):
         pass
 
+    def requestedMountOptions(self):
+        return 1
+
+    def setRequestedMountOptions_(self, a):
+        pass
+
     # FSVolumeReadWriteOperations
     def readFromFile_offset_length_intoBuffer_replyHandler_(self, a, b, c, d, e):
         pass
@@ -230,6 +236,9 @@ class TestFSVolume(TestCase):
         self.assertEqual(FSKit.FSItemDeactivationAlways, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(FSKit.FSItemDeactivationForRemovedItems, 1 << 0)
         self.assertEqual(FSKit.FSItemDeactivationForPreallocatedItems, 1 << 1)
+
+        self.assertIsEnumType(FSKit.FSMountOptions)
+        self.assertEqual(FSKit.FSMountOptionsReadOnly, 1 << 0)
 
     def test_protocols(self):
         self.assertProtocolExists("FSVolumePathConfOperations")
@@ -348,6 +357,13 @@ class TestFSVolume(TestCase):
 
         self.assertResultIsBOOL(TestFSVolumeHelper.enableOpenUnlinkEmulation)
         self.assertArgIsBOOL(TestFSVolumeHelper.setEnableOpenUnlinkEmulation_, 0)
+
+        self.assertResultHasType(
+            TestFSVolumeHelper.requestedMountOptions, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestFSVolumeHelper.setRequestedMountOptions_, 0, objc._C_NSUInteger
+        )
 
         # FSVolumeXattrOperations
         self.assertResultIsBOOL(TestFSVolumeHelper.xattrOperationsInhibited)

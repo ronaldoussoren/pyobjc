@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 12.2
 ------------
 
-* Update framework bindings for macOS 26.2 SDK
+* Update framework bindings for macOS 26.4 SDK (beta)
 
 * The following code failed at the last line in previous versions:
 

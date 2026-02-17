@@ -35,6 +35,8 @@ class TestMTLTensor(TestCase):
         self.assertEqual(Metal.MTLTensorDataTypeUInt16, Metal.MTLDataTypeUShort)
         self.assertEqual(Metal.MTLTensorDataTypeInt32, Metal.MTLDataTypeInt)
         self.assertEqual(Metal.MTLTensorDataTypeUInt32, Metal.MTLDataTypeUInt)
+        self.assertEqual(Metal.MTLTensorDataTypeInt4, 143)
+        self.assertEqual(Metal.MTLTensorDataTypeUInt4, 144)
 
         self.assertEqual(Metal.MTL_TENSOR_MAX_RANK, 16)
 

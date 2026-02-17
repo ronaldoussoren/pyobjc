@@ -108,3 +108,8 @@ class TestAVCaptureInput(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceInput.isExternalSyncSupported
         )
+
+    @min_os_level("26.4")
+    def testMethods26_4(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceInput.isAudioZoomEnabled)
+        self.assertArgIsBOOL(AVFoundation.AVCaptureDeviceInput.setAudioZoomEnabled_, 0)
