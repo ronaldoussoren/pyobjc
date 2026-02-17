@@ -1,3 +1,4 @@
+setuptools<82
 sphinx-sitemap
 sphinxcontrib.blockdiag
 sphinxcontrib.spelling
