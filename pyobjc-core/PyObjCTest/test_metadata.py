@@ -2182,8 +2182,9 @@ class TestArraysOut(TestCase):
         ):
             o.maybeFillArray2_(None)
 
-        with self.assertRaisesRegex(ValueError, "negative count in result: -10"):
-            c, v = o.negatedFillArray_uptoCount_(None, 20)
+        c, v = o.negatedFillArray_uptoCount_(None, 20)
+        self.assertEqual(c, -10)
+        self.assertEqual(v, ())
 
         with self.assertRaisesRegex(
             TypeError, "Don't know how to extract count from result with encoding: f"

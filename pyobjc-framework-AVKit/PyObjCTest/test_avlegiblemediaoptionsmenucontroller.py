@@ -38,6 +38,6 @@ class TestAVLegibleMediaOptionsMenuController(TestCase):
     def test_protocol_methods(self):
         self.assertArgHasType(
             TestAVLegibleMediaOptionsMenuControllerHelper.legibleMenuController_didChangeMenuState_,
-            2,
-            AVKit.didRequestCaptionPreviewForProfileID.__typestr__,
+            1,
+            AVKit.AVLegibleMediaOptionsMenuState.__typestr__,
         )

@@ -20,6 +20,7 @@ mod_release(const void* info)
     PyGILState_STATE state = PyGILState_Ensure();
     Py_DECREF((PyObject*)info);
     PyGILState_Release(state);
+    printf("end of release\n");
 }
 
 static CFStringRef
@@ -84,6 +85,7 @@ m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
     Py_DECREF(rv);
 
     PyGILState_Release(state);
+    printf("end of callback\n");
 }
 
 static void
