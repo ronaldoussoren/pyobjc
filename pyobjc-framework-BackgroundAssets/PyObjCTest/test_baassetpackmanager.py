@@ -57,11 +57,11 @@ class TestBAAssetPackManager(TestCase):
         )
 
         self.assertArgIsBOOL(
-            BackgroundAssets.BAAssetPackManager.ensureLocalAvailabilityOfAssetPack_requiresLatestVersion_completionHandler_,
+            BackgroundAssets.BAAssetPackManager.ensureLocalAvailabilityOfAssetPack_requireLatestVersion_completionHandler_,
             1,
         )
         self.assertArgIsBlock(
-            BackgroundAssets.BAAssetPackManager.ensureLocalAvailabilityOfAssetPack_requiresLatestVersion_completionHandler_,
+            BackgroundAssets.BAAssetPackManager.ensureLocalAvailabilityOfAssetPack_requireLatestVersion_completionHandler_,
             2,
             b"v@",
         )

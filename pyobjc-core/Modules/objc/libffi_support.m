@@ -776,7 +776,11 @@ extract_count(int arrayarg, const char* type, void* pvalue)
 done:
     if (result < 0) {
         if (arrayarg == -1) {
-            PyErr_Format(PyExc_ValueError, "negative count in result: %ld", result);
+            /* Negative values are treated as 0, this allows using
+             * "c_array_length_in_result" annotations for read(2) and
+             * similar APIs.
+             */
+            return 0;
         } else {
             PyErr_Format(PyExc_ValueError, "negative count in argument %d: %ld", arrayarg,
                          result);

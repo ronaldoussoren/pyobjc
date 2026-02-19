@@ -9,7 +9,7 @@ class TestPKPushRegistryHelper(PushKit.NSObject):
         pass
 
     def pushRegistry_didReceiveIncomingVoIPPushWithPayload_metadata_withCompletionHandler_(
-        self, a, b, c
+        self, a, b, c, d
     ):
         pass
 
@@ -29,7 +29,7 @@ class TestPKPushRegistry(TestCase):
 
         self.assertArgIsBlock(
             TestPKPushRegistryHelper.pushRegistry_didReceiveIncomingVoIPPushWithPayload_metadata_withCompletionHandler_,  # noqa: B950
-            2,
+            3,
             b"v",
         )
 

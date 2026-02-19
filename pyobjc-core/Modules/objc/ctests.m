@@ -1346,7 +1346,11 @@ ASSERT(PyObjC_signatures_compatible("[2f]", "[2f]"));
 ASSERT(PyObjC_signatures_compatible("[2f]", "[3f]"));
 ASSERT(!PyObjC_signatures_compatible("[2f]", "[3d]"));
 ASSERT(!PyObjC_signatures_compatible("[2f]", "f"));
+#ifdef __arm64__
 ASSERT(PyObjC_signatures_compatible("d", "D"));
+#else
+ASSERT(!PyObjC_signatures_compatible("d", "D"));
+#endif
 ASSERT(!PyObjC_signatures_compatible("d", "q"));
 ASSERT(!PyObjC_signatures_compatible("d", "f"));
 ASSERT(!PyObjC_signatures_compatible("f", "i"));
