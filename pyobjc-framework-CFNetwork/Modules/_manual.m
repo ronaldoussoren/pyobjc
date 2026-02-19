@@ -22,8 +22,29 @@ mod_release(const void* info)
     PyGILState_Release(state);
 }
 
+static CFStringRef
+mod_copyDescription(const void* info)
+{
+    PyObject*        repr;
+    PyGILState_STATE state = PyGILState_Ensure();
+
+    repr = PyObject_Repr((PyObject*)info);
+    if (repr == NULL) {
+        PyErr_Clear();
+        PyGILState_Release(state);
+        return (CFStringRef)CFRetain([NSString stringWithFormat:@"<pyinfo at %p>", info]);
+    } else {
+        NSString* result =
+            [NSString stringWithFormat:@"<pyinfo %s>", PyUnicode_AsUTF8(repr)];
+        Py_CLEAR(repr);
+        PyGILState_Release(state);
+        return (CFStringRef)CFRetain(result);
+    }
+}
+
 static CFStreamClientContext mod_CFStreamClientContext = {
-    0, NULL, (void* (*)(void*))mod_retain, (void (*)(void*))mod_release, NULL};
+    0, (CFStringRef (*)(void*))mod_copyDescription, (void* (*)(void*))mod_retain,
+    (void (*)(void*))mod_release, NULL};
 
 static CFHostClientContext mod_CFHostClientContext = {0, NULL, mod_retain, mod_release,
                                                       0};

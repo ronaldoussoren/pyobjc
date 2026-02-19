@@ -1,7 +1,13 @@
 import os
 
 import CFNetwork
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    expectedFailure,
+    os_release,
+    os_level_key,
+)
 
 SCRIPT = """
 function FindProxyForURL(url, host) {
@@ -59,7 +65,10 @@ class TestCFProxySupport(TestCase):
 
         CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 1.0, False)
 
-        CFNetwork.CFRunLoopRemoveSource(rl, rls, CFNetwork.kCFRunLoopCommonModes)
+        # XXX: running the removal as should be done for correctly using the API
+        #      results in a crash on macOS 26.4
+        if os_level_key(os_release()) >= os_level_key("26.4"):
+            CFNetwork.CFRunLoopRemoveSource(rl, rls, CFNetwork.kCFRunLoopCommonModes)
 
         self.assertNotEqual(len(lst), 0)
         self.assertTrue(lst[0][0] is ctx)
@@ -84,9 +93,10 @@ class TestCFProxySupport(TestCase):
 
         CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 1.0, True)
 
-        CFNetwork.CFRunLoopRemoveSource(rl, rls, CFNetwork.kCFRunLoopCommonModes)
-
-        # print lst
+        # XXX: running the removal as should be done for correctly using the API
+        #      results in a crash on macOS 26.4
+        if os_level_key(os_release()) >= os_level_key("26.4"):
+            CFNetwork.CFRunLoopRemoveSource(rl, rls, CFNetwork.kCFRunLoopCommonModes)
 
         self.assertNotEqual(len(lst), 0)
         self.assertTrue(lst[0][0] is ctx)
