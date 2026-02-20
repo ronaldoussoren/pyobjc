@@ -2787,47 +2787,50 @@ class TestTestSupport(TestCase):
 
             # Also mock the Cocoa package to avoid classes ending up there as well
             # XXX: Need to check if the actual usage of the API is safe in this respect as well!
-            Cocoa = Mod()
-            Cocoa.NSObject = objc.lookUpClass("NSObject")
-            Cocoa.NSArray = objc.lookUpClass("NSArray")
-
-            if "Cocoa" in sys.modules:
-                orig_Cocoa = sys.modules["Cocoa"]
-            else:
-                orig_Cocoa = None
-            sys.modules["Cocoa"] = Cocoa
-            try:
-                with mock.patch(
-                    "PyObjCTools.TestSupport.TestCase._validateCallableMetadata"
-                ) as fn:
-                    m = Mod()
-                    m.Constant = 42
-                    m.MyClassForValidating = MyClassForValidating
-                    m.NSArray = objc.lookUpClass("NSArray")
-
-                    try:
-                        self.assertCallableMetadataIsSane(m, exclude_cocoa=True)
-                    except self.failureException:
-                        self.fail("Unexpected failure")
-
-            finally:
-                if orig_Cocoa is None:
-                    del sys.modules["Cocoa"]
+            for modname in ("AppKit", "Foundation"):
+                mod = Mod()
+                mod.NSObject = objc.lookUpClass("NSObject")
+                mod.NSArray = objc.lookUpClass("NSArray")
+                if modname in sys.modules:
+                    orig_mod = sys.modules[modname]
                 else:
-                    sys.modules["Cocoa"] = orig_Cocoa
+                    orig_mod = None
+                sys.modules[modname] = mod
 
-            fn.assert_any_call(
-                MyClassForValidating.mymethod,
-                "MyClassForValidating",
-                skip_simple_charptr_check=False,
-            )
+                try:
+                    with mock.patch(
+                        "PyObjCTools.TestSupport.TestCase._validateCallableMetadata"
+                    ) as fn:
+                        m = Mod()
+                        m.Constant = 42
+                        m.MyClassForValidating = MyClassForValidating
+                        m.NSArray = objc.lookUpClass("NSArray")
 
-            for entry in fn.call_args_list:
-                self.assertNotIsInstance(entry.args[0], objc.ivar)
-                self.assertNotEqual(
-                    entry.args[0],
-                    objc.lookUpClass("NSArray").pyobjc_instanceMethods.initWithArray_,
+                        try:
+                            self.assertCallableMetadataIsSane(m, exclude_cocoa=True)
+                        except self.failureException:
+                            self.fail("Unexpected failure")
+
+                finally:
+                    if orig_mod is None:
+                        del sys.modules[modname]
+                    else:
+                        sys.modules[modname] = orig_mod
+
+                fn.assert_any_call(
+                    MyClassForValidating.mymethod,
+                    "MyClassForValidating",
+                    skip_simple_charptr_check=False,
                 )
+
+                for entry in fn.call_args_list:
+                    self.assertNotIsInstance(entry.args[0], objc.ivar)
+                    self.assertNotEqual(
+                        entry.args[0],
+                        objc.lookUpClass(
+                            "NSArray"
+                        ).pyobjc_instanceMethods.initWithArray_,
+                    )
 
         with self.subTest("function"):
 

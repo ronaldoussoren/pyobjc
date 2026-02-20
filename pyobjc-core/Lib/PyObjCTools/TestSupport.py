@@ -1348,9 +1348,14 @@ class TestCase(_unittest.TestCase):
 
         if exclude_cocoa:
             try:
-                import Cocoa
+                if "AppKit" in _sys.modules:
+                    import AppKit
 
-                exclude_names = set(dir(Cocoa))
+                    exclude_names = set(dir(AppKit))
+                else:
+                    import Foundation
+
+                    exclude_names = set(dir(Foundation))
 
                 # Don't exclude NSObject' because a number
                 # of frameworks define categories on this class.

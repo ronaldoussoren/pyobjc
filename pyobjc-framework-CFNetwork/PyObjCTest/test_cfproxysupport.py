@@ -5,8 +5,6 @@ from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
     expectedFailure,
-    os_release,
-    os_level_key,
 )
 
 SCRIPT = """
@@ -65,10 +63,7 @@ class TestCFProxySupport(TestCase):
 
         CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 1.0, False)
 
-        # XXX: running the removal as should be done for correctly using the API
-        #      results in a crash on macOS 26.4
-        if os_level_key(os_release()) >= os_level_key("26.4"):
-            CFNetwork.CFRunLoopRemoveSource(rl, rls, CFNetwork.kCFRunLoopCommonModes)
+        CFNetwork.CFRunLoopRemoveSource(rl, rls, CFNetwork.kCFRunLoopCommonModes)
 
         self.assertNotEqual(len(lst), 0)
         self.assertTrue(lst[0][0] is ctx)
@@ -93,10 +88,7 @@ class TestCFProxySupport(TestCase):
 
         CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 1.0, True)
 
-        # XXX: running the removal as should be done for correctly using the API
-        #      results in a crash on macOS 26.4
-        if os_level_key(os_release()) >= os_level_key("26.4"):
-            CFNetwork.CFRunLoopRemoveSource(rl, rls, CFNetwork.kCFRunLoopCommonModes)
+        CFNetwork.CFRunLoopRemoveSource(rl, rls, CFNetwork.kCFRunLoopCommonModes)
 
         self.assertNotEqual(len(lst), 0)
         self.assertTrue(lst[0][0] is ctx)
