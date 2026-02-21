@@ -2791,10 +2791,16 @@ class TestTestSupport(TestCase):
                 mod = Mod()
                 mod.NSObject = objc.lookUpClass("NSObject")
                 mod.NSArray = objc.lookUpClass("NSArray")
-                if modname in sys.modules:
-                    orig_mod = sys.modules[modname]
+                if "AppKit" in sys.modules:
+                    orig_AppKit = sys.modules["AppKit"]
+                    del sys.modules["AppKit"]
                 else:
-                    orig_mod = None
+                    orig_AppKit = None
+                if "Foundation" in sys.modules:
+                    orig_Foundation = sys.modules["Foundation"]
+                else:
+                    orig_Foundation = None
+
                 sys.modules[modname] = mod
 
                 try:
@@ -2812,10 +2818,17 @@ class TestTestSupport(TestCase):
                             self.fail("Unexpected failure")
 
                 finally:
-                    if orig_mod is None:
-                        del sys.modules[modname]
+                    if orig_Foundation is None:
+                        if "Foundation" in sys.modules:
+                            del sys.modules["Foundation"]
                     else:
-                        sys.modules[modname] = orig_mod
+                        sys.modules["Foundation"] = orig_Foundation
+
+                    if orig_AppKit is None:
+                        if "AppKit" in sys.modules:
+                            del sys.modules["AppKit"]
+                    else:
+                        sys.modules["AppKit"] = orig_AppKit
 
                 fn.assert_any_call(
                     MyClassForValidating.mymethod,

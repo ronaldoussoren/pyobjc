@@ -780,7 +780,9 @@ class TestSuperMisc(TestCase):
         assert deleted
 
     def test_super_invalid_class(self):
-        with self.assertRaisesRegex(TypeError, "not an instance"):
+        with self.assertRaisesRegex(
+            TypeError, r"(not an instance)|(must be an instance)"
+        ):
             objc.super(list, ()).index
 
     def test_non_method(self):
