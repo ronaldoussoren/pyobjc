@@ -129,7 +129,7 @@ The framework name links to API notes for that framework, the python packages li
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | Combine                                                                              | -                                                    | Swift only framework.                   |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-     | :doc:`CompositorServices </apinotes/CompositorServices>`                             | `pyobjc-framewor-CompositorServices`_                |                                         |
+     | :doc:`CompositorServices </apinotes/CompositorServices>`                             | `pyobjc-framework-CompositorServices`_                |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | ContactProvider                                                                      | -                                                    | No public API                           |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -325,7 +325,7 @@ The framework name links to API notes for that framework, the python packages li
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | HIDDriverKit                                                                         | -                                                    | Will not be wrapped, too low level.     |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-     | HomeKit                                                                              | -                                                    | No public API on macOS                  |
+     | :doc:`HomeKit </apinotes/HomeKit>`                                                   | `pyobjc-framework-HomeKit`_                          | Experimental, based on iOS headers      |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | Hypervisor                                                                           | -                                                    | Will not be wrapped, too low level.     |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -957,4 +957,5 @@ prioritizing work.
 .. _`pyobjc-framework-MediaExtension`: https://pypi.org/project/pyobjc-framework-MediaExtension/
 .. _`pyobjc-framework-Carbon`: https://pypi.org/project/pyobjc-framework-Carbon/
 .. _`pyobjc-framework-ARKit`: https://pypi.org/project/pyobjc-framework-ARKit/
-.. _`pyobjc-framewor-CompositorServices`: https://pypi.org/project/pyobjc-framewor-CompositorServices/
+.. _`pyobjc-framework-CompositorServices`: https://pypi.org/project/pyobjc-framework-CompositorServices/
+.. _`pyobjc-framework-HomeKit`: https://pypi.org/project/pyobjc-framework-HomeKit/

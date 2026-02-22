@@ -8,6 +8,13 @@ Version 12.2
 
 * Update framework bindings for macOS 26.4 SDK (beta)
 
+* Add experiment bindings for the HomeKit framework.
+
+  This is a framework without public API on macOS, the bindings are based
+  on the iOS headers.
+
+  Added because interacting with HomeKit from my laptop might be useful.
+
 * The following code failed at the last line in previous versions:
 
   .. sourcecode:: python

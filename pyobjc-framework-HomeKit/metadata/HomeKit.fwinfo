@@ -1,0 +1,1823 @@
+// Manual scan of HomeKit headers for the iOS SDK
+{
+ "definitions": {
+  "type_enum": {
+   "HMSignificantEvent": { "type": "@", "type_name": "NSString" }
+  },
+  "enum_type": {
+   "HMCameraStreamState": { "type": "Q" },
+   "HMCameraAudioStreamSetting": { "type": "Q" },
+   "HMCharacteristicValueLockMechanismLastKnownAction": { "type": "q" },
+   "HMCharacteristicValueAirParticulateSize": { "type": "q" },
+   "HMCharacteristicValueAirQuality": { "type": "q" },
+   "HMCharacteristicValuePositionState": { "type": "q" },
+   "HMCharacteristicValueCurrentSecuritySystemState": { "type": "q" },
+   "HMCharacteristicValueTargetSecuritySystemState": { "type": "q" },
+   "HMCharacteristicValueJammedStatus": { "type": "q" },
+   "HMCharacteristicValueTamperedStatus": { "type": "q" },
+   "HMCharacteristicValueLeakStatus": { "type": "q" },
+   "HMCharacteristicValueContactState": { "type": "q" },
+   "HMCharacteristicValueStatusFault": { "type": "q" },
+   "HMCharacteristicValueCarbonMonoxideDetectionStatus": { "type": "q" },
+   "HMCharacteristicValueCarbonDioxideDetectionStatus": { "type": "q" },
+   "HMCharacteristicValueOccupancyStatus": { "type": "q" },
+   "HMCharacteristicValueSecuritySystemAlarmType": { "type": "q" },
+   "HMCharacteristicValueTargetAirPurifierState": { "type": "q" },
+   "HMCharacteristicValueCurrentSlatState": { "type": "q" },
+   "HMCharacteristicValueSlatType": { "type": "q" },
+   "HMCharacteristicValueFilterChange": { "type": "q" },
+   "HMCharacteristicValueLabelNamespace": { "type": "q" },
+   "HMCharacteristicValueProgramMode": { "type": "q" },
+   "HMCharacteristicValueUsageState": { "type": "q" },
+   "HMCharacteristicValueValveType": { "type": "q" },
+   "HMCharacteristicValueVolumeControlType": { "type": "q" },
+   "HMCharacteristicValueVolumeSelector": { "type": "q" },
+   "HMCharacteristicValueDoorState": { "type": "q" },
+   "HMCharacteristicValueCurrentHeatingCooling": { "type": "q" },
+   "HMCharacteristicValueLockMechanismState": { "type": "q" },
+   "HMCharacteristicValueTargetLockMechanismState": { "type": "q" },
+   "HMCharacteristicValueRotationDirection": { "type": "q" },
+   "HMCharacteristicValueTargetDoorState": { "type": "q" },
+   "HMCharacteristicValueHeatingCooling": { "type": "q" },
+   "HMCharacteristicValueTemperatureUnit": { "type": "q" },
+   "HMCharacteristicValueInputEvent": { "type": "q" },
+   "HMCharacteristicValueSmokeDetectionStatus": { "type": "q" },
+   "HMCharacteristicValueBatteryStatus": { "type": "q" },
+   "HMCharacteristicValueChargingState": { "type": "q" },
+   "HMCharacteristicValueLockPhysicalControlsState": { "type": "q" },
+   "HMCharacteristicValueCurrentFanState": { "type": "q" },
+   "HMCharacteristicValueActivationState": { "type": "q" },
+   "HMCharacteristicValueCurrentHeaterCoolerState": { "type": "q" },
+   "HMCharacteristicValueTargetHeaterCoolerState": { "type": "q" },
+   "HMCharacteristicValueCurrentHumidifierDehumidifierState": { "type": "q" },
+   "HMCharacteristicValueTargetHumidifierDehumidifierState": { "type": "q" },
+   "HMCharacteristicValueSwingMode": { "type": "q" },
+   "HMCharacteristicValueTargetFanState": { "type": "q" },
+   "HMCharacteristicValueConfigurationState": { "type": "q" },
+   "HMCharacteristicValueInputSourceType": { "type": "q" },
+   "HMCharacteristicValueInputDeviceType": { "type": "q" },
+   "HMCharacteristicValueClosedCaptions": { "type": "q" },
+   "HMCharacteristicValuePowerModeSelection": { "type": "q" },
+   "HMCharacteristicValueCurrentMediaState": { "type": "q" },
+   "HMCharacteristicValueRemoteKey": { "type": "q" },
+   "HMCharacteristicValuePictureMode": { "type": "q" },
+   "HMCharacteristicValueTargetVisibilityState": { "type": "q" },
+   "HMCharacteristicValueCurrentVisibilityState": { "type": "q" },
+   "HMCharacteristicValueTargetMediaState": { "type": "q" },
+   "HMCharacteristicValueRouterStatus": { "type": "q" },
+   "HMCharacteristicValueWiFiSatelliteStatus": { "type": "q" },
+   "HMErrorCode": { "type": "q" },
+   "HMEventTriggerActivationState": { "type": "Q" },
+   "HMHomeHubState": { "type": "Q" },
+   "HMHomeManagerAuthorizationStatus": { "type": "Q" },
+   "HMPresenceEventType": { "type": "Q" },
+   "HMPresenceEventUserType": { "type": "Q" }
+  },
+  "enum": {
+   "HMCameraStreamStateStarting": { "value": 1 },
+   "HMCameraStreamStateStreaming": { "value": 2 },
+   "HMCameraStreamStateStopping": { "value": 3 },
+   "HMCameraStreamStateNotStreaming": { "value": 4 },
+   "HMCameraAudioStreamSettingMuted": { "value": 1 },
+   "HMCameraAudioStreamSettingIncomingAudioAllowed": { "value": 2 },
+   "HMCameraAudioStreamSettingBidirectionalAudioAllowed": { "value": 3 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredUsingPhysicalMovementInterior": { "value": 0 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredUsingPhysicalMovementInterior": { "value": 1 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredUsingPhysicalMovementExterior": { "value": 2 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredUsingPhysicalMovementExterior": { "value": 3 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredWithKeypad": { "value": 4 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredWithKeypad": { "value": 5 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredRemotely": { "value": 6 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredRemotely": { "value": 7 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredWithAutomaticSecureTimeout": { "value": 8 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredUsingPhysicalMovement": { "value": 9 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredUsingPhysicalMovement": { "value": 10 },
+   "HMCharacteristicValueAirParticulateSize2_5": { "value": 0 },
+   "HMCharacteristicValueAirParticulateSize10": { "value": 1 },
+   "HMCharacteristicValueAirQualityUnknown": { "value": 0 },
+   "HMCharacteristicValueAirQualityExcellent": { "value": 1 },
+   "HMCharacteristicValueAirQualityGood": { "value": 2 },
+   "HMCharacteristicValueAirQualityFair": { "value": 3 },
+   "HMCharacteristicValueAirQualityInferior": { "value": 4 },
+   "HMCharacteristicValueAirQualityPoor": { "value": 5 },
+   "HMCharacteristicValuePositionStateClosing": { "value": 0 },
+   "HMCharacteristicValuePositionStateOpening": { "value": 1 },
+   "HMCharacteristicValuePositionStateStopped": { "value": 2 },
+   "HMCharacteristicValueCurrentSecuritySystemStateStayArm": { "value": 0 },
+   "HMCharacteristicValueCurrentSecuritySystemStateAwayArm": { "value": 1 },
+   "HMCharacteristicValueCurrentSecuritySystemStateNightArm": { "value": 2 },
+   "HMCharacteristicValueCurrentSecuritySystemStateDisarmed": { "value": 3 },
+   "HMCharacteristicValueCurrentSecuritySystemStateTriggered": { "value": 4 },
+   "HMCharacteristicValueTargetSecuritySystemStateStayArm": { "value": 0 },
+   "HMCharacteristicValueTargetSecuritySystemStateAwayArm": { "value": 1 },
+   "HMCharacteristicValueTargetSecuritySystemStateNightArm": { "value": 2 },
+   "HMCharacteristicValueTargetSecuritySystemStateDisarm": { "value": 3 },
+   "HMCharacteristicValueJammedStatusNone": { "value": 0 },
+   "HMCharacteristicValueJammedStatusJammed": { "value": 1 },
+   "HMCharacteristicValueTamperedStatusNone": { "value": 0 },
+   "HMCharacteristicValueTamperedStatusTampered": { "value": 1 },
+   "HMCharacteristicValueLeakStatusNone": { "value": 0 },
+   "HMCharacteristicValueLeakStatusDetected": { "value": 1 },
+   "HMCharacteristicValueContactStateDetected": { "value": 0 },
+   "HMCharacteristicValueContactStateNone": { "value": 1 },
+   "HMCharacteristicValueStatusFaultNoFault": { "value": 0 },
+   "HMCharacteristicValueStatusFaultGeneralFault": { "value": 1 },
+   "HMCharacteristicValueCarbonMonoxideDetectionStatusNotDetected": { "value": 0 },
+   "HMCharacteristicValueCarbonMonoxideDetectionStatusDetected": { "value": 1 },
+   "HMCharacteristicValueCarbonDioxideDetectionStatusNotDetected": { "value": 0 },
+   "HMCharacteristicValueCarbonDioxideDetectionStatusDetected": { "value": 1 },
+   "HMCharacteristicValueOccupancyStatusNotOccupied": { "value": 0 },
+   "HMCharacteristicValueOccupancyStatusOccupied": { "value": 1 },
+   "HMCharacteristicValueSecuritySystemAlarmTypeNoAlarm": { "value": 0 },
+   "HMCharacteristicValueSecuritySystemAlarmTypeUnknown": { "value": 1 },
+   "HMCharacteristicValueCurrentAirPurifierStateInactive": { "value": 0 },
+   "HMCharacteristicValueCurrentAirPurifierStateIdle": { "value": 1 },
+   "HMCharacteristicValueCurrentAirPurifierStateActive": { "value": 2 },
+   "HMCharacteristicValueTargetAirPurifierStateManual": { "value": 0 },
+   "HMCharacteristicValueTargetAirPurifierStateAutomatic": { "value": 1 },
+   "HMCharacteristicValueCurrentSlatStateStationary": { "value": 0 },
+   "HMCharacteristicValueCurrentSlatStateJammed": { "value": 1 },
+   "HMCharacteristicValueCurrentSlatStateOscillating": { "value": 2 },
+   "HMCharacteristicValueSlatTypeHorizontal": { "value": 0 },
+   "HMCharacteristicValueSlatTypeVertical": { "value": 1 },
+   "HMCharacteristicValueFilterChangeNotNeeded": { "value": 0 },
+   "HMCharacteristicValueFilterChangeNeeded": { "value": 1 },
+   "HMCharacteristicValueLabelNamespaceDot": { "value": 0 },
+   "HMCharacteristicValueLabelNamespaceNumeral": { "value" : 1 },
+   "HMCharacteristicValueProgramModeNotScheduled": { "value": 0 },
+   "HMCharacteristicValueProgramModeScheduled": { "value": 1 },
+   "HMCharacteristicValueProgramModeScheduleOverriddenToManual": { "value": 2 },
+   "HMCharacteristicValueUsageStateNotInUse": { "value": 0 },
+   "HMCharacteristicValueUsageStateInUse": { "value": 1 },
+   "HMCharacteristicValueValveTypeGenericValve": { "value": 0 },
+   "HMCharacteristicValueValveTypeIrrigation": { "value": 1 },
+   "HMCharacteristicValueValveTypeShowerHead": { "value": 2 },
+   "HMCharacteristicValueValveTypeWaterFaucet": { "value": 3 },
+   "HMCharacteristicValueVolumeControlTypeNone": { "value": 0 },
+   "HMCharacteristicValueVolumeControlTypeRelative": { "value": 1 },
+   "HMCharacteristicValueVolumeControlTypeRelativeWithCurrent": { "value": 2 },
+   "HMCharacteristicValueVolumeControlTypeAbsolute": { "value": 3 },
+   "HMCharacteristicValueVolumeSelectorVolumeIncrement": { "value": 0 },
+   "HMCharacteristicValueVolumeSelectorVolumeDecrement": { "value": 1 },
+   "HMCharacteristicValueDoorStateOpen": { "value": 0 },
+   "HMCharacteristicValueDoorStateClosed": { "value": 1 },
+   "HMCharacteristicValueDoorStateOpening": { "value": 2 },
+   "HMCharacteristicValueDoorStateClosing": { "value": 3 },
+   "HMCharacteristicValueDoorStateStopped": { "value": 4 },
+   "HMCharacteristicValueCurrentHeatingCoolingOff": { "value": 0 },
+   "HMCharacteristicValueCurrentHeatingCoolingHeat": { "value": 1 },
+   "HMCharacteristicValueCurrentHeatingCoolingCool": { "value": 2 },
+   "HMCharacteristicValueLockMechanismStateUnsecured": { "value": 0 },
+   "HMCharacteristicValueLockMechanismStateSecured": { "value": 1 },
+   "HMCharacteristicValueLockMechanismStateJammed": { "value": 2 }  ,
+   "HMCharacteristicValueLockMechanismStateUnknown": { "value": 3 },
+   "HMCharacteristicValueTargetLockMechanismStateUnsecured": { "value": 0 },
+   "HMCharacteristicValueTargetLockMechanismStateSecured": { "value": 1 },
+   "HMCharacteristicValueRotationDirectionClockwise": { "value": 0 },
+   "HMCharacteristicValueRotationDirectionCounterClockwise": { "value": 1 },
+   "HMCharacteristicValueTargetDoorStateOpen": { "value": 0 },
+   "HMCharacteristicValueTargetDoorStateClosed": { "value": 1 },
+   "HMCharacteristicValueHeatingCoolingOff": { "value": 0 },
+   "HMCharacteristicValueHeatingCoolingHeat": { "value": 1 },
+   "HMCharacteristicValueHeatingCoolingCool": { "value": 2 },
+   "HMCharacteristicValueHeatingCoolingAuto": { "value": 3 },
+   "HMCharacteristicValueTemperatureUnitCelsius": { "value": 0 },
+   "HMCharacteristicValueTemperatureUnitFahrenheit": { "value": 1 },
+   "HMCharacteristicValueInputEventSinglePress": { "value": 0 },
+   "HMCharacteristicValueInputEventDoublePress": { "value": 1 },
+   "HMCharacteristicValueInputEventLongPress": { "value": 2 },
+   "HMCharacteristicValueSmokeDetectionStatusNone": { "value": 0 } ,
+   "HMCharacteristicValueSmokeDetectionStatusDetected": { "value": 1 } ,
+   "HMCharacteristicValueBatteryStatusNormal": { "value": 0 },
+   "HMCharacteristicValueBatteryStatusLow": { "value": 1 },
+   "HMCharacteristicValueChargingStateNone": { "value": 0 },
+   "HMCharacteristicValueChargingStateInProgress": { "value": 1 },
+   "HMCharacteristicValueChargingStateNotChargeable": { "value": 2 },
+   "HMCharacteristicValueLockPhysicalControlsStateNotLocked": { "value": 0 },
+   "HMCharacteristicValueLockPhysicalControlsStateLocked": { "value": 1 },
+   "HMCharacteristicValueCurrentFanStateInactive": { "value": 0 },
+   "HMCharacteristicValueCurrentFanStateIdle": { "value": 1 },
+   "HMCharacteristicValueCurrentFanStateActive": { "value": 2 },
+   "HMCharacteristicValueActivationStateInactive": { "value": 0 },
+   "HMCharacteristicValueActivationStateActive": { "value": 1 },
+   "HMCharacteristicValueCurrentHeaterCoolerStateInactive": { "value": 0 },
+   "HMCharacteristicValueCurrentHeaterCoolerStateIdle": { "value": 1 },
+   "HMCharacteristicValueCurrentHeaterCoolerStateHeating": { "value": 2 },
+   "HMCharacteristicValueCurrentHeaterCoolerStateCooling": { "value": 3 },
+   "HMCharacteristicValueTargetHeaterCoolerStateAutomatic": { "value": 0 },
+   "HMCharacteristicValueTargetHeaterCoolerStateHeat": { "value": 1 },
+   "HMCharacteristicValueTargetHeaterCoolerStateCool": { "value": 2 },
+   "HMCharacteristicValueCurrentHumidifierDehumidifierStateInactive": { "value": 0 },
+   "HMCharacteristicValueCurrentHumidifierDehumidifierStateIdle": { "value": 1 },
+   "HMCharacteristicValueCurrentHumidifierDehumidifierStateHumidifying": { "value": 2 },
+   "HMCharacteristicValueCurrentHumidifierDehumidifierStateDehumidifying": { "value": 3 },
+   "HMCharacteristicValueTargetHumidifierDehumidifierStateAutomatic": { "value": 0 },
+   "HMCharacteristicValueTargetHumidifierDehumidifierStateHumidify": { "value": 1 },
+   "HMCharacteristicValueTargetHumidifierDehumidifierStateDehumidify": { "value": 2 },
+   "HMCharacteristicValueSwingModeDisabled": { "value": 0 },
+   "HMCharacteristicValueSwingModeEnabled": { "value": 1 },
+   "HMCharacteristicValueTargetFanStateManual": { "value": 0 },
+   "HMCharacteristicValueTargetFanStateAutomatic": { "value": 1 },
+   "HMCharacteristicValueConfigurationStateNotConfigured": { "value": 0 },
+   "HMCharacteristicValueConfigurationStateConfigured": { "value": 1 },
+   "HMCharacteristicValueInputSourceTypeOther": { "value": 0 },
+   "HMCharacteristicValueInputSourceTypeHomeScreen": { "value": 1 },
+   "HMCharacteristicValueInputSourceTypeTuner": { "value": 2 },
+   "HMCharacteristicValueInputSourceTypeHDMI": { "value": 3 },
+   "HMCharacteristicValueInputSourceTypeCompositeVideo": { "value": 4 },
+   "HMCharacteristicValueInputSourceTypeSVideo": { "value": 5 },
+   "HMCharacteristicValueInputSourceTypeComponentVideo": { "value": 6 },
+   "HMCharacteristicValueInputSourceTypeDVI": { "value": 7 },
+   "HMCharacteristicValueInputSourceTypeAirPlay": { "value": 8 },
+   "HMCharacteristicValueInputSourceTypeUSB": { "value": 9 },
+   "HMCharacteristicValueInputSourceTypeApplication": { "value": 10 },
+   "HMCharacteristicValueInputDeviceTypeOther": { "value": 0 },
+   "HMCharacteristicValueInputDeviceTypeTV": { "value": 1 },
+   "HMCharacteristicValueInputDeviceTypeRecording": { "value": 2 },
+   "HMCharacteristicValueInputDeviceTypeTuner": { "value": 3 },
+   "HMCharacteristicValueInputDeviceTypePlayback": { "value": 4 },
+   "HMCharacteristicValueInputDeviceTypeAudioSystem": { "value": 5 },
+   "HMCharacteristicValueInputDeviceTypeNone": { "value": 6 },
+   "HMCharacteristicValueClosedCaptionsDisabled": { "value": 0 },
+   "HMCharacteristicValueClosedCaptionsEnabled": { "value": 1 },
+   "HMCharacteristicValuePowerModeSelectionShow": { "value": 0 },
+   "HMCharacteristicValuePowerModeSelectionHide": { "value": 1 },
+   "HMCharacteristicValueCurrentMediaStatePlaying": { "value": 0 },
+   "HMCharacteristicValueCurrentMediaStatePaused": { "value": 1 },
+   "HMCharacteristicValueCurrentMediaStateStopped": { "value": 2 },
+   "HMCharacteristicValueCurrentMediaStateUnknown": { "value": 3 },
+   "HMCharacteristicValueCurrentMediaStateLoading": { "value": 4 },
+   "HMCharacteristicValueCurrentMediaStateInterrupted": { "value": 5 },
+   "HMCharacteristicValueRemoteKeyRewind": { "value": 0 },
+   "HMCharacteristicValueRemoteKeyFastForward": { "value": 1 },
+   "HMCharacteristicValueRemoteKeyNextTrack": { "value": 2 },
+   "HMCharacteristicValueRemoteKeyPreviousTrack": { "value": 3 },
+   "HMCharacteristicValueRemoteKeyArrowUp": { "value": 4 },
+   "HMCharacteristicValueRemoteKeyArrowDown": { "value": 5 },
+   "HMCharacteristicValueRemoteKeyArrowLeft": { "value": 6 },
+   "HMCharacteristicValueRemoteKeyArrowRight": { "value": 7 },
+   "HMCharacteristicValueRemoteKeySelect": { "value": 8 },
+   "HMCharacteristicValueRemoteKeyBack": { "value": 9 },
+   "HMCharacteristicValueRemoteKeyExit": { "value": 10 },
+   "HMCharacteristicValueRemoteKeyPlayPause": { "value": 11 },
+   "HMCharacteristicValueRemoteKeyPlay": { "value": 12 },
+   "HMCharacteristicValueRemoteKeyPause": { "value": 13 },
+   "HMCharacteristicValueRemoteKeyMenu": { "value": 14 },
+   "HMCharacteristicValueRemoteKeyInfo": { "value": 15 },
+   "HMCharacteristicValueRemoteKeyHome": { "value": 16 },
+   "HMCharacteristicValuePictureModeStandard": { "value": 0 },
+   "HMCharacteristicValuePictureModeMovie": { "value": 1 },
+   "HMCharacteristicValuePictureModeSport": { "value": 2 },
+   "HMCharacteristicValuePictureModeGame": { "value": 3 },
+   "HMCharacteristicValuePictureModePhoto": { "value": 4 },
+   "HMCharacteristicValuePictureModeVivid": { "value": 5 },
+   "HMCharacteristicValuePictureModeDark": { "value": 6 },
+   "HMCharacteristicValuePictureModeBright": { "value": 7 },
+   "HMCharacteristicValuePictureModeComputer": { "value": 8 },
+   "HMCharacteristicValuePictureModeNight": { "value": 9 },
+   "HMCharacteristicValuePictureModeCalibrated": { "value": 10 },
+   "HMCharacteristicValuePictureModeCustom1": { "value": 11 },
+   "HMCharacteristicValuePictureModeCustom2": { "value": 12 },
+   "HMCharacteristicValuePictureModeCustom3": { "value": 13 },
+   "HMCharacteristicValueTargetVisibilityStateShow": { "value": 0 },
+   "HMCharacteristicValueTargetVisibilityStateHide": { "value": 1 },
+   "HMCharacteristicValueCurrentVisibilityStateShown": { "value": 0 },
+   "HMCharacteristicValueCurrentVisibilityStateHidden": { "value": 1 },
+   "HMCharacteristicValueCurrentVisibilityStateConnected": { "value": 2 },
+   "HMCharacteristicValueCurrentVisibilityStateAlwaysShown": { "value": 3 },
+   "HMCharacteristicValueTargetMediaStatePlay": { "value": 0 },
+   "HMCharacteristicValueTargetMediaStatePause": { "value": 1 },
+   "HMCharacteristicValueTargetMediaStateStop": { "value": 2 },
+   "HMCharacteristicValueRouterStatusReady": { "value": 0 },
+   "HMCharacteristicValueRouterStatusNotReady": { "value": 1 },
+   "HMCharacteristicValueWiFiSatelliteStatusUnknown": { "value": 0   },
+   "HMCharacteristicValueWiFiSatelliteStatusConnected": { "value": 1 },
+   "HMCharacteristicValueWiFiSatelliteStatusNotConnected": { "value": 2 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredUsingPhysicalMovementInterior": { "value": 0 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredUsingPhysicalMovementInterior": { "value": 1 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredUsingPhysicalMovementExterior": { "value": 2 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredUsingPhysicalMovementExterior": { "value": 3 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredWithKeypad": { "value": 4 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredWithKeypad": { "value": 5 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredRemotely": { "value": 6 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredRemotely": { "value": 7 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredWithAutomaticSecureTimeout": { "value": 8 },
+   "HMCharacteristicValueLockMechanismLastKnownActionSecuredUsingPhysicalMovement": { "value": 9 },
+   "HMCharacteristicValueLockMechanismLastKnownActionUnsecuredUsingPhysicalMovement": { "value": 10 },
+   "HMCharacteristicValueAirParticulateSize2_5": { "value": 0 },
+   "HMCharacteristicValueAirParticulateSize10": { "value": 1 },
+   "HMCharacteristicValueAirQualityUnknown": { "value": 0 },
+   "HMCharacteristicValueAirQualityExcellent": { "value": 1 },
+   "HMCharacteristicValueAirQualityGood": { "value": 2 },
+   "HMCharacteristicValueAirQualityFair": { "value": 3 },
+   "HMCharacteristicValueAirQualityInferior": { "value": 4 },
+   "HMCharacteristicValueAirQualityPoor": { "value": 5 },
+   "HMCharacteristicValuePositionStateClosing": { "value": 0 },
+   "HMCharacteristicValuePositionStateOpening": { "value": 1 },
+   "HMCharacteristicValuePositionStateStopped": { "value": 2 },
+   "HMCharacteristicValueCurrentSecuritySystemStateStayArm": { "value": 0 },
+   "HMCharacteristicValueCurrentSecuritySystemStateAwayArm": { "value": 1 },
+   "HMCharacteristicValueCurrentSecuritySystemStateNightArm": { "value": 2 },
+   "HMCharacteristicValueCurrentSecuritySystemStateDisarmed": { "value": 3 },
+   "HMCharacteristicValueCurrentSecuritySystemStateTriggered": { "value": 4 },
+   "HMCharacteristicValueTargetSecuritySystemStateStayArm": { "value": 0 },
+   "HMCharacteristicValueTargetSecuritySystemStateAwayArm": { "value": 1 },
+   "HMCharacteristicValueTargetSecuritySystemStateNightArm": { "value": 2 },
+   "HMCharacteristicValueTargetSecuritySystemStateDisarm": { "value": 3 },
+   "HMCharacteristicValueJammedStatusNone": { "value": 0 },
+   "HMCharacteristicValueJammedStatusJammed": { "value": 1 },
+   "HMCharacteristicValueTamperedStatusNone": { "value": 0 },
+   "HMCharacteristicValueTamperedStatusTampered": { "value": 1 },
+   "HMCharacteristicValueLeakStatusNone": { "value": 0 },
+   "HMCharacteristicValueLeakStatusDetected": { "value": 1 },
+   "HMCharacteristicValueContactStateDetected": { "value": 0 },
+   "HMCharacteristicValueContactStateNone": { "value": 1 },
+   "HMCharacteristicValueStatusFaultNoFault": { "value": 0 },
+   "HMCharacteristicValueStatusFaultGeneralFault": { "value": 1 },
+   "HMCharacteristicValueCarbonMonoxideDetectionStatusNotDetected": { "value": 0 },
+   "HMCharacteristicValueCarbonMonoxideDetectionStatusDetected": { "value": 1 },
+   "HMCharacteristicValueCarbonDioxideDetectionStatusNotDetected": { "value": 0 },
+   "HMCharacteristicValueCarbonDioxideDetectionStatusDetected": { "value": 1 },
+   "HMCharacteristicValueOccupancyStatusNotOccupied": { "value": 0 },
+   "HMCharacteristicValueOccupancyStatusOccupied": { "value": 1 },
+   "HMCharacteristicValueSecuritySystemAlarmTypeNoAlarm": { "value": 0 },
+   "HMCharacteristicValueSecuritySystemAlarmTypeUnknown": { "value": 1 },
+   "HMCharacteristicValueCurrentAirPurifierStateInactive": { "value": 0 },
+   "HMCharacteristicValueCurrentAirPurifierStateIdle": { "value": 1 },
+   "HMCharacteristicValueCurrentAirPurifierStateActive": { "value": 2 },
+   "HMCharacteristicValueTargetAirPurifierStateManual": { "value": 0 },
+   "HMCharacteristicValueTargetAirPurifierStateAutomatic": { "value": 1 },
+   "HMCharacteristicValueSlatTypeHorizontal": { "value": 0 },
+   "HMCharacteristicValueSlatTypeVertical": { "value": 1 },
+   "HMCharacteristicValueFilterChangeNotNeeded": { "value": 0 },
+   "HMCharacteristicValueFilterChangeNeeded": { "value": 1 },
+   "HMCharacteristicValueLabelNamespaceDot": { "value": 0 },
+   "HMCharacteristicValueLabelNamespaceNumeral": { "value": 1 },
+   "HMCharacteristicValueProgramModeNotScheduled": { "value": 0 },
+   "HMCharacteristicValueProgramModeScheduled": { "value": 1 },
+   "HMCharacteristicValueProgramModeScheduleOverriddenToManual": { "value": 2 },
+   "HMCharacteristicValueProgramModeNotScheduled": { "value": 0 },
+   "HMCharacteristicValueProgramModeScheduled": { "value": 1 },
+   "HMCharacteristicValueProgramModeScheduleOverriddenToManual": { "value": 2 },
+   "HMErrorCodeUnexpectedError": { "value": -1 },
+   "HMErrorCodeAlreadyExists": { "value": 1 },
+   "HMErrorCodeNotFound": { "value": 2 },
+   "HMErrorCodeInvalidParameter": { "value": 3 },
+   "HMErrorCodeAccessoryNotReachable": { "value": 4 },
+   "HMErrorCodeReadOnlyCharacteristic": { "value": 5 },
+   "HMErrorCodeWriteOnlyCharacteristic": { "value": 6 },
+   "HMErrorCodeNotificationNotSupported": { "value": 7 },
+   "HMErrorCodeOperationTimedOut": { "value": 8 },
+   "HMErrorCodeAccessoryPoweredOff": { "value": 9 },
+   "HMErrorCodeAccessDenied": { "value": 10 },
+   "HMErrorCodeObjectAssociatedToAnotherHome": { "value": 11 },
+   "HMErrorCodeObjectNotAssociatedToAnyHome": { "value": 12 },
+   "HMErrorCodeObjectAlreadyAssociatedToHome": { "value": 13 },
+   "HMErrorCodeAccessoryIsBusy": { "value": 14 },
+   "HMErrorCodeOperationInProgress": { "value": 15 },
+   "HMErrorCodeAccessoryOutOfResources": { "value": 16 },
+   "HMErrorCodeInsufficientPrivileges": { "value": 17 },
+   "HMErrorCodeAccessoryPairingFailed": { "value": 18 },
+   "HMErrorCodeInvalidDataFormatSpecified": { "value": 19 },
+   "HMErrorCodeNilParameter": { "value": 20 },
+   "HMErrorCodeUnconfiguredParameter": { "value": 21 },
+   "HMErrorCodeInvalidClass": { "value": 22 },
+   "HMErrorCodeOperationCancelled": { "value": 23 },
+   "HMErrorCodeRoomForHomeCannotBeInZone": { "value": 24 },
+   "HMErrorCodeNoActionsInActionSet": { "value": 25 },
+   "HMErrorCodeNoRegisteredActionSets": { "value": 26 },
+   "HMErrorCodeMissingParameter": { "value": 27 },
+   "HMErrorCodeFireDateInPast": { "value": 28 },
+   "HMErrorCodeRoomForHomeCannotBeUpdated": { "value": 29 },
+   "HMErrorCodeActionInAnotherActionSet": { "value": 30 },
+   "HMErrorCodeObjectWithSimilarNameExistsInHome": { "value": 31 },
+   "HMErrorCodeHomeWithSimilarNameExists": { "value": 32 },
+   "HMErrorCodeRenameWithSimilarName": { "value": 33 },
+   "HMErrorCodeCannotRemoveNonBridgeAccessory": { "value": 34 },
+   "HMErrorCodeNameContainsProhibitedCharacters": { "value": 35 },
+   "HMErrorCodeNameDoesNotStartWithValidCharacters": { "value": 36 },
+   "HMErrorCodeUserIDNotEmailAddress": { "value": 37 },
+   "HMErrorCodeUserDeclinedAddingUser": { "value": 38 },
+   "HMErrorCodeUserDeclinedRemovingUser": { "value": 39 },
+   "HMErrorCodeUserDeclinedInvite": { "value": 40 },
+   "HMErrorCodeUserManagementFailed": { "value": 41 },
+   "HMErrorCodeRecurrenceTooSmall": { "value": 42 },
+   "HMErrorCodeInvalidValueType": { "value": 43 },
+   "HMErrorCodeValueLowerThanMinimum": { "value": 44 },
+   "HMErrorCodeValueHigherThanMaximum": { "value": 45 },
+   "HMErrorCodeStringLongerThanMaximum": { "value": 46 },
+   "HMErrorCodeHomeAccessNotAuthorized": { "value": 47 },
+   "HMErrorCodeOperationNotSupported": { "value": 48 },
+   "HMErrorCodeMaximumObjectLimitReached": { "value": 49 },
+   "HMErrorCodeAccessorySentInvalidResponse": { "value": 50 },
+   "HMErrorCodeStringShorterThanMinimum": { "value": 51 },
+   "HMErrorCodeGenericError": { "value": 52 },
+   "HMErrorCodeSecurityFailure": { "value": 53 },
+   "HMErrorCodeCommunicationFailure": { "value": 54 },
+   "HMErrorCodeMessageAuthenticationFailed": { "value": 55 },
+   "HMErrorCodeInvalidMessageSize": { "value": 56 },
+   "HMErrorCodeAccessoryDiscoveryFailed": { "value": 57 },
+   "HMErrorCodeClientRequestError": { "value": 58 },
+   "HMErrorCodeAccessoryResponseError": { "value": 59 },
+   "HMErrorCodeNameDoesNotEndWithValidCharacters": { "value": 60 },
+   "HMErrorCodeAccessoryIsBlocked": { "value": 61 },
+   "HMErrorCodeInvalidAssociatedServiceType": { "value": 62 },
+   "HMErrorCodeActionSetExecutionFailed": { "value": 63 },
+   "HMErrorCodeActionSetExecutionPartialSuccess": { "value": 64 },
+   "HMErrorCodeActionSetExecutionInProgress": { "value": 65 },
+   "HMErrorCodeAccessoryOutOfCompliance": { "value": 66 },
+   "HMErrorCodeDataResetFailure": { "value": 67 },
+   "HMErrorCodeNotificationAlreadyEnabled": { "value": 68 },
+   "HMErrorCodeRecurrenceMustBeOnSpecifiedBoundaries": { "value": 69 },
+   "HMErrorCodeDateMustBeOnSpecifiedBoundaries": { "value": 70 },
+   "HMErrorCodeCannotActivateTriggerTooFarInFuture": { "value": 71 },
+   "HMErrorCodeRecurrenceTooLarge": { "value": 72 },
+   "HMErrorCodeReadWritePartialSuccess": { "value": 73 },
+   "HMErrorCodeReadWriteFailure": { "value": 74 },
+   "HMErrorCodeNotSignedIntoiCloud": { "value": 75 },
+   "HMErrorCodeKeychainSyncNotEnabled": { "value": 76 },
+   "HMErrorCodeCloudDataSyncInProgress": { "value": 77 },
+   "HMErrorCodeNetworkUnavailable": { "value": 78 },
+   "HMErrorCodeAddAccessoryFailed": { "value": 79 },
+   "HMErrorCodeMissingEntitlement": { "value": 80 },
+   "HMErrorCodeCannotUnblockNonBridgeAccessory": { "value": 81 },
+   "HMErrorCodeDeviceLocked": { "value": 82 },
+   "HMErrorCodeCannotRemoveBuiltinActionSet": { "value": 83 },
+   "HMErrorCodeLocationForHomeDisabled": { "value": 84 },
+   "HMErrorCodeNotAuthorizedForLocationServices": { "value": 85 },
+   "HMErrorCodeReferToUserManual": { "value": 86 },
+   "HMErrorCodeInvalidOrMissingAuthorizationData": { "value": 87 },
+   "HMErrorCodeBridgedAccessoryNotReachable": { "value": 88 },
+   "HMErrorCodeNotAuthorizedForMicrophoneAccess": { "value": 89 },
+   "HMErrorCodeIncompatibleNetwork": { "value": 90 },
+   "HMErrorCodeNoHomeHub": { "value": 91 },
+   "HMErrorCodeNoCompatibleHomeHub": { "value": 92 },
+   "HMErrorCodeIncompatibleAccessory": { "value": 93 },
+   "HMErrorCodeIncompatibleHomeHub": { "value": 92 },
+   "HMErrorCodeObjectWithSimilarNameExists": { "value": 95 },
+   "HMErrorCodeOwnershipFailure": { "value": 96 },
+   "HMErrorCodeMaximumAccessoriesOfTypeInHome": { "value": 97 },
+   "HMErrorCodeWiFiCredentialGenerationFailed": { "value": 98 },
+   "HMErrorCodeEnterpriseNetworkNotSupported": { "value": 99 },
+   "HMErrorCodeTimedOutWaitingForAccessory": { "value": 100 },
+   "HMErrorCodeAccessoryCommunicationFailure": { "value": 101 },
+   "HMErrorCodeFailedToJoinNetwork": { "value": 102 },
+   "HMErrorCodeAccessoryIsSuspended": { "value": 103 },
+   "HMErrorCodePartialCommunicationFailure": { "value": 104 },
+   "HMErrorCodeHomeUpgradeRequired": { "value": 105 },
+   "HMEventTriggerActivationStateDisabled": { "value": 0 },
+   "HMEventTriggerActivationStateDisabledNoHomeHub": { "value": 1 },
+   "HMEventTriggerActivationStateDisabledNoCompatibleHomeHub": { "value": 2 },
+   "HMEventTriggerActivationStateDisabledNoLocationServicesAuthorization": { "value": 3 },
+   "HMEventTriggerActivationStateEnabled": { "value": 4 },
+   "HMHomeHubStateNotAvailable": { "value": 0 },
+   "HMHomeHubStateConnected": { "value": 1 },
+   "HMHomeHubStateDisconnected": { "value": 2 },
+   "HMHomeManagerAuthorizationStatusDetermined": { "value": 1 },
+   "HMHomeManagerAuthorizationStatusRestricted": { "value": 2 },
+   "HMHomeManagerAuthorizationStatusAuthorized": { "value": 4 },
+   "HMPresenceEventTypeEveryEntry": { "value": 1 },
+   "HMPresenceEventTypeEveryExit": { "value": 2 },
+   "HMPresenceEventTypeFirstEntry": { "value": 3 },
+   "HMPresenceEventTypeLastExit": { "value": 4 },
+   "HMPresenceEventTypeAtHome": { "value": 3 },
+   "HMPresenceEventTypeNotAtHome": { "value": 4 },
+   "HMPresenceEventUserTypeCurrentUser": { "value": 1 },
+   "HMPresenceEventUserTypeHomeUsers": { "value": 2 },
+   "HMPresenceEventUserTypeCustomUsers": { "value": 3 }
+  },
+  "extern": {
+   "HMAccessoryCategoryTypeOther": { "typestr": "@" },
+   "HMAccessoryCategoryTypeSecuritySystem": { "typestr": "@" },
+   "HMAccessoryCategoryTypeBridge": { "typestr": "@" },
+   "HMAccessoryCategoryTypeDoor": { "typestr": "@" },
+   "HMAccessoryCategoryTypeDoorLock": { "typestr": "@" },
+   "HMAccessoryCategoryTypeFan": { "typestr": "@" },
+   "HMAccessoryCategoryTypeGarageDoorOpener": { "typestr": "@" },
+   "HMAccessoryCategoryTypeIPCamera": { "typestr": "@" },
+   "HMAccessoryCategoryTypeLightbulb": { "typestr": "@" },
+   "HMAccessoryCategoryTypeOutlet": { "typestr": "@" },
+   "HMAccessoryCategoryTypeProgrammableSwitch": { "typestr": "@" },
+   "HMAccessoryCategoryTypeRangeExtender": { "typestr": "@" },
+   "HMAccessoryCategoryTypeSensor": { "typestr": "@" },
+   "HMAccessoryCategoryTypeSwitch": { "typestr": "@" },
+   "HMAccessoryCategoryTypeThermostat": { "typestr": "@" },
+   "HMAccessoryCategoryTypeVideoDoorbell": { "typestr": "@" },
+   "HMAccessoryCategoryTypeWindow": { "typestr": "@" },
+   "HMAccessoryCategoryTypeWindowCovering": { "typestr": "@" },
+   "HMAccessoryCategoryTypeAirPurifier": { "typestr": "@" },
+   "HMAccessoryCategoryTypeAirHeater": { "typestr": "@" },
+   "HMAccessoryCategoryTypeAirConditioner": { "typestr": "@" },
+   "HMAccessoryCategoryTypeAirHumidifier": { "typestr": "@" },
+   "HMAccessoryCategoryTypeAirDehumidifier": { "typestr": "@" },
+   "HMAccessoryCategoryTypeSprinkler": { "typestr": "@" },
+   "HMAccessoryCategoryTypeFaucet": { "typestr": "@" },
+   "HMAccessoryCategoryTypeShowerHead": { "typestr": "@" },
+   "HMAccessoryCategoryTypeTelevision": { "typestr": "@" },
+   "HMAccessoryCategoryTypeTelevisionSetTopBox": { "typestr": "@" },
+   "HMAccessoryCategoryTypeTelevisionStreamingStick": { "typestr": "@" },
+   "HMAccessoryCategoryTypeWiFiRouter": { "typestr": "@" },
+   "HMAccessoryCategoryTypeSpeaker": { "typestr": "@" },
+   "HMAccessoryCategoryTypeAudioReceiver": { "typestr": "@" },
+   "HMAccessoryCategoryTypeAirPort": { "typestr": "@" },
+   "HMActionSetTypeWakeUp": { "typestr": "@" },
+   "HMActionSetTypeSleep": { "typestr": "@" },
+   "HMActionSetTypeHomeDeparture": { "typestr": "@" },
+   "HMActionSetTypeHomeArrival": { "typestr": "@" },
+   "HMActionSetTypeUserDefined": { "typestr": "@" },
+   "HMActionSetTypeTriggerOwned": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatBool": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatInt": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatFloat": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatString": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatArray": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatDictionary": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatUInt8": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatUInt16": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatUInt32": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatUInt64": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatData": { "typestr": "@" },
+   "HMCharacteristicMetadataFormatTLV8": { "typestr": "@" },
+   "HMCharacteristicMetadataUnitsCelsius": { "typestr": "@" },
+   "HMCharacteristicMetadataUnitsFahrenheit": { "typestr": "@" },
+   "HMCharacteristicMetadataUnitsPercentage": { "typestr": "@" },
+   "HMCharacteristicMetadataUnitsArcDegree": { "typestr": "@" },
+   "HMCharacteristicMetadataUnitsSeconds": { "typestr": "@" },
+   "HMCharacteristicMetadataUnitsLux": { "typestr": "@" },
+   "HMCharacteristicMetadataUnitsPartsPerMillion": { "typestr": "@" },
+   "HMCharacteristicMetadataUnitsMicrogramsPerCubicMeter": { "typestr": "@" },
+   "HMCharacteristicPropertySupportsEventNotification": { "typestr": "@" },
+   "HMCharacteristicPropertyReadable": { "typestr": "@" },
+   "HMCharacteristicPropertyWritable": { "typestr": "@" },
+   "HMCharacteristicPropertyHidden": { "typestr": "@" },
+   "HMCharacteristicPropertyRequiresAuthorizationData": { "typestr": "@" },
+   "HMCharacteristicTypeTargetRelativeHumidity": { "typestr": "@" },
+   "HMCharacteristicTypeOutletInUse": { "typestr": "@" },
+   "HMCharacteristicTypeLogs": { "typestr": "@" },
+   "HMCharacteristicTypeAudioFeedback": { "typestr": "@" },
+   "HMCharacteristicTypeAdminOnlyAccess": { "typestr": "@" },
+   "HMCharacteristicTypeSecuritySystemAlarmType": { "typestr": "@" },
+   "HMCharacteristicTypeMotionDetected": { "typestr": "@" },
+   "HMCharacteristicTypeLockMechanismLastKnownAction": { "typestr": "@" },
+   "HMCharacteristicTypeLockManagementControlPoint": { "typestr": "@" },
+   "HMCharacteristicTypeLockManagementAutoSecureTimeout": { "typestr": "@" },
+   "HMCharacteristicTypeAirParticulateDensity": { "typestr": "@" },
+   "HMCharacteristicTypeAirParticulateSize": { "typestr": "@" },
+   "HMCharacteristicTypeAirQuality": { "typestr": "@" },
+   "HMCharacteristicTypeCarbonDioxideDetected": { "typestr": "@" },
+   "HMCharacteristicTypeCarbonDioxideLevel": { "typestr": "@" },
+   "HMCharacteristicTypeCarbonDioxidePeakLevel": { "typestr": "@" },
+   "HMCharacteristicTypeCarbonMonoxideDetected": { "typestr": "@" },
+   "HMCharacteristicTypeCarbonMonoxideLevel": { "typestr": "@" },
+   "HMCharacteristicTypeCarbonMonoxidePeakLevel": { "typestr": "@" },
+   "HMCharacteristicTypeContactState": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentHorizontalTilt": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentPosition": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentSecuritySystemState": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentVerticalTilt": { "typestr": "@" },
+   "HMCharacteristicTypeHoldPosition": { "typestr": "@" },
+   "HMCharacteristicTypeLeakDetected": { "typestr": "@" },
+   "HMCharacteristicTypeOccupancyDetected": { "typestr": "@" },
+   "HMCharacteristicTypeOutputState": { "typestr": "@" },
+   "HMCharacteristicTypePositionState": { "typestr": "@" },
+   "HMCharacteristicTypeStatusActive": { "typestr": "@" },
+   "HMCharacteristicTypeStatusFault": { "typestr": "@" },
+   "HMCharacteristicTypeStatusJammed": { "typestr": "@" },
+   "HMCharacteristicTypeStatusTampered": { "typestr": "@" },
+   "HMCharacteristicTypeTargetHorizontalTilt": { "typestr": "@" },
+   "HMCharacteristicTypeTargetSecuritySystemState": { "typestr": "@" },
+   "HMCharacteristicTypeTargetPosition": { "typestr": "@" },
+   "HMCharacteristicTypeTargetVerticalTilt": { "typestr": "@" },
+   "HMCharacteristicTypeStreamingStatus": { "typestr": "@" },
+   "HMCharacteristicTypeSetupStreamEndpoint": { "typestr": "@" },
+   "HMCharacteristicTypeSupportedVideoStreamConfiguration": { "typestr": "@" },
+   "HMCharacteristicTypeSupportedRTPConfiguration": { "typestr": "@" },
+   "HMCharacteristicTypeSelectedStreamConfiguration": { "typestr": "@" },
+   "HMCharacteristicTypeOpticalZoom": { "typestr": "@" },
+   "HMCharacteristicTypeDigitalZoom": { "typestr": "@" },
+   "HMCharacteristicTypeImageRotation": { "typestr": "@" },
+   "HMCharacteristicTypeImageMirroring": { "typestr": "@" },
+   "HMCharacteristicTypeLabelNamespace": { "typestr": "@" },
+   "HMCharacteristicTypeLabelIndex": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentAirPurifierState": { "typestr": "@" },
+   "HMCharacteristicTypeTargetAirPurifierState": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentSlatState": { "typestr": "@" },
+   "HMCharacteristicTypeFilterChangeIndication": { "typestr": "@" },
+   "HMCharacteristicTypeFilterLifeLevel": { "typestr": "@" },
+   "HMCharacteristicTypeFilterResetChangeIndication": { "typestr": "@" },
+   "HMCharacteristicTypeSlatType": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentTilt": { "typestr": "@" },
+   "HMCharacteristicTypeTargetTilt": { "typestr": "@" },
+   "HMCharacteristicTypeOzoneDensity": { "typestr": "@" },
+   "HMCharacteristicTypeNitrogenDioxideDensity": { "typestr": "@" },
+   "HMCharacteristicTypeSulphurDioxideDensity": { "typestr": "@" },
+   "HMCharacteristicTypePM2_5Density": { "typestr": "@" },
+   "HMCharacteristicTypePM10Density": { "typestr": "@" },
+   "HMCharacteristicTypeVolatileOrganicCompoundDensity": { "typestr": "@" },
+   "HMCharacteristicTypeProgramMode": { "typestr": "@" },
+   "HMCharacteristicTypeInUse": { "typestr": "@" },
+   "HMCharacteristicTypeSetDuration": { "typestr": "@" },
+   "HMCharacteristicTypeRemainingDuration": { "typestr": "@" },
+   "HMCharacteristicTypeValveType": { "typestr": "@" },
+   "HMCharacteristicTypeVolumeControlType": { "typestr": "@" },
+   "HMCharacteristicTypeVolumeSelector": { "typestr": "@" },
+   "HMCharacteristicTypeBrightness": { "typestr": "@" },
+   "HMCharacteristicTypeCoolingThreshold": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentDoorState": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentHeatingCooling": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentRelativeHumidity": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentTemperature": { "typestr": "@" },
+   "HMCharacteristicTypeHeatingThreshold": { "typestr": "@" },
+   "HMCharacteristicTypeHue": { "typestr": "@" },
+   "HMCharacteristicTypeIdentify": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentLockMechanismState": { "typestr": "@" },
+   "HMCharacteristicTypeTargetLockMechanismState": { "typestr": "@" },
+   "HMCharacteristicTypeManufacturer": { "typestr": "@" },
+   "HMCharacteristicTypeModel": { "typestr": "@" },
+   "HMCharacteristicTypeName": { "typestr": "@" },
+   "HMCharacteristicTypeObstructionDetected": { "typestr": "@" },
+   "HMCharacteristicTypePowerState": { "typestr": "@" },
+   "HMCharacteristicTypeRotationDirection": { "typestr": "@" },
+   "HMCharacteristicTypeRotationSpeed": { "typestr": "@" },
+   "HMCharacteristicTypeSaturation": { "typestr": "@" },
+   "HMCharacteristicTypeSerialNumber": { "typestr": "@" },
+   "HMCharacteristicTypeTargetDoorState": { "typestr": "@" },
+   "HMCharacteristicTypeTargetHeatingCooling": { "typestr": "@" },
+   "HMCharacteristicTypeTargetTemperature": { "typestr": "@" },
+   "HMCharacteristicTypeTemperatureUnits": { "typestr": "@" },
+   "HMCharacteristicTypeVersion": { "typestr": "@" },
+   "HMCharacteristicTypeFirmwareVersion": { "typestr": "@" },
+   "HMCharacteristicTypeHardwareVersion": { "typestr": "@" },
+   "HMCharacteristicTypeSoftwareVersion": { "typestr": "@" },
+   "HMCharacteristicTypeBatteryLevel": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentLightLevel": { "typestr": "@" },
+   "HMCharacteristicTypeInputEvent": { "typestr": "@" },
+   "HMCharacteristicTypeSmokeDetected": { "typestr": "@" },
+   "HMCharacteristicTypeStatusLowBattery": { "typestr": "@" },
+   "HMCharacteristicTypeChargingState": { "typestr": "@" },
+   "HMCharacteristicTypeLockPhysicalControls": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentFanState": { "typestr": "@" },
+   "HMCharacteristicTypeActive": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentHeaterCoolerState": { "typestr": "@" },
+   "HMCharacteristicTypeTargetHeaterCoolerState": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentHumidifierDehumidifierState": { "typestr": "@" },
+   "HMCharacteristicTypeTargetHumidifierDehumidifierState": { "typestr": "@" },
+   "HMCharacteristicTypeWaterLevel": { "typestr": "@" },
+   "HMCharacteristicTypeSwingMode": { "typestr": "@" },
+   "HMCharacteristicTypeTargetFanState": { "typestr": "@" },
+   "HMCharacteristicTypeDehumidifierThreshold": { "typestr": "@" },
+   "HMCharacteristicTypeHumidifierThreshold": { "typestr": "@" },
+   "HMCharacteristicTypeColorTemperature": { "typestr": "@" },
+   "HMCharacteristicTypeIsConfigured": { "typestr": "@" },
+   "HMCharacteristicTypeInputSourceType": { "typestr": "@" },
+   "HMCharacteristicTypeInputDeviceType": { "typestr": "@" },
+   "HMCharacteristicTypeClosedCaptions": { "typestr": "@" },
+   "HMCharacteristicTypePowerModeSelection": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentMediaState": { "typestr": "@" },
+   "HMCharacteristicTypeRemoteKey": { "typestr": "@" },
+   "HMCharacteristicTypePictureMode": { "typestr": "@" },
+   "HMCharacteristicTypeConfiguredName": { "typestr": "@" },
+   "HMCharacteristicTypeIdentifier": { "typestr": "@" },
+   "HMCharacteristicTypeActiveIdentifier": { "typestr": "@" },
+   "HMCharacteristicTypeSupportedAudioStreamConfiguration": { "typestr": "@" },
+   "HMCharacteristicTypeVolume": { "typestr": "@" },
+   "HMCharacteristicTypeMute": { "typestr": "@" },
+   "HMCharacteristicTypeNightVision": { "typestr": "@" },
+   "HMCharacteristicTypeTargetVisibilityState": { "typestr": "@" },
+   "HMCharacteristicTypeCurrentVisibilityState": { "typestr": "@" },
+   "HMCharacteristicTypeTargetMediaState": { "typestr": "@" },
+   "HMCharacteristicTypeRouterStatus": { "typestr": "@" },
+   "HMCharacteristicTypeWANStatusList": { "typestr": "@" },
+   "HMCharacteristicTypeWiFiSatelliteStatus": { "typestr": "@" },
+   "HMErrorDomain": { "typestr": "@" },
+   "HMCharacteristicKeyPath": { "typestr": "@" },
+   "HMCharacteristicValueKeyPath": { "typestr": "@" },
+   "HMPresenceKeyPath": { "typestr": "@" },
+   "HMUserFailedAccessoriesKey": { "typestr": "@" },
+   "HMServiceTypeSwitch": { "typestr": "@" },
+   "HMServiceTypeThermostat": { "typestr": "@" },
+   "HMServiceTypeOutlet": { "typestr": "@" },
+   "HMServiceTypeLockManagement": { "typestr": "@" },
+   "HMServiceTypeAirQualitySensor": { "typestr": "@" },
+   "HMServiceTypeCarbonDioxideSensor": { "typestr": "@" },
+   "HMServiceTypeCarbonMonoxideSensor": { "typestr": "@" },
+   "HMServiceTypeContactSensor": { "typestr": "@" },
+   "HMServiceTypeDoor": { "typestr": "@" },
+   "HMServiceTypeHumiditySensor": { "typestr": "@" },
+   "HMServiceTypeLeakSensor": { "typestr": "@" },
+   "HMServiceTypeLightSensor": { "typestr": "@" },
+   "HMServiceTypeMotionSensor": { "typestr": "@" },
+   "HMServiceTypeOccupancySensor": { "typestr": "@" },
+   "HMServiceTypeSecuritySystem": { "typestr": "@" },
+   "HMServiceTypeStatefulProgrammableSwitch": { "typestr": "@" },
+   "HMServiceTypeStatelessProgrammableSwitch": { "typestr": "@" },
+   "HMServiceTypeSmokeSensor": { "typestr": "@" },
+   "HMServiceTypeTemperatureSensor": { "typestr": "@" },
+   "HMServiceTypeWindow": { "typestr": "@" },
+   "HMServiceTypeWindowCovering": { "typestr": "@" },
+   "HMServiceTypeCameraRTPStreamManagement": { "typestr": "@" },
+   "HMServiceTypeCameraControl": { "typestr": "@" },
+   "HMServiceTypeMicrophone": { "typestr": "@" },
+   "HMServiceTypeSpeaker": { "typestr": "@" },
+   "HMServiceTypeAirPurifier": { "typestr": "@" },
+   "HMServiceTypeFilterMaintenance": { "typestr": "@" },
+   "HMServiceTypeSlats": { "typestr": "@" },
+   "HMServiceTypeLabel": { "typestr": "@" },
+   "HMServiceTypeIrrigationSystem": { "typestr": "@" },
+   "HMServiceTypeValve": { "typestr": "@" },
+   "HMServiceTypeFaucet": { "typestr": "@" },
+   "HMServiceTypeAccessoryInformation": { "typestr": "@" },
+   "HMServiceTypeFan": { "typestr": "@" },
+   "HMServiceTypeGarageDoorOpener": { "typestr": "@" },
+   "HMServiceTypeLightbulb": { "typestr": "@" },
+   "HMServiceTypeLockMechanism": { "typestr": "@" },
+   "HMServiceTypeBattery": { "typestr": "@" },
+   "HMServiceTypeVentilationFan": { "typestr": "@" },
+   "HMServiceTypeHeaterCooler": { "typestr": "@" },
+   "HMServiceTypeHumidifierDehumidifier": { "typestr": "@" },
+   "HMServiceTypeTelevision": { "typestr": "@" },
+   "HMServiceTypeInputSource": { "typestr": "@" },
+   "HMServiceTypeDoorbell": { "typestr": "@" },
+   "HMServiceTypeWiFiRouter": { "typestr": "@" },
+   "HMServiceTypeWiFiSatellite": { "typestr": "@" },
+   "HMSignificantEventSunrise": { "typestr": "@" },
+   "HMSignificantEventSunset": { "typestr": "@" }
+  },
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "homeManager:didUpdateAuthorizationStatus:",
+      "class_method": false,
+      "arguments": {
+       "1": {"type_override": "Q" }
+      }
+     }
+    ]
+   },
+   "HMAccessory": {
+    "methods": [
+     {
+      "selector": "isVendorAccessory",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isReachable",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isBridged",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isBlocked",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "supportsIdentify",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "identifyWithCompletionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMAccessory": {
+    "methods": [
+     {
+      "selector": "performAccessorySetupUsingRequest:completionHandler::",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMActionSet": {
+    "methods": [
+     {
+      "selector": "isExecuting",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "updateName:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeAction:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMAddAccessoryRequest": {
+    "methods": [
+     {
+      "selector": "requiresSetupPayloadURL",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "requiresOwnershipToken",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "HMCameraStream": {
+    "methods": [
+     {
+      "selector": "updateAudioStreamSetting:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMCharacteristic": {
+    "methods": [
+     {
+      "selector": "isNotificationEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeValue:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "readValueWithCompletionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "enableNotification:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" },
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "updateAuthorizationData:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMCharacteristicEvent": {
+    "methods": [
+     {
+      "selector": "updateTriggerValue:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMCharacteristicWriteAction": {
+    "methods": [
+     {
+      "selector": "updateTargetValue:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMAccessory": {
+    "methods": [
+     {
+      "selector": "executeOnce",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "addEvent:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeEvent:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "updateEvents:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "updatePredicate:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "updateRecurrences:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "updateExecuteOnce:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" },
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMHome": {
+    "methods": [
+     {
+      "selector": "isPrimary",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "updateName:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addAccessory:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeAccessory:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "assignAccessory:toRoom:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "unblockAccessory:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addAndSetupAccessoriesWithCompletionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addAndSetupAccessoriesWithPayload:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "manageUsersWithCompletionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addUserWithCompletionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeUser:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addRoomWithName:completionHandler::",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeRoom:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addZoneWithName:completionHandler::",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeZone:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addServiceGroupWithName:completionHandler::",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeServiceGroup:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addActionSetWithName:completionHandler::",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeActionSet:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "executeActionSet:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addTrigger:completionHandler::",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeTrigger:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "matterControllerXPCConnectBlock",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" }
+        },
+        "retval": { "type": "@" }
+       }
+      }
+     },
+     {
+      "selector": "matterStartupParametersXPCConnectBlock",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" }
+        },
+        "retval": { "type": "@" }
+       }
+      }
+     }
+    ]
+   },
+   "HMHomeManager": {
+    "methods": [
+     {
+      "selector": "findVendorAccessoryWithHAPPublicKey:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "updatePrimaryHome:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addHomeWithName:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeHome:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMLocationEvent": {
+    "methods": [
+     {
+      "selector": "updateRegion:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMRoom": {
+    "methods": [
+     {
+      "selector": "updateName:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMService": {
+    "methods": [
+     {
+      "selector": "isUserInteractive",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isPrimaryService",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "updateName:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "updateAssociatedServiceType:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMServiceGroup": {
+    "methods": [
+     {
+      "selector": "updateName:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addService:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeService:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMTimerTrigger": {
+    "methods": [
+     {
+      "selector": "updateTimeZone:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "updateRecurrence:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMTrigger": {
+    "methods": [
+     {
+      "selector": "isEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "updateName:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addActionSet:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeActionSet:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "enable:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "0": { "type_override": "Z" },
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "HMZone": {
+    "methods": [
+     {
+      "selector": "updateName:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "addRoom:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeRoom:completionHandler:",
+      "class_method": false,
+      "arguments": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   }
+  }
+ }
+}
