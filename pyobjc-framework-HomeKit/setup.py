@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 
 
-from pyobjc_setup import setup, Extension  # noqa: E402
+from pyobjc_setup import setup  # noqa: E402
 
 VERSION = "12.2"
 
@@ -22,18 +22,6 @@ setup(
     description="Wrappers for the framework HomeKit on macOS",
     min_os_level="26.4",
     packages=["HomeKit"],
-    ext_modules=[
-        Extension(
-            "HomeKit._HomeKit",
-            ["Modules/_HomeKit.m"],
-            extra_link_args=["-framework", "HomeKit"],
-            depends=[
-                os.path.join("Modules", fn)
-                for fn in os.listdir("Modules")
-                if fn.startswith("_HomeKit")
-            ],
-        )
-    ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,
