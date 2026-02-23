@@ -1,5 +1,5 @@
-# objective.metada exceptions file, see its document
-# for information on how to update this file.
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
   "cftypes": {
@@ -26,26 +26,6 @@
    "ABSearchElementRef": {
     "tollfree": "ABSearchElement"
    }
-  },
-  "externs": {
-   "kABHomePageProperty": { "deprecated": "10.4" },
-   "kABAIMInstantProperty": { "deprecated": "10.7" },
-   "kABAIMWorkLabel": { "deprecated": "10.7" },
-   "kABAIMHomeLabel": { "deprecated": "10.7" },
-   "kABAIMMobileMeLabel": { "deprecated": "10.7" },
-   "kABJabberInstantProperty": { "deprecated": "10.7" },
-   "kABJabberWorkLabel": { "deprecated": "10.7" },
-   "kABJabberHomeLabel": { "deprecated": "10.7" },
-   "kABMSNInstantProperty": { "deprecated": "10.7" },
-   "kABMSNWorkLabel": { "deprecated": "10.7" },
-   "kABMSNHomeLabel": { "deprecated": "10.7" },
-   "kABYahooInstantProperty": { "deprecated": "10.7" },
-   "kABYahooWorkLabel": { "deprecated": "10.7" },
-   "kABYahooHomeLabel": { "deprecated": "10.7" },
-   "kABICQInstantProperty": { "deprecated": "10.7" },
-   "kABICQWorkLabel": { "deprecated": "10.7" },
-   "kABICQHomeLabel": { "deprecated": "10.7" },
-   "kABOrganizationPhoneticProperty": { "typestr": "@" }
   },
   "classes": {
    "ABAddressBook": {
@@ -359,6 +339,62 @@
     ]
    }
   },
+  "externs": {
+   "kABAIMHomeLabel": {
+    "deprecated": "10.7"
+   },
+   "kABAIMInstantProperty": {
+    "deprecated": "10.7"
+   },
+   "kABAIMMobileMeLabel": {
+    "deprecated": "10.7"
+   },
+   "kABAIMWorkLabel": {
+    "deprecated": "10.7"
+   },
+   "kABHomePageProperty": {
+    "deprecated": "10.4"
+   },
+   "kABICQHomeLabel": {
+    "deprecated": "10.7"
+   },
+   "kABICQInstantProperty": {
+    "deprecated": "10.7"
+   },
+   "kABICQWorkLabel": {
+    "deprecated": "10.7"
+   },
+   "kABJabberHomeLabel": {
+    "deprecated": "10.7"
+   },
+   "kABJabberInstantProperty": {
+    "deprecated": "10.7"
+   },
+   "kABJabberWorkLabel": {
+    "deprecated": "10.7"
+   },
+   "kABMSNHomeLabel": {
+    "deprecated": "10.7"
+   },
+   "kABMSNInstantProperty": {
+    "deprecated": "10.7"
+   },
+   "kABMSNWorkLabel": {
+    "deprecated": "10.7"
+   },
+   "kABOrganizationPhoneticProperty": {
+    "typestr": "@"
+   },
+   "kABYahooHomeLabel": {
+    "deprecated": "10.7"
+   },
+   "kABYahooInstantProperty": {
+    "deprecated": "10.7"
+   },
+   "kABYahooWorkLabel": {
+    "deprecated": "10.7"
+   }
+  },
   "formal_protocols": {},
   "functions": {
    "ABAddPropertiesAndTypes": {
@@ -412,7 +448,7 @@
          "typestr": "^{__CFData=}"
         },
         {
-         "typestr": "l"
+         "typestr": "q"
         },
         {
          "typestr": "^v"

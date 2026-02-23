@@ -104,4 +104,8 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSURLSessionWebSocketDelegate));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 2604
+    p = PyObjC_IdToPython(@protocol(NSPredicateValidating));
+    Py_XDECREF(p);
+#endif
 }

@@ -61,10 +61,3 @@ class TestQUICOptions(TestCase):
         Network.nw_quic_get_max_datagram_frame_size
         Network.nw_quic_set_max_datagram_frame_size
         Network.nw_quic_get_stream_usable_datagram_frame_size
-
-    @min_os_level("26.4")
-    def test_functions26_4(self):
-        Network.nw_quic_get_reset_stream_at_enabled
-        Network.nw_quic_set_reset_stream_at_enabled
-        Network.nw_quic_get_webtransport_enabled
-        Network.nw_quic_set_webtransport_enabled

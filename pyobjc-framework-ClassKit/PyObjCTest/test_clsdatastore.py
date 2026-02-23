@@ -22,5 +22,5 @@ class TestCLSDataStore(TestCase):
     @min_os_level("26.4")
     def test_methods26_4(self):
         self.assertArgIsBlock(
-            ClassKit.CLSDataStore.checkDocumentAssignedToUser_completion_, 1, b"vZ@"
+            ClassKit.CLSDataStore.checkIsAssignedDocument_completion_, 1, b"vZ@"
         )

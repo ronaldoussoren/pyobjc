@@ -6,7 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 12.2
 ------------
 
-* Update framework bindings for macOS 26.4 SDK (beta)
+* Update framework bindings for macOS 26.4 SDK (beta 2)
 
 * Add experiment bindings for the HomeKit framework.
 

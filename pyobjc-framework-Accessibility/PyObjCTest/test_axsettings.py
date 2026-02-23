@@ -42,6 +42,13 @@ class TestAXSettings(TestCase):
             str,
         )
 
+    @min_os_level("26.4")
+    def testConstants26_4(self):
+        self.assertIsInstance(
+            Accessibility.AXReduceHighlightingEffectsEnabledDidChangeNotification,
+            str,
+        )
+
     @min_os_level("14.0")
     def test_functions(self):
         self.assertResultIsBOOL(Accessibility.AXAnimatedImagesEnabled)
@@ -59,3 +66,4 @@ class TestAXSettings(TestCase):
     @min_os_level("26.4")
     def test_functions26_4(self):
         self.assertResultIsBOOL(Accessibility.AXOpenSettingsFeatureIsSupported)
+        self.assertResultIsBOOL(Accessibility.AXReduceHighlightingEffectsEnabled)

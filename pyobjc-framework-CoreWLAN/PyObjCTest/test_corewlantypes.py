@@ -58,6 +58,7 @@ class TestCoreWLANTypes(TestCase):
         self.assertEqual(CoreWLAN.kCWPHYMode11n, 4)
         self.assertEqual(CoreWLAN.kCWPHYMode11ac, 5)
         self.assertEqual(CoreWLAN.kCWPHYMode11ax, 6)
+        self.assertEqual(CoreWLAN.kCWPHYMode11be, 7)
         self.assertEqual(CoreWLAN.kCWInterfaceModeNone, 0)
         self.assertEqual(CoreWLAN.kCWInterfaceModeStation, 1)
         self.assertEqual(CoreWLAN.kCWInterfaceModeIBSS, 2)

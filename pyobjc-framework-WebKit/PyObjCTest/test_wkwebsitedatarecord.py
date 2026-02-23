@@ -32,3 +32,7 @@ class TestWKWebsiteDataRecord(TestCase):
     @min_os_level("26.0")
     def testConstants26_0(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeScreenTime, str)
+
+    @min_os_level("26.4")
+    def testConstants26_4(self):
+        self.assertIsInstance(WebKit.WKWebsiteDataTypeOfflineWebApplicationCache, str)

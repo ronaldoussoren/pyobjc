@@ -29,3 +29,12 @@ class TestNSPredicate(TestCase):
         self.assertArgIsBlock(
             Foundation.NSPredicate.predicateWithBlock_, 0, objc._C_NSBOOL + b"@@"
         )
+
+    @min_os_level("26.4")
+    def testMethods26_4(self):
+        self.assertResultIsBOOL(
+            Foundation.NSPredicate.allowEvaluationWithValidator_error_
+        )
+        self.assertArgIsOut(
+            Foundation.NSPredicate.allowEvaluationWithValidator_error_, 1
+        )

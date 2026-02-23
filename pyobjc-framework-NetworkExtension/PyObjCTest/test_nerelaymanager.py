@@ -35,6 +35,9 @@ class TestNERelayManager(TestCase):
             NetworkExtension.NERelayManagerClientErrorServerCertificateExpired, 9
         )
         self.assertEqual(NetworkExtension.NERelayManagerClientErrorOther, 10)
+        self.assertEqual(
+            NetworkExtension.NERelayManagerClientErrorPvDConfigurationTruncated, 11
+        )
 
     @min_os_level("14.0")
     def test_constants14_0(self):

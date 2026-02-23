@@ -2,10 +2,12 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "externs": {
-   "AppTrackingTransparencyVersionString": { "type_override": "*" }
-  },
   "classes": {},
+  "externs": {
+   "AppTrackingTransparencyVersionString": {
+    "type_override": "*"
+   }
+  },
   "formal_protocols": {},
   "functions": {},
   "informal_protocols": {}
