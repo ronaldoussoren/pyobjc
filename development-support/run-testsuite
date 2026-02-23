@@ -154,6 +154,14 @@ def parse_arguments():
         default=[],
         help="Which -Xgil=VAL values should be tested for the free-threaded build (defaults to 0 and 1)",
     )
+    parser.add_argument(
+        "--jit",
+        dest="jit_enabled",
+        metavar="VAL",
+        action="append",
+        default=[],
+        help="Which ${PYTHON_JIT} values should be tested (defaults to 0)"
+    )
 
     result = parser.parse_args()
     if not result.python_versions:
@@ -199,7 +207,7 @@ def build_project(*, interpreter, py_ver, project, idx, count):
 
 
 def run_tests(
-    *, interpreter, arch, py_ver, project, state_dir, extra_py_args, idx, count
+    *, interpreter, arch, py_ver, project, state_dir, extra_py_args, idx, count, env=None
 ):
     proj_dir = os.path.join(TOP_DIR, project)
 
@@ -209,6 +217,8 @@ def run_tests(
     k = {}
     k["env"] = os.environ.copy()
     k["env"]["PATH"] = os.path.dirname(interpreter) + ":" + k["env"]["PATH"]
+    if env is not None:
+        k["env"].update(env)
 
     if not os.path.exists(state_dir):
         os.makedirs(state_dir)
@@ -640,22 +650,31 @@ def main():
                     else:
                         extra_args = [[]]
 
-                    for extra in extra_args:
-                        state_dir = os.path.join(osx_dir, f"{variant}-{arch}")
-                        if extra:
-                            state_dir = state_dir + "-" + "~".join(extra)
+                    if options.jit_enabled:
+                        extra_env = [{"PYTHON_JIT": v} for v in options.gil_enabled]
+                    else:
+                        extra_env = [None]
 
-                        for idx, project in enumerate(build_order):
-                            run_tests(
-                                interpreter=interpreter,
-                                arch=arch,
-                                py_ver=variant,
-                                project=project,
-                                state_dir=state_dir,
-                                extra_py_args=extra,
-                                idx=idx + 1,
-                                count=len(build_order) + 1,
-                            )
+                    for extra in extra_args:
+                        for env in extra_env:
+                            state_dir = os.path.join(osx_dir, f"{variant}-{arch}")
+                            if extra:
+                                state_dir = state_dir + "-" + "~".join(extra)
+
+                            if env:
+                                state_dir = state_dir + "-" + "~".join(f"{k}={v}" for k, v in env.items())
+                            for idx, project in enumerate(build_order):
+                                run_tests(
+                                    interpreter=interpreter,
+                                    arch=arch,
+                                    py_ver=variant,
+                                    project=project,
+                                    state_dir=state_dir,
+                                    extra_py_args=extra,
+                                    idx=idx + 1,
+                                    count=len(build_order) + 1,
+                                    env=extra_env,
+                                )
 
     print(f"{BOLD}done{RESET}")
     with open(os.path.join(osx_dir, "summary.txt"), "w") as fp:
