@@ -160,7 +160,7 @@ def parse_arguments():
         metavar="VAL",
         action="append",
         default=[],
-        help="Which ${PYTHON_JIT} values should be tested (defaults to 0)"
+        help="Which ${PYTHON_JIT} values should be tested (defaults to 0)",
     )
 
     result = parser.parse_args()
@@ -207,7 +207,16 @@ def build_project(*, interpreter, py_ver, project, idx, count):
 
 
 def run_tests(
-    *, interpreter, arch, py_ver, project, state_dir, extra_py_args, idx, count, env=None
+    *,
+    interpreter,
+    arch,
+    py_ver,
+    project,
+    state_dir,
+    extra_py_args,
+    idx,
+    count,
+    env=None,
 ):
     proj_dir = os.path.join(TOP_DIR, project)
 
@@ -416,7 +425,7 @@ def test_summary_html(fp_out, state_dir):
         for k in keys:
             if k not in results[proj]:
                 print(
-                    "      <td><span class=\"skip\"></span></td>",
+                    '      <td><span class="skip"></span></td>',
                     file=fp_out,
                 )
                 continue
@@ -542,7 +551,7 @@ def main():
 
     system_report(os.path.join(osx_dir, "build-info.txt"), options.python_versions)
 
-    build_order = ["pyobjc-core"] + sort_framework_wrappers()
+    build_order = ["pyobjc-core"] + sort_framework_wrappers()[:1]
 
     # Clear coverage directories to avoid using old coverage information
     for project in build_order:
@@ -651,7 +660,7 @@ def main():
                         extra_args = [[]]
 
                     if options.jit_enabled:
-                        extra_env = [{"PYTHON_JIT": v} for v in options.gil_enabled]
+                        extra_env = [{"PYTHON_JIT": v} for v in options.jit_enabled]
                     else:
                         extra_env = [None]
 
@@ -662,7 +671,14 @@ def main():
                                 state_dir = state_dir + "-" + "~".join(extra)
 
                             if env:
-                                state_dir = state_dir + "-" + "~".join(f"{k}={v}" for k, v in env.items())
+                                print(env)
+                                state_dir = (
+                                    state_dir
+                                    + "-"
+                                    + "~".join(f"{k}={v}" for k, v in env.items())
+                                )
+                                print(state_dir)
+
                             for idx, project in enumerate(build_order):
                                 run_tests(
                                     interpreter=interpreter,
@@ -673,7 +689,7 @@ def main():
                                     extra_py_args=extra,
                                     idx=idx + 1,
                                     count=len(build_order) + 1,
-                                    env=extra_env,
+                                    env=env,
                                 )
 
     print(f"{BOLD}done{RESET}")
