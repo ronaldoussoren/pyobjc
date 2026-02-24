@@ -551,7 +551,7 @@ def main():
 
     system_report(os.path.join(osx_dir, "build-info.txt"), options.python_versions)
 
-    build_order = ["pyobjc-core"] + sort_framework_wrappers()[:1]
+    build_order = ["pyobjc-core"] + sort_framework_wrappers()
 
     # Clear coverage directories to avoid using old coverage information
     for project in build_order:
@@ -671,13 +671,11 @@ def main():
                                 state_dir = state_dir + "-" + "~".join(extra)
 
                             if env:
-                                print(env)
                                 state_dir = (
                                     state_dir
                                     + "-"
                                     + "~".join(f"{k}={v}" for k, v in env.items())
                                 )
-                                print(state_dir)
 
                             for idx, project in enumerate(build_order):
                                 run_tests(
