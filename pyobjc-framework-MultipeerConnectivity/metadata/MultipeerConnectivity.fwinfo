@@ -9,13 +9,21 @@
       "args": {
        "1": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
       },
       "class_method": false,
@@ -25,12 +33,18 @@
       "args": {
        "3": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
       },
       "class_method": false,
@@ -38,14 +52,20 @@
      },
      {
       "args": {
-       "3": { "type_modifier": "o" }
+       "3": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
       },
       "class_method": false,
       "selector": "sendData:toPeers:withMode:error:"
      },
      {
       "args": {
-       "2": { "type_modifier": "o" }
+       "2": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
       },
       "class_method": false,
       "selector": "startStreamWithName:toPeer:error:"
@@ -57,14 +77,20 @@
      {
       "args": {
        "3": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
       },
       "class_method": false,
@@ -73,15 +99,23 @@
      {
       "args": {
        "3": {
-        "type_override": "@?",
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Z" },
-	  "2": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "Z"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
       },
       "class_method": false,
@@ -89,7 +123,9 @@
      },
      {
       "args": {
-       "2": { "type_override": "Q" }
+       "2": {
+        "type_override": "Q"
+       }
       },
       "class_method": false,
       "selector": "session:peer:didChangeState:"

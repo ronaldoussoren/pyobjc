@@ -1,432 +1,133 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
-  "externs": {
-   "kUTTypeUniversalSceneDescriptionMobile": { "typestr": "@" },
-   "MDLVertexAttributeAnisotropy": { "typestr": "@" },
-   "MDLVertexAttributeBinormal": { "typestr": "@" },
-   "MDLVertexAttributeBitangent": { "typestr": "@" },
-   "MDLVertexAttributeColor": { "typestr": "@" },
-   "MDLVertexAttributeEdgeCrease": { "typestr": "@" },
-   "MDLVertexAttributeJointIndices": { "typestr": "@" },
-   "MDLVertexAttributeJointWeights": { "typestr": "@" },
-   "MDLVertexAttributeNormal": { "typestr": "@" },
-   "MDLVertexAttributeOcclusionValue": { "typestr": "@" },
-   "MDLVertexAttributePosition": { "typestr": "@" },
-   "MDLVertexAttributeShadingBasisU": { "typestr": "@" },
-   "MDLVertexAttributeShadingBasisV": { "typestr": "@" },
-   "MDLVertexAttributeSubdivisionStencil": { "typestr": "@" },
-   "MDLVertexAttributeTangent": { "typestr": "@" },
-   "MDLVertexAttributeTextureCoordinate": { "typestr": "@" },
-   "kUTTypeAlembic": { "typestr": "@" },
-   "kUTType3dObject": { "typestr": "@" },
-   "kUTTypePolygon": { "typestr": "@" },
-   "kUTTypeStereolithography": { "typestr": "@" },
-   "kUTTypeUniversalSceneDescription": { "typestr": "@" }
-  },
-  "enum": {
-   "MDLMeshBufferTypeCustom": { "value": 3 },
-   "MDLMaterialPropertyTypeBuffer": { "value": 10 },
-   "MDLTransformOpRotationOrderXYZ": { "value": 1 },
-   "MDLTransformOpRotationOrderXZY": { "value": 2 },
-   "MDLTransformOpRotationOrderYXZ": { "value": 3 },
-   "MDLTransformOpRotationOrderYZX": { "value": 4 },
-   "MDLTransformOpRotationOrderZXY": { "value": 5 },
-   "MDLTransformOpRotationOrderZYX": { "value": 6 },
-   "MDLPrimitiveTypeCube": { "value": 0 },
-   "MDLPrimitiveTypeSphere": { "value": 1 },
-   "MDLPrimitiveTypeCone": { "value": 2 },
-   "MDLPrimitiveTypeCapsule": { "value": 3 },
-   "MDLPrimitiveTypeCylinder": { "value": 4 },
-   "MDLPrimitiveTypeNone": { "value": 5 },
-   "MDLAnimatedValueInterpolationConstant": { "value": 0 },
-   "MDLAnimatedValueInterpolationLinear": { "value": 1 },
-   "MDLDataPrecisionUndefined": { "value": 0 },
-   "MDLDataPrecisionFloat": { "value": 1 },
-   "MDLDataPrecisionDouble": { "value": 2 },
-   "MDLVertexFormatChar": { "value": 131073 },
-   "MDLVertexFormatChar2": { "value": 131074 },
-   "MDLVertexFormatChar2Normalized": { "value": 262146 },
-   "MDLVertexFormatChar3": { "value": 131075 },
-   "MDLVertexFormatChar3Normalized": { "value": 262147 },
-   "MDLVertexFormatChar4": { "value": 131076 },
-   "MDLVertexFormatChar4Normalized": { "value": 262148 },
-   "MDLVertexFormatCharBits": { "value": 131072 },
-   "MDLVertexFormatCharNormalized": { "value": 262145 },
-   "MDLVertexFormatCharNormalizedBits": { "value": 262144 },
-   "MDLVertexFormatFloat": { "value": 786433 },
-   "MDLVertexFormatFloat2": { "value": 786434 },
-   "MDLVertexFormatFloat3": { "value": 786435 },
-   "MDLVertexFormatFloat4": { "value": 786436 },
-   "MDLVertexFormatFloatBits": { "value": 786432 },
-   "MDLVertexFormatHalf": { "value": 720897 },
-   "MDLVertexFormatHalf2": { "value": 720898 },
-   "MDLVertexFormatHalf3": { "value": 720899 },
-   "MDLVertexFormatHalf4": { "value": 720900 },
-   "MDLVertexFormatHalfBits": { "value": 720896 },
-   "MDLVertexFormatInt": { "value": 655361 },
-   "MDLVertexFormatInt1010102Normalized": { "value": 659460 },
-   "MDLVertexFormatInt2": { "value": 655362 },
-   "MDLVertexFormatInt3": { "value": 655363 },
-   "MDLVertexFormatInt4": { "value": 655364 },
-   "MDLVertexFormatIntBits": { "value": 655360 },
-   "MDLVertexFormatInvalid": { "value": 0 },
-   "MDLVertexFormatPackedBit": { "value": 4096 },
-   "MDLVertexFormatShort": { "value": 393217 },
-   "MDLVertexFormatShort2": { "value": 393218 },
-   "MDLVertexFormatShort2Normalized": { "value": 524290 },
-   "MDLVertexFormatShort3": { "value": 393219 },
-   "MDLVertexFormatShort3Normalized": { "value": 524291 },
-   "MDLVertexFormatShort4": { "value": 393220 },
-   "MDLVertexFormatShort4Normalized": { "value": 524292 },
-   "MDLVertexFormatShortBits": { "value": 393216 },
-   "MDLVertexFormatShortNormalized": { "value": 524289 },
-   "MDLVertexFormatShortNormalizedBits": { "value": 524288 },
-   "MDLVertexFormatUChar": { "value": 65537 },
-   "MDLVertexFormatUChar2": { "value": 65538 },
-   "MDLVertexFormatUChar2Normalized": { "value": 196610 },
-   "MDLVertexFormatUChar3": { "value": 65539 },
-   "MDLVertexFormatUChar3Normalized": { "value": 196611 },
-   "MDLVertexFormatUChar4": { "value": 65540 },
-   "MDLVertexFormatUChar4Normalized": { "value": 196612 },
-   "MDLVertexFormatUCharBits": { "value": 65536 },
-   "MDLVertexFormatUCharNormalized": { "value": 196609 },
-   "MDLVertexFormatUCharNormalizedBits": { "value": 196608 },
-   "MDLVertexFormatUInt": { "value": 589825 },
-   "MDLVertexFormatUInt1010102Normalized": { "value": 593924 },
-   "MDLVertexFormatUInt2": { "value": 589826 },
-   "MDLVertexFormatUInt3": { "value": 589827 },
-   "MDLVertexFormatUInt4": { "value": 589828 },
-   "MDLVertexFormatUIntBits": { "value": 589824 },
-   "MDLVertexFormatUShort": { "value": 327681 },
-   "MDLVertexFormatUShort2": { "value": 327682 },
-   "MDLVertexFormatUShort2Normalized": { "value": 458754 },
-   "MDLVertexFormatUShort3": { "value": 327683 },
-   "MDLVertexFormatUShort3Normalized": { "value": 458755 },
-   "MDLVertexFormatUShort4": { "value": 327684 },
-   "MDLVertexFormatUShort4Normalized": { "value": 458756 },
-   "MDLVertexFormatUShortBits": { "value": 327680 },
-   "MDLVertexFormatUShortNormalized": { "value": 458753 },
-   "MDLVertexFormatUShortNormalizedBits": { "value": 458752 },
-   "MDLIndexBitDepthInvalid": { "value": 0 },
-   "MDLIndexBitDepthUInt8": { "value": 8 },
-   "MDLIndexBitDepthUint8": { "value": 8 },
-   "MDLIndexBitDepthUInt16": { "value": 16 },
-   "MDLIndexBitDepthUint16": { "value": 16 },
-   "MDLIndexBitDepthUInt32": { "value": 32 },
-   "MDLIndexBitDepthUint32": { "value": 32 },
-   "MDLGeometryTypePoints": { "value": 0 },
-   "MDLGeometryTypeLines": { "value": 1 },
-   "MDLGeometryTypeTriangles": { "value": 2 },
-   "MDLGeometryTypeTriangleStrips": { "value": 3 },
-   "MDLGeometryTypeQuads": { "value": 4 },
-   "MDLGeometryTypeVariableTopology": { "value": 5 },
-   "MDLProbePlacementUniformGrid": { "value": 0 },
-   "MDLProbePlacementIrradianceDistribution": { "value": 1 },
-   "MDLTextureChannelEncodingUInt8": { "value": 1 },
-   "MDLTextureChannelEncodingUint8": { "value": 1 },
-   "MDLTextureChannelEncodingUInt16": { "value": 2 },
-   "MDLTextureChannelEncodingUint16": { "value": 2 },
-   "MDLTextureChannelEncodingUInt24": { "value": 3 },
-   "MDLTextureChannelEncodingUint24": { "value": 3 },
-   "MDLTextureChannelEncodingUInt32": { "value": 4 },
-   "MDLTextureChannelEncodingUint32": { "value": 4 },
-   "MDLTextureChannelEncodingFloat16": { "value": 258 },
-   "MDLTextureChannelEncodingFloat16SR": { "value": 770 },
-   "MDLTextureChannelEncodingFloat32": { "value": 260 },
-   "MDLMeshBufferTypeVertex": { "value": 1 },
-   "MDLMeshBufferTypeIndex": { "value": 2 },
-   "MDLMaterialFaceFront": { "value": 0 },
-   "MDLMaterialFaceBack": { "value": 1 },
-   "MDLMaterialFaceDoubleSided": { "value": 2 },
-   "MDLMaterialTextureWrapModeClamp": { "value": 0 },
-   "MDLMaterialTextureWrapModeRepeat": { "value": 1 },
-   "MDLMaterialTextureWrapModeMirror": { "value": 2 },
-   "MDLMaterialTextureFilterModeNearest": { "value": 0 },
-   "MDLMaterialTextureFilterModeLinear": { "value": 1 },
-   "MDLMaterialMipMapFilterModeNearest": { "value": 0 },
-   "MDLMaterialMipMapFilterModeLinear": { "value": 1 },
-   "MDLMaterialPropertyTypeNone": { "value": 0 },
-   "MDLMaterialPropertyTypeString": { "value": 1 },
-   "MDLMaterialPropertyTypeURL": { "value": 2 },
-   "MDLMaterialPropertyTypeTexture": { "value": 3 },
-   "MDLMaterialPropertyTypeColor": { "value": 4 },
-   "MDLMaterialPropertyTypeFloat": { "value": 5 },
-   "MDLMaterialPropertyTypeFloat2": { "value": 6 },
-   "MDLMaterialPropertyTypeFloat3": { "value": 7 },
-   "MDLMaterialPropertyTypeFloat4": { "value": 8 },
-   "MDLMaterialPropertyTypeMatrix44": { "value": 9 },
-   "MDLMaterialSemanticBaseColor": { "value": 0 },
-   "MDLMaterialSemanticSubsurface": { "value": 1 },
-   "MDLMaterialSemanticMetallic": { "value": 2 },
-   "MDLMaterialSemanticSpecular": { "value": 3 },
-   "MDLMaterialSemanticSpecularExponent": { "value": 4 },
-   "MDLMaterialSemanticSpecularTint": { "value": 5 },
-   "MDLMaterialSemanticRoughness": { "value": 6 },
-   "MDLMaterialSemanticAnisotropic": { "value": 7 },
-   "MDLMaterialSemanticAnisotropicRotation": { "value": 8 },
-   "MDLMaterialSemanticSheen": { "value": 9 },
-   "MDLMaterialSemanticSheenTint": { "value": 10 },
-   "MDLMaterialSemanticClearcoat": { "value": 11 },
-   "MDLMaterialSemanticClearcoatGloss": { "value": 12 },
-   "MDLMaterialSemanticEmission": { "value": 13 },
-   "MDLMaterialSemanticBump": { "value": 14 },
-   "MDLMaterialSemanticOpacity": { "value": 15 },
-   "MDLMaterialSemanticInterfaceIndexOfRefraction": { "value": 16 },
-   "MDLMaterialSemanticMaterialIndexOfRefraction": { "value": 17 },
-   "MDLMaterialSemanticObjectSpaceNormal": { "value": 18 },
-   "MDLMaterialSemanticTangentSpaceNormal": { "value": 19 },
-   "MDLMaterialSemanticDisplacement": { "value": 20 },
-   "MDLMaterialSemanticDisplacementScale": { "value": 21 },
-   "MDLMaterialSemanticAmbientOcclusion": { "value": 22 },
-   "MDLMaterialSemanticAmbientOcclusionScale": { "value": 23 },
-   "MDLMaterialSemanticNone": { "value": 32768 },
-   "MDLMaterialSemanticUserDefined": { "value": 32769 },
-   "MDLLightTypeUnknown": { "value": 0 },
-   "MDLLightTypeAmbient": { "value": 1 },
-   "MDLLightTypeDirectional": { "value": 2 },
-   "MDLLightTypeSpot": { "value": 3 },
-   "MDLLightTypePoint": { "value": 4 },
-   "MDLLightTypeLinear": { "value": 5 },
-   "MDLLightTypeDiscArea": { "value": 6 },
-   "MDLLightTypeRectangularArea": { "value": 7 },
-   "MDLLightTypeSuperElliptical": { "value": 8 },
-   "MDLLightTypePhotometric": { "value": 9 },
-   "MDLLightTypeProbe": { "value": 10 },
-   "MDLLightTypeEnvironment": { "value": 11 },
-   "MDLCameraProjectionPerspective": { "value": 0 },
-   "MDLCameraProjectionOrthographic": { "value": 1 }
-  },
   "classes": {
-   "MDLAnimatedScalarArray": {
+   "MDLAnimatedMatrix4x4": {
     "methods": [
      {
-      "selector": "resetWithFloatArray:count:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
-      }
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const matrix_float4x4 *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloat4x4Array:atTimes:count:"
      },
      {
-      "selector": "resetWithDoubleArray:count:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
-      }
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const matrix_double4x4 *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDouble4x4Array:atTimes:count:"
      },
      {
-      "selector": "resetWithFloatArray:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyFloat4x4ArrayInto:maxCount:"
      },
      {
-      "selector": "resetWithDoubleArray:count:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3  }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyDouble4x4ArrayInto:maxCount:"
      },
      {
-      "selector": "setFloatArray:count:atTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "matrix_float4x4 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloat4x4Array:maxCount:"
      },
      {
-      "selector": "setDoubleArray:count:atTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-      }
-     },
-     {
-      "selector": "resetWithFloatArray:atTimes:count:",
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "matrix_double4x4 *"
+       }
+      },
       "class_method": false,
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
-     },
-     {
-      "selector": "resetWithDoubleArray:count:atTimes:count:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
-     },
-     {
-      "selector": "copyFloatArrayInto:maxCount:atTime:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "copyDoubleArrayInto:maxCount:atTime:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "getFloatArray:maxCount:atTime:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "getDoubleArray:maxCount:atTime:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "getFloatArray:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "getDoubleArray:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "copyFloatArrayInto:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "copyDoubleArrayInto:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+      "selector": "getDouble4x4Array:maxCount:"
      }
     ]
    },
-   "MDLAnimatedScalar": {
+   "MDLAnimatedQuaternion": {
     "methods": [
      {
-      "selector": "resetWithFloatArray:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+       "0": {
+        "type_name": "const simd_quatf *"
+       },
+       "1": {
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloatQuaternionArray:atTimes:count:"
      },
      {
-      "selector": "resetWithDoubleArray:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+       "0": {
+        "type_name": "const simd_quatd *"
+       },
+       "1": {
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDoubleQuaternionArray:atTimes:count:"
      },
      {
-      "selector": "copyFloatArrayInto:maxCount:atTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "type_name": "simd_quatf *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloatQuaternionArray:maxCount:"
      },
      {
-      "selector": "copyDoubleArrayInto:maxCount:atTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "getFloatArray:maxCount:",
+       "0": {
+        "type_name": "simd_quatd *"
+       }
+      },
       "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "getDoubleArray:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     }
-    ]
-   },
-   "MDLAnimatedVector3Array": {
-    "comment": "SIMD types",
-    "methods": [
-     {
-      "selector": "setFloat3Array:count:atTime:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-      }
-     },
-     {
-      "selector": "setDouble3Array:count:atTime:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-      }
-     },
-     {
-      "selector": "getFloat3Array:maxCount:atTime:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "getDouble3Array:maxCount:atTime:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "resetWithFloat3Array:count:atTimes:count:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
-      }
-     },
-     {
-      "selector": "resetWithDouble3Array:count:atTimes:count:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
-      }
-     },
-     {
-      "selector": "getFloat3Array:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "getDouble3Array:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+      "selector": "getDoubleQuaternionArray:maxCount:"
      }
     ]
    },
@@ -434,972 +135,2552 @@
     "comment": "SIMD types",
     "methods": [
      {
-      "selector": "setFloatQuaternionArray:count:atTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const simd_quatf *"
+       }
+      },
+      "class_method": false,
+      "selector": "setFloatQuaternionArray:count:atTime:"
      },
      {
-      "selector": "setDoubleQuaternionArray:count:atTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const simd_quatd *"
+       }
+      },
+      "class_method": false,
+      "selector": "setDoubleQuaternionArray:count:atTime:"
      },
      {
-      "selector": "getFloatQuaternionArray:maxCount:atTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "simd_quatf *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloatQuaternionArray:maxCount:atTime:"
      },
      {
-      "selector": "getDoubleQuaternionArray:maxCount:atTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "simd_quatd *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDoubleQuaternionArray:maxCount:atTime:"
      },
      {
-      "selector": "resetWithFloatQuaternionArray:count:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const simd_quatf *"
+       },
+       "2": {
+        "c_array_length_in_arg": 3,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloatQuaternionArray:count:atTimes:count:"
      },
      {
-      "selector": "resetWithDoubleQuaternionArray:count:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const simd_quatd *"
+       },
+       "2": {
+        "c_array_length_in_arg": 3,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDoubleQuaternionArray:count:atTimes:count:"
      },
      {
-      "selector": "getFloatQuaternionArray:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "simd_quatf *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloatQuaternionArray:maxCount:"
      },
      {
-      "selector": "getDoubleQuaternionArray:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "simd_quatd *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDoubleQuaternionArray:maxCount:"
      }
     ]
    },
-   "MDLAnimatedVector2": {
+   "MDLAnimatedScalar": {
     "methods": [
      {
-      "selector": "resetWithFloat2Array:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const float *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloatArray:atTimes:count:"
      },
      {
-      "selector": "resetWithDouble2Array:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const double *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDoubleArray:atTimes:count:"
      },
      {
-      "selector": "copyFloat2ArrayInto:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyFloatArrayInto:maxCount:atTime:"
      },
      {
-      "selector": "copyDouble2ArrayInto:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyDoubleArrayInto:maxCount:atTime:"
      },
      {
-      "selector": "getFloat2Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "float *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloatArray:maxCount:"
      },
      {
-      "selector": "getDouble2Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "double *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDoubleArray:maxCount:"
      }
     ]
    },
-   "MDLAnimatedVector3": {
+   "MDLAnimatedScalarArray": {
     "methods": [
      {
-      "selector": "resetWithFloat3Array:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const float *"
+       },
+       "2": {
+        "c_array_length_in_arg": 3,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloatArray:count:atTimes:count:"
      },
      {
-      "selector": "resetWithDouble3Array:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const double *"
+       },
+       "2": {
+        "c_array_length_in_arg": 3,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDoubleArray:count:atTimes:count:"
      },
      {
-      "selector": "copyFloat3ArrayInto:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n"
+       },
+       "2": {
+        "c_array_length_in_arg": 3,
+        "type_modifier": "n"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloatArray:atTimes:count:"
      },
      {
-      "selector": "copyDouble3ArrayInto:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n"
+       },
+       "2": {
+        "c_array_length_in_arg": 3,
+        "type_modifier": "n"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDoubleArray:count:atTimes:count:"
      },
      {
-      "selector": "getFloat3Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const float *"
+       }
+      },
+      "class_method": false,
+      "selector": "setFloatArray:count:atTime:"
      },
      {
-      "selector": "getDouble3Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     }
-    ]
-   },
-   "MDLAnimatedVector4": {
-    "methods": [
-     {
-      "selector": "resetWithFloat4Array:atTimes:count:",
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const double *"
+       }
+      },
       "class_method": false,
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+      "selector": "setDoubleArray:count:atTime:"
      },
      {
-      "selector": "resetWithDouble4Array:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloatArray:atTimes:count:"
      },
      {
-      "selector": "copyFloat4ArrayInto:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDoubleArray:count:atTimes:count:"
      },
      {
-      "selector": "copyDouble4ArrayInto:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyFloatArrayInto:maxCount:atTime:"
      },
      {
-      "selector": "getFloat4Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyDoubleArrayInto:maxCount:atTime:"
      },
      {
-      "selector": "getDouble4Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     }
-    ]
-   },
-   "MDLAnimatedMatrix4x4": {
-    "methods": [
-     {
-      "selector": "resetWithFloat4x4Array:atTimes:count:",
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "float *"
+       }
+      },
       "class_method": false,
-      "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+      "selector": "getFloatArray:maxCount:atTime:"
      },
      {
-      "selector": "resetWithDouble4x4Array:atTimes:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "double *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDoubleArray:maxCount:atTime:"
      },
      {
-      "selector": "copyFloat4x4ArrayInto:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "float *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloatArray:maxCount:"
      },
      {
-      "selector": "copyDouble4x4ArrayInto:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "double *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDoubleArray:maxCount:"
      },
      {
-      "selector": "getFloat4x4Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyFloatArrayInto:maxCount:"
      },
      {
-      "selector": "getDouble4x4Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyDoubleArrayInto:maxCount:"
      }
     ]
    },
    "MDLAnimatedValue": {
     "methods": [
      {
-      "selector": "isAnimated",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isAnimated"
      },
      {
-      "selector": "copyTimesInto:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "getTimes:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     }
-    ]
-   },
-   "MDLVoxelArray": {
-    "methods": [
-     {
-      "selector": "voxelExistsAtIndex:allowAnyX:allowAnyY:allowAnyZ:allowAnyShell:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "1": { "type_override": "Z" },
-       "2": { "type_override": "Z" },
-       "3": { "type_override": "Z" },
-       "4": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "isValidSignedShellField",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setIsValidSignedShellField:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "MDLTransform": {
-    "methods": [
-     {
-      "selector": "initWithTransformComponent:resetsTransform:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "initWithMatrix:resetsTransform:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "MDLNoiseTexture": {
-    "methods": [
-     {
-      "selector": "initScalarNoiseWithSmoothness:name:textureDimensions:channelCount:channelEncoding:grayScale:",
-      "class_method": false,
-      "args": {
-       "5": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "MDLTexture": {
-    "methods": [
-     {
-      "selector": "initWithData:topLeftOrigin:name:dimensions:rowStride:channelCount:channelEncoding:isCube:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" },
-       "7": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "writeToURL:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "writeToURL:level:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "writeToURL:type:level:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "writeToURL:type:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "texelDataWithTopLeftOriginAtMipLevel:create:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "texelDataWithBottomLeftOriginAtMipLevel:create:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "isCube",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setIsCube:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "hasAlphaValues",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setHasAlphaValues:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "MDLObject": {
-    "methods": [
-     {
-      "selector": "enumerateChildObjectsOfClass:root:usingBlock:stopPointer:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       },
-       "3": { "type_override": "N^Z" }
-      }
-     },
-     {
-      "selector": "resetsTransform",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setResetsTransform:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "hidden",
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "class_method": false,
-      "selector": "setHidden:",
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "MDLMeshBufferMap": {
-    "methods": [
-     {
-      "selector": "initWithBytes:deallocator:",
-      "class_method": false,
-      "args": {
-       "0": { "c_array_of_variable_length": true, "type_modifier": "n" },
-       "1": {
-        "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "selector": "bytes",
-      "class_method": false,
-      "retval": { "c_array_of_variable_length": true }
-     }
-    ]
-   },
-   "MDLMorphDeformer": {
-    "methods": [
-     {
-      "selector": "initWithTargetShapes:shapeSetTargetWeights:count:shapeSetTargetCounts:count:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "3": { "type_modifier": "n", "c_array_length_in_arg": 4 }
-      }
-     },
-     {
-      "selector": "copyShapeSetTargetWeightsInto:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     },
-     {
-      "selector": "copyShapeSetTargetCountsInto:maxCount:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
-     }
-    ]
-   },
-   "MDLMesh": {
-    "methods": [
-     {
-      "selector": "makeVerticesUniqueAndReturnError:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "0": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "initMeshWithPrimitive:segments:inwardNormals:geometryType:allocator:",
-      "class_method": false,
-      "args": {
-       "2": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "newMeshWithPrimitive:segments:inwardNormals:geometryType:allocator:",
-      "class_method": true,
-      "args": {
-       "2": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "initBoxWithExtent:segments:inwardNormals:geometryType:allocator:",
-      "class_method": false,
-      "args": {
-       "2": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "initSphereWithExtent:segments:inwardNormals:geometryType:allocator:",
-      "class_method": false,
-      "args": {
-       "2": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "initHemisphereWithExtent:segments:inwardNormals:cap:geometryType:allocator:",
-      "class_method": false,
-      "args": {
-       "2": { "type_override": "Z" },
-       "3": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "initCylinderWithExtent:segments:inwardNormals:topCap:bottomCap:cap:geometryType:allocator:",
-      "class_method": false,
-      "args": {
-       "2": { "type_override": "Z" },
-       "3": { "type_override": "Z" },
-       "4": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "initCapsuleWithExtent:cylinderSegments:hemisphereSegments:inwardNormals:geometryType:allocator:",
-      "class_method": false,
-      "args": {
-       "3": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "initConeWithExtent:segments:inwardNormals:cap:geometryType:allocator:",
-      "class_method": false,
-      "args": {
-       "2": { "type_override": "Z" },
-       "3": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "initIcosahedronWithExtent:inwardNormals:segments:geometryType:allocator:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "newBoxWithDimensions:segments:geometryType:inwardNormals:allocator:",
-      "class_method": true,
-      "args": {
-       "3": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "newEllipsoidWithRadii:radialSegments:verticalSegments:geometryType:inwardNormals:hemisphere:allocator:",
-      "class_method": true,
-      "args": {
-       "4": { "type_override": "Z" },
-       "5": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "newCapsuleWithHeight:radii:radialSegments:verticalSegments:hemisphereSegments:geometryType:inwardNormals:allocator:",
-      "class_method": true,
-      "args": {
-       "6": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "newCylinderWithHeight:radii:radialSegments:verticalSegments:geometryType:inwardNormals:allocator:",
-      "class_method": true,
-      "args": {
-       "5": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "newEllipticalConeWithHeight:radii:radialSegments:verticalSegments:geometryType:inwardNormals:allocator:",
-      "class_method": true,
-      "args": {
-       "5": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "newIcosahedronWithRadius:inwardNormals:allocator:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "generateAmbientOcclusionTextureWithSize:raysPerSample:attenuationFactor:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "generateAmbientOcclusionTextureWithQuality:attenuationFactor:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "generateAmbientOcclusionVertexColorsWithRaysPerSample:attenuationFactor:objectsToConsider:vertexAttributeNamed:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "generateAmbientOcclusionVertexColorsWithQuality:attenuationFactor:objectsToConsider:vertexAttributeNamed:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "generateLightMapTextureWithTextureSize:lightsToCondider:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "generateLightMapTextureWithQuality:lightsToCondider:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "generateLightMapVertexColorsWithLightsToConsider:objectsToConsider:vertexAttributeNamed:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     }
-    ]
-   },
-   "MDLVertexAttributeData": {
-    "methods": [
-     {
-      "selector": "dataStart",
-      "class_method": false,
-      "retval": { "c_array_of_variable_length": true }
-     },
-     {
-      "selector": "setDataStart:",
-      "class_method": false,
-      "args": {
-       "0": { "c_array_of_variable_length": true }
-      }
-     }
-    ]
-   },
-   "MDLMaterialPropertyNode": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "initWithInputs:outputs:evaluationFunction:",
-      "args": {
-       "2": {
-        "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "setEvaluationFunction:",
       "args": {
        "0": {
-        "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "copyTimesInto:maxCount:"
      },
      {
-      "class_method": false,
-      "selector": "evaluationFunction",
-      "retval": {
-       "callable": {
-	"arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" }
-	},
-	"retval": { "typestr": "v" }
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "NSTimeInterval *"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "getTimes:maxCount:"
      }
     ]
    },
-   "MDLCamera": {
+   "MDLAnimatedVector2": {
     "methods": [
      {
-      "selector": "frameBoundingBox:setNearAndFar:",
-      "class_method": false,
       "args": {
-       "1": { "type_override": "Z" }
-      }
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const vector_float2 *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloat2Array:atTimes:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const vector_double2 *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDouble2Array:atTimes:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyFloat2ArrayInto:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyDouble2ArrayInto:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_float2 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloat2Array:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_double2 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDouble2Array:maxCount:"
+     }
+    ]
+   },
+   "MDLAnimatedVector3": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const vector_float3 *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloat3Array:atTimes:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const vector_double3 *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDouble3Array:atTimes:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyFloat3ArrayInto:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyDouble3ArrayInto:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_float3 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloat3Array:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_double3 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDouble3Array:maxCount:"
+     }
+    ]
+   },
+   "MDLAnimatedVector3Array": {
+    "comment": "SIMD types",
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const vector_float3 *"
+       }
+      },
+      "class_method": false,
+      "selector": "setFloat3Array:count:atTime:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const vector_double3 *"
+       }
+      },
+      "class_method": false,
+      "selector": "setDouble3Array:count:atTime:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_float3 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloat3Array:maxCount:atTime:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_double3 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDouble3Array:maxCount:atTime:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const vector_float3 *"
+       },
+       "2": {
+        "c_array_length_in_arg": 3,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloat3Array:count:atTimes:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const vector_double3 *"
+       },
+       "2": {
+        "c_array_length_in_arg": 3,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDouble3Array:count:atTimes:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_float3 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloat3Array:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_double3 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDouble3Array:maxCount:"
+     }
+    ]
+   },
+   "MDLAnimatedVector4": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const vector_float4 *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithFloat4Array:atTimes:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const vector_double4 *"
+       },
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n",
+        "type_name": "const NSTimeInterval *"
+       }
+      },
+      "class_method": false,
+      "selector": "resetWithDouble4Array:atTimes:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyFloat4ArrayInto:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyDouble4ArrayInto:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_float4 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloat4Array:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "vector_double4 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDouble4Array:maxCount:"
      }
     ]
    },
    "MDLAsset": {
     "methods": [
      {
-      "selector": "initWithURL:bufferAllocator:preserveIndexing:error:",
-      "class_method": false,
       "args": {
-       "2": { "type_override": "Z" },
-       "3": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "initWithURL:vertexDescriptor:bufferAllocator:preserveTopology:error:",
-      "class_method": false,
-      "args": {
-       "3": { "type_override": "Z" },
-       "4": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "canExportFileExtension:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "canImportFileExtension:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "exportAssetToURL:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "exportAssetToURL:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
+       "2": {
+        "type_override": "Z"
+       },
+       "3": {
+        "type_modifier": "o"
+       }
       },
-      "retval": { "type_override": "Z" }
+      "class_method": false,
+      "selector": "initWithURL:bufferAllocator:preserveIndexing:error:"
+     },
+     {
+      "args": {
+       "3": {
+        "type_override": "Z"
+       },
+       "4": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithURL:vertexDescriptor:bufferAllocator:preserveTopology:error:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "canExportFileExtension:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "canImportFileExtension:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "exportAssetToURL:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "exportAssetToURL:error:"
      }
     ]
    },
-   "MDLSkinDeformer": {
+   "MDLCamera": {
     "methods": [
      {
-      "selector": "copyJointBindTransformsInto:maxCount:",
-      "class_method": false,
-      "retval": { "type_override": "Q" },
       "args": {
-       "0": { "type_override": "?", "comment": "matrix_float4x4" },
-       "1": { "type_override": "Q" }
-      }
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "frameBoundingBox:setNearAndFar:"
+     }
+    ]
+   },
+   "MDLCheckerboardTexture": {
+    "methods": [
+     {
+      "args": {
+       "5": {
+        "type_name": "CGColorRef"
+       },
+       "6": {
+        "type_name": "CGColorRef"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithDivisions:name:dimensions:channelCount:channelEncoding:color1:color2:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_name": "CGColorRef"
+      },
+      "selector": "color1"
+     },
+     {
+      "args": {
+       "0": {
+        "type_name": "CGColorRef"
+       }
+      },
+      "class_method": false,
+      "selector": "setColor1:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_name": "CGColorRef"
+      },
+      "selector": "color2"
+     },
+     {
+      "args": {
+       "0": {
+        "type_name": "CGColorRef"
+       }
+      },
+      "class_method": false,
+      "selector": "setColor2:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "color1",
+      "type_name": "CGColorRef"
+     },
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "color2",
+      "type_name": "CGColorRef"
+     }
+    ]
+   },
+   "MDLColorSwatchTexture": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_name": "CGColorRef"
+       },
+       "1": {
+        "type_name": "CGColorRef"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithColorGradientFrom:toColor:name:textureDimensions:"
+     }
+    ]
+   },
+   "MDLLight": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_name": "CGColorRef"
+      },
+      "selector": "irradianceAtPoint:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_name": "CGColorSpaceRef"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_name": "CGColorRef"
+      },
+      "selector": "irradianceAtPoint:colorSpace:"
+     }
+    ]
+   },
+   "MDLMaterialProperty": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_name": "CGColorRef"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithName:semantic:color:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_name": "CGColorRef"
+      },
+      "selector": "color"
+     },
+     {
+      "args": {
+       "0": {
+        "type_name": "CGColorRef"
+       }
+      },
+      "class_method": false,
+      "selector": "setColor:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "color",
+      "type_name": "CGColorRef"
+     }
+    ]
+   },
+   "MDLMaterialPropertyNode": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "initWithInputs:outputs:evaluationFunction:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setEvaluationFunction:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "evaluationFunction"
      }
     ]
    },
    "MDLMatrix4x4Array": {
     "methods": [
      {
-      "selector": "setFloat4x4Array:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const matrix_float4x4 *"
+       }
+      },
+      "class_method": false,
+      "selector": "setFloat4x4Array:count:"
      },
      {
-      "selector": "setDouble4x4Array:count:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_name": "const matrix_double4x4 *"
+       }
+      },
+      "class_method": false,
+      "selector": "setDouble4x4Array:count:"
      },
      {
-      "selector": "getFloat4x4Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "matrix_float4x4 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getFloat4x4Array:maxCount:"
      },
      {
-      "selector": "getDouble4x4Array:maxCount:",
-      "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o",
+        "type_name": "matrix_double4x4 *"
+       }
+      },
+      "class_method": false,
+      "selector": "getDouble4x4Array:maxCount:"
+     }
+    ]
+   },
+   "MDLMesh": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "makeVerticesUniqueAndReturnError:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initMeshWithPrimitive:segments:inwardNormals:geometryType:allocator:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": true,
+      "selector": "newMeshWithPrimitive:segments:inwardNormals:geometryType:allocator:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initBoxWithExtent:segments:inwardNormals:geometryType:allocator:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initSphereWithExtent:segments:inwardNormals:geometryType:allocator:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       },
+       "3": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initHemisphereWithExtent:segments:inwardNormals:cap:geometryType:allocator:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       },
+       "3": {
+        "type_override": "Z"
+       },
+       "4": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initCylinderWithExtent:segments:inwardNormals:topCap:bottomCap:cap:geometryType:allocator:"
+     },
+     {
+      "args": {
+       "3": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initCapsuleWithExtent:cylinderSegments:hemisphereSegments:inwardNormals:geometryType:allocator:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       },
+       "3": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initConeWithExtent:segments:inwardNormals:cap:geometryType:allocator:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initIcosahedronWithExtent:inwardNormals:segments:geometryType:allocator:"
+     },
+     {
+      "args": {
+       "3": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": true,
+      "selector": "newBoxWithDimensions:segments:geometryType:inwardNormals:allocator:"
+     },
+     {
+      "args": {
+       "4": {
+        "type_override": "Z"
+       },
+       "5": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": true,
+      "selector": "newEllipsoidWithRadii:radialSegments:verticalSegments:geometryType:inwardNormals:hemisphere:allocator:"
+     },
+     {
+      "args": {
+       "6": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": true,
+      "selector": "newCapsuleWithHeight:radii:radialSegments:verticalSegments:hemisphereSegments:geometryType:inwardNormals:allocator:"
+     },
+     {
+      "args": {
+       "5": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": true,
+      "selector": "newCylinderWithHeight:radii:radialSegments:verticalSegments:geometryType:inwardNormals:allocator:"
+     },
+     {
+      "args": {
+       "5": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": true,
+      "selector": "newEllipticalConeWithHeight:radii:radialSegments:verticalSegments:geometryType:inwardNormals:allocator:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "newIcosahedronWithRadius:inwardNormals:allocator:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "generateAmbientOcclusionTextureWithSize:raysPerSample:attenuationFactor:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "generateAmbientOcclusionTextureWithQuality:attenuationFactor:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "generateAmbientOcclusionVertexColorsWithRaysPerSample:attenuationFactor:objectsToConsider:vertexAttributeNamed:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "generateAmbientOcclusionVertexColorsWithQuality:attenuationFactor:objectsToConsider:vertexAttributeNamed:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "generateLightMapTextureWithTextureSize:lightsToCondider:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "generateLightMapTextureWithQuality:lightsToCondider:objectsToConsider:vertexAttributeNamed:materialPropertyNamed:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "generateLightMapVertexColorsWithLightsToConsider:objectsToConsider:vertexAttributeNamed:"
+     }
+    ]
+   },
+   "MDLMeshBufferMap": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "c_array_of_variable_length": true,
+        "type_modifier": "n",
+        "type_name": "void *"
+       },
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "initWithBytes:deallocator:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "c_array_of_variable_length": true,
+       "type_name": "void *"
+      },
+      "selector": "bytes"
+     }
+    ]
+   },
+   "MDLMorphDeformer": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "c_array_length_in_arg": 2,
+        "type_modifier": "n"
+       },
+       "3": {
+        "c_array_length_in_arg": 4,
+        "type_modifier": "n"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithTargetShapes:shapeSetTargetWeights:count:shapeSetTargetCounts:count:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyShapeSetTargetWeightsInto:maxCount:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "c_array_length_in_result": true,
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "copyShapeSetTargetCountsInto:maxCount:"
+     }
+    ]
+   },
+   "MDLNoiseTexture": {
+    "methods": [
+     {
+      "args": {
+       "5": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initScalarNoiseWithSmoothness:name:textureDimensions:channelCount:channelEncoding:grayScale:"
+     }
+    ]
+   },
+   "MDLObject": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       },
+       "3": {
+        "type_name": "BOOL *",
+        "type_override": "N^Z"
+       }
+      },
+      "class_method": false,
+      "selector": "enumerateChildObjectsOfClass:root:usingBlock:stopPointer:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "resetsTransform"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setResetsTransform:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hidden"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setHidden:"
+     }
+    ]
+   },
+   "MDLPhysicallyPlausibleLight": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_name": "CGColorRef"
+      },
+      "selector": "color"
+     },
+     {
+      "args": {
+       "0": {
+        "type_name": "CGColorRef"
+       }
+      },
+      "class_method": false,
+      "selector": "setColor:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "color",
+      "type_name": "CGColorRef"
+     }
+    ]
+   },
+   "MDLSkinDeformer": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "comment": "matrix_float4x4",
+        "type_override": "?"
+       },
+       "1": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Q"
+      },
+      "selector": "copyJointBindTransformsInto:maxCount:"
+     }
+    ]
+   },
+   "MDLSkyCubeTexture": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_name": "CGColorRef"
+      },
+      "selector": "groundColor"
+     },
+     {
+      "args": {
+       "0": {
+        "type_name": "CGColorRef"
+       }
+      },
+      "class_method": false,
+      "selector": "setGroundColor:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "groundColor",
+      "type_name": "CGColorRef"
+     }
+    ]
+   },
+   "MDLTexture": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       },
+       "7": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithData:topLeftOrigin:name:dimensions:rowStride:channelCount:channelEncoding:isCube:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "writeToURL:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "writeToURL:level:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_name": "CFStringRef"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "writeToURL:type:level:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_name": "CFStringRef"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "writeToURL:type:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "texelDataWithTopLeftOriginAtMipLevel:create:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "texelDataWithBottomLeftOriginAtMipLevel:create:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isCube"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setIsCube:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hasAlphaValues"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setHasAlphaValues:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_name": "CGImageRef"
+      },
+      "selector": "imageFromTexture"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_name": "CGImageRef"
+      },
+      "selector": "imageFromTextureAtLevel:"
+     }
+    ]
+   },
+   "MDLTransform": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithTransformComponent:resetsTransform:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithMatrix:resetsTransform:"
+     }
+    ]
+   },
+   "MDLVertexAttributeData": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "c_array_of_variable_length": true,
+       "type_name": "void *"
+      },
+      "selector": "dataStart"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_of_variable_length": true,
+        "type_name": "void *"
+       }
+      },
+      "class_method": false,
+      "selector": "setDataStart:"
+     }
+    ]
+   },
+   "MDLVoxelArray": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       },
+       "2": {
+        "type_override": "Z"
+       },
+       "3": {
+        "type_override": "Z"
+       },
+       "4": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "voxelExistsAtIndex:allowAnyX:allowAnyY:allowAnyZ:allowAnyShell:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isValidSignedShellField"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setIsValidSignedShellField:"
      }
     ]
    },
    "NSObject": {
     "methods": [
      {
-      "selector": "objectAtIndexedSubscript:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Q" }
-      }
+       "0": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "selector": "objectAtIndexedSubscript:"
      },
      {
-      "selector": "copyJointBindTransformsInto:maxCount:",
-      "class_method": false,
-      "retval": { "type_override": "Q" },
       "args": {
-       "0": { "type_override": "?", "comment": "matrix_float4x4" },
-       "1": { "type_override": "Q" }
-      }
+       "0": {
+        "comment": "matrix_float4x4",
+        "type_override": "?"
+       },
+       "1": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Q"
+      },
+      "selector": "copyJointBindTransformsInto:maxCount:"
      },
      {
-      "selector": "canResolveAssetNamed:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "canResolveAssetNamed:"
      },
      {
-      "selector": "minimumTime",
       "class_method": false,
-      "retval": { "type_override": "d" }
+      "retval": {
+       "type_override": "d"
+      },
+      "selector": "minimumTime"
      },
      {
-      "selector": "maximumTime",
       "class_method": false,
-      "retval": { "type_override": "d" }
+      "retval": {
+       "type_override": "d"
+      },
+      "selector": "maximumTime"
      },
      {
-      "selector": "setMinimumTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "d" }
-      }
+       "0": {
+        "type_override": "d"
+       }
+      },
+      "class_method": false,
+      "selector": "setMinimumTime:"
      },
      {
-      "selector": "setMaximumTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "d" }
-      }
+       "0": {
+        "type_override": "d"
+       }
+      },
+      "class_method": false,
+      "selector": "setMaximumTime:"
      },
      {
-      "selector": "localTransformAtTime:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "d" }
-      }
+       "0": {
+        "type_override": "d"
+       }
+      },
+      "class_method": false,
+      "selector": "localTransformAtTime:"
      },
      {
-      "selector": "globalTransformWithObject:atTime",
-      "class_method": false,
       "args": {
-       "1": { "type_override": "d" }
-      }
+       "1": {
+        "type_override": "d"
+       }
+      },
+      "class_method": false,
+      "selector": "globalTransformWithObject:atTime"
      },
      {
-      "selector": "setLocalTransform:forTime:",
-      "class_method": false,
       "args": {
-       "1": { "type_override": "d" }
-      }
+       "1": {
+        "type_override": "d"
+       }
+      },
+      "class_method": false,
+      "selector": "setLocalTransform:forTime:"
      },
      {
-      "selector": "resetsTransform",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "resetsTransform"
      },
      {
-      "selector": "setResetsTransform:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setResetsTransform:"
      },
      {
-      "selector": "sphericalHarmonicsLevel",
       "class_method": false,
-      "retval": { "type_override": "Q" }
+      "retval": {
+       "type_override": "Q"
+      },
+      "selector": "sphericalHarmonicsLevel"
      },
      {
-      "selector": "setSphericalHarmonicsLevel:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Q" }
-      }
+       "0": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "selector": "setSphericalHarmonicsLevel:"
      },
      {
-      "selector": "fillData:offset:",
-      "class_method": false,
       "args": {
-       "1": { "type_override": "Q" }
-      }
+       "1": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "selector": "fillData:offset:"
      },
      {
-      "selector": "length",
       "class_method": false,
-      "retval": { "type_override": "Q" }
+      "retval": {
+       "type_override": "Q"
+      },
+      "selector": "length"
      },
      {
-      "selector": "type",
       "class_method": false,
-      "retval": { "type_override": "Q" }
+      "retval": {
+       "type_override": "Q"
+      },
+      "selector": "type"
      },
      {
-      "selector": "capacity",
       "class_method": false,
-      "retval": { "type_override": "Q" }
+      "retval": {
+       "type_override": "Q"
+      },
+      "selector": "capacity"
      },
      {
-      "selector": "newZone:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Q" }
-      }
+       "0": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "selector": "newZone:"
      },
      {
-      "selector": "newBuffer:type:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Q" },
-       "1": { "type_override": "Q" }
-      }
+       "0": {
+        "type_override": "Q"
+       },
+       "1": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "selector": "newBuffer:type:"
      },
      {
-      "selector": "newBufferWithData:type:",
-      "class_method": false,
       "args": {
-       "1": { "type_override": "Q" }
-      }
+       "1": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "selector": "newBufferWithData:type:"
      },
      {
-      "selector": "newBufferFromZone:length:type:",
-      "class_method": false,
       "args": {
-       "1": { "type_override": "Q" },
-       "2": { "type_override": "Q" }
-      }
+       "1": {
+        "type_override": "Q"
+       },
+       "2": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "selector": "newBufferFromZone:length:type:"
      },
      {
-      "selector": "newBufferFromZone:data:type:",
-      "class_method": false,
       "args": {
-       "2": { "type_override": "Q" }
-      }
+       "2": {
+        "type_override": "Q"
+       }
+      },
+      "class_method": false,
+      "selector": "newBufferFromZone:data:type:"
      }
     ]
+   }
+  },
+  "enum": {
+   "MDLAnimatedValueInterpolationConstant": {
+    "value": 0
+   },
+   "MDLAnimatedValueInterpolationLinear": {
+    "value": 1
+   },
+   "MDLCameraProjectionOrthographic": {
+    "value": 1
+   },
+   "MDLCameraProjectionPerspective": {
+    "value": 0
+   },
+   "MDLDataPrecisionDouble": {
+    "value": 2
+   },
+   "MDLDataPrecisionFloat": {
+    "value": 1
+   },
+   "MDLDataPrecisionUndefined": {
+    "value": 0
+   },
+   "MDLGeometryTypeLines": {
+    "value": 1
+   },
+   "MDLGeometryTypePoints": {
+    "value": 0
+   },
+   "MDLGeometryTypeQuads": {
+    "value": 4
+   },
+   "MDLGeometryTypeTriangleStrips": {
+    "value": 3
+   },
+   "MDLGeometryTypeTriangles": {
+    "value": 2
+   },
+   "MDLGeometryTypeVariableTopology": {
+    "value": 5
+   },
+   "MDLIndexBitDepthInvalid": {
+    "value": 0
+   },
+   "MDLIndexBitDepthUInt16": {
+    "value": 16
+   },
+   "MDLIndexBitDepthUInt32": {
+    "value": 32
+   },
+   "MDLIndexBitDepthUInt8": {
+    "value": 8
+   },
+   "MDLIndexBitDepthUint16": {
+    "value": 16
+   },
+   "MDLIndexBitDepthUint32": {
+    "value": 32
+   },
+   "MDLIndexBitDepthUint8": {
+    "value": 8
+   },
+   "MDLLightTypeAmbient": {
+    "value": 1
+   },
+   "MDLLightTypeDirectional": {
+    "value": 2
+   },
+   "MDLLightTypeDiscArea": {
+    "value": 6
+   },
+   "MDLLightTypeEnvironment": {
+    "value": 11
+   },
+   "MDLLightTypeLinear": {
+    "value": 5
+   },
+   "MDLLightTypePhotometric": {
+    "value": 9
+   },
+   "MDLLightTypePoint": {
+    "value": 4
+   },
+   "MDLLightTypeProbe": {
+    "value": 10
+   },
+   "MDLLightTypeRectangularArea": {
+    "value": 7
+   },
+   "MDLLightTypeSpot": {
+    "value": 3
+   },
+   "MDLLightTypeSuperElliptical": {
+    "value": 8
+   },
+   "MDLLightTypeUnknown": {
+    "value": 0
+   },
+   "MDLMaterialFaceBack": {
+    "value": 1
+   },
+   "MDLMaterialFaceDoubleSided": {
+    "value": 2
+   },
+   "MDLMaterialFaceFront": {
+    "value": 0
+   },
+   "MDLMaterialMipMapFilterModeLinear": {
+    "value": 1
+   },
+   "MDLMaterialMipMapFilterModeNearest": {
+    "value": 0
+   },
+   "MDLMaterialPropertyTypeBuffer": {
+    "value": 10
+   },
+   "MDLMaterialPropertyTypeColor": {
+    "value": 4
+   },
+   "MDLMaterialPropertyTypeFloat": {
+    "value": 5
+   },
+   "MDLMaterialPropertyTypeFloat2": {
+    "value": 6
+   },
+   "MDLMaterialPropertyTypeFloat3": {
+    "value": 7
+   },
+   "MDLMaterialPropertyTypeFloat4": {
+    "value": 8
+   },
+   "MDLMaterialPropertyTypeMatrix44": {
+    "value": 9
+   },
+   "MDLMaterialPropertyTypeNone": {
+    "value": 0
+   },
+   "MDLMaterialPropertyTypeString": {
+    "value": 1
+   },
+   "MDLMaterialPropertyTypeTexture": {
+    "value": 3
+   },
+   "MDLMaterialPropertyTypeURL": {
+    "value": 2
+   },
+   "MDLMaterialSemanticAmbientOcclusion": {
+    "value": 22
+   },
+   "MDLMaterialSemanticAmbientOcclusionScale": {
+    "value": 23
+   },
+   "MDLMaterialSemanticAnisotropic": {
+    "value": 7
+   },
+   "MDLMaterialSemanticAnisotropicRotation": {
+    "value": 8
+   },
+   "MDLMaterialSemanticBaseColor": {
+    "value": 0
+   },
+   "MDLMaterialSemanticBump": {
+    "value": 14
+   },
+   "MDLMaterialSemanticClearcoat": {
+    "value": 11
+   },
+   "MDLMaterialSemanticClearcoatGloss": {
+    "value": 12
+   },
+   "MDLMaterialSemanticDisplacement": {
+    "value": 20
+   },
+   "MDLMaterialSemanticDisplacementScale": {
+    "value": 21
+   },
+   "MDLMaterialSemanticEmission": {
+    "value": 13
+   },
+   "MDLMaterialSemanticInterfaceIndexOfRefraction": {
+    "value": 16
+   },
+   "MDLMaterialSemanticMaterialIndexOfRefraction": {
+    "value": 17
+   },
+   "MDLMaterialSemanticMetallic": {
+    "value": 2
+   },
+   "MDLMaterialSemanticNone": {
+    "value": 32768
+   },
+   "MDLMaterialSemanticObjectSpaceNormal": {
+    "value": 18
+   },
+   "MDLMaterialSemanticOpacity": {
+    "value": 15
+   },
+   "MDLMaterialSemanticRoughness": {
+    "value": 6
+   },
+   "MDLMaterialSemanticSheen": {
+    "value": 9
+   },
+   "MDLMaterialSemanticSheenTint": {
+    "value": 10
+   },
+   "MDLMaterialSemanticSpecular": {
+    "value": 3
+   },
+   "MDLMaterialSemanticSpecularExponent": {
+    "value": 4
+   },
+   "MDLMaterialSemanticSpecularTint": {
+    "value": 5
+   },
+   "MDLMaterialSemanticSubsurface": {
+    "value": 1
+   },
+   "MDLMaterialSemanticTangentSpaceNormal": {
+    "value": 19
+   },
+   "MDLMaterialSemanticUserDefined": {
+    "value": 32769
+   },
+   "MDLMaterialTextureFilterModeLinear": {
+    "value": 1
+   },
+   "MDLMaterialTextureFilterModeNearest": {
+    "value": 0
+   },
+   "MDLMaterialTextureWrapModeClamp": {
+    "value": 0
+   },
+   "MDLMaterialTextureWrapModeMirror": {
+    "value": 2
+   },
+   "MDLMaterialTextureWrapModeRepeat": {
+    "value": 1
+   },
+   "MDLMeshBufferTypeCustom": {
+    "value": 3
+   },
+   "MDLMeshBufferTypeIndex": {
+    "value": 2
+   },
+   "MDLMeshBufferTypeVertex": {
+    "value": 1
+   },
+   "MDLPrimitiveTypeCapsule": {
+    "value": 3
+   },
+   "MDLPrimitiveTypeCone": {
+    "value": 2
+   },
+   "MDLPrimitiveTypeCube": {
+    "value": 0
+   },
+   "MDLPrimitiveTypeCylinder": {
+    "value": 4
+   },
+   "MDLPrimitiveTypeNone": {
+    "value": 5
+   },
+   "MDLPrimitiveTypeSphere": {
+    "value": 1
+   },
+   "MDLProbePlacementIrradianceDistribution": {
+    "value": 1
+   },
+   "MDLProbePlacementUniformGrid": {
+    "value": 0
+   },
+   "MDLTextureChannelEncodingFloat16": {
+    "value": 258
+   },
+   "MDLTextureChannelEncodingFloat16SR": {
+    "value": 770
+   },
+   "MDLTextureChannelEncodingFloat32": {
+    "value": 260
+   },
+   "MDLTextureChannelEncodingUInt16": {
+    "value": 2
+   },
+   "MDLTextureChannelEncodingUInt24": {
+    "value": 3
+   },
+   "MDLTextureChannelEncodingUInt32": {
+    "value": 4
+   },
+   "MDLTextureChannelEncodingUInt8": {
+    "value": 1
+   },
+   "MDLTextureChannelEncodingUint16": {
+    "value": 2
+   },
+   "MDLTextureChannelEncodingUint24": {
+    "value": 3
+   },
+   "MDLTextureChannelEncodingUint32": {
+    "value": 4
+   },
+   "MDLTextureChannelEncodingUint8": {
+    "value": 1
+   },
+   "MDLTransformOpRotationOrderXYZ": {
+    "value": 1
+   },
+   "MDLTransformOpRotationOrderXZY": {
+    "value": 2
+   },
+   "MDLTransformOpRotationOrderYXZ": {
+    "value": 3
+   },
+   "MDLTransformOpRotationOrderYZX": {
+    "value": 4
+   },
+   "MDLTransformOpRotationOrderZXY": {
+    "value": 5
+   },
+   "MDLTransformOpRotationOrderZYX": {
+    "value": 6
+   },
+   "MDLVertexFormatChar": {
+    "value": 131073
+   },
+   "MDLVertexFormatChar2": {
+    "value": 131074
+   },
+   "MDLVertexFormatChar2Normalized": {
+    "value": 262146
+   },
+   "MDLVertexFormatChar3": {
+    "value": 131075
+   },
+   "MDLVertexFormatChar3Normalized": {
+    "value": 262147
+   },
+   "MDLVertexFormatChar4": {
+    "value": 131076
+   },
+   "MDLVertexFormatChar4Normalized": {
+    "value": 262148
+   },
+   "MDLVertexFormatCharBits": {
+    "value": 131072
+   },
+   "MDLVertexFormatCharNormalized": {
+    "value": 262145
+   },
+   "MDLVertexFormatCharNormalizedBits": {
+    "value": 262144
+   },
+   "MDLVertexFormatFloat": {
+    "value": 786433
+   },
+   "MDLVertexFormatFloat2": {
+    "value": 786434
+   },
+   "MDLVertexFormatFloat3": {
+    "value": 786435
+   },
+   "MDLVertexFormatFloat4": {
+    "value": 786436
+   },
+   "MDLVertexFormatFloatBits": {
+    "value": 786432
+   },
+   "MDLVertexFormatHalf": {
+    "value": 720897
+   },
+   "MDLVertexFormatHalf2": {
+    "value": 720898
+   },
+   "MDLVertexFormatHalf3": {
+    "value": 720899
+   },
+   "MDLVertexFormatHalf4": {
+    "value": 720900
+   },
+   "MDLVertexFormatHalfBits": {
+    "value": 720896
+   },
+   "MDLVertexFormatInt": {
+    "value": 655361
+   },
+   "MDLVertexFormatInt1010102Normalized": {
+    "value": 659460
+   },
+   "MDLVertexFormatInt2": {
+    "value": 655362
+   },
+   "MDLVertexFormatInt3": {
+    "value": 655363
+   },
+   "MDLVertexFormatInt4": {
+    "value": 655364
+   },
+   "MDLVertexFormatIntBits": {
+    "value": 655360
+   },
+   "MDLVertexFormatInvalid": {
+    "value": 0
+   },
+   "MDLVertexFormatPackedBit": {
+    "value": 4096
+   },
+   "MDLVertexFormatShort": {
+    "value": 393217
+   },
+   "MDLVertexFormatShort2": {
+    "value": 393218
+   },
+   "MDLVertexFormatShort2Normalized": {
+    "value": 524290
+   },
+   "MDLVertexFormatShort3": {
+    "value": 393219
+   },
+   "MDLVertexFormatShort3Normalized": {
+    "value": 524291
+   },
+   "MDLVertexFormatShort4": {
+    "value": 393220
+   },
+   "MDLVertexFormatShort4Normalized": {
+    "value": 524292
+   },
+   "MDLVertexFormatShortBits": {
+    "value": 393216
+   },
+   "MDLVertexFormatShortNormalized": {
+    "value": 524289
+   },
+   "MDLVertexFormatShortNormalizedBits": {
+    "value": 524288
+   },
+   "MDLVertexFormatUChar": {
+    "value": 65537
+   },
+   "MDLVertexFormatUChar2": {
+    "value": 65538
+   },
+   "MDLVertexFormatUChar2Normalized": {
+    "value": 196610
+   },
+   "MDLVertexFormatUChar3": {
+    "value": 65539
+   },
+   "MDLVertexFormatUChar3Normalized": {
+    "value": 196611
+   },
+   "MDLVertexFormatUChar4": {
+    "value": 65540
+   },
+   "MDLVertexFormatUChar4Normalized": {
+    "value": 196612
+   },
+   "MDLVertexFormatUCharBits": {
+    "value": 65536
+   },
+   "MDLVertexFormatUCharNormalized": {
+    "value": 196609
+   },
+   "MDLVertexFormatUCharNormalizedBits": {
+    "value": 196608
+   },
+   "MDLVertexFormatUInt": {
+    "value": 589825
+   },
+   "MDLVertexFormatUInt1010102Normalized": {
+    "value": 593924
+   },
+   "MDLVertexFormatUInt2": {
+    "value": 589826
+   },
+   "MDLVertexFormatUInt3": {
+    "value": 589827
+   },
+   "MDLVertexFormatUInt4": {
+    "value": 589828
+   },
+   "MDLVertexFormatUIntBits": {
+    "value": 589824
+   },
+   "MDLVertexFormatUShort": {
+    "value": 327681
+   },
+   "MDLVertexFormatUShort2": {
+    "value": 327682
+   },
+   "MDLVertexFormatUShort2Normalized": {
+    "value": 458754
+   },
+   "MDLVertexFormatUShort3": {
+    "value": 327683
+   },
+   "MDLVertexFormatUShort3Normalized": {
+    "value": 458755
+   },
+   "MDLVertexFormatUShort4": {
+    "value": 327684
+   },
+   "MDLVertexFormatUShort4Normalized": {
+    "value": 458756
+   },
+   "MDLVertexFormatUShortBits": {
+    "value": 327680
+   },
+   "MDLVertexFormatUShortNormalized": {
+    "value": 458753
+   },
+   "MDLVertexFormatUShortNormalizedBits": {
+    "value": 458752
+   }
+  },
+  "externs": {
+   "MDLVertexAttributeAnisotropy": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeBinormal": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeBitangent": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeColor": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeEdgeCrease": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeJointIndices": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeJointWeights": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeNormal": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeOcclusionValue": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributePosition": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeShadingBasisU": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeShadingBasisV": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeSubdivisionStencil": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeTangent": {
+    "typestr": "@"
+   },
+   "MDLVertexAttributeTextureCoordinate": {
+    "typestr": "@"
+   },
+   "kUTType3dObject": {
+    "typestr": "@"
+   },
+   "kUTTypeAlembic": {
+    "typestr": "@"
+   },
+   "kUTTypePolygon": {
+    "typestr": "@"
+   },
+   "kUTTypeStereolithography": {
+    "typestr": "@"
+   },
+   "kUTTypeUniversalSceneDescription": {
+    "typestr": "@"
+   },
+   "kUTTypeUniversalSceneDescriptionMobile": {
+    "typestr": "@"
    }
   }
  }

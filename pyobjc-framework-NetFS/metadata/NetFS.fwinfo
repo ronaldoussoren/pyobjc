@@ -4,70 +4,23 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
-  "literals": {
-   "kNetFSAuthenticationInfoKey": { "unicode": true },
-   "kNetFSServerDisplayNameKey": { "unicode": true },
-   "kNetFSSupportsChangePasswordKey": { "unicode": true },
-   "kNetFSSupportsGuestKey": { "unicode": true },
-   "kNetFSSupportsKerberosKey": { "unicode": true },
-   "kNetFSGuestOnlyKey": { "unicode": true },
-   "kNetFSNoMountAuthenticationKey": { "unicode": true },
-   "kNetFSConnectedWithAuthenticationInfoKey": { "unicode": true },
-   "kNetFSConnectedAsUserKey": { "unicode": true },
-   "kNetFSConnectedAsGuestKey": { "unicode": true },
-   "kNetFSConnectedMultiUserKey": { "unicode": true },
-   "kNetFSMechTypesSupportedKey": { "unicode": true },
-   "kNAUIOptionKey": { "unicode": true },
-   "kNAUIOptionNoUI": { "unicode": true },
-   "kNAUIOptionAllowUI": { "unicode": true },
-   "kNAUIOptionForceUI": { "unicode": true },
-   "kNetFSSchemeKey": { "unicode": true },
-   "kNetFSHostKey": { "unicode": true },
-   "kNetFSAlternatePortKey": { "unicode": true },
-   "kNetFSAuthorityParamsKey": { "unicode": true },
-   "kNetFSUserNameKey": { "unicode": true },
-   "kNetFSPasswordKey": { "unicode": true },
-   "kNetFSPathKey": { "unicode": true },
-   "kNetFSNoUserPreferencesKey": { "unicode": true },
-   "kNetFSForceNewSessionKey": { "unicode": true },
-   "kNetFSUseAuthenticationInfoKey": { "unicode": true },
-   "kNetFSUseGuestKey": { "unicode": true },
-   "kNetFSChangePasswordKey": { "unicode": true },
-   "kNetFSAllowLoopbackKey": { "unicode": true },
-   "kNetFSUseKerberosKey": { "unicode": true },
-   "kNetFSMountedWithAuthenticationInfoKey": { "unicode": true },
-   "kNetFSMountedByUserKey": { "unicode": true },
-   "kNetFSMountedByGuestKey": { "unicode": true },
-   "kNetFSMountedMultiUserKey": { "unicode": true },
-   "kNetFSMountedByKerberosKey": { "unicode": true },
-   "kNetFSGetAccessRightsKey": { "unicode": true },
-   "kNetFSAlreadyMountedKey": { "unicode": true },
-   "kNetFSMountPathKey": { "unicode": true },
-   "kNetFSHasPasswordKey": { "unicode": true },
-   "kNetFSIsHiddenKey": { "unicode": true },
-   "kNetFSPrinterShareKey": { "unicode": true },
-   "kNetFSAccessRightsKey": { "unicode": true },
-   "kNetFSDisplayNameKey": { "unicode": true },
-   "kNetFSSoftMountKey": { "unicode": true },
-   "kNetFSMountFlagsKey": { "unicode": true },
-   "kNetFSAllowSubMountsKey": { "unicode": true },
-   "kNetFSMountAtMountDirKey": { "unicode": true },
-   "kNetFSMountedURLKey": { "unicode": true },
-   "kNetFSOpenURLMountKey": { "value": "OpenURLMount", "unicode": true }
-  },
   "functions": {
    "NetFSCFStringtoCString": {
     "args": {
-     "0": { "type_override": "^{__CFString=}" }
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
     },
     "retval": {
-     "type_override": "^t",
-     "c_array_delimited_by_null": true
+     "c_array_delimited_by_null": true,
+     "type_override": "^t"
     }
    },
    "NetFSCopyURLForRemountingVolume": {
     "args": {
-     "0": {}
+     "0": {
+      "type_name": "CFURLRef"
+     }
     },
     "retval": {
      "already_cfretained": true
@@ -75,50 +28,244 @@
    },
    "NetFSMountURLAsync": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {},
-     "5": {},
-     "6": { "type_modifier": "o" },
+     "0": {
+      "type_name": "CFURLRef"
+     },
+     "1": {
+      "type_name": "CFURLRef"
+     },
+     "2": {
+      "type_name": "CFStringRef"
+     },
+     "3": {
+      "type_name": "CFStringRef"
+     },
+     "4": {
+      "type_name": "CFMutableDictionaryRef"
+     },
+     "5": {
+      "type_name": "CFMutableDictionaryRef"
+     },
+     "6": {
+      "type_modifier": "o",
+      "type_name": "AsyncRequestID *"
+     },
      "7": {},
      "8": {
       "callable": {
        "arguments": {
-        "0": { "type": "^v" },
-        "1": { "type": "i" },
-        "2": { "type": "^v" },
-        "3": { "type": "@" }
+        "0": {
+         "type": "^v"
+        },
+        "1": {
+         "type": "i"
+        },
+        "2": {
+         "type": "^v"
+        },
+        "3": {
+         "type": "@"
+        }
        },
-       "retval": { "type": "v" }
+       "retval": {
+        "type": "v"
+       }
       }
      }
     }
    },
    "NetFSMountURLCancel": {
     "args": {
-     "0": {}
+     "0": {
+      "type_name": "AsyncRequestID"
+     }
     }
    },
    "NetFSMountURLProbe": {
     "args": {
-     "0": {}
+     "0": {
+      "type_name": "CFStringRef"
+     }
     },
     "retval": {}
    },
    "NetFSMountURLSync": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {},
-     "5": {},
-     "6": { "type_modifier": "o" }
+     "0": {
+      "type_name": "CFURLRef"
+     },
+     "1": {
+      "type_name": "CFURLRef"
+     },
+     "2": {
+      "type_name": "CFStringRef"
+     },
+     "3": {
+      "type_name": "CFStringRef"
+     },
+     "4": {
+      "type_name": "CFMutableDictionaryRef"
+     },
+     "5": {
+      "type_name": "CFMutableDictionaryRef"
+     },
+     "6": {
+      "type_modifier": "o",
+      "type_name": "CFArrayRef *"
+     }
     }
    }
   },
-  "informal_protocols": {}
+  "informal_protocols": {},
+  "literals": {
+   "kNAUIOptionAllowUI": {
+    "unicode": true
+   },
+   "kNAUIOptionForceUI": {
+    "unicode": true
+   },
+   "kNAUIOptionKey": {
+    "unicode": true
+   },
+   "kNAUIOptionNoUI": {
+    "unicode": true
+   },
+   "kNetFSAccessRightsKey": {
+    "unicode": true
+   },
+   "kNetFSAllowLoopbackKey": {
+    "unicode": true
+   },
+   "kNetFSAllowSubMountsKey": {
+    "unicode": true
+   },
+   "kNetFSAlreadyMountedKey": {
+    "unicode": true
+   },
+   "kNetFSAlternatePortKey": {
+    "unicode": true
+   },
+   "kNetFSAuthenticationInfoKey": {
+    "unicode": true
+   },
+   "kNetFSAuthorityParamsKey": {
+    "unicode": true
+   },
+   "kNetFSChangePasswordKey": {
+    "unicode": true
+   },
+   "kNetFSConnectedAsGuestKey": {
+    "unicode": true
+   },
+   "kNetFSConnectedAsUserKey": {
+    "unicode": true
+   },
+   "kNetFSConnectedMultiUserKey": {
+    "unicode": true
+   },
+   "kNetFSConnectedWithAuthenticationInfoKey": {
+    "unicode": true
+   },
+   "kNetFSDisplayNameKey": {
+    "unicode": true
+   },
+   "kNetFSForceNewSessionKey": {
+    "unicode": true
+   },
+   "kNetFSGetAccessRightsKey": {
+    "unicode": true
+   },
+   "kNetFSGuestOnlyKey": {
+    "unicode": true
+   },
+   "kNetFSHasPasswordKey": {
+    "unicode": true
+   },
+   "kNetFSHostKey": {
+    "unicode": true
+   },
+   "kNetFSIsHiddenKey": {
+    "unicode": true
+   },
+   "kNetFSMechTypesSupportedKey": {
+    "unicode": true
+   },
+   "kNetFSMountAtMountDirKey": {
+    "unicode": true
+   },
+   "kNetFSMountFlagsKey": {
+    "unicode": true
+   },
+   "kNetFSMountPathKey": {
+    "unicode": true
+   },
+   "kNetFSMountedByGuestKey": {
+    "unicode": true
+   },
+   "kNetFSMountedByKerberosKey": {
+    "unicode": true
+   },
+   "kNetFSMountedByUserKey": {
+    "unicode": true
+   },
+   "kNetFSMountedMultiUserKey": {
+    "unicode": true
+   },
+   "kNetFSMountedURLKey": {
+    "unicode": true
+   },
+   "kNetFSMountedWithAuthenticationInfoKey": {
+    "unicode": true
+   },
+   "kNetFSNoMountAuthenticationKey": {
+    "unicode": true
+   },
+   "kNetFSNoUserPreferencesKey": {
+    "unicode": true
+   },
+   "kNetFSOpenURLMountKey": {
+    "unicode": true,
+    "value": "OpenURLMount"
+   },
+   "kNetFSPasswordKey": {
+    "unicode": true
+   },
+   "kNetFSPathKey": {
+    "unicode": true
+   },
+   "kNetFSPrinterShareKey": {
+    "unicode": true
+   },
+   "kNetFSSchemeKey": {
+    "unicode": true
+   },
+   "kNetFSServerDisplayNameKey": {
+    "unicode": true
+   },
+   "kNetFSSoftMountKey": {
+    "unicode": true
+   },
+   "kNetFSSupportsChangePasswordKey": {
+    "unicode": true
+   },
+   "kNetFSSupportsGuestKey": {
+    "unicode": true
+   },
+   "kNetFSSupportsKerberosKey": {
+    "unicode": true
+   },
+   "kNetFSUseAuthenticationInfoKey": {
+    "unicode": true
+   },
+   "kNetFSUseGuestKey": {
+    "unicode": true
+   },
+   "kNetFSUseKerberosKey": {
+    "unicode": true
+   },
+   "kNetFSUserNameKey": {
+    "unicode": true
+   }
+  }
  }
 }

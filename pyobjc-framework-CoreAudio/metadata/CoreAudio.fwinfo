@@ -12,6 +12,110 @@
     "type": "q"
    }
   },
+  "literals": {
+   "kAudioAggregateDeviceClockDeviceKey": {
+    "unicode": true
+   },
+   "kAudioAggregateDeviceIsPrivateKey": {
+    "unicode": true
+   },
+   "kAudioAggregateDeviceIsStackedKey": {
+    "unicode": true
+   },
+   "kAudioAggregateDeviceMainSubDeviceKey": {
+    "unicode": true
+   },
+   "kAudioAggregateDeviceMasterSubDeviceKey": {
+    "unicode": true
+   },
+   "kAudioAggregateDeviceNameKey": {
+    "unicode": true
+   },
+   "kAudioAggregateDeviceSubDeviceListKey": {
+    "unicode": true
+   },
+   "kAudioAggregateDeviceTapAutoStartKey": {
+    "unicode": true
+   },
+   "kAudioAggregateDeviceTapListKey": {
+    "unicode": true
+   },
+   "kAudioAggregateDeviceUIDKey": {
+    "unicode": true
+   },
+   "kAudioEndPointDeviceEndPointListKey": {
+    "unicode": true
+   },
+   "kAudioEndPointDeviceIsPrivateKey": {
+    "unicode": true
+   },
+   "kAudioEndPointDeviceMainEndPointKey": {
+    "unicode": true
+   },
+   "kAudioEndPointDeviceMasterEndPointKey": {
+    "unicode": true
+   },
+   "kAudioEndPointDeviceNameKey": {
+    "unicode": true
+   },
+   "kAudioEndPointDeviceUIDKey": {
+    "unicode": true
+   },
+   "kAudioEndPointInputChannelsKey": {
+    "unicode": true
+   },
+   "kAudioEndPointNameKey": {
+    "unicode": true
+   },
+   "kAudioEndPointOutputChannelsKey": {
+    "unicode": true
+   },
+   "kAudioEndPointUIDKey": {
+    "unicode": true
+   },
+   "kAudioHardwareRunLoopMode": {
+    "unicode": true
+   },
+   "kAudioSubDeviceDriftCompensationKey": {
+    "unicode": true
+   },
+   "kAudioSubDeviceDriftCompensationQualityKey": {
+    "unicode": true
+   },
+   "kAudioSubDeviceExtraInputLatencyKey": {
+    "unicode": true
+   },
+   "kAudioSubDeviceExtraOutputLatencyKey": {
+    "unicode": true
+   },
+   "kAudioSubDeviceInputChannelsKey": {
+    "unicode": true
+   },
+   "kAudioSubDeviceNameKey": {
+    "unicode": true
+   },
+   "kAudioSubDeviceOutputChannelsKey": {
+    "unicode": true
+   },
+   "kAudioSubDeviceUIDKey": {
+    "unicode": true
+   },
+   "kAudioSubTapDriftCompensationKey": {
+    "unicode": true
+   },
+   "kAudioSubTapDriftCompensationQualityKey": {
+    "unicode": true
+   },
+   "kAudioSubTapExtraInputLatencyKey": {
+    "unicode": true
+   },
+   "kAudioSubTapExtraOutputLatencyKey": {
+    "unicode": true
+   },
+   "kAudioSubTapUIDKey": {
+    "unicode": true
+   }
+  },
   "enum": {
    "kAppleLosslessFormatFlag_16BitSourceData": {"value": 1},
    "kAppleLosslessFormatFlag_20BitSourceData": {"value": 2},

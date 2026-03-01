@@ -41,4 +41,4 @@ if incorrect:
     print(f"{incorrect} frameworks with too much metadata")
 
 if incorrect or len(versions_seen) != 1:
-    raise SystemExit(0)
+    raise SystemExit(1)

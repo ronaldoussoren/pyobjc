@@ -1,335 +1,738 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
-  "typed_enum": {
-   "NLTagScheme": { "type": "@", "type_name": "NSString" },
-   "NLTag": { "type": "@", "type_name": "NSString" },
-   "NLLanguage": { "type": "@", "type_name": "NSString" },
-   "NLScript": { "type": "@", "type_name": "NSString" },
-   "NLContextualEmbeddingKey": { "type": "@", "type_name": "NSString" }
-  },
-  "enum": {
-   "NLTokenUnitWord": { "value": 0 },
-   "NLTokenUnitSentence": { "value": 1 },
-   "NLTokenUnitParagraph": { "value": 2 },
-   "NLTokenUnitDocument": { "value": 3 },
-   "NLTokenizerAttributeNumeric": { "value": 1 },
-   "NLTokenizerAttributeSymbolic": { "value": 2 },
-   "NLTokenizerAttributeEmoji": { "value": 4 },
-   "NLModelTypeClassifier": { "value": 0 },
-   "NLModelTypeSequence": { "value": 1 },
-   "NLTaggerOmitWords": { "value": 1 },
-   "NLTaggerOmitPunctuation": { "value": 2 },
-   "NLTaggerOmitWhitespace": { "value": 4 },
-   "NLTaggerOmitOther": { "value": 8 },
-   "NLTaggerJoinNames": { "value": 16 },
-   "NLTaggerJoinContractions": { "value": 32 }
-  },
-  "externs": {
-   "NLLanguageUndetermined": { "typestr": "@" },
-   "NLLanguageAmharic": { "typestr": "@" },
-   "NLLanguageArabic": { "typestr": "@" },
-   "NLLanguageArmenian": { "typestr": "@" },
-   "NLLanguageBengali": { "typestr": "@" },
-   "NLLanguageBulgarian": { "typestr": "@" },
-   "NLLanguageBurmese": { "typestr": "@" },
-   "NLLanguageCatalan": { "typestr": "@" },
-   "NLLanguageCherokee": { "typestr": "@" },
-   "NLLanguageCroatian": { "typestr": "@" },
-   "NLLanguageCzech": { "typestr": "@" },
-   "NLLanguageDanish": { "typestr": "@" },
-   "NLLanguageDutch": { "typestr": "@" },
-   "NLLanguageEnglish": { "typestr": "@" },
-   "NLLanguageFinnish": { "typestr": "@" },
-   "NLLanguageFrench": { "typestr": "@" },
-   "NLLanguageGeorgian": { "typestr": "@" },
-   "NLLanguageGerman": { "typestr": "@" },
-   "NLLanguageGreek": { "typestr": "@" },
-   "NLLanguageGujarati": { "typestr": "@" },
-   "NLLanguageHebrew": { "typestr": "@" },
-   "NLLanguageHindi": { "typestr": "@" },
-   "NLLanguageHungarian": { "typestr": "@" },
-   "NLLanguageIcelandic": { "typestr": "@" },
-   "NLLanguageIndonesian": { "typestr": "@" },
-   "NLLanguageItalian": { "typestr": "@" },
-   "NLLanguageJapanese": { "typestr": "@" },
-   "NLLanguageKannada": { "typestr": "@" },
-   "NLLanguageKhmer": { "typestr": "@" },
-   "NLLanguageKorean": { "typestr": "@" },
-   "NLLanguageLao": { "typestr": "@" },
-   "NLLanguageMalay": { "typestr": "@" },
-   "NLLanguageMalayalam": { "typestr": "@" },
-   "NLLanguageMarathi": { "typestr": "@" },
-   "NLLanguageMongolian": { "typestr": "@" },
-   "NLLanguageNorwegian": { "typestr": "@" },
-   "NLLanguageOriya": { "typestr": "@" },
-   "NLLanguagePersian": { "typestr": "@" },
-   "NLLanguagePolish": { "typestr": "@" },
-   "NLLanguagePortuguese": { "typestr": "@" },
-   "NLLanguagePunjabi": { "typestr": "@" },
-   "NLLanguageRomanian": { "typestr": "@" },
-   "NLLanguageRussian": { "typestr": "@" },
-   "NLLanguageSimplifiedChinese": { "typestr": "@" },
-   "NLLanguageSinhalese": { "typestr": "@" },
-   "NLLanguageSlovak": { "typestr": "@" },
-   "NLLanguageSpanish": { "typestr": "@" },
-   "NLLanguageSwedish": { "typestr": "@" },
-   "NLLanguageTamil": { "typestr": "@" },
-   "NLLanguageTelugu": { "typestr": "@" },
-   "NLLanguageThai": { "typestr": "@" },
-   "NLLanguageTibetan": { "typestr": "@" },
-   "NLLanguageTraditionalChinese": { "typestr": "@" },
-   "NLLanguageTurkish": { "typestr": "@" },
-   "NLLanguageUkrainian": { "typestr": "@" },
-   "NLLanguageUrdu": { "typestr": "@" },
-   "NLLanguageVietnamese": { "typestr": "@" },
-   "NLTagSchemeTokenType": { "typestr": "@" },
-   "NLTagSchemeLexicalClass": { "typestr": "@" },
-   "NLTagSchemeNameType": { "typestr": "@" },
-   "NLTagSchemeNameTypeOrLexicalClass": { "typestr": "@" },
-   "NLTagSchemeLemma": { "typestr": "@" },
-   "NLTagSchemeLanguage": { "typestr": "@" },
-   "NLTagSchemeScript": { "typestr": "@" },
-   "NLTagWord": { "typestr": "@" },
-   "NLTagPunctuation": { "typestr": "@" },
-   "NLTagWhitespace": { "typestr": "@" },
-   "NLTagOther": { "typestr": "@" },
-   "NLTagNoun": { "typestr": "@" },
-   "NLTagVerb": { "typestr": "@" },
-   "NLTagAdjective": { "typestr": "@" },
-   "NLTagAdverb": { "typestr": "@" },
-   "NLTagPronoun": { "typestr": "@" },
-   "NLTagDeterminer": { "typestr": "@" },
-   "NLTagParticle": { "typestr": "@" },
-   "NLTagPreposition": { "typestr": "@" },
-   "NLTagNumber": { "typestr": "@" },
-   "NLTagConjunction": { "typestr": "@" },
-   "NLTagInterjection": { "typestr": "@" },
-   "NLTagClassifier": { "typestr": "@" },
-   "NLTagIdiom": { "typestr": "@" },
-   "NLTagOtherWord": { "typestr": "@" },
-   "NLTagSentenceTerminator": { "typestr": "@" },
-   "NLTagOpenQuote": { "typestr": "@" },
-   "NLTagCloseQuote": { "typestr": "@" },
-   "NLTagOpenParenthesis": { "typestr": "@" },
-   "NLTagCloseParenthesis": { "typestr": "@" },
-   "NLTagWordJoiner": { "typestr": "@" },
-   "NLTagDash": { "typestr": "@" },
-   "NLTagOtherPunctuation": { "typestr": "@" },
-   "NLTagParagraphBreak": { "typestr": "@" },
-   "NLTagOtherWhitespace": { "typestr": "@" },
-   "NLTagPersonalName": { "typestr": "@" },
-   "NLTagPlaceName": { "typestr": "@" },
-   "NLTagOrganizationName": { "typestr": "@" }
-  },
   "classes": {
-   "NLGazetteer": {
+   "NLContextualEmbedding": {
     "methods": [
      {
-      "selector": "gazetteerWithContentsOfURL:error:",
-      "class_method": true,
       "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "writeGazetteerForDictionary:language:toURL:error:",
-      "class_method": false,
-      "args": {
-       "3": { "type_modifier": "o" }
+       "0": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
       },
-      "retval": { "type_override": "Z" }
+      "class_method": false,
+      "selector": "loadWithError:"
      },
      {
-      "selector": "initWithDictionary:language:error:",
-      "class_method": false,
       "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "initWithContentsOfURL:error:",
+       "2": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
       "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "initWithData:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
+      "selector": "embeddingResultForString:language:error:"
      }
     ]
    },
-   "NLModel": {
+   "NLContextualEmbeddingResult": {
     "methods": [
      {
-      "selector": "modelWithContentsOfURL:error:",
-      "class_method": true,
       "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "modelWithMLModel:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
+       "1": {
+        "type_name": "NSRangePointer"
+       }
+      },
+      "class_method": false,
+      "selector": "tokenVectorAtIndex:tokenRange:"
      }
     ]
    },
    "NLEmbedding": {
     "methods": [
      {
-      "selector": "getVector:forString:",
+      "args": {
+       "0": {
+        "c_array_of_variable_length": true,
+        "type_modifier": "o",
+        "type_name": "float *"
+       }
+      },
       "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
-      }
+      "selector": "getVector:forString:"
      },
      {
-      "selector": "writeEmbeddingForDictionary:language:revision:toURL:error:",
-      "class_method": true,
       "args": {
-       "4": { "type_modifier": "o" }
-      }
+       "4": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": true,
+      "selector": "writeEmbeddingForDictionary:language:revision:toURL:error:"
      },
      {
-      "selector": "enumerateNeighborsForVector:maximumCount:maximumDistance:distanceType:usingBlock:",
-      "class_method": true,
       "args": {
        "4": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "d" },
-	  "3": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "d"
+          },
+          "3": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": true,
+      "selector": "enumerateNeighborsForVector:maximumCount:maximumDistance:distanceType:usingBlock:"
      },
      {
-      "selector": "enumerateNeighborsForVector:maximumCount:distanceType:usingBlock:",
-      "class_method": true,
       "args": {
        "3": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "d" },
-	  "3": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "d"
+          },
+          "3": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": true,
+      "selector": "enumerateNeighborsForVector:maximumCount:distanceType:usingBlock:"
      },
      {
-      "selector": "enumerateNeighborsForString:maximumCount:maximumDistance:distanceType:usingBlock:",
-      "class_method": true,
       "args": {
        "4": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "d" },
-	  "3": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "d"
+          },
+          "3": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": true,
+      "selector": "enumerateNeighborsForString:maximumCount:maximumDistance:distanceType:usingBlock:"
      },
      {
-      "selector": "enumerateNeighborsForString:maximumCount:distanceType:usingBlock:",
-      "class_method": true,
       "args": {
        "3": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "d" },
-	  "3": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "d"
+          },
+          "3": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": true,
+      "selector": "enumerateNeighborsForString:maximumCount:distanceType:usingBlock:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": true,
+      "selector": "embeddingWithContentsOfURL:error:"
+     }
+    ]
+   },
+   "NLGazetteer": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": true,
+      "selector": "gazetteerWithContentsOfURL:error:"
+     },
+     {
+      "args": {
+       "3": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "writeGazetteerForDictionary:language:toURL:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithDictionary:language:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithContentsOfURL:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithData:error:"
+     }
+    ]
+   },
+   "NLModel": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": true,
+      "selector": "modelWithContentsOfURL:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": true,
+      "selector": "modelWithMLModel:error:"
      }
     ]
    },
    "NLTagger": {
     "methods": [
      {
-      "selector": "tagHypothesesAtIndex:unit:scheme:maximumCount:tokenRange:",
-      "class_method": true,
       "args": {
-       "4": { "type_modifier": "o" }
-      }
+       "4": {
+        "type_modifier": "o",
+        "type_name": "NSRangePointer"
+       }
+      },
+      "class_method": true,
+      "selector": "tagHypothesesAtIndex:unit:scheme:maximumCount:tokenRange:"
      },
      {
-      "selector": "requestAssetsForLanguage:tagScheme:completionHandler:",
-      "class_method": true,
       "args": {
        "2": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "q" },
-	  "2": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "q"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": true,
+      "selector": "requestAssetsForLanguage:tagScheme:completionHandler:"
      },
      {
-      "selector": "enumerateTagsInRange:unit:scheme:options:usingBlock:",
-      "class_method": true,
       "args": {
        "4": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "{_NSRange=QQ}" },
-	  "3": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "{_NSRange=QQ}"
+          },
+          "3": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": true,
+      "selector": "enumerateTagsInRange:unit:scheme:options:usingBlock:"
+     },
+     {
+      "args": {
+       "3": {
+        "type_name": "NSRangePointer"
+       }
+      },
+      "class_method": false,
+      "selector": "tagAtIndex:unit:scheme:tokenRange:"
+     },
+     {
+      "args": {
+       "4": {
+        "type_name": "NSArray<NSValue *> * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "selector": "tagsInRange:unit:scheme:options:tokenRanges:"
      }
     ]
    },
    "NLTokenizer": {
     "methods": [
      {
-      "selector": "enumerateTokensInRange:usingBlock:",
-      "class_method": true,
       "args": {
        "1": {
         "callable": {
-	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "{_NSRange=QQ}" },
-	  "2": { "typestr": "Q" },
-	  "3": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "{_NSRange=QQ}"
+          },
+          "2": {
+           "typestr": "Q"
+          },
+          "3": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": true,
+      "selector": "enumerateTokensInRange:usingBlock:"
      }
     ]
+   }
+  },
+  "enum": {
+   "NLModelTypeClassifier": {
+    "value": 0
+   },
+   "NLModelTypeSequence": {
+    "value": 1
+   },
+   "NLTaggerJoinContractions": {
+    "value": 32
+   },
+   "NLTaggerJoinNames": {
+    "value": 16
+   },
+   "NLTaggerOmitOther": {
+    "value": 8
+   },
+   "NLTaggerOmitPunctuation": {
+    "value": 2
+   },
+   "NLTaggerOmitWhitespace": {
+    "value": 4
+   },
+   "NLTaggerOmitWords": {
+    "value": 1
+   },
+   "NLTokenUnitDocument": {
+    "value": 3
+   },
+   "NLTokenUnitParagraph": {
+    "value": 2
+   },
+   "NLTokenUnitSentence": {
+    "value": 1
+   },
+   "NLTokenUnitWord": {
+    "value": 0
+   },
+   "NLTokenizerAttributeEmoji": {
+    "value": 4
+   },
+   "NLTokenizerAttributeNumeric": {
+    "value": 1
+   },
+   "NLTokenizerAttributeSymbolic": {
+    "value": 2
+   }
+  },
+  "externs": {
+   "NLLanguageAmharic": {
+    "typestr": "@"
+   },
+   "NLLanguageArabic": {
+    "typestr": "@"
+   },
+   "NLLanguageArmenian": {
+    "typestr": "@"
+   },
+   "NLLanguageBengali": {
+    "typestr": "@"
+   },
+   "NLLanguageBulgarian": {
+    "typestr": "@"
+   },
+   "NLLanguageBurmese": {
+    "typestr": "@"
+   },
+   "NLLanguageCatalan": {
+    "typestr": "@"
+   },
+   "NLLanguageCherokee": {
+    "typestr": "@"
+   },
+   "NLLanguageCroatian": {
+    "typestr": "@"
+   },
+   "NLLanguageCzech": {
+    "typestr": "@"
+   },
+   "NLLanguageDanish": {
+    "typestr": "@"
+   },
+   "NLLanguageDutch": {
+    "typestr": "@"
+   },
+   "NLLanguageEnglish": {
+    "typestr": "@"
+   },
+   "NLLanguageFinnish": {
+    "typestr": "@"
+   },
+   "NLLanguageFrench": {
+    "typestr": "@"
+   },
+   "NLLanguageGeorgian": {
+    "typestr": "@"
+   },
+   "NLLanguageGerman": {
+    "typestr": "@"
+   },
+   "NLLanguageGreek": {
+    "typestr": "@"
+   },
+   "NLLanguageGujarati": {
+    "typestr": "@"
+   },
+   "NLLanguageHebrew": {
+    "typestr": "@"
+   },
+   "NLLanguageHindi": {
+    "typestr": "@"
+   },
+   "NLLanguageHungarian": {
+    "typestr": "@"
+   },
+   "NLLanguageIcelandic": {
+    "typestr": "@"
+   },
+   "NLLanguageIndonesian": {
+    "typestr": "@"
+   },
+   "NLLanguageItalian": {
+    "typestr": "@"
+   },
+   "NLLanguageJapanese": {
+    "typestr": "@"
+   },
+   "NLLanguageKannada": {
+    "typestr": "@"
+   },
+   "NLLanguageKhmer": {
+    "typestr": "@"
+   },
+   "NLLanguageKorean": {
+    "typestr": "@"
+   },
+   "NLLanguageLao": {
+    "typestr": "@"
+   },
+   "NLLanguageMalay": {
+    "typestr": "@"
+   },
+   "NLLanguageMalayalam": {
+    "typestr": "@"
+   },
+   "NLLanguageMarathi": {
+    "typestr": "@"
+   },
+   "NLLanguageMongolian": {
+    "typestr": "@"
+   },
+   "NLLanguageNorwegian": {
+    "typestr": "@"
+   },
+   "NLLanguageOriya": {
+    "typestr": "@"
+   },
+   "NLLanguagePersian": {
+    "typestr": "@"
+   },
+   "NLLanguagePolish": {
+    "typestr": "@"
+   },
+   "NLLanguagePortuguese": {
+    "typestr": "@"
+   },
+   "NLLanguagePunjabi": {
+    "typestr": "@"
+   },
+   "NLLanguageRomanian": {
+    "typestr": "@"
+   },
+   "NLLanguageRussian": {
+    "typestr": "@"
+   },
+   "NLLanguageSimplifiedChinese": {
+    "typestr": "@"
+   },
+   "NLLanguageSinhalese": {
+    "typestr": "@"
+   },
+   "NLLanguageSlovak": {
+    "typestr": "@"
+   },
+   "NLLanguageSpanish": {
+    "typestr": "@"
+   },
+   "NLLanguageSwedish": {
+    "typestr": "@"
+   },
+   "NLLanguageTamil": {
+    "typestr": "@"
+   },
+   "NLLanguageTelugu": {
+    "typestr": "@"
+   },
+   "NLLanguageThai": {
+    "typestr": "@"
+   },
+   "NLLanguageTibetan": {
+    "typestr": "@"
+   },
+   "NLLanguageTraditionalChinese": {
+    "typestr": "@"
+   },
+   "NLLanguageTurkish": {
+    "typestr": "@"
+   },
+   "NLLanguageUkrainian": {
+    "typestr": "@"
+   },
+   "NLLanguageUndetermined": {
+    "typestr": "@"
+   },
+   "NLLanguageUrdu": {
+    "typestr": "@"
+   },
+   "NLLanguageVietnamese": {
+    "typestr": "@"
+   },
+   "NLTagAdjective": {
+    "typestr": "@"
+   },
+   "NLTagAdverb": {
+    "typestr": "@"
+   },
+   "NLTagClassifier": {
+    "typestr": "@"
+   },
+   "NLTagCloseParenthesis": {
+    "typestr": "@"
+   },
+   "NLTagCloseQuote": {
+    "typestr": "@"
+   },
+   "NLTagConjunction": {
+    "typestr": "@"
+   },
+   "NLTagDash": {
+    "typestr": "@"
+   },
+   "NLTagDeterminer": {
+    "typestr": "@"
+   },
+   "NLTagIdiom": {
+    "typestr": "@"
+   },
+   "NLTagInterjection": {
+    "typestr": "@"
+   },
+   "NLTagNoun": {
+    "typestr": "@"
+   },
+   "NLTagNumber": {
+    "typestr": "@"
+   },
+   "NLTagOpenParenthesis": {
+    "typestr": "@"
+   },
+   "NLTagOpenQuote": {
+    "typestr": "@"
+   },
+   "NLTagOrganizationName": {
+    "typestr": "@"
+   },
+   "NLTagOther": {
+    "typestr": "@"
+   },
+   "NLTagOtherPunctuation": {
+    "typestr": "@"
+   },
+   "NLTagOtherWhitespace": {
+    "typestr": "@"
+   },
+   "NLTagOtherWord": {
+    "typestr": "@"
+   },
+   "NLTagParagraphBreak": {
+    "typestr": "@"
+   },
+   "NLTagParticle": {
+    "typestr": "@"
+   },
+   "NLTagPersonalName": {
+    "typestr": "@"
+   },
+   "NLTagPlaceName": {
+    "typestr": "@"
+   },
+   "NLTagPreposition": {
+    "typestr": "@"
+   },
+   "NLTagPronoun": {
+    "typestr": "@"
+   },
+   "NLTagPunctuation": {
+    "typestr": "@"
+   },
+   "NLTagSchemeLanguage": {
+    "typestr": "@"
+   },
+   "NLTagSchemeLemma": {
+    "typestr": "@"
+   },
+   "NLTagSchemeLexicalClass": {
+    "typestr": "@"
+   },
+   "NLTagSchemeNameType": {
+    "typestr": "@"
+   },
+   "NLTagSchemeNameTypeOrLexicalClass": {
+    "typestr": "@"
+   },
+   "NLTagSchemeScript": {
+    "typestr": "@"
+   },
+   "NLTagSchemeTokenType": {
+    "typestr": "@"
+   },
+   "NLTagSentenceTerminator": {
+    "typestr": "@"
+   },
+   "NLTagVerb": {
+    "typestr": "@"
+   },
+   "NLTagWhitespace": {
+    "typestr": "@"
+   },
+   "NLTagWord": {
+    "typestr": "@"
+   },
+   "NLTagWordJoiner": {
+    "typestr": "@"
+   }
+  },
+  "typed_enum": {
+   "NLContextualEmbeddingKey": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "NLLanguage": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "NLScript": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "NLTag": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "NLTagScheme": {
+    "type": "@",
+    "type_name": "NSString"
    }
   }
  }

@@ -1,1261 +1,1977 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
-  "enum": {
-   "NEVPNIKEv2TLSVersionDefault": { "value": 0 },
-   "NEVPNIKEv2TLSVersion1_0": { "value": 1 },
-   "NEVPNIKEv2TLSVersion1_1": { "value": 2 },
-   "NEVPNIKEv2TLSVersion1_2": { "value": 3 },
-   "NEVPNIKEv2DiffieHellmanGroupInvalid": { "value": 0 },
-   "NEAppProxyFlowErrorDatagramTooLarge": { "value": 9 },
-   "NEAppProxyFlowErrorReadAlreadyPending": { "value": 10 },
-   "NEEvaluateConnectionRuleActionConnectIfNeeded": { "value": 1 },
-   "NEEvaluateConnectionRuleActionNeverConnect": { "value": 2 },
-   "NEAppProxyFlowErrorNotConnected": { "value": 1 },
-   "NEAppProxyFlowErrorPeerReset": { "value": 2 },
-   "NEAppProxyFlowErrorHostUnreachable": { "value": 3 },
-   "NEAppProxyFlowErrorInvalidArgument": { "value": 4 },
-   "NEAppProxyFlowErrorAborted": { "value": 5 },
-   "NEAppProxyFlowErrorRefused": { "value": 6 },
-   "NEAppProxyFlowErrorTimedOut": { "value": 7 },
-   "NEAppProxyFlowErrorInternal": { "value": 8 },
-   "NEFilterFlowBytesMax": { "value": "18446744073709551615" },
-   "NEFilterManagerErrorConfigurationInvalid": { "value": 1 },
-   "NEFilterManagerErrorConfigurationDisabled": { "value": 2 },
-   "NEFilterManagerErrorConfigurationStale": { "value": 3 },
-   "NEFilterManagerErrorConfigurationCannotBeRemoved": { "value": 4 },
-   "NEOnDemandRuleActionConnect": { "value": 1 },
-   "NEOnDemandRuleActionDisconnect": { "value": 2 },
-   "NEOnDemandRuleActionEvaluateConnection": { "value": 3 },
-   "NEOnDemandRuleActionIgnore": { "value": 4 },
-   "NEOnDemandRuleInterfaceTypeAny": { "value": 0 },
-   "NEOnDemandRuleInterfaceTypeEthernet": { "value": 1 },
-   "NEOnDemandRuleInterfaceTypeWiFi": { "value": 2 },
-   "NEProviderStopReasonNone": { "value": 0 },
-   "NEProviderStopReasonUserInitiated": { "value": 1 },
-   "NEProviderStopReasonProviderFailed": { "value": 2 },
-   "NEProviderStopReasonNoNetworkAvailable": { "value": 3 },
-   "NEProviderStopReasonUnrecoverableNetworkChange": { "value": 4 },
-   "NEProviderStopReasonProviderDisabled": { "value": 5 },
-   "NEProviderStopReasonAuthenticationCanceled": { "value": 6 },
-   "NEProviderStopReasonConfigurationFailed": { "value": 7 },
-   "NEProviderStopReasonIdleTimeout": { "value": 8 },
-   "NEProviderStopReasonConfigurationDisabled": { "value": 9 },
-   "NEProviderStopReasonConfigurationRemoved": { "value": 10 },
-   "NEProviderStopReasonSuperceded": { "value": 11 },
-   "NEProviderStopReasonUserLogout": { "value": 12 },
-   "NEProviderStopReasonUserSwitch": { "value": 13 },
-   "NEProviderStopReasonConnectionFailed": { "value": 14 },
-   "NETunnelProviderErrorNetworkSettingsInvalid": { "value": 1 },
-   "NETunnelProviderErrorNetworkSettingsCanceled": { "value": 2 },
-   "NETunnelProviderErrorNetworkSettingsFailed": { "value": 3 },
-   "NETunnelProviderRoutingMethodDestinationIP": { "value": 1 },
-   "NETunnelProviderRoutingMethodSourceApplication": { "value": 2 },
-   "NEVPNStatusInvalid": { "value": 0 },
-   "NEVPNStatusDisconnected": { "value": 1 },
-   "NEVPNStatusConnecting": { "value": 2 },
-   "NEVPNStatusConnected": { "value": 3 },
-   "NEVPNStatusReasserting": { "value": 4 },
-   "NEVPNStatusDisconnecting": { "value": 5 },
-   "NEVPNErrorConfigurationInvalid": { "value": 1 },
-   "NEVPNErrorConfigurationDisabled": { "value": 2 },
-   "NEVPNErrorConnectionFailed": { "value": 3 },
-   "NEVPNErrorConfigurationStale": { "value": 4 },
-   "NEVPNErrorConfigurationReadWriteFailed": { "value": 5 },
-   "NEVPNErrorConfigurationUnknown": { "value": 6 },
-   "NEVPNIKEv2EncryptionAlgorithmDES": { "value": 1 },
-   "NEVPNIKEv2EncryptionAlgorithm3DES": { "value": 2 },
-   "NEVPNIKEv2EncryptionAlgorithmAES128": { "value": 3 },
-   "NEVPNIKEv2EncryptionAlgorithmAES256": { "value": 4 },
-   "NEVPNIKEv2EncryptionAlgorithmAES128GCM": { "value": 5 },
-   "NEVPNIKEv2EncryptionAlgorithmAES256GCM": { "value": 6 },
-   "NEVPNIKEv2IntegrityAlgorithmSHA96": { "value": 1 },
-   "NEVPNIKEv2IntegrityAlgorithmSHA160": { "value": 2 },
-   "NEVPNIKEv2IntegrityAlgorithmSHA256": { "value": 3 },
-   "NEVPNIKEv2IntegrityAlgorithmSHA384": { "value": 4 },
-   "NEVPNIKEv2IntegrityAlgorithmSHA512": { "value": 5 },
-   "NEVPNIKEv2DeadPeerDetectionRateNone": { "value": 0 },
-   "NEVPNIKEv2DeadPeerDetectionRateLow": { "value": 1 },
-   "NEVPNIKEv2DeadPeerDetectionRateMedium": { "value": 2 },
-   "NEVPNIKEv2DeadPeerDetectionRateHigh": { "value": 3 },
-   "NEVPNIKEv2DiffieHellmanGroup0": { "value": 0 },
-   "NEVPNIKEv2DiffieHellmanGroup1": { "value": 1 },
-   "NEVPNIKEv2DiffieHellmanGroup2": { "value": 2 },
-   "NEVPNIKEv2DiffieHellmanGroup5": { "value": 5 },
-   "NEVPNIKEv2DiffieHellmanGroup14": { "value": 14 },
-   "NEVPNIKEv2DiffieHellmanGroup15": { "value": 15 },
-   "NEVPNIKEv2DiffieHellmanGroup16": { "value": 16 },
-   "NEVPNIKEv2DiffieHellmanGroup17": { "value": 17 },
-   "NEVPNIKEv2DiffieHellmanGroup18": { "value": 18 },
-   "NEVPNIKEv2DiffieHellmanGroup19": { "value": 19 },
-   "NEVPNIKEv2DiffieHellmanGroup20": { "value": 20 },
-   "NEVPNIKEv2DiffieHellmanGroup21": { "value": 21 },
-   "NEVPNIKEv2CertificateTypeRSA": { "value": 1 },
-   "NEVPNIKEv2CertificateTypeECDSA256": { "value": 2 },
-   "NEVPNIKEv2CertificateTypeECDSA384": { "value": 3 },
-   "NEVPNIKEv2CertificateTypeECDSA521": { "value": 4 },
-   "NEVPNIKEAuthenticationMethodNone": { "value": 0 },
-   "NEVPNIKEAuthenticationMethodCertificate": { "value": 1 },
-   "NEVPNIKEAuthenticationMethodSharedSecret": { "value": 2 },
-   "NWPathStatusInvalid": { "value": 0 },
-   "NWPathStatusSatisfied": { "value": 1 },
-   "NWPathStatusUnsatisfied": { "value": 2 },
-   "NWPathStatusSatisfiable": { "value": 3 },
-   "NWTCPConnectionStateInvalid": { "value": 0 },
-   "NWTCPConnectionStateConnecting": { "value": 1 },
-   "NWTCPConnectionStateWaiting": { "value": 2 },
-   "NWTCPConnectionStateConnected": { "value": 3 },
-   "NWTCPConnectionStateDisconnected": { "value": 4 },
-   "NWTCPConnectionStateCancelled": { "value": 5 },
-   "NWUDPSessionStateInvalid": { "value": 0 },
-   "NWUDPSessionStateWaiting": { "value": 1 },
-   "NWUDPSessionStatePreparing": { "value": 2 },
-   "NWUDPSessionStateReady": { "value": 3 },
-   "NWUDPSessionStateFailed": { "value": 4 },
-   "NWUDPSessionStateCancelled": { "value": 5 }
-  },
-  "externs": {
-   "NEAppProxyErrorDomain": { "typestr": "@" },
-   "NEFilterErrorDomain": { "typestr": "@" },
-   "NEFilterConfigurationDidChangeNotification": { "typestr": "@" },
-   "NETunnelProviderErrorDomain": { "typestr": "@" },
-   "NEVPNStatusDidChangeNotification": { "typestr": "@" },
-   "NEVPNConnectionStartOptionUsername": { "typestr": "@" },
-   "NEVPNConnectionStartOptionPassword": { "typestr": "@" },
-   "NEVPNErrorDomain": { "typestr": "@" },
-   "NEVPNConfigurationChangeNotification": { "typestr": "@" }
-  },
   "classes": {
-   "NEVPNConnection": {
-    "methods": [
-     {
-      "selector": "startVPNTunnelAndReturnError:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "0": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "startVPNTunnelWithOptions:andReturnError:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "NETunnelProviderSession": {
-    "methods": [
-     {
-      "selector": "startTunnelWithOptions:andReturnError:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "sendProviderMessage:returnError:responseHandler:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "1": { "type_modifier": "o" },
-       "2": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NWPath": {
-    "methods": [
-     {
-      "selector": "isExpensive",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "isEqualToPath:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     }
-    ]
-   },
-   "NWTCPConnection": {
-    "methods": [
-     {
-      "selector": "isViable",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "hasBetterPath",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "readLength:completionHandler:",
-      "class_method": true,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "readMinimumLength:maximumLength:completionHandler:",
-      "class_method": true,
-      "args": {
-       "2": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "write:completionHandler:",
-      "class_method": true,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NWUDPSession": {
-    "methods": [
-     {
-      "selector": "isViable",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "hasBetterPath",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setReadHandler:maxDatagrams:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "writeDatagram:completionHandler:",
-      "class_method": true,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NETunnelProviderManager": {
-    "methods": [
-     {
-      "selector": "loadAllFromPreferencesWithCompletionHandler:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NEPacketTunnelProvider": {
-    "methods": [
-     {
-      "selector": "startTunnelWithOptions:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "stopTunnelWithReason:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "createTCPConnectionThroughTunnelToEndpoint:enableTLS:TLSParameters:delegate:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "NEPacketTunnelFlow": {
-    "methods": [
-     {
-      "selector": "readPacketsWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "writePackets:withProtocols:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "readPacketObjectsWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "writePacketObjects:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     }
-    ]
-   },
-   "NEProvider": {
-    "methods": [
-     {
-      "selector": "createTCPConnectionToEndpoint:enableTLS:TLSParameters:delegate:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "sleepWithCompletionHandler:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "displayMessage:completionHandler:",
-      "class_method": true,
-      "deprecated": 1014,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Z" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NETunnelProvider": {
-    "methods": [
-     {
-      "selector": "handleAppMessage:completionHandler:",
-      "class_method": true,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "setTunnelNetworkSettings:completionHandler:",
-      "class_method": true,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "reasserting",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setReasserting:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     }
-    ]
-   },
-   "NEProxyServer": {
-    "methods": [
-     {
-      "selector": "authenticationRequired",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setAuthenticationRequired:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     }
-    ]
-   },
-   "NEProxySettings": {
-    "methods": [
-     {
-      "selector": "autoProxyConfigurationEnabled",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setAutoProxyConfigurationEnabled:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "HTTPSEnabled",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setHTTPSEnabled:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "excludeSimpleHostnames",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setExcludeSimpleHostnames:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "HTTPEnabled",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setHTTPEnabled:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     }
-    ]
-   },
-   "NEAppProxyProviderManager": {
-    "methods": [
-     {
-      "selector": "loadAllFromPreferencesWithCompletionHandler:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NEFilterControlProvider": {
-    "methods": [
-     {
-      "selector": "handleRemediationForFlow:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "handleNewFlow:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
    "NEAppProxyFlow": {
     "methods": [
      {
-      "selector": "isBound",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "openWithLocalEndpoint:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NEAppProxyUDPFlow": {
-    "methods": [
-     {
-      "selector": "readDatagramsWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "writeDatagrams:sentByEndpoints:completionHandler:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NEAppProxyTCPFlow": {
-    "methods": [
-     {
-      "selector": "readDataWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "writeData:withCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NEFilterManager": {
-    "methods": [
-     {
-      "selector": "loadFromPreferencesWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "removeFromPreferencesWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "saveToPreferencesWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "isEnabled",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setEnabled:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     }
-    ]
-   },
-   "NEVPNProtocolIPSec": {
-    "methods": [
-     {
-      "selector": "excludeDeviceCommunication",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "useExtendedAuthentication",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setUseExtendedAuthentication:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "setExcludeDeviceCommunication:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     }
-    ]
-   },
-   "NEVPNProtocol": {
-    "methods": [
-     {
-      "selector": "disconnectOnSleep",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setDisconnectOnSleep:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     }
-    ]
-   },
-   "NEVPNProtocolIKEv2": {
-    "methods": [
-     {
-      "selector": "useConfigurationAttributeInternalIPSubnet",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setUseConfigurationAttributeInternalIPSubnet:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "disableMOBIKE",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setDisableMOBIKE:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "disableRedirect",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setDisableRedirect:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "enablePFS",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setEnablePFS:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "enableRevocationCheck",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setEnableRevocationCheck:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "strictRevocationCheck",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setStrictRevocationCheck:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     }
-    ]
-   },
-   "NEVPNManager": {
-    "methods": [
-     {
-      "selector": "protocol",
-      "class_method": false,
-      "deprecated": 1011
-     },
-     {
-      "selector": "setProtocol:",
-      "class_method": false,
-      "deprecated": 1011
-     },
-     {
-      "selector": "loadFromPreferencesWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "removeFromPreferencesWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "saveToPreferencesWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "type_override": "@?",
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "isOnDemandEnabled",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setOnDemandEnabled:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "isEnabled",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setEnabled:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "NEFilterPacketProvider": {
-    "methods": [
-     {
-      "selector": "packetHandler",
       "class_method": false,
       "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" },
-	 "3": { "typestr": "q" },
-	 "4": { "typestr": "n^v" },
-	 "5": { "typestr": "l" }
+       "type_override": "Z"
+      },
+      "selector": "isBound"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
         },
-	"retval": { "typestr": "q" }
+        "type_override": "@?"
        }
-      }
-     },
-     {
-      "selector": "setPacketHandler:",
+      },
       "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "q" },
-	  "4": { "typestr": "n^v" },
-	  "5": { "typestr": "l" }
-         },
-	 "retval": { "typestr": "q" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NEFilterDataProvider": {
-    "methods": [
-     {
-      "selector": "applySettings:completionHandler:",
-      "class_method": true,
-      "args": {
-       "1": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NEDNSProxyManager": {
-    "methods": [
-     {
-      "selector": "saveToPreferencesWithCompletionHandler:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "loadFromPreferencesWithCompletionHandler:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "removeFromPreferencesWithCompletionHandler:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NETransparentProxyManager": {
-    "methods": [
-     {
-      "selector": "loadAllFromPreferencesWithCompletionHandler:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NEFilterProvider": {
-    "methods": [
-     {
-      "selector": "stopFilterWithReason:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     },
-     {
-      "selector": "startFilterWithCompletionHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-         },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
-     }
-    ]
-   },
-   "NEFilterProviderConfiguration": {
-    "methods": [
-     {
-      "selector": "filterBrowsers",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setFilterBrowsers:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
-     },
-     {
-      "selector": "filterSockets",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setFilterSockets:",
-      "class_method": false,
-      "args": { "0": { "type_override": "Z" } }
+      "selector": "openWithLocalEndpoint:completionHandler:"
      }
     ]
    },
    "NEAppProxyProvider": {
     "methods": [
      {
-      "selector": "handleNewFlow:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "handleNewFlow:"
      },
      {
-      "selector": "startProxyWithOptions:completionHandler:",
-      "class_method": false,
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
          },
-	 "retval": { "typestr": "v" }
-        }
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "startProxyWithOptions:completionHandler:"
      },
      {
-      "selector": "stopProxyWithReason:completionHandler:",
-      "class_method": false,
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" }
+          "0": {
+           "typestr": "^v"
+          }
          },
-	 "retval": { "typestr": "v" }
-        }
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "stopProxyWithReason:completionHandler:"
      },
      {
-      "selector": "stopProxyWithReason:completionHandler:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "stopProxyWithReason:completionHandler:"
+     }
+    ]
+   },
+   "NEAppProxyProviderManager": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "loadAllFromPreferencesWithCompletionHandler:"
+     }
+    ]
+   },
+   "NEAppProxyTCPFlow": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "readDataWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "writeData:withCompletionHandler:"
+     }
+    ]
+   },
+   "NEAppProxyUDPFlow": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "readDatagramsWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "writeDatagrams:sentByEndpoints:completionHandler:"
+     }
+    ]
+   },
+   "NEDNSProxyManager": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "saveToPreferencesWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "loadFromPreferencesWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "removeFromPreferencesWithCompletionHandler:"
      }
     ]
    },
    "NEDNSSettings": {
     "methods": [
      {
-      "selector": "matchDomainsNoSearch",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "matchDomainsNoSearch"
      },
      {
-      "selector": "setMatchDomainsNoSearch:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setMatchDomainsNoSearch:"
+     }
+    ]
+   },
+   "NEFilterControlProvider": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "handleRemediationForFlow:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "handleNewFlow:completionHandler:"
+     }
+    ]
+   },
+   "NEFilterDataProvider": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "applySettings:completionHandler:"
+     }
+    ]
+   },
+   "NEFilterManager": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "loadFromPreferencesWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "removeFromPreferencesWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "saveToPreferencesWithCompletionHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isEnabled"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setEnabled:"
+     }
+    ]
+   },
+   "NEFilterPacketProvider": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "@"
+         },
+         "3": {
+          "typestr": "q"
+         },
+         "4": {
+          "typestr": "n^v"
+         },
+         "5": {
+          "typestr": "l"
+         }
+        },
+        "retval": {
+         "typestr": "q"
+        }
+       }
+      },
+      "selector": "packetHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "q"
+          },
+          "4": {
+           "typestr": "n^v"
+          },
+          "5": {
+           "typestr": "l"
+          }
+         },
+         "retval": {
+          "typestr": "q"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setPacketHandler:"
+     }
+    ]
+   },
+   "NEFilterProvider": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "stopFilterWithReason:completionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "startFilterWithCompletionHandler:"
+     }
+    ]
+   },
+   "NEFilterProviderConfiguration": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "filterBrowsers"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setFilterBrowsers:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "filterSockets"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setFilterSockets:"
+     }
+    ]
+   },
+   "NEHotspotEAPSettings": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_name": "SecIdentityRef"
+       }
+      },
+      "class_method": false,
+      "selector": "setIdentity:"
+     }
+    ]
+   },
+   "NEPacketTunnelFlow": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "readPacketsWithCompletionHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "writePackets:withProtocols:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "readPacketObjectsWithCompletionHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "writePacketObjects:"
+     }
+    ]
+   },
+   "NEPacketTunnelProvider": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "startTunnelWithOptions:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "stopTunnelWithReason:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "createTCPConnectionThroughTunnelToEndpoint:enableTLS:TLSParameters:delegate:"
+     }
+    ]
+   },
+   "NEProvider": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "createTCPConnectionToEndpoint:enableTLS:TLSParameters:delegate:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "sleepWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "deprecated": 1014,
+      "selector": "displayMessage:completionHandler:"
+     }
+    ]
+   },
+   "NEProxyServer": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "authenticationRequired"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAuthenticationRequired:"
+     }
+    ]
+   },
+   "NEProxySettings": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "autoProxyConfigurationEnabled"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAutoProxyConfigurationEnabled:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "HTTPSEnabled"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setHTTPSEnabled:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "excludeSimpleHostnames"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setExcludeSimpleHostnames:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "HTTPEnabled"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setHTTPEnabled:"
+     }
+    ]
+   },
+   "NETransparentProxyManager": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "loadAllFromPreferencesWithCompletionHandler:"
+     }
+    ]
+   },
+   "NETunnelProvider": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "handleAppMessage:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "setTunnelNetworkSettings:completionHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "reasserting"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setReasserting:"
+     }
+    ]
+   },
+   "NETunnelProviderManager": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "loadAllFromPreferencesWithCompletionHandler:"
+     }
+    ]
+   },
+   "NETunnelProviderSession": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "startTunnelWithOptions:andReturnError:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       },
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "sendProviderMessage:returnError:responseHandler:"
+     }
+    ]
+   },
+   "NEVPNConnection": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "startVPNTunnelAndReturnError:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "startVPNTunnelWithOptions:andReturnError:"
+     }
+    ]
+   },
+   "NEVPNManager": {
+    "methods": [
+     {
+      "class_method": false,
+      "deprecated": 1011,
+      "selector": "protocol"
+     },
+     {
+      "class_method": false,
+      "deprecated": 1011,
+      "selector": "setProtocol:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "loadFromPreferencesWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "removeFromPreferencesWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "saveToPreferencesWithCompletionHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isOnDemandEnabled"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setOnDemandEnabled:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isEnabled"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setEnabled:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_name": "AuthorizationRef"
+       }
+      },
+      "class_method": false,
+      "selector": "setAuthorization:"
+     }
+    ]
+   },
+   "NEVPNProtocol": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "disconnectOnSleep"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setDisconnectOnSleep:"
+     }
+    ]
+   },
+   "NEVPNProtocolIKEv2": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "useConfigurationAttributeInternalIPSubnet"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setUseConfigurationAttributeInternalIPSubnet:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "disableMOBIKE"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setDisableMOBIKE:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "disableRedirect"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setDisableRedirect:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "enablePFS"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setEnablePFS:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "enableRevocationCheck"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setEnableRevocationCheck:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "strictRevocationCheck"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setStrictRevocationCheck:"
+     }
+    ]
+   },
+   "NEVPNProtocolIPSec": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "excludeDeviceCommunication"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "useExtendedAuthentication"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setUseExtendedAuthentication:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setExcludeDeviceCommunication:"
      }
     ]
    },
    "NSObject": {
     "methods": [
      {
-      "selector": "shouldProvideIdentityForConnection:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "shouldProvideIdentityForConnection:"
      },
      {
-      "selector": "shouldEvaluateTrustForConnection:",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "shouldEvaluateTrustForConnection:"
      },
      {
-      "selector": "provideIdentityForConnection:completionHandler:",
-      "class_method": false,
       "args": {
        "1": {
-        "type_override": "@?",
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
          },
-	 "retval": { "typestr": "v" }
-        }
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "provideIdentityForConnection:completionHandler:"
      },
      {
-      "selector": "evaluateTrustForConnection:peerCertificateChain:completionHandler:",
-      "class_method": false,
       "args": {
        "2": {
-        "type_override": "@?",
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
          },
-	 "retval": { "typestr": "v" }
-        }
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "evaluateTrustForConnection:peerCertificateChain:completionHandler:"
      }
     ]
+   },
+   "NWPath": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isExpensive"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isEqualToPath:"
+     }
+    ]
+   },
+   "NWTCPConnection": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isViable"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hasBetterPath"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "readLength:completionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "readMinimumLength:maximumLength:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "write:completionHandler:"
+     }
+    ]
+   },
+   "NWUDPSession": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isViable"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hasBetterPath"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "setReadHandler:maxDatagrams:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": true,
+      "selector": "writeDatagram:completionHandler:"
+     }
+    ]
+   }
+  },
+  "enum": {
+   "NEAppProxyFlowErrorAborted": {
+    "value": 5
+   },
+   "NEAppProxyFlowErrorDatagramTooLarge": {
+    "value": 9
+   },
+   "NEAppProxyFlowErrorHostUnreachable": {
+    "value": 3
+   },
+   "NEAppProxyFlowErrorInternal": {
+    "value": 8
+   },
+   "NEAppProxyFlowErrorInvalidArgument": {
+    "value": 4
+   },
+   "NEAppProxyFlowErrorNotConnected": {
+    "value": 1
+   },
+   "NEAppProxyFlowErrorPeerReset": {
+    "value": 2
+   },
+   "NEAppProxyFlowErrorReadAlreadyPending": {
+    "value": 10
+   },
+   "NEAppProxyFlowErrorRefused": {
+    "value": 6
+   },
+   "NEAppProxyFlowErrorTimedOut": {
+    "value": 7
+   },
+   "NEEvaluateConnectionRuleActionConnectIfNeeded": {
+    "value": 1
+   },
+   "NEEvaluateConnectionRuleActionNeverConnect": {
+    "value": 2
+   },
+   "NEFilterFlowBytesMax": {
+    "value": "18446744073709551615"
+   },
+   "NEFilterManagerErrorConfigurationCannotBeRemoved": {
+    "value": 4
+   },
+   "NEFilterManagerErrorConfigurationDisabled": {
+    "value": 2
+   },
+   "NEFilterManagerErrorConfigurationInvalid": {
+    "value": 1
+   },
+   "NEFilterManagerErrorConfigurationStale": {
+    "value": 3
+   },
+   "NEOnDemandRuleActionConnect": {
+    "value": 1
+   },
+   "NEOnDemandRuleActionDisconnect": {
+    "value": 2
+   },
+   "NEOnDemandRuleActionEvaluateConnection": {
+    "value": 3
+   },
+   "NEOnDemandRuleActionIgnore": {
+    "value": 4
+   },
+   "NEOnDemandRuleInterfaceTypeAny": {
+    "value": 0
+   },
+   "NEOnDemandRuleInterfaceTypeEthernet": {
+    "value": 1
+   },
+   "NEOnDemandRuleInterfaceTypeWiFi": {
+    "value": 2
+   },
+   "NEProviderStopReasonAuthenticationCanceled": {
+    "value": 6
+   },
+   "NEProviderStopReasonConfigurationDisabled": {
+    "value": 9
+   },
+   "NEProviderStopReasonConfigurationFailed": {
+    "value": 7
+   },
+   "NEProviderStopReasonConfigurationRemoved": {
+    "value": 10
+   },
+   "NEProviderStopReasonConnectionFailed": {
+    "value": 14
+   },
+   "NEProviderStopReasonIdleTimeout": {
+    "value": 8
+   },
+   "NEProviderStopReasonNoNetworkAvailable": {
+    "value": 3
+   },
+   "NEProviderStopReasonNone": {
+    "value": 0
+   },
+   "NEProviderStopReasonProviderDisabled": {
+    "value": 5
+   },
+   "NEProviderStopReasonProviderFailed": {
+    "value": 2
+   },
+   "NEProviderStopReasonSuperceded": {
+    "value": 11
+   },
+   "NEProviderStopReasonUnrecoverableNetworkChange": {
+    "value": 4
+   },
+   "NEProviderStopReasonUserInitiated": {
+    "value": 1
+   },
+   "NEProviderStopReasonUserLogout": {
+    "value": 12
+   },
+   "NEProviderStopReasonUserSwitch": {
+    "value": 13
+   },
+   "NETunnelProviderErrorNetworkSettingsCanceled": {
+    "value": 2
+   },
+   "NETunnelProviderErrorNetworkSettingsFailed": {
+    "value": 3
+   },
+   "NETunnelProviderErrorNetworkSettingsInvalid": {
+    "value": 1
+   },
+   "NETunnelProviderRoutingMethodDestinationIP": {
+    "value": 1
+   },
+   "NETunnelProviderRoutingMethodSourceApplication": {
+    "value": 2
+   },
+   "NEVPNErrorConfigurationDisabled": {
+    "value": 2
+   },
+   "NEVPNErrorConfigurationInvalid": {
+    "value": 1
+   },
+   "NEVPNErrorConfigurationReadWriteFailed": {
+    "value": 5
+   },
+   "NEVPNErrorConfigurationStale": {
+    "value": 4
+   },
+   "NEVPNErrorConfigurationUnknown": {
+    "value": 6
+   },
+   "NEVPNErrorConnectionFailed": {
+    "value": 3
+   },
+   "NEVPNIKEAuthenticationMethodCertificate": {
+    "value": 1
+   },
+   "NEVPNIKEAuthenticationMethodNone": {
+    "value": 0
+   },
+   "NEVPNIKEAuthenticationMethodSharedSecret": {
+    "value": 2
+   },
+   "NEVPNIKEv2CertificateTypeECDSA256": {
+    "value": 2
+   },
+   "NEVPNIKEv2CertificateTypeECDSA384": {
+    "value": 3
+   },
+   "NEVPNIKEv2CertificateTypeECDSA521": {
+    "value": 4
+   },
+   "NEVPNIKEv2CertificateTypeRSA": {
+    "value": 1
+   },
+   "NEVPNIKEv2DeadPeerDetectionRateHigh": {
+    "value": 3
+   },
+   "NEVPNIKEv2DeadPeerDetectionRateLow": {
+    "value": 1
+   },
+   "NEVPNIKEv2DeadPeerDetectionRateMedium": {
+    "value": 2
+   },
+   "NEVPNIKEv2DeadPeerDetectionRateNone": {
+    "value": 0
+   },
+   "NEVPNIKEv2DiffieHellmanGroup0": {
+    "value": 0
+   },
+   "NEVPNIKEv2DiffieHellmanGroup1": {
+    "value": 1
+   },
+   "NEVPNIKEv2DiffieHellmanGroup14": {
+    "value": 14
+   },
+   "NEVPNIKEv2DiffieHellmanGroup15": {
+    "value": 15
+   },
+   "NEVPNIKEv2DiffieHellmanGroup16": {
+    "value": 16
+   },
+   "NEVPNIKEv2DiffieHellmanGroup17": {
+    "value": 17
+   },
+   "NEVPNIKEv2DiffieHellmanGroup18": {
+    "value": 18
+   },
+   "NEVPNIKEv2DiffieHellmanGroup19": {
+    "value": 19
+   },
+   "NEVPNIKEv2DiffieHellmanGroup2": {
+    "value": 2
+   },
+   "NEVPNIKEv2DiffieHellmanGroup20": {
+    "value": 20
+   },
+   "NEVPNIKEv2DiffieHellmanGroup21": {
+    "value": 21
+   },
+   "NEVPNIKEv2DiffieHellmanGroup5": {
+    "value": 5
+   },
+   "NEVPNIKEv2DiffieHellmanGroupInvalid": {
+    "value": 0
+   },
+   "NEVPNIKEv2EncryptionAlgorithm3DES": {
+    "value": 2
+   },
+   "NEVPNIKEv2EncryptionAlgorithmAES128": {
+    "value": 3
+   },
+   "NEVPNIKEv2EncryptionAlgorithmAES128GCM": {
+    "value": 5
+   },
+   "NEVPNIKEv2EncryptionAlgorithmAES256": {
+    "value": 4
+   },
+   "NEVPNIKEv2EncryptionAlgorithmAES256GCM": {
+    "value": 6
+   },
+   "NEVPNIKEv2EncryptionAlgorithmDES": {
+    "value": 1
+   },
+   "NEVPNIKEv2IntegrityAlgorithmSHA160": {
+    "value": 2
+   },
+   "NEVPNIKEv2IntegrityAlgorithmSHA256": {
+    "value": 3
+   },
+   "NEVPNIKEv2IntegrityAlgorithmSHA384": {
+    "value": 4
+   },
+   "NEVPNIKEv2IntegrityAlgorithmSHA512": {
+    "value": 5
+   },
+   "NEVPNIKEv2IntegrityAlgorithmSHA96": {
+    "value": 1
+   },
+   "NEVPNIKEv2TLSVersion1_0": {
+    "value": 1
+   },
+   "NEVPNIKEv2TLSVersion1_1": {
+    "value": 2
+   },
+   "NEVPNIKEv2TLSVersion1_2": {
+    "value": 3
+   },
+   "NEVPNIKEv2TLSVersionDefault": {
+    "value": 0
+   },
+   "NEVPNStatusConnected": {
+    "value": 3
+   },
+   "NEVPNStatusConnecting": {
+    "value": 2
+   },
+   "NEVPNStatusDisconnected": {
+    "value": 1
+   },
+   "NEVPNStatusDisconnecting": {
+    "value": 5
+   },
+   "NEVPNStatusInvalid": {
+    "value": 0
+   },
+   "NEVPNStatusReasserting": {
+    "value": 4
+   },
+   "NWPathStatusInvalid": {
+    "value": 0
+   },
+   "NWPathStatusSatisfiable": {
+    "value": 3
+   },
+   "NWPathStatusSatisfied": {
+    "value": 1
+   },
+   "NWPathStatusUnsatisfied": {
+    "value": 2
+   },
+   "NWTCPConnectionStateCancelled": {
+    "value": 5
+   },
+   "NWTCPConnectionStateConnected": {
+    "value": 3
+   },
+   "NWTCPConnectionStateConnecting": {
+    "value": 1
+   },
+   "NWTCPConnectionStateDisconnected": {
+    "value": 4
+   },
+   "NWTCPConnectionStateInvalid": {
+    "value": 0
+   },
+   "NWTCPConnectionStateWaiting": {
+    "value": 2
+   },
+   "NWUDPSessionStateCancelled": {
+    "value": 5
+   },
+   "NWUDPSessionStateFailed": {
+    "value": 4
+   },
+   "NWUDPSessionStateInvalid": {
+    "value": 0
+   },
+   "NWUDPSessionStatePreparing": {
+    "value": 2
+   },
+   "NWUDPSessionStateReady": {
+    "value": 3
+   },
+   "NWUDPSessionStateWaiting": {
+    "value": 1
+   }
+  },
+  "externs": {
+   "NEAppProxyErrorDomain": {
+    "typestr": "@"
+   },
+   "NEFilterConfigurationDidChangeNotification": {
+    "typestr": "@"
+   },
+   "NEFilterErrorDomain": {
+    "typestr": "@"
+   },
+   "NETunnelProviderErrorDomain": {
+    "typestr": "@"
+   },
+   "NEVPNConfigurationChangeNotification": {
+    "typestr": "@"
+   },
+   "NEVPNConnectionStartOptionPassword": {
+    "typestr": "@"
+   },
+   "NEVPNConnectionStartOptionUsername": {
+    "typestr": "@"
+   },
+   "NEVPNErrorDomain": {
+    "typestr": "@"
+   },
+   "NEVPNStatusDidChangeNotification": {
+    "typestr": "@"
    }
   }
  }

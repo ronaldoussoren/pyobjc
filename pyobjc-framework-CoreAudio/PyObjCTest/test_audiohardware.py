@@ -301,18 +301,16 @@ class TestAudioHardware(TestCase):
 
         self.assertEqual(CoreAudio.kAudioAggregateDeviceClassID, fourcc(b"aagg"))
 
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceUIDKey, b"uid")
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceNameKey, b"name")
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceSubDeviceListKey, b"subdevices")
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceMasterSubDeviceKey, b"master")
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceMainSubDeviceKey, b"master")
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceClockDeviceKey, b"clock")
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceIsPrivateKey, b"private")
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceIsStackedKey, b"stacked")
-        self.assertEqual(CoreAudio.kAudioAggregateDeviceTapListKey, b"taps")
-        self.assertEqual(
-            CoreAudio.kAudioAggregateDeviceTapAutoStartKey, b"tapautostart"
-        )
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceUIDKey, "uid")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceNameKey, "name")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceSubDeviceListKey, "subdevices")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceMasterSubDeviceKey, "master")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceMainSubDeviceKey, "master")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceClockDeviceKey, "clock")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceIsPrivateKey, "private")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceIsStackedKey, "stacked")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceTapListKey, "taps")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceTapAutoStartKey, "tapautostart")
 
         self.assertEqual(
             CoreAudio.kAudioAggregateDevicePropertyFullSubDeviceList, fourcc(b"grup")
@@ -366,15 +364,15 @@ class TestAudioHardware(TestCase):
         self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationHighQuality, 0x60)
         self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationMaxQuality, 0x7F)
 
-        self.assertEqual(CoreAudio.kAudioSubDeviceUIDKey, b"uid")
-        self.assertEqual(CoreAudio.kAudioSubDeviceNameKey, b"name")
-        self.assertEqual(CoreAudio.kAudioSubDeviceInputChannelsKey, b"channels-in")
-        self.assertEqual(CoreAudio.kAudioSubDeviceOutputChannelsKey, b"channels-out")
-        self.assertEqual(CoreAudio.kAudioSubDeviceExtraInputLatencyKey, b"latency-in")
-        self.assertEqual(CoreAudio.kAudioSubDeviceExtraOutputLatencyKey, b"latency-out")
-        self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationKey, b"drift")
+        self.assertEqual(CoreAudio.kAudioSubDeviceUIDKey, "uid")
+        self.assertEqual(CoreAudio.kAudioSubDeviceNameKey, "name")
+        self.assertEqual(CoreAudio.kAudioSubDeviceInputChannelsKey, "channels-in")
+        self.assertEqual(CoreAudio.kAudioSubDeviceOutputChannelsKey, "channels-out")
+        self.assertEqual(CoreAudio.kAudioSubDeviceExtraInputLatencyKey, "latency-in")
+        self.assertEqual(CoreAudio.kAudioSubDeviceExtraOutputLatencyKey, "latency-out")
+        self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationKey, "drift")
         self.assertEqual(
-            CoreAudio.kAudioSubDeviceDriftCompensationQualityKey, b"drift quality"
+            CoreAudio.kAudioSubDeviceDriftCompensationQualityKey, "drift quality"
         )
 
         self.assertEqual(CoreAudio.kAudioSubDevicePropertyExtraLatency, fourcc(b"xltc"))

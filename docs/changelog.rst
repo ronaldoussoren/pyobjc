@@ -129,6 +129,9 @@ Version 12.2
   This makes it possible to refactor parts of this extension module with
   more confidence, and has fixed a number of issues in edge conditions.
 
+* :issue:`644`: A number of constants in the CoreAudio bindings evaluated
+  to byte strings, while the framework expects regular strings.
+
 Version 12.1
 ------------
 
