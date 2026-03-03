@@ -10,7 +10,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 .. __: https://developer.apple.com/documentation/foundation/?preferredLanguage=occ
 
-These bindings are accessed through the ``AppKit`` package (that is, ``import AppKit``).
+These bindings are accessed through the ``Foundation`` package (that is, ``import Foundation``).
 
 
 API Notes
