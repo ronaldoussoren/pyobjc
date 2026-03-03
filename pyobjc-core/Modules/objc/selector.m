@@ -30,7 +30,6 @@ PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
     PyObjCSelector* self = (PyObjCSelector*)_self;
 
     if (self->sel_methinfo != NULL && self->sel_mappingcount != PyObjC_MappingCount) {
-        /* XXX: likely needs atomic read for the mappingcounts */
         Py_BEGIN_CRITICAL_SECTION(self);
         Py_CLEAR(self->sel_methinfo);
         /* XXX: This should also reset the CIF! */

@@ -136,9 +136,9 @@ PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID
 
     if (unlikely(typeID == 0)) { // LCOV_BR_EXCL_LINE
         /* Partially registered type, just wrap as a
-         * a plain CFTypeRef
+         * a plain CFTypeRef.
          *
-         * XXX: Can we reproduce this in testing?
+         * This shouldn't happen in practice.
          */
         // LCOV_EXCL_START
         assert(PyObjC_NSCFTypeClass != NULL);

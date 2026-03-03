@@ -14,7 +14,7 @@ Class   NSAutoreleasePool_class;
 PyObject* PyObjCExc_Error;
 PyObject* PyObjCExc_NoSuchClassError;
 PyObject* PyObjCExc_InternalError;
-PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 12 */
+PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 13 */
 PyObject* PyObjCExc_ObjCRevivalWarning;
 PyObject* PyObjCExc_LockError;
 PyObject* PyObjCExc_BadPrototypeError;

@@ -246,7 +246,6 @@ static PyObject*
 bundle_hack_get(PyObject* s __attribute__((__unused__)),
                 void*     c __attribute__((__unused__)))
 {
-    /* XXX: Need to test on a 10.9 VM to check if this option is still needed... */
     if (unlikely([OC_NSBundleHack bundleHackUsed])) { // LCOV_BR_EXCL_LINE
         Py_RETURN_TRUE;                               // LCOV_EXCL_LINE
     } else {

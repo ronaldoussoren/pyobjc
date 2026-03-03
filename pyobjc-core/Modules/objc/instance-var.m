@@ -599,7 +599,7 @@ PyObjCInstanceVariable_Setup(PyObject* module)
         return -1; // LCOV_EXCL_LINE
     }
 
-    /* XXX: Which this INCREF? AddObject does not steal a reference */
+    /* XXX: Why this INCREF? AddObject does not steal a reference */
     Py_INCREF(PyObjCInstanceVariable_Type);
     return 0;
 }

@@ -504,7 +504,6 @@ decimal_power(PyObject* left __attribute__((__unused__)),
 static PyObject* _Nullable decimal_result_to_python(NSCalculationError status,
                                                     NSDecimal* value, bool round_down)
 {
-    /* XXX: Need tests that trigger these errors, including the loss of precision one */
     NSDecimal value2;
     switch (status) { // LCOV_BR_EXCL_LINE
     case NSCalculationOverflow:

@@ -528,15 +528,14 @@ PyObjC_MakeIMP(Class class, PyObject* sel)
         return NULL;                  // LCOV_EXCL_LINE
     }
 
-    /* XXX: class will always be non-Nil given the function interface */
-    if (class != nil) { // LCOV_BR_EXCL_LINE
-        special = search_special(class, aSelector);
-        if (special) {
-            func = special->make_call_to_python_block;
-        } else if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
-            Py_CLEAR(methinfo);                  // LCOV_EXCL_LINE
-            return NULL;                         // LCOV_EXCL_LINE
-        }
+    assert(class != Nil);
+
+    special = search_special(class, aSelector);
+    if (special) {
+        func = special->make_call_to_python_block;
+    } else if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        Py_CLEAR(methinfo);                  // LCOV_EXCL_LINE
+        return NULL;                         // LCOV_EXCL_LINE
     }
 
     if (func == NULL) {

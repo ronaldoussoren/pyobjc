@@ -1,8 +1,6 @@
 /*
  * Implementation of objective-C object wrapper
  *
- * XXX: Free-threading: Access to 'flags' is not yet thread safe, need to audit all
- *      paths that change flags.
  */
 #include "pyobjc.h"
 
