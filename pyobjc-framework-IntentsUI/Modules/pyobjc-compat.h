@@ -57,8 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  *
  * Start of compiler support helpers
- *
- * XXX: Are these needed?
  */
 
 #define unlikely(x) __builtin_expect(!!(x), 0)

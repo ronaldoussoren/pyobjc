@@ -7,7 +7,7 @@ extern NSNull*   NSNull_null;
 extern Class     NSAutoreleasePool_class;
 extern PyObject* PyObjCExc_Error;
 extern PyObject* PyObjCExc_NoSuchClassError;
-extern PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 12 */
+extern PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 13 */
 extern PyObject* PyObjCExc_ObjCRevivalWarning;
 extern PyObject* PyObjCExc_LockError;
 extern PyObject* PyObjCExc_BadPrototypeError;
