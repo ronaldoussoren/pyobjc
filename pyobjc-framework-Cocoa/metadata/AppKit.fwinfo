@@ -27531,93 +27531,128 @@
    }
   },
   "externs": {
-   "NSAccessibilityHorizontialUnitDescriptionAttribute": { "typestr": "@" },
-   "NSAccessibilityHorizontialUnitsAttribute": { "typestr": "@" },
+   "NSAccessibilityHorizontialUnitDescriptionAttribute": {
+    "type_name": "const NSString *",
+    "typestr": "@"
+   },
+   "NSAccessibilityHorizontialUnitsAttribute": {
+    "type_name": "const NSString *",
+    "typestr": "@"
+   },
    "NSImageIPTCData": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSApplicationProtectedDataWillBecomeUnavailableNotification": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSApplicationProtectedDataDidBecomeAvailableNotification": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAboutPanelOptionApplicationIcon": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAboutPanelOptionApplicationName": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAboutPanelOptionApplicationVersion": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAboutPanelOptionCredits": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAboutPanelOptionVersion": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityAnnotationElement": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityAnnotationLabel": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityAnnotationLocation": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityAnnotationTextAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityCollectionListSubrole": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityCustomTextAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityLanguageTextAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityListItemIndexTextAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityListItemLevelTextAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityListItemPrefixTextAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityMenuBarItemRole": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityPageRole": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityRequiredAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilitySectionListSubrole": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityTabButtonSubrole": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAccessibilityTextAlignmentAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSAppearanceDocumentAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSCollectionElementKindInterItemGapIndicator": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSCollectionElementKindSectionFooter": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSCollectionElementKindSectionHeader": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSDefaultAttributesDocumentAttribute": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSFontWeightBlack": {
@@ -27651,318 +27686,423 @@
     "typestr": "d"
    },
    "NSImageHintUserInterfaceLayoutDirection": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameGoBackTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameGoForwardTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAddDetailTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAddTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAlarmTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAudioInputMuteTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAudioInputTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAudioOutputMuteTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAudioOutputVolumeHighTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAudioOutputVolumeLowTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAudioOutputVolumeMediumTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarAudioOutputVolumeOffTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarBookmarksTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarColorPickerFill": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarColorPickerFont": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarColorPickerStroke": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarCommunicationAudioTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarCommunicationVideoTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarComposeTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarDeleteTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarDownloadTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarEnterFullScreenTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarExitFullScreenTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarFastForwardTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarFolderCopyToTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarFolderMoveToTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarFolderTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarGetInfoTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarGoBackTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarGoDownTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarGoForwardTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarGoUpTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarHistoryTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarIconViewTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarListViewTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarMailTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarNewFolderTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarNewMessageTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarOpenInBrowserTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarPauseTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarPlayPauseTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarPlayTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarPlayheadTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarQuickLookTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarRecordStartTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarRecordStopTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarRefreshTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarRemoveTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarRewindTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarRotateLeftTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarRotateRightTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSearchTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarShareTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSidebarTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSkipAhead15SecondsTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSkipAhead30SecondsTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSkipAheadTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSkipBack15SecondsTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSkipBack30SecondsTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSkipBackTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSkipToEndTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSkipToStartTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarSlideshowTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTagIconTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextBoldTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextBoxTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextCenterAlignTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextItalicTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextJustifiedAlignTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextLeftAlignTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextListTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextRightAlignTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextStrikethroughTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarTextUnderlineTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarUserAddTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarUserGroupTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarUserTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarVolumeDownTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSImageNameTouchBarVolumeUpTemplate": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPasteboardNameDrag": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPasteboardNameFind": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPasteboardNameFont": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPasteboardNameGeneral": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPasteboardNameRuler": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPasteboardTypeFileURL": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPasteboardTypeURL": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxCoverSheetName": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxHighResolution": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxJob": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxModem": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxReceiverNames": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxReceiverNumbers": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxReturnReceipt": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxSendTime": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxTrimPageEnds": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSPrintFaxUseCoverSheet": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSRulerViewUnitCentimeters": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSRulerViewUnitInches": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSRulerViewUnitPicas": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSRulerViewUnitPoints": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSSharingServiceNameCloudSharing": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSSpellCheckerDidChangeAutomaticCapitalizationNotification": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSSpellCheckerDidChangeAutomaticPeriodSubstitutionNotification": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSSpellCheckerDidChangeAutomaticTextCompletionNotification": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSSplitViewControllerAutomaticDimension": {
@@ -27972,99 +28112,131 @@
     "typestr": "f"
    },
    "NSTextCheckingSelectedRangeKey": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerBox": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerCheck": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerCircle": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerDecimal": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerDiamond": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerDisc": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerHyphen": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerLowercaseAlpha": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerLowercaseHexadecimal": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerLowercaseLatin": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerLowercaseRoman": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerOctal": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerSquare": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerUppercaseAlpha": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerUppercaseHexadecimal": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerUppercaseLatin": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextListMarkerUppercaseRoman": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTextMovementUserInfoKey": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSToolbarCloudSharingItemIdentifier": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSToolbarToggleSidebarItemIdentifier": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierCandidateList": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierCharacterPicker": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierFixedSpaceLarge": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierFixedSpaceSmall": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierFlexibleSpace": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierOtherItemsProxy": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierTextAlignment": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierTextColorPicker": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierTextFormat": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierTextList": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSTouchBarItemIdentifierTextStyle": {
+    "type_name": "const NSString *",
     "typestr": "@"
    },
    "NSViewNoIntrinsicMetric": {
