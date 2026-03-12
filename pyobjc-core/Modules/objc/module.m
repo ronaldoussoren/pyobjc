@@ -1866,6 +1866,13 @@ static PyObject* _Nullable mod_registeredMetadataForSelector(PyObject* _Nullable
     return PyObjCMethodSignature_AsDict(sig);
 }
 
+static PyObject* _Nullable mod_returns_value(PyObject* _Nullable mod
+                                             __attribute__((__unused__)),
+                                             PyObject* value)
+{
+    return PyBool_FromLong(PyObjC_returns_value(value));
+}
+
 static PyMethodDef mod_methods[] = {
     {
         .ml_name  = "propertiesForClass",
@@ -2086,6 +2093,13 @@ static PyMethodDef mod_methods[] = {
         .ml_flags = METH_VARARGS,
         .ml_doc   = "_registeredMetadataForSelector(cls, selname)\n" CLINIC_SEP
                   "\nLook up registered metadata info for a selector.",
+    },
+    {
+        .ml_name  = "_returns_value",
+        .ml_meth  = (PyCFunction)mod_returns_value,
+        .ml_flags = METH_O,
+        .ml_doc   = "_returns_value(func)\n" CLINIC_SEP
+                  "\nReturns True if `func` explicitly returns a value.",
     },
     {
         .ml_name = NULL /* SENTINEL */

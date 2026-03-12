@@ -10,7 +10,6 @@ performs checks that are needed to avoid crashes.
 import objc
 import types
 import inspect
-import dis
 import keyword
 import warnings
 import sys
@@ -449,7 +448,7 @@ def transformAttribute(name, value, class_object, protocols):
     if signature is None:
         # Calculate a default signature based on the selector shape
         if isinstance(value, (types.FunctionType, types.MethodType)):
-            returns_object = returns_value(value)
+            returns_object = objc._returns_value(value)
         else:
             returns_object = True
 
@@ -572,46 +571,6 @@ def is_generator_or_async(value):
         return True
     elif inspect.isgenerator(value) or inspect.isgeneratorfunction(value):
         return True
-    return False
-
-
-def returns_value(func):
-    """
-    Return True if 'func' explicitly returns a value
-
-    """
-    # This will return False for functions where all explicit
-    # returns are of the form "return" or "return None". The
-    # latter is a false negative, but cannot be avoided with
-    # bytecode inspection.
-    # XXX: This will give a false positive for functions
-    #      that only contain "return None" paths for
-    #      returning a value.
-    #
-    # Until Python 3.14 constant 0 was always None, due to
-    # changes in the bytecode compiler that's no longer true.
-
-    if not isinstance(func.__code__, types.CodeType):
-        return True
-
-    prev = None
-    consts = func.__code__.co_consts
-
-    for inst in dis.get_instructions(func):
-        if inst.opname == "RETURN_VALUE":
-            assert prev is not None
-            if prev.opname == "LOAD_CONST" and consts[prev.arg] is not None:
-                return True
-            elif prev.opname != "LOAD_CONST":
-                return True
-
-        elif (  # pragma: no branch
-            inst.opname == "RETURN_CONST" and consts[inst.arg] is not None
-        ):
-            # New in Python 3.12, dropped in 3.14
-            return True  # pragma: no cover
-        prev = inst
-
     return False
 
 
