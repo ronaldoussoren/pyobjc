@@ -2727,6 +2727,33 @@ class TestTestSupport(TestCase):
                 self.assertEqual(m.Object.__name__, "Object")
                 self.assertIsInstance(m.Object, objc.objc_class)
 
+        m = Mod()
+        try:
+            m.IOBluetoothHostController = objc.lookUpClass("IOBluetoothHostController")
+        except objc.error:
+
+            class IOBluetoothHostController(objc.lookUpClass("NSObject")):
+                @objc.objc_method(signature=b"^i@:")
+                def Bluetoothxyz(self):
+                    return 1
+
+                @objc.objc_method(signature=b"^i@:")
+                def Broadcomxyz(self):
+                    return 1
+
+            m.IOBluetoothHostController = IOBluetoothHostController
+
+        with self.subTest("IOBluetoothHostController methods are igored"):
+            try:
+                self.assertCallableMetadataIsSane(m, exclude_cocoa=False)
+            except self.failureException:
+                self.fail("Unexpected failure")
+
+            self.assertEqual(
+                m.IOBluetoothHostController.__name__, "IOBluetoothHostController"
+            )
+            self.assertIsInstance(m.IOBluetoothHostController, objc.objc_class)
+
         with self.subTest("validate framework identifier"):
             m = Mod()
             m.__bundle__ = Mod()

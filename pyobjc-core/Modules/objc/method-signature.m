@@ -1994,6 +1994,9 @@ static PyObject* _Nullable PyObjCMethodSignature_AsFrozenDict(
 {
     PyObject* result = PyObjCMethodSignature_AsDict(methinfo);
 #if PY_VERSION_HEX >= 0x030f00a7
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+    }
     PyObject* tmp = PyFrozenDict_New(result);
     Py_CLEAR(result);
     return tmp;
@@ -2301,6 +2304,9 @@ PyObject* _Nullable PyObjC_copyMetadataRegistry(void)
     PyObject* result = PyObjC_CopyRegistry(
         registry, (PyObjC_ItemTransform)PyObjCMethodSignature_AsFrozenDict);
 #if PY_VERSION_HEX >= 0x030f00a7
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LIN#
+        return result;              // LCOV_EXCL_LINE
+    }
     PyObject* tmp = PyFrozenDict_New(result);
     Py_CLEAR(result);
     return tmp;

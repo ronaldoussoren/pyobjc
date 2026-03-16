@@ -4,13 +4,19 @@ import datetime
 import sys
 
 from PyObjCTest.classes import OCTestClasses
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_python_release
 import objc
 
 
 class TestBridgedClasses(TestCase):
     def test_dict(self):
         value = {}
+        cls = OCTestClasses.classForObject_(value)
+        self.assertEqual(cls.__name__, "OC_BuiltinPythonDictionary")
+
+    @min_python_release("3.15")
+    def test_frozendict(self):
+        value = frozendict({})  # noqa: F821
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_BuiltinPythonDictionary")
 

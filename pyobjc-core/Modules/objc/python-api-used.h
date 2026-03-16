@@ -523,7 +523,8 @@ PyAPI_FUNC(Py_hash_t) Py_HashBuffer(const void* ptr, Py_ssize_t len);
 #endif
 
 #if PY_VERSION_HEX >= 0x030f0000
-PyAPI_FUNC(PyObject* _Nullable) PyFrozenDict_New(PyObject*);
+PyAPI_FUNC(PyObject* _Nullable) PyFrozenDict_New(PyObject*)
+    __attribute__((warn_unused_result));
 #endif
 
 NS_ASSUME_NONNULL_END

@@ -5,9 +5,10 @@ NOTE: this file is very, very incomplete and just tests copying at the moment.
 """
 
 import objc
+import sys
 from PyObjCTest.pythonset import OC_TestSet
 from PyObjCTest.dictint import OC_DictInt
-from PyObjCTest.objectint import OC_NoPythonRepresentation
+from PyObjCTest.objectint import OC_NoPythonRepresentation, OC_ObjectInt
 from PyObjCTools.TestSupport import TestCase, pyobjc_options
 import collections
 import collections.abc
@@ -16,6 +17,11 @@ from unittest import SkipTest
 OC_PythonDictionary = objc.lookUpClass("OC_PythonDictionary")
 OC_BuiltinPythonDictionary = objc.lookUpClass("OC_BuiltinPythonDictionary")
 NSNull = objc.lookUpClass("NSNull")
+
+if sys.version_info[:2] >= (3, 15):
+    DICT_CLASSES = (dict, frozendict)  # noqa: F821
+else:
+    DICT_CLASSES = (dict,)
 
 
 class Fake:
@@ -38,17 +44,37 @@ class RaisingKey(str):
 
 class TestDictionary(TestCase):
     mapClass = dict
+    mutable = True
+
+    def test_classForCoder(self):
+        s = self.mapClass()
+        c = OC_ObjectInt.classForCoderOf_(s)
+        if self.mapClass == dict:
+            self.assertEqual(c.__name__, "NSMutableDictionary")
+        elif (
+            sys.version_info[:2] >= (3, 15)
+            and self.mapClass == frozendict  # noqa: F821
+        ):
+            self.assertEqual(c.__name__, "NSDictionary")
+        else:
+            self.assertEqual(c.__name__, "OC_PythonDictionary")
 
     def testCopy(self):
         s = self.mapClass()
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEqual(s, o)
-        self.assertIsNot(s, o)
+        if self.mutable:
+            self.assertIsNot(s, o)
+        else:
+            self.assertIs(s, o)
 
         s = self.mapClass({1: 2, "a": "c"})
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEqual(s, o)
-        self.assertIsNot(s, o)
+        if self.mutable:
+            self.assertIsNot(s, o)
+        else:
+            self.assertIs(s, o)
 
         def copy_func(value):
             raise RuntimeError("cannot copy")
@@ -67,7 +93,7 @@ class TestDictionary(TestCase):
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
-        if self.mapClass is dict:
+        if self.mapClass in (DICT_CLASSES):
             self.assertIs(
                 OC_TestSet.classOf_(self.mapClass()), OC_BuiltinPythonDictionary
             )
@@ -139,6 +165,8 @@ class TestDictionary(TestCase):
             )
 
     def test_set_item(self):
+        if not self.mutable:
+            raise SkipTest("not relevant for immutable dict")
         s = self.mapClass()
 
         OC_DictInt.dict_set_value_(s, "key", "value")
@@ -163,12 +191,16 @@ class TestDictionary(TestCase):
             OC_DictInt.dict_set_valueInstanceOf_(s, "key", OC_NoPythonRepresentation)
 
     def test_set_null(self):
+        if not self.mutable:
+            raise SkipTest("immutable dict")
         s = self.mapClass()
 
         OC_DictInt.dict_set_value_(s, NSNull.null(), "null")
         self.assertEqual(s[None], "null")
 
     def test_set_None(self):
+        if not self.mutable:
+            raise SkipTest("immutable dict")
         s = self.mapClass()
 
         # This calls [dict setObject:@"null" forKey:nil]
@@ -178,6 +210,8 @@ class TestDictionary(TestCase):
         self.assertEqual(s[None], "null")
 
     def test_setting_raises(self):
+        if not self.mutable:
+            raise SkipTest("immutable dict")
         s = self.mapClass({RaisingKey("a"): 1})
 
         with self.assertRaisesRegex(TypeError, "a is not valid"):
@@ -186,6 +220,8 @@ class TestDictionary(TestCase):
         self.assertEqual(tuple(s.values()), (1,))
 
     def test_removing_key(self):
+        if not self.mutable:
+            raise SkipTest("immutable dict")
         s = self.mapClass({"a": 1, "b": 2, None: "None", NSNull.null(): "null"})
 
         OC_DictInt.dict_remove_(s, "a")
@@ -205,6 +241,8 @@ class TestDictionary(TestCase):
             OC_DictInt.dict_removeInstanceOf_(s, OC_NoPythonRepresentation)
 
     def test_removing_key_raises(self):
+        if not self.mutable:
+            raise SkipTest("immutable dict")
         s = self.mapClass({RaisingKey("a"): 1})
         with self.assertRaisesRegex(TypeError, "a is not valid"):
             OC_DictInt.dict_remove_(s, "a")
@@ -212,6 +250,27 @@ class TestDictionary(TestCase):
 
 class TestUserDict(TestDictionary):
     mapClass = collections.UserDict
+
+
+if sys.version_info[:2] >= (3, 15):
+
+    class TestFrozenDict(TestDictionary):
+        mapClass = frozendict  # noqa: F821
+        mutable = False
+
+        def test_setting(self):
+            s = self.mapClass({"a": 4})
+            with self.assertRaisesRegex(
+                TypeError, "'frozendict' object does not support item assignment"
+            ):
+                OC_DictInt.dict_set_value_(s, "key", "value")
+
+        def test_deleting(self):
+            s = self.mapClass({"a": 4})
+            with self.assertRaisesRegex(
+                TypeError, "'frozendict' object does not support item deletion"
+            ):
+                OC_DictInt.dict_remove_(s, "a")
 
 
 class TestMisc(TestCase):

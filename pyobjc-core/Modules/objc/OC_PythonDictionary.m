@@ -275,7 +275,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             } // LCOV_EXCL_LINE
         }
 
-        if (likely(PyAnyDict_CheckExact(value))) {
+        if (likely(PyDict_CheckExact(value))) {
             if (unlikely(PyDict_SetItem(value, k, v) < 0)) {
                 Py_XDECREF(v);
                 Py_XDECREF(k);
@@ -311,7 +311,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             } // LCOV_EXCL_LINE
         }
 
-        if (PyAnyDict_CheckExact(value)) {
+        if (PyDict_CheckExact(value)) {
             if (unlikely(PyDict_DelItem(value, k) < 0)) {
                 Py_DECREF(k);
                 if (PyErr_ExceptionMatches(PyExc_KeyError)) {
@@ -507,14 +507,15 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 #if PY_VERSION_HEX >= 0x030f00a7
         if (isfrozen) {
             PyObjC_BEGIN_WITH_GIL
-                PyObject* newvalue = PyFrozenDict_New(value);
-                if (newvalue == NULL) {
-                    PyObjC_GIL_FORWARD_EXC();
-                }
-                Py_CLEAR(value);
+                PyObject* new_value = PyFrozenDict_New(value);
+                if (new_value == NULL) {      // LCOV_BR_EXCL_LINE
+                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+                } // LCOV_EXCL_LINE
+                PyObject* old_value = value;
 
                 PyObjC_UnregisterObjCProxy(value, self);
-                value = newvalue;
+                value = new_value;
+                Py_CLEAR(old_value);
 
                 id actual = PyObjC_RegisterObjCProxy(value, self);
                 [self release];
