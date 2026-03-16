@@ -2517,10 +2517,10 @@ depythonify_python_object(PyObject* argument, id* datum)
     } else if (PyList_Check(argument) || PyTuple_Check(argument)) {
         *datum = [OC_PythonArray arrayWithPythonObject:argument];
 
-    } else if (PyDict_CheckExact(argument)) {
+    } else if (PyAnyDict_CheckExact(argument)) {
         *datum = [OC_BuiltinPythonDictionary dictionaryWithPythonObject:argument];
 
-    } else if (PyDict_Check(argument)) {
+    } else if (PyAnyDict_Check(argument)) {
         *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
 
     } else if (PyBytes_CheckExact(argument) || PyByteArray_CheckExact(argument)) {

@@ -668,7 +668,7 @@ setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_na
         return 0;
     }
 
-    if (!PyDict_Check(meta)) {
+    if (!PyAnyDict_Check(meta)) {
         PyErr_Format(PyExc_TypeError, "metadata of type %s: %R", Py_TYPE(meta)->tp_name,
                      meta);
 
@@ -828,7 +828,7 @@ setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_na
             // LCOV_EXCL_STOP
         }
 
-        if (!PyDict_Check(d)) {
+        if (!PyAnyDict_Check(d)) {
             PyErr_Format(PyExc_ValueError, "expecting dict for 'callable', got %R", d);
             return -1;
         }
@@ -1346,7 +1346,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
     PyObject* v;
     int       r;
 
-    if (metadata != NULL && !PyDict_Check(metadata)) {
+    if (metadata != NULL && !PyAnyDict_Check(metadata)) {
         PyErr_Format(PyExc_TypeError,
                      "Metadata dictionary is of type '%s' instead of 'dict'",
                      Py_TYPE(metadata)->tp_name);
@@ -1419,7 +1419,7 @@ process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metad
             return -1; // LCOV_EXCL_LINE
         /* case 0: pass */
         case 1:
-            if (!PyDict_Check(args)) {
+            if (!PyAnyDict_Check(args)) {
                 Py_CLEAR(args);
             } else {
                 Py_ssize_t i;
@@ -1595,7 +1595,7 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
     Py_ssize_t             i;
 
     assert(metadata != NULL);
-    assert(PyDict_Check(metadata));
+    assert(PyAnyDict_Check(metadata));
 
     PyObject* arguments;
     switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
@@ -1606,7 +1606,7 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
         max_idx = 0;
         break;
     default: /* case 1: */
-        if (!PyDict_Check(arguments)) {
+        if (!PyAnyDict_Check(arguments)) {
             max_idx = 0;
         } else {
             pos     = 0;
@@ -1710,7 +1710,7 @@ PyObjC_registerMetaData(PyObject* class_name, PyObject* selector, PyObject* meta
     assert(registry != NULL);
     assert(PyBytes_Check(class_name));
     assert(PyBytes_Check(selector));
-    if (!PyDict_Check(metadata)) {
+    if (!PyAnyDict_Check(metadata)) {
         PyErr_SetString(PyExc_TypeError, "metadata should be a dictionary");
         return -1;
     }
@@ -1989,6 +1989,20 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
     return methinfo;
 }
 
+static PyObject* _Nullable PyObjCMethodSignature_AsFrozenDict(
+    PyObjCMethodSignature* methinfo)
+{
+    PyObject* result = PyObjCMethodSignature_AsDict(methinfo);
+#if PY_VERSION_HEX >= 0x030f00a7
+    PyObject* tmp = PyFrozenDict_New(result);
+    Py_CLEAR(result);
+    return tmp;
+
+#else
+    return result;
+#endif
+}
+
 static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
 {
     PyObject*   result;
@@ -2077,7 +2091,7 @@ static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
     }
 
     if (descr->callable) {
-        v = PyObjCMethodSignature_AsDict(descr->callable);
+        v = PyObjCMethodSignature_AsFrozenDict(descr->callable);
         if (v == NULL)  // LCOV_BR_EXCL_LINE
             goto error; // LCOV_EXCL_LINE
         r = PyDict_SetItem(result, PyObjCNM_callable, v);
@@ -2146,7 +2160,14 @@ static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
             goto error; // LCOV_EXCL_LINE
     }
 
+#if PY_VERSION_HEX >= 0x030f00a7
+    PyObject* tmp = PyFrozenDict_New(result);
+    Py_CLEAR(result);
+    return tmp;
+
+#else
     return result;
+#endif
 
 error:
     // LCOV_EXCL_START
@@ -2277,8 +2298,16 @@ error:
 
 PyObject* _Nullable PyObjC_copyMetadataRegistry(void)
 {
-    return PyObjC_CopyRegistry(registry,
-                               (PyObjC_ItemTransform)PyObjCMethodSignature_AsDict);
+    PyObject* result = PyObjC_CopyRegistry(
+        registry, (PyObjC_ItemTransform)PyObjCMethodSignature_AsFrozenDict);
+#if PY_VERSION_HEX >= 0x030f00a7
+    PyObject* tmp = PyFrozenDict_New(result);
+    Py_CLEAR(result);
+    return tmp;
+
+#else
+    return result;
+#endif
 }
 
 int

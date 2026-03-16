@@ -65,7 +65,12 @@ class TestFunctions(TestCase):
         )
         self.assertRegex(repr(doubleFunc), r"<objc.function at 0x[0-9a-f]+>")
 
-        self.assertIsInstance(NSRectClipList.__metadata__(), dict)  # noqa: F821
+        if sys.version_info[:2] >= (3, 15):
+            self.assertIsInstance(
+                NSRectClipList.__metadata__(), frozendict  # noqa: F821
+            )  # noqa: F821
+        else:
+            self.assertIsInstance(NSRectClipList.__metadata__(), dict)  # noqa: F821
         self.assertEqual(
             NSRectClipList.__metadata__(),  # noqa: F821
             {

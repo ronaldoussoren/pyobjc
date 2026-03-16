@@ -217,15 +217,6 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
             return NULL;
             // LCOV_EXCL_STOP
         }
-        if (unlikely(PyDict_SetItem(result, key, sl_new) == -1)) { // LCOV_BR_EXCL_LINE
-            // LCOV_EXCL_START
-            Py_DECREF(sl_new);
-            Py_DECREF(result);
-            Py_EXIT_CRITICAL_SECTION();
-            return NULL;
-            // LCOV_EXCL_STOP
-        }
-        Py_DECREF(sl_new);
 
         for (i = 0; i < len; i++) {
             PyObject* item;
@@ -236,6 +227,7 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
             if (unlikely(item == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(result);
+                Py_DECREF(sl_new);
                 Py_EXIT_CRITICAL_SECTION();
                 return NULL;
                 // LCOV_EXCL_STOP
@@ -247,6 +239,7 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
                  */
                 // LCOV_EXCL_START
                 Py_DECREF(result);
+                Py_DECREF(sl_new);
                 Py_EXIT_CRITICAL_SECTION();
                 return NULL;
                 // LCOV_EXCL_STOP
@@ -257,6 +250,7 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
             if (unlikely(new_item == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START
                 Py_DECREF(result);
+                Py_DECREF(sl_new);
                 Py_EXIT_CRITICAL_SECTION();
                 return NULL;
                 // LCOV_EXCL_STOP
@@ -266,12 +260,33 @@ PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
                 // LCOV_EXCL_START
                 Py_DECREF(new_item);
                 Py_DECREF(result);
+                Py_DECREF(sl_new);
                 Py_EXIT_CRITICAL_SECTION();
                 return NULL;
                 // LCOV_EXCL_STOP
             }
             Py_DECREF(new_item);
         } // LCOV_BR_EXCL_LINE
+
+        PyObject* sl_as_tuple = PyList_AsTuple(sl_new);
+        Py_CLEAR(sl_new);
+        if (sl_as_tuple == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(result);
+            Py_EXIT_CRITICAL_SECTION();
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        if (unlikely(PyDict_SetItem(result, key, sl_as_tuple)
+                     == -1)) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(sl_as_tuple);
+            Py_DECREF(result);
+            Py_EXIT_CRITICAL_SECTION();
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        Py_DECREF(sl_as_tuple);
     } // LCOV_BR_EXCL_LINE
     Py_END_CRITICAL_SECTION(); // LCOV_BR_EXCL_LINE
 

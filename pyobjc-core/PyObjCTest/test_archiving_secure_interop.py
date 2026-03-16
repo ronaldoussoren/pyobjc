@@ -14,7 +14,13 @@ import tempfile
 import datetime
 
 import objc
-from PyObjCTools.TestSupport import TestCase, os_release, os_level_key, cast_ulonglong
+from PyObjCTools.TestSupport import (
+    TestCase,
+    os_release,
+    os_level_key,
+    cast_ulonglong,
+    min_python_release,
+)
 
 from plistlib import loads
 
@@ -289,6 +295,29 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
 
         def test_interop_dict(self):
             for testval in ({"a": "b", "c": 42},):
+                (
+                    data,
+                    error,
+                ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                    testval, True, None
+                )
+
+                if data is None:
+                    self.fail(f"Cannot create archive: {error}")
+
+                with tempfile.NamedTemporaryFile() as fp:
+                    fp.write(data.bytes())
+                    fp.flush()
+
+                    converted = subprocess.check_output([self.progpath, fp.name])
+
+                converted = loads(converted)
+                self.assertEqual(converted, testval)
+
+        @min_python_release("3.15")
+        def test_interop_frozendict(self):
+            for testval in ({"a": "b", "c": 42},):
+                testval = frozendict(testval)  # noqa: F821
                 (
                     data,
                     error,

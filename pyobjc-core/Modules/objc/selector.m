@@ -130,7 +130,14 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
         // LCOV_EXCL_STOP
     }
 
+#if PY_VERSION_HEX >= 0x030f00a7
+    PyObject* tmp = PyFrozenDict_New(result);
+    Py_CLEAR(result);
+    return tmp;
+
+#else
     return result;
+#endif
 }
 
 static PyMethodDef sel_methods[] = {{.ml_name  = "__metadata__",

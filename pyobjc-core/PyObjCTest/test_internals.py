@@ -1,5 +1,6 @@
 import objc
 import os
+import sys
 from objc import super  # noqa: A004
 from .supercall import OCSuperCallHelper
 from PyObjCTools.TestSupport import (
@@ -18,40 +19,54 @@ NSObject = objc.lookUpClass("NSObject")
 class TestMetadataRegistry(TestCase):
     def test_copyMetadataRegistry_valid(self):
         result = objc._copyMetadataRegistry()
-        self.assertIsInstance(result, dict)
+        if sys.version_info[:2] >= (3, 15):
+            self.assertIsInstance(result, frozendict)  # noqa: F821
+            hash(result)
+        else:
+            self.assertIsInstance(result, dict)
 
         for selector, info in result.items():
             self.assertIsInstance(selector, bytes)
-            self.assertIsInstance(info, list)
+            self.assertIsInstance(info, tuple)
             for item in info:
                 self.assertIsInstance(item, tuple)
                 self.assertEqual(len(item), 2)
                 self.assertIsInstance(item[0], bytes)
-                self.assertIsInstance(item[1], dict)
+                if sys.version_info[:2] >= (3, 15):
+                    self.assertIsInstance(item[1], frozendict)  # noqa: F821
+                else:
+                    self.assertIsInstance(item[1], dict)
 
                 meta = item[1]
                 self.assertIn("arguments", meta)
                 self.assertIn("retval", meta)
                 self.assertIsInstance(meta["arguments"], tuple)
-                self.assertIsInstance(meta["retval"], (dict, type(None)))
+                if sys.version_info[:2] >= (3, 15):
+                    self.assertIsInstance(
+                        meta["retval"], (frozendict, type(None))  # noqa: F821
+                    )  # noqa: F821
+                else:
+                    self.assertIsInstance(meta["retval"], (dict, type(None)))
 
                 # XXX: Maybe look for a particular set of metadata and
                 #      verify that it is compatible with the ``__metadata__``
                 #      method of the selector.
 
-    def test_copyMetadataRegistry_deepcopies(self):
-        # Make sure this results a copy of the registry, not the registry itself
-        result = objc._copyMetadataRegistry()
-        result["foo"] = "bar"
-        extra = objc._copyMetadataRegistry()
-        self.assertNotIn("foo", extra)
+    if sys.version_info[:2] < (3, 15):
 
-        del result["foo"]
-        self.assertEqual(extra, result)
+        def test_copyMetadataRegistry_deepcopies(self):
+            # Make sure this results a copy of the registry, not the registry itself
+            result = objc._copyMetadataRegistry()
+            result["foo"] = "bar"
+            extra = objc._copyMetadataRegistry()
+            self.assertNotIn("foo", extra)
 
-        result[next(iter(result.keys()))].append("hello")
+            del result["foo"]
+            self.assertEqual(extra, result)
 
-        self.assertNotEqual(extra, result)
+            result[next(iter(result.keys()))].append("hello")
+
+            self.assertNotEqual(extra, result)
 
     def test_copyMetadataRegistry_invalid(self):
         with self.assertRaisesRegex(

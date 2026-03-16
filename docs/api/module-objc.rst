@@ -592,6 +592,8 @@ Types
    refers to. *Cobject* should be a Python capsule created using the :meth:`__cobject__`
    method, *c_void_p* should be a :class:`ctypes.c_void_p`.
 
+   .. versionchanged:: 12.2 The ``cobject`` and ``c_void_p`` arguments are now actually keyword-only.
+
    .. attribute:: pyobjc_ISA
       :type: objc.objc_class
 
@@ -599,6 +601,7 @@ Types
       ``value.pyobjc_ISA`` is the same as ``type(value)``.
 
       .. deprecated:: 11.1 Use ``type(value)`` instead.
+
 
    .. attribute:: pyobjc_instanceMethods
 
@@ -701,6 +704,8 @@ Types
 
       Returns a copy of the metadata dictionary for the selector.  See the
       :doc:`metadata system documentation </metadata/manual>` for more information.
+
+      .. pythonchanged:: 3.15 The return value is a :class:`frozendict` instead of a :class:`dict`.
 
    .. attribute:: isHidden
 
@@ -1132,6 +1137,8 @@ Types
       Returns a copy of the metadata dictionary for the selector.  See the
       :doc:`metadata system documentation </metadata/manual>` for more information.
 
+      .. pythonchanged:: 3.15 The return value is a :class:`frozendict` instead of a :class:`dict`.
+
 
 .. class:: IMP
 
@@ -1173,6 +1180,8 @@ Types
 
       Returns a copy of the metadata dictionary for the selector.  See the
       :doc:`metadata system documentation </metadata/manual>` for more information.
+
+      .. pythonchanged:: 3.15 The return value is a :class:`frozendict` instead of a :class:`dict`.
 
 
 .. class:: super

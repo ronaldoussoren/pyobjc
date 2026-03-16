@@ -66,7 +66,7 @@ static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable ar
     PyObject*    cobject    = NULL;
     PyObject*    c_void_p   = NULL;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OO", keywords, &cobject, &c_void_p)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|$OO", keywords, &cobject, &c_void_p)) {
         return NULL;
     }
 

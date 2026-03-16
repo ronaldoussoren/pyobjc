@@ -127,8 +127,13 @@ class TestFromC(TestCase):
         ):
             FooHandle(invalid=42)
 
-        with self.assertRaisesRegex(TypeError, "'cobject' argument is not a PyCapsule"):
+        with self.assertRaisesRegex(
+            TypeError, "function takes no positional arguments"
+        ):
             FooHandle(42)
+
+        with self.assertRaisesRegex(TypeError, "'cobject' argument is not a PyCapsule"):
+            FooHandle(cobject=42)
 
         with self.assertRaisesRegex(
             OverflowError, "Python int too large to convert to C unsigned long"

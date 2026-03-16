@@ -16,7 +16,7 @@ static PyObject* _Nullable object_new(PyTypeObject* type __attribute__((__unused
     PyObject*    cobject    = NULL;
     PyObject*    c_void_p   = NULL;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OO", keywords, &cobject, &c_void_p)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|$OO", keywords, &cobject, &c_void_p)) {
         return NULL;
     }
 

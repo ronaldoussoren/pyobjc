@@ -522,5 +522,9 @@ PyAPI_FUNC(int) PyUnstable_TryIncRef(PyObject* obj);
 PyAPI_FUNC(Py_hash_t) Py_HashBuffer(const void* ptr, Py_ssize_t len);
 #endif
 
+#if PY_VERSION_HEX >= 0x030f0000
+PyAPI_FUNC(PyObject* _Nullable) PyFrozenDict_New(PyObject*);
+#endif
+
 NS_ASSUME_NONNULL_END
 #endif /* static analyzer */

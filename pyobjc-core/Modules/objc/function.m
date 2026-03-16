@@ -40,7 +40,14 @@ static PyObject* _Nullable func_metadata(PyObject* _self)
             return NULL;       // LCOV_EXCL_LINE
         }
     }
+#if PY_VERSION_HEX >= 0x030f00a7
+    PyObject* tmp = PyFrozenDict_New(result);
+    Py_CLEAR(result);
+    return tmp;
+
+#else
     return result;
+#endif
 }
 
 static PyMethodDef func_methods[] = {

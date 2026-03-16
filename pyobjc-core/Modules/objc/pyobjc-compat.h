@@ -361,6 +361,11 @@ PyUnstable_TryIncRef(PyObject* op __attribute__((__unused__)))
 }
 #endif
 
+#if PY_VERSION_HEX < 0x030f00a7
+#define PyAnyDict_CheckExact PyDict_CheckExact
+#define PyAnyDict_Check PyDict_Check
+#endif
+
 NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_COMPAT_H */
