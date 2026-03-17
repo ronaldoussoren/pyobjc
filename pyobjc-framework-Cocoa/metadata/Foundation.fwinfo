@@ -1080,15 +1080,6 @@
        "type_override": "s"
       },
       "selector": "dispatchRawAppleEvent:withRawReply:handlerRefCon:"
-     },
-     {
-      "args": {
-       "1": {
-        "sel_of_type": "v@:@@"
-       }
-      },
-      "class_method": false,
-      "selector": "setEventHandler:andSelector:forEventClass:andEventID:"
      }
     ]
    },
@@ -2397,7 +2388,8 @@
       },
       "class_method": false,
       "selector": "encodeValuesOfObjCTypes:",
-      "variadic": true
+      "variadic": true,
+      "suggestion": "Use the basic encoding methods instead."
      },
      {
       "args": {
@@ -2435,7 +2427,8 @@
       },
       "class_method": false,
       "selector": "decodeValuesOfObjCTypes:",
-      "variadic": true
+      "variadic": true,
+      "suggestion": "Use the basic encoding methods instead."
      },
      {
       "args": {
@@ -2913,7 +2906,8 @@
        }
       },
       "class_method": true,
-      "selector": "dataWithBytesNoCopy:length:"
+      "selector": "dataWithBytesNoCopy:length:",
+      "suggestion": "Use the 'dataWithBytesNoCopy:length:freeWhenDone:' method instead."
      },
      {
       "args": {
@@ -2923,11 +2917,13 @@
         "type_override": "^v"
        },
        "2": {
-        "type_override": "Z"
+        "type_override": "Z",
+        "doc": "Value must be false, the C API will call free(3 on the buffer otherwise."
        }
       },
       "class_method": true,
-      "selector": "dataWithBytesNoCopy:length:freeWhenDone:"
+      "selector": "dataWithBytesNoCopy:length:freeWhenDone:",
+      "doc": "The program will crash when the buffer passed in is garbage collected before Objective-C is done with it."
      },
      {
       "args": {
@@ -3007,7 +3003,7 @@
       },
       "class_method": false,
       "selector": "getBytes:",
-      "suggestion": "use -bytes instead"
+      "suggestion": "Use the *bytes* method instead."
      },
      {
       "class_method": false,
@@ -3306,7 +3302,7 @@
       },
       "class_method": false,
       "selector": "getObjects:andKeys:",
-      "suggestion": "convert to a python dict instead"
+      "suggestion": "Convert to a python dict instead."
      },
      {
       "args": {
@@ -14776,6 +14772,10 @@
    }
   },
   "externs": {
+   "NSZeroPoint": { "doc": "The value is mutable, use NSPoint() instead to initialize a variable." },
+   "NSZeroSize": { "doc": "The value is mutable, use NSSize() instead to initialize a variable." },
+   "NSZeroRect": { "doc": "The value is mutable, use NSRect() instead to initialize a variable." },
+   "NSEdgeInsetsZero": { "doc": "The value is mutable, use NSEdgeInsets() instead to initialize a variable." },
    "NSMultipleUnderlyingErrorsKey": { "typestr": "@", "type_name": "const NSString *" },
    "NSProgressFileOperationKindUploading": { "typestr": "@", "type_name": "const NSString *" },
    "NSURLUbiquitousItemIsExcludedFromSyncKey": { "typestr": "@", "type_name": "const NSString *" },
@@ -14839,11 +14839,11 @@
    "NSPersonNameComponentNickname": { "typestr": "@", "type_name": "const NSString *" },
    "NSPersonNameComponentDelimiter": { "typestr": "@", "type_name": "const NSString *" },
    "NSFileManagerUnmountDissentingProcessIdentifierErrorKey": { "typestr": "@", "type_name": "const NSString *" },
-   "NSDebugEnabled": { "typestr": "Z" },
-   "NSZombieEnabled": { "typestr": "Z" },
-   "NSDeallocateZombies": { "typestr": "Z" },
-   "NSHangOnUncaughtException": { "typestr": "Z" },
-   "NSKeepAllocationStatistics": { "typestr": "Z" },
+   "NSDebugEnabled": { "typestr": "Z", "doc": "Updating this value does not affect the Objective-C world." },
+   "NSZombieEnabled": { "typestr": "Z", "doc": "Updating this value does not affect the Objective-C world." },
+   "NSDeallocateZombies": { "typestr": "Z", "doc": "Updating this value does not affect the Objective-C world." },
+   "NSHangOnUncaughtException": { "typestr": "Z", "doc": "Updating this value does not affect the Objective-C world." },
+   "NSKeepAllocationStatistics": { "typestr": "Z", "doc": "Updating this value does not affect the Objective-C world." },
    "NSMetadataQueryLocalDocumentsScope": {
      "typestr": "@", "type_name": "const NSString *"
    },
