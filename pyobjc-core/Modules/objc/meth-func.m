@@ -60,11 +60,19 @@ PyCodeObject* _Nullable PyObjC_get_code(PyObject* value)
 }
 
 /*
- * XXX: This duplicates code in Lib/objc/_transform.py!
- */
+  Return true if `value` explicitly returns a value.
+*/
 bool
 PyObjC_returns_value(PyObject* value)
 {
+    // This will return False for functions where all explicit
+    // returns are of the form "return" or "return None". The
+    // latter is a false negative, but cannot be avoided with
+    // bytecode inspection.
+    //
+    // Until Python 3.14 constant 0 was always None, due to
+    // changes in the bytecode compiler that's no longer true.
+
     bool      rv = false;
     Py_buffer buf;
 
