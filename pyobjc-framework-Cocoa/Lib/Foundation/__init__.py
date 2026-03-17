@@ -217,6 +217,8 @@ def _setup():
         "NSLocale", (("__getitem__", lambda self, key: self.objectForKey_(key)),)
     )
 
+    objc.lookUpClass("NSDecimalNumber").__objc_final__ = True
+
 
 globals().pop("_setup")()
 
