@@ -7978,7 +7978,7 @@
       "retval": {
        "type_override": "Z"
       },
-      "selector": "hitTestRect:withImageDestinationRect:context_hints:flipped:"
+      "selector": "hitTestRect:withImageDestinationRect:context:hints:flipped:"
      },
      {
       "class_method": false,
