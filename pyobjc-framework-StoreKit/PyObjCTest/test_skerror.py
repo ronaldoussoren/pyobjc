@@ -11,6 +11,7 @@ class TestSKError(TestCase):
         self.assertEqual(StoreKit.SKErrorPaymentCancelled, 2)
         self.assertEqual(StoreKit.SKErrorPaymentInvalid, 3)
         self.assertEqual(StoreKit.SKErrorPaymentNotAllowed, 4)
+        self.assertEqual(StoreKit.SKErrorPaymentMethodBindingConfigurationRequired, 6)
 
         self.assertEqual(StoreKit.SKErrorPrivacyAcknowledgementRequired, 9)
         self.assertEqual(StoreKit.SKErrorUnauthorizedRequestData, 10)
