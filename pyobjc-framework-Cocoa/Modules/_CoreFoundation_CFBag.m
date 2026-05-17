@@ -17,8 +17,8 @@ mod_CFBagGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
         return NULL;
     }
 
-    if (py_None != Py_None) {
-        PyErr_SetSring(PyExc_ValueError, "'values' must be None");
+    if (py_none != Py_None) {
+        PyErr_SetString(PyExc_ValueError, "'values' must be None");
         return NULL;
     }
 
