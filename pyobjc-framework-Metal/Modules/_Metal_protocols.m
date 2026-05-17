@@ -94,7 +94,7 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(MTLResidencySet));
     Py_XDECREF(p);
 #endif
-#if PyObjC_BUILD_RELEASE >= 1500
+#if PyObjC_BUILD_RELEASE >= 2600
     p = PyObjC_IdToPython(@protocol(MTL4Archive));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(MTL4ArgumentTable));
