@@ -5,6 +5,8 @@
  */
 /* inline definition of PyMac_GetOSType pymactoolbox.h doesn't work in 64-bit mode */
 
+/* XXX: Add tests for these functions, then drop manual bindings */
+
 static int
 PyMac_GetOSType(PyObject* v, OSType* pr)
 {
