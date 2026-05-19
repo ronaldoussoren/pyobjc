@@ -1231,6 +1231,14 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
     # format such tests are irrelevant to archiving support)
 
     @skipUnless(0, "python unittest not relevant for archiving")
+    def test_picklebuffer_memoization(self):
+        pass
+
+    @skipUnless(0, "python unittest not relevant for archiving")
+    def test_empty_picklebuffer_memoization(self):
+        pass
+
+    @skipUnless(0, "python unittest not relevant for archiving")
     def test_recursive_frozendict_and_inst(self):
         pass
 
