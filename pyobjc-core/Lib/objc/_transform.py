@@ -600,9 +600,11 @@ def returns_value(func):
     for inst in dis.get_instructions(func):
         if inst.opname == "RETURN_VALUE":
             assert prev is not None
-            if prev.opname == "LOAD_CONST" and consts[prev.arg] is not None:
+            if prev.opname == "LOAD_COMMON_CONSTANT" and prev.argval is not None:
                 return True
-            elif prev.opname != "LOAD_CONST":
+            elif prev.opname == "LOAD_CONST" and consts[prev.arg] is not None:
+                return True
+            elif prev.opname not in ("LOAD_CONST", "LOAD_COMMON_CONSTANT"):
                 return True
 
         elif (  # pragma: no branch
