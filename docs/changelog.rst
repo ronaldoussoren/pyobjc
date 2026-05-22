@@ -152,6 +152,9 @@ Version 12.2
     and :class:`objc.IMP` now returns a ``frozendict`` instead of a regular dict
     to indicate that changing the value has no effect.
 
+* :issue:`674`: Drop GIL when sending KVO notifications
+
+  PR by github user `Tim Clem <https://github.com/misterfifths>`_.
 
 Version 12.1
 ------------
