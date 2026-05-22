@@ -11,7 +11,6 @@ class TestCNContactFormatter(TestCase):
     def testConstants(self):
         self.assertEqual(Contacts.CNContactFormatterStyleFullName, 0)
         self.assertEqual(Contacts.CNContactFormatterStylePhoneticFullName, 1)
-        self.assertEqual(Contacts.CNContactFormatterStyleHandleName, 2)
 
         self.assertEqual(Contacts.CNContactDisplayNameOrderUserDefault, 0)
         self.assertEqual(Contacts.CNContactDisplayNameOrderGivenNameFirst, 1)

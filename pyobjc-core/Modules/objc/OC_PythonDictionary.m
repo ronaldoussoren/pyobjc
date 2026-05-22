@@ -166,7 +166,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     }
 
     PyObjC_BEGIN_WITH_GIL
-        if (likely(PyDict_CheckExact(value))) {
+        if (likely(PyAnyDict_CheckExact(value))) {
             result = PyDict_Size(value);
         } else {
             result = PyObject_Length(value);
@@ -205,7 +205,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             } // LCOV_EXCL_LINE
         }
 
-        if (likely(PyDict_CheckExact(value))) {
+        if (likely(PyAnyDict_CheckExact(value))) {
             int r = PyDict_GetItemRef(value, k, &v);
             switch (r) {
             case -1:
@@ -347,7 +347,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
          * is not possible to invoke arbitrary methods in that state.
          */
         return nil; // LCOV_EXCL_LINE
-    } else if (PyDict_CheckExact(value)) {
+    } else if (PyAnyDict_CheckExact(value)) {
         return [OC_PythonDictionaryEnumerator enumeratorWithWrappedDictionary:self];
 
     } else {
@@ -465,8 +465,16 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 - (id _Nullable)initWithCoder:(NSCoder*)coder
 {
     int code;
+#if PY_VERSION_HEX >= 0x030f00a7
+    int isfrozen = 0;
+#endif
     if ([coder allowsKeyedCoding]) {
         code = [coder decodeInt32ForKey:@"pytype"];
+#if PY_VERSION_HEX >= 0x030f00a7
+        if ([coder containsValueForKey:@"isfrozen"]) {
+            isfrozen = [coder decodeInt32ForKey:@"isfrozen"];
+        }
+#endif
     } else {
 #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13 && PyObjC_BUILD_RELEASE >= 1013
         /* Old deployment target, modern SDK */
@@ -496,6 +504,25 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
         PyObjC_END_WITH_GIL
 
         self = [super initWithCoder:coder];
+#if PY_VERSION_HEX >= 0x030f00a7
+        if (isfrozen) {
+            PyObjC_BEGIN_WITH_GIL
+                PyObject* new_value = PyFrozenDict_New(value);
+                if (new_value == NULL) {      // LCOV_BR_EXCL_LINE
+                    PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
+                } // LCOV_EXCL_LINE
+                PyObject* old_value = value;
+
+                PyObjC_UnregisterObjCProxy(value, self);
+                value = new_value;
+                Py_CLEAR(old_value);
+
+                id actual = PyObjC_RegisterObjCProxy(value, self);
+                [self release];
+                self = actual;
+            PyObjC_END_WITH_GIL
+        }
+#endif
         return self;
 
     case 2:
@@ -525,6 +552,11 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 - (Class)classForCoder
 {
+#if PY_VERSION_HEX >= 0x030f00a7
+    if (unlikely(value && PyFrozenDict_CheckExact(value))) {
+        return [NSDictionary class];
+    }
+#endif
     if (unlikely(value && PyDict_CheckExact(value))) { // LCOV_BR_EXCL_LINE
         return [NSMutableDictionary class];
     } else {
@@ -544,9 +576,14 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
-    if (PyDict_CheckExact(value)) {
+    if (PyAnyDict_CheckExact(value)) {
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:1 forKey:@"pytype"];
+#if PY_VERSION_HEX >= 0x030f00a7
+            if (unlikely(PyFrozenDict_CheckExact(value))) {
+                [coder encodeInt32:1 forKey:@"isfrozen"];
+            }
+#endif
         }
         [super encodeWithCoder:coder];
 

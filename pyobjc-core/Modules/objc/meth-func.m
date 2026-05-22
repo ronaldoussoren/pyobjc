@@ -162,9 +162,15 @@ PyObjC_returns_value(PyObject* value)
 
     for (Py_ssize_t i = 0; i < buf.len; i += 2) {
         int op = ((unsigned char*)buf.buf)[i];
+#if PY_VERSION_HEX >= 0x030f0000
+        if (op == LOAD_COMMON_CONSTANT && ((unsigned char*)buf.buf)[i + 1] == 7) {
+            was_none = true;
+        } else
+#endif
 #if PY_VERSION_HEX >= 0x030e0000
-        if (op == LOAD_CONST
-            && PyTuple_GET_ITEM(consts, ((unsigned char*)buf.buf)[i + 1]) == Py_None) {
+            if (op == LOAD_CONST
+                && PyTuple_GET_ITEM(consts, ((unsigned char*)buf.buf)[i + 1])
+                       == Py_None) {
 #else
         if (op == LOAD_CONST && ((unsigned char*)buf.buf)[i + 1] == 0) {
 #endif

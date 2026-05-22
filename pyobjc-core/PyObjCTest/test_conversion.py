@@ -465,7 +465,12 @@ class TestCArray(TestCase):
         code_compatible_codes = "bBuhHiIlLqQfd"
         if sys.version_info[:2] >= (3, 13):
             code_compatible_codes += "w"
-        self.assertEqual(set(code_compatible_codes), set(array.typecodes))
+
+        # Complex floats and _Float16 are not supported by PyObjC
+        # XXX: Complex could be supported though
+        self.assertEqual(
+            set(code_compatible_codes), set(array.typecodes) - {"Zd", "Zf", "e"}
+        )
 
     def test_byte_array(self):
         o = carrayMaker(objc._C_CHR, b"hello", 5)

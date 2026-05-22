@@ -23,6 +23,11 @@ from .objectint import OC_NoPythonRepresentation
 
 make_array = array.array
 
+if sys.version_info[:2] >= (3, 15):
+    META_DICT = frozendict  # noqa: F821
+else:
+    META_DICT = dict
+
 
 class NotBool:
     def __bool__(self):
@@ -3239,14 +3244,14 @@ class TestMetaDataAccess(TestCase):
 
     def testSuggestions(self):
         meta = OC_MetaDataTest.varargsMethodWithObjects_.__metadata__()
-        self.assertIsInstance(meta, dict)
+        self.assertIsInstance(meta, META_DICT)
         self.assertIn("suggestion", meta)
         self.assertEqual(
             meta["suggestion"], "Variadic functions/methods are not supported"
         )
 
         meta = OC_MetaDataTest.ignoreMethod.__metadata__()
-        self.assertIsInstance(meta, dict)
+        self.assertIsInstance(meta, META_DICT)
         self.assertIn("suggestion", meta)
         self.assertEqual(meta["suggestion"], "please ignore me")
 

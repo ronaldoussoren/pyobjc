@@ -75,6 +75,7 @@ class TestSecProtocolTypes(TestCase):
         self.assertEqual(Security.tls_ciphersuite_group_legacy, 2)
         self.assertEqual(Security.tls_ciphersuite_group_ats, 3)
         self.assertEqual(Security.tls_ciphersuite_group_ats_compatibility, 4)
+        self.assertEqual(Security.tls_ciphersuite_group_ats_fcp_v2_1, 5)
 
         self.assertEqual(Security.kSSLProtocolUnknown, 0)
         self.assertEqual(Security.kTLSProtocol1, 4)

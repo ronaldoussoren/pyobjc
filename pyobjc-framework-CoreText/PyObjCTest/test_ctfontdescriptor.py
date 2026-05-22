@@ -104,6 +104,10 @@ class TestCTFontDescriptor(TestCase):
     def testConstants10_13(self):
         self.assertIsInstance(CoreText.kCTFontVariationAxesAttribute, str)
 
+    @min_os_level("26.4")
+    def testConstants26_4(self):
+        self.assertIsInstance(CoreText.kCTFontDescriptorLanguageAttribute, str)
+
     @min_os_level("10.9")
     def testFunctions10_9(self):
         CoreText.CTFontDescriptorProgressHandler = (

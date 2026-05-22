@@ -952,7 +952,10 @@ class TestSelectorAttributes(TestCase):
         def mySelector(self):
             return 1
 
-        self.assertIsInstance(mySelector.__metadata__(), dict)
+        if sys.version_info[:2] >= (3, 15):
+            self.assertIsInstance(mySelector.__metadata__(), frozendict)  # noqa: F821
+        else:
+            self.assertIsInstance(mySelector.__metadata__(), dict)
         self.assertIs(mySelector.__metadata__()["classmethod"], False)
 
         # XXX: Tests for the detailed contents

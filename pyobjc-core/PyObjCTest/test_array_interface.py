@@ -38,6 +38,10 @@ class ArrayTests(seq_tests.CommonTest):
     def test_pickle(self):
         pass
 
+    @skipUnless(0, "Not relevant for NSArray")
+    def test_cmp(self):
+        pass
+
     def test_constructors(self):
         self.assertEqual(NSArray(), ())
         t0_3 = (0, 1, 2, 3)
@@ -158,6 +162,14 @@ class MutableArrayTest(list_tests.CommonTest):
 
     def test_pop(self):
         list_tests.CommonTest.test_pop(self)
+
+    @skipUnless(0, "test irrelevant for NSMutableArray")
+    def test_cmp(self):
+        pass
+
+    @skipUnless(0, "test irrelevant for NSMutableArray")
+    def test_mul(self):
+        pass
 
     @skipUnless(0, "test irrelevant for NSMutableArray")
     def test_repr_deep(self):

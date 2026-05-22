@@ -178,7 +178,7 @@ use_id(id x __attribute__((__unused__)))
     return [self new];
 }
 
-- (id)cfretainedValue
+- (id)cfretainedValue __attribute__((cf_returns_retained))
 {
     return (id)CFErrorCreate(kCFAllocatorDefault, CFSTR("pyobjcdomain"), 999, NULL);
 }

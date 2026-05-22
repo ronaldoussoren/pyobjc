@@ -239,6 +239,8 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
         @try {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+#pragma clang diagnostic ignored "-Wunguarded-availability"
             image =
                 CGWindowListCreateImageFromArray(screenBounds, windowArray, imageOption);
 #pragma clang diagnostic pop

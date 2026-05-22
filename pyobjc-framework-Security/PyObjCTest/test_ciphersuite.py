@@ -181,3 +181,4 @@ class TestCipherSuite(TestCase):
         self.assertEqual(Security.kSSLCiphersuiteGroupLegacy, 2)
         self.assertEqual(Security.kSSLCiphersuiteGroupATS, 3)
         self.assertEqual(Security.kSSLCiphersuiteGroupATSCompatibility, 4)
+        self.assertEqual(Security.kSSLCiphersuiteGroupATSFCP_v2_1, 5)

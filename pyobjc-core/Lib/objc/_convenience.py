@@ -139,7 +139,9 @@ def registerNewKeywordsFromSelector(classname, selector):
         raise TypeError("selector should by a bytes object")
     selname = selector.decode()
     kw = _selectorToKeywords(selname)
-    NEW_MAP.setdefault(classname, {})[kw] = selname.replace(":", "_")
+    map_dict = NEW_MAP.setdefault(classname, {})
+    if kw not in map_dict:
+        map_dict[kw] = selname.replace(":", "_")
 
 
 def registerNewKeywords(classname, keywords, methodname):
@@ -152,7 +154,9 @@ def registerNewKeywords(classname, keywords, methodname):
     """
     if not isinstance(keywords, tuple) or not all(isinstance(x, str) for x in keywords):
         raise TypeError("keywords must be tuple of strings")
-    NEW_MAP.setdefault(classname, {})[keywords] = methodname
+    map_dict = NEW_MAP.setdefault(classname, {})
+    if keywords not in map_dict:
+        map_dict[keywords] = methodname
 
 
 def registerABCForClass(classname, *abc_class):

@@ -6,14 +6,7 @@ An overview of the relevant changes in new, and older, releases.
 Version 12.2
 ------------
 
-* Update framework bindings for macOS 26.4 SDK (beta 2)
-
-* Add experiment bindings for the HomeKit framework.
-
-  This is a framework without public API on macOS, the bindings are based
-  on the iOS headers.
-
-  Added because interacting with HomeKit from my laptop might be useful.
+* Update framework bindings for macOS 26.5 SDK
 
 * The following code failed at the last line in previous versions:
 
@@ -25,6 +18,11 @@ Version 12.2
      obj = MyObject()
      obj.alloc = MyObject.alloc
      print(obj.alloc) # Raised AttributeError
+
+* Backward incompatible changes:
+
+  ``CFBagCreate`` and ``CFBagCreateMutable`` now match the API in Objective-C, that
+  is, a value for the ``callbacks`` argument must be passed (must be ``kCFTypeBagCallBacks``).
 
 * :issue:`663`: Fix retain count management for the callbacks registered
   with :func:`DARegisterDiskEjectApprovalCallback <DiskArbitration.DARegisterDiskEjectApprovalCallback>`,
@@ -131,6 +129,29 @@ Version 12.2
 
 * :issue:`644`: A number of constants in the CoreAudio bindings evaluated
   to byte strings, while the framework expects regular strings.
+
+* :class:`Foundation.NSDecimalNumber` can no longer be subclassed in Python.
+
+  Subclasses was possible in older versions, but this is something that
+  isn't supported in Objective-C and has unexpected behaviour.
+
+* The ``cobject`` and ``c_void_p`` arguments for opaque pointer types
+  and :class:`objc.objc_object` are now keyword only.
+
+  This should not affect user code because passing these values by
+  value isn't useful (esp. because the ``c_void_p`` argument is the only
+  one that's useful for interop with 3th-party code).
+
+* :issue:`668`: "frozendict" is supported with Python 3.15a7 and later.
+
+  - Instances roundtrip to Objective-C objects similarly as the ``dict`` type,
+    including for keyed archiving. For non-keyed archiving a ``frozendict`` value
+    is read back as a plain ``dict``.
+
+  - The ``__metadata__`` method on :class:`objc.function`, :class:`objc.selector`,
+    and :class:`objc.IMP` now returns a ``frozendict`` instead of a regular dict
+    to indicate that changing the value has no effect.
+
 
 Version 12.1
 ------------

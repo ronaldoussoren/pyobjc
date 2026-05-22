@@ -5,13 +5,20 @@ static PyObject*
 mod_CFBagGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_bag;
+    PyObject* py_none = Py_None;
     CFBagRef  bag;
 
-    if (!PyArg_ParseTuple(args, "O", &py_bag)) {
+    /* XXX: Make py_none required in  next major release */
+    if (!PyArg_ParseTuple(args, "O|O", &py_bag, &py_none)) {
         return NULL;
     }
 
     if (PyObjC_PythonToObjC(@encode(CFBagRef), py_bag, &bag) < 0) {
+        return NULL;
+    }
+
+    if (py_none != Py_None) {
+        PyErr_SetString(PyExc_ValueError, "'values' must be None");
         return NULL;
     }
 

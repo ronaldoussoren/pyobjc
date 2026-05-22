@@ -480,6 +480,10 @@ class TestCTFont(TestCase):
         CoreText.CTFontDrawImageFromAdaptiveImageProviderAtPoint
         CoreText.CTFontHasTable
 
+    @min_os_level("26.4")
+    def testFunctions26_4(self):
+        CoreText.CTFontGetUIFontType
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(CoreText.kCTFontOpenTypeFeatureTag, str)

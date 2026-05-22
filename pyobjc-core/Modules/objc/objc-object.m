@@ -16,7 +16,7 @@ static PyObject* _Nullable object_new(PyTypeObject* type __attribute__((__unused
     PyObject*    cobject    = NULL;
     PyObject*    c_void_p   = NULL;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OO", keywords, &cobject, &c_void_p)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|$OO", keywords, &cobject, &c_void_p)) {
         return NULL;
     }
 
@@ -768,11 +768,13 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
                 // LCOV_EXCL_STOP
             }
 
+            Py_BEGIN_ALLOW_THREADS
             @try {
                 [(NSObject*)obj_inst willChangeValueForKey:obj_name];
             } @catch (NSObject* localException) {
                 PyObjCErr_FromObjC(localException);
             }
+            Py_END_ALLOW_THREADS
             if (PyErr_Occurred()) {
                 return -1;
             }
@@ -842,11 +844,13 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
 done:
     Py_CLEAR(descr);
     if (obj_inst && obj_name) {
+        Py_BEGIN_ALLOW_THREADS
         @try {
             [(NSObject*)obj_inst didChangeValueForKey:obj_name];
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
         }
+        Py_END_ALLOW_THREADS
         if (PyErr_Occurred()) {
             res = -1;
         }

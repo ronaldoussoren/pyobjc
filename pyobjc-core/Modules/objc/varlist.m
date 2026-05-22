@@ -6,7 +6,7 @@ typedef struct {
 
     void*      array;
     Py_ssize_t itemsize;
-    char       typestr[];
+    char*      typestr;
 } PyObjCVarList;
 
 PyDoc_STRVAR(varlist_as_tuple_doc,
@@ -357,6 +357,9 @@ static void
 varlist_dealloc(PyObject* self)
 {
     PyTypeObject* tp = Py_TYPE(self);
+    if (((PyObjCVarList*)self)->typestr != NULL) {
+        PyMem_Free(((PyObjCVarList*)self)->typestr);
+    }
     PyObject_Del(self);
     Py_DECREF(tp);
 }
@@ -442,16 +445,24 @@ PyObjCVarList_New(const char* tp, void* array)
         end--;
     }
 
-    result = (PyObjCVarList*)PyObject_Malloc(
-        _PyObject_SIZE((PyTypeObject*)PyObjCVarList_Type) + (end - tp) + 1);
+    result = PyObject_NEW(PyObjCVarList, (PyTypeObject*)PyObjCVarList_Type);
+
     if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
         return NULL;                // LCOV_EXCL_LINE
     }
-    (void)PyObject_Init((PyObject*)result, (PyTypeObject*)PyObjCVarList_Type);
+    result->typestr  = (char* _Nonnull)NULL;
     result->array    = array;
     result->itemsize = PyObjCRT_AlignedSize(tp);
     if (unlikely(result->itemsize == -1)) { // LCOV_BR_EXCL_LINE
         /* Should never happen, type is already validated */
+        // LCOV_EXCL_START
+        Py_DECREF(result);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
+    result->typestr = PyMem_Malloc((end - tp) + 1);
+    if (result->typestr == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;

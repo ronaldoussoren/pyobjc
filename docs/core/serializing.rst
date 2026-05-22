@@ -46,15 +46,20 @@ the same hooks and mechanisms as the :mod:`pickle` module.
 
 Archiving instances of :class:`int`, :class:`float`, :class:`str`
 :class:`bytes`, :class:`list`, :class:`tuple`, :class:`set`,
-:class:`frozenset` and :class:`dict` (but not instances of subclasses
-of these types) with a plain,
+:class:`frozenset`, and :class:`dict` (but not instances
+of subclasses of these types) with a plain,
 not keyed, archiver and will result in objects of the corresponding
 Cocoa type when reading them back, even when reading them back in Python. Programs
 than need high fidility when roundtripping object graphs therefore
 need to use keyed archiving when possible.
 
-For the classes mentioned in the previous paragraph PyObjC implements
-"NSSecureCoding", it doesn't do so for other Python classes.
+.. versionchanged:: 12.2 With Python 3.15 a :type:`frozendict`
+   deserializes as a plain dict when read back with a plain, non-keyed,
+   archiver. It is read back as a :type:`frozendict` when using a
+   keyed archiver.
+
+For the classes mentioned in the previous paragraph (including :type:`frozendit`)
+PyObjC implements "NSSecureCoding", it doesn't do so for other Python classes.
 
 Python subclasses of a Cocoa class can only be archived when they
 implement the NSCoding protocol, that is the subclass must implement
@@ -161,7 +166,7 @@ can read back a limited subset of archives created by PyObjC.
 In particular, the following subset of objects are encoded in such
 a way that they can be read back by pure Objective-C programs:
 
-* Instances of :class:`dict`, :class:`list`, :class:`tuple`,
+* Instances of :class:`dict`, :class:`frozendict`, :class:`list`, :class:`tuple`,
   :class:`set`, :class:`frozenset` (but not subclasses of these classes)
   when all values in these containers are compatible as well.
 
@@ -192,6 +197,7 @@ The following classes support secure coding:
 * :class:`list`
 * :class:`tuple`
 * :class:`dict`
+* :class:`frozendcit`
 * :class:`set`
 * :class:`frozenset`
 * :class:`datetime.date`
@@ -199,3 +205,6 @@ The following classes support secure coding:
 
 .. versionchanged:: 8.3
    :class:`datetime.date` and :class:`datetime.datetime` support secure coding
+
+.. versionchanged:: 12.2
+   :class:`frozendict` is supported when using Python 3.15 or later.

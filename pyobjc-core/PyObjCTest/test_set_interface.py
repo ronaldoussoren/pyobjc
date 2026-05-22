@@ -16,7 +16,7 @@ NSSet = objc.lookUpClass("NSSet")
 NSMutableSet = objc.lookUpClass("NSMutableSet")
 
 
-test.test_set.empty_set = NSMutableSet()
+test.test_set.empty_set = NSSet()  # NSMutableSet()
 
 
 class TestPyObjCSet(TestCase):

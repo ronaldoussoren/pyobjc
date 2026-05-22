@@ -19,6 +19,7 @@ from PyObjCTools.TestSupport import (
     os_level_key,
     cast_ulonglong,
     min_os_level,
+    min_python_release,
 )
 
 
@@ -208,6 +209,20 @@ class TestNSKeyedArchivingInterop(TestCase):
 
     def test_interop_dict(self):
         for testval in ({"a": "b", "c": 42},):
+            data = NSKeyedArchiver.archivedDataWithRootObject_(testval)
+
+            with tempfile.NamedTemporaryFile() as fp:
+                fp.write(data.bytes())
+                fp.flush()
+
+                converted = subprocess.check_output([self.progpath, "keyed", fp.name])
+
+            converted = loads(converted)
+            self.assertEqual(converted, testval)
+
+    @min_python_release("3.15")
+    def test_interop_frozendict(self):
+        for testval in (frozendict({"a": "b", "c": 42}),):  # noqa: F821
             data = NSKeyedArchiver.archivedDataWithRootObject_(testval)
 
             with tempfile.NamedTemporaryFile() as fp:
