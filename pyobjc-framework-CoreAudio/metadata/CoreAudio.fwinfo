@@ -14,106 +14,106 @@
   },
   "literals": {
    "kAudioAggregateDeviceClockDeviceKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioAggregateDeviceIsPrivateKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioAggregateDeviceIsStackedKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioAggregateDeviceMainSubDeviceKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioAggregateDeviceMasterSubDeviceKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioAggregateDeviceNameKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioAggregateDeviceSubDeviceListKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioAggregateDeviceTapAutoStartKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioAggregateDeviceTapListKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioAggregateDeviceUIDKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointDeviceEndPointListKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointDeviceIsPrivateKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointDeviceMainEndPointKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointDeviceMasterEndPointKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointDeviceNameKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointDeviceUIDKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointInputChannelsKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointNameKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointOutputChannelsKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioEndPointUIDKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioHardwareRunLoopMode": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubDeviceDriftCompensationKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubDeviceDriftCompensationQualityKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubDeviceExtraInputLatencyKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubDeviceExtraOutputLatencyKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubDeviceInputChannelsKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubDeviceNameKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubDeviceOutputChannelsKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubDeviceUIDKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubTapDriftCompensationKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubTapDriftCompensationQualityKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubTapExtraInputLatencyKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubTapExtraOutputLatencyKey": {
-    "unicode": true
+    "unicode": false
    },
    "kAudioSubTapUIDKey": {
-    "unicode": true
+    "unicode": false
    }
   },
   "enum": {

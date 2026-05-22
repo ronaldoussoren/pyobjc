@@ -1,7 +1,7 @@
 import CoreFoundation as _CF
 import objc as _objc
 
-"""
+
 #
 # 'Emulation' for CFArray constructors
 #
@@ -76,7 +76,6 @@ kCFTypeArrayCallBacks = None
 kCFTypeDictionaryKeyCallBacks = None
 kCFTypeDictionaryValueCallBacks = None
 kCFTypeSetCallBacks = None
-"""
 
 
 #

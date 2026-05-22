@@ -8,11 +8,22 @@ class TestCallableMetadata(TestCase):
         self.assertCallableMetadataIsSane(
             AVFoundation,
             exclude_attrs={
+                "CKException",
+                "CKSQLite",
+                "CKSQLiteDatabase",
+                "CKSignificantIssue",
+                "IMLogging",
+                "MLModelErrorUtils",
                 "NSATSTypesetter",
+                "NSConcreteNotifyingMutableAttributedString",
+                "NSConcreteTextStorage",
                 "NSDocFormatWriter",
                 "NSFont",
                 "NSLayoutManager",
+                "NSStringDrawingTextStorage",
                 "NSTextLayoutFragment",
+                "NSTextStorage",
                 "NSTypesetter",
+                "SAException",
             },
         )

@@ -22267,7 +22267,7 @@
         "type_override": "{_NSRange=QQ}"
        },
        "2": {
-        "c_array_delimited_by_null": true,
+        "c_array_length_in_arg": 3,
         "type_modifier": "n",
         "type_override": "^v"
        }

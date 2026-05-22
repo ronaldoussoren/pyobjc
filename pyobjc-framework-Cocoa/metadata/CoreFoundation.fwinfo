@@ -7,13 +7,6 @@
       "ignore": true
     }
   },
-  "opaque": {
-   "CFArrayCallBacks": { "typestr": "^{CFArrayCallBacks=q^?^?^?^?}" },
-   "CFBagCallBacks": { "typestr": "^{CFBagCallBacks=q^?^?^?^?^?}" },
-   "CFDictionaryKeyCallBacks": { "typestr": "^{CFDictionaryKeyCallBacks=q^?^?^?^?^?}" },
-   "CFDictionaryValueCallBacks": { "typestr": "^{CFDictionaryValueCallBacks=q^?^?^?^?}" },
-   "CFSetCallBacks": { "typestr": "^{CFSetCallBacks=q^?^?^?^?^?}" }
-  },
   "expressions": {
    "kCFISO8601DateFormatWithFullDate": { "value": "kCFISO8601DateFormatWithYear | kCFISO8601DateFormatWithMonth | kCFISO8601DateFormatWithDay | kCFISO8601DateFormatWithDashSeparatorInDate" },
    "kCFISO8601DateFormatWithFullTime": { "value": "kCFISO8601DateFormatWithTime | kCFISO8601DateFormatWithColonSeparatorInTime | kCFISO8601DateFormatWithTimeZone | kCFISO8601DateFormatWithColonSeparatorInTimeZone" },
@@ -98,7 +91,6 @@
     "kCFCopyStringSetCallBacks": { "ignore": true },
     "kCFStringBinaryHeapCallBacks": { "ignore": true },
     "kCFTypeArrayCallBacks": { "ignore": true },
-    "kCFTypeDictionaryKeyCallBacks": { "ignore": true },
     "kCFTypeBagCallBacks": { "ignore": true },
     "kCFURLIsApplicationKey": { "typestr": "@", "type_name": "const NSString *" },
     "kCFURLApplicationIsScriptableKey": { "typestr": "@", "type_name": "const NSString *" }
@@ -373,7 +365,7 @@
     "args": {
      "2": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -396,7 +388,7 @@
      "2": { "type_override": "@"},
      "3": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -531,7 +523,7 @@
      "0": {},
      "2": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -704,7 +696,7 @@
      "0": {},
      "1": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -829,7 +821,7 @@
      "0": {},
      "1": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -1883,7 +1875,7 @@
      "0": {},
      "1": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -2082,7 +2074,7 @@
     "args": {
      "0": {},
      "3": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFFileDescriptor=}"
@@ -2390,7 +2382,7 @@
     "args": {
      "0": {},
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFMachPort=}"
@@ -2430,7 +2422,7 @@
     "args": {
      "0": {},
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFMachPort=}"
@@ -2488,7 +2480,7 @@
     "args": {
      "0": {},
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFMachPort=}"
@@ -2509,7 +2501,7 @@
      "0": {},
      "1": {},
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFMessagePort=}"
@@ -2567,10 +2559,10 @@
     "retval": {
        "function": {
          "args": [
-	    { "typestr": "@" },
-	    { "typestr": "^v" }
-	 ],
-	 "retval": { "typestr": "v" }
+           { "typestr": "@" },
+           { "typestr": "^v" }
+        ],
+        "retval": { "typestr": "v" }
       }
     }
    },
@@ -2613,7 +2605,7 @@
     "args": {
      "0": {},
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFMessagePort=}"
@@ -2641,7 +2633,7 @@
      "1": { "type_override": "@"},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -3180,7 +3172,7 @@
     "args": {
      "0": {},
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFReadStream=}"
@@ -3298,7 +3290,7 @@
     "args": {
      "0": {},
      "4": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFRunLoopObserver=}"
@@ -3325,7 +3317,7 @@
     "args": {
      "0": {},
      "4": {
-        "function": {
+        "callable": {
 	  "retval": { "typestr": "v" },
 	  "args": [
 	     { "typestr": "^v" },
@@ -3374,7 +3366,7 @@
     "args": {
      "0": {},
      "2": {
-       "function": {
+       "callable": {
          "args": [
 	   { "typestr":  "^v" }
 	 ],
@@ -3455,7 +3447,7 @@
     "args": {
      "0": {},
      "5": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFRunLoopTimer=}"
@@ -3479,7 +3471,7 @@
     "args": {
      "0": {},
      "5": {
-       "function": {
+       "callable": {
           "args": [
 	     { "typestr": "^v" },
 	     { "typestr": "^{__CFRunLoopTimer=}" }
@@ -3551,7 +3543,7 @@
      "0": {},
      "1": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -3699,7 +3691,7 @@
     "args": {
      "0": {},
      "5": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFSocket=}"
@@ -3733,7 +3725,7 @@
      "0": {},
      "1": {},
      "3": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFSocket=}"
@@ -3775,7 +3767,7 @@
     "args": {
      "0": {},
      "3": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFSocket=}"
@@ -3809,7 +3801,7 @@
      "0": {},
      "1": {},
      "3": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFSocket=}"
@@ -4604,7 +4596,7 @@
      "0": {},
      "1": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -4710,7 +4702,7 @@
      "0": {},
      "1": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -5398,7 +5390,7 @@
      "1": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFUserNotification=}"
@@ -5542,7 +5534,7 @@
     "args": {
      "0": {},
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFWriteStream=}"

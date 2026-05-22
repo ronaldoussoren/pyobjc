@@ -26,5 +26,7 @@ class TestCallableMetadata(TestCase):
             exclude_attrs=(
                 "MDQuerySetCreateResultFunction",
                 "MDQuerySetCreateValueFunction",
+                "CULogHandle",
+                "IMLogging",
             ),
         )

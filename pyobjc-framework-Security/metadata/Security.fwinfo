@@ -3344,15 +3344,7 @@
     "args":  {
      "0": {
       "type_override": "^?",
-      "callable_retained": true,
-      "callable": {
-       "arguments": {
-        "0": { "type": "I" },
-	"1": { "type": "n^{SecKeychainCallbackInfo=I@@i}" },
-	"2": { "type": "^v" }
-       },
-       "retval": { "type": "i" }
-      }
+      "callable_retained": true
      }
     },
     "retval": { "type_override": "i" }

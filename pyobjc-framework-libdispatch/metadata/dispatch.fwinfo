@@ -1067,25 +1067,9 @@
    },
    "dispatch_apply_f": {
     "args": {
-     "0": { "type_override": "L" },
-     "1": { "type_override": "@" },
-     "2": { "type_override": "^v" },
      "3": {
-      "type_override": "^?",
-      "callable_retained": true,
-      "callable": {
-       "arguments": {
-        "0": { "type": "^v" },
-        "1": { "type": "L" }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
+      "callable_retained": true
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_sync": {

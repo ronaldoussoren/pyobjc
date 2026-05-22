@@ -232,14 +232,7 @@
   "CMTagCollectionApplyUntil": {
    "args": {
     "1": {
-     "callable_retained": false,
-     "callable": {
-      "arguments": {
-       "0": { "type": "{CMTag=IIQ}" },
-       "1": { "type": "^v" }
-      },
-      "retval": { "type": "v" }
-     }
+     "callable_retained": false
     }
    }
   },
