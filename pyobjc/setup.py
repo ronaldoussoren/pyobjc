@@ -95,7 +95,6 @@ FRAMEWORK_WRAPPERS = [
     ("GameController", "10.9", None),
     ("GameSave", "26.0", None),
     ("HealthKit", "13.0", None),
-    ("HomeKit", "26.4", None),
     ("InputMethodKit", "10.5", None),
     ("ImageCaptureCore", "10.6", None),
     ("Intents", "10.12", None),
