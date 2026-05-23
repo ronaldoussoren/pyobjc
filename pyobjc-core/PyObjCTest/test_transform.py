@@ -2489,14 +2489,14 @@ class TestUtilities(TestCase):
             def func():
                 return 1
 
-            self.assertTrue(_transform.returns_value(func))
+            self.assertTrue(objc._returns_value(func))
 
         with self.subTest("function returns value"):
 
             def func():
                 return x**3  # noqa: F821
 
-            self.assertTrue(_transform.returns_value(func))
+            self.assertTrue(objc._returns_value(func))
 
         with self.subTest("function returns value in multiple paths"):
 
@@ -2506,7 +2506,7 @@ class TestUtilities(TestCase):
                 else:
                     return 42 / x  # noqa: F821
 
-            self.assertTrue(_transform.returns_value(func))
+            self.assertTrue(objc._returns_value(func))
 
         with self.subTest("function returns in multiple paths"):
 
@@ -2516,7 +2516,7 @@ class TestUtilities(TestCase):
                 else:
                     return 42 / x  # noqa: F821
 
-            self.assertTrue(_transform.returns_value(func))
+            self.assertTrue(objc._returns_value(func))
 
         with self.subTest("function returns value in nesting"):
 
@@ -2524,14 +2524,14 @@ class TestUtilities(TestCase):
                 if x == 1:  # noqa: F821
                     return 1
 
-            self.assertTrue(_transform.returns_value(func))
+            self.assertTrue(objc._returns_value(func))
 
         with self.subTest("function returns no value"):
 
             def func():
                 return
 
-            self.assertFalse(_transform.returns_value(func))
+            self.assertFalse(objc._returns_value(func))
 
         with self.subTest("function without return"):
 
@@ -2539,7 +2539,7 @@ class TestUtilities(TestCase):
                 if x == 1:  # noqa: F821
                     y = x * 2  # noqa: F821, F841
 
-            self.assertFalse(_transform.returns_value(func))
+            self.assertFalse(objc._returns_value(func))
 
     @expectedFailure
     def test_returns_None(self):
@@ -2548,4 +2548,4 @@ class TestUtilities(TestCase):
             def func():
                 return None
 
-            self.assertTrue(_transform.returns_value(func))
+            self.assertTrue(objc._returns_value(func))

@@ -156,6 +156,10 @@ Version 12.2
 
   PR by github user `Tim Clem <https://github.com/misterfifths>`_.
 
+* :issue:`669`: Drop dependency on :func:`dis.dis`
+
+  PR by github user `Max Bélanger <https://github.com/maxbelanger>`_.
+
 Version 12.1
 ------------
 
