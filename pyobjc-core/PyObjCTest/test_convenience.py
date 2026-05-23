@@ -648,6 +648,13 @@ class TestRegisterKeywords(TestCase):
         self.assertEqual(len(NEW_MAP["OC_Keyword1"]), 1)
         self.assertEqual(NEW_MAP["OC_Keyword1"][()], "init")
 
+        # Check that registrations don't get replaced:
+        objc.registerNewKeywordsFromSelector("OC_Keyword1", b"init")
+        NEW_MAP["OC_Keyword1"][()] = "init4"
+        self.assertIn("OC_Keyword1", NEW_MAP)
+        self.assertEqual(len(NEW_MAP["OC_Keyword1"]), 1)
+        self.assertEqual(NEW_MAP["OC_Keyword1"][()], "init4")
+
         objc.registerNewKeywordsFromSelector("OC_Keyword1", b"initWithFoo:bar:baz:")
         self.assertEqual(len(NEW_MAP["OC_Keyword1"]), 2)
         self.assertEqual(
@@ -673,6 +680,14 @@ class TestRegisterKeywords(TestCase):
         self.assertNotIn("OC_Keyword2", NEW_MAP)
 
         objc.registerNewKeywords("OC_Keyword2", ("a", "b"), "keywordWithValue1_value2_")
+        self.assertIn("OC_Keyword2", NEW_MAP)
+        self.assertEqual(len(NEW_MAP["OC_Keyword2"]), 1)
+        self.assertEqual(
+            NEW_MAP["OC_Keyword2"][("a", "b")], "keywordWithValue1_value2_"
+        )
+
+        # Check that registrations don't get replaced:
+        objc.registerNewKeywords("OC_Keyword2", ("a", "b"), "blablaWithValue1_value2_")
         self.assertIn("OC_Keyword2", NEW_MAP)
         self.assertEqual(len(NEW_MAP["OC_Keyword2"]), 1)
         self.assertEqual(
