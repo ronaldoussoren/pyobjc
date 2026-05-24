@@ -757,7 +757,7 @@
     "args": {
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -793,7 +793,7 @@
     "args": {
      "4": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -823,7 +823,7 @@
     "args": {
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -911,7 +911,7 @@
     "args": {
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -946,7 +946,7 @@
     "args": {
      "4": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -1012,7 +1012,7 @@
     "args": {
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -1056,7 +1056,7 @@
     "args": {
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -1090,7 +1090,7 @@
      "1": { "type_modifier": "n" },
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -1205,7 +1205,7 @@
      "1": { "type_modifier": "n" },
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -1254,7 +1254,7 @@
     "args": {
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -1293,7 +1293,7 @@
     "args": {
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"

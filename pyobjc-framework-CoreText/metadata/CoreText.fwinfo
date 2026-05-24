@@ -328,7 +328,7 @@
    "CTFontCollectionCreateMatchingFontDescriptorsSortedWithCallback": {
     "args": {
      "1": {
-      "function": {
+      "callable": {
        "args": {
         "0": {
          "typestr": "^{__CTFontDescriptor=}"

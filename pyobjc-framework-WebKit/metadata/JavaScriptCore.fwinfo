@@ -706,7 +706,7 @@
      "1": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{OpaqueJSContext=}"
@@ -775,7 +775,7 @@
      "1": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{OpaqueJSContext=}"

@@ -70,7 +70,7 @@
       "type_override": "^{__CFAllocator=}"
      },
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__FSEventStream=}"
@@ -116,7 +116,7 @@
       "type_override": "^{__CFAllocator=}"
      },
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__FSEventStream=}"

@@ -181,7 +181,7 @@
      "6": {},
      "7": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"
@@ -362,7 +362,7 @@
     "args": {
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"
@@ -395,7 +395,7 @@
      "2": {},
      "3": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"

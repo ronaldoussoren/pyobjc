@@ -529,7 +529,7 @@
      "1": {},
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{opaqueCMSampleBuffer=}"
@@ -652,7 +652,7 @@
      "0": {},
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -766,7 +766,7 @@
      "0": {},
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"
@@ -789,7 +789,7 @@
      "0": {},
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"
@@ -838,7 +838,7 @@
      "0": {},
      "1": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"
@@ -860,7 +860,7 @@
      "0": {},
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{opaqueCMBufferQueue=}"
@@ -1191,7 +1191,7 @@
      "0": {},
      "1": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{opaqueCMSampleBuffer=}"
@@ -1230,7 +1230,7 @@
      "1": {},
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{opaqueCMSampleBuffer=}"
@@ -1272,7 +1272,7 @@
      "1": {},
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{opaqueCMSampleBuffer=}"
@@ -1480,7 +1480,7 @@
      "0": {},
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{opaqueCMSampleBuffer=}"

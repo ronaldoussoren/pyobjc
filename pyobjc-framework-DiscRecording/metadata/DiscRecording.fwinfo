@@ -509,7 +509,7 @@
      "0": {},
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"
@@ -614,7 +614,7 @@
      "1": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DRNotificationCenter=}"
@@ -672,7 +672,7 @@
      "0": {},
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DRTrack=}"

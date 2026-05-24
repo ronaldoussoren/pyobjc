@@ -255,7 +255,7 @@
      "0": {
       "typestr": "^?",
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": {
         "0": { "typestr": "^{ColorSyncCMM=}" },
 	"1": { "typestr": "^v" }
@@ -294,7 +294,7 @@
      "0": {
       "typestr": "^?",
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": {
         "0": { "typestr": "^{__CFDictionary=}" },
 	"1": { "typestr": "^v" }
@@ -506,7 +506,7 @@
      "0": {
       "typestr": "^?",
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": {
         "0": { "typestr": "^{__CFDictionary=}" },
 	"1": { "typestr": "^v" }

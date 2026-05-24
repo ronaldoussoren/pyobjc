@@ -2557,7 +2557,7 @@
      "0": {}
     },
     "retval": {
-       "function": {
+       "callable": {
          "args": [
            { "typestr": "@" },
            { "typestr": "^v" }

@@ -292,7 +292,7 @@
     "args": {
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"
@@ -495,7 +495,7 @@
    "xpc_main": {
     "args": {
      "0": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "@"

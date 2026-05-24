@@ -411,7 +411,7 @@
     "args": {
      "0": {},
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFHost=}"
@@ -488,7 +488,7 @@
     "args": {
      "0": {},
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFNetServiceBrowser=}"
@@ -656,7 +656,7 @@
      "0": {},
      "1": {},
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFNetServiceMonitor=}"
@@ -755,7 +755,7 @@
     "args": {
      "0": {},
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFNetService=}"
@@ -831,7 +831,7 @@
      "0": {},
      "1": {},
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"
@@ -857,7 +857,7 @@
      "0": {},
      "1": {},
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"

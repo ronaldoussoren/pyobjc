@@ -391,7 +391,7 @@
     "args": {
      "0": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -431,7 +431,7 @@
     "args": {
      "0": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "i"

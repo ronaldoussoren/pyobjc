@@ -391,7 +391,7 @@
       "type_override": "^{__CFString=}"
      },
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__SCDynamicStore=}"
@@ -444,7 +444,7 @@
       "type_override": "^{__CFDictionary=}"
      },
      "3": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__SCDynamicStore=}"
@@ -779,7 +779,7 @@
       "type_override": "^{__CFString=}"
      },
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__SCNetworkConnection=}"
@@ -1217,7 +1217,7 @@
       "type_override": "^{__SCNetworkReachability=}"
      },
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__SCNetworkReachability=}"
@@ -1773,7 +1773,7 @@
         "typestr": "v"
        }
       },
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__SCPreferences=}"

@@ -367,7 +367,7 @@
      "0": {},
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^@",

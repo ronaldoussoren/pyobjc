@@ -385,7 +385,7 @@
      "0": {},
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CVDisplayLink=}"
@@ -624,7 +624,7 @@
      "0": {},
      "4": {},
      "6": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"
@@ -670,7 +670,7 @@
      "9": {},
      "10": {},
      "11": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^v"

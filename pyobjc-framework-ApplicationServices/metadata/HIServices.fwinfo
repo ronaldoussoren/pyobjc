@@ -41,7 +41,7 @@
     "args": {
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__AXObserver=}"
@@ -68,7 +68,7 @@
     "args": {
      "1": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__AXObserver=}"
@@ -416,7 +416,7 @@
     "args": {
      "2": {
       "callable_retained": false,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "i"
@@ -609,7 +609,7 @@
    "NewIconActionUPP": {
     "args": {
      "0": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -632,7 +632,7 @@
    "NewIconGetterUPP": {
     "args": {
      "0": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "I"
@@ -735,7 +735,7 @@
     "args": {
      "0": {},
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{OpaquePasteboardRef=}"

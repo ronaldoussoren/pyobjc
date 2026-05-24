@@ -442,7 +442,7 @@
         "typestr": "^v"
        }
       },
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__CFData=}"

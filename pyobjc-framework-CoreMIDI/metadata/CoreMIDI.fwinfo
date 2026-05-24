@@ -232,7 +232,7 @@
     "args": {
      "0": {},
      "1": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{MIDINotification=iI}"
@@ -260,7 +260,7 @@
     "args": {
      "1": {},
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{MIDIPacketList=I[1{MIDIPacket=QS[256C]}]}"
@@ -398,7 +398,7 @@
     "args": {
      "1": {},
      "2": {
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{MIDIPacketList=I[1{MIDIPacket=QS[256C]}]}"

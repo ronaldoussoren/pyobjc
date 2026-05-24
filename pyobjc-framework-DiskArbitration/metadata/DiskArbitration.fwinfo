@@ -62,7 +62,7 @@
      "0": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -79,7 +79,7 @@
      "3": {},
      "4": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -154,7 +154,7 @@
      "0": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -196,7 +196,7 @@
      "1": {},
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -222,7 +222,7 @@
      "1": {},
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -249,7 +249,7 @@
      "1": {},
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -284,7 +284,7 @@
      "0": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -330,7 +330,7 @@
      "1": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -354,7 +354,7 @@
      "2": {},
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -380,7 +380,7 @@
      "1": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -403,7 +403,7 @@
      "1": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -427,7 +427,7 @@
      "1": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -451,7 +451,7 @@
      "1": {},
      "3": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
@@ -474,7 +474,7 @@
      "1": {},
      "2": {
       "callable_retained": true,
-      "function": {
+      "callable": {
        "args": [
         {
          "typestr": "^{__DADisk=}"
