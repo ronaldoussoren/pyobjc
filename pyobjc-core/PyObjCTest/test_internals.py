@@ -64,7 +64,7 @@ class TestMetadataRegistry(TestCase):
             del result["foo"]
             self.assertEqual(extra, result)
 
-            result[next(iter(result.keys()))].append("hello")
+            result["foo"] = 1
 
             self.assertNotEqual(extra, result)
 

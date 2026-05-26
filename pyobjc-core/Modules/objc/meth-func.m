@@ -76,7 +76,7 @@ PyObjC_returns_value(PyObject* value)
     bool      rv = false;
     Py_buffer buf;
 
-    if (!PyFunction_Check(value) && !PyMethod_Check(value)) {
+    if (!PyObjC_is_pyfunction(value) && !PyObjC_is_pymethod(value)) {
         return true;
     }
 
