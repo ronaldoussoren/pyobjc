@@ -366,16 +366,16 @@
      "2": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -389,19 +389,19 @@
      "3": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "2": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "l"
+        "type": "l"
        }
       }
      },
@@ -524,19 +524,19 @@
      "2": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "2": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "l"
+        "type": "l"
        }
       }
      },
@@ -697,16 +697,16 @@
      "1": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -2557,13 +2557,13 @@
      "0": {}
     },
     "retval": {
-       "callable": {
-         "args": [
-           { "typestr": "@" },
-           { "typestr": "^v" }
-        ],
-        "retval": { "typestr": "v" }
-      }
+     "callable": {
+      "arguments": {
+       "0": { "type": "^{__CFMessagePort=}" },
+       "1": { "type": "^v" }
+      },
+      "retval": { "type": "v" }
+     }
     }
    },
    "CFMessagePortGetName": {
@@ -2605,6 +2605,7 @@
     "args": {
      "0": {},
      "1": {
+      "callable_retained": true,
       "callable": {
        "args": [
         {

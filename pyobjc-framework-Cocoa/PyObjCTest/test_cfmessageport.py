@@ -60,7 +60,17 @@ class TestMessagePort(TestCase):
             global didInvalidate
             didInvalidate = True
 
+        self.assertArgIsFunction(
+            CoreFoundation.CFMessagePortSetInvalidationCallBack,
+            1,
+            b"v^{__CFMessagePort=}^v",
+            True,
+        )
         CoreFoundation.CFMessagePortSetInvalidationCallBack(port, invalidate)
+        self.assertResultIsFunction(
+            CoreFoundation.CFMessagePortGetInvalidationCallBack,
+            b"v^{__CFMessagePort=}^v",
+        )
         cb = CoreFoundation.CFMessagePortGetInvalidationCallBack(port)
 
         # XXX: Without writing a custom wrapper we cannot guarantee this
