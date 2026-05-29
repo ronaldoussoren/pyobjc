@@ -530,16 +530,16 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{opaqueCMSampleBuffer=}"
+       "arguments": {
+        "0": {
+         "type": "^{opaqueCMSampleBuffer=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -653,16 +653,16 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -767,16 +767,16 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^{opaqueCMBufferQueueTriggerToken=}"
+        "1": {
+         "type": "^{opaqueCMBufferQueueTriggerToken=}"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -790,16 +790,16 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^{opaqueCMBufferQueueTriggerToken=}"
+        "1": {
+         "type": "^{opaqueCMBufferQueueTriggerToken=}"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -839,16 +839,16 @@
      "1": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -861,19 +861,19 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{opaqueCMBufferQueue=}"
+       "arguments": {
+        "0": {
+         "type": "^{opaqueCMBufferQueue=}"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -1192,19 +1192,19 @@
      "1": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{opaqueCMSampleBuffer=}"
+       "arguments": {
+        "0": {
+         "type": "^{opaqueCMSampleBuffer=}"
         },
-        {
-         "typestr": "q"
+        "1": {
+         "type": "q"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -1231,16 +1231,16 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{opaqueCMSampleBuffer=}"
+       "arguments": {
+        "0": {
+         "type": "^{opaqueCMSampleBuffer=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -1273,16 +1273,16 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{opaqueCMSampleBuffer=}"
+       "arguments": {
+        "0": {
+         "type": "^{opaqueCMSampleBuffer=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -1481,16 +1481,16 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{opaqueCMSampleBuffer=}"
+       "arguments": {
+        "0": {
+         "type": "^{opaqueCMSampleBuffer=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }

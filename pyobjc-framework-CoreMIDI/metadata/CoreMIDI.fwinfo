@@ -233,16 +233,16 @@
      "0": {},
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{MIDINotification=iI}"
+       "arguments": {
+        "0": {
+         "type": "^{MIDINotification=iI}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -261,19 +261,19 @@
      "1": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{MIDIPacketList=I[1{MIDIPacket=QS[256C]}]}"
+       "arguments": {
+        "0": {
+         "type": "^{MIDIPacketList=I[1{MIDIPacket=QS[256C]}]}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -399,19 +399,19 @@
      "1": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{MIDIPacketList=I[1{MIDIPacket=QS[256C]}]}"
+       "arguments": {
+        "0": {
+         "type": "^{MIDIPacketList=I[1{MIDIPacket=QS[256C]}]}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },

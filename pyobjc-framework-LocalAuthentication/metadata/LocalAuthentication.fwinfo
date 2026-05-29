@@ -53,17 +53,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Z"
+           "type": "Z"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -77,17 +77,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Z"
+           "type": "Z"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }

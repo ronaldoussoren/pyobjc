@@ -42,22 +42,22 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__AXObserver=}"
+       "arguments": {
+        "0": {
+         "type": "^{__AXObserver=}"
         },
-        {
-         "typestr": "^{__AXUIElement=}"
+        "1": {
+         "type": "^{__AXUIElement=}"
         },
-        {
-         "typestr": "^{__CFString=}"
+        "2": {
+         "type": "^{__CFString=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -69,25 +69,25 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__AXObserver=}"
+       "arguments": {
+        "0": {
+         "type": "^{__AXObserver=}"
         },
-        {
-         "typestr": "^{__AXUIElement=}"
+        "1": {
+         "type": "^{__AXUIElement=}"
         },
-        {
-         "typestr": "^{__CFString=}"
+        "2": {
+         "type": "^{__CFString=}"
         },
-        {
-         "typestr": "^{__CFDictionary=}"
+        "3": {
+         "type": "^{__CFDictionary=}"
         },
-        {
-         "typestr": "^v"
+        "4": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -417,23 +417,23 @@
      "2": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "i"
+       "arguments": {
+        "0": {
+         "type": "i"
         },
-        {
-         "typestr": "^{__HIShape=}"
+        "1": {
+         "type": "^{__HIShape=}"
         },
-        {
-         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}" ,
+        "2": {
+         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}" ,
 	 "type_modifier": "n"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      }
@@ -610,19 +610,19 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "^^^c"
+        "1": {
+         "type": "^^^c"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "s"
+        "type": "s"
        }
       }
      }
@@ -633,16 +633,16 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^^c"
+        "type": "^^c"
        }
       }
      }
@@ -736,22 +736,22 @@
      "0": {},
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{OpaquePasteboardRef=}"
+       "arguments": {
+        "0": {
+         "type": "^{OpaquePasteboardRef=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "^{__CFString=}"
+        "2": {
+         "type": "^{__CFString=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },

@@ -81,10 +81,10 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "I" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "I" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }

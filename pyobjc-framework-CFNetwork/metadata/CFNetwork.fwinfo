@@ -412,22 +412,22 @@
      "0": {},
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFHost=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFHost=}"
         },
-        {
-         "typestr": "i"
+        "1": {
+         "type": "i"
         },
-        {
-         "typestr": "^{CFStreamError=qi}"
+        "2": {
+         "type": "^{CFStreamError=qi}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -489,25 +489,25 @@
      "0": {},
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFNetServiceBrowser=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFNetServiceBrowser=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "@"
+        "2": {
+         "type": "@"
         },
-        {
-         "typestr": "^{CFStreamError=qi}"
+        "3": {
+         "type": "^{CFStreamError=qi}"
         },
-        {
-         "typestr": "^v"
+        "4": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -657,28 +657,28 @@
      "1": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFNetServiceMonitor=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFNetServiceMonitor=}"
         },
-        {
-         "typestr": "^{__CFNetService=}"
+        "1": {
+         "type": "^{__CFNetService=}"
         },
-        {
-         "typestr": "i"
+        "2": {
+         "type": "i"
         },
-        {
-         "typestr": "^{__CFData=}"
+        "3": {
+         "type": "^{__CFData=}"
         },
-        {
-         "typestr": "^{CFStreamError=qi}"
+        "4": {
+         "type": "^{CFStreamError=qi}"
         },
-        {
-         "typestr": "^v"
+        "5": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -756,19 +756,19 @@
      "0": {},
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFNetService=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFNetService=}"
         },
-        {
-         "typestr": "^{CFStreamError=qi}"
+        "1": {
+         "type": "^{CFStreamError=qi}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -832,19 +832,19 @@
      "1": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^{__CFArray=}"
+        "1": {
+         "type": "^{__CFArray=}"
         },
-        {
-         "typestr": "^{__CFError=}"
+        "2": {
+         "type": "^{__CFError=}"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -858,19 +858,19 @@
      "1": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^{__CFArray=}"
+        "1": {
+         "type": "^{__CFArray=}"
         },
-        {
-         "typestr": "^{__CFError=}"
+        "2": {
+         "type": "^{__CFError=}"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },

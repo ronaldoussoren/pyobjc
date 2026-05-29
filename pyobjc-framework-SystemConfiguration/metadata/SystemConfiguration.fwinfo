@@ -392,19 +392,19 @@
      },
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__SCDynamicStore=}"
+       "arguments": {
+        "0": {
+         "type": "^{__SCDynamicStore=}"
         },
-        {
-         "typestr": "^{__CFArray=}"
+        "1": {
+         "type": "^{__CFArray=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "type_override": "^?"
@@ -445,19 +445,19 @@
      },
      "3": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__SCDynamicStore=}"
+       "arguments": {
+        "0": {
+         "type": "^{__SCDynamicStore=}"
         },
-        {
-         "typestr": "^{__CFArray=}"
+        "1": {
+         "type": "^{__CFArray=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "type_override": "^?"
@@ -780,19 +780,19 @@
      },
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__SCNetworkConnection=}"
+       "arguments": {
+        "0": {
+         "type": "^{__SCNetworkConnection=}"
         },
-        {
-         "typestr": "i"
+        "1": {
+         "type": "i"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "type_override": "^?"
@@ -1218,19 +1218,19 @@
      },
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__SCNetworkReachability=}"
+       "arguments": {
+        "0": {
+         "type": "^{__SCNetworkReachability=}"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "type_override": "^?"
@@ -1770,23 +1770,23 @@
       "callable": {
        "arguments": {},
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__SCPreferences=}"
+       "arguments": {
+        "0": {
+         "type": "^{__SCPreferences=}"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "type_override": "^?"

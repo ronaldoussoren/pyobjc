@@ -35,17 +35,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "d"
+           "type": "d"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -59,14 +59,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "f"
+           "type": "f"
           }
          },
          "retval": {
-          "typestr": "f"
+          "type": "f"
          }
         }
        }
@@ -80,14 +80,14 @@
        "callable": {
         "arguments": {
          "0": {
-          "typestr": "^v"
+          "type": "^v"
          },
          "1": {
-          "typestr": "f"
+          "type": "f"
          }
         },
         "retval": {
-         "typestr": "f"
+         "type": "f"
         }
        }
       },
@@ -159,14 +159,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "f"
+           "type": "f"
           }
          },
          "retval": {
-          "typestr": "f"
+          "type": "f"
          }
         }
        }
@@ -180,14 +180,14 @@
        "callable": {
         "arguments": {
          "0": {
-          "typestr": "^v"
+          "type": "^v"
          },
          "1": {
-          "typestr": "f"
+          "type": "f"
          }
         },
         "retval": {
-         "typestr": "f"
+         "type": "f"
         }
        }
       },
@@ -203,19 +203,19 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
            "c_array_length_in_arg": 2,
            "type_modifier": "N",
-           "typestr": "^v"
+           "type": "^v"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -245,18 +245,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -270,11 +270,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -329,23 +329,23 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "{CGPoint=dd}"
+           "type": "{CGPoint=dd}"
           },
           "3": {
-           "typestr": "{CGVector=dd}"
+           "type": "{CGVector=dd}"
           },
           "4": {
-           "typestr": "o^Z"
+           "type": "o^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -359,18 +359,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -384,18 +384,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -651,11 +651,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -669,11 +669,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -698,11 +698,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -716,11 +716,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }

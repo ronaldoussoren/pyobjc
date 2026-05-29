@@ -71,28 +71,28 @@
      },
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__FSEventStream=}"
+       "arguments": {
+        "0": {
+         "type": "^{__FSEventStream=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "L"
+        "2": {
+         "type": "L"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         },
-        {
-         "typestr": "^I"
+        "4": {
+         "type": "^I"
         },
-        {
-         "typestr": "^Q"
+        "5": {
+         "type": "^Q"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "type_override": "^?"
@@ -117,28 +117,28 @@
      },
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__FSEventStream=}"
+       "arguments": {
+        "0": {
+         "type": "^{__FSEventStream=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "L"
+        "2": {
+         "type": "L"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         },
-        {
-         "typestr": "^I"
+        "4": {
+         "type": "^I"
         },
-        {
-         "typestr": "^Q"
+        "5": {
+         "type": "^Q"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "type_override": "^?"

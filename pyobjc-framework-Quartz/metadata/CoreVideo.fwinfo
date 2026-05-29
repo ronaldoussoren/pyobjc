@@ -210,7 +210,7 @@
      "0": { "typestr": "^{__CVDisplayLink=}" },
      "1": { "typestr": "@?" ,
          "callable": {
-	  "retval": { "typestr": "i" },
+	  "retval": { "type": "i" },
 	  "arguments": {
 	   "0": { "type": "^v" },
 	   "1": { "type": "^{__CVDisplayLink=}" },
@@ -386,31 +386,31 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CVDisplayLink=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CVDisplayLink=}"
         },
-        {
-         "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
+        "1": {
+         "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
 	 "type_modifier": "n"
         },
-        {
-         "typestr": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
+        "2": {
+         "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}",
 	 "type_modifier": "N"
         },
-        {
-         "typestr": "Q"
+        "3": {
+         "type": "Q"
         },
-        {
-         "typestr": "^Q",
+        "4": {
+         "type": "^Q",
 	 "type_modifier": "o"
         },
-        {
-         "typestr": "^v"
+        "5": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -625,16 +625,16 @@
      "4": {},
      "6": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -671,24 +671,24 @@
      "10": {},
      "11": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v" },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "^v" },
+        "2": {
+         "type": "Q"
         },
-        {
-         "typestr": "Q"
+        "3": {
+         "type": "Q"
         },
-        {
-         "typestr": "^^v"
+        "4": {
+         "type": "^^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },

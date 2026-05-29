@@ -1598,7 +1598,7 @@
         }
        },
        "retval": {
-        "typestr": "q"
+        "type": "q"
        }
       }
      }

@@ -37,12 +37,12 @@
       "retval": {
        "callable": {
         "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "@" },
-	 "2": { "typestr": "@" }
+	 "0": { "type": "^v" },
+	 "1": { "type": "@" },
+	 "2": { "type": "@" }
 	},
 	"retval": {
-	 "typestr": "v"
+	 "type": "v"
 	}
        }
       }
@@ -54,12 +54,12 @@
        "0": {
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
 	 "retval": {
-	  "typestr": "v"
+	  "type": "v"
 	 }
 	}
        }
@@ -707,28 +707,28 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{OpaqueJSContext=}"
+       "arguments": {
+        "0": {
+         "type": "^{OpaqueJSContext=}"
         },
-        {
-         "typestr": "^{OpaqueJSValue=}"
+        "1": {
+         "type": "^{OpaqueJSValue=}"
         },
-        {
-         "typestr": "L"
+        "2": {
+         "type": "L"
         },
-        {
-         "typestr": "^^{OpaqueJSValue=}",
+        "3": {
+         "type": "^^{OpaqueJSValue=}",
 	 "type_modifier": "n",
 	 "c_array_length_in_arg": 2
         },
-        {
-         "typestr": "^^{OpaqueJSValue=}",
+        "4": {
+         "type": "^^{OpaqueJSValue=}",
 	 "type_modifier": "o"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{OpaqueJSValue=}"
+        "type": "^{OpaqueJSValue=}"
        }
       }
      }
@@ -776,31 +776,31 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{OpaqueJSContext=}"
+       "arguments": {
+        "0": {
+         "type": "^{OpaqueJSContext=}"
         },
-        {
-         "typestr": "^{OpaqueJSValue=}"
+        "1": {
+         "type": "^{OpaqueJSValue=}"
         },
-        {
-         "typestr": "^{OpaqueJSValue=}"
+        "2": {
+         "type": "^{OpaqueJSValue=}"
         },
-        {
-         "typestr": "L"
+        "3": {
+         "type": "L"
         },
-        {
-         "typestr": "^^{OpaqueJSValue=}",
+        "4": {
+         "type": "^^{OpaqueJSValue=}",
 	 "type_modifier": "n",
 	 "c_array_length_in_arg": 3
         },
-        {
-         "typestr": "^^{OpaqueJSValue=}",
+        "5": {
+         "type": "^^{OpaqueJSValue=}",
 	 "type_modifier": "o"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{OpaqueJSValue=}"
+        "type": "^{OpaqueJSValue=}"
        }
       }
      }

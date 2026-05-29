@@ -392,22 +392,22 @@
      "0": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "L"
+        "1": {
+         "type": "L"
         },
-        {
-         "typestr": "L"
+        "2": {
+         "type": "L"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -432,16 +432,16 @@
      "0": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "i"
+       "arguments": {
+        "0": {
+         "type": "i"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },

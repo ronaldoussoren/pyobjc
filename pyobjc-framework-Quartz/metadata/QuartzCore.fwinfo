@@ -573,9 +573,9 @@
        "4": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" }
+	  "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "@" }
+	 "retval": { "type": "@" }
 	}
        }
       }
@@ -906,7 +906,7 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {

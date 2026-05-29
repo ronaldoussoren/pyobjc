@@ -144,19 +144,19 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "Z" }
+	 "retval": { "type": "Z" }
 	}
        },
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }

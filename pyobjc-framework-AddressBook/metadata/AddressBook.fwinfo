@@ -429,33 +429,33 @@
       "callable": {
        "arguments": {
         "0": {
-         "typestr": "@"
+         "type": "@"
         },
         "1": {
-         "typestr": "q"
+         "type": "q"
         },
         "2": {
-         "typestr": "^v"
+         "type": "^v"
         }
        },
        "retval": {
-        "typestr": "^v"
+        "type": "^v"
        }
       },
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFData=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFData=}"
         },
-        {
-         "typestr": "q"
+        "1": {
+         "type": "q"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "type_override": "^?"

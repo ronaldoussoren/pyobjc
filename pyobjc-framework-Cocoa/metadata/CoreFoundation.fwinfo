@@ -822,16 +822,16 @@
      "1": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -1876,19 +1876,19 @@
      "1": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "2": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -2075,19 +2075,19 @@
      "0": {},
      "3": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFFileDescriptor=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFFileDescriptor=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -2383,22 +2383,22 @@
      "0": {},
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFMachPort=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFMachPort=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "q"
+        "2": {
+         "type": "q"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -2423,22 +2423,22 @@
      "0": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFMachPort=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFMachPort=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "q"
+        "2": {
+         "type": "q"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -2481,16 +2481,16 @@
      "0": {},
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFMachPort=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFMachPort=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }
@@ -2502,22 +2502,22 @@
      "1": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFMessagePort=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFMessagePort=}"
         },
-        {
-         "typestr": "i"
+        "1": {
+         "type": "i"
         },
-        {
-         "typestr": "^{__CFData=}"
+        "2": {
+         "type": "^{__CFData=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__CFData=}", "already_cfretained": true
+        "type": "^{__CFData=}", "already_cfretained": true
        }
       }
      },
@@ -2607,16 +2607,16 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFMessagePort=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFMessagePort=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }
@@ -2635,25 +2635,25 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "2": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "3": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "4": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3174,19 +3174,19 @@
      "0": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFReadStream=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFReadStream=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3292,19 +3292,19 @@
      "0": {},
      "4": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFRunLoopObserver=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFRunLoopObserver=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3319,12 +3319,12 @@
      "0": {},
      "4": {
         "callable": {
-	  "retval": { "typestr": "v" },
-	  "args": [
-	     { "typestr": "^v" },
-	     { "typestr": "^{__CFRunLoopObserver=}" },
-	     { "typestr": "Q"}
-	  ]
+	  "retval": { "type": "v" },
+	  "arguments": {
+	     "0": { "type": "^v" },
+	     "1": { "type": "^{__CFRunLoopObserver=}" },
+	     "2": { "type": "Q"}
+	  }
        }
      }
     },
@@ -3368,11 +3368,11 @@
      "0": {},
      "2": {
        "callable": {
-         "args": [
-	   { "typestr":  "^v" }
-	 ],
+         "arguments": {
+	   "0": { "type":  "^v" }
+	 },
 	 "retval": {
-	   "typestr": "v"
+	   "type": "v"
 	 }
        }
      }
@@ -3449,16 +3449,16 @@
      "0": {},
      "5": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFRunLoopTimer=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFRunLoopTimer=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3473,12 +3473,12 @@
      "0": {},
      "5": {
        "callable": {
-          "args": [
-	     { "typestr": "^v" },
-	     { "typestr": "^{__CFRunLoopTimer=}" }
-	 ],
+          "arguments": {
+	     "0": { "type": "^v" },
+	     "1": { "type": "^{__CFRunLoopTimer=}" }
+	 },
 	 "retval": {
-	    "typestr": "v"
+	    "type": "v"
 	 }
       }
      }
@@ -3545,16 +3545,16 @@
      "1": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3693,25 +3693,25 @@
      "0": {},
      "5": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFSocket=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFSocket=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^{__CFData=}"
+        "2": {
+         "type": "^{__CFData=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "4": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3727,25 +3727,25 @@
      "1": {},
      "3": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFSocket=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFSocket=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^{__CFData=}"
+        "2": {
+         "type": "^{__CFData=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "4": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3769,25 +3769,25 @@
      "0": {},
      "3": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFSocket=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFSocket=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^{__CFData=}"
+        "2": {
+         "type": "^{__CFData=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "4": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3803,25 +3803,25 @@
      "1": {},
      "3": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFSocket=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFSocket=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^{__CFData=}"
+        "2": {
+         "type": "^{__CFData=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "4": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -4598,16 +4598,16 @@
      "1": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -4704,19 +4704,19 @@
      "1": {
       "callable_retained": false,
       "callable": {
-       "args": [
-        {
-         "typestr": "@"
+       "arguments": {
+        "0": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "1": {
+         "type": "@"
         },
-        {
-         "typestr": "@"
+        "2": {
+         "type": "@"
         }
-       ],
+       },
        "retval": {
-        "typestr": "l"
+        "type": "l"
        }
       }
      },
@@ -5392,16 +5392,16 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFUserNotification=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFUserNotification=}"
         },
-        {
-         "typestr": "q"
+        "1": {
+         "type": "q"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }
@@ -5536,19 +5536,19 @@
      "0": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CFWriteStream=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CFWriteStream=}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },

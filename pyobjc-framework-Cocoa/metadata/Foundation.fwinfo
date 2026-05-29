@@ -463,11 +463,11 @@
        "1": {
         "callable": {
 	 "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "@" },
-	   "2": { "typestr": "@" }
+	   "0": { "type": "^v" },
+	   "1": { "type": "@" },
+	   "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "@" }
+	 "retval": { "type": "@" }
 	}
        }
       }
@@ -478,11 +478,11 @@
       "retval": {
        "callable": {
 	"arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	},
-	"retval": { "typestr": "@" }
+	"retval": { "type": "@" }
        }
       }
      }
@@ -497,12 +497,12 @@
        "0": {
         "type_override": "@?",
 	"callable": {
-	 "retval": { "typestr": "v" },
+	 "retval": { "type": "v" },
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
 	 }
 	}
        }
@@ -596,10 +596,10 @@
        "2": {
         "type_override": "@?",
 	"callable": {
-	 "retval": { "typestr": "v" },
+	 "retval": { "type": "v" },
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 }
 	}
        }
@@ -616,12 +616,12 @@
         "type_override": "@?",
 	"callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "Z" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "Z" },
+	  "3": { "type": "@" }
          },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -637,10 +637,10 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -656,10 +656,10 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -671,11 +671,11 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -687,10 +687,10 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -706,12 +706,12 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -723,12 +723,12 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -740,12 +740,12 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -757,12 +757,12 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -774,12 +774,12 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -791,12 +791,12 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -808,12 +808,12 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -825,10 +825,10 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -840,9 +840,9 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" }
+	  "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -854,9 +854,9 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" }
+	  "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -872,10 +872,10 @@
        "0": {
         "callable": {
 	 "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "q" }
+	   "0": { "type": "^v" },
+	   "1": { "type": "q" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -888,9 +888,9 @@
        "retval": {
         "callable": {
 	 "arguments": {
-	   "0": { "typestr": "^v" }
+	   "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        },
        "class_method": false,
@@ -900,9 +900,9 @@
        "args": { "0": {
         "callable": {
 	 "arguments": {
-	   "0": { "typestr": "^v" }
+	   "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }},
        "class_method": false,
@@ -912,9 +912,9 @@
        "retval": {
         "callable": {
 	 "arguments": {
-	   "0": { "typestr": "^v" }
+	   "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        },
        "class_method": false,
@@ -924,9 +924,9 @@
        "args": { "0": {
         "callable": {
 	 "arguments": {
-	   "0": { "typestr": "^v" }
+	   "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }},
        "class_method": false,
@@ -936,10 +936,10 @@
        "args": { "0": {
         "callable": {
 	 "arguments": {
-	   "0": { "typestr": "^v" },
-	   "1": { "typestr": "@" }
+	   "0": { "type": "^v" },
+	   "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }},
        "class_method": false,
@@ -1250,12 +1250,12 @@
        "2": {
         "callable": {
          "arguments": {
-          "0": { "typestr": "^v" },
-          "1": { "typestr": "@" },
-          "2": { "typestr": "@" }
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
          },
          "retval": {
-          "typestr": "b"
+          "type": "b"
          }
         }
        }
@@ -1269,17 +1269,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "@"
+           "type": "@"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "l"
+          "type": "l"
          }
         },
         "callable_retained": false
@@ -1297,17 +1297,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "@"
+           "type": "@"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "l"
+          "type": "l"
          }
         },
         "callable_retained": false
@@ -1450,21 +1450,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -1478,21 +1478,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -1506,21 +1506,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -1534,21 +1534,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -1562,21 +1562,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -1590,21 +1590,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -1618,21 +1618,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -1646,21 +1646,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -1674,21 +1674,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -1702,17 +1702,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "l"
+          "type": "l"
          }
         }
        }
@@ -1726,17 +1726,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "l"
+          "type": "l"
          }
         }
        }
@@ -1750,17 +1750,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "l"
+          "type": "l"
          }
         }
        }
@@ -1949,21 +1949,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -1977,21 +1977,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -2047,11 +2047,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -2065,11 +2065,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -2173,21 +2173,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Z"
+           "type": "Z"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -2784,19 +2784,19 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "^v",
+           "type": "^v",
 	   "c_array_length_in_arg": 2,
 	   "type_modifier": "n"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -2810,23 +2810,23 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "^v",
+           "type": "^v",
 	   "c_array_length_in_arg": 2,
 	   "type_modifier": "n"
           },
           "2": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3365,21 +3365,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3393,21 +3393,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3421,17 +3421,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "i"
+          "type": "i"
          }
         }
        }
@@ -3445,17 +3445,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "q"
+          "type": "q"
          }
         }
        }
@@ -3469,21 +3469,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -3497,21 +3497,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -3648,14 +3648,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Z"
+           "type": "Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3669,14 +3669,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Z"
+           "type": "Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3736,20 +3736,20 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           },
           "3": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "@"
+          "type": "@"
          }
         }
        }
@@ -3763,20 +3763,20 @@
        "callable": {
         "arguments": {
          "0": {
-          "typestr": "^v"
+          "type": "^v"
          },
          "1": {
-          "typestr": "@"
+          "type": "@"
          },
          "2": {
-          "typestr": "@"
+          "type": "@"
          },
          "3": {
-          "typestr": "@"
+          "type": "@"
          }
         },
         "retval": {
-         "typestr": "@"
+         "type": "@"
         }
        }
       },
@@ -3792,14 +3792,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3816,14 +3816,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3840,14 +3840,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3864,17 +3864,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3891,17 +3891,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -3918,24 +3918,24 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
            "callable": {
             "arguments": {
              "0": {
-              "typestr": "^v"
+              "type": "^v"
              }
             },
             "retval": {
-             "typestr": "v"
+             "type": "v"
             }
            },
-           "typestr": "@?"
+           "type": "@?"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -4001,14 +4001,14 @@
        "callable": {
         "arguments": {
          "0": {
-          "typestr": "^v"
+          "type": "^v"
          },
          "1": {
-          "typestr": "@"
+          "type": "@"
          }
         },
         "retval": {
-         "typestr": "v"
+         "type": "v"
         }
        }
       },
@@ -4020,14 +4020,14 @@
        "callable": {
         "arguments": {
          "0": {
-          "typestr": "^v"
+          "type": "^v"
          },
          "1": {
-          "typestr": "@"
+          "type": "@"
          }
         },
         "retval": {
-         "typestr": "v"
+         "type": "v"
         }
        }
       },
@@ -4039,14 +4039,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -4060,14 +4060,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -4095,10 +4095,10 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -4585,17 +4585,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -4617,11 +4617,11 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -4636,17 +4636,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -5056,11 +5056,11 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -5072,11 +5072,11 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -5088,11 +5088,11 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -5104,12 +5104,12 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "Z" },
-	  "3": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "Z" },
+	  "3": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -5121,20 +5121,20 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
+	  "0": { "type": "^v" },
 	  "1": {
-	   "typestr": "@?",
+	   "type": "@?",
 	   "callable": {
 	    "arguments": {
-	     "0": { "typestr": "^v" },
-	     "1": { "typestr": "@" },
-	     "2": { "typestr": "@" }
+	     "0": { "type": "^v" },
+	     "1": { "type": "@" },
+	     "2": { "type": "@" }
 	    },
-	    "retval": { "typestr": "v" }
+	    "retval": { "type": "v" }
 	   }
 	  }
 	 },
-	 "retval": { "typestr": "@" }
+	 "retval": { "type": "@" }
 	}
        }
       }
@@ -5146,20 +5146,20 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
+	  "0": { "type": "^v" },
 	  "1": {
-	   "typestr": "@?",
+	   "type": "@?",
 	   "callable": {
 	    "arguments": {
-	     "0": { "typestr": "^v" },
-	     "1": { "typestr": "@" },
-	     "2": { "typestr": "@" }
+	     "0": { "type": "^v" },
+	     "1": { "type": "@" },
+	     "2": { "type": "@" }
 	    },
-	    "retval": { "typestr": "v" }
+	    "retval": { "type": "v" }
 	   }
 	  }
 	 },
-	 "retval": { "typestr": "@" }
+	 "retval": { "type": "@" }
 	}
        }
       }
@@ -5176,12 +5176,12 @@
 	   "typestr": "@?",
 	   "callable": {
 	    "arguments": {
-	     "0": { "typestr": "^v" },
-	     "1": { "typestr": "@" },
-	     "2": { "typestr": "Z" },
-	     "3": { "typestr": "@" }
+	     "0": { "type": "^v" },
+	     "1": { "type": "@" },
+	     "2": { "type": "Z" },
+	     "3": { "type": "@" }
 	    },
-	    "retval": { "typestr": "v" }
+	    "retval": { "type": "v" }
 	   }
 	  }
 	 },
@@ -5410,18 +5410,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -5435,18 +5435,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -5463,18 +5463,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -5488,18 +5488,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -5513,18 +5513,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -5541,18 +5541,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -5566,18 +5566,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -5591,18 +5591,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -5619,18 +5619,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -5644,18 +5644,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -5669,18 +5669,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -5697,18 +5697,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -6070,12 +6070,12 @@
        "6": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "{_NSRange=QQ}" },
-	  "3": { "typestr": "o^Z" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "{_NSRange=QQ}" },
+	  "3": { "type": "o^Z" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       },
@@ -6087,12 +6087,12 @@
        "4": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "{_NSRange=QQ}" },
-	  "3": { "typestr": "o^Z" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "{_NSRange=QQ}" },
+	  "3": { "type": "o^Z" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       },
@@ -6155,24 +6155,24 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "3": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "4": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -6231,12 +6231,12 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "Q" },
-	  "3": { "typestr": "o^Z" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "Q" },
+	  "3": { "type": "o^Z" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -6248,12 +6248,12 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "Q" },
-	  "3": { "typestr": "o^Z" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "Q" },
+	  "3": { "type": "o^Z" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -6344,17 +6344,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "@"
+           "type": "@"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "l"
+          "type": "l"
          }
         },
         "callable_retained": false
@@ -6400,17 +6400,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "q"
+          "type": "q"
          }
         }
        }
@@ -6424,17 +6424,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "q"
+          "type": "q"
          }
         }
        }
@@ -6448,17 +6448,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "@"
+           "type": "@"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "l"
+          "type": "l"
          }
         },
         "callable_retained": false
@@ -6740,17 +6740,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "q"
+          "type": "q"
          }
         }
        }
@@ -6764,17 +6764,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "q"
+          "type": "q"
          }
         }
        }
@@ -6788,17 +6788,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "q"
+          "type": "q"
          }
         }
        }
@@ -6966,14 +6966,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -6987,14 +6987,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -7254,10 +7254,10 @@
         "type_override": "@?",
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
          },
-         "retval": { "typestr": "v" }
+         "retval": { "type": "v" }
         }
        }
       }
@@ -7294,11 +7294,11 @@
         "type_override": "@?",
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -7311,11 +7311,11 @@
         "type_override": "@?",
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "q"},
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "q"},
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -7327,10 +7327,10 @@
        "3": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -7342,10 +7342,10 @@
        "3": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Q" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "Q" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -7357,10 +7357,10 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -7372,11 +7372,11 @@
        "3": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Q" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "Q" },
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -7388,10 +7388,10 @@
        "4": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -7403,11 +7403,11 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Q" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "Q" },
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -7424,10 +7424,10 @@
          "0": {
 	  "callable": {
 	    "arguments": {
-	     "0": { "typestr": "^v" },
-	     "1": { "typestr": "@" }
+	     "0": { "type": "^v" },
+	     "1": { "type": "@" }
 	    },
-	    "retval": { "typestr": "v" }
+	    "retval": { "type": "v" }
 	  }
 	 }
        },
@@ -7933,24 +7933,24 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
            "callable": {
             "arguments": {
              "0": {
-              "typestr": "^v"
+              "type": "^v"
              }
             },
             "retval": {
-             "typestr": "v"
+             "type": "v"
             }
            },
-           "typestr": "@?"
+           "type": "@?"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         },
         "type_override": "@?"
@@ -7965,24 +7965,24 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
            "callable": {
             "arguments": {
              "0": {
-              "typestr": "^v"
+              "type": "^v"
              }
             },
             "retval": {
-             "typestr": "v"
+             "type": "v"
             }
            },
-           "typestr": "@?"
+           "type": "@?"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         },
         "type_override": "@?"
@@ -7997,14 +7997,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         },
         "type_override": "@?"
@@ -8019,14 +8019,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         },
         "type_override": "@?"
@@ -8041,14 +8041,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         },
         "type_override": "@?"
@@ -9529,11 +9529,11 @@
        "callable": {
         "arguments": {
          "0": {
-          "typestr": "^v"
+          "type": "^v"
          }
         },
         "retval": {
-         "typestr": "v"
+         "type": "v"
         }
        }
       },
@@ -9545,11 +9545,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -9611,11 +9611,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -9629,11 +9629,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -9668,11 +9668,11 @@
        "2": {
         "callable": {
          "arguments": {
-          "0": { "typestr": "^v" },
-          "1": { "typestr": "@" },
-          "2": { "typestr": "@" }
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
          },
-         "retval": { "typestr": "Z" }
+         "retval": { "type": "Z" }
         }
        }
       }
@@ -9778,21 +9778,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -9806,21 +9806,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -9834,21 +9834,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -9862,21 +9862,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -9890,21 +9890,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -9918,21 +9918,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -9946,21 +9946,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -9974,17 +9974,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
@@ -10002,21 +10002,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -10030,17 +10030,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "q"
+          "type": "q"
          }
         }
        }
@@ -10054,17 +10054,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "q"
+          "type": "q"
          }
         }
        }
@@ -10078,17 +10078,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "q"
+          "type": "q"
          }
         }
        }
@@ -10192,21 +10192,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -10540,17 +10540,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -10598,11 +10598,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -10619,9 +10619,9 @@
        "1": {
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" }
+	  "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -10632,9 +10632,9 @@
       "retval": {
        "callable": {
         "arguments": {
-	 "0": { "typestr": "^v" }
+	 "0": { "type": "^v" }
 	},
-	"retval": { "typestr": "v" }
+	"retval": { "type": "v" }
        }
       }
      },
@@ -10645,9 +10645,9 @@
        "0": {
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" }
+	  "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -10658,9 +10658,9 @@
       "retval": {
        "callable": {
         "arguments": {
-	 "0": { "typestr": "^v" }
+	 "0": { "type": "^v" }
 	},
-	"retval": { "typestr": "v" }
+	"retval": { "type": "v" }
        }
       }
      },
@@ -10671,9 +10671,9 @@
        "0": {
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" }
+	  "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -10684,9 +10684,9 @@
       "retval": {
        "callable": {
         "arguments": {
-	 "0": { "typestr": "^v" }
+	 "0": { "type": "^v" }
 	},
-	"retval": { "typestr": "v" }
+	"retval": { "type": "v" }
        }
       }
      },
@@ -10697,9 +10697,9 @@
        "0": {
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" }
+	  "0": { "type": "^v" }
 	 },
- 	 "retval": { "typestr": "v" }
+ 	 "retval": { "type": "v" }
 	}
        }
       }
@@ -10713,20 +10713,20 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "@?",
+          "type": "@?",
 	  "callable": {
 	   "arguments": {
-	    "0": { "typestr": "^v" }
+	    "0": { "type": "^v" }
 	   },
 	   "retval": {
-	    "typestr": "v"
+	    "type": "v"
 	   }
 	  }
          }
@@ -10902,21 +10902,21 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "Q"
+           "type": "Q"
           },
           "3": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -10934,11 +10934,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -10952,11 +10952,11 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -11479,18 +11479,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -11504,18 +11504,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -11529,18 +11529,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -11554,18 +11554,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "Z"
+          "type": "Z"
          }
         }
        }
@@ -11678,17 +11678,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "i"
+          "type": "i"
          }
         }
        }
@@ -11705,17 +11705,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "i"
+          "type": "i"
          }
         }
        }
@@ -11729,17 +11729,17 @@
        "callable": {
         "arguments": {
          "0": {
-          "typestr": "^v"
+          "type": "^v"
          },
          "1": {
-          "typestr": "@"
+          "type": "@"
          },
          "2": {
-          "typestr": "@"
+          "type": "@"
          }
         },
         "retval": {
-         "typestr": "i"
+         "type": "i"
         }
        }
       },
@@ -12078,11 +12078,11 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "^T", "c_array_length_in_arg": 2, "type_modifier": "n" },
-	  "2": { "typestr": "Q" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "^T", "c_array_length_in_arg": 2, "type_modifier": "n" },
+	  "2": { "type": "Q" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       },
@@ -12576,24 +12576,24 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "3": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "4": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -12610,24 +12610,24 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "3": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "4": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -12641,18 +12641,18 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -12916,24 +12916,24 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "3": {
-           "typestr": "{_NSRange=QQ}"
+           "type": "{_NSRange=QQ}"
           },
           "4": {
            "type_modifier": "o",
-           "typestr": "^Z"
+           "type": "^Z"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -12954,14 +12954,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -12973,14 +12973,14 @@
        "callable": {
         "arguments": {
          "0": {
-          "typestr": "^v"
+          "type": "^v"
          },
          "1": {
-          "typestr": "@"
+          "type": "@"
          }
         },
         "retval": {
-         "typestr": "v"
+         "type": "v"
         }
        }
       },
@@ -12992,14 +12992,14 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -13171,9 +13171,9 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" }
+	  "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
         }
        }
       }
@@ -13185,9 +13185,9 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" }
+	  "0": { "type": "^v" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
         }
        }
       }
@@ -13314,10 +13314,10 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
         }
        }
       }
@@ -13330,10 +13330,10 @@
        "3": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
         }
        }
       }
@@ -13346,10 +13346,10 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
         }
        }
       }
@@ -13717,10 +13717,10 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
         }
        }
       }
@@ -13763,17 +13763,17 @@
         "callable": {
          "arguments": {
           "0": {
-           "typestr": "^v"
+           "type": "^v"
           },
           "1": {
-           "typestr": "@"
+           "type": "@"
           },
           "2": {
-           "typestr": "@"
+           "type": "@"
           }
          },
          "retval": {
-          "typestr": "v"
+          "type": "v"
          }
         }
        }
@@ -13792,10 +13792,10 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -13807,10 +13807,10 @@
        "2": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -14098,10 +14098,10 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       }
@@ -14207,10 +14207,10 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       },
@@ -14226,11 +14226,11 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       },
@@ -14246,10 +14246,10 @@
        "1": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "@" }
+	 "retval": { "type": "@" }
 	}
        }
       },
@@ -14272,10 +14272,10 @@
        "0": {
         "callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
 	 },
-	 "retval": { "typestr": "v" }
+	 "retval": { "type": "v" }
 	}
        }
       },
@@ -15368,10 +15368,10 @@
      "0": {
       "callable": {
        "arguments": {
-        "0": { "typestr": "@" }
+        "0": { "type": "@" }
        },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       },
       "callable_retained": true

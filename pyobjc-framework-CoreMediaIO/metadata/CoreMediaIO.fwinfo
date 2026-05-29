@@ -206,22 +206,22 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^{CMIOObjectPropertyAddress=III}"
+        "2": {
+         "type": "^{CMIOObjectPropertyAddress=III}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -289,22 +289,22 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^{CMIOObjectPropertyAddress=III}"
+        "2": {
+         "type": "^{CMIOObjectPropertyAddress=III}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -413,19 +413,19 @@
     "args": {
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },

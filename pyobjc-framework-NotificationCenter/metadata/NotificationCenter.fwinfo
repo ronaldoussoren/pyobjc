@@ -64,8 +64,8 @@
         "type_override": "@?",
 	"callable": {
 	 "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Q"}
+	  "0": { "type": "^v" },
+	  "1": { "type": "Q"}
 	 },
 	 "retval": { "type": "v" }
 	}

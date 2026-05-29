@@ -63,16 +63,16 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__DADissenter=}"
+        "type": "^{__DADissenter=}"
        }
       }
      },
@@ -80,19 +80,19 @@
      "4": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^{__DADissenter=}"
+        "1": {
+         "type": "^{__DADissenter=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -155,19 +155,19 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^{__DADissenter=}"
+        "1": {
+         "type": "^{__DADissenter=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -197,19 +197,19 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^{__DADissenter=}"
+        "1": {
+         "type": "^{__DADissenter=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -223,19 +223,19 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^{__DADissenter=}"
+        "1": {
+         "type": "^{__DADissenter=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -250,19 +250,19 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^{__DADissenter=}"
+        "1": {
+         "type": "^{__DADissenter=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -285,19 +285,19 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^{__DADissenter=}"
+        "1": {
+         "type": "^{__DADissenter=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -331,16 +331,16 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -355,19 +355,19 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^{__CFArray=}"
+        "1": {
+         "type": "^{__CFArray=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -381,16 +381,16 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -404,16 +404,16 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__DADissenter=}",
+        "type": "^{__DADissenter=}",
         "already_cfretained": true
        }
       }
@@ -428,16 +428,16 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__DADissenter=}",
+        "type": "^{__DADissenter=}",
         "already_cfretained": true
        }
       }
@@ -452,16 +452,16 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -475,16 +475,16 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DADisk=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DADisk=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__DADissenter=}",
+        "type": "^{__DADissenter=}",
         "already_cfretained": true
        }
       }

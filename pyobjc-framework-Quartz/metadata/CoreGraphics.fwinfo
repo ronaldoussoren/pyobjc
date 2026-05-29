@@ -400,11 +400,11 @@
      "3": {
       "callable": {
        "arguments": {
-        "0": { "typestr": "^v" },
-        "1": { "typestr": "^{CGContentInfo=IIBBf}", "type_modifier": "N" },
-        "2": { "typestr": "^{CGBitmapParameters=QQQQIII^{CGColorSpace=}Bqf}", "type_modifier": "N" }
+        "0": { "type": "^v" },
+        "1": { "type": "^{CGContentInfo=IIBBf}", "type_modifier": "N" },
+        "2": { "type": "^{CGBitmapParameters=QQQQIII^{CGColorSpace=}Bqf}", "type_modifier": "N" }
        },
-       "retval": { "typestr": "B" }
+       "retval": { "type": "B" }
       }
      }
     }
@@ -473,16 +473,16 @@
     "args": {
      "7": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }
@@ -782,19 +782,19 @@
     "args": {
      "3": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "Q"
+        "2": {
+         "type": "Q"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }
@@ -940,19 +940,19 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -963,19 +963,19 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -1291,22 +1291,22 @@
     "args": {
      "4": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CGEventTapProxy=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CGEventTapProxy=}"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^{__CGEvent=}"
+        "2": {
+         "type": "^{__CGEvent=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__CGEvent=}"
+        "type": "^{__CGEvent=}"
        }
       }
      },
@@ -1321,22 +1321,22 @@
      "0": {},
      "4": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CGEventTapProxy=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CGEventTapProxy=}"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^{__CGEvent=}"
+        "2": {
+         "type": "^{__CGEvent=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__CGEvent=}"
+        "type": "^{__CGEvent=}"
        }
       }
      },
@@ -1350,22 +1350,22 @@
     "args": {
      "4": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CGEventTapProxy=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CGEventTapProxy=}"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^{__CGEvent=}"
+        "2": {
+         "type": "^{__CGEvent=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__CGEvent=}"
+        "type": "^{__CGEvent=}"
        }
       }
      },
@@ -2126,19 +2126,19 @@
      "0": {},
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^c"
+       "arguments": {
+        "0": {
+         "type": "^c"
         },
-        {
-         "typestr": "^{CGPDFObject=}"
+        "1": {
+         "type": "^{CGPDFObject=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -2654,16 +2654,16 @@
      "1": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^{CGPathElement=i^{CGPoint=dd}}"
+        "1": {
+         "type": "^{CGPathElement=i^{CGPoint=dd}}"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }
@@ -2675,10 +2675,10 @@
       "type_override": "@?",
       "callable": {
        "arguments": {
-        "0": { "typestr": "^v" },
-        "1": { "typestr": "^{CGPathElement=}" }
+        "0": { "type": "^v" },
+        "1": { "type": "^{CGPathElement=}" }
        },
-       "retval": { "typestr": "v" }
+       "retval": { "type": "v" }
       }
      }
     },
@@ -2873,19 +2873,19 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+        "1": {
+         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -2901,22 +2901,22 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "{CGScreenUpdateMoveDelta=ii}"
+       "arguments": {
+        "0": {
+         "type": "{CGScreenUpdateMoveDelta=ii}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+        "2": {
+         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -2927,22 +2927,22 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "{CGScreenUpdateMoveDelta=ii}"
+       "arguments": {
+        "0": {
+         "type": "{CGScreenUpdateMoveDelta=ii}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+        "2": {
+         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3012,19 +3012,19 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+        "1": {
+         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -3104,10 +3104,10 @@
       "typestr": "@?",
       "callable": {
        "arguments": {
-        "0": { "typestr": "^v" },
-        "1": { "typestr": "^{CGPathElement=}" }
+        "0": { "type": "^v" },
+        "1": { "type": "^{CGPathElement=}" }
        },
-       "retval": { "typestr": "v" }
+       "retval": { "type": "v" }
       }
      }
     }
@@ -3227,16 +3227,16 @@
      "5": {},
      "7": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -4343,19 +4343,19 @@
      "1": {},
      "3": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "Q"
+        "2": {
+         "type": "Q"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }
@@ -4535,19 +4535,19 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -4558,19 +4558,19 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -4600,7 +4600,7 @@
          "3": {"type": "@" },
          "4": {"type": "@" }
        },
-       "retval": { "typestr": "v" }
+       "retval": { "type": "v" }
      }}
     },
     "retval": {
@@ -4617,7 +4617,7 @@
          "3": {"type": "@" },
          "4": {"type": "@" }
        },
-       "retval": { "typestr": "v" }
+       "retval": { "type": "v" }
      }}
     },
     "retval": {
@@ -4916,22 +4916,22 @@
     "args": {
      "4": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CGEventTapProxy=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CGEventTapProxy=}"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^{__CGEvent=}"
+        "2": {
+         "type": "^{__CGEvent=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__CGEvent=}"
+        "type": "^{__CGEvent=}"
        }
       }
      },
@@ -4946,22 +4946,22 @@
      "0": {},
      "4": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__CGEventTapProxy=}"
+       "arguments": {
+        "0": {
+         "type": "^{__CGEventTapProxy=}"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^{__CGEvent=}"
+        "2": {
+         "type": "^{__CGEvent=}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "^{__CGEvent=}"
+        "type": "^{__CGEvent=}"
        }
       }
      },
@@ -5500,7 +5500,7 @@
 	"2": { "type": "^{CGPDFObject=}" },
 	"3": { "type": "^v" }
        },
-       "retval": { "typestr": "v" }
+       "retval": { "type": "v" }
       }
      }
     }
@@ -5518,7 +5518,7 @@
 	"2": { "type": "^{CGPDFObject=}" },
 	"3": { "type": "^v" }
        },
-       "retval": { "typestr": "B" }
+       "retval": { "type": "B" }
       }
      }
     }
@@ -5695,21 +5695,21 @@
      "0": {},
      "1": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^t",
+       "arguments": {
+        "0": {
+         "type": "^t",
 	 "c_array_delimeted_by_null": true,
 	 "type_modifier": "n"
         },
-        {
-         "typestr": "^{CGPDFObject=}"
+        "1": {
+         "type": "^{CGPDFObject=}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -5939,16 +5939,16 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{CGPDFScanner=}"
+       "arguments": {
+        "0": {
+         "type": "^{CGPDFScanner=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }
@@ -6291,16 +6291,16 @@
      "1": {},
      "2": {
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^{CGPathElement=i^{CGPoint=dd}}"
+        "1": {
+         "type": "^{CGPathElement=i^{CGPoint=dd}}"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      }
@@ -6500,19 +6500,19 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+        "1": {
+         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -6528,22 +6528,22 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "{CGScreenUpdateMoveDelta=ii}"
+       "arguments": {
+        "0": {
+         "type": "{CGScreenUpdateMoveDelta=ii}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+        "2": {
+         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -6554,22 +6554,22 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "{CGScreenUpdateMoveDelta=ii}"
+       "arguments": {
+        "0": {
+         "type": "{CGScreenUpdateMoveDelta=ii}"
         },
-        {
-         "typestr": "Q"
+        "1": {
+         "type": "Q"
         },
-        {
-         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+        "2": {
+         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -6639,19 +6639,19 @@
     "args": {
      "0": {
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+        "1": {
+         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },

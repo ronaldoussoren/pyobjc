@@ -256,11 +256,11 @@
       "typestr": "^?",
       "callable_retained": false,
       "callable": {
-       "args": {
-        "0": { "typestr": "^{ColorSyncCMM=}" },
-	"1": { "typestr": "^v" }
+       "arguments": {
+        "0": { "type": "^{ColorSyncCMM=}" },
+	"1": { "type": "^v" }
        },
-       "retval": { "typestr": "B" }
+       "retval": { "type": "B" }
       }
      },
      "1": { "typestr": "^v" }
@@ -295,11 +295,11 @@
       "typestr": "^?",
       "callable_retained": false,
       "callable": {
-       "args": {
-        "0": { "typestr": "^{__CFDictionary=}" },
-	"1": { "typestr": "^v" }
+       "arguments": {
+        "0": { "type": "^{__CFDictionary=}" },
+	"1": { "type": "^v" }
        },
-       "retval": { "typestr": "B" }
+       "retval": { "type": "B" }
       }
      },
      "1": { "typestr": "^v" }
@@ -507,11 +507,11 @@
       "typestr": "^?",
       "callable_retained": false,
       "callable": {
-       "args": {
-        "0": { "typestr": "^{__CFDictionary=}" },
-	"1": { "typestr": "^v" }
+       "arguments": {
+        "0": { "type": "^{__CFDictionary=}" },
+	"1": { "type": "^v" }
        },
-       "retval": { "typestr": "B" }
+       "retval": { "type": "B" }
       }
      },
      "1": { "type_override": "N^I" },

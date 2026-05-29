@@ -510,22 +510,22 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^v"
+       "arguments": {
+        "0": {
+         "type": "^v"
         },
-        {
-         "typestr": "^{__DRFile=}"
+        "1": {
+         "type": "^{__DRFile=}"
         },
-        {
-         "typestr": "I"
+        "2": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -615,25 +615,25 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DRNotificationCenter=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DRNotificationCenter=}"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         },
-        {
-         "typestr": "^{__CFString=}"
+        "2": {
+         "type": "^{__CFString=}"
         },
-        {
-         "typestr": "@"
+        "3": {
+         "type": "@"
         },
-        {
-         "typestr": "^{__CFDictionary=}"
+        "4": {
+         "type": "^{__CFDictionary=}"
         }
-       ],
+       },
        "retval": {
-        "typestr": "v"
+        "type": "v"
        }
       }
      },
@@ -673,19 +673,19 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^{__DRTrack=}"
+       "arguments": {
+        "0": {
+         "type": "^{__DRTrack=}"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      }

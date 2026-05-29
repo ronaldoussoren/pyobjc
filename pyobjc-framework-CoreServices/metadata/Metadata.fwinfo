@@ -368,23 +368,23 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "^@",
+       "arguments": {
+        "0": {
+         "type": "^@",
 	 "type_modifier": "n",
 	 "c_array_of_variable_length": true
         },
-        {
-         "typestr": "^@",
+        "1": {
+         "type": "^@",
 	 "type_modifier": "n",
 	 "c_array_of_variable_length": true
         },
-        {
-         "typestr": "^v"
+        "2": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "q"
+        "type": "q"
        }
       }
      },

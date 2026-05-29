@@ -329,19 +329,19 @@
     "args": {
      "1": {
       "callable": {
-       "args": {
+       "arguments": {
         "0": {
-         "typestr": "^{__CTFontDescriptor=}"
+         "type": "^{__CTFontDescriptor=}"
         },
         "1": {
-         "typestr": "^{__CTFontDescriptor=}"
+         "type": "^{__CTFontDescriptor=}"
         },
         "2": {
-         "typestr": "@"
+         "type": "@"
         }
        },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       },
       "callable_retained": false

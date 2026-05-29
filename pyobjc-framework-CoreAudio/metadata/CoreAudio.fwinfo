@@ -758,31 +758,31 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        "1": {
+         "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
-        {
-         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        "2": {
+         "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
-        {
-         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        "3": {
+         "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
-        {
-         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        "4": {
+         "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
-        {
-         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        "5": {
+         "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
-        {
-         "typestr": "^v"
+        "6": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -794,25 +794,25 @@
      "4": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "Z"
+        "2": {
+         "type": "Z"
         },
-        {
-         "typestr": "I"
+        "3": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "4": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -824,31 +824,31 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        "1": {
+         "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
-        {
-         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        "2": {
+         "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
-        {
-         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        "3": {
+         "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
-        {
-         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        "4": {
+         "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
-        {
-         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        "5": {
+         "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
-        {
-         "typestr": "^v"
+        "6": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -912,31 +912,31 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        "1": {
+         "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
-        {
-         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        "2": {
+         "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
-        {
-         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        "3": {
+         "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
-        {
-         "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+        "4": {
+         "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
         },
-        {
-         "typestr": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+        "5": {
+         "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
         },
-        {
-         "typestr": "^v"
+        "6": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      }
@@ -947,25 +947,25 @@
      "4": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "Z"
+        "2": {
+         "type": "Z"
         },
-        {
-         "typestr": "I"
+        "3": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "4": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      }
@@ -1013,16 +1013,16 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -1057,16 +1057,16 @@
      "1": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "1": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      }
@@ -1091,22 +1091,22 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "n^{AudioObjectPropertyAddress=III}"
+        "2": {
+         "type": "n^{AudioObjectPropertyAddress=III}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -1206,22 +1206,22 @@
      "2": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "n^{AudioObjectPropertyAddress=III}"
+        "2": {
+         "type": "n^{AudioObjectPropertyAddress=III}"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -1255,22 +1255,22 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "2": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      },
@@ -1294,22 +1294,22 @@
      "3": {
       "callable_retained": true,
       "callable": {
-       "args": [
-        {
-         "typestr": "I"
+       "arguments": {
+        "0": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "1": {
+         "type": "I"
         },
-        {
-         "typestr": "I"
+        "2": {
+         "type": "I"
         },
-        {
-         "typestr": "^v"
+        "3": {
+         "type": "^v"
         }
-       ],
+       },
        "retval": {
-        "typestr": "i"
+        "type": "i"
        }
       }
      }
