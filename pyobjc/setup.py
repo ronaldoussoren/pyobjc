@@ -643,6 +643,33 @@ class oc_test(Command):
                     print(f"* {fw} depends on {r} but doesn't require it")
                     failures += 1
 
+        print("  Scanning for case sensitivity issues")
+        for ln in subprocess.check_output(
+            ["git", "ls-files"], cwd="..", text=True
+        ).splitlines():
+            frameworks = {}
+            if ln.startswith("pyobjc-framework-"):
+                suffix = ln.split("/", 1)[0].split("-", 2)[2]
+                if not suffix:
+                    print(f"Empty framework name: {ln}")
+                    failures += 1
+                elif not suffix[0].isupper() and suffix not in {
+                    "libxpc",
+                    "libdispatch",
+                    "iTunesLibrary",
+                }:
+                    print(f"Framework name with lower-case starting letter: {ln}")
+                    failures += 1
+                elif "pyobjctest" in ln:
+                    print(f"'pyobjctest' instead of 'PyObjCTest': {ln}")
+                    failures += 1
+
+                elif "PyObjCTest" in ln:
+                    basename = os.path.basename(ln)
+                    if any(ch.isupper() for ch in basename):
+                        print(f"PyObjCTest filename with upper-case characters: {ln}")
+                        failures += 1
+
         print(
             "SUMMARY: {'testSeconds': 0.0, 'count': 1, 'fails': %d, "
             "'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }" % (failures,)
