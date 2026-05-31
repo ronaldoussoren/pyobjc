@@ -202,8 +202,7 @@ m_CGWindowListCreateDescriptionFromArray(PyObject* self __attribute__((__unused_
     return rv;
 }
 
-#if !defined(MAC_OS_X_VERSION_15_0)                                                      \
-    || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_15_0
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 150000
 static PyObject*
 m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
                                    PyObject* args)
@@ -239,8 +238,6 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
         @try {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
-#pragma clang diagnostic ignored "-Wunguarded-availability"
             image =
                 CGWindowListCreateImageFromArray(screenBounds, windowArray, imageOption);
 #pragma clang diagnostic pop
@@ -266,8 +263,7 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
     CFRelease(image);
     return rv;
 }
-#endif /* defined(MAC_OS_X_VERSION_15_0) && MAC_OS_X_VERSION_MIN_REQUIRED <              \
-          MAC_OS_X_VERSION_15_0 */
+#endif /* MAC_OS_X_VERSION_MIN_REQUIRED < 150000 */
 
 static PyObject*
 m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
@@ -626,12 +622,10 @@ static PyMethodDef mod_methods[] = {
     {"CGWindowListCreate", (PyCFunction)m_CGWindowListCreate, METH_VARARGS, NULL},
     {"CGWindowListCreateDescriptionFromArray",
      (PyCFunction)m_CGWindowListCreateDescriptionFromArray, METH_VARARGS, NULL},
-#if !defined(MAC_OS_X_VERSION_15_0)                                                      \
-    || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_15_0
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 150000
     {"CGWindowListCreateImageFromArray", (PyCFunction)m_CGWindowListCreateImageFromArray,
      METH_VARARGS, NULL},
-#endif /* !defined(MAC_OS_X_VERSION_15_0) || MAC_OS_X_VERSION_MIN_REQUIRED <             \
-          MAC_OS_X_VERSION_15_0 */
+#endif /* MAC_OS_X_VERSION_MIN_REQUIRED < 150000 */
     {"CGBitmapContextCreate", (PyCFunction)m_CGBitmapContextCreate, METH_VARARGS, NULL},
     {"CGBitmapContextCreateWithData", (PyCFunction)m_CGBitmapContextCreateWithData,
      METH_VARARGS, NULL},

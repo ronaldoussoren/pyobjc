@@ -11,6 +11,9 @@ Version 12.2.1
   used. This only affects users checking out the repository on
   systems with a case-sensitive filesystem.
 
+* :issue:`671`: Fix build error in the Quartz bindings when the SDK
+  is for macOS 15 or later and the build target is also macOS 15 or later.
+
 Version 12.2
 ------------
 
