@@ -311,7 +311,10 @@ PyObjCCFType_Setup(PyObject* module __attribute__((__unused__)))
                 cls, @selector(__pyobjc_PythonObject__), (IMP)pyobjc_PythonObject,
                 encodingBuf))) {
 
-            return -1; // LCOV_EXCL_LINE
+            // LCOV_EXCL_START
+            PyErr_SetString(PyObjCExc_InternalError, "Cannot add category on NSCFType");
+            return -1;
+            // LCOV_EXCL_STOP
         }
 #endif
 
@@ -328,7 +331,7 @@ PyObjCCFType_Setup(PyObject* module __attribute__((__unused__)))
 
     if (unlikely(PyObjC_NSCFTypeClass == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        PyErr_SetString(PyExc_RuntimeError, "Cannot locate NSCFType");
+        PyErr_SetString(PyObjCExc_InternalError, "Cannot locate NSCFType");
         return -1;
         // LCOV_EXCL_STOP
     }
