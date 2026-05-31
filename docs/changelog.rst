@@ -3,6 +3,14 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 12.2.1
+--------------
+
+* :issue:`670`: A number of test files were in a directory name
+  with lower-case letters where upper-case letters should have been
+  used. This only affects users checking out the repository on
+  systems with a case-sensitive filesystem.
+
 Version 12.2
 ------------
 
