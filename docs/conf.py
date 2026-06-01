@@ -57,7 +57,7 @@ extlinks = {
 templates_path = ["_templates"]
 
 # The suffix of source filenames.
-source_suffix = ".rst"
+source_suffix = {".rst": "restructuredtext"}
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
@@ -74,7 +74,7 @@ copyright = "2017-2025, Ronald Oussoren"  # noqa: A001
 # built documents.
 #
 # The short X.Y version.
-version = "12.2"
+version = "12.2.1"
 
 # The full version, including alpha/beta/rc tags.
 release = version
@@ -141,8 +141,12 @@ html_theme_options = {
             "external": True,
         },
         {
-            "title": "Module Index",
+            "title": "Modules",
             "url": "py-modindex",
+        },
+        {
+            "title": "Index",
+            "url": "genindex",
         },
         {
             "title": "Support Me",
@@ -171,6 +175,8 @@ html_theme_options = {
         },
     ],
     "globaltoc_expand_depth": 1,
+    "toctree_collapse": True,
+    "toctree_maxdepth": 2,
     "github_url": "https://github.com/ronaldoussoren/pyobjc",
     "mastodon_url": "https://blog.ronaldoussoren.com/@ronald",
 }
@@ -257,13 +263,15 @@ redirects = {
     "apinotes/kvo": "../core/kvo.html",
     "core/objc-gc": "../supported-platforms.html#objective-c-garbage-collection.html",
     "core/vector-types": "../api/module-objc.simd.html",
+    # "apinotes/Foundation": "frameworks/Foundation/",
+    # "notes/framework-wrappers": "../frameworks/",
 }
 
 todo_include_todos = True
 copybutton_exclude = ".linenos, .gp"
 
 ogp_site_url = "https://pyobjc.readthedocs.io/"
-ogp_image = "https://pyobjc.readthedocs.io/en/latest/_static/pyobjc-logo.jpg"
+# ogp_image = "https://pyobjc.readthedocs.io/en/latest/_static/pyobjc-logo.jpg"
 ogp_type = "article"
 ogp_enable_meta_description = True
 
