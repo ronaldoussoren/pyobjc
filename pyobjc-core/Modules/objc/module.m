@@ -2251,6 +2251,7 @@ static setup_function _Nullable setup_functions[] = {
     PyObjC_setup_simd,
     PyObjC_setup_nsinvocation,
     PyObjCCFType_Setup,
+    PyObjCSwiftObject_Setup,
     PyObjCBlock_Setup,
     PyObjCFSRef_Setup,
 

@@ -14,6 +14,10 @@ Version 12.2.1
 * :issue:`671`: Fix build error in the Quartz bindings when the SDK
   is for macOS 15 or later and the build target is also macOS 15 or later.
 
+* :issue:`659`: Implement basic support for handling Swift classes that
+  have an Objective-C representation but are not subclasses of NSObject,
+  as used in the ``Network`` framework.
+
 Version 12.2
 ------------
 

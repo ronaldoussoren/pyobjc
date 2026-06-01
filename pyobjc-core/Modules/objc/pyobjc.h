@@ -155,6 +155,7 @@
 #import "struct-sockaddr.h"
 #import "struct-wrapper.h"
 #import "super-call.h"
+#import "swiftobject.h"
 #import "varlist.h"
 #import "weakref.h"
 
