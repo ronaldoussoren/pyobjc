@@ -10,7 +10,7 @@ PyObjC supports the Python versions that will be supported by the CPython core
 developers uhtil the next the major release of PyObjC will be released
 (generally in October), and will add new versions of Python when they come available.
 
-Currently PyObjC supports Python 3.10 upto and including 3.14. Python 3.15 (alpha)
+Currently PyObjC supports Python 3.11 upto and including 3.15. Python 3.16 (alpha)
 is supported experimentally.
 
 Free-threading as introduced in Python 3.13 is supported, see :doc:`notes/free-threading`
@@ -24,6 +24,7 @@ for more information.
    ====== ======
    Python PyObjC
    ====== ======
+   3.10   12.2.1
    3.9    11.1
    3.8    10.3
    3.7    9.2

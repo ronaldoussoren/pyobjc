@@ -769,11 +769,11 @@ object_setattro(PyObject* obj, PyObject* name, PyObject* _Nullable value)
             }
 
             Py_BEGIN_ALLOW_THREADS
-            @try {
-                [(NSObject*)obj_inst willChangeValueForKey:obj_name];
-            } @catch (NSObject* localException) {
-                PyObjCErr_FromObjC(localException);
-            }
+                @try {
+                    [(NSObject*)obj_inst willChangeValueForKey:obj_name];
+                } @catch (NSObject* localException) {
+                    PyObjCErr_FromObjC(localException);
+                }
             Py_END_ALLOW_THREADS
             if (PyErr_Occurred()) {
                 return -1;
@@ -845,11 +845,11 @@ done:
     Py_CLEAR(descr);
     if (obj_inst && obj_name) {
         Py_BEGIN_ALLOW_THREADS
-        @try {
-            [(NSObject*)obj_inst didChangeValueForKey:obj_name];
-        } @catch (NSObject* localException) {
-            PyObjCErr_FromObjC(localException);
-        }
+            @try {
+                [(NSObject*)obj_inst didChangeValueForKey:obj_name];
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
         Py_END_ALLOW_THREADS
         if (PyErr_Occurred()) {
             res = -1;

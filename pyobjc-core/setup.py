@@ -21,8 +21,8 @@ def get_config_var(var):
     return _get_config_var(var) or ""
 
 
-# We need at least Python 3.10
-MIN_PYTHON = (3, 10)
+# We need at least Python 3.11
+MIN_PYTHON = (3, 11)
 
 if sys.version_info < MIN_PYTHON:
     vstr = ".".join(map(str, MIN_PYTHON))

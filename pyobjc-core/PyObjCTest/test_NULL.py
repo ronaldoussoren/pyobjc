@@ -1,7 +1,6 @@
 import objc
 from PyObjCTest.NULL import OCTestNULL
 from PyObjCTools.TestSupport import TestCase
-import sys
 
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
@@ -63,12 +62,11 @@ class TestNULL(TestCase):
         ):
             type(objc.NULL)()
 
-        if sys.version_info[:2] >= (3, 10):
-            with self.assertRaisesRegex(
-                TypeError,
-                "cannot set 'foo' attribute of immutable type 'objc._NULL_type'",
-            ):
-                type(objc.NULL).foo = 1
+        with self.assertRaisesRegex(
+            TypeError,
+            "cannot set 'foo' attribute of immutable type 'objc._NULL_type'",
+        ):
+            type(objc.NULL).foo = 1
 
 
 class TestNullArgumentsHelper(objc.lookUpClass("NSObject")):

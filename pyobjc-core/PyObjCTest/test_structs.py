@@ -43,8 +43,7 @@ class TestStructs(TestCase):
 
         self.assertEqual(tp._fields, ("a", "b", "c", "d"))
 
-        if sys.version_info[:2] >= (3, 10):
-            self.assertEqual(tp.__match_args__, ("a", "b", "c", "d"))
+        self.assertEqual(tp.__match_args__, ("a", "b", "c", "d"))
 
         o = tp()
         self.assertHasAttr(o, "a")

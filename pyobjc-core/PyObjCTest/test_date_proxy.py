@@ -43,7 +43,7 @@ objc.registerMetaDataForSelector(
 
 
 # Start of epoch for NSDate
-REFDATE = datetime.datetime(2001, 1, 1, 0, 0, 0, 0, datetime.timezone.utc)
+REFDATE = datetime.datetime(2001, 1, 1, 0, 0, 0, 0, datetime.UTC)
 
 
 def as_datetime(value):
@@ -266,9 +266,9 @@ class TestDateInObjC(TestCase):
 
 
 class TestTZAwareDatetimeInObjC(TestDateInObjC):
-    value = datetime.datetime.now().astimezone(
-        tz=datetime.timezone.utc
-    ) - datetime.timedelta(days=28)
+    value = datetime.datetime.now().astimezone(tz=datetime.UTC) - datetime.timedelta(
+        days=28
+    )
 
 
 class TestDate(TestDateInObjC):
@@ -323,7 +323,7 @@ class TestInteractingWithNSDate(TestCase):
         seconds = time.time()
 
         oc = NSDate.dateWithTimeIntervalSince1970_(seconds)
-        py = datetime.datetime.fromtimestamp(seconds + 7200, datetime.timezone.utc)
+        py = datetime.datetime.fromtimestamp(seconds + 7200, datetime.UTC)
 
         with self.subTest("py is later, ask oc"):
             v = OC_DateInt.earlierOf_and_(oc, py)
@@ -334,7 +334,7 @@ class TestInteractingWithNSDate(TestCase):
             self.assertIs(v, oc)
 
         oc = NSDate.dateWithTimeIntervalSince1970_(seconds)
-        py = datetime.datetime.fromtimestamp(seconds - 7200, datetime.timezone.utc)
+        py = datetime.datetime.fromtimestamp(seconds - 7200, datetime.UTC)
 
         with self.subTest("py is earlier, ask oc"):
             v = OC_DateInt.earlierOf_and_(oc, py)
