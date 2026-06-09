@@ -13,6 +13,13 @@ These bindings are accessed through the ``dispatch`` package (that is, ``import 
 
 For backward compatibility ``import libdispatch`` works as well.
 
+.. warning::
+
+   Libdispatch invokes callbacks in a context where it is not possible to
+   raise Objective-C exceptions. This means that Python code that raises
+   exceptions in callbacks (both blocks and functions) will cause a hard
+   crash.  Make sure that callbacks don't raise exceptions.
+
 
 API Notes
 ---------

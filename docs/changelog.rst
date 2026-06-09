@@ -18,6 +18,12 @@ Version 12.2.1
   have an Objective-C representation but are not subclasses of NSObject,
   as used in the ``Network`` framework.
 
+  .. note::
+
+     The ``Network`` framework builds upon grand central dispatch
+     (the ``pyobjc-framework-libdispatch`` package), and because of that
+     exceptions in callback handlers will cause a hard crash.
+
 Version 12.2
 ------------
 

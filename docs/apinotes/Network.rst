@@ -14,9 +14,16 @@ These bindings are accessed through the ``Network`` package (that is, ``import N
 
 .. macosadded:: 10.14
 
+.. warning::
+
+   Network builds on Libdispatch and because of that invokes callbacks in
+   a context where it is not possible to raise Objective-C exceptions.
+   This means that Python code that raises
+   exceptions in callbacks (both blocks and functions) will cause a hard
+   crash.  Make sure that callbacks don't raise exceptions.
+
 API Notes
 ---------
-
 
 ``nw_framer_parse_input``
 .........................
