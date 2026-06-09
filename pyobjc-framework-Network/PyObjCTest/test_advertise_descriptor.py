@@ -71,3 +71,20 @@ class TestAdvertiseDescriptor(TestCase):
         self.assertResultIsNullTerminated(
             Network.nw_advertise_descriptor_get_application_service_name
         )
+
+    def test_functional(self):
+        value = Network.nw_advertise_descriptor_create_bonjour_service(
+            b"pyobjctest", b"_http._tcp", None
+        )
+        self.assertIsNot(value, None)
+
+        self.assertResultHasType(
+            Network.nw_advertise_descriptor_get_application_service_name, b"^t"
+        )
+        self.assertResultIsNullTerminated(
+            Network.nw_advertise_descriptor_get_application_service_name
+        )
+        self.assertEqual(
+            Network.nw_advertise_descriptor_get_application_service_name(value),
+            objc.NULL,
+        )

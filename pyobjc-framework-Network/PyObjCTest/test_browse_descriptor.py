@@ -47,3 +47,11 @@ class TestBrowseDescriptor(TestCase):
         self.assertResultIsNullTerminated(
             Network.nw_browse_descriptor_get_application_service_name
         )
+
+    def test_functional(self):
+        v = Network.nw_browse_descriptor_create_bonjour_service(b"_ssh._tcp", b"local")
+        self.assertIsInstance(v, objc.objc_object)
+
+        self.assertEqual(
+            Network.nw_browse_descriptor_get_bonjour_service_type(v), b"_ssh._tcp"
+        )
