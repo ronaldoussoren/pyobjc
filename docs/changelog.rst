@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 13.0a0
+--------------
+
+* This release drops support for Python 3.10
+
 Version 12.2.1
 --------------
 
