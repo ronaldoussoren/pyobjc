@@ -178,6 +178,7 @@ extern PyObject* PyObjCNM_tzinfo;
 extern PyObject* PyObjCNM_update;
 extern PyObject* PyObjCNM_co_consts;
 extern PyObject* PyObjCNM___call__;
+extern PyObject* PyObjCNM___orig_bases__;
 
 extern int PyObjC_RemoveInternalTypeCodes(char*);
 

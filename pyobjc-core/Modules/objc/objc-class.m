@@ -764,6 +764,52 @@ static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused_
     } // LCOV_BR_EXCL_LINE
     }
 
+    /* Adding formal protocols to base classes is also supported. Those
+     * will have to be fetched from ``__orig_bases__`` because a formal
+     * protocol is not a type.
+     */
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        dict, PyObjCNM___orig_bases__, &arg_protocols)) {
+    case -1:
+        // LCOV_EXCL_START
+        Py_DECREF(protocols);
+        Py_DECREF(real_bases);
+        Py_DECREF(hiddenSelectors);
+        Py_DECREF(hiddenClassSelectors);
+        return NULL;
+        // LCOV_EXCL_STOP
+    /* case 0: pass */
+    case 1: {
+        if (!PyTuple_Check(arg_protocols)) {
+            PyErr_SetString(PyExc_TypeError, "__orig_bases__ is not a tuple");
+            Py_DECREF(arg_protocols);
+            Py_DECREF(protocols);
+            Py_DECREF(real_bases);
+            Py_DECREF(hiddenSelectors);
+            Py_DECREF(hiddenClassSelectors);
+            return NULL;
+        }
+
+        for (Py_ssize_t i = 0; i < PyTuple_GET_SIZE(arg_protocols); i++) {
+            PyObject* item = PyTuple_GET_ITEM(arg_protocols, i);
+            if (PyObjCFormalProtocol_Check(item)) {
+                int r = PyList_Append(protocols, item);
+                if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
+                    Py_DECREF(arg_protocols);
+                    Py_DECREF(protocols);
+                    Py_DECREF(real_bases);
+                    Py_DECREF(hiddenSelectors);
+                    Py_DECREF(hiddenClassSelectors);
+                    return NULL;
+                    // LCOV_EXCL_STOP
+                }
+            }
+        }
+        Py_CLEAR(arg_protocols);
+    }
+    }
+
     metadict = PyDict_New();
     if (unlikely(metadict == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START

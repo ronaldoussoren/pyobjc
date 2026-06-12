@@ -1518,7 +1518,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
 
         case _C_CHARPTR:
             if (*(void**)args[i] == NULL) {
-                v = PyObjC_NULL;
+                v = Py_None;
                 Py_INCREF(v);
             } else {
                 switch (methinfo->argtype[i]->ptrType) {
@@ -3976,8 +3976,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
 
             case PyObjC_kNullTerminatedArray:
                 if (*(void**)pRetval == NULL) {
-                    Py_INCREF(PyObjC_NULL);
-                    objc_result = PyObjC_NULL;
+                    Py_INCREF(Py_None);
+                    objc_result = Py_None;
                 } else {
                     objc_result = pythonify_c_array_nullterminated(
                         resttype, *(void**)pRetval, methinfo->rettype->alreadyRetained,
@@ -3990,8 +3990,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
 
             case PyObjC_kFixedLengthArray:
                 if (*(void**)pRetval == NULL) {
-                    Py_INCREF(PyObjC_NULL);
-                    objc_result = PyObjC_NULL;
+                    Py_INCREF(Py_None);
+                    objc_result = Py_None;
 
                 } else {
                     objc_result = PyObjC_CArrayToPython2(
@@ -4007,8 +4007,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
             case PyObjC_kVariableLengthArray:
                 /* FIXME: explicit support for UniChar buffers */
                 if (*(void**)pRetval == NULL) {
-                    Py_INCREF(PyObjC_NULL);
-                    objc_result = PyObjC_NULL;
+                    Py_INCREF(Py_None);
+                    objc_result = Py_None;
 
                 } else {
                     objc_result = PyObjCVarList_New(resttype, *(void**)pRetval);
@@ -4018,8 +4018,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
             case PyObjC_kArrayCountInArg:
 
                 if (*(void**)pRetval == NULL) {
-                    Py_INCREF(PyObjC_NULL);
-                    objc_result = PyObjC_NULL;
+                    Py_INCREF(Py_None);
+                    objc_result = Py_None;
 
                 } else {
                     if (methinfo->rettype->arrayArg < 0
@@ -4050,8 +4050,8 @@ PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
 
             case PyObjC_kDerefResultPointer:
                 if (*(void**)pRetval == NULL) {
-                    Py_INCREF(PyObjC_NULL);
-                    objc_result = PyObjC_NULL;
+                    Py_INCREF(Py_None);
+                    objc_result = Py_None;
                 } else {
                     objc_result = pythonify_c_value(tp + 1, *(void**)pRetval);
                     if (objc_result == NULL) {

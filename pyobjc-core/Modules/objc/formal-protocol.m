@@ -404,6 +404,12 @@ static PyObject* _Nullable descriptionForClassMethod_(PyObject* object, PyObject
     }
 }
 
+static PyObject* _Nullable mro_entries(PyObject* object __attribute__((__unused__)),
+                                       PyObject* bases __attribute__((__unused__)))
+{
+    return PyTuple_New(0);
+}
+
 static PyMethodDef proto_methods[] = {
     {
         .ml_name  = "name",
@@ -435,6 +441,10 @@ static PyMethodDef proto_methods[] = {
      .ml_meth  = (PyCFunction)classMethods,
      .ml_flags = METH_NOARGS,
      .ml_doc = "classMethods()\n" CLINIC_SEP "\nList of class methods in this protocol"},
+    {.ml_name  = "__mro_entries__",
+     .ml_meth  = (PyCFunction)mro_entries,
+     .ml_flags = METH_O,
+     .ml_doc   = "mro_entries(bases)\n" CLINIC_SEP "\nEnable use in a class definition"},
     {
         .ml_name = NULL /* SENTINEL */
     }};
