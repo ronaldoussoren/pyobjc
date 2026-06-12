@@ -147,6 +147,7 @@ def createFrameworkDirAndGetattr(
     funcmap = metadict.get("functions")
     aliases = metadict.get("aliases")
     aliases_deprecated = metadict.get("deprecated_aliases", {})
+    formal_protocols = metadict.get("formal_protocols", {})
 
     # XXX: informal protocols are not exposed, but added here
     # for completeness sake.
@@ -196,6 +197,18 @@ def createFrameworkDirAndGetattr(
             globals_dict[name] = value
             return value
 
+        # Check if the name is a formal protocol
+        # from the metadata files
+        try:
+            value = formal_protocols.pop(name)
+        except KeyError:
+            pass
+        else:
+            try:
+                return objc.protocolNamed(value)
+            except objc.ProtocolError:
+                pass
+
         # Then check if the name is class
         try:
             value = lookUpClass(name)
@@ -214,7 +227,7 @@ def createFrameworkDirAndGetattr(
         #
         # The code tries to resolve through 'expressions_mapping'
         # to avoid code duplication, and to get some edge cases correct
-        nonlocal varmap, enummap, inline_list, expressions, aliases
+        nonlocal varmap, enummap, inline_list, expressions, aliases, formal_protocols
 
         if varmap_dct:
             for nm in list(varmap_dct):
@@ -274,6 +287,14 @@ def createFrameworkDirAndGetattr(
                 except KeyError:
                     pass
             aliases = []
+
+        if formal_protocols:
+            for nm in list(formal_protocols):
+                try:
+                    expressions_mapping[nm]
+                except KeyError:
+                    pass
+            formal_protocols = {}
 
         all_names = set()
 

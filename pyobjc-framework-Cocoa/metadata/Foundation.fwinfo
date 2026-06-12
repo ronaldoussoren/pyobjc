@@ -14990,6 +14990,7 @@
     ]
    },
    "NSObject": {
+    "rename": "NSObjectProtocol",
     "methods": [
      {
       "class_method": false,
