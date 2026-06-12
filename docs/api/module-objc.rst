@@ -1238,6 +1238,8 @@ Constants
 
    This always has the value "MACOSX".
 
+   .. deprecated:: 13 Will be removed in PyObjC 14
+
 
 .. _type-encodings:
 

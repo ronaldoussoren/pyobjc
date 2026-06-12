@@ -1490,3 +1490,11 @@ class TestTransient(TestCase):
         str(o.action)
         del o.action
         self.assertEqual(gDeallocCounter, before + 1)
+
+
+class TestDeprecatedAttributes(TestCase):
+    def test_objc_platform(self):
+        if int(objc.__version__.split(".")[0]) < 14:
+            self.assertEqual(objc.platform, "MACOSX")
+        else:
+            self.assertNotHasAttr(objc, "platform")
