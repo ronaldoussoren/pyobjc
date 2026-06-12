@@ -10,7 +10,7 @@ class TestBEExtensionProcessHelper(BrowserEngineKit.NSObject):
 class TestBEExtensionProcess(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("BEExtensionProcess")
+        self.assertProtocolExists("BEExtensionProcess", BrowserEngineKit)
 
     def test_protocol_methods(self):
         self.assertArgIsOut(TestBEExtensionProcessHelper.makeLibXPCConnectionError_, 0)

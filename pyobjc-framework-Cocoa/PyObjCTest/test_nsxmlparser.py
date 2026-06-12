@@ -126,4 +126,4 @@ class TestNSXMLParser(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        self.assertProtocolExists("NSXMLParserDelegate")
+        self.assertProtocolExists("NSXMLParserDelegate", Foundation)

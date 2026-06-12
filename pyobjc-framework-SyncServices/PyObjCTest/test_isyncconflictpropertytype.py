@@ -21,4 +21,4 @@ class TestISyncConflictPropertyType(TestCase):
 
     @min_os_level("10.7")
     def testProtocolObjects(self):
-        self.assertProtocolExists("ISyncConflictPropertyType")
+        self.assertProtocolExists("ISyncConflictPropertyType", SyncServices)

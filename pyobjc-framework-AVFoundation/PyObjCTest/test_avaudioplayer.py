@@ -27,7 +27,7 @@ class TestAVAudioPlayer(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("AVAudioPlayerDelegate")
+        self.assertProtocolExists("AVAudioPlayerDelegate", AVFoundation)
 
     @min_os_level("10.8")
     def testMethods10_8(self):

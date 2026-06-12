@@ -54,7 +54,7 @@ class TestCNContact(TestCase):
 
     @min_os_level("10.11")
     def testProtocols(self):
-        self.assertProtocolExists("CNKeyDescriptor")
+        self.assertProtocolExists("CNKeyDescriptor", Contacts)
 
     @min_os_level("10.11")
     def testMethods(self):

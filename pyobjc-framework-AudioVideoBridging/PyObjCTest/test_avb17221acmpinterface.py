@@ -14,7 +14,7 @@ class TestAVB17221ACMPInterfaceHelper(AudioVideoBridging.NSObject):
 
 class TestAVB17221ACMPInterface(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("AVB17221ACMPClient")
+        self.assertProtocolExists("AVB17221ACMPClient", AudioVideoBridging)
 
     def test_methods(self):
         self.assertResultIsBOOL(

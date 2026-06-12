@@ -54,6 +54,6 @@ class TestQCPlugIn(TestCase):
         self.assertResultIsBOOL(Quartz.QCPlugIn.loadPlugInAtPath_)
 
     def testProtocols(self):
-        self.assertProtocolExists("QCPlugInContext")
-        self.assertProtocolExists("QCPlugInInputImageSource")
-        self.assertProtocolExists("QCPlugInOutputImageProvider")
+        self.assertProtocolExists("QCPlugInContext", Quartz)
+        self.assertProtocolExists("QCPlugInInputImageSource", Quartz)
+        self.assertProtocolExists("QCPlugInOutputImageProvider", Quartz)

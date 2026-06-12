@@ -14,7 +14,7 @@ class TestCXProvider(TestCase):
         self.assertEqual(CallKit.CXCallEndedReasonDeclinedElsewhere, 5)
 
     def test_protocols(self):
-        self.assertProtocolExists("CXProviderDelegate")
+        self.assertProtocolExists("CXProviderDelegate", CallKit)
 
     def test_methods(self):
         self.assertArgIsBlock(

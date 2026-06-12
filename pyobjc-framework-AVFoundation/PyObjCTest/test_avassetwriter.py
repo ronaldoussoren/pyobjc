@@ -58,7 +58,7 @@ class TestAVAssetWriter(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols(self):
-        self.assertProtocolExists("AVAssetWriterDelegate")
+        self.assertProtocolExists("AVAssetWriterDelegate", AVFoundation)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

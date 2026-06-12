@@ -36,4 +36,6 @@ class TestNSAccessibilityCustomRotor(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("NSAccessibilityCustomRotorItemSearchDelegate")
+        self.assertProtocolExists(
+            "NSAccessibilityCustomRotorItemSearchDelegate", AppKit
+        )

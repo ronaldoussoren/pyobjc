@@ -17,7 +17,7 @@ class TestIOBluetoothDeviceInquiryHelper(IOBluetooth.NSObject):
 
 class TestIOBluetoothDeviceInquiry(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("IOBluetoothDeviceInquiryDelegate")
+        self.assertProtocolExists("IOBluetoothDeviceInquiryDelegate", IOBluetooth)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

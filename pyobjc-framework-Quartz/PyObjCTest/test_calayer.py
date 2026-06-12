@@ -149,9 +149,9 @@ class TestCALayer(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        self.assertProtocolExists("CAAction")
+        self.assertProtocolExists("CAAction", Quartz)
 
     @min_sdk_level("10.12")
     def testProtocols10_12(self):
-        self.assertProtocolExists("CALayerDelegate")
-        self.assertProtocolExists("CALayoutManager")
+        self.assertProtocolExists("CALayerDelegate", Quartz)
+        self.assertProtocolExists("CALayoutManager", Quartz)

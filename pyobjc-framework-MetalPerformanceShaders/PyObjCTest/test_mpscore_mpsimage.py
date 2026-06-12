@@ -31,7 +31,7 @@ class TestMPSCore_MPSImage(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("MPSImageAllocator")
+        self.assertProtocolExists("MPSImageAllocator", MetalPerformanceShaders)
 
     @min_os_level("10.13")
     def test_methods(self):

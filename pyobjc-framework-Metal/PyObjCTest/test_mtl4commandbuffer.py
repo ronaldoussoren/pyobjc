@@ -21,7 +21,7 @@ class TestMTL4CommandBufferHelper(Metal.NSObject):
 class TestMTL4CommandBuffer(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4CommandBuffer")
+        self.assertProtocolExists("MTL4CommandBuffer", Metal)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

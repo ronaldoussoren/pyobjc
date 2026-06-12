@@ -14,7 +14,7 @@ class TestMKAnnotationHelper(MapKit.NSObject):
 class TestMKAnnotation(TestCase):
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertProtocolExists("MKAnnotation")
+        self.assertProtocolExists("MKAnnotation", MapKit)
 
         self.assertResultHasType(
             TestMKAnnotationHelper.coordinate, MapKit.CLLocationCoordinate2D.__typestr__

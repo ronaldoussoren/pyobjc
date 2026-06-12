@@ -18,7 +18,8 @@ class TestASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequest(
     @min_sdk_level("14.0")
     def test_protocols(self):
         self.assertProtocolExists(
-            "ASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequest"
+            "ASAuthorizationWebBrowserPlatformPublicKeyCredentialAssertionRequest",
+            AuthenticationServices,
         )
 
     def test_protocol_methods(self):

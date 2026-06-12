@@ -7,7 +7,7 @@ from objc import simd
 
 class TestGKAgent(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("GKAgentDelegate")
+        self.assertProtocolExists("GKAgentDelegate", GameplayKit)
 
     @min_os_level("10.12")
     def testMethods(self):

@@ -15,8 +15,8 @@ class TestGKPublicProtocolsHelper(GameCenter.NSObject):
 class TestGCAchievement(TestCase):
     @min_os_level("10.8")
     def testProtocols(self):
-        self.assertProtocolExists("GKSessionDelegate")
-        self.assertProtocolExists("GKVoiceChatClient")
+        self.assertProtocolExists("GKSessionDelegate", GameCenter)
+        self.assertProtocolExists("GKVoiceChatClient", GameCenter)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

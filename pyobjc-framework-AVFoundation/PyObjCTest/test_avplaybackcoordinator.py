@@ -115,5 +115,7 @@ class TestAVPlaybackCoordinator(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        self.assertProtocolExists("AVPlaybackCoordinatorPlaybackControlDelegate")
-        self.assertProtocolExists("AVPlayerPlaybackCoordinatorDelegate")
+        self.assertProtocolExists(
+            "AVPlaybackCoordinatorPlaybackControlDelegate", AVFoundation
+        )
+        self.assertProtocolExists("AVPlayerPlaybackCoordinatorDelegate", AVFoundation)

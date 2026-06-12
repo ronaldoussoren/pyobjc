@@ -32,7 +32,7 @@ class TestMTLSampler(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLSamplerState")
+        self.assertProtocolExists("MTLSamplerState", Metal)
 
     @min_os_level("10.11")
     def test_methods10_11(self):

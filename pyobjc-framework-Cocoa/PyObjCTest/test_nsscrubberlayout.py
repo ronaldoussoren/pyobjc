@@ -36,4 +36,4 @@ class TestNSScrubberLayout(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("NSScrubberFlowLayoutDelegate")
+        self.assertProtocolExists("NSScrubberFlowLayoutDelegate", AppKit)

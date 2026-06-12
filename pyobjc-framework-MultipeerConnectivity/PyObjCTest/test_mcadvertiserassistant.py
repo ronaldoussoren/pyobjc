@@ -12,4 +12,6 @@ class TestMCAdvertiserAssistant(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("MCAdvertiserAssistantDelegate")
+        self.assertProtocolExists(
+            "MCAdvertiserAssistantDelegate", MultipeerConnectivity
+        )

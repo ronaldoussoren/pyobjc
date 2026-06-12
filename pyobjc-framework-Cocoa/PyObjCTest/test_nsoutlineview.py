@@ -169,8 +169,8 @@ class TestNSOutlineView(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSOutlineViewDelegate")
-        self.assertProtocolExists("NSOutlineViewDataSource")
+        self.assertProtocolExists("NSOutlineViewDelegate", AppKit)
+        self.assertProtocolExists("NSOutlineViewDataSource", AppKit)
 
     def testProtocols(self):
         self.assertArgHasType(

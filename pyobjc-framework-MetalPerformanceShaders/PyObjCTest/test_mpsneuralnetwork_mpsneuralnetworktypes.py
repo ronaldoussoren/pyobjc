@@ -119,8 +119,8 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("MPSNNPadding")
-        self.assertProtocolExists("MPSImageSizeEncodingState")
+        self.assertProtocolExists("MPSNNPadding", MetalPerformanceShaders)
+        self.assertProtocolExists("MPSImageSizeEncodingState", MetalPerformanceShaders)
 
     def test_methods(self):
         self.assertResultHasType(

@@ -84,7 +84,7 @@ class TestMTLBlitCommandEncoder(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols10_11(self):
-        self.assertProtocolExists("MTLBlitCommandEncoder")
+        self.assertProtocolExists("MTLBlitCommandEncoder", Metal)
 
     def test_methods(self):
         self.assertArgHasType(

@@ -37,7 +37,7 @@ class TestMTKView(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("MTKViewDelegate")
+        self.assertProtocolExists("MTKViewDelegate", MetalKit)
 
     def test_methods(self):
         self.assertArgHasType(

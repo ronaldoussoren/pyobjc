@@ -35,4 +35,4 @@ class TestPKPushRegistry(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("PKPushRegistryDelegate")
+        self.assertProtocolExists("PKPushRegistryDelegate", PushKit)

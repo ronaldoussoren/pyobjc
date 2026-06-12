@@ -41,15 +41,19 @@ class TestNSFileProviderTesting(TestCase):
 
     @min_sdk_level("11.3")
     def test_protocols(self):
-        self.assertProtocolExists("NSFileProviderTestingOperation")
-        self.assertProtocolExists("NSFileProviderTestingIngestion")
-        self.assertProtocolExists("NSFileProviderTestingLookup")
-        self.assertProtocolExists("NSFileProviderTestingContentFetch")
-        self.assertProtocolExists("NSFileProviderTestingChildrenEnumeration")
-        self.assertProtocolExists("NSFileProviderTestingCreation")
-        self.assertProtocolExists("NSFileProviderTestingModification")
-        self.assertProtocolExists("NSFileProviderTestingDeletion")
-        self.assertProtocolExists("NSFileProviderTestingCollisionResolution")
+        self.assertProtocolExists("NSFileProviderTestingOperation", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingIngestion", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingLookup", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingContentFetch", FileProvider)
+        self.assertProtocolExists(
+            "NSFileProviderTestingChildrenEnumeration", FileProvider
+        )
+        self.assertProtocolExists("NSFileProviderTestingCreation", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingModification", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingDeletion", FileProvider)
+        self.assertProtocolExists(
+            "NSFileProviderTestingCollisionResolution", FileProvider
+        )
 
     def test_proto_methods(self):
         self.assertResultHasType(

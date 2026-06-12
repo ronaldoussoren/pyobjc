@@ -64,8 +64,8 @@ class TestNSSharingService(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSSharingServiceDelegate")
-        self.assertProtocolExists("NSSharingServicePickerDelegate")
+        self.assertProtocolExists("NSSharingServiceDelegate", AppKit)
+        self.assertProtocolExists("NSSharingServicePickerDelegate", AppKit)
 
     def testProtocol(self):
         self.assertArgHasType(
@@ -81,4 +81,4 @@ class TestNSSharingService(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocolObjects10_12(self):
-        self.assertProtocolExists("NSCloudSharingServiceDelegate")
+        self.assertProtocolExists("NSCloudSharingServiceDelegate", AppKit)

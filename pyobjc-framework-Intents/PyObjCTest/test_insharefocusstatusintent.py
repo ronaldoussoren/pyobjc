@@ -13,7 +13,7 @@ class TestINShareFocusStatusIntentHelper(Intents.NSObject):
 class TestINShareFocusStatusIntent(TestCase):
     @min_sdk_level("12.0")
     def test_protocols(self):
-        self.assertProtocolExists("INShareFocusStatusIntentHandling")
+        self.assertProtocolExists("INShareFocusStatusIntentHandling", Intents)
 
     def test_methods(self):
         self.assertArgIsBlock(

@@ -51,8 +51,8 @@ class TestNSAnimation(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocol(self):
-        self.assertProtocolExists("NSAnimationDelegate")
-        self.assertProtocolExists("NSAnimatablePropertyContainer")
+        self.assertProtocolExists("NSAnimationDelegate", AppKit)
+        self.assertProtocolExists("NSAnimatablePropertyContainer", AppKit)
 
     def testProtocolMethods(self):
         self.assertResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)

@@ -25,4 +25,4 @@ class TestNSPageController(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSPageControllerDelegate")
+        self.assertProtocolExists("NSPageControllerDelegate", AppKit)

@@ -26,7 +26,7 @@ class TestAVAssetResourceLoader(TestCase):
 
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertProtocolExists("AVAssetResourceLoaderDelegate")
+        self.assertProtocolExists("AVAssetResourceLoaderDelegate", AVFoundation)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

@@ -25,7 +25,7 @@ class TestINStartCallIntentHelper(Intents.NSObject):
 class TestINStartCallIntent(TestCase):
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
-        self.assertProtocolExists("INStartCallIntentHandling")
+        self.assertProtocolExists("INStartCallIntentHandling", Intents)
 
     def test_methods(self):
         self.assertArgIsBlock(

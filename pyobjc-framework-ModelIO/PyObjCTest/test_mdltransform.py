@@ -181,4 +181,4 @@ class TestMDLTransform(TestCase):
         )
 
     def testProtocolObjects(self):
-        self.assertProtocolExists("MDLTransformComponent")
+        self.assertProtocolExists("MDLTransformComponent", ModelIO)

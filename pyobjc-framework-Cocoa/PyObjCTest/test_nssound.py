@@ -26,7 +26,7 @@ class TestNSSound(TestCase):
 
     @min_os_level("10.10")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSSoundDelegate")
+        self.assertProtocolExists("NSSoundDelegate", AppKit)
 
     def testProtocols(self):
         self.assertArgIsBOOL(TestNSSoundHelper.sound_didFinishPlaying_, 1)

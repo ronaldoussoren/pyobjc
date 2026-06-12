@@ -73,4 +73,4 @@ class TestNSProgress(TestCase):
 
     @min_sdk_level("10.11")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSProgressReporting")
+        self.assertProtocolExists("NSProgressReporting", AppKit)

@@ -86,7 +86,7 @@ class TestMTLArgumentEncoder(TestCase):
 
     @min_sdk_level("10.13")
     def test_protocols10_13(self):
-        self.assertProtocolExists("MTLArgumentEncoder")
+        self.assertProtocolExists("MTLArgumentEncoder", Metal)
 
     def test_methods(self):
         self.assertResultHasType(

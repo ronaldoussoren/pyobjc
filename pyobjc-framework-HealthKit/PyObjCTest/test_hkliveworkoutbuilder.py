@@ -4,7 +4,7 @@ import HealthKit  # noqa: F401
 
 class TestHKActivitySummary(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("HKLiveWorkoutBuilderDelegate")
+        self.assertProtocolExists("HKLiveWorkoutBuilderDelegate", HealthKit)
 
     def test_methods(self):
         self.assertResultIsBOOL(

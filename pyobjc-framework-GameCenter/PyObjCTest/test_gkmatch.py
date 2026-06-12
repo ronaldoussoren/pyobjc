@@ -69,7 +69,7 @@ class TestGKError(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("GKMatchDelegate")
+        self.assertProtocolExists("GKMatchDelegate", GameCenter)
 
         self.assertArgHasType(
             GKMatchDelegateHelper.match_player_didChangeConnectionState_,

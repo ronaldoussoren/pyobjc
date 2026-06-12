@@ -32,7 +32,7 @@ class TestGCAxisInputHelper(GameController.NSObject):
 class TestGCAxisInput(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCAxisInput")
+        self.assertProtocolExists("GCAxisInput", GameController)
 
     @expectedFailure  # 'value' method is requires explicit protocol definition.
     def test_protocol_methods(self):

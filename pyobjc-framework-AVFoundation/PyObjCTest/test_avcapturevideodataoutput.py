@@ -56,4 +56,6 @@ class TestAVCaptureVideoDataOutput(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocols(self):
-        self.assertProtocolExists("AVCaptureVideoDataOutputSampleBufferDelegate")
+        self.assertProtocolExists(
+            "AVCaptureVideoDataOutputSampleBufferDelegate", AVFoundation
+        )

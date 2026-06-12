@@ -168,12 +168,12 @@ class TestNSPasteboard(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSPasteboardWriting")
-        self.assertProtocolExists("NSPasteboardReading")
+        self.assertProtocolExists("NSPasteboardWriting", AppKit)
+        self.assertProtocolExists("NSPasteboardReading", AppKit)
 
     @min_sdk_level("10.14")
     def testProtocolObjects10_14(self):
-        self.assertProtocolExists("NSPasteboardTypeOwner")
+        self.assertProtocolExists("NSPasteboardTypeOwner", AppKit)
 
     def testProtocols(self):
         self.assertResultHasType(

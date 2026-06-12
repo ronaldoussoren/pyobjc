@@ -31,7 +31,7 @@ class TestNSURLDownload(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSURLDownloadDelegate")
+        self.assertProtocolExists("NSURLDownloadDelegate", Foundation)
 
     def testProtocols(self):
         self.assertArgHasType(

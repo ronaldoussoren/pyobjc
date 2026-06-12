@@ -86,7 +86,7 @@ class TestISyncSessionDriver(TestCase):
 
     @min_os_level("10.5")
     def testProtocols(self):
-        self.assertProtocolExists("ISyncSessionDriverDataSource")
+        self.assertProtocolExists("ISyncSessionDriverDataSource", SyncServices)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

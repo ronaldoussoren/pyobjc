@@ -8,4 +8,4 @@ class TestNSUserInterfaceItemIdentification(TestCase):
 
     @min_os_level("10.7")
     def testProtocols(self):
-        self.assertProtocolExists("NSUserInterfaceItemIdentification")
+        self.assertProtocolExists("NSUserInterfaceItemIdentification", AppKit)

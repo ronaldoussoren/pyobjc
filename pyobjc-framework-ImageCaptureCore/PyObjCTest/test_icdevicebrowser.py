@@ -15,7 +15,7 @@ class TestICDeviceBrowser(TestCase):
         self.assertIsTypedEnum(ImageCaptureCore.ICAuthorizationStatus, str)
 
     def testProtocolObjects(self):
-        self.assertProtocolExists("ICDeviceBrowserDelegate")
+        self.assertProtocolExists("ICDeviceBrowserDelegate", ImageCaptureCore)
 
     def testMethods(self):
         self.assertArgIsBOOL(

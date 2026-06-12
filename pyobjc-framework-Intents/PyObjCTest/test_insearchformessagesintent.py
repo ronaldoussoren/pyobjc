@@ -97,4 +97,4 @@ class TestINSearchForMessagesIntent(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("INSearchForMessagesIntentHandling")
+        self.assertProtocolExists("INSearchForMessagesIntentHandling", Intents)

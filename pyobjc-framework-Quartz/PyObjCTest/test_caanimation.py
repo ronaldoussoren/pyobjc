@@ -39,7 +39,7 @@ class TestCAAnimation(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("CAAnimationDelegate")
+        self.assertProtocolExists("CAAnimationDelegate", Quartz)
 
     @min_os_level("10.5")
     def testMethods(self):

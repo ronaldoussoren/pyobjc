@@ -29,10 +29,10 @@ class TestMTLIOCommandQueue(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLIOCommandQueue")
-        self.assertProtocolExists("MTLIOScratchBuffer")
-        self.assertProtocolExists("MTLIOScratchBufferAllocator")
-        self.assertProtocolExists("MTLIOFileHandle")
+        self.assertProtocolExists("MTLIOCommandQueue", Metal)
+        self.assertProtocolExists("MTLIOScratchBuffer", Metal)
+        self.assertProtocolExists("MTLIOScratchBufferAllocator", Metal)
+        self.assertProtocolExists("MTLIOFileHandle", Metal)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

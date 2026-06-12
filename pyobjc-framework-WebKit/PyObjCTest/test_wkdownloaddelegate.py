@@ -37,7 +37,7 @@ class TestWKDownloadDelegate(TestCase):
 
     @min_sdk_level("11.3")
     def test_protocols(self):
-        self.assertProtocolExists("WKDownloadDelegate")
+        self.assertProtocolExists("WKDownloadDelegate", WebKit)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

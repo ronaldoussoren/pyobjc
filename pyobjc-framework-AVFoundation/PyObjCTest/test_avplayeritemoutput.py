@@ -53,11 +53,15 @@ class TestAVPlayerOutput(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("AVPlayerItemOutputPullDelegate")
-        self.assertProtocolExists("AVPlayerItemLegibleOutputPushDelegate")
-        self.assertProtocolExists("AVPlayerItemMetadataOutputPushDelegate")
-        self.assertProtocolExists("AVPlayerItemOutputPushDelegate")
-        self.assertProtocolExists("AVPlayerItemRenderedLegibleOutputPushDelegate")
+        self.assertProtocolExists("AVPlayerItemOutputPullDelegate", AVFoundation)
+        self.assertProtocolExists("AVPlayerItemLegibleOutputPushDelegate", AVFoundation)
+        self.assertProtocolExists(
+            "AVPlayerItemMetadataOutputPushDelegate", AVFoundation
+        )
+        self.assertProtocolExists("AVPlayerItemOutputPushDelegate", AVFoundation)
+        self.assertProtocolExists(
+            "AVPlayerItemRenderedLegibleOutputPushDelegate", AVFoundation
+        )
 
     def test_protocol_methods(self):
         self.assertArgHasType(

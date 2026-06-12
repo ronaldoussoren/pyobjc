@@ -8,4 +8,4 @@ class TestNSFileProviderItemDecoration(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("NSFileProviderItemDecorating")
+        self.assertProtocolExists("NSFileProviderItemDecorating", FileProvider)

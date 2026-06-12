@@ -26,7 +26,7 @@ class TestNCWidgetProviding(TestCase):
 
     @min_os_level("10.10")
     def testClasses10_10(self):
-        self.assertProtocolExists("NCWidgetProviding")
+        self.assertProtocolExists("NCWidgetProviding", NotificationCenter)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

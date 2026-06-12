@@ -50,7 +50,7 @@ class TestMTLIntersectionFunctionTable(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("MTLIntersectionFunctionTable")
+        self.assertProtocolExists("MTLIntersectionFunctionTable", Metal)
 
     def test_methods(self):
         self.assertArgHasType(

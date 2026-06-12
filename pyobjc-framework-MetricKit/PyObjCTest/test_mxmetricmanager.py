@@ -11,7 +11,7 @@ class TestMXMetricManager(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocol(self):
-        self.assertProtocolExists("MXMetricManagerSubscriber")
+        self.assertProtocolExists("MXMetricManagerSubscriber", MetricKit)
 
     @min_os_level("12.0")
     def test_methods(self):

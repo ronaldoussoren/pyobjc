@@ -11,7 +11,7 @@ class TestSAEmergencyResponseManagerHelper(SafetyKit.NSObject):
 
 class TestSAEmergencyResponseManager(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("SAEmergencyResponseDelegate")
+        self.assertProtocolExists("SAEmergencyResponseDelegate", SafetyKit)
 
     def test_constants(self):
         self.assertIsEnumType(SafetyKit.SAEmergencyResponseManagerVoiceCallStatus)

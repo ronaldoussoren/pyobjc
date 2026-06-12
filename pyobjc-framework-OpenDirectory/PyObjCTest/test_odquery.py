@@ -17,4 +17,4 @@ class TestODQuery(TestCase):
         self.assertArgIsOut(OpenDirectory.ODQuery.resultsAllowingPartial_error_, 1)
 
     def testProtocols(self):
-        self.assertProtocolExists("ODQueryDelegate")
+        self.assertProtocolExists("ODQueryDelegate", OpenDirectory)

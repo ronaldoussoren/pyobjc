@@ -19,7 +19,9 @@ class TestMCNearbyServiceAdvertiser(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("MCNearbyServiceAdvertiserDelegate")
+        self.assertProtocolExists(
+            "MCNearbyServiceAdvertiserDelegate", MultipeerConnectivity
+        )
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

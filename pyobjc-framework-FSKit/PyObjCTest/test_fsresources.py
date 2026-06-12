@@ -20,7 +20,7 @@ class TestFSResource(TestCase):
         self.assertEqual(FSKit.FSMatchResultUsable, 3)
 
     def test_protocols(self):
-        self.assertProtocolExists("FSManageableResourceMaintenanceOperations")
+        self.assertProtocolExists("FSManageableResourceMaintenanceOperations", FSKit)
 
     def test_protocol_methods(self):
 

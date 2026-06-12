@@ -35,7 +35,7 @@ class TestNSDrawer(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSDrawerDelegate")
+        self.assertProtocolExists("NSDrawerDelegate", AppKit)
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldOpen_)

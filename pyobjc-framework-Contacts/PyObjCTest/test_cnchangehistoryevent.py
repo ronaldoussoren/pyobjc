@@ -5,4 +5,4 @@ import Contacts  # noqa: F401
 class TestCNChangeHistoryEvent(TestCase):
     @min_os_level("10.15")
     def testProtocols(self):
-        self.assertProtocolExists("CNChangeHistoryEventVisitor")
+        self.assertProtocolExists("CNChangeHistoryEventVisitor", Contacts)

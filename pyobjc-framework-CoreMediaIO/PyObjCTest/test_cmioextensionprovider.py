@@ -21,7 +21,7 @@ class TestCMIOExtensionProvider(TestCase):
 
     @min_sdk_level("12.3")
     def test_protocols(self):
-        self.assertProtocolExists("CMIOExtensionProviderSource")
+        self.assertProtocolExists("CMIOExtensionProviderSource", CoreMediaIO)
 
     def test_methods(self):
         self.assertResultIsBOOL(TestCMIOExtensionProviderHelper.connectClient_error_)

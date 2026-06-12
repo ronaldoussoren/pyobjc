@@ -33,17 +33,17 @@ class TestWebKit(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        self.assertProtocolExists("DOMEventListener")
-        self.assertProtocolExists("DOMEventTarget")
-        self.assertProtocolExists("DOMNodeFilter")
-        self.assertProtocolExists("DOMXPathNSResolver")
-        self.assertProtocolExists("WebDocumentRepresentation")
-        self.assertProtocolExists("WebDocumentSearching")
-        self.assertProtocolExists("WebDocumentText")
-        self.assertProtocolExists("WebDocumentView")
-        self.assertProtocolExists("WebOpenPanelResultListener")
-        self.assertProtocolExists("WebPlugInViewFactory")
-        self.assertProtocolExists("WebPolicyDecisionListener")
+        self.assertProtocolExists("DOMEventListener", WebKit)
+        self.assertProtocolExists("DOMEventTarget", WebKit)
+        self.assertProtocolExists("DOMNodeFilter", WebKit)
+        self.assertProtocolExists("DOMXPathNSResolver", WebKit)
+        self.assertProtocolExists("WebDocumentRepresentation", WebKit)
+        self.assertProtocolExists("WebDocumentSearching", WebKit)
+        self.assertProtocolExists("WebDocumentText", WebKit)
+        self.assertProtocolExists("WebDocumentView", WebKit)
+        self.assertProtocolExists("WebOpenPanelResultListener", WebKit)
+        self.assertProtocolExists("WebPlugInViewFactory", WebKit)
+        self.assertProtocolExists("WebPolicyDecisionListener", WebKit)
 
 
 class TestCallableMetadata(TestCase):

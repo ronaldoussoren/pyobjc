@@ -226,4 +226,4 @@ class TestMPSCore_MPSCoreTypes(TestCase):
         MetalPerformanceShaders.MPSDataTypeBitsCount
 
     def test_protocols(self):
-        self.assertProtocolExists("MPSDeviceProvider")
+        self.assertProtocolExists("MPSDeviceProvider", MetalPerformanceShaders)

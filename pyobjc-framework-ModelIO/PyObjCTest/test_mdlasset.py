@@ -81,4 +81,4 @@ class TestMDLAsset(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocolObjects(self):
-        self.assertProtocolExists("MDLLightProbeIrradianceDataSource")
+        self.assertProtocolExists("MDLLightProbeIrradianceDataSource", ModelIO)

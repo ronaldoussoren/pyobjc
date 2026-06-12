@@ -16,7 +16,7 @@ class TestMTLResourceViewPoolHelper(Metal.NSObject):
 class TestMTLResourceViewPool(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLResourceViewPool")
+        self.assertProtocolExists("MTLResourceViewPool", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

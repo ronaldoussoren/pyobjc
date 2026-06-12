@@ -7,7 +7,7 @@ class TestOpenDirectory(TestCase):
         self.assertIsInstance(OpenDirectory.ODFrameworkErrorDomain, str)
 
     def testProtocols(self):
-        self.assertProtocolExists("ODQueryDelegate")
+        self.assertProtocolExists("ODQueryDelegate", OpenDirectory)
 
     def testIntegration(self):
         import CFOpenDirectory

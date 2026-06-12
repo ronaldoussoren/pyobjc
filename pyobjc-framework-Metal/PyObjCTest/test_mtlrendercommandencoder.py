@@ -394,7 +394,7 @@ class TestMTLRenderCommandEncoder(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLRenderCommandEncoder")
+        self.assertProtocolExists("MTLRenderCommandEncoder", Metal)
 
     def test_methods(self):
         self.assertArgHasType(
@@ -1604,7 +1604,7 @@ class TestMTLRenderCommandEncoder2(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLRenderCommandEncoder")
+        self.assertProtocolExists("MTLRenderCommandEncoder", Metal)
 
     def test_methods(self):
         self.assertArgHasType(

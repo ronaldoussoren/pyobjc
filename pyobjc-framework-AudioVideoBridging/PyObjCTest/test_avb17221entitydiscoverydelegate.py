@@ -116,7 +116,7 @@ class TestAVB17221EntityDiscoveryDelegate(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("AVB17221EntityDiscoveryDelegate")
+        self.assertProtocolExists("AVB17221EntityDiscoveryDelegate", AudioVideoBridging)
 
     def test_methods(self):
         self.assertArgHasType(

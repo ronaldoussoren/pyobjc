@@ -17,7 +17,7 @@ class TestlMTL4CompilerTask(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4CompilerTask")
+        self.assertProtocolExists("MTL4CompilerTask", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(TestlMTL4CompilerTaskHelper.status, b"q")

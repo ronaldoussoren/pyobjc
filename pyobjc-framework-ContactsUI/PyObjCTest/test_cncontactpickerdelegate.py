@@ -5,4 +5,4 @@ import ContactsUI  # noqa: F401
 class TestCNContactPickerDelegate(TestCase):
     @min_os_level("10.11")
     def testProtocols(self):
-        self.assertProtocolExists("CNContactPickerDelegate")
+        self.assertProtocolExists("CNContactPickerDelegate", ContactsUI)

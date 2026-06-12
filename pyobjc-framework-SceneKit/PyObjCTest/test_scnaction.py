@@ -27,7 +27,7 @@ class TestSCNAction(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("SCNActionable")
+        self.assertProtocolExists("SCNActionable", SceneKit)
 
     @min_os_level("10.10")
     def testMethods(self):

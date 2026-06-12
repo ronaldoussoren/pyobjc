@@ -25,4 +25,4 @@ class TestIKDeviceBrowserView(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("IKDeviceBrowserViewDelegate")
+        self.assertProtocolExists("IKDeviceBrowserViewDelegate", Quartz)

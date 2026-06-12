@@ -241,15 +241,15 @@ class TestFSVolume(TestCase):
         self.assertEqual(FSKit.FSMountOptionsReadOnly, 1 << 0)
 
     def test_protocols(self):
-        self.assertProtocolExists("FSVolumePathConfOperations")
-        self.assertProtocolExists("FSVolumeOperations")
-        self.assertProtocolExists("FSVolumeXattrOperations")
-        self.assertProtocolExists("FSVolumeOpenCloseOperations")
-        self.assertProtocolExists("FSVolumeReadWriteOperations")
-        self.assertProtocolExists("FSVolumeAccessCheckOperations")
-        self.assertProtocolExists("FSVolumeRenameOperations")
-        self.assertProtocolExists("FSVolumePreallocateOperations")
-        self.assertProtocolExists("FSVolumeItemDeactivation")
+        self.assertProtocolExists("FSVolumePathConfOperations", FSKit)
+        self.assertProtocolExists("FSVolumeOperations", FSKit)
+        self.assertProtocolExists("FSVolumeXattrOperations", FSKit)
+        self.assertProtocolExists("FSVolumeOpenCloseOperations", FSKit)
+        self.assertProtocolExists("FSVolumeReadWriteOperations", FSKit)
+        self.assertProtocolExists("FSVolumeAccessCheckOperations", FSKit)
+        self.assertProtocolExists("FSVolumeRenameOperations", FSKit)
+        self.assertProtocolExists("FSVolumePreallocateOperations", FSKit)
+        self.assertProtocolExists("FSVolumeItemDeactivation", FSKit)
 
     def test_protocol_methods(self):
         # FSVolumePathConfOperations

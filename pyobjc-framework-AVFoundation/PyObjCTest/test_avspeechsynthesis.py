@@ -153,4 +153,4 @@ class TestAVSpeechSynthesis(TestCase):
 
     @min_sdk_level("10.14")
     def testProtocols(self):
-        self.assertProtocolExists("AVSpeechSynthesizerDelegate")
+        self.assertProtocolExists("AVSpeechSynthesizerDelegate", AVFoundation)

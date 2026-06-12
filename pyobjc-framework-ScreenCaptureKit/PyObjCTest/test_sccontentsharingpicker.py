@@ -24,7 +24,7 @@ class TestSCContentSharingPicker(TestCase):
 
     @min_sdk_level("14.0")
     def test_protocols(self):
-        self.assertProtocolExists("SCContentSharingPickerObserver")
+        self.assertProtocolExists("SCContentSharingPickerObserver", ScreenCaptureKit)
 
     @min_os_level("14.0")
     def test_methods(self):

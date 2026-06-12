@@ -114,4 +114,4 @@ class TestPDFDocument(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("PDFDocumentDelegate")
+        self.assertProtocolExists("PDFDocumentDelegate", Quartz)

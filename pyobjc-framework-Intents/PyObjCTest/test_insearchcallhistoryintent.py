@@ -68,4 +68,4 @@ class TestINSearchCallHistoryIntent(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("INSearchCallHistoryIntentHandling")
+        self.assertProtocolExists("INSearchCallHistoryIntentHandling", Intents)

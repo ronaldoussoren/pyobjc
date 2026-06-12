@@ -48,7 +48,9 @@ class TestMPSNeuralNetwork_MPSNNBatchNormalizationHelper(
 
 class TestMPSNeuralNetwork_MPSNNBatchNormalization(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("MPSCNNBatchNormalizationDataSource")
+        self.assertProtocolExists(
+            "MPSCNNBatchNormalizationDataSource", MetalPerformanceShaders
+        )
 
     def test_methods(self):
         self.assertResultHasType(

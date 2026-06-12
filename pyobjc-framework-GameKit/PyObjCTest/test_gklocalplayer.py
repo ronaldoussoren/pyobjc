@@ -111,7 +111,7 @@ class TestGKLocalPlayer(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("GKLocalPlayerListener")
+        self.assertProtocolExists("GKLocalPlayerListener", GameKit)
 
     def testConstants(self):
         self.assertIsInstance(

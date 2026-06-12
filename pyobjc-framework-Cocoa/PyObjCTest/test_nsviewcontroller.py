@@ -41,7 +41,7 @@ class TestNSViewController(TestCase):
 
     @min_os_level("10.10")
     def testProtocols10_10(self):
-        self.assertProtocolExists("NSViewControllerPresentationAnimator")
+        self.assertProtocolExists("NSViewControllerPresentationAnimator", AppKit)
 
     @min_os_level("10.10")
     def testConstants10_10(self):

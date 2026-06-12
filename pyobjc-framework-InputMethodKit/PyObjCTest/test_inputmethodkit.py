@@ -26,8 +26,8 @@ class TestInputMethodKit(TestCase):
         self.assertIsInstance(InputMethodKit.IMKCandidatesOpacityAttributeName, str)
 
     def testProtocols2(self):
-        self.assertProtocolExists("IMKMouseHandling")
-        self.assertProtocolExists("IMKStateSetting")
+        self.assertProtocolExists("IMKMouseHandling", InputMethodKit)
+        self.assertProtocolExists("IMKStateSetting", InputMethodKit)
 
 
 class TestCallableMetadata(TestCase):

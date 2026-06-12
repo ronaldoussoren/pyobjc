@@ -352,7 +352,7 @@ class TestMTLRenderPipeline(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLRenderPipelineState")
+        self.assertProtocolExists("MTLRenderPipelineState", Metal)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

@@ -12,4 +12,4 @@ class TestNSDockTile(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocol(self):
-        self.assertProtocolExists("NSDockTilePlugIn")
+        self.assertProtocolExists("NSDockTilePlugIn", AppKit)

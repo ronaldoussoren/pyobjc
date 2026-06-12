@@ -46,7 +46,7 @@ class TestCMIOExtensionStream(TestCase):
 
     @min_sdk_level("12.3")
     def test_protocols(self):
-        self.assertProtocolExists("CMIOExtensionStreamSource")
+        self.assertProtocolExists("CMIOExtensionStreamSource", CoreMediaIO)
 
     def test_methods(self):
         self.assertArgHasType(

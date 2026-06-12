@@ -44,4 +44,4 @@ class TestVNRequest(TestCase):
 
     @min_sdk_level("10.15")
     def testProtocols(self):
-        self.assertProtocolExists("VNRequestProgressProviding")
+        self.assertProtocolExists("VNRequestProgressProviding", Vision)

@@ -16,4 +16,4 @@ class TestSKScene(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("SKSceneDelegate")
+        self.assertProtocolExists("SKSceneDelegate", SpriteKit)

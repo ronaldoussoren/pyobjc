@@ -11,7 +11,7 @@ class TestMTL4BinaryFunctionHelper(Metal.NSObject):
 class TestMTL4BinaryFunction(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4BinaryFunction")
+        self.assertProtocolExists("MTL4BinaryFunction", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

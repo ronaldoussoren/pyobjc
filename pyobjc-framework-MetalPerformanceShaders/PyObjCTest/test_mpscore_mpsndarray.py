@@ -104,4 +104,4 @@ class TestMPSCore_MPSNDArray(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("MPSNDArrayAllocator")
+        self.assertProtocolExists("MPSNDArrayAllocator", MetalPerformanceShaders)

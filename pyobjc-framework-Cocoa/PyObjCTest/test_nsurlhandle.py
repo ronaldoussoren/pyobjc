@@ -32,4 +32,4 @@ class TestNSURLHandle(TestCase):
         self.assertResultIsBOOL(Foundation.NSURLHandle.writeData_)
 
     def testProtocols(self):
-        self.assertProtocolExists("NSURLHandleClient")
+        self.assertProtocolExists("NSURLHandleClient", Foundation)

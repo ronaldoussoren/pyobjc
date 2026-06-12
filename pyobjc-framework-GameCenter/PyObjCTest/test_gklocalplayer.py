@@ -70,7 +70,7 @@ class TestGKLocalPlayer(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("GKLocalPlayerListener")
+        self.assertProtocolExists("GKLocalPlayerListener", GameCenter)
 
     @min_os_level("10.8")
     def testConstants(self):

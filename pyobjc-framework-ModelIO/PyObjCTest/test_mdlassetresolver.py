@@ -10,7 +10,7 @@ class TestMDLAssetResolverHelper(ModelIO.NSObject):
 class TestMDLAssetResolver(TestCase):
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("MDLAssetResolver")
+        self.assertProtocolExists("MDLAssetResolver", ModelIO)
 
     def testMethods(self):
         self.assertResultIsBOOL(

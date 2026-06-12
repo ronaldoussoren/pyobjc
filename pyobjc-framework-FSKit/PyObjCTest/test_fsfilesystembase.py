@@ -10,7 +10,7 @@ class TestFSFileSystemBaseHelper(FSKit.NSObject):
 
 class TestFSFileSystemBase(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("FSFileSystemBase")
+        self.assertProtocolExists("FSFileSystemBase", FSKit)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

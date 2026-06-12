@@ -13,7 +13,7 @@ class TestCMIOExtensionDeviceHelper(CoreMediaIO.NSObject):
 class TestCMIOExtensionDevice(TestCase):
     @min_sdk_level("12.3")
     def test_protocols(self):
-        self.assertProtocolExists("CMIOExtensionDeviceSource")
+        self.assertProtocolExists("CMIOExtensionDeviceSource", CoreMediaIO)
 
     def test_methods(self):
         self.assertArgHasType(

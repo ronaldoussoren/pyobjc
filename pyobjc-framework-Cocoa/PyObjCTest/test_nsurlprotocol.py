@@ -27,4 +27,4 @@ class TestNSURLProtocol(TestCase):
         self.assertResultIsBOOL(Foundation.NSURLProtocol.canInitWithTask_)
 
     def testProtocols(self):
-        self.assertProtocolExists("NSURLProtocolClient")
+        self.assertProtocolExists("NSURLProtocolClient", Foundation)

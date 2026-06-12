@@ -88,7 +88,7 @@ class TestNSGestureRecognizer(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("NSGestureRecognizerDelegate")
+        self.assertProtocolExists("NSGestureRecognizerDelegate", AppKit)
         self.assertResultIsBOOL(
             TestNSGestureRecognizerHelper.gestureRecognizerShouldBegin_
         )

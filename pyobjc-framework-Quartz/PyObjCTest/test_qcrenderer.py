@@ -13,7 +13,7 @@ class TestQCRenderer(TestCase):
         self.assertIsInstance(Quartz.QCRendererMouseLocationKey, str)
 
     def testProtocols(self):
-        self.assertProtocolExists("QCCompositionRenderer")
+        self.assertProtocolExists("QCCompositionRenderer", Quartz)
 
     def testMethods(self):
         self.assertResultIsBOOL(TestQCRendererHelper.setValue_forInputKey_)

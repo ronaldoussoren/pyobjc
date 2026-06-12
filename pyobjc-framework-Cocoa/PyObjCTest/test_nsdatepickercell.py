@@ -54,4 +54,4 @@ class TestNSDatePickerCell(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("NSDatePickerCellDelegate")
+        self.assertProtocolExists("NSDatePickerCellDelegate", AppKit)

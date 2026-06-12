@@ -110,5 +110,5 @@ class TestNSKeyedArchiver(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocols(self):
-        self.assertProtocolExists("NSKeyedArchiverDelegate")
-        self.assertProtocolExists("NSKeyedUnarchiverDelegate")
+        self.assertProtocolExists("NSKeyedArchiverDelegate", Foundation)
+        self.assertProtocolExists("NSKeyedUnarchiverDelegate", Foundation)

@@ -131,7 +131,10 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("ASAuthorizationProviderExtensionRegistrationHandler")
+        self.assertProtocolExists(
+            "ASAuthorizationProviderExtensionRegistrationHandler",
+            AuthenticationServices,
+        )
 
     def test_methods(self):
         self.assertArgHasType(

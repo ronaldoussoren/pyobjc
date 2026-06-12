@@ -44,4 +44,4 @@ class TestPHPicker(TestCase):
 
     @min_sdk_level("13.0")
     def testProtocols(self):
-        self.assertProtocolExists("PHPickerViewControllerDelegate")
+        self.assertProtocolExists("PHPickerViewControllerDelegate", PhotosUI)

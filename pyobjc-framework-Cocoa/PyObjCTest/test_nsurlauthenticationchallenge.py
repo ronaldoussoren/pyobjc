@@ -4,4 +4,4 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestNSURLAuthenticationChallenge(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("NSURLAuthenticationChallengeSender")
+        self.assertProtocolExists("NSURLAuthenticationChallengeSender", Foundation)

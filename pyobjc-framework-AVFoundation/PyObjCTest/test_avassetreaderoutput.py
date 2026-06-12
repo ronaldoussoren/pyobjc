@@ -5,7 +5,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 class TestAVAssetReaderOutput(TestCase):
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
-        self.assertProtocolExists("AVAssetReaderCaptionValidationHandling")
+        self.assertProtocolExists(
+            "AVAssetReaderCaptionValidationHandling", AVFoundation
+        )
 
     @min_os_level("10.8")
     def testMethods10_8(self):

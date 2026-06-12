@@ -25,7 +25,7 @@ class Presenter(Foundation.NSObject):
 class TestNSFilePresenter(TestCase):
     @min_os_level("10.7")
     def testProtocols(self):
-        self.assertProtocolExists("NSFilePresenter")
+        self.assertProtocolExists("NSFilePresenter", Foundation)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

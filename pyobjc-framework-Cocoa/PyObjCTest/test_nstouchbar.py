@@ -26,5 +26,5 @@ class TestNSTouchBar(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSTouchBarDelegate")
-        self.assertProtocolExists("NSTouchBarProvider")
+        self.assertProtocolExists("NSTouchBarDelegate", AppKit)
+        self.assertProtocolExists("NSTouchBarProvider", AppKit)

@@ -134,7 +134,7 @@ class TestPDFView(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("PDFViewDelegate")
+        self.assertProtocolExists("PDFViewDelegate", Quartz)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

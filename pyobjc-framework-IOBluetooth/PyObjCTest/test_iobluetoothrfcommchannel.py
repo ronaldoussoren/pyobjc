@@ -20,7 +20,7 @@ class TestIOBluetoothRFCOMMChannelHelper(IOBluetooth.NSObject):
 
 class TestIOBluetoothRFCOMMChannel(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("IOBluetoothRFCOMMChannelDelegate")
+        self.assertProtocolExists("IOBluetoothRFCOMMChannelDelegate", IOBluetooth)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

@@ -22,7 +22,7 @@ class TestMTLResidencySetHelper(Metal.NSObject):
 
 class TestMTLResidencySet(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("MTLResidencySet")
+        self.assertProtocolExists("MTLResidencySet", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(TestMTLResidencySetHelper.allocatedSize, b"Q")

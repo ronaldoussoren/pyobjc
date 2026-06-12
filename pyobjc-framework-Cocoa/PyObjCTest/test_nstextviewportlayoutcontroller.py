@@ -10,7 +10,7 @@ class TestNSTextViewportLayoutControllerHelper(AppKit.NSObject):
 class TestNSTextViewportLayoutController(TestCase):
     @min_sdk_level("12.0")
     def test_protocols(self):
-        self.assertProtocolExists("NSTextViewportLayoutControllerDelegate")
+        self.assertProtocolExists("NSTextViewportLayoutControllerDelegate", AppKit)
 
     def test_methods(self):
         self.assertResultHasType(

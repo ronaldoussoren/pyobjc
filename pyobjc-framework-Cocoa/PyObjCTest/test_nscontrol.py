@@ -56,7 +56,7 @@ class TestNSControl(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        self.assertProtocolExists("NSControlTextEditingDelegate")
+        self.assertProtocolExists("NSControlTextEditingDelegate", AppKit)
 
     def testDelegate(self):
         self.assertResultIsBOOL(TestNSControlHelper.control_textShouldBeginEditing_)

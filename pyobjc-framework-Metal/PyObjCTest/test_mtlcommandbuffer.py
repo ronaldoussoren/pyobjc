@@ -95,7 +95,7 @@ class TestMTLCommandBuffer(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLCommandBuffer")
+        self.assertProtocolExists("MTLCommandBuffer", Metal)
 
     @min_os_level("10.11")
     def test_constants10_11(self):

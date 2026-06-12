@@ -42,7 +42,7 @@ class TestNSInputServerHelper(AppKit.NSObject):
 
 class TestNSInputServer(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("NSInputServiceProvider")
+        self.assertProtocolExists("NSInputServiceProvider", AppKit)
         self.assertArgIsSEL(
             TestNSInputServerHelper.doCommandBySelector_client_, 0, b"v@:@"
         )
@@ -68,7 +68,7 @@ class TestNSInputServer(TestCase):
             objc._C_NSInteger,
         )
 
-        self.assertProtocolExists("NSInputServerMouseTracker")
+        self.assertProtocolExists("NSInputServerMouseTracker", AppKit)
 
         self.assertResultIsBOOL(
             TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_

@@ -10,7 +10,7 @@ class TestTKSmartCardTokenHelper(CryptoTokenKit.NSObject):
 class TestTKSmartCardToken(TestCase):
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("TKSmartCardTokenDriverDelegate")
+        self.assertProtocolExists("TKSmartCardTokenDriverDelegate", CryptoTokenKit)
 
     @min_sdk_level("10.12")
     def testMethods(self):

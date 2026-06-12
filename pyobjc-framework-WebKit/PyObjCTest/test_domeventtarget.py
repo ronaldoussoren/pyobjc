@@ -32,4 +32,4 @@ class TestDOMEventTarget(TestCase):
         self.assertResultIsBOOL(TestDOMEventTargetHelper.dispatchEvent_)
 
     def testProtocols(self):
-        self.assertProtocolExists("DOMEventTarget")
+        self.assertProtocolExists("DOMEventTarget", WebKit)

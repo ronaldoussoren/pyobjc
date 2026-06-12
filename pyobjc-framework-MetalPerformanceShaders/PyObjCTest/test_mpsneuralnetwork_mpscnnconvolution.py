@@ -61,7 +61,9 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("MPSCNNConvolutionDataSource")
+        self.assertProtocolExists(
+            "MPSCNNConvolutionDataSource", MetalPerformanceShaders
+        )
 
     def test_methods(self):
         self.assertResultHasType(

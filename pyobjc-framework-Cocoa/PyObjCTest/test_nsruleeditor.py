@@ -61,7 +61,7 @@ class TestNSRuleEditor(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSRuleEditorDelegate")
+        self.assertProtocolExists("NSRuleEditorDelegate", AppKit)
 
     def testProtocols(self):
         self.assertResultHasType(

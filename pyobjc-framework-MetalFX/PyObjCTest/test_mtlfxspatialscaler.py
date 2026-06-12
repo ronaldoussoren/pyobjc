@@ -53,11 +53,11 @@ class TestMTLFXSpatialScaler(TestCase):
         self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingModeHDR, 2)
 
     def test_protocols(self):
-        self.assertProtocolExists("MTLFXSpatialScaler")
+        self.assertProtocolExists("MTLFXSpatialScaler", MetalFX)
 
     @min_sdk_level("26.0")
     def test_protocols26_0(self):
-        self.assertProtocolExists("MTLFXSpatialScalerBase")
+        self.assertProtocolExists("MTLFXSpatialScalerBase", MetalFX)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

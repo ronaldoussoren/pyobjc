@@ -18,7 +18,7 @@ class TestSCNCameraController(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("SCNCameraControllerDelegate")
+        self.assertProtocolExists("SCNCameraControllerDelegate", SceneKit)
 
     @min_os_level("10.13")
     def testMethods(self):

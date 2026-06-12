@@ -4,4 +4,4 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestGKAchievementViewController(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("GKChallengesViewControllerDelegate")
+        self.assertProtocolExists("GKChallengesViewControllerDelegate", GameKit)

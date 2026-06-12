@@ -39,7 +39,7 @@ class TestWebEditingDelegate(TestCase):
 
     @min_sdk_level("10.11")
     def testProtocols(self):
-        self.assertProtocolExists("WebEditingDelegate")
+        self.assertProtocolExists("WebEditingDelegate", WebKit)
 
     def testConstants(self):
         self.assertEqual(WebKit.WebViewInsertActionTyped, 0)

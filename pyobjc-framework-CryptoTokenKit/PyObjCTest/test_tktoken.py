@@ -49,9 +49,9 @@ class TestTKToken(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("TKTokenSessionDelegate")
-        self.assertProtocolExists("TKTokenDelegate")
-        self.assertProtocolExists("TKTokenDriverDelegate")
+        self.assertProtocolExists("TKTokenSessionDelegate", CryptoTokenKit)
+        self.assertProtocolExists("TKTokenDelegate", CryptoTokenKit)
+        self.assertProtocolExists("TKTokenDriverDelegate", CryptoTokenKit)
 
     @min_sdk_level("10.12")
     def testProtocolMethods(self):

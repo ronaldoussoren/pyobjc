@@ -99,4 +99,4 @@ class TestNSURLRequest(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("NSURLSessionWebSocketDelegate")
+        self.assertProtocolExists("NSURLSessionWebSocketDelegate", Foundation)

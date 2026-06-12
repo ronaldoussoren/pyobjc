@@ -71,4 +71,4 @@ class TestGKMatch(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("GKMatchDelegate")
+        self.assertProtocolExists("GKMatchDelegate", GameKit)

@@ -28,4 +28,4 @@ class TestNSPasteboardItem(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        self.assertProtocolExists("NSPasteboardItemDataProvider")
+        self.assertProtocolExists("NSPasteboardItemDataProvider", AppKit)

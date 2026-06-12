@@ -111,8 +111,8 @@ class TestMTLLibrary(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLFunction")
-        self.assertProtocolExists("MTLLibrary")
+        self.assertProtocolExists("MTLFunction", Metal)
+        self.assertProtocolExists("MTLLibrary", Metal)
 
     def test_methods(self):
         self.assertResultHasType(TestMTLLibraryHelper.functionType, objc._C_NSUInteger)

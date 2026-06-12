@@ -4,4 +4,4 @@ import SharedWithYouCore  # noqa: F401
 
 class TestSWCollaborationActionHandler(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("SWCollaborationActionHandler")
+        self.assertProtocolExists("SWCollaborationActionHandler", SharedWithYouCore)

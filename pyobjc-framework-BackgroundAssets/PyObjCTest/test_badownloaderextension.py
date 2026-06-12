@@ -16,7 +16,7 @@ class TestBADownloaderExtension(TestCase):
         self.assertEqual(BackgroundAssets.BAContentRequestPeriodic, 3)
 
     def test_protocols(self):
-        self.assertProtocolExists("BADownloaderExtension")
+        self.assertProtocolExists("BADownloaderExtension", BackgroundAssets)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

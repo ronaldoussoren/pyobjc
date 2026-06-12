@@ -103,7 +103,7 @@ class TestMTL4ComputeCommandEncoderHelper(Metal.NSObject):
 class TestMTL4ComputeCommandEncoder(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4ComputeCommandEncoder")
+        self.assertProtocolExists("MTL4ComputeCommandEncoder", Metal)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

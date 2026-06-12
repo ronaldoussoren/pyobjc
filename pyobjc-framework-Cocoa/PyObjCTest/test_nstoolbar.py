@@ -64,7 +64,7 @@ class TestNSToolbar(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSToolbarDelegate")
+        self.assertProtocolExists("NSToolbarDelegate", AppKit)
 
     def testProtocols(self):
         self.assertArgIsBOOL(

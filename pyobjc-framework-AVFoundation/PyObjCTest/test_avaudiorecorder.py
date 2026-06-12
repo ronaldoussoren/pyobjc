@@ -51,4 +51,4 @@ class TestAVAudioRecorder(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.deleteRecording)
 
     def testProtocols(self):
-        self.assertProtocolExists("AVAudioRecorderDelegate")
+        self.assertProtocolExists("AVAudioRecorderDelegate", AVFoundation)

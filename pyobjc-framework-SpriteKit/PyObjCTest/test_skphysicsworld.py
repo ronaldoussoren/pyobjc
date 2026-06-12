@@ -36,4 +36,4 @@ class TestSKPhysicsWorld(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("SKPhysicsContactDelegate")
+        self.assertProtocolExists("SKPhysicsContactDelegate", SpriteKit)

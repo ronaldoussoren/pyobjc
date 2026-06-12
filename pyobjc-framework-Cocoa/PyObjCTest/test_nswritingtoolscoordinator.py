@@ -99,7 +99,7 @@ class TestNSWritingToolsCoordinator(TestCase):
 
     @min_sdk_level("15.2")
     def test_protocols(self):
-        self.assertProtocolExists("NSWritingToolsCoordinatorDelegate")
+        self.assertProtocolExists("NSWritingToolsCoordinatorDelegate", AppKit)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

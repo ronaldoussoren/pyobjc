@@ -32,7 +32,7 @@ class TestMKMapView(TestCase):
 
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertProtocolExists("MKMapViewDelegate")
+        self.assertProtocolExists("MKMapViewDelegate", MapKit)
 
     def test_protocol_methods(self):
         self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionWillChangeAnimated_, 1)

@@ -18,7 +18,7 @@ class TestMTLTextureViewPoolHelper(Metal.NSObject):
 class TestMTLTextureViewPool(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLTextureViewPool")
+        self.assertProtocolExists("MTLTextureViewPool", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

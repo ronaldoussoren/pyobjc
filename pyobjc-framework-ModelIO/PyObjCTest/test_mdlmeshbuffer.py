@@ -82,6 +82,6 @@ class TestMDLMeshBuffer(TestCase):
         )
 
     def testProtocolObjects(self):
-        self.assertProtocolExists("MDLMeshBuffer")
-        self.assertProtocolExists("MDLMeshBufferZone")
-        self.assertProtocolExists("MDLMeshBufferAllocator")
+        self.assertProtocolExists("MDLMeshBuffer", ModelIO)
+        self.assertProtocolExists("MDLMeshBufferZone", ModelIO)
+        self.assertProtocolExists("MDLMeshBufferAllocator", ModelIO)

@@ -20,7 +20,7 @@ class TestSFSpeechRecognizer(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("SFSpeechRecognizerDelegate")
+        self.assertProtocolExists("SFSpeechRecognizerDelegate", Speech)
 
     def test_methods(self):
         self.assertArgIsBOOL(

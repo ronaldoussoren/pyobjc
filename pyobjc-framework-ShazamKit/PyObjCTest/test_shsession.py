@@ -7,4 +7,4 @@ class TestSHSession(TestCase):
         ShazamKit.SHSession
 
     def test_protocols(self):
-        self.assertProtocolExists("SHSessionDelegate")
+        self.assertProtocolExists("SHSessionDelegate", ShazamKit)

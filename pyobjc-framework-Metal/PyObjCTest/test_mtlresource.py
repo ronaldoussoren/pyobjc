@@ -140,7 +140,7 @@ class TestMTLResource(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLResource")
+        self.assertProtocolExists("MTLResource", Metal)
 
     def test_methods(self):
         self.assertResultHasType(

@@ -16,7 +16,7 @@ class TestMLCustomModelHelper(CoreML.NSObject):
 class TestMLCustomModel(TestCase):
     @min_sdk_level("10.14")
     def testProtocols(self):
-        self.assertProtocolExists("MLCustomModel")
+        self.assertProtocolExists("MLCustomModel", CoreML)
 
     def testMethods(self):
         self.assertArgHasType(

@@ -26,7 +26,7 @@ class TestMTLParallelRenderCommandEncoderHelper(Metal.NSObject):
 class TestMTLParallelRenderCommandEncoder(TestCase):
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLParallelRenderCommandEncoder")
+        self.assertProtocolExists("MTLParallelRenderCommandEncoder", Metal)
 
     def test_methods(self):
         self.assertArgHasType(

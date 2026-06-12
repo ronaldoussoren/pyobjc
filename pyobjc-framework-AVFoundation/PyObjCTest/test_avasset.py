@@ -161,7 +161,7 @@ class TestAVAsset(TestCase):
 
     @min_sdk_level("10.11")
     def testProtocols(self):
-        self.assertProtocolExists("AVFragmentMinding")
+        self.assertProtocolExists("AVFragmentMinding", AVFoundation)
 
     @min_sdk_level("10.11")
     def testProtocolMethods(self):

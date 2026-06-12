@@ -57,4 +57,4 @@ class TestNSTextContent(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols(self):
-        self.assertProtocolExists("NSTextContent")
+        self.assertProtocolExists("NSTextContent", AppKit)

@@ -53,4 +53,4 @@ class TestGKMatchmakerViewController(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("GKMatchmakerViewControllerDelegate")
+        self.assertProtocolExists("GKMatchmakerViewControllerDelegate", GameKit)

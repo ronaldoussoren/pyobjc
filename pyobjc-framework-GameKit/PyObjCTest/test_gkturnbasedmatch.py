@@ -60,8 +60,8 @@ class TestGKTurnBasedMatch(TestCase):
         self.assertIsInstance(GameKit.GKTurnTimeoutNone, float)
 
     def testProtocols(self):
-        self.assertProtocolExists("GKTurnBasedEventListener")
-        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate")
+        self.assertProtocolExists("GKTurnBasedEventListener", GameKit)
+        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate", GameKit)
 
     def testMethods(self):
         self.assertArgIsBOOL(

@@ -10,7 +10,7 @@ class TestSWAttributionViewHelper(SharedWithYou.NSObject):
 
 class TestSWAttributionView(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("SWCollaborationViewDelegate")
+        self.assertProtocolExists("SWCollaborationViewDelegate", SharedWithYou)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(

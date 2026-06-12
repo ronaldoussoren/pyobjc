@@ -16,7 +16,7 @@ class TestCLLocationManagerDelegateHelper(CoreLocation.NSObject):
 
 class TestCLLocationManagerDelegate(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("CLLocationManagerDelegate")
+        self.assertProtocolExists("CLLocationManagerDelegate", CoreLocation)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(

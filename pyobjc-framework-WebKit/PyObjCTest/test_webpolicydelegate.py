@@ -21,8 +21,8 @@ class TestWebPolicyDelegate(TestCase):
         self.assertEqual(WebKit.WebNavigationTypeOther, 5)
 
     def testProtocols(self):
-        self.assertProtocolExists("WebPolicyDecisionListener")
+        self.assertProtocolExists("WebPolicyDecisionListener", WebKit)
 
     @min_sdk_level("10.11")
     def testProtocols10_11(self):
-        self.assertProtocolExists("WebPolicyDelegate")
+        self.assertProtocolExists("WebPolicyDelegate", WebKit)

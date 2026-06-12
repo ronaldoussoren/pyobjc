@@ -34,7 +34,9 @@ class TestMPSNeuralNetwork_MPSCNNInstanceNormalizationHelper(
 
 class TestMPSNeuralNetwork_MPSCNNInstanceNormalization(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("MPSCNNInstanceNormalizationDataSource")
+        self.assertProtocolExists(
+            "MPSCNNInstanceNormalizationDataSource", MetalPerformanceShaders
+        )
 
     def test_methods(self):
         self.assertResultHasType(

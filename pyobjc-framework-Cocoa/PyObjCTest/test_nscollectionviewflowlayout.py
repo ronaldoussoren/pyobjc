@@ -73,7 +73,7 @@ class TestNSCollectionViewFlowLayout(TestCase):
 
     @min_os_level("10.11")
     def testProtocols10_11(self):
-        self.assertProtocolExists("NSCollectionViewDelegateFlowLayout")
+        self.assertProtocolExists("NSCollectionViewDelegateFlowLayout", AppKit)
 
         self.assertResultHasType(
             TestNSCollectionViewFlowLayoutHelper.collectionView_layout_sizeForItemAtIndexPath_,

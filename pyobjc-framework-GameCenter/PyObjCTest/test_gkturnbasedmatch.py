@@ -56,14 +56,14 @@ class TestGKTurnBasedMatch(TestCase):
 
     @min_os_level("10.8")
     def testProtocols(self):
-        self.assertProtocolExists("GKTurnBasedEventListener")
+        self.assertProtocolExists("GKTurnBasedEventListener", GameCenter)
 
         self.assertArgIsBOOL(
             TestGKTurnBasedMatchHelper.player_receivedTurnEventForMatch_didBecomeActive_,
             2,
         )
 
-        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate")
+        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate", GameCenter)
         self.assertArgIsBOOL(
             TestGKTurnBasedMatchHelper.handleTurnEventForMatch_didBecomeActive_, 1
         )

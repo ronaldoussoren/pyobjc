@@ -13,7 +13,7 @@ class TestMEMessageSecurityHandler(TestCase):
         self.assertEqual(MailKit.MEMessageSecurityDecodingError, 1)
 
     def test_protocols(self):
-        self.assertProtocolExists("MEMessageSecurityHandler")
+        self.assertProtocolExists("MEMessageSecurityHandler", MailKit)
 
     def test_methods(self):
         self.assertArgIsBlock(

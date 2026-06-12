@@ -8,7 +8,7 @@ class TestCKRecord(TestCase):
     def testProtocols(self):
         # Documentation claims this protocol is available on 10.11,
         # but value isn't present in the latest 10.11 SDK.
-        self.assertProtocolExists("CKRecordKeyValueSetting")
+        self.assertProtocolExists("CKRecordKeyValueSetting", CloudKit)
 
     @min_os_level("10.10")
     def testClasses(self):

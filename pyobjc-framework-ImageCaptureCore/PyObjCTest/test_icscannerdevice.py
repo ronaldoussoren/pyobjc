@@ -12,4 +12,4 @@ class TestICScannerDevice(TestCase):
         self.assertEqual(ImageCaptureCore.ICScannerTransferModeMemoryBased, 1)
 
     def testProtocolObjects(self):
-        self.assertProtocolExists("ICScannerDeviceDelegate")
+        self.assertProtocolExists("ICScannerDeviceDelegate", ImageCaptureCore)

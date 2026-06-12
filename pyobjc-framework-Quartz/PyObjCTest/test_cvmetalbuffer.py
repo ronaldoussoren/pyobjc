@@ -12,4 +12,4 @@ class TestCVMetalBuffer(TestCase):
 
     @min_sdk_level("15.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLBuffer")
+        self.assertProtocolExists("MTLBuffer", Quartz)

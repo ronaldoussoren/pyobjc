@@ -512,13 +512,13 @@ class TestNSURLSession(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols10_12(self):
-        self.assertProtocolExists("NSURLSessionTaskDelegate")
-        self.assertProtocolExists("NSURLSessionDataDelegate")
-        self.assertProtocolExists("NSURLSessionDownloadDelegate")
+        self.assertProtocolExists("NSURLSessionTaskDelegate", Foundation)
+        self.assertProtocolExists("NSURLSessionDataDelegate", Foundation)
+        self.assertProtocolExists("NSURLSessionDownloadDelegate", Foundation)
 
     @min_sdk_level("10.11")
     def testProtocols10_11(self):
-        self.assertProtocolExists("NSURLSessionStreamDelegate")
+        self.assertProtocolExists("NSURLSessionStreamDelegate", Foundation)
 
     def test_protocol_methods10_15(self):
         self.assertArgHasType(

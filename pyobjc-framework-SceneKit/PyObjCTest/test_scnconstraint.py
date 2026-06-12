@@ -79,4 +79,4 @@ class TestSCNConstraint(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("SCNAvoidOccluderConstraintDelegate")
+        self.assertProtocolExists("SCNAvoidOccluderConstraintDelegate", SceneKit)

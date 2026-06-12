@@ -28,7 +28,7 @@ class TestISyncCoreData(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("NSPersistentStoreCoordinatorSyncing")
+        self.assertProtocolExists("NSPersistentStoreCoordinatorSyncing", SyncServices)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(

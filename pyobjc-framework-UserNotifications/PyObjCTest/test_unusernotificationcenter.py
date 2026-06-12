@@ -95,7 +95,7 @@ class TestUNUserNotificationCenter(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("UNUserNotificationCenterDelegate")
+        self.assertProtocolExists("UNUserNotificationCenterDelegate", UserNotifications)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

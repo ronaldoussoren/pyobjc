@@ -4,5 +4,5 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestNSSpellProtocol(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("NSChangeSpelling")
-        self.assertProtocolExists("NSIgnoreMisspelledWords")
+        self.assertProtocolExists("NSChangeSpelling", AppKit)
+        self.assertProtocolExists("NSIgnoreMisspelledWords", AppKit)

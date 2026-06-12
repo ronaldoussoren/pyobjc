@@ -39,7 +39,7 @@ class TestMTLIndirectCommandBuffer(TestCase):
 
     @min_sdk_level("10.14")
     def test_protocols(self):
-        self.assertProtocolExists("MTLIndirectCommandBuffer")
+        self.assertProtocolExists("MTLIndirectCommandBuffer", Metal)
 
     def test_methods(self):
         self.assertArgHasType(

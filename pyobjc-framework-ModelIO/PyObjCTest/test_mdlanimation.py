@@ -6,7 +6,7 @@ from objc import simd
 class TestMDLAnimation(TestCase):
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("MDLJointAnimation")
+        self.assertProtocolExists("MDLJointAnimation", ModelIO)
 
     @min_os_level("10.13")
     def test_methods(self):

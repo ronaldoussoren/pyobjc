@@ -20,7 +20,9 @@ class TestASWebAuthenticationSession(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("ASWebAuthenticationPresentationContextProviding")
+        self.assertProtocolExists(
+            "ASWebAuthenticationPresentationContextProviding", AuthenticationServices
+        )
 
     @min_os_level("10.15")
     def test_methods10_15(self):

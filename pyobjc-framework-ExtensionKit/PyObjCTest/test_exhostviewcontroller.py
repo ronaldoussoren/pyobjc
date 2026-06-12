@@ -15,4 +15,4 @@ class TestEXHostViewController(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("EXHostViewControllerDelegate")
+        self.assertProtocolExists("EXHostViewControllerDelegate", ExtensionKit)

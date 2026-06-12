@@ -65,5 +65,5 @@ class TestNSPopover(TestCase):
 
     @min_os_level("10.10")
     def testProtocols10_10(self):
-        self.assertProtocolExists("NSPopoverDelegate")
+        self.assertProtocolExists("NSPopoverDelegate", AppKit)
         self.assertResultIsBOOL(PopoverHelper.popoverShouldDetach_)

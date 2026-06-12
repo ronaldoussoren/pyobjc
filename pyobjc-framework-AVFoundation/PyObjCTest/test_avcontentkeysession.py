@@ -150,5 +150,5 @@ class TestAVContentKeySession(TestCase):
 
     @min_sdk_level("10.12.4")
     def testProtocols(self):
-        self.assertProtocolExists("AVContentKeySessionDelegate")
-        self.assertProtocolExists("AVContentKeyRecipient")
+        self.assertProtocolExists("AVContentKeySessionDelegate", AVFoundation)
+        self.assertProtocolExists("AVContentKeyRecipient", AVFoundation)

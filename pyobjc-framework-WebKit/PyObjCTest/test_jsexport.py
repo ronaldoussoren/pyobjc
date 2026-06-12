@@ -8,7 +8,7 @@ import objc
 class TestJSExport(TestCase):
     @min_sdk_level("10.9")
     def test_protocols(self):
-        self.assertProtocolExists("JSExport")
+        self.assertProtocolExists("JSExport", JavaScriptCore)
 
     @expectedFailure
     def test_jsexportas(self):

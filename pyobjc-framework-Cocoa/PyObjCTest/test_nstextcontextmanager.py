@@ -13,7 +13,7 @@ class TestNSTextContentManager(TestCase):
 
     @min_sdk_level("12.0")
     def testProtocols(self):
-        self.assertProtocolExists("NSTextElementProvider")
+        self.assertProtocolExists("NSTextElementProvider", AppKit)
 
     @min_os_level("12.0")
     def testMethods12_0(self):

@@ -12,7 +12,7 @@ class TestNSCache(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("NSCacheDelegate")
+        self.assertProtocolExists("NSCacheDelegate", Foundation)
 
     def testConvenience(self):
         key = "key"

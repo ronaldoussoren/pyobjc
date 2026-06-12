@@ -13,4 +13,4 @@ class TestGKDialogController(TestCase):
 
     @min_os_level("10.8")
     def testProtocols10_8(self):
-        self.assertProtocolExists("GKViewController")
+        self.assertProtocolExists("GKViewController", GameCenter)

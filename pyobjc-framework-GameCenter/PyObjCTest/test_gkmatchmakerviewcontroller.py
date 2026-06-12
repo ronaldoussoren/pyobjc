@@ -7,7 +7,7 @@ import GameCenter
 class TestGKMatchmakerViewController(TestCase):
     @min_os_level("10.8")
     def testProtocols(self):
-        self.assertProtocolExists("GKMatchmakerViewControllerDelegate")
+        self.assertProtocolExists("GKMatchmakerViewControllerDelegate", GameCenter)
 
     @min_os_level("10.8")
     def testMethods10_8(self):

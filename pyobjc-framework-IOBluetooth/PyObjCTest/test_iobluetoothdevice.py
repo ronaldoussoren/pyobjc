@@ -46,7 +46,7 @@ class TestIOBluetoothDevice(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("IOBluetoothDeviceAsyncCallbacks")
+        self.assertProtocolExists("IOBluetoothDeviceAsyncCallbacks", IOBluetooth)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

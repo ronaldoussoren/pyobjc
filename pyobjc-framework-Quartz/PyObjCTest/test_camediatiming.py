@@ -89,4 +89,4 @@ class TestCAMediaTiming(TestCase):
 
     @min_os_level("10.5")
     def testProtocols(self):
-        self.assertProtocolExists("CAMediaTiming")
+        self.assertProtocolExists("CAMediaTiming", Quartz)

@@ -138,4 +138,4 @@ class TestGKMatchMaker(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("GKInviteEventListener")
+        self.assertProtocolExists("GKInviteEventListener", GameKit)

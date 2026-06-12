@@ -20,7 +20,7 @@ class TestAXCustomContent(TestCase):
         self.assertEqual(Accessibility.AXCustomContentImportanceHigh, 1)
 
     def test_protocols(self):
-        self.assertProtocolExists("AXCustomContentProvider")
+        self.assertProtocolExists("AXCustomContentProvider", Accessibility)
 
     def testProtocolMethods(self):
         self.assertResultIsBlock(

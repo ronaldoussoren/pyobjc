@@ -35,11 +35,11 @@ class TestNSTextStorage(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSTextStorageDelegate")
+        self.assertProtocolExists("NSTextStorageDelegate", AppKit)
 
     @min_sdk_level("12.0")
     def testProtocolObjects12_0(self):
-        self.assertProtocolExists("NSTextStorageObserving")
+        self.assertProtocolExists("NSTextStorageObserving", AppKit)
 
     def testProtocols(self):
         self.assertArgHasType(

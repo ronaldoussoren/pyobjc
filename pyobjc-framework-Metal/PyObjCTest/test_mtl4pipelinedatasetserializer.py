@@ -22,7 +22,7 @@ class TestMTL4PipelineDataSetSerializer(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4PipelineDataSetSerializer")
+        self.assertProtocolExists("MTL4PipelineDataSetSerializer", Metal)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(

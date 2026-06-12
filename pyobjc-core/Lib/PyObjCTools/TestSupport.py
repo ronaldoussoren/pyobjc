@@ -1178,7 +1178,7 @@ class TestCase(_unittest.TestCase):
         elif not cls.__objc_final__:
             self.fail(f"{cls} is not a final class")
 
-    def assertProtocolExists(self, name):
+    def assertProtocolExists(self, name, mod=None, modalias=None):
         ok = True
         try:
             proto = objc.protocolNamed(name)
@@ -1192,6 +1192,18 @@ class TestCase(_unittest.TestCase):
         if not isinstance(proto, objc.formal_protocol):
             # Should never happen
             self.fail(f"Protocol {name!r} is not a protocol, but {type(proto)}")
+
+        if mod is not None:
+            if modalias is None:
+                modalias = name
+            try:
+                v = getattr(mod, modalias)
+            except AttributeError:
+                self.fail(f"{mod}.{modalias} does not exist")
+
+            else:
+                if v is not proto:
+                    self.fail(f"{mod}.{modalias} is not objc.protocolNamed({name!r}")
 
     def assertPickleRoundTrips(self, value):
         try:

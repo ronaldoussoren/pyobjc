@@ -10,7 +10,7 @@ class TestCKSyncEngine(TestCase):
 
     @min_sdk_level("14.0")
     def test_protocols(self):
-        self.assertProtocolExists("CKSyncEngineDelegate")
+        self.assertProtocolExists("CKSyncEngineDelegate", CloudKit)
 
     @min_os_level("14.0")
     def test_methods14_0(self):

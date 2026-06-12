@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
-import objc
 
 
 class TestIKImageEditPanelHelper(Quartz.NSObject):
@@ -20,13 +19,8 @@ class TestIKImageEditPanelHelper(Quartz.NSObject):
 class TestIKImageEditPanel(TestCase):
     @min_os_level("10.5")
     def no_testProtocols(self):
-        self.assertIsInstance(
-            self.assertProtocolExists("IKImageEditPanel"), objc.formal_protocol
-        )
-        self.assertIsInstance(
-            self.assertProtocolExists("IKImageEditPanelDataSource"),
-            objc.formal_protocol,
-        )
+        self.assertProtocolExists("IKImageEditPanel", Quartz)
+        self.assertProtocolExists("IKImageEditPanelDataSource", Quartz)
 
     @min_os_level("10.5")
     def testProtocolMethods(self):

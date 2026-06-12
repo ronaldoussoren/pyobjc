@@ -11,7 +11,7 @@ class TestNSUserInterfaceItemSearchingHelper(AppKit.NSObject):
 class TestNSUserInterfaceItemSearching(TestCase):
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSUserInterfaceItemSearching")
+        self.assertProtocolExists("NSUserInterfaceItemSearching", AppKit)
 
     @min_os_level("10.6")
     def testMethods(self):

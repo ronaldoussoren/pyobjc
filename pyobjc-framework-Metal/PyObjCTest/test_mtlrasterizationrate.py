@@ -137,4 +137,4 @@ class TestMTLRasterizationRate(TestCase):
 
     @min_os_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("MTLRasterizationRateMap")
+        self.assertProtocolExists("MTLRasterizationRateMap", Metal)

@@ -45,4 +45,4 @@ class TestIKCameraDeviceView(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("IKCameraDeviceViewDelegate")
+        self.assertProtocolExists("IKCameraDeviceViewDelegate", Quartz)

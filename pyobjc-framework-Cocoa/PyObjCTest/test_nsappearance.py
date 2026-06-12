@@ -43,4 +43,4 @@ class TestNSAppearance(TestCase):
 
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertProtocolExists("NSAppearanceCustomization")
+        self.assertProtocolExists("NSAppearanceCustomization", AppKit)

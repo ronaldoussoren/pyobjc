@@ -20,7 +20,7 @@ class TestMEComposeSession(TestCase):
         self.assertEqual(MailKit.MEComposeSessionErrorCodeInvalidBody, 2)
 
     def test_protocols(self):
-        self.assertProtocolExists("MEComposeSessionHandler")
+        self.assertProtocolExists("MEComposeSessionHandler", MailKit)
 
     def test_methods(self):
         self.assertArgIsBlock(

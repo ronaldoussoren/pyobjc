@@ -71,5 +71,5 @@ class TestNSScrubber(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("NSScrubberDataSource")
-        self.assertProtocolExists("NSScrubberDelegate")
+        self.assertProtocolExists("NSScrubberDataSource", AppKit)
+        self.assertProtocolExists("NSScrubberDelegate", AppKit)

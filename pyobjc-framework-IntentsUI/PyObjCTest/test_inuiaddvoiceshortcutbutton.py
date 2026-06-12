@@ -15,4 +15,4 @@ class TestINUIAddVoiceShortcutButton(TestCase):
         self.assertEqual(IntentsUI.INUIAddVoiceShortcutButtonStyleAutomaticOutline, 5)
 
     def test_protocols(self):
-        self.assertProtocolExists("INUIAddVoiceShortcutButtonDelegate")
+        self.assertProtocolExists("INUIAddVoiceShortcutButtonDelegate", IntentsUI)

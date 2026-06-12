@@ -13,7 +13,7 @@ class TestINAnswerCallIntentHelper(Intents.NSObject):
 class TestINAnswerCallIntent(TestCase):
     @min_sdk_level("13.1")
     def test_protocols(self):
-        self.assertProtocolExists("INAnswerCallIntentHandling")
+        self.assertProtocolExists("INAnswerCallIntentHandling", Intents)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

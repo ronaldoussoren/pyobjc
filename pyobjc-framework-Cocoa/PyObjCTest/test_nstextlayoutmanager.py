@@ -36,7 +36,7 @@ class TestNSTextLayoutManager(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        self.assertProtocolExists("NSTextLayoutManagerDelegate")
+        self.assertProtocolExists("NSTextLayoutManagerDelegate", AppKit)
 
     def test_methods(self):
         self.assertResultIsBOOL(

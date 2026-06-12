@@ -55,7 +55,7 @@ class TestCBPeriphicalManager(TestCase):
 
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertProtocolExists("CBPeripheralManagerDelegate")
+        self.assertProtocolExists("CBPeripheralManagerDelegate", CoreBluetooth)
 
     @min_os_level("10.9")
     def testMethods(self):

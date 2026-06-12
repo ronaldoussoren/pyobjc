@@ -11,4 +11,4 @@ class TestNSSpeechRecognizer(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("NSSpeechRecognizerDelegate")
+        self.assertProtocolExists("NSSpeechRecognizerDelegate", AppKit)

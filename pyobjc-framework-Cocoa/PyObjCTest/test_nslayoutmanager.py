@@ -110,8 +110,8 @@ class TestNSLayoutManager(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSTextLayoutOrientationProvider")
-        self.assertProtocolExists("NSLayoutManagerDelegate")
+        self.assertProtocolExists("NSTextLayoutOrientationProvider", AppKit)
+        self.assertProtocolExists("NSLayoutManagerDelegate", AppKit)
 
     def testProtocols(self):
         self.assertResultHasType(

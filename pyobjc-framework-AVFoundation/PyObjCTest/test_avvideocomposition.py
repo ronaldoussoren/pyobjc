@@ -195,4 +195,4 @@ class TestAVVideoComposition(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("AVVideoCompositionValidationHandling")
+        self.assertProtocolExists("AVVideoCompositionValidationHandling", AVFoundation)

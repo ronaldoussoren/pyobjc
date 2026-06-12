@@ -27,7 +27,7 @@ class TestNSComboBoxCell(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSComboBoxCellDataSource")
+        self.assertProtocolExists("NSComboBoxCellDataSource", AppKit)
 
     def testProtocol(self):
         self.assertResultHasType(

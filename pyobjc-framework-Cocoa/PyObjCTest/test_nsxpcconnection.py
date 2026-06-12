@@ -16,8 +16,8 @@ class TestNSXPCConnection(TestCase):
 
     @min_os_level("10.8")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSXPCProxyCreating")
-        self.assertProtocolExists("NSXPCListenerDelegate")
+        self.assertProtocolExists("NSXPCProxyCreating", Foundation)
+        self.assertProtocolExists("NSXPCListenerDelegate", Foundation)
 
     @min_os_level("10.8")
     def testConstants10_8(self):

@@ -46,6 +46,6 @@ class TestGKGameModel(TestCase):
         self.assertResultIsBOOL(TestGKGameModelHelper.isLossForPlayer_)
 
     def testProtocols(self):
-        self.assertProtocolExists("GKGameModelUpdate")
-        self.assertProtocolExists("GKGameModelPlayer")
-        self.assertProtocolExists("GKGameModel")
+        self.assertProtocolExists("GKGameModelUpdate", GameplayKit)
+        self.assertProtocolExists("GKGameModelPlayer", GameplayKit)
+        self.assertProtocolExists("GKGameModel", GameplayKit)

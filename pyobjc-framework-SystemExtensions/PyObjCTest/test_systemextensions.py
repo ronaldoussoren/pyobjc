@@ -55,11 +55,13 @@ class TestSystemExtensions(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("OSSystemExtensionRequestDelegate")
+        self.assertProtocolExists("OSSystemExtensionRequestDelegate", SystemExtensions)
 
     @min_sdk_level("15.2")
     def test_protocols15_2(self):
-        self.assertProtocolExists("OSSystemExtensionsWorkspaceObserver")
+        self.assertProtocolExists(
+            "OSSystemExtensionsWorkspaceObserver", SystemExtensions
+        )
 
     @min_os_level("10.15")
     def test_classes(self):

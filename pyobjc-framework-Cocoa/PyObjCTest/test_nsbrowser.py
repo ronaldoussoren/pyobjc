@@ -144,7 +144,7 @@ class TestNSBrowser(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSBrowserDelegate")
+        self.assertProtocolExists("NSBrowserDelegate", AppKit)
 
     def testDelegate(self):
         self.assertResultIsBOOL(

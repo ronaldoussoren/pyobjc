@@ -16,7 +16,7 @@ class TestPHContentEditingControllerHelper(PhotosUI.NSObject):
 class TestPHContentEditingController(TestCase):
     @min_os_level("10.11")
     def testProtocols(self):
-        self.assertProtocolExists("PHContentEditingController")
+        self.assertProtocolExists("PHContentEditingController", PhotosUI)
 
     @min_os_level("10.11")
     def testMethods(self):

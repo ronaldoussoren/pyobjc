@@ -72,7 +72,7 @@ class TestNSSplitView(TestCase):
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSSplitViewDelegate")
+        self.assertProtocolExists("NSSplitViewDelegate", AppKit)
 
     def testProtocol(self):
         self.assertResultIsBOOL(TestNSSplitViewHelper.splitView_canCollapseSubview_)

@@ -11,7 +11,7 @@ class TestMPSCore_MPSCommandBufferHelper(MetalPerformanceShaders.NSObject):
 class TestMPSCore_MPSCommandBuffer(TestCase):
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("MPSHeapProvider")
+        self.assertProtocolExists("MPSHeapProvider", MetalPerformanceShaders)
 
     def test_methods(self):
         self.assertArgHasType(

@@ -4,4 +4,4 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestAUCustomViewPersistentData(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("AUCustomViewPersistentData")
+        self.assertProtocolExists("AUCustomViewPersistentData", CoreAudioKit)

@@ -71,7 +71,7 @@ class TestAVCaptureTimecodeGenerator(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("AVCaptureTimecodeGeneratorDelegate")
+        self.assertProtocolExists("AVCaptureTimecodeGeneratorDelegate", AVFoundation)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

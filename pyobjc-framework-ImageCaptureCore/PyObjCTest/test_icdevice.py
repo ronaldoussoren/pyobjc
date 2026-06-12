@@ -71,7 +71,7 @@ class TestICDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICTransportTypeProximity, str)
 
     def testProtocolObjects(self):
-        self.assertProtocolExists("ICDeviceDelegate")
+        self.assertProtocolExists("ICDeviceDelegate", ImageCaptureCore)
 
     def testMethods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.isRemote)

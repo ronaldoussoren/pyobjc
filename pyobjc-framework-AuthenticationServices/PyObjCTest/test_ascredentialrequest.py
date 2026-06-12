@@ -25,7 +25,7 @@ class TestASCredentialRequest(TestCase):
 
     @min_sdk_level("14.0")
     def test_protocols(self):
-        self.assertProtocolExists("ASCredentialRequest")
+        self.assertProtocolExists("ASCredentialRequest", AuthenticationServices)
 
     def test_protocol_methods(self):
         self.assertResultHasType(TestASCredentialRequestHelper.type, objc._C_NSInteger)

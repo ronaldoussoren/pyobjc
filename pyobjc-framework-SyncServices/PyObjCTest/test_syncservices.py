@@ -13,13 +13,13 @@ class TestSyncServices(TestCase):
         self.assertIsInstance(SyncServices.ISyncClient, objc.objc_class)
 
     def testProtocols(self):
-        self.assertProtocolExists("ISyncFiltering")
+        self.assertProtocolExists("ISyncFiltering", SyncServices)
 
     @min_os_level("10.6")
     def testProtocols10_5(self):
         # Document for 10.5, but not actually present there
-        self.assertProtocolExists("ISyncSessionDriverDataSource")
-        self.assertProtocolExists("NSPersistentStoreCoordinatorSyncing")
+        self.assertProtocolExists("ISyncSessionDriverDataSource", SyncServices)
+        self.assertProtocolExists("NSPersistentStoreCoordinatorSyncing", SyncServices)
 
 
 class TestCallableMetadata(TestCase):

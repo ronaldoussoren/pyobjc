@@ -9,8 +9,8 @@ class TestGKPublicProtocolsHelper(GameKit.NSObject):
 
 class TestGKPublicProtocols(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("GKSessionDelegate")
-        self.assertProtocolExists("GKVoiceChatClient")
+        self.assertProtocolExists("GKSessionDelegate", GameKit)
+        self.assertProtocolExists("GKVoiceChatClient", GameKit)
 
     def testMethods(self):
         self.assertArgHasType(

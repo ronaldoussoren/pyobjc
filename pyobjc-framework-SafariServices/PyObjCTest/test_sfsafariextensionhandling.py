@@ -19,7 +19,7 @@ class TestSFSafariExtensionHandlingHelper(SafariServices.NSObject):
 class TestSFSafariExtensionHandling(TestCase):
     @min_os_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("SFSafariExtensionHandling")
+        self.assertProtocolExists("SFSafariExtensionHandling", SafariServices)
 
     @min_os_level("10.12")
     def testMethods(self):

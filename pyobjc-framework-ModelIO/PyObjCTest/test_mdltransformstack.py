@@ -25,7 +25,7 @@ class TestMDLTransformStack(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("MDLTransformOp")
+        self.assertProtocolExists("MDLTransformOp", ModelIO)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

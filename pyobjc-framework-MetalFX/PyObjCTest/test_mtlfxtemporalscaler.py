@@ -108,11 +108,11 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
 
 class TestMTLFXTemporalScaler(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("MTLFXTemporalScaler")
+        self.assertProtocolExists("MTLFXTemporalScaler", MetalFX)
 
     @min_sdk_level("26.0")
     def test_protocols26_0(self):
-        self.assertProtocolExists("MTLFXTemporalScalerBase")
+        self.assertProtocolExists("MTLFXTemporalScalerBase", MetalFX)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

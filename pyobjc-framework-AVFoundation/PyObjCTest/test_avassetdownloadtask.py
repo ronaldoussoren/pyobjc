@@ -66,7 +66,7 @@ class TestAVAssetDownloadTask(TestCase):
 
     @min_os_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("AVAssetDownloadDelegate")
+        self.assertProtocolExists("AVAssetDownloadDelegate", AVFoundation)
 
     @min_os_level("12.0")
     def test_methods12_0(self):

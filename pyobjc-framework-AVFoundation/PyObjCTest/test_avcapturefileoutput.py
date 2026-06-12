@@ -27,8 +27,8 @@ class TestAVCaptureFileOutput(TestCase):
         )  # noqa: B950
 
     def testProtocols(self):
-        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate")
-        self.assertProtocolExists("AVCaptureFileOutputDelegate")
+        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate", AVFoundation)
+        self.assertProtocolExists("AVCaptureFileOutputDelegate", AVFoundation)
 
     def testProtocolMethods(self):
         self.assertResultIsBOOL(

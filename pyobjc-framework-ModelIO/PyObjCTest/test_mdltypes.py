@@ -53,9 +53,9 @@ class TestMDLTypes(TestCase):
         self.assertIsInstance(ModelIO.kUTTypeUniversalSceneDescriptionMobile, str)
 
     def testProtocolObjects(self):
-        self.assertProtocolExists("MDLNamed")
-        self.assertProtocolExists("MDLComponent")
-        self.assertProtocolExists("MDLObjectContainerComponent")
+        self.assertProtocolExists("MDLNamed", ModelIO)
+        self.assertProtocolExists("MDLComponent", ModelIO)
+        self.assertProtocolExists("MDLObjectContainerComponent", ModelIO)
 
     def testMethods(self):
         self.assertArgHasType(

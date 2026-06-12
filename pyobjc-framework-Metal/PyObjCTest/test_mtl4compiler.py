@@ -89,7 +89,7 @@ class TestMTL4CompilerHelper(Metal.NSObject):
 class TestMTL4Compiler(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4Compiler")
+        self.assertProtocolExists("MTL4Compiler", Metal)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

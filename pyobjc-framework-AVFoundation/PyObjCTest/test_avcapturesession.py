@@ -62,11 +62,11 @@ class TestAVCaptureSession(TestCase):
 
     @min_sdk_level("15.2")
     def test_protocools(self):
-        self.assertProtocolExists("AVCaptureSessionControlsDelegate")
+        self.assertProtocolExists("AVCaptureSessionControlsDelegate", AVFoundation)
 
     @min_sdk_level("26.0")
     def test_protocools26_0(self):
-        self.assertProtocolExists("AVCaptureSessionDeferredStartDelegate")
+        self.assertProtocolExists("AVCaptureSessionDeferredStartDelegate", AVFoundation)
 
     @min_os_level("10.7")
     def testMethods(self):

@@ -10,7 +10,7 @@ class TestMLWritableHelper(CoreML.NSObject):
 class TestMLWritable(TestCase):
     @min_sdk_level("10.15")
     def testProtocols(self):
-        self.assertProtocolExists("MLWritable")
+        self.assertProtocolExists("MLWritable", CoreML)
 
     def testMethods(self):
         self.assertResultIsBOOL(TestMLWritableHelper.writeToURL_error_)

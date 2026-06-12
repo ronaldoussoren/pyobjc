@@ -221,8 +221,8 @@ class TestSCStream(TestCase):
         self.assertArgIsOut(ScreenCaptureKit.SCStream.removeRecordingOutput_error_, 1)
 
     def test_protocols(self):
-        self.assertProtocolExists("SCStreamDelegate")
-        self.assertProtocolExists("SCStreamOutput")
+        self.assertProtocolExists("SCStreamDelegate", ScreenCaptureKit)
+        self.assertProtocolExists("SCStreamOutput", ScreenCaptureKit)
 
     def test_proto_methods(self):
         self.assertArgHasType(

@@ -39,7 +39,7 @@ class TestDRTrackHelper(DiscRecording.NSObject):
 
 class TestDRTrack(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("DRTrackDataProduction")
+        self.assertProtocolExists("DRTrackDataProduction", DiscRecording)
 
     def testMethods(self):
         self.assertResultHasType(

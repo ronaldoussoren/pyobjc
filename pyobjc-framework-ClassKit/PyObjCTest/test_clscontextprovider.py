@@ -10,7 +10,7 @@ class TestCLSActivityHelper(ClassKit.NSObject):
 
 class TestCLSActivity(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("CLSContextProvider")
+        self.assertProtocolExists("CLSContextProvider", ClassKit)
 
     def test_methods(self):
         self.assertArgIsBlock(

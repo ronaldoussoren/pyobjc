@@ -20,4 +20,4 @@ class TestNSSearchField(TestCase):
 
     @min_sdk_level("10.11")
     def testProtocols(self):
-        self.assertProtocolExists("NSSearchFieldDelegate")
+        self.assertProtocolExists("NSSearchFieldDelegate", AppKit)

@@ -57,11 +57,11 @@ class TestICCameraDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICTruncateAfterSuccessfulDownload, str)
 
     def testProtocolObjects(self):
-        self.assertProtocolExists("ICCameraDeviceDelegate")
+        self.assertProtocolExists("ICCameraDeviceDelegate", ImageCaptureCore)
 
     @min_sdk_level("10.7")
     def testProtocolObjects10_7(self):
-        self.assertProtocolExists("ICCameraDeviceDownloadDelegate")
+        self.assertProtocolExists("ICCameraDeviceDownloadDelegate", ImageCaptureCore)
 
     def testProtocolMethods(self):
         self.assertArgHasType(

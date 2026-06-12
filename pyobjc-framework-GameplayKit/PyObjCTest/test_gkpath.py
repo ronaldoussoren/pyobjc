@@ -7,7 +7,7 @@ from objc import simd
 
 class TestGKPath(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("GKAgentDelegate")
+        self.assertProtocolExists("GKAgentDelegate", GameplayKit)
 
     def testMethods(self):
         self.assertResultIsBOOL(GameplayKit.GKPath.isCyclical)

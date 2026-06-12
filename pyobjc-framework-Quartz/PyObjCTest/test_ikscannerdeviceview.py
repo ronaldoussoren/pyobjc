@@ -5,7 +5,7 @@ import Quartz
 class TestIKScannerDeviceView(TestCase):
     @min_os_level("10.10")
     def testProtocolObjects(self):
-        self.assertProtocolExists("IKScannerDeviceViewDelegate")
+        self.assertProtocolExists("IKScannerDeviceViewDelegate", Quartz)
 
     @min_os_level("10.6")
     def testConstants10_6(self):

@@ -16,7 +16,7 @@ class TestMTL4CommitFeedbackHelper(Metal.NSObject):
 class TestMTL4CommitFeedback(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4CommitFeedback")
+        self.assertProtocolExists("MTL4CommitFeedback", Metal)
 
     def test_protocol_methos(self):
         self.assertResultHasType(TestMTL4CommitFeedbackHelper.GPUStartTime, objc._C_DBL)

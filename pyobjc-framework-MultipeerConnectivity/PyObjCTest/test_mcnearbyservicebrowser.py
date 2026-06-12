@@ -12,4 +12,6 @@ class TestMCNearbyServiceBrowser(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("MCNearbyServiceBrowserDelegate")
+        self.assertProtocolExists(
+            "MCNearbyServiceBrowserDelegate", MultipeerConnectivity
+        )

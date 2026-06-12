@@ -27,7 +27,9 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper(
 class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCase):
     @min_sdk_level("12.0")
     def testProtocols12_0(self):
-        self.assertProtocolExists("AVPictureInPictureSampleBufferPlaybackDelegate")
+        self.assertProtocolExists(
+            "AVPictureInPictureSampleBufferPlaybackDelegate", AVKit
+        )
 
     def test_methods(self):
         self.assertArgIsBOOL(

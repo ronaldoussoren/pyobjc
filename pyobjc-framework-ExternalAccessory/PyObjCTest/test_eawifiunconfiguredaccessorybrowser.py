@@ -11,7 +11,9 @@ class TestEAWiFiUnconfiguredAccessoryBrowser(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("EAWiFiUnconfiguredAccessoryBrowserDelegate")
+        self.assertProtocolExists(
+            "EAWiFiUnconfiguredAccessoryBrowserDelegate", ExternalAccessory
+        )
 
     def testConstants(self):
         self.assertEqual(

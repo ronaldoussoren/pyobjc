@@ -145,8 +145,8 @@ class TestMTLFXTemporalDenoisedScalerHelper(MetalFX.NSObject):
 class TestMTLFXTemporalDenoisedScaler(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLFXTemporalDenoisedScalerBase")
-        self.assertProtocolExists("MTLFXTemporalDenoisedScaler")
+        self.assertProtocolExists("MTLFXTemporalDenoisedScalerBase", MetalFX)
+        self.assertProtocolExists("MTLFXTemporalDenoisedScaler", MetalFX)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

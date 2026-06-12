@@ -20,7 +20,7 @@ class TestIOBluetoothDevicePairHelper(IOBluetooth.NSObject):
 
 class TestIOBluetoothDevicePair(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("IOBluetoothDevicePairDelegate")
+        self.assertProtocolExists("IOBluetoothDevicePairDelegate", IOBluetooth)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

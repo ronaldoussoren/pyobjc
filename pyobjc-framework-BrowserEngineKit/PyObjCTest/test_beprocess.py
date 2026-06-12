@@ -9,7 +9,7 @@ class TestBEProcessHelper(BrowserEngineKit.NSObject):
 
 class TestBEProcess(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("BEProcessCapabilityGrant")
+        self.assertProtocolExists("BEProcessCapabilityGrant", BrowserEngineKit)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(TestBEProcessHelper.isValid)

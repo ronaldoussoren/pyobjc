@@ -46,7 +46,7 @@ class TestWKUIDelegate(TestCase):
 
     @min_os_level("10.10")
     def testProtocols10_10(self):
-        self.assertProtocolExists("WKUIDelegate")
+        self.assertProtocolExists("WKUIDelegate", WebKit)
 
         self.assertArgIsBlock(
             TestWKUIDelegateHelper.webView_runJavaScriptAlertPanelWithMessage_initiatedByFrame_completionHandler_,  # noqa: B950

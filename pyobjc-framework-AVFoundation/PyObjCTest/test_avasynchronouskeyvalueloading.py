@@ -25,7 +25,7 @@ class TestAVAsynchronousKeyValueLoading(TestCase):
 
     @min_os_level("10.7")
     def testProtocols(self):
-        self.assertProtocolExists("AVAsynchronousKeyValueLoading")
+        self.assertProtocolExists("AVAsynchronousKeyValueLoading", AVFoundation)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

@@ -8,4 +8,4 @@ import GameController  # noqa: F401
 class TestGCPhysicalInputElement(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCPhysicalInputElement")
+        self.assertProtocolExists("GCPhysicalInputElement", GameController)

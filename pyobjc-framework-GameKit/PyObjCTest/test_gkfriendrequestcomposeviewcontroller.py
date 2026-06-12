@@ -4,4 +4,6 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestGKFriendRequestComposeViewController(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("GKFriendRequestComposeViewControllerDelegate")
+        self.assertProtocolExists(
+            "GKFriendRequestComposeViewControllerDelegate", GameKit
+        )

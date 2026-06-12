@@ -289,12 +289,12 @@ class TestHeader(TestCase):
 
     @min_sdk_level("10.14")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSViewLayerContentScaleDelegate")
-        self.assertProtocolExists("NSViewToolTipOwner")
+        self.assertProtocolExists("NSViewLayerContentScaleDelegate", AppKit)
+        self.assertProtocolExists("NSViewToolTipOwner", AppKit)
 
     @min_sdk_level("15.0")
     def testProtocolObjects15_0(self):
-        self.assertProtocolExists("NSViewContentSelectionInfo")
+        self.assertProtocolExists("NSViewContentSelectionInfo", AppKit)
 
     def testMissingTests(self):
         v = AppKit.NSView.alloc().init()

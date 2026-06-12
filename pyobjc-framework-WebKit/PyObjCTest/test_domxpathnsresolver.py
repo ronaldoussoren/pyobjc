@@ -5,4 +5,4 @@ import WebKit  # noqa: F401
 class TestDOMXPathNSResolver(TestCase):
     @min_sdk_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("DOMXPathNSResolver")
+        self.assertProtocolExists("DOMXPathNSResolver", WebKit)

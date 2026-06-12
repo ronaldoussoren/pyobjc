@@ -10,4 +10,4 @@ class TestNSSharingServicePickerTouchBarItem(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols10_12(self):
-        self.assertProtocolExists("NSSharingServicePickerTouchBarItemDelegate")
+        self.assertProtocolExists("NSSharingServicePickerTouchBarItemDelegate", AppKit)

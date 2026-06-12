@@ -37,4 +37,4 @@ class TestMTLDepthStencil(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLDepthStencilState")
+        self.assertProtocolExists("MTLDepthStencilState", Metal)

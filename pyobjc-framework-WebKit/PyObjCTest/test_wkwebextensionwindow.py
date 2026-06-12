@@ -39,7 +39,7 @@ class TestWKWebExtensionWindow(TestCase):
 
     @min_sdk_level("15.4")
     def test_protocols(self):
-        self.assertProtocolExists("WKWebExtensionWindow")
+        self.assertProtocolExists("WKWebExtensionWindow", WebKit)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

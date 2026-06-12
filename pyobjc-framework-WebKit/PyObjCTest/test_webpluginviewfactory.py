@@ -15,4 +15,4 @@ class TestWebPluginViewFactory(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocols(self):
-        self.assertProtocolExists("WebPlugInViewFactory")
+        self.assertProtocolExists("WebPlugInViewFactory", WebKit)

@@ -16,7 +16,7 @@ class TestPHProjectExtensionControllerHelper(PhotosUI.NSObject):
 class TestPHProjectExtensionController(TestCase):
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("PHProjectExtensionController")
+        self.assertProtocolExists("PHProjectExtensionController", PhotosUI)
 
     @min_os_level("10.11")
     def testMethods(self):

@@ -29,7 +29,7 @@ class TestSCNAnimationHelper(SceneKit.NSObject):
 class TestSCNAnimation(TestCase):
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("SCNAnimatable")
+        self.assertProtocolExists("SCNAnimatable", SceneKit)
 
     @min_os_level("10.10")
     def testProtocolMethods(self):

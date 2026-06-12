@@ -136,8 +136,8 @@ class TestMTLFXFrameInterpolator(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLFXFrameInterpolatorBase")
-        self.assertProtocolExists("MTLFXFrameInterpolator")
+        self.assertProtocolExists("MTLFXFrameInterpolatorBase", MetalFX)
+        self.assertProtocolExists("MTLFXFrameInterpolator", MetalFX)
 
     def test_protocol_methods(self):
 

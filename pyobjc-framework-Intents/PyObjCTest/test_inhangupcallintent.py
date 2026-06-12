@@ -13,7 +13,7 @@ class TestINHangUpCallIntentHelper(Intents.NSObject):
 class TestINHangUpCallIntent(TestCase):
     @min_sdk_level("13.1")
     def test_protocols(self):
-        self.assertProtocolExists("INHangUpCallIntentHandling")
+        self.assertProtocolExists("INHangUpCallIntentHandling", Intents)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

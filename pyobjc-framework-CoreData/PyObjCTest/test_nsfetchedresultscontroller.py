@@ -24,7 +24,7 @@ class TestNSFetchedResultsController(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("NSFetchedResultsControllerDelegate")
+        self.assertProtocolExists("NSFetchedResultsControllerDelegate", CoreData)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

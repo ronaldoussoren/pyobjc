@@ -5,4 +5,4 @@ import MetalFX  # noqa: F401
 
 class TestMTL4FXTemporalScaler(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("MTL4FXTemporalScaler")
+        self.assertProtocolExists("MTL4FXTemporalScaler", MetalFX)

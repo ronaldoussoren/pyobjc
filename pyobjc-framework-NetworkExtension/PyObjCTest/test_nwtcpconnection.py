@@ -68,4 +68,6 @@ class TestNWTCPConnection(TestCase):
 
     @min_sdk_level("10.11")
     def testProtocols(self):
-        self.assertProtocolExists("NWTCPConnectionAuthenticationDelegate")
+        self.assertProtocolExists(
+            "NWTCPConnectionAuthenticationDelegate", NetworkExtension
+        )

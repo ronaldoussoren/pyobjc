@@ -54,4 +54,4 @@ class TestNSUserActivity(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("NSUserActivityDelegate")
+        self.assertProtocolExists("NSUserActivityDelegate", Foundation)

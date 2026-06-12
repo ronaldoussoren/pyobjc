@@ -74,8 +74,8 @@ class TestGCInputNames(TestCase):
         pass
 
         # These are compile time only protocols:
-        # self.assertProtocolExists("GCPhysicalInputElementName")
-        # self.assertProtocolExists("GCButtonElementName")
-        # self.assertProtocolExists("GCAxisElementName")
-        # self.assertProtocolExists("GCSwitchElementName")
-        # self.assertProtocolExists("GCDirectionPadElementName")
+        # self.assertProtocolExists("GCPhysicalInputElementName", GameController)
+        # self.assertProtocolExists("GCButtonElementName", GameController)
+        # self.assertProtocolExists("GCAxisElementName", GameController)
+        # self.assertProtocolExists("GCSwitchElementName", GameController)
+        # self.assertProtocolExists("GCDirectionPadElementName", GameController)

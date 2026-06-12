@@ -43,7 +43,7 @@ class TestMTLIOCommandBuffer(TestCase):
 
     @min_os_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLIOCommandBuffer")
+        self.assertProtocolExists("MTLIOCommandBuffer", Metal)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

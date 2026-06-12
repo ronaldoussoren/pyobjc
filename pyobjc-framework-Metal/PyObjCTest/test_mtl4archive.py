@@ -23,7 +23,7 @@ class TestMTL4ArchiveHelper(Metal.NSObject):
 class TestMTL4Archive(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4Archive")
+        self.assertProtocolExists("MTL4Archive", Metal)
 
     def test_protocol_methods(self):
         self.assertArgIsOut(

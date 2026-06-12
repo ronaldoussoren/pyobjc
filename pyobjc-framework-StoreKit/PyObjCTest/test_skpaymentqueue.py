@@ -23,8 +23,8 @@ class TestSKPaymentQueue(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("SKPaymentTransactionObserver")
+        self.assertProtocolExists("SKPaymentTransactionObserver", StoreKit)
 
     @min_sdk_level("10.15")
     def test_protocols10_15(self):
-        self.assertProtocolExists("SKPaymentQueueDelegate")
+        self.assertProtocolExists("SKPaymentQueueDelegate", StoreKit)

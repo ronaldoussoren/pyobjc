@@ -10,7 +10,7 @@ class TestNSFilePromiseProviderHelper(AppKit.NSObject):
 class TestNSFilePromiseProvider(TestCase):
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("NSFilePromiseProviderDelegate")
+        self.assertProtocolExists("NSFilePromiseProviderDelegate", AppKit)
 
     def testMethods(self):
         self.assertArgIsBlock(

@@ -28,11 +28,13 @@ class TestAVCapturePhotoOutput(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols10_15(self):
-        self.assertProtocolExists("AVCapturePhotoCaptureDelegate")
+        self.assertProtocolExists("AVCapturePhotoCaptureDelegate", AVFoundation)
 
     @min_sdk_level("14.0")
     def test_protocols14_0(self):
-        self.assertProtocolExists("AVCapturePhotoOutputReadinessCoordinatorDelegate")
+        self.assertProtocolExists(
+            "AVCapturePhotoOutputReadinessCoordinatorDelegate", AVFoundation
+        )
 
     def test_protocol_methods(self):
         self.assertArgHasType(

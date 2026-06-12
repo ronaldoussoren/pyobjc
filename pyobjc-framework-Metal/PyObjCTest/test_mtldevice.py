@@ -527,7 +527,7 @@ class TestMTLDevice(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLDevice")
+        self.assertProtocolExists("MTLDevice", Metal)
 
     def test_methods(self):
         self.assertResultHasType(TestMTLDeviceHelper.registryID, objc._C_ULNGLNG)

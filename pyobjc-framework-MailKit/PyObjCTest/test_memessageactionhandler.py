@@ -9,7 +9,7 @@ class TestMEMessageActionHandlerHelper(MailKit.NSObject):
 
 class TestMEMessageActionHandler(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("MEMessageActionHandler")
+        self.assertProtocolExists("MEMessageActionHandler", MailKit)
 
     def test_methods(self):
         self.assertArgIsBlock(

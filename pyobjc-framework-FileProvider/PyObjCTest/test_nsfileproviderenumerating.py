@@ -35,9 +35,9 @@ class TestNSFileProviderEnumeration(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("NSFileProviderEnumerationObserver")
-        self.assertProtocolExists("NSFileProviderChangeObserver")
-        self.assertProtocolExists("NSFileProviderEnumerator")
+        self.assertProtocolExists("NSFileProviderEnumerationObserver", FileProvider)
+        self.assertProtocolExists("NSFileProviderChangeObserver", FileProvider)
+        self.assertProtocolExists("NSFileProviderEnumerator", FileProvider)
 
     def test_methods(self):
         self.assertArgIsBOOL(

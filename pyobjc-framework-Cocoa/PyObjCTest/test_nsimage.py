@@ -154,7 +154,7 @@ class TestNSImage(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSImageDelegate")
+        self.assertProtocolExists("NSImageDelegate", AppKit)
 
     @min_os_level("10.6")
     def testMethods10_6(self):

@@ -26,5 +26,5 @@ class TestNSColorPicking(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("NSColorPickingCustom")
-        self.assertProtocolExists("NSColorPickingDefault")
+        self.assertProtocolExists("NSColorPickingCustom", AppKit)
+        self.assertProtocolExists("NSColorPickingDefault", AppKit)

@@ -172,5 +172,5 @@ class TestNSKeyValueBinding(TestCase):
 
     @min_sdk_level("10.14")
     def test_protocols(self):
-        self.assertProtocolExists("NSEditor")
-        self.assertProtocolExists("NSEditorRegistration")
+        self.assertProtocolExists("NSEditor", AppKit)
+        self.assertProtocolExists("NSEditorRegistration", AppKit)

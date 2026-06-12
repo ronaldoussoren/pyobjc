@@ -33,8 +33,8 @@ class TestNSComboBox(TestCase):
 
     @min_os_level("10.6")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSComboBoxDataSource")
-        self.assertProtocolExists("NSComboBoxDelegate")
+        self.assertProtocolExists("NSComboBoxDataSource", AppKit)
+        self.assertProtocolExists("NSComboBoxDelegate", AppKit)
 
     def testProtocols(self):
         self.assertResultHasType(

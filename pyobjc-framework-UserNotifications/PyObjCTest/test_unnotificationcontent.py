@@ -16,7 +16,7 @@ class TestUNNotificationContent(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
-        self.assertProtocolExists("UNNotificationContentProviding")
+        self.assertProtocolExists("UNNotificationContentProviding", UserNotifications)
 
     @min_os_level("12.0")
     def test_methods12_0(self):

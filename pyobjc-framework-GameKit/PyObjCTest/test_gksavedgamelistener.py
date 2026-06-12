@@ -4,4 +4,4 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestGKSavedGameListener(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("GKSavedGameListener")
+        self.assertProtocolExists("GKSavedGameListener", GameKit)

@@ -77,8 +77,8 @@ class TestNSToolbarItem(TestCase):
 
     @min_sdk_level("10.12")
     def testProtocolObject(self):
-        self.assertProtocolExists("NSCloudSharingValidation")
+        self.assertProtocolExists("NSCloudSharingValidation", AppKit)
 
     @min_sdk_level("10.14")
     def testProtocolObject10_14(self):
-        self.assertProtocolExists("NSToolbarItemValidation")
+        self.assertProtocolExists("NSToolbarItemValidation", AppKit)

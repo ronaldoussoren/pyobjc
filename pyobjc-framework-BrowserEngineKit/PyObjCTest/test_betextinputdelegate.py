@@ -9,7 +9,7 @@ class TestBETextInputDelegateHelper(BrowserEngineKit.NSObject):
 
 class TestBETextInputDelegate(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("BETextInputDelegate")
+        self.assertProtocolExists("BETextInputDelegate", BrowserEngineKit)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(

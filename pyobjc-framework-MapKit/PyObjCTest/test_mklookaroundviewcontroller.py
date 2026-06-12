@@ -13,7 +13,7 @@ class TestMKLookAroundViewController(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols13_0(self):
-        self.assertProtocolExists("MKLookAroundViewControllerDelegate")
+        self.assertProtocolExists("MKLookAroundViewControllerDelegate", MapKit)
 
     @min_os_level("13.0")
     def test_methods13_0(self):

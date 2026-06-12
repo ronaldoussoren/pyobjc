@@ -62,8 +62,14 @@ class TestAVCaptureOutput(TestCase):
         )
 
     def testProtocols(self):
-        self.assertProtocolExists("AVCaptureVideoDataOutputSampleBufferDelegate")
-        self.assertProtocolExists("AVCaptureAudioDataOutputSampleBufferDelegate")
-        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate")
-        self.assertProtocolExists("AVCaptureFileOutputDelegate")
-        self.assertProtocolExists("AVCaptureMetadataOutputObjectsDelegate")
+        self.assertProtocolExists(
+            "AVCaptureVideoDataOutputSampleBufferDelegate", AVFoundation
+        )
+        self.assertProtocolExists(
+            "AVCaptureAudioDataOutputSampleBufferDelegate", AVFoundation
+        )
+        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate", AVFoundation)
+        self.assertProtocolExists("AVCaptureFileOutputDelegate", AVFoundation)
+        self.assertProtocolExists(
+            "AVCaptureMetadataOutputObjectsDelegate", AVFoundation
+        )

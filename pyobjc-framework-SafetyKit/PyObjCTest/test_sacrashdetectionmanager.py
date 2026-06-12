@@ -6,7 +6,7 @@ import objc
 
 class TestSACrashDetectionManager(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("SACrashDetectionDelegate")
+        self.assertProtocolExists("SACrashDetectionDelegate", SafetyKit)
 
     def test_methods(self):
         self.assertResultIsBOOL(SafetyKit.SACrashDetectionManager.isAvailable)

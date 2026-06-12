@@ -111,7 +111,7 @@ class TestNSText(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSTextDelegate")
+        self.assertProtocolExists("NSTextDelegate", AppKit)
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSTextHelper.textShouldBeginEditing_)

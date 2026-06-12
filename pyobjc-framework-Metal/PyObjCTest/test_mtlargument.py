@@ -213,15 +213,15 @@ class TestMTLArgument(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLBinding")
-        self.assertProtocolExists("MTLBufferBinding")
-        self.assertProtocolExists("MTLThreadgroupBinding")
-        self.assertProtocolExists("MTLTextureBinding")
-        self.assertProtocolExists("MTLObjectPayloadBinding")
+        self.assertProtocolExists("MTLBinding", Metal)
+        self.assertProtocolExists("MTLBufferBinding", Metal)
+        self.assertProtocolExists("MTLThreadgroupBinding", Metal)
+        self.assertProtocolExists("MTLTextureBinding", Metal)
+        self.assertProtocolExists("MTLObjectPayloadBinding", Metal)
 
     @min_sdk_level("26.0")
     def test_protocols26_0(self):
-        self.assertProtocolExists("MTLTensorBinding")
+        self.assertProtocolExists("MTLTensorBinding", Metal)
 
     @min_os_level("10.11")
     def test_methods10_11(self):

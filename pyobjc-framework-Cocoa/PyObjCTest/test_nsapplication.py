@@ -466,4 +466,4 @@ class TestNSApplication(TestCase):
 
     @min_sdk_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("NSApplicationDelegate")
+        self.assertProtocolExists("NSApplicationDelegate", AppKit)

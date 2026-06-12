@@ -47,8 +47,8 @@ class TestQLPreviewPanel(TestCase):
 
     @min_os_level("10.6")
     def testProtocols(self):
-        self.assertProtocolExists("QLPreviewPanelDataSource")
+        self.assertProtocolExists("QLPreviewPanelDataSource", Quartz)
 
     @min_os_level("10.7")
     def testProtocols10_7(self):
-        self.assertProtocolExists("QLPreviewPanelDelegate")
+        self.assertProtocolExists("QLPreviewPanelDelegate", Quartz)

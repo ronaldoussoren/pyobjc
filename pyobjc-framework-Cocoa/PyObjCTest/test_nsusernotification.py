@@ -47,4 +47,4 @@ class TestNSUserNotification(TestCase):
 
     @min_os_level("10.10")
     def testProtocolsObjects(self):
-        self.assertProtocolExists("NSUserNotificationCenterDelegate")
+        self.assertProtocolExists("NSUserNotificationCenterDelegate", Foundation)

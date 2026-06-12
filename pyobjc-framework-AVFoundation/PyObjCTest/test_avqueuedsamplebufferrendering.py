@@ -30,7 +30,7 @@ class TestAVQueuedSampleBufferRendering(TestCase):
 
     @min_sdk_level("10.13")
     def testProtocols(self):
-        self.assertProtocolExists("AVQueuedSampleBufferRendering")
+        self.assertProtocolExists("AVQueuedSampleBufferRendering", AVFoundation)
 
     def testMethods(self):
         self.assertResultIsBOOL(

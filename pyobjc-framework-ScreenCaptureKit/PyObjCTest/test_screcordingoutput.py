@@ -6,4 +6,4 @@ import ScreenCaptureKit  # noqa: F401
 class TestSCRecordingOutput(TestCase):
     @min_sdk_level("15.0")
     def test_protocols(self):
-        self.assertProtocolExists("SCRecordingOutputDelegate")
+        self.assertProtocolExists("SCRecordingOutputDelegate", ScreenCaptureKit)

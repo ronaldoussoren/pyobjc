@@ -4,7 +4,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestGKTurnBasedMatchmakerViewController(TestCase):
     def testProtocols(self):
-        self.assertProtocolExists("GKTurnBasedMatchmakerViewControllerDelegate")
+        self.assertProtocolExists(
+            "GKTurnBasedMatchmakerViewControllerDelegate", GameKit
+        )
 
     @min_os_level("10.8")
     def testMethods(self):

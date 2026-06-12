@@ -19,7 +19,7 @@ class TestMKOverlayHelper(MapKit.NSObject):
 class TestMKOverlay(TestCase):
     @min_os_level("10.9")
     def testProtocols(self):
-        self.assertProtocolExists("MKOverlay")
+        self.assertProtocolExists("MKOverlay", MapKit)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(TestMKOverlayHelper.intersectsMapRect_)

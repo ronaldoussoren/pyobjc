@@ -19,7 +19,9 @@ class TestMCBrowserViewController(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("MCBrowserViewControllerDelegate")
+        self.assertProtocolExists(
+            "MCBrowserViewControllerDelegate", MultipeerConnectivity
+        )
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(

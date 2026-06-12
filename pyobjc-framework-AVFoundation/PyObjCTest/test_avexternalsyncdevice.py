@@ -19,4 +19,4 @@ class TestAVExternalSyncDevice(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("AVExternalSyncDeviceDelegate")
+        self.assertProtocolExists("AVExternalSyncDeviceDelegate", AVFoundation)

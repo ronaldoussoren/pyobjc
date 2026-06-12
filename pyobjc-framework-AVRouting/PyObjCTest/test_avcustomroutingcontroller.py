@@ -16,7 +16,7 @@ class TestAVCustomRoutingController(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("AVCustomRoutingControllerDelegate")
+        self.assertProtocolExists("AVCustomRoutingControllerDelegate", AVRouting)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

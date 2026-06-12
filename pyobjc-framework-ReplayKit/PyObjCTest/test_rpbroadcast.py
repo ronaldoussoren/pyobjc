@@ -22,5 +22,5 @@ class TestRPBroadcast(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("RPBroadcastActivityControllerDelegate")
-        self.assertProtocolExists("RPBroadcastControllerDelegate")
+        self.assertProtocolExists("RPBroadcastActivityControllerDelegate", ReplayKit)
+        self.assertProtocolExists("RPBroadcastControllerDelegate", ReplayKit)

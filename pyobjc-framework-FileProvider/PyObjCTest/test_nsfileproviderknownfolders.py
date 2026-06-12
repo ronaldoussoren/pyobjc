@@ -30,7 +30,7 @@ class TestNSFileProviderKnownFolders(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("NSFileProviderKnownFolderSupporting")
+        self.assertProtocolExists("NSFileProviderKnownFolderSupporting", FileProvider)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

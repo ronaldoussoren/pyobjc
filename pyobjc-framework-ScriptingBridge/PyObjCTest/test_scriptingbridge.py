@@ -13,7 +13,7 @@ class TestSBApplication(TestCase):
 
     @min_os_level("10.6")
     def testProtocols(self):
-        self.assertProtocolExists("SBApplicationDelegate")
+        self.assertProtocolExists("SBApplicationDelegate", ScriptingBridge)
         self.assertArgHasType(
             TestSBApplicationHelper.eventDidFail_withError_,
             0,

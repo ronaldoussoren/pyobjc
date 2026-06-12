@@ -9,7 +9,7 @@ class TestVZVirtioSocketListenerHelper(Virtualization.NSObject):
 
 class TestVZVirtioSocketListener(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("VZVirtioSocketListenerDelegate")
+        self.assertProtocolExists("VZVirtioSocketListenerDelegate", Virtualization)
 
     def test_methods(self):
         self.assertResultIsBOOL(

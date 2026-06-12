@@ -4,4 +4,4 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestBETextInteractionDelegate(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("BETextInteractionDelegate")
+        self.assertProtocolExists("BETextInteractionDelegate", BrowserEngineKit)

@@ -130,7 +130,7 @@ class TestIOBluetoothHandsFree(TestCase):
         self.assertIsInstance(IOBluetooth.IOBluetoothPDUUserData, str)
 
     def test_protocols(self):
-        self.assertProtocolExists("IOBluetoothHandsFreeDelegate")
+        self.assertProtocolExists("IOBluetoothHandsFreeDelegate", IOBluetooth)
 
     def test_methods(self):
         self.assertResultIsBOOL(IOBluetooth.IOBluetoothHandsFree.isInputMuted)

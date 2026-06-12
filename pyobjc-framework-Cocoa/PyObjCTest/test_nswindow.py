@@ -428,7 +428,7 @@ class TestNSWindow(TestCase):
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        self.assertProtocolExists("NSWindowDelegate")
+        self.assertProtocolExists("NSWindowDelegate", AppKit)
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSWindowHelper.windowShouldClose_)
