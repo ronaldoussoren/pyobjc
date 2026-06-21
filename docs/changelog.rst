@@ -8,6 +8,469 @@ Version 13.0a0
 
 * This release drops support for Python 3.10
 
+* The attribute :data:`objc.platform` is deprecated and will be removed
+  in PyObjC 14. Its value is always ``"MACOSX"``.
+
+* Framework bindings updated for macOS 27 SDK (beta 1)
+
+* Add support for the following frameworks (all new in macOS 27):
+
+  * :doc:`EnhancedLinkSecurity </apinotes/EnhancedLinkSecurity>`
+
+  * :doc:`StateReporting </apinotes/StateReporting>`
+
+* The following frameworks are deprecated in macOS 27:
+
+  * :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`
+
+  * :doc:`AVRouting </apinotes/AVRouting>`
+
+* All formal protocols (``@protocol ...`` in Objective-C) are exposed
+  as attributes on module that implements the binding for the framework
+  that defines the protocol, e.g. ``Foundation.NSFastEnumeration`` for
+  ``@protocol(NSFastEnumeration)``.
+
+  A number of protocols have the same name as an Objective-C classes, in
+  those cases the protocol is bound to a name ending with "Protocol". In
+  particular:
+
+  * ``Foundation.NSObjectProtocol`` for ``@protocol(NSObject)``.
+
+  * ``AppKit.NSAccessibilityElementProtocol`` for ``@protocol(NSAccessibilityElement)``.
+
+  * ``AppKit.NSCollectionLayoutContainerProtocol`` for ``@protocol(NSCollectionLayoutContainer)``.
+
+  * ``AppKit.NSTextAttachmentCellProtocol`` for ``@protocol(NSTextAttachmentCell)``.
+
+  * ``AppKit.NSCollectionLayoutEnvironmentProtocol`` for ``@protocol(NSCollectionLayoutEnvironment)``.
+
+  * ``AppKit.NSCollectionLayoutVisibleItemProtocol`` for ``@protocol(NSCollectionLayoutVisibleItem)``.
+
+  * ``AVFoundation.AVVideoCompositionInstructionProtocol`` for ``@protocol(AVVideoCompositionInstructiol)``.
+
+  * ``FinderSync.FIFinderSyncProtocol`` for ``@protocol(FIFinderSync)``.
+
+  * ``WebKit.DOMNodeFilterProtocol`` for ``@protocol(DOMNodeFilter)``.
+
+  * ``WebKit.WebPolicyDecisionListenerProtocol`` for ``@protocol(WebPolicyDecisionListener)``.
+
+  * ``WebKit.WebOpenPanelResultListenerProtocol`` for ``@protocol(WebOpenPanelResultListener)``.
+
+  * ``JavaScriptCore.JSExportProtocol`` for ``@protocol(JSExportProtocol)``.
+
+  * ``Quartz.CAMetalDrawableProtocol`` for ``@protocol(CAMetalDrawable)``.
+
+  * ``Quartz.CIFilterProtocol`` for ``@protocol(CIFilter)``.
+
+  * ``Quartz.CISystemToneMapProtocol`` for ``@protocol(CISystemToneMap)``.
+
+  * ``Quartz.CIImageProcessorInputProtocol`` for ``@protocol(CIImageProcessorInput)``.
+
+  * ``Quartz.CIAccordionFoldTransitionProtocol`` for ``@protocol(CIAccordionFoldTransition)``
+
+  * ``Quartz.CIAffineClampProtocol`` for ``@protocol(CIAffineClamp)``
+
+  * ``Quartz.CIAffineTileProtocol`` for ``@protocol(CIAffineTile)``
+
+  * ``Quartz.CIAreaAverageProtocol`` for ``@protocol(CIAreaAverage)``
+
+  * ``Quartz.CIAreaAverageMaximumRedProtocol`` for ``@protocol(CIAreaAverageMaximumRed)``
+
+  * ``Quartz.CIAreaBoundsRedProtocol`` for ``@protocol(CIAreaBoundsRed)``
+
+  * ``Quartz.CIAreaHistogramProtocol`` for ``@protocol(CIAreaHistogram)``
+
+  * ``Quartz.CIAreaMaximumProtocol`` for ``@protocol(CIAreaMaximum)``
+
+  * ``Quartz.CIAreaMaximumAlphaProtocol`` for ``@protocol(CIAreaMaximumAlpha)``
+
+  * ``Quartz.CIAreaMinMaxProtocol`` for ``@protocol(CIAreaMinMax)``
+
+  * ``Quartz.CIAreaMinMaxRedProtocol`` for ``@protocol(CIAreaMinMaxRed)``
+
+  * ``Quartz.CIAreaMinimumProtocol`` for ``@protocol(CIAreaMinimum)``
+
+  * ``Quartz.CIAreaMinimumAlphaProtocol`` for ``@protocol(CIAreaMinimumAlpha)``
+
+  * ``Quartz.CIAreaReductionFilterProtocol`` for ``@protocol(CIAreaReductionFilter)``
+
+  * ``Quartz.CIAttributedTextImageGeneratorProtocol`` for ``@protocol(CIAttributedTextImageGenerator)``
+
+  * ``Quartz.CIAztecCodeGeneratorProtocol`` for ``@protocol(CIAztecCodeGenerator)``
+
+  * ``Quartz.CIBarcodeGeneratorProtocol`` for ``@protocol(CIBarcodeGenerator)``
+
+  * ``Quartz.CIBarsSwipeTransitionProtocol`` for ``@protocol(CIBarsSwipeTransition)``
+
+  * ``Quartz.CIBicubicScaleTransformProtocol`` for ``@protocol(CIBicubicScaleTransform)``
+
+  * ``Quartz.CIBlendWithMaskProtocol`` for ``@protocol(CIBlendWithMask)``
+
+  * ``Quartz.CIBloomProtocol`` for ``@protocol(CIBloom)``
+
+  * ``Quartz.CIBlurredRectangleGeneratorProtocol`` for ``@protocol(CIBlurredRectangleGenerator)``
+
+  * ``Quartz.CIBlurredRoundedRectangleGeneratorProtocol`` for ``@protocol(CIBlurredRoundedRectangleGenerator)``
+
+  * ``Quartz.CIBokehBlurProtocol`` for ``@protocol(CIBokehBlur)``
+
+  * ``Quartz.CIBoxBlurProtocol`` for ``@protocol(CIBoxBlur)``
+
+  * ``Quartz.CIBumpDistortionProtocol`` for ``@protocol(CIBumpDistortion)``
+
+  * ``Quartz.CIBumpDistortionLinearProtocol`` for ``@protocol(CIBumpDistortionLinear)``
+
+  * ``Quartz.CICMYKHalftoneProtocol`` for ``@protocol(CICMYKHalftone)``
+
+  * ``Quartz.CICannyEdgeDetectorProtocol`` for ``@protocol(CICannyEdgeDetector)``
+
+  * ``Quartz.CICheckerboardGeneratorProtocol`` for ``@protocol(CICheckerboardGenerator)``
+
+  * ``Quartz.CICircleSplashDistortionProtocol`` for ``@protocol(CICircleSplashDistortion)``
+
+  * ``Quartz.CICircularScreenProtocol`` for ``@protocol(CICircularScreen)``
+
+  * ``Quartz.CICircularWrapProtocol`` for ``@protocol(CICircularWrap)``
+
+  * ``Quartz.CICode128BarcodeGeneratorProtocol`` for ``@protocol(CICode128BarcodeGenerator)``
+
+  * ``Quartz.CIColorAbsoluteDifferenceProtocol`` for ``@protocol(CIColorAbsoluteDifference)``
+
+  * ``Quartz.CIColorClampProtocol`` for ``@protocol(CIColorClamp)``
+
+  * ``Quartz.CIColorControlsProtocol`` for ``@protocol(CIColorControls)``
+
+  * ``Quartz.CIColorCrossPolynomialProtocol`` for ``@protocol(CIColorCrossPolynomial)``
+
+  * ``Quartz.CIColorCubeProtocol`` for ``@protocol(CIColorCube)``
+
+  * ``Quartz.CIColorCubeWithColorSpaceProtocol`` for ``@protocol(CIColorCubeWithColorSpace)``
+
+  * ``Quartz.CIColorCubesMixedWithMaskProtocol`` for ``@protocol(CIColorCubesMixedWithMask)``
+
+  * ``Quartz.CIColorCurvesProtocol`` for ``@protocol(CIColorCurves)``
+
+  * ``Quartz.CIColorInvertProtocol`` for ``@protocol(CIColorInvert)``
+
+  * ``Quartz.CIColorMapProtocol`` for ``@protocol(CIColorMap)``
+
+  * ``Quartz.CIColorMatrixProtocol`` for ``@protocol(CIColorMatrix)``
+
+  * ``Quartz.CIColorMonochromeProtocol`` for ``@protocol(CIColorMonochrome)``
+
+  * ``Quartz.CIColorPolynomialProtocol`` for ``@protocol(CIColorPolynomial)``
+
+  * ``Quartz.CIColorPosterizeProtocol`` for ``@protocol(CIColorPosterize)``
+
+  * ``Quartz.CIColorThresholdProtocol`` for ``@protocol(CIColorThreshold)``
+
+  * ``Quartz.CIColorThresholdOtsuProtocol`` for ``@protocol(CIColorThresholdOtsu)``
+
+  * ``Quartz.CIColumnAverageProtocol`` for ``@protocol(CIColumnAverage)``
+
+  * ``Quartz.CIComicEffectProtocol`` for ``@protocol(CIComicEffect)``
+
+  * ``Quartz.CICompositeOperationProtocol`` for ``@protocol(CICompositeOperation)``
+
+  * ``Quartz.CIConvolutionProtocol`` for ``@protocol(CIConvolution)``
+
+  * ``Quartz.CICopyMachineTransitionProtocol`` for ``@protocol(CICopyMachineTransition)``
+
+  * ``Quartz.CICoreMLModelProtocol`` for ``@protocol(CICoreMLModel)``
+
+  * ``Quartz.CICrystallizeProtocol`` for ``@protocol(CICrystallize)``
+
+  * ``Quartz.CIDepthOfFieldProtocol`` for ``@protocol(CIDepthOfField)``
+
+  * ``Quartz.CIDepthToDisparityProtocol`` for ``@protocol(CIDepthToDisparity)``
+
+  * ``Quartz.CIDiscBlurProtocol`` for ``@protocol(CIDiscBlur)``
+
+  * ``Quartz.CIDisintegrateWithMaskTransitionProtocol`` for ``@protocol(CIDisintegrateWithMaskTransition)``
+
+  * ``Quartz.CIDisparityToDepthProtocol`` for ``@protocol(CIDisparityToDepth)``
+
+  * ``Quartz.CIDisplacementDistortionProtocol`` for ``@protocol(CIDisplacementDistortion)``
+
+  * ``Quartz.CIDissolveTransitionProtocol`` for ``@protocol(CIDissolveTransition)``
+
+  * ``Quartz.CIDitherProtocol`` for ``@protocol(CIDither)``
+
+  * ``Quartz.CIDocumentEnhancerProtocol`` for ``@protocol(CIDocumentEnhancer)``
+
+  * ``Quartz.CIDotScreenProtocol`` for ``@protocol(CIDotScreen)``
+
+  * ``Quartz.CIDrosteProtocol`` for ``@protocol(CIDroste)``
+
+  * ``Quartz.CIEdgePreserveUpsampleProtocol`` for ``@protocol(CIEdgePreserveUpsample)``
+
+  * ``Quartz.CIEdgeWorkProtocol`` for ``@protocol(CIEdgeWork)``
+
+  * ``Quartz.CIEdgesProtocol`` for ``@protocol(CIEdges)``
+
+  * ``Quartz.CIEightfoldReflectedTileProtocol`` for ``@protocol(CIEightfoldReflectedTile)``
+
+  * ``Quartz.CIExposureAdjustProtocol`` for ``@protocol(CIExposureAdjust)``
+
+  * ``Quartz.CIFalseColorProtocol`` for ``@protocol(CIFalseColor)``
+
+  * ``Quartz.CIFlashTransitionProtocol`` for ``@protocol(CIFlashTransition)``
+
+  * ``Quartz.CIFourCoordinateGeometryFilterProtocol`` for ``@protocol(CIFourCoordinateGeometryFilter)``
+
+  * ``Quartz.CIFourfoldReflectedTileProtocol`` for ``@protocol(CIFourfoldReflectedTile)``
+
+  * ``Quartz.CIFourfoldRotatedTileProtocol`` for ``@protocol(CIFourfoldRotatedTile)``
+
+  * ``Quartz.CIFourfoldTranslatedTileProtocol`` for ``@protocol(CIFourfoldTranslatedTile)``
+
+  * ``Quartz.CIGaborGradientsProtocol`` for ``@protocol(CIGaborGradients)``
+
+  * ``Quartz.CIGammaAdjustProtocol`` for ``@protocol(CIGammaAdjust)``
+
+  * ``Quartz.CIGaussianBlurProtocol`` for ``@protocol(CIGaussianBlur)``
+
+  * ``Quartz.CIGaussianGradientProtocol`` for ``@protocol(CIGaussianGradient)``
+
+  * ``Quartz.CIGlassDistortionProtocol`` for ``@protocol(CIGlassDistortion)``
+
+  * ``Quartz.CIGlassLozengeProtocol`` for ``@protocol(CIGlassLozenge)``
+
+  * ``Quartz.CIGlideReflectedTileProtocol`` for ``@protocol(CIGlideReflectedTile)``
+
+  * ``Quartz.CIGloomProtocol`` for ``@protocol(CIGloom)``
+
+  * ``Quartz.CIHatchedScreenProtocol`` for ``@protocol(CIHatchedScreen)``
+
+  * ``Quartz.CIHeightFieldFromMaskProtocol`` for ``@protocol(CIHeightFieldFromMask)``
+
+  * ``Quartz.CIHexagonalPixellateProtocol`` for ``@protocol(CIHexagonalPixellate)``
+
+  * ``Quartz.CIHighlightShadowAdjustProtocol`` for ``@protocol(CIHighlightShadowAdjust)``
+
+  * ``Quartz.CIHistogramDisplayProtocol`` for ``@protocol(CIHistogramDisplay)``
+
+  * ``Quartz.CIHoleDistortionProtocol`` for ``@protocol(CIHoleDistortion)``
+
+  * ``Quartz.CIHueAdjustProtocol`` for ``@protocol(CIHueAdjust)``
+
+  * ``Quartz.CIHueSaturationValueGradientProtocol`` for ``@protocol(CIHueSaturationValueGradient)``
+
+  * ``Quartz.CIImageProcessorInputProtocol`` for ``@protocol(CIImageProcessorInput)``
+
+  * ``Quartz.CIKMeansProtocol`` for ``@protocol(CIKMeans)``
+
+  * ``Quartz.CIKaleidoscopeProtocol`` for ``@protocol(CIKaleidoscope)``
+
+  * ``Quartz.CIKeystoneCorrectionCombinedProtocol`` for ``@protocol(CIKeystoneCorrectionCombined)``
+
+  * ``Quartz.CIKeystoneCorrectionHorizontalProtocol`` for ``@protocol(CIKeystoneCorrectionHorizontal)``
+
+  * ``Quartz.CIKeystoneCorrectionVerticalProtocol`` for ``@protocol(CIKeystoneCorrectionVertical)``
+
+  * ``Quartz.CILabDeltaEProtocol`` for ``@protocol(CILabDeltaE)``
+
+  * ``Quartz.CILanczosScaleTransformProtocol`` for ``@protocol(CILanczosScaleTransform)``
+
+  * ``Quartz.CILenticularHaloGeneratorProtocol`` for ``@protocol(CILenticularHaloGenerator)``
+
+  * ``Quartz.CILightTunnelProtocol`` for ``@protocol(CILightTunnel)``
+
+  * ``Quartz.CILineOverlayProtocol`` for ``@protocol(CILineOverlay)``
+
+  * ``Quartz.CILineScreenProtocol`` for ``@protocol(CILineScreen)``
+
+  * ``Quartz.CILinearGradientProtocol`` for ``@protocol(CILinearGradient)``
+
+  * ``Quartz.CILinearToSRGBToneCurveProtocol`` for ``@protocol(CILinearToSRGBToneCurve)``
+
+  * ``Quartz.CIMaskToAlphaProtocol`` for ``@protocol(CIMaskToAlpha)``
+
+  * ``Quartz.CIMaskedVariableBlurProtocol`` for ``@protocol(CIMaskedVariableBlur)``
+
+  * ``Quartz.CIMaximumComponentProtocol`` for ``@protocol(CIMaximumComponent)``
+
+  * ``Quartz.CIMedianProtocol`` for ``@protocol(CIMedian)``
+
+  * ``Quartz.CIMeshGeneratorProtocol`` for ``@protocol(CIMeshGenerator)``
+
+  * ``Quartz.CIMinimumComponentProtocol`` for ``@protocol(CIMinimumComponent)``
+
+  * ``Quartz.CIMixProtocol`` for ``@protocol(CIMix)``
+
+  * ``Quartz.CIModTransitionProtocol`` for ``@protocol(CIModTransition)``
+
+  * ``Quartz.CIMorphologyGradientProtocol`` for ``@protocol(CIMorphologyGradient)``
+
+  * ``Quartz.CIMorphologyMaximumProtocol`` for ``@protocol(CIMorphologyMaximum)``
+
+  * ``Quartz.CIMorphologyMinimumProtocol`` for ``@protocol(CIMorphologyMinimum)``
+
+  * ``Quartz.CIMorphologyRectangleMaximumProtocol`` for ``@protocol(CIMorphologyRectangleMaximum)``
+
+  * ``Quartz.CIMorphologyRectangleMinimumProtocol`` for ``@protocol(CIMorphologyRectangleMinimum)``
+
+  * ``Quartz.CIMotionBlurProtocol`` for ``@protocol(CIMotionBlur)``
+
+  * ``Quartz.CINinePartStretchedProtocol`` for ``@protocol(CINinePartStretched)``
+
+  * ``Quartz.CINinePartTiledProtocol`` for ``@protocol(CINinePartTiled)``
+
+  * ``Quartz.CINoiseReductionProtocol`` for ``@protocol(CINoiseReduction)``
+
+  * ``Quartz.CIOpTileProtocol`` for ``@protocol(CIOpTile)``
+
+  * ``Quartz.CIPDF417BarcodeGeneratorProtocol`` for ``@protocol(CIPDF417BarcodeGenerator)``
+
+  * ``Quartz.CIPageCurlTransitionProtocol`` for ``@protocol(CIPageCurlTransition)``
+
+  * ``Quartz.CIPageCurlWithShadowTransitionProtocol`` for ``@protocol(CIPageCurlWithShadowTransition)``
+
+  * ``Quartz.CIPaletteCentroidProtocol`` for ``@protocol(CIPaletteCentroid)``
+
+  * ``Quartz.CIPalettizeProtocol`` for ``@protocol(CIPalettize)``
+
+  * ``Quartz.CIParallelogramTileProtocol`` for ``@protocol(CIParallelogramTile)``
+
+  * ``Quartz.CIPerspectiveCorrectionProtocol`` for ``@protocol(CIPerspectiveCorrection)``
+
+  * ``Quartz.CIPerspectiveRotateProtocol`` for ``@protocol(CIPerspectiveRotate)``
+
+  * ``Quartz.CIPerspectiveTileProtocol`` for ``@protocol(CIPerspectiveTile)``
+
+  * ``Quartz.CIPerspectiveTransformProtocol`` for ``@protocol(CIPerspectiveTransform)``
+
+  * ``Quartz.CIPerspectiveTransformWithExtentProtocol`` for ``@protocol(CIPerspectiveTransformWithExtent)``
+
+  * ``Quartz.CIPhotoEffectProtocol`` for ``@protocol(CIPhotoEffect)``
+
+  * ``Quartz.CIPinchDistortionProtocol`` for ``@protocol(CIPinchDistortion)``
+
+  * ``Quartz.CIPixellateProtocol`` for ``@protocol(CIPixellate)``
+
+  * ``Quartz.CIPointillizeProtocol`` for ``@protocol(CIPointillize)``
+
+  * ``Quartz.CIQRCodeGeneratorProtocol`` for ``@protocol(CIQRCodeGenerator)``
+
+  * ``Quartz.CIRadialGradientProtocol`` for ``@protocol(CIRadialGradient)``
+
+  * ``Quartz.CIRandomGeneratorProtocol`` for ``@protocol(CIRandomGenerator)``
+
+  * ``Quartz.CIRippleTransitionProtocol`` for ``@protocol(CIRippleTransition)``
+
+  * ``Quartz.CIRoundedQRCodeGeneratorProtocol`` for ``@protocol(CIRoundedQRCodeGenerator)``
+
+  * ``Quartz.CIRoundedRectangleGeneratorProtocol`` for ``@protocol(CIRoundedRectangleGenerator)``
+
+  * ``Quartz.CIRoundedRectangleStrokeGeneratorProtocol`` for ``@protocol(CIRoundedRectangleStrokeGenerator)``
+
+  * ``Quartz.CIRowAverageProtocol`` for ``@protocol(CIRowAverage)``
+
+  * ``Quartz.CISRGBToneCurveToLinearProtocol`` for ``@protocol(CISRGBToneCurveToLinear)``
+
+  * ``Quartz.CISaliencyMapProtocol`` for ``@protocol(CISaliencyMap)``
+
+  * ``Quartz.CISepiaToneProtocol`` for ``@protocol(CISepiaTone)``
+
+  * ``Quartz.CIShadedMaterialProtocol`` for ``@protocol(CIShadedMaterial)``
+
+  * ``Quartz.CISharpenLuminanceProtocol`` for ``@protocol(CISharpenLuminance)``
+
+  * ``Quartz.CISixfoldReflectedTileProtocol`` for ``@protocol(CISixfoldReflectedTile)``
+
+  * ``Quartz.CISixfoldRotatedTileProtocol`` for ``@protocol(CISixfoldRotatedTile)``
+
+  * ``Quartz.CISmoothLinearGradientProtocol`` for ``@protocol(CISmoothLinearGradient)``
+
+  * ``Quartz.CISobelGradientsProtocol`` for ``@protocol(CISobelGradients)``
+
+  * ``Quartz.CISpotColorProtocol`` for ``@protocol(CISpotColor)``
+
+  * ``Quartz.CISpotLightProtocol`` for ``@protocol(CISpotLight)``
+
+  * ``Quartz.CIStarShineGeneratorProtocol`` for ``@protocol(CIStarShineGenerator)``
+
+  * ``Quartz.CIStraightenProtocol`` for ``@protocol(CIStraighten)``
+
+  * ``Quartz.CIStretchCropProtocol`` for ``@protocol(CIStretchCrop)``
+
+  * ``Quartz.CIStripesGeneratorProtocol`` for ``@protocol(CIStripesGenerator)``
+
+  * ``Quartz.CISunbeamsGeneratorProtocol`` for ``@protocol(CISunbeamsGenerator)``
+
+  * ``Quartz.CISwipeTransitionProtocol`` for ``@protocol(CISwipeTransition)``
+
+  * ``Quartz.CITemperatureAndTintProtocol`` for ``@protocol(CITemperatureAndTint)``
+
+  * ``Quartz.CITextImageGeneratorProtocol`` for ``@protocol(CITextImageGenerator)``
+
+  * ``Quartz.CIThermalProtocol`` for ``@protocol(CIThermal)``
+
+  * ``Quartz.CIToneCurveProtocol`` for ``@protocol(CIToneCurve)``
+
+  * ``Quartz.CIToneMapHeadroomProtocol`` for ``@protocol(CIToneMapHeadroom)``
+
+  * ``Quartz.CITorusLensDistortionProtocol`` for ``@protocol(CITorusLensDistortion)``
+
+  * ``Quartz.CITransitionFilterProtocol`` for ``@protocol(CITransitionFilter)``
+
+  * ``Quartz.CITriangleKaleidoscopeProtocol`` for ``@protocol(CITriangleKaleidoscope)``
+
+  * ``Quartz.CITriangleTileProtocol`` for ``@protocol(CITriangleTile)``
+
+  * ``Quartz.CITwelvefoldReflectedTileProtocol`` for ``@protocol(CITwelvefoldReflectedTile)``
+
+  * ``Quartz.CITwirlDistortionProtocol`` for ``@protocol(CITwirlDistortion)``
+
+  * ``Quartz.CIUnsharpMaskProtocol`` for ``@protocol(CIUnsharpMask)``
+
+  * ``Quartz.CIVibranceProtocol`` for ``@protocol(CIVibrance)``
+
+  * ``Quartz.CIVignetteProtocol`` for ``@protocol(CIVignette)``
+
+  * ``Quartz.CIVignetteEffectProtocol`` for ``@protocol(CIVignetteEffect)``
+
+  * ``Quartz.CIVortexDistortionProtocol`` for ``@protocol(CIVortexDistortion)``
+
+  * ``Quartz.CIWhitePointAdjustProtocol`` for ``@protocol(CIWhitePointAdjust)``
+
+  * ``Quartz.CIXRayProtocol`` for ``@protocol(CIXRay)``
+
+  * ``Quartz.CIZoomBlurProtocol`` for ``@protocol(CIZoomBlur)``
+
+  * ``Quartz.CIImageProcessorInputProtocol`` for ``@protocol(CIImageProcessorInput)``
+
+  * ``Quartz.CIImageProcessorOutputProtocol`` for ``@protocol(CIImageProcessorOutput)``
+
+  * ``Metal.MTLCaptureScopeProtocol`` for ``@protocol(MTLCaptureScope)``
+
+* ``objc.formal_protocol`` can now be used as an additional base class
+  to indicate that a class implements a protocol.
+
+  The following two definitions are equivalent:
+
+  .. sourcecode:: python
+
+     class MyClass(NSObject, protocols=[NSFilePresenter]):
+         ...
+
+  and:
+
+  .. sourcecode:: python
+
+     class MyClass(NSObject, NSFilePresenter):
+         ...
+
+  The formal protocols that are used as a base class do not end
+  up in the MRO, but will be added to ``__pyobjc_protocols__``.
+
+  Mixing the two definition styles is supported as well, although
+  this will lead to less understandable code.
+
+* The ``DVDPlayback`` framework is not available on macOS 27.
+
+  .. note:: to be removed, headers are no longer available
+
 Version 12.2.1
 --------------
 
@@ -28,6 +491,7 @@ Version 12.2.1
      The ``Network`` framework builds upon grand central dispatch
      (the ``pyobjc-framework-libdispatch`` package), and because of that
      exceptions in callback handlers will cause a hard crash.
+
 
 Version 12.2
 ------------
