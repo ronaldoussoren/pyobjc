@@ -35,15 +35,19 @@ class TestWebKit(TestCase):
     def testProtocols(self):
         self.assertProtocolExists("DOMEventListener", WebKit)
         self.assertProtocolExists("DOMEventTarget", WebKit)
-        self.assertProtocolExists("DOMNodeFilter", WebKit)
+        self.assertProtocolExists("DOMNodeFilter", WebKit, "DOMNodeFilterProtocol")
         self.assertProtocolExists("DOMXPathNSResolver", WebKit)
         self.assertProtocolExists("WebDocumentRepresentation", WebKit)
         self.assertProtocolExists("WebDocumentSearching", WebKit)
         self.assertProtocolExists("WebDocumentText", WebKit)
         self.assertProtocolExists("WebDocumentView", WebKit)
-        self.assertProtocolExists("WebOpenPanelResultListener", WebKit)
+        self.assertProtocolExists(
+            "WebOpenPanelResultListener", WebKit, "WebOpenPanelResultListenerProtocol"
+        )
         self.assertProtocolExists("WebPlugInViewFactory", WebKit)
-        self.assertProtocolExists("WebPolicyDecisionListener", WebKit)
+        self.assertProtocolExists(
+            "WebPolicyDecisionListener", WebKit, "WebPolicyDecisionListenerProtocol"
+        )
 
 
 class TestCallableMetadata(TestCase):

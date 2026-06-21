@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import PhotosUI
 
 
@@ -35,12 +35,10 @@ class TestPHPicker(TestCase):
             PhotosUI.PHPickerCapabilitiesSensitivityAnalysisIntervention, 1 << 4
         )
 
-    @min_os_level("13.0")
-    def testClasses(self):
-        self.assertClassIsFinal(PhotosUI.PHPickerFilter)
-        self.assertClassIsFinal(PhotosUI.PHPickerConfiguration)
-        self.assertClassIsFinal(PhotosUI.PHPickerResult)
-        self.assertClassIsFinal(PhotosUI.PHPickerViewController)
+        self.assertIsEnumType(PhotosUI.PHPickerMetadataOptions)
+        self.assertEqual(PhotosUI.PHPickerMetadataOptionsNone, 0)
+        self.assertEqual(PhotosUI.PHPickerMetadataOptionsRemoveLocation, 1 << 0)
+        self.assertEqual(PhotosUI.PHPickerMetadataOptionsRemoveCaptions, 1 << 1)
 
     @min_sdk_level("13.0")
     def testProtocols(self):

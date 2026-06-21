@@ -26,6 +26,11 @@ class TestCSSearchableIndexHelper(CoreSpotlight.NSObject):
     def searchableItemsForIdentifiers_searchableItemsHandler_(self, a, b):
         pass
 
+    def searchableItemsForIdentifiers_protectionClass_searchableItemsHandler_(
+        self, a, b, c
+    ):
+        pass
+
 
 class TestCSSearchableIndex(TestCase):
     def test_enum_types(self):
@@ -101,6 +106,12 @@ class TestCSSearchableIndex(TestCase):
         self.assertArgIsBlock(
             TestCSSearchableIndexHelper.searchableItemsForIdentifiers_searchableItemsHandler_,
             1,
+            b"v@",
+        )
+
+        self.assertArgIsBlock(
+            TestCSSearchableIndexHelper.searchableItemsForIdentifiers_protectionClass_searchableItemsHandler_,
+            2,
             b"v@",
         )
 

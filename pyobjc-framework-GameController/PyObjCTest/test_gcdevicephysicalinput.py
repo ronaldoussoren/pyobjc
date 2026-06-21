@@ -24,6 +24,9 @@ class TestGCDevicePhysicalInputHelper(GameController.NSObject):
     def setInputStateQueueDepth_(self, a):
         pass
 
+    def inputStateForSpatialAccessoryAnchorTimestamp_(self, a):
+        return 1
+
 
 class TestGCDevicePhysicalInput(TestCase):
     @min_sdk_level("13.0")
@@ -43,4 +46,10 @@ class TestGCDevicePhysicalInput(TestCase):
         )
         self.assertArgIsBlock(
             TestGCDevicePhysicalInputHelper.setInputStateAvailableHandler_, 0, b"v@"
+        )
+
+        self.assertArgHasType(
+            TestGCDevicePhysicalInputHelper.inputStateForSpatialAccessoryAnchorTimestamp_,
+            0,
+            b"d",
         )

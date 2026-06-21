@@ -85,3 +85,19 @@ class TestMKPointOfInterestCategory(TestCase):
         self.assertIsInstance(MapKit.MKPointOfInterestCategorySwimming, str)
         self.assertIsInstance(MapKit.MKPointOfInterestCategoryTennis, str)
         self.assertIsInstance(MapKit.MKPointOfInterestCategoryVolleyball, str)
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryAirportTerminal, str)
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryAutomotiveDealership, str)
+        self.assertIsInstance(
+            MapKit.MKPointOfInterestCategoryCommercialVehicleDealership, str
+        )
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryInformationBooth, str)
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryMotorbikeDealership, str)
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryPicnicArea, str)
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryRangerStation, str)
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryRestArea, str)
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryScenicView, str)
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryTicketOffice, str)
+        self.assertIsInstance(MapKit.MKPointOfInterestCategoryVisitorCenter, str)

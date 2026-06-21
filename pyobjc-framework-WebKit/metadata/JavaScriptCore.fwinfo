@@ -200,7 +200,9 @@
     ]
    }
   },
-  "formal_protocols": {},
+  "formal_protocols": {
+   "JSExport": { "rename": "JSExportProtocol" }
+  },
   "opaque": {
       "JSContextGroupRef": {
             "typestr": "^{OpaqueJSContextGroup=}"

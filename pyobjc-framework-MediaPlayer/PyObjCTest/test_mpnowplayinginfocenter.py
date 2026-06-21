@@ -94,3 +94,9 @@ class TestMPNowPlayingInfoCenter(TestCase):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoProperty3x4AnimatedArtwork, str
         )
+
+    @min_os_level("27.0")
+    def testConstants27_0(self):
+        self.assertIsInstance(
+            MediaPlayer.MPNowPlayingInfoPropertyAppEntityIdentifiers, str
+        )

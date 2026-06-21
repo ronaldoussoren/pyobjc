@@ -117,6 +117,9 @@ class TestAudioHardwareDeprecated(TestCase):
         self.assertEqual(
             CoreAudio.kAudioDeviceTransportTypeAutoAggregate, fourcc(b"fgrp")
         )
+        self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeContinuityCapture, fourcc(b"ccap")
+        )
 
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyVolumeDecibelsToScalarTransferFunction,
@@ -219,6 +222,8 @@ class TestAudioHardwareDeprecated(TestCase):
             CoreAudio.kAudioClockSourceControlPropertyItemKind,
             CoreAudio.kAudioSelectorControlPropertyItemKind,
         )
+
+        self.assertEqual(CoreAudio.kAudioEndPointDeviceMasterEndPointKey, b"master")
 
     def testFunctions(self):
         CoreAudio.AudioHardwareAddRunLoopSource

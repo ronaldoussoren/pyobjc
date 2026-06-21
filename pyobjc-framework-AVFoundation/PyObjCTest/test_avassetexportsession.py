@@ -7,6 +7,10 @@ class TestAVAssetExportSession(TestCase):
         self.assertIsEnumType(AVFoundation.AVAssetExportSessionStatus)
         self.assertIsEnumType(AVFoundation.AVAssetTrackGroupOutputHandling)
 
+        self.assertIsTypedEnum(
+            AVFoundation.AVAssetExportSessionResumptionFailureReason, str
+        )
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(AVFoundation.AVAssetExportPreset640x480, str)
@@ -104,6 +108,29 @@ class TestAVAssetExportSession(TestCase):
         self.assertIsInstance(AVFoundation.AVAssetExportPresetMVHEVC4320x4320, str)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetMVHEVC7680x7680, str)
 
+    @min_os_level("27.0")
+    def testConstants27_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVAssetExportSessionResumptionFailureReasonIncompatiblePreset,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetExportSessionResumptionFailureReasonUnsupportedForPresetOnPlatform,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetExportSessionResumptionFailureReasonTemporaryDirectoryDoesNotExist,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetExportSessionResumptionFailureReasonIncompatibleSessionSettings,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetExportSessionResumptionFailureReasonIncompatibleTemporaryDirectoryContents,
+            str,
+        )
+
     @min_os_level("10.7")
     def testMethods(self):
         self.assertArgIsBlock(
@@ -158,4 +185,18 @@ class TestAVAssetExportSession(TestCase):
         )
         self.assertArgIsBOOL(
             AVFoundation.AVAssetExportSession.setAllowsParallelizedExport_, 0
+        )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetExportSessionResumptionState.isResumptionConfigured
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetExportSessionResumptionState.isResumingFromPreviousState
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAssetExportSession.configureForResumableExportWithCompletionHandler_,
+            0,
+            b"v@",
         )

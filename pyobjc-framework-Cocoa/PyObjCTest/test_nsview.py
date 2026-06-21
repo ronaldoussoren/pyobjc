@@ -23,16 +23,6 @@ class ObjCTestNSView_KnowPageRange(AppKit.NSView):
 
 
 class TestNSView(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(AppKit.NSDefinitionOptionKey, str)
-        self.assertIsTypedEnum(AppKit.NSDefinitionPresentationType, str)
-        self.assertIsTypedEnum(AppKit.NSViewFullScreenModeOptionKey, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSAutoresizingMaskOptions)
-        self.assertIsEnumType(AppKit.NSBorderType)
-        self.assertIsEnumType(AppKit.NSViewLayerContentsPlacement)
-        self.assertIsEnumType(AppKit.NSViewLayerContentsRedrawPolicy)
 
     def test_knowsPageRange(self):
         method = ObjCTestNSView_KnowPageRange.knowsPageRange_
@@ -52,7 +42,13 @@ class TestNSView(TestCase):
 
 
 class TestHeader(TestCase):
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(AppKit.NSDefinitionOptionKey, str)
+        self.assertIsTypedEnum(AppKit.NSDefinitionPresentationType, str)
+        self.assertIsTypedEnum(AppKit.NSViewFullScreenModeOptionKey, str)
+
     def testConstants(self):
+        self.assertIsEnumType(AppKit.NSAutoresizingMaskOptions)
         self.assertEqual(AppKit.NSViewNotSizable, 0)
         self.assertEqual(AppKit.NSViewMinXMargin, 1)
         self.assertEqual(AppKit.NSViewWidthSizable, 2)
@@ -61,6 +57,7 @@ class TestHeader(TestCase):
         self.assertEqual(AppKit.NSViewHeightSizable, 16)
         self.assertEqual(AppKit.NSViewMaxYMargin, 32)
 
+        self.assertIsEnumType(AppKit.NSBorderType)
         self.assertEqual(AppKit.NSNoBorder, 0)
         self.assertEqual(AppKit.NSLineBorder, 1)
         self.assertEqual(AppKit.NSBezelBorder, 2)
@@ -70,6 +67,11 @@ class TestHeader(TestCase):
         self.assertIsInstance(AppKit.NSViewFocusDidChangeNotification, str)
         self.assertIsInstance(AppKit.NSViewBoundsDidChangeNotification, str)
         self.assertIsInstance(AppKit.NSViewGlobalFrameDidChangeNotification, str)
+
+        self.assertIsEnumType(AppKit.NSViewExclusiveGestureBehavior)
+        self.assertEqual(AppKit.NSViewExclusiveGestureBehaviorInherit, 0)
+        self.assertEqual(AppKit.NSViewExclusiveGestureBehaviorExclusive, 1)
+        self.assertEqual(AppKit.NSViewExclusiveGestureBehaviorNotExclusive, 2)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
@@ -84,11 +86,13 @@ class TestHeader(TestCase):
             AppKit.NSFullScreenModeApplicationPresentationOptions, str
         )
 
+        self.assertIsEnumType(AppKit.NSViewLayerContentsRedrawPolicy)
         self.assertEqual(AppKit.NSViewLayerContentsRedrawNever, 0)
         self.assertEqual(AppKit.NSViewLayerContentsRedrawOnSetNeedsDisplay, 1)
         self.assertEqual(AppKit.NSViewLayerContentsRedrawDuringViewResize, 2)
         self.assertEqual(AppKit.NSViewLayerContentsRedrawBeforeViewResize, 3)
 
+        self.assertIsEnumType(AppKit.NSViewLayerContentsPlacement)
         self.assertEqual(AppKit.NSViewLayerContentsPlacementScaleAxesIndependently, 0)
         self.assertEqual(AppKit.NSViewLayerContentsPlacementScaleProportionallyToFit, 1)
         self.assertEqual(

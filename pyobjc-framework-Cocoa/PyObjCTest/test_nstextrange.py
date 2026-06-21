@@ -19,3 +19,7 @@ class TestNSTextRange(TestCase):
         self.assertResultIsBOOL(AppKit.NSTextRange.containsLocation_)
         self.assertResultIsBOOL(AppKit.NSTextRange.containsRange_)
         self.assertResultIsBOOL(AppKit.NSTextRange.intersectsWithTextRange_)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(AppKit.NSTextRange.isEqual_)

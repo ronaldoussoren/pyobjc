@@ -35,6 +35,8 @@ def _setup():
         ("PKTool", b"new"),
         ("PKToolPickerItem", b"init"),
         ("PKToolPickerItem", b"new"),
+        ("PKConvertedBezierPoint", b"init"),
+        ("PKConvertedBezierPoint", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

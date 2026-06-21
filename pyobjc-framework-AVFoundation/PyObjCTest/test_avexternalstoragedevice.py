@@ -3,6 +3,30 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVExternalStorageDevice(TestCase):
+    def test_enum_type(self):
+        self.assertIsTypedEnum(
+            AVFoundation.AVExternalStorageDeviceReasonNotRecommendedForCaptureUse, str
+        )
+
+    @min_os_level("27.0")
+    def test_constants(self):
+        self.assertIsInstance(
+            AVFoundation.AVExternalStorageDeviceReasonNotRecommendedForCaptureUseEncrypted,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVExternalStorageDeviceReasonNotRecommendedForCaptureUseUnsupportedFileSystem,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVExternalStorageDeviceReasonNotRecommendedForCaptureUseSlowWritingSpeed,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVExternalStorageDeviceReasonNotRecommendedForCaptureUseUnknownWritingSpeed,
+            str,
+        )
+
     @min_os_level("14.0")
     def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVExternalStorageDevice.isConnected)

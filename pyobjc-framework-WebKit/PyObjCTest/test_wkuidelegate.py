@@ -38,6 +38,11 @@ class TestWKUIDelegateHelper(WebKit.NSObject):
     ):
         pass
 
+    def webView_requestGeolocationPermissionForOrigin_initiatedByFrame_decisionHandler_(
+        self, a, b, c, d
+    ):
+        pass
+
 
 class TestWKUIDelegate(TestCase):
     def test_enum_types(self):
@@ -77,6 +82,11 @@ class TestWKUIDelegate(TestCase):
         self.assertArgIsBlock(
             TestWKUIDelegateHelper.webView_requestDeviceOrientationAndMotionPermissionForOrigin_initiatedByFrame_type_decisionHandler_,  # noqa: B950
             4,
+            b"vq",
+        )
+        self.assertArgIsBlock(
+            TestWKUIDelegateHelper.webView_requestGeolocationPermissionForOrigin_initiatedByFrame_decisionHandler_,  # noqa: B950
+            3,
             b"vq",
         )
 

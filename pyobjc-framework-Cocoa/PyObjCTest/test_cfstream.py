@@ -183,7 +183,7 @@ class TestStream(TestCase):
         self.assertResultHasType(CoreFoundation.CFReadStreamGetBuffer, b"^v")
         self.assertArgIsOut(CoreFoundation.CFReadStreamGetBuffer, 2)
         buf, numBytes = CoreFoundation.CFReadStreamGetBuffer(stream, 20, None)
-        if buf is objc.NULL:
+        if buf in (objc.NULL, None):
             self.assertEqual(numBytes, 0)
         else:
             self.assertIsInstance(buf, str)

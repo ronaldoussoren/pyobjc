@@ -19,6 +19,14 @@ class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
             AuthenticationServices.ASAuthorizationProviderExtensionFederationTypeDynamicWSTrust,
             2,
         )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionFederationTypeOpenID,
+            3,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionFederationTypeDynamicOpenID,
+            4,
+        )
 
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationProviderExtensionUserSecureEnclaveKeyBiometricPolicy

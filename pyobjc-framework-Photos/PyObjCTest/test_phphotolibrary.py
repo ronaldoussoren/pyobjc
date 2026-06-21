@@ -50,3 +50,15 @@ class TestPHPhotoLibrary(TestCase):
             Photos.PHPhotoLibrary.fetchPersistentChangesSinceToken_error_,
             1,
         )
+
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertResultIsBOOL(Photos.PHPhotoLibrary.isUploadJobExtensionEnabled)
+
+        self.assertResultIsBOOL(
+            Photos.PHPhotoLibrary.isUploadJobExtensionEnabled_error_
+        )
+        self.assertArgIsBOOL(
+            Photos.PHPhotoLibrary.isUploadJobExtensionEnabled_error_, 0
+        )
+        self.assertArgIsOut(Photos.PHPhotoLibrary.isUploadJobExtensionEnabled_error_, 1)

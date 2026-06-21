@@ -5364,6 +5364,7 @@
    }
   },
   "formal_protocols": {
+   "AVVideoCompositionInstruction": { "rename": "AVVideoCompositionInstructionProtocol" },
    "AVAsynchronousKeyValueLoading": {
     "methods": [
      {
@@ -5542,6 +5543,14 @@
    }
   },
   "typed_enum": {
+   "AVExternalStorageDeviceReasonNotRecommendedForCaptureUse": {
+    "type": "@",
+    "type_name": "NSString"
+   },
+   "AVAssetExportSessionResumptionFailureReason": {
+    "type": "@",
+    "type_name": "NSString"
+   },
    "AVCaptureSceneMonitoringStatus": {
     "type": "@",
     "type_name": "NSString"

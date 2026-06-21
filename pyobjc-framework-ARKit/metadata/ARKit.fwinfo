@@ -1,16 +1,37 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "externs": {
+   "ar_error_domain": { "typestr": "@" }
+  },
   "functions": {
    "ar_anchor_get_origin_from_anchor_transform": { "ignore": true },
    "ar_device_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_trackable_anchor_is_tracked": {
+    "args": {
+     "0": { "type_override": "@"}
+    },
+    "retval": { "type_override": "B" }
+   },
+   "ar_error_get_error_code": {
+    "args": {
+     "0": { "type_override": "@"}
+    },
+    "retval": { "type_override": "q" }
+   },
+   "ar_anchor_get_timestamp": {
+    "args": {
+     "0": { "type_override": "@"}
+    },
+    "retval": { "type_override": "d" }
+   },
    "ar_anchor_get_identifier": {
     "args": {
-     "1": { "type_modifier": "o"}
-    }
+     "0": { "type_override": "@"},
+     "1": { "type_modifier": "o", "type_override": "^@"}
+    },
+    "retval": { "type_override": "v" }
    },
    "ar_authorization_results_enumerate_results": {
     "args": {
@@ -272,7 +293,10 @@
     }
    },
    "ar_error_copy_cf_error": {
-    "retval": { "already_cfretained": true }
+    "retval": { "already_cfretained": true, "type_override": "@" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
    },
    "ar_hand_anchor_get_identifier": {
     "args": {
@@ -541,15 +565,15 @@
     }
    },
    "ar_reference_image_create_from_cgimage": {
-    "retval": {  "already_retained": true },
+    "retval": {  "already_retained": true, "type_override": "@" },
     "args": {
-     "0": {}
+     "0": { "type_override": "@"}
     }
    },
    "ar_reference_image_create_from_pixel_buffer": {
-    "retval": {  "already_retained": true },
+    "retval": {  "already_retained": true, "type_override": "@" },
     "args": {
-     "0": {}
+     "0": { "type_override": "@"}
     }
    },
    "ar_reference_image_get_name": {

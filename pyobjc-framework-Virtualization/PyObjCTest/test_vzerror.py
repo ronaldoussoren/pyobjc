@@ -34,3 +34,10 @@ class TestVZError(TestCase):
         self.assertEqual(Virtualization.VZErrorDeviceAlreadyAttached, 30002)
         self.assertEqual(Virtualization.VZErrorDeviceInitializationFailure, 30003)
         self.assertEqual(Virtualization.VZErrorDeviceNotFound, 30004)
+
+        self.assertEqual(Virtualization.VZErrorGuestProvisioningInvalidFullName, 40001)
+        self.assertEqual(Virtualization.VZErrorGuestProvisioningInvalidUsername, 40002)
+        self.assertEqual(Virtualization.VZErrorGuestProvisioningInvalidPassword, 40003)
+
+        self.assertEqual(Virtualization.VZErrorEFISecureBootEnrollmentFailed, 50001)
+        self.assertEqual(Virtualization.VZErrorEFIVariableInaccessible, 50002)

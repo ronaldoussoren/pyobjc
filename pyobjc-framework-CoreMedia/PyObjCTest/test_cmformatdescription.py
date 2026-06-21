@@ -739,6 +739,12 @@ class TestCMFormatDescription(TestCase):
             str,
         )
 
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionLogTransferFunction_AppleLog2, str
+        )
+
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()
         self.assertEqual(v.width, 0)

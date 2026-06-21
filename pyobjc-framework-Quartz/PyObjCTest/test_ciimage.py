@@ -117,6 +117,12 @@ class TestCIImage(TestCase):
         self.assertIsInstance(Quartz.kCIImageApplyCleanAperture, str)
         self.assertIsInstance(Quartz.kCIImageContentAverageLightLevel, str)
 
+    @min_os_level("27.0")
+    def testConstants27_0(self):
+        self.assertIsInstance(Quartz.kCIImageSubsampleFactor, str)
+        self.assertIsInstance(Quartz.kCIImageTypeIdentifierHint, str)
+        self.assertIsInstance(Quartz.kCIImageUseHardwareAcceleration, str)
+
     def testMethods(self):
         self.assertArgIsBOOL(
             Quartz.CIImage.imageWithTexture_size_flipped_colorSpace_, 2

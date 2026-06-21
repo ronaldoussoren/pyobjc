@@ -39,6 +39,7 @@ class TestCBCentralManager(TestCase):
         self.assertEqual(
             CoreBluetooth.CBCentralManagerFeatureExtendedScanAndConnect, 1 << 0
         )
+        self.assertEqual(CoreBluetooth.CBCentralManagerFeatureChannelSounding, 1 << 10)
 
     @min_os_level("10.9")
     def testProtocols(self):

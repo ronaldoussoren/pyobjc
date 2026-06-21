@@ -93,3 +93,8 @@ class TestCIRAWFilter(TestCase):
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isMoireReductionSupported)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isLocalToneMapSupported)
+
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertResultIsBOOL(Quartz.CIRAWFilter.isDespeckleSupported)
+        self.assertArgIsBOOL(Quartz.CIRAWFilter.setDespeckleSupported_, 0)

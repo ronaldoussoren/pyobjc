@@ -42,6 +42,11 @@ class TesNSScrollView(TestCase):
         self.assertResultIsBOOL(AppKit.NSScrollView.hasVerticalRuler)
         self.assertArgIsBOOL(AppKit.NSScrollView.setHasVerticalRuler_, 0)
 
+    @min_os_level("10.8")
+    def testMethods10_8(self):
+        self.assertArgIsBOOL(AppKit.NSScrollView.setAllowsMagnification_, 0)
+        self.assertResultIsBOOL(AppKit.NSScrollView.allowsMagnification)
+
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsBOOL(
@@ -49,16 +54,16 @@ class TesNSScrollView(TestCase):
         )
         self.assertResultIsBOOL(AppKit.NSScrollView.automaticallyAdjustsContentInsets)
 
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(AppKit.NSScrollView.isTouchScrollingEnabled)
+        self.assertArgIsBOOL(AppKit.NSScrollView.setTouchScrollingEnabled_, 0)
+
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(AppKit.NSScrollViewWillStartLiveScrollNotification, str)
         self.assertIsInstance(AppKit.NSScrollViewDidLiveScrollNotification, str)
         self.assertIsInstance(AppKit.NSScrollViewDidEndLiveScrollNotification, str)
-
-    @min_os_level("10.8")
-    def testMethods10_8(self):
-        self.assertArgIsBOOL(AppKit.NSScrollView.setAllowsMagnification_, 0)
-        self.assertResultIsBOOL(AppKit.NSScrollView.allowsMagnification)
 
     @min_os_level("10.8")
     def testConstants10_8(self):

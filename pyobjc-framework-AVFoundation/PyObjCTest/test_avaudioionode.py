@@ -2,6 +2,8 @@ import AVFoundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 AVAudioIONodeInputBlock = b"^{AudioBufferList=L[1{AudioBuffer=LL^v}]}I"
+AVAudioIONodeInputBlockRealtimeSafe = b"^{AudioBufferList=L[1{AudioBuffer=LL^v}]}I"
+AVAudioNodeTapBlock = b"v@@"
 
 
 class TestAVAudioIONode(TestCase):
@@ -61,4 +63,28 @@ class TestAVAudioIONode(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioInputNode.isVoiceProcessingBypassed)
         self.assertArgIsBOOL(
             AVFoundation.AVAudioInputNode.setVoiceProcessingBypassed_, 0
+        )
+
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioInputNode.setRealtimeSafeManualRenderingInputPCMFormat_inputBlock_
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioInputNode.setRealtimeSafeManualRenderingInputPCMFormat_inputBlock_,
+            1,
+            AVAudioIONodeInputBlockRealtimeSafe,
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioInputNode.installTapOnBus_bufferSize_format_error_block_
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVAudioInputNode.installTapOnBus_bufferSize_format_error_block_,
+            3,
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioInputNode.installTapOnBus_bufferSize_format_error_block_,
+            4,
+            AVAudioNodeTapBlock,
         )

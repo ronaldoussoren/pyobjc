@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
+import objc.simd
 
 import MetalFX
 
@@ -48,11 +49,95 @@ class TestMTLFXFrameInterpolatorHelper(MetalFX.NSObject):
     def uiTextureFormat(self):
         return 1
 
-    def motionVectorScaleX(self):
+    def contentWidth(self):
         return 1
+
+    def setContentWidth_(self, a):
+        pass
+
+    def contentHeight(self):
+        return 1
+
+    def setContentHeight_(self, a):
+        pass
+
+    def depthContentOffsetX(self):
+        return 1
+
+    def setDepthContentOffsetX_(self, a):
+        pass
+
+    def depthContentOffsetY(self):
+        return 1
+
+    def setDepthContentOffsetY_(self, a):
+        pass
+
+    def motionContentOffsetX(self):
+        return 1
+
+    def setMotionContentOffsetX_(self, a):
+        pass
+
+    def motionContentOffsetY(self):
+        return 1
+
+    def setMotionContentOffsetY_(self, a):
+        pass
+
+    def distortionOffsetX(self):
+        return 1
+
+    def setDistortionOffsetX_(self, a):
+        pass
+
+    def distortionOffsetY(self):
+        return 1
+
+    def setDistortionOffsetY_(self, a):
+        pass
+
+    def distortionWidth(self):
+        return 1
+
+    def setDistortionWidth_(self, a):
+        pass
+
+    def distortionHeight(self):
+        return 1
+
+    def setDistortionHeight_(self, a):
+        pass
+
+    def outputOffsetX(self):
+        return 1
+
+    def setOutputOffsetX_(self, a):
+        pass
+
+    def outputOffsetY(self):
+        return 1
+
+    def setOutputOffsetY_(self, a):
+        pass
 
     def setMotionVectorScaleX_(self, x):
         pass
+
+    # def outputOffsetX(self):
+    #    return 1
+
+    # def setOutputOffsetX_(self, a):
+    #    pass
+
+    # def outputOffsetY(self):
+    #    return 1
+
+    def motionVectorScaleX(self):
+        return 1
+
+    # def setMotionVectorScaleX_(self, x):
+    #    pass
 
     def motionVectorScaleY(self):
         return 1
@@ -88,6 +173,18 @@ class TestMTLFXFrameInterpolatorHelper(MetalFX.NSObject):
         return 1
 
     def setAspectRatio_(self, x):
+        pass
+
+    def worldToViewMatrix(self):
+        return 1
+
+    def setWorldToViewMatrix_(self, a):
+        pass
+
+    def viewToClipMatrix(self):
+        return 1
+
+    def setViewToClipMatrix_(self, a):
         pass
 
     def jitterOffsetX(self):
@@ -132,6 +229,19 @@ class TestMTLFXFrameInterpolator(TestCase):
         )
         self.assertResultIsBOOL(
             MetalFX.MTLFXFrameInterpolatorDescriptor.supportsDevice_
+        )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            MetalFX.MTLFXFrameInterpolator.isDistortionTextureEnabled
+        )
+        self.assertArgIsBOOL(
+            MetalFX.MTLFXFrameInterpolator.setDistortionTextureEnabled_, 0
+        )
+        self.assertResultIsBOOL(MetalFX.MTLFXFrameInterpolator.requiresPrevColorTexture)
+        self.assertArgIsBOOL(
+            MetalFX.MTLFXFrameInterpolator.setRequiresPrevColorTexture_, 0
         )
 
     @min_sdk_level("26.0")
@@ -181,9 +291,96 @@ class TestMTLFXFrameInterpolator(TestCase):
         self.assertResultHasType(
             TestMTLFXFrameInterpolatorHelper.outputHeight, objc._C_NSUInteger
         )
+
         self.assertResultHasType(
             TestMTLFXFrameInterpolatorHelper.uiTextureFormat, objc._C_NSUInteger
         )
+
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.contentWidth, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setContentWidth_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.contentHeight, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setContentHeight_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.depthContentOffsetX, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setDepthContentOffsetX_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.depthContentOffsetY, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setDepthContentOffsetY_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.motionContentOffsetX, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setMotionContentOffsetX_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.motionContentOffsetY, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setMotionContentOffsetY_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.outputOffsetX, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setOutputOffsetX_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.outputOffsetY, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setOutputOffsetY_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.distortionOffsetX, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setDistortionOffsetX_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.distortionOffsetY, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setDistortionOffsetY_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.distortionWidth, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setDistortionWidth_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.distortionHeight, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setDistortionHeight_, 0, objc._C_NSUInteger
+        )
+
         self.assertResultHasType(
             TestMTLFXFrameInterpolatorHelper.motionVectorScaleX, objc._C_FLT
         )
@@ -223,6 +420,24 @@ class TestMTLFXFrameInterpolator(TestCase):
         )
         self.assertArgHasType(
             TestMTLFXFrameInterpolatorHelper.setAspectRatio_, 0, objc._C_FLT
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.worldToViewMatrix,
+            objc.simd.simd_float4x4.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setWorldToViewMatrix_,
+            0,
+            objc.simd.simd_float4x4.__typestr__,
+        )
+        self.assertResultHasType(
+            TestMTLFXFrameInterpolatorHelper.viewToClipMatrix,
+            objc.simd.simd_float4x4.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLFXFrameInterpolatorHelper.setViewToClipMatrix_,
+            0,
+            objc.simd.simd_float4x4.__typestr__,
         )
         self.assertResultHasType(
             TestMTLFXFrameInterpolatorHelper.jitterOffsetX, objc._C_FLT

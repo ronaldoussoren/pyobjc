@@ -21,6 +21,7 @@ setup(
     name="pyobjc-framework-DVDPlayback",
     description="Wrappers for the framework DVDPlayback on macOS",
     min_os_level="10.7",
+    max_os_level="26.6",
     packages=["DVDPlayback"],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],

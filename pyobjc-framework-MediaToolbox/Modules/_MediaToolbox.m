@@ -338,6 +338,10 @@ m_MTAudioProcessingTapCreate(PyObject* self __attribute__((__unused__)), PyObjec
         }
     Py_END_ALLOW_THREADS
 
+    if (allocator != NULL) {
+        CFRelease(allocator);
+    }
+
     if (rv == -1 && PyErr_Occurred()) {
         Py_DECREF(info);
         return NULL;
@@ -357,6 +361,125 @@ m_MTAudioProcessingTapCreate(PyObject* self __attribute__((__unused__)), PyObjec
 
     return Py_BuildValue("iN", rv, py_tapOut);
 }
+
+#if PyObjC_BUILD_RELEASE >= 2700
+static PyObject*
+m_MTAudioProcessingTapCreateWithPreferredFormat(PyObject* self
+                                                __attribute__((__unused__)),
+                                                PyObject* args, PyObject* kwds)
+{
+    static char* keywords[] = {"allocator",       "callbacks", "flags",
+                               "preferredFormat", "tapOut",    NULL};
+
+    PyObject*    py_allocator;
+    PyObject*    py_callbacks;
+    unsigned int flags;
+    PyObject*    py_preferredFormat;
+    PyObject*    py_tapOut;
+
+    CFAllocatorRef                allocator;
+    MTAudioProcessingTapCallbacks callbacks = callback_template;
+    CMAudioFormatDescriptionRef   preferredFormat;
+    MTAudioProcessingTapRef       tap;
+    PyObject*                     info;
+    int                           i;
+    OSStatus                      rv;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOIOO", keywords, &py_allocator,
+                                     &py_callbacks, &flags, &py_preferredFormat,
+                                     &py_tapOut)) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) == -1) {
+        return NULL;
+    }
+
+    if (!PyTuple_Check(py_callbacks) || PyTuple_Size(py_callbacks) != 7) {
+        PyErr_SetString(PyExc_ValueError, "callbacks should be tuple of 7 items");
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(CMAudioFormatDescriptionRef), py_preferredFormat,
+                            &preferredFormat)
+        == -1) {
+        return NULL;
+    }
+
+    if (py_tapOut != Py_None) {
+        PyErr_SetString(PyExc_ValueError, "tapOut should be None");
+        return NULL;
+    }
+    /* XXX: Validate py_callbacks[0], should be kMTAudioProcessingTapCallbacksVersion_0 */
+    for (i = 2; i < 7; i++) {
+        /* Most callbacks can be either None or a callable */
+        if (i != 6 && PyTuple_GetItem(py_callbacks, i) == Py_None)
+            continue;
+
+        if (!PyCallable_Check(PyTuple_GetItem(py_callbacks, i))) {
+            PyErr_Format(PyExc_ValueError, "callbacks[%d] should be callable", i);
+            return NULL;
+        }
+    }
+
+    info = PyTuple_New(OFFSET_COUNT);
+    if (info == NULL) {
+        return NULL;
+    }
+
+    PyTuple_SetItem(info, INFO_OFFSET, PyTuple_GetItem(py_callbacks, 1));
+    Py_INCREF(PyTuple_GetItem(info, INFO_OFFSET));
+    PyTuple_SetItem(info, INIT_OFFSET, PyTuple_GetItem(py_callbacks, 2));
+    Py_INCREF(PyTuple_GetItem(info, INIT_OFFSET));
+    PyTuple_SetItem(info, FINALIZE_OFFSET, PyTuple_GetItem(py_callbacks, 3));
+    Py_INCREF(PyTuple_GetItem(info, FINALIZE_OFFSET));
+    PyTuple_SetItem(info, PREPARE_OFFSET, PyTuple_GetItem(py_callbacks, 4));
+    Py_INCREF(PyTuple_GetItem(info, PREPARE_OFFSET));
+    PyTuple_SetItem(info, UNPREPARE_OFFSET, PyTuple_GetItem(py_callbacks, 5));
+    Py_INCREF(PyTuple_GetItem(info, UNPREPARE_OFFSET));
+    PyTuple_SetItem(info, PROCESS_OFFSET, PyTuple_GetItem(py_callbacks, 6));
+    Py_INCREF(PyTuple_GetItem(info, PROCESS_OFFSET));
+
+    callbacks.clientInfo = info;
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = MTAudioProcessingTapCreateWithPreferredFormat(
+                allocator, &callbacks, flags, preferredFormat, &tap);
+
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            rv = -1;
+        }
+    Py_END_ALLOW_THREADS
+
+    if (allocator != NULL) {
+        CFRelease(allocator);
+    }
+    if (preferredFormat != NULL) {
+        CFRelease(preferredFormat);
+    }
+
+    if (rv == -1 && PyErr_Occurred()) {
+        Py_DECREF(info);
+        return NULL;
+    }
+
+    if (rv != 0) {
+        Py_DECREF(info);
+    }
+
+    if (rv == 0) {
+        py_tapOut = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
+        CFRelease(tap);
+    } else {
+        py_tapOut = Py_None;
+        Py_INCREF(Py_None);
+    }
+
+    return Py_BuildValue("iN", rv, py_tapOut);
+}
+#endif
 
 static PyObject*
 m_MTAudioProcessingTapGetStorage(PyObject* self __attribute__((__unused__)),
@@ -382,6 +505,11 @@ m_MTAudioProcessingTapGetStorage(PyObject* self __attribute__((__unused__)),
 static PyMethodDef mod_methods[] = {
     {"MTAudioProcessingTapCreate", (PyCFunction)m_MTAudioProcessingTapCreate,
      METH_VARARGS | METH_KEYWORDS, NULL},
+#if PyObjC_BUILD_RELEASE >= 2700
+    {"MTAudioProcessingTapCreateWithPreferredFormat",
+     (PyCFunction)m_MTAudioProcessingTapCreateWithPreferredFormat,
+     METH_VARARGS | METH_KEYWORDS, NULL},
+#endif
     {"MTAudioProcessingTapGetStorage", (PyCFunction)m_MTAudioProcessingTapGetStorage,
      METH_VARARGS | METH_KEYWORDS, NULL},
 
@@ -391,6 +519,15 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
+#if PyObjC_BUILD_RELEASE >= 2700
+    if (__builtin_available(macOS 27.0, *)) {
+    } else {
+        if (PyObject_DelAttrString(m, "MTAudioProcessingTapCreateWithPreferredFormat")
+            == -1) {
+            return -1;
+        }
+    }
+#endif
     return 0;
 }
 

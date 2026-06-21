@@ -18,8 +18,25 @@ class TestMTLTensorHelper(Metal.NSObject):
     def replaceSliceOrigin_sliceDimensions_withBytes_strides_(self, a, b, c, d):
         pass
 
+    def replaceSliceOrigin_sliceDimensions_plane_withBytes_strides_(
+        self, a, b, c, d, e
+    ):
+        pass
+
     def getBytes_strides_fromSliceOrigin_sliceDimensions_(self, a, b, c, d):
         pass
+
+    def getBytes_strides_fromSliceOrigin_sliceDimensions_plane_(self, a, b, c, d, e):
+        pass
+
+    # def dataType(self):
+    #    return 1
+
+    # def bufferOffset(self):
+    #    return 1
+
+    def planeType(self):
+        return 1
 
 
 class TestMTLTensor(TestCase):
@@ -37,6 +54,12 @@ class TestMTLTensor(TestCase):
         self.assertEqual(Metal.MTLTensorDataTypeUInt32, Metal.MTLDataTypeUInt)
         self.assertEqual(Metal.MTLTensorDataTypeInt4, 143)
         self.assertEqual(Metal.MTLTensorDataTypeUInt4, 144)
+        self.assertEqual(Metal.MTLTensorDataTypeFloat8UE8M0, 145)
+        self.assertEqual(Metal.MTLTensorDataTypeUInt2, 149)
+        self.assertEqual(Metal.MTLTensorDataTypeInt2, 150)
+        self.assertEqual(Metal.MTLTensorDataTypeFloat8E5M2, 141)
+        self.assertEqual(Metal.MTLTensorDataTypeFloat8E4M3, 142)
+        self.assertEqual(Metal.MTLTensorDataTypeFloat4E2M1, 148)
 
         self.assertEqual(Metal.MTL_TENSOR_MAX_RANK, 16)
 
@@ -50,9 +73,17 @@ class TestMTLTensor(TestCase):
         self.assertEqual(Metal.MTLTensorUsageRender, 1 << 1)
         self.assertEqual(Metal.MTLTensorUsageMachineLearning, 1 << 2)
 
+        self.assertIsEnumType(Metal.MTLTensorPlaneType)
+        self.assertEqual(Metal.MTLTensorPlaneTypeData, 0)
+        self.assertEqual(Metal.MTLTensorPlaneTypeScales, 1)
+
     @min_sdk_level("26.0")
     def test_protocols(self):
         self.assertProtocolExists("MTLTensor", Metal)
+
+    @min_sdk_level("27.0")
+    def test_protocols27_0(self):
+        self.assertProtocolExists("MTLTensorAuxiliaryPlane", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(
@@ -72,6 +103,16 @@ class TestMTLTensor(TestCase):
         )
 
         self.assertArgHasType(
+            TestMTLTensorHelper.replaceSliceOrigin_sliceDimensions_plane_withBytes_strides_,
+            3,
+            b"n^v",
+        )
+        self.assertArgIsVariableSize(
+            TestMTLTensorHelper.replaceSliceOrigin_sliceDimensions_plane_withBytes_strides_,
+            3,
+        )
+
+        self.assertArgHasType(
             TestMTLTensorHelper.getBytes_strides_fromSliceOrigin_sliceDimensions_,
             0,
             b"o^v",
@@ -79,3 +120,17 @@ class TestMTLTensor(TestCase):
         self.assertArgIsVariableSize(
             TestMTLTensorHelper.getBytes_strides_fromSliceOrigin_sliceDimensions_, 0
         )
+
+        self.assertArgHasType(
+            TestMTLTensorHelper.getBytes_strides_fromSliceOrigin_sliceDimensions_plane_,
+            0,
+            b"o^v",
+        )
+        self.assertArgIsVariableSize(
+            TestMTLTensorHelper.getBytes_strides_fromSliceOrigin_sliceDimensions_plane_,
+            0,
+        )
+
+        self.assertResultHasType(TestMTLTensorHelper.dataType, b"q")
+        self.assertResultHasType(TestMTLTensorHelper.bufferOffset, b"Q")
+        self.assertResultHasType(TestMTLTensorHelper.planeType, b"q")

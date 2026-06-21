@@ -52,22 +52,28 @@ def _setup():
         ("PHPickerViewController", b"new"),
         ("PHProjectTypeDescription", b"init"),
         ("PHProjectTypeDescription", b"new"),
+        ("PHPickerSearchText", b"init"),
+        ("PHPickerSearchText", b"new"),
+        ("PHSharedAlbumCreationConfiguration", b"init"),
+        ("PHSharedAlbumCreationConfiguration", b"new"),
+        ("PHSharedAlbumCreationResult", b"init"),
+        ("PHSharedAlbumCreationResult", b"new"),
+        ("PHSharedAlbumCreationViewController", b"init"),
+        ("PHSharedAlbumCreationViewController", b"initWithNibName:bundle:"),
+        ("PHSharedAlbumCreationViewController", b"initWithCoder:"),
+        ("PHSharedAlbumCreationViewController", b"new"),
+        ("PHSharedAlbumCustomizationViewController", b"init"),
+        ("PHSharedAlbumCustomizationViewController", b"initWithNibName:bundle:"),
+        ("PHSharedAlbumCustomizationViewController", b"initWithCoder:"),
+        ("PHSharedAlbumCustomizationViewController", b"new"),
+        ("PHSharedAlbumPostingViewController", b"init"),
+        ("PHSharedAlbumPostingViewController", b"initWithNibName:bundle:"),
+        ("PHSharedAlbumPostingViewController", b"initWithCoder:"),
+        ("PHSharedAlbumPostingViewController", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 
     del sys.modules["PhotosUI._metadata"]
-
-    for cls_name in (
-        "PHPickerFilter",
-        "PHPickerConfiguration",
-        "PHPickerResult",
-        "PHPickerViewController",
-    ):
-        try:
-            cls = objc.lookUpClass(cls_name)
-            cls.__objc_final__ = True
-        except objc.error:
-            pass
 
 
 globals().pop("_setup")()

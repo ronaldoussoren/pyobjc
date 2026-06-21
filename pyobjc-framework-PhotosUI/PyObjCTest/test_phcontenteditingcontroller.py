@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import PhotosUI
 
 
@@ -14,7 +14,7 @@ class TestPHContentEditingControllerHelper(PhotosUI.NSObject):
 
 
 class TestPHContentEditingController(TestCase):
-    @min_os_level("10.11")
+    @min_sdk_level("10.11")
     def testProtocols(self):
         self.assertProtocolExists("PHContentEditingController", PhotosUI)
 

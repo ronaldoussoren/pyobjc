@@ -30,4 +30,12 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(PHPickerViewControllerDelegate));
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1300 */
+#if PyObjC_BUILD_RELEASE >= 2700
+    p = PyObjC_IdToPython(@protocol(PHSharedAlbumCreationViewControllerDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(PHSharedAlbumCustomizationViewControllerDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(PHSharedAlbumPostingViewControllerDelegate));
+    Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 2700 */
 }

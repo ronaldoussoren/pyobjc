@@ -69,3 +69,12 @@ class TestAVCaptureFileOutput(TestCase):
             AVFoundation.AVCaptureMovieFileOutput.setSpatialVideoCaptureEnabled_,
             0,
         )
+
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.usesProVideoStorage
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.setUsesProVideoStorage_, 0
+        )

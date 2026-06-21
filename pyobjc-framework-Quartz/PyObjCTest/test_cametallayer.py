@@ -5,7 +5,7 @@ import Quartz
 class TestCAMetalLayer(TestCase):
     @min_os_level("10.11")
     def testProtocols(self):
-        self.assertProtocolExists("CAMetalDrawable", Quartz)
+        self.assertProtocolExists("CAMetalDrawable", Quartz, "CAMetalDrawableProtocol")
 
     @min_os_level("10.11")
     def testMethods(self):

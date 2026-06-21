@@ -535,3 +535,14 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(VideoToolbox.kVTCompressionPreset_Balanced, str)
         self.assertIsInstance(VideoToolbox.kVTCompressionPreset_HighSpeed, str)
         self.assertIsInstance(VideoToolbox.kVTCompressionPreset_VideoConferencing, str)
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_LogTransferFunction, str
+        )
+        self.assertIsInstance(VideoToolbox.kVTProjectionKind_AppleImmersiveVideo, str)
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_ConstantQualityFactor, str
+        )
+        self.assertIsInstance(VideoToolbox.kVTCompressionPreset_ConsistentQuality, str)

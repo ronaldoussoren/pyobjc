@@ -135,6 +135,16 @@ class TestNSTextView(TestCase):
             AppKit.NSTextViewDidChangeTypingAttributesNotification, str
         )
 
+        self.assertIsEnumType(AppKit.NSTextAttachmentViewProviderReusePolicy)
+        self.assertEqual(
+            AppKit.NSTextAttachmentViewProviderReusePolicyOnScrollingOutOfViewport,
+            1 << 0,
+        )
+        self.assertEqual(
+            AppKit.NSTextAttachmentViewProviderReusePolicyOnEditingInlineParagraphs,
+            1 << 1,
+        )
+
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(AppKit.NSTouchBarItemIdentifierCharacterPicker, str)

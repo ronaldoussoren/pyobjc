@@ -21,3 +21,4 @@ class TestAVAudioUnitReverb(TestCase):
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetMediumHall2, 10)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetMediumHall3, 11)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetLargeHall2, 12)
+        self.assertEqual(AVFoundation.AVAudioUnitReverbPresetOutdoorGeneral, 24)

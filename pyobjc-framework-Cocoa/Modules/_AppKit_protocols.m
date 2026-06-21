@@ -308,4 +308,12 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSWritingToolsCoordinatorDelegate));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 2700
+    p = PyObjC_IdToPython(@protocol(NSStatusItemExpandedInterfaceDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSTextViewportRenderingSurface));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSTextViewportRenderingSurfaceKey));
+    Py_XDECREF(p);
+#endif
 }

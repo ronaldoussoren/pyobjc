@@ -33,6 +33,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetMediaSubtypePhotoScreenshot, (1 << 2))
         self.assertEqual(Photos.PHAssetMediaSubtypePhotoLive, (1 << 3))
         self.assertEqual(Photos.PHAssetMediaSubtypePhotoDepthEffect, (1 << 4))
+        self.assertEqual(Photos.PHAssetMediaSubtypePhotoAnimation, (1 << 6))
         self.assertEqual(Photos.PHAssetMediaSubtypeSpatialMedia, (1 << 10))
 
         self.assertEqual(Photos.PHAssetMediaSubtypeVideoStreamed, (1 << 16))
@@ -134,3 +135,36 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHObjectTypeAsset, 1)
         self.assertEqual(Photos.PHObjectTypeAssetCollection, 2)
         self.assertEqual(Photos.PHObjectTypeCollectionList, 3)
+
+        self.assertIsEnumType(Photos.PHOriginalResourceChoice)
+        self.assertEqual(Photos.PHOriginalResourceChoiceCompressed, 0)
+        self.assertEqual(Photos.PHOriginalResourceChoiceRaw, 1)
+
+        self.assertIsEnumType(Photos.PHAssetAdjustmentsState)
+        self.assertEqual(Photos.PHAssetAdjustmentsStateNone, 0)
+        self.assertEqual(Photos.PHAssetAdjustmentsStateUserAdjusted, 2)
+        self.assertEqual(Photos.PHAssetAdjustmentsStateCameraAutoAdjusted, 3)
+
+        self.assertIsEnumType(Photos.PHAssetResourceUploadJobState)
+        self.assertEqual(Photos.PHAssetResourceUploadJobStateRegistered, 1)
+        self.assertEqual(Photos.PHAssetResourceUploadJobStatePending, 2)
+        self.assertEqual(Photos.PHAssetResourceUploadJobStateFailed, 3)
+        self.assertEqual(Photos.PHAssetResourceUploadJobStateSucceeded, 4)
+        self.assertEqual(Photos.PHAssetResourceUploadJobStateCancelled, 5)
+
+        self.assertIsEnumType(Photos.PHAssetResourceUploadJobType)
+        self.assertEqual(Photos.PHAssetResourceUploadJobTypeUpload, 0)
+        self.assertEqual(Photos.PHAssetResourceUploadJobTypeDownloadOnly, 1)
+
+        self.assertIsEnumType(Photos.PHAssetResourceUploadJobAction)
+        self.assertEqual(Photos.PHAssetResourceUploadJobActionAcknowledge, 1)
+        self.assertEqual(Photos.PHAssetResourceUploadJobActionRetry, 2)
+        self.assertEqual(Photos.PHAssetResourceUploadJobActionProcess, 3)
+
+        self.assertIsEnumType(Photos.PHAssetRating)
+        self.assertEqual(Photos.PHAssetRatingUnset, 0)
+        self.assertEqual(Photos.PHAssetRatingOne, 1)
+        self.assertEqual(Photos.PHAssetRatingTwo, 2)
+        self.assertEqual(Photos.PHAssetRatingThree, 3)
+        self.assertEqual(Photos.PHAssetRatingFour, 4)
+        self.assertEqual(Photos.PHAssetRatingFive, 5)

@@ -71,7 +71,9 @@
     ]
    }
   },
-  "formal_protocols": {},
+  "formal_protocols": {
+    "FIFinderSync": { "rename": "FIFinderSyncProtocol" }
+   },
   "functions": {},
   "informal_protocols": {}
  }

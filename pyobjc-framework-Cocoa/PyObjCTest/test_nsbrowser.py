@@ -85,6 +85,17 @@ class TestNSBrowserHelper(AppKit.NSObject):
     def browser_didChangeLastColumn_toColumn_(self, b, c1, c2):
         pass
 
+    def browser_pasteboardWriterForRow_column_(self, a, b, c):
+        pass
+
+    def browser_draggingSession_willBeginAtPoint_forRowsWithIndexes_column_(
+        self, a, b, c, d, e
+    ):
+        pass
+
+    def browser_draggingSession_endedAtPoint_operation_(self, a, b, c, d):
+        pass
+
 
 class TestNSBrowser(TestCase):
     def test_enum_types(self):
@@ -254,6 +265,17 @@ class TestNSBrowser(TestCase):
             objc._C_NSInteger,
         )
 
+        self.assertArgHasType(
+            TestNSBrowserHelper.browser_pasteboardWriterForRow_column_,
+            1,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSBrowserHelper.browser_pasteboardWriterForRow_column_,
+            2,
+            objc._C_NSInteger,
+        )
+
         # XXX: Redo testcase for delegate
 
     @min_os_level("10.6")
@@ -313,4 +335,21 @@ class TestNSBrowser(TestCase):
             TestNSBrowserHelper.browser_willDisplayCell_atRow_column_,
             3,
             objc._C_NSInteger,
+        )
+
+        self.assertArgHasType(
+            TestNSBrowserHelper.browser_draggingSession_willBeginAtPoint_forRowsWithIndexes_column_,
+            2,
+            AppKit.NSPoint.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestNSBrowserHelper.browser_draggingSession_endedAtPoint_operation_,
+            2,
+            AppKit.NSPoint.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSBrowserHelper.browser_draggingSession_endedAtPoint_operation_,
+            3,
+            objc._C_NSUInteger,
         )

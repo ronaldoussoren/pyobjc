@@ -4986,6 +4986,24 @@
      {
       "args": {
        "0": {
+        "sel_of_type": "v@:@@"
+       }
+      },
+      "class_method": false,
+      "selector": "addTarget:action:forControlEvent:"
+     },
+     {
+      "args": {
+       "0": {
+        "sel_of_type": "v@:@@"
+       }
+      },
+      "class_method": false,
+      "selector": "removeTarget:action:forControlEvent:"
+     },
+     {
+      "args": {
+       "0": {
         "sel_of_type": "v@:@"
        }
       },
@@ -16776,6 +16794,26 @@
      }
     ]
    },
+   "NSRefreshController": {
+    "methods": [
+     {
+      "retval": {
+       "sel_of_type": "v@:@"
+      },
+      "class_method": false,
+      "selector": "action"
+     },
+     {
+      "args": {
+       "0": {
+        "sel_of_type": "v@:@"
+       }
+      },
+      "class_method": false,
+      "selector": "setAction:"
+     }
+    ]
+   },
    "NSResponder": {
     "methods": [
      {
@@ -28242,6 +28280,11 @@
    }
   },
   "formal_protocols": {
+   "NSAccessibilityElement": { "rename": "NSAccessibilityElementProtocol" },
+   "NSCollectionLayoutContainer": { "rename": "NSCollectionLayoutContainerProtocol" },
+   "NSTextAttachmentCell": { "rename": "NSTextAttachmentCellProtocol" },
+   "NSCollectionLayoutEnvironment": { "rename": "NSCollectionLayoutEnvironmentProtocol" },
+   "NSCollectionLayoutVisibleItem": { "rename": "NSCollectionLayoutVisibleItemProtocol" },
    "NSBrowserDelegate": {
     "methods": [
      {

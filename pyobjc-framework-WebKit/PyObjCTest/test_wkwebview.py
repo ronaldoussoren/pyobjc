@@ -157,3 +157,9 @@ class TestWKWebView(TestCase):
             WebKit.WKWebView.fetchDataOfTypes_completionHandler_, 1, b"v@@"
         )
         self.assertArgIsBlock(WebKit.WKWebView.restoreData_completionHandler_, 1, b"v@")
+
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertArgIsBlock(
+            WebKit.WKWebView.dismissImmersiveEnvironmentWithCompletionHandler_, 0, b"v"
+        )

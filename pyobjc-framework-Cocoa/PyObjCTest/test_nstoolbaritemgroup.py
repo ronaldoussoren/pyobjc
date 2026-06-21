@@ -3,18 +3,21 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSToolbarItemGroup(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSToolbarItemGroupControlRepresentation)
-        self.assertIsEnumType(AppKit.NSToolbarItemGroupSelectionMode)
-
     def test_constants(self):
+        self.assertIsEnumType(AppKit.NSToolbarItemGroupSelectionMode)
         self.assertEqual(AppKit.NSToolbarItemGroupSelectionModeSelectOne, 0)
         self.assertEqual(AppKit.NSToolbarItemGroupSelectionModeSelectAny, 1)
         self.assertEqual(AppKit.NSToolbarItemGroupSelectionModeMomentary, 2)
 
+        self.assertIsEnumType(AppKit.NSToolbarItemGroupControlRepresentation)
         self.assertEqual(AppKit.NSToolbarItemGroupControlRepresentationAutomatic, 0)
         self.assertEqual(AppKit.NSToolbarItemGroupControlRepresentationExpanded, 1)
         self.assertEqual(AppKit.NSToolbarItemGroupControlRepresentationCollapsed, 2)
+
+        self.assertIsEnumType(AppKit.NSToolbarItemGroupRole)
+        self.assertEqual(AppKit.NSToolbarItemGroupRoleAutomatic, 0)
+        self.assertEqual(AppKit.NSToolbarItemGroupRoleTabs, 1)
+        self.assertEqual(AppKit.NSToolbarItemGroupRoleValueSelection, 2)
 
     @min_os_level("10.15")
     def test_methods(self):

@@ -373,3 +373,10 @@ class TestHKTypeIdentifiers(TestCase):
     @min_os_level("26.2")
     def test_constants26_2(self):
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierHypertensionEvent, str)
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            HealthKit.HKCategoryTypeIdentifierBleedingAfterMenopause, str
+        )
+        self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierMenopausalState, str)

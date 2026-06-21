@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import WebKit
 import objc
 
@@ -19,6 +19,9 @@ class TestWKNavigationDelegateHelper(WebKit.NSObject):
     def webView_shouldGoToBackForwardListItem_willUseInstantBack_completionHandler_(
         self, a, b, c, d
     ):
+        pass
+
+    def webView_willSubmitForm_submissionHandler_(self, a, b, c):
         pass
 
 
@@ -70,10 +73,18 @@ class TestWKNavigationDelegate(TestCase):
             objc._C_VOID + objc._C_NSBOOL,
         )
 
-    @min_os_level("11.0")
+    @min_sdk_level("11.0")
     def testMethods11_0(self):
         self.assertArgIsBlock(
             TestWKNavigationDelegateHelper.webView_authenticationChallenge_shouldAllowDeprecatedTLS_,
             2,
             b"vZ",
+        )
+
+    @min_sdk_level("27.0")
+    def testMethods27_0(self):
+        self.assertArgIsBlock(
+            TestWKNavigationDelegateHelper.webView_willSubmitForm_submissionHandler_,
+            2,
+            b"v",
         )

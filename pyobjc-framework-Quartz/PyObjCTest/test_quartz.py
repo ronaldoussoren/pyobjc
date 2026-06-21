@@ -10,6 +10,8 @@ class TestCallableMetadata(TestCase):
             exclude_attrs={
                 "NSColor",
                 ("NSColor", "scn_C3DColorIgnoringColorSpace_success_"),
+                "IOGPUMetalIOHandleRaw",
+                "_MTLDevice",
             },
         )
 

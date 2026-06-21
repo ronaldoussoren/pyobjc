@@ -10,4 +10,8 @@ use_protocols(void)
     PyObject* p __attribute__((__unused__));
     p = PyObjC_IdToPython(@protocol(CLLocationManagerDelegate));
     Py_XDECREF(p);
+#if PyObjC_BUILD_RELEASE >= 2700
+    p = PyObjC_IdToPython(@protocol(CLBodyIdentifiable));
+    Py_XDECREF(p);
+#endif
 }

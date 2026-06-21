@@ -69,4 +69,8 @@ class TestAVVideoCompositing(TestCase):
     @min_sdk_level("10.9")
     def testProtocols(self):
         self.assertProtocolExists("AVVideoCompositing", AVFoundation)
-        self.assertProtocolExists("AVVideoCompositionInstruction", AVFoundation)
+        self.assertProtocolExists(
+            "AVVideoCompositionInstruction",
+            AVFoundation,
+            "AVVideoCompositionInstructionProtocol",
+        )

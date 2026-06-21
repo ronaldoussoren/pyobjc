@@ -395,7 +395,9 @@
     "deprecated": "10.7"
    }
   },
-  "formal_protocols": {},
+  "formal_protocols": {
+   "ABPersonPickerDelegate": { "rename": "ABPersonPickerDelegate" }
+  },
   "functions": {
    "ABAddPropertiesAndTypes": {
     "args": {

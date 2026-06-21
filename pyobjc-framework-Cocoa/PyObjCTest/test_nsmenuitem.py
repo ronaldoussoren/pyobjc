@@ -3,6 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSMenuItem(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(AppKit.NSMenuItemImageVisibility)
+        self.assertEqual(AppKit.NSMenuItemImageVisibilityAutomatic, 0)
+        self.assertEqual(AppKit.NSMenuItemImageVisibilityVisible, 1)
+        self.assertEqual(AppKit.NSMenuItemImageVisibilityHidden, 2)
+
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSMenuItem.usesUserKeyEquivalents)
         self.assertArgIsBOOL(AppKit.NSMenuItem.setUsesUserKeyEquivalents_, 0)

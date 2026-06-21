@@ -56,6 +56,12 @@ class TestAVAssetWriter(TestCase):
             AVFoundation.AVAssetWriter.setProducesCombinableFragments_, 0
         )
 
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertResultIsBOOL(AVFoundation.AVAssetWriter.isProVideoStorageSupported)
+        self.assertResultIsBOOL(AVFoundation.AVAssetWriter.usesProVideoStorage)
+        self.assertArgIsBOOL(AVFoundation.AVAssetWriter.setUsesProVideoStorage_, 0)
+
     @min_sdk_level("11.0")
     def test_protocols(self):
         self.assertProtocolExists("AVAssetWriterDelegate", AVFoundation)

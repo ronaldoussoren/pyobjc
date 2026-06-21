@@ -30,3 +30,5 @@ class TestVNError(TestCase):
         self.assertEqual(Vision.VNErrorTimeout, 20)
         self.assertEqual(Vision.VNErrorUnsupportedComputeStage, 21)
         self.assertEqual(Vision.VNErrorUnsupportedComputeDevice, 22)
+        self.assertEqual(Vision.VNErrorResourceUnavailable, 23)
+        self.assertEqual(Vision.VNErrorResourceCorrupted, 24)

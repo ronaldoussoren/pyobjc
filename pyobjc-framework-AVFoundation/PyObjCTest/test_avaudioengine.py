@@ -81,6 +81,27 @@ class TestAVAudioEngine(TestCase):
             AUMIDIEventListBlock,
         )
 
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertArgIsOut(
+            AVFoundation.AVAudioEngine.connect_to_fromBus_toBus_format_error_, 5
+        )
+        self.assertArgIsOut(AVFoundation.AVAudioEngine.connect_to_format_error_, 3)
+        self.assertArgIsOut(
+            AVFoundation.AVAudioEngine.connect_toConnectionPoints_fromBus_format_error_,
+            4,
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioEngine.connectMIDI_to_format_eventListProvider_,
+            3,
+            AUMIDIEventListBlock,
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioEngine.connectMIDI_toNodes_format_eventListProvider_,
+            3,
+            AUMIDIEventListBlock,
+        )
+
     def testConstants(self):
         self.assertEqual(
             AVFoundation.AVAudioEngineManualRenderingErrorInvalidMode, -80800

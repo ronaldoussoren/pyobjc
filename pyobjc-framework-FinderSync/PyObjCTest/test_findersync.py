@@ -22,7 +22,7 @@ class TestFinderSync(TestCase):
 
     @min_os_level("10.10")
     def testProtocols(self):
-        self.assertProtocolExists("FIFinderSync", FinderSync)
+        self.assertProtocolExists("FIFinderSync", FinderSync, "FIFinderSyncProtocol")
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

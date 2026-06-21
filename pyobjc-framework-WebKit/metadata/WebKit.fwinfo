@@ -3637,7 +3637,11 @@
     "typestr": "@"
    }
   },
-  "formal_protocols": {},
+  "formal_protocols": {
+   "DOMNodeFilter": { "rename": "DOMNodeFilterProtocol" },
+   "WebPolicyDecisionListener": { "rename": "WebPolicyDecisionListenerProtocol" },
+   "WebOpenPanelResultListener": { "rename": "WebOpenPanelResultListenerProtocol" }
+  },
   "functions": {
    "WebInitForCarbon": {
     "deprecated": 1006

@@ -299,6 +299,20 @@ def _setup():
         ("AVExternalSyncDevice", b"init"),
         ("AVExternalSyncDeviceDiscoverySession", b"new"),
         ("AVExternalSyncDeviceDiscoverySession", b"init"),
+        ("AVAssetWritingPlanner", b"new"),
+        ("AVAssetWritingPlanner", b"init"),
+        ("AVPlannedSegmentConfiguration", b"new"),
+        ("AVPlannedSegmentConfiguration", b"init"),
+        ("AVPlannedVideoSegmentConfiguration", b"new"),
+        ("AVPlannedVideoSegmentConfiguration", b"init"),
+        ("AVAssetTrackPlan", b"new"),
+        ("AVAssetTrackPlan", b"init"),
+        ("AVAssetVideoTrackPlan", b"new"),
+        ("AVAssetVideoTrackPlan", b"init"),
+        ("AVPlannedSegmentWritingRequest", b"new"),
+        ("AVPlannedSegmentWritingRequest", b"init"),
+        ("AVPlannedVideoSegmentWritingRequest", b"new"),
+        ("AVPlannedVideoSegmentWritingRequest", b"init"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

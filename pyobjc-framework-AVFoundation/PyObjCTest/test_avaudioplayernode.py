@@ -74,3 +74,8 @@ class TestAVAudioPlayerNode(TestCase):
             5,
             AVAudioPlayerNodeCompletionHandler,
         )
+
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertArgIsOut(AVFoundation.AVAudioPlayerNode.playAndReturnError_, 0)
+        self.assertArgIsOut(AVFoundation.AVAudioPlayerNode.playAtTime_error_, 1)

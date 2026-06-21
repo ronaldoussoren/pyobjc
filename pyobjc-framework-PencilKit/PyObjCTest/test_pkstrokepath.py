@@ -21,3 +21,11 @@ class TestPKStrokePath(TestCase):
             2,
             b"v@o^Z",
         )
+
+    @min_os_level("27.0")
+    def test_methods27(self):
+        self.assertArgIsBlock(
+            PencilKit.PKStrokePath.initWithBezierPath_creationDate_pointProvider_,
+            2,
+            b"@@",
+        )

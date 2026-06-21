@@ -7,6 +7,26 @@
    "VZMacAuxiliaryStorageInitializationOptionAllowOverwrite": { "value": 1 }
   },
   "classes": {
+   "VZVirtioQueueElement": {
+    "methods": [
+     {
+      "selector": "readBytesIntoBuffer:exactLength:error",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "o"}
+      }
+     },
+     {
+      "selector": "writeBuffer:exactLength:error",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "o"}
+      }
+     }
+    ]
+   },
    "VZMacOSRestoreImage": {
     "methods": [
      {

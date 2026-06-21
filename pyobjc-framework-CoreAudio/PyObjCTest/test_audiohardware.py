@@ -176,6 +176,15 @@ class TestAudioHardware(TestCase):
             CoreAudio.kAudioDevicePropertyIOThreadOSWorkgroup, fourcc(b"oswg")
         )
         self.assertEqual(CoreAudio.kAudioDevicePropertyProcessMute, fourcc(b"appm"))
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyVoiceActivityDetectionEnable, fourcc(b"vAd+")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyVoiceActivityDetectionState, fourcc(b"vAdS")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertySuggestedReferenceDevice, fourcc(b"eord")
+        )
 
         self.assertEqual(CoreAudio.kAudioDevicePropertyJackIsConnected, fourcc(b"jack"))
         self.assertEqual(CoreAudio.kAudioDevicePropertyVolumeScalar, fourcc(b"volm"))
@@ -298,6 +307,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyWantsStreamFormatsRestored, fourcc(b"resf")
         )
+        self.assertEqual(CoreAudio.kAudioDevicePropertySubMute, fourcc(b"smut"))
 
         self.assertEqual(CoreAudio.kAudioAggregateDeviceClassID, fourcc(b"aagg"))
 

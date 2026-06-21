@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioMix(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(AVFoundation.AVAudioMixInputParametersTrackID)
+        self.assertEqual(AVFoundation.AVAudioMixInputParametersTrackMixID, 0)
+
     def testClasses(self):
         AVFoundation.AVAudioMix
         AVFoundation.AVMutableAudioMix

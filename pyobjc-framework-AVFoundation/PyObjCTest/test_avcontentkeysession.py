@@ -148,6 +148,14 @@ class TestAVContentKeySession(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVSampleBufferAttachContentKey)
         self.assertArgIsOut(AVFoundation.AVSampleBufferAttachContentKey, 2)
 
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVContentKeySession.makeOptionalStreamingContentKeyRequestDataForApp_contentIdentifier_options_completionHandler_,  # noqa: B950
+            3,
+            b"v@@",
+        )
+
     @min_sdk_level("10.12.4")
     def testProtocols(self):
         self.assertProtocolExists("AVContentKeySessionDelegate", AVFoundation)

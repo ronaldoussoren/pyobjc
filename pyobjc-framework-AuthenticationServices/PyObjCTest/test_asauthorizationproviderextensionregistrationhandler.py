@@ -37,6 +37,14 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
             AuthenticationServices.ASAuthorizationProviderExtensionAuthenticationMethodUserSecureEnclaveKey,
             2,
         )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionAuthenticationMethodSmartCard,
+            3,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionAuthenticationMethodOpenID,
+            5,
+        )
 
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationProviderExtensionRequestOptions
@@ -115,6 +123,10 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypesSAML2_0,
             1 << 3,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypesTokenExchange,
+            1 << 4,
         )
 
         self.assertIsEnumType(

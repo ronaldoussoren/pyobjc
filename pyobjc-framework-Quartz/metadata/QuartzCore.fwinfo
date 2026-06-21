@@ -972,7 +972,24 @@
     "methods": [
      {
       "class_method": true,
+      "selector": "applyWithExtents:inputs:arguments:error:",
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "class_method": true,
       "selector": "processWithInputs:arguments:output:error:",
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": true,
+      "selector": "processWithInputs:arguments:outputs:error:",
       "args": {
        "3": { "type_modifier": "o" }
       },
@@ -1595,6 +1612,24 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "temporarySurfaceWithIdentifier:format:width:height:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "i" },
+       "2": { "type_override": "Q" },
+       "3": { "type_override": "Q" }
+      }
+     },
+     {
+      "selector": "temporaryPixelBufferWithIdentifier:format:width:height:attributes:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "i" },
+       "2": { "type_override": "Q" },
+       "3": { "type_override": "Q" }
+      }
+     },
      {
       "selector": "autoreverses",
       "class_method": false,
@@ -3377,6 +3412,8 @@
    }
   },
   "formal_protocols": {
+   "CAMetalDrawable": { "rename": "CAMetalDrawableProtocol" },
+   "CIImageProcessorInput": { "rename": "CIImageProcessorInputProtocol" }
   },
   "functions": {},
   "informal_protocols": {

@@ -55,6 +55,12 @@ class TestBEAccessibilityHelper(BrowserEngineKit.NSObject):
     def accessibilityLineRangeForPosition_(self, a):
         pass
 
+    def browserAccessibilityOrientation(self):
+        return 1
+
+    def setBrowserAccessibilityOrientation_(self, a):
+        pass
+
 
 class TestBEAccessibility(TestCase):
     def test_constants(self):
@@ -84,6 +90,11 @@ class TestBEAccessibility(TestCase):
         self.assertEqual(
             BrowserEngineKit.BEAccessibilityContainerTypeDescriptionList, 1 << 11
         )
+
+        self.assertIsEnumType(BrowserEngineKit.BEAccessibilityOrientation)
+        self.assertEqual(BrowserEngineKit.BEAccessibilityOrientationUnknown, 0)
+        self.assertEqual(BrowserEngineKit.BEAccessibilityOrientationVertical, 1)
+        self.assertEqual(BrowserEngineKit.BEAccessibilityOrientationHorizontal, 2)
 
     def test_methods(self):
         self.assertResultIsBOOL(
@@ -151,4 +162,13 @@ class TestBEAccessibility(TestCase):
         self.assertResultHasType(
             TestBEAccessibilityHelper.accessibilityLineRangeForPosition_,
             BrowserEngineKit.NSRange.__typestr__,
+        )
+
+        self.assertResultHasType(
+            TestBEAccessibilityHelper.browserAccessibilityOrientation, objc._C_NSInteger
+        )
+        self.assertArgHasType(
+            TestBEAccessibilityHelper.setBrowserAccessibilityOrientation_,
+            0,
+            objc._C_NSInteger,
         )

@@ -33,3 +33,7 @@ class TestCKShareParticipant(TestCase):
     @min_os_level("26.0")
     def test_methods(self):
         self.assertResultIsBOOL(CloudKit.CKShareParticipant.isApprovedRequester)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(CloudKit.CKShareParticipant.isEqual_)

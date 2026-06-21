@@ -335,6 +335,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newTensorWithDescriptor_error_(self, a, b):
         return 1
 
+    def newTensorWithDescriptor_attachments_error_(self, a, b, c):
+        pass
+
     def newCommandAllocatorWithDescriptor_error_(self, a, b):
         return 1
 
@@ -1091,6 +1094,11 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(
             TestMTLDeviceHelper.newTensorWithDescriptor_error_,
             1,
+            b"o^@",
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newTensorWithDescriptor_attachments_error_,
+            2,
             b"o^@",
         )
         self.assertArgHasType(

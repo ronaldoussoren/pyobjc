@@ -15,6 +15,8 @@ The framework name links to API notes for that framework, the python packages li
      +======================================================================================+======================================================+=========================================+
      | :doc:`dispatch </apinotes/libdispatch>`                                              | `pyobjc-framework-libdispatch`_                      |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+     | :doc:`AccessoryAccess </apinotes/AccessoryAccess>`                                   | `pyobjc-framework-AccessoryAccess`_                  |                                         |
+     +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | :doc:`Accessibility </apinotes/Accessibility>`                                       | `pyobjc-framework-Accessibility`_                    |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | AccessorySetupKit                                                                    | -                                                    | No public API on macOS.                 |
@@ -130,6 +132,8 @@ The framework name links to API notes for that framework, the python packages li
      | Combine                                                                              | -                                                    | Swift only framework.                   |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | :doc:`CompositorServices </apinotes/CompositorServices>`                             | `pyobjc-framework-CompositorServices`_                |                                         |
+     +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+     | ComputeGraph                                                                         | -                                                    | No usable API.               |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | ContactProvider                                                                      | -                                                    | No public API                           |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -259,6 +263,8 @@ The framework name links to API notes for that framework, the python packages li
      | DrawSprocket                                                                         | -                                                    | Will not be wrapped.                    |
      |                                                                                      |                                                      |                                         |
      |                                                                                      |                                                      | Removed in macOS 10.15                  |
+     +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+     | :doc:`EnhancedLinkSecurity </apinotes/EnhancedLinkSecurity>`                         | `pyobjc-framework-EnhancedLinkSecurity`_             |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | :doc:`EventKit </apinotes/EventKit>`                                                 | `pyobjc-framework-EventKit`_                         |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -617,6 +623,8 @@ The framework name links to API notes for that framework, the python packages li
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | :doc:`SpriteKit </apinotes/SpriteKit>`                                               | `pyobjc-framework-SpriteKit`_                        |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+     | :doc:`StateReporting </apinotes/StateReporting>`                                     | `pyobjc-framework-StateReporting`_                   |                                         |
+     +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | StickerFoundation                                                                    | -                                                    | No public API on macOS.                 |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | StickerKit                                                                           | -                                                    | No public API on macOS.                 |
@@ -959,3 +967,6 @@ prioritizing work.
 .. _`pyobjc-framework-ARKit`: https://pypi.org/project/pyobjc-framework-ARKit/
 .. _`pyobjc-framework-CompositorServices`: https://pypi.org/project/pyobjc-framework-CompositorServices/
 .. _`pyobjc-framework-HomeKit`: https://pypi.org/project/pyobjc-framework-HomeKit/
+.. _`pyobjc-framework-AccessoryAccess`: https://pypi.org/project/pyobjc-framework-AccessoryAccess/
+.. _`pyobjc-framework-EnhancedLinkSecurity`: https://pypi.org/project/pyobjc-framework-EnhancedLinkSecurity/
+.. _`pyobjc-framework-StateReporting`: https://pypi.org/project/pyobjc-framework-StateReporting/

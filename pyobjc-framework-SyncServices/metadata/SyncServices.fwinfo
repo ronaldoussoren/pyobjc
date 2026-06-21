@@ -1,5 +1,5 @@
-# objective.metada exceptions file, see its document
-# for information on how to update this file.
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
   "classes": {
@@ -126,7 +126,10 @@
      {
       "args": {
        "1": {
+        "name": "pModified",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "BOOL *",
         "type_override": "^Z"
        }
       },
@@ -222,7 +225,10 @@
      {
       "args": {
        "0": {
-        "type_modifier": "o"
+        "name": "outError",
+        "null_accepted": true,
+        "type_modifier": "o",
+        "type_name": "NSError **"
        }
       },
       "class_method": false,
@@ -259,32 +265,32 @@
    "NSObject": {
     "methods": [
      {
-      "selector": "preferredSyncModeForEntityName",
       "class_method": false,
       "retval": {
        "type_override": "i"
-      }
+      },
+      "selector": "preferredSyncModeForEntityName"
      },
      {
-      "selector": "isRelationship",
       "class_method": false,
       "retval": {
        "type_override": "Z"
-      }
+      },
+      "selector": "isRelationship"
      },
      {
-      "selector": "isToMany",
       "class_method": false,
       "retval": {
        "type_override": "Z"
-      }
+      },
+      "selector": "isToMany"
      },
      {
-      "selector": "isRequired",
       "class_method": false,
       "retval": {
        "type_override": "Z"
-      }
+      },
+      "selector": "isRequired"
      },
      {
       "args": {
@@ -331,7 +337,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -344,7 +353,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -357,7 +369,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -370,7 +385,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -383,7 +401,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -396,7 +417,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -409,7 +433,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -422,7 +449,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -435,7 +465,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -531,7 +564,10 @@
         "type_override": "Z"
        },
        "3": {
+        "name": "rError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -545,16 +581,32 @@
    }
   },
   "formal_protocols": {
+   "ISyncConflictPropertyType": {
+    "rename": "ISyncConflictPropertyType"
+   },
    "ISyncSessionDriverDataSource": {
+    "rename": "ISyncSessionDriverDataSource"
+   },
+   "ISyncFiltering": {
+    "rename": "ISyncFiltering"
+   },
+   "ISyncSessionDriverDataSource": {
+    "rename": "ISyncSessionDriverDataSource",
     "methods": [
      {
       "args": {
        "1": {
+        "name": "moreComing",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "BOOL *",
         "type_override": "^Z"
        },
        "2": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -564,15 +616,24 @@
      {
       "args": {
        "2": {
+        "name": "outRecordIdentifier",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSString **",
         "type_override": "^@"
        },
        "3": {
+        "name": "outRecord",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSDictionary **",
         "type_override": "^@"
        },
        "4": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -585,7 +646,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -598,11 +662,17 @@
      {
       "args": {
        "1": {
+        "name": "moreComing",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "BOOL *",
         "type_override": "^Z"
        },
        "2": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -612,11 +682,17 @@
      {
       "args": {
        "1": {
+        "name": "moreComing",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "BOOL *",
         "type_override": "^Z"
        },
        "2": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -626,11 +702,17 @@
      {
       "args": {
        "1": {
+        "name": "moreComing",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "BOOL *",
         "type_override": "^Z"
        },
        "2": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -693,7 +775,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -706,7 +791,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -719,7 +807,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -732,7 +823,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -745,7 +839,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -758,7 +855,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -771,7 +871,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -784,7 +887,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },
@@ -797,7 +903,10 @@
      {
       "args": {
        "1": {
+        "name": "outError",
+        "null_accepted": true,
         "type_modifier": "o",
+        "type_name": "NSError **",
         "type_override": "^@"
        }
       },

@@ -11,6 +11,8 @@ def _setup():
 
     import Metal
     import objc
+    import objc.simd
+    import math
     from . import _metadata, _MetalPerformanceShaders
     from ._inlines import _inline_list_
 
@@ -31,6 +33,8 @@ def _setup():
 
     globals()["__dir__"] = dir_func
     globals()["__getattr__"] = getattr_func
+    globals()["_simd"] = objc.simd
+    globals()["_math"] = math
 
     for cls, sel in (
         ("MMPSAccelerationStructureGroupTKMeshBufferAllocator", b"init"),
@@ -268,6 +272,7 @@ def _setup():
         ("MPSMatrixVectorMultiplication", b"initWithDevice:"),
         ("MPSMatrixCopyDescriptor", b"init"),
         ("MPSMatrixCopy", b"initWithDevice:"),
+        ("MPSFunction", b"init"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

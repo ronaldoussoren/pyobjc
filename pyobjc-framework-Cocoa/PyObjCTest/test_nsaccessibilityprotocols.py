@@ -300,7 +300,9 @@ class TestNSAccessibilityProtocols(TestCase):
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
         self.assertProtocolExists("NSAccessibilityGroup", AppKit)
-        self.assertProtocolExists("NSAccessibilityElement", AppKit)
+        self.assertProtocolExists(
+            "NSAccessibilityElement", AppKit, "NSAccessibilityElementProtocol"
+        )
         self.assertProtocolExists("NSAccessibilityButton", AppKit)
         self.assertProtocolExists("NSAccessibilitySwitch", AppKit)
         self.assertProtocolExists("NSAccessibilityRadioButton", AppKit)

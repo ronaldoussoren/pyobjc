@@ -92,6 +92,11 @@ class TestCSCommon(TestCase):
         self.assertEqual(Security.errSecCSRevokedNotarization, -66992)
         self.assertEqual(Security.errSecCSCMSConstructionFailed, -66991)
         self.assertEqual(Security.errSecCSRemoteSignerFailed, -66990)
+        self.assertEqual(Security.errSecCSRemoteSignerFirstSlotFull, -66989)
+        self.assertEqual(Security.errSecCSRemoteSignerSecondSlotFull, -66988)
+        self.assertEqual(Security.errSecCSUnsupportedAlgorithm, -66987)
+        self.assertEqual(Security.errSecCSMultipleSelfSigning, -66986)
+        self.assertEqual(Security.errSecCSDetachedCertificates, -66985)
 
         self.assertIsInstance(Security.kSecCFErrorArchitecture, str)
         self.assertIsInstance(Security.kSecCFErrorPattern, str)
@@ -116,6 +121,8 @@ class TestCSCommon(TestCase):
         self.assertEqual(Security.kSecCSApplyEmbeddedPolicy, 1 << 25)
         self.assertEqual(Security.kSecCSStripDisallowedXattrs, 1 << 24)
         self.assertEqual(Security.kSecCSMatchGuestRequirementInKernel, 1 << 23)
+        self.assertEqual(Security.kSecCSUseSignature1, 1 << 22)
+        self.assertEqual(Security.kSecCSUseSignature2, 1 << 21)
 
         self.assertEqual(Security.kSecCodeSignatureHost, 0x0001)
         self.assertEqual(Security.kSecCodeSignatureAdhoc, 0x0002)
@@ -158,3 +165,7 @@ class TestCSCommon(TestCase):
     @min_os_level("14.0")
     def test_constants14_0(self):
         self.assertIsInstance(Security.kSecCFErrorResourceRecursive, str)
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(Security.kSecCFErrorDetachedCertificates, str)

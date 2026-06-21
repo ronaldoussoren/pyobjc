@@ -148,4 +148,4 @@ class TestCIFilter(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("CIFilter", Quartz)
+        self.assertProtocolExists("CIFilter", Quartz, "CIFilterProtocol")

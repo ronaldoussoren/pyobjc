@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import UniformTypeIdentifiers
 
@@ -12,3 +12,9 @@ class TestUTType(TestCase):
         self.assertResultIsBOOL(UniformTypeIdentifiers.UTType.conformsToType_)
         self.assertResultIsBOOL(UniformTypeIdentifiers.UTType.isSupertypeOfType_)
         self.assertResultIsBOOL(UniformTypeIdentifiers.UTType.isSubtypeOfType_)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsBOOL(
+            UniformTypeIdentifiers.UTType.typeWithIdentifier_allowUndeclared_, 1
+        )

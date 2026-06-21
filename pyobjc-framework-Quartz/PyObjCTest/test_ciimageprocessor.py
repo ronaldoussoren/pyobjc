@@ -16,10 +16,18 @@ class TestCIImageProcessorHelper(Quartz.NSObject):
     def baseAddress(self):
         return 1
 
+    def temporarySurfaceWithIdentifier_format_width_height_(self, a, b, c, d):
+        return 1
+
+    def temporaryPixelBufferWithIdentifier_format_width_height_attributes_(
+        self, a, b, c, d, e
+    ):
+        return 1
+
 
 class TestCIImageProcessor(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Quartz.CIImageProcessorKernel.processWithInputs_arguments_output_error_
         )
@@ -41,9 +49,31 @@ class TestCIImageProcessor(TestCase):
             Quartz.CIImageProcessorKernel.applyWithExtent_inputs_arguments_error_, 3
         )
 
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            Quartz.CIImageProcessorKernel.processWithInputs_arguments_outputs_error_
+        )
+        self.assertArgIsOut(
+            Quartz.CIImageProcessorKernel.processWithInputs_arguments_outputs_error_, 3
+        )
+
+        self.assertArgIsOut(
+            Quartz.CIImageProcessorKernel.applyWithExtents_inputs_arguments_error_, 3
+        )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsOut(
+            Quartz.CIImageProcessorKernel.applyWithTiledExtent_inputs_arguments_error_,
+            3,
+        )
+
     @min_sdk_level("10.12")
     def testProtocols(self):
-        self.assertProtocolExists("CIImageProcessorInput", Quartz)
+        self.assertProtocolExists(
+            "CIImageProcessorInput", Quartz, "CIImageProcessorInputProtocol"
+        )
 
         self.assertResultHasType(
             TestCIImageProcessorHelper.region, Quartz.CGRect.__typestr__
@@ -52,4 +82,37 @@ class TestCIImageProcessor(TestCase):
         self.assertResultHasType(TestCIImageProcessorHelper.format, objc._C_NSInteger)
         self.assertResultHasType(TestCIImageProcessorHelper.baseAddress, b"^v")
 
-        self.assertProtocolExists("CIImageProcessorOutput", Quartz)
+        self.assertProtocolExists(
+            "CIImageProcessorOutput", Quartz, "CIImageProcessorOutputProtocol"
+        )
+        self.assertArgHasType(
+            TestCIImageProcessorHelper.temporarySurfaceWithIdentifier_format_width_height_,
+            1,
+            objc._C_INT,
+        )
+        self.assertArgHasType(
+            TestCIImageProcessorHelper.temporarySurfaceWithIdentifier_format_width_height_,
+            2,
+            objc._C_ULNG_LNG,
+        )
+        self.assertArgHasType(
+            TestCIImageProcessorHelper.temporarySurfaceWithIdentifier_format_width_height_,
+            3,
+            objc._C_ULNG_LNG,
+        )
+
+        self.assertArgHasType(
+            TestCIImageProcessorHelper.temporaryPixelBufferWithIdentifier_format_width_height_attributes_,
+            1,
+            objc._C_INT,
+        )
+        self.assertArgHasType(
+            TestCIImageProcessorHelper.temporaryPixelBufferWithIdentifier_format_width_height_attributes_,
+            2,
+            objc._C_ULNG_LNG,
+        )
+        self.assertArgHasType(
+            TestCIImageProcessorHelper.temporaryPixelBufferWithIdentifier_format_width_height_attributes_,
+            3,
+            objc._C_ULNG_LNG,
+        )

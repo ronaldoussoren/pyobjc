@@ -140,4 +140,8 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(MTL4RenderCommandEncoder));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 2700
+    p = PyObjC_IdToPython(@protocol(MTLTensorAuxiliaryPlane));
+    Py_XDECREF(p);
+#endif
 }

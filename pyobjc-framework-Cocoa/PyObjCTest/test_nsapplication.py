@@ -404,6 +404,9 @@ class TestNSApplication(TestCase):
         self.assertEqual(
             AppKit.NSApplicationPresentationDisableCursorLocationAssistance, 1 << 12
         )
+        self.assertEqual(
+            AppKit.NSApplicationPresentationDisableScreenCornerInteractions, 1 << 15
+        )
 
     @min_os_level("10.13")
     def testConstants10_13(self):

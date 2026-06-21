@@ -89,6 +89,10 @@ class TestSCStream(TestCase):
             ScreenCaptureKit.SCStreamFrameInfoPresenterOverlayContentRect, str
         )
 
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoVideoOrientation, str)
+
     def test_methods(self):
         self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.scalesToFit)
         self.assertArgIsBOOL(ScreenCaptureKit.SCStreamConfiguration.setScalesToFit_, 0)
@@ -219,6 +223,30 @@ class TestSCStream(TestCase):
 
         self.assertResultIsBOOL(ScreenCaptureKit.SCStream.removeRecordingOutput_error_)
         self.assertArgIsOut(ScreenCaptureKit.SCStream.removeRecordingOutput_error_, 1)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(ScreenCaptureKit.SCContentFilter.isMicrophoneEnabled)
+        self.assertResultIsBOOL(ScreenCaptureKit.SCContentFilter.isCameraEnabled)
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStream.isCapturing)
+
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStream.addClipBufferingOutput_error_)
+        self.assertArgIsOut(ScreenCaptureKit.SCStream.addClipBufferingOutput_error_, 1)
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStream.removeClipBufferingOutput_error_
+        )
+        self.assertArgIsOut(
+            ScreenCaptureKit.SCStream.removeClipBufferingOutput_error_, 1
+        )
+
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStream.addVideoEffectOutput_error_)
+        self.assertArgIsOut(ScreenCaptureKit.SCStream.addVideoEffectOutput_error_, 1)
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStream.removeVideoEffectOutput_error_
+        )
+        self.assertArgIsOut(ScreenCaptureKit.SCStream.removeVideoEffectOutput_error_, 1)
 
     def test_protocols(self):
         self.assertProtocolExists("SCStreamDelegate", ScreenCaptureKit)

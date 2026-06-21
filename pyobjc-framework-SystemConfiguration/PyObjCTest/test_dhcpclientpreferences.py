@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import TestCase
-import objc
 import SystemConfiguration
 
 
@@ -21,5 +20,5 @@ class TestDHCPClientPreferences(TestCase):
         r, count = SystemConfiguration.DHCPClientPreferencesCopyApplicationOptions(
             "com.apple.SystemPreferences", None
         )
-        self.assertTrue(r is objc.NULL)
+        self.assertIs(r, None)
         self.assertTrue(count == 0)

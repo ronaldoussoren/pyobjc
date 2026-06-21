@@ -789,7 +789,9 @@
     ]
    }
   },
-  "formal_protocols": {},
+  "formal_protocols": {
+   "AVVideoCompositionInstruction": { "rename": "AVVideoCompositionInstructionProtocol" }
+  },
   "functions": {},
   "informal_protocols": {}
  }

@@ -14,6 +14,7 @@ class TestPDFKitPlatform(TestCase):
         )
         self.assertIs(Quartz.PDFKitPlatformImage, Quartz.NSImage)
         self.assertIs(Quartz.PDFKitPlatformImageView, Quartz.NSImageView)
+        self.assertIs(Quartz.PDFKitPlatformTouch, Quartz.NSTouch)
         self.assertIs(Quartz.PDFKitPlatformEvent, Quartz.NSEvent)
         self.assertIs(Quartz.PDFKitPlatformFont, Quartz.NSFont)
         self.assertIs(Quartz.PDFKitPlatformColor, Quartz.NSColor)
@@ -27,11 +28,26 @@ class TestPDFKitPlatform(TestCase):
             Quartz.PDFKitPlatformChoiceWidgetComboBoxView, Quartz.NSPopUpButton
         )
         self.assertIs(Quartz.PDFKitPlatformChoiceWidgetListView, Quartz.NSTableView)
+        self.assertIs(Quartz.PDFKitPlatformTableView, Quartz.NSTableView)
+        self.assertIs(Quartz.PDFKitPlatformComboBox, Quartz.NSComboBox)
         self.assertIs(Quartz.PDFKitPlatformButton, Quartz.NSButton)
         self.assertIs(Quartz.PDFKitPlatformButtonCell, Quartz.NSButtonCell)
         self.assertIs(Quartz.PDFKitResponder, Quartz.NSResponder)
         self.assertIs(Quartz.PDFKitTextContentType, Quartz.NSTextContentType)
         self.assertIs(Quartz.PDFKitPlatformTextContentType, Quartz.NSTextContentType)
+        self.assertIs(
+            Quartz.PDFKitPlatformGestureRecognizer, Quartz.NSGestureRecognizer
+        )
+        self.assertIs(
+            Quartz.PDFKitPlatformTapGestureRecognizer, Quartz.NSClickGestureRecognizer
+        )
+        self.assertIs(
+            Quartz.PDFKitPlatformLongPressGestureRecognizer,
+            Quartz.NSPressGestureRecognizer,
+        )
+        self.assertIs(
+            Quartz.PDFKitPlatformPanGestureRecognizer, Quartz.NSPanGestureRecognizer
+        )
         self.assertIs(Quartz.PDFPoint, Quartz.NSPoint)
         self.assertIs(Quartz.PDFRect, Quartz.NSRect)
         self.assertIs(Quartz.PDFSize, Quartz.NSSize)
@@ -52,4 +68,16 @@ class TestPDFKitPlatform(TestCase):
     def test_aliases10_11(self):
         self.assertIs(
             Quartz.PDFKitPlatformFontWeightRegular, Quartz.NSFontWeightRegular
+        )
+        self.assertIs(
+            Quartz.PDFKitPlatformUserInterfaceLayoutDirection,
+            Quartz.NSUserInterfaceLayoutDirection,
+        )
+        self.assertIs(
+            Quartz.PDFKitPlatformUserInterfaceLayoutDirectionLeftToRight,
+            Quartz.NSUserInterfaceLayoutDirectionLeftToRight,
+        )
+        self.assertIs(
+            Quartz.PDFKitPlatformUserInterfaceLayoutDirectionRightToLeft,
+            Quartz.NSUserInterfaceLayoutDirectionRightToLeft,
         )

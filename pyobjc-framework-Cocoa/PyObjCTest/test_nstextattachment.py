@@ -90,7 +90,9 @@ class TestNSTextAttachment(TestCase):
     @min_sdk_level("10.11")
     def testProtocolObjects(self):
         self.assertProtocolExists("NSTextAttachmentContainer", AppKit)
-        self.assertProtocolExists("NSTextAttachmentCell", AppKit)
+        self.assertProtocolExists(
+            "NSTextAttachmentCell", AppKit, "NSTextAttachmentCellProtocol"
+        )
 
     def testProtocols(self):
         self.assertArgHasType(

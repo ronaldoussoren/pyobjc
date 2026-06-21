@@ -107,3 +107,15 @@ class TestAVAudioSessionTypes(TestCase):
         self.assertEqual(
             AVFoundation.AVAudioSessionMicrophoneInjectionModeSpokenAudio, 1
         )
+
+        self.assertIsEnumType(AVFoundation.AVAudioSessionDeactivationSource)
+        self.assertEqual(AVFoundation.AVAudioSessionDeactivationSourceApp, 1)
+        self.assertEqual(AVFoundation.AVAudioSessionDeactivationSourceSystem, 2)
+
+        self.assertIsEnumType(AVFoundation.AVAudioSessionResumptionRecommendation)
+        self.assertEqual(
+            AVFoundation.AVAudioSessionResumptionRecommendationShouldNotResume, 0
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioSessionResumptionRecommendationShouldResume, 1
+        )

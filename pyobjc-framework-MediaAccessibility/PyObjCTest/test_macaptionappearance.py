@@ -11,6 +11,9 @@ class TestMAAudibleMedia(TestCase):
         )
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDomainDefault, 0)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDomainUser, 1)
+        self.assertEqual(
+            MediaAccessibility.kMACaptionAppearanceDomainVideoConferencing, 2
+        )
 
         self.assertEqual(
             MediaAccessibility.kMACaptionAppearanceDisplayTypeForcedOnly, 0

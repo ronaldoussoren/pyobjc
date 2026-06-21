@@ -130,3 +130,9 @@ class TestAVVideoSettings(TestCase):
     def testConstants26_0(self):
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProResRAW, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProResRAWHQ, str)
+
+    @min_os_level("27.0")
+    def testConstants27_0(self):
+        self.assertIsInstance(AVFoundation.AVVideoLogTransferFunctionKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoLogTransferFunction_AppleLog, str)
+        self.assertIsInstance(AVFoundation.AVVideoLogTransferFunction_AppleLog2, str)

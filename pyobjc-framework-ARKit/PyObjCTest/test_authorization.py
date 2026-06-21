@@ -14,6 +14,7 @@ class TestAuthorization(TestCase):
         self.assertEqual(ARKit.ar_authorization_type_hand_tracking, 1 << 0)
         self.assertEqual(ARKit.ar_authorization_type_world_sensing, 1 << 1)
         self.assertEqual(ARKit.ar_authorization_type_camera_access, 1 << 3)
+        self.assertEqual(ARKit.ar_authorization_type_accessory_tracking, 1 << 5)
 
     def test_types(self):
         # These are not concrete types in ObjC:

@@ -911,205 +911,455 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
 class TestCIFilterBuiltins(TestCase):
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("CIGaussianGradient", Quartz)
-        self.assertProtocolExists("CIHueSaturationValueGradient", Quartz)
-        self.assertProtocolExists("CILinearGradient", Quartz)
-        self.assertProtocolExists("CIRadialGradient", Quartz)
-        self.assertProtocolExists("CISmoothLinearGradient", Quartz)
-        self.assertProtocolExists("CISharpenLuminance", Quartz)
-        self.assertProtocolExists("CIUnsharpMask", Quartz)
-        self.assertProtocolExists("CICircularScreen", Quartz)
-        self.assertProtocolExists("CICMYKHalftone", Quartz)
-        self.assertProtocolExists("CIDotScreen", Quartz)
-        self.assertProtocolExists("CIHatchedScreen", Quartz)
-        self.assertProtocolExists("CILineScreen", Quartz)
-        self.assertProtocolExists("CIBicubicScaleTransform", Quartz)
-        self.assertProtocolExists("CIFourCoordinateGeometryFilter", Quartz)
-        self.assertProtocolExists("CIEdgePreserveUpsample", Quartz)
-        self.assertProtocolExists("CIKeystoneCorrectionCombined", Quartz)
-        self.assertProtocolExists("CIKeystoneCorrectionHorizontal", Quartz)
-        self.assertProtocolExists("CIKeystoneCorrectionVertical", Quartz)
-        self.assertProtocolExists("CILanczosScaleTransform", Quartz)
-        self.assertProtocolExists("CIPerspectiveCorrection", Quartz)
-        self.assertProtocolExists("CIPerspectiveRotate", Quartz)
-        self.assertProtocolExists("CIPerspectiveTransform", Quartz)
-        self.assertProtocolExists("CIPerspectiveTransformWithExtent", Quartz)
-        self.assertProtocolExists("CIStraighten", Quartz)
-        self.assertProtocolExists("CITransitionFilter", Quartz)
-        self.assertProtocolExists("CIAccordionFoldTransition", Quartz)
-        self.assertProtocolExists("CIBarsSwipeTransition", Quartz)
-        self.assertProtocolExists("CICopyMachineTransition", Quartz)
-        self.assertProtocolExists("CIDisintegrateWithMaskTransition", Quartz)
-        self.assertProtocolExists("CIDissolveTransition", Quartz)
-        self.assertProtocolExists("CIFlashTransition", Quartz)
-        self.assertProtocolExists("CIModTransition", Quartz)
-        self.assertProtocolExists("CIPageCurlTransition", Quartz)
-        self.assertProtocolExists("CIPageCurlWithShadowTransition", Quartz)
-        self.assertProtocolExists("CIRippleTransition", Quartz)
-        self.assertProtocolExists("CISwipeTransition", Quartz)
-        self.assertProtocolExists("CICompositeOperation", Quartz)
-        self.assertProtocolExists("CIColorClamp", Quartz)
-        self.assertProtocolExists("CIColorControls", Quartz)
-        self.assertProtocolExists("CIColorMatrix", Quartz)
-        self.assertProtocolExists("CIColorPolynomial", Quartz)
-        self.assertProtocolExists("CIDepthToDisparity", Quartz)
-        self.assertProtocolExists("CIDisparityToDepth", Quartz)
-        self.assertProtocolExists("CIExposureAdjust", Quartz)
-        self.assertProtocolExists("CIGammaAdjust", Quartz)
-        self.assertProtocolExists("CIHueAdjust", Quartz)
-        self.assertProtocolExists("CILinearToSRGBToneCurve", Quartz)
-        self.assertProtocolExists("CISRGBToneCurveToLinear", Quartz)
-        self.assertProtocolExists("CITemperatureAndTint", Quartz)
-        self.assertProtocolExists("CIToneCurve", Quartz)
-        self.assertProtocolExists("CIVibrance", Quartz)
-        self.assertProtocolExists("CIWhitePointAdjust", Quartz)
-        self.assertProtocolExists("CIColorCrossPolynomial", Quartz)
-        self.assertProtocolExists("CIColorCube", Quartz)
-        self.assertProtocolExists("CIColorCubesMixedWithMask", Quartz)
-        self.assertProtocolExists("CIColorCubeWithColorSpace", Quartz)
-        self.assertProtocolExists("CIColorCurves", Quartz)
-        self.assertProtocolExists("CIColorInvert", Quartz)
-        self.assertProtocolExists("CIColorMap", Quartz)
-        self.assertProtocolExists("CIColorMonochrome", Quartz)
-        self.assertProtocolExists("CIColorPosterize", Quartz)
-        self.assertProtocolExists("CIDither", Quartz)
-        self.assertProtocolExists("CIDocumentEnhancer", Quartz)
-        self.assertProtocolExists("CIFalseColor", Quartz)
-        self.assertProtocolExists("CILabDeltaE", Quartz)
-        self.assertProtocolExists("CIMaskToAlpha", Quartz)
-        self.assertProtocolExists("CIMaximumComponent", Quartz)
-        self.assertProtocolExists("CIMinimumComponent", Quartz)
-        self.assertProtocolExists("CIPaletteCentroid", Quartz)
-        self.assertProtocolExists("CIPalettize", Quartz)
-        self.assertProtocolExists("CIPhotoEffect", Quartz)
-        self.assertProtocolExists("CISepiaTone", Quartz)
-        self.assertProtocolExists("CIThermal", Quartz)
-        self.assertProtocolExists("CIVignette", Quartz)
-        self.assertProtocolExists("CIVignetteEffect", Quartz)
-        self.assertProtocolExists("CIXRay", Quartz)
-        self.assertProtocolExists("CIAffineClamp", Quartz)
-        self.assertProtocolExists("CIAffineTile", Quartz)
-        self.assertProtocolExists("CIEightfoldReflectedTile", Quartz)
-        self.assertProtocolExists("CIFourfoldReflectedTile", Quartz)
-        self.assertProtocolExists("CIFourfoldRotatedTile", Quartz)
-        self.assertProtocolExists("CIFourfoldTranslatedTile", Quartz)
-        self.assertProtocolExists("CIGlideReflectedTile", Quartz)
-        self.assertProtocolExists("CIKaleidoscope", Quartz)
-        self.assertProtocolExists("CIOpTile", Quartz)
-        self.assertProtocolExists("CIParallelogramTile", Quartz)
-        self.assertProtocolExists("CIPerspectiveTile", Quartz)
-        self.assertProtocolExists("CISixfoldReflectedTile", Quartz)
-        self.assertProtocolExists("CISixfoldRotatedTile", Quartz)
-        self.assertProtocolExists("CITriangleKaleidoscope", Quartz)
-        self.assertProtocolExists("CITriangleTile", Quartz)
-        self.assertProtocolExists("CITwelvefoldReflectedTile", Quartz)
-        self.assertProtocolExists("CIAttributedTextImageGenerator", Quartz)
-        self.assertProtocolExists("CIAztecCodeGenerator", Quartz)
-        self.assertProtocolExists("CIBarcodeGenerator", Quartz)
-        self.assertProtocolExists("CICheckerboardGenerator", Quartz)
-        self.assertProtocolExists("CICode128BarcodeGenerator", Quartz)
-        self.assertProtocolExists("CILenticularHaloGenerator", Quartz)
-        self.assertProtocolExists("CIMeshGenerator", Quartz)
-        self.assertProtocolExists("CIPDF417BarcodeGenerator", Quartz)
-        self.assertProtocolExists("CIQRCodeGenerator", Quartz)
-        self.assertProtocolExists("CIRandomGenerator", Quartz)
-        self.assertProtocolExists("CIRoundedRectangleGenerator", Quartz)
-        self.assertProtocolExists("CIStarShineGenerator", Quartz)
-        self.assertProtocolExists("CIStripesGenerator", Quartz)
-        self.assertProtocolExists("CISunbeamsGenerator", Quartz)
-        self.assertProtocolExists("CITextImageGenerator", Quartz)
-        self.assertProtocolExists("CIBlendWithMask", Quartz)
-        self.assertProtocolExists("CIGaborGradients", Quartz)
-        self.assertProtocolExists("CIBloom", Quartz)
-        self.assertProtocolExists("CIComicEffect", Quartz)
-        self.assertProtocolExists("CIConvolution", Quartz)
-        self.assertProtocolExists("CICoreMLModel", Quartz)
-        self.assertProtocolExists("CICrystallize", Quartz)
-        self.assertProtocolExists("CIDepthOfField", Quartz)
-        self.assertProtocolExists("CIEdges", Quartz)
-        self.assertProtocolExists("CIEdgeWork", Quartz)
-        self.assertProtocolExists("CIGloom", Quartz)
-        self.assertProtocolExists("CIHeightFieldFromMask", Quartz)
-        self.assertProtocolExists("CIHexagonalPixellate", Quartz)
-        self.assertProtocolExists("CIHighlightShadowAdjust", Quartz)
-        self.assertProtocolExists("CILineOverlay", Quartz)
-        self.assertProtocolExists("CIMix", Quartz)
-        self.assertProtocolExists("CIPixellate", Quartz)
-        self.assertProtocolExists("CIPointillize", Quartz)
-        self.assertProtocolExists("CISaliencyMap", Quartz)
-        self.assertProtocolExists("CIShadedMaterial", Quartz)
-        self.assertProtocolExists("CISpotColor", Quartz)
-        self.assertProtocolExists("CISpotLight", Quartz)
-        self.assertProtocolExists("CIBokehBlur", Quartz)
-        self.assertProtocolExists("CIBoxBlur", Quartz)
-        self.assertProtocolExists("CIDiscBlur", Quartz)
-        self.assertProtocolExists("CIGaussianBlur", Quartz)
-        self.assertProtocolExists("CIMaskedVariableBlur", Quartz)
-        self.assertProtocolExists("CIMedian", Quartz)
-        self.assertProtocolExists("CIMorphologyGradient", Quartz)
-        self.assertProtocolExists("CIMorphologyMaximum", Quartz)
-        self.assertProtocolExists("CIMorphologyMinimum", Quartz)
-        self.assertProtocolExists("CIMorphologyRectangleMaximum", Quartz)
-        self.assertProtocolExists("CIMorphologyRectangleMinimum", Quartz)
-        self.assertProtocolExists("CIMotionBlur", Quartz)
-        self.assertProtocolExists("CINoiseReduction", Quartz)
-        self.assertProtocolExists("CIZoomBlur", Quartz)
+        self.assertProtocolExists(
+            "CIGaussianGradient", Quartz, "CIGaussianGradientProtocol"
+        )
+        self.assertProtocolExists(
+            "CIHueSaturationValueGradient",
+            Quartz,
+            "CIHueSaturationValueGradientProtocol",
+        )
+        self.assertProtocolExists(
+            "CILinearGradient", Quartz, "CILinearGradientProtocol"
+        )
+        self.assertProtocolExists(
+            "CIRadialGradient", Quartz, "CIRadialGradientProtocol"
+        )
+        self.assertProtocolExists(
+            "CISmoothLinearGradient", Quartz, "CISmoothLinearGradientProtocol"
+        )
+        self.assertProtocolExists(
+            "CISharpenLuminance", Quartz, "CISharpenLuminanceProtocol"
+        )
+        self.assertProtocolExists("CIUnsharpMask", Quartz, "CIUnsharpMaskProtocol")
+        self.assertProtocolExists(
+            "CICircularScreen", Quartz, "CICircularScreenProtocol"
+        )
+        self.assertProtocolExists("CICMYKHalftone", Quartz, "CICMYKHalftoneProtocol")
+        self.assertProtocolExists("CIDotScreen", Quartz, "CIDotScreenProtocol")
+        self.assertProtocolExists("CIHatchedScreen", Quartz, "CIHatchedScreenProtocol")
+        self.assertProtocolExists("CILineScreen", Quartz, "CILineScreenProtocol")
+        self.assertProtocolExists(
+            "CIBicubicScaleTransform", Quartz, "CIBicubicScaleTransformProtocol"
+        )
+        self.assertProtocolExists(
+            "CIFourCoordinateGeometryFilter",
+            Quartz,
+            "CIFourCoordinateGeometryFilterProtocol",
+        )
+        self.assertProtocolExists(
+            "CIEdgePreserveUpsample", Quartz, "CIEdgePreserveUpsampleProtocol"
+        )
+        self.assertProtocolExists(
+            "CIKeystoneCorrectionCombined",
+            Quartz,
+            "CIKeystoneCorrectionCombinedProtocol",
+        )
+        self.assertProtocolExists(
+            "CIKeystoneCorrectionHorizontal",
+            Quartz,
+            "CIKeystoneCorrectionHorizontalProtocol",
+        )
+        self.assertProtocolExists(
+            "CIKeystoneCorrectionVertical",
+            Quartz,
+            "CIKeystoneCorrectionVerticalProtocol",
+        )
+        self.assertProtocolExists(
+            "CILanczosScaleTransform", Quartz, "CILanczosScaleTransformProtocol"
+        )
+        self.assertProtocolExists(
+            "CIPerspectiveCorrection", Quartz, "CIPerspectiveCorrectionProtocol"
+        )
+        self.assertProtocolExists(
+            "CIPerspectiveRotate", Quartz, "CIPerspectiveRotateProtocol"
+        )
+        self.assertProtocolExists(
+            "CIPerspectiveTransform", Quartz, "CIPerspectiveTransformProtocol"
+        )
+        self.assertProtocolExists(
+            "CIPerspectiveTransformWithExtent",
+            Quartz,
+            "CIPerspectiveTransformWithExtentProtocol",
+        )
+        self.assertProtocolExists("CIStraighten", Quartz, "CIStraightenProtocol")
+        self.assertProtocolExists(
+            "CITransitionFilter", Quartz, "CITransitionFilterProtocol"
+        )
+        self.assertProtocolExists(
+            "CIAccordionFoldTransition", Quartz, "CIAccordionFoldTransitionProtocol"
+        )
+        self.assertProtocolExists(
+            "CIBarsSwipeTransition", Quartz, "CIBarsSwipeTransitionProtocol"
+        )
+        self.assertProtocolExists(
+            "CICopyMachineTransition", Quartz, "CICopyMachineTransitionProtocol"
+        )
+        self.assertProtocolExists(
+            "CIDisintegrateWithMaskTransition",
+            Quartz,
+            "CIDisintegrateWithMaskTransitionProtocol",
+        )
+        self.assertProtocolExists(
+            "CIDissolveTransition", Quartz, "CIDissolveTransitionProtocol"
+        )
+        self.assertProtocolExists(
+            "CIFlashTransition", Quartz, "CIFlashTransitionProtocol"
+        )
+        self.assertProtocolExists("CIModTransition", Quartz, "CIModTransitionProtocol")
+        self.assertProtocolExists(
+            "CIPageCurlTransition", Quartz, "CIPageCurlTransitionProtocol"
+        )
+        self.assertProtocolExists(
+            "CIPageCurlWithShadowTransition",
+            Quartz,
+            "CIPageCurlWithShadowTransitionProtocol",
+        )
+        self.assertProtocolExists(
+            "CIRippleTransition", Quartz, "CIRippleTransitionProtocol"
+        )
+        self.assertProtocolExists(
+            "CISwipeTransition", Quartz, "CISwipeTransitionProtocol"
+        )
+        self.assertProtocolExists(
+            "CICompositeOperation", Quartz, "CICompositeOperationProtocol"
+        )
+        self.assertProtocolExists("CIColorClamp", Quartz, "CIColorClampProtocol")
+        self.assertProtocolExists("CIColorControls", Quartz, "CIColorControlsProtocol")
+        self.assertProtocolExists("CIColorMatrix", Quartz, "CIColorMatrixProtocol")
+        self.assertProtocolExists(
+            "CIColorPolynomial", Quartz, "CIColorPolynomialProtocol"
+        )
+        self.assertProtocolExists(
+            "CIDepthToDisparity", Quartz, "CIDepthToDisparityProtocol"
+        )
+        self.assertProtocolExists(
+            "CIDisparityToDepth", Quartz, "CIDisparityToDepthProtocol"
+        )
+        self.assertProtocolExists(
+            "CIExposureAdjust", Quartz, "CIExposureAdjustProtocol"
+        )
+        self.assertProtocolExists("CIGammaAdjust", Quartz, "CIGammaAdjustProtocol")
+        self.assertProtocolExists("CIHueAdjust", Quartz, "CIHueAdjustProtocol")
+        self.assertProtocolExists(
+            "CILinearToSRGBToneCurve", Quartz, "CILinearToSRGBToneCurveProtocol"
+        )
+        self.assertProtocolExists(
+            "CISRGBToneCurveToLinear", Quartz, "CISRGBToneCurveToLinearProtocol"
+        )
+        self.assertProtocolExists(
+            "CITemperatureAndTint", Quartz, "CITemperatureAndTintProtocol"
+        )
+        self.assertProtocolExists("CIToneCurve", Quartz, "CIToneCurveProtocol")
+        self.assertProtocolExists("CIVibrance", Quartz, "CIVibranceProtocol")
+        self.assertProtocolExists(
+            "CIWhitePointAdjust", Quartz, "CIWhitePointAdjustProtocol"
+        )
+        self.assertProtocolExists(
+            "CIColorCrossPolynomial", Quartz, "CIColorCrossPolynomialProtocol"
+        )
+        self.assertProtocolExists("CIColorCube", Quartz, "CIColorCubeProtocol")
+        self.assertProtocolExists(
+            "CIColorCubesMixedWithMask", Quartz, "CIColorCubesMixedWithMaskProtocol"
+        )
+        self.assertProtocolExists(
+            "CIColorCubeWithColorSpace", Quartz, "CIColorCubeWithColorSpaceProtocol"
+        )
+        self.assertProtocolExists("CIColorCurves", Quartz, "CIColorCurvesProtocol")
+        self.assertProtocolExists("CIColorInvert", Quartz, "CIColorInvertProtocol")
+        self.assertProtocolExists("CIColorMap", Quartz, "CIColorMapProtocol")
+        self.assertProtocolExists(
+            "CIColorMonochrome", Quartz, "CIColorMonochromeProtocol"
+        )
+        self.assertProtocolExists(
+            "CIColorPosterize", Quartz, "CIColorPosterizeProtocol"
+        )
+        self.assertProtocolExists("CIDither", Quartz, "CIDitherProtocol")
+        self.assertProtocolExists(
+            "CIDocumentEnhancer", Quartz, "CIDocumentEnhancerProtocol"
+        )
+        self.assertProtocolExists("CIFalseColor", Quartz, "CIFalseColorProtocol")
+        self.assertProtocolExists("CILabDeltaE", Quartz, "CILabDeltaEProtocol")
+        self.assertProtocolExists("CIMaskToAlpha", Quartz, "CIMaskToAlphaProtocol")
+        self.assertProtocolExists(
+            "CIMaximumComponent", Quartz, "CIMaximumComponentProtocol"
+        )
+        self.assertProtocolExists(
+            "CIMinimumComponent", Quartz, "CIMinimumComponentProtocol"
+        )
+        self.assertProtocolExists(
+            "CIPaletteCentroid", Quartz, "CIPaletteCentroidProtocol"
+        )
+        self.assertProtocolExists("CIPalettize", Quartz, "CIPalettizeProtocol")
+        self.assertProtocolExists("CIPhotoEffect", Quartz, "CIPhotoEffectProtocol")
+        self.assertProtocolExists("CISepiaTone", Quartz, "CISepiaToneProtocol")
+        self.assertProtocolExists("CIThermal", Quartz, "CIThermalProtocol")
+        self.assertProtocolExists("CIVignette", Quartz, "CIVignetteProtocol")
+        self.assertProtocolExists(
+            "CIVignetteEffect", Quartz, "CIVignetteEffectProtocol"
+        )
+        self.assertProtocolExists("CIXRay", Quartz, "CIXRayProtocol")
+        self.assertProtocolExists("CIAffineClamp", Quartz, "CIAffineClampProtocol")
+        self.assertProtocolExists("CIAffineTile", Quartz, "CIAffineTileProtocol")
+        self.assertProtocolExists(
+            "CIEightfoldReflectedTile", Quartz, "CIEightfoldReflectedTileProtocol"
+        )
+        self.assertProtocolExists(
+            "CIFourfoldReflectedTile", Quartz, "CIFourfoldReflectedTileProtocol"
+        )
+        self.assertProtocolExists(
+            "CIFourfoldRotatedTile", Quartz, "CIFourfoldRotatedTileProtocol"
+        )
+        self.assertProtocolExists(
+            "CIFourfoldTranslatedTile", Quartz, "CIFourfoldTranslatedTileProtocol"
+        )
+        self.assertProtocolExists(
+            "CIGlideReflectedTile", Quartz, "CIGlideReflectedTileProtocol"
+        )
+        self.assertProtocolExists("CIKaleidoscope", Quartz, "CIKaleidoscopeProtocol")
+        self.assertProtocolExists("CIOpTile", Quartz, "CIOpTileProtocol")
+        self.assertProtocolExists(
+            "CIParallelogramTile", Quartz, "CIParallelogramTileProtocol"
+        )
+        self.assertProtocolExists(
+            "CIPerspectiveTile", Quartz, "CIPerspectiveTileProtocol"
+        )
+        self.assertProtocolExists(
+            "CISixfoldReflectedTile", Quartz, "CISixfoldReflectedTileProtocol"
+        )
+        self.assertProtocolExists(
+            "CISixfoldRotatedTile", Quartz, "CISixfoldRotatedTileProtocol"
+        )
+        self.assertProtocolExists(
+            "CITriangleKaleidoscope", Quartz, "CITriangleKaleidoscopeProtocol"
+        )
+        self.assertProtocolExists("CITriangleTile", Quartz, "CITriangleTileProtocol")
+        self.assertProtocolExists(
+            "CITwelvefoldReflectedTile", Quartz, "CITwelvefoldReflectedTileProtocol"
+        )
+        self.assertProtocolExists(
+            "CIAttributedTextImageGenerator",
+            Quartz,
+            "CIAttributedTextImageGeneratorProtocol",
+        )
+        self.assertProtocolExists(
+            "CIAztecCodeGenerator", Quartz, "CIAztecCodeGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CIBarcodeGenerator", Quartz, "CIBarcodeGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CICheckerboardGenerator", Quartz, "CICheckerboardGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CICode128BarcodeGenerator", Quartz, "CICode128BarcodeGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CILenticularHaloGenerator", Quartz, "CILenticularHaloGeneratorProtocol"
+        )
+        self.assertProtocolExists("CIMeshGenerator", Quartz, "CIMeshGeneratorProtocol")
+        self.assertProtocolExists(
+            "CIPDF417BarcodeGenerator", Quartz, "CIPDF417BarcodeGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CIQRCodeGenerator", Quartz, "CIQRCodeGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CIRandomGenerator", Quartz, "CIRandomGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CIRoundedRectangleGenerator", Quartz, "CIRoundedRectangleGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CIStarShineGenerator", Quartz, "CIStarShineGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CIStripesGenerator", Quartz, "CIStripesGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CISunbeamsGenerator", Quartz, "CISunbeamsGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CITextImageGenerator", Quartz, "CITextImageGeneratorProtocol"
+        )
+        self.assertProtocolExists("CIBlendWithMask", Quartz, "CIBlendWithMaskProtocol")
+        self.assertProtocolExists(
+            "CIGaborGradients", Quartz, "CIGaborGradientsProtocol"
+        )
+        self.assertProtocolExists("CIBloom", Quartz, "CIBloomProtocol")
+        self.assertProtocolExists("CIComicEffect", Quartz, "CIComicEffectProtocol")
+        self.assertProtocolExists("CIConvolution", Quartz, "CIConvolutionProtocol")
+        self.assertProtocolExists("CICoreMLModel", Quartz, "CICoreMLModelProtocol")
+        self.assertProtocolExists("CICrystallize", Quartz, "CICrystallizeProtocol")
+        self.assertProtocolExists("CIDepthOfField", Quartz, "CIDepthOfFieldProtocol")
+        self.assertProtocolExists("CIEdges", Quartz, "CIEdgesProtocol")
+        self.assertProtocolExists("CIEdgeWork", Quartz, "CIEdgeWorkProtocol")
+        self.assertProtocolExists("CIGloom", Quartz, "CIGloomProtocol")
+        self.assertProtocolExists(
+            "CIHeightFieldFromMask", Quartz, "CIHeightFieldFromMaskProtocol"
+        )
+        self.assertProtocolExists(
+            "CIHexagonalPixellate", Quartz, "CIHexagonalPixellateProtocol"
+        )
+        self.assertProtocolExists(
+            "CIHighlightShadowAdjust", Quartz, "CIHighlightShadowAdjustProtocol"
+        )
+        self.assertProtocolExists("CILineOverlay", Quartz, "CILineOverlayProtocol")
+        self.assertProtocolExists("CIMix", Quartz, "CIMixProtocol")
+        self.assertProtocolExists("CIPixellate", Quartz, "CIPixellateProtocol")
+        self.assertProtocolExists("CIPointillize", Quartz, "CIPointillizeProtocol")
+        self.assertProtocolExists("CISaliencyMap", Quartz, "CISaliencyMapProtocol")
+        self.assertProtocolExists(
+            "CIShadedMaterial", Quartz, "CIShadedMaterialProtocol"
+        )
+        self.assertProtocolExists("CISpotColor", Quartz, "CISpotColorProtocol")
+        self.assertProtocolExists("CISpotLight", Quartz, "CISpotLightProtocol")
+        self.assertProtocolExists("CIBokehBlur", Quartz, "CIBokehBlurProtocol")
+        self.assertProtocolExists("CIBoxBlur", Quartz, "CIBoxBlurProtocol")
+        self.assertProtocolExists("CIDiscBlur", Quartz, "CIDiscBlurProtocol")
+        self.assertProtocolExists("CIGaussianBlur", Quartz, "CIGaussianBlurProtocol")
+        self.assertProtocolExists(
+            "CIMaskedVariableBlur", Quartz, "CIMaskedVariableBlurProtocol"
+        )
+        self.assertProtocolExists("CIMedian", Quartz, "CIMedianProtocol")
+        self.assertProtocolExists(
+            "CIMorphologyGradient", Quartz, "CIMorphologyGradientProtocol"
+        )
+        self.assertProtocolExists(
+            "CIMorphologyMaximum", Quartz, "CIMorphologyMaximumProtocol"
+        )
+        self.assertProtocolExists(
+            "CIMorphologyMinimum", Quartz, "CIMorphologyMinimumProtocol"
+        )
+        self.assertProtocolExists(
+            "CIMorphologyRectangleMaximum",
+            Quartz,
+            "CIMorphologyRectangleMaximumProtocol",
+        )
+        self.assertProtocolExists(
+            "CIMorphologyRectangleMinimum",
+            Quartz,
+            "CIMorphologyRectangleMinimumProtocol",
+        )
+        self.assertProtocolExists("CIMotionBlur", Quartz, "CIMotionBlurProtocol")
+        self.assertProtocolExists(
+            "CINoiseReduction", Quartz, "CINoiseReductionProtocol"
+        )
+        self.assertProtocolExists("CIZoomBlur", Quartz, "CIZoomBlurProtocol")
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("CIColorAbsoluteDifference", Quartz)
-        self.assertProtocolExists("CIColorThreshold", Quartz)
-        self.assertProtocolExists("CIColorThresholdOtsu", Quartz)
-        self.assertProtocolExists("CIBumpDistortion", Quartz)
-        self.assertProtocolExists("CIBumpDistortionLinear", Quartz)
-        self.assertProtocolExists("CICircleSplashDistortion", Quartz)
-        self.assertProtocolExists("CICircularWrap", Quartz)
-        self.assertProtocolExists("CIDisplacementDistortion", Quartz)
-        self.assertProtocolExists("CIDroste", Quartz)
-        self.assertProtocolExists("CIGlassDistortion", Quartz)
-        self.assertProtocolExists("CIGlassLozenge", Quartz)
-        self.assertProtocolExists("CIHoleDistortion", Quartz)
-        self.assertProtocolExists("CILightTunnel", Quartz)
-        self.assertProtocolExists("CINinePartStretched", Quartz)
-        self.assertProtocolExists("CINinePartTiled", Quartz)
-        self.assertProtocolExists("CIPinchDistortion", Quartz)
-        self.assertProtocolExists("CIStretchCrop", Quartz)
-        self.assertProtocolExists("CITorusLensDistortion", Quartz)
-        self.assertProtocolExists("CITwirlDistortion", Quartz)
-        self.assertProtocolExists("CIVortexDistortion", Quartz)
-        self.assertProtocolExists("CIAreaReductionFilter", Quartz)
-        self.assertProtocolExists("CIAreaAverage", Quartz)
-        self.assertProtocolExists("CIAreaHistogram", Quartz)
-        self.assertProtocolExists("CIAreaMaximum", Quartz)
-        self.assertProtocolExists("CIAreaMaximumAlpha", Quartz)
-        self.assertProtocolExists("CIAreaMinimum", Quartz)
-        self.assertProtocolExists("CIAreaMinimumAlpha", Quartz)
-        self.assertProtocolExists("CIAreaMinMax", Quartz)
-        self.assertProtocolExists("CIAreaMinMaxRed", Quartz)
-        self.assertProtocolExists("CIColumnAverage", Quartz)
-        self.assertProtocolExists("CIHistogramDisplay", Quartz)
-        self.assertProtocolExists("CIKMeans", Quartz)
-        self.assertProtocolExists("CIRowAverage", Quartz)
+        self.assertProtocolExists(
+            "CIColorAbsoluteDifference", Quartz, "CIColorAbsoluteDifferenceProtocol"
+        )
+        self.assertProtocolExists(
+            "CIColorThreshold", Quartz, "CIColorThresholdProtocol"
+        )
+        self.assertProtocolExists(
+            "CIColorThresholdOtsu", Quartz, "CIColorThresholdOtsuProtocol"
+        )
+        self.assertProtocolExists(
+            "CIBumpDistortion", Quartz, "CIBumpDistortionProtocol"
+        )
+        self.assertProtocolExists(
+            "CIBumpDistortionLinear", Quartz, "CIBumpDistortionLinearProtocol"
+        )
+        self.assertProtocolExists(
+            "CICircleSplashDistortion", Quartz, "CICircleSplashDistortionProtocol"
+        )
+        self.assertProtocolExists("CICircularWrap", Quartz, "CICircularWrapProtocol")
+        self.assertProtocolExists(
+            "CIDisplacementDistortion", Quartz, "CIDisplacementDistortionProtocol"
+        )
+        self.assertProtocolExists("CIDroste", Quartz, "CIDrosteProtocol")
+        self.assertProtocolExists(
+            "CIGlassDistortion", Quartz, "CIGlassDistortionProtocol"
+        )
+        self.assertProtocolExists("CIGlassLozenge", Quartz, "CIGlassLozengeProtocol")
+        self.assertProtocolExists(
+            "CIHoleDistortion", Quartz, "CIHoleDistortionProtocol"
+        )
+        self.assertProtocolExists("CILightTunnel", Quartz, "CILightTunnelProtocol")
+        self.assertProtocolExists(
+            "CINinePartStretched", Quartz, "CINinePartStretchedProtocol"
+        )
+        self.assertProtocolExists("CINinePartTiled", Quartz, "CINinePartTiledProtocol")
+        self.assertProtocolExists(
+            "CIPinchDistortion", Quartz, "CIPinchDistortionProtocol"
+        )
+        self.assertProtocolExists("CIStretchCrop", Quartz, "CIStretchCropProtocol")
+        self.assertProtocolExists(
+            "CITorusLensDistortion", Quartz, "CITorusLensDistortionProtocol"
+        )
+        self.assertProtocolExists(
+            "CITwirlDistortion", Quartz, "CITwirlDistortionProtocol"
+        )
+        self.assertProtocolExists(
+            "CIVortexDistortion", Quartz, "CIVortexDistortionProtocol"
+        )
+        self.assertProtocolExists(
+            "CIAreaReductionFilter", Quartz, "CIAreaReductionFilterProtocol"
+        )
+        self.assertProtocolExists("CIAreaAverage", Quartz, "CIAreaAverageProtocol")
+        self.assertProtocolExists("CIAreaHistogram", Quartz, "CIAreaHistogramProtocol")
+        self.assertProtocolExists("CIAreaMaximum", Quartz, "CIAreaMaximumProtocol")
+        self.assertProtocolExists(
+            "CIAreaMaximumAlpha", Quartz, "CIAreaMaximumAlphaProtocol"
+        )
+        self.assertProtocolExists("CIAreaMinimum", Quartz, "CIAreaMinimumProtocol")
+        self.assertProtocolExists(
+            "CIAreaMinimumAlpha", Quartz, "CIAreaMinimumAlphaProtocol"
+        )
+        self.assertProtocolExists("CIAreaMinMax", Quartz, "CIAreaMinMaxProtocol")
+        self.assertProtocolExists("CIAreaMinMaxRed", Quartz, "CIAreaMinMaxRedProtocol")
+        self.assertProtocolExists("CIColumnAverage", Quartz, "CIColumnAverageProtocol")
+        self.assertProtocolExists(
+            "CIHistogramDisplay", Quartz, "CIHistogramDisplayProtocol"
+        )
+        self.assertProtocolExists("CIKMeans", Quartz, "CIKMeansProtocol")
+        self.assertProtocolExists("CIRowAverage", Quartz, "CIRowAverageProtocol")
 
     @min_sdk_level("14.0")
     def test_protocols14_0(self):
-        self.assertProtocolExists("CIRoundedRectangleStrokeGenerator", Quartz)
-        self.assertProtocolExists("CICannyEdgeDetector", Quartz)
-        self.assertProtocolExists("CISobelGradients", Quartz)
-        self.assertProtocolExists("CIBlurredRectangleGenerator", Quartz)
+        self.assertProtocolExists(
+            "CIRoundedRectangleStrokeGenerator",
+            Quartz,
+            "CIRoundedRectangleStrokeGeneratorProtocol",
+        )
+        self.assertProtocolExists(
+            "CICannyEdgeDetector", Quartz, "CICannyEdgeDetectorProtocol"
+        )
+        self.assertProtocolExists(
+            "CISobelGradients", Quartz, "CISobelGradientsProtocol"
+        )
+        self.assertProtocolExists(
+            "CIBlurredRectangleGenerator", Quartz, "CIBlurredRectangleGeneratorProtocol"
+        )
 
     @min_sdk_level("15.0")
     def test_protocols15_0(self):
-        self.assertProtocolExists("CIMaximumScaleTransform", Quartz)
-        self.assertProtocolExists("CIToneMapHeadroom", Quartz)
-        self.assertProtocolExists("CIAreaBoundsRed", Quartz)
+        self.assertProtocolExists(
+            "CIMaximumScaleTransform", Quartz, "CIMaximumScaleTransformProtocol"
+        )
+        self.assertProtocolExists(
+            "CIToneMapHeadroom", Quartz, "CIToneMapHeadroomProtocol"
+        )
+        self.assertProtocolExists("CIAreaBoundsRed", Quartz, "CIAreaBoundsRedProtocol")
 
     @min_sdk_level("26.0")
     def test_protocols26_0(self):
-        self.assertProtocolExists("CISystemToneMap", Quartz)
-        self.assertProtocolExists("CIBlurredRoundedRectangleGenerator", Quartz)
-        self.assertProtocolExists("CIRoundedQRCodeGenerator", Quartz)
-        self.assertProtocolExists("CIAreaAverageMaximumRed", Quartz)
+        self.assertProtocolExists("CISystemToneMap", Quartz, "CISystemToneMapProtocol")
+        self.assertProtocolExists(
+            "CIBlurredRoundedRectangleGenerator",
+            Quartz,
+            "CIBlurredRoundedRectangleGeneratorProtocol",
+        )
+        self.assertProtocolExists(
+            "CIRoundedQRCodeGenerator", Quartz, "CIRoundedQRCodeGeneratorProtocol"
+        )
+        self.assertProtocolExists(
+            "CIAreaAverageMaximumRed", Quartz, "CIAreaAverageMaximumRedProtocol"
+        )
 
     def assert_rw_prop(self, cls, name, typestr):
         self.assertResultHasType(getattr(cls, name), typestr)

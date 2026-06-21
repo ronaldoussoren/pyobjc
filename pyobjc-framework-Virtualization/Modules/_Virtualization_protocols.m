@@ -30,4 +30,12 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(VZUSBDevice));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 2700
+    p = PyObjC_IdToPython(@protocol(VZCustomVirtioDeviceConfigurationDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(VZCustomVirtioDeviceDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(VZUSBControllerDelegate));
+    Py_XDECREF(p);
+#endif
 }

@@ -12,10 +12,13 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
     def depthTextureUsage(self):
         return 1
 
-    def reactiveTextureUsage(self):
+    def motionTextureUsage(self):
         return 1
 
-    def motionTextureUsage(self):
+    def reactiveMaskTextureUsage(self):
+        return 1
+
+    def reactiveTextureUsage(self):
         return 1
 
     def outputTextureUsage(self):
@@ -31,6 +34,66 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
         return 1
 
     def setInputContentHeight_(self, a):
+        pass
+
+    def colorContentOffsetX(self):
+        return 1
+
+    def setColorContentOffsetX_(self, a):
+        pass
+
+    def colorContentOffsetY(self):
+        return 1
+
+    def setColorContentOffsetY_(self, a):
+        pass
+
+    def depthContentOffsetX(self):
+        return 1
+
+    def setDepthContentOffsetX_(self, a):
+        pass
+
+    def depthContentOffsetY(self):
+        return 1
+
+    def setDepthContentOffsetY_(self, a):
+        pass
+
+    def motionContentOffsetX(self):
+        return 1
+
+    def setMotionContentOffsetX_(self, a):
+        pass
+
+    def motionContentOffsetY(self):
+        return 1
+
+    def setMotionContentOffsetY_(self, a):
+        pass
+
+    def reactiveMaskContentOffsetX(self):
+        return 1
+
+    def setReactiveMaskContentOffsetX_(self, a):
+        pass
+
+    def reactiveMaskContentOffsetY(self):
+        return 1
+
+    def setReactiveMaskContentOffsetY_(self, a):
+        pass
+
+    def outputOffsetX(self):
+        return 1
+
+    def setOutputOffsetX_(self, a):
+        pass
+
+    def outputOffsetY(self):
+        return 1
+
+    def setOutputOffsetY_(self, a):
         pass
 
     def jitterOffsetX(self):
@@ -96,6 +159,18 @@ class TestMTLFXTemporalScalerHelper(MetalFX.NSObject):
     def inputContentMaxScale(self):
         return 1
 
+    def isOutputResolutionMotionVectorsEnabled(self):
+        return 1
+
+    def setOutputResolutionMotionVectorsEnabled_(self, a):
+        pass
+
+    def isJitteredMotionVectorsEnabled(self):
+        return 1
+
+    def setJitteredMotionVectorsEnabled_(self, a):
+        pass
+
     def isDepthReversed(self):
         return 1
 
@@ -122,6 +197,12 @@ class TestMTLFXTemporalScaler(TestCase):
             TestMTLFXTemporalScalerHelper.depthTextureUsage, objc._C_NSUInteger
         )
         self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.motionTextureUsage, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.reactiveMaskTextureUsage, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
             TestMTLFXTemporalScalerHelper.reactiveTextureUsage, objc._C_NSUInteger
         )
         self.assertResultHasType(
@@ -138,6 +219,74 @@ class TestMTLFXTemporalScaler(TestCase):
         )
         self.assertArgHasType(
             TestMTLFXTemporalScalerHelper.setInputContentHeight_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.colorContentOffsetX, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setColorContentOffsetX_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.colorContentOffsetY, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setColorContentOffsetY_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.depthContentOffsetX, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setDepthContentOffsetX_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.depthContentOffsetY, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setDepthContentOffsetY_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.motionContentOffsetX, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setMotionContentOffsetX_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.motionContentOffsetY, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setMotionContentOffsetY_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.reactiveMaskContentOffsetX, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setReactiveMaskContentOffsetX_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.reactiveMaskContentOffsetY, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setReactiveMaskContentOffsetY_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.outputOffsetX, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setOutputOffsetX_, 0, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLFXTemporalScalerHelper.outputOffsetY, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLFXTemporalScalerHelper.setOutputOffsetY_, 0, objc._C_NSUInteger
         )
 
         self.assertResultHasType(
@@ -206,6 +355,7 @@ class TestMTLFXTemporalScaler(TestCase):
         self.assertResultHasType(
             TestMTLFXTemporalScalerHelper.inputContentMaxScale, objc._C_FLT
         )
+
         self.assertResultIsBOOL(TestMTLFXTemporalScalerHelper.isDepthReversed)
         self.assertArgIsBOOL(TestMTLFXTemporalScalerHelper.setDepthReversed_, 0)
 
@@ -253,3 +403,18 @@ class TestMTLFXTemporalScaler(TestCase):
     @min_os_level("26.0")
     def test_methods26_0(self):
         self.assertResultIsBOOL(MetalFX.MTLFXTemporalScalerDescriptor.supportsMetal4FX_)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            MetalFX.MTLFXTemporalScaler.isOutputResolutionMotionVectorsEnabled
+        )
+        self.assertArgIsBOOL(
+            MetalFX.MTLFXTemporalScaler.setOutputResolutionMotionVectorsEnabled_, 0
+        )
+        self.assertResultIsBOOL(
+            MetalFX.MTLFXTemporalScaler.isJitteredMotionVectorsEnabled
+        )
+        self.assertArgIsBOOL(
+            MetalFX.MTLFXTemporalScaler.setJitteredMotionVectorsEnabled_, 0
+        )

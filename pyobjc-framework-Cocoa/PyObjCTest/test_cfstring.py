@@ -164,11 +164,11 @@ class TestString(TestCase):
         s = CoreFoundation.CFStringGetCStringPtr(
             "apenootjes", CoreFoundation.kCFStringEncodingASCII
         )
-        if s is not objc.NULL:
+        if s not in (objc.NULL, None):
             self.assertEqual(s, b"apenootjes")
             self.assertIsInstance(s, str)
         s = CoreFoundation.CFStringGetCharactersPtr("apenootjes")
-        if s is not objc.NULL:
+        if s not in (objc.NULL, None):
             self.assertEqual(s, "apenootjes")
             self.assertIsInstance(s, str)
         idx, buf, used = CoreFoundation.CFStringGetBytes(

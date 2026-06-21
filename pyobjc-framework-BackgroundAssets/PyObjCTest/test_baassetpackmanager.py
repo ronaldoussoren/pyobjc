@@ -65,3 +65,53 @@ class TestBAAssetPackManager(TestCase):
             2,
             b"v@",
         )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsBlock(
+            BackgroundAssets.BAAssetPackManager.getManifestWithCompletionHandler_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            BackgroundAssets.BAAssetPackManager.getLocallyAvailableLanguagesWithCompletionHandler_,
+            0,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            BackgroundAssets.BAAssetPackManager.reconcilePreferredLanguagesWithCompletionHandler_,
+            0,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            BackgroundAssets.BAAssetPackManager.ensureLocalAvailabilityOfAssetPacks_completionHandler_,
+            1,
+            b"v@",
+        )
+
+        self.assertArgIsBOOL(
+            BackgroundAssets.BAAssetPackManager.ensureLocalAvailabilityOfAssetPacks_requireLatestVersions_completionHandler_,
+            1,
+        )
+        self.assertArgIsBlock(
+            BackgroundAssets.BAAssetPackManager.ensureLocalAvailabilityOfAssetPacks_requireLatestVersions_completionHandler_,
+            2,
+            b"v@",
+        )
+
+        self.assertArgIsOut(
+            BackgroundAssets.BAAssetPackManager.contentsAtPath_asLocalizedForLanguage_options_error_,
+            3,
+        )
+        self.assertArgIsOut(
+            BackgroundAssets.BAAssetPackManager.fileDescriptorForPath_asLocalizedForLanguage_error_,
+            2,
+        )
+        self.assertArgIsOut(
+            BackgroundAssets.BAAssetPackManager.URLForPath_error_,
+            1,
+        )
+        self.assertArgIsOut(
+            BackgroundAssets.BAAssetPackManager.URLForPath_asLocalizedForLanguage_error_,
+            2,
+        )

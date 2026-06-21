@@ -36,3 +36,7 @@ class TestTCPOptions(TestCase):
     @min_os_level("12.0")
     def test_functions12_0(self):
         Network.nw_tcp_options_set_multipath_force_version
+
+    @min_os_level("27.0")
+    def test_functions27_0(self):
+        Network.nw_tcp_set_max_pacing_rate

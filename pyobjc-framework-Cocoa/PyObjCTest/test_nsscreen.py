@@ -3,13 +3,18 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSScreen(TestCase):
-    def testMethods(self):
-        m = AppKit.NSScreen.supportedWindowDepths.__metadata__()
-        self.assertTrue(m["retval"]["c_array_delimited_by_null"])
+    def test_constants(self):
+        self.assertIsEnumType(AppKit.NSScreenTouchCapabilities)
+        self.assertEqual(AppKit.NSScreenTouchCapabilitiesNone, 0)
+        self.assertEqual(AppKit.NSScreenTouchCapabilitiesMultiTouch, 1 << 0)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(AppKit.NSScreenColorSpaceDidChangeNotification, str)
+
+    def testMethods(self):
+        m = AppKit.NSScreen.supportedWindowDepths.__metadata__()
+        self.assertTrue(m["retval"]["c_array_delimited_by_null"])
 
     @min_os_level("10.7")
     def testMethods10_7(self):

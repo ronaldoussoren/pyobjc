@@ -86,6 +86,13 @@ class TestNSGestureRecognizer(TestCase):
             AppKit.NSGestureRecognizer.shouldBeRequiredToFailByGestureRecognizer_
         )
 
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertResultIsBOOL(AppKit.NSGestureRecognizer.isCancellableByScrollGesture)
+        self.assertArgIsBOOL(
+            AppKit.NSGestureRecognizer.setCancellableByScrollGesture_, 0
+        )
+
     @min_sdk_level("10.10")
     def testProtocols(self):
         self.assertProtocolExists("NSGestureRecognizerDelegate", AppKit)

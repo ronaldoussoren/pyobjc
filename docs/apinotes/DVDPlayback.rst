@@ -13,6 +13,8 @@ These bindings are accessed through the ``DVDPlayback`` package (that is, ``impo
 
 .. macosdeprecated:: 10.15
 
+.. macosremoved:: 27.0
+
 
 API Notes
 ---------

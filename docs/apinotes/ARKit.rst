@@ -14,6 +14,10 @@ These bindings are accessed through the ``ARKit`` package (that is, ``import ARK
 
 .. macosadded:: 26
 
+.. note::
+
+   Most interesting APIs are not available on macOS.
+
 API Notes
 ---------
 

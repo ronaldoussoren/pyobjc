@@ -52,6 +52,9 @@ class TestNSFileProviderItemHelper(FileProvider.NSObject):
     def isSharedByCurrentUser(self):
         return 1
 
+    def namespacePolicy(self):
+        return 1
+
 
 class TestNSFileProviderItem(TestCase):
     def test_enum_types(self):
@@ -125,6 +128,13 @@ class TestNSFileProviderItem(TestCase):
             FileProvider.NSFileProviderTrashContainerItemIdentifier, str
         )
 
+        self.assertIsEnumType(FileProvider.NSFileProviderNamespacePolicy)
+        self.assertEqual(FileProvider.NSFileProviderNamespacePolicyInherited, 0)
+        self.assertEqual(FileProvider.NSFileProviderNamespacePolicyMaterializeLazily, 1)
+        self.assertEqual(
+            FileProvider.NSFileProviderNamespacePolicyMaterializeEagerly, 2
+        )
+
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
         self.assertProtocolExists("NSFileProviderItem", FileProvider)
@@ -155,3 +165,7 @@ class TestNSFileProviderItem(TestCase):
         )
         self.assertResultIsBOOL(TestNSFileProviderItemHelper.isShared)
         self.assertResultIsBOOL(TestNSFileProviderItemHelper.isSharedByCurrentUser)
+
+        self.assertResultHasType(
+            TestNSFileProviderItemHelper.namespacePolicy, objc._C_NSInteger
+        )

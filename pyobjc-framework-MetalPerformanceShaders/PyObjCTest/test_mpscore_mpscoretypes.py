@@ -53,6 +53,23 @@ class TestMPSCore_MPSCoreTypes(TestCase):
             MetalPerformanceShaders.MPSDataTypeFloatBit | 16,
         )
 
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDataTypeFloat4e2m1,
+            MetalPerformanceShaders.MPSDataTypeFloatBit | 0x210000 | 4,
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDataTypeFloat8e4m3,
+            MetalPerformanceShaders.MPSDataTypeFloatBit | 0x430000 | 8,
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDataTypeFloat8e5m2,
+            MetalPerformanceShaders.MPSDataTypeFloatBit | 0x520000 | 8,
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDataTypeFloat8e8m0,
+            MetalPerformanceShaders.MPSDataTypeFloatBit | 0x800000 | 8,
+        )
+
         self.assertEqual(MetalPerformanceShaders.MPSDataTypeComplexBit, 0x01000000)
         self.assertEqual(
             MetalPerformanceShaders.MPSDataTypeComplexFloat32,

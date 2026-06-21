@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 
 
 class TestAVMetrics(TestCase):
+    def test_constants(self):
+        self.assertIsEnumType(AVFoundation.AVMetricPlaybackMode)
+        self.assertEqual(AVFoundation.AVMetricPlaybackModeLocal, 0)
+        self.assertEqual(AVFoundation.AVMetricPlaybackModeAirPlayVideo, 1)
+
     @min_sdk_level("15.0")
     def test_protocols(self):
         self.assertProtocolExists("AVMetricEventStreamPublisher", AVFoundation)

@@ -448,3 +448,9 @@ class TestUTCoreTypes(TestCase):
         self.assertIsInstance(
             UniformTypeIdentifiers.UTTypeJPEGXL, UniformTypeIdentifiers.UTType
         )
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeMarkdown, UniformTypeIdentifiers.UTType
+        )

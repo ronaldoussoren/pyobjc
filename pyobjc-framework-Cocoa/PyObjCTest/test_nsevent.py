@@ -419,3 +419,7 @@ class TestNSEvent(TestCase):
             + b"o^"
             + objc._C_NSBOOL,
         )
+
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertResultIsBOOL(AppKit.NSEvent.isTouchSwipeNavigationEnabled)

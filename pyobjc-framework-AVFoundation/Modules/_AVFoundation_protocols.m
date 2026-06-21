@@ -99,4 +99,8 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(AVCaptureTimecodeGeneratorDelegate));
     p = PyObjC_IdToPython(@protocol(AVExternalSyncDeviceDelegate));
 #endif
+#if PyObjC_BUILD_RELEASE >= 2700
+    p = PyObjC_IdToPython(@protocol(AVCaptureBroadcastVideoOutputDelegate));
+    p = PyObjC_IdToPython(@protocol(AVPlayerItemSampleBufferOutputDelegate));
+#endif
 }

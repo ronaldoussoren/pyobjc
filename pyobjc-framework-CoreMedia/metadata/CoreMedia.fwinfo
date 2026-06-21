@@ -58,6 +58,16 @@
    }
   },
   "aliases": {
+   "COREMEDIA_DECLARE_RETURNS_NOT_RETAINED_ON_PARAMETERS": {  "ignore": true },
+   "COREMEDIA_DECLARE_RETURNS_RETAINED_ON_PARAMETERS": {  "ignore": true },
+   "COREMEDIA_DECLARE_NULLABILITY": {  "ignore": true },
+   "COREMEDIA_DECLARE_RELEASES_ARGUMENT": {  "ignore": true },
+   "COREMEDIA_DECLARE_RETURNS_RETAINED": {  "ignore": true },
+   "CM_NULLABLE": {  "ignore": true },
+   "CM_RETURNS_RETAINED_BLOCK": {  "ignore": true },
+   "CM_RETURNS_RETAINED_PARAMETER": {  "ignore": true },
+   "CM_REFINED_FOR_SWIFT": {  "ignore": true },
+   "CM_RETURNS_NOT_RETAINED": {  "ignore": true },
    "kCMTimebaseFarFutureCFAbsoluteTime": {  "alias": "kCMTimebaseVeryLongCFTimeInterval" },
    "CMVideoFormatDescriptionGetCodecType": {  "alias": "CMFormatDescriptionGetMediaSubType" },
    "CMSubtitleFormatDescriptionGetFormatType": {  "alias": "CMFormatDescriptionGetMediaSubType" },

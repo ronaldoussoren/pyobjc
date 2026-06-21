@@ -113,6 +113,22 @@ class TestAVPlaybackCoordinator(TestCase):
             1,
         )
 
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayerPlaybackCoordinator.disconnectedFromSystemAudio
+        )
+
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayerPlaybackCoordinator.setDisconnectedFromSystemAudio_completionHandler_,
+            0,
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVPlayerPlaybackCoordinator.setDisconnectedFromSystemAudio_completionHandler_,
+            1,
+            b"v",
+        )
+
     @min_sdk_level("12.0")
     def test_protocols(self):
         self.assertProtocolExists(

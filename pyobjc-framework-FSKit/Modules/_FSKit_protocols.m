@@ -36,4 +36,28 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(FSVolumeKernelOffloadedIOOperations));
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1501 */
+#if PyObjC_BUILD_RELEASE >= 2700
+    p = PyObjC_IdToPython(@protocol(FSVolumeHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumeXattrHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumeOpenCloseHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumeReadWriteHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumeAccessCheckHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumeRenameHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumePreallocateHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumeItemDeactivationHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumeSeekRegionHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumeDataCacheHandler));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(FSVolumeKernelOffloadedIOHandler));
+    Py_XDECREF(p);
+#endif
 }

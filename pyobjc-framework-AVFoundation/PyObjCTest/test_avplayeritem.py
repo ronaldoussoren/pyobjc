@@ -129,3 +129,12 @@ class TestAVPlayerItem(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVPlayerItem.setAppliesPerFrameHDRDisplayMetadata_, 0
         )
+
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVPlayerItem.fetchAccessLogWithCompletionHandler_, 0, b"v@"
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVPlayerItem.fetchErrorLogWithCompletionHandler_, 0, b"v@"
+        )

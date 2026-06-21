@@ -38,3 +38,6 @@ class TestSCError(TestCase):
             ScreenCaptureKit.SCStreamErrorFailedToStartMicrophoneCapture, -3820
         )
         self.assertEqual(ScreenCaptureKit.SCStreamErrorSystemStoppedStream, -3821)
+        self.assertEqual(ScreenCaptureKit.SCStreamErrorInsufficientStorage, -3822)
+        self.assertEqual(ScreenCaptureKit.SCStreamErrorNotSupported, -3823)
+        self.assertEqual(ScreenCaptureKit.SCStreamErrorMissingBackgroundMode, -3824)

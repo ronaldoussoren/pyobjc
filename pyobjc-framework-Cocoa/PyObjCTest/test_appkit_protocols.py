@@ -56,7 +56,9 @@ class TestProtocolsExisting(TestCase):
         self.assertProtocolExists("NSRuleEditorDelegate", AppKit)
         self.assertProtocolExists("NSTableViewDataSource", AppKit)
         self.assertProtocolExists("NSTableViewDelegate", AppKit)
-        self.assertProtocolExists("NSTextAttachmentCell", AppKit)
+        self.assertProtocolExists(
+            "NSTextAttachmentCell", AppKit, "NSTextAttachmentCellProtocol"
+        )
         self.assertProtocolExists("NSTextDelegate", AppKit)
         self.assertProtocolExists("NSTextFieldDelegate", AppKit)
         self.assertProtocolExists("NSTextInput", AppKit)

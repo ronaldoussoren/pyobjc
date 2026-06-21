@@ -52,6 +52,8 @@ class TestVTErrors(TestCase):
         self.assertEqual(
             VideoToolbox.kVTVideoEncoderAutoWhiteBalanceNotLockedErr, -19512
         )
+        self.assertEqual(VideoToolbox.kVTLogTransferFunctionMismatchErr, -19513)
+
         self.assertEqual(
             VideoToolbox.kVTDecodeFrame_EnableAsynchronousDecompression, 1 << 0
         )

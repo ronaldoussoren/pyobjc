@@ -3,12 +3,9 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSegmentedControl(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSSegmentDistribution)
-        self.assertIsEnumType(AppKit.NSSegmentStyle)
-        self.assertIsEnumType(AppKit.NSSegmentSwitchTracking)
 
     def testConstants(self):
+        self.assertIsEnumType(AppKit.NSSegmentStyle)
         self.assertEqual(AppKit.NSSegmentStyleAutomatic, 0)
         self.assertEqual(AppKit.NSSegmentStyleRounded, 1)
         self.assertEqual(AppKit.NSSegmentStyleTexturedRounded, 2)
@@ -18,15 +15,22 @@ class TestNSSegmentedControl(TestCase):
         self.assertEqual(AppKit.NSSegmentStyleSmallSquare, 6)
         self.assertEqual(AppKit.NSSegmentStyleSeparated, 8)
 
+        self.assertIsEnumType(AppKit.NSSegmentSwitchTracking)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingSelectOne, 0)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingSelectAny, 1)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingMomentary, 2)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingMomentaryAccelerator, 3)
 
+        self.assertIsEnumType(AppKit.NSSegmentDistribution)
         self.assertEqual(AppKit.NSSegmentDistributionFit, 0)
         self.assertEqual(AppKit.NSSegmentDistributionFill, 1)
         self.assertEqual(AppKit.NSSegmentDistributionFillEqually, 2)
         self.assertEqual(AppKit.NSSegmentDistributionFillProportionally, 3)
+
+        self.assertIsEnumType(AppKit.NSSegmentedControlRole)
+        self.assertEqual(AppKit.NSSegmentedControlRoleAutomatic, 0)
+        self.assertEqual(AppKit.NSSegmentedControlRoleTabs, 1)
+        self.assertEqual(AppKit.NSSegmentedControlRoleValueSelection, 2)
 
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSSegmentedControl.selectSegmentWithTag_)

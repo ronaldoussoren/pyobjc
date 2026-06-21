@@ -25,3 +25,9 @@ class TestGCControllerElement(TestCase):
         self.assertResultIsBOOL(
             GameController.GCControllerElement.isBoundToSystemGesture
         )
+
+    @min_os_level("27.0")
+    def testMethods27_0(self):
+        self.assertResultIsBOOL(
+            GameController.GCControllerElement.isBoundToSystemGesture
+        )

@@ -200,6 +200,20 @@
       }
      },
      {
+      "selector": "getBytes:strides:fromSliceOrigin:sliceDimensions:plane:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
+      }
+     },
+     {
+      "selector": "replaceSliceOrigin:sliceDimensions:plane:withBytes:strides:",
+      "class_method": false,
+      "args": {
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true }
+      }
+     },
+     {
       "selector": "replaceSliceOrigin:sliceDimensions:withBytes:strides:",
       "class_method": false,
       "args": {
@@ -1408,6 +1422,7 @@
    }
   },
   "formal_protocols": {
+   "MTLCaptureScope": { "rename": "MTLCaptureScopeProtocol" },
    "MTLArgumentEncoder": {
     "methods": [
      {

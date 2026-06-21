@@ -25,6 +25,7 @@ FRAMEWORK_WRAPPERS = [
     ("libdispatch", "10.8", None),
     ("libxpc", "10.8", None),
     ("Accessibility", "11.0", None),
+    ("AccessoryAccess", "27.0", None),
     ("AdServices", "11.0", None),
     ("AdSupport", "10.14", None),
     ("AppTrackingTransparency", "11.0", None),
@@ -80,7 +81,8 @@ FRAMEWORK_WRAPPERS = [
     ("DiscRecording", None, None),
     ("DiscRecordingUI", None, None),
     ("DiskArbitration", None, None),
-    ("DVDPlayback", None, None),
+    ("DVDPlayback", None, "26.6"),
+    ("EnhancedLinkSecurity", "27.0", None),
     ("EventKit", "10.8", None),
     ("ExceptionHandling", None, None),
     ("ExecutionPolicy", "10.15", None),
@@ -160,6 +162,7 @@ FRAMEWORK_WRAPPERS = [
     ("Social", "10.8", None),
     ("Speech", "10.15", None),
     ("SpriteKit", "10.9", None),
+    ("StateReporting", "27.0", None),
     ("StoreKit", "10.7", None),
     ("SyncServices", None, None),
     ("SystemConfiguration", None, None),
@@ -212,6 +215,7 @@ MACOS_TO_DARWIN = {
     "15.4": "24.4",
     "26.0": "25.0",
     "26.4": "25.4",
+    "27.0": "26.0",
 }
 
 

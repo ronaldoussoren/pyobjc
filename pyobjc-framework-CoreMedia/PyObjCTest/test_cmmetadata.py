@@ -164,6 +164,17 @@ class TestCMMetadata(TestCase):
             CoreMedia.kCMMetadataBaseDataType_ExtendedRasterRectangleValue, str
         )
 
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataIdentifier_ITUT_T35MetadataSMPTE2094_50, str
+        )
+        self.assertIsInstance(CoreMedia.kCMMetadataBaseDataType_MacRoman, str)
+        self.assertIsInstance(CoreMedia.kCMMetadataBaseDataType_ISOLatin1, str)
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataDataType_QuickTimeMetadataSMPTE2094_50, str
+        )
+
     @min_os_level("10.10")
     def test_functions10_10(self):
         self.assertArgIsOut(CoreMedia.CMMetadataCreateIdentifierForKeyAndKeySpace, 3)

@@ -122,3 +122,8 @@ class TestHKCategoryValues(TestCase):
         self.assertEqual(HealthKit.HKCategoryValueVaginalBleedingMedium, 3)
         self.assertEqual(HealthKit.HKCategoryValueVaginalBleedingHeavy, 4)
         self.assertEqual(HealthKit.HKCategoryValueVaginalBleedingNone, 5)
+
+        self.assertIsEnumType(HealthKit.HKCategoryValueMenopausalState)
+        self.assertEqual(HealthKit.HKCategoryValueMenopausalStateMenopause, 1)
+        self.assertEqual(HealthKit.HKCategoryValueMenopausalStatePerimenopause, 2)
+        self.assertEqual(HealthKit.HKCategoryValueMenopausalStateNone, 3)

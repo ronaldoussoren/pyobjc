@@ -137,6 +137,12 @@ class TestAudioHardwareBase(TestCase):
             CoreAudio.kAudioDeviceTransportTypeContinuityCapture, fourcc(b"ccap")
         )
         self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeRemoteScreen, fourcc(b"rscr")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeRemoteStreaming, fourcc(b"rstr")
+        )
+        self.assertEqual(
             CoreAudio.kAudioDeviceTransportTypeContinuityCaptureWired, fourcc(b"ccwd")
         )
         self.assertEqual(
@@ -178,6 +184,12 @@ class TestAudioHardwareBase(TestCase):
         )
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyPreferredChannelLayout, fourcc(b"srnd")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyWantsControlsRestored, fourcc(b"resc")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyWantsStreamFormatsRestored, fourcc(b"resf")
         )
 
         self.assertEqual(CoreAudio.kAudioClockDeviceClassID, fourcc(b"aclk"))

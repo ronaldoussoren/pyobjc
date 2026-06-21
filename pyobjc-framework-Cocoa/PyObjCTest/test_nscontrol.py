@@ -54,6 +54,17 @@ class TestNSControl(TestCase):
         self.assertResultIsBOOL(AppKit.NSControl.refusesFirstResponder)
         self.assertArgIsBOOL(AppKit.NSControl.setRefusesFirstResponder_, 0)
 
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        # XXX: "The selector may include the sender, the event, or both as parameters, in that order."
+        #      The SEL can have either 1 or 2 arguments, that's not something we can represent ATM
+        self.assertArgIsSEL(
+            AppKit.NSControl.addTarget_action_forControlEvents_, 1, b"v@:@@"
+        )
+        self.assertArgIsSEL(
+            AppKit.NSControl.removeTarget_action_forControlEvents_, 1, b"v@:@@"
+        )
+
     @min_sdk_level("10.6")
     def testProtocols(self):
         self.assertProtocolExists("NSControlTextEditingDelegate", AppKit)
@@ -90,3 +101,21 @@ class TestNSControl(TestCase):
         self.assertEqual(AppKit.NSControlBorderShapeCapsule, 1)
         self.assertEqual(AppKit.NSControlBorderShapeRoundedRectangle, 2)
         self.assertEqual(AppKit.NSControlBorderShapeCircle, 3)
+
+        self.assertIsEnumType(AppKit.NSControlEvents)
+        self.assertEqual(AppKit.NSControlEventTrackingBegan, 1 << 0)
+        self.assertEqual(AppKit.NSControlEventTrackingRepeated, 1 << 1)
+        self.assertEqual(AppKit.NSControlEventTrackingInside, 1 << 2)
+        self.assertEqual(AppKit.NSControlEventTrackingOutside, 1 << 3)
+        self.assertEqual(AppKit.NSControlEventTrackingEntered, 1 << 4)
+        self.assertEqual(AppKit.NSControlEventTrackingExited, 1 << 5)
+        self.assertEqual(AppKit.NSControlEventTrackingEndedInside, 1 << 6)
+        self.assertEqual(AppKit.NSControlEventTrackingEndedOutside, 1 << 7)
+        self.assertEqual(AppKit.NSControlEventTrackingCancelled, 1 << 8)
+        self.assertEqual(AppKit.NSControlEventValueChanged, 1 << 12)
+        self.assertEqual(AppKit.NSControlEventPrimaryActionTriggered, 1 << 13)
+        self.assertEqual(AppKit.NSControlEventMenuActionTriggered, 1 << 14)
+        self.assertEqual(AppKit.NSControlEventAllTrackingEvents, 0x00000FFF)
+        self.assertEqual(AppKit.NSControlEventApplicationReserved, 0x0F000000)
+        self.assertEqual(AppKit.NSControlEventSystemReserved, 0xF0000000)
+        self.assertEqual(AppKit.NSControlEventAllEvents, 0xFFFFFFFF)

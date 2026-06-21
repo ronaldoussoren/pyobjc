@@ -105,6 +105,12 @@ def _setup():
         ("NSWritingToolsCoordinatorContext", b"new"),
         ("NSViewLayoutRegion", b"init"),
         ("NSViewLayoutRegion", b"new"),
+        ("NSViewCornerConfiguration", b"init"),
+        ("NSViewCornerConfiguration", b"new"),
+        ("NSViewCornerRadii", b"init"),
+        ("NSViewCornerRadii", b"new"),
+        ("NSViewCornerRadius", b"init"),
+        ("NSViewCornerRadius", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 
@@ -126,6 +132,12 @@ def _setup():
         "NSFontDescriptor",
         (("__getitem__", fontdescriptor_getitem), ("get", fontdescriptor_get)),
     )
+
+    for cls in ("NSViewCornerRadii",):
+        try:
+            objc.lookUpClass(cls).__objc_final__ = True
+        except objc.error:
+            pass
 
     # Fix types for a number of character constants
     # XXX: Move this to metadata

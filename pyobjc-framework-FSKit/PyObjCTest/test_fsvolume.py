@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 import FSKit
 import objc
@@ -45,7 +45,13 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def getAttributes_ofItem_replyHandler_(self, a, b, c):
         pass
 
+    def getAttributes_ofItem_context_replyHandler_(self, a, b, c, e):
+        pass
+
     def setAttributes_onItem_replyHandler_(self, a, b, c):
+        pass
+
+    def setAttributes_onItem_context_replyHandler_(self, a, b, c, d):
         pass
 
     def lookupItemNamed_inDirectory_replyHandler_(self, a, b, c):
@@ -57,7 +63,15 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def readSymbolicLink_replyHandler_(self, a, b):
         pass
 
+    def readSymbolicLink_context_replyHandler_(self, a, b, c):
+        pass
+
     def createItemNamed_type_inDirectory_attributes_replyHandler_(self, a, b, c, d, e):
+        pass
+
+    def createItemNamed_type_inDirectory_attributes_context_replyHandler_(
+        self, a, b, c, d, e, f
+    ):
         pass
 
     def createSymbolicLinkNamed_inDirectory_attributes_linkContents_replyHandler_(
@@ -65,14 +79,30 @@ class TestFSVolumeHelper(FSKit.NSObject):
     ):
         pass
 
+    def createSymbolicLinkNamed_inDirectory_attributes_linkContents_context_replyHandler_(
+        self, a, b, c, d, e, f
+    ):
+        pass
+
     def createLinkToItem_named_inDirectory_replyHandler_(self, a, b, c, d):
+        pass
+
+    def createLinkToItem_named_inDirectory_context_replyHandler_(self, a, b, c, d, e):
         pass
 
     def removeItem_named_fromDirectory_replyHandler_(self, a, b, c, d):
         pass
 
+    def removeItem_named_fromDirectory_context_replyHandler_(self, a, b, c, d, e):
+        pass
+
     def renameItem_inDirectory_named_toNewName_inDirectory_overItem_replyHandler_(
         self, a, b, c, d, e, f, g
+    ):
+        pass
+
+    def renameItem_inDirectory_named_toNewName_inDirectory_overItem_context_replyHandler_(
+        self, a, b, c, d, e, f, g, h
     ):
         pass
 
@@ -84,6 +114,18 @@ class TestFSVolumeHelper(FSKit.NSObject):
         d,
         e,
         f,
+    ):
+        pass
+
+    def enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_context_replyHandler_(
+        self,
+        a,
+        b,
+        c,
+        d,
+        e,
+        f,
+        g,
     ):
         pass
 
@@ -180,6 +222,77 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def deactivateItem_replyHandler_(self, a, b):
         pass
 
+    # FSVolumeHandler
+    # enableOpenUnlinkEmulation (see above)
+    # requestedMountOptions (see above)
+
+    # FSVolumeXattrHandler
+
+    # def xattrOperationsInhibited(self):
+    #    return 1
+
+    def getXattrNamed_ofItem_context_replyHandler_(self, a, b, c, e):
+        pass
+
+    def setXattrNamed_toData_onItem_policy_context_replyHandler_(
+        self, a, b, c, d, e, f
+    ):
+        pass
+
+    def listXattrsOfItem_context_replyHandler_(self, a, b, c):
+        pass
+
+    # FSVolumeOpenCloseHandler
+    # def isOpenCloseInhibited(self):
+    #    return 1
+
+    def openItem_withModes_context_replyHandler_(self, a, b, c, d):
+        pass
+
+    def closeItem_keepingModes_context_replyHandler_(self, a, b, c, d):
+        pass
+
+    # FSVolumeReadWriteHandler
+    # def readFromFile_offset_length_intoBuffer_replyHandler_(self, a, b, c, d):
+    #    pass
+
+    # def writeContents_toFile_atOffset_replyHandler_(self, a, b, c, d):
+    #    pass
+
+    # FSVolumeAccessCheckHandler
+    # def isAccessCheckInhibited(self):
+    #    return 1
+
+    def checkAccessToItem_requestedAccess_context_replyHandler_(self, a, b, c, d):
+        pass
+
+    # FSVolumeRenameHandler
+    # def isVolumeRenameInhibited(self):
+    #    return 1
+    def setVolumeName_context_replyHandler_(self, a, b, c):
+        pass
+
+    # FSVolumePreallocateHandler
+    # def isPreallocateInhibited(self):
+    #    return 1
+    def preallocateSpaceForItem_atOffset_length_flags_context_replyHandler_(
+        self, a, b, c, d, e, f
+    ):
+        pass
+
+    # FSVolumeItemDeactivationHandler
+    # def itemDeactivationPolicy(self):
+    #    return 1
+    def deactivateItem_context_replyHandler_(self, a, b, c):
+        pass
+
+    # FSVolumeSeekRegionHandler
+    def isSeekRegionInhibited(self):
+        return 1
+
+    def seekWithinItem_fromOffset_region_context_replyHandler_(self, a, b, c, d, e):
+        pass
+
 
 class TestFSVolume(TestCase):
     def test_enum(self):
@@ -240,6 +353,10 @@ class TestFSVolume(TestCase):
         self.assertIsEnumType(FSKit.FSMountOptions)
         self.assertEqual(FSKit.FSMountOptionsReadOnly, 1 << 0)
 
+        self.assertIsEnumType(FSKit.FSSeekRegion)
+        self.assertEqual(FSKit.FSSeekRegionHole, 1)
+        self.assertEqual(FSKit.FSSeekRegionData, 2)
+
     def test_protocols(self):
         self.assertProtocolExists("FSVolumePathConfOperations", FSKit)
         self.assertProtocolExists("FSVolumeOperations", FSKit)
@@ -251,233 +368,465 @@ class TestFSVolume(TestCase):
         self.assertProtocolExists("FSVolumePreallocateOperations", FSKit)
         self.assertProtocolExists("FSVolumeItemDeactivation", FSKit)
 
+    @min_sdk_level("27.0")
+    def test_protocols27_0(self):
+        self.assertProtocolExists("FSVolumeHandler", FSKit)
+        self.assertProtocolExists("FSVolumeXattrHandler", FSKit)
+        self.assertProtocolExists("FSVolumeOpenCloseHandler", FSKit)
+        self.assertProtocolExists("FSVolumeReadWriteHandler", FSKit)
+        self.assertProtocolExists("FSVolumeAccessCheckHandler", FSKit)
+        self.assertProtocolExists("FSVolumeRenameHandler", FSKit)
+        self.assertProtocolExists("FSVolumePreallocateHandler", FSKit)
+        self.assertProtocolExists("FSVolumeItemDeactivationHandler", FSKit)
+        self.assertProtocolExists("FSVolumeSeekRegionHandler", FSKit)
+
     def test_protocol_methods(self):
-        # FSVolumePathConfOperations
-        self.assertResultHasType(TestFSVolumeHelper.maximumLinkCount, objc._C_NSInteger)
-        self.assertResultHasType(
-            TestFSVolumeHelper.maximumNameLength, objc._C_NSInteger
-        )
-        self.assertResultIsBOOL(TestFSVolumeHelper.restrictsOwnershipChanges)
-        self.assertResultIsBOOL(TestFSVolumeHelper.truncatesLongNames)
-        self.assertResultHasType(TestFSVolumeHelper.maximumXattrSize, objc._C_NSInteger)
-        self.assertResultHasType(
-            TestFSVolumeHelper.maximumXattrSizeInBits, objc._C_NSInteger
-        )
-        self.assertResultHasType(TestFSVolumeHelper.maximumFileSize, objc._C_NSUInteger)
-        self.assertResultHasType(
-            TestFSVolumeHelper.maximumFileSizeInBits, objc._C_NSInteger
-        )
+        with self.subTest("FSVolumePathConfOperations"):
+            self.assertResultHasType(
+                TestFSVolumeHelper.maximumLinkCount, objc._C_NSInteger
+            )
+            self.assertResultHasType(
+                TestFSVolumeHelper.maximumNameLength, objc._C_NSInteger
+            )
+            self.assertResultIsBOOL(TestFSVolumeHelper.restrictsOwnershipChanges)
+            self.assertResultIsBOOL(TestFSVolumeHelper.truncatesLongNames)
+            self.assertResultHasType(
+                TestFSVolumeHelper.maximumXattrSize, objc._C_NSInteger
+            )
+            self.assertResultHasType(
+                TestFSVolumeHelper.maximumXattrSizeInBits, objc._C_NSInteger
+            )
+            self.assertResultHasType(
+                TestFSVolumeHelper.maximumFileSize, objc._C_NSUInteger
+            )
+            self.assertResultHasType(
+                TestFSVolumeHelper.maximumFileSizeInBits, objc._C_NSInteger
+            )
 
-        # FSVolumeOperations
+        with self.subTest("FSVolumeOperations"):
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.mountWithOptions_replyHandler_, 1, b"v@"
+            )
+            self.assertArgIsBlock(TestFSVolumeHelper.unmountWithReplyHandler_, 0, b"v")
 
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.mountWithOptions_replyHandler_, 1, b"v@"
-        )
-        self.assertArgIsBlock(TestFSVolumeHelper.unmountWithReplyHandler_, 0, b"v")
+            self.assertArgHasType(
+                TestFSVolumeHelper.synchronizeWithFlags_replyHandler_,
+                0,
+                objc._C_NSInteger,
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.synchronizeWithFlags_replyHandler_, 1, b"v@"
+            )
 
-        self.assertArgHasType(
-            TestFSVolumeHelper.synchronizeWithFlags_replyHandler_, 0, objc._C_NSInteger
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.synchronizeWithFlags_replyHandler_, 1, b"v@"
-        )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.getAttributes_ofItem_replyHandler_,
+                2,
+                b"v@@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.getAttributes_ofItem_context_replyHandler_,
+                3,
+                b"v@@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.setAttributes_onItem_replyHandler_,
+                2,
+                b"v@@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.setAttributes_onItem_context_replyHandler_,
+                3,
+                b"v@@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.lookupItemNamed_inDirectory_replyHandler_, 2, b"v@@@"
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.reclaimItem_replyHandler_, 1, b"v@"
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.readSymbolicLink_replyHandler_, 1, b"v@@"
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.readSymbolicLink_context_replyHandler_, 2, b"v@@"
+            )
 
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.getAttributes_ofItem_replyHandler_,
-            2,
-            b"v@@",
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.setAttributes_onItem_replyHandler_,
-            2,
-            b"v@@",
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.lookupItemNamed_inDirectory_replyHandler_, 2, b"v@@@"
-        )
-        self.assertArgIsBlock(TestFSVolumeHelper.reclaimItem_replyHandler_, 1, b"v@")
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.readSymbolicLink_replyHandler_, 1, b"v@@"
-        )
+            self.assertArgHasType(
+                TestFSVolumeHelper.createItemNamed_type_inDirectory_attributes_replyHandler_,
+                1,
+                objc._C_NSInteger,
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.createItemNamed_type_inDirectory_attributes_replyHandler_,
+                4,
+                b"v@@@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.createItemNamed_type_inDirectory_attributes_context_replyHandler_,
+                5,
+                b"v@@",
+            )
 
-        self.assertArgHasType(
-            TestFSVolumeHelper.createItemNamed_type_inDirectory_attributes_replyHandler_,
-            1,
-            objc._C_NSInteger,
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.createItemNamed_type_inDirectory_attributes_replyHandler_,
-            4,
-            b"v@@@",
-        )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.createSymbolicLinkNamed_inDirectory_attributes_linkContents_replyHandler_,
+                4,
+                b"v@@@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.createSymbolicLinkNamed_inDirectory_attributes_linkContents_context_replyHandler_,
+                5,
+                b"v@@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.createLinkToItem_named_inDirectory_replyHandler_,
+                3,
+                b"v@@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.createLinkToItem_named_inDirectory_context_replyHandler_,
+                4,
+                b"v@@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.removeItem_named_fromDirectory_replyHandler_,
+                3,
+                b"v@",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.removeItem_named_fromDirectory_context_replyHandler_,
+                4,
+                b"v@@",
+            )
 
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.createSymbolicLinkNamed_inDirectory_attributes_linkContents_replyHandler_,
-            4,
-            b"v@@@",
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.createLinkToItem_named_inDirectory_replyHandler_,
-            3,
-            b"v@@",
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.removeItem_named_fromDirectory_replyHandler_, 3, b"v@"
-        )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.renameItem_inDirectory_named_toNewName_inDirectory_overItem_replyHandler_,
+                6,
+                b"v@@",
+            )
 
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.renameItem_inDirectory_named_toNewName_inDirectory_overItem_replyHandler_,
-            6,
-            b"v@@",
-        )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.renameItem_inDirectory_named_toNewName_inDirectory_overItem_context_replyHandler_,
+                7,
+                b"v@@",
+            )
 
-        self.assertArgHasType(
-            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
-            1,
-            b"Q",
-        )
-        self.assertArgHasType(
-            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
-            2,
-            b"Q",
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
-            5,
-            b"vQ@",
-        )
+            self.assertArgHasType(
+                TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
+                1,
+                b"Q",
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
+                2,
+                b"Q",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_replyHandler_,
+                5,
+                b"vQ@",
+            )
 
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.activateWithOptions_replyHandler_, 1, b"v@@"
-        )
+            self.assertArgHasType(
+                TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_context_replyHandler_,
+                1,
+                b"Q",
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_context_replyHandler_,
+                2,
+                b"Q",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.enumerateDirectory_startingAtCookie_verifier_providingAttributes_usingPacker_context_replyHandler_,
+                6,
+                b"v@@",
+            )
 
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.deactivateWithOptions_replyHandler_, 1, b"v@"
-        )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.activateWithOptions_replyHandler_, 1, b"v@@"
+            )
 
-        self.assertResultIsBOOL(TestFSVolumeHelper.enableOpenUnlinkEmulation)
-        self.assertArgIsBOOL(TestFSVolumeHelper.setEnableOpenUnlinkEmulation_, 0)
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.deactivateWithOptions_replyHandler_, 1, b"v@"
+            )
 
-        self.assertResultHasType(
-            TestFSVolumeHelper.requestedMountOptions, objc._C_NSUInteger
-        )
-        self.assertArgHasType(
-            TestFSVolumeHelper.setRequestedMountOptions_, 0, objc._C_NSUInteger
-        )
+            self.assertResultIsBOOL(TestFSVolumeHelper.enableOpenUnlinkEmulation)
+            self.assertArgIsBOOL(TestFSVolumeHelper.setEnableOpenUnlinkEmulation_, 0)
 
-        # FSVolumeXattrOperations
-        self.assertResultIsBOOL(TestFSVolumeHelper.xattrOperationsInhibited)
-        self.assertArgIsBOOL(TestFSVolumeHelper.setXattrOperationsInhibited_, 0)
+            self.assertResultHasType(
+                TestFSVolumeHelper.requestedMountOptions, objc._C_NSUInteger
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.setRequestedMountOptions_, 0, objc._C_NSUInteger
+            )
 
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.getXattrNamed_ofItem_replyHandler_, 2, b"v@@"
-        )
+        with self.subTest("FSVolumeXattrOperations"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.xattrOperationsInhibited)
+            self.assertArgIsBOOL(TestFSVolumeHelper.setXattrOperationsInhibited_, 0)
 
-        self.assertArgHasType(
-            TestFSVolumeHelper.setXattrNamed_toData_onItem_policy_replyHandler_,
-            3,
-            objc._C_NSUInteger,
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.setXattrNamed_toData_onItem_policy_replyHandler_,
-            4,
-            b"v@",
-        )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.getXattrNamed_ofItem_replyHandler_, 2, b"v@@"
+            )
 
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.listXattrsOfItem_replyHandler_, 1, b"v@@"
-        )
+            self.assertArgHasType(
+                TestFSVolumeHelper.setXattrNamed_toData_onItem_policy_replyHandler_,
+                3,
+                objc._C_NSUInteger,
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.setXattrNamed_toData_onItem_policy_replyHandler_,
+                4,
+                b"v@",
+            )
 
-        # FSVolumeOpenCloseOperations
-        self.assertResultIsBOOL(TestFSVolumeHelper.isOpenCloseInhibited)
-        self.assertArgIsBOOL(TestFSVolumeHelper.setOpenCloseInhibited_, 0)
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.listXattrsOfItem_replyHandler_, 1, b"v@@"
+            )
 
-        self.assertArgHasType(
-            TestFSVolumeHelper.openItem_withModes_replyHandler_, 1, objc._C_NSUInteger
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.openItem_withModes_replyHandler_, 2, b"v@"
-        )
+        with self.subTest("FSVolumeOpenCloseOperations"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.isOpenCloseInhibited)
+            self.assertArgIsBOOL(TestFSVolumeHelper.setOpenCloseInhibited_, 0)
 
-        self.assertArgHasType(
-            TestFSVolumeHelper.closeItem_keepingModes_replyHandler_,
-            1,
-            objc._C_NSUInteger,
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.closeItem_keepingModes_replyHandler_, 2, b"v@"
-        )
+            self.assertArgHasType(
+                TestFSVolumeHelper.openItem_withModes_replyHandler_,
+                1,
+                objc._C_NSUInteger,
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.openItem_withModes_replyHandler_, 2, b"v@"
+            )
 
-        # FSVolumeReadWriteOperations
-        self.assertArgHasType(
-            TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
-            1,
-            b"q",
-        )
-        self.assertArgHasType(
-            TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
-            2,
-            b"Q",
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
-            4,
-            b"vQ@",
-        )
+            self.assertArgHasType(
+                TestFSVolumeHelper.closeItem_keepingModes_replyHandler_,
+                1,
+                objc._C_NSUInteger,
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.closeItem_keepingModes_replyHandler_, 2, b"v@"
+            )
 
-        self.assertArgHasType(
-            TestFSVolumeHelper.writeContents_toFile_atOffset_replyHandler_, 2, b"q"
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.writeContents_toFile_atOffset_replyHandler_, 3, b"vQ@"
-        )
+        with self.subTest("FSVolumeReadWriteOperations"):
+            self.assertArgHasType(
+                TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
+                1,
+                b"q",
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
+                2,
+                b"Q",
+            )
 
-        # FSVolumeAccessCheckOperations
-        self.assertResultIsBOOL(TestFSVolumeHelper.isAccessCheckInhibited)
-        self.assertArgIsBOOL(TestFSVolumeHelper.setAccessCheckInhibited_, 0)
+            # XXX: The macOS 27 SDK introduced a new protocol with the same selector but different typing.
+            #      (Probably needs some work in core)
+            # self.assertArgIsBlock(
+            #    TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
+            #    4,
+            #    b"vQ@",
+            # )
 
-        self.assertArgHasType(
-            TestFSVolumeHelper.checkAccessToItem_requestedAccess_replyHandler_, 1, b"Q"
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.checkAccessToItem_requestedAccess_replyHandler_,
-            2,
-            b"vZ@",
-        )
+            self.assertArgHasType(
+                TestFSVolumeHelper.writeContents_toFile_atOffset_replyHandler_, 2, b"q"
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.writeContents_toFile_atOffset_replyHandler_,
+                3,
+                b"vQ@",
+            )
 
-        # FSVolumeRenameOperations
-        self.assertResultIsBOOL(TestFSVolumeHelper.isVolumeRenameInhibited)
-        self.assertArgIsBOOL(TestFSVolumeHelper.setVolumeRenameInhibited_, 0)
+        with self.subTest("FSVolumeAccessCheckOperations"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.isAccessCheckInhibited)
+            self.assertArgIsBOOL(TestFSVolumeHelper.setAccessCheckInhibited_, 0)
 
-        self.assertArgIsBlock(TestFSVolumeHelper.setVolumeName_replyHandler_, 1, b"v@@")
+            self.assertArgHasType(
+                TestFSVolumeHelper.checkAccessToItem_requestedAccess_replyHandler_,
+                1,
+                b"Q",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.checkAccessToItem_requestedAccess_replyHandler_,
+                2,
+                b"vZ@",
+            )
 
-        # FSVolumePreallocateOperations
-        self.assertResultIsBOOL(TestFSVolumeHelper.isPreallocateInhibited)
-        self.assertArgIsBOOL(TestFSVolumeHelper.setPreallocateInhibited_, 0)
-        self.assertArgHasType(
-            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
-            1,
-            b"q",
-        )
-        self.assertArgHasType(
-            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
-            2,
-            b"Q",
-        )
-        self.assertArgHasType(
-            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
-            3,
-            b"Q",
-        )
-        self.assertArgIsBlock(
-            TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
-            4,
-            b"vQ@",
-        )
+        with self.subTest("FSVolumeRenameOperations"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.isVolumeRenameInhibited)
+            self.assertArgIsBOOL(TestFSVolumeHelper.setVolumeRenameInhibited_, 0)
 
-        # FSVolumeItemDeactivation
-        self.assertResultHasType(TestFSVolumeHelper.itemDeactivationPolicy, b"Q")
-        self.assertArgIsBlock(TestFSVolumeHelper.deactivateItem_replyHandler_, 1, b"v@")
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.setVolumeName_replyHandler_, 1, b"v@@"
+            )
+
+        with self.subTest("FSVolumePreallocateOperations"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.isPreallocateInhibited)
+            self.assertArgIsBOOL(TestFSVolumeHelper.setPreallocateInhibited_, 0)
+            self.assertArgHasType(
+                TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
+                1,
+                b"q",
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
+                2,
+                b"Q",
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
+                3,
+                b"Q",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_replyHandler_,
+                4,
+                b"vQ@",
+            )
+
+        with self.subTest("FSVolumeItemDeactivation"):
+            self.assertResultHasType(TestFSVolumeHelper.itemDeactivationPolicy, b"Q")
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.deactivateItem_replyHandler_, 1, b"v@"
+            )
+
+        with self.subTest("FSVolumeXattrHandler"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.xattrOperationsInhibited)
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.getXattrNamed_ofItem_context_replyHandler_, 3, b"v@@"
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.setXattrNamed_toData_onItem_policy_context_replyHandler_,
+                3,
+                objc._C_NSUInteger,
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.setXattrNamed_toData_onItem_policy_context_replyHandler_,
+                5,
+                b"v@@",
+            )
+
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.listXattrsOfItem_context_replyHandler_, 2, b"v@@"
+            )
+
+        with self.subTest("FSVolumeOpenCloseHandler"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.isOpenCloseInhibited)
+
+            self.assertArgHasType(
+                TestFSVolumeHelper.openItem_withModes_context_replyHandler_,
+                1,
+                objc._C_NSUInteger,
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.openItem_withModes_context_replyHandler_, 3, b"v@"
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.closeItem_keepingModes_context_replyHandler_,
+                1,
+                objc._C_NSUInteger,
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.closeItem_keepingModes_context_replyHandler_,
+                3,
+                b"v@",
+            )
+
+        with self.subTest("FSVolumeReadWriteHandler"):
+            self.assertArgHasType(
+                TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
+                1,
+                b"q",
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
+                2,
+                b"Q",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.readFromFile_offset_length_intoBuffer_replyHandler_,
+                4,
+                b"v@@",
+            )
+
+            # XXX: The macOS 27 SDK introduced a new protocol with the same selector but different typing.
+            #      (Probably needs some work in core)
+            # self.assertArgHasType(
+            #    TestFSVolumeHelper.writeContents_toFile_atOffset_replyHandler_, 2, b"q"
+            # )
+            # self.assertArgIsBlock(
+            #    TestFSVolumeHelper.writeContents_toFile_atOffset_replyHandler_, 3, b"v@@"
+            # )
+
+        with self.subTest("FSVolumeAccessCheckHandler"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.isAccessCheckInhibited)
+
+            self.assertArgHasType(
+                TestFSVolumeHelper.checkAccessToItem_requestedAccess_context_replyHandler_,
+                1,
+                b"Q",
+            )
+
+            # XXX: The macOS 27 SDK introduced a new protocol with the same selector but different typing.
+            #      (Probably needs some work in core)
+            # self.assertArgIsBlock(
+            #    TestFSVolumeHelper.checkAccessToItem_requestedAccess_context_replyHandler_,
+            #    3,
+            #    b"vZ@",
+            # )
+
+        with self.subTest("FSVolumeRenameHandler"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.isVolumeRenameInhibited)
+
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.setVolumeName_context_replyHandler_, 2, b"v@@"
+            )
+
+        with self.subTest("FSVolumePreallocateHandler"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.isPreallocateInhibited)
+
+            self.assertArgHasType(
+                TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_context_replyHandler_,
+                1,
+                b"q",
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_context_replyHandler_,
+                2,
+                b"Q",
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_context_replyHandler_,
+                3,
+                b"Q",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.preallocateSpaceForItem_atOffset_length_flags_context_replyHandler_,
+                5,
+                b"v@@",
+            )
+
+        with self.subTest("FSVolumeItemDeactivationHandler"):
+            self.assertResultHasType(TestFSVolumeHelper.itemDeactivationPolicy, b"Q")
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.deactivateItem_context_replyHandler_, 2, b"v@@"
+            )
+
+        with self.subTest("FSVolumeSeekRegionHandler"):
+            self.assertResultIsBOOL(TestFSVolumeHelper.isSeekRegionInhibited)
+
+            self.assertArgHasType(
+                TestFSVolumeHelper.seekWithinItem_fromOffset_region_context_replyHandler_,
+                1,
+                b"q",
+            )
+            self.assertArgHasType(
+                TestFSVolumeHelper.seekWithinItem_fromOffset_region_context_replyHandler_,
+                2,
+                b"Q",
+            )
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.seekWithinItem_fromOffset_region_context_replyHandler_,
+                4,
+                b"v@@",
+            )
 
     def test_methods(self):
         self.assertResultIsBOOL(

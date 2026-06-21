@@ -1,5 +1,10 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+
+
+class TestNSStatusItemHelper(AppKit.NSObject):
+    def statusItemDidEndExpandedInterfaceSession_animated_(self, a, b):
+        pass
 
 
 class TestNSStatusItem(TestCase):
@@ -9,6 +14,15 @@ class TestNSStatusItem(TestCase):
     def testConstants(self):
         self.assertEqual(AppKit.NSStatusItemBehaviorRemovalAllowed, 1 << 1)
         self.assertEqual(AppKit.NSStatusItemBehaviorTerminationOnRemoval, 1 << 2)
+
+    @min_sdk_level("27.0")
+    def test_protocols(self):
+        self.assertProtocolExists("NSStatusItemExpandedInterfaceDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBOOL(
+            TestNSStatusItemHelper.statusItemDidEndExpandedInterfaceSession_animated_, 1
+        )
 
     def testMethods(self):
         m = AppKit.NSStatusItem.setAction_.__metadata__()
