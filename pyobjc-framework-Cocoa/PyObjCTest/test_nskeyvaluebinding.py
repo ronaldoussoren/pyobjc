@@ -18,7 +18,7 @@ class TestNSKeyValueBindingHelper(AppKit.NSObject):
 
 
 class TestNSKeyValueBinding(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSBindingInfoKey, str)
         self.assertIsTypedEnum(AppKit.NSBindingName, str)
         self.assertIsTypedEnum(AppKit.NSBindingOption, str)

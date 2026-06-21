@@ -12,7 +12,7 @@ class TestNSToolbarHelper(AppKit.NSObject):
 
 
 class TestNSToolbar(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSToolbarItemIdentifier, str)
         self.assertIsTypedEnum(AppKit.NSToolbarUserInfoKey, str)
 

@@ -24,7 +24,7 @@ class TestDate(TestCase):
         except objc.error:
             self.assertIsCFType(CoreFoundation.CFTimeZoneRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFDateGetTypeID()
         self.assertIsInstance(v, int)
 
@@ -60,19 +60,19 @@ class TestDate(TestCase):
 
         self.assertPickleRoundTrips(v)
 
-    def testAbsoluteTime(self):
+    def test_absolute_time(self):
         v = CoreFoundation.CFAbsoluteTimeGetCurrent()
         self.assertIsInstance(v, float)
         self.assertLess(
             abs(v - time.time() + CoreFoundation.kCFAbsoluteTimeIntervalSince1970), 1.0
         )
 
-    def testCreation(self):
+    def test_creation(self):
         now = CoreFoundation.CFAbsoluteTimeGetCurrent()
         dt = CoreFoundation.CFDateCreate(None, now)
         self.assertIsInstance(dt, NSDate)
 
-    def testInspection(self):
+    def test_inspect(self):
         now = CoreFoundation.CFAbsoluteTimeGetCurrent()
         nowtm = time.localtime()
         dt = CoreFoundation.CFDateCreate(None, now)

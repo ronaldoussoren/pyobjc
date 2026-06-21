@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFBag(TestCase):
-    def testCreation(self):
+    def test_creation(self):
         bag = CoreFoundation.CFBagCreate(None, [1, 1, 2, 3, 4], 5)
         self.assertIsInstance(bag, CoreFoundation.CFBagRef)
         self.assertEqual(CoreFoundation.CFBagGetCountOfValue(bag, 1), 2)
@@ -18,7 +18,7 @@ class TestCFBag(TestCase):
         self.assertEqual(CoreFoundation.CFBagGetCountOfValue(bag, 9), 2)
         self.assertEqual(CoreFoundation.CFBagGetCountOfValue(bag, 8), 1)
 
-    def testApplyFunction(self):
+    def test_apply_function(self):
         items = []
         contexts = []
 
@@ -33,11 +33,11 @@ class TestCFBag(TestCase):
         self.assertEqual(items, [1, 1, 4, 9, 16])
         self.assertEqual(contexts, [99, 99, 99, 99, 99])
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFBagGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCopy(self):
+    def test_copy(self):
         bag = CoreFoundation.CFBagCreate(None, [1, 1, 2, 3, 4], 5)
         self.assertIsInstance(bag, CoreFoundation.CFBagRef)
         bag2 = CoreFoundation.CFBagCreateCopy(None, bag)
@@ -46,7 +46,7 @@ class TestCFBag(TestCase):
         self.assertIsInstance(bag3, CoreFoundation.CFBagRef)
         self.assertIsNot(bag3, bag)
 
-    def testInspect(self):
+    def test_inspect(self):
         bag = CoreFoundation.CFBagCreate(
             None, ["Hello", 42, "World", 42, "a", "a", "a"], 7
         )
@@ -72,7 +72,7 @@ class TestCFBag(TestCase):
         expected = {"Hello", 42, "World", "a"}
         self.assertEqual(values, expected)
 
-    def testMutation(self):
+    def test_mutation(self):
         bag = CoreFoundation.CFBagCreateMutable(None, 0)
         self.assertEqual(CoreFoundation.CFBagGetCount(bag), 0)
         CoreFoundation.CFBagAddValue(bag, "hello")

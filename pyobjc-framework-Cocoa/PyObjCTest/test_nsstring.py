@@ -6,7 +6,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, cast_uint
 
 
 class TestNSString(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSStringEncodingDetectionOptionsKey, str)
 
     def test_enum_types(self):
@@ -14,10 +14,10 @@ class TestNSString(TestCase):
         self.assertIsEnumType(Foundation.NSStringEncodingConversionOptions)
         self.assertIsEnumType(Foundation.NSStringEnumerationOptions)
 
-    def testClassTree(self):
+    def test_class_tree(self):
         self.assertTrue(issubclass(objc.pyobjc_unicode, str))
 
-    def testCompare(self):
+    def test_compare(self):
         self.assertTrue(
             Foundation.NSString.localizedCaseInsensitiveCompare_("foo", "bar") == 1,
             "NSString doesn't compare correctly",
@@ -27,7 +27,7 @@ class TestNSString(TestCase):
             "NSString doesn't compare correctly",
         )
 
-    def testFormatting(self):
+    def test_formatting(self):
         # The test on instances is slightly more verbose to avoid warnings
         obj = Foundation.NSString.alloc().initWithFormat_("foo %d", 42)
         self.assertEqual(obj, "foo 42")
@@ -35,7 +35,7 @@ class TestNSString(TestCase):
         obj = Foundation.NSString.alloc().initWithFormat_locale_("foo %d", {}, 42)
         self.assertEqual(obj, "foo 42")
 
-    def testGetCString(self):
+    def test_get_cstring(self):
         # Custom wrappers
         v = Foundation.NSString.stringWithString_("hello world")
 
@@ -57,24 +57,24 @@ class TestNSStringBridging(TestCase):
         self.nsUniString = Foundation.NSString.stringWithString_("unifoo")
         self.pyUniString = "unifoo"
 
-    def testBasicComparison(self):
+    def test_basic_comparision(self):
         self.assertEqual("unifoo", Foundation.NSString.stringWithString_("unifoo"))
 
         u = "\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8"
         self.assertEqual(u, Foundation.NSString.stringWithString_(u))
 
-    def test_typesAndClasses(self):
+    def test_types_and_classes(self):
         self.assertIsInstance(self.nsUniString, str)
         self.assertIsInstance(self.pyUniString, str)
 
-    def testNSStringMethodAccess(self):
+    def test_nsstring_method_access(self):
         self.assertIsInstance(self.nsUniString, objc.pyobjc_unicode)
         v = self.nsUniString.stringByAppendingString_
         self.assertIsInstance(v, objc.selector)
 
 
 class TestMutable(TestCase):
-    def testSync(self):
+    def test_sync(self):
         # Test that python and ObjC string representation are not
         # automaticly synchronized.
         pyStr = Foundation.NSMutableString.stringWithString_("hello")
@@ -92,7 +92,7 @@ class TestPickle(TestCase):
     def setUp(self):
         self.strVal = Foundation.NSTaskDidTerminateNotification
 
-    def testPickle(self):
+    def test_pickle(self):
         # Check that ObjC-strings pickle as str strings
         import pickle
 
@@ -108,7 +108,7 @@ class TestPickle(TestCase):
         v = pickle.loads(s)
         self.assertEqual(type(v), str)
 
-    def testFormat(self):
+    def test_format(self):
         v = self.strVal
 
         d = v.stringByAppendingFormat_("hello")

@@ -13,11 +13,11 @@ def byte2bits(val):
 
 
 class TestBitVector(TestCase):
-    def testGetTypeID(self):
+    def test_get_typeid(self):
         v = CoreFoundation.CFBitVectorGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCreation(self):
+    def test_creation(self):
         bitset = CoreFoundation.CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 30)
         self.assertIsInstance(bitset, CoreFoundation.CFBitVectorRef)
         self.assertEqual(CoreFoundation.CFBitVectorGetCount(bitset), 30)
@@ -39,7 +39,7 @@ class TestBitVector(TestCase):
         self.assertEqual(CoreFoundation.CFBitVectorGetCount(set3), 0)
         self.assertIsNot(set3, set)
 
-    def testInspection(self):
+    def test_inspect(self):
         bitset = CoreFoundation.CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 32)
 
         self.assertEqual(CoreFoundation.CFBitVectorGetCount(bitset), 32)
@@ -70,7 +70,7 @@ class TestBitVector(TestCase):
         idx = CoreFoundation.CFBitVectorGetLastIndexOfBit(bitset, (0, 8), 0)
         self.assertEqual(idx, 6)
 
-    def testMutation(self):
+    def test_mutation(self):
         bitset = CoreFoundation.CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 30)
         bitset = CoreFoundation.CFBitVectorCreateMutableCopy(None, 0, bitset)
 

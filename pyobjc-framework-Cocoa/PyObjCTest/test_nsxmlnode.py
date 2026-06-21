@@ -21,7 +21,7 @@ class TestXMLNode(TestCase):
         self.assertEqual(Foundation.NSXMLElementDeclarationKind, 11)
         self.assertEqual(Foundation.NSXMLNotationDeclarationKind, 12)
 
-    def testOutputArgs(self):
+    def test_output(self):
         self.assertArgIsOut(Foundation.NSXMLNode.nodesForXPath_error_, 1)
         self.assertArgIsOut(Foundation.NSXMLNode.objectsForXQuery_constants_error_, 2)
         self.assertArgIsOut(Foundation.NSXMLNode.objectsForXQuery_error_, 1)

@@ -367,7 +367,7 @@ class TestMTLDeviceHelper(Metal.NSObject):
 
 
 class TestMTLDevice(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Metal.MTLDeviceNotificationName, str)
 
     def test_enum_types(self):
@@ -514,12 +514,12 @@ class TestMTLDevice(TestCase):
         self.assertPickleRoundTrips(v)
 
     @min_os_level("10.11")
-    def test_funtions10_11(self):
+    def test_functions10_11(self):
         self.assertResultIsCFRetained(Metal.MTLCreateSystemDefaultDevice)
         self.assertResultIsCFRetained(Metal.MTLCopyAllDevices)
 
     @min_os_level("10.13")
-    def test_funtions10_13(self):
+    def test_functions10_13(self):
         self.assertResultIsCFRetained(Metal.MTLCopyAllDevicesWithObserver)
         self.assertArgIsOut(Metal.MTLCopyAllDevicesWithObserver, 0)
         self.assertArgIsBlock(

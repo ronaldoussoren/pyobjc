@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFDictionary(TestCase):
-    def testCreation(self):
+    def test_creation(self):
         dictionary = CoreFoundation.CFDictionaryCreate(
             None,
             ("aap", "noot", "mies", "wim"),
@@ -28,7 +28,7 @@ class TestCFDictionary(TestCase):
         CoreFoundation.CFDictionarySetValue(dictionary, "hello", "world")
         self.assertEqual(dictionary, {"hello": "world"})
 
-    def testApplyFunction(self):
+    def test_apply_function(self):
         dictionary = CoreFoundation.CFDictionaryCreate(
             None,
             ("aap", "noot", "mies", "wim"),
@@ -56,10 +56,10 @@ class TestCFDictionary(TestCase):
             [("aap", "monkey"), ("mies", "missy"), ("noot", "nut"), ("wim", "john")],
         )
 
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFDictionaryGetTypeID(), int)
 
-    def testCreation2(self):  # XXX
+    def test_creation2(self):  # XXX
         dct = CoreFoundation.CFDictionaryCreate(
             None,
             ["key1" "key2"],
@@ -81,7 +81,7 @@ class TestCFDictionary(TestCase):
         dct = CoreFoundation.CFDictionaryCreateMutableCopy(None, 0, dct)
         self.assertIsInstance(dct, CoreFoundation.CFDictionaryRef)
 
-    def testInspection(self):
+    def test_inspect(self):
         dct = CoreFoundation.CFDictionaryCreate(
             None,
             ["key1", "key2"],
@@ -124,7 +124,7 @@ class TestCFDictionary(TestCase):
         keys.sort()
         self.assertEqual(keys, ["key1", "key2"])
 
-    def testMutation(self):
+    def test_mutation(self):
         dct = CoreFoundation.CFDictionaryCreateMutable(
             None,
             0,

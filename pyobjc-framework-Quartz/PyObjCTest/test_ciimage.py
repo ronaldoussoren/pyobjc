@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCIImage(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CIFormat, int)
         self.assertIsTypedEnum(Quartz.CIImageAutoAdjustmentOption, str)
         self.assertIsTypedEnum(Quartz.CIImageOption, str)

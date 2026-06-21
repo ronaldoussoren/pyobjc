@@ -6,7 +6,7 @@ DRTrackCallbackProc = b"i^{__DRTrack=}I^v"
 
 class TestDRCoreTrack(TestCase):
     @expectedFailure
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(DiscRecording.DRTrackRef)
 
     def test_constants(self):

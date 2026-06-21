@@ -15,5 +15,5 @@ class TestNSExtensionContext(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstant10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(Foundation.NSExtensionItemsAndErrorsKey, str)

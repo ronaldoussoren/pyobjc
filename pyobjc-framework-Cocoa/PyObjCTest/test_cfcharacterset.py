@@ -18,11 +18,11 @@ class TestCharacterSet(TestCase):
 
         self.assertIsCFType(CoreFoundation.CFMutableCharacterSetRef)
 
-    def testTypeId(self):
+    def test_typesId(self):
         v = CoreFoundation.CFCharacterSetGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCreation(self):
+    def test_creation(self):
         charset = CoreFoundation.CFCharacterSetGetPredefined(
             CoreFoundation.kCFCharacterSetLetter
         )
@@ -73,7 +73,7 @@ class TestCharacterSet(TestCase):
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
 
-    def testInspection(self):
+    def test_inspect(self):
         letters = CoreFoundation.CFCharacterSetGetPredefined(
             CoreFoundation.kCFCharacterSetLetter
         )
@@ -96,7 +96,7 @@ class TestCharacterSet(TestCase):
         data = CoreFoundation.CFCharacterSetCreateBitmapRepresentation(None, charset)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
 
-    def testInspectLongUnicode(self):
+    def test_inspect_long_unicode(self):
         letters = CoreFoundation.CFCharacterSetGetPredefined(
             CoreFoundation.kCFCharacterSetLetter
         )
@@ -116,7 +116,7 @@ class TestCharacterSet(TestCase):
             CoreFoundation.CFCharacterSetIsLongCharacterMember(digits, ord("A"))
         )
 
-    def testMutation(self):
+    def test_mutation(self):
         charset = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
             None, "abcdef"
         )

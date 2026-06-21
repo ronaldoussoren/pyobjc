@@ -7,7 +7,7 @@ class TestNSPickerTouchBarItem(TestCase):
         self.assertIsEnumType(AppKit.NSPickerTouchBarItemControlRepresentation)
         self.assertIsEnumType(AppKit.NSPickerTouchBarItemSelectionMode)
 
-    def test_contants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSPickerTouchBarItemSelectionModeSelectOne, 0)
         self.assertEqual(AppKit.NSPickerTouchBarItemSelectionModeSelectAny, 1)
         self.assertEqual(AppKit.NSPickerTouchBarItemSelectionModeMomentary, 2)
@@ -17,7 +17,7 @@ class TestNSPickerTouchBarItem(TestCase):
         self.assertEqual(AppKit.NSPickerTouchBarItemControlRepresentationCollapsed, 2)
 
     @min_os_level("10.15")
-    def test_nethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsSEL(
             AppKit.NSPickerTouchBarItem.pickerTouchBarItemWithIdentifier_labels_selectionMode_target_action_,  # noqa: B950
             4,

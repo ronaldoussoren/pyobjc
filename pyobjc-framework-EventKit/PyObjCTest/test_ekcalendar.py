@@ -5,7 +5,7 @@ import EventKit
 
 class TestEKCalendar(TestCase):
     @min_os_level("10.8")
-    def testBasic(self):
+    def test_basic(self):
         self.assertTrue(hasattr(EventKit, "EKCalendar"))
 
     @min_os_level("10.8")

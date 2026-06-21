@@ -32,7 +32,7 @@ class TestNSInvocation(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSInvocation.argumentsRetained)
 
-    def testNoUnsupported(self):
+    def no_unsupported(self):
         self.assertNotHasAttr(Foundation, "NSObjCValue")
         self.assertNotHasAttr(Foundation, "NSObjCNoType")
         self.assertNotHasAttr(Foundation, "NSObjCVoidType")

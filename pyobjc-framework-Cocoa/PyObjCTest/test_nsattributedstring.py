@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAttributedString(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSAttributedStringKey, str)
         self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentAttributeKey, str)
         self.assertIsTypedEnum(AppKit.NSAttributedStringDocumentReadingOptionKey, str)
@@ -29,7 +29,7 @@ class TestNSAttributedString(TestCase):
         self.assertIsEnumType(Foundation.NSPresentationIntentKind)
         self.assertIsEnumType(Foundation.NSPresentationIntentTableColumnAlignment)
 
-    def test_methodsFoundation(self):
+    def test_methods_foundation(self):
         self.assertArgIsOut(
             AppKit.NSAttributedString.attributesAtIndex_effectiveRange_, 1
         )
@@ -44,7 +44,7 @@ class TestNSAttributedString(TestCase):
 
         self.assertResultIsBOOL(AppKit.NSAttributedString.isEqualToAttributedString_)
 
-    def test_constantsAppKit(self):
+    def test_constants_appkit(self):
         self.assertIsInstance(AppKit.NSManagerDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSFontAttributeName, str)
         self.assertIsInstance(AppKit.NSParagraphStyleAttributeName, str)
@@ -140,7 +140,7 @@ class TestNSAttributedString(TestCase):
         self.assertEqual(AppKit.NSSingleUnderlineStyle, 1)
         self.assertIsInstance(AppKit.NSUnderlineStrikethroughMask, int)
 
-    def test_methodsAppKit(self):
+    def test_methods_appkit(self):
         self.assertResultIsBOOL(AppKit.NSAttributedString.containsAttachments)
         self.assertArgIsBOOL(AppKit.NSAttributedString.nextWordFromIndex_forward_, 1)
         self.assertArgIsOut(AppKit.NSAttributedString.URLAtIndex_effectiveRange_, 1)

@@ -150,13 +150,13 @@ class KeyValueObserver(Foundation.NSObject):
 
 
 class PyKeyValueCoding(TestCase):
-    def testNoPrivateVars(self):
+    def no_private_vars(self):
         # Private instance variables ('anObject.__value') are not accessible using
         # key-value coding.
         o = KeyValueClass1.alloc().init()
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, "private")
 
-    def testValueForKey(self):
+    def test_value_for_key(self):
         o = KeyValueClass1.alloc().init()
         o.addMultiple()
 
@@ -188,14 +188,14 @@ class PyKeyValueCoding(TestCase):
         self.assertEqual(obj.selector, b"getKey1")
         self.assertIs(obj.self, o)
 
-    def testValueForKey2(self):
+    def test_value_for_key2(self):
         o = KeyValueClass4.alloc().init()
 
         self.assertEqual(STUB.keyValue_forObject_key_(0, o, "foo"), "foobar")
         self.assertEqual(STUB.keyValue_forObject_key_(0, o, "bar"), "foobarfoobar")
         self.assertEqual(STUB.keyValue_forObject_key_(0, o, "roprop"), "read-only")
 
-    def testStoredValueForKey(self):
+    def test_stored_value_for_key(self):
         o = KeyValueClass1.alloc().init()
         o.addMultiple()
 
@@ -207,14 +207,14 @@ class PyKeyValueCoding(TestCase):
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 2, o, "nokey")
 
-    def testStoredValueForKey2(self):
+    def test_stored_value_for_key2(self):
         o = KeyValueClass4.alloc().init()
 
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, "foo"), "foobar")
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, "bar"), "foobarfoobar")
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, "roprop"), "read-only")
 
-    def testValueForKeyPath(self):
+    def test_value_for_keypath(self):
         o = KeyValueClass1.alloc().init()
         o.addMultiple()
 
@@ -236,7 +236,7 @@ class PyKeyValueCoding(TestCase):
         )
 
     @max_os_level("10.5")
-    def test_valuesForKeys(self):
+    def test_values_for_keys(self):
         o = KeyValueClass1.alloc().init()
 
         self.assertEqual(
@@ -249,7 +249,7 @@ class PyKeyValueCoding(TestCase):
         )
 
     @max_os_level("10.5")
-    def testTakeValueForKey(self):
+    def take_value_for_key(self):
         o = KeyValueClass1.alloc().init()
 
         self.assertEqual(o.key3, 3)
@@ -271,7 +271,7 @@ class PyKeyValueCoding(TestCase):
         self.assertEqual(o.key9, "IX")
 
     @max_os_level("10.5")
-    def testTakeValueForKey2(self):
+    def take_value_for_key2(self):
         o = KeyValueClass4.alloc().init()
 
         self.assertEqual(o.foo, "foobar")
@@ -282,7 +282,7 @@ class PyKeyValueCoding(TestCase):
             KeyError, STUB.setKeyValue_forObject_key_value_, 0, o, "key9", "IX"
         )
 
-    def testTakeStoredValueForKey(self):
+    def test_take_stored_value_for_key(self):
         o = KeyValueClass1.alloc().init()
 
         self.assertEqual(o.key3, 3)
@@ -302,7 +302,7 @@ class PyKeyValueCoding(TestCase):
         self.assertHasAttr(o, "key9")
         self.assertEqual(o.key9, "IX")
 
-    def testStoredTakeValueForKey2(self):
+    def test_stored_take_value_for_key(self):
         o = KeyValueClass4.alloc().init()
 
         self.assertEqual(o.foo, "foobar")
@@ -317,7 +317,7 @@ class PyKeyValueCoding(TestCase):
         )
 
     @max_os_level("10.5")
-    def testTakeValuesFromDictionary(self):
+    def test_take_values_from_dict(self):
         o = KeyValueClass1.alloc().init()
 
         self.assertEqual(o.key3, 3)
@@ -336,7 +336,7 @@ class PyKeyValueCoding(TestCase):
         self.assertEqual(o.key9, "IX")
 
     @max_os_level("10.5")
-    def testTakeValuesFromDictionary2(self):
+    def test_take_values_from_dict2(self):
         o = KeyValueClass4.alloc().init()
 
         self.assertEqual(o.foo, "foobar")
@@ -356,7 +356,7 @@ class PyKeyValueCoding(TestCase):
         )
 
     @max_os_level("10.5")
-    def testTakeValueForKeyPath(self):
+    def test_take_value_for_keypath(self):
         o = KeyValueClass1.alloc().init()
         o.addMultiple()
 
@@ -375,12 +375,12 @@ class PyKeyValueCoding(TestCase):
 
     if hasattr(Foundation.NSObject, "willChangeValueForKey_"):
         # NSKeyValueObserving is only available on Panther and beyond
-        def testKVO1(self):
+        def test_kvo1(self):
             o = KVOClass.alloc().init()
             o.addObserver_forKeyPath_options_context_(self, "test", 0, None)
             o.removeObserver_forKeyPath_(self, "test")
 
-        def testKVO2(self):
+        def test_kvo2(self):
             # Check if observations work for python-based keys on ObjC classes
             observer = KeyValueObserver.alloc().init()
             self.assertEqual(observer.observed, [])
@@ -402,7 +402,7 @@ class PyKeyValueCoding(TestCase):
             finally:
                 o.removeObserver_forKeyPath_(observer, "key3")
 
-        def testKVO3(self):
+        def test_kvo3(self):
             # Check if observations work for python-based keys on ObjC classes
             observer = KeyValueObserver.alloc().init()
             self.assertEqual(observer.observed, [])
@@ -440,7 +440,7 @@ class PyKeyValueCoding(TestCase):
 
 
 class PyKeyValueCodingExplicit(TestCase):
-    def testValueForKey(self):
+    def test_value_for_key(self):
         o = KeyValueClass1Explicit.alloc().init()
         o.addMultiple()
 
@@ -455,7 +455,7 @@ class PyKeyValueCodingExplicit(TestCase):
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, "nokey")
 
-    def testStoredValueForKey(self):
+    def test_stored_value_for_key(self):
         o = KeyValueClass1Explicit.alloc().init()
         o.addMultiple()
 
@@ -469,7 +469,7 @@ class PyKeyValueCodingExplicit(TestCase):
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 2, o, "nokey")
 
-    def testValueForKeyPath(self):
+    def test_value_for_keypath(self):
         o = KeyValueClass1Explicit.alloc().init()
         o.addMultiple()
 
@@ -494,7 +494,7 @@ class PyKeyValueCodingExplicit(TestCase):
         )
 
     @max_os_level("10.5")
-    def test_valuesForKeys(self):
+    def test_values_for_keys(self):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(
@@ -506,7 +506,7 @@ class PyKeyValueCodingExplicit(TestCase):
             KeyError, STUB.keyValue_forObject_key_, 3, o, ["key1", "key3", "nosuchkey"]
         )
 
-    def testTakeValueForKey(self):
+    def take_value_for_key(self):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(o._values["key3"], 3)
@@ -529,7 +529,7 @@ class PyKeyValueCodingExplicit(TestCase):
         self.assertIn("key9", o._values)
         self.assertEqual(o._values["key9"], "IX")
 
-    def testTakeStoredValueForKey(self):
+    def test_take_stored_value_for_key(self):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(o._values["key3"], 3)
@@ -550,7 +550,7 @@ class PyKeyValueCodingExplicit(TestCase):
         self.assertEqual(o._values["key9"], "IX")
 
     @max_os_level("10.5")
-    def testTakeValuesFromDictionary(self):
+    def test_take_values_from_dict(self):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(o._values["key3"], 3)
@@ -568,7 +568,7 @@ class PyKeyValueCodingExplicit(TestCase):
         self.assertEqual(o._values["key9"], "IX")
 
     @max_os_level("10.5")
-    def testTakeValueForKeyPath(self):
+    def test_take_value_for_keypath(self):
         o = KeyValueClass1Explicit.alloc().init()
         o.addMultiple()
 
@@ -602,17 +602,17 @@ class TestBaseExceptions(TestCase):
     # Check that NSObject implementation of Key-Value coding raises the
     # exception that we expect it to raise.
 
-    def testValueForKey(self):
+    def test_value_for_key(self):
         o = Foundation.NSObject.alloc().init()
 
         self.assertRaises(KeyError, o.valueForKey_, "unknownKey")
 
-    def testStoredValueForKey(self):
+    def test_stored_value_for_key(self):
         o = Foundation.NSObject.alloc().init()
 
         self.assertRaises(KeyError, o.storedValueForKey_, "unknownKey")
 
-    def testTakeStoredValue(self):
+    def test_take_stored_value(self):
         o = Foundation.NSObject.alloc().init()
 
         self.assertRaises(KeyError, o.takeStoredValue_forKey_, "value", "unknownKey")

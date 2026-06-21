@@ -25,7 +25,7 @@ class TestNSBezierPath(TestCase):
         self.assertIsNot(p, None)
         self.assertEqual(p.elementCount(), 5)
 
-    def test_appendPoints(self):
+    def test_append_points(self):
         p = AppKit.NSBezierPath.bezierPath()
         self.assertIsNot(p, None)
         self.assertEqual(p.elementCount(), 0)
@@ -34,7 +34,7 @@ class TestNSBezierPath(TestCase):
         p.appendBezierPathWithPoints_count_(points, 3)
         self.assertEqual(p.elementCount(), 3)
 
-    def test_setLineDash(self):
+    def test_set_linedash(self):
         p = AppKit.NSBezierPath.bezierPath()
         p.setLineDash_count_phase_((10, 10, 20, 5), 4, 45.0)
 
@@ -52,7 +52,7 @@ class TestNSBezierPath(TestCase):
         self.assertEqual(count, 4)
         self.assertAlmostEqual(phase, 45.0)
 
-    def test_elementAtIndex(self):
+    def test_element_at_index(self):
         p = AppKit.NSBezierPath.bezierPath()
         p.moveToPoint_((10, 10))
         p.lineToPoint_((20, 30))
@@ -92,7 +92,7 @@ class TestNSBezierPath(TestCase):
         self.assertEqual(tp, AppKit.NSClosePathBezierPathElement)
         self.assertEqual(len(points), 0)
 
-    def test_setAssociatedPoints(self):
+    def test_set_associated_points(self):
         p = AppKit.NSBezierPath.bezierPath()
         p.moveToPoint_((10, 10))
         p.lineToPoint_((20, 30))

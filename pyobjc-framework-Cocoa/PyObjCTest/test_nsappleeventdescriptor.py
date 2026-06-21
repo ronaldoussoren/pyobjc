@@ -6,7 +6,7 @@ class TestAED(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSAppleEventSendOptions)
 
-    def testCreateWithBytes(self):
+    def test_create_with_bytes(self):
         self.assertArgSizeInArg(
             Foundation.NSAppleEventDescriptor.descriptorWithDescriptorType_bytes_length_,
             1,
@@ -26,7 +26,7 @@ class TestAED(TestCase):
 
         self.assertResultIsBOOL(Foundation.NSAppleEventDescriptor.booleanValue)
 
-    #    def testInitWithAEDescNoCopy(self):
+    #    def test_initWithAEDescNoCopy(self):
     #        # The object will call AEDisposeDesc, meaning MacPython shouldn't
     #        self.fail("Test for 'initWithAEDescNoCopy'")
     #

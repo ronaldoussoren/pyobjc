@@ -84,7 +84,7 @@ class TestSCPreferences(TestCase):
 
         SystemConfiguration.SCPreferencesSynchronize(ref)
 
-    def testSecurityIntegreation(self):
+    def test_security_integration(self):
         self.assertResultIsCFRetained(
             SystemConfiguration.SCPreferencesCreateWithAuthorization
         )

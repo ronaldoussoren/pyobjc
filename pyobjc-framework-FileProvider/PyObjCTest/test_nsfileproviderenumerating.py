@@ -20,7 +20,7 @@ class TestNSFileProviderEnumerationHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderEnumeration(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(FileProvider.NSFileProviderSyncAnchor, NSData)
         self.assertIsTypedEnum(FileProvider.NSFileProviderPage, NSData)
 

@@ -71,10 +71,10 @@ class TestNSSavePanel(TestCase):
         )
 
     @min_sdk_level("10.6")
-    def test_protocols(self):
+    def test_protocols10_6(self):
         self.assertProtocolExists("NSOpenSavePanelDelegate", AppKit)
 
-    def testProtocol(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSSavePanelHelper.panel_shouldShowFilename_)
         self.assertResultHasType(
             TestNSSavePanelHelper.panel_compareFilename_with_caseSensitive_,

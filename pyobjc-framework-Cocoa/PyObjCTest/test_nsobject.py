@@ -28,26 +28,26 @@ class TestNSObjectHelper(Foundation.NSObject):
 
 
 class TestNSObjectFunctions(TestCase):
-    def testAllocation(self):
+    def test_allocation(self):
         o = Foundation.NSAllocateObject(Foundation.NSObject, 0, None)
         self.assertIsInstance(o, Foundation.NSObject)
         o = Foundation.NSAllocateObject(Foundation.NSObject, 50, None)
         self.assertIsInstance(o, Foundation.NSObject)
         Foundation.NSDeallocateObject(None)
 
-    def testCopy(self):
+    def test_copy(self):
         o = Foundation.NSObject.alloc().init()
         self.assertIsInstance(o, Foundation.NSObject)
         o2 = Foundation.NSCopyObject(o, 50, None)
         self.assertIsInstance(o2, Foundation.NSObject)
 
-    def testShouldRetain(self):
+    def test_should_retain(self):
         o = Foundation.NSObject.alloc().init()
         self.assertIsInstance(o, Foundation.NSObject)
         v = Foundation.NSShouldRetainWithZone(o, None)
         self.assertTrue((v is True) or (v is False))
 
-    def testRefCounts(self):
+    def test_refcounts(self):
         o = Foundation.NSObject.alloc().init()
 
         cnt = Foundation.NSExtraRefCount(o)
@@ -69,13 +69,13 @@ class TestNSObjectFunctions(TestCase):
 
 
 class TestNSObjectInteraction(TestCase):
-    def testCallingInstanceMethodWithClassSelf(self):
+    def test_calling_instance_method_with_class(self):
         self.assertRaises(
             TypeError, Foundation.NSObject.description, Foundation.NSObject
         )
         self.assertRaises(TypeError, Foundation.NSObject.description, "hello")
 
-    def testNSObjectClassMethod(self):
+    def test_nsobject_classmethod(self):
         # Check that -class is accesible as 'class__' and 'class' (the latter
         # only through getattr because it is a Python keyword)
         self.assertTrue(hasattr(Foundation.NSObject, "class__"))
@@ -89,7 +89,7 @@ class TestNSObjectInteraction(TestCase):
         )
         self.assertTrue(getattr(o, "class")() is o.__class__)
 
-    def testNSObjectClass(self):
+    def test_nsobject_class(self):
         self.assertTrue(
             Foundation.NSObject.instancesRespondToSelector_("description"),
             "NSObject class claims it doesn't respond to a selector that it does.",
@@ -103,7 +103,7 @@ class TestNSObjectInteraction(TestCase):
             "NSObject class failed to respond to +description selector.",
         )
 
-    def testNSObjectInstance(self):
+    def test_nsobject_instance(self):
         instance = Foundation.NSObject.new()
 
         self.assertTrue(instance, "Failed to instantiate an instance")
@@ -122,7 +122,7 @@ class TestNSObjectInteraction(TestCase):
         self.assertEqual(instance, instance, "Python identity check failed.")
         self.assertTrue(instance.isEqual_(instance), "Obj-C identity check failed.")
 
-    def testRepeatedAllocInit(self):
+    def test_repeated_alloc_init(self):
         for _ in range(1, 1000):
             _ = Foundation.NSObject.alloc().init()
 

@@ -36,7 +36,7 @@ class TestIMAVManager(TestCase):
         self.assertEqual(InstantMessage.IMVideoOptimizationStills, 1 << 0)
         self.assertEqual(InstantMessage.IMVideoOptimizationReplacement, 1 << 1)
 
-    def testInformalProtocol(self):
+    def test_informal_protocolsProtocol(self):
         # self.assert_( hasattr(protocols, 'IMVideoDataSource') )
         # self.assert_( isinstance(protocols.IMVideoDataSource, objc.informal_protocol) )
 

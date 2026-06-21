@@ -27,7 +27,7 @@ class TestPropertyList(TestCase):
         )
         self.assertIs(valid, True)
 
-    def testStreams(self):
+    def test_streams(self):
         stream = CoreFoundation.CFWriteStreamCreateWithAllocatedBuffers(
             CoreFoundation.kCFAllocatorDefault, CoreFoundation.kCFAllocatorDefault
         )

@@ -8,7 +8,7 @@ class TestCAAnimationHelper(Quartz.NSObject):
 
 
 class TestCAAnimation(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CAAnimationCalculationMode, str)
         self.assertIsTypedEnum(Quartz.CAAnimationRotationMode, str)
         self.assertIsTypedEnum(Quartz.CATransitionSubtype, str)

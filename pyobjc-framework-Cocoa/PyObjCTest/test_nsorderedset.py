@@ -124,7 +124,7 @@ class TestNSOrderedSet(TestCase):
         )
 
     @min_os_level("10.7")
-    def testCreation(self):
+    def test_creation(self):
         self.assertArgIsBOOL(
             Foundation.NSOrderedSet.orderedSetWithOrderedSet_range_copyItems_, 2
         )

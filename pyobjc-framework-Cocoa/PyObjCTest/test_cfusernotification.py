@@ -7,11 +7,11 @@ class TestUserNotification(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreFoundation.CFUserNotificationRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         value = CoreFoundation.CFUserNotificationGetTypeID()
         self.assertIsInstance(value, int)
 
-    def testCreation(self):
+    def test_creation(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfusernotificaton"
 
@@ -77,7 +77,7 @@ class TestUserNotification(TestCase):
         if v is not None:
             self.assertIsInstance(v, str)
 
-    def testAlert(self):
+    def test_alert(self):
         err, flags = CoreFoundation.CFUserNotificationDisplayAlert(
             0.1, 0, None, None, None, "Header", "Message", "Cancel", None, None, None
         )
@@ -89,13 +89,13 @@ class TestUserNotification(TestCase):
         self.assertEqual(err, 0)
         self.assertIsInstance(flags, int)
 
-    def testNotice(self):
+    def test_notice(self):
         err = CoreFoundation.CFUserNotificationDisplayNotice(
             0.1, 0, None, None, None, "Header", "Message", "Cancel"
         )
         self.assertEqual(err, 0)
 
-    def testInlines(self):
+    def test_functions_inlines(self):
         flag = CoreFoundation.CFUserNotificationCheckBoxChecked(2)
         self.assertEqual(flag, 1 << 10)
         flag = CoreFoundation.CFUserNotificationSecureTextField(2)

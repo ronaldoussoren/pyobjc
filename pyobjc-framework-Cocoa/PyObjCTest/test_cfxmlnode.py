@@ -106,5 +106,5 @@ class TestXMLNode(TestCase):
         CoreFoundation.CFXMLTreeGetNode
 
     @expectedFailure
-    def testMissingWrappers(self):
+    def test_missingWrappers(self):
         self.fail("CFXML requires manual wrappers (low prio)")

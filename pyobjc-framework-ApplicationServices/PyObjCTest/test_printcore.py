@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestPrintCore(TestCase):
-    def test_functional(self):
+    def test_usage(self):
         res, value = PrintCore.PMCreatePrintSettings(None)
         self.assertEqual(res, 0)
 

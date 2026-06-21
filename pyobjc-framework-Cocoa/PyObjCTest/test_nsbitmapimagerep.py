@@ -6,7 +6,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSBitmapImageRep(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSBitmapImageRepPropertyKey, str)
 
     def test_enum_types(self):
@@ -15,7 +15,7 @@ class TestNSBitmapImageRep(TestCase):
         self.assertIsEnumType(AppKit.NSImageRepLoadStatus)
         self.assertIsEnumType(AppKit.NSTIFFCompression)
 
-    def testInstantiation(self):
+    def test_creation(self):
         # widthxheight RGB 24bpp image
         width = 256
         height = 256
@@ -31,7 +31,7 @@ class TestNSBitmapImageRep(TestCase):
         )
         self.assertTrue(i2)
 
-    def testPixelFormat(self):
+    def test_pixelformat(self):
         width = 16
         height = 16
 
@@ -78,7 +78,7 @@ class TestNSBitmapImageRep(TestCase):
 
         self.assertEqual(len(bitmapData), width * height * 4)
 
-    def testImageData(self):
+    def test_image_data(self):
         width = 256
         height = 256
 
@@ -191,7 +191,7 @@ class TestBadCreation(TestCase):
 
         os.dup2(self.duppedStderr, 2)
 
-    def test_AllocInit(self):
+    def test_alloc_init(self):
         y = AppKit.NSBitmapImageRep.alloc()
         try:
             self.assertRaises(ValueError, y.init)
@@ -281,7 +281,7 @@ class TestBadCreation(TestCase):
     def test_constants12_0(self):
         self.assertIsInstance(AppKit.NSImageIPTCData, str)
 
-    def testTiffCompression(self):
+    def test_thread_compression(self):
         lst, nr = AppKit.NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
         self.assertIsInstance(lst, tuple)
         self.assertIsInstance(nr, int)

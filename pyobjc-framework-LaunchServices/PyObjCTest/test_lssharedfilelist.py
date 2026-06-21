@@ -40,7 +40,7 @@ class TestLSSharedFileList(TestCase):
         self.assertIsInstance(LaunchServices.kLSSharedFileListLoginItemHidden, str)
 
     @min_os_level("10.5")
-    def testMagicConstants10_5(self):
+    def test_constants_magic10_5(self):
         self.assertIsInstance(
             LaunchServices.kLSSharedFileListItemBeforeFirst,
             LaunchServices.LSSharedFileListItemRef,
@@ -167,7 +167,7 @@ class TestLSSharedFileList(TestCase):
         LaunchServices.LSSharedFileListRemoveAllItems
 
     @expectedFailure
-    def testMissing(self):
+    def test_missing(self):
         # Needs more infrastructure
         self.fail("LSSharedFileListSetAuthorization")
 

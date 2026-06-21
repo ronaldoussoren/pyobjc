@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDREraseSession(TestCase):
     @expectedFailure
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(DiscRecordingUI.DREraseSessionRef)
 
     def test_constants(self):

@@ -12,11 +12,11 @@ class TestData(TestCase):
 
         self.assertIs(CoreFoundation.CFDataRef, NSCFData)
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFDataGetTypeID()
         self.assertTrue(v, int)
 
-    def testCreation(self):
+    def test_creation(self):
         self.assertArgHasType(CoreFoundation.CFDataCreate, 1, b"n^v")
         self.assertArgSizeInArg(CoreFoundation.CFDataCreate, 1, 2)
         data = CoreFoundation.CFDataCreate(None, b"hello", 5)
@@ -39,7 +39,7 @@ class TestData(TestCase):
         mut = CoreFoundation.CFDataCreateMutable(None, 0)
         self.assertIsInstance(mut, CoreFoundation.CFDataRef)
 
-    def testInspection(self):
+    def test_inspect(self):
         data = CoreFoundation.CFDataCreate(None, b"hello", 5)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
         mutableData = CoreFoundation.CFDataCreateMutableCopy(None, 0, data)

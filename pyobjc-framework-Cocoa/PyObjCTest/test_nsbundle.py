@@ -34,13 +34,13 @@ class TestNSBundle(TestCase):
         self.assertIsInstance(AppKit.NSBundleDidLoadNotification, str)
         self.assertIsInstance(AppKit.NSLoadedClasses, str)
 
-    def testDefines(self):
+    def test_defines(self):
         self.assertHasAttr(Foundation, "NSLocalizedString")
         self.assertHasAttr(Foundation, "NSLocalizedStringFromTable")
         self.assertHasAttr(Foundation, "NSLocalizedStringFromTableInBundle")
         self.assertHasAttr(Foundation, "NSLocalizedStringWithDefaultValue")
 
-    def testDefines12_0(self):
+    def test_defines12_0(self):
         # XXX: these should only be available on macOS 12
         self.assertHasAttr(Foundation, "NSLocalizedAttributedString")
         self.assertHasAttr(Foundation, "NSLocalizedAttributedStringFromTable")

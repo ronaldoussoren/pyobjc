@@ -14,7 +14,7 @@ class TestNSCache(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSCacheDelegate", Foundation)
 
-    def testConvenience(self):
+    def test_convenience(self):
         key = "key"
         value = Foundation.NSObject.alloc().init()
         c = Foundation.NSCache.alloc().init()

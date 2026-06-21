@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVMetadataObject(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AVFoundation.AVMetadataObjectType, str)
 
     @min_os_level("10.10")

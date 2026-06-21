@@ -13,11 +13,11 @@ class TestAttributedString(TestCase):
         self.assertIs(CoreFoundation.CFAttributedStringRef, NSCFAttributedString)
         self.assertIs(CoreFoundation.CFMutableAttributedStringRef, NSCFAttributedString)
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFAttributedStringGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCreate(self):
+    def test_create(self):
         val = CoreFoundation.CFAttributedStringCreate(None, "hello", {"foo": 42})
         self.assertIsInstance(val, CoreFoundation.CFAttributedStringRef)
         val = CoreFoundation.CFAttributedStringCreateWithSubstring(None, val, (1, 2))
@@ -25,7 +25,7 @@ class TestAttributedString(TestCase):
         val2 = CoreFoundation.CFAttributedStringCreateCopy(None, val)
         self.assertIs(val2, val)
 
-    def testGetting(self):
+    def test_getting(self):
         val = CoreFoundation.CFAttributedStringCreate(
             None, "hello", {"foo": 42, "bar": b"baz"}
         )
@@ -67,7 +67,7 @@ class TestAttributedString(TestCase):
         self.assertEqual(v, b"baz")
         self.assertEqual(rng, objc.NULL)
 
-    def testMutableCopy(self):
+    def test_mutable_copy(self):
         val = CoreFoundation.CFAttributedStringCreateMutable(None, 0)
         self.assertIsInstance(val, CoreFoundation.CFAttributedStringRef)
         orig = CoreFoundation.CFAttributedStringCreate(
@@ -110,7 +110,7 @@ class TestAttributedString(TestCase):
         CoreFoundation.CFAttributedStringReplaceAttributedString(val, (1, 3), rep)
         self.assertEqual(CoreFoundation.CFAttributedStringGetString(val), "Hdummyo")
 
-    def testEditing(self):
+    def test_editing(self):
         val = CoreFoundation.CFAttributedStringCreateMutable(None, 0)
         self.assertIsInstance(val, CoreFoundation.CFAttributedStringRef)
         CoreFoundation.CFAttributedStringBeginEditing(val)

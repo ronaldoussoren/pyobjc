@@ -50,7 +50,7 @@ class TestLSOpen(TestCase):
         self.assertHasAttr(v, "initialEvent")
         self.assertPickleRoundTrips(v)
 
-    def testLSLaunchFSRefSpec(self):
+    def test_lslaunchfsrefspec(self):
         o = CoreServices.LSLaunchURLSpec()
         self.assertEqual(o.appURL, None)
         self.assertEqual(o.itemURLs, None)
@@ -112,7 +112,7 @@ class TestLSOpen(TestCase):
             self.assertIsInstance(x[1], int)
 
     @expectedFailure
-    def testUnsupportedFunctions(self):
+    def test_functions_unsupported(self):
         self.assertArgIsIn(CoreServices.LSOpenApplication, 0)
         self.assertArgIsOut(CoreServices.LSOpenApplication, 1)
         params = CoreServices.LSApplicationParameters(
@@ -133,7 +133,7 @@ class TestLSOpen(TestCase):
         self.assertEqual(ok, 0)
         self.assertIsInstance(psn, int)
 
-    def testFSRef(self):
+    def test_fsref(self):
         # Functions using structs we don't support, probably need
         # manual wrappers
         self.assertArgIsIn(CoreServices.LSOpenFromRefSpec, 0)

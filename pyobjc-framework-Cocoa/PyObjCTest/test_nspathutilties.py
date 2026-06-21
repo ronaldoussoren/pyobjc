@@ -8,7 +8,7 @@ class TestNSPathUtilities(TestCase):
         self.assertIsEnumType(Foundation.NSSearchPathDirectory)
         self.assertIsEnumType(Foundation.NSSearchPathDomainMask)
 
-    def testSearchPaths(self):
+    def test_search_paths(self):
         self.assertTrue(
             Foundation.NSSearchPathForDirectoriesInDomains(
                 Foundation.NSAllLibrariesDirectory, Foundation.NSAllDomainsMask, objc.NO
@@ -18,7 +18,7 @@ class TestNSPathUtilities(TestCase):
 
         self.assertArgIsBOOL(Foundation.NSSearchPathForDirectoriesInDomains, 2)
 
-    def testTrue(self):
+    def test_true(self):
         for boolVal in (1, 1 == 1, objc.YES, -1):
             self.assertEqual(
                 Foundation.NSSearchPathForDirectoriesInDomains(
@@ -28,7 +28,7 @@ class TestNSPathUtilities(TestCase):
                 boolVal,
             )
 
-    def testFalse(self):
+    def test_false(self):
         for boolVal in (0, 1 != 1, objc.NO):
             self.assertNotEqual(
                 Foundation.NSSearchPathForDirectoriesInDomains(

@@ -15,18 +15,18 @@ class TestNSArrayInteraction(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSBinarySearchingOptions)
 
-    def testRepeatedAllocInit(self):
+    def test_repeated_alloc_init(self):
         for _ in range(1, 1000):
             _ = Foundation.NSArray.alloc().init()
 
-    def testIndices(self):
+    def test_indices(self):
         x = Foundation.NSArray.arrayWithArray_(["foo", "bar", "baz"])
 
         self.assertEqual(x.indexOfObject_("bar"), 1)
 
         self.assertRaises(IndexError, x.objectAtIndex_, 100)
 
-    def testEnumeration(self):
+    def test_enumseration(self):
         x = Foundation.NSArray.arrayWithArray_([1, 2, "foo", "bar", "", "baz"])
         y = []
 
@@ -35,7 +35,7 @@ class TestNSArrayInteraction(TestCase):
 
         self.assertEqual(len(x), len(y))
 
-    def testContains(self):
+    def test_contains(self):
         x = Foundation.NSArray.arrayWithArray_(["foo", "bar", "baz"])
         self.assertEqual(x.count(), 3)
         self.assertEqual(len(x), 3)
@@ -46,7 +46,7 @@ class TestNSArrayInteraction(TestCase):
         self.assertTrue("foo" in x)
         self.assertTrue("dumbledorf" not in x)
 
-    def testIn(self):
+    def test_in(self):
         x = Foundation.NSMutableArray.array()
         for i in range(0, 100):
             x.addObject_(i)
@@ -99,7 +99,7 @@ class TestNSArrayInteraction(TestCase):
         self.assertEqual(x[-15:-5], z[-15:-5])
         self.assertEqual(y[-15:-5], z[-15:-5])
 
-    def testSlice(self):
+    def test_slice(self):
         x = Foundation.NSMutableArray.array()
         for i in range(0, 100):
             x.addObject_(i)
@@ -135,7 +135,7 @@ class TestNSArrayInteraction(TestCase):
 
         self.assertSlicesEqual(x, y, z)
 
-    def test_mixSliceNDice(self):
+    def test_mix_slice_and_dice(self):
         # This test failes on Python 2.2, that is expected.
         x = list(range(0, 10))
         y = Foundation.NSMutableArray.arrayWithArray_(range(0, 10))
@@ -144,7 +144,7 @@ class TestNSArrayInteraction(TestCase):
         x[2:8] = y[3:7]
         y[2:4] = y[1:8]
 
-    def test_subScripts(self):
+    def test_subscripts(self):
         x = list(range(0, 10))
         y = Foundation.NSMutableArray.arrayWithArray_(x)
 
@@ -157,7 +157,7 @@ class TestNSArrayInteraction(TestCase):
         self.assertRaises(IndexError, x.__getitem__, 100)
         self.assertRaises(IndexError, x.__getitem__, -100)
 
-    def test_varargConstruction(self):
+    def test_vararg_construction(self):
         w = Foundation.NSArray.arrayWithObjects_(1, 2, 3, 4)
         x = Foundation.NSArray.alloc().initWithObjects_(1, 2, 3, 4)
 
@@ -174,7 +174,7 @@ class TestNSArrayInteraction(TestCase):
         self.assertEqual(y[2], 3)
         self.assertEqual(z[3], 4)
 
-    def test_varargConstruction2(self):
+    def test_vararg_construction2(self):
         w = Foundation.NSMutableArray.arrayWithObjects_(1, 2, 3, 4, None)
         x = Foundation.NSMutableArray.alloc().initWithObjects_(1, 2, 3, 4, None)
         y = Foundation.NSMutableArray.arrayWithObjects_count_([1, 2, 3, 4, 5, 6], 4)
@@ -196,7 +196,7 @@ class TestNSArrayInteraction(TestCase):
 class TestNSArraySpecialMethods(TestCase):
     # Test calling 'difficult' methods from Python
 
-    def test_initWithObjects_count_(self):
+    def test_init_with_objects_count(self):
         a = Foundation.NSArray.alloc().initWithObjects_count_(("a", "b", "c", "d"), 3)
         self.assertEqual(a, ["a", "b", "c"])
 
@@ -215,7 +215,7 @@ class TestNSArraySpecialMethods(TestCase):
         finally:
             del warnings.filters[0]
 
-    def test_arrayWithObjects_count_(self):
+    def test_array_with_objects(self):
         a = Foundation.NSArray.arrayWithObjects_count_(("a", "b", "c", "d"), 3)
         self.assertEqual(a, ["a", "b", "c"])
 
@@ -223,7 +223,7 @@ class TestNSArraySpecialMethods(TestCase):
             ValueError, Foundation.NSArray.arrayWithObjects_count_, ("a", "b"), 3
         )
 
-    def test_arrayByAddingObjects_count_(self):
+    def test_array_by_adding_objects_count(self):
         return
 
         a = Foundation.NSArray.arrayWithArray_(("a", "b", "c"))
@@ -235,7 +235,7 @@ class TestNSArraySpecialMethods(TestCase):
 
         self.assertRaises(ValueError, a.arrayByAddingObjects_count_, ("a", "b"), 3)
 
-    def test_sortedArrayUsingFunction_context_(self):
+    def test_sortedarray_using_function(self):
         a = Foundation.NSArray.arrayWithArray_(("a", "b", "c"))
         self.assertEqual(a, ("a", "b", "c"))
 
@@ -246,7 +246,7 @@ class TestNSArraySpecialMethods(TestCase):
         self.assertEqual(a, ("a", "b", "c"))
         self.assertEqual(b, ("c", "b", "a"))
 
-    def test_sortedArrayUsingFunction_context_hint_(self):
+    def test_sortedarray_using_functionhint_(self):
         a = Foundation.NSArray.arrayWithArray_(("a", "b", "c"))
         self.assertEqual(a, ("a", "b", "c"))
 
@@ -261,7 +261,7 @@ class TestNSArraySpecialMethods(TestCase):
 
 
 class TestNSMutableArrayInteraction(TestCase):
-    def testRemoveObjects(self):
+    def test_remove_objects(self):
         a = Foundation.NSMutableArray.arrayWithArray_(range(10))
 
         self.assertEqual(len(a), 10)
@@ -274,7 +274,7 @@ class TestNSMutableArrayInteraction(TestCase):
         self.assertEqual(len(a), 7)
         self.assertEqual(a, (0, 1, 3, 5, 7, 8, 9))
 
-    def testReplaceObjects(self):
+    def test_replace_objects(self):
         if objc.platform == "MACOSX" or hasattr(
             Foundation.NSMutableArray, "replaceObjectsInRange_withObjects_count_"
         ):
@@ -285,7 +285,7 @@ class TestNSMutableArrayInteraction(TestCase):
 
             self.assertEqual(a, (0, "a", "b", "c", 3))
 
-    def testSortInvalid(self):
+    def test_sort_invalid(self):
         # Invalid calls to sortUsingFunction:context:
         def cmp(a, b):
             return -1
@@ -304,7 +304,7 @@ class TestNSMutableArrayInteraction(TestCase):
         finally:
             objc.options.verbose = t
 
-    def dont_testSort2(self):
+    def dont_test_sort2(self):
         # sortUsingFunction:context:range: isn't documented an hence shouldn't be tested
         a = Foundation.NSMutableArray.arrayWithArray_(range(10))
         self.assertEqual(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
@@ -318,7 +318,7 @@ class TestNSMutableArrayInteraction(TestCase):
 
             self.assertEqual(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
-    def testSort1(self):
+    def test_sort1(self):
         a = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
 
@@ -329,7 +329,7 @@ class TestNSMutableArrayInteraction(TestCase):
 
         self.assertEqual(a, (3, 2, 1, 0))
 
-    def dont_testSort2_2(self):  # XXX
+    def dont_test_sort2_2(self):  # XXX
         a = Foundation.NSMutableArray.arrayWithArray_(range(10))
         self.assertEqual(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
 
@@ -342,7 +342,7 @@ class TestNSMutableArrayInteraction(TestCase):
 
             self.assertEqual(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
-    def testSort4(self):
+    def test_sort4(self):
         # check the sort method, list interface compatibility
 
         a = Foundation.NSMutableArray.arrayWithArray_(range(4))
@@ -375,7 +375,7 @@ class TestNSMutableArrayInteraction(TestCase):
         v = o.getObjects_range_((1, 2))
         self.assertEqual(v, (5, 6))
 
-    def test_unsupportedMethods(self):
+    def test_unsupported_methods(self):
         #
         # Check that calling unsupported methods results in a TypeError
         #
@@ -387,7 +387,7 @@ class TestNSMutableArrayInteraction(TestCase):
         # if objc.platform == 'MACOSX' or hasattr(o, 'apply_context_'):
         #    self.assertRaises(TypeError, o.apply_context_, lambda x, y:None, 0)
 
-    def testInsert(self):
+    def test_insert(self):
         o = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(list(o), list(range(4)))
 
@@ -401,7 +401,7 @@ class TestNSMutableArrayInteraction(TestCase):
 
 
 class TestVariadic(TestCase):
-    def testArrayWithObjects(self):
+    def test_array_with_objects(self):
         a = Foundation.NSArray.arrayWithObjects_("foo", "bar", None)
         self.assertEqual(a, ("foo", "bar"))
         self.assertIsInstance(a, Foundation.NSArray)
@@ -410,7 +410,7 @@ class TestVariadic(TestCase):
         self.assertEqual(a, ["foo", "bar"])
         self.assertIsInstance(a, Foundation.NSMutableArray)
 
-    def testInitWithObjecs(self):
+    def test_initWithObjecs(self):
         a = Foundation.NSArray.alloc().initWithObjects_("foo", "bar", None)
         self.assertEqual(a, ("foo", "bar"))
         self.assertIsInstance(a, Foundation.NSArray)

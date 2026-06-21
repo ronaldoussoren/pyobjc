@@ -5,7 +5,7 @@ import objc
 
 class TestCVImageBuffer(TestCase):
     @expectedFailure
-    def testsMissing(self):
+    def test_tests_missing(self):
         # FIXME
         Quartz.CVImageBufferGetColorSpace
         Quartz.CVImageBufferRef

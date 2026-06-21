@@ -44,7 +44,7 @@ class TestCFProxySupport(TestCase):
         self.assertIsInstance(v, CFNetwork.CFDictionaryRef)
 
     @min_os_level("10.5")
-    def testManual(self):
+    def test_manual(self):
         lst = []
         ctx = object()
 

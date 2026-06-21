@@ -5,7 +5,7 @@ import ColorSync
 
 class TestColorSyncProfile(TestCase):
     @min_os_level("10.13")
-    def test_cftype(self):
+    def test_cftypes(self):
         self.assertIsCFType(ColorSync.ColorSyncProfileRef)
         self.assertIsCFType(ColorSync.ColorSyncMutableProfileRef)
 

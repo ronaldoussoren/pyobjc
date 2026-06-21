@@ -10,7 +10,7 @@ class TestByteOrder(TestCase):
         self.assertEqual(CoreFoundation.CFByteOrderLittleEndian, 1)
         self.assertEqual(CoreFoundation.CFByteOrderBigEndian, 2)
 
-    def testCurrent(self):
+    def test_current(self):
         if sys.byteorder == "little":
             self.assertTrue(
                 CoreFoundation.CFByteOrderGetCurrent(),
@@ -22,7 +22,7 @@ class TestByteOrder(TestCase):
                 CoreFoundation.CFByteOrderBigEndian,
             )
 
-    def testSwap(self):
+    def test_swap(self):
         v = CoreFoundation.CFSwapInt16(0x1)
         self.assertEqual(v, 1 << 8)
         v = CoreFoundation.CFSwapInt32(0x1)

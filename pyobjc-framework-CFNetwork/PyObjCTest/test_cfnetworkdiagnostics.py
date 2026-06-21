@@ -15,7 +15,7 @@ class TestCFNetwork(TestCase):
         self.assertEqual(CFNetwork.kCFNetDiagnosticConnectionIndeterminate, -66558)
         self.assertEqual(CFNetwork.kCFNetDiagnosticConnectionDown, -66557)
 
-    def testFuncdtions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(CFNetwork.CFNetDiagnosticCreateWithStreams)
 
         host = CFNetwork.CFHostCreateWithName(None, "www.apple.com")

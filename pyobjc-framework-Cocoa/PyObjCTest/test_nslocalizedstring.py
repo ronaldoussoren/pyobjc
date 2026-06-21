@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSLocalizedString(TestCase):
-    def testBasic(self):
+    def test_basic(self):
         # This is mostly a regression tests, the function used to crash on
         # this...
         if objc.platform != "MACOSX":

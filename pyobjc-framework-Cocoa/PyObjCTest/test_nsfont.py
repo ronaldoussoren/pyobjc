@@ -29,7 +29,7 @@ class TestNSFont(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Error on 15.0 in full test run",
     )
-    def testMatrixMethods(self):
+    def test_methods_simd(self):
         o = AppKit.NSFont.boldSystemFontOfSize_(10)
         m = o.matrix()
         self.assertTrue(isinstance(m, tuple))

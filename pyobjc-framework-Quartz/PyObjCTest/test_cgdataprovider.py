@@ -54,7 +54,7 @@ class TestCGDataProvider(TestCase):
         self.assertTrue(info[-1])
 
     @expectedFailure
-    def testMissing(self):
+    def test_missing(self):
         self.fail("CGDataProviderCreateSequential")  # + callbacks
         self.fail("CGDataProviderCreateDirect")  # + callbacks
         self.fail("CGDataProviderCreate")  # + callbacks

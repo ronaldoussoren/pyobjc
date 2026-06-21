@@ -3,7 +3,7 @@ import Vision
 
 
 class TestVNDetectHumanHandPoseRequest(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Vision.VNHumanHandPoseObservationJointName, str)
         self.assertIsTypedEnum(Vision.VNHumanHandPoseObservationJointsGroupName, str)
 

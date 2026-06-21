@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestApplicationServices(TestCase):
-    def testTrivial(self):
+    def test_trivial(self):
         ApplicationServices.kAXErrorSuccess
 
 

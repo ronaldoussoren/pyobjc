@@ -8,7 +8,7 @@ class TestNSDateFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSDateFormatterBehavior)
         self.assertIsEnumType(Foundation.NSDateFormatterStyle)
 
-    def testOutput(self):
+    def test_output(self):
         formatter = Foundation.NSDateFormatter.alloc().init()
         formatter.setDateFormat_("yyyy/mm/dd")
 

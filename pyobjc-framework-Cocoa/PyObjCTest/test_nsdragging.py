@@ -135,7 +135,7 @@ class TestNSDragging(TestCase):
         self.assertEqual(AppKit.NSDragOperationAll, AppKit.NSDragOperationAll_Obsolete)
 
     @min_os_level("10.7")
-    def testConstant10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSDraggingFormationDefault, 0)
         self.assertEqual(AppKit.NSDraggingFormationNone, 1)
         self.assertEqual(AppKit.NSDraggingFormationPile, 2)
@@ -153,7 +153,7 @@ class TestNSDragging(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstant10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(AppKit.NSSpringLoadingHighlightNone, 0)
         self.assertEqual(AppKit.NSSpringLoadingHighlightStandard, 1)
         self.assertEqual(AppKit.NSSpringLoadingHighlightEmphasized, 2)
@@ -172,7 +172,7 @@ class TestNSDragging(TestCase):
     def test_protocols10_11(self):
         self.assertProtocolExists("NSSpringLoadingDestination", AppKit)
 
-    def testProtocolImplementations(self):
+    def test_protocols_implementation(self):
         self.assertResultHasType(
             TestNSDraggingHelper.draggingSourceOperationMask, objc._C_NSUInteger
         )

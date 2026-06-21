@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSScannerUsage(TestCase):
-    def testUsage(self):
+    def test_usage(self):
         obj = Foundation.NSScanner.scannerWithString_("1.2 2.5")
 
         didConvert, value = obj.scanDouble_(None)

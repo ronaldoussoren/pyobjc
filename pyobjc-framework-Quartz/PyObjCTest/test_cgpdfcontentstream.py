@@ -52,5 +52,5 @@ class TestCGPDFContentStream(TestCase):
         self.assertIsInstance(v, Quartz.CGPDFObject)
 
     @expectedFailure
-    def testIncomplete(self):
+    def test_incomplete(self):
         self.fail("CGPDFContentStreamGetStreams")  # Need manual wrapper

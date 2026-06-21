@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestEAManager(TestCase):
-    def testContants(self):
+    def test_constants(self):
         self.assertIsInstance(
             Foundation.NSAppleEventManagerWillProcessFirstEventNotification, str
         )

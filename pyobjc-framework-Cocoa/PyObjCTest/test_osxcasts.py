@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestTollFreeBridging(TestCase):
-    def testImplicitFromCF(self):
+    def test_implicit_from_cf(self):
         c = CoreFoundation.CFArrayCreateMutable(None, 0, None)
         self.assertIsInstance(c, CoreFoundation.CFMutableArrayRef)
 

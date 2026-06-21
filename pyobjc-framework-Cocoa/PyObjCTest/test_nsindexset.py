@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSIndexSet(TestCase):
-    def testConvenience(self):
+    def test_convenience(self):
         v = Foundation.NSIndexSet.indexSetWithIndexesInRange_((5, 10))
         lst = list(v)
         self.assertEqual(lst, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
@@ -108,7 +108,7 @@ class TestNSIndexSet(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethod10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsBlock(
             Foundation.NSIndexSet.enumerateRangesUsingBlock_,
             0,

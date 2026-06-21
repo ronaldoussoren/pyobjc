@@ -77,7 +77,7 @@ class TestNSError(TestCase):
     def test_constants11_3(self):
         self.assertIsInstance(AppKit.NSMultipleUnderlyingErrorsKey, str)
 
-    def testAttemptRecovery(self):
+    def test_attempt_recovery(self):
         self.assertArgHasType(
             TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_,  # noqa: B950
             1,

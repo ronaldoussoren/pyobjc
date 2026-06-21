@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSCalendarDate(TestCase):
-    def testOutput(self):
+    def test_output(self):
         obj = Foundation.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
             2008, 12, 5, 14, 15, 16, Foundation.NSTimeZone.systemTimeZone()
         )

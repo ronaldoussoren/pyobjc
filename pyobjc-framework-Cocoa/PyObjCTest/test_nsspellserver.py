@@ -41,7 +41,7 @@ class TestNSSpellServer(TestCase):
             Foundation.NSSpellServer.isWordInUserDictionaries_caseSensitive_, 1
         )
 
-    def testDelegate(self):
+    def test_delegate_methods(self):
         self.assertResultHasType(
             TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_,  # noqa: B950
             Foundation.NSRange.__typestr__,
@@ -74,7 +74,7 @@ class TestNSSpellServer(TestCase):
         )
 
     @min_os_level("10.6")
-    def testDelegate10_6(self):
+    def test_delegate_methods10_6(self):
         self.assertArgHasType(
             TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
             2,

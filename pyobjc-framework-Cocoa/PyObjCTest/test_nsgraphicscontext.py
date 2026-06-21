@@ -8,7 +8,7 @@ except ImportError:
 
 
 class TestNSGraphicsContext(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSGraphicsContextAttributeKey, str)
         self.assertIsTypedEnum(AppKit.NSGraphicsContextRepresentationFormatName, str)
 

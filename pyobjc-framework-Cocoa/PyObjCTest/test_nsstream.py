@@ -9,7 +9,7 @@ class TestNSStreamHelper(Foundation.NSObject):
 
 
 class TestNSStreamUsage(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSStreamNetworkServiceTypeValue, str)
         self.assertIsTypedEnum(Foundation.NSStreamPropertyKey, str)
         self.assertIsTypedEnum(Foundation.NSStreamSOCKSProxyConfiguration, str)
@@ -20,7 +20,7 @@ class TestNSStreamUsage(TestCase):
         self.assertIsEnumType(Foundation.NSStreamEvent)
         self.assertIsEnumType(Foundation.NSStreamStatus)
 
-    def testUsage(self):
+    def test_usage(self):
         # Test the usage of methods that require extra work
 
         # Try to create a connection to the IPP port on the local host
@@ -123,7 +123,7 @@ class TestNSStreamUsage(TestCase):
         self.assertArgIsOut(Foundation.NSInputStream.getBuffer_length_, 1)
         self.assertArgSizeInArg(Foundation.NSInputStream.getBuffer_length_, 0, 1)
 
-    def testDelegate(self):
+    def test_delegate_methods(self):
         self.assertArgHasType(
             TestNSStreamHelper.stream_handleEvent_, 1, objc._C_NSUInteger
         )

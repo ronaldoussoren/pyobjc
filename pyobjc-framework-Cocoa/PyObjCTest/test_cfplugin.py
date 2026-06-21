@@ -56,7 +56,7 @@ symbols = [
 
 
 class TestPluginNotSuppported(TestCase):
-    def testUnsupported(self):
+    def test_unsupported(self):
         for sym in symbols:
             with self.subTest(sym):
                 if hasattr(CoreFoundation, sym):

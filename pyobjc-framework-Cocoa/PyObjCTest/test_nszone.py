@@ -6,7 +6,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSZone(TestCase):
-    def testWithZones(self):
+    def test_with_zones(self):
         obj = Foundation.NSObject.allocWithZone_(None).init()
         zone = obj.zone()
         self.assertIsNot(zone, None)
@@ -19,7 +19,7 @@ class TestNSZone(TestCase):
         self.assertRaises(TypeError, Foundation.NSObject.allocWithZone_, 10)
         # self.assertRaises(TypeError, Foundation.NSObject.allocWithZone_, objc.NULL)
 
-    def testNoMallocAndFriends(self):
+    def test_no_malloc_and_friends(self):
         import Foundation
 
         self.assertNotHasAttr(Foundation, "NSZoneMalloc")
@@ -37,7 +37,7 @@ class TestNSZone(TestCase):
         self.assertEqual(Foundation.NSScannedOption, (1 << 0))
         self.assertEqual(Foundation.NSCollectorDisabledOption, (1 << 1))
 
-    def testMakeCollectable(self):
+    def test_make_collectable(self):
         v = Foundation.NSMakeCollectable
 
         o = Foundation.NSObject.alloc().init()
@@ -47,7 +47,7 @@ class TestNSZone(TestCase):
         v = Foundation.NSMakeCollectable(None)
         self.assertIs(v, None)
 
-    def testInfoFunctions(self):
+    def test_functions_info(self):
         v = Foundation.NSPageSize()
         self.assertIsInstance(v, int)
         v = Foundation.NSLogPageSize()
@@ -59,7 +59,7 @@ class TestNSZone(TestCase):
         v = Foundation.NSRealMemoryAvailable()
         self.assertIsInstance(v, int)
 
-    def testZoneCreation(self):
+    def test_zone_creation(self):
         z = Foundation.NSDefaultMallocZone()
         if z is not None:
             self.assertIsInstance(z, Foundation.NSZonePtr)

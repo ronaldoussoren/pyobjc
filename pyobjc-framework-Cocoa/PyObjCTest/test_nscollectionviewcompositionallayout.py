@@ -94,7 +94,7 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         )
 
     @min_os_level("10.15")
-    def test_contants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(
             AppKit.NSDirectionalEdgeInsetsZero, AppKit.NSDirectionalEdgeInsets
         )
@@ -117,7 +117,7 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         self.assertEqual(v.trailing, 4.0)
 
     @min_os_level("10.15")
-    def test_methods_10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             AppKit.NSCollectionViewCompositionalLayout.initWithSectionProvider_,
             0,

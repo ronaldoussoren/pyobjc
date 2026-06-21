@@ -28,5 +28,5 @@ class TestCGColorConvertor(TestCase):
 
     @expectedFailure
     @min_os_level("10.12")
-    def testFunctionHard(self):
+    def test_functions_manual(self):
         self.fail("Quartz.CGColorConverterCreate")  # Varargs with annoying signature

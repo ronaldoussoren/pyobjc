@@ -16,7 +16,7 @@ def do_del_slice(op, start, stop):
 
 
 class TestNSPoint(TestCase):
-    def testConstructor(self):
+    def test_constructor(self):
         p = Foundation.NSPoint()
         self.assertIsInstance(p, Foundation.NSPoint)
         self.assertEqual(p.x, 0)
@@ -41,17 +41,17 @@ class TestNSPoint(TestCase):
         self.assertRaises(TypeError, Foundation.NSPoint, 1, x=3)
         self.assertRaises(TypeError, Foundation.NSPoint, x=3, z=4)
 
-    def testMakePoint(self):
+    def test_make_point(self):
         p = Foundation.NSMakePoint(1, 2)
         self.assertIsInstance(p, Foundation.NSPoint)
         self.assertEqual(p.x, 1)
         self.assertEqual(p.y, 2)
 
-    def testHash(self):
+    def test_hash(self):
         p = Foundation.NSMakePoint(1, 2)
         self.assertRaises(TypeError, hash, p)
 
-    def testCompare(self):
+    def test_compare(self):
         p = Foundation.NSMakePoint(1, 2)
         q = Foundation.NSMakePoint(2, 3)
         P = (1, 2)
@@ -87,7 +87,7 @@ class TestNSPoint(TestCase):
         self.assertTrue(q > p)
         self.assertTrue(q > P)
 
-    def testRepr(self):
+    def test_repr(self):
         p = Foundation.NSPoint()
         self.assertEqual(repr(p), "<CoreFoundation.CGPoint x=0.0 y=0.0>")
 
@@ -99,7 +99,7 @@ class TestNSPoint(TestCase):
             repr(p), "<CoreFoundation.CGPoint x=<CoreFoundation.CGPoint ...> y=98>"
         )
 
-    def testStr(self):
+    def test_str(self):
         p = Foundation.NSPoint()
         self.assertEqual(str(p), "<CoreFoundation.CGPoint x=0.0 y=0.0>")
 
@@ -111,22 +111,22 @@ class TestNSPoint(TestCase):
             repr(p), "<CoreFoundation.CGPoint x=<CoreFoundation.CGPoint ...> y=98>"
         )
 
-    def testSlice(self):
+    def test_slice(self):
         p = Foundation.NSPoint(1, 2)
         q = p[:]
 
         self.assertIsInstance(q, tuple)
         self.assertEqual(q, (1.0, 2.0))
 
-    def testDeleteAttr(self):
+    def test_delete_attr(self):
         p = Foundation.NSPoint(1, 2)
         self.assertRaises(TypeError, delattr, p, "x")
 
-    def testDeleteSlice(self):
+    def test_delete_slice(self):
         p = Foundation.NSPoint(1, 2)
         self.assertRaises(TypeError, operator.delitem, p, 0)
 
-    def testAssignSlice(self):
+    def test_assign_slice(self):
         p = Foundation.NSPoint(1, 2)
         p[:] = (4, 5)
 
@@ -149,7 +149,7 @@ class TestNSPoint(TestCase):
 
 
 class TestNSSize(TestCase):
-    def testConstructor(self):
+    def test_constructor(self):
         p = Foundation.NSSize()
         self.assertIsInstance(p, Foundation.NSSize)
         self.assertEqual(p.width, 0)
@@ -174,7 +174,7 @@ class TestNSSize(TestCase):
         self.assertRaises(TypeError, Foundation.NSSize, 1, width=3)
         self.assertRaises(TypeError, Foundation.NSSize, width=3, z=4)
 
-    def testMakeSize(self):
+    def test_make_size(self):
         p = Foundation.NSMakeSize(1, 2)
         self.assertIsInstance(p, Foundation.NSSize)
         self.assertEqual(p.width, 1)
@@ -182,7 +182,7 @@ class TestNSSize(TestCase):
 
 
 class TestNSRange(TestCase):
-    def testConstructor(self):
+    def test_constructor(self):
         p = Foundation.NSRange()
         self.assertIsInstance(p, Foundation.NSRange)
         self.assertEqual(p.location, 0)
@@ -207,7 +207,7 @@ class TestNSRange(TestCase):
         self.assertRaises(TypeError, Foundation.NSRange, 1, location=3)
         self.assertRaises(TypeError, Foundation.NSRange, location=3, z=4)
 
-    def testMakeSize(self):
+    def test_make_size(self):
         p = Foundation.NSMakeSize(1, 2)
         self.assertIsInstance(p, Foundation.NSSize)
         self.assertEqual(p.width, 1)
@@ -215,7 +215,7 @@ class TestNSRange(TestCase):
 
 
 class TestNSRect(TestCase):
-    def testConstructor(self):
+    def test_constructor(self):
         p = Foundation.NSRect()
         self.assertIsInstance(p, Foundation.NSRect)
         self.assertIsNot(p.origin, None)
@@ -242,7 +242,7 @@ class TestNSRect(TestCase):
         self.assertRaises(TypeError, Foundation.NSRect, 1, origin=3)
         self.assertRaises(TypeError, Foundation.NSRect, origin=3, z=4)
 
-    def testMakeRect(self):
+    def test_make_rect(self):
         p = Foundation.NSMakeRect(1, 2, 3, 4)
         self.assertIsInstance(p, Foundation.NSRect)
         self.assertEqual(p.origin, (1, 2))
@@ -252,7 +252,7 @@ class TestNSRect(TestCase):
         self.assertEqual(p.size.width, 3)
         self.assertEqual(p.size.height, 4)
 
-    def testNSEdgeInserts(self):
+    def test_edgeinserts(self):
         v = Foundation.NSEdgeInsets()
         self.assertEqual(v.top, 0.0)
         self.assertEqual(v.left, 0.0)

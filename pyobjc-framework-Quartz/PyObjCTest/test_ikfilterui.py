@@ -13,5 +13,5 @@ class TestIKFilterUI(TestCase):
         self.assertIsInstance(Quartz.IKUIFlavorAllowFallback, str)
 
     @min_os_level("10.5")
-    def testProtocol(self):
+    def test_protocols(self):
         self.assertProtocolExists("IKFilterCustomUIProvider", Quartz)

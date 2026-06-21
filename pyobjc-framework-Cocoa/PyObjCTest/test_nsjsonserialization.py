@@ -22,7 +22,7 @@ class TestNSJSONSerialization(TestCase):
         self.assertEqual(Foundation.NSJSONWritingWithoutEscapingSlashes, (1 << 3))
 
     @min_os_level("10.7")
-    def testMethod10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(Foundation.NSJSONSerialization.isValidJSONObject_)
         self.assertArgIsOut(
             Foundation.NSJSONSerialization.dataWithJSONObject_options_error_, 2

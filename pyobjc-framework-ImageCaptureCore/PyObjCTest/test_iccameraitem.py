@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestICCameraItem(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(ImageCaptureCore.ICCameraItemMetadataOption, str)
         self.assertIsTypedEnum(ImageCaptureCore.ICCameraItemThumbnailOption, str)
         self.assertIsTypedEnum(ImageCaptureCore.ICDownloadOption, str)

@@ -42,13 +42,13 @@ class TestRunLoop(TestCase):
         self.assertIsInstance(CoreFoundation.kCFRunLoopDefaultMode, str)
         self.assertIsInstance(CoreFoundation.kCFRunLoopCommonModes, str)
 
-    def testGetTypeID(self):
+    def test_get_typeid(self):
         self.assertIsInstance(CoreFoundation.CFRunLoopGetTypeID(), int)
         self.assertIsInstance(CoreFoundation.CFRunLoopSourceGetTypeID(), int)
         self.assertIsInstance(CoreFoundation.CFRunLoopObserverGetTypeID(), int)
         self.assertIsInstance(CoreFoundation.CFRunLoopTimerGetTypeID(), int)
 
-    def testRunloop(self):
+    def test_runloop(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
 
@@ -82,7 +82,7 @@ class TestRunLoop(TestCase):
         # CoreFoundation.CFRunLoopRun is hard to test reliably
         self.assertHasAttr(CoreFoundation, "CFRunLoopRun")
 
-    def testObserver(self):
+    def test_observer(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
 
@@ -156,7 +156,7 @@ class TestRunLoop(TestCase):
             CoreFoundation.CFRunLoopContainsObserver(rl, observer, runloop_mode), False
         )
 
-    def testTimer(self):
+    def test_timer(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
         rl = CoreFoundation.CFRunLoopGetCurrent()
@@ -206,7 +206,7 @@ class TestRunLoop(TestCase):
             self.assertIs(item[0], timer)
             self.assertIs(item[1], data)
 
-    def testSource(self):
+    def test_source(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
 

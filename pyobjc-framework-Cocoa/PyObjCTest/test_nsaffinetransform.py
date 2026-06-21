@@ -8,7 +8,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSAffineTransformStruct(TestCase):
-    def testConstructor(self):
+    def test_constructor(self):
         p = Foundation.NSAffineTransformStruct()
         self.assertIsInstance(p, Foundation.NSAffineTransformStruct)
         self.assertEqual(p.m11, 0)
@@ -59,11 +59,11 @@ class TestNSAffineTransformStruct(TestCase):
         )
         self.assertRaises(TypeError, Foundation.NSAffineTransformStruct, m11=3, mXY=4)
 
-    def testHash(self):
+    def test_hash(self):
         p = Foundation.NSAffineTransformStruct()
         self.assertRaises(TypeError, hash, p)
 
-    def testCompare(self):
+    def test_compare(self):
         p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
         q = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 7)
         P = (1, 2, 3, 4, 5, 6)
@@ -106,7 +106,7 @@ class TestNSAffineTransformStruct(TestCase):
         self.assertTrue(q > p)
         self.assertTrue(q > P)
 
-    def testRepr(self):
+    def test_repr(self):
         p = Foundation.NSAffineTransformStruct()
         self.assertEqual(
             repr(p),
@@ -125,7 +125,7 @@ class TestNSAffineTransformStruct(TestCase):
             "<Foundation.NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<Foundation.NSAffineTransformStruct ...> tY=6>",  # noqa: B950
         )
 
-    def testStr(self):
+    def test_str(self):
         p = Foundation.NSAffineTransformStruct()
         self.assertEqual(
             str(p),
@@ -144,14 +144,14 @@ class TestNSAffineTransformStruct(TestCase):
             "<Foundation.NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<Foundation.NSAffineTransformStruct ...> tY=6>",  # noqa: B950
         )
 
-    def testSlice(self):
+    def test_slice(self):
         p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
         q = p[:]
 
         self.assertIsInstance(q, tuple)
         self.assertEqual(q, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
 
-    def testDeleteSlice(self):
+    def test_delete_slice(self):
         p = Foundation.NSAffineTransformStruct(1, 2)
 
         def delslice(o, b, e):
@@ -160,7 +160,7 @@ class TestNSAffineTransformStruct(TestCase):
         self.assertRaises(TypeError, operator.delitem, p, 0)
         self.assertRaises(TypeError, delslice, p, 0, 3)
 
-    def testAssignSlice(self):
+    def test_assign_slice(self):
         p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
         p[:] = (4, 5, 6, 7, 8, 9)
 
@@ -204,7 +204,7 @@ class TestNSAffineTransformStruct(TestCase):
 
 
 class TestAffineTransform(TestCase):
-    def test_structReturn(self):
+    def test_structs_return(self):
         transform = Foundation.NSAffineTransform.transform()
         s = transform.transformStruct()
         self.assertIsInstance(s, Foundation.NSAffineTransformStruct)

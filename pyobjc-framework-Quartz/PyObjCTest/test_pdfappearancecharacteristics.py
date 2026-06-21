@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestPDFAppearanceCharacteristic(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.PDFAppearanceCharacteristicsKey, str)
 
     @min_os_level("10.13")

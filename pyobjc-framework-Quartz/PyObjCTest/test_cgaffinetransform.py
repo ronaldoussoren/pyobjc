@@ -4,7 +4,7 @@ import objc
 
 
 class TestCGAffineTransform(TestCase):
-    def test_struct(self):
+    def test_structs(self):
         v = Quartz.CGAffineTransform()
         self.assertTrue(hasattr(v, "a"))
         self.assertTrue(hasattr(v, "b"))

@@ -333,7 +333,7 @@ class TestCGDirectDisplay(TestCase):
         self.assertIsCFType(Quartz.CGDisplayModeRef)
 
     @min_os_level("10.6")
-    def testFunction10_6(self):
+    def test_functions10_6(self):
         mainID = Quartz.CGMainDisplayID()
 
         self.assertResultIsCFRetained(Quartz.CGDisplayCopyAllDisplayModes)

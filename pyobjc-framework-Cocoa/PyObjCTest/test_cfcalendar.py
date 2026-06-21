@@ -9,7 +9,7 @@ NSLocale = objc.lookUpClass("NSLocale")
 
 
 class TestCFCalendarVariadic(TestCase):
-    def testCFCalendarComposeAbsoluteTime(self):
+    def test_cfcalendar_compose_absolute_time(self):
         calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFGregorianCalendar
         )
@@ -25,7 +25,7 @@ class TestCFCalendarVariadic(TestCase):
         self.assertEqual(success, True)
         self.assertIsInstance(at, float)
 
-    def testCFCalendarAddComponents(self):
+    def test_cfcalendar_add_components(self):
         calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFGregorianCalendar
         )
@@ -50,7 +50,7 @@ class TestCFCalendarVariadic(TestCase):
         self.assertEqual(y, 2)
         self.assertEqual(H, 3)
 
-    def testCFCalendarDecomposeAbsoluteTime(self):
+    def test_cfcalendar_decompose_absolute_time(self):
         calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFGregorianCalendar
         )
@@ -72,7 +72,7 @@ class TestCFCalendarVariadic(TestCase):
         self.assertEqual(m, 10)
         self.assertEqual(s, 0)
 
-    def testCFCalendarGetComponentDifference(self):
+    def test_cfcalendar_get_component_difference(self):
         calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFGregorianCalendar
         )
@@ -97,11 +97,11 @@ class TestCFCalendarVariadic(TestCase):
         self.assertEqual(y, 2)
         self.assertEqual(M, 1)
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFCalendarGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCreation(self):
+    def test_creation(self):
         cal = CoreFoundation.CFCalendarCopyCurrent()
         self.assertIsInstance(cal, NSCalendar)
         cal = CoreFoundation.CFCalendarCreateWithIdentifier(
@@ -109,7 +109,7 @@ class TestCFCalendarVariadic(TestCase):
         )
         self.assertIsInstance(cal, NSCalendar)
 
-    def testInspection(self):
+    def test_inspect(self):
         cal = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFGregorianCalendar
         )
@@ -173,7 +173,7 @@ class TestCFCalendarVariadic(TestCase):
         self.assertIsInstance(tip, float)
         self.assertIn(tip, (86400.0, 90000.0, 82800))  # 1 day, remove DST, add DST
 
-    def testMutation(self):
+    def test_mutation(self):
         cal = CoreFoundation.CFCalendarCreateWithIdentifier(
             None, CoreFoundation.kCFBuddhistCalendar
         )

@@ -23,7 +23,7 @@ class TestCMBlockBuffer(TestCase):
 
         self.assertEqual(CoreMedia.kCMBlockBufferCustomBlockSourceVersion, 0)
 
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(CoreMedia.CMBlockBufferRef)
 
     def test_functions(self):

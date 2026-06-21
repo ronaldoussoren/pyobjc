@@ -35,7 +35,7 @@ def stripDocType(val):
 
 
 class TestNSNumber(TestCase):
-    def testSimple(self):
+    def test_simple(self):
         self.assertEqual(Foundation.NSNumber.numberWithFloat_(1.0), 1, 0)
         self.assertEqual(Foundation.NSNumber.numberWithInt_(1), 1)
         self.assertEqual(Foundation.NSNumber.numberWithFloat_(-0.5), -0.5)
@@ -43,7 +43,7 @@ class TestNSNumber(TestCase):
         self.assertEqual(Foundation.NSNumber.numberWithInt_(0), 0)
         self.assertEqual(Foundation.NSNumber.numberWithFloat_(0.0), 0.0)
 
-    def testReadOnly(self):
+    def test_readonly(self):
         n = Foundation.NSNumber.numberWithFloat_(1.2)
         self.assertRaises(AttributeError, setattr, n, "foo", 2)
 
@@ -53,7 +53,7 @@ class TestNSNumber(TestCase):
         n = Foundation.NSNumber.numberWithLongLong_(2**32 + 2)
         self.assertRaises(AttributeError, setattr, n, "foo", 2)
 
-    def testUseAsBasicType(self):
+    def test_use_as_basic_type(self):
         lstValue = list(range(0, 20, 2))
         for idx, v in enumerate(lstValue):
             self.assertEqual(v, lstValue[Foundation.NSNumber.numberWithInt_(idx)])
@@ -67,7 +67,7 @@ class TestNSNumber(TestCase):
             Foundation.NSNumber.numberWithFloat_(2.0),
         )
 
-    def testUnsignedIssues(self):
+    def test_uinsigned_issues(self):
         # Foundation.NSNumber stores unsigned numbers as signed numbers
         # This is a bug in Cocoa... (RADAR #4007594), fixed in 10.5
         if sdkForPython() is not None and sdkForPython() < (10, 5):
@@ -86,7 +86,7 @@ class TestNSNumber(TestCase):
         v = Foundation.NSNumber.numberWithInt_(10)
         self.assertEqual(v.doubleValue(), float(10))
 
-    def testMath(self):
+    def test_math(self):
         Xs = list(range(10, 40, 3))
         Ys = list(range(-12, 44, 5))
 
@@ -125,7 +125,7 @@ class TestNSNumber(TestCase):
                 self.assertEqual((x) % (y), Nx % Ny)
                 self.assertEqual((x) ** (y), Nx**Ny)
 
-    def testTyping(self):
+    def test_typing(self):
         # Thanks to some tricks and a cooperating Python runtime,
         # Foundation.NSNumber "instances" seem to be subclasses of both Foundation.NSNumber and
         # the corresponding Python number type.
@@ -175,7 +175,7 @@ if objc.platform == "MACOSX":
         # NOTE: GNUstep uses the old NeXT property lists, and these tests
         # will fail.
 
-        def testPropertyList1(self):
+        def test_propertylist1(self):
             d = Foundation.NSMutableDictionary.dictionary()
 
             # Python 2.3 only...
@@ -190,7 +190,7 @@ if objc.platform == "MACOSX":
 
             self.assertEqual(stripDocType(data), stripDocType(PLIST))
 
-        def testPropertyList2(self):
+        def test_propertylist2(self):
             d = Foundation.NSMutableDictionary.dictionary()
 
             d["plain"] = Foundation.NSNumber.numberWithLong_(1)
@@ -206,7 +206,7 @@ if objc.platform == "MACOSX":
 
 
 class TestDecimalNumber(TestCase):
-    def testProxy(self):
+    def test_proxy(self):
         one = Foundation.NSDecimalNumber.decimalNumberWithString_("1.00")
         self.assertIsInstance(one, Foundation.NSDecimalNumber)
 

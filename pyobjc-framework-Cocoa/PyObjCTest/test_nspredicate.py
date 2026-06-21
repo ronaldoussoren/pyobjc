@@ -4,15 +4,15 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPredicate(TestCase):
-    def testSimple(self):
+    def test_simple(self):
         pred = Foundation.NSPredicate.predicateWithFormat_("a == 42")
         self.assertEqual(pred.predicateFormat(), "a == 42")
 
-    def testFormat(self):
+    def test_format(self):
         pred = Foundation.NSPredicate.predicateWithFormat_("a == %d", 99)
         self.assertEqual(pred.predicateFormat(), "a == 99")
 
-    def testBadFormat(self):
+    def test_bad_format(self):
         self.assertRaises(
             ValueError, Foundation.NSPredicate.predicateWithFormat_, "a == %d"
         )

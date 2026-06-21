@@ -20,7 +20,7 @@ class TestAVCaptureFileOutput(TestCase):
         )  # noqa: B950
 
     @min_os_level("12.0")
-    def test_methodsTundra(self):
+    def test_methods_tundra(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput_Tundra.isRecording)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureFileOutput_Tundra.isRecordingPaused

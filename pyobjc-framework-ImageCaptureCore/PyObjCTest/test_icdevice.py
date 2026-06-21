@@ -7,7 +7,7 @@ from PyObjCTools.TestSupport import (
 
 
 class TestICDevice(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(ImageCaptureCore.ICDeviceCapability, str)
         self.assertIsTypedEnum(ImageCaptureCore.ICDeviceLocationOptions, str)
         self.assertIsTypedEnum(ImageCaptureCore.ICDeviceStatus, str)

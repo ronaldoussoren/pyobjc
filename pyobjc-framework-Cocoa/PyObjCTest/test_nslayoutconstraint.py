@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSLayoutContraintManual(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSLayoutPriority, float)
 
     def test_enum_types(self):
@@ -13,7 +13,7 @@ class TestNSLayoutContraintManual(TestCase):
         self.assertIsEnumType(AppKit.NSLayoutFormatOptions)
         self.assertIsEnumType(AppKit.NSLayoutRelation)
 
-    def testNSDictionaryOfVariableBindings(self):
+    def test_nsdictionary_of_variable_bindings(self):
         var1 = "foo"  # noqa: F841
         var2 = "bar"  # noqa: F841
 
@@ -113,7 +113,7 @@ class TestNSLayoutContraintManual(TestCase):
         self.assertEqual(AppKit.NSLayoutPriorityFittingSizeCompression, 50)
 
     @min_os_level("10.7")
-    def testRecords10_7(self):
+    def test_structs10_7(self):
         v = AppKit.NSEdgeInsets()
         self.assertEqual(v.top, 0.0)
         self.assertEqual(v.left, 0.0)

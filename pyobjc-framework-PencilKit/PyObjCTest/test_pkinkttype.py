@@ -4,7 +4,7 @@ import PencilKit
 
 
 class TestPKInknType(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(PencilKit.PKInkType, str)
 
     @min_os_level("11.0")

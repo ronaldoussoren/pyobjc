@@ -157,7 +157,7 @@ class TestNSBrowser(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSBrowserDelegate", AppKit)
 
-    def testDelegate(self):
+    def test_delegate_methods(self):
         self.assertResultIsBOOL(
             TestNSBrowserHelper.browser_selectCellWithString_inColumn_
         )
@@ -295,7 +295,7 @@ class TestNSBrowser(TestCase):
         )
 
     @min_os_level("10.6")
-    def testDelegate10_6(self):
+    def test_delegate_methods10_6(self):
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_isLeafItem_)
         self.assertResultHasType(
             TestNSBrowserHelper.browser_heightOfRow_inColumn_, objc._C_CGFloat

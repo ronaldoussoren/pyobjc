@@ -21,7 +21,7 @@ class TestEKTypes(TestCase):
         self.assertIsEnumType(EventKit.EKWeekday)
 
     @min_os_level("10.8")
-    def testConstacts(self):
+    def test_constants(self):
         self.assertEqual(EventKit.EKAlarmProximityLeave, 2)
 
         self.assertEqual(EventKit.EKAuthorizationStatusNotDetermined, 0)

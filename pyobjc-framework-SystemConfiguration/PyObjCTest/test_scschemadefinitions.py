@@ -368,7 +368,7 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(SystemConfiguration.kSCPropUsersConsoleUserGID, str)
 
     @max_os_level("10.11")
-    def test_constantsUpto10_12(self):
+    def test_constants_upto10_12(self):
         self.assertIsInstance(SystemConfiguration.kSCPropNetAppleTalkComputerName, str)
         self.assertIsInstance(
             SystemConfiguration.kSCPropNetAppleTalkComputerNameEncoding, str

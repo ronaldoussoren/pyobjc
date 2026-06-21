@@ -48,7 +48,7 @@ class FindHelper(AppKit.NSObject):
 
 
 class TestNSTextFinder(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSPasteboardTypeTextFinderOptionKey, str)
 
     def test_enum_types(self):
@@ -98,7 +98,7 @@ class TestNSTextFinder(TestCase):
         self.assertProtocolExists("NSTextFinderClient", AppKit)
 
     @min_os_level("10.7")
-    def testProtocol10_7(self):
+    def test_protocols10_7(self):
         self.assertResultIsBOOL(FindHelper.isSelectable)
         self.assertResultIsBOOL(FindHelper.allowsMultipleSelection)
         self.assertResultIsBOOL(FindHelper.isEditable)

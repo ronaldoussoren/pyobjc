@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestIMKServer(TestCase):
-    def testBrokenConstants(self):
+    def test_broken_constants(self):
         # The definitions below are defined on 10.5, but not actually
         # exported by the framework.
         #

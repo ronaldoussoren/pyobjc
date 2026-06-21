@@ -6,11 +6,11 @@ class TestCFBundle(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreFoundation.CFBundleRef)
 
-    def testMainBundle(self):
+    def test_main_bundle(self):
         bundle = CoreFoundation.CFBundleGetMainBundle()
         self.assertIsInstance(bundle, CoreFoundation.CFBundleRef)
 
-    def testBundleLoader(self):
+    def test_bundle_loader(self):
         bundle = CoreFoundation.CFBundleGetBundleWithIdentifier(
             "com.apple.CoreFoundation"
         )
@@ -46,11 +46,11 @@ class TestCFBundle(TestCase):
         array = CoreFoundation.CFBundleCreateBundlesFromDirectory(None, url, None)
         self.assertNotEqual(len(array), 0)
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFBundleGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testInspection(self):
+    def test_inspect(self):
         bundle = CoreFoundation.CFBundleGetBundleWithIdentifier(
             "com.apple.CoreFoundation"
         )
@@ -98,7 +98,7 @@ class TestCFBundle(TestCase):
         if v is not None:
             self.assertIsInstance(v, CoreFoundation.CFURLRef)
 
-    def testDirectAccess(self):
+    def test_direct_access(self):
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
             "/System/Library/Frameworks/Foundation.framework",
@@ -116,7 +116,7 @@ class TestCFBundle(TestCase):
         self.assertIsInstance(bundle_type, int)
         self.assertIsInstance(creator, int)
 
-    def testResources(self):
+    def test_resources(self):
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
             "/System/Library/Frameworks/Foundation.framework",
@@ -274,7 +274,7 @@ class TestCFBundle(TestCase):
         if id2 != -1:
             CoreFoundation.CFBundleCloseBundleResourceMap(bundle, id2)
 
-    def testResourcesDirect(self):
+    def test_resources_direct(self):
         bundle = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
             "/System/Library/Frameworks/Foundation.framework",
@@ -309,7 +309,7 @@ class TestCFBundle(TestCase):
             for a in array:
                 self.assertIsInstance(a, int)
 
-    def testPlugin(self):
+    def test_plugin(self):
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
             "/System/Library/Components/AppleScript.component",

@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSKeyValueObserving(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSKeyValueChangeKey, str)
 
     def test_enum_types(self):
@@ -35,7 +35,7 @@ class TestNSKeyValueObserving(TestCase):
         self.assertIsInstance(Foundation.NSKeyValueChangeIndexesKey, str)
         self.assertIsInstance(Foundation.NSKeyValueChangeNotificationIsPriorKey, str)
 
-    def testContext(self):
+    def test_context(self):
         o = Foundation.NSObject.alloc().init()
         m = o.observeValueForKeyPath_ofObject_change_context_.__metadata__()
         self.assertEqual(m["arguments"][5]["type"], b"^v")
@@ -61,7 +61,7 @@ class TestNSKeyValueObserving(TestCase):
         self.assertEqual(m["arguments"][5]["type"], b"^v")
 
     @min_os_level("10.7")
-    def testContext10_7(self):
+    def test_context10_7(self):
         o = Foundation.NSObject.alloc().init()
         m = o.removeObserver_forKeyPath_context_.__metadata__()
         self.assertEqual(m["arguments"][4]["type"], b"^v")

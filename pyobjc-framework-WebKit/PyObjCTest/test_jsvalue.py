@@ -42,7 +42,7 @@ class TestJSValue(TestCase):
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isBigInt)
 
     @min_os_level("10.9")
-    def test_contants(self):
+    def test_constants(self):
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorWritableKey, str)
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorEnumerableKey, str)
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorConfigurableKey, str)

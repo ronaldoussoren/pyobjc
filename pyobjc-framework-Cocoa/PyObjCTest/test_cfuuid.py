@@ -8,11 +8,11 @@ class TestCFUUIDAPI(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreFoundation.CFUUIDRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFUUIDGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCreate(self):
+    def test_create(self):
         self.assertResultIsCFRetained(CoreFoundation.CFUUIDCreate)
         uuid = CoreFoundation.CFUUIDCreate(None)
         self.assertIsNot(uuid, None)
@@ -22,7 +22,7 @@ class TestCFUUIDAPI(TestCase):
         m = re.match("^[0-9A-Z]{8}(-[0-9A-Z]{4}){3}-[0-9A-Z]{12}$", text)
         self.assertIsNot(m, None)
 
-    def testCreateWithBytes(self):
+    def test_create_with_bytes(self):
         self.assertResultIsCFRetained(CoreFoundation.CFUUIDCreateWithBytes)
         uuid = CoreFoundation.CFUUIDCreateWithBytes(
             None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
@@ -75,7 +75,7 @@ class TestCFUUIDAPI(TestCase):
             16,
         )
 
-    def testCreateFromString(self):
+    def test_create_from_string(self):
         self.assertResultIsCFRetained(CoreFoundation.CFUUIDCreateFromString)
         uuid1 = CoreFoundation.CFUUIDCreateFromString(
             None, "01020304-0506-0708-090A-0B0C0D0E0F10"
@@ -92,7 +92,7 @@ class TestCFUUIDAPI(TestCase):
         # CoreFoundation.CFUUID interns values
         self.assertIs(uuid1, uuid2)
 
-    def testGetBytes(self):
+    def test_get_bytes(self):
         uuid = CoreFoundation.CFUUIDCreateWithBytes(
             None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
         )
@@ -117,7 +117,7 @@ class TestCFUUIDAPI(TestCase):
         self.assertEqual(bytes_value.byte14, 15)
         self.assertEqual(bytes_value.byte15, 16)
 
-    def testConstant(self):
+    def test_constants(self):
         # This is an interesting one, the result of
         # CoreFoundation.CFUUIDGetConstantUUIDWithBytes should not be released.
 
@@ -139,7 +139,7 @@ class TestCFUUIDAPI(TestCase):
 
         self.assertEqual(s, t)
 
-    def testCreateFromUUIDBytes(self):
+    def test_create_from_uuidbytes(self):
         bytes_value = CoreFoundation.CFUUIDBytes(*range(16, 32))
         uuid = CoreFoundation.CFUUIDCreateFromUUIDBytes(None, bytes_value)
 

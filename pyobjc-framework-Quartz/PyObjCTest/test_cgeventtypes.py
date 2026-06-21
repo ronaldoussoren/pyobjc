@@ -173,5 +173,5 @@ class TestCGEventTypes(TestCase):
         self.assertTrue(hasattr(v, "maxUsecLatency"))
         self.assertPickleRoundTrips(v)
 
-    def testInline(self):
+    def test_functions_inline(self):
         self.assertEqual(Quartz.CGEventMaskBit(10), 1 << 10)

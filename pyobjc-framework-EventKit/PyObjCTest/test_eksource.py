@@ -4,7 +4,7 @@ import EventKit
 
 class TestEKSource(TestCase):
     @min_os_level("10.8")
-    def testBasic(self):
+    def test_basic(self):
         self.assertTrue(hasattr(EventKit, "EKSource"))
 
     @min_os_level("10.8")

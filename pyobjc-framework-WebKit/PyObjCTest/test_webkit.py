@@ -15,7 +15,7 @@ class TestWebKit(TestCase):
         self.assertHasAttr(WebKit, "DOMHTMLObjectElement")
         self.assertIsInstance(WebKit.DOMHTMLObjectElement, objc.objc_class)
 
-    def test_values(self):
+    def test_constants(self):
         self.assertHasAttr(WebKit, "DOM_CSS_PERCENTAGE")
         self.assertIsInstance(WebKit.DOM_CSS_PERCENTAGE, int)
         self.assertEqual(WebKit.DOM_CSS_PERCENTAGE, 2)
@@ -27,7 +27,6 @@ class TestWebKit(TestCase):
         self.assertHasAttr(WebKit, "WebViewInsertActionDropped")
         self.assertIsInstance(WebKit.WebViewInsertActionDropped, int)
 
-    def test_variables(self):
         self.assertHasAttr(WebKit, "DOMRangeException")
         self.assertIsInstance(WebKit.DOMRangeException, str)
 

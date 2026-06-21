@@ -4,7 +4,7 @@ import ColorSync
 
 class TestColorSyncTransform(TestCase):
     @min_os_level("10.13")
-    def test_cftype(self):
+    def test_cftypes(self):
         self.assertIsCFType(ColorSync.ColorSyncTransformRef)
 
     @min_os_level("10.13")

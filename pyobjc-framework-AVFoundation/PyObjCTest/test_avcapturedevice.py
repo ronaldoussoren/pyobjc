@@ -207,7 +207,7 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingWhiteBalance)
 
     @min_os_level("12.0")
-    def test_methods_Clones(self):
+    def test_methods_clones(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.hasMediaType_)
 
         self.assertResultIsBOOL(
@@ -271,7 +271,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("12.0")
-    def test_methodsTundra10_14(self):
+    def test_methods_tundra10_14(self):
         self.assertArgIsBlock(
             AVFoundation.AVCaptureDevice_Tundra.requestAccessForMediaType_completionHandler_,
             1,
@@ -292,7 +292,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("12.0")
-    def test_methodsTundra10_15(self):
+    def test_methods_tundra10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isFlashAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isTorchAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isTorchActive)

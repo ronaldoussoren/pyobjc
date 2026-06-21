@@ -19,7 +19,7 @@ class TestMPSNNGraphNodes(TestCase):
         self.assertProtocolExists("MPSNNTrainableNode", MetalPerformanceShaders)
 
     @min_sdk_level("10.15")
-    def test_protols10_15(self):
+    def test_protocols10_15(self):
         self.assertProtocolExists("MPSNNGramMatrixCallback", MetalPerformanceShaders)
         self.assertProtocolExists("MPSNNLossCallback", MetalPerformanceShaders)
 

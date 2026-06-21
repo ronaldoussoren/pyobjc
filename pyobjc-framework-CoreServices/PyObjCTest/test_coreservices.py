@@ -5,7 +5,7 @@ import CoreServices
 
 
 class TestCoreServices(TestCase):
-    def testBasicImport(self):
+    def test_basic_import(self):
         # DictionaryServices
         self.assertHasAttr(CoreServices, "DCSCopyTextDefinition")
 

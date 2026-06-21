@@ -26,10 +26,10 @@ class TestNSComboBoxCell(TestCase):
         self.assertArgIsBOOL(AppKit.NSComboBoxCell.setCompletes_, 0)
 
     @min_sdk_level("10.7")
-    def test_protocols(self):
+    def test_protocols10_7(self):
         self.assertProtocolExists("NSComboBoxCellDataSource", AppKit)
 
-    def testProtocol(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSComboBoxCellHelper.numberOfItemsInComboBoxCell_, objc._C_NSInteger
         )

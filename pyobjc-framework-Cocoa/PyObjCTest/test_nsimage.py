@@ -18,7 +18,7 @@ class TestNSImage(TestCase):
         self.assertIsEnumType(AppKit.NSImageResizingMode)
         self.assertIsEnumType(AppKit.NSImageSymbolScale)
 
-    def test_compositePoint(self):
+    def test_composite_point(self):
         # comes straight from ReSTedit.  Works on PPC, not on Intel (as of r1791)
         ws = AppKit.NSWorkspace.sharedWorkspace()
         txtIcon = ws.iconForFileType_("txt")

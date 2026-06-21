@@ -26,7 +26,7 @@ class TestNSPersonNameComponentsFormatter(TestCase):
         self.assertIsInstance(Foundation.NSPersonNameComponentDelimiter, str)
 
     @min_os_level("10.11")
-    def testOutput(self):
+    def test_output(self):
         self.assertResultIsBOOL(
             Foundation.NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_  # noqa: B950
         )

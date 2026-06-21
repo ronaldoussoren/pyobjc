@@ -5,7 +5,7 @@ import objc
 
 class TestCGPDFObject(TestCase):
     @expectedFailure
-    def testIncomplete(self):
+    def test_incomplete(self):
         self.fail("Add header tests for <CoreGraphics/CGPDFObject.h>")
 
     def test_constants(self):

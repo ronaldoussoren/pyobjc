@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestProtocols(TestCase):
-    def test_formal_protocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("SKPaymentTransactionObserver", StoreKit)
         self.assertProtocolExists("SKProductsRequestDelegate", StoreKit)
         self.assertProtocolExists("SKRequestDelegate", StoreKit)

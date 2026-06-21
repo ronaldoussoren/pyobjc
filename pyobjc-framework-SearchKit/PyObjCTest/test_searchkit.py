@@ -15,7 +15,7 @@ class TestSearchKit(TestCase):
         self.assertHasAttr(SearchKit, "SKIndexRef")
         self.assertIsCFType(SearchKit.SKIndexRef)
 
-    def test_values(self):
+    def test_constants(self):
         self.assertHasAttr(SearchKit, "kSKIndexInverted")
         self.assertIsInstance(SearchKit.kSKIndexInverted, int)
         self.assertEqual(SearchKit.kSKIndexInverted, 1)
@@ -26,7 +26,6 @@ class TestSearchKit(TestCase):
         self.assertIsInstance(SearchKit.kSKSearchRanked, int)
         self.assertEqual(SearchKit.kSKSearchRanked, 0)
 
-    def test_variables(self):
         # Use this to test for global variables, (NSString*'s and the like)
         self.assertHasAttr(SearchKit, "kSKEndTermChars")
         self.assertIsInstance(SearchKit.kSKEndTermChars, (str, str))

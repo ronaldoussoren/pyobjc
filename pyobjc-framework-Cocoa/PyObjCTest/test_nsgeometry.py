@@ -9,7 +9,7 @@ class TestNSGeometry(TestCase):
         self.assertIsEnumType(Foundation.NSAlignmentOptions)
         self.assertIsEnumType(Foundation.NSRectEdge)
 
-    def test_struct_are_aliases(self):
+    def test_structs_are_aliases(self):
         self.assertIs(Foundation.NSPoint, CoreFoundation.CGPoint)
         self.assertIs(Foundation.NSSize, CoreFoundation.CGSize)
         self.assertIs(Foundation.NSRect, CoreFoundation.CGRect)
@@ -29,7 +29,7 @@ class TestNSGeometry(TestCase):
         self.assertEqual(AppKit.NSZeroSize, AppKit.NSSize())
         self.assertEqual(AppKit.NSZeroRect, AppKit.NSRect())
 
-    def testInlines(self):
+    def test_functions_inlines(self):
         self.assertEqual(AppKit.NSMakePoint(1, 2), AppKit.NSPoint(1, 2))
         self.assertEqual(AppKit.NSMakeSize(4, 5), AppKit.NSSize(4, 5))
         self.assertEqual(
@@ -56,7 +56,7 @@ class TestNSGeometry(TestCase):
         self.assertHasAttr(Foundation, "NSSizeToCGSize")
 
     @min_os_level("10.8")
-    def testInlines10_8(self):
+    def test_functions_inlines10_8(self):
         v = AppKit.NSEdgeInsetsMake(1, 2, 3, 4)
         self.assertIsInstance(v, AppKit.NSEdgeInsets)
         self.assertEqual(v.top, 1.0)
@@ -122,7 +122,7 @@ class TestNSGeometry(TestCase):
         v = AppKit.NSRectFromString("{   {0,1}  , {  4, 5}}")
         self.assertEqual(v, r1)
 
-    def testValueMethods(self):
+    def test_value_methods(self):
         v = AppKit.NSValue.valueWithPoint_(AppKit.NSPoint(2, 3))
         w = v.pointValue()
         self.assertIsInstance(w, AppKit.NSPoint)
@@ -157,7 +157,7 @@ class TestNSGeometry(TestCase):
         )
         self.assertResultHasType(AppKit.NSValue.rectValue, AppKit.NSRect.__typestr__)
 
-    def testCoderMethods(self):
+    def test_coder_methods(self):
         self.assertArgHasType(
             AppKit.NSCoder.encodePoint_, 0, AppKit.NSPoint.__typestr__
         )

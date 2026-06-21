@@ -16,12 +16,11 @@ class TestInputMethodKit(TestCase):
         self.assertHasAttr(InputMethodKit, "IMKCandidates")
         self.assertIsInstance(InputMethodKit.IMKCandidates, objc.objc_class)
 
-    def test_values(self):
+    def test_constants(self):
         self.assertHasAttr(InputMethodKit, "kIMKScrollingGridCandidatePanel")
         self.assertIsInstance(InputMethodKit.kIMKScrollingGridCandidatePanel, int)
         self.assertEqual(InputMethodKit.kIMKScrollingGridCandidatePanel, 2)
 
-    def test_variables(self):
         self.assertHasAttr(InputMethodKit, "IMKCandidatesOpacityAttributeName")
         self.assertIsInstance(InputMethodKit.IMKCandidatesOpacityAttributeName, str)
 

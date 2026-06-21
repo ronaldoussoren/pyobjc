@@ -38,7 +38,7 @@ class TestAVCaptureOutput(TestCase):
         )
 
     @min_os_level("12.0")
-    def test_methodsTundra(self):
+    def test_methods_tundra(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureVideoDataOutput_Tundra.alwaysDiscardsLateVideoFrames
         )

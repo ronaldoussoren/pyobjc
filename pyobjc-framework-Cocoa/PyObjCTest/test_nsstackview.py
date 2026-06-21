@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSStackView(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSStackViewVisibilityPriority, float)
 
     def test_enum_types(self):

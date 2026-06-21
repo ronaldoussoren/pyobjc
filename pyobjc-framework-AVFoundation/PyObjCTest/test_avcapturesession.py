@@ -61,11 +61,11 @@ class TestAVCaptureSession(TestCase):
         )
 
     @min_sdk_level("15.2")
-    def test_protocools(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVCaptureSessionControlsDelegate", AVFoundation)
 
     @min_sdk_level("26.0")
-    def test_protocools26_0(self):
+    def test_protocols26_0(self):
         self.assertProtocolExists("AVCaptureSessionDeferredStartDelegate", AVFoundation)
 
     @min_os_level("10.7")
@@ -106,7 +106,7 @@ class TestAVCaptureSession(TestCase):
         self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel.setEnabled_, 0)
 
     @min_os_level("12.0")
-    def test_methodsTundra(self):
+    def test_methods_tundra(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureSession_Tundra.canSetSessionPreset_
         )

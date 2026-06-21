@@ -20,7 +20,7 @@ class TestDebugging(TestCase):
             self.assertTrue(hasattr(Debugging, nm))
             self.assertTrue(isinstance(getattr(Debugging, nm), int))
 
-    def testHandlerBasic(self):
+    def test_handler_basic(self):
         self.assertFalse(Debugging.handlerInstalled())
 
         Debugging.installExceptionHandler()
@@ -41,7 +41,7 @@ class TestDebugging(TestCase):
         Debugging.removeExceptionHandler()
         self.assertFalse(Debugging.handlerInstalled())
 
-    def test_isPythonException(self):
+    def test_is_python_exception(self):
         try:
             a = objc.lookUpClass("NSArray").array()
             a.objectAtIndex_(42)
@@ -70,7 +70,7 @@ class TestDebugging(TestCase):
             self.assertTrue(Debugging.isPythonException(exc))
 
     @expectedFailureIf(sys.byteorder == "big")
-    def testAtos(self):
+    def test_atos(self):
         NSThread = objc.lookUpClass("NSThread")
         NSArray = objc.lookUpClass("NSArray")
 
@@ -84,7 +84,7 @@ class TestDebugging(TestCase):
 
         self.assertTrue(any(x in value for x in {"_objc.", "ffi_call_unix64"}))
 
-    def testInstallExceptionHandler(self):
+    def test_install_exception_handler(self):
         self.assertFalse(Debugging.handlerInstalled())
         try:
             Debugging.installExceptionHandler(
@@ -123,7 +123,7 @@ class TestDebugging(TestCase):
             self.assertFalse(Debugging.handlerInstalled())
 
     @expectedFailure
-    def testMisc(self):
+    def test_misc(self):
         self.fail("Actually test this module")
         # - nsLogPythonException
         # - nsLogObjCException

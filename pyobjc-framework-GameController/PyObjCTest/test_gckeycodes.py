@@ -3,7 +3,7 @@ import GameController
 
 
 class TestGCKeyCodes(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(GameController.GCKeyCode, int)
 
     @min_os_level("11.0")

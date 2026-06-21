@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAddressBook(TestCase):
-    def testNoTypedefs(self):
+    def test_no_typedefs(self):
         # Just in case: the following is a typedef not a function definition
         self.assertFalse(hasattr(AddressBook, "ABActionGetPropertyCallback"))
 

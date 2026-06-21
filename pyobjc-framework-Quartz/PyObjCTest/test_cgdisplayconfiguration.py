@@ -133,7 +133,7 @@ class TestCGDisplayConfiguration(TestCase):
         v = Quartz.CGDisplayCopyColorSpace(Quartz.CGMainDisplayID())
         self.assertIsInstance(v, Quartz.CGColorSpaceRef)
 
-    def testContents(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGConfigureForAppOnly, 0)
         self.assertEqual(Quartz.kCGConfigureForSession, 1)
         self.assertEqual(Quartz.kCGConfigurePermanently, 2)

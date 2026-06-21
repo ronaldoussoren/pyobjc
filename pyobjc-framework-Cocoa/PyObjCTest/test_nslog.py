@@ -19,7 +19,7 @@ class TestNSLog(TestCase):
         os.unlink("pyobjc-test-nslog.txt")
         return data
 
-    def testBasic(self):
+    def test_basic(self):
         self._redirect()
         try:
             Foundation.NSLog("Hello world")
@@ -28,7 +28,7 @@ class TestNSLog(TestCase):
 
         self.assertTrue(data.endswith(b"] Hello world"))
 
-    def testWithArguments(self):
+    def test_with_arguments(self):
         self._redirect()
         try:
             Foundation.NSLog("Hello %@: the count is %d", "ronald", 99)
@@ -37,7 +37,7 @@ class TestNSLog(TestCase):
 
         self.assertTrue(data.endswith(b"] Hello ronald: the count is 99"))
 
-    def testWithInvalidFormat(self):
+    def tst_with_invalid_format(self):
         self._redirect()
         try:
             self.assertRaises(
@@ -64,5 +64,5 @@ class TestNSLog(TestCase):
 
 
 class TestNSLogv(TestCase):
-    def testNotSuchThing(self):
+    def test_no_such_thing(self):
         self.assertFalse(hasattr(Foundation, "NSLogv"))

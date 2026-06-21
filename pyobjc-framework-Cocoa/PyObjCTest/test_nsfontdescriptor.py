@@ -9,7 +9,7 @@ from PyObjCTools.TestSupport import (
 
 
 class TestNSFontDescriptor(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSFontDescriptorAttributeName, str)
         self.assertIsTypedEnum(AppKit.NSFontDescriptorFeatureKey, str)
         self.assertIsTypedEnum(AppKit.NSFontDescriptorSystemDesign, str)
@@ -29,7 +29,7 @@ class TestNSFontDescriptor(TestCase):
         ),
         "Crash on 10.13, 10.14??",
     )
-    def testConvenience(self):
+    def test_convenience(self):
         v = AppKit.NSFontDescriptor.fontDescriptorWithName_size_("Courier", 12)
         self.assertIsInstance(v, AppKit.NSFontDescriptor)
         d = v[AppKit.NSFontNameAttribute]

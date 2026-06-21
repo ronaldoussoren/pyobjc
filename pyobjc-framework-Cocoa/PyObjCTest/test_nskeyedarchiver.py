@@ -12,7 +12,7 @@ class TestNSKeyedArchiver(TestCase):
     def test_constants10_9(self):
         self.assertIsInstance(Foundation.NSKeyedArchiveRootObjectKey, str)
 
-    def testOutput(self):
+    def test_output(self):
         o = Foundation.NSKeyedUnarchiver.alloc().initForReadingWithData_(
             Foundation.NSKeyedArchiver.archivedDataWithRootObject_("foobar")
         )

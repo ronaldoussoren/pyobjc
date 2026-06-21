@@ -106,13 +106,13 @@ class TestStream(TestCase):
 
         self.assertPickleRoundTrips(o)
 
-    def testGetTypeID(self):
+    def test_get_typeid(self):
         v = CoreFoundation.CFReadStreamGetTypeID()
         self.assertIsInstance(v, int)
         v = CoreFoundation.CFWriteStreamGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testReadStream(self):
+    def test_read_stream(self):
         strval = b"hello world"
         self.assertArgHasType(
             CoreFoundation.CFReadStreamCreateWithBytesNoCopy, 1, b"n^v"
@@ -208,7 +208,7 @@ class TestStream(TestCase):
         self.assertEqual(err.domain, 0)
         self.assertEqual(err.error, 0)
 
-    def testWriteStream(self):
+    def test_write_stream(self):
         import array
 
         a = array.array("b", b" " * 20)
@@ -323,7 +323,7 @@ class TestStream(TestCase):
         self.assertEqual(data, b"0123456789ABCDE")
         os.unlink("/tmp/pyobjc.test.txt")
 
-    def testStreamPair(self):
+    def test_streamPair(self):
         self.assertArgIsOut(CoreFoundation.CFStreamCreateBoundPair, 1)
         self.assertArgIsOut(CoreFoundation.CFStreamCreateBoundPair, 2)
         readStream, writeStream = CoreFoundation.CFStreamCreateBoundPair(
@@ -343,7 +343,7 @@ class TestStream(TestCase):
         del readStream, writeStream
 
     @skipUnless(onTheNetwork(), "Test requires a working Internet connection")
-    def testSockets(self):
+    def test_sockets(self):
         with contextlib.closing(
             socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         ) as sd:
@@ -425,7 +425,7 @@ class TestStream(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    def testReadSocketASync(self):
+    def test_read_socket_async(self):
         rl = CoreFoundation.CFRunLoopGetCurrent()
 
         strval = b"hello world"
@@ -494,7 +494,7 @@ class TestStream(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    def testWriteSocketAsync(self):
+    def test_write_socket_async(self):
         rl = CoreFoundation.CFRunLoopGetCurrent()
 
         import array

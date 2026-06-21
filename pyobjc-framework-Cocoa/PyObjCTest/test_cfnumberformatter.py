@@ -6,10 +6,10 @@ class TestNumberFormatter(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreFoundation.CFNumberFormatterRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFNumberFormatterGetTypeID(), int)
 
-    def testFuncs(self):
+    def test_functions(self):
         locale = CoreFoundation.CFLocaleCreate(None, "en_US")
         fmt = CoreFoundation.CFNumberFormatterCreate(
             None, locale, CoreFoundation.kCFNumberFormatterDecimalStyle

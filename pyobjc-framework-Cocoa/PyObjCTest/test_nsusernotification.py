@@ -40,7 +40,7 @@ class TestNSUserNotification(TestCase):
         self.assertArgIsBOOL(obj.setHasReplyButton_, 0)
 
     @min_os_level("10.8")
-    def testProtocol10_8(self):
+    def test_protocols10_8(self):
         self.assertResultIsBOOL(
             UserNotificationHelper.userNotificationCenter_shouldPresentNotification_
         )

@@ -8,7 +8,7 @@ class TestCGEvent(TestCase):
         self.assertIsCFType(Quartz.CGEventRef)
         self.assertIsCFType(Quartz.CGEventSourceRef)
 
-    def testEventFunctions(self):
+    def test_event_functions(self):
         evt = Quartz.CGEventCreateMouseEvent(
             None, Quartz.kCGEventLeftMouseDown, (80, 90), Quartz.kCGMouseButtonLeft
         )
@@ -96,7 +96,7 @@ class TestCGEvent(TestCase):
         Quartz.CGEventPostToPid
 
     @expectedFailure
-    def testMissing(self):
+    def test_missing(self):
         self.fail("CGEventTapCreateForPSN")
         self.fail("CGEventTapCreate")
         self.fail("CGEventTapCreateForPid")

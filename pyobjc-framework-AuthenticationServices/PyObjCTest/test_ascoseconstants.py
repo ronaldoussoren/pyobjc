@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestASCOSEConstants(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AuthenticationServices.ASCOSEAlgorithmIdentifier, int)
         self.assertIsTypedEnum(
             AuthenticationServices.ASCOSEEllipticCurveIdentifier, int

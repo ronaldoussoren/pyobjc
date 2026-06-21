@@ -29,5 +29,5 @@ class TestQuartzFilterManager(TestCase):
         self.assertIsInstance(Quartz.kQuartzFilterPrintingDomain, str)
 
     @expectedFailure
-    def testGlobalUpdateOK(self):
+    def test_global_update_ok(self):
         self.fail("Not yet supported")

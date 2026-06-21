@@ -567,7 +567,7 @@ class TestJSObjectRef(TestCase):
 
         self.assertArgIsOut(JavaScriptCore.JSObjectDeletePropertyForKey, 3)
 
-    def testUnsupported(self):
+    def test_unsupported(self):
         self.assertNotHasAttr(JavaScriptCore, "kJSClassDefinitionEmpty")
         self.assertNotHasAttr(JavaScriptCore, "JSStaticValue")
         self.assertNotHasAttr(JavaScriptCore, "JSStaticFunction")

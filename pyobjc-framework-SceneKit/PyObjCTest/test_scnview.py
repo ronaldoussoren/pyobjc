@@ -44,7 +44,7 @@ class TestSCNViewHelper(SceneKit.NSObject):
 
 
 class TestSCNView(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(SceneKit.SCNViewOption, str)
 
     def test_constants(self):

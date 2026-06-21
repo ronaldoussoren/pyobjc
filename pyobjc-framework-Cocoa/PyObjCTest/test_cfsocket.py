@@ -34,7 +34,7 @@ class TestSocket(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreFoundation.CFSocketRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFSocketGetTypeID(), int)
 
     def test_constants(self):
@@ -70,7 +70,7 @@ class TestSocket(TestCase):
 
         self.assertPickleRoundTrips(o)
 
-    def testNameRegistry(self):
+    def test_nameregistry(self):
         p1 = CoreFoundation.CFSocketGetDefaultNameRegistryPortNumber()
         self.assertIsInstance(p1, int)
         CoreFoundation.CFSocketSetDefaultNameRegistryPortNumber(p1 + 1)
@@ -81,7 +81,7 @@ class TestSocket(TestCase):
         CoreFoundation.CFSocketSetDefaultNameRegistryPortNumber(p1)
 
     @skipUnless(onTheNetwork(), "Test requires a working Internet connection")
-    def testSocketFunctions(self):
+    def test_socket_functions(self):
         data = {}
         state = []
 
@@ -211,7 +211,7 @@ class TestSocket(TestCase):
         finally:
             sd.close()
 
-    def testSocketNameServer(self):
+    def test_socket_nameserver(self):
         # The documentation says:
         #   Name server functionality is currently inoperable in macOS.
         #

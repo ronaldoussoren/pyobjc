@@ -8,7 +8,7 @@ class TestEKEvent(TestCase):
         self.assertIsEnumType(EventKit.EKEventStatus)
 
     @min_os_level("10.8")
-    def testBasic(self):
+    def test_basic(self):
         self.assertTrue(hasattr(EventKit, "EKEvent"))
 
     @min_os_level("10.8")

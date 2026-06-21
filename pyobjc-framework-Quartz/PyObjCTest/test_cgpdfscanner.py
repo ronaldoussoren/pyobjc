@@ -14,7 +14,7 @@ class TestCGPDFScanner(TestCase):
         self.assertIsOpaquePointer(Quartz.CGPDFScannerRef)
 
     @expectedFailureIf(os_release().startswith("10.5."))
-    def testFunctionMissingOn10_5(self):
+    def test_functions_missing10_5(self):
         Quartz.CGPDFScannerRetain
 
     def test_functions(self):

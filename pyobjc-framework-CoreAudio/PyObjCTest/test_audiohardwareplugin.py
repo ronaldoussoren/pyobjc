@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, max_os_level
 
 
 class TestAudioHardwarePlugIn(TestCase):
-    def testUnavailable(self):
+    def test_unavailable(self):
         self.assertNotHasAttr(CoreAudio, "AudioHardwarePlugInInterface")
 
         self.assertNotHasAttr(CoreAudio, "kAudioHardwarePlugInTypeID")
@@ -13,7 +13,7 @@ class TestAudioHardwarePlugIn(TestCase):
         self.assertNotHasAttr(CoreAudio, "kAudioHardwarePlugInInterface4ID")
         self.assertNotHasAttr(CoreAudio, "kAudioHardwarePlugInInterface5ID")
 
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsOpaquePointer(CoreAudio.AudioHardwarePlugInRef)
 
     @max_os_level("10.15.9")  # API removed in macOS 11

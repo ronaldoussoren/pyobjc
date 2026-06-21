@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMediaFormat(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AVFoundation.AVFileTypeProfile, str)
         self.assertIsTypedEnum(AVFoundation.AVVideoRange, str)
         self.assertIsTypedEnum(AVFoundation.AVMediaCharacteristic, str)

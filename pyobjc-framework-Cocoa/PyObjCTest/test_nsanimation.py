@@ -15,7 +15,7 @@ class TestNSAnimationHelper(AppKit.NSObject):
 
 
 class TestNSAnimation(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSViewAnimationEffectName, str)
         self.assertIsTypedEnum(AppKit.NSViewAnimationKey, str)
 
@@ -50,7 +50,7 @@ class TestNSAnimation(TestCase):
         self.assertResultIsBOOL(AppKit.NSAnimation.isAnimating)
 
     @min_sdk_level("10.6")
-    def testProtocol(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSAnimationDelegate", AppKit)
         self.assertProtocolExists("NSAnimatablePropertyContainer", AppKit)
 

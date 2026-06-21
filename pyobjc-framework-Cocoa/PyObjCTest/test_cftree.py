@@ -18,7 +18,7 @@ class TestCFTree(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreFoundation.CFTreeRef)
 
-    def testCreation(self):
+    def test_creation(self):
         context = object()
         tree = CoreFoundation.CFTreeCreate(None, context)
 
@@ -28,7 +28,7 @@ class TestCFTree(TestCase):
         CoreFoundation.CFTreeSetContext(tree, 42)
         self.assertEqual(CoreFoundation.CFTreeGetContext(tree, None), 42)
 
-    def testCreateTree(self):
+    def test_create_tree(self):
         root = CoreFoundation.CFTreeCreate(None, "root")
 
         for child in range(10):
@@ -57,11 +57,11 @@ class TestCFTree(TestCase):
             9,
         )
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFTreeGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testQuerying(self):
+    def test_querying(self):
         root = CoreFoundation.CFTreeCreate(None, "root")
 
         for child in range(2):
@@ -98,7 +98,7 @@ class TestCFTree(TestCase):
         r = CoreFoundation.CFTreeFindRoot(s2)
         self.assertIs(r, root)
 
-    def testModification(self):
+    def test_modification(self):
         root = CoreFoundation.CFTreeCreate(None, "root")
 
         for child in range(2):

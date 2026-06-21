@@ -2434,7 +2434,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kInfoStringMaxLength, 35)
         self.assertEqual(IOBluetooth.kBluetoothHCIInquiryResultsMaxResults, 50)
 
-    def test_struct_tyeps(self):
+    def test_structs(self):
         v = IOBluetooth.BluetoothDeviceAddress()
         self.assertIs(v.data, None)
 

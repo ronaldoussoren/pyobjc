@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRBurnSession(TestCase):
     @expectedFailure
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(DiscRecordingUI.DRBurnSessionRef)
 
     def test_constants(self):

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestIOSurfaceObjC(TestCase):
-    def testEnum(self):
+    def test_enums(self):
         self.assertIsEnumType(IOSurface.IOSurfaceComponentName)
         self.assertEqual(IOSurface.kIOSurfaceComponentNameUnknown, 0)
         self.assertEqual(IOSurface.kIOSurfaceComponentNameAlpha, 1)
@@ -92,7 +92,7 @@ class TestIOSurfaceObjC(TestCase):
     def test_constants15_0(self):
         self.assertIsInstance(IOSurface.kIOSurfaceContentHeadroom, str)
 
-    def test_funtions(self):
+    def test_functions(self):
         IOSurface.IOSurfaceGetTypeID
         self.assertResultIsCFRetained(IOSurface.IOSurfaceCreate)
         self.assertResultIsCFRetained(IOSurface.IOSurfaceLookup)
@@ -135,13 +135,13 @@ class TestIOSurfaceObjC(TestCase):
         IOSurface.IOSurfaceIsInUse
 
     @min_os_level("10.12")
-    def test_funtions10_12(self):
+    def test_functions10_12(self):
         IOSurface.IOSurfaceAllowsPixelSizeCasting
         IOSurface.IOSurfaceSetPurgeable
         self.assertArgIsOut(IOSurface.IOSurfaceSetPurgeable, 2)
 
     @min_os_level("10.13")
-    def test_funtions10_13(self):
+    def test_functions10_13(self):
         IOSurface.IOSurfaceGetNameOfComponentOfPlane
         IOSurface.IOSurfaceGetTypeOfComponentOfPlane
         IOSurface.IOSurfaceGetRangeOfComponentOfPlane
@@ -150,5 +150,5 @@ class TestIOSurfaceObjC(TestCase):
         IOSurface.IOSurfaceGetSubsampling
 
     @min_os_level("14.4")
-    def test_funtions14_4(self):
+    def test_functions14_4(self):
         IOSurface.IOSurfaceSetOwnershipIdentity

@@ -14,7 +14,7 @@ class TestSecBase(TestCase):
         self.assertIsCFType(Security.SecACLRef)
 
     @min_os_level("10.10")
-    def test_types_10_10(self):
+    def test_types10_10(self):
         self.assertIsCFType(Security.SecAccessControlRef)
 
     @expectedFailure

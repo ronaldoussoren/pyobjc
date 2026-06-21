@@ -74,7 +74,7 @@ class TestSecCode(TestCase):
         self.assertIsInstance(Security.kSecCodeInfoStapledNotarizationTicket, str)
 
     @min_os_level("27.0")
-    def test_constants2714_0(self):
+    def test_constants27_0(self):
         self.assertIsInstance(Security.kSecCodeInfoTotalSignatures, str)
         self.assertIsInstance(Security.kSecCodeInfoChosenSignature, str)
         self.assertIsInstance(Security.kSecCodeInfoSignerInfoSKID, str)

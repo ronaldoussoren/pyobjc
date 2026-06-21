@@ -105,7 +105,7 @@ class TestNSNumberFormatter(TestCase):
             CoreFoundation.kCFNumberFormatterCurrencyAccountingStyle,
         )
 
-    def testOutput(self):
+    def test_output(self):
         self.assertResultIsBOOL(
             Foundation.NSNumberFormatter.getObjectValue_forString_range_error_
         )

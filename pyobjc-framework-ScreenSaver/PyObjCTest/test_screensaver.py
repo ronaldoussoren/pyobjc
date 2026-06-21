@@ -15,7 +15,7 @@ class TestScreenSaver(TestCase):
         self.assertResultIsBOOL(ScreenSaver.ScreenSaverView.isAnimating)
         self.assertResultIsBOOL(ScreenSaver.ScreenSaverView.isPreview)
 
-    def testInlines(self):
+    def test_functions_inlines(self):
         self.assertHasAttr(ScreenSaver, "SSRandomIntBetween")
         self.assertIsInstance(ScreenSaver.SSRandomIntBetween, objc.function)
 

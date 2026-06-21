@@ -107,7 +107,7 @@ class TestSCNetworkConfiguration(TestCase):
         self.assertTrue(isinstance(SystemConfiguration.kSCNetworkProtocolTypeSMB, str))
 
     @max_os_level("10.11")
-    def test_constantsUpto10_12(self):
+    def test_constants_upto10_12(self):
         self.assertTrue(
             isinstance(SystemConfiguration.kSCNetworkProtocolTypeAppleTalk, str)
         )

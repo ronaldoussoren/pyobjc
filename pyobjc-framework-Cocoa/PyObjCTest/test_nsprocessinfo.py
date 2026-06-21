@@ -7,7 +7,7 @@ class TestNSProcessInfo(TestCase):
         self.assertIsEnumType(Foundation.NSActivityOptions)
         self.assertIsEnumType(Foundation.NSProcessInfoThermalState)
 
-    def testConvenience(self):
+    def test_convenience(self):
         # This doesn't actually test anything...
         with Foundation.NSDisabledSuddenTermination():
             pass
@@ -73,7 +73,7 @@ class TestNSProcessInfo(TestCase):
         )
 
     @min_os_level("10.6")
-    def testNSDisabledSuddenTermination(self):
+    def test_nsdisabled_sudden_termination(self):
         # annoyingly we cannot easily test if this has an effect, but
         # this at least guards against typos.
         with Foundation.NSDisabledSuddenTermination():

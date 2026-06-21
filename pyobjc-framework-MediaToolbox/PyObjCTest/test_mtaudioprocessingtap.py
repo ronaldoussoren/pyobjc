@@ -4,7 +4,7 @@ import objc
 
 
 class TestMTAudioProcessingTap(TestCase):
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(MediaToolbox.MTAudioProcessingTapRef)
 
     def test_functions(self):

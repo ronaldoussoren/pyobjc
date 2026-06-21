@@ -12,10 +12,10 @@ class TestSet(TestCase):
             pass
         self.assertIsCFType(CoreFoundation.CFSetRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFSetGetTypeID(), int)
 
-    def testCreation(self):
+    def test_creation(self):
         st = CoreFoundation.CFSetCreate(
             None, ["a", "b", "c"], 3, CoreFoundation.kCFTypeSetCallBacks
         )
@@ -34,7 +34,7 @@ class TestSet(TestCase):
         cp = CoreFoundation.CFSetCreateCopy(None, st)
         self.assertIsInstance(cp, CoreFoundation.CFSetRef)
 
-    def testInspection(self):
+    def test_inspect(self):
         st = CoreFoundation.CFSetCreate(
             None, ["a", "b", "c"], 3, CoreFoundation.kCFTypeSetCallBacks
         )
@@ -69,7 +69,7 @@ class TestSet(TestCase):
         values.sort()
         self.assertEqual(values, ["a", "b", "c"])
 
-    def testApplying(self):
+    def test_applying(self):
         st = CoreFoundation.CFSetCreate(
             None, ["a", "b", "c"], 3, CoreFoundation.kCFTypeSetCallBacks
         )
@@ -87,7 +87,7 @@ class TestSet(TestCase):
         context.sort()
         self.assertEqual(context, ["a", "b", "c"])
 
-    def testMutation(self):
+    def test_mutation(self):
         st = CoreFoundation.CFSetCreate(
             None, ["a", "b", "c"], 3, CoreFoundation.kCFTypeSetCallBacks
         )

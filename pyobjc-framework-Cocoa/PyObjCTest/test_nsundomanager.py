@@ -9,7 +9,7 @@ class TestHelper(Foundation.NSObject):
 
 
 class TestNSUndoManager(TestCase):
-    def testUndoManager(self):
+    def test_undo_manager(self):
         x = TestHelper.new()
         m = Foundation.NSUndoManager.new()
         lst = [0]
@@ -45,7 +45,7 @@ if hasattr(Foundation, "NSIndexSpecifier"):
                 self.undo.prepareWithInvocationTarget_(self).test_(self.idx.index())
                 self.idx.setIndex_(i)
 
-        def testUndoInt(self):
+        def test_undo_int(self):
             # test that undo works
             x = TestUndoInt.UndoInt.alloc().init()
             x.test_(3)
@@ -60,7 +60,7 @@ if hasattr(Foundation, "NSIndexSpecifier"):
 class TestSubclassingUndo(TestCase):
     # Bugreport: 678759 Subclassing Foundation.NSUndoManager fails
 
-    def testSubclass(self):
+    def test_subclass(self):
         class UndoSubclass(Foundation.NSUndoManager):
             pass
 

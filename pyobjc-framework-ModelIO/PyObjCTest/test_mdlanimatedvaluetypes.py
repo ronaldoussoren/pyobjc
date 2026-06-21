@@ -154,7 +154,7 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgIsOut(ModelIO.MDLAnimatedScalar.getDoubleArray_maxCount_, 0)
 
     @min_os_level("10.13")
-    def test_methodsVector(self):
+    def test_methods_simd(self):
         self.assertArgHasType(
             ModelIO.MDLAnimatedVector3Array.setFloat3Array_count_atTime_,
             0,

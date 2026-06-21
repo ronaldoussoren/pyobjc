@@ -17,11 +17,11 @@ class TestMachPort(TestCase):
             pass
         self.assertIsCFType(CoreFoundation.CFMachPortRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFMachPortGetTypeID(), int)
 
     @min_os_level("10.8")
-    def testCreate10_8(self):
+    def test_create10_8(self):
         class Context:
             pass
 
@@ -35,7 +35,7 @@ class TestMachPort(TestCase):
         # On OSX 10.7 or earlier this test passed, on OSX 10.8 it doesn't???
         self.assertIsInstance(port, MachPortClasses)
 
-    def testCreate(self):
+    def test_create(self):
         class Context:
             pass
 

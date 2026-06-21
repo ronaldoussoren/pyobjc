@@ -14,7 +14,7 @@ SCNParticleModifierBlock = (
 
 
 class TestSCNParticleSystem(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(SceneKit.SCNParticleProperty, str)
 
     def test_enum_types(self):

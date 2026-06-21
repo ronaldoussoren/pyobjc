@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestIOSurfaceObjC(TestCase):
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(IOSurface.IOSurfaceRef)
 
     @min_os_level("10.12")

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestIntrospectionAPI(TestCase):
-    def test_function(self):
+    def test_functions(self):
         self.assertFalse(hasattr(dispatch, "dispatch_introspection_hook_queue_create"))
         self.assertFalse(hasattr(dispatch, "dispatch_introspection_hook_queue_destroy"))
         self.assertFalse(

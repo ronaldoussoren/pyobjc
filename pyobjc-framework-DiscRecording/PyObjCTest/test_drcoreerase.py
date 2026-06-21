@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRCoreErase(TestCase):
     @expectedFailure
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(DiscRecording.DREraseRef)
 
     def test_constants(self):

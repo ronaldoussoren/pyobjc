@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPointerArray(TestCase):
-    def testPointers(self):
+    def test_pointers(self):
         o = Foundation.NSPointerArray.pointerArrayWithStrongObjects()
 
         m = o.addPointer_.__metadata__()

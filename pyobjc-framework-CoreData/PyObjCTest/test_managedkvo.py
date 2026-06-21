@@ -44,7 +44,7 @@ class Test(TestCase):
             self.persistentStoreCoordinator
         )
 
-    def testModeledAttribute(self):
+    def test_module_attribute(self):
         managedObject = CoreData.NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
             self.entity, self.managedObjectContext
         )
@@ -68,7 +68,7 @@ class Test(TestCase):
         self.assertEqual(testValue, managedObject.valueForKey_("testAttribute"))
         self.assertEqual(testValue, managedObject._.testAttribute)
 
-    def testPythonicAttribute(self):
+    def test_python_attributes(self):
         managedObject = CoreData.NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
             self.entity, self.managedObjectContext
         )
@@ -120,7 +120,7 @@ class TestSubclass(TestCase):
             self.persistentStoreCoordinator
         )
 
-    def testModeledAttribute(self):
+    def test_module_attribute(self):
         managedObject = (
             CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
                 self.entity, self.managedObjectContext
@@ -149,7 +149,7 @@ class TestSubclass(TestCase):
         self.assertEqual(testValue, managedObject.valueForKey_("testAttribute"))
         self.assertEqual(testValue, managedObject._.testAttribute)
 
-    def testPythonicAttribute(self):
+    def test_python_attributes(self):
         # self.fail("research recursion problem")
         managedObject = (
             CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(

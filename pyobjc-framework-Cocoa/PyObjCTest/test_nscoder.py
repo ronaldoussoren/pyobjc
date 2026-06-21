@@ -8,7 +8,7 @@ class TestNSCoderUsage(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSDecodingFailurePolicy)
 
-    def testUsage(self):
+    def test_usage(self):
         class CoderClass1(Foundation.NSObject):
             def encodeWithCoder_(self, coder):
                 # Foundation.NSObject does not implement Foundation.NSCoding, no need to
@@ -89,7 +89,7 @@ class TestPythonCoder(TestCase):
     #
     # The tests only use those methods that require a custom IMP-stub.
     #
-    def testEncoding(self):
+    def test_encoding(self):
         coder = MyCoder.alloc().init()
         o = PyObjC_TestClass4.alloc().init()
         o.encodeWithCoder_(coder)
@@ -102,7 +102,7 @@ class TestPythonCoder(TestCase):
             ],
         )
 
-    def testDecoding(self):
+    def test_decoding(self):
         coder = MyCoder.alloc().init()
         o = PyObjC_TestClass4
 

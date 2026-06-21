@@ -36,7 +36,7 @@ class TestNSAccessibilityHelper(AppKit.NSObject):
 
 
 class TestNSAccessibility(TestCase):
-    def testInformal(self):
+    def test_informal_protocols(self):
         self.assertResultIsBOOL(
             TestNSAccessibilityHelper.accessibilityIsAttributeSettable_
         )
@@ -161,7 +161,7 @@ class TestNSAccessibility(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    def testFunction(self):
+    def test_functions(self):
         v = AppKit.NSAccessibilityRoleDescription(
             AppKit.NSAccessibilityButtonRole, None
         )
@@ -762,7 +762,7 @@ class TestNSAccessibility(TestCase):
         self.assertArgIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent, 0)
         self.assertResultIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent)
 
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSAccessibilityActionName, str)
         self.assertIsTypedEnum(AppKit.NSAccessibilityAnnotationAttributeKey, str)
         self.assertIsTypedEnum(AppKit.NSAccessibilityAttributeName, str)

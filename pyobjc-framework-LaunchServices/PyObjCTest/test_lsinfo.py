@@ -271,7 +271,7 @@ class TestLSInfo(TestCase):
         ok = LaunchServices.LSSetDefaultHandlerForURLScheme("http", default_handler)
         self.assertIsInstance(ok, int)
 
-    def testFSRef(self):
+    def test_fsref(self):
         ref = objc.FSRef.from_pathname(self.path)
         self.assertIsInstance(ref, objc.FSRef)
 

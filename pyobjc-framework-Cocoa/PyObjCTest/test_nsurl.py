@@ -5,7 +5,7 @@ import os
 
 
 class TestNSURL(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSURLFileProtectionType, str)
         self.assertIsTypedEnum(Foundation.NSURLFileResourceType, str)
         self.assertIsTypedEnum(Foundation.NSURLResourceKey, str)

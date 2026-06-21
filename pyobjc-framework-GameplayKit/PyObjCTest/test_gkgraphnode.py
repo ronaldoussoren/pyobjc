@@ -41,7 +41,7 @@ class TestGKGraphNode(TestCase):
         )
 
     @min_os_level("10.12")
-    def test_methods_10_12(self):
+    def test_methods10_12(self):
         self.assertResultHasType(
             GameplayKit.GKGraphNode3D.position, simd.vector_float3.__typestr__
         )

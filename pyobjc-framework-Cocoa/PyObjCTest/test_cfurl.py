@@ -11,11 +11,11 @@ class TestURL(TestCase):
     def test_types(self):
         self.assertIs(CoreFoundation.CFURLRef, NSURL)
 
-    def testTypeID(self):
+    def test_typeid(self):
         val = CoreFoundation.CFURLGetTypeID()
         self.assertIsInstance(val, int)
 
-    def testCreateWithBytes(self):
+    def test_create_with_bytes(self):
         url = b"http://www.omroep.nl/"
 
         ref = CoreFoundation.CFURLCreateWithBytes(
@@ -48,7 +48,7 @@ class TestURL(TestCase):
             None,
         )
 
-    def testCreateData(self):
+    def test_create_data(self):
         url = b"http://www.omroep.nl/ blank"
 
         ref = CoreFoundation.CFURLCreateWithBytes(
@@ -74,7 +74,7 @@ class TestURL(TestCase):
         )
         self.assertEqual(val, url.replace(b" ", b"%20"))
 
-    def testCreateWithString(self):
+    def test_create_with_string(self):
         url = "http://www.omroep.nl/"
 
         ref = CoreFoundation.CFURLCreateWithString(None, url, None)
@@ -86,7 +86,7 @@ class TestURL(TestCase):
         ref2 = CoreFoundation.CFURLCreateWithString(None, url, ref)
         self.assertIsInstance(ref2, CoreFoundation.CFURLRef)
 
-    def testCreateAbsolute(self):
+    def test_create_absolute(self):
         url = "http://www.omroep.nl/sport/"
         baseref = CoreFoundation.CFURLCreateWithString(None, url, None)
 
@@ -131,7 +131,7 @@ class TestURL(TestCase):
         strval = CoreFoundation.CFURLGetString(ref)
         self.assertEqual(strval, "http://www.omroep.nl/../../dummy")
 
-    def testCopyAbs(self):
+    def test_copy_abs(self):
         # CoreFoundation.CFURLCopyAbsoluteURL
         base = CoreFoundation.CFURLCreateWithString(None, "http://www.omroep.nl/", None)
         self.assertIsInstance(base, CoreFoundation.CFURLRef)
@@ -146,7 +146,7 @@ class TestURL(TestCase):
             CoreFoundation.CFURLGetString(abs_url), "http://www.omroep.nl/sport"
         )
 
-    def testPaths(self):
+    def test_paths(self):
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None, "/tmp/", CoreFoundation.kCFURLPOSIXPathStyle, True
         )
@@ -216,7 +216,7 @@ class TestURL(TestCase):
             strval = strval[: strval.index(b"\0")]
         self.assertEqual(strval, b"/tmp/filename2")
 
-    def testParts(self):
+    def test_parts(self):
         base = CoreFoundation.CFURLCreateWithString(None, "http://www.omroep.nl/", None)
         self.assertIsInstance(base, CoreFoundation.CFURLRef)
 
@@ -308,7 +308,7 @@ class TestURL(TestCase):
         self.assertIsInstance(rng1, CoreFoundation.CFRange)
         self.assertIsInstance(rng2, CoreFoundation.CFRange)
 
-    def testUpdating(self):
+    def test_updating(self):
         base = CoreFoundation.CFURLCreateWithString(
             None, "http://www.omroep.nl/sport", None
         )
@@ -337,7 +337,7 @@ class TestURL(TestCase):
         strval = CoreFoundation.CFURLGetString(url2)
         self.assertEqual(strval, "http://www.omroep.nl/sport")
 
-    def testStringEncoding(self):
+    def test_stringEncoding(self):
         base = "http://www.omroep.nl/sport%20en%20%73%70el"
 
         strval = CoreFoundation.CFURLCreateStringByReplacingPercentEscapes(
@@ -370,7 +370,7 @@ class TestURL(TestCase):
         )
         self.assertEqual(strval, "http://www.omroep.nl/%73port en %73pel")
 
-    def testFSRef(self):
+    def test_fsref(self):
         ref = CoreFoundation.CFURLCreateWithFileSystemPath(
             None, os.getcwd(), CoreFoundation.kCFURLPOSIXPathStyle, True
         )

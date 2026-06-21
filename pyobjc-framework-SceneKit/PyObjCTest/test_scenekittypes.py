@@ -50,7 +50,7 @@ class TestSceneKitTypes(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.10")
     @min_os_level("10.10")
-    def test_constantsFail10_10(self):
+    def test_constants_fail10_10(self):
         self.assertIsInstance(SceneKit.SCNErrorDomain, str)
 
     @min_os_level("10.10")
@@ -99,7 +99,7 @@ class TestSceneKitTypes(TestCase):
         SceneKit.SCNVector4FromGLKVector4
         SceneKit.SCNVector4ToGLKVector4
 
-    def test_inlineFunctions(self):
+    def test_inline_functions(self):
         v = SceneKit.SCNVector3ToFloat3(SceneKit.SCNVector3())
         self.assertIsInstance(v, simd.vector_float3)
 

@@ -649,7 +649,7 @@ class TestManualWrappers(TestCase):
         self.assertEqual(buf.itemsize, 1)
         self.assertEqual(buf.nbytes, size)
 
-    def testAudioBuffer(self):
+    def test_audiobuffer(self):
         buf = CoreAudio.AudioBuffer()
         self.assertEqual(buf.mNumberChannels, 1)
         self.assertEqual(buf.mData, None)
@@ -667,7 +667,7 @@ class TestManualWrappers(TestCase):
         v2 = buf.mData
         self.assert_buffer_size(v2, 2048)
 
-    def testAudioBufferList(self):
+    def test_audiobuffer_list(self):
         bl = CoreAudio.AudioBufferList(2)
         self.assertEqual(len(bl), 2)
 
@@ -690,7 +690,7 @@ class TestManualWrappers(TestCase):
         with self.assertRaises(IndexError):
             bl[-4]
 
-    def testAudioValueTranslation(self):
+    def test_audio_value_translation(self):
         avt = CoreAudio.AudioValueTranslation()
         self.assertEqual(avt.mInputDataSize, 0)
         self.assertEqual(avt.mInputData, None)
@@ -735,7 +735,7 @@ class TestManualWrappers(TestCase):
         self.assertEqual(avt.mInputData, None)
         self.assertEqual(avt.mInputDataSize, 0)
 
-    def test_AudioChannelDescription(self):
+    def test_audiochannel_description(self):
         v = CoreAudio.AudioChannelDescription()
         self.assertEqual(v.mChannelLabel, 0)
         self.assertEqual(v.mChannelFlags, 0)
@@ -748,7 +748,7 @@ class TestManualWrappers(TestCase):
         self.assertEqual(v.mChannelFlags, 2)
         self.assertEqual(v.mCoordinates, (5.0, 6.0, 7.0))
 
-    def test_AudioChannelLayout(self):
+    def test_audiochannel_layout(self):
         with self.assertRaises(TypeError):
             v = CoreAudio.AudioChannelLayout()
 

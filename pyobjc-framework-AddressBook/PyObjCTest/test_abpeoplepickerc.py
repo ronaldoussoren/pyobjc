@@ -18,7 +18,7 @@ class TestABPeoplePickerC(TestCase):
         self.assertEqual(AddressBook.kEventABPeoplePickerGroupDoubleClicked, 5)
         self.assertEqual(AddressBook.kEventABPeoplePickerNameDoubleClicked, 6)
 
-    def testType(self):
+    def test_types(self):
         self.assertIsInstance(AddressBook.ABPickerRef, objc.objc_class)
 
     @expectedFailure

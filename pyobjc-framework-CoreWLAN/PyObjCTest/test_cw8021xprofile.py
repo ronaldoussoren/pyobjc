@@ -10,7 +10,7 @@ class TestCW8021XProfile(TestCase):
         self.assertResultIsBOOL(CoreWLAN.CW8021XProfile.isEqualToProfile_)
 
     @min_os_level("10.6")
-    def testConvenience(self):
+    def test_convenience(self):
         p1 = CoreWLAN.CW8021XProfile.profile()
         p2 = CoreWLAN.CW8021XProfile.profile()
 

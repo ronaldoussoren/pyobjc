@@ -15,11 +15,11 @@ class TestError(TestCase):
         self.assertIs(CoreFoundation.CFErrorRef, NSCFError)
 
     @min_os_level("10.5")
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFErrorGetTypeID(), int)
 
     @min_os_level("10.5")
-    def testCreation(self):
+    def test_creation(self):
         userInfo = {"foo": "bar"}
         err = CoreFoundation.CFErrorCreate(
             None, CoreFoundation.kCFErrorDomainPOSIX, 42, userInfo
@@ -55,7 +55,7 @@ class TestError(TestCase):
         self.assertEqual(dct, {"key1": "value1", "key2": "value2"})
 
     @min_os_level("10.5")
-    def testInspection(self):
+    def test_inspect(self):
         userInfo = {
             "foo": "bar",
             CoreFoundation.kCFErrorLocalizedFailureReasonKey: "failure reason",

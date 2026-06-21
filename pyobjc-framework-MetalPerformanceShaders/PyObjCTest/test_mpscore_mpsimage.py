@@ -14,16 +14,16 @@ class TestMPSCore_MPSImage(TestCase):
         self.assertIsEnumType(MetalPerformanceShaders.MPSPurgeableState)
 
     @min_os_level("10.13.4")
-    def test_function10_13_4(self):
+    def test_functions10_13_4(self):
         MetalPerformanceShaders.MPSImageBatchIncrementReadCount
         MetalPerformanceShaders.MPSImageBatchSynchronize
 
     @min_os_level("10.14")
-    def test_function10_14(self):
+    def test_functions10_14(self):
         MetalPerformanceShaders.MPSImageBatchResourceSize
 
     @min_os_level("10.15")
-    def test_function10_15(self):
+    def test_functions10_15(self):
         self.assertArgIsBlock(
             MetalPerformanceShaders.MPSImageBatchIterate,
             1,

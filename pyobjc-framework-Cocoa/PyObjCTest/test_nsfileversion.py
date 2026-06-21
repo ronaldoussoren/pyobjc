@@ -8,7 +8,7 @@ class TestNSFileVersion(TestCase):
         self.assertIsEnumType(Foundation.NSFileVersionReplacingOptions)
 
     @min_os_level("10.7")
-    def testContants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Foundation.NSFileVersionAddingByMoving, 1 << 0)
         self.assertEqual(Foundation.NSFileVersionReplacingByMoving, 1 << 0)
 

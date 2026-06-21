@@ -20,10 +20,10 @@ class TestMessagePort(TestCase):
     def test_functions10_6(self):
         self.fail("CFMessagePortSetDispatchQueue: dispatch_queue_t not wrapped yet")
 
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFMessagePortGetTypeID(), int)
 
-    def testInteraction(self):
+    def test_interaction(self):
         class Context:
             pass
 
@@ -88,7 +88,7 @@ class TestMessagePort(TestCase):
         self.assertTrue(didInvalidate)
 
     @min_os_level("10.5")
-    def testSending(self):
+    def test_sending(self):
         curloop = CoreFoundation.CFRunLoopGetCurrent()
         context = []
 

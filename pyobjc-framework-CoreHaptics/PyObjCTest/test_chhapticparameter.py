@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestCHHapticParameter(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(CoreHaptics.CHHapticEventParameterID, str)
         self.assertIsTypedEnum(CoreHaptics.CHHapticDynamicParameterID, str)
 

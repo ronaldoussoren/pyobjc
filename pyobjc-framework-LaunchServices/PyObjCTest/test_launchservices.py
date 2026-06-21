@@ -13,7 +13,7 @@ with warnings.catch_warnings():
 
 
 class TestLaunchServices(TestCase):
-    def test_values(self):
+    def test_constants(self):
         # Use this to test for a number of enum and #define values
         self.assertHasAttr(LaunchServices, "kLSRequestAllInfo")
         self.assertIsInstance(LaunchServices.kLSRequestAllInfo, int)
@@ -28,7 +28,6 @@ class TestLaunchServices(TestCase):
         self.assertHasAttr(LaunchServices, "kLSInvalidExtensionIndex")
         self.assertIsInstance(LaunchServices.kLSInvalidExtensionIndex, int)
 
-    def test_variables(self):
         self.assertHasAttr(LaunchServices, "kUTTypeItem")
         self.assertIsInstance(LaunchServices.kUTTypeItem, str)
 

@@ -15,7 +15,7 @@ class TestPHLivePhotoEditingContextHelper(Photos.NSObject):
 
 
 class TestPHLivePhotoEditingContext(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Photos.PHLivePhotoEditingOption, str)
 
     def test_enum_types(self):
@@ -65,7 +65,7 @@ class TestPHLivePhotoEditingContext(TestCase):
         )
 
     @min_os_level("10.12")
-    def testContants(self):
+    def test_constants(self):
         self.assertEqual(Photos.PHLivePhotoFrameTypePhoto, 0)
         self.assertEqual(Photos.PHLivePhotoFrameTypeVideo, 1)
 

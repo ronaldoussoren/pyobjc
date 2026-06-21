@@ -53,7 +53,7 @@ class TestNSTimer(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on 15.0 beta",
     )
-    def testPythonLeakage(self):
+    def test_python_leakage(self):
         # Ignore first run, this has some side-effects that would
         # taint the result.
         self._testHelp()

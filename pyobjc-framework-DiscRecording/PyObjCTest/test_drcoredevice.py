@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRCoreDevice(TestCase):
     @expectedFailure
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(DiscRecording.DRDeviceRef)
 
     def test_constants(self):
@@ -174,7 +174,7 @@ class TestDRCoreDevice(TestCase):
         DiscRecording.DRDeviceKPSForXFactor
         DiscRecording.DRDeviceXFactorForKPS
 
-    def testMacros(self):
+    def test_defines(self):
         import math
 
         self.assertEqual(

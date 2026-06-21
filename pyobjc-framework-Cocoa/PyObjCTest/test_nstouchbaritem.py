@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestNSTouchBarItem(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSTouchBarItemIdentifier, str)
         self.assertIsTypedEnum(AppKit.NSTouchBarItemPriority, float)
 

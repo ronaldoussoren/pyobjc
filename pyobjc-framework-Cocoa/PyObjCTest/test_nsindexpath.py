@@ -20,7 +20,7 @@ class TestNSIndexPath(TestCase):
         self.assertArgIsOut(Foundation.NSIndexPath.getIndexes_range_, 0)
         self.assertArgSizeInArg(Foundation.NSIndexPath.getIndexes_range_, 0, 1)
 
-    def testConvenience(self):
+    def test_convenience(self):
         path = Foundation.NSIndexPath.indexPathWithIndexes_length_([0, 1, 4], 3)
 
         self.assertEqual(path[0], 0)

@@ -112,7 +112,7 @@ class TestCFNetServices(TestCase):
         CFNetwork.CFNetServiceCancel(serv)
 
     @expectedFailure
-    def testMissingTests(self):
+    def test_tests_missing(self):
         self.fail("CFNetServiceSetClient")
         self.fail("CFNetServiceMonitorCreate")
         self.fail("CFNetServiceMonitorInvalidate")

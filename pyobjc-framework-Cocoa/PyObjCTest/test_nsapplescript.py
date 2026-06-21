@@ -10,7 +10,7 @@ class TestAE(TestCase):
         self.assertIsInstance(Foundation.NSAppleScriptErrorBriefMessage, str)
         self.assertIsInstance(Foundation.NSAppleScriptErrorRange, str)
 
-    def testOutput(self):
+    def test_output(self):
         obj = Foundation.NSAppleScript.alloc().initWithSource_(
             'tell application Terminal to do Xscript "ls -l"'
         )

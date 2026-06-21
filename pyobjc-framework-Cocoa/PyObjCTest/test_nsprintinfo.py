@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level
 
 
 class TestNSPrintInfo(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSPrintInfoAttributeKey, str)
         self.assertIsTypedEnum(AppKit.NSPrintJobDispositionValue, str)
 

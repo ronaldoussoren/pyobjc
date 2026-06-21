@@ -25,10 +25,10 @@ class TestNSMenu(TestCase):
         self.assertIsEnumType(AppKit.NSMenuProperties)
 
     @min_sdk_level("10.6")
-    def test_protocols(self):
+    def test_protocols10_6(self):
         self.assertProtocolExists("NSMenuDelegate", AppKit)
 
-    def testProtocol(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSMenuHelper.validateMenuItem_)
         self.assertResultHasType(
             TestNSMenuHelper.numberOfItemsInMenu_, objc._C_NSInteger

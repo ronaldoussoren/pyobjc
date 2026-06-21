@@ -12,7 +12,7 @@ class TestXMLDocument(TestCase):
         self.assertEqual(Foundation.NSXMLDocumentHTMLKind, 2)
         self.assertEqual(Foundation.NSXMLDocumentTextKind, 3)
 
-    def testOutputArgs(self):
+    def test_output(self):
         self.assertArgIsOut(
             Foundation.NSXMLDocument.initWithXMLString_options_error_, 2
         )

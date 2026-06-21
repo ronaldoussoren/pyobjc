@@ -18,7 +18,7 @@ class TestNSSpeechSynthesizerHelper(AppKit.NSObject):
 
 
 class TestNSSpeechSynthesizer(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSSpeechCommandDelimiterKey, str)
         self.assertIsTypedEnum(AppKit.NSSpeechDictionaryKey, str)
         self.assertIsTypedEnum(AppKit.NSSpeechErrorKey, str)
@@ -125,7 +125,7 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertArgIsOut(AppKit.NSSpeechSynthesizer.objectForProperty_error_, 1)
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.isAnyApplicationSpeaking)
 
-    def testProtocol(self):
+    def test_protocols(self):
         self.assertArgIsBOOL(
             TestNSSpeechSynthesizerHelper.speechSynthesizer_didFinishSpeaking_, 1
         )
@@ -141,7 +141,7 @@ class TestNSSpeechSynthesizer(TestCase):
         )
 
     @min_os_level("10.5")
-    def testProtocol10_5(self):
+    def test_protocols10_5(self):
         self.assertArgHasType(
             TestNSSpeechSynthesizerHelper.speechSynthesizer_didEncounterErrorAtIndex_ofString_message_,  # noqa: B950
             1,
@@ -149,5 +149,5 @@ class TestNSSpeechSynthesizer(TestCase):
         )
 
     @min_sdk_level("10.9")
-    def testProtocol10_9(self):
+    def test_protocols10_9(self):
         self.assertProtocolExists("NSSpeechSynthesizerDelegate", AppKit)

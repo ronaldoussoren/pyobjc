@@ -56,7 +56,7 @@ class TestNSWindowHelper(AppKit.NSObject):
 
 
 class TestNSWindow(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSWindowLevel, int)
 
     def test_enum_types(self):
@@ -246,7 +246,7 @@ class TestNSWindow(TestCase):
         )
 
     @skipUnless(Quartz is not None, "test requires Quartz")
-    def testMagicConstants(self):
+    def test_constants_magic(self):
         self.assertEqual(AppKit.NSNormalWindowLevel, Quartz.kCGNormalWindowLevel)
         self.assertEqual(AppKit.NSFloatingWindowLevel, Quartz.kCGFloatingWindowLevel)
         self.assertEqual(AppKit.NSSubmenuWindowLevel, Quartz.kCGTornOffMenuWindowLevel)

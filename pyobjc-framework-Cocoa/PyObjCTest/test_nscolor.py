@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestRegressions(TestCase):
-    def testQualifiersInSignature(self):
+    def test_qualifiers_in_signature(self):
         AppKit.NSColor.redColor().getRed_green_blue_alpha_(None, None, None, None)
 
     def test_methods(self):

@@ -7,10 +7,10 @@ class TestNotificationCenter(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreFoundation.CFNotificationCenterRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFNotificationCenterGetTypeID(), int)
 
-    def testGetting(self):
+    def test_getting(self):
         ref = CoreFoundation.CFNotificationCenterGetLocalCenter()
         self.assertIsInstance(ref, CoreFoundation.CFNotificationCenterRef)
         ref = CoreFoundation.CFNotificationCenterGetDistributedCenter()
@@ -18,7 +18,7 @@ class TestNotificationCenter(TestCase):
         ref = CoreFoundation.CFNotificationCenterGetDarwinNotifyCenter()
         self.assertIsInstance(ref, CoreFoundation.CFNotificationCenterRef)
 
-    def testSending(self):
+    def test_sending(self):
         ref = CoreFoundation.CFNotificationCenterGetLocalCenter()
         self.assertIsInstance(ref, CoreFoundation.CFNotificationCenterRef)
         notifications = []

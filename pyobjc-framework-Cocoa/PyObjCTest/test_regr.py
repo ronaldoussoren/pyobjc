@@ -14,7 +14,7 @@ from PyObjCTools.TestSupport import (
 
 
 class TestRegr(TestCase):
-    def testFSRepr(self):
+    def test_fsrepr(self):
         fm = Foundation.NSFileManager.defaultManager()
         self.assertRaises(
             TypeError, fm.stringWithFileSystemRepresentation_length_, b"/var"
@@ -23,7 +23,7 @@ class TestRegr(TestCase):
             "/var", fm.stringWithFileSystemRepresentation_length_(b"/var/boo", 4)
         )
 
-    def testThreadHang(self):
+    def test_thread_hang(self):
         # Temporarily redirect stderr to a file, this allows us to check
         # that NSLog actually wrote some text.
         fp = os.open("/tmp/pyobjc-thread.txt", os.O_RDWR | os.O_CREAT, 0o666)
@@ -60,7 +60,7 @@ class TestRegr(TestCase):
 
         self.assertEqual(aList, ["before", "after"])
 
-    def testMemoryInit(self):
+    def test_memory_init(self):
         # Regression test for bug #814683, that didn't initialize the memory
         # space for output parameters correctly.
         if not hasattr(Foundation, "NSPropertyListSerialization"):
@@ -77,7 +77,7 @@ class TestRegr(TestCase):
         )
         self.assertEqual(r[1], None)
 
-    def testTypeOverrideProblem(self):
+    def test_typesOverrideProblem(self):
         # A bug in the medatata machinery caused a crash.
         cls = AppKit.NSOpenGLPixelFormat
         dir(cls)
@@ -93,7 +93,7 @@ class TestRegr(TestCase):
 
     @min_os_level("10.6")
     @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.15"))
-    def testBinaryPlist(self):
+    def test_binary_plist(self):
         for pl in ({"key": 2**64 - 1}, {"key": 2**16 - 1}):
             with self.subTest(pl):
                 (

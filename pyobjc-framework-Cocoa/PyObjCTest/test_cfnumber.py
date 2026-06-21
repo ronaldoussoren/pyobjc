@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFNumber(TestCase):
-    def testCFNumberGetValue(self):
+    def test_cfnumber_get_value(self):
         number = 42
 
         ok, v = CoreFoundation.CFNumberGetValue(
@@ -104,7 +104,7 @@ class TestCFNumber(TestCase):
         self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
-    def testBoolean(self):
+    def test_boolean(self):
         self.assertIsInstance(CoreFoundation.CFBooleanGetTypeID(), int)
         self.assertIs(
             CoreFoundation.CFBooleanGetValue(CoreFoundation.kCFBooleanTrue), True
@@ -199,7 +199,7 @@ class TestCFNumber(TestCase):
         self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
 
-    def testNumberTypes(self):
+    def test_number_types(self):
         v = CoreFoundation.CFNumberGetType(44)
         self.assertIn(
             v, (CoreFoundation.kCFNumberLongLongType, CoreFoundation.kCFNumberLongType)

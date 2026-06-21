@@ -24,14 +24,14 @@ class ObjCTestNSView_KnowPageRange(AppKit.NSView):
 
 class TestNSView(TestCase):
 
-    def test_knowsPageRange(self):
+    def test_knows_page_range(self):
         method = ObjCTestNSView_KnowPageRange.knowsPageRange_
         self.assertEqual(
             method.__metadata__()["arguments"][2]["type"],
             b"o^" + AppKit.NSRange.__typestr__,
         )
 
-    def test_rectForPage(self):
+    def test_rect_for_page(self):
         method = ObjCTestNSView_KnowPageRange.rectForPage_
 
         self.assertResultHasType(method, AppKit.NSRect.__typestr__)
@@ -42,7 +42,7 @@ class TestNSView(TestCase):
 
 
 class TestHeader(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSDefinitionOptionKey, str)
         self.assertIsTypedEnum(AppKit.NSDefinitionPresentationType, str)
         self.assertIsTypedEnum(AppKit.NSViewFullScreenModeOptionKey, str)
@@ -276,7 +276,16 @@ class TestHeader(TestCase):
         self.assertResultIsBOOL(AppKit.NSView.prefersCompactControlSizeMetrics)
         self.assertArgIsBOOL(AppKit.NSView.setPrefersCompactControlSizeMetrics_, 0)
 
-    def testProtocol(self):
+    @min_sdk_level("10.14")
+    def test_protocols(self):
+        self.assertProtocolExists("NSViewLayerContentScaleDelegate", AppKit)
+        self.assertProtocolExists("NSViewToolTipOwner", AppKit)
+
+    @min_sdk_level("15.0")
+    def test_protocols15_0(self):
+        self.assertProtocolExists("NSViewContentSelectionInfo", AppKit)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSViewHelper.view_stringForToolTip_point_userData_,
             2,
@@ -291,16 +300,7 @@ class TestHeader(TestCase):
             AppKit.NSRect.__typestr__,
         )
 
-    @min_sdk_level("10.14")
-    def test_protocols(self):
-        self.assertProtocolExists("NSViewLayerContentScaleDelegate", AppKit)
-        self.assertProtocolExists("NSViewToolTipOwner", AppKit)
-
-    @min_sdk_level("15.0")
-    def test_protocols15_0(self):
-        self.assertProtocolExists("NSViewContentSelectionInfo", AppKit)
-
-    def testMissingTests(self):
+    def test_tests_missing(self):
         v = AppKit.NSView.alloc().init()
         v.setNeedsDisplayInRect_(((0, 0), (50, 50)))
         r = v.getRectsBeingDrawn_count_(None, None)

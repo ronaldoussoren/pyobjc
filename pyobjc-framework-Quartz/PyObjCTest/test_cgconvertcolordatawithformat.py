@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGConvertColorDataWithFormat(TestCase):
-    def test_struct(self):
+    def test_structs(self):
         v = Quartz.CGColorDataFormat()
         self.assertIsInstance(v.version, int)
         self.assertIs(v.colorspace_info, None)

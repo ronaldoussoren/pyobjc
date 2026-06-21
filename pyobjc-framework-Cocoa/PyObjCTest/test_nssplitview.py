@@ -74,7 +74,7 @@ class TestNSSplitView(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSSplitViewDelegate", AppKit)
 
-    def testProtocol(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSSplitViewHelper.splitView_canCollapseSubview_)
         self.assertResultIsBOOL(
             TestNSSplitViewHelper.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_  # noqa: B950
@@ -133,7 +133,7 @@ class TestNSSplitView(TestCase):
         )
 
     @min_os_level("10.5")
-    def testProtocol10_5(self):
+    def test_protocols10_5(self):
         self.assertResultIsBOOL(
             TestNSSplitViewHelper.splitView_shouldHideDividerAtIndex_
         )
@@ -174,7 +174,7 @@ class TestNSSplitView(TestCase):
         )
 
     @min_os_level("10.6")
-    def testProtocol10_6(self):
+    def test_protocols10_6(self):
         self.assertResultIsBOOL(
             TestNSSplitViewHelper.splitView_shouldAdjustSizeOfSubview_
         )

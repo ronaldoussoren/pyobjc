@@ -13,7 +13,7 @@ class TestCFFileSecurity(TestCase):
             self.assertIsCFType(CoreFoundation.CFFileSecurityRef)
 
     @min_os_level("10.7")
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFFileSecurityGetTypeID(), int)
 
     @min_os_level("10.7")

@@ -61,7 +61,7 @@ class TestNSApplicationHelper(AppKit.NSObject):
 
 
 class TestNSApplication(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSAboutPanelOptionKey, str)
         self.assertIsTypedEnum(AppKit.NSAppKitVersion, float)
         self.assertIsTypedEnum(AppKit.NSModalResponse, int)
@@ -227,7 +227,7 @@ class TestNSApplication(TestCase):
         AppKit.NSRegisterServicesProvider(v, "foobar")
         AppKit.NSUnregisterServicesProvider("foobar")
 
-    def testNSApp(self):
+    def test_nsapp(self):
         self.assertIsNot(AppKit.NSApp, None)
         self.assertEqual(type(AppKit.NSApp).__name__, "_NSApp")
         self.assertHasAttr(AppKit.NSApp, "__call__")
@@ -249,7 +249,7 @@ class TestNSApplication(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("16.0")),
         "Crash on macOS 15",
     )
-    def testNSModalSession(self):
+    def test_modal_sessiong(self):
         self.assertIsOpaquePointer(AppKit.NSModalSession)
 
         app = AppKit.NSApplication.sharedApplication()
@@ -288,7 +288,7 @@ class TestNSApplication(TestCase):
             AppKit.NSApplication.nextEventMatchingMask_untilDate_inMode_dequeue_, 3
         )
 
-    def testDelegateMethods(self):
+    def test_delegate_methods(self):
         self.assertResultIsBOOL(
             TestNSApplicationHelper.applicationShouldAutomaticallyLocalizeKeyEquivalents_
         )

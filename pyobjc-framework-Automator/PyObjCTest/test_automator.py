@@ -11,7 +11,7 @@ class TestAutomator(TestCase):
         self.assertHasAttr(Automator, "AMAppleScriptAction")
         self.assertIsInstance(Automator.AMAppleScriptAction, objc.objc_class)
 
-    def testInformalProtocols(self):
+    def test_informal_protocolsProtocols(self):
         self.assertNotHasAttr(Automator, "protocols")
 
 

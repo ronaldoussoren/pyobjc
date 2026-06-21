@@ -6,10 +6,10 @@ class TestNSEnumeratorInteraction(TestCase):
     def setUp(self):
         self.arrayContainer = Foundation.NSArray.arrayWithArray_(range(100))
 
-    def testNoFastEnumeration(self):
+    def test_no_fast_enumeration(self):
         self.assertNotHasAttr(Foundation, "NSFastEnumerationState")
 
-    def testInOperator(self):
+    def test_in(self):
         y = []
         for x in self.arrayContainer.objectEnumerator():
             y.append(x)

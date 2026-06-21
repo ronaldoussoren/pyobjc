@@ -298,9 +298,9 @@ class TestNSCollectionView(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocol10_12(self):
+    def test_protocols10_12(self):
         self.assertProtocolExists("NSCollectionViewSectionHeaderView", AppKit)
 
     @min_sdk_level("10.13")
-    def testProtocol10_13(self):
+    def test_protocols10_13(self):
         self.assertProtocolExists("NSCollectionViewPrefetching", AppKit)

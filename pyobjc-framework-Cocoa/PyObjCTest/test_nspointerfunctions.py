@@ -27,7 +27,7 @@ class TestNSPointerFunctions(TestCase):
     def test_constants10_8(self):
         self.assertEqual(Foundation.NSPointerFunctionsWeakMemory, 5 << 0)
 
-    def testPropType(self):
+    def test_property_type(self):
         o = Foundation.NSPointerFunctions.alloc().initWithOptions_(0)
 
         v = o.usesStrongWriteBarrier()

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class PythonListAsValue(TestCase):
-    def testSettingPythonList(self):
+    def test_setting_python_list(self):
         defaults = Foundation.NSUserDefaults.standardUserDefaults()
         defaults.setObject_forKey_(["a", "b", "c"], "randomKey")
 

@@ -26,7 +26,7 @@ class TestCMTagCollection(TestCase):
         self.assertEqual(CoreMedia.kCMTagCollectionError_NotYetImplemented, -15749)
 
     @min_os_level("14.0")
-    def test_consetants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(CoreMedia.kCMTagCollectionTagsArrayKey, str)
 
     @min_os_level("14.0")

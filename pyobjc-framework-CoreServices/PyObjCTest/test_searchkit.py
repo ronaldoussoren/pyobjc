@@ -14,7 +14,7 @@ class TestSearchKit(TestCase):
         self.assertTrue(hasattr(CoreServices, "SKIndexRef"))
         self.assertIsCFType(CoreServices.SKIndexRef)
 
-    def test_values(self):
+    def test_constants(self):
         self.assertTrue(hasattr(CoreServices, "kSKIndexInverted"))
         self.assertTrue(isinstance(CoreServices.kSKIndexInverted, int))
         self.assertEqual(CoreServices.kSKIndexInverted, 1)
@@ -25,7 +25,6 @@ class TestSearchKit(TestCase):
         self.assertTrue(isinstance(CoreServices.kSKSearchRanked, int))
         self.assertEqual(CoreServices.kSKSearchRanked, 0)
 
-    def test_variables(self):
         # Use this to test for global variables, (NSString*'s and the like)
         self.assertTrue(hasattr(CoreServices, "kSKEndTermChars"))
         self.assertTrue(isinstance(CoreServices.kSKEndTermChars, str))

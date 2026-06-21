@@ -4,7 +4,7 @@ import objc
 
 
 class TestCGGeometry(TestCase):
-    def test_struct(self):
+    def test_structs(self):
         v = Quartz.CGPoint()
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)

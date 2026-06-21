@@ -8,7 +8,7 @@ class TestCWNetworkProfile(TestCase):
         self.assertResultIsBOOL(CoreWLAN.CWNetworkProfile.isEqualToNetworkProfile_)
 
     @min_os_level("10.7")
-    def testConvenience(self):
+    def test_convenience(self):
         c1 = CoreWLAN.CWNetworkProfile.alloc().init()
         c2 = CoreWLAN.CWNetworkProfile.alloc().init()
 

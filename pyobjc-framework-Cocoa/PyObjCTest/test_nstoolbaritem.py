@@ -8,7 +8,7 @@ class TestNSToolbarItemHelper(AppKit.NSObject):
 
 
 class TestNSToolbarItem(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSToolbarItemVisibilityPriority, int)
         self.assertIsTypedEnum(AppKit.NSToolbarItemIdentifier, str)
 
@@ -72,13 +72,13 @@ class TestNSToolbarItem(TestCase):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.isHidden)
         self.assertArgIsBOOL(AppKit.NSToolbarItem.setHidden_, 0)
 
-    def test_protocols(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
 
     @min_sdk_level("10.12")
-    def testProtocolObject(self):
+    def test_protocols10_12(self):
         self.assertProtocolExists("NSCloudSharingValidation", AppKit)
 
     @min_sdk_level("10.14")
-    def testProtocolObject10_14(self):
+    def test_protocols10_14(self):
         self.assertProtocolExists("NSToolbarItemValidation", AppKit)

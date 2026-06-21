@@ -11,5 +11,5 @@ class TestNSDockTile(TestCase):
         self.assertEqual(AppKit.NSAppKitVersionNumberWithDockTilePlugInSupport, 1001.0)
 
     @min_sdk_level("10.10")
-    def testProtocol(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSDockTilePlugIn", AppKit)

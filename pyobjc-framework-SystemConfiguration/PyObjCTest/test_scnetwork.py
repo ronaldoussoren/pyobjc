@@ -25,7 +25,7 @@ class TestSCNetwork(TestCase):
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsIsLocalAddress, 1 << 16)
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsIsDirect, 1 << 17)
 
-    def testHardFunctionsNoHost(self):
+    def test_functions_manualNoHost(self):
         self.assertRaises(
             socket.gaierror,
             SystemConfiguration.SCNetworkCheckReachabilityByAddress,
@@ -35,7 +35,7 @@ class TestSCNetwork(TestCase):
         )
 
     @skipUnless(resolver_available(), "No DNS resolver available")
-    def testHardFunctions(self):
+    def test_functions_manual(self):
         b, flags = SystemConfiguration.SCNetworkCheckReachabilityByAddress(
             ("www.python.org", 80), objc._size_sockaddr_ip4, None
         )

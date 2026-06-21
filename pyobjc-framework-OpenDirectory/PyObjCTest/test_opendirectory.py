@@ -9,7 +9,7 @@ class TestOpenDirectory(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("ODQueryDelegate", OpenDirectory)
 
-    def testIntegration(self):
+    def test_integration(self):
         import CFOpenDirectory
 
         for nm in dir(CFOpenDirectory):

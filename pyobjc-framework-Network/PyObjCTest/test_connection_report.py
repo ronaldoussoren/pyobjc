@@ -25,7 +25,7 @@ class TestConnectionReport(TestCase):
         self.assertEqual(Network.nw_report_resolution_protocol_https, 4)
 
     @min_os_level("10.15")
-    def test_contants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Network.NW_ALL_PATHS, int)
 
     @min_os_level("10.15")

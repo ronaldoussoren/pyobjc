@@ -15,7 +15,7 @@ class TestNSMethodSignature(TestCase):
         m = o.getArgumentTypeAtIndex_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"^t")
 
-    def testUsing(self):
+    def test_using(self):
         o = Foundation.NSMethodSignature.signatureWithObjCTypes_(b"^v@:@o^i")
         self.assertIsInstance(o, Foundation.NSMethodSignature)
         v = o.methodReturnType()

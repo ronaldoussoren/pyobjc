@@ -9,7 +9,7 @@ from PyObjCTools.TestSupport import (
 
 
 class TestNSCell(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSControlStateValue, int)
 
     def test_enum_types(self):
@@ -33,7 +33,7 @@ class TestNSCell(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "doesn't work on 15.0",
     )
-    def testUnicode(self):
+    def test_unicode(self):
         u = "\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8"
         cell = AppKit.NSCell.alloc().initTextCell_(u)
         cell.setStringValue_(u)
@@ -49,7 +49,7 @@ class TestNSCell(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "doesn't work on 15.0",
     )
-    def testInt(self):
+    def test_int(self):
         i = 17
         cell = AppKit.NSCell.alloc().initTextCell_("")
         cell.setIntValue_(i)
@@ -65,7 +65,7 @@ class TestNSCell(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "doesn't work on 15.0",
     )
-    def testFloat(self):
+    def test_float(self):
         f = 3.125
         cell = AppKit.NSCell.alloc().initTextCell_("")
         cell.setFloatValue_(f)

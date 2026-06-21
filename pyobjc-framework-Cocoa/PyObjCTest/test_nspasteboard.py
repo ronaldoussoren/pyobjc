@@ -12,7 +12,7 @@ class TestNSPasteboardHelper(AppKit.NSObject):
 
 
 class TestNSPasteboard(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSPasteboardName, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardReadingOptionKey, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardType, str)

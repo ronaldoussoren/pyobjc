@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSObjCRuntime(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSExceptionName, str)
         self.assertIsTypedEnum(Foundation.NSRunLoopMode, str)
 
@@ -138,7 +138,7 @@ class TestNSObjCRuntime(TestCase):
         self.assertEqual(Foundation.NSFoundationVersionNumber10_7_3, 833.24)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_7_4, 833.25)
 
-    def testSelectorAccess(self):
+    def test_selector_access(self):
         v = Foundation.NSStringFromSelector("description")
         self.assertIsInstance(v, str)
         self.assertEqual(v, "description")
@@ -147,7 +147,7 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsInstance(v, str)
         self.assertEqual(v, "description")
 
-    def testClassAccess(self):
+    def test_class_access(self):
         v = Foundation.NSStringFromClass(Foundation.NSObject)
         self.assertIsInstance(v, str)
         self.assertEqual(v, "NSObject")
@@ -156,20 +156,20 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsInstance(v, objc.objc_class)
         self.assertEqual(v, Foundation.NSDictionary)
 
-    def testProtocolAccess(self):
+    def test_protocols_access(self):
         p = Foundation.NSProtocolFromString("NSObject")
         self.assertIsInstance(p, objc.formal_protocol)
         v = Foundation.NSStringFromProtocol(p)
         self.assertIsInstance(v, str)
         self.assertEqual(v, "NSObject")
 
-    def testTypeInfo(self):
+    def test_typesInfo(self):
         rest, size, align = Foundation.NSGetSizeAndAlignment(b"ii", None, None)
         self.assertEqual(rest, b"i")
         self.assertIsInstance(size, int)
         self.assertIsInstance(align, int)
 
-    def testMinMax(self):
+    def test_min_max(self):
         self.assertEqual(Foundation.MAX(1, 2), 2)
         self.assertEqual(Foundation.MAX(2, 1), 2)
         self.assertEqual(Foundation.MAX("a", "b"), "b")

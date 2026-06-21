@@ -18,6 +18,6 @@ class TestMTL4CommitFeedback(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTL4CommitFeedback", Metal)
 
-    def test_protocol_methos(self):
+    def test_protocols_methos(self):
         self.assertResultHasType(TestMTL4CommitFeedbackHelper.GPUStartTime, objc._C_DBL)
         self.assertResultHasType(TestMTL4CommitFeedbackHelper.GPUEndTime, objc._C_DBL)

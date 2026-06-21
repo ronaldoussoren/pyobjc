@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSWorkspace(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSWorkspaceDesktopImageOptionKey, str)
 
     def test_enum_types(self):
@@ -12,7 +12,7 @@ class TestNSWorkspace(TestCase):
         self.assertIsEnumType(AppKit.NSWorkspaceIconCreationOptions)
         self.assertIsEnumType(AppKit.NSWorkspaceLaunchOptions)
 
-    def testInfoForFile(self):
+    def test_info_for_file(self):
         ws = AppKit.NSWorkspace.sharedWorkspace()
 
         # A method with 2 output parameters, this means the result

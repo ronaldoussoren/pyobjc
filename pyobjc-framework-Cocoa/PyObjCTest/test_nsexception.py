@@ -4,13 +4,13 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSExceptionInteraction(TestCase):
-    def testRepeatedAllocInit(self):
+    def test_repeated_alloc_init(self):
         for _ in range(1, 1000):
             _ = Foundation.NSException.alloc().initWithName_reason_userInfo_(
                 "Bogus", "A bad reason", {"foo": "bar"}
             )
 
-    def testFormat(self):
+    def test_format(self):
         try:
             Foundation.NSException.raise_format_(
                 "ExceptionName", "Format: %s %d", b"hello", 42
@@ -45,13 +45,13 @@ class TestNSException(TestCase):
     def test_constants10_6(self):
         self.assertIsInstance(Foundation.NSAssertionHandlerKey, str)
 
-    def testUncaughtExceptionHandler(self):
+    def test_uncaught_exception_handler(self):
         self.assertArgIsFunction(
             Foundation.NSSetUncaughtExceptionHandler, 0, b"v@", True
         )
         self.assertResultIsFunction(Foundation.NSGetUncaughtExceptionHandler, b"v@")
 
-    def testNoAssert(self):
+    def test_no_assert(self):
         self.assertNotHasAttr(Foundation, "NSAssert5")
         self.assertNotHasAttr(Foundation, "NSAssert4")
         self.assertNotHasAttr(Foundation, "NSAssert3")

@@ -29,15 +29,6 @@ class TestCMTime(TestCase):
             CoreMedia.kCMTimeRoundingMethod_RoundHalfAwayFromZero,
         )
 
-    def test_structs(self):
-        v = CoreMedia.CMTime()
-        self.assertEqual(v.value, 0)
-        self.assertEqual(v.timescale, 0)
-        self.assertEqual(v.flags, 0)
-        self.assertEqual(v.epoch, 0)
-        self.assertPickleRoundTrips(v)
-
-    def test_contants(self):
         self.assertIsInstance(CoreMedia.kCMTimeInvalid, CoreMedia.CMTime)
         self.assertIsInstance(CoreMedia.kCMTimeIndefinite, CoreMedia.CMTime)
         self.assertIsInstance(CoreMedia.kCMTimePositiveInfinity, CoreMedia.CMTime)
@@ -48,6 +39,14 @@ class TestCMTime(TestCase):
         self.assertIsInstance(CoreMedia.kCMTimeScaleKey, str)
         self.assertIsInstance(CoreMedia.kCMTimeEpochKey, str)
         self.assertIsInstance(CoreMedia.kCMTimeFlagsKey, str)
+
+    def test_structs(self):
+        v = CoreMedia.CMTime()
+        self.assertEqual(v.value, 0)
+        self.assertEqual(v.timescale, 0)
+        self.assertEqual(v.flags, 0)
+        self.assertEqual(v.epoch, 0)
+        self.assertPickleRoundTrips(v)
 
     def test_functions(self):
         CoreMedia.CMTIME_IS_VALID

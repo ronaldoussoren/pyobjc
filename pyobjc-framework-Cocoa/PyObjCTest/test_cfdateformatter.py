@@ -5,7 +5,7 @@ import objc
 
 
 class TestDateFormatter(TestCase):
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFDateGetTypeID(), int)
 
     def test_constants(self):
@@ -109,7 +109,7 @@ class TestDateFormatter(TestCase):
         )
 
     @min_os_level("10.6")
-    def testFunction10_6(self):
+    def test_functions10_6(self):
         self.assertResultIsCFRetained(
             CoreFoundation.CFDateFormatterCreateDateFormatFromTemplate
         )
@@ -129,7 +129,7 @@ class TestDateFormatter(TestCase):
 
         self.assertIsInstance(CoreFoundation.CFDateFormatterGetTypeID(), int)
 
-    def testInspection(self):
+    def test_inspect(self):
         locale = CoreFoundation.CFLocaleCopyCurrent()
         self.assertIsInstance(locale, objc.lookUpClass("NSLocale"))
 

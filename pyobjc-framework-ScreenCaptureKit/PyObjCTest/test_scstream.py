@@ -9,7 +9,7 @@ class TestSCStreamHelper(ScreenCaptureKit.NSObject):
 
 
 class TestSCStream(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(ScreenCaptureKit.SCStreamFrameInfo, str)
 
     def test_enum_types(self):
@@ -252,7 +252,7 @@ class TestSCStream(TestCase):
         self.assertProtocolExists("SCStreamDelegate", ScreenCaptureKit)
         self.assertProtocolExists("SCStreamOutput", ScreenCaptureKit)
 
-    def test_proto_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestSCStreamHelper.stream_didOutputSampleBuffer_ofType_,
             1,

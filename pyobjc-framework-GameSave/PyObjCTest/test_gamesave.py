@@ -4,7 +4,7 @@ import GameSave
 
 
 class TestGameSave(TestCase):
-    def test_callable_metadata_sane(self):
+    def test_callable_metadata_is_sane(self):
         self.assertCallableMetadataIsSane(GameSave)
 
     def test_constants(self):

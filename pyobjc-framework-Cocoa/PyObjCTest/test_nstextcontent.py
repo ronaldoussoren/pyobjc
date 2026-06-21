@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestNSTextContent(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSTextContentType, str)
 
     @min_os_level("11.0")

@@ -9,5 +9,5 @@ class TestIKSaveOptionsHelper(Quartz.NSObject):
 
 class TestIKSaveOptions(TestCase):
     @min_os_level("10.6")
-    def testProtocol10_6(self):
+    def test_protocols10_6(self):
         self.assertResultIsBOOL(TestIKSaveOptionsHelper.saveOptions_shouldShowUTType_)

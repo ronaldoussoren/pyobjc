@@ -8,7 +8,7 @@ import objc
 
 
 class TestLaunchServices(TestCase):
-    def test_values(self):
+    def test_constants(self):
         # Use this to test for a number of enum and #define values
         self.assertTrue(hasattr(CoreServices, "kLSRequestAllInfo"))
         self.assertTrue(isinstance(CoreServices.kLSRequestAllInfo, int))
@@ -23,7 +23,6 @@ class TestLaunchServices(TestCase):
         self.assertTrue(hasattr(CoreServices, "kLSInvalidExtensionIndex"))
         self.assertTrue(isinstance(CoreServices.kLSInvalidExtensionIndex, int))
 
-    def test_variables(self):
         self.assertTrue(hasattr(CoreServices, "kUTTypeItem"))
         self.assertTrue(isinstance(CoreServices.kUTTypeItem, str))
 

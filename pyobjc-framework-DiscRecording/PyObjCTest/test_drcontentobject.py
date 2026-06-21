@@ -5,7 +5,7 @@ import objc
 
 class TestDRContentObject(TestCase):
     @expectedFailure
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(DiscRecording.DRFileRef)
         self.assertIsCFType(DiscRecording.DRFolderRef)
 

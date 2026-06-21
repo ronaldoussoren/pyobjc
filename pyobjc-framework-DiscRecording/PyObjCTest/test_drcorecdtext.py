@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRCoreCDText(TestCase):
     @expectedFailure
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(DiscRecording.DRCDTextBlockRef)
 
     def test_constants(self):

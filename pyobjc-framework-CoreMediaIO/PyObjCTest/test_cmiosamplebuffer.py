@@ -7,7 +7,7 @@ CMIOStreamScheduledOutputNotificationProc = b"vQQ^v"
 
 
 class TestCMIOSampleBuffer(TestCase):
-    def testDefines(self):
+    def test_defines(self):
         self.assertEqual(CoreMediaIO.CMIOGetNextSequenceNumber(0), 1)
         self.assertEqual(CoreMediaIO.CMIOGetNextSequenceNumber(42), 43)
         self.assertEqual(

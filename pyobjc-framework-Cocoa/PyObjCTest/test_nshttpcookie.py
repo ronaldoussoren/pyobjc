@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSHTTPCookie(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSHTTPCookiePropertyKey, str)
         self.assertIsTypedEnum(Foundation.NSHTTPCookieStringPolicy, str)
 

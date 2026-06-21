@@ -158,7 +158,7 @@ class TestNSData(TestCase):
             % (len(d2), len(rawData)),
         )
 
-    def testDataWithBytes_length_(self):
+    def test_dataWithBytes_length_(self):
         # Test +dataWithBytes:length
         data = Foundation.NSData.dataWithBytes_length_(rawBytes, len(rawBytes))
         mutableData = Foundation.NSMutableData.dataWithBytes_length_(
@@ -166,17 +166,17 @@ class TestNSData(TestCase):
         )
         self.assertDataContents(data, mutableData, rawBytes)
 
-    def testAppendBytes_length_(self):
+    def test_appendbytes_length(self):
         self.assertArgIsIn(Foundation.NSMutableData.appendBytes_length_, 0)
         self.assertArgSizeInArg(Foundation.NSMutableData.appendBytes_length_, 0, 1)
 
-    def testreplaceBytesInRange_withBytes_(self):
+    def test_replace_bytes_in_range_with_bytes(self):
         self.assertArgIsIn(Foundation.NSMutableData.replaceBytesInRange_withBytes_, 1)
         self.assertArgSizeInArg(
             Foundation.NSMutableData.replaceBytesInRange_withBytes_, 1, 0
         )
 
-    def testreplaceBytesInRange_withBytes_length_(self):
+    def test_replace_bytes_in_range_with_bytes_length(self):
         self.assertArgIsIn(
             Foundation.NSMutableData.replaceBytesInRange_withBytes_length_, 1
         )
@@ -184,7 +184,7 @@ class TestNSData(TestCase):
             Foundation.NSMutableData.replaceBytesInRange_withBytes_length_, 1, 2
         )
 
-    def testDataWithBytesNoCopy_length_freeWhenDone_(self):
+    def test_dataWithBytesNoCopy_length_freeWhenDone_(self):
         data = Foundation.NSData.dataWithBytesNoCopy_length_freeWhenDone_(
             rawBytes, len(rawBytes), False
         )
@@ -193,7 +193,7 @@ class TestNSData(TestCase):
         )
         self.assertDataContents(data, mutableData, rawBytes)
 
-    def testInitWithBytes_length_(self):
+    def test_initWithBytes_length_(self):
         # Test -initWithBytes:length:
         data = Foundation.NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
         mutableData = Foundation.NSMutableData.alloc().initWithBytes_length_(
@@ -201,7 +201,7 @@ class TestNSData(TestCase):
         )
         self.assertDataContents(data, mutableData, rawBytes)
 
-    def testInitWithBytesNoCopy_length_freeWhenDone_(self):
+    def test_initWithBytesNoCopy_length_freeWhenDone_(self):
         # Test -initWithBytesNoCopy:length:
         data = Foundation.NSData.alloc().initWithBytesNoCopy_length_freeWhenDone_(
             rawBytes, len(rawBytes), False
@@ -213,7 +213,7 @@ class TestNSData(TestCase):
         )
         self.assertDataContents(data, mutableData, rawBytes)
 
-    def testBytes(self):
+    def test_bytes(self):
         # Test -bytes
         data = Foundation.NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
         bytesValue = data.bytes()
@@ -233,7 +233,7 @@ class TestNSData(TestCase):
             else:
                 raise
 
-    def testMutableBytes(self):
+    def test_mutable_bytes(self):
         # Test -mutableBytes
         mutableData = Foundation.NSMutableData.dataWithBytes_length_(
             rawBytes, len(rawBytes)
@@ -263,7 +263,7 @@ class TestNSData(TestCase):
             else:
                 raise
 
-    def testVariousDataLengths(self):
+    def test_various_data_lengths(self):
         # Test data of different lengths.
         #
         # Data of different lengths may be stored in different subclasses
@@ -290,7 +290,7 @@ class TestNSData(TestCase):
 
             mutableBytes[0 : len(mutableBytes)] = bytes_value[0 : len(bytes_value)]
 
-    def testInitWithContents(self):
+    def test_initWithContents(self):
         b, err = Foundation.NSData.alloc().initWithContentsOfFile_options_error_(
             "/etc/hosts", 0, None
         )
@@ -375,15 +375,15 @@ class MyData5(Foundation.NSData):
 
 class TestMyData(TestCase):
     # 'initWithBytes:length:' and 'dataWithBytes:length:' have custom IMP's
-    def testData(self):
+    def test_data(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData, 0)
         self.assertEqual(r, ("data", b"hello world", 11))
 
-    def testInit(self):
+    def test_init(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData2, 1)
         self.assertEqual(r, ("init", b"hello world", 11))
 
-    def testBytes(self):
+    def test_bytes(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData3, 1)
         b = PyObjC_TestClass3.getBytes_(r)
 
@@ -396,17 +396,17 @@ class TestMyData(TestCase):
         self.assertEqual(b.getBytes_length_(None, 4), b"hell")
         self.assertEqual(b.getBytes_range_(None, Foundation.NSRange(2, 4)), b"llo ")
 
-    def testBytesNone(self):
+    def test_bytes_none(self):
         b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData4, 1)
         self.assertEqual(b.bytes(), None)
 
-    def testBytesRaises(self):
+    def test_bytes_raises(self):
         b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData5, 1)
         self.assertRaises(ValueError, b.bytes)
 
 
 class TestBuffer(TestCase):
-    def testArray(self):
+    def test_array(self):
         pool = Foundation.NSAutoreleasePool.alloc().init()
         a = array.array("b", b"foo")
         m = Foundation.NSMutableData.dataWithData_(a)
@@ -420,7 +420,7 @@ class TestBuffer(TestCase):
         m[3:6] = b"bar"
         self.assertEqual(m[:], b"foobarfoo")
 
-    def testBuffer(self):
+    def test_buffer(self):
         b = b"foo"
         m = Foundation.NSMutableData.dataWithData_(b)
         self.assertEqual(b[:], m[:])
@@ -429,7 +429,7 @@ class TestBuffer(TestCase):
 
 
 class TestRegressions(TestCase):
-    def testDataStr(self):
+    def test_data_string(self):
         input_bytes = b"hello"
         input_str = str(input_bytes)
 

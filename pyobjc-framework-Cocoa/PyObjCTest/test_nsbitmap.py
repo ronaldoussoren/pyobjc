@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSBitmapImageRep(TestCase):
-    def test_getTIFFCompressionTypes(self):
+    def test_gettiffcompressiontypes(self):
         r = AppKit.NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
 
         self.assertIsInstance(r, tuple)

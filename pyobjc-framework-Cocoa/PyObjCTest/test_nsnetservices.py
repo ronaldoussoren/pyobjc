@@ -41,7 +41,7 @@ class TestNSNetservices(TestCase):
     def test_constants10_9(self):
         self.assertEqual(Foundation.NSNetServiceListenForConnections, 1 << 1)
 
-    def testOutput(self):
+    def test_output(self):
         o = Foundation.NSNetService.alloc().initWithDomain_type_name_port_(
             "", "_http._tcp.", "", 0
         )

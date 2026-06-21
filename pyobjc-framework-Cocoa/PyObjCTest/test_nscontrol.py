@@ -69,7 +69,7 @@ class TestNSControl(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSControlTextEditingDelegate", AppKit)
 
-    def testDelegate(self):
+    def test_delegate_methods(self):
         self.assertResultIsBOOL(TestNSControlHelper.control_textShouldBeginEditing_)
         self.assertResultIsBOOL(TestNSControlHelper.control_textShouldEndEditing_)
         self.assertResultIsBOOL(

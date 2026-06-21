@@ -7,5 +7,5 @@ class TestSharedWithYouCore(TestCase):
         self.assertIsInstance(SharedWithYouCore.SharedWithYouCoreVersionNumber, float)
         self.assertNotHasAttr(SharedWithYouCore, "SharedWithYouCoreVersionString")
 
-    def test_metadata_sane(self):
+    def test_callable_metadata_is_sane(self):
         self.assertCallableMetadataIsSane(SharedWithYouCore)

@@ -17,7 +17,7 @@ class TestCWNetwork(TestCase):
 
     @min_os_level("10.7")
     @expectedFailure  # on 10.15
-    def testConvenience(self):
+    def test_convenience(self):
         c1 = CoreWLAN.CWNetwork.alloc().init()
         c2 = CoreWLAN.CWNetwork.alloc().init()
 

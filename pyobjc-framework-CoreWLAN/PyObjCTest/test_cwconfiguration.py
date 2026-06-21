@@ -49,7 +49,7 @@ class TestCWConfiguration(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConvenience(self):
+    def test_convenience(self):
         c1 = CoreWLAN.CWConfiguration.alloc().init()
         c2 = CoreWLAN.CWConfiguration.alloc().init()
 

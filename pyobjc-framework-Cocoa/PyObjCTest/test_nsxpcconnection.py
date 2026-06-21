@@ -24,7 +24,7 @@ class TestNSXPCConnection(TestCase):
         self.assertEqual(Foundation.NSXPCConnectionPrivileged, 1 << 12)
 
     @min_os_level("10.8")
-    def testProtocol10_8(self):
+    def test_protocols10_8(self):
         self.assertArgIsBlock(XPCHelper.remoteObjectProxyWithErrorHandler_, 0, b"v@")
         self.assertResultIsBOOL(XPCHelper.listener_shouldAcceptNewConnection_)
 

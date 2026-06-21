@@ -8,7 +8,7 @@ class TestCALayerHelper(Quartz.NSObject):
 
 
 class TestCALayer(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CALayerContentsFilter, str)
         self.assertIsTypedEnum(Quartz.CALayerContentsFormat, str)
         self.assertIsTypedEnum(Quartz.CALayerContentsGravity, str)

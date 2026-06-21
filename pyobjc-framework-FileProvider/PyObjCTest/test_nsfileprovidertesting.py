@@ -55,7 +55,7 @@ class TestNSFileProviderTesting(TestCase):
             "NSFileProviderTestingCollisionResolution", FileProvider
         )
 
-    def test_proto_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSFileProviderTestingHelper.side, objc._C_NSUInteger
         )

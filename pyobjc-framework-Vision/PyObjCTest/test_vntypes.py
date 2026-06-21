@@ -3,7 +3,7 @@ import Vision
 
 
 class TestVNTypes(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Vision.VNBarcodeSymbology, str)
         self.assertIsTypedEnum(Vision.VNVideoProcessingOption, str)
         self.assertIsTypedEnum(Vision.VNComputeStage, str)

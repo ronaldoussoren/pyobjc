@@ -12,11 +12,11 @@ def cmp(a, b):
 
 
 class TestCFArray(TestCase):
-    def testCFArrayIsNSArray(self):
+    def test_cfarray_is_nsarray(self):
         self.assertTrue(issubclass(CoreFoundation.CFArrayRef, NSArray))
         self.assertTrue(issubclass(CoreFoundation.CFMutableArrayRef, NSMutableArray))
 
-    def testCFArrayCreate(self):
+    def test_cfarray_create(self):
         array = CoreFoundation.CFArrayCreate(
             None, [1, 2, 3, 4], 4, CoreFoundation.kCFTypeArrayCallBacks
         )
@@ -32,7 +32,7 @@ class TestCFArray(TestCase):
         self.assertEqual(array, [42, 43, 44])
         self.assertIsInstance(array, CoreFoundation.CFMutableArrayRef)
 
-    def testCFArrayApplyFunction(self):
+    def test_cfarray_apply_function(self):
         array = CoreFoundation.CFArrayCreate(
             None, [1, 2, 3, 4], 4, CoreFoundation.kCFTypeArrayCallBacks
         )
@@ -57,7 +57,7 @@ class TestCFArray(TestCase):
         self.assertEqual(items, [4, 9])
         self.assertEqual(infos, [42, 42])
 
-    def testBSearchValues(self):
+    def test_bsearch_values(self):
         # This method causes a hard crash, reason unclear.
         array = CoreFoundation.CFArrayCreate(
             None, range(20), 20, CoreFoundation.kCFTypeArrayCallBacks
@@ -82,7 +82,7 @@ class TestCFArray(TestCase):
         r = CoreFoundation.CFArrayBSearchValues(array, (0, 20), -1, compare, None)
         self.assertEqual(r, 0)
 
-    def testSortValues(self):
+    def test_sort_values(self):
         array = CoreFoundation.NSMutableArray.arrayWithArray_([4, 2, 1, 3, 0, 5])
 
         self.assertArgIsFunction(CoreFoundation.CFArraySortValues, 2, b"l@@@", False)
@@ -95,11 +95,11 @@ class TestCFArray(TestCase):
 
         self.assertEqual(array, [0, 1, 2, 3, 4, 5])
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFArrayGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCopy(self):
+    def test_copy(self):
         array = CoreFoundation.CFArrayCreate(
             None, [1, 2, 3, 4], 4, CoreFoundation.kCFTypeArrayCallBacks
         )
@@ -115,7 +115,7 @@ class TestCFArray(TestCase):
         self.assertIsInstance(cpy, CoreFoundation.CFMutableArrayRef)
         self.assertIsNot(cpy, array)
 
-    def testCounts(self):
+    def test_counts(self):
         array = CoreFoundation.CFArrayCreate(
             None, [1, 2, 3, 4, 4, 2], 6, CoreFoundation.kCFTypeArrayCallBacks
         )
@@ -127,7 +127,7 @@ class TestCFArray(TestCase):
         self.assertEqual(CoreFoundation.CFArrayGetCountOfValue(array, (0, 6), 2), 2)
         self.assertEqual(CoreFoundation.CFArrayGetCountOfValue(array, (0, 6), 3), 1)
 
-    def testContains(self):
+    def test_contains(self):
         array = CoreFoundation.CFArrayCreate(
             None, ["a", 2, 3, 4, 4, 2], 6, CoreFoundation.kCFTypeArrayCallBacks
         )
@@ -157,7 +157,7 @@ class TestCFArray(TestCase):
         self.assertArgHasType(CoreFoundation.CFArrayGetFirstIndexOfValue, 2, b"@")
         self.assertArgHasType(CoreFoundation.CFArrayGetLastIndexOfValue, 2, b"@")
 
-    def testGetting(self):
+    def test_getting(self):
         array = CoreFoundation.CFArrayCreate(
             None, ["a", 2, 3, 4, 4, 2], 6, CoreFoundation.kCFTypeArrayCallBacks
         )
@@ -173,7 +173,7 @@ class TestCFArray(TestCase):
         self.assertIsInstance(vals, tuple)
         self.assertEqual(vals, ("a", 2, 3))
 
-    def testUpdating(self):
+    def test_updating(self):
         array = CoreFoundation.CFArrayCreate(
             None, ["a", 2, 3, 4, 4, 2], 6, CoreFoundation.kCFTypeArrayCallBacks
         )

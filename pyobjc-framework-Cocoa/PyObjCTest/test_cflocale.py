@@ -7,10 +7,10 @@ NSArray = objc.lookUpClass("NSArray")
 
 
 class TestLocale(TestCase):
-    def testGetTypeID(self):
+    def test_get_typeid(self):
         self.assertIsInstance(CoreFoundation.CFLocaleGetTypeID(), int)
 
-    def testInspection(self):
+    def test_inspect(self):
         locale = CoreFoundation.CFLocaleGetSystem()
         self.assertIsInstance(locale, NSLocale)
         locale = CoreFoundation.CFLocaleCopyCurrent()

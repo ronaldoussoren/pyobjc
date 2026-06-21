@@ -7,7 +7,7 @@ class TestCFBinaryHeap(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreFoundation.CFBinaryHeapRef)
 
-    def testCreation(self):
+    def test_creation(self):
         heap = CoreFoundation.CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CoreFoundation.CFBinaryHeapRef)
 
@@ -18,7 +18,7 @@ class TestCFBinaryHeap(TestCase):
         self.assertTrue(CoreFoundation.CFBinaryHeapContainsValue(heap, "hello"))
         self.assertFalse(CoreFoundation.CFBinaryHeapContainsValue(heap, "niemand"))
 
-    def testApply(self):
+    def test_apply(self):
         def compare(a, b, info):
             if a < b:
                 return -1
@@ -53,11 +53,11 @@ class TestCFBinaryHeap(TestCase):
         CoreFoundation.CFBinaryHeapApplyFunction(heap, function, ctx)
         self.assertEqual(ctx[0], "aapjeshelloworld")
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFBinaryHeapGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCopy(self):
+    def test_copy(self):
         heap = CoreFoundation.CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CoreFoundation.CFBinaryHeapRef)
 
@@ -68,7 +68,7 @@ class TestCFBinaryHeap(TestCase):
         heap2 = CoreFoundation.CFBinaryHeapCreateCopy(None, 0, heap)
         self.assertIsInstance(heap2, CoreFoundation.CFBinaryHeapRef)
 
-    def testInspect(self):
+    def test_inspect(self):
         heap = CoreFoundation.CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CoreFoundation.CFBinaryHeapRef)
 

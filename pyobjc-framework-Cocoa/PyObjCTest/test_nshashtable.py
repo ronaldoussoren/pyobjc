@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestNSHashTable(TestCase):
-    def testConvenience(self):
+    def test_convenience(self):
         v = Foundation.NSHashTable.hashTableWithOptions_(
             Foundation.NSPointerFunctionsObjectPersonality
         )

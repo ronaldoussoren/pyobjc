@@ -5,7 +5,7 @@ import ColorSync
 
 class TestColorSyncCMM(TestCase):
     @min_os_level("10.13")
-    def test_cftype(self):
+    def test_cftypes(self):
         self.assertIsCFType(ColorSync.ColorSyncCMMRef)
 
     @min_os_level("10.13")

@@ -58,7 +58,7 @@ class TestIMKInputController(TestCase):
             TestIMKInputControllerHelper.didCommandBySelector_client_, 0, objc._C_SEL
         )
 
-    def testIMKMouseHandling(self):
+    def test_imkmousehandling(self):
         self.assertResultIsBOOL(
             TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_
         )

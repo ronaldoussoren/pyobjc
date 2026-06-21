@@ -9,7 +9,7 @@ from PyObjCTools.TestSupport import TestCase
 class GlobalFunctionTest(TestCase):
     if sys.platform == "darwin":
 
-        def testNSFileTypeForHFSTypeCode(self):
+        def test_nsfiletypeforhfstypecode(self):
             self.assertEqual("'rtfx'", Foundation.NSFileTypeForHFSTypeCode(b"rtfx"))
 
             # The cannonical representation for four-character-codes in python
@@ -26,10 +26,10 @@ class GlobalFunctionTest(TestCase):
                     "'rtfx'", Foundation.NSFileTypeForHFSTypeCode(fourchar)
                 )
 
-        def testNSHFSTypeCodeFromFileType(self):
+        def test_nshfstypecodefromfiletype(self):
             self.assertEqual(b"rtfx", Foundation.NSHFSFTypeCodeFromFileType("'rtfx'"))
 
-    def testMakeNSRect(self):
+    def make_rect(self):
         self.assertHasAttr(Foundation, "NSMakeRect")
 
         self.assertEqual(
@@ -40,7 +40,7 @@ class GlobalFunctionTest(TestCase):
 
         self.assertRaises(ValueError, Foundation.NSMakeRect, 1.0, 2.0, 3.0, "4")
 
-    def test_NSDivideRect(self):
+    def test_nsdividerect(self):
         rect1 = Foundation.NSMakeRect(1.0, 2.0, 3.0, 4.0)
 
         slice_value, rem = Foundation.NSDivideRect(
@@ -55,7 +55,7 @@ class GlobalFunctionTest(TestCase):
         self.assertEqual(slice_value, ((1.0, 2.0), (3.0, 0.5)))
         self.assertEqual(rem, ((1.0, 2.5), (3.0, 3.5)))
 
-    def testMisc(self):
+    def test_misc(self):
         self.assertHasAttr(Foundation, "NSLogPageSize")
         self.assertHasAttr(Foundation, "NSRangeFromString")
         self.assertHasAttr(Foundation, "NSTemporaryDirectory")
@@ -63,7 +63,7 @@ class GlobalFunctionTest(TestCase):
 
 
 class GlobalVariablesTest(TestCase):
-    def testMisc(self):
+    def test_misc(self):
         # enum
         self.assertHasAttr(Foundation, "NS_LittleEndian")
 
@@ -87,7 +87,7 @@ class NSLogTest(TestCase):
             data = fp.read()
         return data
 
-    def testLogging(self):
+    def test_logging(self):
         self.startCaptureStderr()
         try:
             Foundation.NSLog("This is a test")
@@ -95,7 +95,7 @@ class NSLogTest(TestCase):
             data = self.stopCaptureStderr()
             self.assertIn(b"This is a test", data)
 
-    def testLoggingWithFormattingChars(self):
+    def test_logging_with_formatting_chars(self):
         self.assertRaises(ValueError, Foundation.NSLog, "This is a test %@")
 
         self.startCaptureStderr()
@@ -105,7 +105,7 @@ class NSLogTest(TestCase):
             data = self.stopCaptureStderr()
             self.assertIn(b"This is a test, ronald", data)
 
-    def testSpotlight(self):
+    def test_spotlight(self):
         if hasattr(Foundation, "NSMetadataQuery"):
             self.assertHasAttr(
                 Foundation, "NSMetadataQueryDidFinishGatheringNotification"

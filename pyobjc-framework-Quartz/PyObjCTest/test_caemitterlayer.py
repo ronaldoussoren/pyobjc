@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCAEmitterLayer(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CAEmitterLayerEmitterMode, str)
         self.assertIsTypedEnum(Quartz.CAEmitterLayerEmitterShape, str)
         self.assertIsTypedEnum(Quartz.CAEmitterLayerRenderMode, str)

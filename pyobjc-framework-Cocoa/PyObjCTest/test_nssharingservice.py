@@ -9,7 +9,7 @@ class TestNSSharingServiceHelper(AppKit.NSObject):
 
 
 class TestNSSharingService(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSSharingServiceName, str)
 
     def test_enum_types(self):
@@ -63,11 +63,11 @@ class TestNSSharingService(TestCase):
         self.assertResultIsBOOL(AppKit.NSSharingService.canPerformWithItems_)
 
     @min_sdk_level("10.7")
-    def test_protocols(self):
+    def test_protocols10_7(self):
         self.assertProtocolExists("NSSharingServiceDelegate", AppKit)
         self.assertProtocolExists("NSSharingServicePickerDelegate", AppKit)
 
-    def testProtocol(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSSharingServiceHelper.showRelativeToRect_ofView_preferredEdge_,
             0,

@@ -16,7 +16,7 @@ class TestNSKeyValueCodingHelper(Foundation.NSObject):
 
 
 class TestNSKeyValueCoding(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSKeyValueOperator, str)
 
     def test_constants(self):
@@ -33,7 +33,7 @@ class TestNSKeyValueCoding(TestCase):
         self.assertIsInstance(Foundation.NSUnionOfObjectsKeyValueOperator, str)
         self.assertIsInstance(Foundation.NSUnionOfSetsKeyValueOperator, str)
 
-    def testDefineValidation(self):
+    def test_define_validation(self):
         o = Foundation.NSObject.alloc().init()
 
         m = o.validateValue_forKey_error_.__metadata__()

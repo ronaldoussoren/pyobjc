@@ -60,7 +60,7 @@ class TestNSFileManagerHelper(Foundation.NSObject):
 
 
 class TestNSFileManager(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSFileAttributeKey, str)
         self.assertIsTypedEnum(Foundation.NSFileAttributeType, str)
         self.assertIsTypedEnum(Foundation.NSFileProtectionType, str)
@@ -129,7 +129,7 @@ class TestNSFileManager(TestCase):
         self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyFailOnConflict, 1)
 
     @min_os_level("10.14")
-    def test_constantsMissingOn10_9(self):
+    def test_constants_missing10_9(self):
         self.assertIsInstance(Foundation.NSFileProtectionKey, str)
         self.assertIsInstance(Foundation.NSFileProtectionNone, str)
         self.assertIsInstance(Foundation.NSFileProtectionComplete, str)
@@ -334,7 +334,7 @@ class TestNSFileManager(TestCase):
             4,
         )
 
-    def testOutput(self):
+    def test_output(self):
         obj = Foundation.NSFileManager.defaultManager()
         m = obj.setAttributes_ofItemAtPath_error_.__metadata__()
         self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))

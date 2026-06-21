@@ -21,7 +21,7 @@ class TestNSCandidateListTouchBarItemHelper(AppKit.NSObject):
 
 class TestNSCandidateListTouchBarItem(TestCase):
     @min_sdk_level("10.12")
-    def testProtocoObjects10_12(self):
+    def test_protocols10_12(self):
         self.assertProtocolExists("NSCandidateListTouchBarItemDelegate", AppKit)
 
     @min_os_level("10.12")

@@ -20,7 +20,7 @@ class TestOpenPanel(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    def testOpenPanelSignature(self):
+    def test_openpanel_signature(self):
         o = AppKit.NSOpenPanel.openPanel()
         sig = (
             o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.signature  # noqa: B950
@@ -77,6 +77,6 @@ class TestOpenPanel(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    def test_issue_272(self):
+    def test_issue272(self):
         panel = AppKit.NSOpenPanel.openPanel()
         panel.setAllowedFileTypes_([".html", ".txt"])

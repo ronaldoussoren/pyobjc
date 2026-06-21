@@ -59,7 +59,7 @@ class TestNSPanel(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    def test_function_usage(self):
+    def test_functions_usage(self):
         panel = AppKit.NSGetInformationalAlertPanel(
             "title", "fmt %d", "ok", "cancel", "help", 10
         )

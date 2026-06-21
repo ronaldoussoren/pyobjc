@@ -10,7 +10,7 @@ xpc_handler_t = b"v@"
 
 
 class TestXPC(TestCase):
-    def test_metadata_sane(self):
+    def test_callable_metadata_is_sane(self):
         to_exclude = set()
         for class_name in (
             "XPC_TYPE_ACTIVITY",

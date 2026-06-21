@@ -127,7 +127,7 @@ class TestCGRemoteOperation(TestCase):
         self.assertResultIsCFRetained(Quartz.CGWindowServerCreateServerPort)
 
     @expectedFailure
-    def testMissing(self):
+    def test_missing(self):
         self.fail("CGScreenRegisterMoveCallback")
         self.fail("CGScreenUnregisterMoveCallback")
         self.fail("CGReleaseScreenRefreshRects")

@@ -119,7 +119,7 @@ class TestSCDynamicStore(TestCase):
     def test_functions10_6(self):
         self.assertResultIsBOOL(SystemConfiguration.SCDynamicStoreSetDispatchQueue)
 
-    def testContants(self):
+    def test_constants(self):
         self.assertTrue(
             isinstance(SystemConfiguration.kSCDynamicStoreUseSessionKeys, str)
         )

@@ -15,7 +15,7 @@ class TestMTLCounters(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Metal.MTLCounterSampleBufferError)
 
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Metal.MTLCommonCounter, str)
         self.assertIsTypedEnum(Metal.MTLCommonCounterSet, str)
 

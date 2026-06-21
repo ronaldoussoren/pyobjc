@@ -534,7 +534,7 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def testGlyphFunctions(self):
+    def test_functions_glyph(self):
         self.assertArgHasType(Quartz.CGContextShowGlyphsAtPositions, 1, b"n^S")
         self.assertArgSizeInArg(Quartz.CGContextShowGlyphsAtPositions, 1, 3)
         self.assertArgHasType(
@@ -568,7 +568,7 @@ class TestCGContext(TestCase):
         self.assertArgHasType(Quartz.CGContextDrawPDFDocument, 3, objc._C_INT)
 
     @min_os_level("10.5")
-    def testContextManager10_5(self):
+    def test_context_manager10_5(self):
         url = Quartz.CFURLCreateWithFileSystemPath(
             None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
         )
@@ -593,7 +593,7 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def testContextManager(self):
+    def test_context_manager(self):
         """
         Tests for some additional functionality
         """
@@ -632,7 +632,7 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def test_functions_n(self):
+    def test_functions_untested(self):
         Quartz.CGContextResetClip
 
     @min_os_level("14.0")

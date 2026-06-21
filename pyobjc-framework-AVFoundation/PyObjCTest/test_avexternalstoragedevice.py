@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVExternalStorageDevice(TestCase):
-    def test_enum_type(self):
+    def test_enum_types(self):
         self.assertIsTypedEnum(
             AVFoundation.AVExternalStorageDeviceReasonNotRecommendedForCaptureUse, str
         )

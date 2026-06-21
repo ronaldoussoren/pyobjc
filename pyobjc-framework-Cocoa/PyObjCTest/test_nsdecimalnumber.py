@@ -21,7 +21,7 @@ class TestNSDecimalNumber(TestCase):
         self.assertIsInstance(Foundation.NSDecimalNumberUnderflowException, str)
         self.assertIsInstance(Foundation.NSDecimalNumberDivideByZeroException, str)
 
-    def testNSDecimal(self):
+    def test_nsdecimal(self):
         dec = Foundation.NSDecimal("55.0")
 
         v = Foundation.NSDecimalNumber.alloc().initWithDecimal_(dec)
@@ -38,12 +38,12 @@ class TestNSDecimalNumber(TestCase):
         o = v.objCType()
         self.assertIsInstance(o, bytes)
 
-    def testNSNumberAsNSDecimal(self):
+    def test_nsnumber_as_nsdecimal(self):
         v = Foundation.NSNumber.numberWithFloat_(33.5)
         o = v.decimalValue()
         self.assertIsInstance(o, Foundation.NSDecimal)
 
-    def testNSScannerWithDecimal(self):
+    def test_nsscanner_with_decimal(self):
         v = Foundation.NSScanner.alloc().initWithString_("55.23")
 
         o, dec = v.scanDecimal_(None)

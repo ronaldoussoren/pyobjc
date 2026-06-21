@@ -12,7 +12,7 @@ class TestCGPDFDictionary(TestCase):
         self.assertArgIsNullTerminated(function, 1)
         self.assertArgIsOut(function, 2)
 
-    def testIncomplete(self):
+    def test_incomplete(self):
         self.assertIsPDFGetter(Quartz.CGPDFDictionaryGetObject)
         self.assertIsPDFGetter(Quartz.CGPDFDictionaryGetBoolean)
         self.assertIsPDFGetter(Quartz.CGPDFDictionaryGetInteger)

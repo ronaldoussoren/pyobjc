@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCIContext(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CIContextOption, str)
         self.assertIsTypedEnum(Quartz.CIImageRepresentationOption, str)
 
@@ -100,7 +100,7 @@ class TestCIContext(TestCase):
         )
 
     @min_os_level("10.13.4")
-    def test_methods_10_13_4(self):
+    def test_methods10_13_4(self):
         self.assertResultIsBOOL(
             Quartz.CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_
         )

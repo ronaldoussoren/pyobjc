@@ -120,13 +120,13 @@ class TestBase(TestCase):
 
         self.assertPickleRoundTrips(o)
 
-    def testCFRangeMake(self):
+    def test_cfrange_make(self):
         r = CoreFoundation.CFRangeMake(42, 99)
         self.assertIsInstance(r, CoreFoundation.CFRange)
         self.assertEqual(r.location, 42)
         self.assertEqual(r.length, 99)
 
-    def testCFNull(self):
+    def test_cfnull(self):
         self.assertIsInstance(CoreFoundation.CFNullGetTypeID(), int)
         self.assertIsInstance(CoreFoundation.kCFNull, CoreFoundation.CFNullRef)
 
@@ -134,7 +134,7 @@ class TestBase(TestCase):
         if cls is not CoreFoundation.CFNullRef:
             self.assertIsCFType(CoreFoundation.CFNullRef)
 
-    def testCFAllocator(self):
+    def test_cfallocator(self):
         self.assertIsCFType(CoreFoundation.CFAllocatorRef)
 
         self.assertIsInstance(CoreFoundation.CFAllocatorGetTypeID(), int)
@@ -177,7 +177,7 @@ class TestBase(TestCase):
         self.assertIsInstance(r, int)
         self.assertGreaterEqual(r, 15)
 
-    def testGenericFunctions(self):
+    def test_functions_generic(self):
         value = CoreFoundation.CFGetTypeID(CoreFoundation.kCFAllocatorMalloc)
         self.assertEqual(value, CoreFoundation.CFAllocatorGetTypeID())
 

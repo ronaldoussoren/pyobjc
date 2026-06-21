@@ -11,7 +11,7 @@ class TestAVContentKeySessionHelper(AVFoundation.NSObject):
 
 
 class TestAVContentKeySession(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(
             AVFoundation.AVContentKeySessionServerPlaybackContextOption, str
         )

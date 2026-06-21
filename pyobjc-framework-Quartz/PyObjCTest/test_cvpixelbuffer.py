@@ -211,7 +211,7 @@ class TestCVPixelBuffer(TestCase):
     def test_types(self):
         self.assertIsCFType(Quartz.CVPixelBufferRef)
 
-    def test_structures(self):
+    def test_structsures(self):
         v = Quartz.CVPlanarComponentInfo()
         self.assertIsInstance(v.offset, int)
         self.assertIsInstance(v.rowBytes, int)
@@ -314,7 +314,7 @@ class TestCVPixelBuffer(TestCase):
         self.assertArgIsCFRetained(Quartz.CVPixelBufferCreate, 5)
 
     @expectedFailure
-    def testManual(self):
+    def test_manual(self):
         self.fail("CVPixelBufferCreate requires manual wrapper")
         self.fail("CVPixelBufferCreateWithBytes requires manual wrapper")
         self.fail("CVPixelBufferCreateWithPlanarBytes requires manual wrapper")
