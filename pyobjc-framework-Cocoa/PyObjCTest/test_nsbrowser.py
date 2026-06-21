@@ -102,7 +102,7 @@ class TestNSBrowser(TestCase):
         self.assertIsEnumType(AppKit.NSBrowserColumnResizingType)
         self.assertIsEnumType(AppKit.NSBrowserDropOperation)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSBrowserNoColumnResizing, 0)
         self.assertEqual(AppKit.NSBrowserAutoColumnResizing, 1)
         self.assertEqual(AppKit.NSBrowserUserColumnResizing, 2)
@@ -118,7 +118,7 @@ class TestNSBrowser(TestCase):
         )
         self.assertEqual(AppKit.NSAppKitVersionNumberWithColumnResizingBrowser, 685.0)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSBrowser.isLoaded)
         self.assertResultIsBOOL(AppKit.NSBrowser.reusesColumns)
         self.assertArgIsBOOL(AppKit.NSBrowser.setReusesColumns_, 0)
@@ -154,7 +154,7 @@ class TestNSBrowser(TestCase):
         self.assertArgIsBOOL(AppKit.NSBrowser.setAllowsTypeSelect_, 0)
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSBrowserDelegate", AppKit)
 
     def testDelegate(self):
@@ -279,7 +279,7 @@ class TestNSBrowser(TestCase):
         # XXX: Redo testcase for delegate
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBOOL(AppKit.NSBrowser.setAutohidesScroller_, 0)
         self.assertResultIsBOOL(AppKit.NSBrowser.autohidesScroller)
         self.assertResultIsBOOL(AppKit.NSBrowser.isLeafItem_)

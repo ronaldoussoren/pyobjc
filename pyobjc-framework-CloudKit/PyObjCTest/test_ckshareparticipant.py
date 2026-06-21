@@ -10,7 +10,7 @@ class TestCKShareParticipant(TestCase):
         self.assertIsEnumType(CloudKit.CKShareParticipantType)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertEqual(CloudKit.CKShareParticipantAcceptanceStatusUnknown, 0)
         self.assertEqual(CloudKit.CKShareParticipantAcceptanceStatusPending, 1)
         self.assertEqual(CloudKit.CKShareParticipantAcceptanceStatusAccepted, 2)

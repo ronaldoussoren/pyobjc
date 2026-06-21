@@ -3,16 +3,16 @@ import WebKit
 
 
 class TestWebPluginViewFactory(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(WebKit.WebPlugInBaseURLKey, str)
         self.assertIsInstance(WebKit.WebPlugInAttributesKey, str)
         self.assertIsInstance(WebKit.WebPlugInContainerKey, str)
         self.assertIsInstance(WebKit.WebPlugInContainingElementKey, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(WebKit.WebPlugInShouldLoadMainResourceKey, str)
 
     @min_sdk_level("10.6")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("WebPlugInViewFactory", WebKit)

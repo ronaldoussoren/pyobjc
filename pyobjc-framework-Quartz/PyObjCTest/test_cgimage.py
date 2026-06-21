@@ -8,7 +8,7 @@ import objc
 
 
 class TestCGImage(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGImagePixelFormatMask, 0xF0000)
         self.assertEqual(Quartz.kCGImagePixelFormatPacked, 0 << 16)
         self.assertEqual(Quartz.kCGImagePixelFormatRGB555, 1 << 16)
@@ -110,7 +110,7 @@ class TestCGImage(TestCase):
     def test_constants15_0(self):
         self.assertIsInstance(Quartz.kCGDefaultHDRImageContentHeadroom, float)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGImageGetTypeID(), int)
 
         provider = Quartz.CGDataProviderCreateWithCFData(b"1" * 4 * 100 * 80)
@@ -263,7 +263,7 @@ class TestCGImage(TestCase):
         self.assertIsInstance(v, int)
 
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         fn = "/System/Library/CoreServices/DefaultDesktop.jpg"
         if not os.path.exists(fn):
             fn = "/System/Library/CoreServices/DefaultDesktopServer.jpg"
@@ -283,12 +283,12 @@ class TestCGImage(TestCase):
         self.assertIsInstance(v, str)
 
     @min_os_level("10.14")
-    def testFunctions10_14(self):
+    def test_functions10_14(self):
         Quartz.CGImageGetByteOrderInfo
         Quartz.CGImageGetPixelFormatInfo
 
     @min_os_level("15.0")
-    def testFunctions15_0(self):
+    def test_functions15_0(self):
         self.assertResultIsCFRetained(Quartz.CGImageCreateWithContentHeadroom)
         self.assertArgIsIn(Quartz.CGImageCreateWithContentHeadroom, 9)
         self.assertArgIsVariableSize(Quartz.CGImageCreateWithContentHeadroom, 9)

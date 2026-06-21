@@ -20,7 +20,7 @@ class TestDOMEventTargetHelper(WebKit.NSObject):
 
 
 class TestDOMEventTarget(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             TestDOMEventTargetHelper.addEventListener_listener_useCapture_, 2
         )
@@ -31,5 +31,5 @@ class TestDOMEventTarget(TestCase):
         self.assertArgIsBOOL(TestDOMEventTargetHelper.removeEventListener___, 2)
         self.assertResultIsBOOL(TestDOMEventTargetHelper.dispatchEvent_)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("DOMEventTarget", WebKit)

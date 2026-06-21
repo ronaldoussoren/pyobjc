@@ -8,7 +8,7 @@ import objc
 
 
 class TestURL(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIs(CoreFoundation.CFURLRef, NSURL)
 
     def testTypeID(self):
@@ -384,7 +384,7 @@ class TestURL(TestCase):
         ref2 = CoreFoundation.CFURLCreateFromFSRef(None, fsref)
         self.assertEqual(ref, ref2)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFURLPOSIXPathStyle, 0)
         self.assertEqual(CoreFoundation.kCFURLHFSPathStyle, 1)
         self.assertEqual(CoreFoundation.kCFURLWindowsPathStyle, 2)
@@ -403,7 +403,7 @@ class TestURL(TestCase):
         self.assertEqual(CoreFoundation.kCFURLComponentFragment, 12)
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         fp = open("/tmp/pyobjc.test", "w")
         fp.close()
         try:
@@ -575,14 +575,14 @@ class TestURL(TestCase):
                 os.unlink("/tmp/pyobjc.test.2")
 
     @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions10_8(self):
         self.assertResultIsBOOL(
             CoreFoundation.CFURLStartAccessingSecurityScopedResource
         )
         CoreFoundation.CFURLStopAccessingSecurityScopedResource
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(CoreFoundation.kCFURLIsExcludedFromBackupKey, str)
 
         self.assertIsInstance(CoreFoundation.kCFURLPathKey, str)
@@ -600,7 +600,7 @@ class TestURL(TestCase):
         )
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(CoreFoundation.kCFURLTagNamesKey, str)
         self.assertIsInstance(
             CoreFoundation.kCFURLUbiquitousItemDownloadingStatusKey, str
@@ -620,19 +620,19 @@ class TestURL(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(CoreFoundation.kCFURLGenerationIdentifierKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLDocumentIdentifierKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLAddedToDirectoryDateKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLQuarantinePropertiesKey, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(CoreFoundation.kCFURLIsApplicationKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLApplicationIsScriptableKey, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(CoreFoundation.kCFURLNameKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLLocalizedNameKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLIsRegularFileKey, str)
@@ -701,7 +701,7 @@ class TestURL(TestCase):
         )
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(
             CoreFoundation.kCFURLBookmarkCreationWithSecurityScope, 1 << 11
         )
@@ -778,7 +778,7 @@ class TestURL(TestCase):
         )
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(CoreFoundation.kCFURLVolumeLocalizedNameKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLVolumeIsEncryptedKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLVolumeIsRootFileSystemKey, str)
@@ -790,7 +790,7 @@ class TestURL(TestCase):
         )
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(
             CoreFoundation.kCFURLVolumeAvailableCapacityForImportantUsageKey, str
         )
@@ -803,7 +803,7 @@ class TestURL(TestCase):
         )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(CoreFoundation.kCFURLFileContentIdentifierKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLMayShareFileContentKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLMayHaveExtendedAttributesKey, str)
@@ -813,29 +813,29 @@ class TestURL(TestCase):
         self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsFileProtectionKey, str)
 
     @min_os_level("11.3")
-    def testConstants11_3(self):
+    def test_constants11_3(self):
         self.assertIsInstance(
             CoreFoundation.kCFURLUbiquitousItemIsExcludedFromSyncKey, str
         )
 
     @min_os_level("13.3")
-    def testConstants13_3(self):
+    def test_constants13_3(self):
         self.assertIsInstance(CoreFoundation.kCFURLFileIdentifierKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLVolumeTypeNameKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLVolumeSubtypeKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLVolumeMountFromLocationKey, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(CoreFoundation.kCFURLDirectoryEntryCountKey, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(
             CoreFoundation.kCFURLUbiquitousItemSupportedSyncControlsKey, str
         )
         self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemIsSyncPausedKey, str)
 
     @min_os_level("10.9")
-    def testFunctions10_9(self):
+    def test_functions10_9(self):
         self.assertResultIsBOOL(CoreFoundation.CFURLIsFileReferenceURL)

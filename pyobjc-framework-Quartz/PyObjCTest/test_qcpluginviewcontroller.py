@@ -9,6 +9,6 @@ class QCPlugInHelper(Quartz.QCPlugIn):
 
 class TestQCPlugInViewController(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsRetained(Quartz.QCPlugIn.createViewController)
         self.assertResultIsRetained(Quartz.QCPlugInHelper.createViewController)

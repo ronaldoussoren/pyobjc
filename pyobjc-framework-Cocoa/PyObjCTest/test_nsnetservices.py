@@ -21,7 +21,7 @@ class TestNSNetservices(TestCase):
         self.assertIsEnumType(Foundation.NSNetServiceOptions)
         self.assertIsEnumType(Foundation.NSNetServicesError)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSNetServicesErrorCode, str)
         self.assertIsInstance(Foundation.NSNetServicesErrorDomain, str)
         self.assertEqual(Foundation.NSNetServicesUnknownError, -72000)
@@ -38,7 +38,7 @@ class TestNSNetservices(TestCase):
         self.assertEqual(Foundation.NSNetServiceNoAutoRename, 1)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(Foundation.NSNetServiceListenForConnections, 1 << 1)
 
     def testOutput(self):
@@ -51,7 +51,7 @@ class TestNSNetservices(TestCase):
         self.assertEqual(m["arguments"][2]["type"], b"o^@")
         self.assertEqual(m["arguments"][3]["type"], b"o^@")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSNetService.getInputStream_outputStream_)
         self.assertArgIsOut(Foundation.NSNetService.getInputStream_outputStream_, 0)
         self.assertArgIsOut(Foundation.NSNetService.getInputStream_outputStream_, 1)
@@ -71,7 +71,7 @@ class TestNSNetservices(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(Foundation.NSNetService.includesPeerToPeer)
         self.assertArgIsBOOL(Foundation.NSNetService.setIncludesPeerToPeer_, 0)
 
@@ -79,6 +79,6 @@ class TestNSNetservices(TestCase):
         self.assertArgIsBOOL(Foundation.NSNetServiceBrowser.setIncludesPeerToPeer_, 0)
 
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSNetServiceDelegate", Foundation)
         self.assertProtocolExists("NSNetServiceBrowserDelegate", Foundation)

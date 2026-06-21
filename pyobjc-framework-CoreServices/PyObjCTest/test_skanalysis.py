@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestSKAnalysis(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreServices.kSKLanguageTypes, str)
         self.assertIsInstance(CoreServices.kSKMinTermLength, str)
         self.assertIsInstance(CoreServices.kSKSubstitutions, str)

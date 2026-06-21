@@ -4,7 +4,7 @@ import CoreSpotlight
 
 
 class TestCoreSpotlight(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreSpotlight.CoreSpotlightVersionNumber, float)
         self.assertIsInstance(CoreSpotlight.CoreSpotlightVersionString, bytes)
 

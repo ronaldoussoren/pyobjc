@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSSegmentedControl(TestCase):
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsEnumType(AppKit.NSSegmentStyle)
         self.assertEqual(AppKit.NSSegmentStyleAutomatic, 0)
         self.assertEqual(AppKit.NSSegmentStyleRounded, 1)
@@ -32,7 +32,7 @@ class TestNSSegmentedControl(TestCase):
         self.assertEqual(AppKit.NSSegmentedControlRoleTabs, 1)
         self.assertEqual(AppKit.NSSegmentedControlRoleValueSelection, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSegmentedControl.selectSegmentWithTag_)
         self.assertArgIsBOOL(AppKit.NSSegmentedControl.setSelected_forSegment_, 0)
         self.assertResultIsBOOL(AppKit.NSSegmentedControl.isSelectedForSegment_)
@@ -40,12 +40,12 @@ class TestNSSegmentedControl(TestCase):
         self.assertResultIsBOOL(AppKit.NSSegmentedControl.isEnabledForSegment_)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSSegmentedControl.isSpringLoaded)
         self.assertArgIsBOOL(AppKit.NSSegmentedControl.setSpringLoaded_, 0)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsSEL(
             AppKit.NSSegmentedControl.segmentedControlWithLabels_trackingMode_target_action_,
             3,
@@ -58,7 +58,7 @@ class TestNSSegmentedControl(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBOOL(
             AppKit.NSSegmentedControl.setShowsMenuIndicator_forSegment_, 0
         )

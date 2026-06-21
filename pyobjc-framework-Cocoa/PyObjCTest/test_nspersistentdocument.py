@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSPersistentDocument(TestCase):
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(
             AppKit.NSPersistentDocument.configurePersistentStoreCoordinatorForURL_ofType_modelConfiguration_storeOptions_error_  # noqa: B950
         )
@@ -13,7 +13,7 @@ class TestNSPersistentDocument(TestCase):
             4,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSPersistentDocument.writeToURL_ofType_forSaveOperation_originalContentsURL_error_  # noqa: B950
         )

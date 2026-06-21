@@ -35,7 +35,7 @@ class TestINSendMessageIntentHelper(Intents.NSObject):
 
 class TestINSendMessageIntent(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             TestINSendMessageIntentHelper.handleSendMessage_completion_, 1, b"v@"
         )
@@ -71,7 +71,7 @@ class TestINSendMessageIntent(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             TestINSendMessageIntentHelper.resolveRecipientsForSendMessage_completion_,
             1,
@@ -79,5 +79,5 @@ class TestINSendMessageIntent(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("INSendMessageIntentHandling", Intents)

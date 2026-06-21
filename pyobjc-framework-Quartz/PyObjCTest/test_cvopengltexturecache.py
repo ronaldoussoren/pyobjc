@@ -3,10 +3,10 @@ import Quartz
 
 
 class TestCVOpenGLTextureCache(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CVOpenGLTextureCacheRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCVOpenGLTextureCacheChromaSamplingModeKey, str)
         self.assertIsInstance(
             Quartz.kCVOpenGLTextureCacheChromaSamplingModeAutomatic, str
@@ -19,7 +19,7 @@ class TestCVOpenGLTextureCache(TestCase):
         )
 
     @expectedFailure
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CVOpenGLTextureCacheGetTypeID, int)
         Quartz.CVOpenGLTextureCacheRetain
         Quartz.CVOpenGLTextureCacheRelease

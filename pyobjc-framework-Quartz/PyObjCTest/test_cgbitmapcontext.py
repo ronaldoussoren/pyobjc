@@ -6,7 +6,7 @@ import Quartz
 
 
 class TestCGBitmapContext(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
         self.assertIsInstance(bytes_val, array.array)
         self.assertEqual(len(bytes_val), 100 * 80 * 4)
@@ -44,7 +44,7 @@ class TestCGBitmapContext(TestCase):
         self.assertIsInstance(img, Quartz.CGImageRef)
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
         ctx = Quartz.CGBitmapContextCreateWithData(
             bytes_val,

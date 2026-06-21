@@ -3,5 +3,5 @@ import Quartz
 
 
 class TestCIFilterShape(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Quartz.CIFilterShape.transformBy_interior_, 1)

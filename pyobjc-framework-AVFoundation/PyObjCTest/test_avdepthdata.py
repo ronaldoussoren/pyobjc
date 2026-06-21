@@ -7,7 +7,7 @@ class TestAVDepthData(TestCase):
         self.assertIsEnumType(AVFoundation.AVDepthDataAccuracy)
         self.assertIsEnumType(AVFoundation.AVDepthDataQuality)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVDepthDataQualityLow, 0)
         self.assertEqual(AVFoundation.AVDepthDataQualityHigh, 1)
 
@@ -15,7 +15,7 @@ class TestAVDepthData(TestCase):
         self.assertEqual(AVFoundation.AVDepthDataAccuracyAbsolute, 1)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsOut(
             AVFoundation.AVDepthData.depthDataFromDictionaryRepresentation_error_,
             1,  # noqa: B950

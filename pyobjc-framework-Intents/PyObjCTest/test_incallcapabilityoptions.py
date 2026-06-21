@@ -7,6 +7,6 @@ class TestINCallCapabilityOptions(TestCase):
         self.assertIsEnumType(Intents.INCallCapabilityOptions)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INCallCapabilityOptionAudioCall, 1 << 0)
         self.assertEqual(Intents.INCallCapabilityOptionVideoCall, 1 << 1)

@@ -5,12 +5,12 @@ import objc
 
 class TestCGImageMetadata(TestCase):
     @min_os_level("10.8")
-    def testTypes10_8(self):
+    def test_types10_8(self):
         self.assertIsCFType(Quartz.CGImageMetadataRef)
         self.assertIsCFType(Quartz.CGImageMetadataTagRef)
 
     @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions10_8(self):
         self.assertIsInstance(Quartz.CGImageMetadataGetTypeID(), int)
         self.assertIsInstance(Quartz.CGImageMetadataTagGetTypeID(), int)
 
@@ -69,7 +69,7 @@ class TestCGImageMetadata(TestCase):
         self.assertResultIsCFRetained(Quartz.CGImageMetadataCreateFromXMPData)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceExif, str)
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceExifAux, str)
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceDublinCore, str)
@@ -106,11 +106,11 @@ class TestCGImageMetadata(TestCase):
         self.assertEqual(Quartz.kCGImageMetadataErrorPrefixConflict, 4)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceExifEX, str)
         self.assertIsInstance(Quartz.kCGImageMetadataPrefixExifEX, str)
 
     @min_os_level("10.13.4")
-    def testConstants10_13_4(self):
+    def test_constants10_13_4(self):
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceIPTCExtension, str)
         self.assertIsInstance(Quartz.kCGImageMetadataPrefixIPTCExtension, str)

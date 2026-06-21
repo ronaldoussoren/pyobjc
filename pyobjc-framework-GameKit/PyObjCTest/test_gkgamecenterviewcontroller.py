@@ -6,10 +6,10 @@ class TestGKGameCenterViewController(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(GameKit.GKGameCenterViewControllerState)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKGameCenterControllerDelegate", GameKit)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(GameKit.GKGameCenterViewControllerStateDefault, -1)
         self.assertEqual(GameKit.GKGameCenterViewControllerStateLeaderboards, 0)
         self.assertEqual(GameKit.GKGameCenterViewControllerStateAchievements, 1)

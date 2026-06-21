@@ -8,7 +8,7 @@ class TestNSPrintOperation(TestCase):
         self.assertIsEnumType(AppKit.NSPrintRenderingQuality)
         self.assertIsEnumType(AppKit.NSPrintingPageOrder)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSDescendingPageOrder, -1)
         self.assertEqual(AppKit.NSSpecialPageOrder, 0)
         self.assertEqual(AppKit.NSAscendingPageOrder, 1)
@@ -17,11 +17,11 @@ class TestNSPrintOperation(TestCase):
         self.assertIsInstance(AppKit.NSPrintOperationExistsException, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSPrintRenderingQualityBest, 0)
         self.assertEqual(AppKit.NSPrintRenderingQualityResponsive, 1)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSPrintOperation.isCopyingOperation)
         self.assertResultIsBOOL(AppKit.NSPrintOperation.showsPrintPanel)
         self.assertArgIsBOOL(AppKit.NSPrintOperation.setShowsPrintPanel_, 0)

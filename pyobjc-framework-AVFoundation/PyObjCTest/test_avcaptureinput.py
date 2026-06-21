@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVCaptureInput(TestCase):
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification, str
         )
@@ -16,7 +16,7 @@ class TestAVCaptureInput(TestCase):
             AVFoundation.AVCaptureMultichannelAudioModeFirstOrderAmbisonics, 2
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureInputPort.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureInputPort.setEnabled_, 0)
 
@@ -49,7 +49,7 @@ class TestAVCaptureInput(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesCursor)
         self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesCursor_, 0)
 
@@ -61,7 +61,7 @@ class TestAVCaptureInput(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput_Tundra.capturesCursor)
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput_Tundra.setCapturesCursor_, 0
@@ -75,7 +75,7 @@ class TestAVCaptureInput(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceInput.isMultichannelAudioModeSupported_
         )
@@ -91,7 +91,7 @@ class TestAVCaptureInput(TestCase):
         )
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceInput.isCinematicVideoCaptureSupported
         )
@@ -110,6 +110,6 @@ class TestAVCaptureInput(TestCase):
         )
 
     @min_os_level("26.4")
-    def testMethods26_4(self):
+    def test_methods26_4(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceInput.isAudioZoomEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureDeviceInput.setAudioZoomEnabled_, 0)

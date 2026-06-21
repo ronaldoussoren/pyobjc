@@ -4,7 +4,7 @@ import objc
 
 
 class TestCGDirectPalette(TestCase):
-    def testStructs(self):
+    def test_structs(self):
         v = Quartz.CGDeviceByteColor()
         self.assertTrue(hasattr(v, "red"))
         self.assertTrue(hasattr(v, "green"))
@@ -17,10 +17,10 @@ class TestCGDirectPalette(TestCase):
         self.assertTrue(hasattr(v, "blue"))
         self.assertPickleRoundTrips(v)
 
-    def testTypes(self):
+    def test_types(self):
         self.assertIsOpaquePointer(Quartz.CGDirectPaletteRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(Quartz.CGPaletteCreateDefaultColorPalette)
         v = Quartz.CGPaletteCreateDefaultColorPalette()
         self.assertIsInstance(v, Quartz.CGDirectPaletteRef)

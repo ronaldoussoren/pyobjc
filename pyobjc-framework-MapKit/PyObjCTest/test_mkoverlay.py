@@ -18,7 +18,7 @@ class TestMKOverlayHelper(MapKit.NSObject):
 
 class TestMKOverlay(TestCase):
     @min_os_level("10.9")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("MKOverlay", MapKit)
 
     def test_protocol_methods(self):

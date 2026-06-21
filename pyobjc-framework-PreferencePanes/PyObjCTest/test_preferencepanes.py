@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestPreferencePanes(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertTrue(hasattr(PreferencePanes, "NSPreferencePane"))
         self.assertTrue(isinstance(PreferencePanes.NSPreferencePane, objc.objc_class))
 

@@ -4,7 +4,7 @@ import objc
 
 
 class TestCGRemoteOperation(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.CGEventNoErr, Quartz.kCGErrorSuccess)
 
         self.assertEqual(Quartz.kCGScreenUpdateOperationRefresh, 0)
@@ -37,13 +37,13 @@ class TestCGRemoteOperation(TestCase):
             Quartz.kCGNumberOfEventSuppressionStates,
         )
 
-    def testStructs(self):
+    def test_structs(self):
         v = Quartz.CGScreenUpdateMoveDelta()
         self.assertTrue(hasattr(v, "dX"))
         self.assertTrue(hasattr(v, "dY"))
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         myInfo = object()
         callcount = [0]
 
@@ -123,7 +123,7 @@ class TestCGRemoteOperation(TestCase):
         )
 
     @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions10_8(self):
         self.assertResultIsCFRetained(Quartz.CGWindowServerCreateServerPort)
 
     @expectedFailure

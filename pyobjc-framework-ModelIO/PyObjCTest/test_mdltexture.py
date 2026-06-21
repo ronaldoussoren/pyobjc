@@ -7,7 +7,7 @@ class TestMDLTexture(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(ModelIO.MDLTextureChannelEncoding)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(ModelIO.MDLTextureChannelEncodingUInt8, 1)
         self.assertEqual(ModelIO.MDLTextureChannelEncodingUint8, 1)
         self.assertEqual(ModelIO.MDLTextureChannelEncodingUInt16, 2)
@@ -20,7 +20,7 @@ class TestMDLTexture(TestCase):
         self.assertEqual(ModelIO.MDLTextureChannelEncodingFloat16SR, 0x302)
         self.assertEqual(ModelIO.MDLTextureChannelEncodingFloat32, 0x104)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             ModelIO.MDLTexture.initWithData_topLeftOrigin_name_dimensions_rowStride_channelCount_channelEncoding_isCube_,
             1,
@@ -107,12 +107,12 @@ class TestMDLTexture(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(ModelIO.MDLTexture.hasAlphaValues)
         self.assertArgIsBOOL(ModelIO.MDLTexture.setHasAlphaValues_, 0)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgHasType(
             ModelIO.MDLSkyCubeTexture.initWithName_channelEncoding_textureDimensions_turbidity_sunElevation_upperAtmosphereScattering_groundAlbedo_,
             2,

@@ -19,13 +19,13 @@ class TestNCWidgetProviding(TestCase):
         self.assertIsEnumType(NotificationCenter.NCUpdateResult)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(NotificationCenter.NCUpdateResultNewData, 0)
         self.assertEqual(NotificationCenter.NCUpdateResultNoData, 1)
         self.assertEqual(NotificationCenter.NCUpdateResultFailed, 2)
 
     @min_os_level("10.10")
-    def testClasses10_10(self):
+    def test_classes10_10(self):
         self.assertProtocolExists("NCWidgetProviding", NotificationCenter)
 
     def test_protocol_methods(self):

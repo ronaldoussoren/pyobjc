@@ -25,7 +25,7 @@ class TestAVAssetResourceLoader(TestCase):
         )
 
     @min_os_level("10.9")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVAssetResourceLoaderDelegate", AVFoundation)
 
     def test_protocol_methods(self):
@@ -35,7 +35,7 @@ class TestAVAssetResourceLoader(TestCase):
         )
 
     @min_os_level("10.10")
-    def testProtocols10_10(self):
+    def test_protocols10_10(self):
         self.assertResultHasType(
             TestAVAssetResourceLoaderHelper.resourceLoader_shouldWaitForRenewalOfRequestedResource_,  # noqa: B950
             objc._C_NSBOOL,
@@ -46,7 +46,7 @@ class TestAVAssetResourceLoader(TestCase):
         )
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetResourceLoadingRequest.isFinished
         )  # noqa: B950
@@ -69,7 +69,7 @@ class TestAVAssetResourceLoader(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetResourceLoadingDataRequest.requestsAllDataToEndOfResource  # noqa: B950
         )
@@ -82,20 +82,20 @@ class TestAVAssetResourceLoader(TestCase):
         )
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetResourceLoadingRequestor.providesExpiredSessionReports  # noqa: B950
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsOut(
             AVFoundation.AVAssetResourceLoadingRequest.persistentContentKeyFromKeyVendorResponse_options_error_,  # noqa: B950
             2,
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetResourceLoadingContentInformationRequest.isEntireLengthAvailableOnDemand
         )
@@ -105,7 +105,7 @@ class TestAVAssetResourceLoader(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetResourceLoader.sendsCommonMediaClientDataAsHTTPHeaders
         )

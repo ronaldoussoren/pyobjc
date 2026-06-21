@@ -8,7 +8,7 @@ class TestNEAppProxyFlow(TestCase):
         self.assertIsEnumType(NetworkExtension.NETunnelProviderRoutingMethod)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             NetworkExtension.NETunnelProviderErrorNetworkSettingsInvalid, 1
         )
@@ -26,7 +26,7 @@ class TestNEAppProxyFlow(TestCase):
         self.assertIsInstance(NetworkExtension.NETunnelProviderErrorDomain, str)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NETunnelProvider.handleAppMessage_completionHandler_,
             1,

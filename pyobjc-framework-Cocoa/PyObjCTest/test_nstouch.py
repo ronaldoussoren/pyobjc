@@ -9,7 +9,7 @@ class TestNSTouch(TestCase):
         self.assertIsEnumType(AppKit.NSTouchTypeMask)
 
     @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTouchPhaseBegan, 1 << 0)
         self.assertEqual(AppKit.NSTouchPhaseMoved, 1 << 1)
         self.assertEqual(AppKit.NSTouchPhaseStationary, 1 << 2)
@@ -30,12 +30,12 @@ class TestNSTouch(TestCase):
         self.assertEqual(AppKit.NSTouchTypeMaskIndirect, 1 << 1)
 
     @min_os_level("10.6")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTouch.isResting)
         self.assertResultHasType(AppKit.NSTouch.deviceSize, AppKit.NSSize.__typestr__)
 
     @min_sdk_level("10.12")
-    def testFunctions10_12(self):
+    def test_functions10_12(self):
         self.assertEqual(
             AppKit.NSTouchTypeMaskFromType(AppKit.NSTouchTypeDirect),
             AppKit.NSTouchTypeMaskDirect,

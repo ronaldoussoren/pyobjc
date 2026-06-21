@@ -37,7 +37,7 @@ class TestNSStreamUsage(TestCase):
         inputStream.close()
         outputStream.close()
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSStreamStatusNotOpen, 0)
         self.assertEqual(Foundation.NSStreamStatusOpening, 1)
         self.assertEqual(Foundation.NSStreamStatusOpen, 2)
@@ -74,7 +74,7 @@ class TestNSStreamUsage(TestCase):
         self.assertIsInstance(Foundation.NSStreamSOCKSErrorDomain, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(Foundation.NSStreamNetworkServiceType, str)
         self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeVoIP, str)
         self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeVideo, str)
@@ -82,10 +82,10 @@ class TestNSStreamUsage(TestCase):
         self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeVoice, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeCallSignaling, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSStream.setProperty_forKey_)
 
         self.assertArgHasType(Foundation.NSInputStream.read_maxLength_, 0, b"o^v")
@@ -129,7 +129,7 @@ class TestNSStreamUsage(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         # XXX: See above, this code used to create an uninitialsed NSOutputStream
         #      by calling ``NSOutputStream.alloc()``. This crashed hard.
         b = Foundation.NSOutputStream.outputStreamToMemory()
@@ -137,7 +137,7 @@ class TestNSStreamUsage(TestCase):
         self.assertArgIsBOOL(Foundation.NSOutputStream.outputStreamWithURL_append_, 1)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsOut(
             Foundation.NSStream.getStreamsToHostWithName_port_inputStream_outputStream_,
             2,
@@ -157,5 +157,5 @@ class TestNSStreamUsage(TestCase):
         )
 
     @min_sdk_level("10.7")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSStreamDelegate", Foundation)

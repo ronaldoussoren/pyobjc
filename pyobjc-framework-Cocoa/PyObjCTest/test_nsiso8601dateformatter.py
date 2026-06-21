@@ -8,7 +8,7 @@ class TestNSISO8601DateFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSISO8601DateFormatOptions)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             Foundation.NSISO8601DateFormatWithYear,
             CoreFoundation.kCFISO8601DateFormatWithYear,
@@ -63,7 +63,7 @@ class TestNSISO8601DateFormatter(TestCase):
         )
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertEqual(
             Foundation.NSISO8601DateFormatWithFractionalSeconds,
             CoreFoundation.kCFISO8601DateFormatWithFractionalSeconds,

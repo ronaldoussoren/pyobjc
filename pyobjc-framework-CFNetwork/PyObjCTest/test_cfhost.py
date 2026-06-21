@@ -6,17 +6,17 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFHost(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CFNetwork.CFHostRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainNetDB, int)
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainSystemConfiguration, int)
         self.assertEqual(CFNetwork.kCFHostAddresses, 0)
         self.assertEqual(CFNetwork.kCFHostNames, 1)
         self.assertEqual(CFNetwork.kCFHostReachability, 2)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CFNetwork.CFHostGetTypeID(), int)
 
         self.assertResultIsCFRetained(CFNetwork.CFHostCreateWithName)
@@ -68,7 +68,7 @@ class TestCFHost(TestCase):
         self.assertIsInstance(ok, bool)
         # self.assertIn(value, lst)
 
-    def testCallbacks(self):
+    def test_callbacks(self):
         lst = []
         ctx = object()
 

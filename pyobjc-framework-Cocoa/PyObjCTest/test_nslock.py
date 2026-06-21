@@ -9,7 +9,7 @@ class TestNSLockProtocols(TestCase):
         lock = Foundation.NSLock.alloc().init()
         self.assertTrue(lock.conformsToProtocol_(objc.protocolNamed("NSLocking")))
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSLock.tryLock)
         self.assertResultIsBOOL(Foundation.NSLock.lockBeforeDate_)
 

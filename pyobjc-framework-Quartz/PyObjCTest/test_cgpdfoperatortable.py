@@ -3,10 +3,10 @@ import Quartz
 
 
 class TestCGPDFOperatorTable(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsOpaquePointer(Quartz.CGPDFOperatorTableRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         Quartz.CGPDFOperatorCallback = b"v^{CGPDFScanner=}^v"
 
         self.assertArgIsIn(Quartz.CGPDFOperatorTableSetCallback, 1)

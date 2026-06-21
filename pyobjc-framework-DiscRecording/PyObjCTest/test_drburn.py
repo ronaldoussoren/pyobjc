@@ -3,14 +3,14 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRBurn(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(DiscRecording.DRBurn.appendable)
         self.assertArgIsBOOL(DiscRecording.DRBurn.setAppendable_, 0)
 
         self.assertResultIsBOOL(DiscRecording.DRBurn.verifyDisc)
         self.assertArgIsBOOL(DiscRecording.DRBurn.setVerifyDisc_, 0)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.DRBurnRequestedSpeedKey, str)
         self.assertIsInstance(DiscRecording.DRBurnAppendableKey, str)
         self.assertIsInstance(DiscRecording.DRBurnOverwriteDiscKey, str)

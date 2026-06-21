@@ -9,7 +9,7 @@ MachPortClasses = tuple(
 
 
 class TestMachPort(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             if objc.lookUpClass("NSMachPort") is CoreFoundation.CFMachPortRef:
                 return

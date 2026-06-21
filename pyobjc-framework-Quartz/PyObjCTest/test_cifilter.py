@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCIFilter(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCIAttributeFilterName, str)
         self.assertIsInstance(Quartz.kCIAttributeFilterDisplayName, str)
         self.assertIsInstance(Quartz.kCIAttributeFilterCategories, str)
@@ -53,7 +53,7 @@ class TestCIFilter(TestCase):
         self.assertIsInstance(Quartz.kCIApplyOptionColorSpace, str)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(Quartz.kCICategoryReduction, str)
         self.assertIsInstance(Quartz.kCIAttributeDescription, str)
         self.assertIsInstance(Quartz.kCIAttributeReferenceDocumentation, str)
@@ -91,7 +91,7 @@ class TestCIFilter(TestCase):
         self.assertIsInstance(Quartz.kCIInputExtentKey, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(Quartz.kCIAttributeFilterAvailable_Mac, str)
         self.assertIsInstance(Quartz.kCIAttributeFilterAvailable_iOS, str)
         self.assertIsInstance(Quartz.kCIAttributeTypeColor, str)
@@ -101,17 +101,17 @@ class TestCIFilter(TestCase):
         self.assertIsInstance(Quartz.kCIInputWeightsKey, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.kCIInputDepthImageKey, str)
         self.assertIsInstance(Quartz.kCIInputDisparityImageKey, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(Quartz.kCIInputAmountKey, str)
         self.assertIsInstance(Quartz.kCIInputMatteImageKey, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(Quartz.kCIInputCountKey, str)
         self.assertIsInstance(Quartz.kCIInputThresholdKey, str)
         self.assertIsInstance(Quartz.kCIInputRadius0Key, str)
@@ -131,17 +131,17 @@ class TestCIFilter(TestCase):
         self.assertIsInstance(Quartz.kCIDynamicRangeConstrainedHigh, str)
         self.assertIsInstance(Quartz.kCIDynamicRangeHigh, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertIsNullTerminated(Quartz.CIFilter.apply_)
         self.assertIsNullTerminated(Quartz.CIFilter.filterWithName_keysAndValues_)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(Quartz.CIFilter.isEnabled)
         self.assertArgIsBOOL(Quartz.CIFilter.setEnabled_, 0)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsOut(
             Quartz.CIFilter.filterArrayFromSerializedXMP_inputImageExtent_error_, 2
         )

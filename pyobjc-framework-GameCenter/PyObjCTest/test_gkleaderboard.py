@@ -11,7 +11,7 @@ import GameCenter
 
 class TestGKLeaderboard(TestCase):
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(GameCenter.GKLeaderboardTimeScopeToday, 0)
         self.assertEqual(GameCenter.GKLeaderboardTimeScopeWeek, 1)
         self.assertEqual(GameCenter.GKLeaderboardTimeScopeAllTime, 2)
@@ -21,7 +21,7 @@ class TestGKLeaderboard(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(GameCenter.GKLeaderboard.isLoading)
         self.assertArgIsBlock(
             GameCenter.GKLeaderboard.loadScoresWithCompletionHandler_, 0, b"v@@"
@@ -40,7 +40,7 @@ class TestGKLeaderboard(TestCase):
 
     @expectedFailure
     @min_os_level("10.8")
-    def testMethods10_8_fail(self):
+    def test_methods10_8_fail(self):
         self.assertArgIsBlock(
             GameCenter.GKLeaderboard.loadImageWithCompletionHandler_, 1, b"v@@"
         )

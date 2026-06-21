@@ -6,11 +6,11 @@ from objc import simd
 
 
 class TestGKAgent(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKAgentDelegate", GameplayKit)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameplayKit.GKAgent3D.rightHanded)
         self.assertArgIsBOOL(GameplayKit.GKAgent3D.setRightHanded_, 0)
 

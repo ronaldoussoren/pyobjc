@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSSplitViewController(TestCase):
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSplitViewItem.isCollapsed)
         self.assertArgIsBOOL(AppKit.NSSplitViewItem.setCollapsed_, 0)
         self.assertResultIsBOOL(AppKit.NSSplitViewItem.canCollapse)
@@ -21,18 +21,18 @@ class TestNSSplitViewController(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSSplitViewItem.isSpringLoaded)
         self.assertArgIsBOOL(AppKit.NSSplitViewItem.setSpringLoaded_, 0)
         self.assertResultIsBOOL(AppKit.NSSplitViewController.validateUserInterfaceItem_)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSSplitViewItemBehaviorDefault, 0)
         self.assertEqual(AppKit.NSSplitViewItemBehaviorSidebar, 1)
         self.assertEqual(AppKit.NSSplitViewItemBehaviorContentList, 2)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(AppKit.NSSplitViewControllerAutomaticDimension, float)
         self.assertIsInstance(AppKit.NSSplitViewItemUnspecifiedDimension, float)
 

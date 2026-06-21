@@ -13,7 +13,7 @@ class TestGKTurnBasedMatchHelper(GameCenter.NSObject):
 
 class TestGKTurnBasedMatch(TestCase):
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(GameCenter.GKTurnBasedMatchStatusUnknown, 0)
         self.assertEqual(GameCenter.GKTurnBasedMatchStatusOpen, 1)
         self.assertEqual(GameCenter.GKTurnBasedMatchStatusEnded, 2)
@@ -45,17 +45,17 @@ class TestGKTurnBasedMatch(TestCase):
         self.assertEqual(GameCenter.GKTurnBasedExchangeStatusCanceled, 4)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(GameCenter.GKTurnTimeoutDefault, float)
         self.assertIsInstance(GameCenter.GKTurnTimeoutNone, float)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(GameCenter.GKExchangeTimeoutDefault, float)
         self.assertIsInstance(GameCenter.GKExchangeTimeoutNone, float)
 
     @min_os_level("10.8")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKTurnBasedEventListener", GameCenter)
 
         self.assertArgIsBOOL(
@@ -69,7 +69,7 @@ class TestGKTurnBasedMatch(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBlock(
             GameCenter.GKTurnBasedMatch.findMatchForRequest_withCompletionHandler_,
             1,
@@ -123,7 +123,7 @@ class TestGKTurnBasedMatch(TestCase):
         )
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBlock(
             GameCenter.GKTurnBasedMatch.rematchWithCompletionHandler_, 0, b"v@@"
         )
@@ -139,7 +139,7 @@ class TestGKTurnBasedMatch(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             GameCenter.GKTurnBasedMatch.endMatchInTurnWithMatchData_scores_achievements_completionHandler_,
             3,

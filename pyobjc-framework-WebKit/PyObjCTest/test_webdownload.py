@@ -4,5 +4,5 @@ import WebKit  # noqa: F401
 
 class TestWebDownload(TestCase):
     @min_sdk_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("WebDownloadDelegate", WebKit)

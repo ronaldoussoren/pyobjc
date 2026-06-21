@@ -3,7 +3,7 @@ import SystemConfiguration
 
 
 class TestSystemConfiguration(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SystemConfiguration.kSCStatusOK, 0)
         self.assertEqual(SystemConfiguration.kSCStatusFailed, 1001)
         self.assertEqual(SystemConfiguration.kSCStatusInvalidArgument, 1002)
@@ -28,25 +28,25 @@ class TestSystemConfiguration(TestCase):
         self.assertEqual(SystemConfiguration.kSCStatusReachabilityUnknown, 4001)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(
             SystemConfiguration.kCFErrorDomainSystemConfiguration, str
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(SystemConfiguration.kSCStatusConnectionNoService, 5001)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(SystemConfiguration.kSCStatusConnectionIgnore, 5002)
 
     @min_os_level("10.5")
-    def testFunctions10_5(self):
+    def test_functions10_5(self):
         err = SystemConfiguration.SCCopyLastError()
         self.assertTrue(isinstance(err, SystemConfiguration.CFErrorRef))
 
-    def testFunctions(self):
+    def test_functions(self):
         err = SystemConfiguration.SCError()
         self.assertIsInstance(err, int)
 

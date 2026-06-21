@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestIMService(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(InstantMessage.IMServiceStatusChangedNotification, str)
         self.assertIsInstance(InstantMessage.IMMyStatusChangedNotification, str)
         self.assertIsInstance(InstantMessage.IMPersonStatusChangedNotification, str)
@@ -44,7 +44,7 @@ class TestIMService(TestCase):
         self.assertIsInstance(InstantMessage.IMCapabilityVideoConference, str)
 
     @min_os_level("10.5")
-    def testFunctions10_5(self):
+    def test_functions10_5(self):
         v = InstantMessage.IMComparePersonStatus(
             InstantMessage.IMPersonStatusOffline, InstantMessage.IMPersonStatusAway
         )

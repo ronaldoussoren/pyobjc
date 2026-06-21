@@ -5,16 +5,16 @@ import ColorSync
 
 class TestColorSyncProfile(TestCase):
     @min_os_level("10.13")
-    def testCFType(self):
+    def test_cftype(self):
         self.assertIsCFType(ColorSync.ColorSyncProfileRef)
         self.assertIsCFType(ColorSync.ColorSyncMutableProfileRef)
 
     @min_os_level("10.4")
-    def testFunctions10_4(self):
+    def test_functions10_4(self):
         self.assertResultHasType(ColorSync.ColorSyncProfileIsWideGamut, objc._C_BOOL)
 
     @min_os_level("10.13")
-    def testFunctions10_13(self):
+    def test_functions10_13(self):
         self.assertIsInstance(ColorSync.ColorSyncProfileGetTypeID(), int)
 
         self.assertResultIsCFRetained(ColorSync.ColorSyncProfileCreate)
@@ -111,21 +111,21 @@ class TestColorSyncProfile(TestCase):
         self.assertArgIsOut(ColorSync.ColorSyncIterateInstalledProfilesWithOptions, 4)
 
     @min_os_level("11.0")
-    def testFunctions11_0(self):
+    def test_functions11_0(self):
         self.assertResultHasType(ColorSync.ColorSyncProfileIsMatrixBased, objc._C_BOOL)
 
     @min_os_level("12.0")
-    def testFunctions12_0(self):
+    def test_functions12_0(self):
         self.assertResultHasType(ColorSync.ColorSyncProfileIsPQBased, objc._C_BOOL)
         self.assertResultHasType(ColorSync.ColorSyncProfileIsHLGBased, objc._C_BOOL)
 
     @min_os_level("26.1")
-    def testFunctions26_1(self):
+    def test_functions26_1(self):
         self.assertResultIsCFRetained(ColorSync.ColorSyncProfileCreateWithURLAndOptions)
         self.assertArgIsOut(ColorSync.ColorSyncProfileCreateWithURLAndOptions, 2)
 
     @min_os_level("10.13")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(ColorSync.icVersion4Number, 0x04000000)
         self.assertEqual(ColorSync.icVersion4Point4Number, 0x04400000)
         self.assertIsInstance(ColorSync.kColorSyncGenericGrayProfile, str)
@@ -199,21 +199,21 @@ class TestColorSyncProfile(TestCase):
         self.assertEqual(ColorSync.COLORSYNC_MD5_LENGTH, 16)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(ColorSync.kColorSyncProfileCacheSeed, str)
         self.assertIsInstance(ColorSync.kColorSyncWaitForCacheReply, str)
         self.assertIsInstance(ColorSync.kColorSyncWaitForCacheReply, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(ColorSync.kColorSyncProfileIsValid, str)
         self.assertIsInstance(ColorSync.kColorSyncWebSafeColorsProfile, str)
 
     @min_os_level("26.1")
-    def testConstants26_1(self):
+    def test_constants26_1(self):
         self.assertIsInstance(ColorSync.kColorSyncDoNotSubstituteProfiles, str)
 
-    def testStructs(self):
+    def test_structs(self):
         v = ColorSync.ColorSyncMD5()
         self.assertTrue(hasattr(v, "digest"))
         self.assertPickleRoundTrips(v)

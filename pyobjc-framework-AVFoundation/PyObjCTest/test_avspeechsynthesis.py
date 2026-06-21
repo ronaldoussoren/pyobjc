@@ -24,7 +24,7 @@ class TestAVSpeechSynthesis(TestCase):
         self.assertIsEnumType(AVFoundation.AVSpeechSynthesisVoiceQuality)
         self.assertIsEnumType(AVFoundation.AVSpeechSynthesisMarkerMark)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVSpeechBoundaryImmediate, 0)
         self.assertEqual(AVFoundation.AVSpeechBoundaryWord, 1)
 
@@ -67,7 +67,7 @@ class TestAVSpeechSynthesis(TestCase):
         )
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(
             AVFoundation.AVSpeechUtteranceMinimumSpeechRate, float
         )  # noqa: B950
@@ -86,12 +86,12 @@ class TestAVSpeechSynthesis(TestCase):
         )  # noqa: B950
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(
             AVFoundation.AVSpeechSynthesisAvailableVoicesDidChangeNotification, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestAVSpeechSynthesisHelper.speechSynthesizer_willSpeakRangeOfSpeechString_utterance_,  # noqa: B950
             1,
@@ -99,7 +99,7 @@ class TestAVSpeechSynthesis(TestCase):
         )
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.isSpeaking)
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.isPaused)
         self.assertResultIsBOOL(
@@ -113,7 +113,7 @@ class TestAVSpeechSynthesis(TestCase):
         )  # noqa: B950
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             AVFoundation.AVSpeechSynthesizer.writeUtterance_toBufferCallback_,
             1,
@@ -122,7 +122,7 @@ class TestAVSpeechSynthesis(TestCase):
 
     @expectedFailure
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSpeechSynthesizer.prefersAssistiveTechnologySettings
         )
@@ -131,7 +131,7 @@ class TestAVSpeechSynthesis(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertArgIsBlock(
             AVFoundation.AVSpeechSynthesizer.writeUtterance_toBufferCallback_toMarkerCallback_,
             1,
@@ -144,7 +144,7 @@ class TestAVSpeechSynthesis(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsBlock(
             AVFoundation.AVSpeechSynthesizer.requestPersonalVoiceAuthorizationWithCompletionHandler_,
             0,
@@ -152,5 +152,5 @@ class TestAVSpeechSynthesis(TestCase):
         )
 
     @min_sdk_level("10.14")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVSpeechSynthesizerDelegate", AVFoundation)

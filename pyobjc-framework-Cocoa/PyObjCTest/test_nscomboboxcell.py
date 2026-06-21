@@ -15,7 +15,7 @@ class TestNSComboBoxCellHelper(AppKit.NSObject):
 
 
 class TestNSComboBoxCell(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSComboBoxCell.hasVerticalScroller)
         self.assertArgIsBOOL(AppKit.NSComboBoxCell.setHasVerticalScroller_, 0)
         self.assertResultIsBOOL(AppKit.NSComboBoxCell.isButtonBordered)
@@ -26,7 +26,7 @@ class TestNSComboBoxCell(TestCase):
         self.assertArgIsBOOL(AppKit.NSComboBoxCell.setCompletes_, 0)
 
     @min_sdk_level("10.7")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSComboBoxCellDataSource", AppKit)
 
     def testProtocol(self):

@@ -4,16 +4,16 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRCoreErase(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(DiscRecording.DREraseRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.kDREraseStatusChangedNotification, str)
         self.assertIsInstance(DiscRecording.kDREraseTypeKey, str)
         self.assertIsInstance(DiscRecording.kDREraseTypeQuick, str)
         self.assertIsInstance(DiscRecording.kDREraseTypeComplete, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(DiscRecording.DREraseGetTypeID(), int)
 
         self.assertResultIsCFRetained(DiscRecording.DREraseCreate)

@@ -8,7 +8,7 @@ class TestEKRecurrenceRule(TestCase):
         self.assertTrue(hasattr(EventKit, "EKRecurrenceRule"))
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(EventKit.EKRecurrenceFrequencyDaily, 0)
         self.assertEqual(EventKit.EKRecurrenceFrequencyWeekly, 1)
         self.assertEqual(EventKit.EKRecurrenceFrequencyMonthly, 2)

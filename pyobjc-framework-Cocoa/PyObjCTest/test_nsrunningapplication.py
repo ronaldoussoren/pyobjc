@@ -8,7 +8,7 @@ class TestNSRunningApplication(TestCase):
         self.assertIsEnumType(AppKit.NSApplicationActivationPolicy)
 
     @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSApplicationActivateAllWindows, 1 << 0)
         self.assertEqual(AppKit.NSApplicationActivateIgnoringOtherApps, 1 << 1)
 
@@ -17,7 +17,7 @@ class TestNSRunningApplication(TestCase):
         self.assertEqual(AppKit.NSApplicationActivationPolicyProhibited, 2)
 
     @min_os_level("10.6")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSRunningApplication.isTerminated)
         self.assertResultIsBOOL(AppKit.NSRunningApplication.isFinishedLaunching)
         self.assertResultIsBOOL(AppKit.NSRunningApplication.isHidden)
@@ -29,11 +29,11 @@ class TestNSRunningApplication(TestCase):
         self.assertResultIsBOOL(AppKit.NSRunningApplication.forceTerminate)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSRunningApplication.ownsMenuBar)
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(
             AppKit.NSRunningApplication.activateFromApplication_options_
         )

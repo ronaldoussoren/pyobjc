@@ -10,7 +10,7 @@ class TestNSScrubberLayoutHelper(AppKit.NSObject):
 
 class TestNSScrubberLayout(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSScrubberLayout.shouldInvalidateLayoutForSelectionChange
         )
@@ -35,5 +35,5 @@ class TestNSScrubberLayout(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSScrubberFlowLayoutDelegate", AppKit)

@@ -4,10 +4,10 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRCoreBurn(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(DiscRecording.DRBurnRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.kDRBurnStatusChangedNotification, str)
         self.assertIsInstance(DiscRecording.kDRBurnRequestedSpeedKey, str)
         self.assertIsInstance(DiscRecording.kDRBurnAppendableKey, str)
@@ -33,7 +33,7 @@ class TestDRCoreBurn(TestCase):
         self.assertIsInstance(DiscRecording.kDRBurnStrategyCDSAO, str)
         self.assertIsInstance(DiscRecording.kDRBurnStrategyBDDAO, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(DiscRecording.DRBurnGetTypeID(), int)
 
         self.assertResultIsCFRetained(DiscRecording.DRBurnCreate)

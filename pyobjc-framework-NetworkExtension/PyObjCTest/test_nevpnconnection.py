@@ -7,7 +7,7 @@ class TestNEVPNConnection(TestCase):
         self.assertIsEnumType(NetworkExtension.NEVPNStatus)
         self.assertIsEnumType(NetworkExtension.NEVPNConnectionError)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(NetworkExtension.NEVPNStatusInvalid, 0)
         self.assertEqual(NetworkExtension.NEVPNStatusDisconnected, 1)
         self.assertEqual(NetworkExtension.NEVPNStatusConnecting, 2)
@@ -52,17 +52,17 @@ class TestNEVPNConnection(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(NetworkExtension.NEVPNStatusDidChangeNotification, str)
         self.assertIsInstance(NetworkExtension.NEVPNConnectionStartOptionUsername, str)
         self.assertIsInstance(NetworkExtension.NEVPNConnectionStartOptionPassword, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(NetworkExtension.NEVPNConnectionErrorDomain, str)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             NetworkExtension.NEVPNConnection.startVPNTunnelAndReturnError_
         )
@@ -79,7 +79,7 @@ class TestNEVPNConnection(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertArgIsBlock(
             NetworkExtension.NEVPNConnection.fetchLastDisconnectErrorWithCompletionHandler_,
             0,

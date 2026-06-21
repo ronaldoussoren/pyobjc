@@ -4,14 +4,14 @@ import SyncServices
 
 class TestISyncSession(TestCase):
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertArgIsSEL(
             SyncServices.ISyncSession.beginSessionInBackgroundWithClient_entityNames_target_selector_,  # noqa: B950
             3,
             b"v@:@@",
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             SyncServices.ISyncSession.shouldPushChangesForEntityName_
         )
@@ -39,7 +39,7 @@ class TestISyncSession(TestCase):
         )
         self.assertResultIsBOOL(SyncServices.ISyncSession.isCancelled)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(SyncServices.ISyncSessionCancelledException, str)
         self.assertIsInstance(SyncServices.ISyncSessionUnavailableException, str)
         self.assertIsInstance(SyncServices.ISyncInvalidRecordException, str)

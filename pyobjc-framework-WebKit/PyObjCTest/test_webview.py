@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestWebView(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(WebKit.WebElementDOMNodeKey, str)
         self.assertIsInstance(WebKit.WebElementFrameKey, str)
         self.assertIsInstance(WebKit.WebElementImageAltStringKey, str)
@@ -24,7 +24,7 @@ class TestWebView(TestCase):
         self.assertIsInstance(WebKit.WebViewDidChangeTypingStyleNotification, str)
         self.assertIsInstance(WebKit.WebViewDidChangeSelectionNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.WebView.canShowMIMEType_)
         self.assertResultIsBOOL(WebKit.WebView.canShowMIMETypeAsHTML_)
         self.assertResultIsBOOL(WebKit.WebView.shouldCloseWithWindow)

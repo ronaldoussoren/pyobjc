@@ -7,15 +7,15 @@ import objc
 
 
 class TestCTLine(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreText.CTLineRef, objc.objc_class)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreText.kCTLineTruncationStart, 0)
         self.assertEqual(CoreText.kCTLineTruncationEnd, 1)
         self.assertEqual(CoreText.kCTLineTruncationMiddle, 2)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = CoreText.CTLineGetTypeID()
         self.assertIsInstance(v, int)
 
@@ -93,7 +93,7 @@ class TestCTLine(TestCase):
             os.unlink("/tmp/pyobjc.test.pdf")
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(CoreText.kCTLineBoundsExcludeTypographicLeading, 1 << 0)
         self.assertEqual(CoreText.kCTLineBoundsExcludeTypographicShifts, 1 << 1)
         self.assertEqual(CoreText.kCTLineBoundsUseHangingPunctuation, 1 << 2)
@@ -101,11 +101,11 @@ class TestCTLine(TestCase):
         self.assertEqual(CoreText.kCTLineBoundsUseOpticalBounds, 1 << 4)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(CoreText.kCTLineBoundsIncludeLanguageExtents, 1 << 5)
 
     @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions10_8(self):
         astr = CoreText.CFAttributedStringCreate(None, "-", None)
         self.assertTrue(astr is not None)
 
@@ -118,5 +118,5 @@ class TestCTLine(TestCase):
         self.assertIsInstance(r, Quartz.CGRect)
 
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         self.assertArgIsBlock(CoreText.CTLineEnumerateCaretOffsets, 1, b"vdqBo^B")

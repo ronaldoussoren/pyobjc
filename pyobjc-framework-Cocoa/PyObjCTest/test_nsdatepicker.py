@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSDatePicker(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSDatePicker.isBezeled)
         self.assertArgIsBOOL(AppKit.NSDatePicker.setBezeled_, 0)
 
@@ -14,6 +14,6 @@ class TestNSDatePicker(TestCase):
         self.assertArgIsBOOL(AppKit.NSDatePicker.setDrawsBackground_, 0)
 
     @min_os_level("10.15.4")
-    def testMethods10_15_4(self):
+    def test_methods10_15_4(self):
         self.assertResultIsBOOL(AppKit.NSDatePicker.presentsCalendarOverlay)
         self.assertArgIsBOOL(AppKit.NSDatePicker.setPresentsCalendarOverlay_, 0)

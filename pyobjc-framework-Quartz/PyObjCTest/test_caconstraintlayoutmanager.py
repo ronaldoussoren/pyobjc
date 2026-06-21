@@ -4,7 +4,7 @@ import Quartz
 
 class TestCAConstraintLayoutManager(TestCase):
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCAConstraintMinX, 0)
         self.assertEqual(Quartz.kCAConstraintMidX, 1)
         self.assertEqual(Quartz.kCAConstraintMaxX, 2)

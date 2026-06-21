@@ -3,19 +3,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestODSession(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(OpenDirectory.ODSessionProxyAddress, str)
         self.assertIsInstance(OpenDirectory.ODSessionProxyPort, str)
         self.assertIsInstance(OpenDirectory.ODSessionProxyUsername, str)
         self.assertIsInstance(OpenDirectory.ODSessionProxyPassword, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(OpenDirectory.ODSession.sessionWithOptions_error_, 1)
         self.assertArgIsOut(OpenDirectory.ODSession.initWithOptions_error_, 1)
         self.assertArgIsOut(OpenDirectory.ODSession.nodeNamesAndReturnError_, 0)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBOOL(
             OpenDirectory.ODSession.configurationAuthorizationAllowingUserInteraction_error_,
             0,

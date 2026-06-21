@@ -8,14 +8,14 @@ with warnings.catch_warnings():
 
 
 class TestSearchKit(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(SearchKit, "SKDocumentRef")
         self.assertIsCFType(SearchKit.SKDocumentRef)
 
         self.assertHasAttr(SearchKit, "SKIndexRef")
         self.assertIsCFType(SearchKit.SKIndexRef)
 
-    def testValues(self):
+    def test_values(self):
         self.assertHasAttr(SearchKit, "kSKIndexInverted")
         self.assertIsInstance(SearchKit.kSKIndexInverted, int)
         self.assertEqual(SearchKit.kSKIndexInverted, 1)
@@ -26,12 +26,12 @@ class TestSearchKit(TestCase):
         self.assertIsInstance(SearchKit.kSKSearchRanked, int)
         self.assertEqual(SearchKit.kSKSearchRanked, 0)
 
-    def testVariables(self):
+    def test_variables(self):
         # Use this to test for global variables, (NSString*'s and the like)
         self.assertHasAttr(SearchKit, "kSKEndTermChars")
         self.assertIsInstance(SearchKit.kSKEndTermChars, (str, str))
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertHasAttr(SearchKit, "SKDocumentCreateWithURL")
         self.assertHasAttr(SearchKit, "SKDocumentCreate")
         self.assertHasAttr(SearchKit, "SKIndexOpenWithURL")

@@ -5,18 +5,18 @@ import objc
 
 
 class TestCTFont(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreText.CTFontRef, objc.objc_class)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(CoreText.kCTFontOptionsDefault, 0)
         self.assertEqual(CoreText.kCTFontOptionsPreventAutoActivation, 1 << 0)
         self.assertEqual(CoreText.kCTFontOptionsPreventAutoDownload, 1 << 1)
         self.assertEqual(CoreText.kCTFontOptionsPreferSystemFont, 1 << 2)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(CoreText.kCTBaselineClassHanging, str)
         self.assertIsInstance(CoreText.kCTBaselineClassIdeographicCentered, str)
         self.assertIsInstance(CoreText.kCTBaselineClassIdeographicHigh, str)
@@ -57,7 +57,7 @@ class TestCTFont(TestCase):
         self.assertEqual(CoreText.kCTFontUIFontToolTip, 25)
         self.assertEqual(CoreText.kCTFontUIFontControlContent, 26)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreText.kCTFontCopyrightNameKey, str)
         self.assertIsInstance(CoreText.kCTFontFamilyNameKey, str)
         self.assertIsInstance(CoreText.kCTFontSubFamilyNameKey, str)
@@ -198,7 +198,7 @@ class TestCTFont(TestCase):
         self.assertEqual(CoreText.kCTFontTableOptionNoOptions, 0)
         self.assertEqual(CoreText.kCTFontTableOptionExcludeSynthetic, (1 << 0))
 
-    def testFunctions(self):
+    def test_functions(self):
         font = CoreText.CTFontCreateWithName("Optima Bold", 14, None)
         self.assertIsInstance(font, CoreText.CTFontRef)
         self.assertResultIsCFRetained(CoreText.CTFontCreateWithName)
@@ -421,13 +421,13 @@ class TestCTFont(TestCase):
         self.assertTrue(all(isinstance(x, float) for x in a))
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         self.assertResultIsCFRetained(CoreText.CTFontCreateWithNameAndOptions)
         v = CoreText.CTFontCreateWithNameAndOptions("Times", 15, None, 0)
         self.assertIsInstance(v, CoreText.CTFontRef)
 
     @min_os_level("10.6")
-    def testFunctions10_6_crash(self):
+    def test_functions10_6_crash(self):
         descr = CoreText.CTFontDescriptorCreateWithNameAndSize("Courier", 14.0)
         self.assertNotEqual(descr, None)
 
@@ -437,7 +437,7 @@ class TestCTFont(TestCase):
         self.assertIsInstance(v, CoreText.CTFontRef)
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         self.assertArgHasType(CoreText.CTFontDrawGlyphs, 0, b"^{__CTFont=}")
         self.assertArgHasType(CoreText.CTFontDrawGlyphs, 1, b"n^S")
         self.assertArgSizeInArg(CoreText.CTFontDrawGlyphs, 1, 3)
@@ -449,7 +449,7 @@ class TestCTFont(TestCase):
         self.assertArgHasType(CoreText.CTFontDrawGlyphs, 4, b"^{CGContext=}")
 
     @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions10_8(self):
         font = CoreText.CTFontCreateUIFontForLanguage(
             CoreText.kCTFontMiniSystemFontType, 10.0, "nl_NL"
         )
@@ -470,30 +470,30 @@ class TestCTFont(TestCase):
         CoreText.CTFontCopyNameForGlyph
 
     @min_os_level("10.9")
-    def testFunctions10_9(self):
+    def test_functions10_9(self):
         self.assertResultIsCFRetained(CoreText.CTFontCreateForStringWithLanguage)
 
     @min_os_level("15.0")
-    def testFunctions15_0(self):
+    def test_functions15_0(self):
         self.assertResultIsCFRetained(CoreText.CTFontCopyDefaultCascadeListForLanguages)
         CoreText.CTFontGetTypographicBoundsForAdaptiveImageProvider
         CoreText.CTFontDrawImageFromAdaptiveImageProviderAtPoint
         CoreText.CTFontHasTable
 
     @min_os_level("26.4")
-    def testFunctions26_4(self):
+    def test_functions26_4(self):
         CoreText.CTFontGetUIFontType
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(CoreText.kCTFontOpenTypeFeatureTag, str)
         self.assertIsInstance(CoreText.kCTFontOpenTypeFeatureValue, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(CoreText.kCTFontVariationAxisHiddenKey, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(CoreText.kCTFontFeatureSampleTextKey, str)
         self.assertIsInstance(CoreText.kCTFontFeatureTooltipTextKey, str)

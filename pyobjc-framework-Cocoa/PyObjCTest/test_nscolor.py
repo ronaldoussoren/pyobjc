@@ -8,7 +8,7 @@ class TestRegressions(TestCase):
     def testQualifiersInSignature(self):
         AppKit.NSColor.redColor().getRed_green_blue_alpha_(None, None, None, None)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSColor.ignoresAlpha)
         self.assertArgIsBOOL(AppKit.NSColor.setIgnoresAlpha_, 0)
 
@@ -60,7 +60,7 @@ class TestRegressions(TestCase):
         self.assertIsEnumType(AppKit.NSColorSystemEffect)
         self.assertIsEnumType(AppKit.NSColorType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSSystemColorsDidChangeNotification, str)
 
         self.assertEqual(AppKit.NSAppKitVersionNumberWithPatternColorLeakFix, 641.0)

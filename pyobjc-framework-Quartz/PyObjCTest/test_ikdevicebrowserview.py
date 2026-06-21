@@ -4,13 +4,13 @@ import Quartz
 
 class TestIKDeviceBrowserView(TestCase):
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Quartz.IKDeviceBrowserViewDisplayModeTable, 0)
         self.assertEqual(Quartz.IKDeviceBrowserViewDisplayModeOutline, 1)
         self.assertEqual(Quartz.IKDeviceBrowserViewDisplayModeIcon, 2)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.IKDeviceBrowserView.displaysLocalCameras)
         self.assertArgIsBOOL(Quartz.IKDeviceBrowserView.setDisplaysLocalCameras_, 0)
 
@@ -24,5 +24,5 @@ class TestIKDeviceBrowserView(TestCase):
         self.assertArgIsBOOL(Quartz.IKDeviceBrowserView.setDisplaysNetworkScanners_, 0)
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("IKDeviceBrowserViewDelegate", Quartz)

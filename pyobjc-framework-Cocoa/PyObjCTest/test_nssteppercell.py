@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSStepperCell(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSStepperCell.valueWraps)
         self.assertArgIsBOOL(AppKit.NSStepperCell.setValueWraps_, 0)
         self.assertResultIsBOOL(AppKit.NSStepperCell.autorepeat)

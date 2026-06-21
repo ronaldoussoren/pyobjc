@@ -115,7 +115,7 @@ class TestNSTableView(TestCase):
         self.assertIsEnumType(AppKit.NSTableViewSelectionHighlightStyle)
         self.assertIsEnumType(AppKit.NSTableViewStyle)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTableViewDropOn, 0)
         self.assertEqual(AppKit.NSTableViewDropAbove, 1)
 
@@ -145,7 +145,7 @@ class TestNSTableView(TestCase):
         self.assertEqual(AppKit.NSTableViewStylePlain, 4)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleNone, -1)
         self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleNone, -1)
         self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
@@ -154,7 +154,7 @@ class TestNSTableView(TestCase):
         )
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
 
         self.assertEqual(AppKit.NSTableViewRowSizeStyleDefault, -1)
@@ -176,15 +176,15 @@ class TestNSTableView(TestCase):
         self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleGap, 2)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(AppKit.NSTableRowActionEdgeLeading, 0)
         self.assertEqual(AppKit.NSTableRowActionEdgeTrailing, 1)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(AppKit.NSTableView.setAllowsColumnReordering_, 0)
         self.assertResultIsBOOL(AppKit.NSTableView.allowsColumnReordering)
         self.assertArgIsBOOL(AppKit.NSTableView.setAllowsColumnResizing_, 0)
@@ -238,7 +238,7 @@ class TestNSTableView(TestCase):
         self.assertResultIsBOOL(AppKit.NSTableView.autoresizesAllColumnsToFit)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertArgIsBOOL(AppKit.NSTableView.setAllowsTypeSelect_, 0)
         self.assertResultIsBOOL(AppKit.NSTableView.allowsTypeSelect)
 
@@ -247,11 +247,11 @@ class TestNSTableView(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSTableView.shouldFocusCell_atColumn_row_)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsBOOL(AppKit.NSTableView.viewAtColumn_row_makeIfNecessary_, 2)
         self.assertArgIsBOOL(AppKit.NSTableView.rowViewAtRow_makeIfNecessary_, 1)
 
@@ -265,26 +265,26 @@ class TestNSTableView(TestCase):
         self.assertArgIsBOOL(AppKit.NSTableView.setFloatsGroupRows_, 0)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSTableView.usesStaticContents)
         self.assertArgIsBOOL(AppKit.NSTableView.setUsesStaticContents_, 0)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSTableView.rowActionsVisible)
         self.assertArgIsBOOL(AppKit.NSTableView.setRowActionsVisible_, 0)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(AppKit.NSTableView.usesAutomaticRowHeights)
         self.assertArgIsBOOL(AppKit.NSTableView.setUsesAutomaticRowHeights_, 0)
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTableViewDelegate", AppKit)
         self.assertProtocolExists("NSTableViewDataSource", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSTableViewHelper.numberOfRowsInTableView_, objc._C_NSInteger
         )
@@ -418,7 +418,7 @@ class TestNSTableView(TestCase):
         )
 
     @min_os_level("10.6")
-    def testProtocols10_6(self):
+    def test_protocols10_6(self):
         self.assertResultHasType(
             TestNSTableViewHelper.tableView_sizeToFitWidthOfColumn_, objc._C_CGFloat
         )
@@ -443,7 +443,7 @@ class TestNSTableView(TestCase):
         )
 
     @min_os_level("10.7")
-    def testProtocols10_7(self):
+    def test_protocols10_7(self):
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_pasteboardWriterForRow_,
             1,

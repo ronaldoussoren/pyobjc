@@ -5,11 +5,11 @@ import GameController
 
 class TestGCExtendedGamepad(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(GameController.GCExtendedGamepad, objc.objc_class)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBlock(
             GameController.GCExtendedGamepad.valueChangedHandler, b"v@@"
         )

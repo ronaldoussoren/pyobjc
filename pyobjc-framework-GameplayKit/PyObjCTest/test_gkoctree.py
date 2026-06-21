@@ -6,7 +6,7 @@ from objc import simd
 
 class TestGKOctree(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             GameplayKit.GKOctree.octreeWithBoundingBox_minimumCellSize_,
             0,

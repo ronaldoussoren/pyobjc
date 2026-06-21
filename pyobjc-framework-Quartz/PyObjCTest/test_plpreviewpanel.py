@@ -17,7 +17,7 @@ class TestPLPreviewPanelHelper(Quartz.NSObject):
 
 class TestQLPreviewPanel(TestCase):
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(Quartz.QLPreviewPanel.isInFullScreenMode)
 
     @min_sdk_level("12.0")

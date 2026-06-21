@@ -7,7 +7,7 @@ class TestNSGridView(TestCase):
         self.assertIsEnumType(AppKit.NSGridCellPlacement)
         self.assertIsEnumType(AppKit.NSGridRowAlignment)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSGridCellPlacementInherited, 0)
         self.assertEqual(AppKit.NSGridCellPlacementNone, 1)
         self.assertEqual(AppKit.NSGridCellPlacementLeading, 2)
@@ -23,11 +23,11 @@ class TestNSGridView(TestCase):
         self.assertEqual(AppKit.NSGridRowAlignmentLastBaseline, 3)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AppKit.NSGridViewSizeForContent, float)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSGridRow.isHidden)
         self.assertArgIsBOOL(AppKit.NSGridRow.setHidden_, 0)
 

@@ -7,7 +7,7 @@ import CoreLocation
 
 class TestMKMapCamera(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKMapCamera, objc.objc_class)
 
     def test_methods(self):

@@ -27,12 +27,12 @@ class TestNSSpellServerHelper(Foundation.NSObject):
 
 
 class TestNSSpellServer(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSGrammarRange, str)
         self.assertIsInstance(Foundation.NSGrammarUserDescription, str)
         self.assertIsInstance(Foundation.NSGrammarCorrections, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSSpellServer.registerLanguage_byVendor_)
         self.assertResultIsBOOL(
             Foundation.NSSpellServer.isWordInUserDictionaries_caseSensitive_
@@ -92,5 +92,5 @@ class TestNSSpellServer(TestCase):
         )
 
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSSpellServerDelegate", Foundation)

@@ -6,7 +6,7 @@ class TestTKError(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(CryptoTokenKit.TKErrorCode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CryptoTokenKit.TKErrorDomain, str)
 
         self.assertEqual(CryptoTokenKit.TKErrorCodeNotImplemented, -1)

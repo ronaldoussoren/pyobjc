@@ -8,7 +8,7 @@ class TestAVVideoSettings(TestCase):
         self.assertIsTypedEnum(AVFoundation.AVVideoCodecType, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(AVFoundation.AVVideoCodecKey, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecH264, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecJPEG, str)
@@ -51,7 +51,7 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoMaxKeyFrameIntervalKey, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelKey, str)
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline30, str)
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline31, str)
@@ -62,7 +62,7 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main41, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(
             AVFoundation.AVVideoProfileLevelH264BaselineAutoLevel, str
         )
@@ -73,7 +73,7 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoMaxKeyFrameIntervalDurationKey, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AVFoundation.AVVideoAllowFrameReorderingKey, str)
         self.assertIsInstance(AVFoundation.AVVideoH264EntropyModeKey, str)
         self.assertIsInstance(AVFoundation.AVVideoH264EntropyModeCAVLC, str)
@@ -83,12 +83,12 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoEncoderSpecificationKey, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_P3_D65, str)
         self.assertIsInstance(AVFoundation.AVVideoAllowWideColorKey, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeHEVC, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeH264, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeJPEG, str)
@@ -107,32 +107,32 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoApertureModeEncodedPixels, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422HQ, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422LT, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422Proxy, str)
 
     @min_os_level("11.1")
-    def testConstants11_1(self):
+    def test_constants11_1(self):
         self.assertIsInstance(AVFoundation.AVVideoAppleProRAWBitDepthKey, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(AVFoundation.AVVideoTransferFunction_Linear, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes4444XQ, str)
         self.assertIsInstance(AVFoundation.AVVideoTransferFunction_IEC_sRGB, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeJPEGXL, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProResRAW, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProResRAWHQ, str)
 
     @min_os_level("27.0")
-    def testConstants27_0(self):
+    def test_constants27_0(self):
         self.assertIsInstance(AVFoundation.AVVideoLogTransferFunctionKey, str)
         self.assertIsInstance(AVFoundation.AVVideoLogTransferFunction_AppleLog, str)
         self.assertIsInstance(AVFoundation.AVVideoLogTransferFunction_AppleLog2, str)

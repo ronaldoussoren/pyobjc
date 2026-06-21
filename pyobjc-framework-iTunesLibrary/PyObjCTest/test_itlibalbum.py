@@ -7,7 +7,7 @@ class TestITLibAlbum(TestCase):
     def test_classes(self):
         self.assertIsInstance(iTunesLibrary.ITLibAlbum, objc.objc_class)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(iTunesLibrary.ITLibAlbum.isCompilation)
         self.assertResultIsBOOL(iTunesLibrary.ITLibAlbum.isRatingComputed)
         self.assertResultIsBOOL(iTunesLibrary.ITLibAlbum.isGapless)

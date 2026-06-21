@@ -7,7 +7,7 @@ class TestINSendMessageIntentResponse(TestCase):
         self.assertIsEnumType(Intents.INSendMessageIntentResponseCode)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INSendMessageIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INSendMessageIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INSendMessageIntentResponseCodeInProgress, 2)

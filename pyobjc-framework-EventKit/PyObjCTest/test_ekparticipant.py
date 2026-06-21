@@ -8,11 +8,11 @@ class TestEKParticipant(TestCase):
         self.assertTrue(hasattr(EventKit, "EKParticipant"))
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertResultIsBOOL(EventKit.EKParticipant.isCurrentUser)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(EventKit.EKParticipantRoleUnknown, 0)
         self.assertEqual(EventKit.EKParticipantRoleRequired, 1)
         self.assertEqual(EventKit.EKParticipantRoleOptional, 2)

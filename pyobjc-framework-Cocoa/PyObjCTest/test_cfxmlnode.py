@@ -5,10 +5,10 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 class TestXMLNode(TestCase):
     # NOTE: This doesn't actually test the API
 
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFXMLNodeRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFXMLNodeCurrentVersion, 1)
 
         self.assertEqual(CoreFoundation.kCFXMLNodeTypeDocument, 1)
@@ -33,7 +33,7 @@ class TestXMLNode(TestCase):
         self.assertEqual(CoreFoundation.kCFXMLEntityTypeUnparsed, 3)
         self.assertEqual(CoreFoundation.kCFXMLEntityTypeCharacter, 4)
 
-    def testStructs(self):
+    def test_structs(self):
         # self.fail()
 
         o = CoreFoundation.CFXMLElementInfo()
@@ -90,7 +90,7 @@ class TestXMLNode(TestCase):
         o = CoreFoundation.CFXMLEntityReferenceInfo()
         self.assertHasAttr(o, "entityType")
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreFoundation.CFXMLNodeGetTypeID(), int)
 
         # CoreFoundation.CFXMLNodeCreate: requires manual binding

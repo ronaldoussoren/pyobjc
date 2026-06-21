@@ -6,7 +6,7 @@ from objc import simd
 
 class TestMDLValueTypes(TestCase):
     @min_os_level("10.13")
-    def testMethodsSIMD(self):
+    def test_methodsSIMD(self):
         # SIMD types
         self.assertArgHasType(
             ModelIO.MDLMatrix4x4Array.setFloat4x4Array_count_,

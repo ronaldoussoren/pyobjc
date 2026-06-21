@@ -5,7 +5,7 @@ import CoreSpotlight
 
 
 class TestCSSearchableItemAttributeSet(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             CoreSpotlight.CSCustomAttributeKey.initWithKeyName_searchable_searchableByDefault_unique_multiValued_,
             1,

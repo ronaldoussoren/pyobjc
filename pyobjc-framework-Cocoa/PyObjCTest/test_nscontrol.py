@@ -27,7 +27,7 @@ class TestNSControlHelper(AppKit.NSObject):
 
 class TestNSControl(TestCase):
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSControl.usesSingleLineMode)
         self.assertArgIsBOOL(AppKit.NSControl.setUsesSingleLineMode_, 0)
 
@@ -35,11 +35,11 @@ class TestNSControl(TestCase):
         self.assertArgIsBOOL(AppKit.NSControl.setHighlighted_, 0)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(AppKit.NSControl.allowsExpansionToolTips)
         self.assertArgIsBOOL(AppKit.NSControl.setAllowsExpansionToolTips_, 0)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(AppKit.NSControl.setAction_, 0, b"v@:@")
         self.assertResultIsBOOL(AppKit.NSControl.ignoresMultiClick)
         self.assertArgIsBOOL(AppKit.NSControl.setIgnoresMultiClick_, 0)
@@ -66,7 +66,7 @@ class TestNSControl(TestCase):
         )
 
     @min_sdk_level("10.6")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSControlTextEditingDelegate", AppKit)
 
     def testDelegate(self):
@@ -91,7 +91,7 @@ class TestNSControl(TestCase):
             b"N^" + objc._C_NSInteger,
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSControlTextDidBeginEditingNotification, str)
         self.assertIsInstance(AppKit.NSControlTextDidEndEditingNotification, str)
         self.assertIsInstance(AppKit.NSControlTextDidChangeNotification, str)

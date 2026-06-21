@@ -6,7 +6,7 @@ class TestICCameraDevice(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(ImageCaptureCore.ICEXIFOrientationType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(ImageCaptureCore.ICEXIFOrientation1, 1)
         self.assertEqual(ImageCaptureCore.ICEXIFOrientation2, 2)
         self.assertEqual(ImageCaptureCore.ICEXIFOrientation3, 3)

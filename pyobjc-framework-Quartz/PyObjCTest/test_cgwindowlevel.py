@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGWindowLevel(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGBaseWindowLevelKey, 0)
         self.assertEqual(Quartz.kCGMinimumWindowLevelKey, 1)
         self.assertEqual(Quartz.kCGDesktopWindowLevelKey, 2)

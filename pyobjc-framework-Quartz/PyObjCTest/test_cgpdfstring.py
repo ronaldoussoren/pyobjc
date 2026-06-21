@@ -6,7 +6,7 @@ class TestCGPDFString(TestCase):
     def test_types(self):
         self.assertIsOpaquePointer(Quartz.CGPDFStringRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         Quartz.CGPDFStringGetLength
 
         self.assertResultIsVariableSize(Quartz.CGPDFStringGetBytePtr)

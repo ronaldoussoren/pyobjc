@@ -6,11 +6,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCFURLEnumerator(TestCase):
     @min_os_level("10.6")
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFURLEnumeratorRef)
 
     @min_os_level("10.6")
-    def testFunctions(self):
+    def test_functions(self):
         v = CoreFoundation.CFURLEnumeratorGetTypeID()
         self.assertIsInstance(v, int)
 
@@ -46,7 +46,7 @@ class TestCFURLEnumerator(TestCase):
         self.assertIsInstance(v, bool)
 
     @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFURLEnumeratorDefaultBehavior, 0)
         self.assertEqual(CoreFoundation.kCFURLEnumeratorDescendRecursively, 1 << 0)
         self.assertEqual(CoreFoundation.kCFURLEnumeratorSkipInvisibles, 1 << 1)

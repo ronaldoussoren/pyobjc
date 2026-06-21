@@ -34,7 +34,7 @@ class TestNSSpeechSynthesizer(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSSpeechBoundary)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSVoiceName, str)
         self.assertIsInstance(AppKit.NSVoiceIdentifier, str)
         self.assertIsInstance(AppKit.NSVoiceAge, str)
@@ -47,7 +47,7 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertIsInstance(AppKit.NSVoiceLanguage, str)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertEqual(AppKit.NSSpeechImmediateBoundary, 0)
         self.assertEqual(AppKit.NSSpeechWordBoundary, 1)
         self.assertEqual(AppKit.NSSpeechSentenceBoundary, 2)
@@ -110,10 +110,10 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertIsInstance(AppKit.NSSpeechDictionaryEntryPhonemes, str)
 
     @min_os_level("12.3")
-    def testConstants12_3(self):
+    def test_constants12_3(self):
         self.assertIsInstance(AppKit.NSVoiceGenderNeutral, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.startSpeakingString_)
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.startSpeakingString_toURL_)
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.isSpeaking)

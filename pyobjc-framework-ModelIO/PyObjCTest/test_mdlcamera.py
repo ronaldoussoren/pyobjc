@@ -7,11 +7,11 @@ class TestMDLCamera(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(ModelIO.MDLCameraProjection)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(ModelIO.MDLCameraProjectionPerspective, 0)
         self.assertEqual(ModelIO.MDLCameraProjectionOrthographic, 1)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             ModelIO.MDLCamera.projectionMatrix, simd.simd_float4x4.__typestr__
         )

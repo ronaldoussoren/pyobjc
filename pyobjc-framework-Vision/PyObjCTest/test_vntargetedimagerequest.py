@@ -4,7 +4,7 @@ import Vision
 
 class TestVNTargetedImageRequest(TestCase):
     @os_level_between("10.13", "11.5")
-    def testMethods10_13_missing_12_0(self):
+    def test_methods10_13_missing_12_0(self):
         # XXX: Needs further research!
         #      Also add "expectedFailure" instead of disabling the test
         self.assertArgIsBlock(
@@ -34,7 +34,7 @@ class TestVNTargetedImageRequest(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             Vision.VNTargetedImageRequest.initWithTargetedCIImage_options_completionHandler_,  # noqa: B950
             2,
@@ -90,7 +90,7 @@ class TestVNTargetedImageRequest(TestCase):
         )
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             Vision.VNTargetedImageRequest.initWithTargetedCMSampleBuffer_options_completionHandler_,
             2,

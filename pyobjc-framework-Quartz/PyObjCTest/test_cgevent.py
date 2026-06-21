@@ -4,7 +4,7 @@ import objc
 
 
 class TestCGEvent(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGEventRef)
         self.assertIsCFType(Quartz.CGEventSourceRef)
 
@@ -92,7 +92,7 @@ class TestCGEvent(TestCase):
         self.assertArgHasType(Quartz.CGEventPostToPSN, 1, b"^{__CGEvent=}")
 
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         Quartz.CGEventPostToPid
 
     @expectedFailure
@@ -101,7 +101,7 @@ class TestCGEvent(TestCase):
         self.fail("CGEventTapCreate")
         self.fail("CGEventTapCreateForPid")
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGEventGetTypeID(), int)
 
         self.assertResultIsCFRetained(Quartz.CGEventCreate)
@@ -138,7 +138,7 @@ class TestCGEvent(TestCase):
         self.assertEqual(s, t)
 
     @min_os_level("10.5")
-    def testFunctions10_5(self):
+    def test_functions10_5(self):
         self.assertResultIsCFRetained(Quartz.CGEventCreateScrollWheelEvent)
         evt = Quartz.CGEventCreateScrollWheelEvent(
             None, Quartz.kCGScrollEventUnitPixel, 2, 99, 44
@@ -167,11 +167,11 @@ class TestCGEvent(TestCase):
         self.assertIsInstance(v, Quartz.CGPoint)
 
     @min_os_level("10.13")
-    def testFunctions10_13(self):
+    def test_functions10_13(self):
         Quartz.CGEventCreateScrollWheelEvent2
 
     @min_os_level("11.0")
-    def testFunctions10_15(self):
+    def test_functions10_15(self):
         Quartz.CGPreflightListenEventAccess
         Quartz.CGRequestListenEventAccess
         Quartz.CGPreflightPostEventAccess

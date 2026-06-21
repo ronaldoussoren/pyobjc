@@ -7,7 +7,7 @@ class TestNSDateIntervalFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSDateIntervalFormatterStyle)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(Foundation.NSDateIntervalFormatterNoStyle, 0)
         self.assertEqual(Foundation.NSDateIntervalFormatterShortStyle, 1)
         self.assertEqual(Foundation.NSDateIntervalFormatterMediumStyle, 2)

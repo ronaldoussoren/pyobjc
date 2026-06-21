@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAppKitErrors(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTextReadInapplicableDocumentTypeError, 65806)
         self.assertEqual(AppKit.NSTextWriteInapplicableDocumentTypeError, 66062)
         self.assertEqual(AppKit.NSTextReadWriteErrorMinimum, 65792)

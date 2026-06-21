@@ -4,7 +4,7 @@ import ServiceManagement
 
 class TestSMErrors(TestCase):
     @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(ServiceManagement.kSMErrorDomainIPC, str)
         self.assertIsInstance(ServiceManagement.kSMErrorDomainFramework, str)
         self.assertIsInstance(ServiceManagement.kSMErrorDomainLaunchd, str)

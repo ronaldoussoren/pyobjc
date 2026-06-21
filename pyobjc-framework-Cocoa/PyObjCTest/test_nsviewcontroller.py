@@ -8,7 +8,7 @@ class TestNSViewController(TestCase):
         self.assertIsEnumType(AppKit.NSViewControllerTransitionOptions)
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             AppKit.NSViewController.commitEditingWithDelegate_didCommitSelector_contextInfo_,
             1,
@@ -23,7 +23,7 @@ class TestNSViewController(TestCase):
         self.assertResultIsBOOL(AppKit.NSViewController.commitEditing)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSViewController.isViewLoaded)
 
         self.assertArgIsBlock(
@@ -33,18 +33,18 @@ class TestNSViewController(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsBOOL(
             AppKit.NSViewController.presentViewController_asPopoverRelativeToRect_ofView_preferredEdge_behavior_hasFullSizeContent_,
             5,
         )
 
     @min_os_level("10.10")
-    def testProtocols10_10(self):
+    def test_protocols10_10(self):
         self.assertProtocolExists("NSViewControllerPresentationAnimator", AppKit)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(AppKit.NSViewControllerTransitionNone, 0x0)
         self.assertEqual(AppKit.NSViewControllerTransitionCrossfade, 0x1)
         self.assertEqual(AppKit.NSViewControllerTransitionSlideUp, 0x10)

@@ -3,6 +3,6 @@ import WebKit
 
 
 class TestDOMEventException(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(WebKit.DOMEventException, str)
         self.assertEqual(WebKit.DOM_UNSPECIFIED_EVENT_TYPE_ERR, 0)

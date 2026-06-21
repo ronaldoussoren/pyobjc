@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBIdentityPicker(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             Collaboration.CBIdentityPicker.setAllowsMultipleSelection_, 0
         )
@@ -22,7 +22,7 @@ class TestCBIdentityPicker(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             Collaboration.CBIdentityPicker.runModalForWindow_completionHandler_,
             1,

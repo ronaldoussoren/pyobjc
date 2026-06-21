@@ -14,7 +14,7 @@ class TestISyncCoreDataHelper(SyncServices.NSObject):
 
 class TestISyncCoreData(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             SyncServices.NSPersistentStoreCoordinator.syncWithClient_inBackground_handler_error_  # noqa: B950
         )
@@ -27,7 +27,7 @@ class TestISyncCoreData(TestCase):
             3,
         )
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSPersistentStoreCoordinatorSyncing", SyncServices)
 
     def test_protocol_methods(self):

@@ -22,7 +22,7 @@ class TestWebScriptObjectHelper(WebKit.NSObject):
 
 
 class TestWebScriptObject(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestWebScriptObjectHelper.webScriptNameForSelector_, 0, objc._C_SEL
         )

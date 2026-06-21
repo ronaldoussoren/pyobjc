@@ -15,13 +15,13 @@ class TestNSComboBoxHelper(AppKit.NSObject):
 
 
 class TestNSComboBox(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSComboBoxWillPopUpNotification, str)
         self.assertIsInstance(AppKit.NSComboBoxWillDismissNotification, str)
         self.assertIsInstance(AppKit.NSComboBoxSelectionDidChangeNotification, str)
         self.assertIsInstance(AppKit.NSComboBoxSelectionIsChangingNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSComboBox.hasVerticalScroller)
         self.assertArgIsBOOL(AppKit.NSComboBox.setHasVerticalScroller_, 0)
         self.assertResultIsBOOL(AppKit.NSComboBox.isButtonBordered)
@@ -32,11 +32,11 @@ class TestNSComboBox(TestCase):
         self.assertArgIsBOOL(AppKit.NSComboBox.setCompletes_, 0)
 
     @min_os_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSComboBoxDataSource", AppKit)
         self.assertProtocolExists("NSComboBoxDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSComboBoxHelper.numberOfItemsInComboBox_, objc._C_NSInteger
         )

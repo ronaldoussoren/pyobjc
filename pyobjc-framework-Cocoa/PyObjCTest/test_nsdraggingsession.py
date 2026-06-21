@@ -5,7 +5,7 @@ import objc
 
 class TestNSDraggingSession(TestCase):
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(
             AppKit.NSDraggingSession.animatesToStartingPositionsOnCancelOrFail
         )

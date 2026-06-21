@@ -5,5 +5,5 @@ import MediaLibrary
 
 class TestMLMediaSource(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MediaLibrary.MLMediaSource, objc.objc_class)

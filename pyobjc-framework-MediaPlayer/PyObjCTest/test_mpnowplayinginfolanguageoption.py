@@ -7,7 +7,7 @@ class TestMPNowPlayingInfoLanguageOption(TestCase):
         self.assertIsEnumType(MediaPlayer.MPNowPlayingInfoLanguageOptionType)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             MediaPlayer.MPLanguageOptionCharacteristicIsMainProgramContent, str
         )
@@ -41,7 +41,7 @@ class TestMPNowPlayingInfoLanguageOption(TestCase):
         self.assertEqual(MediaPlayer.MPNowPlayingInfoLanguageOptionTypeLegible, 1)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             MediaPlayer.MPNowPlayingInfoLanguageOption.isAutomaticLegibleLanguageOption
         )

@@ -14,7 +14,7 @@ class TestAVCaptureSession(TestCase):
         self.assertIsEnumType(AVFoundation.AVVideoFieldMode)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             AVFoundation.AVCaptureSessionRuntimeErrorNotification, str
         )
@@ -47,12 +47,12 @@ class TestAVCaptureSession(TestCase):
         self.assertEqual(AVFoundation.AVVideoFieldModeDeinterlace, 3)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame960x540, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame1280x720, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(
             AVFoundation.AVCaptureSessionWasInterruptedNotification, str
         )
@@ -69,7 +69,7 @@ class TestAVCaptureSession(TestCase):
         self.assertProtocolExists("AVCaptureSessionDeferredStartDelegate", AVFoundation)
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canSetSessionPreset_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canAddInput_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canAddOutput_)
@@ -149,7 +149,7 @@ class TestAVCaptureSession(TestCase):
 
     @expectedFailure
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureConnection.isHighResolutionStillImageOutputEnabled
         )
@@ -159,7 +159,7 @@ class TestAVCaptureSession(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureConnection.automaticallyAdjustsVideoMirroring
         )
@@ -173,12 +173,12 @@ class TestAVCaptureSession(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.supportsControls)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canAddControl_)
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureSession.automaticallyRunsDeferredStart
         )

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 
 
 class TestAVCaptureVideoDataOutput(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureVideoDataOutput.alwaysDiscardsLateVideoFrames
         )
@@ -12,7 +12,7 @@ class TestAVCaptureVideoDataOutput(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethodsTundra(self):
+    def test_methodsTundra(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureVideoDataOutput_Tundra.alwaysDiscardsLateVideoFrames
         )
@@ -22,7 +22,7 @@ class TestAVCaptureVideoDataOutput(TestCase):
         )
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureVideoDataOutput.preparesCellularRadioForNetworkConnection
         )
@@ -55,7 +55,7 @@ class TestAVCaptureVideoDataOutput(TestCase):
         )
 
     @min_sdk_level("10.7")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "AVCaptureVideoDataOutputSampleBufferDelegate", AVFoundation
         )

@@ -7,7 +7,7 @@ class TestNSImageCell(TestCase):
         self.assertIsEnumType(AppKit.NSImageAlignment)
         self.assertIsEnumType(AppKit.NSImageFrameStyle)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSImageAlignCenter, 0)
         self.assertEqual(AppKit.NSImageAlignTop, 1)
         self.assertEqual(AppKit.NSImageAlignTopLeft, 2)

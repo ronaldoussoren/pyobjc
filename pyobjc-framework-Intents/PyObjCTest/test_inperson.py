@@ -7,7 +7,7 @@ class TestINPerson(TestCase):
         self.assertIsEnumType(Intents.INPersonSuggestionType)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INPersonSuggestionTypeNone, 0)
         self.assertEqual(Intents.INPersonSuggestionTypeSocialProfile, 1)
         self.assertEqual(Intents.INPersonSuggestionTypeInstantMessageAddress, 2)

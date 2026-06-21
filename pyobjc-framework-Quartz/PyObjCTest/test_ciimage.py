@@ -8,7 +8,7 @@ class TestCIImage(TestCase):
         self.assertIsTypedEnum(Quartz.CIImageAutoAdjustmentOption, str)
         self.assertIsTypedEnum(Quartz.CIImageOption, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCIFormatARGB8, int)
         self.assertIsInstance(Quartz.kCIFormatBGRA8, int)
         self.assertIsInstance(Quartz.kCIFormatRGBA8, int)
@@ -18,24 +18,24 @@ class TestCIImage(TestCase):
         self.assertIsInstance(Quartz.kCIImageColorSpace, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(Quartz.kCIImageProperties, str)
         self.assertIsInstance(Quartz.kCIImageAutoAdjustEnhance, str)
         self.assertIsInstance(Quartz.kCIImageAutoAdjustRedEye, str)
         self.assertIsInstance(Quartz.kCIImageAutoAdjustFeatures, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(Quartz.kCIImageTextureTarget, str)
         self.assertIsInstance(Quartz.kCIImageTextureFormat, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(Quartz.kCIImageAutoAdjustCrop, str)
         self.assertIsInstance(Quartz.kCIImageAutoAdjustLevel, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(Quartz.kCIFormatABGR8, int)
         self.assertIsInstance(Quartz.kCIFormatA8, int)
         self.assertIsInstance(Quartz.kCIFormatA16, int)
@@ -51,7 +51,7 @@ class TestCIImage(TestCase):
         self.assertIsInstance(Quartz.kCIFormatRGf, int)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(Quartz.kCIFormatL8, int)
         self.assertIsInstance(Quartz.kCIFormatL16, int)
         self.assertIsInstance(Quartz.kCIFormatLh, int)
@@ -63,18 +63,18 @@ class TestCIImage(TestCase):
         self.assertIsInstance(Quartz.kCIFormatLAf, int)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.kCIImageNearestSampling, str)
         self.assertIsInstance(Quartz.kCIImageAuxiliaryDepth, str)
         self.assertIsInstance(Quartz.kCIImageAuxiliaryDisparity, str)
         self.assertIsInstance(Quartz.kCIImageApplyOrientationProperty, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(Quartz.kCIImageAuxiliaryPortraitEffectsMatte, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(
             Quartz.kCIImageAuxiliarySemanticSegmentationSkinMatte, str
         )
@@ -86,18 +86,18 @@ class TestCIImage(TestCase):
         )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(Quartz.kCIImageToneMapHDRtoSDR, str)
         self.assertIsInstance(
             Quartz.kCIImageAuxiliarySemanticSegmentationGlassesMatte, str
         )
 
     @min_os_level("11.1")
-    def testConstants11_1(self):
+    def test_constants11_1(self):
         self.assertIsInstance(Quartz.kCIImageAuxiliarySemanticSegmentationSkyMatte, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(Quartz.kCIFormatRGBX16, int)
         self.assertIsInstance(Quartz.kCIFormatRGBXh, int)
         self.assertIsInstance(Quartz.kCIFormatRGBXf, int)
@@ -108,34 +108,34 @@ class TestCIImage(TestCase):
         self.assertIsInstance(Quartz.kCIImageAuxiliaryHDRGainMap, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(Quartz.kCIImageContentHeadroom, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(Quartz.kCIFormatRGBX8, int)
         self.assertIsInstance(Quartz.kCIImageApplyCleanAperture, str)
         self.assertIsInstance(Quartz.kCIImageContentAverageLightLevel, str)
 
     @min_os_level("27.0")
-    def testConstants27_0(self):
+    def test_constants27_0(self):
         self.assertIsInstance(Quartz.kCIImageSubsampleFactor, str)
         self.assertIsInstance(Quartz.kCIImageTypeIdentifierHint, str)
         self.assertIsInstance(Quartz.kCIImageUseHardwareAcceleration, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             Quartz.CIImage.imageWithTexture_size_flipped_colorSpace_, 2
         )
         self.assertArgIsBOOL(Quartz.CIImage.initWithTexture_size_flipped_colorSpace_, 2)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBOOL(Quartz.CIImage.imageWithTexture_size_flipped_options_, 2)
         self.assertArgIsBOOL(Quartz.CIImage.initWithTexture_size_flipped_options_, 2)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsOut(
             Quartz.CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_,
             4,
@@ -149,7 +149,7 @@ class TestCIImage(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsOut(
             Quartz.CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_,
             5,
@@ -167,5 +167,5 @@ class TestCIImage(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(Quartz.CIImage.isOpaque)

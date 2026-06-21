@@ -27,11 +27,11 @@ class TestNSLayoutContraintManual(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(AppKit.NSViewNoIntrinsicMetric, float)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(AppKit.NSViewNoInstrinsicMetric, float)
 
         self.assertEqual(AppKit.NSLayoutRelationLessThanOrEqual, -1)
@@ -131,7 +131,7 @@ class TestNSLayoutContraintManual(TestCase):
         )
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         v = AppKit.NSEdgeInsetsMake(1, 2, 3, 4)
         self.assertIsInstance(v, AppKit.NSEdgeInsets)
         self.assertEqual(v.top, 1.0)
@@ -140,7 +140,7 @@ class TestNSLayoutContraintManual(TestCase):
         self.assertEqual(v.right, 4.0)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSLayoutConstraint.shouldBeArchived)
         self.assertArgIsBOOL(AppKit.NSLayoutConstraint.setShouldBeArchived_, 0)
 
@@ -159,12 +159,12 @@ class TestNSLayoutContraintManual(TestCase):
         self.assertResultIsBOOL(AppKit.NSView.hasAmbiguousLayout)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSLayoutConstraint.isActive)
         self.assertArgIsBOOL(AppKit.NSLayoutConstraint.setActive_, 0)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(AppKit.NSView.isHorizontalContentSizeConstraintActive)
         self.assertArgIsBOOL(AppKit.NSView.setHorizontalContentSizeConstraintActive_, 0)
 

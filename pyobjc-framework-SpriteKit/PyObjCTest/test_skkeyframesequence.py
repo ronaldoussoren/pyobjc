@@ -8,7 +8,7 @@ class TestSKKeyframeSequence(TestCase):
         self.assertIsEnumType(SpriteKit.SKInterpolationMode)
         self.assertIsEnumType(SpriteKit.SKRepeatMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SpriteKit.SKInterpolationModeLinear, 1)
         self.assertEqual(SpriteKit.SKInterpolationModeSpline, 2)
         self.assertEqual(SpriteKit.SKInterpolationModeStep, 3)

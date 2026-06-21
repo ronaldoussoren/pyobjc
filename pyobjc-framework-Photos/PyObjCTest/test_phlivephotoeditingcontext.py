@@ -23,7 +23,7 @@ class TestPHLivePhotoEditingContext(TestCase):
         self.assertIsEnumType(Photos.PHLivePhotoFrameType)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         PHLivePhotoFrameProcessingBlock = b"@@o^@"
 
         self.assertResultIsBlock(
@@ -76,5 +76,5 @@ class TestPHLivePhotoEditingContext(TestCase):
         self.assertEqual(Photos.PHLivePhotoEditingErrorCodeAborted, 1)
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("PHLivePhotoFrame", Photos)

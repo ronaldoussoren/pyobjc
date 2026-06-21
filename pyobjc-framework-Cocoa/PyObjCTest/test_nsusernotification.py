@@ -12,7 +12,7 @@ class TestNSUserNotification(TestCase):
         self.assertIsEnumType(Foundation.NSUserNotificationActivationType)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(Foundation.NSUserNotificationActivationTypeNone, 0)
         self.assertEqual(Foundation.NSUserNotificationActivationTypeContentsClicked, 1)
         self.assertEqual(
@@ -26,7 +26,7 @@ class TestNSUserNotification(TestCase):
         self.assertIsInstance(Foundation.NSUserNotificationDefaultSoundName, str)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         obj = Foundation.NSUserNotification.alloc().init()
         self.assertResultIsBOOL(obj.isPresented)
         self.assertResultIsBOOL(obj.isRemote)
@@ -34,7 +34,7 @@ class TestNSUserNotification(TestCase):
         self.assertArgIsBOOL(obj.setHasActionButton_, 0)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         obj = Foundation.NSUserNotification.alloc().init()
         self.assertResultIsBOOL(obj.hasReplyButton)
         self.assertArgIsBOOL(obj.setHasReplyButton_, 0)
@@ -46,5 +46,5 @@ class TestNSUserNotification(TestCase):
         )
 
     @min_os_level("10.10")
-    def testProtocolsObjects(self):
+    def test_protocolsObjects(self):
         self.assertProtocolExists("NSUserNotificationCenterDelegate", Foundation)

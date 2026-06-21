@@ -4,14 +4,14 @@ import objc
 
 
 class TestCTFontCollection(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreText.CTFontCollectionRef, objc.objc_class)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreText.kCTFontCollectionRemoveDuplicatesOption, str)
 
     @min_os_level("10.7")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(CoreText.kCTFontCollectionIncludeDisabledFontsOption, str)
         self.assertIsInstance(
             CoreText.kCTFontCollectionDisallowAutoActivationOption, str
@@ -22,7 +22,7 @@ class TestCTFontCollection(TestCase):
         self.assertEqual(CoreText.kCTFontCollectionCopyStandardSort, 1 << 1)
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         self.assertResultIsCFRetained(CoreText.CTFontCollectionCreateMutableCopy)
         self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyQueryDescriptors)
         CoreText.CTFontCollectionSetQueryDescriptors
@@ -37,7 +37,7 @@ class TestCTFontCollection(TestCase):
         self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyFontAttribute)
         self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyFontAttributes)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(
             CoreText.CTFontCollectionCreateCopyWithFontDescriptors
         )

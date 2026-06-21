@@ -4,10 +4,10 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRCoreDevice(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(DiscRecording.DRDeviceRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.kDRDeviceAppearedNotification, str)
         self.assertIsInstance(DiscRecording.kDRDeviceDisappearedNotification, str)
         self.assertIsInstance(DiscRecording.kDRDeviceStatusChangedNotification, str)
@@ -146,7 +146,7 @@ class TestDRCoreDevice(TestCase):
         self.assertIsInstance(DiscRecording.kDRDeviceBurnSpeedHDDVD1x, float)
         self.assertIsInstance(DiscRecording.kDRDeviceBurnSpeedMax, float)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(DiscRecording.DRDeviceGetTypeID(), int)
 
         self.assertResultIsCFRetained(DiscRecording.DRCopyDeviceArray)

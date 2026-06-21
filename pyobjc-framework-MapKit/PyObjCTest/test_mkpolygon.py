@@ -6,7 +6,7 @@ import MapKit
 
 class TestMKPolygon(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKPolygon, objc.objc_class)
 
         self.assertArgSizeInArg(MapKit.MKPolygon.polygonWithPoints_count_, 0, 1)

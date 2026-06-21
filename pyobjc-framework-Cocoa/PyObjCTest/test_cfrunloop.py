@@ -10,7 +10,7 @@ from PyObjCTools.TestSupport import (
 
 
 class TestRunLoop(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFRunLoopRef)
         self.assertIsCFType(CoreFoundation.CFRunLoopSourceRef)
         self.assertIsCFType(CoreFoundation.CFRunLoopObserverRef)
@@ -27,7 +27,7 @@ class TestRunLoop(TestCase):
             pass
         self.assertIsCFType(CoreFoundation.CFRunLoopTimerRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFRunLoopRunFinished, 1)
         self.assertEqual(CoreFoundation.kCFRunLoopRunStopped, 2)
         self.assertEqual(CoreFoundation.kCFRunLoopRunTimedOut, 3)
@@ -296,7 +296,7 @@ class TestRunLoop(TestCase):
         "Crash on macOS 15 beta",
     )
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         self.assertArgIsBlock(CoreFoundation.CFRunLoopPerformBlock, 2, b"v")
 
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
@@ -324,7 +324,7 @@ class TestRunLoop(TestCase):
         "Crash on macOS 15 beta",
     )
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         self.assertArgIsBOOL(CoreFoundation.CFRunLoopObserverCreateWithHandler, 2)
         self.assertArgIsBlock(
             CoreFoundation.CFRunLoopObserverCreateWithHandler,
@@ -384,7 +384,7 @@ class TestRunLoop(TestCase):
             self.assertEqual(a, ref)
 
     @min_os_level("10.9")
-    def testFunctions10_9(self):
+    def test_functions10_9(self):
         lst = []
         ref = CoreFoundation.CFRunLoopTimerCreateWithHandler(
             None,

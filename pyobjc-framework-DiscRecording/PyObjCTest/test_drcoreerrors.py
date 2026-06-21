@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRCoreErrors(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(DiscRecording.kDRFirstErr, 0x80020000)
         self.assertEqual(DiscRecording.kDRInternalErr, DiscRecording.kDRFirstErr)
         self.assertEqual(DiscRecording.kDRDeviceAccessErr, 0x80020020)
@@ -56,7 +56,7 @@ class TestDRCoreErrors(TestCase):
         self.assertIsInstance(DiscRecording.kDRErrorStatusSenseCodeStringKey, str)
         self.assertIsInstance(DiscRecording.kDRErrorStatusAdditionalSenseStringKey, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(
             DiscRecording.DRCopyLocalizedStringForDiscRecordingError
         )

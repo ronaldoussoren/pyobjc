@@ -8,11 +8,11 @@ class TestSBApplicationHelper(ScriptingBridge.NSObject):
 
 
 class TestSBApplication(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(ScriptingBridge.SBApplication.isRunning)
 
     @min_os_level("10.6")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("SBApplicationDelegate", ScriptingBridge)
         self.assertArgHasType(
             TestSBApplicationHelper.eventDidFail_withError_,

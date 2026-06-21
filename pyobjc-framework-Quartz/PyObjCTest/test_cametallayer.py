@@ -4,11 +4,11 @@ import Quartz
 
 class TestCAMetalLayer(TestCase):
     @min_os_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("CAMetalDrawable", Quartz, "CAMetalDrawableProtocol")
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.CAMetalLayer.framebufferOnly)
         self.assertArgIsBOOL(Quartz.CAMetalLayer.setFramebufferOnly_, 0)
 
@@ -21,7 +21,7 @@ class TestCAMetalLayer(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(Quartz.CAMetalLayer.displaySyncEnabled)
         self.assertArgIsBOOL(Quartz.CAMetalLayer.setDisplaySyncEnabled_, 0)
 

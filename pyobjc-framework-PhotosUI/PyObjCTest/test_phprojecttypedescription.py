@@ -4,5 +4,5 @@ import PhotosUI
 
 class TestPHProjectTypeDescription(TestCase):
     @min_os_level("10.14")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(PhotosUI.PHProjectTypeDescription.canProvideSubtypes)

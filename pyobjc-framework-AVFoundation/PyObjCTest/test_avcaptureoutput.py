@@ -12,7 +12,7 @@ class TestAVCaptureOutput(TestCase):
         self.assertIsEnumType(AVFoundation.AVCaptureOutputDataDroppedReason)
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureVideoDataOutput.alwaysDiscardsLateVideoFrames
         )
@@ -61,7 +61,7 @@ class TestAVCaptureOutput(TestCase):
             b"v^{opaqueCMSampleBuffer=}@",
         )
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "AVCaptureVideoDataOutputSampleBufferDelegate", AVFoundation
         )

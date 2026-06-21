@@ -77,7 +77,7 @@ class TestNSNumber(TestCase):
         else:
             self.assertEqual(Foundation.NSNumber.numberWithUnsignedInt_(2**31), (2**31))
 
-    def testMethods(self):
+    def test_methods(self):
         v = Foundation.NSNumber.numberWithUnsignedInt_(2**31)
 
         self.assertEqual(v.unsignedIntValue(), 2**31)

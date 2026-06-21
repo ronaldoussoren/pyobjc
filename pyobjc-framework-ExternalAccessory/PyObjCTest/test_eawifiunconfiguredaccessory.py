@@ -7,7 +7,7 @@ class TestEAWiFiUnconfiguredAccessory(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(ExternalAccessory.EAWiFiUnconfiguredAccessoryProperties)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             ExternalAccessory.EAWiFiUnconfiguredAccessoryPropertySupportsAirPlay, 1 << 0
         )

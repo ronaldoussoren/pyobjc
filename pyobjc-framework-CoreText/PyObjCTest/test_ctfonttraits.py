@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, cast_uint
 
 
 class TestCTFontTraits(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreText.kCTFontSymbolicTrait, str)
         self.assertIsInstance(CoreText.kCTFontWeightTrait, str)
         self.assertIsInstance(CoreText.kCTFontWidthTrait, str)
@@ -117,7 +117,7 @@ class TestCTFontTraits(TestCase):
         )
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(CoreText.kCTFontTraitColorGlyphs, 1 << 13)
         self.assertEqual(CoreText.kCTFontTraitComposite, 1 << 14)
 
@@ -126,5 +126,5 @@ class TestCTFontTraits(TestCase):
         )
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(CoreText.kCTFontCompositeTrait, CoreText.kCTFontTraitComposite)

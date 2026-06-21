@@ -8,7 +8,7 @@ class TestEKAlarm(TestCase):
         self.assertTrue(hasattr(EventKit, "EKAlarm"))
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(EventKit.EKAlarmTypeDisplay, 0)
         self.assertEqual(EventKit.EKAlarmTypeAudio, 1)
         self.assertEqual(EventKit.EKAlarmTypeProcedure, 2)

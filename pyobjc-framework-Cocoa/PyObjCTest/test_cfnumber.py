@@ -218,7 +218,7 @@ class TestCFNumber(TestCase):
         r = CoreFoundation.CFNumberCompare(44, 45, 0)
         self.assertLess(r, 0)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIs(CoreFoundation.kCFBooleanTrue, True)
         self.assertIs(CoreFoundation.kCFBooleanFalse, False)
         self.assertEqual(CoreFoundation.kCFNumberSInt8Type, 1)

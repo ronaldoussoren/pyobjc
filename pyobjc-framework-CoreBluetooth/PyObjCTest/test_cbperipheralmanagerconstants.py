@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCBAdvertisementData(TestCase):
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             CoreBluetooth.CBPeripheralManagerOptionShowPowerAlertKey, str
         )

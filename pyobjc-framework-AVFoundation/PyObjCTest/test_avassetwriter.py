@@ -16,7 +16,7 @@ class TestAVAssetWriter(TestCase):
         self.assertIsEnumType(AVFoundation.AVAssetWriterStatus)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVAssetWriterStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVAssetWriterStatusWriting, 1)
         self.assertEqual(AVFoundation.AVAssetWriterStatusCompleted, 2)
@@ -24,14 +24,14 @@ class TestAVAssetWriter(TestCase):
         self.assertEqual(AVFoundation.AVAssetWriterStatusCancelled, 4)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBlock(
             AVFoundation.AVAssetWriter.finishWritingWithCompletionHandler_, 0, b"v"
         )
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.canAddInputGroup_)
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             AVFoundation.AVAssetWriter.assetWriterWithURL_fileType_error_, 2
         )
@@ -50,14 +50,14 @@ class TestAVAssetWriter(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.finishWriting)
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.producesCombinableFragments)
         self.assertArgIsBOOL(
             AVFoundation.AVAssetWriter.setProducesCombinableFragments_, 0
         )
 
     @min_os_level("27.0")
-    def testMethods27_0(self):
+    def test_methods27_0(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.isProVideoStorageSupported)
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.usesProVideoStorage)
         self.assertArgIsBOOL(AVFoundation.AVAssetWriter.setUsesProVideoStorage_, 0)

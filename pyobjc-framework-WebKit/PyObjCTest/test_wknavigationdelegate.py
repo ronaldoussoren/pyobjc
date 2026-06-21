@@ -31,7 +31,7 @@ class TestWKNavigationDelegate(TestCase):
         self.assertIsEnumType(WebKit.WKNavigationResponsePolicy)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(WebKit.WKErrorDomain, str)
 
         self.assertEqual(WebKit.WKNavigationActionPolicyCancel, 0)
@@ -43,7 +43,7 @@ class TestWKNavigationDelegate(TestCase):
         self.assertEqual(WebKit.WKNavigationResponsePolicyDownload, 2)
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("WKNavigationDelegate", WebKit)
 
     def test_protocol_methods(self):
@@ -74,7 +74,7 @@ class TestWKNavigationDelegate(TestCase):
         )
 
     @min_sdk_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             TestWKNavigationDelegateHelper.webView_authenticationChallenge_shouldAllowDeprecatedTLS_,
             2,
@@ -82,7 +82,7 @@ class TestWKNavigationDelegate(TestCase):
         )
 
     @min_sdk_level("27.0")
-    def testMethods27_0(self):
+    def test_methods27_0(self):
         self.assertArgIsBlock(
             TestWKNavigationDelegateHelper.webView_willSubmitForm_submissionHandler_,
             2,

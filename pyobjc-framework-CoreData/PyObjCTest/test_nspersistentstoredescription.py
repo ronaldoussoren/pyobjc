@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSPersistentStoreDescription(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(CoreData.NSPersistentStoreDescription.setReadOnly_, 0)
         self.assertResultIsBOOL(CoreData.NSPersistentStoreDescription.isReadOnly)
 

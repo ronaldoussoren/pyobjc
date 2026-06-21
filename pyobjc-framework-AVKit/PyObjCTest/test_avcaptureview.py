@@ -8,15 +8,15 @@ class TestAVCaptureView(TestCase):
         self.assertIsEnumType(AVKit.AVCaptureViewControlsStyle)
 
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(AVKit.AVCaptureView, objc.objc_class)
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVCaptureViewDelegate", AVKit)
 
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             AVKit.AVCaptureView.setSession_showVideoPreview_showAudioPreview_, 1
         )

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSPersistentStore(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStore.metadataForPersistentStoreWithURL_error_, 1
         )
@@ -18,6 +18,6 @@ class TestNSPersistentStore(TestCase):
         self.assertArgIsBOOL(CoreData.NSPersistentStore.setReadOnly_, 0)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(CoreData.NSPersistentStore.loadMetadata_)
         self.assertArgIsOut(CoreData.NSPersistentStore.loadMetadata_, 0)

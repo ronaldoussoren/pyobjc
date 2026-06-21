@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCalCalendar(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CalendarStore.CalCalendarTypeBirthday, str)
         self.assertIsInstance(CalendarStore.CalCalendarTypeCalDAV, str)
         self.assertIsInstance(CalendarStore.CalCalendarTypeLocal, str)
@@ -11,8 +11,8 @@ class TestCalCalendar(TestCase):
         self.assertIsInstance(CalendarStore.CalCalendarTypeIMAP, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(CalendarStore.CalCalendarTypeExchange, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CalendarStore.CalCalendar.isEditable)

@@ -3,5 +3,5 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalCalendarItem(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CalendarStore.CalCalendarItem.hasAlarm)

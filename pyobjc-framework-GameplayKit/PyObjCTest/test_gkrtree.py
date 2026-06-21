@@ -8,7 +8,7 @@ class TestGKAgent(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(GameplayKit.GKRTreeSplitStrategy)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(GameplayKit.GKRTreeSplitStrategyHalve, 0)
         self.assertEqual(GameplayKit.GKRTreeSplitStrategyLinear, 1)
         self.assertEqual(GameplayKit.GKRTreeSplitStrategyQuadratic, 2)

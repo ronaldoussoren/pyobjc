@@ -75,7 +75,7 @@ class TestNSWindow(TestCase):
         self.assertIsEnumType(AppKit.NSWindowToolbarStyle)
         self.assertIsEnumType(AppKit.NSWindowUserTabbingPreference)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSEventDurationForever, sys.float_info.max)
         self.assertEqual(AppKit.NSAppKitVersionNumberWithCustomSheetPosition, 686.0)
         self.assertEqual(
@@ -172,7 +172,7 @@ class TestNSWindow(TestCase):
         self.assertEqual(AppKit.NSTitlebarSeparatorStyleShadow, 3)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(
             AppKit.NSAppKitVersionNumberWithDeferredWindowDisplaySupport, 1019.0
         )
@@ -189,7 +189,7 @@ class TestNSWindow(TestCase):
         self.assertIsInstance(AppKit.NSWindowDidEndLiveResizeNotification, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSFullScreenWindowMask, 1 << 14)
         self.assertEqual(AppKit.NSWindowCollectionBehaviorFullScreenPrimary, 1 << 7)
         self.assertEqual(AppKit.NSWindowCollectionBehaviorFullScreenAuxiliary, 1 << 8)
@@ -216,7 +216,7 @@ class TestNSWindow(TestCase):
         self.assertIsInstance(AppKit.NSWindowDidExitVersionBrowserNotification, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(AppKit.NSModalResponseOK, 1)
         self.assertEqual(AppKit.NSModalResponseCancel, 0)
 
@@ -225,14 +225,14 @@ class TestNSWindow(TestCase):
         self.assertIsInstance(AppKit.NSWindowDidChangeOcclusionStateNotification, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(AppKit.NSFullSizeContentViewWindowMask, 1 << 15)
 
         self.assertEqual(AppKit.NSWindowTitleVisible, 0)
         self.assertEqual(AppKit.NSWindowTitleHidden, 1)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(
             AppKit.NSWindowCollectionBehaviorFullScreenAllowsTiling, 1 << 11
         )
@@ -264,7 +264,7 @@ class TestNSWindow(TestCase):
             AppKit.NSScreenSaverWindowLevel, Quartz.kCGScreenSaverWindowLevel
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             AppKit.NSWindow.nextEventMatchingMask_untilDate_inMode_dequeue_, 3
         )
@@ -345,7 +345,7 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(
             AppKit.NSWindow.autorecalculatesContentBorderThicknessForEdge_
         )
@@ -358,7 +358,7 @@ class TestNSWindow(TestCase):
         self.assertArgIsBOOL(AppKit.NSWindow.setCanBeVisibleOnAllSpaces_, 0)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSWindow.inLiveResize)
         self.assertResultIsBOOL(AppKit.NSWindow.isOnActiveSpace)
         self.assertResultIsBOOL(AppKit.NSWindow.isMovable)
@@ -377,7 +377,7 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBlock(
             AppKit.NSWindow.beginSheet_completionHandler_, 1, b"v" + objc._C_NSInteger
         )
@@ -388,7 +388,7 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSWindow.titlebarAppearsTransparent)
         self.assertArgIsBOOL(AppKit.NSWindow.setTitlebarAppearsTransparent_, 0)
 
@@ -397,14 +397,14 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSWindow.canRepresentDisplayGamut_)
 
         self.assertResultIsBOOL(AppKit.NSWindow.allowsAutomaticWindowTabbing)
         self.assertArgIsBOOL(AppKit.NSWindow.setAllowsAutomaticWindowTabbing_, 0)
 
     @min_os_level("13.3")
-    def testMethods13_3(self):
+    def test_methods13_3(self):
         self.assertResultIsBOOL(AppKit.NSWindow.hasActiveWindowSharingSession)
 
         self.assertArgIsBlock(
@@ -412,11 +412,11 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsSEL(AppKit.NSWindow.displayLinkWithTarget_selector_, 1, b"v@:@")
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertArgIsBlock(
             AppKit.NSWindow.requestSharingOfWindow_completionHandler_, 1, b"v@"
         )
@@ -427,10 +427,10 @@ class TestNSWindow(TestCase):
         )
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSWindowDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSWindowHelper.windowShouldClose_)
         self.assertResultHasType(
             TestNSWindowHelper.windowWillResize_toSize_, AppKit.NSSize.__typestr__
@@ -471,7 +471,7 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("10.7")
-    def testProtocols10_7(self):
+    def test_protocols10_7(self):
         self.assertArgHasType(
             TestNSWindowHelper.window_willUseFullScreenContentSize_,
             1,
@@ -512,7 +512,7 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("10.9")
-    def testProtocols10_9(self):
+    def test_protocols10_9(self):
         self.assertArgHasType(
             TestNSWindowHelper.window_startCustomAnimationToEnterFullScreenOnScreen_withDuration_,  # noqa: B950
             2,

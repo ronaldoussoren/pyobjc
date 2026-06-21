@@ -7,7 +7,7 @@ class TestMLFeatureDescription(TestCase):
         self.assertIsTypedEnum(CoreML.MLModelMetadataKey, str)
 
     @min_os_level("10.13")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreML.MLModelDescriptionKey, str)
         self.assertIsInstance(CoreML.MLModelVersionStringKey, str)
         self.assertIsInstance(CoreML.MLModelAuthorKey, str)

@@ -8,7 +8,7 @@ class TestDREraseProgressPanelHelper(DiscRecordingUI.NSObject):
 
 
 class TestDREraseProgressPanel(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             DiscRecordingUI.DREraseProgressPanelWillBeginNotification, str
         )
@@ -16,7 +16,7 @@ class TestDREraseProgressPanel(TestCase):
             DiscRecordingUI.DREraseProgressPanelDidFinishNotification, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             TestDREraseProgressPanelHelper.eraseProgressPanel_eraseDidFinish_
         )

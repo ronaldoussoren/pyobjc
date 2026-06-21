@@ -8,7 +8,7 @@ class TestSFContentBlockerManager(TestCase):
         self.assertIsEnumType(SafariServices.SFSafariServicesVersion)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SafariServices.SFSafariServicesVersion10_0, 0)
         self.assertEqual(SafariServices.SFSafariServicesVersion10_1, 1)
         self.assertEqual(SafariServices.SFSafariServicesVersion11_0, 2)

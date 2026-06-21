@@ -8,14 +8,14 @@ class TestSKTileDefinition(TestCase):
         self.assertIsEnumType(SpriteKit.SKTileDefinitionRotation)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SpriteKit.SKTileDefinitionRotation0, 0)
         self.assertEqual(SpriteKit.SKTileDefinitionRotation90, 1)
         self.assertEqual(SpriteKit.SKTileDefinitionRotation180, 2)
         self.assertEqual(SpriteKit.SKTileDefinitionRotation270, 3)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SpriteKit.SKTileDefinition.flipVertically)
         self.assertArgIsBOOL(SpriteKit.SKTileDefinition.setFlipVertically_, 0)
 

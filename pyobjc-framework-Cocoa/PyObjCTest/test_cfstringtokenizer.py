@@ -3,10 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestStringTokenizer(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFStringTokenizerRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         s = "Spring eens over een boom"
         v = CoreFoundation.CFStringTokenizerCopyBestStringLanguage(s, (0, len(s)))
         self.assertEqual(v, "nl")
@@ -53,7 +53,7 @@ class TestStringTokenizer(TestCase):
         self.assertEqual(ranges, ())
         self.assertEqual(subref, [])
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFStringTokenizerUnitWord, 0)
         self.assertEqual(CoreFoundation.kCFStringTokenizerUnitSentence, 1)
         self.assertEqual(CoreFoundation.kCFStringTokenizerUnitParagraph, 2)

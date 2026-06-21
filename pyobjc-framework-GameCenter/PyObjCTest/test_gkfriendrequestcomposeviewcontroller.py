@@ -5,7 +5,7 @@ import GameCenter  # noqa: F401
 
 class TestGKFriendRequestComposeViewController(TestCase):
     @min_os_level("10.8")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "GKFriendRequestComposeViewControllerDelegate", GameCenter
         )

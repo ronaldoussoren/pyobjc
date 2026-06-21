@@ -9,7 +9,7 @@ class TestMKCircle(TestCase):
         self.assertIsEnumType(MapKit.MKFeatureVisibility)
         self.assertIsEnumType(MapKit.MKMapType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(MapKit.MKMapTypeStandard, 0)
         self.assertEqual(MapKit.MKMapTypeSatellite, 1)
         self.assertEqual(MapKit.MKMapTypeHybrid, 2)

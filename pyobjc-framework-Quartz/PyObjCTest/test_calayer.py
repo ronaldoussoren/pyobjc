@@ -16,7 +16,7 @@ class TestCALayer(TestCase):
         self.assertIsTypedEnum(Quartz.CADynamicRange, str)
 
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCALayerNotSizable, 0)
         self.assertEqual(Quartz.kCALayerMinXMargin, 1)
         self.assertEqual(Quartz.kCALayerWidthSizable, 2)
@@ -53,7 +53,7 @@ class TestCALayer(TestCase):
         self.assertEqual(Quartz.kCALayerMaxXMaxYCorner, 1 << 3)
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.CALayer.shouldArchiveValueForKey_)
         self.assertResultIsBOOL(Quartz.CALayer.isHidden)
         self.assertArgIsBOOL(Quartz.CALayer.setHidden_, 0)
@@ -72,7 +72,7 @@ class TestCALayer(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.CALayer.needsDisplayForKey_)
         self.assertResultIsBOOL(Quartz.CALayer.isGeometryFlipped)
         self.assertArgIsBOOL(Quartz.CALayer.setGeometryFlipped_, 0)
@@ -88,17 +88,17 @@ class TestCALayer(TestCase):
         self.assertResultIsBOOL(Quartz.CALayer.needsLayout)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(Quartz.CALayer.shouldRasterize)
         self.assertArgIsBOOL(Quartz.CALayer.setShouldRasterize_, 0)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(Quartz.CALayer.drawsAsynchronously)
         self.assertArgIsBOOL(Quartz.CALayer.setDrawsAsynchronously_, 0)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(Quartz.CALayer.allowsEdgeAntialiasing)
         self.assertArgIsBOOL(Quartz.CALayer.setAllowsEdgeAntialiasing_, 0)
         self.assertResultIsBOOL(Quartz.CALayer.allowsGroupOpacity)
@@ -115,43 +115,43 @@ class TestCALayer(TestCase):
         self.assertArgIsBOOL(Quartz.CALayer.setWantsDynamicContentScaling_, 0)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCAFilterTrilinear, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(Quartz.kCAContentsFormatRGBA8Uint, str)
         self.assertIsInstance(Quartz.kCAContentsFormatRGBA16Float, str)
         self.assertIsInstance(Quartz.kCAContentsFormatGray8Uint, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(Quartz.kCAContentsFormatAutomatic, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Quartz.kCACornerCurveCircular, str)
         self.assertIsInstance(Quartz.kCACornerCurveContinuous, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsTypedEnum(Quartz.CAToneMapMode, str)
         self.assertIsInstance(Quartz.CAToneMapModeAutomatic, str)
         self.assertIsInstance(Quartz.CAToneMapModeNever, str)
         self.assertIsInstance(Quartz.CAToneMapModeIfSupported, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(Quartz.CADynamicRangeAutomatic, str)
         self.assertIsInstance(Quartz.CADynamicRangeStandard, str)
         self.assertIsInstance(Quartz.CADynamicRangeConstrainedHigh, str)
         self.assertIsInstance(Quartz.CADynamicRangeHigh, str)
 
     @min_sdk_level("10.6")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("CAAction", Quartz)
 
     @min_sdk_level("10.12")
-    def testProtocols10_12(self):
+    def test_protocols10_12(self):
         self.assertProtocolExists("CALayerDelegate", Quartz)
         self.assertProtocolExists("CALayoutManager", Quartz)

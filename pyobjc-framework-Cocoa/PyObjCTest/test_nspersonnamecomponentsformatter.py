@@ -7,7 +7,7 @@ class TestNSPersonNameComponentsFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSPersonNameComponentsFormatterStyle)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleDefault, 0)
         self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleShort, 1)
         self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleMedium, 2)

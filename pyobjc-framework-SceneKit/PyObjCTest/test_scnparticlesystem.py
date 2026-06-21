@@ -29,7 +29,7 @@ class TestSCNParticleSystem(TestCase):
         self.assertIsEnumType(SceneKit.SCNParticleSortingMode)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(SceneKit.SCNParticlePropertyPosition, str)
         self.assertIsInstance(SceneKit.SCNParticlePropertyAngle, str)
         self.assertIsInstance(SceneKit.SCNParticlePropertyRotationAxis, str)
@@ -92,7 +92,7 @@ class TestSCNParticleSystem(TestCase):
         self.assertEqual(SceneKit.SCNParticleEventCollision, 2)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(SceneKit.SCNParticleSystem.loops)
         self.assertArgIsBOOL(SceneKit.SCNParticleSystem.setLoops_, 0)
 
@@ -126,6 +126,6 @@ class TestSCNParticleSystem(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(SceneKit.SCNParticleSystem.writesToDepthBuffer)
         self.assertArgIsBOOL(SceneKit.SCNParticleSystem.setWritesToDepthBuffer_, 0)

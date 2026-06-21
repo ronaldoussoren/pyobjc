@@ -5,11 +5,11 @@ import ColorSync
 
 class TestColorSyncCMM(TestCase):
     @min_os_level("10.13")
-    def testCFType(self):
+    def test_cftype(self):
         self.assertIsCFType(ColorSync.ColorSyncCMMRef)
 
     @min_os_level("10.13")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(ColorSync.ColorSyncCMMGetTypeID(), int)
         self.assertResultIsCFRetained(ColorSync.ColorSyncCMMCreate)
         ColorSync.ColorSyncCMMGetBundle
@@ -24,7 +24,7 @@ class TestColorSyncCMM(TestCase):
         )
 
     @min_os_level("10.13")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(ColorSync.kCMMInitializeLinkProfileProcName, str)
         self.assertIsInstance(ColorSync.kCMMInitializeTransformProcName, str)
         self.assertIsInstance(ColorSync.kCMMApplyTransformProcName, str)

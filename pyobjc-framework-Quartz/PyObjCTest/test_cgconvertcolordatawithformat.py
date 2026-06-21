@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGConvertColorDataWithFormat(TestCase):
-    def testStruct(self):
+    def test_struct(self):
         v = Quartz.CGColorDataFormat()
         self.assertIsInstance(v.version, int)
         self.assertIs(v.colorspace_info, None)
@@ -14,7 +14,7 @@ class TestCGConvertColorDataWithFormat(TestCase):
         self.assertIs(v.decode, None)
 
     @min_os_level("12.0")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsOut(Quartz.CGConvertColorDataWithFormat, 2)
         self.assertArgIsVariableSize(Quartz.CGConvertColorDataWithFormat, 2)
         self.assertArgIsIn(Quartz.CGConvertColorDataWithFormat, 4)

@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestPDFAnnotationMarkup(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kPDFMarkupTypeHighlight, 0)
         self.assertEqual(Quartz.kPDFMarkupTypeStrikeOut, 1)
         self.assertEqual(Quartz.kPDFMarkupTypeUnderline, 2)

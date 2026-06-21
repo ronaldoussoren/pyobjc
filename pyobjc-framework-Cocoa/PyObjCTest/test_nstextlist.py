@@ -9,11 +9,11 @@ class TestNSTextList(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSTextListOptions)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTextListPrependEnclosingMarker, 1)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AppKit.NSTextListMarkerBox, str)
         self.assertIsInstance(AppKit.NSTextListMarkerCheck, str)
         self.assertIsInstance(AppKit.NSTextListMarkerCircle, str)

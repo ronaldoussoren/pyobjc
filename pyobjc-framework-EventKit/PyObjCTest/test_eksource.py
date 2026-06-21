@@ -8,7 +8,7 @@ class TestEKSource(TestCase):
         self.assertTrue(hasattr(EventKit, "EKSource"))
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(EventKit.EKSourceTypeLocal, 0)
         self.assertEqual(EventKit.EKSourceTypeExchange, 1)
         self.assertEqual(EventKit.EKSourceTypeCalDAV, 2)

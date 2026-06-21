@@ -22,7 +22,7 @@ class TestMDLAssetHelper(ModelIO.NSObject):
 
 
 class TestMDLAsset(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             ModelIO.MDLAsset.initWithURL_vertexDescriptor_bufferAllocator_preserveTopology_error_,
             3,
@@ -64,7 +64,7 @@ class TestMDLAsset(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBOOL(
             ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndexing_error_, 2
         )
@@ -80,5 +80,5 @@ class TestMDLAsset(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("MDLLightProbeIrradianceDataSource", ModelIO)

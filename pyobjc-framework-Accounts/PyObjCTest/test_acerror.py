@@ -4,7 +4,7 @@ import Accounts
 
 class TestACError(TestCase):
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(Accounts.ACErrorAccessDeniedByProtectionPolicy, 10)
         self.assertEqual(Accounts.ACErrorClientPermissionDenied, 9)
         self.assertEqual(Accounts.ACErrorCredentialNotFound, 11)
@@ -22,7 +22,7 @@ class TestACError(TestCase):
         self.assertEqual(Accounts.ACErrorCredentialItemNotExpired, 23)
 
     @min_os_level("10.8")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Accounts.ACErrorDomain, str)
 
         self.assertEqual(Accounts.ACErrorUnknown, 1)

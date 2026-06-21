@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestODNode(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(OpenDirectory.ODNode.nodeWithSession_type_error_, 2)
         self.assertArgIsOut(OpenDirectory.ODNode.nodeWithSession_name_error_, 2)
         self.assertArgIsOut(OpenDirectory.ODNode.initWithSession_type_error_, 2)
@@ -55,7 +55,7 @@ class TestODNode(TestCase):
         )
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsOut(OpenDirectory.ODNode.policiesAndReturnError_, 0)
         self.assertArgIsOut(OpenDirectory.ODNode.supportedPoliciesAndReturnError_, 0)
         self.assertResultIsBOOL(OpenDirectory.ODNode.setPolicies_error_)
@@ -67,7 +67,7 @@ class TestODNode(TestCase):
         self.assertArgIsOut(OpenDirectory.ODNode.customFunction_payload_error_, 2)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(OpenDirectory.ODNode.addAccountPolicy_toCategory_error_)
         self.assertArgIsOut(OpenDirectory.ODNode.addAccountPolicy_toCategory_error_, 2)
         self.assertResultIsBOOL(

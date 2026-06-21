@@ -6,7 +6,7 @@ import MapKit
 
 class TestMKTileOverlay(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKTileOverlay, objc.objc_class)
 
         self.assertResultIsBOOL(MapKit.MKTileOverlay.isGeometryFlipped)
@@ -18,7 +18,7 @@ class TestMKTileOverlay(TestCase):
         self.assertArgIsBlock(MapKit.MKTileOverlay.loadTileAtPath_result_, 1, b"v@@")
 
     @min_os_level("10.9")
-    def testStructs(self):
+    def test_structs(self):
         c = MapKit.MKTileOverlayPath()
         self.assertIsInstance(c.x, int)
         self.assertIsInstance(c.y, int)

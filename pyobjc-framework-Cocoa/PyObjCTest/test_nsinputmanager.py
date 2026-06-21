@@ -30,7 +30,7 @@ class TestNSInputManagerHelper(AppKit.NSObject):
 
 
 class TestNSInputManager(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTextInput", AppKit)
         self.assertArgIsSEL(TestNSInputManagerHelper.doCommandBySelector_, 0, b"v@:@")
         self.assertArgHasType(
@@ -63,7 +63,7 @@ class TestNSInputManager(TestCase):
             AppKit.NSPoint.__typestr__,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSInputManager.wantsToInterpretAllKeystrokes)
         self.assertResultIsBOOL(AppKit.NSInputManager.wantsToHandleMouseEvents)
         self.assertResultIsBOOL(AppKit.NSInputManager.handleMouseEvent_)

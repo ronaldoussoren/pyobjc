@@ -17,7 +17,7 @@ class TestNSSharingService(TestCase):
         self.assertIsEnumType(AppKit.NSSharingContentScope)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AppKit.NSSharingServiceNameCloudSharing, str)
 
         self.assertEqual(AppKit.NSCloudKitSharingServiceStandard, 0)
@@ -27,14 +27,14 @@ class TestNSSharingService(TestCase):
         self.assertEqual(AppKit.NSCloudKitSharingServiceAllowReadWrite, 1 << 5)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTencentWeibo, str)
         self.assertIsInstance(AppKit.NSSharingServiceNamePostOnLinkedIn, str)
         self.assertIsInstance(AppKit.NSSharingServiceNameUseAsFacebookProfileImage, str)
         self.assertIsInstance(AppKit.NSSharingServiceNameUseAsLinkedInProfileImage, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(AppKit.NSSharingServiceNamePostOnFacebook, str)
         self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTwitter, str)
         self.assertIsInstance(AppKit.NSSharingServiceNamePostOnSinaWeibo, str)
@@ -56,14 +56,14 @@ class TestNSSharingService(TestCase):
         self.assertEqual(AppKit.NSSharingContentScopeFull, 2)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBlock(
             AppKit.NSSharingService.initWithTitle_image_alternateImage_handler_, 3, b"v"
         )
         self.assertResultIsBOOL(AppKit.NSSharingService.canPerformWithItems_)
 
     @min_sdk_level("10.7")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSSharingServiceDelegate", AppKit)
         self.assertProtocolExists("NSSharingServicePickerDelegate", AppKit)
 
@@ -80,5 +80,5 @@ class TestNSSharingService(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocolObjects10_12(self):
+    def test_protocols10_12(self):
         self.assertProtocolExists("NSCloudSharingServiceDelegate", AppKit)

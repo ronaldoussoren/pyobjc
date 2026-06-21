@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestPDFAnnotationLine(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kPDFLineStyleNone, 0)
         self.assertEqual(Quartz.kPDFLineStyleSquare, 1)
         self.assertEqual(Quartz.kPDFLineStyleCircle, 2)

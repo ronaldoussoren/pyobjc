@@ -4,7 +4,7 @@ import objc
 
 
 class TestCGPDFDictionary(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsOpaquePointer(Quartz.CGPDFDictionaryRef)
 
     def assertIsPDFGetter(self, function):
@@ -26,11 +26,11 @@ class TestCGPDFDictionary(TestCase):
         # self.assertArgIsFunction(CGPDFDictionaryApplyFunction, 1, b"vn^t^{CGPDFObject=}^v", False)
         self.assertFalse(isinstance(Quartz.CGPDFDictionaryApplyFunction, objc.function))
 
-    def testFunctions(self):
+    def test_functions(self):
         Quartz.CGPDFDictionaryGetCount
 
     @min_os_level("10.14")
-    def testFunctions10_14(self):
+    def test_functions10_14(self):
         self.assertArgIsBlock(
             Quartz.CGPDFDictionaryApplyBlock, 1, b"vn^t^{CGPDFObject=}^v"
         )

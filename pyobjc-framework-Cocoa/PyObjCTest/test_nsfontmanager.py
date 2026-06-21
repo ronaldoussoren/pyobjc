@@ -13,7 +13,7 @@ class TestNSFontManager(TestCase):
         self.assertIsEnumType(AppKit.NSFontCollectionOptions)
         self.assertIsEnumType(AppKit.NSFontTraitMask)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSItalicFontMask, 0x00000001)
         self.assertEqual(AppKit.NSBoldFontMask, 0x00000002)
         self.assertEqual(AppKit.NSUnboldFontMask, 0x00000004)
@@ -38,7 +38,7 @@ class TestNSFontManager(TestCase):
         self.assertEqual(AppKit.NSLighterFontAction, 6)
         self.assertEqual(AppKit.NSRemoveTraitFontAction, 7)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSFontManager.isMultiple)
         self.assertArgIsBOOL(AppKit.NSFontManager.setSelectedFont_isMultiple_, 1)
         self.assertArgIsBOOL(AppKit.NSFontManager.fontMenu_, 0)
@@ -53,5 +53,5 @@ class TestNSFontManager(TestCase):
 
         self.assertArgIsBOOL(AppKit.NSFontManager.convertWeight_ofFont_, 0)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertResultIsBOOL(TestNSFontManagerHelper.fontManager_willIncludeFont_)

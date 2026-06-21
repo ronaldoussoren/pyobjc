@@ -4,5 +4,5 @@ import Quartz
 
 class TestQCCompositionRepository(TestCase):
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.QCCompositionRepositoryDidUpdateNotification, str)

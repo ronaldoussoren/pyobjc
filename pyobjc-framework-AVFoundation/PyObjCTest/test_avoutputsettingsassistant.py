@@ -7,32 +7,32 @@ class TestAVOutputSettingsAssistant(TestCase):
         self.assertIsTypedEnum(AVFoundation.AVOutputSettingsPreset, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(AVFoundation.AVOutputSettingsPreset640x480, str)
         self.assertIsInstance(AVFoundation.AVOutputSettingsPreset960x540, str)
         self.assertIsInstance(AVFoundation.AVOutputSettingsPreset1280x720, str)
         self.assertIsInstance(AVFoundation.AVOutputSettingsPreset1920x1080, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AVFoundation.AVOutputSettingsPreset3840x2160, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AVFoundation.AVOutputSettingsPresetHEVC1920x1080, str)
         self.assertIsInstance(AVFoundation.AVOutputSettingsPresetHEVC3840x2160, str)
 
     @min_os_level("12.1")
-    def testConstants12_1(self):
+    def test_constants12_1(self):
         self.assertIsInstance(AVFoundation.AVOutputSettingsPresetHEVC7680x4320, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(AVFoundation.AVOutputSettingsPresetMVHEVC960x960, str)
         self.assertIsInstance(AVFoundation.AVOutputSettingsPresetMVHEVC1440x1440, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(AVFoundation.AVOutputSettingsPresetHEVC4320x2160, str)
         self.assertIsInstance(AVFoundation.AVOutputSettingsPresetMVHEVC4320x4320, str)
         self.assertIsInstance(AVFoundation.AVOutputSettingsPresetMVHEVC7680x7680, str)

@@ -4,7 +4,7 @@ import Quartz
 
 class TestCAOpenGLLayer(TestCase):
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(Quartz.CAOpenGLLayer.isAsynchronous)
         self.assertArgIsBOOL(Quartz.CAOpenGLLayer.setAsynchronous_, 0)
 
@@ -22,7 +22,7 @@ class TestCAOpenGLLayer(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(Quartz.CAOpenGLLayer.wantsExtendedDynamicRangeContent)
         self.assertArgIsBOOL(
             Quartz.CAOpenGLLayer.setWantsExtendedDynamicRangeContent_, 0

@@ -41,5 +41,5 @@ class TestPHPicker(TestCase):
         self.assertEqual(PhotosUI.PHPickerMetadataOptionsRemoveCaptions, 1 << 1)
 
     @min_sdk_level("13.0")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("PHPickerViewControllerDelegate", PhotosUI)

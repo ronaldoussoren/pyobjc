@@ -13,7 +13,7 @@ class TestACAccountStore(TestCase):
         self.assertIsEnumType(Accounts.ACAccountCredentialRenewResult)
 
     @min_os_level("10.8")
-    def testConstants(self):
+    def test_constants(self):
         self.assertHasAttr(Accounts, "ACAccountStoreDidChangeNotification")
         self.assertIsInstance(Accounts.ACAccountStoreDidChangeNotification, str)
 
@@ -21,7 +21,7 @@ class TestACAccountStore(TestCase):
         self.assertEqual(Accounts.ACAccountCredentialRenewResultRejected, 1)
         self.assertEqual(Accounts.ACAccountCredentialRenewResultFailed, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             Accounts.ACAccountStore.saveAccount_withCompletionHandler_,
             1,

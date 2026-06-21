@@ -6,11 +6,11 @@ import objc
 
 class TestVNUtils(TestCase):
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Vision.VNNormalizedIdentityRect, Quartz.CGRect)
 
     @min_os_level("10.13")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultHasType(Vision.VNNormalizedRectIsIdentityRect, objc._C_BOOL)
         self.assertArgHasType(
             Vision.VNNormalizedRectIsIdentityRect, 0, Quartz.CGRect.__typestr__
@@ -48,15 +48,15 @@ class TestVNUtils(TestCase):
         Vision.VNImagePointForFaceLandmarkPoint
 
     @min_os_level("10.15")
-    def testFunctions10_15(self):
+    def test_functions10_15(self):
         Vision.VNElementTypeSize
 
     @min_os_level("11.0")
-    def testFunctions11_0(self):
+    def test_functions11_0(self):
         Vision.VNNormalizedPointForImagePoint
 
     @min_os_level("12.0")
-    def testFunctions12_0(self):
+    def test_functions12_0(self):
         Vision.VNImagePointForNormalizedPointUsingRegionOfInterest
         Vision.VNNormalizedPointForImagePointUsingRegionOfInterest
         Vision.VNImageRectForNormalizedRectUsingRegionOfInterest

@@ -3,7 +3,7 @@ import SyncServices
 
 
 class TestISyncClient(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SyncServices.ISyncStatusRunning, 1)
         self.assertEqual(SyncServices.ISyncStatusSuccess, 2)
         self.assertEqual(SyncServices.ISyncStatusWarnings, 3)
@@ -17,7 +17,7 @@ class TestISyncClient(TestCase):
         self.assertIsInstance(SyncServices.ISyncClientTypeServer, str)
         self.assertIsInstance(SyncServices.ISyncClientTypePeer, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SyncServices.ISyncClient.canPushChangesForEntityName_)
         self.assertResultIsBOOL(SyncServices.ISyncClient.canPullChangesForEntityName_)
         self.assertResultIsBOOL(SyncServices.ISyncClient.isEnabledForEntityName_)
@@ -36,6 +36,6 @@ class TestISyncClient(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(SyncServices.ISyncClient.formatsRelationships)
         self.assertArgIsBOOL(SyncServices.ISyncClient.setFormatsRelationships_, 0)

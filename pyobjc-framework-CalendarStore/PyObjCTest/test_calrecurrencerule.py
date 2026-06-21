@@ -3,10 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalRecurrenceRule(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CalendarStore.CalRecurrenceEnd.usesEndDate)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CalendarStore.CalRecurrenceDaily, 0)
         self.assertEqual(CalendarStore.CalRecurrenceWeekly, 1)
         self.assertEqual(CalendarStore.CalRecurrenceMonthly, 2)

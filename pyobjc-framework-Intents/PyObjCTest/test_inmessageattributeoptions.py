@@ -7,7 +7,7 @@ class TestINMessageAttributeOptions(TestCase):
         self.assertIsEnumType(Intents.INMessageAttributeOptions)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INMessageAttributeOptionRead, 1 << 0)
         self.assertEqual(Intents.INMessageAttributeOptionUnread, 1 << 1)
         self.assertEqual(Intents.INMessageAttributeOptionFlagged, 1 << 2)

@@ -20,7 +20,7 @@ class TestICCameraDevice(TestCase):
         self.assertIsTypedEnum(ImageCaptureCore.ICDeleteResult, str)
         self.assertIsTypedEnum(ImageCaptureCore.ICUploadOption, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(ImageCaptureCore.ICCameraDeviceCanTakePicture, str)
         self.assertIsInstance(
             ImageCaptureCore.ICCameraDeviceCanTakePictureUsingShutterReleaseOnCamera,
@@ -43,7 +43,7 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(ImageCaptureCore.ICMediaPresentationOriginalAssets, 2)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(ImageCaptureCore.ICDeleteSuccessful, str)
         self.assertIsInstance(ImageCaptureCore.ICDeleteCanceled, str)
         self.assertIsInstance(ImageCaptureCore.ICDeleteFailed, str)
@@ -53,17 +53,17 @@ class TestICCameraDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICDeleteErrorCanceled, str)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(ImageCaptureCore.ICTruncateAfterSuccessfulDownload, str)
 
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("ICCameraDeviceDelegate", ImageCaptureCore)
 
     @min_sdk_level("10.7")
-    def testProtocolObjects10_7(self):
+    def test_protocols10_7(self):
         self.assertProtocolExists("ICCameraDeviceDownloadDelegate", ImageCaptureCore)
 
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestICCameraDeviceHelper.didDownloadFile_error_options_contextInfo_,
             3,
@@ -80,7 +80,7 @@ class TestICCameraDevice(TestCase):
             b"q",
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraDevice.isLocked)
         self.assertResultIsBOOL(
             ImageCaptureCore.ICCameraDevice.isAccessRestrictedAppleDevice

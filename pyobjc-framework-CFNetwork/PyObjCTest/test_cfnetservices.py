@@ -4,12 +4,12 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestCFNetServices(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CFNetwork.CFNetServiceRef)
         self.assertIsCFType(CFNetwork.CFNetServiceMonitorRef)
         self.assertIsCFType(CFNetwork.CFNetServiceBrowserRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainMach, int)
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainNetServices, int)
 
@@ -32,7 +32,7 @@ class TestCFNetServices(TestCase):
         self.assertEqual(CFNetwork.kCFNetServiceFlagIsRegistrationDomain, 4)
         self.assertEqual(CFNetwork.kCFNetServiceFlagRemove, 8)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CFNetwork.CFNetServiceGetTypeID(), int)
         self.assertIsInstance(CFNetwork.CFNetServiceMonitorGetTypeID(), int)
         self.assertIsInstance(CFNetwork.CFNetServiceBrowserGetTypeID(), int)

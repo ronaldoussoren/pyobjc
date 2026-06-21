@@ -4,7 +4,7 @@ import CloudKit
 
 class TestCKFetchDatabaseChangesOperation(TestCase):
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(
             CloudKit.CKFetchDatabaseChangesOperation.setRecordZoneWithIDChangedBlock_,
             0,
@@ -51,7 +51,7 @@ class TestCKFetchDatabaseChangesOperation(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             CloudKit.CKFetchDatabaseChangesOperation.setRecordZoneWithIDWasPurgedBlock_,
             0,
@@ -63,7 +63,7 @@ class TestCKFetchDatabaseChangesOperation(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertArgIsBlock(
             CloudKit.CKFetchDatabaseChangesOperation.setRecordZoneWithIDWasDeletedDueToUserEncryptedDataResetBlock_,
             0,

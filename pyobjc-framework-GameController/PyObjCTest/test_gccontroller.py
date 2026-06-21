@@ -8,11 +8,11 @@ class TestGCController(TestCase):
         self.assertIsEnumType(GameController.GCControllerPlayerIndex)
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(GameController.GCController, objc.objc_class)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBlock(
             GameController.GCController.controllerPausedHandler, b"v@"
         )
@@ -30,7 +30,7 @@ class TestGCController(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(
             GameController.GCEventViewController.controllerUserInteractionEnabled
         )
@@ -39,15 +39,15 @@ class TestGCController(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(GameController.GCController.isSnapshot)
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(GameController.GCController.supportsHIDDevice_)
 
     @min_os_level("11.3")
-    def testMethods11_3(self):
+    def test_methods11_3(self):
         self.assertResultIsBOOL(
             GameController.GCController.shouldMonitorBackgroundEvents
         )

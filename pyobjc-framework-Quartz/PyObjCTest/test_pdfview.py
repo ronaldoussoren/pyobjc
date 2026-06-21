@@ -33,7 +33,7 @@ class TestPDFView(TestCase):
         self.assertIsEnumType(Quartz.PDFDisplayMode)
         self.assertIsEnumType(Quartz.PDFInterpolationQuality)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kPDFDisplaySinglePage, 0)
         self.assertEqual(Quartz.kPDFDisplaySinglePageContinuous, 1)
         self.assertEqual(Quartz.kPDFDisplayTwoUp, 2)
@@ -63,19 +63,19 @@ class TestPDFView(TestCase):
         self.assertEqual(Quartz.kPDFDisplayDirectionHorizontal, 1)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(Quartz.PDFViewAnnotationWillHitNotification, str)
         self.assertIsInstance(Quartz.PDFViewSelectionChangedNotification, str)
         self.assertIsInstance(Quartz.PDFViewDisplayModeChangedNotification, str)
         self.assertIsInstance(Quartz.PDFViewDisplayBoxChangedNotification, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Quartz.kPDFInterpolationQualityNone, 0)
         self.assertEqual(Quartz.kPDFInterpolationQualityLow, 1)
         self.assertEqual(Quartz.kPDFInterpolationQualityHigh, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.PDFView.canGoToFirstPage)
         self.assertResultIsBOOL(Quartz.PDFView.canGoToLastPage)
         self.assertResultIsBOOL(Quartz.PDFView.canGoToNextPage)
@@ -101,18 +101,18 @@ class TestPDFView(TestCase):
         self.assertArgIsBOOL(Quartz.PDFView.setAllowsDragging_, 0)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertArgIsBOOL(Quartz.PDFView.setCurrentSelection_animate_, 1)
         self.assertArgIsBOOL(Quartz.PDFView.printWithInfo_autoRotate_, 1)
         self.assertArgIsBOOL(Quartz.PDFView.printWithInfo_autoRotate_pageScaling_, 1)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.PDFView.enableDataDetectors)
         self.assertArgIsBOOL(Quartz.PDFView.setEnableDataDetectors_, 0)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(Quartz.PDFView.displaysRTL)
         self.assertArgIsBOOL(Quartz.PDFView.setDisplaysRTL_, 0)
 
@@ -120,12 +120,12 @@ class TestPDFView(TestCase):
         self.assertArgIsBOOL(Quartz.PDFView.setAcceptsDraggedFiles_, 0)
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsBOOL(Quartz.PDFView.pageShadowsEnabled)
         self.assertArgIsBOOL(Quartz.PDFView.enablePageShadows_, 0)
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(Quartz.PDFView.isInMarkupMode)
         self.assertArgIsBOOL(Quartz.PDFView.setInMarkupMode_, 0)
 
@@ -133,7 +133,7 @@ class TestPDFView(TestCase):
         # self.assertArgIsBOOL(Quartz.PDFView.setFindInteractionEnabled_, 0)
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("PDFViewDelegate", Quartz)
 
     def test_protocol_methods(self):

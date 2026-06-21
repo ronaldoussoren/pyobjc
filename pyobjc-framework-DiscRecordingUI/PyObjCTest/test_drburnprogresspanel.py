@@ -8,7 +8,7 @@ class TestDRBurnProgressPanelHelper(DiscRecordingUI.NSObject):
 
 
 class TestDRBurnProgressPanel(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             DiscRecordingUI.DRBurnProgressPanelWillBeginNotification, str
         )
@@ -16,7 +16,7 @@ class TestDRBurnProgressPanel(TestCase):
             DiscRecordingUI.DRBurnProgressPanelDidFinishNotification, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             DiscRecordingUI.DRBurnProgressPanel.setVerboseProgressStatus_, 0
         )

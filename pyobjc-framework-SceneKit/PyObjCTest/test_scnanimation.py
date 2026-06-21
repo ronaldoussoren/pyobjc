@@ -28,11 +28,11 @@ class TestSCNAnimationHelper(SceneKit.NSObject):
 
 class TestSCNAnimation(TestCase):
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("SCNAnimatable", SceneKit)
 
     @min_os_level("10.10")
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestSCNAnimationHelper.isAnimationForKeyPaused_)
         self.assertArgHasType(
             TestSCNAnimationHelper.removeAnimationForKey_fadeOutDuration_,
@@ -64,12 +64,12 @@ class TestSCNAnimation(TestCase):
             objc._C_CGFloat,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(SceneKit.CAAnimation.setUsesSceneTimeBase_, 0)
         self.assertResultIsBOOL(SceneKit.CAAnimation.usesSceneTimeBase)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBlock(
             SceneKit.SCNAnimationEvent.animationEventWithKeyTime_block_,
             1,
@@ -77,7 +77,7 @@ class TestSCNAnimation(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(SceneKit.SCNAnimation.isRemovedOnCompletion)
         self.assertArgIsBOOL(SceneKit.SCNAnimation.setRemovedOnCompletion_, 0)
         self.assertResultIsBOOL(SceneKit.SCNAnimation.isAppliedOnCompletion)

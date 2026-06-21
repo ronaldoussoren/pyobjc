@@ -6,7 +6,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestError(TestCase):
     @min_os_level("10.5")
-    def testTypes(self):
+    def test_types(self):
         try:
             NSCFError = objc.lookUpClass("__NSCFError")
         except objc.error:
@@ -91,7 +91,7 @@ class TestError(TestCase):
         self.assertEqual(v, "recovery suggestion")
 
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreFoundation.kCFErrorDomainPOSIX, str)
         self.assertIsInstance(CoreFoundation.kCFErrorDomainOSStatus, str)
         self.assertIsInstance(CoreFoundation.kCFErrorDomainMach, str)
@@ -105,10 +105,10 @@ class TestError(TestCase):
         self.assertIsInstance(CoreFoundation.kCFErrorUnderlyingErrorKey, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(CoreFoundation.kCFErrorURLKey, str)
         self.assertIsInstance(CoreFoundation.kCFErrorFilePathKey, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(CoreFoundation.kCFErrorLocalizedFailureKey, str)

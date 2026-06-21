@@ -12,7 +12,7 @@ class TestNSExceptionHandlerHelper(ExceptionHandling.NSObject):
 
 
 class TestNSExceptionHandler(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         # self.assertIsInstance(protocols.NSExceptionHandlerDelegate, objc.informal_protocol)
 
         self.assertResultIsBOOL(
@@ -32,7 +32,7 @@ class TestNSExceptionHandler(TestCase):
             objc._C_NSUInteger,
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(ExceptionHandling.NSUncaughtSystemExceptionException, str)
         self.assertIsInstance(ExceptionHandling.NSUncaughtRuntimeErrorException, str)
         self.assertIsInstance(ExceptionHandling.NSStackTraceKey, str)
@@ -81,5 +81,5 @@ class TestNSExceptionHandler(TestCase):
             ),
         )
 
-    def testFunctions(self):
+    def test_functions(self):
         ExceptionHandling.NSExceptionHandlerResume

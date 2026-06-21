@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSMetaDataAttributes(TestCase):
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(Foundation.NSMetadataItemFSNameKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemDisplayNameKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemURLKey, str)
@@ -28,7 +28,7 @@ class TestNSMetaDataAttributes(TestCase):
         )
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(Foundation.NSMetadataItemContentTypeKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemContentTypeTreeKey, str)
         self.assertIsInstance(
@@ -191,7 +191,7 @@ class TestNSMetaDataAttributes(TestCase):
         self.assertIsInstance(Foundation.NSMetadataItemIsApplicationManagedKey, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(
             Foundation.NSMetadataUbiquitousItemDownloadRequestedKey, str
         )
@@ -206,7 +206,7 @@ class TestNSMetaDataAttributes(TestCase):
         )
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(
             Foundation.NSMetadataUbiquitousSharedItemCurrentUserRoleKey, str
         )

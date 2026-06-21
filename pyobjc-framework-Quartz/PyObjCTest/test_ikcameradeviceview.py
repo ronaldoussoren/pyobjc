@@ -4,7 +4,7 @@ import Quartz
 
 class TestIKCameraDeviceView(TestCase):
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Quartz.IKCameraDeviceViewDisplayModeNone, -1)
         self.assertEqual(Quartz.IKCameraDeviceViewDisplayModeTable, 0)
         self.assertEqual(Quartz.IKCameraDeviceViewDisplayModeIcon, 1)
@@ -13,7 +13,7 @@ class TestIKCameraDeviceView(TestCase):
         self.assertEqual(Quartz.IKCameraDeviceViewTransferModeMemoryBased, 1)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.IKCameraDeviceView.hasDisplayModeTable)
         self.assertArgIsBOOL(Quartz.IKCameraDeviceView.setHasDisplayModeTable_, 0)
 
@@ -44,5 +44,5 @@ class TestIKCameraDeviceView(TestCase):
         )
 
     @min_sdk_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("IKCameraDeviceViewDelegate", Quartz)

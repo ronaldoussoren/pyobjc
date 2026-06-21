@@ -21,7 +21,7 @@ class TestCBPeriphicalManager(TestCase):
         self.assertIsEnumType(CoreBluetooth.CBPeripheralManagerState)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreBluetooth.CBPeripheralAuthorizationStatusNotDetermined, 0)
         self.assertEqual(CoreBluetooth.CBPeripheralAuthorizationStatusRestricted, 1)
         self.assertEqual(CoreBluetooth.CBPeripheralAuthorizationStatusDenied, 2)
@@ -50,15 +50,15 @@ class TestCBPeriphicalManager(TestCase):
         )
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(CoreBluetooth.CBPeripheralManager, objc.objc_class)
 
     @min_os_level("10.9")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("CBPeripheralManagerDelegate", CoreBluetooth)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreBluetooth.CBPeripheralManager.isAdvertising)
         self.assertResultIsBOOL(
             CoreBluetooth.CBPeripheralManager.updateValue_forCharacteristic_onSubscribedCentrals_  # noqa: B950
@@ -83,7 +83,7 @@ class TestCBPeriphicalManager(TestCase):
         )
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertArgIsBOOL(
             CoreBluetooth.CBPeripheralManager.publishL2CAPChannelWithEncryption_, 0
         )

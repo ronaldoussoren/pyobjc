@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, os_level_between
 
 class TestCWInterface(TestCase):
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBOOL(
             CoreWLAN.CWInterface.scanForNetworksWithName_includeHidden_error_, 1
         )
@@ -68,7 +68,7 @@ class TestCWInterface(TestCase):
         )
 
     @os_level_between("10.6", "10.8")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsWoW)
         self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsWEP)
         self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsAES_CCM)

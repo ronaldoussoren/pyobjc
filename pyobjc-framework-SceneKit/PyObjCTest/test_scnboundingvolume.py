@@ -17,10 +17,10 @@ class TestSCNBoundingVolumeHelper(SceneKit.NSObject):
 
 
 class TestSCNBoundingVolume(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("SCNBoundingVolume", SceneKit)
 
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestSCNBoundingVolumeHelper.getBoundingBoxMin_max_)
         self.assertArgHasType(
             TestSCNBoundingVolumeHelper.getBoundingBoxMin_max_,

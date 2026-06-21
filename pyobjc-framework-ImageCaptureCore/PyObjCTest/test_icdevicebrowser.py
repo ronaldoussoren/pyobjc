@@ -14,10 +14,10 @@ class TestICDeviceBrowser(TestCase):
     def test_typed_enum(self):
         self.assertIsTypedEnum(ImageCaptureCore.ICAuthorizationStatus, str)
 
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("ICDeviceBrowserDelegate", ImageCaptureCore)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             TestICDeviceBrowserHelper.deviceBrowser_didAddDevice_moreComing_, 2
         )

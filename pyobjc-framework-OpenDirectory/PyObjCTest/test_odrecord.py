@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestODRecord(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             OpenDirectory.ODRecord.setNodeCredentials_password_error_
         )
@@ -106,7 +106,7 @@ class TestODRecord(TestCase):
         self.assertArgIsOut(OpenDirectory.ODRecord.changePassword_toPassword_error_, 2)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsOut(OpenDirectory.ODRecord.policiesAndReturnError_, 0)
         self.assertArgIsOut(OpenDirectory.ODRecord.effectivePoliciesAndReturnError_, 0)
         self.assertArgIsOut(OpenDirectory.ODRecord.supportedPoliciesAndReturnError_, 0)
@@ -119,7 +119,7 @@ class TestODRecord(TestCase):
         self.assertArgIsOut(OpenDirectory.ODRecord.removePolicy_error_, 1)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
             OpenDirectory.ODRecord.addAccountPolicy_toCategory_error_
         )

@@ -16,7 +16,7 @@ class TestAVAsynchronousKeyValueLoading(TestCase):
         self.assertIsEnumType(AVFoundation.AVKeyValueStatus)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVKeyValueStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVKeyValueStatusLoading, 1)
         self.assertEqual(AVFoundation.AVKeyValueStatusLoaded, 2)
@@ -24,7 +24,7 @@ class TestAVAsynchronousKeyValueLoading(TestCase):
         self.assertEqual(AVFoundation.AVKeyValueStatusCancelled, 4)
 
     @min_os_level("10.7")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVAsynchronousKeyValueLoading", AVFoundation)
 
     def test_protocol_methods(self):

@@ -5,11 +5,11 @@ import objc
 
 class TestCGDirectDisplay(TestCase):
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(Quartz.kCGDisplayShowDuplicateLowResolutionModes, str)
 
     @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions10_8(self):
         mainID = Quartz.CGMainDisplayID()
         mode = Quartz.CGDisplayCopyDisplayMode(mainID)
         self.assertIsInstance(mode, Quartz.CGDisplayModeRef)
@@ -20,7 +20,7 @@ class TestCGDirectDisplay(TestCase):
         h = Quartz.CGDisplayModeGetPixelHeight(mode)
         self.assertIsInstance(h, int)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGNullDirectDisplay, 0)
 
         self.assertEqual(Quartz.kCGDisplayWidth, "Width")
@@ -55,7 +55,7 @@ class TestCGDirectDisplay(TestCase):
 
         self.assertEqual(Quartz.CGDisplayNoErr, Quartz.kCGErrorSuccess)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGMainDisplayID(), int)
 
         self.assertArgIsOut(Quartz.CGGetDisplaysWithPoint, 2)
@@ -329,7 +329,7 @@ class TestCGDirectDisplay(TestCase):
         self.assertArgSizeInArg(Quartz.CGSetDisplayTransferByByteTable, 4, 1)
 
     @min_os_level("10.6")
-    def testTypes10_6(self):
+    def test_types10_6(self):
         self.assertIsCFType(Quartz.CGDisplayModeRef)
 
     @min_os_level("10.6")

@@ -4,12 +4,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestNSKeyedArchiver(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSInvalidArchiveOperationException, str)
         self.assertIsInstance(Foundation.NSInvalidUnarchiveOperationException, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(Foundation.NSKeyedArchiveRootObjectKey, str)
 
     def testOutput(self):
@@ -26,7 +26,7 @@ class TestNSKeyedArchiver(TestCase):
         m = o.encodeBytes_length_forKey_.__metadata__()
         self.assertEqual(m["arguments"][2]["type"], b"n^v")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSKeyedArchiver.archiveRootObject_toFile_)
         self.assertArgIsBOOL(Foundation.NSKeyedArchiver.encodeBool_forKey_, 0)
         self.assertArgHasType(
@@ -69,14 +69,14 @@ class TestNSKeyedArchiver(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSKeyedArchiver.requiresSecureCoding)
         self.assertArgIsBOOL(Foundation.NSKeyedArchiver.setRequiresSecureCoding_, 0)
         self.assertResultIsBOOL(Foundation.NSKeyedUnarchiver.requiresSecureCoding)
         self.assertArgIsBOOL(Foundation.NSKeyedUnarchiver.setRequiresSecureCoding_, 0)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBOOL(Foundation.NSKeyedArchiver.initRequiringSecureCoding_, 0)
         self.assertArgIsBOOL(
             Foundation.NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_,
@@ -98,7 +98,7 @@ class TestNSKeyedArchiver(TestCase):
         )
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertArgIsOut(
             Foundation.NSKeyedUnarchiver.unarchivedArrayOfObjectsOfClasses_fromData_error_,
             2,
@@ -109,6 +109,6 @@ class TestNSKeyedArchiver(TestCase):
         )
 
     @min_sdk_level("10.7")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSKeyedArchiverDelegate", Foundation)
         self.assertProtocolExists("NSKeyedUnarchiverDelegate", Foundation)

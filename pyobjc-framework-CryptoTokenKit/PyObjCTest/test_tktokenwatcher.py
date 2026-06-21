@@ -4,7 +4,7 @@ import CryptoTokenKit
 
 class TestTKTokenWatcher(TestCase):
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertArgIsBlock(
             CryptoTokenKit.TKTokenWatcher.initWithInsertionHandler_, 0, b"v@"
         )
@@ -13,7 +13,7 @@ class TestTKTokenWatcher(TestCase):
         )
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertArgIsBlock(
             CryptoTokenKit.TKTokenWatcher.setInsertionHandler_, 0, b"v@"
         )

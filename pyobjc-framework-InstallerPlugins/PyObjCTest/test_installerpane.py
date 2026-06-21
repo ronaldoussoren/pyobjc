@@ -6,12 +6,12 @@ class TestInstallerPane(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(InstallerPlugins.InstallerSectionDirection)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(InstallerPlugins.InstallerDirectionForward, 0)
         self.assertEqual(InstallerPlugins.InstallerDirectionBackward, 1)
         self.assertEqual(InstallerPlugins.InstallerDirectionUndefined, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(InstallerPlugins.InstallerPane.shouldExitPane_)
         self.assertArgIsBOOL(InstallerPlugins.InstallerPane.setNextEnabled_, 0)
         self.assertResultIsBOOL(InstallerPlugins.InstallerPane.nextEnabled)

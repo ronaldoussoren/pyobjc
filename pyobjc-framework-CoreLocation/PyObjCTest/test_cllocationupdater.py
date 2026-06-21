@@ -11,7 +11,7 @@ class TestCLLocationUpdater(TestCase):
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationFitness, 3)
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(CoreLocation.CLUpdate.isStationary)
 
         self.assertArgIsBlock(
@@ -24,7 +24,7 @@ class TestCLLocationUpdater(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationDenied)
         self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationDeniedGlobally)
         self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationRestricted)

@@ -5,5 +5,5 @@ import MultipeerConnectivity
 
 class TestMCPeerID(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MultipeerConnectivity.MCPeerID, objc.objc_class)

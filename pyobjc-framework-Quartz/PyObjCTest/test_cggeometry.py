@@ -4,7 +4,7 @@ import objc
 
 
 class TestCGGeometry(TestCase):
-    def testStruct(self):
+    def test_struct(self):
         v = Quartz.CGPoint()
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
@@ -21,7 +21,7 @@ class TestCGGeometry(TestCase):
         self.assertIsInstance(v.dx, float)
         self.assertIsInstance(v.dy, float)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.CGRectMinXEdge, 0)
         self.assertEqual(Quartz.CGRectMinYEdge, 1)
         self.assertEqual(Quartz.CGRectMaxXEdge, 2)
@@ -42,7 +42,7 @@ class TestCGGeometry(TestCase):
         self.assertIsInstance(Quartz.CGRectNull, Quartz.CGRect)
         self.assertIsInstance(Quartz.CGRectInfinite, Quartz.CGRect)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = Quartz.CGPointMake(2.5, 3.5)
         self.assertIsInstance(v, Quartz.CGPoint)
         self.assertEqual(v.x, 2.5)
@@ -148,7 +148,7 @@ class TestCGGeometry(TestCase):
         self.assertTrue(Quartz.CGRectIntersectsRect(rect, rect) is True)
 
     @min_os_level("10.5")
-    def testFunctions10_5(self):
+    def test_functions10_5(self):
         d = Quartz.CGPointCreateDictionaryRepresentation((10, 5))
         self.assertIsInstance(d, Quartz.CFDictionaryRef)
 
@@ -178,7 +178,7 @@ class TestCGGeometry(TestCase):
         self.assertEqual(p, Quartz.CGRectMake(0, 10, 20, 30))
 
     @min_os_level("10.9")
-    def testFunctions10_9(self):
+    def test_functions10_9(self):
         v = Quartz.CGVectorMake(2.5, 3.5)
         self.assertIsInstance(v, Quartz.CGVector)
         self.assertEqual(v.dx, 2.5)

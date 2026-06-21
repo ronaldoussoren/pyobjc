@@ -6,7 +6,7 @@ class TestMLFeatureDescription(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(CoreML.MLModelError)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreML.MLModelErrorGeneric, 0)
         self.assertEqual(CoreML.MLModelErrorFeatureType, 1)
         self.assertEqual(CoreML.MLModelErrorIO, 3)
@@ -20,5 +20,5 @@ class TestMLFeatureDescription(TestCase):
         self.assertEqual(CoreML.MLModelErrorPredictionCancelled, 11)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(CoreML.MLModelErrorDomain, str)

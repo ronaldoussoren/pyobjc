@@ -4,7 +4,7 @@ import GameplayKit
 
 
 class TestGKRuleSystem(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameplayKit.GKRule.evaluatePredicateWithSystem_)
 
         self.assertArgIsBlock(

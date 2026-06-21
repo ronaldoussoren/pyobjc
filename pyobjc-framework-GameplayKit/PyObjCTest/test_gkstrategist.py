@@ -4,5 +4,5 @@ import GameplayKit  # noqa: F401
 
 
 class TestGKStrategist(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKStrategist", GameplayKit)

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAUViewController(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             CoreAudioKit.AUAudioUnitViewConfiguration.initWithWidth_height_hostHasController_,
             2,

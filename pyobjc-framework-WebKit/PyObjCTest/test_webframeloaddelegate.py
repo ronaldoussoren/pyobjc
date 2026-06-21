@@ -12,10 +12,10 @@ class TestWebFrameLoadDelegateHelper(WebKit.NSObject):
 
 class TestWebFrameLoadDelegate(TestCase):
     @min_sdk_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("WebFrameLoadDelegate", WebKit)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestWebFrameLoadDelegateHelper.webView_willPerformClientRedirectToURL_delay_fireDate_forFrame_,  # noqa: B950
             2,

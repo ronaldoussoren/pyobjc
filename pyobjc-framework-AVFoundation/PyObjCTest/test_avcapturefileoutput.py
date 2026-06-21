@@ -13,7 +13,7 @@ class TestAVCaptureFileOutputHelper(AVFoundation.NSObject):
 
 
 class TestAVCaptureFileOutput(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput.isRecording)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureFileOutput.isRecordingPaused
@@ -26,11 +26,11 @@ class TestAVCaptureFileOutput(TestCase):
             AVFoundation.AVCaptureFileOutput_Tundra.isRecordingPaused
         )  # noqa: B950
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate", AVFoundation)
         self.assertProtocolExists("AVCaptureFileOutputDelegate", AVFoundation)
 
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestAVCaptureFileOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_  # noqa: B950
         )
@@ -41,7 +41,7 @@ class TestAVCaptureFileOutput(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureMovieFileOutput.isPrimaryConstituentDeviceSwitchingBehaviorForRecordingEnabled
         )
@@ -58,7 +58,7 @@ class TestAVCaptureFileOutput(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureMovieFileOutput.isSpatialVideoCaptureSupported
         )
@@ -71,7 +71,7 @@ class TestAVCaptureFileOutput(TestCase):
         )
 
     @min_os_level("27.0")
-    def testMethods27_0(self):
+    def test_methods27_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureMovieFileOutput.usesProVideoStorage
         )

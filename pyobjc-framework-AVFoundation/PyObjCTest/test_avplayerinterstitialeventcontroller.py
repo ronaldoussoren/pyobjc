@@ -10,7 +10,7 @@ class TestAVPlayerInterstitialEventController(TestCase):
             AVFoundation.AVPlayerInterstitialEventAssetListResponseStatus
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVPlayerInterstitialEventRestrictionNone, 0)
         self.assertEqual(
             AVFoundation.AVPlayerInterstitialEventRestrictionConstrainsSeekingForwardInPrimaryContent,

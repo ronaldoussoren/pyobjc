@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAttributedString(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSFontAttributeName, str)
         self.assertIsInstance(AppKit.NSParagraphStyleAttributeName, str)
         self.assertIsInstance(AppKit.NSForegroundColorAttributeName, str)
@@ -128,17 +128,17 @@ class TestNSAttributedString(TestCase):
         self.assertEqual(AppKit.NSTextScalingiOS, 1)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(AppKit.NSAppearanceDocumentAttribute, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(AppKit.NSTextScalingDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSSourceTextScalingDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSTargetTextScalingDocumentOption, str)
         self.assertIsInstance(AppKit.NSSourceTextScalingDocumentOption, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             AppKit.NSAttributedString.initWithURL_options_documentAttributes_error_, 2
         )
@@ -237,26 +237,26 @@ class TestNSAttributedString(TestCase):
         self.assertResultIsBOOL(AppKit.NSAttributedString.containsAttachments)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSAttributedString.containsAttachmentsInRange_)
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(AppKit.NSAttributedString.prefersRTFDInRange_)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(AppKit.NSManagerDocumentAttribute, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(AppKit.NSWritingDirectionAttributeName, str)
         self.assertIsInstance(AppKit.NSFileTypeDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSCategoryDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSFileTypeDocumentOption, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsTypedEnum(AppKit.NSTextLayoutSectionKey, str)
         self.assertIsInstance(AppKit.NSVerticalGlyphFormAttributeName, str)
         self.assertIsInstance(AppKit.NSTextLayoutSectionOrientation, str)
@@ -264,31 +264,31 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(AppKit.NSTextLayoutSectionsAttribute, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(AppKit.NSTextAlternativesAttributeName, str)
         self.assertIsInstance(AppKit.NSUsesScreenFontsDocumentAttribute, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AppKit.NSTextEffectAttributeName, str)
 
         self.assertIsTypedEnum(AppKit.NSTextEffectStyle, str)
         self.assertIsInstance(AppKit.NSTextEffectLetterpressStyle, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(AppKit.NSDefaultAttributesDocumentAttribute, str)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(AppKit.NSTrackingAttributeName, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(AppKit.NSDefaultFontExcludedDocumentAttribute, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(AppKit.NSTextHighlightStyleAttributeName, str)
         self.assertIsInstance(AppKit.NSTextHighlightColorSchemeAttributeName, str)
         self.assertIsInstance(AppKit.NSAdaptiveImageGlyphAttributeName, str)

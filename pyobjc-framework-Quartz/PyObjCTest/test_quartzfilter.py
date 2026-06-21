@@ -4,5 +4,5 @@ import Quartz
 
 class TestQuartzFilter(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.QuartzFilter.applyToContext_)

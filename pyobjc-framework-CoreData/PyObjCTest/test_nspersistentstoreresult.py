@@ -10,7 +10,7 @@ class TestNSPersistentStoreResult(TestCase):
         self.assertIsEnumType(CoreData.NSPersistentCloudKitContainerEventResultType)
         self.assertIsEnumType(CoreData.NSPersistentHistoryResultType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreData.NSStatusOnlyResultType, 0)
         self.assertEqual(CoreData.NSUpdatedObjectIDsResultType, 1)
         self.assertEqual(CoreData.NSUpdatedObjectsCountResultType, 2)

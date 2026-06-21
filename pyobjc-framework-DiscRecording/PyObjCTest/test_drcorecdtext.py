@@ -5,10 +5,10 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRCoreCDText(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(DiscRecording.DRCDTextBlockRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             DiscRecording.kDRCDTextEncodingISOLatin1Modified,
             CoreFoundation.kCFStringEncodingISOLatin1,
@@ -69,7 +69,7 @@ class TestDRCoreCDText(TestCase):
         self.assertIsInstance(DiscRecording.kDRCDTextTOC2Key, str)
         self.assertIsInstance(DiscRecording.kDRCDTextSizeKey, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(
             DiscRecording.DRCDTextBlockCreateArrayFromPackList
         )

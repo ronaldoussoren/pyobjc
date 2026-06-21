@@ -9,7 +9,7 @@ class TestNSURLProtocolHelper(Foundation.NSObject):
 
 
 class TestNSURLProtocol(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSURLProtocol.canInitWithRequest_)
         self.assertResultIsBOOL(
             Foundation.NSURLProtocol.requestIsCacheEquivalent_toRequest_
@@ -23,8 +23,8 @@ class TestNSURLProtocol(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(Foundation.NSURLProtocol.canInitWithTask_)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSURLProtocolClient", Foundation)

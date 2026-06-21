@@ -9,18 +9,18 @@ class TestTkSmartCardATR(TestCase):
         self.assertIsEnumType(CryptoTokenKit.TKSmartCardProtocol)
 
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(
             CryptoTokenKit.TKSmartCardATRInterfaceGroup, objc.objc_class
         )
         self.assertIsInstance(CryptoTokenKit.TKSmartCardATR, objc.objc_class)
 
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(CryptoTokenKit.TKSmartCardATR.initWithSource_, 0, b"i@")
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CryptoTokenKit.TKSmartCardProtocolNone, 0)
         self.assertEqual(CryptoTokenKit.TKSmartCardProtocolT0, 1)
         self.assertEqual(CryptoTokenKit.TKSmartCardProtocolT1, 2)

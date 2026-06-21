@@ -31,13 +31,13 @@ def onTheNetwork():
 
 
 class TestSocket(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFSocketRef)
 
     def testTypeID(self):
         self.assertIsInstance(CoreFoundation.CFSocketGetTypeID(), int)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFSocketSuccess, 0)
         self.assertEqual(CoreFoundation.kCFSocketError, -1)
         self.assertEqual(CoreFoundation.kCFSocketTimeout, -2)
@@ -61,7 +61,7 @@ class TestSocket(TestCase):
         self.assertIsInstance(CoreFoundation.kCFSocketRetrieveCommand, str)
         self.assertEqual(CoreFoundation.kCFSocketLeaveErrors, 64)
 
-    def testStructs(self):
+    def test_structs(self):
         o = CoreFoundation.CFSocketSignature()
         self.assertHasAttr(o, "protocolFamily")
         self.assertHasAttr(o, "socketType")

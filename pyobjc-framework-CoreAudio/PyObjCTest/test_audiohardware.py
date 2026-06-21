@@ -37,7 +37,7 @@ AudioDeviceIOBlock = (
 
 
 class TestAudioHardware(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreAudio.kAudioObjectSystemObject, 1)
 
         self.assertEqual(CoreAudio.kAudioObjectPropertyCreator, fourcc(b"oplg"))
@@ -410,7 +410,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(CoreAudio.kAudioTapPropertyDescription, fourcc(b"tdsc"))
         self.assertEqual(CoreAudio.kAudioTapPropertyFormat, fourcc(b"tfmt"))
 
-    def testFunctions(self):
+    def test_functions(self):
         CoreAudio.AudioObjectShow
 
         self.assertArgIsIn(CoreAudio.AudioObjectHasProperty, 1)
@@ -500,7 +500,7 @@ class TestAudioHardware(TestCase):
         self.assertArgIsOut(CoreAudio.AudioHardwareCreateAggregateDevice, 1)
         CoreAudio.AudioHardwareDestroyAggregateDevice
 
-    def testStructs(self):
+    def test_structs(self):
         # XXX: Requires manual support
         v = CoreAudio.AudioHardwareIOProcStreamUsage()
         self.assertEqual(v.mIOProc, None)

@@ -24,7 +24,7 @@ class TestNSWorkspace(TestCase):
         self.assertEqual(res[1], "/System/Library/CoreServices/Finder.app")
         self.assertEqual(res[2], "")
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSWorkspaceLaunchAndPrint, 0x00000002)
         self.assertEqual(AppKit.NSWorkspaceLaunchWithErrorPresentation, 0x00000040)
         self.assertEqual(AppKit.NSWorkspaceLaunchInhibitingBackgroundOnly, 0x00000080)
@@ -78,7 +78,7 @@ class TestNSWorkspace(TestCase):
         self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeReplaceFile, 2)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(AppKit.NSWorkspaceDesktopImageScalingKey, str)
         self.assertIsInstance(AppKit.NSWorkspaceDesktopImageAllowClippingKey, str)
         self.assertIsInstance(AppKit.NSWorkspaceDesktopImageFillColorKey, str)
@@ -103,7 +103,7 @@ class TestNSWorkspace(TestCase):
         self.assertIsInstance(AppKit.NSWorkspaceLaunchConfigurationEnvironment, str)
         self.assertIsInstance(AppKit.NSWorkspaceLaunchConfigurationArchitecture, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSWorkspace.openFile_)
         self.assertResultIsBOOL(AppKit.NSWorkspace.openFile_withApplication_)
         self.assertResultIsBOOL(
@@ -193,7 +193,7 @@ class TestNSWorkspace(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsOut(
             AppKit.NSWorkspace.launchApplicationAtURL_options_configuration_error_, 3
         )
@@ -217,7 +217,7 @@ class TestNSWorkspace(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsOut(AppKit.NSWorkspace.openURL_options_configuration_error_, 3)
         self.assertArgIsOut(
             AppKit.NSWorkspace.openURLs_withApplicationAtURL_options_configuration_error_,
@@ -225,18 +225,18 @@ class TestNSWorkspace(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(AppKit.NSWorkspace.isVoiceOverEnabled)
         self.assertResultIsBOOL(AppKit.NSWorkspace.isSwitchControlEnabled)
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertArgIsBlock(
             AppKit.NSWorkspace.requestAuthorizationOfType_completionHandler_, 1, b"v@@"
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             AppKit.NSWorkspace.openURL_configuration_completionHandler_, 2, b"v@@"
         )
@@ -282,7 +282,7 @@ class TestNSWorkspace(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertArgIsBlock(
             AppKit.NSWorkspace.setDefaultApplicationAtURL_toOpenContentTypeOfFileAtURL_completionHandler_,
             2,

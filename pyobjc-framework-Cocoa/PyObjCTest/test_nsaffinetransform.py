@@ -204,7 +204,7 @@ class TestNSAffineTransformStruct(TestCase):
 
 
 class TestAffineTransform(TestCase):
-    def testStructReturn(self):
+    def test_structReturn(self):
         transform = Foundation.NSAffineTransform.transform()
         s = transform.transformStruct()
         self.assertIsInstance(s, Foundation.NSAffineTransformStruct)

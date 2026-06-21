@@ -25,7 +25,7 @@ class TestNSURLConnectionHelper(Foundation.NSObject):
 
 
 class TestNSURLConnection(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSURLConnection.canHandleRequest_)
 
         self.assertArgIsBOOL(
@@ -42,7 +42,7 @@ class TestNSURLConnection(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(
             TestNSURLConnectionHelper.connection_canAuthenticateAgainstProtectionSpace_
         )
@@ -93,7 +93,7 @@ class TestNSURLConnection(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsBlock(
             Foundation.NSURLConnection.sendAsynchronousRequest_queue_completionHandler_,
             2,
@@ -101,10 +101,10 @@ class TestNSURLConnection(TestCase):
         )
 
     @min_sdk_level("10.7")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSURLConnectionDelegate", Foundation)
 
     @min_sdk_level("10.10")
-    def testProtocolObjects10_10(self):
+    def test_protocols10_10(self):
         self.assertProtocolExists("NSURLConnectionDataDelegate", Foundation)
         self.assertProtocolExists("NSURLConnectionDownloadDelegate", Foundation)

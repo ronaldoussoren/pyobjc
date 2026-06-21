@@ -4,7 +4,7 @@ import Contacts
 
 class TestCNInstantMessageAddress(TestCase):
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Contacts.CNInstantMessageAddressUsernameKey, str)
         self.assertIsInstance(Contacts.CNInstantMessageAddressServiceKey, str)
         self.assertIsInstance(Contacts.CNInstantMessageServiceAIM, str)

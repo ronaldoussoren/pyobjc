@@ -7,7 +7,7 @@ class TestAVAnimation(TestCase):
         self.assertIsTypedEnum(AVFoundation.AVLayerVideoGravity, str)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVCoreAnimationBeginTimeAtZero, float)
         self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspect, str)
         self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspectFill, str)

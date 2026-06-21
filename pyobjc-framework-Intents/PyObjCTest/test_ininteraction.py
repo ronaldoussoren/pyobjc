@@ -8,7 +8,7 @@ class TestINInteraction(TestCase):
         self.assertIsEnumType(Intents.INInteractionDirection)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INIntentHandlingStatusUnspecified, 0)
         self.assertEqual(Intents.INIntentHandlingStatusReady, 1)
         self.assertEqual(Intents.INIntentHandlingStatusInProgress, 2)

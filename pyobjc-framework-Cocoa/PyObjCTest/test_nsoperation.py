@@ -6,7 +6,7 @@ class TestNSOperation(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSOperationQueuePriority)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSOperationQueuePriorityVeryLow, -8)
         self.assertEqual(Foundation.NSOperationQueuePriorityLow, -4)
         self.assertEqual(Foundation.NSOperationQueuePriorityNormal, 0)
@@ -36,7 +36,7 @@ class TestNSOperation(TestCase):
             Foundation.NSQualityOfServiceBackground,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSOperation.isCancelled)
         self.assertResultIsBOOL(Foundation.NSOperation.isExecuting)
         self.assertResultIsBOOL(Foundation.NSOperation.isFinished)
@@ -47,7 +47,7 @@ class TestNSOperation(TestCase):
         self.assertArgIsBOOL(Foundation.NSOperationQueue.setSuspended_, 0)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBlock(Foundation.NSOperation.completionBlock, b"v")
         self.assertArgIsBlock(Foundation.NSOperation.setCompletionBlock_, 0, b"v")
 
@@ -64,9 +64,9 @@ class TestNSOperation(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSOperation.isAsynchronous)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(Foundation.NSOperationQueue.addBarrierBlock_, 0, b"v")

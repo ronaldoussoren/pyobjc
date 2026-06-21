@@ -8,7 +8,7 @@ import InstallerPlugins
 
 
 class TestInstallerPlugins(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(InstallerPlugins, "InstallerSection")
         self.assertIsInstance(InstallerPlugins.InstallerSection, objc.objc_class)
 

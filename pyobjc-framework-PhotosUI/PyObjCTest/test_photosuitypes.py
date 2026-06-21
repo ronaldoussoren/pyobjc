@@ -7,7 +7,7 @@ class TestPhotosUITypes(TestCase):
         self.assertIsTypedEnum(PhotosUI.PHProjectCategory, str)
 
     @min_os_level("10.13")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(PhotosUI.PHProjectTypeUndefined, str)
 
     @min_os_level("10.14")

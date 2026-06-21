@@ -4,7 +4,7 @@ import NetworkExtension
 
 class NEFilterProviderConfiguration(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             NetworkExtension.NEFilterProviderConfiguration.filterBrowsers
         )
@@ -20,7 +20,7 @@ class NEFilterProviderConfiguration(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(
             NetworkExtension.NEFilterProviderConfiguration.filterPackets
         )

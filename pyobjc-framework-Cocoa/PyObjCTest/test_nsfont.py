@@ -70,7 +70,7 @@ class TestNSFont(TestCase):
             (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0),
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSFontIdentityMatrix, None)
 
         self.assertEqual(AppKit.NSControlGlyph, 0xFFFFFF)
@@ -86,7 +86,7 @@ class TestNSFont(TestCase):
         self.assertIsInstance(AppKit.NSFontSetChangedNotification, str)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsOut(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 0)
         self.assertArgIsIn(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 1)
         self.assertArgSizeInArg(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 0, 2)
@@ -98,10 +98,10 @@ class TestNSFont(TestCase):
         self.assertArgSizeInArg(AppKit.NSFont.getAdvancements_forCGGlyphs_count_, 1, 2)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSFont.isVertical)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSFont.isFixedPitch)
         self.assertArgIsOut(AppKit.NSFont.getBoundingRects_forGlyphs_count_, 0)
         self.assertArgHasType(
@@ -123,7 +123,7 @@ class TestNSFont(TestCase):
             AppKit.NSFont.getAdvancements_forPackedGlyphs_length_, 1, 2
         )
 
-    def testFunctions(self):
+    def test_functions(self):
         glyphs = [ord("A"), ord("B"), ord("9"), ord("a")]
 
         rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(

@@ -7,7 +7,7 @@ class TestINStartAudioCallIntentResponse(TestCase):
         self.assertIsEnumType(Intents.INStartAudioCallIntentResponseCode)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INStartAudioCallIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INStartAudioCallIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INStartAudioCallIntentResponseCodeContinueInApp, 2)

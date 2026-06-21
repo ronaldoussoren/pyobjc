@@ -51,10 +51,10 @@ class TestNSTextAttachmentHelper(AppKit.NSObject):
 
 
 class TestNSTextAttachment(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSAttachmentCharacter, chr(0xFFFC))
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTextAttachmentCell.wantsToTrackMouse)
         self.assertArgIsBOOL(AppKit.NSTextAttachmentCell.highlight_withFrame_inView_, 0)
         self.assertResultIsBOOL(
@@ -75,7 +75,7 @@ class TestNSTextAttachment(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(AppKit.NSTextAttachment.allowsTextAttachmentView)
         self.assertArgIsBOOL(AppKit.NSTextAttachment.setAllowsTextAttachmentView_, 0)
         self.assertResultIsBOOL(AppKit.NSTextAttachment.usesTextAttachmentView)
@@ -88,13 +88,13 @@ class TestNSTextAttachment(TestCase):
         )
 
     @min_sdk_level("10.11")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTextAttachmentContainer", AppKit)
         self.assertProtocolExists(
             "NSTextAttachmentCell", AppKit, "NSTextAttachmentCellProtocol"
         )
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSTextAttachmentHelper.imageForBounds_textContainer_characterIndex_,
             0,

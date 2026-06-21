@@ -17,7 +17,7 @@ class TestVNRequestHelper(Vision.NSObject):
 
 class TestVNRequest(TestCase):
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(Vision.VNRequest.initWithCompletionHandler_, 0, b"v@@")
         self.assertResultIsBOOL(Vision.VNRequest.preferBackgroundProcessing)
         self.assertArgIsBOOL(Vision.VNRequest.setPreferBackgroundProcessing_, 0)
@@ -34,7 +34,7 @@ class TestVNRequest(TestCase):
         self.assertResultIsBOOL(TestVNRequestHelper.indeterminate)
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsOut(
             Vision.VNRequest.supportedComputeStageDevicesAndReturnError_, 0
         )
@@ -43,5 +43,5 @@ class TestVNRequest(TestCase):
         self.assertEqual(Vision.VNRequestRevisionUnspecified, 0)
 
     @min_sdk_level("10.15")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("VNRequestProgressProviding", Vision)

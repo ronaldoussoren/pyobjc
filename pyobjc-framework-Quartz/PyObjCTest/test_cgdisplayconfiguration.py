@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGDisplayConfiguration(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsOpaquePointer(Quartz.CGDisplayConfigRef)
 
         err, config = Quartz.CGBeginDisplayConfiguration(None)
@@ -151,7 +151,7 @@ class TestCGDisplayConfiguration(TestCase):
         self.assertEqual(Quartz.kCGDisplayDesktopShapeChangedFlag, (1 << 12))
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         self.assertResultHasType(Quartz.CGConfigureDisplayWithDisplayMode, b"i")
         self.assertArgHasType(
             Quartz.CGConfigureDisplayWithDisplayMode, 0, b"^{_CGDisplayConfigRef=}"

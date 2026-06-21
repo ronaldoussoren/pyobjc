@@ -6,7 +6,7 @@ import SpriteKit
 
 class TestSKPhysicsBody(TestCase):
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertIsInstance(SpriteKit.SKPhysicsBody, objc.objc_class)
 
         self.assertArgIsBOOL(SpriteKit.SKPhysicsBody.setDynamic_, 0)
@@ -23,6 +23,6 @@ class TestSKPhysicsBody(TestCase):
         self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.affectedByGravity)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(SpriteKit.SKPhysicsBody.setPinned_, 0)
         self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.pinned)

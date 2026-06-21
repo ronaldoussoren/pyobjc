@@ -5,18 +5,18 @@ import objc
 
 class TestDRContentObject(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(DiscRecording.DRFileRef)
         self.assertIsCFType(DiscRecording.DRFolderRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(DiscRecording.kDRFilesystemMaskISO9660, 1 << 0)
         self.assertEqual(DiscRecording.kDRFilesystemMaskJoliet, 1 << 1)
         self.assertEqual(DiscRecording.kDRFilesystemMaskUDF, 1 << 2)
         self.assertEqual(DiscRecording.kDRFilesystemMaskHFSPlus, 1 << 3)
         self.assertEqual(DiscRecording.kDRFilesystemMaskDefault, 0xFFFFFFFF)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsBOOL(DiscRecording.DRFSObjectIsVirtual)
         self.assertArgHasType(DiscRecording.DRFSObjectIsVirtual, 0, objc._C_ID)
 

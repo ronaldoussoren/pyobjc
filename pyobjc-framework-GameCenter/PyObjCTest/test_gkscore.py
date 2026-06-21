@@ -6,7 +6,7 @@ import GameCenter
 
 class TestGKScore(TestCase):
     @min_os_level("10.8")
-    def testClasses10_8(self):
+    def test_classes10_8(self):
         self.assertIsInstance(GameCenter.GKScore, objc.objc_class)
 
         self.assertResultIsBOOL(GameCenter.GKScore.shouldSetDefaultLeaderboard)

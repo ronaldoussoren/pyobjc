@@ -13,11 +13,11 @@ class TestMCSessionHelper(MultipeerConnectivity.NSObject):
 
 class TestMCSession(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MultipeerConnectivity.MCSession, objc.objc_class)
 
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             MultipeerConnectivity.MCSession.sendData_toPeers_withMode_error_
         )
@@ -37,7 +37,7 @@ class TestMCSession(TestCase):
         )
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("MCSessionDelegate", MultipeerConnectivity)
 
     def test_protocol_methods(self):
@@ -52,7 +52,7 @@ class TestMCSession(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(MultipeerConnectivity.MCSessionSendDataReliable, 0)
         self.assertEqual(MultipeerConnectivity.MCSessionSendDataUnreliable, 1)
         self.assertEqual(MultipeerConnectivity.MCSessionStateNotConnected, 0)

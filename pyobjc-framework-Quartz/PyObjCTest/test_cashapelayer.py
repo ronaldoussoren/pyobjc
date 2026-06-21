@@ -9,7 +9,7 @@ class TestCAShapeLayer(TestCase):
         self.assertIsTypedEnum(Quartz.CAShapeLayerLineJoin, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCAFillRuleNonZero, str)
         self.assertIsInstance(Quartz.kCAFillRuleEvenOdd, str)
         self.assertIsInstance(Quartz.kCALineJoinMiter, str)

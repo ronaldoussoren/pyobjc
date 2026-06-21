@@ -3,17 +3,17 @@ import Quartz
 
 
 class TestCVOpenGLBuffer(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCVOpenGLBufferWidth, str)
         self.assertIsInstance(Quartz.kCVOpenGLBufferHeight, str)
         self.assertIsInstance(Quartz.kCVOpenGLBufferTarget, str)
         self.assertIsInstance(Quartz.kCVOpenGLBufferInternalFormat, str)
         self.assertIsInstance(Quartz.kCVOpenGLBufferMaximumMipmapLevel, str)
 
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CVOpenGLBufferRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CVOpenGLBufferGetTypeID(), int)
 
         self.assertArgIsOut(Quartz.CVOpenGLBufferCreate, 4)

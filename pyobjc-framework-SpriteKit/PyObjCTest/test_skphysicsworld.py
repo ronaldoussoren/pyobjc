@@ -7,7 +7,7 @@ from objc import simd
 
 class TestSKPhysicsWorld(TestCase):
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             SpriteKit.SKPhysicsWorld.enumerateBodiesAtPoint_usingBlock_, 1, b"v@o^Z"
         )
@@ -21,7 +21,7 @@ class TestSKPhysicsWorld(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultHasType(
             SpriteKit.SKPhysicsWorld.sampleFieldsAt_, simd.vector_float3.__typestr__
         )
@@ -35,5 +35,5 @@ class TestSKPhysicsWorld(TestCase):
         self.assertIsInstance(v, simd.vector_float3)
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("SKPhysicsContactDelegate", SpriteKit)

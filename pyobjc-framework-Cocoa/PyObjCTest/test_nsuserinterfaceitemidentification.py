@@ -7,5 +7,5 @@ class TestNSUserInterfaceItemIdentification(TestCase):
         self.assertIsTypedEnum(AppKit.NSUserInterfaceItemIdentifier, str)
 
     @min_os_level("10.7")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSUserInterfaceItemIdentification", AppKit)

@@ -9,7 +9,7 @@ NSDictionary = objc.lookUpClass("NSDictionary")
 
 
 class TestTimeZone(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             if objc.lookUpClass("NSTimeZone") is CoreFoundation.CFTimeZoneRef:
                 return
@@ -121,7 +121,7 @@ class TestTimeZone(TestCase):
         )
         self.assertIsInstance(nm, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFTimeZoneNameStyleStandard, 0)
         self.assertEqual(CoreFoundation.kCFTimeZoneNameStyleShortStandard, 1)
         self.assertEqual(CoreFoundation.kCFTimeZoneNameStyleDaylightSaving, 2)

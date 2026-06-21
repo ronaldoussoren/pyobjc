@@ -5,7 +5,7 @@ import SpriteKit
 
 class TestSKRenderer(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SpriteKit.SKRenderer.ignoresSiblingOrder)
         self.assertArgIsBOOL(SpriteKit.SKRenderer.setIgnoresSiblingOrder_, 0)
 

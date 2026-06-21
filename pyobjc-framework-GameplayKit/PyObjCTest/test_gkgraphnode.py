@@ -5,7 +5,7 @@ from objc import simd
 
 
 class TestGKGraphNode(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             GameplayKit.GKGraphNode.addConnectionsToNodes_bidirectional_, 1
         )

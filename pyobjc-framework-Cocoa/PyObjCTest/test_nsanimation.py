@@ -23,7 +23,7 @@ class TestNSAnimation(TestCase):
         self.assertIsEnumType(AppKit.NSAnimationBlockingMode)
         self.assertIsEnumType(AppKit.NSAnimationCurve)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSAnimationEaseInOut, 0)
         self.assertEqual(AppKit.NSAnimationEaseIn, 1)
         self.assertEqual(AppKit.NSAnimationEaseOut, 2)
@@ -46,7 +46,7 @@ class TestNSAnimation(TestCase):
         self.assertIsInstance(AppKit.NSAnimationTriggerOrderIn, str)
         self.assertIsInstance(AppKit.NSAnimationTriggerOrderOut, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSAnimation.isAnimating)
 
     @min_sdk_level("10.6")
@@ -54,7 +54,7 @@ class TestNSAnimation(TestCase):
         self.assertProtocolExists("NSAnimationDelegate", AppKit)
         self.assertProtocolExists("NSAnimatablePropertyContainer", AppKit)
 
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)
 
         self.assertResultHasType(

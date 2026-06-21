@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSWindowScripting(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSWindow.hasCloseBox)
         self.assertResultIsBOOL(AppKit.NSWindow.hasTitleBar)
         self.assertResultIsBOOL(AppKit.NSWindow.isFloatingPanel)

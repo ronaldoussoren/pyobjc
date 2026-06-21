@@ -9,7 +9,7 @@ class TestMKLocalSearchRequest(TestCase):
         self.assertIsEnumType(MapKit.MKLocalSearchResultType)
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKLocalSearchRequest, objc.objc_class)
 
     def test_constants(self):

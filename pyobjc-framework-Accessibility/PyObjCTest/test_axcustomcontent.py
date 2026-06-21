@@ -22,7 +22,7 @@ class TestAXCustomContent(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("AXCustomContentProvider", Accessibility)
 
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBlock(
             TestAXCustomContentHelper.accessibilityCustomContentBlock, b"@"
         )

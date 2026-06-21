@@ -13,7 +13,7 @@ class TestNSTabView(TestCase):
         self.assertIsEnumType(AppKit.NSTabViewBorderType)
         self.assertIsEnumType(AppKit.NSTabViewType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTopTabsBezelBorder, 0)
         self.assertEqual(AppKit.NSLeftTabsBezelBorder, 1)
         self.assertEqual(AppKit.NSBottomTabsBezelBorder, 2)
@@ -32,11 +32,11 @@ class TestNSTabView(TestCase):
         self.assertEqual(AppKit.NSTabViewBorderTypeLine, 1)
         self.assertEqual(AppKit.NSTabViewBorderTypeBezel, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTabView.allowsTruncatedLabels)
         self.assertResultIsBOOL(AppKit.NSTabView.drawsBackground)
         self.assertArgIsBOOL(AppKit.NSTabView.setAllowsTruncatedLabels_, 0)
         self.assertArgIsBOOL(AppKit.NSTabView.setDrawsBackground_, 0)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertResultIsBOOL(TestNSTabViewHelper.tabView_shouldSelectTabViewItem_)

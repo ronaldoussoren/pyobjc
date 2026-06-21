@@ -6,7 +6,7 @@ import SystemConfiguration
 
 
 class TestSCDynamicStoreCopyDHCPInfo(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         def callback(st, keys, info):
             pass
 

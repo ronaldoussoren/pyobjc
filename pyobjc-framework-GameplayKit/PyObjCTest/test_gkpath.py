@@ -6,10 +6,10 @@ from objc import simd
 
 
 class TestGKPath(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKAgentDelegate", GameplayKit)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameplayKit.GKPath.isCyclical)
         self.assertArgIsBOOL(GameplayKit.GKPath.setCyclical_, 0)
 
@@ -45,7 +45,7 @@ class TestGKPath(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgHasType(
             GameplayKit.GKPath.pathWithFloat3Points_count_radius_cyclical_,
             0,

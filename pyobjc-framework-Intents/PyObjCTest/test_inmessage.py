@@ -6,7 +6,7 @@ class TestINMessage(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Intents.INMessageType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INMessageTypeUnspecified, 0)
         self.assertEqual(Intents.INMessageTypeText, 1)
         self.assertEqual(Intents.INMessageTypeAudio, 2)

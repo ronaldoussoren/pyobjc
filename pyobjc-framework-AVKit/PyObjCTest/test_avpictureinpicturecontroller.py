@@ -11,7 +11,7 @@ class TestAVPictureInPictureControllerHelper(AVKit.NSObject):
 
 class TestAVPictureInPictureController(TestCase):
     @min_sdk_level("10.15")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVPictureInPictureControllerDelegate", AVKit)
 
     @min_os_level("10.15")

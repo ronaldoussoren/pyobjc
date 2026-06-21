@@ -7,7 +7,7 @@ class TestEKEventStore(TestCase):
         self.assertIsEnumType(EventKit.EKSpan)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(EventKit.EKSpanThisEvent, 0)
         self.assertEqual(EventKit.EKSpanFutureEvents, 1)
 
@@ -23,7 +23,7 @@ class TestEKEventStore(TestCase):
         self.assertTrue(hasattr(EventKit, "EKEventStore"))
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(EventKit.EKEventStore.commit_)
         self.assertArgIsOut(EventKit.EKEventStore.commit_, 0)
 
@@ -61,13 +61,13 @@ class TestEKEventStore(TestCase):
         self.assertArgIsOut(EventKit.EKEventStore.saveReminder_commit_error_, 2)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBlock(
             EventKit.EKEventStore.requestAccessToEntityType_completion_, 1, b"vZ@"
         )
 
     @min_os_level("10.15")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsBOOL(EventKit.EKEventStore.saveEvent_span_error_)
         self.assertArgIsOut(EventKit.EKEventStore.saveEvent_span_error_, 2)
 
@@ -75,7 +75,7 @@ class TestEKEventStore(TestCase):
         self.assertArgIsOut(EventKit.EKEventStore.removeEvent_span_error_, 2)
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsBlock(
             EventKit.EKEventStore.requestFullAccessToEventsWithCompletion_, 0, b"vZ@"
         )

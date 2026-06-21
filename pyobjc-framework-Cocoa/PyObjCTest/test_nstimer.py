@@ -76,7 +76,7 @@ class TestNSTimer(TestCase):
 
         self.assertEqual(after, before, "%d - %d - %d" % (before, after, after2))
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             Foundation.NSTimer.timerWithTimeInterval_invocation_repeats_, 2
         )
@@ -115,7 +115,7 @@ class TestNSTimer(TestCase):
         self.assertResultIsBOOL(Foundation.NSTimer.isValid)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBOOL(Foundation.NSTimer.timerWithTimeInterval_repeats_block_, 1)
         self.assertArgIsBlock(
             Foundation.NSTimer.timerWithTimeInterval_repeats_block_, 2, b"v@"

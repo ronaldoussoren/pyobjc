@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPortNameServer(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSPortNameServer.registerPort_name_)
         self.assertResultIsBOOL(Foundation.NSPortNameServer.removePortForName_)
 

@@ -152,7 +152,7 @@ class TestVariadic(TestCase):
         self.assertEqual(len(o), 0)
         self.assertIsInstance(o, Foundation.NSMutableSet)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSSet.containsObject_)
         self.assertResultIsBOOL(Foundation.NSSet.intersectsSet_)
         self.assertResultIsBOOL(Foundation.NSSet.isEqualToSet_)
@@ -166,7 +166,7 @@ class TestVariadic(TestCase):
         self.assertArgIsBOOL(Foundation.NSSet.initWithSet_copyItems_, 1)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSSet.enumerateObjectsUsingBlock_, 0, b"v@o^" + objc._C_NSBOOL
         )

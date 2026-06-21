@@ -4,16 +4,16 @@ import Quartz
 
 class TestCGGradient(TestCase):
     @min_os_level("10.5")
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGGradientRef)
 
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGGradientDrawsBeforeStartLocation, 1)
         self.assertEqual(Quartz.kCGGradientDrawsAfterEndLocation, 2)
 
     @min_os_level("10.5")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGGradientGetTypeID(), int)
 
         self.assertResultIsCFRetained(Quartz.CGGradientCreateWithColorComponents)

@@ -8,7 +8,7 @@ class TestNEVPNConnection(TestCase):
         self.assertIsEnumType(NetworkExtension.NEVPNError)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(NetworkExtension.NEVPNErrorConfigurationInvalid, 1)
         self.assertEqual(NetworkExtension.NEVPNErrorConfigurationDisabled, 2)
         self.assertEqual(NetworkExtension.NEVPNErrorConnectionFailed, 3)
@@ -22,7 +22,7 @@ class TestNEVPNConnection(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEVPNManager.loadFromPreferencesWithCompletionHandler_,
             0,

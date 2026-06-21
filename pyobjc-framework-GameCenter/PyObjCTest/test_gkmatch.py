@@ -25,7 +25,7 @@ class GKMatchDelegateHelper(GameCenter.NSObject):
 
 class TestGKError(TestCase):
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(GameCenter.GKMatchSendDataReliable, 0)
         self.assertEqual(GameCenter.GKMatchSendDataUnreliable, 1)
 
@@ -35,7 +35,7 @@ class TestGKError(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(GameCenter.GKMatch.sendData_toPlayers_dataMode_error_)
         self.assertArgIsOut(GameCenter.GKMatch.sendData_toPlayers_dataMode_error_, 3)
 
@@ -55,7 +55,7 @@ class TestGKError(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBlock(
             GameCenter.GKMatch.chooseBestHostPlayerWithCompletionHandler_, 0, b"v@"
         )
@@ -68,7 +68,7 @@ class TestGKError(TestCase):
         )
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKMatchDelegate", GameCenter)
 
         self.assertArgHasType(

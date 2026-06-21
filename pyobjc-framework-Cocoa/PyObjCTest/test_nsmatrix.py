@@ -7,13 +7,13 @@ class TestNSMatrix(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSMatrixMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSRadioModeMatrix, 0)
         self.assertEqual(AppKit.NSHighlightModeMatrix, 1)
         self.assertEqual(AppKit.NSListModeMatrix, 2)
         self.assertEqual(AppKit.NSTrackModeMatrix, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSMatrix.allowsEmptySelection)
         self.assertArgIsBOOL(AppKit.NSMatrix.setAllowsEmptySelection_, 0)
         self.assertArgIsBOOL(AppKit.NSMatrix.sendAction_to_forAllCells_, 2)
@@ -70,10 +70,10 @@ class TestNSMatrix(TestCase):
         self.assertResultIsBOOL(AppKit.NSMatrix.tabKeyTraversesCells)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBOOL(AppKit.NSMatrix.setAutorecalculatesCellSize_, 0)
         self.assertResultIsBOOL(AppKit.NSMatrix.autorecalculatesCellSize)
 
     @min_sdk_level("10.6")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSMatrixDelegate", AppKit)

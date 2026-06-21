@@ -4,11 +4,11 @@ import Quartz
 
 class TestCGColorConversion(TestCase):
     @min_os_level("10.12")
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGColorConversionInfoRef)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsEnumType(Quartz.CGColorConversionInfoTransformType)
         self.assertEqual(Quartz.kCGColorConversionTransformFromSpace, 0)
         self.assertEqual(Quartz.kCGColorConversionTransformToSpace, 1)
@@ -17,15 +17,15 @@ class TestCGColorConversion(TestCase):
         self.assertIsInstance(Quartz.kCGColorConversionBlackPointCompensation, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.kCGColorConversionTRCSize, str)
 
     @min_os_level("10.12")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(Quartz.CGColorConversionInfoCreate)
 
     @min_os_level("10.14.6")
-    def testFunctions10_14_6(self):
+    def test_functions10_14_6(self):
         self.assertResultIsCFRetained(Quartz.CGColorConversionInfoCreateWithOptions)
 
     @expectedFailure
@@ -36,7 +36,7 @@ class TestCGColorConversion(TestCase):
         )  # Varargs with annoying signature
 
     @min_os_level("10.13")
-    def testFunctions10_13(self):
+    def test_functions10_13(self):
         try:
             Quartz.CGColorConversionInfoCreateFromListWithArguments
         except AttributeError:

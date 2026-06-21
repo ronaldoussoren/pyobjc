@@ -13,7 +13,7 @@ class TestNSDatePickerCell(TestCase):
         self.assertIsEnumType(AppKit.NSDatePickerMode)
         self.assertIsEnumType(AppKit.NSDatePickerStyle)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTextFieldAndStepperDatePickerStyle, 0)
         self.assertEqual(AppKit.NSClockAndCalendarDatePickerStyle, 1)
         self.assertEqual(AppKit.NSTextFieldDatePickerStyle, 2)
@@ -43,7 +43,7 @@ class TestNSDatePickerCell(TestCase):
         self.assertEqual(AppKit.NSDatePickerElementFlagYearMonthDay, 0x00E0)
         self.assertEqual(AppKit.NSDatePickerElementFlagEra, 0x0100)
 
-    def testMethods(self):
+    def test_methods(self):
         o = TestNSDatePickerHelper.alloc().init()
         m = o.datePickerCell_validateProposedDateValue_timeInterval_.__metadata__()
         self.assertEqual(m["arguments"][3]["type"], b"N^@")
@@ -53,5 +53,5 @@ class TestNSDatePickerCell(TestCase):
         self.assertArgIsBOOL(AppKit.NSDatePickerCell.setDrawsBackground_, 0)
 
     @min_sdk_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSDatePickerCellDelegate", AppKit)

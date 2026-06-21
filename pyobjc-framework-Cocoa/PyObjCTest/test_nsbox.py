@@ -7,7 +7,7 @@ class TestNSBox(TestCase):
         self.assertIsEnumType(AppKit.NSBoxType)
         self.assertIsEnumType(AppKit.NSTitlePosition)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSNoTitle, 0)
         self.assertEqual(AppKit.NSAboveTop, 1)
         self.assertEqual(AppKit.NSAtTop, 2)
@@ -22,6 +22,6 @@ class TestNSBox(TestCase):
         self.assertEqual(AppKit.NSBoxOldStyle, 3)
         self.assertEqual(AppKit.NSBoxCustom, 4)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSBox.isTransparent)
         self.assertArgIsBOOL(AppKit.NSBox.setTransparent_, 0)

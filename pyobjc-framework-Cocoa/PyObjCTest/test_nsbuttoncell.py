@@ -8,7 +8,7 @@ class TestNSButtonCell(TestCase):
         self.assertIsEnumType(AppKit.NSButtonType)
         self.assertIsEnumType(AppKit.NSGradientType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSMomentaryLightButton, 0)
         self.assertEqual(AppKit.NSPushOnPushOffButton, 1)
         self.assertEqual(AppKit.NSToggleButton, 2)
@@ -87,10 +87,10 @@ class TestNSButtonCell(TestCase):
         self.assertEqual(AppKit.NSBezelStyleInline, AppKit.NSBezelStyleBadge)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSInlineBezelStyle, 15)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSButtonCell.isOpaque)
         self.assertResultIsBOOL(AppKit.NSButtonCell.isTransparent)
         self.assertArgIsBOOL(AppKit.NSButtonCell.setTransparent_, 0)

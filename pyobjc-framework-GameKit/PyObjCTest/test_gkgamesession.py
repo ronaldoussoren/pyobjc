@@ -7,7 +7,7 @@ class TestGKGameSession(TestCase):
         self.assertIsEnumType(GameKit.GKConnectionState)
         self.assertIsEnumType(GameKit.GKTransportType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(GameKit.GKConnectionStateNotConnected, 0)
         self.assertEqual(GameKit.GKConnectionStateConnected, 1)
 
@@ -15,7 +15,7 @@ class TestGKGameSession(TestCase):
         self.assertEqual(GameKit.GKTransportTypeReliable, 1)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             GameKit.GKGameSession.createSessionInContainer_withTitle_maxConnectedPlayers_completionHandler_,
             3,

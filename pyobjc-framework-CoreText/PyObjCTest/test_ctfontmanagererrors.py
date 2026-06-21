@@ -4,11 +4,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCTFontManagerErrors(TestCase):
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(CoreText.kCTFontManagerErrorDomain, str)
         self.assertIsInstance(CoreText.kCTFontManagerErrorFontURLsKey, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreText.kCTFontManagerErrorFileNotFound, 101)
         self.assertEqual(CoreText.kCTFontManagerErrorInsufficientPermissions, 102)
         self.assertEqual(CoreText.kCTFontManagerErrorUnrecognizedFormat, 103)

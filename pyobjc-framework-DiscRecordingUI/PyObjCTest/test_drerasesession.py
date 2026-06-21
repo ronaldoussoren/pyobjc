@@ -4,10 +4,10 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDREraseSession(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(DiscRecordingUI.DREraseSessionRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(DiscRecordingUI.kDREraseSessionOK, 1)
         self.assertEqual(DiscRecordingUI.kDREraseSessionCancel, 0)
 
@@ -36,7 +36,7 @@ class TestDREraseSession(TestCase):
             DiscRecordingUI.kEraseSessionProgressDialogDefaultOptions, 0x00000000
         )
 
-    def testStructs(self):
+    def test_structs(self):
         v = DiscRecordingUI.DREraseSessionSetupDialogOptions()
         self.assertEqual(v.version, 0)
         self.assertEqual(v.dialogOptionFlags, 0)
@@ -48,7 +48,7 @@ class TestDREraseSession(TestCase):
         self.assertEqual(v.description, None)
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(DiscRecordingUI.DREraseSessionGetTypeID(), int)
 
         self.assertResultIsCFRetained(DiscRecordingUI.DREraseSessionCreate)

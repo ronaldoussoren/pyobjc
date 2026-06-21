@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVSampleBufferDisplayLayer(TestCase):
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(
             AVFoundation.AVQueuedSampleBufferRenderingStatusUnknown, 0
         )  # noqa: B950
@@ -25,21 +25,21 @@ class TestAVSampleBufferDisplayLayer(TestCase):
         )
 
     @min_os_level("11.3")
-    def testConstants11_3(self):
+    def test_constants11_3(self):
         self.assertIsInstance(
             AVFoundation.AVSampleBufferDisplayLayerOutputObscuredDueToInsufficientExternalProtectionDidChangeNotification,
             str,
         )  # noqa: B950
 
     @min_os_level("14.4")
-    def testConstants14_4(self):
+    def test_constants14_4(self):
         self.assertIsInstance(
             AVFoundation.AVSampleBufferDisplayLayerReadyForDisplayDidChangeNotification,
             str,
         )  # noqa: B950
 
     @min_os_level("10.8")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferDisplayLayer.isReadyForMoreMediaData
         )
@@ -50,7 +50,7 @@ class TestAVSampleBufferDisplayLayer(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         # Header says 10.15, but new in the 10.14.4 SDK headers
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferDisplayLayer.preventsCapture
@@ -68,25 +68,25 @@ class TestAVSampleBufferDisplayLayer(TestCase):
         )
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferDisplayLayer.requiresFlushToResumeDecoding
         )
 
     @min_os_level("11.3")
-    def testMethods11_3(self):
+    def test_methods11_3(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferDisplayLayer.outputObscuredDueToInsufficientExternalProtection
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferDisplayLayer.hasSufficientMediaDataForReliablePlaybackStart
         )
 
     @min_os_level("14.4")
-    def testMethods14_4(self):
+    def test_methods14_4(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferDisplayLayer.isReadyForDisplay
         )

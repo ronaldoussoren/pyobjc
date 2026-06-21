@@ -10,11 +10,11 @@ class TestEAManager(TestCase):
         self.assertIsInstance(Foundation.NSAppleEventTimeOutDefault, float)
         self.assertIsInstance(Foundation.NSAppleEventTimeOutNone, float)
 
-    def testOpaque(self):
+    def test_opaque(self):
         self.assertHasAttr(Foundation, "NSAppleEventManagerSuspensionID")
         self.assertHasAttr(Foundation.NSAppleEventManagerSuspensionID, "__pointer__")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             Foundation.NSAppleEventManager.setEventHandler_andSelector_forEventClass_andEventID_,  # noqa: B950
             1,

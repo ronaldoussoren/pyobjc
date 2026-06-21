@@ -13,7 +13,7 @@ class TestINIntentIdentifiers(TestCase):
     @expectedFailureIf(
         os_level_key(os_release()) < os_level_key("10.14")
     )  # Documented to be available for 10.12, but not available
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Intents.INStartAudioCallIntentIdentifier, str)
         self.assertIsInstance(Intents.INStartVideoCallIntentIdentifier, str)
         self.assertIsInstance(Intents.INSearchCallHistoryIntentIdentifier, str)

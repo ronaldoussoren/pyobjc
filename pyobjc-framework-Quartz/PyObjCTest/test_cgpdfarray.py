@@ -5,10 +5,10 @@ import objc
 
 
 class TestCGPDFArray(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsOpaquePointer(Quartz.CGPDFArrayRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultHasType(Quartz.CGPDFArrayGetArray, objc._C_BOOL)
         self.assertArgIsOut(Quartz.CGPDFArrayGetArray, 2)
 
@@ -41,5 +41,5 @@ class TestCGPDFArray(TestCase):
         Quartz.CGPDFArrayGetCount
 
     @min_os_level("10.14")
-    def testFunctions10_14(self):
+    def test_functions10_14(self):
         self.assertArgIsBlock(Quartz.CGPDFArrayApplyBlock, 1, b"Bl^{CGPDFObject=}^v")

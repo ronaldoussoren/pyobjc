@@ -7,7 +7,7 @@ class TestEKAlarm(TestCase):
         self.assertIsEnumType(EventKit.EKErrorCode)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(EventKit.EKErrorDomain, str)
 
         self.assertEqual(EventKit.EKErrorEventNotMutable, 0)

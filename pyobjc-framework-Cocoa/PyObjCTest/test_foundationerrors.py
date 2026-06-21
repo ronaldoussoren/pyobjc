@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class FoundationErrorsTest(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSFileNoSuchFileError, 4)
         self.assertEqual(Foundation.NSFileLockingError, 255)
         self.assertEqual(Foundation.NSFileReadUnknownError, 256)
@@ -45,7 +45,7 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSBundleOnDemandResourceInvalidTagError, 4994)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Foundation.NSFileWriteVolumeReadOnlyError, 642)
 
         self.assertEqual(Foundation.NSPropertyListReadCorruptError, 3840)
@@ -56,11 +56,11 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSPropertyListErrorMaximum, 4095)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Foundation.NSFileWriteFileExistsError, 516)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(Foundation.NSFeatureUnsupportedError, 3328)
         self.assertEqual(Foundation.NSXPCConnectionInterrupted, 4097)
         self.assertEqual(Foundation.NSXPCConnectionInvalid, 4099)
@@ -70,7 +70,7 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSXPCConnectionErrorMaximum, 4224)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(Foundation.NSUbiquitousFileUnavailableError, 4353)
         self.assertEqual(Foundation.NSUbiquitousFileNotUploadedDueToQuotaError, 4354)
         self.assertEqual(Foundation.NSUbiquitousFileUbiquityServerNotAvailable, 4355)
@@ -78,7 +78,7 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSUbiquitousFileErrorMaximum, 4607)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(Foundation.NSUserActivityHandoffFailedError, 4608)
         self.assertEqual(Foundation.NSUserActivityConnectionUnavailableError, 4609)
         self.assertEqual(Foundation.NSUserActivityRemoteApplicationTimedOutError, 4610)
@@ -88,7 +88,7 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSPropertyListWriteInvalidError, 3852)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(Foundation.NSFileManagerUnmountUnknownError, 768)
         self.assertEqual(Foundation.NSFileManagerUnmountBusyError, 769)
 
@@ -101,7 +101,7 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSBundleErrorMaximum, 5119)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertEqual(Foundation.NSCloudSharingNetworkFailureError, 5120)
         self.assertEqual(Foundation.NSCloudSharingQuotaExceededError, 5121)
         self.assertEqual(Foundation.NSCloudSharingTooManyParticipantsError, 5122)
@@ -112,7 +112,7 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSCloudSharingErrorMaximum, 5375)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertEqual(Foundation.NSCompressionFailedError, 5376)
         self.assertEqual(Foundation.NSDecompressionFailedError, 5377)
         self.assertEqual(Foundation.NSCompressionErrorMinimum, 5376)

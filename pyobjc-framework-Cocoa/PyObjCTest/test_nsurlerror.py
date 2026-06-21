@@ -6,7 +6,7 @@ class TestNSURLError(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSURLErrorNetworkUnavailableReason)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSURLErrorDomain, str)
         self.assertIsInstance(Foundation.NSErrorFailingURLStringKey, str)
 
@@ -50,11 +50,11 @@ class TestNSURLError(TestCase):
         self.assertEqual(Foundation.NSURLErrorDownloadDecodingFailedToComplete, -3007)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertEqual(Foundation.NSURLErrorDataLengthExceedsMaximum, -1103)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Foundation.NSURLErrorFailingURLPeerTrustErrorKey, str)
         self.assertIsInstance(Foundation.NSURLErrorFailingURLErrorKey, str)
         self.assertIsInstance(Foundation.NSURLErrorFailingURLStringErrorKey, str)
@@ -62,14 +62,14 @@ class TestNSURLError(TestCase):
         self.assertEqual(Foundation.NSURLErrorClientCertificateRequired, -1206)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Foundation.NSURLErrorInternationalRoamingOff, -1018)
         self.assertEqual(Foundation.NSURLErrorCallIsActive, -1019)
         self.assertEqual(Foundation.NSURLErrorDataNotAllowed, -1020)
         self.assertEqual(Foundation.NSURLErrorRequestBodyStreamExhausted, -1021)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(
             Foundation.NSURLErrorBackgroundTaskCancelledReasonKey, str
         )
@@ -93,17 +93,17 @@ class TestNSURLError(TestCase):
         self.assertEqual(Foundation.NSURLErrorBackgroundSessionWasDisconnected, -997)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(
             Foundation.NSURLErrorAppTransportSecurityRequiresSecureConnection, -1022
         )
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertEqual(Foundation.NSURLErrorFileOutsideSafeArea, -1104)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Foundation.NSURLErrorNetworkUnavailableReasonKey, str)
 
         self.assertEqual(Foundation.NSURLErrorNetworkUnavailableReasonCellular, 0)

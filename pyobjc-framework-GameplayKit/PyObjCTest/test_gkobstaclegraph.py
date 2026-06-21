@@ -3,7 +3,7 @@ import GameplayKit
 
 
 class TestGKObstacleGraph(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             GameplayKit.GKObstacleGraph.isConnectionLockedFromNode_toNode_
         )

@@ -73,7 +73,7 @@ class TestNSFileManager(TestCase):
         self.assertIsEnumType(Foundation.NSURLRelationship)
         self.assertIsEnumType(Foundation.NSVolumeEnumerationOptions)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             Foundation.NSFoundationVersionWithFileManagerResourceForkSupport, 412
         )
@@ -129,7 +129,7 @@ class TestNSFileManager(TestCase):
         self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyFailOnConflict, 1)
 
     @min_os_level("10.14")
-    def testConstantsMissingOn10_9(self):
+    def test_constantsMissingOn10_9(self):
         self.assertIsInstance(Foundation.NSFileProtectionKey, str)
         self.assertIsInstance(Foundation.NSFileProtectionNone, str)
         self.assertIsInstance(Foundation.NSFileProtectionComplete, str)
@@ -139,7 +139,7 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Foundation.NSVolumeEnumerationSkipHiddenVolumes, 1 << 1)
         self.assertEqual(Foundation.NSVolumeEnumerationProduceFileReferenceURLs, 1 << 2)
 
@@ -159,17 +159,17 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(Foundation.NSUbiquityIdentityDidChangeNotification, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(Foundation.NSURLRelationshipContains, 0)
         self.assertEqual(Foundation.NSURLRelationshipSame, 1)
         self.assertEqual(Foundation.NSURLRelationshipOther, 2)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(
             Foundation.NSFileManagerUnmountAllPartitionsAndEjectDisk, 1 << 0
         )
@@ -180,7 +180,7 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertEqual(
             Foundation.NSDirectoryEnumerationIncludesDirectoriesPostOrder, 1 << 3
         )
@@ -189,7 +189,7 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(Foundation.NSURLFileProtectionComplete, str)
         self.assertIsInstance(Foundation.NSURLFileProtectionCompleteUnlessOpen, str)
         self.assertIsInstance(
@@ -197,11 +197,11 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(Foundation.NSFileProtectionCompleteWhenUserInactive, str)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsOut(
             Foundation.NSFileManager.contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error_,  # noqa: B950
             3,
@@ -243,7 +243,7 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(
             Foundation.NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_  # noqa: B950
         )
@@ -297,7 +297,7 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(
             Foundation.NSFileManager.trashItemAtURL_resultingItemURL_error_
         )
@@ -309,7 +309,7 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
             Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_
         )
@@ -379,7 +379,7 @@ class TestNSFileManager(TestCase):
         self.assertEqual(m["retval"]["type"], b"Z")
         self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
 
-    def testProtocols(self):
+    def test_protocols(self):
         class FileManagerTest1(Foundation.NSObject):
             def fileManager_shouldCopyItemAtPath_toPath_(self, fm, src, dst):
                 return True
@@ -438,7 +438,7 @@ class TestNSFileManager(TestCase):
         self.assertEqual(m["retval"]["type"], b"Z")
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(
             Foundation.NSFileManager.setAttributes_ofItemAtPath_error_
         )
@@ -490,7 +490,7 @@ class TestNSFileManager(TestCase):
         self.assertResultIsBOOL(Foundation.NSFileManager.removeItemAtPath_error_)
         self.assertArgIsOut(Foundation.NSFileManager.removeItemAtPath_error_, 1)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             Foundation.NSFileManager.fileAttributesAtPath_traverseLink_, 1
         )
@@ -542,7 +542,7 @@ class TestNSFileManager(TestCase):
         self.assertResultIsBOOL(Foundation.NSDictionary.fileExtensionHidden)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             Foundation.NSFileManager.unmountVolumeAtURL_options_completionHandler_,
             2,
@@ -550,7 +550,7 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             Foundation.NSFileManager.getFileProviderMessageInterfacesForItemAtURL_completionHandler_,  # noqa: B950
             1,
@@ -558,7 +558,7 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(
             Foundation.NSDirectoryEnumerator.isEnumeratingDirectoryPostOrder
         )
@@ -586,7 +586,7 @@ class TestNSFileManager(TestCase):
             b"v@@",
         )
 
-    def testProtocolsMethods(self):
+    def test_protocolsMethods(self):
         self.assertResultIsBOOL(
             TestNSFileManagerHelper.fileManager_shouldProceedAfterError_
         )
@@ -616,7 +616,7 @@ class TestNSFileManager(TestCase):
         )
 
     @min_os_level("10.6")
-    def testProtocols10_6(self):
+    def test_protocols10_6(self):
         self.assertResultIsBOOL(
             TestNSFileManagerHelper.fileManager_shouldCopyItemAtURL_toURL_
         )
@@ -643,5 +643,5 @@ class TestNSFileManager(TestCase):
         )
 
     @min_sdk_level("10.10")
-    def testProtocols10_10(self):
+    def test_protocols10_10(self):
         self.assertProtocolExists("NSFileManagerDelegate", Foundation)

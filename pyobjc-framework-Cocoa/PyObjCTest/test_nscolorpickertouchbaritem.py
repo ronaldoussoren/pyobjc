@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSColorPickerTouchBarItem(TestCase):
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSColorPickerTouchBarItem.showsAlpha)
         self.assertArgIsBOOL(AppKit.NSColorPickerTouchBarItem.setShowsAlpha_, 0)
 

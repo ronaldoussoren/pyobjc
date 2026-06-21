@@ -14,11 +14,11 @@ class TestISyncConflictPropertyTypeHelper(SyncServices.NSObject):
 
 
 class TestISyncConflictPropertyType(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isRelationship)
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isToMany)
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isRequired)
 
     @min_os_level("10.7")
-    def testProtocolObjects(self):
+    def test_protocols10_7(self):
         self.assertProtocolExists("ISyncConflictPropertyType", SyncServices)

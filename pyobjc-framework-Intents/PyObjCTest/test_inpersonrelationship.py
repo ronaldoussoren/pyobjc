@@ -7,7 +7,7 @@ class TestINPersonRelationship(TestCase):
         self.assertIsTypedEnum(Intents.INPersonRelationship, str)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Intents.INPersonRelationshipFather, str)
         self.assertIsInstance(Intents.INPersonRelationshipMother, str)
         self.assertIsInstance(Intents.INPersonRelationshipParent, str)
@@ -21,6 +21,6 @@ class TestINPersonRelationship(TestCase):
         self.assertIsInstance(Intents.INPersonRelationshipManager, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Intents.INPersonRelationshipSon, str)
         self.assertIsInstance(Intents.INPersonRelationshipDaughter, str)

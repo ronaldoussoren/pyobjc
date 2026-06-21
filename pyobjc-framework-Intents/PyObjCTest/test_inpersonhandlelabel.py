@@ -7,7 +7,7 @@ class TestINPersonHandleLabel(TestCase):
         self.assertIsTypedEnum(Intents.INPersonHandleLabel, str)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Intents.INPersonHandleLabelHome, str)
         self.assertIsInstance(Intents.INPersonHandleLabelWork, str)
         self.assertIsInstance(Intents.INPersonHandleLabeliPhone, str)

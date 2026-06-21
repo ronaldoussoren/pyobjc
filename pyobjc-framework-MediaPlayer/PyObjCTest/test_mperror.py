@@ -7,7 +7,7 @@ class TestMPError(TestCase):
         self.assertIsEnumType(MediaPlayer.MPErrorCode)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(MediaPlayer.MPErrorDomain, str)
 
         self.assertEqual(MediaPlayer.MPErrorUnknown, 0)

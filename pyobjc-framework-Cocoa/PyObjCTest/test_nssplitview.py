@@ -47,7 +47,7 @@ class TestNSSplitView(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSSplitViewDividerStyle)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSSplitViewDividerStyleThick, 1)
         self.assertEqual(AppKit.NSSplitViewDividerStyleThin, 2)
 
@@ -55,10 +55,10 @@ class TestNSSplitView(TestCase):
         self.assertIsInstance(AppKit.NSSplitViewDidResizeSubviewsNotification, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSSplitViewDividerStylePaneSplitter, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSplitView.isVertical)
         self.assertArgIsBOOL(AppKit.NSSplitView.setVertical_, 0)
         self.assertResultIsBOOL(AppKit.NSSplitView.isSubviewCollapsed_)
@@ -66,12 +66,12 @@ class TestNSSplitView(TestCase):
         self.assertArgIsBOOL(AppKit.NSSplitView.setIsPaneSplitter_, 0)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSSplitView.arrangesAllSubviews)
         self.assertArgIsBOOL(AppKit.NSSplitView.setArrangesAllSubviews_, 0)
 
     @min_sdk_level("10.7")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSSplitViewDelegate", AppKit)
 
     def testProtocol(self):

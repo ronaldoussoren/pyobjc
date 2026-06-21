@@ -9,7 +9,7 @@ class TestCSSearchQuery(TestCase):
         self.assertIsEnumType(CoreSpotlight.CSSearchQueryErrorCode)
         self.assertIsEnumType(CoreSpotlight.CSSearchQuerySourceOptions)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeUnknown, -2000)
         self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeIndexUnreachable, -2001)
         self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeInvalidQuery, -2002)
@@ -20,7 +20,7 @@ class TestCSSearchQuery(TestCase):
         self.assertEqual(CoreSpotlight.CSSearchQuerySourceOptionDefault, 0)
         self.assertEqual(CoreSpotlight.CSSearchQuerySourceOptionAllowMail, 1 << 0)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreSpotlight.CSSearchQuery.isCancelled)
         self.assertResultIsBlock(CoreSpotlight.CSSearchQuery.foundItemsHandler, b"v@")
         self.assertArgIsBlock(

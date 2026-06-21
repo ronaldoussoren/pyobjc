@@ -9,7 +9,7 @@ class TestCAEmitterLayer(TestCase):
         self.assertIsTypedEnum(Quartz.CAEmitterLayerRenderMode, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCAEmitterLayerPoint, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerLine, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerRectangle, str)
@@ -27,7 +27,7 @@ class TestCAEmitterLayer(TestCase):
         self.assertIsInstance(Quartz.kCAEmitterLayerAdditive, str)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultHasType(
             Quartz.CAEmitterLayer.emitterPosition, Quartz.CGPoint.__typestr__
         )

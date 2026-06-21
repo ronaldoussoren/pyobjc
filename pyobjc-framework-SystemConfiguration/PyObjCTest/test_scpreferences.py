@@ -4,11 +4,11 @@ import SystemConfiguration
 
 # from SecurityFoundation import SFAuthorization
 class TestSCPreferences(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SystemConfiguration.kSCPreferencesNotificationCommit, 1 << 0)
         self.assertEqual(SystemConfiguration.kSCPreferencesNotificationApply, 1 << 1)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(SystemConfiguration.SCPreferencesGetTypeID(), int)
 
         ref = SystemConfiguration.SCPreferencesCreate(
@@ -90,5 +90,5 @@ class TestSCPreferences(TestCase):
         )
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         SystemConfiguration.SCPreferencesSetDispatchQueue

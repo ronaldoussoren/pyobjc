@@ -31,7 +31,7 @@ class TestMKMapView(TestCase):
         self.assertEqual(MapKit.MKOverlayLevelAboveLabels, 1)
 
     @min_os_level("10.9")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("MKMapViewDelegate", MapKit)
 
     def test_protocol_methods(self):
@@ -52,7 +52,7 @@ class TestMKMapView(TestCase):
         )
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKMapView, objc.objc_class)
 
         self.assertArgIsBOOL(MapKit.MKMapView.setRegion_animated_, 1)
@@ -116,17 +116,17 @@ class TestMKMapView(TestCase):
         )
 
     @min_os_level("10.10")
-    def testClasses10_10(self):
+    def test_classes10_10(self):
         self.assertResultIsBOOL(MapKit.MKMapView.showsScale)
         self.assertArgIsBOOL(MapKit.MKMapView.setShowsScale_, 0)
 
     @min_os_level("10.11")
-    def testClasses10_11(self):
+    def test_classes10_11(self):
         self.assertResultIsBOOL(MapKit.MKMapView.showsTraffic)
         self.assertArgIsBOOL(MapKit.MKMapView.setShowsTraffic_, 0)
 
     @min_os_level("10.15")
-    def testClasses10_15(self):
+    def test_classes10_15(self):
         self.assertResultIsBOOL(MapKit.MKMapView.showsPointsOfInterest)
         self.assertArgIsBOOL(MapKit.MKMapView.setShowsPointsOfInterest_, 0)
 

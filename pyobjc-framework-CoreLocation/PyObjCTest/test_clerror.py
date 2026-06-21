@@ -15,7 +15,7 @@ class TestCLError(TestCase):
         self.assertIsEnumType(CoreLocation.CLError)
 
     @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreLocation.kCLErrorDomain, str)
 
         self.assertEqual(CoreLocation.kCLErrorLocationUnknown, 0)
@@ -45,5 +45,5 @@ class TestCLError(TestCase):
 
     @min_os_level("10.7")
     @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.13"))
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(CoreLocation.kCLErrorUserInfoAlternateRegionKey, str)

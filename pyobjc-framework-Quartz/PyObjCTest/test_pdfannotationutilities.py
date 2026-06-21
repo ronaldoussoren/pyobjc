@@ -47,7 +47,7 @@ class TestPDFAnnotationUtilities(TestCase):
         self.assertEqual(Quartz.kPDFWidgetOnState, 1)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.PDFAnnotationSubtypeText, str)
         self.assertIsInstance(Quartz.PDFAnnotationSubtypeLink, str)
         self.assertIsInstance(Quartz.PDFAnnotationSubtypeFreeText, str)
@@ -84,7 +84,7 @@ class TestPDFAnnotationUtilities(TestCase):
         self.assertIsInstance(Quartz.PDFAnnotationHighlightingModePush, str)
 
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.PDFAnnotation.isMultiline)
         self.assertArgIsBOOL(Quartz.PDFAnnotation.setMultiline_, 0)
 
@@ -109,5 +109,5 @@ class TestPDFAnnotationUtilities(TestCase):
         self.assertArgIsBOOL(Quartz.PDFAnnotation.setOpen_, 0)
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(Quartz.PDFAnnotation.isActivatableTextField)

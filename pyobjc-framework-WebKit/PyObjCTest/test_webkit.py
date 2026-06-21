@@ -8,14 +8,14 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestWebKit(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(WebKit, "WebResource")
         self.assertIsInstance(WebKit.WebResource, objc.objc_class)
 
         self.assertHasAttr(WebKit, "DOMHTMLObjectElement")
         self.assertIsInstance(WebKit.DOMHTMLObjectElement, objc.objc_class)
 
-    def testValues(self):
+    def test_values(self):
         self.assertHasAttr(WebKit, "DOM_CSS_PERCENTAGE")
         self.assertIsInstance(WebKit.DOM_CSS_PERCENTAGE, int)
         self.assertEqual(WebKit.DOM_CSS_PERCENTAGE, 2)
@@ -27,12 +27,12 @@ class TestWebKit(TestCase):
         self.assertHasAttr(WebKit, "WebViewInsertActionDropped")
         self.assertIsInstance(WebKit.WebViewInsertActionDropped, int)
 
-    def testVariables(self):
+    def test_variables(self):
         self.assertHasAttr(WebKit, "DOMRangeException")
         self.assertIsInstance(WebKit.DOMRangeException, str)
 
     @min_sdk_level("10.6")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("DOMEventListener", WebKit)
         self.assertProtocolExists("DOMEventTarget", WebKit)
         self.assertProtocolExists("DOMNodeFilter", WebKit, "DOMNodeFilterProtocol")

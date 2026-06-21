@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCWChannel(TestCase):
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreWLAN.CWChannel.isEqualToChannel_)
 
     @min_os_level("10.7")

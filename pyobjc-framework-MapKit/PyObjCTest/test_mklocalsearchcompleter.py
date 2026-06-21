@@ -7,7 +7,7 @@ class TestMKLocalSearchCompleter(TestCase):
         self.assertIsEnumType(MapKit.MKLocalSearchCompleterResultType)
         self.assertIsEnumType(MapKit.MKSearchCompletionFilterType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(MapKit.MKSearchCompletionFilterTypeLocationsAndQueries, 0)
         self.assertEqual(MapKit.MKSearchCompletionFilterTypeLocationsOnly, 1)
 
@@ -17,7 +17,7 @@ class TestMKLocalSearchCompleter(TestCase):
         self.assertEqual(MapKit.MKLocalSearchCompleterResultTypePhysicalFeature, 1 << 3)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(MapKit.MKLocalSearchCompleter.isSearching)
 
         self.assertResultHasType(
@@ -30,5 +30,5 @@ class TestMKLocalSearchCompleter(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("MKLocalSearchCompleterDelegate", MapKit)

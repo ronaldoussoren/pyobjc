@@ -4,7 +4,7 @@ import CloudKit
 
 class TestCKFetchShareParticipantsOperation(TestCase):
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBlock(
             CloudKit.CKFetchShareParticipantsOperation.perShareParticipantCompletionBlock,
             b"v@@@",

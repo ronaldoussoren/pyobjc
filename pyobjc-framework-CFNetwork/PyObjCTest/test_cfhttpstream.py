@@ -6,10 +6,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, os_level_key, os_rel
 
 class TestCFHTTPStream(TestCase):
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(CFNetwork.kCFStreamPropertyHTTPFinalRequest, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainHTTP, int)
 
         self.assertEqual(CFNetwork.kCFStreamErrorHTTPParseFailure, -1)
@@ -31,7 +31,7 @@ class TestCFHTTPStream(TestCase):
             CFNetwork.kCFStreamPropertyHTTPRequestBytesWrittenCount, str
         )
 
-    def testFunctions(self):
+    def test_functions(self):
         url = CFNetwork.CFURLCreateWithString(None, "http://www.python.org/", None)
         self.assertIsInstance(url, CFNetwork.CFURLRef)
 

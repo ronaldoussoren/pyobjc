@@ -7,7 +7,7 @@ class TestNSTrackingArea(TestCase):
         self.assertIsEnumType(AppKit.NSTrackingAreaOptions)
 
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTrackingMouseEnteredAndExited, 0x01)
         self.assertEqual(AppKit.NSTrackingMouseMoved, 0x02)
         self.assertEqual(AppKit.NSTrackingCursorUpdate, 0x04)

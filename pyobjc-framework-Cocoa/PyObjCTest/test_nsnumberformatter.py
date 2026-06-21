@@ -10,7 +10,7 @@ class TestNSNumberFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSNumberFormatterRoundingMode)
         self.assertIsEnumType(Foundation.NSNumberFormatterStyle)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             Foundation.NSNumberFormatterNoStyle,
             CoreFoundation.kCFNumberFormatterNoStyle,
@@ -87,7 +87,7 @@ class TestNSNumberFormatter(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(
             Foundation.NSNumberFormatterOrdinalStyle,
             CoreFoundation.kCFNumberFormatterOrdinalStyle,

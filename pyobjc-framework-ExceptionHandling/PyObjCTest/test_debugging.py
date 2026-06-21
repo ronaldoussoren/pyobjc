@@ -10,7 +10,7 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure, expectedFailureIf
 
 
 class TestDebugging(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         for nm in (
             "LOGSTACKTRACE",
             "DEFAULTVERBOSITY",

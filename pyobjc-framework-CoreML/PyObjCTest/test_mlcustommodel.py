@@ -15,10 +15,10 @@ class TestMLCustomModelHelper(CoreML.NSObject):
 
 class TestMLCustomModel(TestCase):
     @min_sdk_level("10.14")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("MLCustomModel", CoreML)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestMLCustomModelHelper.initWithModelDescription_parameterDictionary_error_,
             2,

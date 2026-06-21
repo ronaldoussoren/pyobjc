@@ -6,7 +6,7 @@ class TestNSXMLNodeOptions(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSXMLNodeOptions)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSXMLNodeOptionsNone, 0)
 
         self.assertEqual(Foundation.NSXMLNodeIsCDATA, 1 << 0)

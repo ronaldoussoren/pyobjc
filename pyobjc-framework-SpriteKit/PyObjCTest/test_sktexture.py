@@ -8,12 +8,12 @@ class TestSKTexture(TestCase):
         self.assertIsEnumType(SpriteKit.SKTextureFilteringMode)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SpriteKit.SKTextureFilteringNearest, 0)
         self.assertEqual(SpriteKit.SKTextureFilteringLinear, 1)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBOOL(SpriteKit.SKTexture.setUsesMipmaps_, 0)
         self.assertResultIsBOOL(SpriteKit.SKTexture.usesMipmaps)
 
@@ -25,7 +25,7 @@ class TestSKTexture(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(SpriteKit.SKTexture.textureWithData_size_flipped_, 2)
         self.assertArgIsBOOL(
             SpriteKit.SKTexture.textureNoiseWithSmoothness_size_grayscale_, 2

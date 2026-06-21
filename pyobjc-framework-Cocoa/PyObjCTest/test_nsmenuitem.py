@@ -9,7 +9,7 @@ class TestNSMenuItem(TestCase):
         self.assertEqual(AppKit.NSMenuItemImageVisibilityVisible, 1)
         self.assertEqual(AppKit.NSMenuItemImageVisibilityHidden, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSMenuItem.usesUserKeyEquivalents)
         self.assertArgIsBOOL(AppKit.NSMenuItem.setUsesUserKeyEquivalents_, 0)
         self.assertResultIsBOOL(AppKit.NSMenuItem.hasSubmenu)
@@ -20,19 +20,19 @@ class TestNSMenuItem(TestCase):
         self.assertArgIsBOOL(AppKit.NSMenuItem.setAlternate_, 0)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(AppKit.NSMenuItem.isHighlighted)
         self.assertResultIsBOOL(AppKit.NSMenuItem.isHidden)
         self.assertArgIsBOOL(AppKit.NSMenuItem.setHidden_, 0)
         self.assertResultIsBOOL(AppKit.NSMenuItem.isHiddenOrHasHiddenAncestor)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(AppKit.NSMenuItem.allowsKeyEquivalentWhenHidden)
         self.assertArgIsBOOL(AppKit.NSMenuItem.setAllowsKeyEquivalentWhenHidden_, 0)
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             AppKit.NSMenuItem.allowsAutomaticKeyEquivalentLocalization
         )
@@ -46,5 +46,5 @@ class TestNSMenuItem(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(AppKit.NSMenuItem.isSectionHeader)

@@ -6,14 +6,14 @@ class TestNSPopUpButtonCell(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSPopUpArrowPosition)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSPopUpNoArrow, 0)
         self.assertEqual(AppKit.NSPopUpArrowAtCenter, 1)
         self.assertEqual(AppKit.NSPopUpArrowAtBottom, 2)
 
         self.assertIsInstance(AppKit.NSPopUpButtonCellWillPopUpNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(AppKit.NSPopUpButtonCell.initTextCell_pullsDown_, 1)
         self.assertResultIsBOOL(AppKit.NSPopUpButtonCell.pullsDown)
         self.assertArgIsBOOL(AppKit.NSPopUpButtonCell.setPullsDown_, 0)

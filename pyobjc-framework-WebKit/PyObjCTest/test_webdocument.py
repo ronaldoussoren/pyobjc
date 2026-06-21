@@ -17,13 +17,13 @@ class TestWebDocumentHelper(WebKit.NSObject):
 
 
 class TestWebDocument(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("WebDocumentView", WebKit)
         self.assertProtocolExists("WebDocumentSearching", WebKit)
         self.assertProtocolExists("WebDocumentText", WebKit)
         self.assertProtocolExists("WebDocumentRepresentation", WebKit)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(TestWebDocumentHelper.setNeedsLayout_, 0)
 
         self.assertResultIsBOOL(

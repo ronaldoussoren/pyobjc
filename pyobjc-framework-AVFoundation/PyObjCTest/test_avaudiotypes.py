@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVAudioTypes(TestCase):
     @min_os_level("10.7")
-    def testStructs(self):
+    def test_structs(self):
         v = AVFoundation.AVAudio3DPoint()
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
@@ -25,7 +25,7 @@ class TestAVAudioTypes(TestCase):
         self.assertPickleRoundTrips(v)
 
     @min_os_level("10.10")
-    def testFunctions(self):
+    def test_functions(self):
         v = AVFoundation.AVAudioMake3DPoint(1.5, 2.5, 3.5)
         self.assertIsInstance(
             v, (AVFoundation.AVAudio3DPoint, AVFoundation.AVAudio3DVector)

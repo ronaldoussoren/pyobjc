@@ -7,7 +7,7 @@ class TestEAAccessoryManager(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(ExternalAccessory.EABluetoothAccessoryPickerErrorCode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             ExternalAccessory.EABluetoothAccessoryPickerAlreadyConnected, 0
         )
@@ -24,7 +24,7 @@ class TestEAAccessoryManager(TestCase):
         )
         self.assertIsInstance(ExternalAccessory.EAAccessoryKey, str)
 
-    def testMethods(self):
+    def test_methods(self):
         # Not on macOS:
         # self.assertArgIsBlock(ExternalAccessory.EAAccessoryManager.showBluetoothAccessoryPickerWithNameFilter_completion_, 1, b'v@')   # noqa: B950
         pass

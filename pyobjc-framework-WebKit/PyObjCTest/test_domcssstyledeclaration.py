@@ -3,5 +3,5 @@ import WebKit
 
 
 class TestDOMCSSStyleDeclaration(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMCSSStyleDeclaration.isPropertyImplicit_)

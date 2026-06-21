@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAE(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSAppleScriptErrorMessage, str)
         self.assertIsInstance(Foundation.NSAppleScriptErrorNumber, str)
         self.assertIsInstance(Foundation.NSAppleScriptErrorAppName, str)
@@ -18,7 +18,7 @@ class TestAE(TestCase):
         self.assertIs(ok, False)
         self.assertIsInstance(error, Foundation.NSDictionary)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSAppleScript.isCompiled)
         self.assertResultIsBOOL(Foundation.NSAppleScript.compileAndReturnError_)
         self.assertArgIsOut(Foundation.NSAppleScript.compileAndReturnError_, 0)

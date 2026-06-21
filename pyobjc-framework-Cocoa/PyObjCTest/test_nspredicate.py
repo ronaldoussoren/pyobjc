@@ -17,7 +17,7 @@ class TestNSPredicate(TestCase):
             ValueError, Foundation.NSPredicate.predicateWithFormat_, "a == %d"
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Foundation.NSPredicate.predicateWithValue_, 0)
         self.assertResultIsBOOL(Foundation.NSPredicate.evaluateWithObject_)
         self.assertResultIsBOOL(
@@ -25,13 +25,13 @@ class TestNSPredicate(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSPredicate.predicateWithBlock_, 0, objc._C_NSBOOL + b"@@"
         )
 
     @min_os_level("26.4")
-    def testMethods26_4(self):
+    def test_methods26_4(self):
         self.assertResultIsBOOL(
             Foundation.NSPredicate.allowEvaluationWithValidator_error_
         )

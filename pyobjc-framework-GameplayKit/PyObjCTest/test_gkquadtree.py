@@ -6,7 +6,7 @@ from objc import simd
 
 class TestGKQuadtree(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             GameplayKit.GKQuadtreeNode.quad, GameplayKit.GKQuad.__typestr__
         )

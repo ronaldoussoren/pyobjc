@@ -38,10 +38,10 @@ class TestDRTrackHelper(DiscRecording.NSObject):
 
 
 class TestDRTrack(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("DRTrackDataProduction", DiscRecording)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             TestDRTrackHelper.estimateLengthOfTrack_, objc._C_ULNG_LNG
         )
@@ -189,7 +189,7 @@ class TestDRTrack(TestCase):
 
         self.assertResultIsBOOL(TestDRTrackHelper.cleanupTrackAfterVerification_)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.DRTrackLengthKey, str)
         self.assertIsInstance(DiscRecording.DRBlockSizeKey, str)
         self.assertIsInstance(DiscRecording.DRBlockTypeKey, str)

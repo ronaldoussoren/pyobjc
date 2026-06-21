@@ -7,7 +7,7 @@ class TestMLMultiArray(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(CoreML.MLMultiArrayDataType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreML.MLMultiArrayDataTypeDouble, 0x10000 | 64)
         self.assertEqual(CoreML.MLMultiArrayDataTypeFloat64, 0x10000 | 64)
         self.assertEqual(CoreML.MLMultiArrayDataTypeFloat32, 0x10000 | 32)
@@ -17,7 +17,7 @@ class TestMLMultiArray(TestCase):
         self.assertEqual(CoreML.MLMultiArrayDataTypeInt8, 0x20000 | 8)
 
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(CoreML.MLMultiArray.initWithShape_dataType_error_, 2)
 
         self.assertResultIsVariableSize(CoreML.MLMultiArray.dataPointer)
@@ -37,7 +37,7 @@ class TestMLMultiArray(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertArgIsBlock(
             CoreML.MLMultiArray.getBytesWithHandler_,
             0,

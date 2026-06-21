@@ -50,18 +50,18 @@ class TestSCNShadable(TestCase):
         self.assertIsInstance(SceneKit.SCNShaderModifierEntryPointLightingModel, str)
         self.assertIsInstance(SceneKit.SCNShaderModifierEntryPointFragment, str)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("SCNShadable", SceneKit)
 
     @min_sdk_level("10.10")
-    def testProtocols10_10(self):
+    def test_protocols10_10(self):
         self.assertProtocolExists("SCNProgramDelegate", SceneKit)
 
     @min_sdk_level("10.11")
-    def testProtocols10_11(self):
+    def test_protocols10_11(self):
         self.assertProtocolExists("SCNBufferStream", SceneKit)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(TestSCNShadableHelper.writeBytes_length_, 0, b"n^v")
         self.assertArgHasType(
             TestSCNShadableHelper.writeBytes_length_, 1, objc._C_NSUInteger
@@ -108,12 +108,12 @@ class TestSCNShadable(TestCase):
         self.assertResultIsBOOL(TestSCNShadableHelper.programIsOpaque_)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(SceneKit.SCNProgram.isOpaque)
         self.assertArgIsBOOL(SceneKit.SCNProgram.setOpaque_, 0)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             SceneKit.SCNProgram.handleBindingOfBufferNamed_frequency_usingBlock_,
             2,

@@ -11,7 +11,7 @@ class TestMKDirectionsRequest(TestCase):
         self.assertEqual(MapKit.MKDirectionsRoutePreferenceAvoid, 1)
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKDirectionsRequest, objc.objc_class)
 
         self.assertResultIsBOOL(MapKit.MKDirectionsRequest.requestsAlternateRoutes)

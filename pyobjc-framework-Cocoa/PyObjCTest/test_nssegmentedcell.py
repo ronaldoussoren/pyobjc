@@ -3,12 +3,12 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSSegmentedCell(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSSegmentSwitchTrackingSelectOne, 0)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingSelectAny, 1)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingMomentary, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSegmentedCell.selectSegmentWithTag_)
         self.assertResultIsBOOL(AppKit.NSSegmentedCell.isSelectedForSegment_)
         self.assertArgIsBOOL(AppKit.NSSegmentedCell.setSelected_forSegment_, 0)

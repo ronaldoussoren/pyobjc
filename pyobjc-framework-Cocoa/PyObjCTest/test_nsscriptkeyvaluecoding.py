@@ -15,7 +15,7 @@ class TestNSScriptKeyValueCodingHelper(Foundation.NSObject):
 
 
 class TestNSScriptKeyValueCoding(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestNSScriptKeyValueCodingHelper.insertValue_atIndex_inPropertyWithKey_,
             1,

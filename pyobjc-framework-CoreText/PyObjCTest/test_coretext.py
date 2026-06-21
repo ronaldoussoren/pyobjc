@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCoreText(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreText.kCTVersionNumber10_5, 0x00020000)
         self.assertEqual(CoreText.kCTVersionNumber10_5_2, 0x00020001)
         self.assertEqual(CoreText.kCTVersionNumber10_5_3, 0x00020002)
@@ -20,7 +20,7 @@ class TestCoreText(TestCase):
         self.assertEqual(CoreText.kCTVersionNumber10_15, 0x000C0000)
         self.assertEqual(CoreText.kCTVersionNumber11_0, 0x000D0000)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = CoreText.CTGetCoreTextVersion()
         self.assertIsInstance(v, int)
 

@@ -10,7 +10,7 @@ class TestNCWidgetSearchViewDelegateHelper(NotificationCenter.NSObject):
 
 class TestNCWidgetSearchViewControlle(TestCase):
     @min_os_level("10.10")
-    def testClasses10_10(self):
+    def test_classes10_10(self):
         self.assertProtocolExists("NCWidgetSearchViewDelegate", NotificationCenter)
 
     def test_protocol_methods(self):

@@ -6,7 +6,7 @@ class TestINHangUpCallIntentResponse(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Intents.INHangUpCallIntentResponseCode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INHangUpCallIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INHangUpCallIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INHangUpCallIntentResponseCodeInProgress, 2)

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAXTextAttributedString(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(HIServices.kAXFontTextAttribute, str)
         self.assertIsInstance(HIServices.kAXForegroundColorTextAttribute, str)
         self.assertIsInstance(HIServices.kAXBackgroundColorTextAttribute, str)
@@ -30,9 +30,9 @@ class TestAXTextAttributedString(TestCase):
         self.assertEqual(HIServices.kAXUnderlineStyleDouble, 0x9)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(HIServices.kAXAutocorrectedTextAttribute, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(HIServices.kAXMarkedMisspelledTextAttribute, str)

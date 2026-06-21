@@ -7,7 +7,7 @@ class TestCKError(TestCase):
         self.assertIsEnumType(CloudKit.CKErrorCode)
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CloudKit.CKErrorDomain, str)
         self.assertIsInstance(CloudKit.CKPartialErrorsByItemIDKey, str)
         self.assertIsInstance(CloudKit.CKRecordChangedErrorAncestorRecordKey, str)
@@ -54,5 +54,5 @@ class TestCKError(TestCase):
         self.assertEqual(CloudKit.CKErrorParticipantAlreadyInvited, 37)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(CloudKit.CKErrorUserDidResetEncryptedDataKey, str)

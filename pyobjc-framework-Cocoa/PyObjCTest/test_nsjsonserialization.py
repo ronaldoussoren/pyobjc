@@ -8,7 +8,7 @@ class TestNSJSONSerialization(TestCase):
         self.assertIsEnumType(Foundation.NSJSONWritingOptions)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Foundation.NSJSONReadingMutableContainers, (1 << 0))
         self.assertEqual(Foundation.NSJSONReadingMutableLeaves, (1 << 1))
         self.assertEqual(Foundation.NSJSONReadingAllowFragments, (1 << 2))

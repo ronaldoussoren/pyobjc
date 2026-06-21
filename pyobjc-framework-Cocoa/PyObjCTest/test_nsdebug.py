@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDebug(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsBOOL(Foundation.NSIsFreedObject)
         Foundation.NSRecordAllocationEvent
         Foundation.NSFrameAddress
@@ -11,7 +11,7 @@ class TestNSDebug(TestCase):
         Foundation.NSCountFrames
         Foundation.NSRecordAllocationEvent
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSObjectAutoreleasedEvent, 3)
         self.assertEqual(Foundation.NSObjectExtraRefIncrementedEvent, 4)
         self.assertEqual(Foundation.NSObjectExtraRefDecrementedEvent, 5)

@@ -40,7 +40,7 @@ class TestIKImageBrowserViewHelper(Quartz.NSObject):
 
 class TestIKImageBrowserView(TestCase):
     @min_os_level("10.5")
-    def testProtocols(self):
+    def test_protocols(self):
         # self.assertIsInstance(protocols.IKImageBrowserDataSource, objc.informal_protocol)
 
         self.assertResultHasType(
@@ -93,7 +93,7 @@ class TestIKImageBrowserView(TestCase):
         )
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.IKImageBrowserView.constrainsToOriginalSize)
         self.assertArgIsBOOL(Quartz.IKImageBrowserView.setConstrainsToOriginalSize_, 0)
         self.assertArgIsBOOL(
@@ -109,11 +109,11 @@ class TestIKImageBrowserView(TestCase):
         self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAnimates_, 0)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(Quartz.IKImageBrowserView.isGroupExpandedAtIndex_)
 
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.IKCellsStyleNone, 0)
         self.assertEqual(Quartz.IKCellsStyleShadowed, 1)
         self.assertEqual(Quartz.IKCellsStyleOutlined, 2)
@@ -152,7 +152,7 @@ class TestIKImageBrowserView(TestCase):
         self.assertIsInstance(Quartz.IKImageBrowserGroupStyleKey, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Quartz.IKImageBrowserDropOn, 0)
         self.assertEqual(Quartz.IKImageBrowserDropBefore, 1)
 
@@ -161,7 +161,7 @@ class TestIKImageBrowserView(TestCase):
         self.assertIsInstance(Quartz.IKImageBrowserGroupHeaderLayer, str)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.IKImageBrowserView.canControlQuickLookPanel)
         self.assertArgIsBOOL(Quartz.IKImageBrowserView.setCanControlQuickLookPanel_, 0)
         self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsDroppingOnItems)

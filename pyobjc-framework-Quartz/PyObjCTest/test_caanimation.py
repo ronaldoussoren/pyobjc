@@ -15,7 +15,7 @@ class TestCAAnimation(TestCase):
         self.assertIsTypedEnum(Quartz.CATransitionType, str)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(Quartz.kCAAnimationLinear, str)
         self.assertIsInstance(Quartz.kCAAnimationDiscrete, str)
         self.assertIsInstance(Quartz.kCAAnimationPaced, str)
@@ -33,16 +33,16 @@ class TestCAAnimation(TestCase):
         self.assertIsInstance(Quartz.kCAAnimationRotateAutoReverse, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(Quartz.kCAAnimationCubic, str)
         self.assertIsInstance(Quartz.kCAAnimationCubicPaced, str)
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("CAAnimationDelegate", Quartz)
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.CAAnimation.shouldArchiveValueForKey_)
         self.assertResultIsBOOL(Quartz.CAAnimation.isRemovedOnCompletion)
         self.assertArgIsBOOL(Quartz.CAAnimation.setRemovedOnCompletion_, 0)

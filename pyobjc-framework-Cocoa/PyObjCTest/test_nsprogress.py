@@ -9,7 +9,7 @@ class TestNSProgress(TestCase):
         self.assertIsTypedEnum(AppKit.NSProgressUserInfoKey, str)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSProgressEstimatedTimeRemainingKey, str)
         self.assertIsInstance(AppKit.NSProgressThroughputKey, str)
         self.assertIsInstance(AppKit.NSProgressKindFile, str)
@@ -28,15 +28,15 @@ class TestNSProgress(TestCase):
         self.assertIsInstance(AppKit.NSProgressFileIconKey, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AppKit.NSProgressFileOperationKindUploading, str)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(AppKit.NSProgressFileOperationKindDuplicating, str)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSProgress.isCancellable)
         self.assertArgIsBOOL(AppKit.NSProgress.setCancellable_, 0)
 
@@ -61,16 +61,16 @@ class TestNSProgress(TestCase):
         self.assertResultIsBOOL(AppKit.NSProgress.isOld)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBlock(AppKit.NSProgress.resumingHandler, b"v")
         self.assertArgIsBlock(AppKit.NSProgress.setResumingHandler_, 0, b"v")
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             AppKit.NSProgress.performAsCurrentWithPendingUnitCount_usingBlock_, 1, b"v"
         )
 
     @min_sdk_level("10.11")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSProgressReporting", AppKit)

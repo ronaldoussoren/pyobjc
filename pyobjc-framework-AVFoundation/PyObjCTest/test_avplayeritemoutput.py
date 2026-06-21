@@ -21,7 +21,7 @@ class TestAVPlayerOutput(TestCase):
         )
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(
             AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionDefault,
             str,  # noqa: B950
@@ -32,7 +32,7 @@ class TestAVPlayerOutput(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayerItemOutput.suppressesPlayerRendering
         )
@@ -52,7 +52,7 @@ class TestAVPlayerOutput(TestCase):
             1,
         )
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVPlayerItemOutputPullDelegate", AVFoundation)
         self.assertProtocolExists("AVPlayerItemLegibleOutputPushDelegate", AVFoundation)
         self.assertProtocolExists(

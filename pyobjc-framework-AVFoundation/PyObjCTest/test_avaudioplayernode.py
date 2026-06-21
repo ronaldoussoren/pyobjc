@@ -11,7 +11,7 @@ class TestAVAudioPlayerNode(TestCase):
         self.assertIsEnumType(AVFoundation.AVAudioPlayerNodeBufferOptions)
         self.assertIsEnumType(AVFoundation.AVAudioPlayerNodeCompletionCallbackType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioPlayerNodeBufferLoops, 1 << 0)
         self.assertEqual(AVFoundation.AVAudioPlayerNodeBufferInterrupts, 1 << 1)
         self.assertEqual(
@@ -29,7 +29,7 @@ class TestAVAudioPlayerNode(TestCase):
         )  # noqa: B950
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             AVFoundation.AVAudioPlayerNode.scheduleBuffer_completionHandler_,
             1,
@@ -53,7 +53,7 @@ class TestAVAudioPlayerNode(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioPlayerNode.isPlaying)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             AVFoundation.AVAudioPlayerNode.scheduleBuffer_completionCallbackType_completionHandler_,  # noqa: B950
             2,
@@ -76,6 +76,6 @@ class TestAVAudioPlayerNode(TestCase):
         )
 
     @min_os_level("27.0")
-    def testMethods27_0(self):
+    def test_methods27_0(self):
         self.assertArgIsOut(AVFoundation.AVAudioPlayerNode.playAndReturnError_, 0)
         self.assertArgIsOut(AVFoundation.AVAudioPlayerNode.playAtTime_error_, 1)

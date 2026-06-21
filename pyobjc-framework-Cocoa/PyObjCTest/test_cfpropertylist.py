@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestPropertyList(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         dta = CoreFoundation.CFPropertyListCreateXMLData(None, {"key": 42, "key2": 1})
         self.assertIsInstance(dta, CoreFoundation.CFDataRef)
         self.assertArgIsOut(CoreFoundation.CFPropertyListCreateFromXMLData, 3)
@@ -70,7 +70,7 @@ class TestPropertyList(TestCase):
         self.assertIs(errorString, None)
         self.assertEqual(res, value)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFPropertyListImmutable, 0)
         self.assertEqual(CoreFoundation.kCFPropertyListMutableContainers, 1 << 0)
         self.assertEqual(
@@ -82,14 +82,14 @@ class TestPropertyList(TestCase):
         self.assertEqual(CoreFoundation.kCFPropertyListBinaryFormat_v1_0, 200)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(CoreFoundation.kCFPropertyListReadCorruptError, 3840)
         self.assertEqual(CoreFoundation.kCFPropertyListReadUnknownVersionError, 3841)
         self.assertEqual(CoreFoundation.kCFPropertyListReadStreamError, 3842)
         self.assertEqual(CoreFoundation.kCFPropertyListWriteStreamError, 3851)
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         dta = CoreFoundation.CFPropertyListCreateXMLData(None, {"key": 42, "key2": 1})
         self.assertIsInstance(dta, CoreFoundation.CFDataRef)
         bytes_value = CoreFoundation.CFDataGetBytes(

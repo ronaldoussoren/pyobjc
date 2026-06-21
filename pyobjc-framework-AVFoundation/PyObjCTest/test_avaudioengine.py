@@ -20,12 +20,12 @@ class TestAVAudioEngine(TestCase):
         self.assertIsEnumType(AVFoundation.AVAudioEngineManualRenderingStatus)
 
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(AVFoundation.AVAudioEngine.startAndReturnError_, 0)
         self.assertResultIsBOOL(AVFoundation.AVAudioEngine.isRunning)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioEngine.isAutoShutdownEnabled
         )  # noqa: B950
@@ -56,7 +56,7 @@ class TestAVAudioEngine(TestCase):
         )
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertArgIsBlock(
             AVFoundation.AVAudioEngine.connectMIDI_to_format_block_,
             3,
@@ -69,7 +69,7 @@ class TestAVAudioEngine(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertArgIsBlock(
             AVFoundation.AVAudioEngine.connectMIDI_to_format_eventListBlock_,
             3,
@@ -82,7 +82,7 @@ class TestAVAudioEngine(TestCase):
         )
 
     @min_os_level("27.0")
-    def testMethods27_0(self):
+    def test_methods27_0(self):
         self.assertArgIsOut(
             AVFoundation.AVAudioEngine.connect_to_fromBus_toBus_format_error_, 5
         )
@@ -102,7 +102,7 @@ class TestAVAudioEngine(TestCase):
             AUMIDIEventListBlock,
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             AVFoundation.AVAudioEngineManualRenderingErrorInvalidMode, -80800
         )
@@ -136,7 +136,7 @@ class TestAVAudioEngine(TestCase):
         )  # noqa: B950
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(
             AVFoundation.AVAudioEngineConfigurationChangeNotification, str
         )

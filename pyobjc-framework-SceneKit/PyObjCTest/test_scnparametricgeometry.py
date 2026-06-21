@@ -8,12 +8,12 @@ class TestSCNParametricGeometry(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(SceneKit.SCNChamferMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SceneKit.SCNChamferModeBoth, 0)
         self.assertEqual(SceneKit.SCNChamferModeFront, 1)
         self.assertEqual(SceneKit.SCNChamferModeBack, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SceneKit.SCNSphere.isGeodesic)
         self.assertArgIsBOOL(SceneKit.SCNSphere.setGeodesic_, 0)
 

@@ -12,7 +12,7 @@ class TestNSPrintInfo(TestCase):
         self.assertIsEnumType(AppKit.NSPrintingOrientation)
         self.assertIsEnumType(AppKit.NSPrintingPaginationMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSPortraitOrientation, 0)
         self.assertEqual(AppKit.NSLandscapeOrientation, 1)
 
@@ -71,7 +71,7 @@ class TestNSPrintInfo(TestCase):
         self.assertEqual(AppKit.NSPrintingPaginationModeClip, 2)
 
     @max_os_level("10.13")
-    def testConstants_not10_14(self):
+    def test_constants_not10_14(self):
         self.assertIsInstance(AppKit.NSPrintFaxCoverSheetName, str)
         self.assertIsInstance(AppKit.NSPrintFaxHighResolution, str)
         self.assertIsInstance(AppKit.NSPrintFaxModem, str)
@@ -83,19 +83,19 @@ class TestNSPrintInfo(TestCase):
         self.assertIsInstance(AppKit.NSPrintFaxUseCoverSheet, str)
         self.assertIsInstance(AppKit.NSPrintFaxJob, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSPrintInfo.isHorizontallyCentered)
         self.assertResultIsBOOL(AppKit.NSPrintInfo.isVerticallyCentered)
         self.assertArgIsBOOL(AppKit.NSPrintInfo.setHorizontallyCentered_, 0)
         self.assertArgIsBOOL(AppKit.NSPrintInfo.setVerticallyCentered_, 0)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(AppKit.NSPrintSelectionOnly, str)
         self.assertIsInstance(AppKit.NSPrintJobSavingURL, str)
         self.assertIsInstance(AppKit.NSPrintJobSavingFileNameExtensionHidden, str)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSPrintInfo.isSelectionOnly)
         self.assertArgIsBOOL(AppKit.NSPrintInfo.setSelectionOnly_, 0)

@@ -8,12 +8,12 @@ class TestNSColorPanel(TestCase):
         self.assertIsEnumType(AppKit.NSColorPanelOptions)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertEqual(AppKit.NSNoModeColorPanel, -1)
 
         self.assertEqual(AppKit.NSColorPanelModeNone, -1)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSGrayModeColorPanel, 0)
         self.assertEqual(AppKit.NSRGBModeColorPanel, 1)
         self.assertEqual(AppKit.NSCMYKModeColorPanel, 2)
@@ -44,7 +44,7 @@ class TestNSColorPanel(TestCase):
 
         self.assertIsInstance(AppKit.NSColorPanelColorDidChangeNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSColorPanel.sharedColorPanelExists)
         self.assertResultIsBOOL(AppKit.NSColorPanel.dragColor_withEvent_fromView_)
 

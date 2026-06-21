@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMCSSPrimitiveValue(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.DOM_CSS_UNKNOWN, 0)
         self.assertEqual(WebKit.DOM_CSS_NUMBER, 1)
         self.assertEqual(WebKit.DOM_CSS_PERCENTAGE, 2)

@@ -127,11 +127,11 @@ class TestNSOutlineViewHelper(AppKit.NSObject):
 
 class TestNSOutlineView(TestCase):
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(AppKit.NSOutlineViewDisclosureButtonKey, str)
         self.assertIsInstance(AppKit.NSOutlineViewShowHideButtonKey, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSOutlineViewDropOnItemIndex, -1)
 
         self.assertIsInstance(AppKit.NSOutlineViewSelectionDidChangeNotification, str)
@@ -143,7 +143,7 @@ class TestNSOutlineView(TestCase):
         self.assertIsInstance(AppKit.NSOutlineViewItemWillCollapseNotification, str)
         self.assertIsInstance(AppKit.NSOutlineViewItemDidCollapseNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSOutlineView.isExpandable_)
         self.assertArgIsBOOL(AppKit.NSOutlineView.expandItem_expandChildren_, 1)
         self.assertArgIsBOOL(AppKit.NSOutlineView.collapseItem_collapseChildren_, 1)
@@ -163,16 +163,16 @@ class TestNSOutlineView(TestCase):
         self.assertArgIsBOOL(AppKit.NSOutlineView.setAutosaveExpandedItems_, 0)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSOutlineView.stronglyReferencesItems)
         self.assertArgIsBOOL(AppKit.NSOutlineView.setStronglyReferencesItems_, 0)
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSOutlineViewDelegate", AppKit)
         self.assertProtocolExists("NSOutlineViewDataSource", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSOutlineViewHelper.outlineView_child_ofItem_, 1, objc._C_NSInteger
         )
@@ -234,7 +234,7 @@ class TestNSOutlineView(TestCase):
         )
 
     @min_os_level("10.5")
-    def testProtocols10_5(self):
+    def test_protocols10_5(self):
         self.assertResultIsBOOL(
             TestNSOutlineViewHelper.outlineView_shouldTypeSelectForEvent_withCurrentSearchString_  # noqa: B950
         )
@@ -247,7 +247,7 @@ class TestNSOutlineView(TestCase):
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_isGroupItem_)
 
     @min_os_level("10.6")
-    def testProtocols10_6(self):
+    def test_protocols10_6(self):
         self.assertResultHasType(
             TestNSOutlineViewHelper.outlineView_sizeToFitWidthOfColumn_, objc._C_CGFloat
         )
@@ -275,7 +275,7 @@ class TestNSOutlineView(TestCase):
         )
 
     @min_os_level("10.7")
-    def testProtocols10_7(self):
+    def test_protocols10_7(self):
         self.assertArgHasType(
             TestNSOutlineViewHelper.outlineView_draggingSession_willBeginAtPoint_,
             2,

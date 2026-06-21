@@ -7,7 +7,7 @@ class TestGKVoiceChat(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(GameKit.GKVoiceChatPlayerState)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(GameKit.GKVoiceChatPlayerConnected, 0)
         self.assertEqual(GameKit.GKVoiceChatPlayerDisconnected, 1)
         self.assertEqual(GameKit.GKVoiceChatPlayerSpeaking, 2)
@@ -15,7 +15,7 @@ class TestGKVoiceChat(TestCase):
         self.assertEqual(GameKit.GKVoiceChatPlayerConnecting, 4)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(GameKit.GKVoiceChat.setPlayer_muted_, 1)
 
         self.assertArgIsBlock(
@@ -29,7 +29,7 @@ class TestGKVoiceChat(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         # XXX: For some reason most of these aren't actually available when testing on 10.9
         self.assertArgIsBOOL(GameKit.GKVoiceChat.setActive_, 0)
         self.assertResultIsBOOL(GameKit.GKVoiceChat.isActive)

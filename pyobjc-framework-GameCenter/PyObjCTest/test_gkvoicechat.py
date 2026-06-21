@@ -11,7 +11,7 @@ import GameCenter
 
 class TestGKVoiceChat(TestCase):
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(GameCenter.GKVoiceChatPlayerConnected, 0)
         self.assertEqual(GameCenter.GKVoiceChatPlayerDisconnected, 1)
         self.assertEqual(GameCenter.GKVoiceChatPlayerSpeaking, 2)
@@ -20,7 +20,7 @@ class TestGKVoiceChat(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBOOL(GameCenter.GKVoiceChat.setPlayer_muted_, 1)
 
         self.assertResultIsBlock(

@@ -8,7 +8,7 @@ class TestEKEvent(TestCase):
         self.assertTrue(hasattr(EventKit, "EKObject"))
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(EventKit.EKObject.hasChanges)
         self.assertResultIsBOOL(EventKit.EKObject.isNew)
         self.assertResultIsBOOL(EventKit.EKObject.refresh)

@@ -9,7 +9,7 @@ SCNBindingBlock = b"v" + objc._C_UINT + objc._C_UINT + b"@@"
 
 class TestSCNTransaction(TestCase):
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(SceneKit.SCNTransaction.disableActions)
         self.assertArgIsBOOL(SceneKit.SCNTransaction.setDisableActions_, 0)
 

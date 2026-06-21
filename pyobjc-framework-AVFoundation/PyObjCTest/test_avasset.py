@@ -12,7 +12,7 @@ class TestAVAsset(TestCase):
         self.assertIsEnumType(AVFoundation.AVAssetReferenceRestrictions)
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVAsset.providesPreciseDurationAndTiming)
         self.assertResultIsBOOL(AVFoundation.AVAsset.hasProtectedContent)
         self.assertResultIsBOOL(AVFoundation.AVAsset.isPlayable)
@@ -23,19 +23,19 @@ class TestAVAsset(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVURLAsset.isPlayableExtendedMIMEType_)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AVFoundation.AVAsset.canContainFragments)
         self.assertResultIsBOOL(AVFoundation.AVAsset.containsFragments)
         self.assertResultIsBOOL(AVFoundation.AVAsset.isCompatibleWithAirPlayVideo)
 
     @min_os_level("10.12.4")
-    def testMethods10_12_4(self):
+    def test_methods10_12_4(self):
         self.assertResultIsBOOL(
             AVFoundation.AVURLAsset.mayRequireContentKeysForMediaDataProcessing
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertArgIsBlock(
             AVFoundation.AVAsset.loadTrackWithTrackID_completionHandler_, 1, b"v@@"
         )
@@ -85,7 +85,7 @@ class TestAVAsset(TestCase):
         )
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidNone, 0)
         self.assertEqual(
             AVFoundation.AVAssetReferenceRestrictionForbidRemoteReferenceToLocal, 1 << 0
@@ -111,13 +111,13 @@ class TestAVAsset(TestCase):
         self.assertIsInstance(AVFoundation.AVURLAssetReferenceRestrictionsKey, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(
             AVFoundation.AVURLAssetShouldSupportAliasDataReferencesKey, str
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(AVFoundation.AVAssetDurationDidChangeNotification, str)
         self.assertIsInstance(
             AVFoundation.AVAssetContainsFragmentsDidChangeNotification, str
@@ -131,7 +131,7 @@ class TestAVAsset(TestCase):
         )
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(AVFoundation.AVURLAssetAllowsCellularAccessKey, str)
         self.assertIsInstance(
             AVFoundation.AVURLAssetAllowsExpensiveNetworkAccessKey, str
@@ -141,28 +141,28 @@ class TestAVAsset(TestCase):
         )
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(AVFoundation.AVURLAssetURLRequestAttributionKey, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(AVFoundation.AVURLAssetHTTPUserAgentKey, str)
         self.assertIsInstance(AVFoundation.AVURLAssetPrimarySessionIdentifierKey, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(AVFoundation.AVURLAssetOverrideMIMETypeKey, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(
             AVFoundation.AVURLAssetShouldParseExternalSphericalTagsKey, str
         )
 
     @min_sdk_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVFragmentMinding", AVFoundation)
 
     @min_sdk_level("10.11")
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestAVAssetHelper.isAssociatedWithFragmentMinder)

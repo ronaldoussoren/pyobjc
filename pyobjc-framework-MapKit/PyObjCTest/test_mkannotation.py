@@ -13,7 +13,7 @@ class TestMKAnnotationHelper(MapKit.NSObject):
 
 class TestMKAnnotation(TestCase):
     @min_os_level("10.9")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("MKAnnotation", MapKit)
 
         self.assertResultHasType(

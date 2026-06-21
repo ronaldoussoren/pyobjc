@@ -4,11 +4,11 @@ import Quartz
 
 class TestIKScannerDeviceView(TestCase):
     @min_os_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("IKScannerDeviceViewDelegate", Quartz)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Quartz.IKScannerDeviceViewTransferModeFileBased, 0)
         self.assertEqual(Quartz.IKScannerDeviceViewTransferModeMemoryBased, 1)
 
@@ -16,7 +16,7 @@ class TestIKScannerDeviceView(TestCase):
         self.assertEqual(Quartz.IKScannerDeviceViewDisplayModeAdvanced, 1)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.IKScannerDeviceView.hasDisplayModeSimple)
         self.assertArgIsBOOL(Quartz.IKScannerDeviceView.setHasDisplayModeSimple_, 0)
         self.assertResultIsBOOL(Quartz.IKScannerDeviceView.hasDisplayModeAdvanced)

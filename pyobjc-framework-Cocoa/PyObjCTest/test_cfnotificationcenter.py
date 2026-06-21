@@ -4,7 +4,7 @@ import objc
 
 
 class TestNotificationCenter(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFNotificationCenterRef)
 
     def testTypeID(self):
@@ -115,7 +115,7 @@ class TestNotificationCenter(TestCase):
         )
         self.assertEqual(len(notifications), 3)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.CFNotificationSuspensionBehaviorDrop, 1)
         self.assertEqual(CoreFoundation.CFNotificationSuspensionBehaviorCoalesce, 2)
         self.assertEqual(CoreFoundation.CFNotificationSuspensionBehaviorHold, 3)

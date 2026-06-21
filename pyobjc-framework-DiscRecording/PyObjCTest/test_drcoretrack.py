@@ -6,10 +6,10 @@ DRTrackCallbackProc = b"i^{__DRTrack=}I^v"
 
 class TestDRCoreTrack(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(DiscRecording.DRTrackRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.kDRTrackLengthKey, str)
         self.assertIsInstance(DiscRecording.kDRBlockSizeKey, str)
         self.assertIsInstance(DiscRecording.kDRBlockTypeKey, str)
@@ -105,7 +105,7 @@ class TestDRCoreTrack(TestCase):
         self.assertEqual(DiscRecording.kDRTrackMessageProducePreGap, fourcc(b"prpr"))
         self.assertEqual(DiscRecording.kDRTrackMessageVerifyPreGap, fourcc(b"vrpr"))
 
-    def testStructs(self):
+    def test_structs(self):
         # XXX: Needs manual work
         v = DiscRecording.DRTrackProductionInfo()
         self.assertEqual(v.buffer, None)
@@ -116,7 +116,7 @@ class TestDRCoreTrack(TestCase):
         self.assertEqual(v.requestedAddress, 0)
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(DiscRecording.DRTrackGetTypeID(), int)
 
         self.assertResultIsCFRetained(DiscRecording.DRTrackCreate)

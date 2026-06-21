@@ -33,7 +33,7 @@ class TestNSZone(TestCase):
         self.assertNotHasAttr(Foundation, "NSDeallocateMemoryPages")
         self.assertNotHasAttr(Foundation, "NSCopyMemoryPages")
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSScannedOption, (1 << 0))
         self.assertEqual(Foundation.NSCollectorDisabledOption, (1 << 1))
 

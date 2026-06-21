@@ -15,7 +15,7 @@ class TestNSGraphicsContext(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSImageInterpolation)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSGraphicsContextDestinationAttributeName, str)
         self.assertIsInstance(
             AppKit.NSGraphicsContextRepresentationFormatAttributeName, str
@@ -35,7 +35,7 @@ class TestNSGraphicsContext(TestCase):
         self.assertEqual(AppKit.NSColorRenderingIntentPerceptual, 3)
         self.assertEqual(AppKit.NSColorRenderingIntentSaturation, 4)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             AppKit.NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_, 1
         )
@@ -64,7 +64,7 @@ class TestNSGraphicsContext(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(
             AppKit.NSGraphicsContext.graphicsContextWithCGContext_flipped_, 1
         )

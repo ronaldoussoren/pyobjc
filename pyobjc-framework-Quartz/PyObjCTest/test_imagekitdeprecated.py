@@ -16,7 +16,7 @@ class TestImageKitDeprecatedHelper(Quartz.NSObject):
 
 class TestImageKitDeprecated(TestCase):
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             Quartz.IKImagePickerAllowsVideoCaptureKey,
             Quartz.IKPictureTakerAllowsVideoCaptureKey,
@@ -60,7 +60,7 @@ class TestImageKitDeprecated(TestCase):
         self.assertIsInstance(Quartz.IKPictureTakerCropAreaSizeKey, str)
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             Quartz.IKImagePicker.beginImagePickerWithDelegate_didEndSelector_contextInfo_,
             1,
@@ -73,7 +73,7 @@ class TestImageKitDeprecated(TestCase):
         )
 
     @min_os_level("10.5")
-    def testProtocols(self):
+    def test_protocols(self):
         # self.assertIsInstance(protocols.IKImageBrowserDataSourceDeprecated, objc.informal_protocol)
 
         self.assertResultHasType(
@@ -95,7 +95,7 @@ class TestImageKitDeprecated(TestCase):
         )
 
     @os_level_between("10.6", "10.13")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypeBackground, str)
         self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypeForeground, str)
         self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypeSelection, str)

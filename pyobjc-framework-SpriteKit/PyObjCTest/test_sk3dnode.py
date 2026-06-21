@@ -7,7 +7,7 @@ import SpriteKit
 
 class TestSK3Node(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(SpriteKit.SK3DNode, objc.objc_class)
 
         self.assertResultIsBOOL(SpriteKit.SK3DNode.isPlaying)

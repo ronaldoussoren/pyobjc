@@ -9,7 +9,7 @@ class TestSKTileSet(TestCase):
         self.assertIsEnumType(SpriteKit.SKTileSetType)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SpriteKit.SKTileSetTypeGrid, 0)
         self.assertEqual(SpriteKit.SKTileSetTypeIsometric, 1)
         self.assertEqual(SpriteKit.SKTileSetTypeHexagonalFlat, 2)

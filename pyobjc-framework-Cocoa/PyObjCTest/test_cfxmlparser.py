@@ -5,13 +5,13 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 class TestXMLParser(TestCase):
     # Note: This doesn't actually test the API
 
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFXMLParserRef)
 
     def testTypeID(self):
         self.assertIsInstance(CoreFoundation.CFXMLParserGetTypeID(), int)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFXMLParserValidateDocument, (1 << 0))
         self.assertEqual(CoreFoundation.kCFXMLParserSkipMetaData, (1 << 1))
         self.assertEqual(CoreFoundation.kCFXMLParserReplacePhysicalEntities, (1 << 2))

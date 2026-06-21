@@ -3,11 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAXUIElement(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(HIServices.AXUIElementRef)
         self.assertIsCFType(HIServices.AXObserverRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsBOOL(HIServices.AXAPIEnabled)
         self.assertResultIsBOOL(HIServices.AXIsProcessTrusted)
 
@@ -82,7 +82,7 @@ class TestAXUIElement(TestCase):
         self.assertResultIsNotCFRetained(HIServices.AXObserverGetRunLoopSource)
 
     @min_os_level("10.9")
-    def testFunctions10_9(self):
+    def test_functions10_9(self):
         AXObserverCallbackWithInfo = (
             b"v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^{__CFDictionary=}^v"
         )
@@ -98,11 +98,11 @@ class TestAXUIElement(TestCase):
         self.assertArgIsOut(HIServices.AXObserverCreateWithInfoCallback, 2)
         self.assertArgIsCFRetained(HIServices.AXObserverCreateWithInfoCallback, 2)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(HIServices.kAXCopyMultipleAttributeOptionStopOnError, 1)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(HIServices.kAXTrustedCheckOptionPrompt, str)
 
     @min_os_level("12.0")

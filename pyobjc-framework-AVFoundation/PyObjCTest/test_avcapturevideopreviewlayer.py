@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureVideoPreviewLayer(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         AVFoundation.AVCaptureVideoPreviewLayer
 
     @min_os_level("26.0")

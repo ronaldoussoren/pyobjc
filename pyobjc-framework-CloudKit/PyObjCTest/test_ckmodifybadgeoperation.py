@@ -5,12 +5,12 @@ import objc
 
 class TestCKModifyBadgeOperation(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKModifyBadgeOperation")
         self.assertIsInstance(CloudKit.CKModifyBadgeOperation, objc.objc_class)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         # self.assertResultIsBOOL(CloudKit.CKModifyBadgeOperation.thisDeviceOnly)
         # self.assertArgIsBOOL(CloudKit.CKModifyBadgeOperation.setThisDeviceOnly_, 0)
 

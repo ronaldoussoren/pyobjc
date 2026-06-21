@@ -11,7 +11,7 @@ class TestSKViewHelper(SpriteKit.NSObject):
 
 class TestSKView(TestCase):
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBOOL(SpriteKit.SKView.setPaused_, 0)
         self.assertResultIsBOOL(SpriteKit.SKView.isPaused)
         self.assertArgIsBOOL(SpriteKit.SKView.setShowsFPS_, 0)
@@ -27,7 +27,7 @@ class TestSKView(TestCase):
         self.assertResultIsBOOL(SpriteKit.SKView.ignoresSiblingOrder)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(SpriteKit.SKView.setShowsFields_, 0)
         self.assertResultIsBOOL(SpriteKit.SKView.showsFields)
         self.assertArgIsBOOL(SpriteKit.SKView.setShowsPhysics_, 0)
@@ -40,11 +40,11 @@ class TestSKView(TestCase):
         self.assertResultIsBOOL(SpriteKit.SKView.shouldCullNonVisibleNodes)
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(SpriteKit.SKView.disableDepthStencilBuffer)
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("SKViewDelegate", SpriteKit)
 
         self.assertResultIsBOOL(TestSKViewHelper.view_shouldRenderAtTime_)

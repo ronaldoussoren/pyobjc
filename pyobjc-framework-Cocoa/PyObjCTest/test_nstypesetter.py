@@ -41,7 +41,7 @@ class TestNSTypesetter(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSTypesetterControlCharacterAction)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTypesetterZeroAdvancementAction, (1 << 0))
         self.assertEqual(AppKit.NSTypesetterWhitespaceAction, (1 << 1))
         self.assertEqual(AppKit.NSTypesetterHorizontalTabAction, (1 << 2))
@@ -49,7 +49,7 @@ class TestNSTypesetter(TestCase):
         self.assertEqual(AppKit.NSTypesetterParagraphBreakAction, (1 << 4))
         self.assertEqual(AppKit.NSTypesetterContainerBreakAction, (1 << 5))
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsIn(AppKit.NSTypesetter.substituteGlyphsInRange_withGlyphs_, 1)
         self.assertArgSizeInArg(
             AppKit.NSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0
@@ -296,7 +296,7 @@ class TestNSTypesetter(TestCase):
         )
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertArgHasType(
             AppKit.NSTypesetter.printingAdjustmentInLayoutManager_forNominallySpacedGlyphRange_packedGlyphs_count_,  # noqa: B950
             2,

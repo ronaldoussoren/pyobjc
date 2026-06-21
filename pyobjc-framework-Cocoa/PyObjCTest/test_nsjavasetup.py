@@ -7,7 +7,7 @@ from PyObjCTools.TestSupport import TestCase, max_os_level
 
 class TestNSJavaSetup(TestCase):
     @max_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSJavaClasses, str)
         self.assertIsInstance(Foundation.NSJavaRoot, str)
         self.assertIsInstance(Foundation.NSJavaPath, str)
@@ -23,7 +23,7 @@ class TestNSJavaSetup(TestCase):
         self.assertIsInstance(Foundation.NSJavaDidCreateVirtualMachineNotification, str)
 
     @max_os_level("10.5")
-    def testFunctions(self):
+    def test_functions(self):
         v = Foundation.NSJavaNeedsVirtualMachine({})
         self.assertIs(v, False)
         v = Foundation.NSJavaProvidesClasses({})

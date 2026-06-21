@@ -13,7 +13,7 @@ class TestSCNMaterial(TestCase):
         self.assertIsEnumType(SceneKit.SCNFillMode)
         self.assertIsEnumType(SceneKit.SCNTransparencyMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(SceneKit.SCNLightingModelPhong, str)
         self.assertIsInstance(SceneKit.SCNLightingModelBlinn, str)
         self.assertIsInstance(SceneKit.SCNLightingModelLambert, str)
@@ -42,14 +42,14 @@ class TestSCNMaterial(TestCase):
         self.assertEqual(SceneKit.SCNBlendModeMax, 6)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(SceneKit.SCNLightingModelPhysicallyBased, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(SceneKit.SCNLightingModelShadowOnly, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SceneKit.SCNMaterial.isLitPerPixel)
         self.assertArgIsBOOL(SceneKit.SCNMaterial.setLitPerPixel_, 0)
 
@@ -63,6 +63,6 @@ class TestSCNMaterial(TestCase):
         self.assertArgIsBOOL(SceneKit.SCNMaterial.setWritesToDepthBuffer_, 0)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertResultIsBOOL(SceneKit.SCNMaterial.readsFromDepthBuffer)
         self.assertArgIsBOOL(SceneKit.SCNMaterial.setReadsFromDepthBuffer_, 0)

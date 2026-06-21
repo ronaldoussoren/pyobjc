@@ -7,10 +7,10 @@ class TestNSStringDrawing(TestCase):
         self.assertIsEnumType(AppKit.NSStringDrawingOptions)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertEqual(AppKit.NSStringDrawingTruncatesLastVisibleLine, (1 << 5))
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSStringDrawingUsesLineFragmentOrigin, (1 << 0))
         self.assertEqual(AppKit.NSStringDrawingUsesFontLeading, (1 << 1))
         self.assertEqual(AppKit.NSStringDrawingDisableScreenFontSubstitution, (1 << 2))

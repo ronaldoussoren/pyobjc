@@ -7,12 +7,12 @@ class TestCAMediaTimingFunction(TestCase):
         self.assertIsTypedEnum(Quartz.CAMediaTimingFunctionName, str)
 
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionLinear, str)
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionEaseIn, str)
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionEaseOut, str)
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionEaseInEaseOut, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionDefault, str)

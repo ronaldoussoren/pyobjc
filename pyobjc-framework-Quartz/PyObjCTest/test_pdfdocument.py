@@ -20,7 +20,7 @@ class TestPDFDocument(TestCase):
         self.assertIsEnumType(Quartz.PDFDocumentPermissions)
         self.assertIsEnumType(Quartz.PDFPrintScalingMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kPDFPrintPageScaleNone, 0)
         self.assertEqual(Quartz.kPDFPrintPageScaleToFit, 1)
         self.assertEqual(Quartz.kPDFPrintPageScaleDownToFit, 2)
@@ -78,7 +78,7 @@ class TestPDFDocument(TestCase):
         self.assertIsInstance(Quartz.PDFDocumentSaveImagesAsJPEGOption, str)
         self.assertIsInstance(Quartz.PDFDocumentOptimizeImagesForScreenOption, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.PDFDocument.isEncrypted)
         self.assertResultIsBOOL(Quartz.PDFDocument.isLocked)
         self.assertResultIsBOOL(Quartz.PDFDocument.unlockWithPassword_)
@@ -99,13 +99,13 @@ class TestPDFDocument(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsBOOL(
             Quartz.PDFDocument.printOperationForPrintInfo_scalingMode_autoRotate_, 2
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(Quartz.PDFDocument.allowsFormFieldEntry)
         self.assertResultIsBOOL(Quartz.PDFDocument.allowsDocumentChanges)
         self.assertResultIsBOOL(Quartz.PDFDocument.allowsDocumentAssembly)
@@ -113,5 +113,5 @@ class TestPDFDocument(TestCase):
         self.assertResultIsBOOL(Quartz.PDFDocument.allowsCommenting)
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("PDFDocumentDelegate", Quartz)

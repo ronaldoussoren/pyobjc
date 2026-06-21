@@ -13,7 +13,7 @@ with warnings.catch_warnings():
 
 
 class TestLaunchServices(TestCase):
-    def testValues(self):
+    def test_values(self):
         # Use this to test for a number of enum and #define values
         self.assertHasAttr(LaunchServices, "kLSRequestAllInfo")
         self.assertIsInstance(LaunchServices.kLSRequestAllInfo, int)
@@ -28,7 +28,7 @@ class TestLaunchServices(TestCase):
         self.assertHasAttr(LaunchServices, "kLSInvalidExtensionIndex")
         self.assertIsInstance(LaunchServices.kLSInvalidExtensionIndex, int)
 
-    def testVariables(self):
+    def test_variables(self):
         self.assertHasAttr(LaunchServices, "kUTTypeItem")
         self.assertIsInstance(LaunchServices.kUTTypeItem, str)
 
@@ -38,7 +38,7 @@ class TestLaunchServices(TestCase):
         self.assertHasAttr(LaunchServices, "kUTExportedTypeDeclarationsKey")
         self.assertIsInstance(LaunchServices.kUTExportedTypeDeclarationsKey, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertHasAttr(LaunchServices, "UTTypeEqual")
         self.assertIsInstance(LaunchServices.UTTypeEqual, objc.function)
 

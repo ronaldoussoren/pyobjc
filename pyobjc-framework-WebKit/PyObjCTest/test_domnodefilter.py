@@ -10,18 +10,18 @@ class TestDOMNodeFilterHelper(WebKit.NSObject):
 
 class TestDOMNodeFilter(TestCase):
     @min_sdk_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("DOMNodeFilter", WebKit, "DOMNodeFilterProtocol")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(TestDOMNodeFilterHelper.acceptNode_, objc._C_SHT)
         self.assertResultIsBOOL(WebKit.DOMNodeIterator.expandEntityReferences)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(WebKit.DOMNodeIterator.pointerBeforeReferenceNode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.DOM_FILTER_ACCEPT, 1)
         self.assertEqual(WebKit.DOM_FILTER_REJECT, 2)
         self.assertEqual(WebKit.DOM_FILTER_SKIP, 3)

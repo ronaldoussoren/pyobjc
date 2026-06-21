@@ -23,11 +23,11 @@ class TestQLPreviewPanelHelper(NSObject):
 
 class TestQLPreviewPanel(TestCase):
     @min_os_level("10.6")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(Quartz.QLPreviewPanel, objc.objc_class)
 
     @min_os_level("10.6")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.QLPreviewPanel.sharedPreviewPanelExists)
         self.assertResultIsBOOL(Quartz.QLPreviewPanel.enterFullScreenMode_withOptions_)
         self.assertResultIsBOOL(Quartz.QLPreviewPanel.isInFullScreenMode)
@@ -46,9 +46,9 @@ class TestQLPreviewPanel(TestCase):
         )
 
     @min_os_level("10.6")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("QLPreviewPanelDataSource", Quartz)
 
     @min_os_level("10.7")
-    def testProtocols10_7(self):
+    def test_protocols10_7(self):
         self.assertProtocolExists("QLPreviewPanelDelegate", Quartz)

@@ -173,7 +173,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.hasMediaType_)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.lockForConfiguration_)
@@ -207,7 +207,7 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingWhiteBalance)
 
     @min_os_level("12.0")
-    def testMethods_Clones(self):
+    def test_methods_Clones(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.hasMediaType_)
 
         self.assertResultIsBOOL(
@@ -256,14 +256,14 @@ class TestAVCaptureDevice(TestCase):
 
     @expectedFailure  # XXX
     @min_os_level("10.7")
-    def testMethods_error_on_11(self):
+    def test_methods_error_on_11(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.transportControlsSupported)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice_Tundra.transportControlsSupported
         )
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertArgIsBlock(
             AVFoundation.AVCaptureDevice.requestAccessForMediaType_completionHandler_,
             1,
@@ -271,7 +271,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethodsTundra10_14(self):
+    def test_methodsTundra10_14(self):
         self.assertArgIsBlock(
             AVFoundation.AVCaptureDevice_Tundra.requestAccessForMediaType_completionHandler_,
             1,
@@ -279,7 +279,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isFlashAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isTorchAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isTorchActive)
@@ -292,7 +292,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethodsTundra10_15(self):
+    def test_methodsTundra10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isFlashAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isTorchAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isTorchActive)
@@ -305,7 +305,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isHighPhotoQualitySupported
         )
@@ -351,7 +351,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isContinuityCamera)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isContinuityCamera)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isStudioLightEnabled)
@@ -372,20 +372,20 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.reactionEffectsEnabled)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.reactionEffectsSupported
         )
 
     @min_os_level("14.2")
-    def testMethods14_2(self):
+    def test_methods14_2(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.zoomFactorsOutsideOfVideoZoomRangesForDepthDeliverySupported
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice.isAutoVideoFrameRateEnabled
         )
@@ -411,11 +411,11 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("15.2")
-    def testMethods15_2(self):
+    def test_methods15_2(self):
         self.assertResultIsBOOL(AVFoundation.AVExposureBiasRange.containsExposureBias_)
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice.isExposureRectOfInterestSupported
         )
@@ -452,7 +452,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("26.2")
-    def testMethods26_2(self):
+    def test_methods26_2(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isEdgeLightEnabled)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isEdgeLightActive)
 

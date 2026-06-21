@@ -11,7 +11,7 @@ class TestQCCompositionParameterViewHelper(Quartz.NSObject):
 
 class TestQCCompositionParameterView(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.QCCompositionParameterView.hasParameters)
 
         self.assertResultIsBOOL(Quartz.QCCompositionParameterView.drawsBackground)

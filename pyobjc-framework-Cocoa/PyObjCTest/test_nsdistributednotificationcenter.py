@@ -10,7 +10,7 @@ class TestNSDistributedNotificationCenter(TestCase):
         self.assertIsEnumType(Foundation.NSDistributedNotificationOptions)
         self.assertIsEnumType(Foundation.NSNotificationSuspensionBehavior)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSLocalNotificationCenterType, str)
         self.assertEqual(Foundation.NSNotificationSuspensionBehaviorDrop, 1)
         self.assertEqual(Foundation.NSNotificationSuspensionBehaviorCoalesce, 2)
@@ -25,7 +25,7 @@ class TestNSDistributedNotificationCenter(TestCase):
         self.assertEqual(Foundation.NSDistributedNotificationDeliverImmediately, 1)
         self.assertEqual(Foundation.NSDistributedNotificationPostToAllSessions, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             Foundation.NSDistributedNotificationCenter.addObserver_selector_name_object_suspensionBehavior_,  # noqa: B950
             1,

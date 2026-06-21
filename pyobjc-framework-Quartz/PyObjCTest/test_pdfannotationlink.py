@@ -3,5 +3,5 @@ import Quartz
 
 
 class TestPDFAnnotationLink(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Quartz.PDFAnnotationLink.setHighlighted_, 0)

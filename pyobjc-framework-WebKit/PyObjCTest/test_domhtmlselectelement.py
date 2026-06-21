@@ -3,14 +3,14 @@ import WebKit
 
 
 class TestDOMHTMLSelectElement(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLSelectElement.disabled)
         self.assertArgIsBOOL(WebKit.DOMHTMLSelectElement.setDisabled_, 0)
         self.assertResultIsBOOL(WebKit.DOMHTMLSelectElement.multiple)
         self.assertArgIsBOOL(WebKit.DOMHTMLSelectElement.setMultiple_, 0)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLSelectElement.willValidate)
         self.assertResultIsBOOL(WebKit.DOMHTMLSelectElement.autofocus)
         self.assertArgIsBOOL(WebKit.DOMHTMLSelectElement.setAutofocus_, 0)

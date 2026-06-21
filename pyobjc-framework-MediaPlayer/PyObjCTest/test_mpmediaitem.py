@@ -8,7 +8,7 @@ class TestMPMediaItem(TestCase):
         self.assertIsEnumType(MediaPlayer.MPMediaType)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(MediaPlayer.MPMediaTypeMusic, 1 << 0)
         self.assertEqual(MediaPlayer.MPMediaTypePodcast, 1 << 1)
         self.assertEqual(MediaPlayer.MPMediaTypeAudioBook, 1 << 2)
@@ -64,18 +64,18 @@ class TestMPMediaItem(TestCase):
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDateAdded, str)
 
     @min_os_level("10.13.1")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, str
         )
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPlaybackStoreID, str)
 
     @min_os_level("11.3")
-    def testConstants11_3(self):
+    def test_constants11_3(self):
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyIsPreorder, str)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(MediaPlayer.MPMediaItem.isExplicitItem)
         self.assertResultIsBOOL(MediaPlayer.MPMediaItem.isCompilation)
         self.assertResultIsBOOL(MediaPlayer.MPMediaItem.isCloudItem)

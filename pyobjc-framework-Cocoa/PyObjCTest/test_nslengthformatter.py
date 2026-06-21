@@ -7,7 +7,7 @@ class TestNSLengthFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSLengthFormatterUnit)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(Foundation.NSLengthFormatterUnitMillimeter, 8)
         self.assertEqual(Foundation.NSLengthFormatterUnitCentimeter, 9)
         self.assertEqual(Foundation.NSLengthFormatterUnitMeter, 11)
@@ -18,7 +18,7 @@ class TestNSLengthFormatter(TestCase):
         self.assertEqual(Foundation.NSLengthFormatterUnitMile, (5 << 8) + 4)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(Foundation.NSLengthFormatter.isForPersonHeightUse)
         self.assertArgIsBOOL(Foundation.NSLengthFormatter.setForPersonHeightUse_, 0)
 

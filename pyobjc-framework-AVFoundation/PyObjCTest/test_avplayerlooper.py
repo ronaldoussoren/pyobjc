@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVPlayerLooper(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsEnumType(AVFoundation.AVPlayerLooperStatus)
         self.assertEqual(AVFoundation.AVPlayerLooperStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVPlayerLooperStatusReady, 1)

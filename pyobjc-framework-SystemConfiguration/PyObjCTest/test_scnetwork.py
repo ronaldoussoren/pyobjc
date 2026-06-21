@@ -14,7 +14,7 @@ def resolver_available():
 
 
 class TestSCNetwork(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsTransientConnection, 1 << 0)
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsReachable, 1 << 1)
         self.assertEqual(SystemConfiguration.kSCNetworkFlagsConnectionRequired, 1 << 2)
@@ -45,7 +45,7 @@ class TestSCNetwork(TestCase):
         self.assertTrue(flags & SystemConfiguration.kSCNetworkFlagsReachable)
 
     @skipUnless(resolver_available(), "No DNS resolver available")
-    def testFunctions(self):
+    def test_functions(self):
         r, flags = SystemConfiguration.SCNetworkCheckReachabilityByName(
             b"www.python.org", None
         )

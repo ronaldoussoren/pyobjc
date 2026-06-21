@@ -8,20 +8,20 @@ import Quartz
 
 
 class TestQCComposition(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.QCCompositionAttributeNameKey, str)
         self.assertIsInstance(Quartz.QCCompositionAttributeDescriptionKey, str)
         self.assertIsInstance(Quartz.QCCompositionAttributeCopyrightKey, str)
 
     @os_level_between("10.5", "10.13")
-    def testConstants10_5_to_13(self):
+    def test_constants10_5_to_13(self):
         # Removed in 10.14
         self.assertIsInstance(Quartz.QCCompositionInputRSSFeedURLKey, str)
         self.assertIsInstance(Quartz.QCCompositionInputRSSArticleDurationKey, str)
         self.assertIsInstance(Quartz.QCCompositionProtocolRSSVisualizer, str)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(Quartz.QCCompositionAttributeBuiltInKey, str)
         self.assertIsInstance(Quartz.QCCompositionAttributeIsTimeDependentKey, str)
         self.assertIsInstance(Quartz.QCCompositionAttributeHasConsumersKey, str)
@@ -54,7 +54,7 @@ class TestQCComposition(TestCase):
 
     @min_os_level("10.6")
     @expectedFailure
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Quartz.QCCompositionInputMeshKey, str)
         self.assertIsInstance(Quartz.QCCompositionOutputMeshKey, str)
         self.assertIsInstance(Quartz.QCCompositionProtocolMeshFilter, str)

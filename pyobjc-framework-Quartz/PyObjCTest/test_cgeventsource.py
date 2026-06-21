@@ -4,10 +4,10 @@ import objc
 
 
 class TestCGEventSource(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGEventSourceRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGEventSourceGetTypeID(), int)
 
         src = Quartz.CGEventSourceCreate(0)

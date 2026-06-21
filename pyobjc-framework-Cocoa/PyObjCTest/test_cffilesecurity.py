@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 class TestCFFileSecurity(TestCase):
     @min_os_level("10.7")
-    def testTypes(self):
+    def test_types(self):
         try:
             cls = objc.lookUpClass("__NSFileSecurity")
             self.assertIs(cls, CoreFoundation.CFFileSecurityRef)
@@ -18,11 +18,11 @@ class TestCFFileSecurity(TestCase):
 
     @min_os_level("10.7")
     @expectedFailure
-    def testConstants(self):
+    def test_constants(self):
         self.fail("kCFFileSecurityRemoveACL")
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(CoreFoundation.kCFFileSecurityClearOwner, 1 << 0)
         self.assertEqual(CoreFoundation.kCFFileSecurityClearGroup, 1 << 1)
         self.assertEqual(CoreFoundation.kCFFileSecurityClearMode, 1 << 2)
@@ -31,7 +31,7 @@ class TestCFFileSecurity(TestCase):
         self.assertEqual(CoreFoundation.kCFFileSecurityClearAccessControlList, 1 << 5)
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         self.assertResultIsCFRetained(CoreFoundation.CFFileSecurityCreate)
         v = CoreFoundation.CFFileSecurityCreate(None)
         self.assertIsInstance(v, CoreFoundation.CFFileSecurityRef)
@@ -83,12 +83,12 @@ class TestCFFileSecurity(TestCase):
 
     @min_os_level("10.7")
     @expectedFailure
-    def testFunctionsUnwrapped(self):
+    def test_functionsUnwrapped(self):
         # There are no usable wrappers for sys/acl.h at this time
         self.fail("ACL Handling")
 
     @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions10_8(self):
         security = CoreFoundation.CFFileSecurityCreate(None)
         self.assertIsInstance(security, CoreFoundation.CFFileSecurityRef)
 
@@ -97,6 +97,6 @@ class TestCFFileSecurity(TestCase):
         )
 
     @min_os_level("10.7")
-    def testFunctions_unsupported(self):
+    def test_functions_unsupported(self):
         self.assertFalse(hasattr(CoreFoundation, "CFFileSecurityCopyAccessControlList"))
         self.assertFalse(hasattr(CoreFoundation, "CFFileSecuritySetAccessControlList"))

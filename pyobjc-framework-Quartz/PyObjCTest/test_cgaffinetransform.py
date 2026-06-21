@@ -4,7 +4,7 @@ import objc
 
 
 class TestCGAffineTransform(TestCase):
-    def testStruct(self):
+    def test_struct(self):
         v = Quartz.CGAffineTransform()
         self.assertTrue(hasattr(v, "a"))
         self.assertTrue(hasattr(v, "b"))
@@ -19,7 +19,7 @@ class TestCGAffineTransform(TestCase):
         self.assertIsInstance(v.rotation, float)
         self.assertIsInstance(v.translation, Quartz.CGVector)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             Quartz.CGAffineTransformIdentity, Quartz.CGAffineTransform
         )
@@ -30,7 +30,7 @@ class TestCGAffineTransform(TestCase):
         self.assertIsInstance(Quartz.CGAffineTransformIdentity.tx, float)
         self.assertIsInstance(Quartz.CGAffineTransformIdentity.ty, float)
 
-    def testFunctions(self):
+    def test_functions(self):
         tf = Quartz.CGAffineTransformMake(1.5, 2.5, 3.5, 4.5, 5.5, 6.5)
         self.assertIsInstance(tf, Quartz.CGAffineTransform)
         self.assertEqual(tf.a, 1.5)

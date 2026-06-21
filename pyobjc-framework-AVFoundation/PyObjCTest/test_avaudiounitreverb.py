@@ -7,7 +7,7 @@ class TestAVAudioUnitReverb(TestCase):
         self.assertIsEnumType(AVFoundation.AVAudioUnitReverbPreset)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetSmallRoom, 0)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetMediumRoom, 1)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetLargeRoom, 2)

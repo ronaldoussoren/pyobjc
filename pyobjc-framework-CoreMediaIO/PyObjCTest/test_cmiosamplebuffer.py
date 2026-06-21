@@ -31,7 +31,7 @@ class TestCMIOSampleBuffer(TestCase):
             False,
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreMediaIO.kCMIOInvalidSequenceNumber, 0xFFFFFFFFFFFFFFFF)
 
         self.assertEqual(CoreMediaIO.kCMIOSampleBufferNoDiscontinuities, 0)
@@ -102,7 +102,7 @@ class TestCMIOSampleBuffer(TestCase):
         self.assertEqual(CoreMediaIO.kCMIOSampleBufferNoDataEvent_SleepWakeCycle, 5)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(
             CoreMediaIO.kCMIOSampleBufferAttachmentKey_DiscontinuityFlags, str
         )
@@ -151,7 +151,7 @@ class TestCMIOSampleBuffer(TestCase):
         )
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(
             CoreMediaIO.kCMIOSampleBufferAttachmentKey_ClientSequenceID, str
         )
@@ -176,7 +176,7 @@ class TestCMIOSampleBuffer(TestCase):
         )
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(
             CoreMediaIO.kCMIOSampleBufferAttachment_MouseAndKeyboardModifiersKey_CursorIsVisible,
             str,
@@ -199,7 +199,7 @@ class TestCMIOSampleBuffer(TestCase):
         )
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(
             CoreMediaIO.kCMIOSampleBufferAttachment_MouseAndKeyboardModifiersKey_CursorIsDrawnInFramebuffer,
             str,
@@ -210,13 +210,13 @@ class TestCMIOSampleBuffer(TestCase):
         )
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(
             CoreMediaIO.kCMIOSampleBufferAttachmentKey_PixelBufferOverlaidByStaticImage,
             str,
         )
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsIn(CoreMediaIO.CMIOSampleBufferCreate, 5)
         self.assertArgSizeInArg(CoreMediaIO.CMIOSampleBufferCreate, 5, 4)
         self.assertArgIsIn(CoreMediaIO.CMIOSampleBufferCreate, 7)

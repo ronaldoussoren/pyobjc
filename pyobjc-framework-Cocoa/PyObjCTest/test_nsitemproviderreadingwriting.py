@@ -15,7 +15,7 @@ class TestNSItemProviderReadingWritingHelper(AppKit.NSObject):
 
 
 class TestNSItemProviderReadingWriting(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             TestNSItemProviderReadingWritingHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,  # noqa: B950
             1,

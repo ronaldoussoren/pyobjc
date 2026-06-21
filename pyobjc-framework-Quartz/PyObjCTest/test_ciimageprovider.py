@@ -12,7 +12,7 @@ class TestCIImageProviderHelper(Quartz.NSObject):
 
 
 class TestCIImageProvider(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestCIImageProviderHelper.provideImageData_bytesPerRow_origin__size__userInfo_,
             0,
@@ -54,10 +54,10 @@ class TestCIImageProvider(TestCase):
             objc._C_ID,
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCIImageProviderTileSize, str)
         self.assertIsInstance(Quartz.kCIImageProviderUserInfo, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCIOutputNativeSizeKey, str)

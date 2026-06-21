@@ -12,13 +12,13 @@ class TestEKEvent(TestCase):
         self.assertTrue(hasattr(EventKit, "EKEvent"))
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(EventKit.EKEvent.isAllDay)
         self.assertResultIsBOOL(EventKit.EKEvent.isDetached)
         self.assertResultIsBOOL(EventKit.EKEvent.refresh)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(EventKit.EKEventAvailabilityNotSupported, -1)
         self.assertEqual(EventKit.EKEventAvailabilityBusy, 0)
         self.assertEqual(EventKit.EKEventAvailabilityFree, 1)

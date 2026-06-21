@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMRange(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.DOM_START_TO_START, 0)
         self.assertEqual(WebKit.DOM_START_TO_END, 1)
         self.assertEqual(WebKit.DOM_END_TO_END, 2)
@@ -13,7 +13,7 @@ class TestDOMRange(TestCase):
         self.assertEqual(WebKit.DOM_NODE_BEFORE_AND_AFTER, 2)
         self.assertEqual(WebKit.DOM_NODE_INSIDE, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMRange.collapsed)
         self.assertArgIsBOOL(WebKit.DOMRange.collapse_, 0)
 

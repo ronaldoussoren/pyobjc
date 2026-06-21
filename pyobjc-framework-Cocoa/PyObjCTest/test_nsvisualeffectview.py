@@ -9,7 +9,7 @@ class TestNSVisualEffectView(TestCase):
         self.assertIsEnumType(AppKit.NSVisualEffectState)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(AppKit.NSVisualEffectMaterialAppearanceBased, 0)
         self.assertEqual(AppKit.NSVisualEffectMaterialLight, 1)
         self.assertEqual(AppKit.NSVisualEffectMaterialDark, 2)
@@ -38,6 +38,6 @@ class TestNSVisualEffectView(TestCase):
         self.assertEqual(AppKit.NSVisualEffectStateInactive, 2)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSVisualEffectView.isEmphasized)
         self.assertArgIsBOOL(AppKit.NSVisualEffectView.setEmphasized_, 0)

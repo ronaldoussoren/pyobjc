@@ -4,7 +4,7 @@ import Contacts
 
 class TestCNChangeHistoryFetchRequest(TestCase):
     @min_os_level("10.15")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("CNKeyDescriptor", Contacts)
 
     @min_os_level("10.15")

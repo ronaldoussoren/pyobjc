@@ -8,7 +8,7 @@ class TestNSCollectionViewLayout(TestCase):
         self.assertIsEnumType(AppKit.NSCollectionUpdateAction)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(AppKit.NSCollectionElementCategoryItem, 0)
         self.assertEqual(AppKit.NSCollectionElementCategorySupplementaryView, 1)
         self.assertEqual(AppKit.NSCollectionElementCategoryDecorationView, 2)
@@ -23,7 +23,7 @@ class TestNSCollectionViewLayout(TestCase):
         self.assertIsInstance(AppKit.NSCollectionElementKindInterItemGapIndicator, str)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSCollectionViewLayoutAttributes.isHidden)
         self.assertArgIsBOOL(AppKit.NSCollectionViewLayoutAttributes.setHidden_, 0)
 

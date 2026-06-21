@@ -43,7 +43,7 @@ class TestMDLTransformHelper(ModelIO.NSObject):
 
 
 class TestMDLTransform(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             ModelIO.TestMDLTransformHelper.matrix, simd.simd_float4x4.__typestr__
         )
@@ -166,7 +166,7 @@ class TestMDLTransform(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgHasType(
             ModelIO.MDLTransform.initWithMatrix_resetsTransform_,
             0,
@@ -180,5 +180,5 @@ class TestMDLTransform(TestCase):
             ModelIO.MDLTransform.initWithTransformComponent_resetsTransform_, 1
         )
 
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("MDLTransformComponent", ModelIO)

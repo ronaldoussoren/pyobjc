@@ -9,7 +9,7 @@ class TestAVAudioRecorderHelper(AVFoundation.NSObject):
 
 class TestAVAudioRecorder(TestCase):
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(AVFoundation.AVAudioRecorder.initWithURL_settings_error_, 2)
 
         self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.prepareToRecord)
@@ -25,15 +25,15 @@ class TestAVAudioRecorder(TestCase):
         )
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.recordAtTime_)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsOut(AVFoundation.AVAudioRecorder.initWithURL_format_error_, 2)
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioInputNode.setMutedSpeechActivityEventListener_
         )
@@ -50,5 +50,5 @@ class TestAVAudioRecorder(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.recordAtTime_forDuration_)
         self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.deleteRecording)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVAudioRecorderDelegate", AVFoundation)

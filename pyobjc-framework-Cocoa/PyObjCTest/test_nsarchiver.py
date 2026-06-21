@@ -3,9 +3,9 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestArchiver(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSInconsistentArchiveException, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSArchiver.archiveRootObject_toFile_)
         self.assertResultIsBOOL(Foundation.NSUnarchiver.isAtEnd)

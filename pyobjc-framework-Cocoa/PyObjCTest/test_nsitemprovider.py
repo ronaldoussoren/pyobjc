@@ -28,14 +28,14 @@ class TestNSItemProvider(TestCase):
         self.assertIsEnumType(Foundation.NSItemProviderFileOptions)
         self.assertIsEnumType(Foundation.NSItemProviderRepresentationVisibility)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityAll, 0)
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityGroup, 2)
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityOwnProcess, 3)
         self.assertEqual(AppKit.NSItemProviderFileOptionOpenInPlace, 1)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AppKit.NSTypeIdentifierDateText, str)
         self.assertIsInstance(AppKit.NSTypeIdentifierAddressText, str)
         self.assertIsInstance(AppKit.NSTypeIdentifierPhoneNumberText, str)
@@ -50,10 +50,10 @@ class TestNSItemProvider(TestCase):
         self.assertEqual(AppKit.NSItemProviderUnexpectedValueClassError, -1100)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(AppKit.NSItemProviderUnavailableCoercionError, -1200)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_,
             objc._C_NSInteger,
@@ -75,7 +75,7 @@ class TestNSItemProvider(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
             AppKit.NSItemProvider.hasItemConformingToTypeIdentifier_
         )
@@ -106,7 +106,7 @@ class TestNSItemProvider(TestCase):
         # self.fail("NSItemProviderLoadHandler metadata test")
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         # XXX: Cannot properly test right now...
         self.assertArgIsBlock(
             AppKit.NSItemProvider.registerDataRepresentationForTypeIdentifier_visibility_loadHandler_,  # noqa: B950
@@ -161,6 +161,6 @@ class TestNSItemProvider(TestCase):
         )
 
     @min_sdk_level("10.13")
-    def testProtocols10_13(self):
+    def test_protocols10_13(self):
         self.assertProtocolExists("NSItemProviderWriting", AppKit)
         self.assertProtocolExists("NSItemProviderReading", AppKit)

@@ -19,24 +19,24 @@ class TestGKMatchmakerViewController(TestCase):
         self.assertEqual(GameKit.GKMatchmakingModeAutomatchOnly, 2)
         self.assertEqual(GameKit.GKMatchmakingModeInviteOnly, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameKit.GKMatchmakerViewController.isHosted)
         self.assertArgIsBOOL(GameKit.GKMatchmakerViewController.setHosted_, 0)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBOOL(
             GameKit.GKMatchmakerViewController.setHostedPlayer_connected_, 1
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(
             GameKit.GKMatchmakerViewController.setHostedPlayer_didConnect_, 1
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             GameKit.GKMatchmakerViewController.canStartWithMinimumPlayers
         )
@@ -45,12 +45,12 @@ class TestGKMatchmakerViewController(TestCase):
         )
 
     @min_os_level("14.2")
-    def testMethods14_2(self):
+    def test_methods14_2(self):
         self.assertArgIsBlock(
             GameKit.TestGKMatchmakerViewControllerHelper.matchmakerViewController_getMatchPropertiesForRecipient_withCompletionHandler_,
             2,
             b"v@",
         )
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKMatchmakerViewControllerDelegate", GameKit)

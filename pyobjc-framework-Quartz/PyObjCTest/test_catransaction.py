@@ -4,12 +4,12 @@ import Quartz
 
 class TestCATransaction(TestCase):
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCATransactionAnimationDuration, str)
         self.assertIsInstance(Quartz.kCATransactionDisableActions, str)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.CATransaction.disableActions)
         self.assertArgIsBOOL(Quartz.CATransaction.setDisableActions_, 0)
 
@@ -17,6 +17,6 @@ class TestCATransaction(TestCase):
         self.assertArgIsBlock(Quartz.CATransaction.setCompletionBlock_, 0, b"v")
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCATransactionAnimationTimingFunction, str)
         self.assertIsInstance(Quartz.kCATransactionCompletionBlock, str)

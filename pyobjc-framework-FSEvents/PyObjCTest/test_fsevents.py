@@ -6,7 +6,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestFSEvents(TestCase):
-    def testValues(self):
+    def test_values(self):
         for k, v in (
             ("kFSEventStreamCreateFlagNone", 0x00000000),
             ("kFSEventStreamCreateFlagUseCFTypes", 0x00000001),
@@ -64,7 +64,7 @@ class TestFSEvents(TestCase):
         self.assertEqual(FSEvents.kFSEventStreamEventExtendedDocIDKey, "docID")
         self.assertIsInstance(FSEvents.kFSEventStreamEventExtendedDocIDKey, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         def fsevents_callback(
             streamRef, clientInfo, numEvents, eventPaths, eventMarsks, eventIDs
         ):
@@ -186,17 +186,17 @@ class TestFSEvents(TestCase):
             FSEvents.FSEventStreamRelease(ref)
             ref = None
 
-    def testOpaque(self):
+    def test_opaque(self):
         self.assertHasAttr(FSEvents, "FSEventStreamRef")
         self.assertIsOpaquePointer(FSEvents.FSEventStreamRef)
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         # Can't test beyond this because PyObjC doesn't support dispatch_queue_t yet
         self.assertHasAttr(FSEvents, "FSEventStreamSetDispatchQueue")
 
     @min_os_level("10.9")
-    def testFunctions10_9(self):
+    def test_functions10_9(self):
         self.assertResultIsBOOL(FSEvents.FSEventStreamSetExclusionPaths)
 
 

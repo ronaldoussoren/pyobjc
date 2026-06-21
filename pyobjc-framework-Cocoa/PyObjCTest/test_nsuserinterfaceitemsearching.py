@@ -10,11 +10,11 @@ class TestNSUserInterfaceItemSearchingHelper(AppKit.NSObject):
 
 class TestNSUserInterfaceItemSearching(TestCase):
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSUserInterfaceItemSearching", AppKit)
 
     @min_os_level("10.6")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestNSUserInterfaceItemSearchingHelper.searchForItemsWithSearchString_resultLimit_matchedItemHandler_,  # noqa: B950
             1,

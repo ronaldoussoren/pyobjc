@@ -13,7 +13,7 @@ class TestNSFontCollection(TestCase):
         self.assertIsEnumType(AppKit.NSFontCollectionVisibility)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSFontCollectionVisibilityProcess, 1)
         self.assertEqual(AppKit.NSFontCollectionVisibilityUser, 2)
         self.assertEqual(AppKit.NSFontCollectionVisibilityComputer, 4)
@@ -35,7 +35,7 @@ class TestNSFontCollection(TestCase):
         self.assertIsInstance(AppKit.NSFontCollectionRecentlyUsed, str)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(
             AppKit.NSFontCollection.showFontCollection_withName_visibility_error_
         )

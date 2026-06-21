@@ -14,7 +14,7 @@ class TestNSGeometry(TestCase):
         self.assertIs(Foundation.NSSize, CoreFoundation.CGSize)
         self.assertIs(Foundation.NSRect, CoreFoundation.CGRect)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSMinXEdge, 0)
         self.assertEqual(AppKit.NSMinYEdge, 1)
         self.assertEqual(AppKit.NSMaxXEdge, 2)
@@ -64,7 +64,7 @@ class TestNSGeometry(TestCase):
         self.assertEqual(v.bottom, 3.0)
         self.assertEqual(v.right, 4.0)
 
-    def testFunctions(self):
+    def test_functions(self):
         p1 = AppKit.NSPoint(1, 2)
         p2 = AppKit.NSPoint(3, 4)
 
@@ -188,11 +188,11 @@ class TestNSGeometry(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AppKit.NSEdgeInsetsZero, AppKit.NSEdgeInsets)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSAlignMinXInward, 1 << 0)
         self.assertEqual(AppKit.NSAlignMinYInward, 1 << 1)
         self.assertEqual(AppKit.NSAlignMaxXInward, 1 << 2)
@@ -235,11 +235,11 @@ class TestNSGeometry(TestCase):
         )
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         r2 = AppKit.NSRect(AppKit.NSPoint(4.5, 5.5), AppKit.NSSize(7.5, 8.5))
         r = AppKit.NSIntegralRectWithOptions(r2, AppKit.NSAlignAllEdgesNearest)
         self.assertIsInstance(r, AppKit.NSRect)
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsBOOL(AppKit.NSEdgeInsetsEqual)

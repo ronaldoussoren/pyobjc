@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMUIEvent(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             WebKit.DOMUIEvent.initUIEvent_canBubble_cancelable_view_detail_, 1
         )

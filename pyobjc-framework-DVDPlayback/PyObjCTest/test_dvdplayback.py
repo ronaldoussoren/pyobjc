@@ -6,7 +6,7 @@ DVDEventCallBackFunctionPtr = b"vILL^v"
 
 
 class TestDVDPlayback(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(DVDPlayback.kDVDErrorUnknown, -70001)
         self.assertEqual(DVDPlayback.kDVDErrorInitializingLib, -70002)
         self.assertEqual(DVDPlayback.kDVDErrorUninitializedLib, -70003)
@@ -351,7 +351,7 @@ class TestDVDPlayback(TestCase):
         self.assertEqual(DVDPlayback.kDVDEventCCInfo, 25)
         self.assertEqual(DVDPlayback.kDVDEventChapterTime, 26)
 
-    def testFunctions(self):
+    def test_functions(self):
         DVDPlayback.DVDInitialize
         DVDPlayback.DVDDispose
 

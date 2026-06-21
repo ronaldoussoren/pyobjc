@@ -7,7 +7,7 @@ class TestCNPostalAddressFormatter(TestCase):
         self.assertIsEnumType(Contacts.CNPostalAddressFormatterStyle)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Contacts.CNPostalAddressFormatterStyleMailingAddress, 0)
         self.assertIsInstance(Contacts.CNPostalAddressPropertyAttribute, str)
         self.assertIsInstance(

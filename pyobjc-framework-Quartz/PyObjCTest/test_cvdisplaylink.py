@@ -4,11 +4,11 @@ import objc
 
 
 class TestCVDisplayLink(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CVDisplayLinkRef)
 
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         # XXX: headers claim this is generally available ??
         self.assertArgIsBlock(
             Quartz.CVDisplayLinkSetOutputHandler,
@@ -16,7 +16,7 @@ class TestCVDisplayLink(TestCase):
             b"i^{__CVDisplayLink=}n^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}n^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q",  # noqa: B950
         )
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CVDisplayLinkGetTypeID(), int)
 
         mainID = Quartz.CGMainDisplayID()

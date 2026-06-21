@@ -6,14 +6,14 @@ class TestWebPreferences(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(WebKit.WebCacheModel)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.WebCacheModelDocumentViewer, 0)
         self.assertEqual(WebKit.WebCacheModelDocumentBrowser, 1)
         self.assertEqual(WebKit.WebCacheModelPrimaryWebBrowser, 2)
 
         self.assertIsInstance(WebKit.WebPreferencesChangedNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.WebPreferences.userStyleSheetEnabled)
         self.assertArgIsBOOL(WebKit.WebPreferences.setUserStyleSheetEnabled_, 0)
 
@@ -58,13 +58,13 @@ class TestWebPreferences(TestCase):
         self.assertArgIsBOOL(WebKit.WebPreferences.setUsesPageCache_, 0)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(WebKit.WebPreferences.suppressesIncrementalRendering)
         self.assertArgIsBOOL(
             WebKit.WebPreferences.setSuppressesIncrementalRendering_, 0
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(WebKit.WebPreferences.allowsAirPlayForMediaPlayback)
         self.assertArgIsBOOL(WebKit.WebPreferences.setAllowsAirPlayForMediaPlayback_, 0)

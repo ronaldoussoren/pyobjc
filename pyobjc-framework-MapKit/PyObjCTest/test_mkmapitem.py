@@ -6,7 +6,7 @@ import MapKit
 
 class TestMKMapItem(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKMapItem, objc.objc_class)
 
         self.assertResultIsBOOL(MapKit.MKMapItem.isCurrentLocation)
@@ -14,7 +14,7 @@ class TestMKMapItem(TestCase):
         self.assertResultIsBOOL(MapKit.MKMapItem.openMapsWithItems_launchOptions_)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeKey, str)
         self.assertIsInstance(MapKit.MKLaunchOptionsMapTypeKey, str)
         self.assertIsInstance(MapKit.MKLaunchOptionsShowsTrafficKey, str)
@@ -24,20 +24,20 @@ class TestMKMapItem(TestCase):
         self.assertIsInstance(MapKit.MKLaunchOptionsMapSpanKey, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(MapKit.MKLaunchOptionsCameraKey, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeTransit, str)
         self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeCycling, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(MapKit.MKLaunchOptionsDirectionsModeDefault, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(MapKit.MKMapItemTypeIdentifier, str)
         self.assertIsInstance(MapKit.MKMapViewDefaultAnnotationViewReuseIdentifier, str)
         self.assertIsInstance(

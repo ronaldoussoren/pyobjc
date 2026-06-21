@@ -19,7 +19,7 @@ class TestLSInfo(TestCase):
         if os.path.exists(self.path):
             os.unlink(self.path)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreServices.kLSInvalidExtensionIndex, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(CoreServices.kLSInitializeDefaults, 0x00000001)
         self.assertEqual(CoreServices.kLSMinCatInfoBitmap, 6154)
@@ -64,7 +64,7 @@ class TestLSInfo(TestCase):
         self.assertEqual(CoreServices.kLSHandlerOptionsDefault, 0)
         self.assertEqual(CoreServices.kLSHandlerOptionsIgnoreCreator, 1)
 
-    def testStructs(self):
+    def test_structs(self):
         v = CoreServices.LSItemInfoRecord()
         self.assertHasAttr(v, "flags")
         self.assertHasAttr(v, "filetype")
@@ -74,7 +74,7 @@ class TestLSInfo(TestCase):
         self.assertNotHasAttr(v, "kindID")
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         url = CoreServices.CFURLCreateFromFileSystemRepresentation(
             None, self.bpath, len(self.bpath), True
         )
@@ -300,7 +300,7 @@ class TestLSInfo(TestCase):
         self.assertIsInstance(ok, int)
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsCFRetained(CoreServices.LSCopyDefaultApplicationURLForURL)
         self.assertArgIsOut(CoreServices.LSCopyDefaultApplicationURLForURL, 2)
 

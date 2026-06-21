@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestUTType(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreServices.kUTExportedTypeDeclarationsKey, str)
         self.assertIsInstance(CoreServices.kUTImportedTypeDeclarationsKey, str)
         self.assertIsInstance(CoreServices.kUTTypeIdentifierKey, str)
@@ -18,7 +18,7 @@ class TestUTType(TestCase):
         self.assertIsInstance(CoreServices.kUTTagClassNSPboardType, str)
         self.assertIsInstance(CoreServices.kUTTagClassOSType, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(
             CoreServices.UTTypeCreatePreferredIdentifierForTag
         )
@@ -75,7 +75,7 @@ class TestUTType(TestCase):
         self.assertEqual(v, 24353)
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsCFRetained(CoreServices.UTTypeCopyAllTagsWithClass)
         v = CoreServices.UTTypeCopyAllTagsWithClass(
             CoreServices.kUTTypeArchive, CoreServices.kUTTagClassFilenameExtension

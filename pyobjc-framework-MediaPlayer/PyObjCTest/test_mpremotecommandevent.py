@@ -7,12 +7,12 @@ class TestMPRemoteCommandEvent(TestCase):
         self.assertIsEnumType(MediaPlayer.MPSeekCommandEventType)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(MediaPlayer.MPSeekCommandEventTypeBeginSeeking, 0)
         self.assertEqual(MediaPlayer.MPSeekCommandEventTypeEndSeeking, 1)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(MediaPlayer.MPFeedbackCommandEvent.isNegative)
         self.assertResultIsBOOL(
             MediaPlayer.MPChangeShuffleModeCommandEvent.preservesShuffleMode

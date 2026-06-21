@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAXWebConstants(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(HIServices.kAXARIAAtomicAttribute, "AXARIAAtomic")
         self.assertEqual(HIServices.kAXARIAColumnCountAttribute, "AXARIAColumnCount")
         self.assertEqual(HIServices.kAXARIAColumnIndexAttribute, "AXARIAColumnIndex")

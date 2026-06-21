@@ -16,7 +16,7 @@ class TestSceneKitTypes(TestCase):
         self.assertIsEnumType(SceneKit.SCNActionTimingMode)
         self.assertIsEnumType(SceneKit.SCNColorMask)
 
-    def testStructs(self):
+    def test_structs(self):
         v = SceneKit.SCNVector3()
         self.assertIsInstance(v.x, float)
         self.assertIsInstance(v.y, float)
@@ -33,7 +33,7 @@ class TestSceneKitTypes(TestCase):
         self.assertTrue(SceneKit.SCNQuaternion is SceneKit.SCNVector4)
         self.assertTrue(SceneKit.SCNMatrix4 is SceneKit.CATransform3D)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SceneKit.SCNProgramCompilationError, 1)
 
         self.assertEqual(SceneKit.SCNActionTimingModeLinear, 0)
@@ -50,17 +50,17 @@ class TestSceneKitTypes(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.10")
     @min_os_level("10.10")
-    def testConstantsFail10_10(self):
+    def test_constantsFail10_10(self):
         self.assertIsInstance(SceneKit.SCNErrorDomain, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(SceneKit.SCNMatrix4Identity, SceneKit.SCNMatrix4)
         self.assertIsInstance(SceneKit.SCNVector3Zero, SceneKit.SCNVector3)
         self.assertIsInstance(SceneKit.SCNVector4Zero, SceneKit.SCNVector4)
 
     @min_os_level("10.10")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultHasType(SceneKit.SCNVector3EqualToVector3, objc._C_BOOL)
         self.assertResultHasType(SceneKit.SCNVector4EqualToVector4, objc._C_BOOL)
 
@@ -92,7 +92,7 @@ class TestSceneKitTypes(TestCase):
         w = SceneKit.SCNMatrix4Translate(v, 6, 7, 8)
         self.assertIsInstance(w, SceneKit.SCNMatrix4)
 
-    def testFunctions_unsupported(self):
+    def test_functions_unsupported(self):
         # XXX
         SceneKit.SCNVector3FromGLKVector3
         SceneKit.SCNVector3ToGLKVector3
@@ -119,7 +119,7 @@ class TestSceneKitTypes(TestCase):
         self.assertIsInstance(v, SceneKit.SCNMatrix4)
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         v = SceneKit.SCNMatrix4MakeRotation(1, 2, 3, 4)
         self.assertIsInstance(v, SceneKit.SCNMatrix4)
 
@@ -140,7 +140,7 @@ class TestSceneKitTypes(TestCase):
 
     @min_os_level("10.10")
     @expectedFailure
-    def testFunctions10_10_unsup(self):
+    def test_functions10_10_unsup(self):
         # vector types
         SceneKit.SCNMatrix4ToGLKMatrix4
         SceneKit.SCNMatrix4FromGLKMatrix4

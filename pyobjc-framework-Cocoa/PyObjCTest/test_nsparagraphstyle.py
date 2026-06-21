@@ -11,7 +11,7 @@ class TestNSParagraphStyle(TestCase):
         self.assertIsEnumType(AppKit.NSLineBreakStrategy)
         self.assertIsEnumType(AppKit.NSTextTabType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSLeftTabStopType, 0)
         self.assertEqual(AppKit.NSRightTabStopType, 1)
         self.assertEqual(AppKit.NSCenterTabStopType, 2)
@@ -32,7 +32,7 @@ class TestNSParagraphStyle(TestCase):
         self.assertEqual(AppKit.NSLineBreakStrategyStandard, 0xFFFF)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(
             AppKit.NSParagraphStyle.allowsDefaultTighteningForTruncation
         )
@@ -41,7 +41,7 @@ class TestNSParagraphStyle(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(AppKit.NSParagraphStyle.usesDefaultHyphenation)
         self.assertArgIsBOOL(
             AppKit.NSMutableParagraphStyle.setUsesDefaultHyphenation_, 0

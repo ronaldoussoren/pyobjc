@@ -11,7 +11,7 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(buf.itemsize, 1)
         self.assertEqual(buf.nbytes, size)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreAudio.kAudio_NoError, 0)
         self.assertEqual(CoreAudio.kAudio_UnimplementedError, -4)
         self.assertEqual(CoreAudio.kAudio_FileNotFoundError, -43)
@@ -567,7 +567,7 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(CoreAudio.kMPEG4Object_CELP, 8)
         self.assertEqual(CoreAudio.kMPEG4Object_HVXC, 9)
 
-    def testStructs(self):
+    def test_structs(self):
         v = CoreAudio.AudioValueRange()
         self.assertEqual(v.mMinimum, 0.0)
         self.assertEqual(v.mMaximum, 0.0)
@@ -619,7 +619,7 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(v.mManufacturer, 0)
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         CoreAudio.TestAudioFormatNativeEndian
 
         self.assertArgIsIn(CoreAudio.IsAudioFormatNativeEndian, 0)

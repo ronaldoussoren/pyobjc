@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRDevice(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(DiscRecording.DRDevice.isValid)
         self.assertResultIsBOOL(DiscRecording.DRDevice.openTray)
         self.assertResultIsBOOL(DiscRecording.DRDevice.closeTray)
@@ -22,7 +22,7 @@ class TestDRDevice(TestCase):
         self.assertResultIsBOOL(DiscRecording.DRDevice.mediaIsReserved)
         self.assertResultIsBOOL(DiscRecording.DRDevice.trayIsOpen)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.DRDeviceBurnSpeedCD1x, float)
         self.assertIsInstance(DiscRecording.DRDeviceBurnSpeedDVD1x, float)
         self.assertIsInstance(DiscRecording.DRDeviceBurnSpeedBD1x, float)

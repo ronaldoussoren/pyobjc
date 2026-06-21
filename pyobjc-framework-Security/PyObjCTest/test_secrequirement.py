@@ -4,7 +4,7 @@ import objc
 
 
 class TestSecRequirement(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Security.SecRequirementRef)
 
     def test_functions(self):

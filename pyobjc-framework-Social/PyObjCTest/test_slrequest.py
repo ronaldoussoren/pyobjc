@@ -9,14 +9,14 @@ class TestSLRequest(TestCase):
         self.assertIsEnumType(Social.SLRequestMethod)
 
     @min_os_level("10.8")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Social.SLRequestMethodGET, 0)
         self.assertEqual(Social.SLRequestMethodPOST, 1)
         self.assertEqual(Social.SLRequestMethodDELETE, 2)
         self.assertEqual(Social.SLRequestMethodPUT, 3)
 
     @min_os_level("10.8")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             Social.SLRequest.performRequestWithHandler_, 0, SLRequestHandler
         )

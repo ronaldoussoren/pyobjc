@@ -13,11 +13,11 @@ class TestGCMicroGamepadSnapshot(TestCase):
         self.assertIsEnumType(GameController.GCMicroGamepadSnapshotDataVersion)
 
     @min_os_level("10.12")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(GameController.GCMicroGamepadSnapshot, objc.objc_class)
 
     @min_os_level("10.11")
-    def testStructs(self):
+    def test_structs(self):
         self.assertEqual(
             GameController.GCMicroGamepadSnapShotDataV100.__struct_pack__, 1
         )
@@ -32,7 +32,7 @@ class TestGCMicroGamepadSnapshot(TestCase):
         self.assertPickleRoundTrips(v)
 
     @min_os_level("10.14")
-    def testStructs10_14_4(self):
+    def test_structs10_14_4(self):
         self.assertEqual(GameController.GCMicroGamepadSnapshotData.__struct_pack__, 1)
 
         v = GameController.GCMicroGamepadSnapshotData()
@@ -45,13 +45,13 @@ class TestGCMicroGamepadSnapshot(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] in ("10.9", "10.10", "10.11"))
     @min_os_level("10.9")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsBOOL(GameController.GCMicroGamepadSnapShotDataV100FromNSData)
         self.assertArgIsOut(GameController.GCMicroGamepadSnapShotDataV100FromNSData, 0)
         self.assertArgIsIn(GameController.NSDataFromGCMicroGamepadSnapShotDataV100, 0)
 
     @min_os_level("10.14.4")
-    def testFunctions10_14_4(self):
+    def test_functions10_14_4(self):
         self.assertResultIsBOOL(GameController.GCMicroGamepadSnapshotDataFromNSData)
         self.assertArgIsOut(GameController.GCMicroGamepadSnapshotDataFromNSData, 0)
         self.assertArgIsIn(GameController.NSDataFromGCMicroGamepadSnapshotData, 0)

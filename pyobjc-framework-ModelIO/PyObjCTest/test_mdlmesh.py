@@ -4,7 +4,7 @@ from objc import simd
 
 
 class TestMDLMesh(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             ModelIO.MDLMesh.newBoxWithDimensions_segments_geometryType_inwardNormals_allocator_,
             0,
@@ -104,7 +104,7 @@ class TestMDLMesh(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgHasType(
             ModelIO.MDLMesh.initBoxWithExtent_segments_inwardNormals_geometryType_allocator_,
             0,
@@ -231,5 +231,5 @@ class TestMDLMesh(TestCase):
         pass
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsOut(ModelIO.MDLMesh.makeVerticesUniqueAndReturnError_, 0)

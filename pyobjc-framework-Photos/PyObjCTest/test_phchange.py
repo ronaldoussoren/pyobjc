@@ -4,7 +4,7 @@ import Photos
 
 class TestPHChange(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Photos.PHObjectChangeDetails.assetContentChanged)
         self.assertResultIsBOOL(Photos.PHObjectChangeDetails.objectWasDeleted)
 

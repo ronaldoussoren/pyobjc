@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRCDText(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             DiscRecording.DRCDTextEncodingISOLatin1Modified,
             Foundation.NSISOLatin1StringEncoding,

@@ -16,7 +16,7 @@ class TestAXSettings(TestCase):
         self.assertEqual(Accessibility.AXSettingsFeatureCaptionStyles, 6)
 
     @min_os_level("14.0")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             Accessibility.AXAnimatedImagesEnabledDidChangeNotification, str
         )
@@ -25,14 +25,14 @@ class TestAXSettings(TestCase):
         )
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(
             Accessibility.AXPrefersNonBlinkingTextInsertionIndicatorDidChangeNotification,
             str,
         )
 
     @min_os_level("26.1")
-    def testConstants26_1(self):
+    def test_constants26_1(self):
         self.assertIsInstance(
             Accessibility.AXPrefersActionSliderAlternativeDidChangeNotification,
             str,
@@ -43,7 +43,7 @@ class TestAXSettings(TestCase):
         )
 
     @min_os_level("26.4")
-    def testConstants26_4(self):
+    def test_constants26_4(self):
         self.assertIsInstance(
             Accessibility.AXReduceHighlightingEffectsEnabledDidChangeNotification,
             str,

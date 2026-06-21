@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSActionCell(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(AppKit.NSActionCell.setBordered_, 0)
         self.assertArgIsBOOL(AppKit.NSActionCell.setBezeled_, 0)
         self.assertArgIsBOOL(AppKit.NSActionCell.setEnabled_, 0)

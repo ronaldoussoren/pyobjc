@@ -11,7 +11,7 @@ class TestITMediaItem(TestCase):
     def test_classes(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItem, objc.objc_class)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(iTunesLibrary.ITLibMediaItem.isRatingComputed)
 
         self.assertResultIsBOOL(iTunesLibrary.ITLibMediaItem.hasArtworkAvailable)
@@ -21,7 +21,7 @@ class TestITMediaItem(TestCase):
         self.assertResultIsBOOL(iTunesLibrary.ITLibMediaItem.isVideo)
         self.assertResultIsBOOL(iTunesLibrary.ITLibMediaItem.isUserDisabled)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(iTunesLibrary.ITLibMediaItemMediaKindUnknown, 1)
         self.assertEqual(iTunesLibrary.ITLibMediaItemMediaKindSong, 2)
         self.assertEqual(iTunesLibrary.ITLibMediaItemMediaKindMovie, 3)
@@ -133,7 +133,7 @@ class TestITMediaItem(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyPlayStatus, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementCount, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementName, str)
@@ -141,5 +141,5 @@ class TestITMediaItem(TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyWork, str)
 
     @expectedFailure
-    def testConstants_missing(self):
+    def test_constants_missing(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyFileType, str)

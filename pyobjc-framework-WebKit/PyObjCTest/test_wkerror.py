@@ -7,7 +7,7 @@ class TestWKError(TestCase):
         self.assertIsEnumType(WebKit.WKErrorCode)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(WebKit.WKErrorDomain, str)
 
         self.assertEqual(WebKit.WKErrorUnknown, 1)

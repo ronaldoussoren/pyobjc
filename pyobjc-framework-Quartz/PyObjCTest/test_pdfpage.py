@@ -5,7 +5,7 @@ import Quartz
 
 class TestPDFPage(TestCase):
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsEnumType(Quartz.PDFDisplayBox)
         self.assertEqual(Quartz.kPDFDisplayBoxMediaBox, 0)
         self.assertEqual(Quartz.kPDFDisplayBoxCropBox, 1)
@@ -39,6 +39,6 @@ class TestPDFPage(TestCase):
             Quartz.PDFPageImageInitializationOptionCompressionQuality, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.PDFPage.displaysAnnotations)
         self.assertArgIsBOOL(Quartz.PDFPage.setDisplaysAnnotations_, 0)

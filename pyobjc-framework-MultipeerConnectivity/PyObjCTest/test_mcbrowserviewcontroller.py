@@ -12,13 +12,13 @@ class TestMCBrowserViewControllerHelper(MultipeerConnectivity.NSObject):
 
 class TestMCBrowserViewController(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(
             MultipeerConnectivity.MCBrowserViewController, objc.objc_class
         )
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "MCBrowserViewControllerDelegate", MultipeerConnectivity
         )

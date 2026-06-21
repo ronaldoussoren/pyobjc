@@ -5,7 +5,7 @@ import objc
 
 class TestIKFilterBrowserPanel(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             Quartz.IKFilterBrowserPanel.beginWithOptions_modelessDelegate_didEndSelector_contextInfo_,
             2,
@@ -18,7 +18,7 @@ class TestIKFilterBrowserPanel(TestCase):
         )
 
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.IKFilterBrowserFilterSelectedNotification, str)
         self.assertIsInstance(Quartz.IKFilterBrowserFilterDoubleClickNotification, str)
         self.assertIsInstance(Quartz.IKFilterBrowserWillPreviewFilterNotification, str)

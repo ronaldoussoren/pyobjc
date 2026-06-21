@@ -17,7 +17,7 @@ class TestNSText(TestCase):
         self.assertIsEnumType(AppKit.NSTextMovement)
         self.assertIsEnumType(AppKit.NSWritingDirection)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSEnterCharacter, chr(0x0003))
         self.assertEqual(AppKit.NSBackspaceCharacter, chr(0x0008))
         self.assertEqual(AppKit.NSTabCharacter, chr(0x0009))
@@ -77,15 +77,15 @@ class TestNSText(TestCase):
         self.assertEqual(AppKit.NSTextMovementOther, 0)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSTextWritingDirectionEmbedding, 0 << 1)
         self.assertEqual(AppKit.NSTextWritingDirectionOverride, 1 << 1)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AppKit.NSTextMovementUserInfoKey, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSText.writeRTFDToFile_atomically_)
         self.assertArgIsBOOL(AppKit.NSText.writeRTFDToFile_atomically_, 1)
         self.assertResultIsBOOL(AppKit.NSText.readRTFDFromFile_)
@@ -110,9 +110,9 @@ class TestNSText(TestCase):
         self.assertArgIsBOOL(AppKit.NSText.setVerticallyResizable_, 0)
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTextDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSTextHelper.textShouldBeginEditing_)
         self.assertResultIsBOOL(TestNSTextHelper.textShouldEndEditing_)

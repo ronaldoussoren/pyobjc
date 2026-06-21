@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSByteOrder(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             Foundation.NS_UnknownByteOrder, CoreFoundation.CFByteOrderUnknown
         )

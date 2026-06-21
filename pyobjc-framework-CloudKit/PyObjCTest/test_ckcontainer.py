@@ -10,12 +10,12 @@ class TestCKContainer(TestCase):
         self.assertIsEnumType(CloudKit.CKApplicationPermissions)
 
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(CloudKit.CKAsset, objc.objc_class)
         self.assertIsInstance(CloudKit.CKContainer, objc.objc_class)
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CloudKit.CKOwnerDefaultName, str)
 
         self.assertEqual(CloudKit.CKAccountStatusCouldNotDetermine, 0)
@@ -30,15 +30,15 @@ class TestCKContainer(TestCase):
         self.assertEqual(CloudKit.CKApplicationPermissionStatusGranted, 3)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(CloudKit.CKAccountChangedNotification, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(CloudKit.CKCurrentUserDefaultName, str)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             CloudKit.CKContainer.accountStatusWithCompletionHandler_,
             0,
@@ -74,7 +74,7 @@ class TestCKContainer(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(
             CloudKit.CKContainer.fetchShareParticipantWithEmailAddress_completionHandler_,
             1,

@@ -13,7 +13,7 @@ class TestICScannerFunctionalUnits(TestCase):
         self.assertIsEnumType(ImageCaptureCore.ICScannerMeasurementUnit)
         self.assertIsEnumType(ImageCaptureCore.ICScannerPixelDataType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(ImageCaptureCore.ICScannerFunctionalUnitTypeFlatbed, 0)
         self.assertEqual(
             ImageCaptureCore.ICScannerFunctionalUnitTypePositiveTransparency, 1
@@ -133,7 +133,7 @@ class TestICScannerFunctionalUnits(TestCase):
         self.assertEqual(ImageCaptureCore.ICScannerFeatureTypeBoolean, 2)
         self.assertEqual(ImageCaptureCore.ICScannerFeatureTypeTemplate, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICScannerFeatureBoolean.value)
         self.assertArgIsBOOL(ImageCaptureCore.ICScannerFeatureBoolean.setValue_, 0)
 
@@ -169,7 +169,7 @@ class TestICScannerFunctionalUnits(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(
             ImageCaptureCore.ICScannerFunctionalUnitDocumentFeeder.reverseFeederPageOrder
         )

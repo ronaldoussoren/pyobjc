@@ -38,15 +38,15 @@ class TestWebEditingDelegate(TestCase):
         self.assertIsEnumType(WebKit.WebViewInsertAction)
 
     @min_sdk_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("WebEditingDelegate", WebKit)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.WebViewInsertActionTyped, 0)
         self.assertEqual(WebKit.WebViewInsertActionPasted, 1)
         self.assertEqual(WebKit.WebViewInsertActionDropped, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             TestWebEditingDelegateHelper.webView_shouldBeginEditingInDOMRange_
         )

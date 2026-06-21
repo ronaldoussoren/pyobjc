@@ -17,7 +17,7 @@ from .test_cfsocket import onTheNetwork
 
 
 class TestStream(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             if (
                 objc.lookUpClass("__NSCFInputStream")
@@ -50,7 +50,7 @@ class TestStream(TestCase):
             except objc.error:
                 self.assertIsCFType(CoreFoundation.CFWriteStreamRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFStreamStatusNotOpen, 0)
         self.assertEqual(CoreFoundation.kCFStreamStatusOpening, 1)
         self.assertEqual(CoreFoundation.kCFStreamStatusOpen, 2)
@@ -99,7 +99,7 @@ class TestStream(TestCase):
             CoreFoundation.kCFStreamPropertyShouldCloseNativeSocket, str
         )
 
-    def testStructs(self):
+    def test_structs(self):
         o = CoreFoundation.CFStreamError()
         self.assertHasAttr(o, "domain")
         self.assertHasAttr(o, "error")
@@ -550,7 +550,7 @@ class TestStream(TestCase):
         self.assertEqual(state[0][1], CoreFoundation.kCFStreamEventCanAcceptBytes)
 
     @min_os_level("10.9")
-    def testFunctions10_9(self):
+    def test_functions10_9(self):
         CoreFoundation.CFReadStreamSetDispatchQueue  # Nothing to test
         CoreFoundation.CFWriteStreamSetDispatchQueue  # Nothing to test
         CoreFoundation.CFReadStreamCopyDispatchQueue  # Nothing to test

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSIndexPath(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsIn(Foundation.NSIndexPath.indexPathWithIndexes_length_, 0)
         self.assertArgSizeInArg(
             Foundation.NSIndexPath.indexPathWithIndexes_length_, 0, 1
@@ -16,7 +16,7 @@ class TestNSIndexPath(TestCase):
         self.assertArgIsVariableSize(Foundation.NSIndexPath.getIndexes_, 0)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsOut(Foundation.NSIndexPath.getIndexes_range_, 0)
         self.assertArgSizeInArg(Foundation.NSIndexPath.getIndexes_range_, 0, 1)
 

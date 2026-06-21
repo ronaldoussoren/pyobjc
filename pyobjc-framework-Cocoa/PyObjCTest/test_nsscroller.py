@@ -11,7 +11,7 @@ class TestNSScroller(TestCase):
         self.assertIsEnumType(AppKit.NSScrollerStyle)
         self.assertIsEnumType(AppKit.NSUsableScrollerParts)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSScrollerArrowsMaxEnd, 0)
         self.assertEqual(AppKit.NSScrollerArrowsMinEnd, 1)
         self.assertEqual(AppKit.NSScrollerArrowsDefaultSetting, 0)
@@ -33,7 +33,7 @@ class TestNSScroller(TestCase):
         self.assertEqual(AppKit.NSScrollerDecrementArrow, 1)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSScrollerStyleLegacy, 0)
         self.assertEqual(AppKit.NSScrollerStyleOverlay, 1)
 
@@ -43,11 +43,11 @@ class TestNSScroller(TestCase):
 
         self.assertIsInstance(AppKit.NSPreferredScrollerStyleDidChangeNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(AppKit.NSScroller.drawArrow_highlight_, 1)
         self.assertArgIsBOOL(AppKit.NSScroller.drawKnobSlotInRect_highlight_, 1)
         self.assertArgIsBOOL(AppKit.NSScroller.highlight_, 0)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSScroller.isCompatibleWithOverlayScrollers)

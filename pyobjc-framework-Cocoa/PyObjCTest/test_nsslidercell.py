@@ -7,7 +7,7 @@ class TestNSSliderCell(TestCase):
         self.assertIsEnumType(AppKit.NSSliderType)
         self.assertIsEnumType(AppKit.NSTickMarkPosition)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTickMarkBelow, 0)
         self.assertEqual(AppKit.NSTickMarkAbove, 1)
         self.assertEqual(AppKit.NSTickMarkLeft, AppKit.NSTickMarkAbove)
@@ -28,7 +28,7 @@ class TestNSSliderCell(TestCase):
         self.assertEqual(AppKit.NSSliderTypeLinear, 0)
         self.assertEqual(AppKit.NSSliderTypeCircular, 1)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSliderCell.prefersTrackingUntilMouseUp)
         self.assertArgIsBOOL(AppKit.NSSliderCell.knobRectFlipped_, 0)
         self.assertArgIsBOOL(AppKit.NSSliderCell.drawBarInside_flipped_, 1)
@@ -36,5 +36,5 @@ class TestNSSliderCell(TestCase):
         self.assertArgIsBOOL(AppKit.NSSliderCell.setAllowsTickMarkValuesOnly_, 0)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBOOL(AppKit.NSSliderCell.barRectFlipped_, 0)

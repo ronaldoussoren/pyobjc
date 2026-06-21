@@ -11,17 +11,17 @@ class TestSCNHitTest(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(SceneKit.SCNHitTestSearchMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SceneKit.SCNHitTestSearchModeClosest, 0)
         self.assertEqual(SceneKit.SCNHitTestSearchModeAll, 1)
         self.assertEqual(SceneKit.SCNHitTestSearchModeAny, 2)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(SceneKit.SCNHitTestOptionSearchMode, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(SceneKit.SCNHitTestOptionIgnoreLightArea, str)
 
     @min_os_level("10.15")

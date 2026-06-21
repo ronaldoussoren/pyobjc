@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestLSQuarantine(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreServices.kLSQuarantineAgentNameKey, str)
         self.assertIsInstance(CoreServices.kLSQuarantineAgentBundleIdentifierKey, str)
         self.assertIsInstance(CoreServices.kLSQuarantineTimeStampKey, str)

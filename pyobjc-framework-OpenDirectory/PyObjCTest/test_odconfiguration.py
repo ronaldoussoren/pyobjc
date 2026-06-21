@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestODConfiguration(TestCase):
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(OpenDirectory.ODPacketSigningDisabled, 0)
         self.assertEqual(OpenDirectory.ODPacketSigningAllow, 1)
         self.assertEqual(OpenDirectory.ODPacketSigningRequired, 2)
@@ -19,7 +19,7 @@ class TestODConfiguration(TestCase):
         self.assertIsInstance(OpenDirectory.ODTrustTypeAnonymous, str)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(OpenDirectory.ODConfiguration.hideRegistration)
         self.assertArgIsBOOL(OpenDirectory.ODConfiguration.setHideRegistration_, 0)
 

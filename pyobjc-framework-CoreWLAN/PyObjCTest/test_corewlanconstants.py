@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCoreWLANConstants(TestCase):
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(CoreWLAN.CWErrorDomain, str)
         self.assertIsInstance(CoreWLAN.CWScanCacheDidUpdateNotification, str)
         self.assertIsInstance(CoreWLAN.CWLinkQualityDidChangeNotification, str)
@@ -20,7 +20,7 @@ class TestCoreWLANConstants(TestCase):
         self.assertIsInstance(CoreWLAN.CWCountryCodeDidChangeNotification, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(CoreWLAN.kCWErrorDomain, str)
         self.assertIsInstance(CoreWLAN.kCWPowerDidChangeNotification, str)
         self.assertIsInstance(CoreWLAN.kCWSSIDDidChangeNotification, str)

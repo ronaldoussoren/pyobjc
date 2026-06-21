@@ -73,7 +73,7 @@ class TestSubclassingUndo(TestCase):
 
         self.assertEqual(lst[0], 1)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSUndoManagerCheckpointNotification, str)
         self.assertIsInstance(Foundation.NSUndoManagerWillUndoChangeNotification, str)
         self.assertIsInstance(Foundation.NSUndoManagerWillRedoChangeNotification, str)
@@ -88,13 +88,13 @@ class TestSubclassingUndo(TestCase):
         self.assertIsTypedEnum(Foundation.NSUndoManagerUserInfoKey, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(Foundation.NSUndoManagerGroupIsDiscardableKey, str)
         self.assertIsInstance(
             Foundation.NSUndoManagerDidCloseUndoGroupNotification, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSUndoManager.isUndoRegistrationEnabled)
         self.assertResultIsBOOL(Foundation.NSUndoManager.groupsByEvent)
         self.assertArgIsBOOL(Foundation.NSUndoManager.setGroupsByEvent_, 0)
@@ -107,13 +107,13 @@ class TestSubclassingUndo(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsBOOL(Foundation.NSUndoManager.setActionIsDiscardable_, 0)
         self.assertResultIsBOOL(Foundation.NSUndoManager.undoActionIsDiscardable)
         self.assertResultIsBOOL(Foundation.NSUndoManager.redoActionIsDiscardable)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             Foundation.NSUndoManager.registerUndoWithTarget_handler_, 1, b"v@"
         )

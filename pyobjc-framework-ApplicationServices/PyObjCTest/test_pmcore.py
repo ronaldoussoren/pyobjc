@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestPMCore(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         PrintCore.PMRetain
         PrintCore.PMRelease
 

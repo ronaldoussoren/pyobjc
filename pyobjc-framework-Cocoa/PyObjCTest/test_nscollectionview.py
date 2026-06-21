@@ -75,7 +75,7 @@ class TestNSCollectionView(TestCase):
         self.assertIsEnumType(AppKit.NSCollectionViewItemHighlightState)
         self.assertIsEnumType(AppKit.NSCollectionViewScrollPosition)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSCollectionViewItem.isSelected)
         self.assertArgIsBOOL(AppKit.NSCollectionViewItem.setSelected_, 0)
 
@@ -87,7 +87,7 @@ class TestNSCollectionView(TestCase):
         self.assertArgIsBOOL(AppKit.NSCollectionView.setAllowsMultipleSelection_, 0)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultHasType(
             AppKit.NSCollectionView.frameForItemAtIndex_, AppKit.NSRect.__typestr__
         )
@@ -163,7 +163,7 @@ class TestNSCollectionView(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSCollectionView.allowsEmptySelection)
         self.assertArgIsBOOL(AppKit.NSCollectionView.setAllowsEmptySelection_, 0)
 
@@ -184,7 +184,7 @@ class TestNSCollectionView(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(
             AppKit.NSCollectionView.backgroundViewScrollsWithContent
         )
@@ -192,7 +192,7 @@ class TestNSCollectionView(TestCase):
             AppKit.NSCollectionView.setBackgroundViewScrollsWithContent_, 0
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSCollectionViewScrollPositionNone, 0)
         self.assertEqual(AppKit.NSCollectionViewScrollPositionTop, 1 << 0)
         self.assertEqual(
@@ -214,23 +214,23 @@ class TestNSCollectionView(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSCollectionViewDropOn, 0)
         self.assertEqual(AppKit.NSCollectionViewDropBefore, 1)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(AppKit.NSCollectionViewItemHighlightNone, 0)
         self.assertEqual(AppKit.NSCollectionViewItemHighlightForSelection, 1)
         self.assertEqual(AppKit.NSCollectionViewItemHighlightForDeselection, 2)
         self.assertEqual(AppKit.NSCollectionViewItemHighlightAsDropTarget, 3)
 
     @min_sdk_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSCollectionViewDelegate", AppKit)
 
     @min_sdk_level("10.11")
-    def testProtocols10_11(self):
+    def test_protocols10_11(self):
         self.assertProtocolExists("NSCollectionViewElement", AppKit)
 
         self.assertProtocolExists("NSCollectionViewDataSource", AppKit)

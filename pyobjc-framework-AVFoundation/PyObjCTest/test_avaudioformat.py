@@ -7,7 +7,7 @@ class TestAVAudioFormat(TestCase):
         self.assertIsEnumType(AVFoundation.AVAudioCommonFormat)
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioOtherFormat, 0)
         self.assertEqual(AVFoundation.AVAudioPCMFormatFloat32, 1)
         self.assertEqual(AVFoundation.AVAudioPCMFormatFloat64, 2)
@@ -15,7 +15,7 @@ class TestAVAudioFormat(TestCase):
         self.assertEqual(AVFoundation.AVAudioPCMFormatInt32, 4)
 
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsIn(
             AVFoundation.AVAudioFormat.initWithStreamDescription_, 0
         )  # noqa: B950

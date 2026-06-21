@@ -7,14 +7,14 @@ class TestNSTabViewController(TestCase):
         self.assertIsEnumType(AppKit.NSTabViewControllerTabStyle)
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTabViewControllerTabStyleSegmentedControlOnTop, 0)
         self.assertEqual(AppKit.NSTabViewControllerTabStyleSegmentedControlOnBottom, 1)
         self.assertEqual(AppKit.NSTabViewControllerTabStyleToolbar, 2)
         self.assertEqual(AppKit.NSTabViewControllerTabStyleUnspecified, -1)
 
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSTabViewController.canPropagateSelectedChildViewControllerTitle
         )

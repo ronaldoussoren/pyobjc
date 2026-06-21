@@ -9,7 +9,7 @@ class TestSCNMaterialProperty(TestCase):
         self.assertIsEnumType(SceneKit.SCNFilterMode)
         self.assertIsEnumType(SceneKit.SCNWrapMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SceneKit.SCNFilterModeNone, 0)
         self.assertEqual(SceneKit.SCNFilterModeNearest, 1)
         self.assertEqual(SceneKit.SCNFilterModeLinear, 2)

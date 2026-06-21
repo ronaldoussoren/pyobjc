@@ -4,7 +4,7 @@ import CloudKit
 
 class TestCKDiscoverUserIdentitiesOperation(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBlock(
             CloudKit.CKDiscoverUserIdentitiesOperation.userIdentityDiscoveredBlock,
             b"v@@",

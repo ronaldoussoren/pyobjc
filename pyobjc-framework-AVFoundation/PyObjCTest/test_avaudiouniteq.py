@@ -7,7 +7,7 @@ class TestAVAudioUnitEQ(TestCase):
         self.assertIsEnumType(AVFoundation.AVAudioUnitEQFilterType)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeParametric, 0)
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeLowPass, 1)
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeHighPass, 2)
@@ -21,6 +21,6 @@ class TestAVAudioUnitEQ(TestCase):
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeResonantHighShelf, 10)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitEQFilterParameters.bypass)
         self.assertArgIsBOOL(AVFoundation.AVAudioUnitEQFilterParameters.setBypass_, 0)

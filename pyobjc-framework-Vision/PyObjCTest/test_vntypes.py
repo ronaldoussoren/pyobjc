@@ -19,7 +19,7 @@ class TestVNTypes(TestCase):
         self.assertIsEnumType(Vision.VNImageCropAndScaleOption)
         self.assertIsEnumType(Vision.VNPointsClassification)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Vision.VNImageCropAndScaleOptionCenterCrop, 0)
         self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFit, 1)
         self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFill, 2)
@@ -52,7 +52,7 @@ class TestVNTypes(TestCase):
         self.assertEqual(Vision.VNBarcodeCompositeTypeGS1TypeC, 4)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Vision.VNBarcodeSymbologyAztec, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyCode39, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyCode39Checksum, str)
@@ -72,12 +72,12 @@ class TestVNTypes(TestCase):
         self.assertIsInstance(Vision.VNBarcodeSymbologyUPCE, str)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(Vision.VNVideoProcessingOptionFrameCadence, str)
         self.assertIsInstance(Vision.VNVideoProcessingOptionTimeInterval, str)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(Vision.VNBarcodeSymbologyCodabar, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyGS1DataBar, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyGS1DataBarExpanded, str)
@@ -86,7 +86,7 @@ class TestVNTypes(TestCase):
         self.assertIsInstance(Vision.VNBarcodeSymbologyMicroQR, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(Vision.VNComputeStageMain, str)
         self.assertIsInstance(Vision.VNComputeStagePostProcessing, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyMSIPlessey, str)

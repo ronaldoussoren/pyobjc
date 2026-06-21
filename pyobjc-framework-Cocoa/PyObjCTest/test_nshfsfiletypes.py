@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSHFSFileTypes(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         v = Foundation.NSHFSTypeCodeFromFileType("'rtfd'")
         self.assertIsInstance(v, int)
         w = Foundation.NSFileTypeForHFSTypeCode(v)

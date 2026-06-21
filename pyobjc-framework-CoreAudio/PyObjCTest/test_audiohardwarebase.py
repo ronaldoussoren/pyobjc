@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, fourcc
 
 
 class TestAudioHardwareBase(TestCase):
-    def testStructs(self):
+    def test_structs(self):
         v = CoreAudio.AudioObjectPropertyAddress()
         self.assertEqual(v.mSelector, 0)
         self.assertEqual(v.mScope, 0)
@@ -15,7 +15,7 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(v.mSampleRateRange, CoreAudio.AudioValueRange())
         self.assertPickleRoundTrips(v)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreAudio.kAudioHardwareNoError, 0)
         self.assertEqual(CoreAudio.kAudioHardwareNotRunningError, fourcc(b"stop"))
         self.assertEqual(CoreAudio.kAudioHardwareUnspecifiedError, fourcc(b"what"))

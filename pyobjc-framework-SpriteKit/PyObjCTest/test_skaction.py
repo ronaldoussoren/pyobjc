@@ -11,14 +11,14 @@ class TestSKAction(TestCase):
         self.assertIsEnumType(SpriteKit.SKActionTimingMode)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SpriteKit.SKActionTimingLinear, 0)
         self.assertEqual(SpriteKit.SKActionTimingEaseIn, 1)
         self.assertEqual(SpriteKit.SKActionTimingEaseOut, 2)
         self.assertEqual(SpriteKit.SKActionTimingEaseInEaseOut, 3)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertIsInstance(SpriteKit.SKAction, objc.objc_class)
 
         self.assertArgIsBOOL(
@@ -48,12 +48,12 @@ class TestSKAction(TestCase):
         )
 
     @expectedFailure
-    def testMethods_dispatch(self):
+    def test_methods_dispatch(self):
         self.fail("SpriteKit.SKAction.runBlock_queue_")
         self.fail("SpriteKit.SKAction.runBlock_")
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(
             SpriteKit.SKAction.followPath_asOffset_orientToPath_speed_, 1
         )

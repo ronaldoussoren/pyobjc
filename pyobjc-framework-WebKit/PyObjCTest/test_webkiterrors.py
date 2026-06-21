@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestWebKitErrors(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(WebKit.WebKitErrorDomain, str)
         self.assertIsInstance(WebKit.WebKitErrorMIMETypeKey, str)
         self.assertIsInstance(WebKit.WebKitErrorPlugInNameKey, str)

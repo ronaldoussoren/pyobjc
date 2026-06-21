@@ -8,11 +8,11 @@ class TestEKReminder(TestCase):
         self.assertTrue(hasattr(EventKit, "EKReminder"))
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(EventKit.EKReminder.isCompleted)
         self.assertArgIsBOOL(EventKit.EKReminder.setCompleted_, 0)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(EventKit.EKReminderPriorityNone, 0)
         self.assertEqual(EventKit.EKReminderPriorityHigh, 1)
         self.assertEqual(EventKit.EKReminderPriorityMedium, 5)

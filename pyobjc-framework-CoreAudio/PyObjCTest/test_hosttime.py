@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestHostTime(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         CoreAudio.AudioGetCurrentHostTime
         CoreAudio.AudioGetHostClockFrequency
         CoreAudio.AudioGetHostClockMinimumTimeDelta

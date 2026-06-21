@@ -8,7 +8,7 @@ class TestNSPropertyList(TestCase):
         self.assertIsEnumType(Foundation.NSPropertyListFormat)
         self.assertIsEnumType(Foundation.NSPropertyListMutabilityOptions)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Foundation.NSPropertyListSerialization.propertyList_isValidForFormat_
         )
@@ -22,7 +22,7 @@ class TestNSPropertyList(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsOut(
             Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_,
             3,
@@ -41,7 +41,7 @@ class TestNSPropertyList(TestCase):
         )
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(
             Foundation.NSPropertyListImmutable, CoreFoundation.kCFPropertyListImmutable
         )

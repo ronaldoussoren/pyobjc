@@ -3,5 +3,5 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKLeaderboardViewController(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKLeaderboardViewControllerDelegate", GameKit)

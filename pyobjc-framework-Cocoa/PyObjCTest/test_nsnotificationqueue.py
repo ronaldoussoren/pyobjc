@@ -7,7 +7,7 @@ class TestNSNotificationQueue(TestCase):
         self.assertIsEnumType(Foundation.NSNotificationCoalescing)
         self.assertIsEnumType(Foundation.NSPostingStyle)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSPostWhenIdle, 1)
         self.assertEqual(Foundation.NSPostASAP, 2)
         self.assertEqual(Foundation.NSPostNow, 3)

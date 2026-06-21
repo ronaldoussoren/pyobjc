@@ -3,7 +3,7 @@ import SystemConfiguration
 
 
 class TestDHCPClientPreferences(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         self.assertRaises(
             ValueError,
             SystemConfiguration.DHCPClientPreferencesSetApplicationOptions,

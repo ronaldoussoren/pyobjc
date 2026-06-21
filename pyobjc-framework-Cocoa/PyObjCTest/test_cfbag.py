@@ -94,7 +94,7 @@ class TestCFBag(TestCase):
         CoreFoundation.CFBagRemoveAllValues(bag)
         self.assertEqual(CoreFoundation.CFBagGetCount(bag), 0)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgHasType(CoreFoundation.CFBagGetCountOfValue, 1, b"@")
         self.assertArgHasType(CoreFoundation.CFBagContainsValue, 1, b"@")
         self.assertArgHasType(CoreFoundation.CFBagGetValue, 1, b"@")

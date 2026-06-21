@@ -12,7 +12,7 @@ class TestMDLCamera(TestCase):
         self.assertIsEnumType(ModelIO.MDLMaterialTextureFilterMode)
         self.assertIsEnumType(ModelIO.MDLMaterialTextureWrapMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(ModelIO.MDLMaterialSemanticBaseColor, 0)
         self.assertEqual(ModelIO.MDLMaterialSemanticSubsurface, 1)
         self.assertEqual(ModelIO.MDLMaterialSemanticMetallic, 2)
@@ -67,7 +67,7 @@ class TestMDLCamera(TestCase):
         self.assertEqual(ModelIO.MDLMaterialFaceDoubleSided, 2)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgHasType(
             ModelIO.MDLMaterialProperty.initWithName_semantic_float2_,
             2,
@@ -126,7 +126,7 @@ class TestMDLCamera(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(
             ModelIO.MDLMaterialPropertyNode.initWithInputs_outputs_evaluationFunction_,
             2,

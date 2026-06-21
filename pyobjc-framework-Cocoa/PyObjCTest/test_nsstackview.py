@@ -11,7 +11,7 @@ class TestNSStackView(TestCase):
         self.assertIsEnumType(AppKit.NSStackViewDistribution)
         self.assertIsEnumType(AppKit.NSStackViewGravity)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSUserInterfaceLayoutOrientationHorizontal, 0)
         self.assertEqual(AppKit.NSUserInterfaceLayoutOrientationVertical, 1)
 
@@ -38,15 +38,15 @@ class TestNSStackView(TestCase):
         self.assertEqual(AppKit.NSStackViewDistributionEqualCentering, 4)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSStackView.hasEqualSpacing)
         self.assertArgIsBOOL(AppKit.NSStackView.setHasEqualSpacing_, 0)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSStackView.detachesHiddenViews)
         self.assertArgIsBOOL(AppKit.NSStackView.setDetachesHiddenViews_, 0)
 
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSStackViewDelegate", AppKit)

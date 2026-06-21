@@ -10,7 +10,7 @@ class TestNSRegularExpression(TestCase):
         self.assertIsEnumType(Foundation.NSRegularExpressionOptions)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Foundation.NSRegularExpressionCaseInsensitive, 1 << 0)
         self.assertEqual(
             Foundation.NSRegularExpressionAllowCommentsAndWhitespace, 1 << 1
@@ -34,7 +34,7 @@ class TestNSRegularExpression(TestCase):
         self.assertEqual(Foundation.NSMatchingInternalError, 1 << 4)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsOut(
             Foundation.NSRegularExpression.regularExpressionWithPattern_options_error_,
             2,

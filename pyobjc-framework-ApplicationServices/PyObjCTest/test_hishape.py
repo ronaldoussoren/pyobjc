@@ -3,10 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestHIShape(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(HIServices.HIShapeRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(HIServices.HIShapeGetTypeID(), int)
 
         self.assertResultIsCFRetained(HIServices.HIShapeCreateEmpty)
@@ -57,7 +57,7 @@ class TestHIShape(TestCase):
 
         self.assertArgIsIn(HIServices.HIShapeUnionWithRect, 1)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(HIServices.kHIShapeEnumerateInit, 1)
         self.assertEqual(HIServices.kHIShapeEnumerateRect, 2)
         self.assertEqual(HIServices.kHIShapeEnumerateTerminate, 3)

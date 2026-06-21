@@ -7,14 +7,14 @@ class TestNSEnergyFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSEnergyFormatterUnit)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(Foundation.NSEnergyFormatterUnitJoule, 11)
         self.assertEqual(Foundation.NSEnergyFormatterUnitKilojoule, 14)
         self.assertEqual(Foundation.NSEnergyFormatterUnitCalorie, (7 << 8) + 1)
         self.assertEqual(Foundation.NSEnergyFormatterUnitKilocalorie, (7 << 8) + 2)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(Foundation.NSEnergyFormatter.isForFoodEnergyUse)
         self.assertArgIsBOOL(Foundation.NSEnergyFormatter.setForFoodEnergyUse_, 0)
 

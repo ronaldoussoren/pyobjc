@@ -6,7 +6,7 @@ from objc import simd
 
 
 class TestGKGridGraph(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameplayKit.GKGridGraph.diagonalsAllowed)
 
         self.assertResultHasType(

@@ -4,10 +4,10 @@ import objc
 
 
 class TestSKSummary(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreServices.SKSummaryRef, objc.objc_class)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreServices.SKSummaryGetTypeID(), int)
 
         ref = CoreServices.SKSummaryCreateWithString("hello world.  and you too.")

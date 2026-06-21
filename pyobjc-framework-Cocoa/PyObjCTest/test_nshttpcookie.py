@@ -7,7 +7,7 @@ class TestNSHTTPCookie(TestCase):
         self.assertIsTypedEnum(Foundation.NSHTTPCookiePropertyKey, str)
         self.assertIsTypedEnum(Foundation.NSHTTPCookieStringPolicy, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSHTTPCookieName, str)
         self.assertIsInstance(Foundation.NSHTTPCookieValue, str)
         self.assertIsInstance(Foundation.NSHTTPCookieOriginURL, str)
@@ -23,16 +23,16 @@ class TestNSHTTPCookie(TestCase):
         self.assertIsInstance(Foundation.NSHTTPCookiePort, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Foundation.NSHTTPCookieSameSitePolicy, str)
         self.assertIsInstance(Foundation.NSHTTPCookieSameSiteLax, str)
         self.assertIsInstance(Foundation.NSHTTPCookieSameSiteStrict, str)
 
     @min_os_level("15.2")
-    def testConstants15_2(self):
+    def test_constants15_2(self):
         self.assertIsInstance(Foundation.NSHTTPCookieSetByJavaScript, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSHTTPCookie.isSessionOnly)
         self.assertResultIsBOOL(Foundation.NSHTTPCookie.isSecure)
         self.assertResultIsBOOL(Foundation.NSHTTPCookie.isHTTPOnly)

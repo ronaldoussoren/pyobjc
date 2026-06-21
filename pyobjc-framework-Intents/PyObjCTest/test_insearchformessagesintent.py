@@ -49,7 +49,7 @@ class TestINSearchForMessagesIntentHelper(Intents.NSObject):
 
 class TestINSearchForMessagesIntent(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             TestINSearchForMessagesIntentHelper.handleSearchForMessages_completion_,
             1,
@@ -96,5 +96,5 @@ class TestINSearchForMessagesIntent(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("INSearchForMessagesIntentHandling", Intents)

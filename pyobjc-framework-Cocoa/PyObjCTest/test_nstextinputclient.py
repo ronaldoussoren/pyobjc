@@ -70,7 +70,7 @@ class TestNSTextInputClient(TestCase):
         self.assertEqual(AppKit.NSTextCursorAccessoryPlacementOffscreenBottom, 8)
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertProtocolExists("NSTextInputClient", AppKit)
         self.assertArgHasType(
             TestNSTextInputClientHelper.insertText_replacementRange_,

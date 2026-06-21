@@ -5,15 +5,15 @@ import MediaLibrary
 
 class TestMLMediaLibrary(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MediaLibrary.MLMediaLibrary, objc.objc_class)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(MediaLibrary.MLMediaSourcePhotosIdentifier, str)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(MediaLibrary.MLMediaSourceiPhotoIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLMediaSourceiTunesIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLMediaSourceApertureIdentifier, str)

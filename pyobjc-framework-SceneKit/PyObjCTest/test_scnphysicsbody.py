@@ -21,7 +21,7 @@ class TestSCNPhysicsBody(TestCase):
         self.assertEqual(SceneKit.SCNPhysicsCollisionCategoryAll, (sys.maxsize * 2) + 1)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.isResting)
 
         self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.setAllowsResting_, 0)
@@ -32,7 +32,7 @@ class TestSCNPhysicsBody(TestCase):
         self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.applyTorque_impulse_, 1)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.setUsesDefaultMomentOfInertia_, 0)
         self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.usesDefaultMomentOfInertia)
 
@@ -40,5 +40,5 @@ class TestSCNPhysicsBody(TestCase):
         self.assertResultIsBOOL(SceneKit.SCNPhysicsBody.isAffectedByGravity)
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertArgIsBOOL(SceneKit.SCNPhysicsBody.setResting_, 0)

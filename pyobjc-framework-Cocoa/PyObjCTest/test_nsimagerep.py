@@ -9,7 +9,7 @@ class TestNSImageRep(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSImageLayoutDirection)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSImageRepMatchesDevice, 0)
 
         self.assertEqual(
@@ -22,7 +22,7 @@ class TestNSImageRep(TestCase):
         self.assertEqual(AppKit.NSImageLayoutDirectionLeftToRight, 2)
         self.assertEqual(AppKit.NSImageLayoutDirectionRightToLeft, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSImageRep.draw)
         self.assertResultIsBOOL(AppKit.NSImageRep.drawAtPoint_)
         self.assertResultIsBOOL(AppKit.NSImageRep.drawInRect_)
@@ -34,7 +34,7 @@ class TestNSImageRep(TestCase):
         self.assertResultIsBOOL(AppKit.NSImageRep.canInitWithPasteboard_)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(
             AppKit.NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_
         )

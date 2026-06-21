@@ -5,7 +5,7 @@ import MapKit
 
 class TestMKMapSnapshotOptions(TestCase):
     @min_os_level("10.9")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertResultIsBOOL(MapKit.MKMapSnapshotOptions.showsPointsOfInterest)
         self.assertArgIsBOOL(MapKit.MKMapSnapshotOptions.setShowsPointsOfInterest_, 0)
 

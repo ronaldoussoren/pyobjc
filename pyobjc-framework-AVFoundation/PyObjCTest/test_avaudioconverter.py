@@ -11,7 +11,7 @@ class TestAVAudioConverter(TestCase):
         self.assertIsEnumType(AVFoundation.AVAudioConverterOutputStatus)
         self.assertIsEnumType(AVFoundation.AVAudioConverterPrimeMethod)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_Pre, 0)
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_Normal, 1)
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_None, 2)
@@ -25,14 +25,14 @@ class TestAVAudioConverter(TestCase):
         self.assertEqual(AVFoundation.AVAudioConverterOutputStatus_EndOfStream, 2)
         self.assertEqual(AVFoundation.AVAudioConverterOutputStatus_Error, 3)
 
-    def testStructs(self):
+    def test_structs(self):
         v = AVFoundation.AVAudioConverterPrimeInfo()
         self.assertEqual(v.leadingFrames, 0)
         self.assertEqual(v.trailingFrames, 0)
         self.assertPickleRoundTrips(v)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioConverter.downmix)
         self.assertArgIsBOOL(AVFoundation.AVAudioConverter.setDownmix_, 0)
 

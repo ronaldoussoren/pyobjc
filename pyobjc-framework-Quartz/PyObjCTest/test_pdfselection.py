@@ -9,5 +9,5 @@ class TestPDFSelection(TestCase):
         self.assertEqual(Quartz.PDFSelectionGranularityWord, 1)
         self.assertEqual(Quartz.PDFSelectionGranularityLine, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Quartz.PDFSelection.drawForPage_withBox_active_, 2)

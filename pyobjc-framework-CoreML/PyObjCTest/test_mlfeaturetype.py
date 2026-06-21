@@ -6,7 +6,7 @@ class TestMLFeatureType(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(CoreML.MLFeatureType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreML.MLFeatureTypeInvalid, 0)
         self.assertEqual(CoreML.MLFeatureTypeInt64, 1)
         self.assertEqual(CoreML.MLFeatureTypeDouble, 2)

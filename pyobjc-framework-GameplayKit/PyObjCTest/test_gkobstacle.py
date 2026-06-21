@@ -4,7 +4,7 @@ from objc import simd
 
 
 class TestGKObstacle(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             GameplayKit.GKCircleObstacle.position, simd.vector_float2.__typestr__
         )

@@ -10,10 +10,10 @@ from PyObjCTools.TestSupport import (
 
 class TestCGImageProperties(TestCase):
     @min_os_level("10.14")
-    def testFunctions(self):
+    def test_functions(self):
         Quartz.CGImageSourceGetPrimaryImageIndex
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.IMAGEIO_PNG_NO_FILTERS, 0x00)
         self.assertEqual(Quartz.IMAGEIO_PNG_FILTER_NONE, 0x08)
         self.assertEqual(Quartz.IMAGEIO_PNG_FILTER_SUB, 0x10)
@@ -244,7 +244,7 @@ class TestCGImageProperties(TestCase):
         self.assertEqual(Quartz.kCGImageTGACompressionRLE, 1)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(Quartz.kCGImagePropertyMakerCanonDictionary, str)
         self.assertIsInstance(Quartz.kCGImagePropertyMakerNikonDictionary, str)
         self.assertIsInstance(Quartz.kCGImageProperty8BIMDictionary, str)
@@ -316,7 +316,7 @@ class TestCGImageProperties(TestCase):
 
     @min_os_level("10.5")
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.6")
-    def testConstants10_5_bad_on_10_6(self):
+    def test_constants10_5_bad_on_10_6(self):
         self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerMinoltaDictionary"))
         self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerFujiDictionary"))
         self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerOlympusDictionary"))
@@ -328,7 +328,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyMakerPentaxDictionary, str)
 
     @min_os_level("10.7")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         # Contants aren't actually available on OSX 10.6
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCCreatorContactInfo, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCRightsUsageTerms, str)
@@ -343,7 +343,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCContactInfoWebURLs, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(Quartz.kCGImagePropertyGIFUnclampedDelayTime, str)
         self.assertIsInstance(Quartz.kCGImagePropertyPNGAuthor, str)
         self.assertIsInstance(Quartz.kCGImagePropertyPNGCopyright, str)
@@ -355,7 +355,7 @@ class TestCGImageProperties(TestCase):
 
     @min_os_level("10.7")
     @expectedFailureIf(os_level_key(os_release()) <= os_level_key("10.9"))
-    def testConstants10_7_broken(self):
+    def test_constants10_7_broken(self):
         # The constants in this testcase are defined in headers and documentation,
         # but aren't exported by the framework...
         self.assertIsInstance(Quartz.kCGImagePropertyExifCameraOwnerName, str)
@@ -366,7 +366,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyExifLensSerialNumber, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(Quartz.kCGImagePropertyOpenEXRDictionary, str)
         self.assertIsInstance(Quartz.kCGImagePropertyOpenEXRAspectRatio, str)
         self.assertIsInstance(Quartz.kCGImagePropertyExifSensitivityType, str)
@@ -377,7 +377,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyExifISOSpeedLatitudezzz, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(Quartz.kCGImagePropertyMakerAppleDictionary, str)
         self.assertIsInstance(Quartz.kCGImagePropertyAPNGLoopCount, str)
         self.assertIsInstance(Quartz.kCGImagePropertyAPNGDelayTime, str)
@@ -386,14 +386,14 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImageProperty8BIMVersion, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(Quartz.kCGImagePropertyTIFFTileWidth, str)
         self.assertIsInstance(Quartz.kCGImagePropertyTIFFTileLength, str)
         self.assertIsInstance(Quartz.kCGImagePropertyPNGCompressionFilter, str)
         self.assertIsInstance(Quartz.kCGImagePropertyExifSubsecTimeOriginal, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(Quartz.kCGImagePropertyDNGBlackLevel, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGWhiteLevel, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGCalibrationIlluminant1, str)
@@ -418,7 +418,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyDNGFixVignetteRadial, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.kCGImagePropertyFileContentsDictionary, str)
         self.assertIsInstance(Quartz.kCGImageAuxiliaryDataTypeDepth, str)
         self.assertIsInstance(Quartz.kCGImageAuxiliaryDataTypeDisparity, str)
@@ -444,7 +444,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyPNGTransparency, str)
 
     @min_os_level("10.13.4")
-    def testConstants10_13_4(self):
+    def test_constants10_13_4(self):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAboutCvTerm, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAboutCvTermCvId, str)
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAboutCvTermId, str)
@@ -709,7 +709,7 @@ class TestCGImageProperties(TestCase):
         )
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(Quartz.kCGImagePropertyDNGActiveArea, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGAnalogBalance, str)
         self.assertIsInstance(Quartz.kCGImagePropertyDNGAntiAliasStrength, str)
@@ -787,7 +787,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyPNGWarning, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Quartz.kCGImagePropertyHEICSDictionary, str)
         self.assertIsInstance(Quartz.kCGImagePropertyHEICSLoopCount, str)
         self.assertIsInstance(Quartz.kCGImagePropertyHEICSDelayTime, str)
@@ -815,7 +815,7 @@ class TestCGImageProperties(TestCase):
         )
 
     @min_os_level("10.15.1")
-    def testConstants10_15_1(self):
+    def test_constants10_15_1(self):
         self.assertIsInstance(Quartz.kCGImagePropertyExifCompositeImage, str)
         self.assertIsInstance(
             Quartz.kCGImagePropertyExifSourceImageNumberOfCompositeImage, str
@@ -825,7 +825,7 @@ class TestCGImageProperties(TestCase):
         )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(Quartz.kCGImagePropertyWebPDictionary, str)
 
         self.assertIsInstance(Quartz.kCGImagePropertyWebPLoopCount, str)
@@ -846,7 +846,7 @@ class TestCGImageProperties(TestCase):
         )
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(Quartz.kCGImagePropertyImageIndex, str)
         self.assertIsInstance(Quartz.kCGImagePropertyGroups, str)
         self.assertIsInstance(Quartz.kCGImagePropertyGroupIndex, str)
@@ -862,7 +862,7 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyPNGPixelsAspectRatio, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertTrue(not hasattr(Quartz, "kCGImagePropertyHorizontalFOV"))
 
         self.assertIsInstance(Quartz.kCGImagePropertyHEIFDictionary, str)
@@ -881,19 +881,19 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyOpenEXRCompression, str)
 
     @min_os_level("13.3")
-    def testConstants13_3(self):
+    def test_constants13_3(self):
         # kCGImagePropertyOpenEXRCompression is no longer present in the 14.0 SDK,
         # but wasn't deprecated?
         self.assertIsInstance(Quartz.kCGImagePropertyOpenEXRCompression, str)
         self.assertIsInstance(Quartz.kCGImagePropertyAVISDictionary, str)
 
     @min_os_level("14.4")
-    def testConstants14_4(self):
+    def test_constants14_4(self):
         self.assertIsInstance(Quartz.kCGImagePropertyTIFFXPosition, str)
         self.assertIsInstance(Quartz.kCGImagePropertyTIFFYPosition, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(Quartz.kCGImageAuxiliaryDataTypeISOGainMap, str)
         self.assertIsInstance(Quartz.kCGImageAuxiliaryDataInfoColorSpace, str)
         self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIndexMonoscopic, str)
@@ -909,6 +909,6 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kIIOMonoscopicImageLocation_Center, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(Quartz.kCGImageProviderPreferredTileWidth, str)
         self.assertIsInstance(Quartz.kCGImageProviderPreferredTileHeight, str)

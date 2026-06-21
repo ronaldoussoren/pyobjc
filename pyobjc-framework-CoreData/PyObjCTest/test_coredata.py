@@ -8,11 +8,11 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCoreData(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CoreData, "NSAttributeDescription")
         self.assertIsInstance(CoreData.NSAttributeDescription, objc.objc_class)
 
-    def testValues(self):
+    def test_values(self):
         self.assertHasAttr(CoreData, "NSCoreDataVersionNumber10_4_3")
         self.assertIsInstance(CoreData.NSCoreDataVersionNumber10_4_3, float)
         self.assertEqual(CoreData.NSCoreDataVersionNumber10_4_3, 77.0)
@@ -21,7 +21,7 @@ class TestCoreData(TestCase):
         self.assertIsInstance(CoreData.NSValidationMultipleErrorsError, int)
         self.assertEqual(CoreData.NSValidationMultipleErrorsError, 1560)
 
-    def testVariables(self):
+    def test_variables(self):
         self.assertHasAttr(CoreData, "NSCoreDataVersionNumber")
         self.assertIsInstance(CoreData.NSCoreDataVersionNumber, float)
 

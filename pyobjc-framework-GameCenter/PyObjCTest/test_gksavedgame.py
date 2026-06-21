@@ -6,7 +6,7 @@ import GameCenter
 
 class TestGKSavedGame(TestCase):
     @min_os_level("10.10")
-    def testClasses10_10(self):
+    def test_classes10_10(self):
         self.assertIsInstance(GameCenter.GKSavedGame, objc.objc_class)
 
         self.assertArgIsBlock(

@@ -10,14 +10,14 @@ import objc
 
 
 class TestCGPDFScanner(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsOpaquePointer(Quartz.CGPDFScannerRef)
 
     @expectedFailureIf(os_release().startswith("10.5."))
     def testFunctionMissingOn10_5(self):
         Quartz.CGPDFScannerRetain
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsNotCFRetained(Quartz.CGPDFScannerCreate)
 
         Quartz.CGPDFScannerRelease

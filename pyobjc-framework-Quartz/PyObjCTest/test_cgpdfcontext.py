@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCGPDFContext(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         data = NSMutableData.data()
         self.assertIsInstance(data, Quartz.CFMutableDataRef)
 
@@ -42,12 +42,12 @@ class TestCGPDFContext(TestCase):
             Quartz.CGPDFContextClose(context)
 
     @min_os_level("10.5")
-    def testFunctions10_5(self):
+    def test_functions10_5(self):
         # Note actual test is in the function below this one.
         Quartz.CGPDFContextClose
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         data = NSMutableData.data()
         consumer = Quartz.CGDataConsumerCreateWithCFData(data)
         context = Quartz.CGPDFContextCreate(consumer, None, None)
@@ -60,22 +60,22 @@ class TestCGPDFContext(TestCase):
         )
 
     @min_os_level("10.13")
-    def testFunctions10_13(self):
+    def test_functions10_13(self):
         Quartz.CGPDFContextSetOutline
 
     @min_os_level("10.15")
-    def testFunctions10_15(self):
+    def test_functions10_15(self):
         Quartz.CGPDFTagTypeGetName
         Quartz.CGPDFContextBeginTag
         Quartz.CGPDFContextEndTag
 
     @min_os_level("15.0")
-    def testFunctions15_0(self):
+    def test_functions15_0(self):
         Quartz.CGPDFContextSetParentTree
         Quartz.CGPDFContextSetIDTree
         Quartz.CGPDFContextSetPageTagStructureTree
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCGPDFContextMediaBox, str)
         self.assertIsInstance(Quartz.kCGPDFContextCropBox, str)
         self.assertIsInstance(Quartz.kCGPDFContextBleedBox, str)
@@ -151,21 +151,21 @@ class TestCGPDFContext(TestCase):
         self.assertEqual(Quartz.CGPDFTagTypeObject, 800)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(Quartz.kCGPDFContextSubject, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.kCGPDFContextAccessPermissions, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Quartz.kCGPDFTagPropertyActualText, str)
         self.assertIsInstance(Quartz.kCGPDFTagPropertyAlternativeText, str)
         self.assertIsInstance(Quartz.kCGPDFTagPropertyTitleText, str)
         self.assertIsInstance(Quartz.kCGPDFTagPropertyLanguageText, str)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(Quartz.kCGPDFContextCreateLinearizedPDF, str)
         self.assertIsInstance(Quartz.kCGPDFContextCreatePDFA, str)

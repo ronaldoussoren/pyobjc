@@ -7,14 +7,14 @@ class TestNSTextContentManager(TestCase):
         self.assertIsEnumType(AppKit.NSTextContentManagerEnumerationOptions)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertEqual(AppKit.NSTextElementProviderEnumerationOptionsNone, 0)
         self.assertEqual(AppKit.NSTextElementProviderEnumerationOptionsReverse, 1 << 0)
 
     @min_sdk_level("12.0")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTextElementProvider", AppKit)
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(AppKit.NSAppearance.allowsVibrancy)

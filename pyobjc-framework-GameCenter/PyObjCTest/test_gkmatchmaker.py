@@ -11,7 +11,7 @@ import GameCenter
 
 class TestGKMatchmaker(TestCase):
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(GameCenter.GKInviteRecipientResponseAccepted, 0)
         self.assertEqual(GameCenter.GKInviteRecipientResponseDeclined, 1)
         self.assertEqual(GameCenter.GKInviteRecipientResponseFailed, 2)
@@ -50,7 +50,7 @@ class TestGKMatchmaker(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(GameCenter.GKInvite.isHosted)
 
         self.assertArgIsBlock(
@@ -88,7 +88,7 @@ class TestGKMatchmaker(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBlock(
             GameCenter.GKMatchmaker.startBrowsingForNearbyPlayersWithReachableHandler_,
             0,
@@ -96,7 +96,7 @@ class TestGKMatchmaker(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBlock(
             GameCenter.GKMatchRequest.recipientResponseHandler,
             b"v@" + objc._C_NSUInteger,
@@ -126,5 +126,5 @@ class TestGKMatchmaker(TestCase):
         )
 
     @min_os_level("10.8")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKInviteEventListener", GameCenter)

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSSliderAccessory(TestCase):
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSSliderAccessory.isEnabled)
         self.assertArgIsBOOL(AppKit.NSSliderAccessory.setEnabled_, 0)
 

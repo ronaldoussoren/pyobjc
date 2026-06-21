@@ -6,7 +6,7 @@ import GameCenter
 
 class TestGKSession(TestCase):
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertIsInstance(GameCenter.GKSession, objc.objc_class)
         self.assertResultIsBOOL(GameCenter.GKSession.isAvailable)
         self.assertArgIsBOOL(GameCenter.GKSession.setAvailable_, 0)

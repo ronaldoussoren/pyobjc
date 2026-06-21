@@ -9,7 +9,7 @@ class TestCKNotification(TestCase):
         self.assertIsEnumType(CloudKit.CKQueryNotificationReason)
 
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKNotification")
         self.assertIsInstance(CloudKit.CKNotification, objc.objc_class)
         self.assertHasAttr(CloudKit, "CKQueryNotification")
@@ -18,7 +18,7 @@ class TestCKNotification(TestCase):
         self.assertIsInstance(CloudKit.CKRecordZoneNotification, objc.objc_class)
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CloudKit.CKNotificationTypeQuery, 1)
         self.assertEqual(CloudKit.CKNotificationTypeRecordZone, 2)
         self.assertEqual(CloudKit.CKNotificationTypeReadNotification, 3)
@@ -28,7 +28,7 @@ class TestCKNotification(TestCase):
         self.assertEqual(CloudKit.CKQueryNotificationReasonRecordDeleted, 3)
 
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CloudKit.CKNotification.isPruned)
         # self.assertArgIsBOOL(CloudKit.CKNotification.setPruned_, 0)
 

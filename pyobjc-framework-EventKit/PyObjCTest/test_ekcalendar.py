@@ -9,13 +9,13 @@ class TestEKCalendar(TestCase):
         self.assertTrue(hasattr(EventKit, "EKCalendar"))
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(EventKit.EKCalendar.allowsContentModifications)
         self.assertResultIsBOOL(EventKit.EKCalendar.isImmutable)
         self.assertResultIsBOOL(EventKit.EKCalendar.isSubscribed)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(EventKit.EKCalendarTypeLocal, 0)
         self.assertEqual(EventKit.EKCalendarTypeCalDAV, 1)
         self.assertEqual(EventKit.EKCalendarTypeExchange, 2)

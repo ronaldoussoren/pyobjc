@@ -11,10 +11,10 @@ class TestNSPrintPanel(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSPrintPanelOptions)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSPrintPanelAccessorizing", AppKit)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSPrintPanelShowsCopies, 0x01)
         self.assertEqual(AppKit.NSPrintPanelShowsPageRange, 0x02)
         self.assertEqual(AppKit.NSPrintPanelShowsPaperSize, 0x04)
@@ -30,20 +30,20 @@ class TestNSPrintPanel(TestCase):
         self.assertEqual(AppKit.NSPrintPanelResultPrinted, 1)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(AppKit.NSPrintPanelAccessorySummaryItemNameKey, str)
         self.assertIsInstance(
             AppKit.NSPrintPanelAccessorySummaryItemDescriptionKey, str
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSPrintPanelShowsPrintSelection, 1 << 5)
 
         self.assertIsInstance(AppKit.NSPrintAllPresetsJobStyleHint, str)
         self.assertIsInstance(AppKit.NSPrintNoPresetsJobStyleHint, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             AppKit.NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_,  # noqa: B950
             3,

@@ -6,12 +6,12 @@ CGDisplayStreamFrameAvailableHandler = b"vIQ@@"
 
 class TestCGDisplayStream(TestCase):
     @min_os_level("10.8")
-    def testTypes10_8(self):
+    def test_types10_8(self):
         self.assertIsCFType(Quartz.CGDisplayStreamRef)
         self.assertIsCFType(Quartz.CGDisplayStreamUpdateRef)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(Quartz.kCGDisplayStreamUpdateRefreshedRects, 0)
         self.assertEqual(Quartz.kCGDisplayStreamUpdateMovedRects, 1)
         self.assertEqual(Quartz.kCGDisplayStreamUpdateDirtyRects, 2)
@@ -35,7 +35,7 @@ class TestCGDisplayStream(TestCase):
         self.assertIsInstance(Quartz.kCGDisplayStreamYCbCrMatrix_SMPTE_240M_1995, str)
 
     @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions10_8(self):
         self.assertIsInstance(Quartz.CGDisplayStreamUpdateGetTypeID(), int)
         self.assertIsInstance(Quartz.CGDisplayStreamGetTypeID(), int)
 

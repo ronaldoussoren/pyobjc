@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestWebJavaPlugIn(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.WebJNIReturnTypeInvalid, 0)
         self.assertEqual(WebKit.WebJNIReturnTypeVoid, 1)
         self.assertEqual(WebKit.WebJNIReturnTypeObject, 2)

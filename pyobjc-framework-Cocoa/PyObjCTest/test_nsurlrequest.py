@@ -12,7 +12,7 @@ class TestNSURLRequest(TestCase):
         self.assertIsEnumType(Foundation.NSURLRequestCachePolicy)
         self.assertIsEnumType(Foundation.NSURLRequestNetworkServiceType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSURLRequestUseProtocolCachePolicy, 0)
         self.assertEqual(Foundation.NSURLRequestReloadIgnoringLocalCacheData, 1)
         self.assertEqual(
@@ -39,28 +39,28 @@ class TestNSURLRequest(TestCase):
         self.assertEqual(Foundation.NSURLRequestAttributionDeveloper, 0)
         self.assertEqual(Foundation.NSURLRequestAttributionUser, 1)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.HTTPShouldHandleCookies)
         self.assertArgIsBOOL(
             Foundation.NSMutableURLRequest.setHTTPShouldHandleCookies_, 0
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.HTTPShouldUsePipelining)
         self.assertArgIsBOOL(
             Foundation.NSMutableURLRequest.setHTTPShouldUsePipelining_, 0
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.allowsCellularAccess)
         self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAllowsCellularAccess_, 0)
 
         self.assertResultIsBOOL(Foundation.NSURLRequest.supportsSecureCoding)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.allowsExpensiveNetworkAccess)
         self.assertArgIsBOOL(
             Foundation.NSMutableURLRequest.setAllowsExpensiveNetworkAccess_, 0
@@ -71,25 +71,25 @@ class TestNSURLRequest(TestCase):
         )
 
     @min_os_level("11.3")
-    def testMethods11_3(self):
+    def test_methods11_3(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.assumesHTTP3Capable)
         self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAssumesHTTP3Capable_, 0)
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.requiresDNSSECValidation)
         self.assertArgIsBOOL(
             Foundation.NSMutableURLRequest.setRequiresDNSSECValidation_, 0
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.allowsPersistentDNS)
         self.assertResultIsBOOL(Foundation.NSURLRequest.allowsPersistentDNS)
         self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAllowsPersistentDNS_, 0)
 
     @min_os_level("26.1")
-    def testMethods26_1(self):
+    def test_methods26_1(self):
         self.assertResultIsBOOL(
             Foundation.NSURLRequest.allowsUltraConstrainedNetworkAccess
         )

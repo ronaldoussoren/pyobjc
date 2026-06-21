@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMNode(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.DOM_ELEMENT_NODE, 1)
         self.assertEqual(WebKit.DOM_ATTRIBUTE_NODE, 2)
         self.assertEqual(WebKit.DOM_TEXT_NODE, 3)
@@ -18,7 +18,7 @@ class TestDOMNode(TestCase):
         self.assertEqual(WebKit.DOM_NOTATION_NODE, 12)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(WebKit.DOM_DOCUMENT_POSITION_DISCONNECTED, 1)
         self.assertEqual(WebKit.DOM_DOCUMENT_POSITION_PRECEDING, 2)
         self.assertEqual(WebKit.DOM_DOCUMENT_POSITION_FOLLOWING, 4)
@@ -26,7 +26,7 @@ class TestDOMNode(TestCase):
         self.assertEqual(WebKit.DOM_DOCUMENT_POSITION_CONTAINED_BY, 16)
         self.assertEqual(WebKit.DOM_DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC, 32)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMNode.hasChildNodes)
         self.assertArgIsBOOL(WebKit.DOMNode.cloneNode_, 0)
         self.assertResultIsBOOL(WebKit.DOMNode.isSupported_version_)
@@ -38,9 +38,9 @@ class TestDOMNode(TestCase):
         self.assertResultIsBOOL(WebKit.DOMNode.isContentEditable)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(WebKit.DOMNode.isDefaultNamespace_)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(WebKit.DOMNode.contains_)

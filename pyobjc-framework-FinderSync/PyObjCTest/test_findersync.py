@@ -16,12 +16,12 @@ class TestFinderSync(TestCase):
         self.assertIsEnumType(FinderSync.FIMenuKind)
 
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(FinderSync.FIFinderSyncController, objc.objc_class)
         self.assertIsInstance(FinderSync.FIFinderSync, objc.objc_class)
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("FIFinderSync", FinderSync, "FIFinderSyncProtocol")
 
     def test_protocol_methods(self):
@@ -37,14 +37,14 @@ class TestFinderSync(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(FinderSync.FIMenuKindContextualMenuForItems, 0)
         self.assertEqual(FinderSync.FIMenuKindContextualMenuForContainer, 1)
         self.assertEqual(FinderSync.FIMenuKindContextualMenuForSidebar, 2)
         self.assertEqual(FinderSync.FIMenuKindToolbarItemMenu, 3)
 
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             FinderSync.FIFinderSyncController.setLastUsedDate_forItemWithURL_completion_,
             2,
@@ -57,7 +57,7 @@ class TestFinderSync(TestCase):
         )
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsBOOL(FinderSync.FIFinderSyncController.isExtensionEnabled)
 
 

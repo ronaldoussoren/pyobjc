@@ -29,7 +29,7 @@ class TestNSAttributedString(TestCase):
         self.assertIsEnumType(Foundation.NSPresentationIntentKind)
         self.assertIsEnumType(Foundation.NSPresentationIntentTableColumnAlignment)
 
-    def testMethodsFoundation(self):
+    def test_methodsFoundation(self):
         self.assertArgIsOut(
             AppKit.NSAttributedString.attributesAtIndex_effectiveRange_, 1
         )
@@ -44,7 +44,7 @@ class TestNSAttributedString(TestCase):
 
         self.assertResultIsBOOL(AppKit.NSAttributedString.isEqualToAttributedString_)
 
-    def testConstantsAppKit(self):
+    def test_constantsAppKit(self):
         self.assertIsInstance(AppKit.NSManagerDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSFontAttributeName, str)
         self.assertIsInstance(AppKit.NSParagraphStyleAttributeName, str)
@@ -140,7 +140,7 @@ class TestNSAttributedString(TestCase):
         self.assertEqual(AppKit.NSSingleUnderlineStyle, 1)
         self.assertIsInstance(AppKit.NSUnderlineStrikethroughMask, int)
 
-    def testMethodsAppKit(self):
+    def test_methodsAppKit(self):
         self.assertResultIsBOOL(AppKit.NSAttributedString.containsAttachments)
         self.assertArgIsBOOL(AppKit.NSAttributedString.nextWordFromIndex_forward_, 1)
         self.assertArgIsOut(AppKit.NSAttributedString.URLAtIndex_effectiveRange_, 1)
@@ -230,7 +230,7 @@ class TestNSAttributedString(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSAttributedStringEnumerationReverse, 1 << 1)
         self.assertEqual(
             AppKit.NSAttributedStringEnumerationLongestEffectiveRangeNotRequired,
@@ -243,19 +243,19 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(AppKit.NSFileTypeDocumentOption, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(AppKit.NSVerticalGlyphFormAttributeName, str)
         self.assertIsInstance(AppKit.NSTextLayoutSectionOrientation, str)
         self.assertIsInstance(AppKit.NSTextLayoutSectionRange, str)
         self.assertIsInstance(AppKit.NSTextLayoutSectionsAttribute, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(AppKit.NSTextAlternativesAttributeName, str)
         self.assertIsInstance(AppKit.NSUsesScreenFontsDocumentAttribute, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AppKit.NSTextEffectAttributeName, str)
         self.assertIsInstance(AppKit.NSTextEffectLetterpressStyle, str)
 
@@ -344,7 +344,7 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(Foundation.NSListItemDelimiterAttributeName, str)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgHasType(
             AppKit.NSAttributedString.enumerateAttributesInRange_options_usingBlock_,
             0,

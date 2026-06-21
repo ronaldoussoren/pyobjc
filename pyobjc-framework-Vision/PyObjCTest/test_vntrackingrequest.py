@@ -6,12 +6,12 @@ class TestVNRequest(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Vision.VNRequestTrackingLevel)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Vision.VNRequestTrackingLevelAccurate, 0)
         self.assertEqual(Vision.VNRequestTrackingLevelFast, 1)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(Vision.VNTrackingRequest.isLastFrame)
         self.assertArgIsBOOL(Vision.VNTrackingRequest.setLastFrame_, 0)
         self.assertArgIsBlock(
@@ -19,7 +19,7 @@ class TestVNRequest(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsOut(
             Vision.VNTrackingRequest.supportedNumberOfTrackersAndReturnError_, 0
         )

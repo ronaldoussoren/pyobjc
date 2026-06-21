@@ -5,5 +5,5 @@ import SpriteKit
 
 class TestSKRegion(TestCase):
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SpriteKit.SKRegion.containsPoint_)

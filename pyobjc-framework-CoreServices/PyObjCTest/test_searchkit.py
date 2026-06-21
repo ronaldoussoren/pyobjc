@@ -7,14 +7,14 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestSearchKit(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertTrue(hasattr(CoreServices, "SKDocumentRef"))
         self.assertIsCFType(CoreServices.SKDocumentRef)
 
         self.assertTrue(hasattr(CoreServices, "SKIndexRef"))
         self.assertIsCFType(CoreServices.SKIndexRef)
 
-    def testValues(self):
+    def test_values(self):
         self.assertTrue(hasattr(CoreServices, "kSKIndexInverted"))
         self.assertTrue(isinstance(CoreServices.kSKIndexInverted, int))
         self.assertEqual(CoreServices.kSKIndexInverted, 1)
@@ -25,12 +25,12 @@ class TestSearchKit(TestCase):
         self.assertTrue(isinstance(CoreServices.kSKSearchRanked, int))
         self.assertEqual(CoreServices.kSKSearchRanked, 0)
 
-    def testVariables(self):
+    def test_variables(self):
         # Use this to test for global variables, (NSString*'s and the like)
         self.assertTrue(hasattr(CoreServices, "kSKEndTermChars"))
         self.assertTrue(isinstance(CoreServices.kSKEndTermChars, str))
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertTrue(hasattr(CoreServices, "SKDocumentCreateWithURL"))
         self.assertTrue(hasattr(CoreServices, "SKDocumentCreate"))
         self.assertTrue(hasattr(CoreServices, "SKIndexOpenWithURL"))

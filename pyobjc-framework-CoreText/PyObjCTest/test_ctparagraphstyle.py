@@ -7,10 +7,10 @@ import objc
 
 
 class TestCTParagraphStyle(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreText.CTParagraphStyleRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreText.kCTLeftTextAlignment, 0)
         self.assertEqual(CoreText.kCTRightTextAlignment, 1)
         self.assertEqual(CoreText.kCTCenterTextAlignment, 2)
@@ -53,14 +53,14 @@ class TestCTParagraphStyle(TestCase):
         self.assertEqual(CoreText.kCTParagraphStyleSpecifierLineSpacingAdjustment, 16)
         self.assertEqual(CoreText.kCTParagraphStyleSpecifierLineBoundsOptions, 17)
 
-    def testStructs(self):
+    def test_structs(self):
         v = CoreText.CTParagraphStyleSetting()
         self.assertHasAttr(v, "spec")
         self.assertHasAttr(v, "valueSize")
         self.assertHasAttr(v, "value")
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = CoreText.CTParagraphStyleGetTypeID()
         self.assertIsInstance(v, int)
         self.assertResultHasType(

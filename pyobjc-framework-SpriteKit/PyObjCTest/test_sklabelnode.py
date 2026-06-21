@@ -9,7 +9,7 @@ class TestSKKeyframeSequence(TestCase):
         self.assertIsEnumType(SpriteKit.SKLabelVerticalAlignmentMode)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SpriteKit.SKLabelVerticalAlignmentModeBaseline, 0)
         self.assertEqual(SpriteKit.SKLabelVerticalAlignmentModeCenter, 1)
         self.assertEqual(SpriteKit.SKLabelVerticalAlignmentModeTop, 2)

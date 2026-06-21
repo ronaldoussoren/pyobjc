@@ -23,12 +23,12 @@ class TestICCameraItem(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICImageSourceThumbnailMaxPixelSize, str)
         self.assertIsInstance(ImageCaptureCore.ICImageSourceShouldCache, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraItem.isLocked)
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraItem.isInTemporaryStore)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraItem.isRaw)
         self.assertResultIsBOOL(
             ImageCaptureCore.ICCameraItem.wasAddedAfterContentCatalogCompleted

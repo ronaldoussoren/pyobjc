@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAXRoleConstants(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(HIServices.kAXApplicationRole, "AXApplication")
         self.assertEqual(HIServices.kAXSystemWideRole, "AXSystemWide")
         self.assertEqual(HIServices.kAXWindowRole, "AXWindow")

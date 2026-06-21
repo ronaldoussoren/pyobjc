@@ -9,7 +9,7 @@ class TestMKDistanceFormatter(TestCase):
         self.assertIsEnumType(MapKit.MKDistanceFormatterUnits)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(MapKit.MKDistanceFormatterUnitsDefault, 0)
         self.assertEqual(MapKit.MKDistanceFormatterUnitsMetric, 1)
         self.assertEqual(MapKit.MKDistanceFormatterUnitsImperial, 2)

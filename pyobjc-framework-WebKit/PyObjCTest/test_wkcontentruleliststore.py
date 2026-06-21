@@ -4,7 +4,7 @@ import WebKit
 
 class TestWKContentRuleListStore(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             WebKit.WKContentRuleListStore.compileContentRuleListForIdentifier_encodedContentRuleList_completionHandler_,  # noqa: B950
             2,

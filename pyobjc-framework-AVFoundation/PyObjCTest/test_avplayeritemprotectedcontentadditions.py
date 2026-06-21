@@ -7,7 +7,7 @@ class TestAVPlayerItemProtectedContentAdditions(TestCase):
         self.assertIsEnumType(AVFoundation.AVContentAuthorizationStatus)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVContentAuthorizationUnknown, 0)
         self.assertEqual(AVFoundation.AVContentAuthorizationCompleted, 1)
         self.assertEqual(AVFoundation.AVContentAuthorizationCancelled, 2)
@@ -16,7 +16,7 @@ class TestAVPlayerItemProtectedContentAdditions(TestCase):
         self.assertEqual(AVFoundation.AVContentAuthorizationNotAvailable, 5)
         self.assertEqual(AVFoundation.AVContentAuthorizationNotPossible, 6)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayerItem.isAuthorizationRequiredForPlayback
         )

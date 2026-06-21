@@ -48,7 +48,7 @@ class TestAVAudioSettings(TestCase):
         self.assertEqual(AVFoundation.AVAudioContentSource_AV_Spatial_Live, 41)
         self.assertEqual(AVFoundation.AVAudioContentSource_Passthrough, 42)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVSampleRateKey, str)
         self.assertIsInstance(AVFoundation.AVNumberOfChannelsKey, str)
         self.assertIsInstance(AVFoundation.AVLinearPCMBitDepthKey, str)
@@ -60,7 +60,7 @@ class TestAVAudioSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVSampleRateConverterAudioQualityKey, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(AVFoundation.AVLinearPCMIsNonInterleaved, str)
         self.assertIs(
             AVFoundation.AVLinearPCMIsNonInterleavedKey,
@@ -70,7 +70,7 @@ class TestAVAudioSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVChannelLayoutKey, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(AVFoundation.AVEncoderAudioQualityForVBRKey, str)
         self.assertIsInstance(AVFoundation.AVEncoderBitRateStrategyKey, str)
         self.assertIsInstance(AVFoundation.AVSampleRateConverterAlgorithmKey, str)
@@ -86,17 +86,17 @@ class TestAVAudioSettings(TestCase):
         )
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(
             AVFoundation.AVSampleRateConverterAlgorithm_MinimumPhase, str
         )
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AVFoundation.AVAudioFileTypeKey, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(
             AVFoundation.AVEncoderDynamicRangeControlConfigurationKey, str
         )

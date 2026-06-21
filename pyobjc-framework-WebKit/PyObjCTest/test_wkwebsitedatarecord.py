@@ -4,7 +4,7 @@ import WebKit
 
 class TestWKWebsiteDataRecord(TestCase):
     @min_os_level("10.11")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeDiskCache, str)
         self.assertIsInstance(WebKit.WKWebsiteDataTypeMemoryCache, str)
         self.assertIsInstance(WebKit.WKWebsiteDataTypeOfflineWebApplicationCache, str)
@@ -15,24 +15,24 @@ class TestWKWebsiteDataRecord(TestCase):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeIndexedDBDatabases, str)
 
     @min_os_level("10.13.4")
-    def testConstants10_13_4(self):
+    def test_constants10_13_4(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeFetchCache, str)
         self.assertIsInstance(WebKit.WKWebsiteDataTypeServiceWorkerRegistrations, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeFileSystem, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeSearchFieldRecentSearches, str)
         self.assertIsInstance(WebKit.WKWebsiteDataTypeMediaKeys, str)
         self.assertIsInstance(WebKit.WKWebsiteDataTypeHashSalt, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeScreenTime, str)
 
     @min_os_level("26.4")
-    def testConstants26_4(self):
+    def test_constants26_4(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeOfflineWebApplicationCache, str)

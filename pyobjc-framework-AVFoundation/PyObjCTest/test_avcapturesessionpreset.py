@@ -7,7 +7,7 @@ class TestAVCaptureSessionPreset(TestCase):
         self.assertIsTypedEnum(AVFoundation.AVCaptureSessionPreset, str)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetPhoto, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetHigh, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetMedium, str)
@@ -19,6 +19,6 @@ class TestAVCaptureSessionPreset(TestCase):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPreset1280x720, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame960x540, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame1280x720, str)

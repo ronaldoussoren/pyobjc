@@ -7,7 +7,7 @@ class TestAVMetadataIdentifiers(TestCase):
         self.assertIsTypedEnum(AVFoundation.AVMetadataIdentifier, str)
 
     @min_os_level("10.10")
-    def testConstants10(self):
+    def test_constants10(self):
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierTitle, str)
         self.assertIsInstance(
             AVFoundation.AVMetadataCommonIdentifierCreator, str
@@ -820,7 +820,7 @@ class TestAVMetadataIdentifiers(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedFace, str
         )
@@ -840,13 +840,13 @@ class TestAVMetadataIdentifiers(TestCase):
         )
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierISOUserDataDate, str
         )  # noqa: B950
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         with self.subTest("humanbody"):
             self.assertIsInstance(
                 AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedHumanBody,
@@ -895,7 +895,7 @@ class TestAVMetadataIdentifiers(TestCase):
             )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataCommonIdentifierAccessibilityDescription, str
         )
@@ -913,20 +913,20 @@ class TestAVMetadataIdentifiers(TestCase):
         )
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierQuickTimeMetadataIsMontage, str
         )
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierQuickTimeMetadataFullFrameRatePlaybackIntent,
             str,
         )
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierQuickTimeMetadataCinematicVideoIntent,
             str,

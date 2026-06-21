@@ -33,11 +33,11 @@ class TestIMKInputControllerHelper(InputMethodKit.NSObject):
 
 
 class TestIMKInputController(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(InputMethodKit.kIMKCommandMenuItemName, str)
         self.assertIsInstance(InputMethodKit.kIMKCommandClientName, str)
 
-    def testProtocols(self):
+    def test_protocols(self):
         # self.assertIsInstance(protocols.IMKServerInput, objc.informal_protocol)
 
         self.assertResultIsBOOL(
@@ -122,7 +122,7 @@ class TestIMKInputController(TestCase):
             objc._C_NSUInteger,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             InputMethodKit.IMKInputController.doCommandBySelector_commandDictionary_,
             0,

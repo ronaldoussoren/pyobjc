@@ -5,7 +5,7 @@ import objc
 
 class TestCTFontManager(TestCase):
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(CoreText.kCTFontManagerScopeNone, 0)
         self.assertEqual(CoreText.kCTFontManagerScopeProcess, 1)
         self.assertEqual(CoreText.kCTFontManagerScopePersistent, 2)
@@ -26,7 +26,7 @@ class TestCTFontManager(TestCase):
         )
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         self.assertResultIsCFRetained(
             CoreText.CTFontManagerCopyAvailablePostScriptNames
         )
@@ -67,13 +67,13 @@ class TestCTFontManager(TestCase):
         CoreText.CTFontManagerSetAutoActivationSetting
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         self.assertResultIsCFRetained(
             CoreText.CTFontManagerCreateFontDescriptorFromData
         )
 
     @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions10_8(self):
         self.assertResultIsCFRetained(
             CoreText.CTFontManagerCreateFontDescriptorFromData
         )
@@ -81,13 +81,13 @@ class TestCTFontManager(TestCase):
         self.assertArgIsOut(CoreText.CTFontManagerUnregisterGraphicsFont, 1)
 
     @min_os_level("10.13")
-    def testFunctions10_13(self):
+    def test_functions10_13(self):
         self.assertResultIsCFRetained(
             CoreText.CTFontManagerCreateFontDescriptorsFromData
         )
 
     @min_os_level("10.15")
-    def testFunctions10_15(self):
+    def test_functions10_15(self):
         self.assertArgIsBlock(
             CoreText.CTFontManagerRegisterFontURLs,
             3,

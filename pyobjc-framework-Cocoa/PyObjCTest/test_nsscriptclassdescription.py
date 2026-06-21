@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSScriptClassDescription(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Foundation.NSScriptClassDescription.matchesAppleEventCode_
         )
@@ -13,7 +13,7 @@ class TestNSScriptClassDescription(TestCase):
         )
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(Foundation.NSScriptClassDescription.hasPropertyForKey_)
         self.assertResultIsBOOL(
             Foundation.NSScriptClassDescription.hasOrderedToManyRelationshipForKey_

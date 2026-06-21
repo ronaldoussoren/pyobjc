@@ -14,11 +14,11 @@ class TestLAContext(TestCase):
         self.assertIsEnumType(LocalAuthentication.LAPolicy)
 
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(LocalAuthentication.LAContext, objc.objc_class)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(LocalAuthentication.LAContext.canEvaluatePolicy_error_)
         self.assertArgIsOut(LocalAuthentication.LAContext.canEvaluatePolicy_error_, 1)
 
@@ -29,7 +29,7 @@ class TestLAContext(TestCase):
         )
 
     @os_level_between("10.10", "10.15")
-    def testMethods10_10_to_15(self):
+    def test_methods10_10_to_15(self):
         self.assertResultIsBOOL(LocalAuthentication.LAContext.isCancelButtonVisible)
         self.assertArgIsBOOL(LocalAuthentication.LAContext.setCancelButtonVisible_, 0)
 
@@ -37,13 +37,13 @@ class TestLAContext(TestCase):
         self.assertArgIsBOOL(LocalAuthentication.LAContext.setFallbackButtonVisible_, 0)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBOOL(LocalAuthentication.LAContext.setInteractionNotAllowed_, 0)
         self.assertResultIsBOOL(LocalAuthentication.LAContext.interactionNotAllowed)
 
         # self.assertArgIsBlock(LocalAuthentication.LAContext.withCurrentContextExecute_queue_, 0, b"v")
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             LocalAuthentication.LABiometryTypeNone,
             LocalAuthentication.kLABiometryTypeNone,
@@ -63,7 +63,7 @@ class TestLAContext(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(
             LocalAuthentication.LAPolicyDeviceOwnerAuthenticationWithBiometrics,
             LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithBiometrics,
@@ -78,7 +78,7 @@ class TestLAContext(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(
             LocalAuthentication.LAAccessControlOperationCreateItem,
             LocalAuthentication.kLAAccessControlOperationCreateItem,
@@ -96,15 +96,8 @@ class TestLAContext(TestCase):
             LocalAuthentication.kLAAccessControlOperationUseKeySign,
         )
 
-    @min_os_level("10.15")
-    def test_constants10_15(self):
-        self.assertEqual(
-            LocalAuthentication.LACredentialTypeSmartCardPIN,
-            LocalAuthentication.kLACredentialSmartCardPIN,
-        )
-
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertEqual(
             LocalAuthentication.LAAccessControlOperationUseKeyDecrypt,
             LocalAuthentication.kLAAccessControlOperationUseKeyDecrypt,
@@ -120,7 +113,11 @@ class TestLAContext(TestCase):
         )
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
+        self.assertEqual(
+            LocalAuthentication.LACredentialTypeSmartCardPIN,
+            LocalAuthentication.kLACredentialSmartCardPIN,
+        )
         self.assertEqual(
             LocalAuthentication.LAPolicyDeviceOwnerAuthenticationWithWatch,
             LocalAuthentication.kLAPolicyDeviceOwnerAuthenticationWithWatch,
@@ -139,7 +136,7 @@ class TestLAContext(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(LocalAuthentication.LAContext.setCredential_type_)
         self.assertResultIsBOOL(LocalAuthentication.LAContext.isCredentialSet_)
 

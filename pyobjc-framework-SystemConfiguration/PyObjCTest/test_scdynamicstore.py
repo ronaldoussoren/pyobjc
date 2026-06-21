@@ -6,15 +6,15 @@ import objc
 
 
 class TestSCDynamicStore(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertTrue(
             isinstance(SystemConfiguration.SCDynamicStoreRef, objc.objc_class)
         )
 
-    def testStructs(self):
+    def test_structs(self):
         self.assertFalse(hasattr(SystemConfiguration, "SCDynamicStoreContext"))
 
-    def testFunctions(self):
+    def test_functions(self):
         n = SystemConfiguration.SCDynamicStoreGetTypeID()
         self.assertTrue(isinstance(n, int))
 
@@ -78,7 +78,7 @@ class TestSCDynamicStore(TestCase):
         self.assertTrue(isinstance(r, SystemConfiguration.CFArrayRef))
 
     @expectedFailure
-    def testCallbacks(self):
+    def test_callbacks(self):
         if os.getuid() != 0:
             self.fail("WARNING: Need root privileges to test callback mechanism")
             return
@@ -116,7 +116,7 @@ class TestSCDynamicStore(TestCase):
         self.assertTrue(lst[0][2] is info)
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         self.assertResultIsBOOL(SystemConfiguration.SCDynamicStoreSetDispatchQueue)
 
     def testContants(self):

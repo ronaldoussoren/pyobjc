@@ -7,14 +7,14 @@ GKChallengeComposeCompletionBlock = b"@Z@"
 
 
 class TestGKChallenge(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(GameCenter.GKChallengeStateInvalid, 0)
         self.assertEqual(GameCenter.GKChallengeStatePending, 1)
         self.assertEqual(GameCenter.GKChallengeStateCompleted, 2)
         self.assertEqual(GameCenter.GKChallengeStateDeclined, 3)
 
     @min_os_level("10.8")
-    def testClasses10_8(self):
+    def test_classes10_8(self):
         self.assertIsInstance(GameCenter.GKChallenge, objc.objc_class)
 
         self.assertArgIsBlock(
@@ -29,7 +29,7 @@ class TestGKChallenge(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             GameCenter.GKScore.challengeComposeControllerWithMessage_players_completionHandler_,
             2,

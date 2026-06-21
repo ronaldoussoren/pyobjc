@@ -7,7 +7,7 @@ class TestAddressBook(TestCase):
         # Just in case: the following is a typedef not a function definition
         self.assertFalse(hasattr(AddressBook, "ABActionGetPropertyCallback"))
 
-    def testOpaque(self):
+    def test_opaque(self):
         self.assertTrue(hasattr(AddressBook, "ABPickerRef"))
 
         # Supporting this would require C code, but that won't happen as
@@ -15,7 +15,7 @@ class TestAddressBook(TestCase):
         # available:
         self.assertFalse(hasattr(AddressBook, "ABActionCallbacks"))
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertFalse(hasattr(AddressBook, "protocols"))
 
 

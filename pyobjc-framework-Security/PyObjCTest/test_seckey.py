@@ -9,7 +9,7 @@ SecKeyGeneratePairBlock = b"v@@@"
 
 
 class TestSecKey(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Security.SecKeyRef)
 
     def test_constants(self):

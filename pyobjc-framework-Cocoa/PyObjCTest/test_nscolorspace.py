@@ -6,7 +6,7 @@ class TestNSColorSpace(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSColorSpaceModel)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSUnknownColorSpaceModel, -1)
         self.assertEqual(AppKit.NSGrayColorSpaceModel, 0)
         self.assertEqual(AppKit.NSRGBColorSpaceModel, 1)
@@ -25,7 +25,7 @@ class TestNSColorSpace(TestCase):
         self.assertEqual(AppKit.NSColorSpaceModelIndexed, 5)
         self.assertEqual(AppKit.NSColorSpaceModelPatterned, 6)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             AppKit.NSColorSpace.initWithColorSyncProfile_, 0, b"^{OpaqueCMProfileRef=}"
         )

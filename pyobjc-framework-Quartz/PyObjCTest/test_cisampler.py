@@ -3,11 +3,11 @@ import Quartz
 
 
 class TestCISampler(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertIsNullTerminated(Quartz.CISampler.samplerWithImage_keysAndValues_)
         self.assertIsNullTerminated(Quartz.CISampler.initWithImage_keysAndValues_)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCISamplerAffineMatrix, str)
         self.assertIsInstance(Quartz.kCISamplerWrapMode, str)
         self.assertIsInstance(Quartz.kCISamplerFilterMode, str)

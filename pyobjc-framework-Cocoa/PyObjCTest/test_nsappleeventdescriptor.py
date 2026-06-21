@@ -35,10 +35,10 @@ class TestAED(TestCase):
     #        self.fail('-aeDesc')
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(Foundation.NSAppleEventDescriptor.isRecordDescriptor)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSAppleEventSendNoReply, 1)
         self.assertEqual(Foundation.NSAppleEventSendQueueReply, 2)
         self.assertEqual(Foundation.NSAppleEventSendWaitForReply, 3)

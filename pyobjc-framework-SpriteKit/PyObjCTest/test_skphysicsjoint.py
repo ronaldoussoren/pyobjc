@@ -5,7 +5,7 @@ import SpriteKit
 
 class TestSKPhysicsJoint(TestCase):
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(SpriteKit.SKPhysicsJointPin.setShouldEnableLimits_, 0)
         self.assertResultIsBOOL(SpriteKit.SKPhysicsJointPin.shouldEnableLimits)
 

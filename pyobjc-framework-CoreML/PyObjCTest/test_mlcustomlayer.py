@@ -21,10 +21,10 @@ class TestMLCustomLayerHelper(CoreML.NSObject):
 
 class TestMLCustomLayer(TestCase):
     @min_sdk_level("10.13")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("MLCustomLayer", CoreML)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestMLCustomLayerHelper.initWithParameterDictionary_error_, 1, b"o^@"
         )

@@ -10,12 +10,12 @@ with warnings.catch_warnings():
 
 
 class TestLSSharedFileList(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(LaunchServices.LSSharedFileListRef)
         self.assertIsCFType(LaunchServices.LSSharedFileListItemRef)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(LaunchServices.kLSSharedFileListFavoriteVolumes, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListFavoriteItems, str)
         self.assertIsInstance(
@@ -36,7 +36,7 @@ class TestLSSharedFileList(TestCase):
         self.assertIsInstance(LaunchServices.kLSSharedFileListItemHidden, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(LaunchServices.kLSSharedFileListLoginItemHidden, str)
 
     @min_os_level("10.5")
@@ -50,11 +50,11 @@ class TestLSSharedFileList(TestCase):
             LaunchServices.LSSharedFileListItemRef,
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(LaunchServices.kLSSharedFileListNoUserInteraction, 1)
         self.assertEqual(LaunchServices.kLSSharedFileListDoNotMountVolumes, 2)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(LaunchServices.LSSharedFileListGetTypeID(), int)
         self.assertIsInstance(LaunchServices.LSSharedFileListItemGetTypeID(), int)
 
@@ -175,7 +175,7 @@ class TestLSSharedFileList(TestCase):
         self.fail("LSSharedFileListItemRef")
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsCFRetained(
             LaunchServices.LSSharedFileListItemCopyResolvedURL
         )

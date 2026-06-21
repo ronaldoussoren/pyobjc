@@ -4,5 +4,5 @@ import SpriteKit
 
 
 class TestSKVersion(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertFalse(hasattr(SpriteKit, "SK_VERSION"))

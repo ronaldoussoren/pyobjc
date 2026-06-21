@@ -71,7 +71,7 @@ class TestNSCell(TestCase):
         cell.setFloatValue_(f)
         self.assertEqual(cell.floatValue(), f)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSCell.prefersTrackingUntilMouseUp)
         self.assertResultIsBOOL(AppKit.NSCell.isOpaque)
         self.assertResultIsBOOL(AppKit.NSCell.isEnabled)
@@ -122,12 +122,12 @@ class TestNSCell(TestCase):
         self.assertResultIsBOOL(AppKit.NSCell.allowsMixedState)
         self.assertArgIsBOOL(AppKit.NSCell.setAllowsMixedState_, 0)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsBOOL(AppKit.NSDrawThreePartImage, 4)
         self.assertArgIsBOOL(AppKit.NSDrawThreePartImage, 7)
         self.assertArgIsBOOL(AppKit.NSDrawNinePartImage, 12)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSControlTintDidChangeNotification, str)
 
         self.assertEqual(AppKit.NSAnyType, 0)
@@ -228,6 +228,6 @@ class TestNSCell(TestCase):
         self.assertEqual(AppKit.NSBackgroundStyleLowered, 3)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSCell.usesSingleLineMode)
         self.assertArgIsBOOL(AppKit.NSCell.setUsesSingleLineMode_, 0)

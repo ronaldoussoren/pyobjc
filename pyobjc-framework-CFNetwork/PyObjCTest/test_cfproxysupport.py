@@ -19,7 +19,7 @@ function FindProxyForURL(url, host) {
 
 class TestCFProxySupport(TestCase):
     @min_os_level("10.5")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(CFNetwork.CFNetworkCopyProxiesForURL)
         url = CFNetwork.CFURLCreateWithString(None, "http://www.apple.com/", None)
         v = CFNetwork.CFNetworkCopyProxiesForURL(url, None)
@@ -101,17 +101,17 @@ class TestCFProxySupport(TestCase):
             self.assertIsInstance(lst[0][2], CFNetwork.CFErrorRef)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(CFNetwork.kCFProxyAutoConfigurationJavaScriptKey, str)
         self.assertIsInstance(CFNetwork.kCFProxyTypeAutoConfigurationJavaScript, str)
 
     @expectedFailure
     @min_os_level("10.7")
-    def testConstants10_7_failure(self):
+    def test_constants10_7_failure(self):
         self.assertIsInstance(CFNetwork.kCFNetworkProxiesProxyAutoConfigJavaScript, str)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(CFNetwork.kCFProxyTypeKey, str)
         self.assertIsInstance(CFNetwork.kCFProxyHostNameKey, str)
         self.assertIsInstance(CFNetwork.kCFProxyPortNumberKey, str)
@@ -130,17 +130,17 @@ class TestCFProxySupport(TestCase):
 
     @expectedFailure
     @min_os_level("10.5")
-    def testConstants_fail(self):
+    def test_constants_fail(self):
         self.assertHasAttr(CFNetwork, "kCFProxyAutoConfigurationHTTPResponseKey")
         self.assertIsInstance(CFNetwork.kCFProxyAutoConfigurationHTTPResponseKey, str)
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         r = CFNetwork.CFNetworkCopySystemProxySettings()
         self.assertIsInstance(r, CFNetwork.CFDictionaryRef)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(CFNetwork.kCFNetworkProxiesExceptionsList, str)
         self.assertIsInstance(CFNetwork.kCFNetworkProxiesExcludeSimpleHostnames, str)
         self.assertIsInstance(CFNetwork.kCFNetworkProxiesFTPEnable, str)

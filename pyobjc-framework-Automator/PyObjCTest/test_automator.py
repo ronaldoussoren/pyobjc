@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAutomator(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(Automator, "AMAction")
         self.assertIsInstance(Automator.AMAction, objc.objc_class)
 

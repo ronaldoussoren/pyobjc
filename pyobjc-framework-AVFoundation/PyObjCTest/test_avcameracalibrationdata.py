@@ -5,7 +5,7 @@ from objc import simd
 
 class TestAVCameraCalibrationData(TestCase):
     @min_os_level("10.13")
-    def testMethods_vector(self):
+    def test_methods_vector(self):
         self.assertResultHasType(
             AVFoundation.AVCameraCalibrationData.intrinsicMatrix,
             simd.simd_float3x3.__typestr__,

@@ -5,7 +5,7 @@ import SpriteKit
 
 class TestSKShapeNode(TestCase):
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(SpriteKit.SKShapeNode.shapeNodeWithPath_centered_, 1)
 
         self.assertArgIsIn(SpriteKit.SKShapeNode.shapeNodeWithPoints_count_, 0)

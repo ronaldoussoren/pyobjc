@@ -7,7 +7,7 @@ class TestMDLVertexDescriptor(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(ModelIO.MDLVertexFormat)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(ModelIO.MDLVertexAttributeAnisotropy, str)
         self.assertIsInstance(ModelIO.MDLVertexAttributeBinormal, str)
         self.assertIsInstance(ModelIO.MDLVertexAttributeBitangent, str)

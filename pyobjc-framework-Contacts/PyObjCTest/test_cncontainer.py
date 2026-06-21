@@ -7,7 +7,7 @@ class TestCNContainer(TestCase):
         self.assertIsEnumType(Contacts.CNContainerType)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Contacts.CNContainerTypeUnassigned, 0)
         self.assertEqual(Contacts.CNContainerTypeLocal, 1)
         self.assertEqual(Contacts.CNContainerTypeExchange, 2)

@@ -6,7 +6,7 @@ class TestAutomatorErrors(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Automator.AMErrorCode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Automator.AMAutomatorErrorDomain, "com.apple.Automator")
         self.assertEqual(Automator.AMActionErrorKey, "AMActionErrorKey")
         self.assertIsInstance(Automator.AMAutomatorErrorDomain, str)

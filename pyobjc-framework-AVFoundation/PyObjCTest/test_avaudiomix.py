@@ -7,12 +7,12 @@ class TestAVAudioMix(TestCase):
         self.assertIsEnumType(AVFoundation.AVAudioMixInputParametersTrackID)
         self.assertEqual(AVFoundation.AVAudioMixInputParametersTrackMixID, 0)
 
-    def testClasses(self):
+    def test_classes(self):
         AVFoundation.AVAudioMix
         AVFoundation.AVMutableAudioMix
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioMixInputParameters.getVolumeRampForTime_startVolume_endVolume_timeRange_  # noqa: B950
         )

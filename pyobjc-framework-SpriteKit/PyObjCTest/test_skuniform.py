@@ -9,7 +9,7 @@ class TestSKAction(TestCase):
         self.assertIsEnumType(SpriteKit.SKUniformType)
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SpriteKit.SKUniformTypeNone, 0)
         self.assertEqual(SpriteKit.SKUniformTypeFloat, 1)
         self.assertEqual(SpriteKit.SKUniformTypeFloatVector2, 2)

@@ -63,7 +63,7 @@ class TestNSStringBridging(TestCase):
         u = "\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8"
         self.assertEqual(u, Foundation.NSString.stringWithString_(u))
 
-    def testTypesAndClasses(self):
+    def test_typesAndClasses(self):
         self.assertIsInstance(self.nsUniString, str)
         self.assertIsInstance(self.pyUniString, str)
 
@@ -136,11 +136,11 @@ class TestPickle(TestCase):
         self.assertEqual(v.nsstring(), "hello bar baz")
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Foundation.NSRegularExpressionSearch, 1024)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertEqual(Foundation.NSMaximumStringLength, sys.maxsize)
         self.assertEqual(Foundation.NSDiacriticInsensitiveSearch, 128)
         self.assertEqual(Foundation.NSWidthInsensitiveSearch, 256)
@@ -148,7 +148,7 @@ class TestPickle(TestCase):
 
         self.assertEqual(Foundation.NSProprietaryStringEncoding, 65536)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSParseErrorException, str)
         self.assertIsInstance(Foundation.NSCharacterConversionException, str)
 
@@ -195,7 +195,7 @@ class TestPickle(TestCase):
         self.assertEqual(Foundation.NSStringEncodingConversionAllowLossy, 1)
         self.assertEqual(Foundation.NSStringEncodingConversionExternalRepresentation, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             Foundation.NSString.getCharacters_range_, 0, b"o^" + objc._C_UNICHAR
         )
@@ -423,7 +423,7 @@ class TestPickle(TestCase):
         self.assertArgIsNullTerminated(Foundation.NSString.stringWithCString_, 0)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Foundation.NSStringEnumerationByLines, 0)
         self.assertEqual(Foundation.NSStringEnumerationByParagraphs, 1)
         self.assertEqual(Foundation.NSStringEnumerationByComposedCharacterSequences, 2)
@@ -436,7 +436,7 @@ class TestPickle(TestCase):
         self.assertEqual(Foundation.NSStringEnumerationLocalized, 1 << 10)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgHasType(
             Foundation.NSString.enumerateSubstringsInRange_options_usingBlock_,
             0,
@@ -456,7 +456,7 @@ class TestPickle(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(
             Foundation.NSStringEncodingDetectionSuggestedEncodingsKey, str
         )
@@ -476,7 +476,7 @@ class TestPickle(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgHasType(
             Foundation.NSString.stringEncodingForData_encodingOptions_convertedString_usedLossyConversion_,  # noqa: B950
             2,
@@ -489,7 +489,7 @@ class TestPickle(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(Foundation.NSStringTransformLatinToKatakana, str)
         self.assertIsInstance(Foundation.NSStringTransformLatinToHiragana, str)
         self.assertIsInstance(Foundation.NSStringTransformLatinToHangul, str)
@@ -508,7 +508,7 @@ class TestPickle(TestCase):
         self.assertIsInstance(Foundation.NSStringTransformStripDiacritics, str)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(Foundation.NSString.localizedStandardContainsString_)
         self.assertArgIsBOOL(Foundation.NSString.stringByApplyingTransform_reverse_, 1)
 

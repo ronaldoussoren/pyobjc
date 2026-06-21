@@ -4,7 +4,7 @@ import objc
 
 
 class TestCFODNode(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertIsInstance(CFOpenDirectory.ODNodeGetTypeID(), int)
 
         self.assertResultIsCFRetained(CFOpenDirectory.ODNodeCreateWithNodeType)
@@ -55,7 +55,7 @@ class TestCFODNode(TestCase):
         self.assertArgIsOut(CFOpenDirectory.ODNodeCustomCall, 3)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsOut(CFOpenDirectory.ODNodeCustomFunction, 3)
 
         self.assertResultIsCFRetained(CFOpenDirectory.ODNodeCopyPolicies)
@@ -74,7 +74,7 @@ class TestCFODNode(TestCase):
         self.assertArgIsOut(CFOpenDirectory.ODNodeRemovePolicy, 2)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultHasType(CFOpenDirectory.ODNodeAddAccountPolicy, objc._C_BOOL)
         self.assertArgIsOut(CFOpenDirectory.ODNodeAddAccountPolicy, 3)
 

@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSResponder(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSResponder.tryToPerform_with_)
         self.assertResultIsBOOL(AppKit.NSResponder.performKeyEquivalent_)
         self.assertResultIsBOOL(AppKit.NSResponder.acceptsFirstResponder)
@@ -27,7 +27,7 @@ class TestNSResponder(TestCase):
         self.assertResultIsBOOL(AppKit.NSResponder.presentError_)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(
             AppKit.NSResponder.wantsScrollEventsForSwipeTrackingOnAxis_
         )
@@ -40,5 +40,5 @@ class TestNSResponder(TestCase):
         )
 
     @min_sdk_level("10.14")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSStandardKeyBindingResponding", AppKit)

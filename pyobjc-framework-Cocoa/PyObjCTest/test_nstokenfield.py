@@ -24,10 +24,10 @@ class TestNSTokenFieldHelper(AppKit.NSObject):
 
 class TestNSTokenField(TestCase):
     @min_sdk_level("10.7")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTokenFieldDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_,  # noqa: B950
             2,

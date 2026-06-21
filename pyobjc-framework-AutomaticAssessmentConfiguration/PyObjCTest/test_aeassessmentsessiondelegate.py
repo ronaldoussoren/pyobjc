@@ -18,7 +18,7 @@ class TestAEAssessmentSessionDelegateHelper(AutomaticAssessmentConfiguration.NSO
 
 class TestAEAssessmentSessionDelegate(TestCase):
     @min_sdk_level("10.15.4")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "AEAssessmentSessionDelegate", AutomaticAssessmentConfiguration
         )

@@ -12,7 +12,7 @@ class TestMDLPrimitiveHelper(ModelIO.NSObject):
 
 
 class TestMDLPrimitive(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(ModelIO.MDLPrimitiveTypeCube, 0)
         self.assertEqual(ModelIO.MDLPrimitiveTypeSphere, 1)
         self.assertEqual(ModelIO.MDLPrimitiveTypeCone, 2)

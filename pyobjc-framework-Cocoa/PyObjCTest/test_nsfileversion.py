@@ -13,7 +13,7 @@ class TestNSFileVersion(TestCase):
         self.assertEqual(Foundation.NSFileVersionReplacingByMoving, 1 << 0)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsOut(
             Foundation.NSFileVersion.addVersionOfItemAtURL_withContentsOfURL_options_error_,
             3,
@@ -37,7 +37,7 @@ class TestNSFileVersion(TestCase):
         self.assertResultIsBOOL(Foundation.NSFileVersion.isDiscardable)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             Foundation.NSFileVersion.getNonlocalVersionsOfItemAtURL_completionHandler_,
             1,

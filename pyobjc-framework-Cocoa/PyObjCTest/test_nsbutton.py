@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSButton(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSButton.isBordered)
         self.assertArgIsBOOL(AppKit.NSButton.setBordered_, 0)
         self.assertResultIsBOOL(AppKit.NSButton.isTransparent)
@@ -18,12 +18,12 @@ class TestNSButton(TestCase):
         self.assertArgIsBOOL(AppKit.NSButton.highlight_, 0)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSButton.isSpringLoaded)
         self.assertArgIsBOOL(AppKit.NSButton.setSpringLoaded_, 0)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSButton.imageHugsTitle)
         self.assertArgIsBOOL(AppKit.NSButton.setImageHugsTitle_, 0)
 

@@ -4,7 +4,7 @@ import NetworkExtension
 
 class TestNEAppProxyUDPFlow(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEAppProxyUDPFlow.readDatagramsWithCompletionHandler_,
             0,
@@ -17,7 +17,7 @@ class TestNEAppProxyUDPFlow(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertArgIsBlock(
             NetworkExtension.NEAppProxyUDPFlow.readDatagramsAndFlowEndpointsWithCompletionHandler_,
             0,

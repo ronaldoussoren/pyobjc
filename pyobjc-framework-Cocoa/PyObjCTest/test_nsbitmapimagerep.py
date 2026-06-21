@@ -212,7 +212,7 @@ class TestBadCreation(TestCase):
                 0,
             )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSTIFFCompressionNone, 1)
         self.assertEqual(AppKit.NSTIFFCompressionCCITTFAX3, 3)
         self.assertEqual(AppKit.NSTIFFCompressionCCITTFAX4, 4)
@@ -271,14 +271,14 @@ class TestBadCreation(TestCase):
         self.assertIsInstance(AppKit.NSImageFallbackBackgroundColor, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(AppKit.NS16BitLittleEndianBitmapFormat, (1 << 8))
         self.assertEqual(AppKit.NS32BitLittleEndianBitmapFormat, (1 << 9))
         self.assertEqual(AppKit.NS16BitBigEndianBitmapFormat, (1 << 10))
         self.assertEqual(AppKit.NS32BitBigEndianBitmapFormat, (1 << 11))
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(AppKit.NSImageIPTCData, str)
 
     def testTiffCompression(self):
@@ -289,7 +289,7 @@ class TestBadCreation(TestCase):
         self.assertNotEqual(len(lst), 0)
         self.assertIsInstance(lst[0], int)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSBitmapImageRep.isPlanar)
         self.assertResultIsBOOL(AppKit.NSBitmapImageRep.canBeCompressedUsing_)
         self.assertArgIsBOOL(

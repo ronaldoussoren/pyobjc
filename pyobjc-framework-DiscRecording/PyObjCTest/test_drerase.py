@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRErase(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.DREraseTypeKey, str)
         self.assertIsInstance(DiscRecording.DREraseTypeQuick, str)
         self.assertIsInstance(DiscRecording.DREraseTypeComplete, str)

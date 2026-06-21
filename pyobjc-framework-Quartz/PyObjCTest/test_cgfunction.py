@@ -6,7 +6,7 @@ import objc
 
 
 class TestCGFunction(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         values = []
 
         def evaluate(info, input_value, output_value):

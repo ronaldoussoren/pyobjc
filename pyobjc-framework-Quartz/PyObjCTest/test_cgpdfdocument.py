@@ -9,7 +9,7 @@ class TestCGPDFDocument(TestCase):
         self.fail("Add header tests for <CoreGraphics/CGPDFDocument.h>")
         # See XXX below
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(Quartz.CGPDFDocumentCreateWithProvider)
         self.assertResultIsCFRetained(Quartz.CGPDFDocumentCreateWithURL)
 
@@ -42,11 +42,11 @@ class TestCGPDFDocument(TestCase):
         Quartz.CGPDFDocumentGetRotationAngle
 
     @min_os_level("10.13")
-    def testFunctions10_13(self):
+    def test_functions10_13(self):
         Quartz.CGPDFDocumentGetOutline
         Quartz.CGPDFDocumentGetAccessPermissions
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGPDFAllowsLowQualityPrinting, 1 << 0)
         self.assertEqual(Quartz.kCGPDFAllowsHighQualityPrinting, 1 << 1)
         self.assertEqual(Quartz.kCGPDFAllowsDocumentChanges, 1 << 2)
@@ -57,7 +57,7 @@ class TestCGPDFDocument(TestCase):
         self.assertEqual(Quartz.kCGPDFAllowsFormFieldEntry, 1 << 7)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.kCGPDFOutlineTitle, str)
         self.assertIsInstance(Quartz.kCGPDFOutlineChildren, str)
         self.assertIsInstance(Quartz.kCGPDFOutlineDestination, str)

@@ -20,7 +20,7 @@ class TestNSToolbar(TestCase):
         self.assertIsEnumType(AppKit.NSToolbarDisplayMode)
         self.assertIsEnumType(AppKit.NSToolbarSizeMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSToolbarDisplayModeDefault, 0)
         self.assertEqual(AppKit.NSToolbarDisplayModeIconAndLabel, 1)
         self.assertEqual(AppKit.NSToolbarDisplayModeIconOnly, 2)
@@ -34,14 +34,14 @@ class TestNSToolbar(TestCase):
         self.assertIsInstance(AppKit.NSToolbarDidRemoveItemNotification, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(AppKit.NSToolbarItemKey, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(AppKit.NSToolbarNewIndexKey, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSToolbar.isVisible)
         self.assertArgIsBOOL(AppKit.NSToolbar.setVisible_, 0)
         self.assertResultIsBOOL(AppKit.NSToolbar.customizationPaletteIsRunning)
@@ -53,20 +53,20 @@ class TestNSToolbar(TestCase):
         self.assertArgIsBOOL(AppKit.NSToolbar.setAutosavesConfiguration_, 0)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSToolbar.allowsExtensionItems)
         self.assertArgIsBOOL(AppKit.NSToolbar.setAllowsExtensionItems_, 0)
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(AppKit.NSToolbar.allowsDisplayModeCustomization)
         self.assertArgIsBOOL(AppKit.NSToolbar.setAllowsDisplayModeCustomization_, 0)
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSToolbarDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(
             TestNSToolbarHelper.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_,
             2,

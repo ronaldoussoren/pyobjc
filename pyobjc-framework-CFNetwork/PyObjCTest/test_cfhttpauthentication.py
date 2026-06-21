@@ -4,10 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCFFTPStream(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CFNetwork.CFHTTPAuthenticationRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             CFNetwork.kCFStreamErrorHTTPAuthenticationTypeUnsupported, -1000
         )
@@ -21,7 +21,7 @@ class TestCFFTPStream(TestCase):
     @min_os_level("10.5")
     # These functions should work on 10.4 as well, but caue a crash in
     # CFNetwork on that platform
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CFNetwork.CFHTTPAuthenticationGetTypeID(), int)
 
         msg = CFNetwork.CFHTTPMessageCreateResponse(

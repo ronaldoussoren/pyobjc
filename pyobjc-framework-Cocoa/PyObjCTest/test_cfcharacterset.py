@@ -4,7 +4,7 @@ import objc
 
 
 class TestCharacterSet(TestCase):
-    def testTypes(self):
+    def test_types(self):
         cls = None
         try:
             cls = objc.lookUpClass("__NSCFCharacterSet")
@@ -162,7 +162,7 @@ class TestCharacterSet(TestCase):
         self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "9"))
         self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "e"))
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFCharacterSetControl, 1)
         self.assertEqual(CoreFoundation.kCFCharacterSetWhitespace, 2)
         self.assertEqual(CoreFoundation.kCFCharacterSetWhitespaceAndNewline, 3)
@@ -179,5 +179,5 @@ class TestCharacterSet(TestCase):
         self.assertEqual(CoreFoundation.kCFCharacterSetIllegal, 12)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertEqual(CoreFoundation.kCFCharacterSetNewline, 15)

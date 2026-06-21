@@ -7,7 +7,7 @@ class TestNSUserInterfaceLayout(TestCase):
         self.assertIsEnumType(AppKit.NSUserInterfaceLayoutDirection)
         self.assertIsEnumType(AppKit.NSUserInterfaceLayoutOrientation)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSUserInterfaceLayoutDirectionLeftToRight, 0)
         self.assertEqual(AppKit.NSUserInterfaceLayoutDirectionRightToLeft, 1)
         self.assertEqual(AppKit.NSUserInterfaceLayoutOrientationHorizontal, 0)

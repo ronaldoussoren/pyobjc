@@ -38,7 +38,7 @@ class TestNSFontDescriptor(TestCase):
         with self.assertRaises(KeyError):
             v["no-such-name"]
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSFontUnknownClass, (0 << 28))
         self.assertEqual(AppKit.NSFontOldStyleSerifsClass, (1 << 28))
         self.assertEqual(AppKit.NSFontTransitionalSerifsClass, (2 << 28))
@@ -110,13 +110,13 @@ class TestNSFontDescriptor(TestCase):
         self.assertEqual(AppKit.NSFontDescriptorClassSymbolic, 12 << 28)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AppKit.NSFontWidthCondensed, float)
         self.assertIsInstance(AppKit.NSFontWidthStandard, float)
         self.assertIsInstance(AppKit.NSFontWidthExpanded, float)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(AppKit.NSFontWeightUltraLight, float)
         self.assertIsInstance(AppKit.NSFontWeightThin, float)
         self.assertIsInstance(AppKit.NSFontWeightLight, float)
@@ -128,14 +128,14 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsInstance(AppKit.NSFontWeightBlack, float)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignDefault, str)
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignSerif, str)
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignMonospaced, str)
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignRounded, str)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(AppKit.NSFontTextStyleLargeTitle, str)
         self.assertIsInstance(AppKit.NSFontTextStyleTitle1, str)
         self.assertIsInstance(AppKit.NSFontTextStyleTitle2, str)
@@ -149,9 +149,9 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsInstance(AppKit.NSFontTextStyleCaption2, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(AppKit.NSFontWidthCompressed, float)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(AppKit.NSFontDescriptor.requiresFontAssetRequest)

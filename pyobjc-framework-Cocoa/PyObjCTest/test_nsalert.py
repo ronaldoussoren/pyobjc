@@ -12,7 +12,7 @@ class TestNSAlert(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSAlertStyle)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSWarningAlertStyle, 0)
         self.assertEqual(AppKit.NSInformationalAlertStyle, 1)
         self.assertEqual(AppKit.NSCriticalAlertStyle, 2)
@@ -25,7 +25,7 @@ class TestNSAlert(TestCase):
         self.assertEqual(AppKit.NSAlertSecondButtonReturn, 1001)
         self.assertEqual(AppKit.NSAlertThirdButtonReturn, 1002)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsPrintf(
             AppKit.NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_,  # noqa: B950
             4,
@@ -45,21 +45,21 @@ class TestNSAlert(TestCase):
         self.assertArgIsBOOL(AppKit.NSAlert.setShowsHelp_, 0)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(AppKit.NSAlert.showsSuppressionButton)
         self.assertArgIsBOOL(AppKit.NSAlert.setShowsSuppressionButton_, 0)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBlock(
             AppKit.NSAlert.beginSheetModalForWindow_completionHandler_,
             1,
             b"v" + objc._C_NSInteger,
         )
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertResultIsBOOL(TestNSAlertHelper.alertShowHelp_)
 
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols10_10(self):
         self.assertProtocolExists("NSAlertDelegate", AppKit)

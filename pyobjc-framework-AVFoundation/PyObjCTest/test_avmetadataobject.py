@@ -7,20 +7,20 @@ class TestAVMetadataObject(TestCase):
         self.assertIsTypedEnum(AVFoundation.AVMetadataObjectType, str)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVMetadataFaceObject.hasRollAngle)
         self.assertResultIsBOOL(AVFoundation.AVMetadataFaceObject.hasYawAngle)
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(AVFoundation.AVMetadataObject.isFixedFocus)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeFace, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeUPCECode, str)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode39Code, str)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode39Mod43Code, str)
@@ -37,7 +37,7 @@ class TestAVMetadataObject(TestCase):
 
     @min_os_level("10.15")
     @expectedFailure
-    def testConstants10_15_missing(self):
+    def test_constants10_15_missing(self):
         with self.subTest("humanbody"):
             self.assertIsInstance(
                 AVFoundation.AVFoundationAVMetadataObjectTypeHumanBody, str
@@ -50,7 +50,7 @@ class TestAVMetadataObject(TestCase):
             self.assertIsInstance(AVFoundation.AVMetadataObjectTypeSalientObject, str)
 
     @min_os_level("12.3")
-    def testConstants12_3(self):
+    def test_constants12_3(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCodabarCode, str)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeGS1DataBarCode, str)
         self.assertIsInstance(
@@ -63,9 +63,9 @@ class TestAVMetadataObject(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeMicroPDF417Code, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeHumanFullBody, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDogHead, str)

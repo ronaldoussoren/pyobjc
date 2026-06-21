@@ -4,7 +4,7 @@ import Quartz
 
 class TestPDFThumbnailView(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.PDFThumbnailView.allowsDragging)
         self.assertArgIsBOOL(Quartz.PDFThumbnailView.setAllowsDragging_, 0)
         self.assertResultIsBOOL(Quartz.PDFThumbnailView.allowsMultipleSelection)

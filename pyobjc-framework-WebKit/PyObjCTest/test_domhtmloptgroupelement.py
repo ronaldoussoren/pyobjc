@@ -3,6 +3,6 @@ import WebKit
 
 
 class TestDOMHTMLOptGroupElement(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLOptGroupElement.disabled)
         self.assertArgIsBOOL(WebKit.DOMHTMLOptGroupElement.setDisabled_, 0)

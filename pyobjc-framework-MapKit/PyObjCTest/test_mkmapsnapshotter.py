@@ -8,7 +8,7 @@ MKMapSnapshotCompletionHandler = b"v@@"
 
 class TestMKMapSnapshotter(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKMapSnapshotter, objc.objc_class)
 
         self.assertResultIsBOOL(MapKit.MKMapSnapshotter.isLoading)

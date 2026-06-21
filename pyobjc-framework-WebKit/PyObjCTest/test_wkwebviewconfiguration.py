@@ -9,7 +9,7 @@ class TestWKWebViewConfiguration(TestCase):
         self.assertIsEnumType(WebKit.WKAudiovisualMediaTypes)
         self.assertIsEnumType(WebKit.WKUserInterfaceDirectionPolicy)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.WKUserInterfaceDirectionPolicyContent, 0)
         self.assertEqual(WebKit.WKUserInterfaceDirectionPolicySystem, 1)
 
@@ -21,7 +21,7 @@ class TestWKWebViewConfiguration(TestCase):
         self.assertEqual(WebKit.WKAudiovisualMediaTypeAll, sys.maxsize * 2 + 1)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
             WebKit.WKWebViewConfiguration.suppressesIncrementalRendering
         )
@@ -30,7 +30,7 @@ class TestWKWebViewConfiguration(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(
             WebKit.WKWebViewConfiguration.allowsAirPlayForMediaPlayback
         )
@@ -39,13 +39,13 @@ class TestWKWebViewConfiguration(TestCase):
         )
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(
             WebKit.WKWebViewConfiguration.limitsNavigationsToAppBoundDomains
         )
 
     @min_os_level("12.0")
-    def testMethods11_3(self):
+    def test_methods11_3(self):
         # Not actually present on 11.6...
         self.assertResultIsBOOL(WebKit.WKWebViewConfiguration.upgradeKnownHostsToHTTPS)
         self.assertArgIsBOOL(
@@ -53,14 +53,14 @@ class TestWKWebViewConfiguration(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(WebKit.WKWebViewConfiguration.allowsInlinePredictions)
         self.assertArgIsBOOL(
             WebKit.WKWebViewConfiguration.setAllowsInlinePredictions_, 0
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             WebKit.WKWebViewConfiguration.supportsAdaptiveImageGlyph
         )
@@ -69,7 +69,7 @@ class TestWKWebViewConfiguration(TestCase):
         )
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             WebKit.WKWebViewConfiguration.showsSystemScreenTimeBlockingView
         )

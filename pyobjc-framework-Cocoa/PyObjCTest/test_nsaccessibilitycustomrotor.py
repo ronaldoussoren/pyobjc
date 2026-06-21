@@ -7,7 +7,7 @@ class TestNSAccessibilityCustomRotor(TestCase):
         self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorSearchDirection)
         self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionPrevious, 0)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionNext, 1)
 
@@ -35,7 +35,7 @@ class TestNSAccessibilityCustomRotor(TestCase):
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeAudiograph, 21)
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "NSAccessibilityCustomRotorItemSearchDelegate", AppKit
         )

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCW8021XProfile(TestCase):
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(CoreWLAN.CW8021XProfile.alwaysPromptForPassword)
         self.assertArgIsBOOL(CoreWLAN.CW8021XProfile.setAlwaysPromptForPassword_, 0)
         self.assertResultIsBOOL(CoreWLAN.CW8021XProfile.isEqualToProfile_)

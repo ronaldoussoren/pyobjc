@@ -4,7 +4,7 @@ import ServiceManagement
 
 class TestServiceManagement(TestCase):
     @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             ServiceManagement.kSMRightBlessPrivilegedHelper,
             b"com.apple.ServiceManagement.blesshelper",
@@ -20,7 +20,7 @@ class TestServiceManagement(TestCase):
         self.assertIsInstance(ServiceManagement.kSMInfoKeyAuthorizedClients, str)
 
     @min_os_level("10.6")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultHasType(
             ServiceManagement.SMJobCopyDictionary, b"^{__CFDictionary=}"
         )

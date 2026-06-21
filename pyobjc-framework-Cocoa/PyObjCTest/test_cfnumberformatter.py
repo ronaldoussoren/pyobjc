@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNumberFormatter(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFNumberFormatterRef)
 
     def testTypeID(self):
@@ -79,7 +79,7 @@ class TestNumberFormatter(TestCase):
         self.assertEqual(frac, 2)
         self.assertEqual(rnd, 0.0)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFNumberFormatterNoStyle, 0)
         self.assertEqual(CoreFoundation.kCFNumberFormatterDecimalStyle, 1)
         self.assertEqual(CoreFoundation.kCFNumberFormatterCurrencyStyle, 2)
@@ -147,7 +147,7 @@ class TestNumberFormatter(TestCase):
         )
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(
             CoreFoundation.kCFNumberFormatterCurrencyGroupingSeparator, str
         )
@@ -163,7 +163,7 @@ class TestNumberFormatter(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(CoreFoundation.kCFNumberFormatterOrdinalStyle, 6)
         self.assertEqual(CoreFoundation.kCFNumberFormatterCurrencyISOCodeStyle, 8)
         self.assertEqual(CoreFoundation.kCFNumberFormatterCurrencyPluralStyle, 9)

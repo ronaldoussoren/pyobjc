@@ -8,13 +8,13 @@ import SystemConfiguration
 
 
 class TestSCNetworkReachability(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(
             SystemConfiguration.SCNetworkReachabilityRef, objc.objc_class
         )
 
     @skipUnless(resolver_available(), "No DNS resolver available")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(
             SystemConfiguration.SCNetworkReachabilityCreateWithAddressPair
         )
@@ -80,12 +80,12 @@ class TestSCNetworkReachability(TestCase):
             )
 
         @min_os_level("10.6")
-        def testFunctions10_6(self):
+        def test_functions10_6(self):
             self.assertResultIsBOOL(
                 SystemConfiguration.SCNetworkReachabilitySetDispatchQueue
             )
 
-        def testConstants(self):
+        def test_constants(self):
             self.assertEqual(
                 SystemConfiguration.kSCNetworkReachabilityFlagsTransientConnection,
                 1 << 0,

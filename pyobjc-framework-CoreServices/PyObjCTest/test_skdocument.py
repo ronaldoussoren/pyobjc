@@ -3,10 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestSKDocument(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreServices.SKDocumentRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreServices.SKDocumentGetTypeID(), int)
 
         self.assertResultIsCFRetained(CoreServices.SKDocumentCreateWithURL)

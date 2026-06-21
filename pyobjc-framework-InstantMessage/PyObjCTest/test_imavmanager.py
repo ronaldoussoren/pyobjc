@@ -19,7 +19,7 @@ class TestIMAVManagerHelper(InstantMessage.NSObject):
 
 class TestIMAVManager(TestCase):
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(InstantMessage.IMAVManagerStateChangedNotification, str)
         self.assertIsInstance(
             InstantMessage.IMAVManagerURLToShareChangedNotification, str

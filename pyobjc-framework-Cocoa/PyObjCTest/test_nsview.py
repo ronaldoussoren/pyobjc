@@ -47,7 +47,7 @@ class TestHeader(TestCase):
         self.assertIsTypedEnum(AppKit.NSDefinitionPresentationType, str)
         self.assertIsTypedEnum(AppKit.NSViewFullScreenModeOptionKey, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsEnumType(AppKit.NSAutoresizingMaskOptions)
         self.assertEqual(AppKit.NSViewNotSizable, 0)
         self.assertEqual(AppKit.NSViewMinXMargin, 1)
@@ -74,14 +74,14 @@ class TestHeader(TestCase):
         self.assertEqual(AppKit.NSViewExclusiveGestureBehaviorNotExclusive, 2)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(AppKit.NSFullScreenModeAllScreens, str)
         self.assertIsInstance(AppKit.NSFullScreenModeSetting, str)
         self.assertIsInstance(AppKit.NSFullScreenModeWindowLevel, str)
         self.assertIsInstance(AppKit.NSViewDidUpdateTrackingAreasNotification, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(
             AppKit.NSFullScreenModeApplicationPresentationOptions, str
         )
@@ -115,10 +115,10 @@ class TestHeader(TestCase):
         )
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(AppKit.NSViewLayerContentsRedrawCrossfade, 4)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSView.isDescendantOf_)
         self.assertResultIsBOOL(AppKit.NSView.isHidden)
         self.assertResultIsBOOL(AppKit.NSView.isHiddenOrHasHiddenAncestor)
@@ -194,14 +194,14 @@ class TestHeader(TestCase):
         )
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertArgIsBOOL(AppKit.NSView.setWantsLayer_, 0)
         self.assertResultIsBOOL(AppKit.NSView.wantsLayer)
         self.assertResultIsBOOL(AppKit.NSView.enterFullScreenMode_withOptions_)
         self.assertResultIsBOOL(AppKit.NSView.isInFullScreenMode)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSView.canDrawConcurrently)
         self.assertArgIsBOOL(AppKit.NSView.setCanDrawConcurrently_, 0)
         self.assertResultIsBOOL(AppKit.NSView.acceptsTouchEvents)
@@ -227,7 +227,7 @@ class TestHeader(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSView.isDrawingFindIndicator)
 
         try:
@@ -244,11 +244,11 @@ class TestHeader(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(AppKit.NSView.wantsUpdateLayer)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertResultIsBOOL(AppKit.NSView.canDrawSubviewsIntoLayer)
         self.assertArgIsBOOL(AppKit.NSView.setCanDrawSubviewsIntoLayer_, 0)
         self.assertResultIsBOOL(AppKit.NSView.layerUsesCoreImageFilters)
@@ -256,23 +256,23 @@ class TestHeader(TestCase):
         self.assertResultIsBOOL(AppKit.NSView.isCompatibleWithResponsiveScrolling)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSView.allowsVibrancy)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSView.wantsExtendedDynamicRangeOpenGLSurface)
         self.assertArgIsBOOL(
             AppKit.NSView.setWantsExtendedDynamicRangeOpenGLSurface_, 0
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(AppKit.NSView.clipsToBounds)
         self.assertArgIsSEL(AppKit.NSView.displayLinkWithTarget_selector_, 1, b"v@:@")
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(AppKit.NSView.prefersCompactControlSizeMetrics)
         self.assertArgIsBOOL(AppKit.NSView.setPrefersCompactControlSizeMetrics_, 0)
 
@@ -292,12 +292,12 @@ class TestHeader(TestCase):
         )
 
     @min_sdk_level("10.14")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSViewLayerContentScaleDelegate", AppKit)
         self.assertProtocolExists("NSViewToolTipOwner", AppKit)
 
     @min_sdk_level("15.0")
-    def testProtocolObjects15_0(self):
+    def test_protocols15_0(self):
         self.assertProtocolExists("NSViewContentSelectionInfo", AppKit)
 
     def testMissingTests(self):

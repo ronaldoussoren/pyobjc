@@ -59,7 +59,7 @@ class TestNSScriptWhoseTests(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSTestComparisonOperation)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSEqualToComparison, 0)
         self.assertEqual(Foundation.NSLessThanOrEqualToComparison, 1)
         self.assertEqual(Foundation.NSLessThanComparison, 2)
@@ -69,7 +69,7 @@ class TestNSScriptWhoseTests(TestCase):
         self.assertEqual(Foundation.NSEndsWithComparison, 6)
         self.assertEqual(Foundation.NSContainsComparison, 7)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSScriptWhoseTest.isTrue)
 
         self.assertResultIsBOOL(TestNSScriptWhoseTestsHelper.isEqualTo_)

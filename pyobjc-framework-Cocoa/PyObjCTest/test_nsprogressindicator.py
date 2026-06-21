@@ -7,7 +7,7 @@ class TestNSProgressIndicator(TestCase):
         self.assertIsEnumType(AppKit.NSProgressIndicatorStyle)
         self.assertIsEnumType(AppKit.NSProgressIndicatorThickness)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSProgressIndicatorPreferredThickness, 14)
         self.assertEqual(AppKit.NSProgressIndicatorPreferredSmallThickness, 10)
         self.assertEqual(AppKit.NSProgressIndicatorPreferredLargeThickness, 18)
@@ -19,7 +19,7 @@ class TestNSProgressIndicator(TestCase):
         self.assertEqual(AppKit.NSProgressIndicatorStyleBar, 0)
         self.assertEqual(AppKit.NSProgressIndicatorStyleSpinning, 1)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSProgressIndicator.isIndeterminate)
         self.assertArgIsBOOL(AppKit.NSProgressIndicator.setIndeterminate_, 0)
         self.assertResultIsBOOL(AppKit.NSProgressIndicator.isBezeled)

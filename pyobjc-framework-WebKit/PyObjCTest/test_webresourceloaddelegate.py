@@ -10,10 +10,10 @@ class TestWebResourceLoadDelegateHelper(WebKit.NSObject):
 
 class TestWebResourceLoadDelegate(TestCase):
     @min_sdk_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("WebResourceLoadDelegate", WebKit)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestWebResourceLoadDelegateHelper.webView_resource_didReceiveContentLength_fromDataSource_,  # noqa: B950
             2,

@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestByteOrder(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.CFByteOrderUnknown, 0)
         self.assertEqual(CoreFoundation.CFByteOrderLittleEndian, 1)
         self.assertEqual(CoreFoundation.CFByteOrderBigEndian, 2)

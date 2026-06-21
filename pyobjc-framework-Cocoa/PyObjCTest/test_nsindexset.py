@@ -27,7 +27,7 @@ class TestNSIndexSet(TestCase):
         self.assertFalse(16 in v)
         self.assertFalse("a" in v)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSIndexSet.isEqualToIndexSet_)
         self.assertResultIsBOOL(Foundation.NSIndexSet.containsIndex_)
         self.assertResultIsBOOL(Foundation.NSIndexSet.containsIndexesInRange_)
@@ -43,7 +43,7 @@ class TestNSIndexSet(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSIndexSet.enumerateIndexesUsingBlock_,
             0,

@@ -62,7 +62,7 @@ class TestNSObjectFunctions(TestCase):
         self.assertEqual(v, cnt)
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         # No further testing needed:
         Foundation.CFBridgingRetain
         Foundation.CFBridgingRelease
@@ -126,7 +126,7 @@ class TestNSObjectInteraction(TestCase):
         for _ in range(1, 1000):
             _ = Foundation.NSObject.alloc().init()
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSObject.isEqual_)
         self.assertResultIsBOOL(Foundation.NSObject.isProxy)
         self.assertResultIsBOOL(Foundation.NSObject.isKindOfClass_)
@@ -151,26 +151,26 @@ class TestNSObjectInteraction(TestCase):
         self.assertArgHasType(a.mutableCopyWithZone_, 0, b"^{_NSZone=}")
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(TestNSObjectHelper.beginContentAccess)
         self.assertResultIsBOOL(TestNSObjectHelper.isContentDiscarded)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(TestNSObjectHelper.allowsWeakReference)
         self.assertResultIsBOOL(TestNSObjectHelper.retainWeakReference)
 
         self.assertResultIsBOOL(TestNSObjectHelper.supportsSecureCoding)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSCopying", Foundation)
         self.assertProtocolExists("NSMutableCopying", Foundation)
         self.assertProtocolExists("NSCoding", Foundation)
 
     @min_sdk_level("10.6")
-    def testProtocols10_6(self):
+    def test_protocols10_6(self):
         self.assertProtocolExists("NSDiscardableContent", Foundation)
 
     @min_sdk_level("10.7")
-    def testProtocols10_7(self):
+    def test_protocols10_7(self):
         self.assertProtocolExists("NSSecureCoding", Foundation)

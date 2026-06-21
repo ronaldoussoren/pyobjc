@@ -28,14 +28,14 @@ class TestNSCollectionViewFlowLayout(TestCase):
         self.assertIsEnumType(AppKit.NSCollectionViewScrollDirection)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(AppKit.NSCollectionViewScrollDirectionVertical, 0)
         self.assertEqual(AppKit.NSCollectionViewScrollDirectionHorizontal, 1)
         self.assertIsInstance(AppKit.NSCollectionElementKindSectionHeader, str)
         self.assertIsInstance(AppKit.NSCollectionElementKindSectionFooter, str)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(
             AppKit.NSCollectionViewFlowLayoutInvalidationContext.invalidateFlowLayoutDelegateMetrics  # noqa: B950
         )
@@ -52,7 +52,7 @@ class TestNSCollectionViewFlowLayout(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(
             AppKit.NSCollectionViewFlowLayout.sectionHeadersPinToVisibleBounds
         )
@@ -72,7 +72,7 @@ class TestNSCollectionViewFlowLayout(TestCase):
         )
 
     @min_os_level("10.11")
-    def testProtocols10_11(self):
+    def test_protocols10_11(self):
         self.assertProtocolExists("NSCollectionViewDelegateFlowLayout", AppKit)
 
         self.assertResultHasType(

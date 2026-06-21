@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestUTCoreTypes(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreServices.kUTTypeItem, str)
         self.assertIsInstance(CoreServices.kUTTypeContent, str)
         self.assertIsInstance(CoreServices.kUTTypeCompositeContent, str)
@@ -74,7 +74,7 @@ class TestUTCoreTypes(TestCase):
         self.assertIsInstance(CoreServices.kUTTypeInkText, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(CoreServices.kUTTypeURLBookmarkData, str)
         self.assertIsInstance(CoreServices.kUTTypeDelimitedText, str)
         self.assertIsInstance(CoreServices.kUTTypeCommaSeparatedText, str)
@@ -133,5 +133,5 @@ class TestUTCoreTypes(TestCase):
         self.assertIsInstance(CoreServices.kUTTypeLog, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(CoreServices.kUTTypeSwiftSource, str)

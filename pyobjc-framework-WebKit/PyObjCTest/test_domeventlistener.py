@@ -4,5 +4,5 @@ import WebKit  # noqa: F401
 
 class TestDOMEventListener(TestCase):
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("DOMEventListener", WebKit)

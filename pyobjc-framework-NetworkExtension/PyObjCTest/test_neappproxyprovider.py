@@ -4,7 +4,7 @@ import NetworkExtension
 
 class TestNEAppProxyProvider(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEAppProxyProvider.startProxyWithOptions_completionHandler_,
             1,
@@ -18,13 +18,13 @@ class TestNEAppProxyProvider(TestCase):
         self.assertResultIsBOOL(NetworkExtension.NEAppProxyProvider.handleNewFlow_)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(
             NetworkExtension.NEAppProxyProvider.handleNewUDPFlow_initialRemoteEndpoint_
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(NetworkExtension.NEAppProxyProvider.handleNewFlow_)
         self.assertResultIsBOOL(
             NetworkExtension.NEAppProxyProvider.handleNewUDPFlow_initialRemoteFlowEndpoint_

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFFTPStream(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainFTP, int)
         self.assertIsInstance(CFNetwork.kCFStreamPropertyFTPUserName, str)
         self.assertIsInstance(CFNetwork.kCFStreamPropertyFTPPassword, str)
@@ -28,7 +28,7 @@ class TestCFFTPStream(TestCase):
         self.assertIsInstance(CFNetwork.kCFFTPResourceType, str)
         self.assertIsInstance(CFNetwork.kCFFTPResourceModDate, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(CFNetwork.CFReadStreamCreateWithFTPURL)
         url = CFNetwork.CFURLCreateWithString(None, "ftp://ftp.python.org/", None)
         self.assertIsInstance(url, CFNetwork.CFURLRef)

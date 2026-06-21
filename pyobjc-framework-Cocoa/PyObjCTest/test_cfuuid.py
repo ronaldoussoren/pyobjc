@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFUUIDAPI(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFUUIDRef)
 
     def testTypeID(self):
@@ -148,7 +148,7 @@ class TestCFUUIDAPI(TestCase):
         text = CoreFoundation.CFUUIDCreateString(None, uuid)
         self.assertEqual(text, "10111213-1415-1617-1819-1A1B1C1D1E1F")
 
-    def testStructs(self):
+    def test_structs(self):
         o = CoreFoundation.CFUUIDBytes()
         self.assertHasAttr(o, "byte0")
         self.assertHasAttr(o, "byte1")

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVSampleCursor(TestCase):
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgHasType(
             AVFoundation.AVSampleCursor.stepByDecodeTime_wasPinned_, 1, b"o^Z"
         )
@@ -21,7 +21,7 @@ class TestAVSampleCursor(TestCase):
             AVFoundation.AVSampleCursor.samplesWithLaterDecodeTimeStampsMayHaveEarlierPresentationTimeStampsThanCursor_  # noqa: B950
         )
 
-    def testStructs(self):
+    def test_structs(self):
         v = AVFoundation.AVSampleCursorSyncInfo()
         self.assertIsInstance(v.sampleIsFullSync, bool)
         self.assertIsInstance(v.sampleIsPartialSync, bool)

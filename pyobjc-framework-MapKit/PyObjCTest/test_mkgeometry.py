@@ -7,7 +7,7 @@ import CoreLocation
 
 class TestMKGeometry(TestCase):
     @min_os_level("10.9")
-    def testStructs(self):
+    def test_structs(self):
         s = MapKit.MKCoordinateSpan()
         self.assertIsInstance(s.latitudeDelta, float)
         self.assertIsInstance(s.longitudeDelta, float)
@@ -34,7 +34,7 @@ class TestMKGeometry(TestCase):
         self.assertPickleRoundTrips(s)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(MapKit.MKMapSizeWorld, MapKit.MKMapSize)
         self.assertIsInstance(MapKit.MKMapRectWorld, MapKit.MKMapRect)
         self.assertIsInstance(MapKit.MKMapRectNull, MapKit.MKMapRect)

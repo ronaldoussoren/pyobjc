@@ -6,7 +6,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(CoreData.NSPersistentStoreUbiquitousTransitionType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreData.NSSQLiteStoreType, str)
         self.assertIsInstance(CoreData.NSXMLStoreType, str)
         self.assertIsInstance(CoreData.NSBinaryStoreType, str)
@@ -23,7 +23,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         self.assertIsInstance(CoreData.NSValidateXMLStoreOption, str)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(CoreData.NSPersistentStoreTimeoutOption, str)
         self.assertIsInstance(CoreData.NSSQLitePragmasOption, str)
         self.assertIsInstance(CoreData.NSIgnorePersistentStoreVersioningOption, str)
@@ -40,7 +40,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         self.assertIsInstance(CoreData.NSSQLiteAnalyzeOption, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(CoreData.NSSQLiteManualVacuumOption, str)
         self.assertIsInstance(CoreData.NSInferMappingModelAutomaticallyOption, str)
         self.assertIsInstance(CoreData.NSXMLExternalRecordType, str)
@@ -55,7 +55,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         self.assertIsInstance(CoreData.NSObjectURIKey, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(CoreData.NSPersistentStoreUbiquitousContentNameKey, str)
         self.assertIsInstance(CoreData.NSPersistentStoreUbiquitousContentURLKey, str)
         self.assertIsInstance(
@@ -63,11 +63,11 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(CoreData.NSPersistentStoreForceDestroyOption, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(
             CoreData.NSPersistentStoreUbiquitousTransitionTypeAccountAdded, 1
         )
@@ -99,11 +99,11 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(CoreData.NSPersistentStoreConnectionPoolMaxSizeKey, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(CoreData.NSPersistentHistoryTrackingKey, str)
         self.assertIsInstance(CoreData.NSBinaryStoreSecureDecodingClasses, str)
         self.assertIsInstance(
@@ -111,34 +111,34 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(CoreData.NSPersistentStoreRemoteChangeNotification, str)
         self.assertIsInstance(CoreData.NSPersistentStoreURLKey, str)
         self.assertIsInstance(CoreData.NSPersistentHistoryTokenKey, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(
             CoreData.NSPersistentStoreRemoteChangeNotificationPostOptionKey, str
         )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(
             CoreData.NSPersistentStoreDeferredLightweightMigrationOptionKey, str
         )
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(
             CoreData.NSPersistentStoreStagedMigrationManagerOptionKey, str
         )
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(CoreData.NSPersistentStoreModelVersionChecksumKey, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_,
             4,
@@ -160,7 +160,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.metadataForPersistentStoreOfType_URL_error_,
             2,
@@ -177,20 +177,20 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.importStoreWithIdentifier_fromExternalRecordsDirectory_toURL_options_withType_error_,  # noqa: B950
             5,
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.executeRequest_withContext_error_, 2
         )
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.setMetadata_forPersistentStoreOfType_URL_options_error_,
             4,
@@ -208,7 +208,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             CoreData.NSPersistentStoreCoordinator.performBlock_, 0, b"v"
         )
@@ -217,7 +217,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.destroyPersistentStoreAtURL_withType_options_error_,
             3,
@@ -235,7 +235,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(
             CoreData.NSPersistentStoreCoordinator.addPersistentStoreWithDescription_completionHandler_,
             1,
@@ -243,7 +243,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(
             CoreData.NSPersistentStoreCoordinator.finishDeferredLightweightMigration_
         )
@@ -260,7 +260,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertArgIsIn(
             CoreData.NSPersistentStoreCoordinator.managedObjectIDFromUTF8String_length_,
             0,
@@ -272,7 +272,7 @@ class TestNSPersistentStoreCoordinator(TestCase):
         )
 
     @min_os_level("26.4")
-    def testMethods26_4(self):
+    def test_methods26_4(self):
         self.assertArgIsOut(
             CoreData.NSPersistentStoreCoordinator.cachedModelForPersistentStoreAtURL_options_error_,
             2,

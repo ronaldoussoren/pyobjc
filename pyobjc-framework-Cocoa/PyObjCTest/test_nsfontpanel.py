@@ -12,7 +12,7 @@ class TestNSFontPanel(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSFontPanelModeMask)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSFPPreviewButton, 131)
         self.assertEqual(AppKit.NSFPRevertButton, 130)
         self.assertEqual(AppKit.NSFPSetButton, 132)
@@ -44,16 +44,16 @@ class TestNSFontPanel(TestCase):
         self.assertEqual(AppKit.NSFontPanelModesMaskStandardModes, 0xFFFF)
         self.assertEqual(AppKit.NSFontPanelModesMaskAllModes, 0xFFFFFFFF)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertResultHasType(
             TestNSFontPanelHelper.validModesForFontPanel_, objc._C_NSUInteger
         )
 
     @min_sdk_level("10.14")
-    def testProtocols10_14(self):
+    def test_protocols10_14(self):
         self.assertProtocolExists("NSFontChanging", AppKit)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSFontPanel.sharedFontPanelExists)
         self.assertResultIsBOOL(AppKit.NSFontPanel.worksWhenModal)
         self.assertResultIsBOOL(AppKit.NSFontPanel.isEnabled)

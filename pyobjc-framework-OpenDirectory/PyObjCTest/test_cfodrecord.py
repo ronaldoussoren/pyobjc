@@ -4,7 +4,7 @@ import objc
 
 
 class TestCFODRecord(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertIsInstance(CFOpenDirectory.ODRecordGetTypeID(), int)
 
         self.assertResultHasType(
@@ -76,7 +76,7 @@ class TestCFODRecord(TestCase):
         self.assertArgIsOut(CFOpenDirectory.ODRecordContainsMember, 2)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertResultIsCFRetained(CFOpenDirectory.ODRecordCopyPolicies)
         self.assertArgIsOut(CFOpenDirectory.ODRecordCopyPolicies, 1)
 
@@ -96,7 +96,7 @@ class TestCFODRecord(TestCase):
         self.assertArgIsOut(CFOpenDirectory.ODRecordRemovePolicy, 2)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultHasType(CFOpenDirectory.ODRecordAddAccountPolicy, objc._C_BOOL)
         self.assertArgIsOut(CFOpenDirectory.ODRecordAddAccountPolicy, 3)
 

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVAudioUnit(TestCase):
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             AVFoundation.AVAudioUnit.instantiateWithComponentDescription_options_completionHandler_,  # noqa: B950
             2,

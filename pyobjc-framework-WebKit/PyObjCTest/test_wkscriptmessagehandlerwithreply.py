@@ -9,10 +9,10 @@ class TestWKScriptMessageHandlerWithReplyHelper(WebKit.NSObject):
 
 class TestWKScriptMessageHandlerWithReply(TestCase):
     @min_sdk_level("11.0")
-    def testProtocols11_0(self):
+    def test_protocols11_0(self):
         self.assertProtocolExists("WKScriptMessageHandlerWithReply", WebKit)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             TestWKScriptMessageHandlerWithReplyHelper.userContentController_didReceiveScriptMessage_replyHandler_,
             2,

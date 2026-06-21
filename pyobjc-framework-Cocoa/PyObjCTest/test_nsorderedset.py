@@ -5,7 +5,7 @@ import objc
 
 class TestNSOrderedSet(TestCase):
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             Foundation.NSOrderedSet.differenceFromOrderedSet_withOptions_usingEquivalenceTest_,
             2,
@@ -13,7 +13,7 @@ class TestNSOrderedSet(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(Foundation.NSOrderedSet.isEqualToOrderedSet_)
         self.assertResultIsBOOL(Foundation.NSOrderedSet.containsObject_)
         self.assertResultIsBOOL(Foundation.NSOrderedSet.intersectsOrderedSet_)

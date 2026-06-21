@@ -7,7 +7,7 @@ class TestINSearchForMessagesIntentResponse(TestCase):
         self.assertIsEnumType(Intents.INSearchForMessagesIntentResponseCode)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INSearchForMessagesIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INSearchForMessagesIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INSearchForMessagesIntentResponseCodeInProgress, 2)

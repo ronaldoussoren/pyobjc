@@ -36,7 +36,7 @@ class TestCSSearchableIndex(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(CoreSpotlight.CSIndexErrorCode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeUnknownError, -1)
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeIndexUnavailableError, -1000)
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeInvalidItemError, -1001)
@@ -46,7 +46,7 @@ class TestCSSearchableIndex(TestCase):
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeIndexingUnsupported, -1005)
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeMismatchedClientState, -1006)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreSpotlight.CSSearchableIndex.isIndexingAvailable)
         self.assertArgIsBlock(
             CoreSpotlight.CSSearchableIndex.indexSearchableItems_completionHandler_,

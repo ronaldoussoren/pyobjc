@@ -19,7 +19,7 @@ class TestLSOpen(TestCase):
         if os.path.exists(self.path):
             os.unlink(self.path)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreServices.kLSLaunchDefaults, 0x00000001)
         self.assertEqual(CoreServices.kLSLaunchAndPrint, 0x00000002)
         self.assertEqual(CoreServices.kLSLaunchReserved2, 0x00000004)
@@ -39,7 +39,7 @@ class TestLSOpen(TestCase):
         self.assertEqual(CoreServices.kLSLaunchAndHideOthers, 0x00200000)
         self.assertEqual(CoreServices.kLSLaunchHasUntrustedContents, 0x00400000)
 
-    def testStructs(self):
+    def test_structs(self):
         v = CoreServices.LSApplicationParameters()
         self.assertHasAttr(v, "version")
         self.assertHasAttr(v, "flags")
@@ -66,7 +66,7 @@ class TestLSOpen(TestCase):
         self.assertEqual(o.launchFlags, 0)
         self.assertEqual(o.asyncRefCon, None)
 
-    def testFunctions(self):
+    def test_functions(self):
         url = CoreServices.CFURLCreateFromFileSystemRepresentation(
             None, self.bpath, len(self.bpath), True
         )

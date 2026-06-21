@@ -8,7 +8,7 @@ class TestNSFileCoordinator(TestCase):
         self.assertIsEnumType(Foundation.NSFileCoordinatorWritingOptions)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(
             Foundation.NSFileCoordinatorReadingImmediatelyAvailableMetadataOnly, 1 << 2
         )
@@ -18,7 +18,7 @@ class TestNSFileCoordinator(TestCase):
         )
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSFileCoordinatorReadingWithoutChanges, 1 << 0)
         self.assertEqual(
             Foundation.NSFileCoordinatorReadingResolvesSymbolicLink, 1 << 1
@@ -29,7 +29,7 @@ class TestNSFileCoordinator(TestCase):
         self.assertEqual(Foundation.NSFileCoordinatorWritingForReplacing, 1 << 3)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             Foundation.NSFileCoordinator.coordinateAccessWithIntents_queue_byAccessor_,
             2,
@@ -37,7 +37,7 @@ class TestNSFileCoordinator(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             Foundation.NSFileCoordinator.coordinateReadingItemAtURL_options_error_byAccessor_,
             2,

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, fourcc
 
 
 class TestCMIOHardwareSystem(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreMediaIO.kCMIOSystemObjectClassID, fourcc(b"asys"))
         self.assertEqual(CoreMediaIO.kCMIOObjectSystemObject, 1)
 

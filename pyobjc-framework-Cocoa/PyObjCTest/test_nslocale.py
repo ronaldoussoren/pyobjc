@@ -10,7 +10,7 @@ class TestNSLocale(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSLocaleLanguageDirection)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSCurrentLocaleDidChangeNotification, str)
         self.assertIsInstance(Foundation.NSLocaleIdentifier, str)
         self.assertIsInstance(Foundation.NSLocaleLanguageCode, str)
@@ -35,7 +35,7 @@ class TestNSLocale(TestCase):
         self.assertIsInstance(Foundation.NSJapaneseCalendar, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Foundation.NSLocaleCollatorIdentifier, str)
         self.assertIsInstance(Foundation.NSLocaleQuotationBeginDelimiterKey, str)
         self.assertIsInstance(Foundation.NSLocaleQuotationEndDelimiterKey, str)

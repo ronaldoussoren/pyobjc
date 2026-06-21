@@ -115,7 +115,7 @@ class TestSCNSceneSource(TestCase):
             SceneKit.SCNSceneSourceLoadingOptionPreserveOriginalTopology, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             SceneKit.SCNSceneSource.sceneWithOptions_statusHandler_,
             1,

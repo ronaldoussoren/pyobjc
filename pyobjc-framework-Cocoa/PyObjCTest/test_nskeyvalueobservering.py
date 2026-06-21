@@ -13,7 +13,7 @@ class TestNSKeyValueObserving(TestCase):
         self.assertIsEnumType(Foundation.NSKeyValueObservingOptions)
         self.assertIsEnumType(Foundation.NSKeyValueSetMutationKind)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSKeyValueObservingOptionNew, 1)
         self.assertEqual(Foundation.NSKeyValueObservingOptionOld, 2)
         self.assertEqual(Foundation.NSKeyValueObservingOptionInitial, 4)
@@ -78,7 +78,7 @@ class TestNSKeyValueObserving(TestCase):
         m = o.removeObserver_forKeyPath_context_.__metadata__()
         self.assertEqual(m["arguments"][4]["type"], b"^v")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Foundation.NSObject.automaticallyNotifiesObserversForKey_
         )

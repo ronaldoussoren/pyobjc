@@ -23,7 +23,7 @@ class TestNCWidgetListViewDelegateHelper(NotificationCenter.NSObject):
 
 class TestNCWidgetListViewController(TestCase):
     @min_os_level("10.10")
-    def testClasses10_10(self):
+    def test_classes10_10(self):
         self.assertIsInstance(
             NotificationCenter.NCWidgetListViewController, objc.objc_class
         )
@@ -54,7 +54,7 @@ class TestNCWidgetListViewController(TestCase):
         )
 
     @min_os_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NCWidgetListViewDelegate", NotificationCenter)
 
         self.assertArgHasType(

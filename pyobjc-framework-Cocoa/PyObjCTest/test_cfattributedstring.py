@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAttributedString(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             NSCFAttributedString = objc.lookUpClass("__NSCFAttributedString")
         except objc.error:

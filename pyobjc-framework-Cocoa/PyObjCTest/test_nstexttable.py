@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestNSTextTable(TestCase):
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsEnumType(AppKit.NSTextBlockValueType)
         self.assertEqual(AppKit.NSTextBlockValueTypeAbsolute, 0)
         self.assertEqual(AppKit.NSTextBlockValueTypePercentage, 1)
@@ -76,7 +76,7 @@ class TestNSTextTable(TestCase):
             AppKit.NSTextTableLayoutAlgorithmFixed,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTextTable.collapsesBorders)
         self.assertArgIsBOOL(AppKit.NSTextTable.setCollapsesBorders_, 0)
         self.assertResultIsBOOL(AppKit.NSTextTable.hidesEmptyCells)

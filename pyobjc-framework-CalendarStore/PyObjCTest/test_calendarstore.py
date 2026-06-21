@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalendarStore(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CalendarStore, "CalAlarm")
         self.assertIsInstance(CalendarStore.CalAlarm, objc.objc_class)
         self.assertHasAttr(CalendarStore, "CalNthWeekDay")

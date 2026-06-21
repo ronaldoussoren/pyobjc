@@ -4,6 +4,6 @@ import Quartz
 
 class TestCABase(TestCase):
     @min_os_level("10.5")
-    def testFunctions(self):
+    def test_functions(self):
         v = Quartz.CACurrentMediaTime()
         self.assertIsInstance(v, float)

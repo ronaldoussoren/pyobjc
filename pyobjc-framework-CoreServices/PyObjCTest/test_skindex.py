@@ -5,11 +5,11 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestSKIndex(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreServices.SKIndexRef)
         self.assertIsCFType(CoreServices.SKIndexDocumentIteratorRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreServices.kSKIndexUnknown, 0)
         self.assertEqual(CoreServices.kSKIndexInverted, 1)
         self.assertEqual(CoreServices.kSKIndexVector, 2)
@@ -20,7 +20,7 @@ class TestSKIndex(TestCase):
         self.assertEqual(CoreServices.kSKDocumentStateAddPending, 2)
         self.assertEqual(CoreServices.kSKDocumentStateDeletePending, 3)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreServices.SKIndexGetTypeID(), int)
         self.assertIsInstance(CoreServices.SKIndexDocumentIteratorGetTypeID(), int)
 

@@ -6,7 +6,7 @@ AVMIDIPlayerCompletionHandler = b"v"
 
 class TestAVMIDIPlayer(TestCase):
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             AVFoundation.AVMIDIPlayer.initWithContentsOfURL_soundBankURL_error_, 2
         )

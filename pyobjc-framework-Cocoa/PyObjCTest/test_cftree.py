@@ -15,7 +15,7 @@ def cmp(a, b):
 
 
 class TestCFTree(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFTreeRef)
 
     def testCreation(self):

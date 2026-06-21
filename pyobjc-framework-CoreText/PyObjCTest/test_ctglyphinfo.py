@@ -4,10 +4,10 @@ import objc
 
 
 class TestCTGlyphInfo(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreText.CTGlyphInfoRef, objc.objc_class)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreText.kCTIdentityMappingCharacterCollection, 0)
         self.assertEqual(CoreText.kCTAdobeCNS1CharacterCollection, 1)
         self.assertEqual(CoreText.kCTAdobeGB1CharacterCollection, 2)
@@ -22,7 +22,7 @@ class TestCTGlyphInfo(TestCase):
         self.assertEqual(CoreText.kCTCharacterCollectionAdobeJapan2, 4)
         self.assertEqual(CoreText.kCTCharacterCollectionAdobeKorea1, 5)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = CoreText.CTGlyphInfoGetTypeID()
         self.assertIsInstance(v, int)
 
@@ -65,5 +65,5 @@ class TestCTGlyphInfo(TestCase):
         self.assertIsInstance(v, int)
 
     @min_os_level("10.15")
-    def testFunctions10_15(self):
+    def test_functions10_15(self):
         CoreText.CTGlyphInfoGetGlyph

@@ -6,7 +6,7 @@ class TestWebPolicyDelegate(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(WebKit.WebNavigationType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(WebKit.WebActionNavigationTypeKey, str)
         self.assertIsInstance(WebKit.WebActionElementKey, str)
         self.assertIsInstance(WebKit.WebActionButtonKey, str)
@@ -20,11 +20,11 @@ class TestWebPolicyDelegate(TestCase):
         self.assertEqual(WebKit.WebNavigationTypeFormResubmitted, 4)
         self.assertEqual(WebKit.WebNavigationTypeOther, 5)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "WebPolicyDecisionListener", WebKit, "WebPolicyDecisionListenerProtocol"
         )
 
     @min_sdk_level("10.11")
-    def testProtocols10_11(self):
+    def test_protocols10_11(self):
         self.assertProtocolExists("WebPolicyDelegate", WebKit)

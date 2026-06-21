@@ -8,12 +8,12 @@ class TestCNContact(TestCase):
         self.assertIsEnumType(Contacts.CNContactType)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(Contacts.CNContactPhoneticOrganizationNameKey, str)
         self.assertIsInstance(Contacts.CNContactImageDataAvailableKey, str)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Contacts.CNContactTypePerson, 0)
         self.assertEqual(Contacts.CNContactTypeOrganization, 1)
 
@@ -53,11 +53,11 @@ class TestCNContact(TestCase):
         self.assertIsInstance(Contacts.CNContactInstantMessageAddressesKey, str)
 
     @min_os_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("CNKeyDescriptor", Contacts)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Contacts.CNContact.isKeyAvailable_)
         self.assertResultIsBOOL(Contacts.CNContact.areKeysAvailable_)
         self.assertResultIsBOOL(Contacts.CNContact.isUnifiedWithContactWithIdentifier_)

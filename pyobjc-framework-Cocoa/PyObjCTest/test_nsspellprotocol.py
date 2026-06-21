@@ -3,6 +3,6 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSSpellProtocol(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSChangeSpelling", AppKit)
         self.assertProtocolExists("NSIgnoreMisspelledWords", AppKit)

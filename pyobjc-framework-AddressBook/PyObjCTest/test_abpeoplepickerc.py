@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure, fourcc
 
 
 class TestABPeoplePickerC(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AddressBook.kABPickerSingleValueSelection, 1 << 0)
         self.assertEqual(AddressBook.kABPickerMultipleValueSelection, 1 << 1)
         self.assertEqual(AddressBook.kABPickerAllowGroupSelection, 1 << 2)
@@ -22,7 +22,7 @@ class TestABPeoplePickerC(TestCase):
         self.assertIsInstance(AddressBook.ABPickerRef, objc.objc_class)
 
     @expectedFailure
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(AddressBook.ABPickerCreate)
 
         ref = AddressBook.ABPickerCreate()

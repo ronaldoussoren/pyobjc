@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMRangeException(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(WebKit.DOMRangeException, str)
         self.assertEqual(WebKit.DOM_BAD_BOUNDARYPOINTS_ERR, 1)
         self.assertEqual(WebKit.DOM_INVALID_NODE_TYPE_ERR, 2)

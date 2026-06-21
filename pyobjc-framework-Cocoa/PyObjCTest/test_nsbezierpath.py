@@ -114,7 +114,7 @@ class TestNSBezierPath(TestCase):
         self.assertPointEquals(points[1], (2, 3))  # control point 2
         self.assertPointEquals(points[2], (3, 4))  # end point
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSButtLineCapStyle, 0)
         self.assertEqual(AppKit.NSRoundLineCapStyle, 1)
         self.assertEqual(AppKit.NSSquareLineCapStyle, 2)
@@ -153,7 +153,7 @@ class TestNSBezierPath(TestCase):
             AppKit.NSBezierPathElementCurveTo, AppKit.NSBezierPathElementCubicCurveTo
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSBezierPath.isEmpty)
         self.assertResultIsBOOL(AppKit.NSBezierPath.containsPoint_)
         self.assertResultIsBOOL(AppKit.NSBezierPath.cachesBezierPath)

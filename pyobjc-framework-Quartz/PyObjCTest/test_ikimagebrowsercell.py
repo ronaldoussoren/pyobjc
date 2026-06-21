@@ -4,7 +4,7 @@ import Quartz
 
 class TestIKImageBrowserCell(TestCase):
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Quartz.IKImageStateNoImage, 0)
         self.assertEqual(Quartz.IKImageStateInvalid, 1)
         self.assertEqual(Quartz.IKImageStateReady, 2)
@@ -15,7 +15,7 @@ class TestIKImageBrowserCell(TestCase):
         self.assertIsInstance(Quartz.IKImageBrowserCellPlaceHolderLayer, str)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultHasType(
             Quartz.IKImageBrowserCell.frame, Quartz.NSRect.__typestr__
         )

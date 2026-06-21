@@ -21,7 +21,7 @@ class TestNSURLDownloadHelper(Foundation.NSObject):
 
 
 class TestNSURLDownload(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Foundation.NSURLDownload.canResumeDownloadDecodedWithEncodingMIMEType_
         )
@@ -30,10 +30,10 @@ class TestNSURLDownload(TestCase):
         self.assertResultIsBOOL(Foundation.NSURLDownload.deletesFileUponFailure)
 
     @min_sdk_level("10.7")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSURLDownloadDelegate", Foundation)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSURLDownloadHelper.download_willResumeWithResponse_fromByte_,
             2,

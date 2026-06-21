@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVCompositionTrack(TestCase):
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVMutableCompositionTrack.insertTimeRange_ofTrack_atTime_error_
         )
@@ -31,9 +31,9 @@ class TestAVCompositionTrack(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVMutableCompositionTrack.isEnabled)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBOOL(AVFoundation.AVMutableCompositionTrack.setEnabled_, 0)
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCompositionTrack.hasMediaCharacteristic_)

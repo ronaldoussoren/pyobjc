@@ -131,7 +131,7 @@ class TestString(TestCase):
             b2[0] = "X"
             self.assertEqual(s, "X" + (" " * (len(b) - 1)))
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertNotHasAttr(
             CoreFoundation, "CFStringCreateStringWithValidatedFormatAndArguments"
         )
@@ -499,7 +499,7 @@ class TestString(TestCase):
         self.assertNotHasAttr(CoreFoundation, "CFStringInitInlineBuffer")
         self.assertNotHasAttr(CoreFoundation, "CFStringGetCharacterFromInlineBuffer")
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFStringEncodingInvalidId, 0xFFFFFFFF)
         self.assertEqual(CoreFoundation.kCFStringEncodingMacRoman, 0)
         self.assertEqual(CoreFoundation.kCFStringEncodingWindowsLatin1, 0x0500)
@@ -555,11 +555,11 @@ class TestString(TestCase):
 
 class TestStringEncodingExt(TestCase):
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(CoreFoundation.kCFStringEncodingUTF7, 0x04000100)
         self.assertEqual(CoreFoundation.kCFStringEncodingUTF7_IMAP, 0x0A10)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFStringEncodingMacJapanese, 1)
         self.assertEqual(CoreFoundation.kCFStringEncodingMacChineseTrad, 2)
         self.assertEqual(CoreFoundation.kCFStringEncodingMacKorean, 3)
@@ -691,7 +691,7 @@ class TestStringEncodingExt(TestCase):
         self.assertEqual(CoreFoundation.kCFStringEncodingShiftJIS_X0213_00, 0x0628)
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         self.assertResultIsBOOL(CoreFoundation.CFStringIsSurrogateHighCharacter)
         self.assertTrue(CoreFoundation.CFStringIsSurrogateHighCharacter(chr(0xD800)))
         self.assertFalse(CoreFoundation.CFStringIsSurrogateHighCharacter(chr(0x0600)))
@@ -724,7 +724,7 @@ class TestStringEncodingExt(TestCase):
             pass
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         loc = CoreFoundation.CFLocaleCopyCurrent()
 
         self.assertArgIsOut(CoreFoundation.CFStringGetHyphenationLocationBeforeIndex, 5)

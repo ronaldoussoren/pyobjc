@@ -20,7 +20,7 @@ class TestINStartAudioCallIntentHelper(Intents.NSObject):
 
 class TestINStartAudioCallIntent(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             TestINStartAudioCallIntentHelper.handleStartAudioCall_completion_, 1, b"v@"
         )
@@ -39,5 +39,5 @@ class TestINStartAudioCallIntent(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("INStartAudioCallIntentHandling", Intents)

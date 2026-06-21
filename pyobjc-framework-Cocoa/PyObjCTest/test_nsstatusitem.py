@@ -11,7 +11,7 @@ class TestNSStatusItem(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSStatusItemBehavior)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSStatusItemBehaviorRemovalAllowed, 1 << 1)
         self.assertEqual(AppKit.NSStatusItemBehaviorTerminationOnRemoval, 1 << 2)
 
@@ -24,7 +24,7 @@ class TestNSStatusItem(TestCase):
             TestNSStatusItemHelper.statusItemDidEndExpandedInterfaceSession_animated_, 1
         )
 
-    def testMethods(self):
+    def test_methods(self):
         m = AppKit.NSStatusItem.setAction_.__metadata__()
         self.assertEqual(m["arguments"][2]["sel_of_type"], b"v@:@")
 
@@ -40,6 +40,6 @@ class TestNSStatusItem(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSStatusItem.isVisible)
         self.assertArgIsBOOL(AppKit.NSStatusItem.setVisible_, 0)

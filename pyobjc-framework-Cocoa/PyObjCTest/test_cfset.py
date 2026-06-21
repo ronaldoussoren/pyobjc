@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestSet(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             if objc.lookUpClass("NSSet") is CoreFoundation.CFSetRef:
                 return

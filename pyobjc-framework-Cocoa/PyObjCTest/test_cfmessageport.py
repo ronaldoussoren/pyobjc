@@ -4,10 +4,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestMessagePort(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFMessagePortRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFMessagePortSuccess, 0)
         self.assertEqual(CoreFoundation.kCFMessagePortSendTimeout, -1)
         self.assertEqual(CoreFoundation.kCFMessagePortReceiveTimeout, -2)
@@ -17,7 +17,7 @@ class TestMessagePort(TestCase):
 
     @min_os_level("10.6")
     @expectedFailure
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         self.fail("CFMessagePortSetDispatchQueue: dispatch_queue_t not wrapped yet")
 
     def testTypeID(self):

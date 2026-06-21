@@ -6,7 +6,7 @@ CMIODeviceGetSMPTETimeProc = b"d^v^Q^Z^I"
 
 
 class TestCMIOHardwareDevice(TestCase):
-    def testStructs(self):
+    def test_structs(self):
         v = CoreMediaIO.CMIODeviceStreamConfiguration()
         self.assertEqual(v.mNumberStreams, 0)
         self.assertEqual(v.mNumberChannels, None)
@@ -33,7 +33,7 @@ class TestCMIOHardwareDevice(TestCase):
         self.assertEqual(v.mRefCon, None)
         self.assertPickleRoundTrips(v)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyScopeInput, fourcc(b"inpt"))
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyScopeOutput, fourcc(b"outp"))
         self.assertEqual(
@@ -180,7 +180,7 @@ class TestCMIOHardwareDevice(TestCase):
         )
 
     @min_os_level("10.7")
-    def testFunctions(self):
+    def test_functions(self):
         CoreMediaIO.CMIODeviceStartStream
         CoreMediaIO.CMIODeviceStopStream
 

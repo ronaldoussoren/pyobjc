@@ -8,7 +8,7 @@ class TestNSByteCountFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSByteCountFormatterUnits)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(Foundation.NSByteCountFormatterUseDefault, 0)
         self.assertEqual(Foundation.NSByteCountFormatterUseBytes, 1 << 0)
         self.assertEqual(Foundation.NSByteCountFormatterUseKB, 1 << 1)
@@ -26,7 +26,7 @@ class TestNSByteCountFormatter(TestCase):
         self.assertEqual(Foundation.NSByteCountFormatterCountStyleBinary, 3)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(
             Foundation.NSByteCountFormatter.allowsNonnumericFormatting
         )

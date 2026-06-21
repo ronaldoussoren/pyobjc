@@ -15,7 +15,7 @@ class TestVZMacAuxiliaryStorage(TestCase):
 
     @min_os_level("12.0")
     @arch_only("arm64")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertArgIsOut(
             Virtualization.VZMacAuxiliaryStorage.initCreatingStorageAtURL_hardwareModel_options_error_,
             3,

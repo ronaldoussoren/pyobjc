@@ -4,7 +4,7 @@ import objc
 
 
 class TestCVPixelBuffer(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCVPixelFormatType_1Monochrome, 0x00000001)
         self.assertEqual(Quartz.kCVPixelFormatType_2Indexed, 0x00000002)
         self.assertEqual(Quartz.kCVPixelFormatType_4Indexed, 0x00000004)
@@ -208,10 +208,10 @@ class TestCVPixelBuffer(TestCase):
             fourcc(b"-xv2"),
         )
 
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CVPixelBufferRef)
 
-    def testStructures(self):
+    def test_structures(self):
         v = Quartz.CVPlanarComponentInfo()
         self.assertIsInstance(v.offset, int)
         self.assertIsInstance(v.rowBytes, int)
@@ -229,7 +229,7 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(v.componentInfoY, Quartz.CVPlanarComponentInfo())
         self.assertEqual(v.componentInfoCbCr, Quartz.CVPlanarComponentInfo())
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CVPixelBufferGetTypeID(), int)
 
         buf = self.makeBuffer()
@@ -343,7 +343,7 @@ class TestCVPixelBuffer(TestCase):
         return image
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Quartz.kCVPixelBufferLock_ReadOnly, 1)
 
         self.assertIsInstance(Quartz.kCVPixelBufferPlaneAlignmentKey, str)
@@ -359,14 +359,14 @@ class TestCVPixelBuffer(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(Quartz.kCVPixelBufferMetalCompatibilityKey, str)
         self.assertIsInstance(
             Quartz.kCVPixelBufferOpenGLTextureCacheCompatibilityKey, str
         )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(Quartz.kCVPixelBufferVersatileBayerKey_BayerPattern, str)
         self.assertIsInstance(
             Quartz.kCVPixelBufferProResRAWKey_SenselSitingOffsets, str
@@ -385,15 +385,15 @@ class TestCVPixelBuffer(TestCase):
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_RecommendedCrop, str)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_MetadataExtension, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePurgeableKey, str)
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         self.assertResultHasType(Quartz.CVPixelBufferGetIOSurface, b"^{__IOSurface=}")
         self.assertArgHasType(Quartz.CVPixelBufferGetIOSurface, 0, b"^{__CVBuffer=}")
         self.assertArgHasType(
@@ -402,9 +402,9 @@ class TestCVPixelBuffer(TestCase):
         self.assertArgIsOut(Quartz.CVPixelBufferCreateWithIOSurface, 3)
 
     @min_os_level("12.0")
-    def testFunctions12_0(self):
+    def test_functions12_0(self):
         self.assertResultIsCFRetained(Quartz.CVPixelBufferCopyCreationAttributes)
 
     @min_os_level("26.0")
-    def testFunctions26_0(self):
+    def test_functions26_0(self):
         self.assertResultIsBOOL(Quartz.CVPixelBufferIsCompatibleWithAttributes)

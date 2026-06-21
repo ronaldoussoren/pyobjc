@@ -5,7 +5,7 @@ import NetworkExtension
 
 class TestNEProxySettings(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(NetworkExtension.NEProxyServer.authenticationRequired)
         self.assertArgIsBOOL(
             NetworkExtension.NEProxyServer.setAuthenticationRequired_, 0

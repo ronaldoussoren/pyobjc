@@ -27,7 +27,7 @@ class TestNSRuleEditor(TestCase):
         self.assertIsEnumType(AppKit.NSRuleEditorNestingMode)
         self.assertIsEnumType(AppKit.NSRuleEditorRowType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSRuleEditorNestingModeSingle, 0)
         self.assertEqual(AppKit.NSRuleEditorNestingModeList, 1)
         self.assertEqual(AppKit.NSRuleEditorNestingModeCompound, 2)
@@ -46,7 +46,7 @@ class TestNSRuleEditor(TestCase):
         self.assertIsInstance(AppKit.NSRuleEditorPredicateCompoundType, str)
         self.assertIsInstance(AppKit.NSRuleEditorRowsDidChangeNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSRuleEditor.isEditable)
         self.assertArgIsBOOL(AppKit.NSRuleEditor.setEditable_, 0)
         self.assertResultIsBOOL(AppKit.NSRuleEditor.canRemoveAllRows)
@@ -60,10 +60,10 @@ class TestNSRuleEditor(TestCase):
         )
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSRuleEditorDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_,
             objc._C_NSInteger,

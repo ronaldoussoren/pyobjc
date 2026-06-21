@@ -7,7 +7,7 @@ class TestINCallRecordTypeOptions(TestCase):
         self.assertIsEnumType(Intents.INCallRecordTypeOptions)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INCallRecordTypeOptionOutgoing, 1 << 0)
         self.assertEqual(Intents.INCallRecordTypeOptionMissed, 1 << 1)
         self.assertEqual(Intents.INCallRecordTypeOptionReceived, 1 << 2)

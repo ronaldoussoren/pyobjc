@@ -7,7 +7,7 @@ class TestINCallDestinationType(TestCase):
         self.assertIsEnumType(Intents.INCallDestinationType)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INCallDestinationTypeUnknown, 0)
         self.assertEqual(Intents.INCallDestinationTypeNormalDestination, 1)
         self.assertEqual(Intents.INCallDestinationTypeEmergencyDestination, 2)

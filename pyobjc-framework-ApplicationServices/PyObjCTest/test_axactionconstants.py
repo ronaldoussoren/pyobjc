@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAXActionConstants(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(HIServices.kAXPressAction, "AXPress")
         self.assertEqual(HIServices.kAXIncrementAction, "AXIncrement")
         self.assertEqual(HIServices.kAXDecrementAction, "AXDecrement")

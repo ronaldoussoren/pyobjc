@@ -24,7 +24,7 @@ class TestNWTCPConnection(TestCase):
         self.assertIsEnumType(NetworkExtension.NWTCPConnectionState)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(NetworkExtension.NWTCPConnectionStateInvalid, 0)
         self.assertEqual(NetworkExtension.NWTCPConnectionStateConnecting, 1)
         self.assertEqual(NetworkExtension.NWTCPConnectionStateWaiting, 2)
@@ -33,7 +33,7 @@ class TestNWTCPConnection(TestCase):
         self.assertEqual(NetworkExtension.NWTCPConnectionStateCancelled, 5)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(NetworkExtension.NWTCPConnection.isViable)
         self.assertResultIsBOOL(NetworkExtension.NWTCPConnection.hasBetterPath)
 
@@ -67,7 +67,7 @@ class TestNWTCPConnection(TestCase):
         )
 
     @min_sdk_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "NWTCPConnectionAuthenticationDelegate", NetworkExtension
         )

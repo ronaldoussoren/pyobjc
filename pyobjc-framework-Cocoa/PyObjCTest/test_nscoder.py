@@ -121,7 +121,7 @@ class TestPythonCoder(TestCase):
         d = o.fetchArray_(coder)
         self.assertEqual(tuple(range(10)), tuple(d))
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSCoder.allowsKeyedCoding)
         self.assertArgIsBOOL(Foundation.NSCoder.encodeBool_forKey_, 0)
         self.assertResultIsBOOL(Foundation.NSCoder.containsValueForKey_)
@@ -138,24 +138,24 @@ class TestPythonCoder(TestCase):
         self.assertTrue(hasattr(Foundation, "NXReadNSObjectFromCoder"))
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSCoder.requiresSecureCoding)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsOut(Foundation.NSCoder.decodeTopLevelObjectAndReturnError_, 0)
         self.assertArgIsOut(
             Foundation.NSCoder.decodeTopLevelObjectOfClass_forKey_error_, 2
         )
 
     @min_os_level("15.4")
-    def testMethods15_4(self):
+    def test_methods15_4(self):
         self.assertResultSizeInArg(Foundation.NSCoder.decodeBytesWithMinimumLength_, 0)
         self.assertResultSizeInArg(
             Foundation.NSCoder.decodeBytesForKey_minimumLength_, 1
         )
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSDecodingFailurePolicyRaiseException, 0)
         self.assertEqual(Foundation.NSDecodingFailurePolicySetErrorAndReturn, 1)

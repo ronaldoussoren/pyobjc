@@ -9,7 +9,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestFoundation(TestCase):
-    def testValues(self):
+    def test_values(self):
         self.assertHasAttr(Foundation, "NSTimeIntervalSince1970")
         self.assertIsInstance(Foundation.NSTimeIntervalSince1970, float)
         self.assertEqual(Foundation.NSTimeIntervalSince1970, 978_307_200.0)
@@ -20,10 +20,10 @@ class TestFoundation(TestCase):
         self.assertHasAttr(Foundation, "NSURLResponseUnknownLength")
         self.assertIsInstance(Foundation.NSURLResponseUnknownLength, int)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertHasAttr(Foundation, "NSStringFromSelector")
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertNotHasAttr(Foundation, "protocols")
 
     def test_structs(self):

@@ -10,7 +10,7 @@ class TestNSDateComponentsFormatter(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(Foundation.NSDateComponentsFormatterUnitsStylePositional, 0)
         self.assertEqual(Foundation.NSDateComponentsFormatterUnitsStyleAbbreviated, 1)
         self.assertEqual(Foundation.NSDateComponentsFormatterUnitsStyleShort, 2)
@@ -47,7 +47,7 @@ class TestNSDateComponentsFormatter(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
             Foundation.NSDateComponentsFormatter.allowsFractionalUnits
         )

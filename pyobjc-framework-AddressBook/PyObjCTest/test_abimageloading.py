@@ -15,5 +15,5 @@ class TestABImageLoading(TestCase):
             TestABImageClientHelper.consumeImageData_forTag_, 1, objc._C_NSInteger
         )
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("ABImageClient", AddressBook)

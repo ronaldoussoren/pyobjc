@@ -14,7 +14,7 @@ class TestNSErrorHelper(AppKit.NSObject):
 
 
 class TestNSError(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSCocoaErrorDomain, str)
 
         self.assertIsInstance(AppKit.NSPOSIXErrorDomain, str)
@@ -70,11 +70,11 @@ class TestNSError(TestCase):
         self.assertIsInstance(AppKit.NSWordTablesWriteException, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AppKit.NSLocalizedFailureErrorKey, str)
 
     @min_os_level("11.3")
-    def testConstants11_3(self):
+    def test_constants11_3(self):
         self.assertIsInstance(AppKit.NSMultipleUnderlyingErrorsKey, str)
 
     def testAttemptRecovery(self):
@@ -102,7 +102,7 @@ class TestNSError(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             AppKit.NSError.setUserInfoValueProviderForDomain_provider_, 1, b"@@@"
         )

@@ -25,11 +25,11 @@ class TestNSCandidateListTouchBarItem(TestCase):
         self.assertProtocolExists("NSCandidateListTouchBarItemDelegate", AppKit)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AppKit.NSTouchBarItemIdentifierCandidateList, str)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSCandidateListTouchBarItem.isCollapsed)
         self.assertArgIsBOOL(AppKit.NSCandidateListTouchBarItem.setCollapsed_, 0)
 

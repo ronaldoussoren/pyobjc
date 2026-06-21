@@ -7,7 +7,7 @@ class TestAVMovie(TestCase):
         self.assertIsEnumType(AVFoundation.AVMovieWritingOptions)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AVFoundation.AVMovieReferenceRestrictionsKey, str)
 
         self.assertEqual(
@@ -30,17 +30,17 @@ class TestAVMovie(TestCase):
         )
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(
             AVFoundation.AVMovieShouldSupportAliasDataReferencesKey, str
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVMovie.canContainMovieFragments)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AVFoundation.AVMovie.isCompatibleWithFileType_)
 
         self.assertResultIsBOOL(AVFoundation.AVMovie.containsMovieFragments)
@@ -93,7 +93,7 @@ class TestAVMovie(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertArgIsBlock(
             AVFoundation.AVMovie.loadTrackWithTrackID_completionHandler_, 1, b"v@@"
         )

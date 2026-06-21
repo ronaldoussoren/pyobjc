@@ -9,7 +9,7 @@ class TestMPRemoteControlTypes(TestCase):
         self.assertIsEnumType(MediaPlayer.MPShuffleType)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(MediaPlayer.MPShuffleTypeOff, 0)
         self.assertEqual(MediaPlayer.MPShuffleTypeItems, 1)
         self.assertEqual(MediaPlayer.MPShuffleTypeCollections, 2)

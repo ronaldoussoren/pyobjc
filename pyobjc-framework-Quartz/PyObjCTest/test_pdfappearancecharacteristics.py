@@ -7,7 +7,7 @@ class TestPDFAppearanceCharacteristic(TestCase):
         self.assertIsTypedEnum(Quartz.PDFAppearanceCharacteristicsKey, str)
 
     @min_os_level("10.13")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             Quartz.PDFAppearanceCharacteristicsKeyBackgroundColor, str
         )

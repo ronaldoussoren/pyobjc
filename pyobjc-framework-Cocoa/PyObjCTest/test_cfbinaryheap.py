@@ -4,7 +4,7 @@ import objc
 
 
 class TestCFBinaryHeap(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFBinaryHeapRef)
 
     def testCreation(self):
@@ -109,7 +109,7 @@ class TestCFBinaryHeap(TestCase):
         values = CoreFoundation.CFBinaryHeapGetValues(heap)
         self.assertEqual(values, ())
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgHasType(CoreFoundation.CFBinaryHeapGetCountOfValue, 1, b"@")
         self.assertArgHasType(CoreFoundation.CFBinaryHeapContainsValue, 1, b"@")
         self.assertResultHasType(CoreFoundation.CFBinaryHeapGetMinimum, b"@")

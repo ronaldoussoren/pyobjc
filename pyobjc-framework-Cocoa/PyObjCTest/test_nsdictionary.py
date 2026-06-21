@@ -72,7 +72,7 @@ class TestNSDictionarySubclassing(TestCase):
 
 
 class TestNSDictionaryInteraction(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         for nm in dir(dict):
             if nm.startswith("__"):
                 continue
@@ -294,7 +294,7 @@ class TestVariadic(TestCase):
 
 
 class TestNSDictionary(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSDictionary.isEqualToDictionary_)
         self.assertResultIsBOOL(Foundation.NSDictionary.writeToFile_atomically_)
         self.assertArgIsBOOL(Foundation.NSDictionary.writeToFile_atomically_, 1)
@@ -335,7 +335,7 @@ class TestNSDictionary(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSDictionary.enumerateKeysAndObjectsUsingBlock_,
             0,
@@ -367,7 +367,7 @@ class TestNSDictionary(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsOut(Foundation.NSDictionary.writeToURL_error_, 1)
         self.assertResultIsBOOL(Foundation.NSDictionary.writeToURL_error_)
 

@@ -3,23 +3,23 @@ import Quartz
 
 
 class TestCVPixelBufferPool(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CVPixelBufferPoolRef)
 
-    def testContants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCVPixelBufferPoolMinimumBufferCountKey, str)
         self.assertIsInstance(Quartz.kCVPixelBufferPoolMaximumBufferAgeKey, str)
 
     @min_os_level("10.7")
-    def testContants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(Quartz.kCVPixelBufferPoolAllocationThresholdKey, str)
         self.assertIsInstance(Quartz.kCVPixelBufferPoolFreeBufferNotification, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(Quartz.kCVPixelBufferPoolFlushExcessBuffers, 1)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CVPixelBufferPoolGetTypeID(), int)
 
         self.assertArgIsCFRetained(Quartz.CVPixelBufferPoolCreate, 3)
@@ -56,7 +56,7 @@ class TestCVPixelBufferPool(TestCase):
         self.assertIsInstance(image, Quartz.CVPixelBufferRef)
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         self.assertArgIsOut(
             Quartz.CVPixelBufferPoolCreatePixelBufferWithAuxAttributes, 3
         )
@@ -65,7 +65,7 @@ class TestCVPixelBufferPool(TestCase):
         )
 
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         rv, pool = Quartz.CVPixelBufferPoolCreate(
             None,
             {

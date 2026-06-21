@@ -28,7 +28,7 @@ class TestOpenPanel(TestCase):
         sig = b"".join(objc.splitSignature(sig))
         self.assertEqual(sig, b"v@:@@@@@:^v")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSOpenPanel.resolvesAliases)
         self.assertArgIsBOOL(AppKit.NSOpenPanel.setResolvesAliases_, 0)
         self.assertResultIsBOOL(AppKit.NSOpenPanel.canChooseDirectories)
@@ -61,7 +61,7 @@ class TestOpenPanel(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSOpenPanel.canResolveUbiquitousConflicts)
         self.assertArgIsBOOL(AppKit.NSOpenPanel.setCanResolveUbiquitousConflicts_, 0)
         self.assertResultIsBOOL(AppKit.NSOpenPanel.canDownloadUbiquitousContents)

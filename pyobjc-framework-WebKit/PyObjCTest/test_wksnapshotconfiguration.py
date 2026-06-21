@@ -4,6 +4,6 @@ import WebKit
 
 class TestWKSnapshotConfiguration(TestCase):
     @min_os_level("10.15")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.WKSnapshotConfiguration.afterScreenUpdates)
         self.assertArgIsBOOL(WebKit.WKSnapshotConfiguration.setAfterScreenUpdates_, 0)

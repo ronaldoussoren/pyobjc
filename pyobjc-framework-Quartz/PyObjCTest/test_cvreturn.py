@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCVReturn(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCVReturnSuccess, 0)
         self.assertEqual(Quartz.kCVReturnError, -6660)
         self.assertEqual(Quartz.kCVReturnInvalidArgument, -6661)

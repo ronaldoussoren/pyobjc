@@ -4,7 +4,7 @@ import Contacts
 
 class TestCNContactRelation(TestCase):
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(Contacts.CNLabelContactRelationFather, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationMother, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationParent, str)
@@ -18,12 +18,12 @@ class TestCNContactRelation(TestCase):
         self.assertIsInstance(Contacts.CNLabelContactRelationManager, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Contacts.CNLabelContactRelationSon, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationDaughter, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Contacts.CNLabelContactRelationColleague, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationTeacher, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationSibling, str)
@@ -474,6 +474,6 @@ class TestCNContactRelation(TestCase):
         )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(Contacts.CNLabelContactRelationGranddaughterOrNiece, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationGrandsonOrNephew, str)

@@ -6,7 +6,7 @@ class TestNSExpression(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSExpressionType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSConstantValueExpressionType, 0)
         self.assertEqual(Foundation.NSEvaluatedObjectExpressionType, 1)
         self.assertEqual(Foundation.NSVariableExpressionType, 2)
@@ -19,19 +19,19 @@ class TestNSExpression(TestCase):
         self.assertEqual(Foundation.NSAggregateExpressionType, 14)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Foundation.NSBlockExpressionType, 19)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(Foundation.NSAnyKeyExpressionType, 15)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertEqual(Foundation.NSConditionalExpressionType, 20)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSExpression.expressionForBlock_arguments_, 0, b"@@@@"
         )

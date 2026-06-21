@@ -9,12 +9,12 @@ class TestCBAdvertisementData(TestCase):
         self.assertIsEnumType(CoreBluetooth.CBCharacteristicProperties)
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(CoreBluetooth.CBCharacteristic, objc.objc_class)
         self.assertIsInstance(CoreBluetooth.CBMutableCharacteristic, objc.objc_class)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyBroadcast, 0x01)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyRead, 0x02)
         self.assertEqual(
@@ -44,6 +44,6 @@ class TestCBAdvertisementData(TestCase):
         )
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreBluetooth.CBCharacteristic.isBroadcasted)
         self.assertResultIsBOOL(CoreBluetooth.CBCharacteristic.isNotifying)

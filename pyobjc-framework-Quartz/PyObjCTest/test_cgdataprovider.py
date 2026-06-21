@@ -5,10 +5,10 @@ import Quartz
 
 
 class TestCGDataProvider(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGDataProviderRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGDataProviderGetTypeID(), int)
 
         provider = Quartz.CGDataProviderCreateWithCFData(b"data")
@@ -61,5 +61,5 @@ class TestCGDataProvider(TestCase):
         self.fail("CGDataProviderCreateDirectAccess")  # + callbacks
 
     @min_os_level("10.13")
-    def testFunctions10_13(self):
+    def test_functions10_13(self):
         Quartz.CGDataProviderGetInfo

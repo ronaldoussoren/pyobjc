@@ -4,7 +4,7 @@ import PhotosUI
 
 class TestPHSharedAlbumCustomizationViewController(TestCase):
     @min_sdk_level("27.0")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "PHSharedAlbumCustomizationViewControllerDelegate", PhotosUI
         )

@@ -7,7 +7,7 @@ PHAssetResourceProgressHandler = b"vd"
 
 class TestPHAssetResourceManager(TestCase):
     @min_os_level("10.15")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Photos.PHContentEditingInputRequestOptions.isNetworkAccessAllowed
         )

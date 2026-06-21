@@ -6,7 +6,7 @@ class TestGKError(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(GameKit.GKErrorCode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(GameKit.GKErrorUnknown, 1)
         self.assertEqual(GameKit.GKErrorCancelled, 2)
         self.assertEqual(GameKit.GKErrorCommunicationsFailure, 3)

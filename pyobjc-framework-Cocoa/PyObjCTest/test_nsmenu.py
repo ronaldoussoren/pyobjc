@@ -25,7 +25,7 @@ class TestNSMenu(TestCase):
         self.assertIsEnumType(AppKit.NSMenuProperties)
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSMenuDelegate", AppKit)
 
     def testProtocol(self):
@@ -48,7 +48,7 @@ class TestNSMenu(TestCase):
             TestNSMenuHelper.menuHasKeyEquivalent_forEvent_target_action_, 3, b"o^:"
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSMenu.menuBarVisible)
         self.assertArgIsBOOL(AppKit.NSMenu.setMenuBarVisible_, 0)
         self.assertResultIsBOOL(AppKit.NSMenu.autoenablesItems)
@@ -67,7 +67,7 @@ class TestNSMenu(TestCase):
             AppKit.NSMenu.locationForSubmenu_, AppKit.NSPoint.__typestr__
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSMenuWillSendActionNotification, str)
         self.assertIsInstance(AppKit.NSMenuDidSendActionNotification, str)
         self.assertIsInstance(AppKit.NSMenuDidAddItemNotification, str)
@@ -85,7 +85,7 @@ class TestNSMenu(TestCase):
         self.assertEqual(AppKit.NSMenuSelectionModeSelectAny, 2)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(
             AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_
         )
@@ -103,7 +103,7 @@ class TestNSMenu(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSMenuPropertyItemTitle, 1 << 0)
         self.assertEqual(AppKit.NSMenuPropertyItemAttributedTitle, 1 << 1)
         self.assertEqual(AppKit.NSMenuPropertyItemKeyEquivalent, 1 << 2)

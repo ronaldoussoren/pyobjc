@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSRulerMarker(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSRulerMarker.isMovable)
         self.assertArgIsBOOL(AppKit.NSRulerMarker.setMovable_, 0)
         self.assertResultIsBOOL(AppKit.NSRulerMarker.isRemovable)

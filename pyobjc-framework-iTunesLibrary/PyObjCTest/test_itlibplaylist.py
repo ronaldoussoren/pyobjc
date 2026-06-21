@@ -7,16 +7,16 @@ class TestITLibPlaylist(TestCase):
     def test_classes(self):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylist, objc.objc_class)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isMaster)
         self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isVisible)
         self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isAllItemsPlaylist)
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isPrimary)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindNone, 0)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindMovies, 1)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindTVShows, 2)
@@ -62,9 +62,9 @@ class TestITLibPlaylist(TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyItems, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyKind, str)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyPrimary, str)

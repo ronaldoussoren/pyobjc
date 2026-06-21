@@ -47,7 +47,7 @@ class TestSCNView(TestCase):
     def test_typed_enum(self):
         self.assertIsTypedEnum(SceneKit.SCNViewOption, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SceneKit.SCNAntialiasingModeNone, 0)
         self.assertEqual(SceneKit.SCNAntialiasingModeMultisampling2X, 1)
         self.assertEqual(SceneKit.SCNAntialiasingModeMultisampling4X, 2)
@@ -55,7 +55,7 @@ class TestSCNView(TestCase):
         self.assertEqual(SceneKit.SCNAntialiasingModeMultisampling16X, 4)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(SceneKit.SCNPreferredRenderingAPIKey, str)
         self.assertIsInstance(SceneKit.SCNPreferredDeviceKey, str)
         self.assertIsInstance(SceneKit.SCNPreferLowPowerDeviceKey, str)
@@ -72,7 +72,7 @@ class TestSCNView(TestCase):
             SceneKit.SCNPreferLowPowerDeviceKey,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(TestSCNViewHelper.autoSwitchToFreeCamera)
         self.assertResultIsBOOL(TestSCNViewHelper.allowsTranslation)
         self.assertResultHasType(TestSCNViewHelper.flyModeVelocity, objc._C_CGFloat)
@@ -92,22 +92,22 @@ class TestSCNView(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBOOL(SceneKit.SCNView.setAllowsCameraControl_, 0)
         self.assertResultIsBOOL(SceneKit.SCNView.allowsCameraControl)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBOOL(SceneKit.SCNView.setRendersContinuously_, 0)
         self.assertResultIsBOOL(SceneKit.SCNView.rendersContinuously)
         self.assertArgIsBOOL(SceneKit.SCNView.setAllowsCameraControl_, 0)
         self.assertResultIsBOOL(SceneKit.SCNView.allowsCameraControl)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(SceneKit.SCNView.drawableResizesAsynchronously)
         self.assertArgIsBOOL(SceneKit.SCNView.setDrawableResizesAsynchronously_, 0)
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("SCNCameraControlConfiguration", SceneKit)

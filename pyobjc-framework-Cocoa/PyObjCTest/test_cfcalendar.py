@@ -215,7 +215,7 @@ class TestCFCalendarVariadic(TestCase):
         num2 = CoreFoundation.CFCalendarGetMinimumDaysInFirstWeek(cal)
         self.assertEqual(num2, num)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFCalendarUnitEra, 1 << 1)
         self.assertEqual(CoreFoundation.kCFCalendarUnitYear, 1 << 2)
         self.assertEqual(CoreFoundation.kCFCalendarUnitMonth, 1 << 3)
@@ -229,11 +229,11 @@ class TestCFCalendarVariadic(TestCase):
         self.assertEqual(CoreFoundation.kCFCalendarComponentsWrap, 1 << 0)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(CoreFoundation.kCFCalendarUnitQuarter, 1 << 11)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(CoreFoundation.kCFCalendarUnitWeekOfMonth, 1 << 12)
         self.assertEqual(CoreFoundation.kCFCalendarUnitWeekOfYear, 1 << 13)
         self.assertEqual(CoreFoundation.kCFCalendarUnitYearForWeekOfYear, 1 << 14)

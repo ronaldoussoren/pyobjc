@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAudioServerPlugIn(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInTypeUUID"))
 
         self.assertFalse(hasattr(CoreAudio, "kAudioObjectPlugInObject"))
@@ -54,7 +54,7 @@ class TestAudioServerPlugIn(TestCase):
 
         self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInDriverInterfaceUUID"))
 
-    def testStructs(self):
+    def test_structs(self):
         self.assertFalse(hasattr(CoreAudio, "AudioServerPlugInCustomPropertyInfo"))
         self.assertFalse(hasattr(CoreAudio, "AudioServerPlugInClientInfo"))
         self.assertFalse(hasattr(CoreAudio, "AudioServerPlugInIOCycleInfo"))

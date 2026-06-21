@@ -14,7 +14,7 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsEnumType(Foundation.NSQualityOfService)
         self.assertIsEnumType(Foundation.NSSortOptions)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSQualityOfServiceUserInteractive, 0x21)
         self.assertEqual(Foundation.NSQualityOfServiceUserInitiated, 0x19)
         self.assertEqual(Foundation.NSQualityOfServiceUtility, 0x11)
@@ -116,7 +116,7 @@ class TestNSObjCRuntime(TestCase):
         self.assertEqual(Foundation.NSNotFound, Foundation.NSIntegerMax)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Foundation.NSFoundationVersionNumber10_5, 677.00)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_5_1, 677.10)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_5_2, 677.15)
@@ -131,7 +131,7 @@ class TestNSObjCRuntime(TestCase):
         self.assertEqual(Foundation.NSSortStable, 1 << 4)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Foundation.NSFoundationVersionNumber10_7, 833.10)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_7_1, 833.10)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_7_2, 833.20)
@@ -180,5 +180,5 @@ class TestNSObjCRuntime(TestCase):
         self.assertEqual(Foundation.ABS(-1), 1)
         self.assertEqual(Foundation.ABS(-1.0), 1.0)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsPrintf(Foundation.NSLog, 0)

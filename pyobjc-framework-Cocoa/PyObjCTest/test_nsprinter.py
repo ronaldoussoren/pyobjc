@@ -10,12 +10,12 @@ class TestNSPrinter(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSPrinterTableStatus)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSPrinterTableOK, 0)
         self.assertEqual(AppKit.NSPrinterTableNotFound, 1)
         self.assertEqual(AppKit.NSPrinterTableError, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSPrinter.isKey_inTable_)
         self.assertResultIsBOOL(AppKit.NSPrinter.booleanForKey_inTable_)
         self.assertResultIsBOOL(AppKit.NSPrinter.acceptsBinary)

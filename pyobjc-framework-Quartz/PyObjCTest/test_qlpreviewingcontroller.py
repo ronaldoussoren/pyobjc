@@ -18,10 +18,10 @@ class TestQLPreviewingControllerHelper(NSObject):
 
 class TestQLPreviewingController(TestCase):
     @min_sdk_level("10.13")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("QLPreviewingController", Quartz)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             TestQLPreviewingControllerHelper.preparePreviewOfSearchableItemWithIdentifier_queryString_completionHandler_,
             2,

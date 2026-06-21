@@ -8,7 +8,7 @@ class TestCIRAWFilter(TestCase):
         self.assertIsTypedEnum(Quartz.CIRAWFilterOption, str)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(Quartz.kCIInputDecoderVersionKey, str)
         self.assertIsInstance(Quartz.kCISupportedDecoderVersionsKey, str)
         self.assertIsInstance(Quartz.kCIInputBoostKey, str)
@@ -28,13 +28,13 @@ class TestCIRAWFilter(TestCase):
         self.assertIsInstance(Quartz.kCIInputBiasKey, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(Quartz.kCIInputNoiseReductionAmountKey, str)
         self.assertIsInstance(Quartz.kCIInputLinearSpaceFilter, str)
         self.assertIsInstance(Quartz.kCIActiveKeys, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(Quartz.kCIInputEnableVendorLensCorrectionKey, str)
         self.assertIsInstance(Quartz.kCIInputLuminanceNoiseReductionAmountKey, str)
         self.assertIsInstance(Quartz.kCIInputColorNoiseReductionAmountKey, str)
@@ -44,24 +44,24 @@ class TestCIRAWFilter(TestCase):
         self.assertIsInstance(Quartz.kCIOutputNativeSizeKey, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(Quartz.kCIInputBaselineExposureKey, str)
         self.assertIsInstance(Quartz.kCIInputDisableGamutMapKey, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.kCIInputMoireAmountKey, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Quartz.kCIInputEnableEDRModeKey, str)
 
     @min_os_level("11.1")
-    def testConstants11_1(self):
+    def test_constants11_1(self):
         self.assertIsInstance(Quartz.kCIInputLocalToneMapAmountKey, str)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(Quartz.CIRAWDecoderVersionNone, str)
         self.assertIsInstance(Quartz.CIRAWDecoderVersion8, str)
         self.assertIsInstance(Quartz.CIRAWDecoderVersion8DNG, str)
@@ -71,7 +71,7 @@ class TestCIRAWFilter(TestCase):
         self.assertIsInstance(Quartz.CIRAWDecoderVersion6DNG, str)
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isGamutMappingEnabled)
         self.assertArgIsBOOL(Quartz.CIRAWFilter.setGamutMappingEnabled_, 0)
 
@@ -95,6 +95,6 @@ class TestCIRAWFilter(TestCase):
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isLocalToneMapSupported)
 
     @min_os_level("27.0")
-    def testMethods27_0(self):
+    def test_methods27_0(self):
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isDespeckleSupported)
         self.assertArgIsBOOL(Quartz.CIRAWFilter.setDespeckleSupported_, 0)

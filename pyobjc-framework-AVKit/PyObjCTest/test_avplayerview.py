@@ -28,11 +28,11 @@ class TestAVPlayerView(TestCase):
         self.assertProtocolExists("AVPlayerViewDelegate", AVKit)
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(AVKit.AVPlayerView, objc.objc_class)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBOOL(AVKit.AVPlayerView.setShowsFrameSteppingButtons_, 0)
         self.assertResultIsBOOL(AVKit.AVPlayerView.showsFrameSteppingButtons)
         self.assertArgIsBOOL(AVKit.AVPlayerView.setShowsSharingServiceButton_, 0)
@@ -48,16 +48,16 @@ class TestAVPlayerView(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AVKit.AVPlayerView.isReadyForDisplay)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBOOL(AVKit.AVPlayerView.setUpdatesNowPlayingInfoCenter_, 0)
         self.assertResultIsBOOL(AVKit.AVPlayerView.updatesNowPlayingInfoCenter)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBOOL(AVKit.AVPlayerView.setShowsTimecodes_, 0)
         self.assertResultIsBOOL(AVKit.AVPlayerView.showsTimecodes)
 
@@ -80,7 +80,7 @@ class TestAVPlayerView(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(AVKit.AVPlayerView.allowsVideoFrameAnalysis)
         self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsVideoFrameAnalysis_, 0)
 

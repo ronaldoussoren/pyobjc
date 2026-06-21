@@ -8,5 +8,5 @@ class TestNSDictionaryControllerHelper(AppKit.NSObject):
 
 
 class TestNSDictionaryController(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertResultIsBOOL(TestNSDictionaryControllerHelper.isExplicitlyIncluded)

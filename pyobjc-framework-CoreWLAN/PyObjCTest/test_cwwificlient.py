@@ -12,7 +12,7 @@ class TestCWWifiClientHelper(CoreWLAN.NSObject):
 
 class TestCWWiFiClient(TestCase):
     @min_os_level("10.10")
-    def testProtocols10_10(self):
+    def test_protocols10_10(self):
         self.assertProtocolExists("CWEventDelegate", CoreWLAN)
 
     def test_protocol_methods(self):
@@ -24,7 +24,7 @@ class TestCWWiFiClient(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
             CoreWLAN.CWWiFiClient.startMonitoringEventWithType_error_
         )

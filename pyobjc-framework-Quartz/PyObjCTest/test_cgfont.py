@@ -4,10 +4,10 @@ import objc
 
 
 class TestCGFont(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGFontRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGFontPostScriptFormatType1, 1)
         self.assertEqual(Quartz.kCGFontPostScriptFormatType3, 3)
         self.assertEqual(Quartz.kCGFontPostScriptFormatType42, 42)
@@ -27,7 +27,7 @@ class TestCGFont(TestCase):
     @min_os_level("10.5")
     # Most functions should work on 10.4 as well, except for the convenient
     # contruction functions
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGFontGetTypeID(), int)
 
         self.assertResultIsCFRetained(Quartz.CGFontCreateWithFontName)

@@ -8,7 +8,7 @@ class TestAVAssetReader(TestCase):
         self.assertIsEnumType(AVFoundation.AVSampleBufferRequestMode)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVAssetReaderStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVAssetReaderStatusReading, 1)
         self.assertEqual(AVFoundation.AVAssetReaderStatusCompleted, 2)
@@ -16,14 +16,14 @@ class TestAVAssetReader(TestCase):
         self.assertEqual(AVFoundation.AVAssetReaderStatusCancelled, 4)
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(AVFoundation.AVAssetReader.assetReaderWithAsset_error_, 1)
         self.assertArgIsOut(AVFoundation.AVAssetReader.initWithAsset_error_, 1)
         self.assertResultIsBOOL(AVFoundation.AVAssetReader.canAddOutput_)
         self.assertResultIsBOOL(AVFoundation.AVAssetReader.startReading)
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureSession.isMultitaskingCameraAccessSupported
         )

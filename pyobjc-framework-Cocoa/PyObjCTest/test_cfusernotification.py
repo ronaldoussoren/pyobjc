@@ -4,7 +4,7 @@ import objc
 
 
 class TestUserNotification(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFUserNotificationRef)
 
     def testTypeID(self):
@@ -103,7 +103,7 @@ class TestUserNotification(TestCase):
         flag = CoreFoundation.CFUserNotificationPopUpSelection(2)
         self.assertEqual(flag, 2 << 24)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFUserNotificationStopAlertLevel, 0)
         self.assertEqual(CoreFoundation.kCFUserNotificationNoteAlertLevel, 1)
         self.assertEqual(CoreFoundation.kCFUserNotificationCautionAlertLevel, 2)

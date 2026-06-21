@@ -4,7 +4,7 @@ import MediaPlayer
 
 class TestMPContentItem(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(MediaPlayer.MPContentItem.isContainer)
         self.assertArgIsBOOL(MediaPlayer.MPContentItem.setContainer_, 0)
 

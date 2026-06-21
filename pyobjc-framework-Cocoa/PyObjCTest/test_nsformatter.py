@@ -8,7 +8,7 @@ class TestNSFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSFormattingUnitStyle)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(Foundation.NSFormattingContextUnknown, 0)
         self.assertEqual(Foundation.NSFormattingContextDynamic, 1)
         self.assertEqual(Foundation.NSFormattingContextStandalone, 2)
@@ -20,7 +20,7 @@ class TestNSFormatter(TestCase):
         self.assertEqual(Foundation.NSFormattingUnitStyleMedium, 2)
         self.assertEqual(Foundation.NSFormattingUnitStyleLong, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Foundation.NSFormatter.getObjectValue_forString_errorDescription_
         )

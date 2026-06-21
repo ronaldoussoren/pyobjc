@@ -8,7 +8,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestExceptionHandling(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(ExceptionHandling, "NSExceptionHandler")
         self.assertIsInstance(ExceptionHandling.NSExceptionHandler, objc.objc_class)
 

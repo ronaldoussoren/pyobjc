@@ -38,7 +38,7 @@ class TestNSPathUtilities(TestCase):
                 boolVal,
             )
 
-    def testFunctions(self):
+    def test_functions(self):
         s = Foundation.NSUserName()
         self.assertIsInstance(s, str)
         s = Foundation.NSFullUserName()
@@ -52,7 +52,7 @@ class TestNSPathUtilities(TestCase):
         s = Foundation.NSOpenStepRootDirectory()
         self.assertIsInstance(s, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSApplicationDirectory, 1)
         self.assertEqual(Foundation.NSDemoApplicationDirectory, 2)
         self.assertEqual(Foundation.NSDeveloperApplicationDirectory, 3)
@@ -77,7 +77,7 @@ class TestNSPathUtilities(TestCase):
         self.assertEqual(Foundation.NSAllDomainsMask, 0x0FFFF)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Foundation.NSAutosavedInformationDirectory, 11)
 
         self.assertEqual(Foundation.NSInputMethodsDirectory, 16)
@@ -90,11 +90,11 @@ class TestNSPathUtilities(TestCase):
         self.assertEqual(Foundation.NSItemReplacementDirectory, 99)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(Foundation.NSApplicationScriptsDirectory, 23)
         self.assertEqual(Foundation.NSTrashDirectory, 102)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSString.isAbsolutePath)
         self.assertArgIsOut(
             Foundation.NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,  # noqa: B950

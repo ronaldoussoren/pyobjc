@@ -29,7 +29,7 @@ class TestINSearchCallHistoryIntentHelper(Intents.NSObject):
 
 class TestINSearchCallHistoryIntent(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             TestINSearchCallHistoryIntentHelper.handleSearchCallHistory_completion_,
             1,
@@ -54,7 +54,7 @@ class TestINSearchCallHistoryIntent(TestCase):
         # self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveCallCapabilitiesForSearchCallHistory_withCompletion_, 1, b'v@')   # noqa: B950
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             TestINSearchCallHistoryIntentHelper.resolveCallTypesForSearchCallHistory_withCompletion_,
             1,
@@ -67,5 +67,5 @@ class TestINSearchCallHistoryIntent(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("INSearchCallHistoryIntentHandling", Intents)

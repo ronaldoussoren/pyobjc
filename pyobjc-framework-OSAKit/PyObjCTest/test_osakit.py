@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestOSAScript(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(OSAKit.OSAScriptErrorMessageKey, str)
         self.assertIsInstance(OSAKit.OSAScriptErrorBriefMessageKey, str)
         self.assertIsInstance(OSAKit.OSAScriptErrorNumberKey, str)
@@ -31,11 +31,11 @@ class TestOSAScript(TestCase):
         self.assertEqual(OSAKit.OSAStayOpenApplet, 0x10000000)
         self.assertEqual(OSAKit.OSAShowStartupScreen, 0x20000000)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(OSAKit.OSAScript.initWithCompiledData_error_, 1)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsOut(OSAKit.OSAScript.initWithContentsOfURL_error_, 1)
         self.assertArgIsOut(
             OSAKit.OSAScript.initWithContentsOfURL_languageInstance_usingStorageOptions_error_,

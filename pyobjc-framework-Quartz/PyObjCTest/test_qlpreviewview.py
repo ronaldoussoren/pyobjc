@@ -7,12 +7,12 @@ class TestQLPreviewView(TestCase):
         self.assertIsEnumType(Quartz.QLPreviewViewStyle)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Quartz.QLPreviewViewStyleNormal, 0)
         self.assertEqual(Quartz.QLPreviewViewStyleCompact, 1)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.QLPreviewView.shouldCloseWithWindow)
         self.assertResultIsBOOL(Quartz.QLPreviewView.autostarts)
 

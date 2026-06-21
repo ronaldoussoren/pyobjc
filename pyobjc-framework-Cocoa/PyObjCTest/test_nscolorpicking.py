@@ -15,7 +15,7 @@ class TestNSColorPickingHelper(AppKit.NSObject):
 
 
 class TestNSColorPicking(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(TestNSColorPickingHelper.supportsMode_)
         self.assertArgIsBOOL(TestNSColorPickingHelper.provideNewView_, 0)
 
@@ -25,6 +25,6 @@ class TestNSColorPicking(TestCase):
             objc._C_NSUInteger,
         )
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSColorPickingCustom", AppKit)
         self.assertProtocolExists("NSColorPickingDefault", AppKit)

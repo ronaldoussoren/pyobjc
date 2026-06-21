@@ -16,7 +16,7 @@ class TestPHImageManager(TestCase):
         self.assertIsEnumType(Photos.UIImageOrientation)
 
     @min_os_level("10.13")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Photos.PHImageRequestOptionsVersionCurrent, 0)
         self.assertEqual(Photos.PHImageRequestOptionsVersionUnadjusted, 1)
         self.assertEqual(Photos.PHImageRequestOptionsVersionOriginal, 2)
@@ -45,7 +45,7 @@ class TestPHImageManager(TestCase):
         self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeFastFormat, 3)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(Photos.PHImageRequestOptions.isNetworkAccessAllowed)
         self.assertArgIsBOOL(Photos.PHImageRequestOptions.setNetworkAccessAllowed_, 0)
 
@@ -73,7 +73,7 @@ class TestPHImageManager(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(Photos.PHLivePhotoRequestOptions.isNetworkAccessAllowed)
         self.assertArgIsBOOL(
             Photos.PHLivePhotoRequestOptions.setNetworkAccessAllowed_, 0
@@ -128,7 +128,7 @@ class TestPHImageManager(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(
             Photos.PHImageRequestOptions.allowSecondaryDegradedImage
         )

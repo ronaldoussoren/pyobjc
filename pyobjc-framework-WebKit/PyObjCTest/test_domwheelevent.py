@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMWheelEvent(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMWheelEvent.ctrlKey)
         self.assertResultIsBOOL(WebKit.DOMWheelEvent.shiftKey)
         self.assertResultIsBOOL(WebKit.DOMWheelEvent.altKey)
@@ -27,7 +27,7 @@ class TestDOMWheelEvent(TestCase):
             10,
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.DOM_DOM_DELTA_PIXEL, 0)
         self.assertEqual(WebKit.DOM_DOM_DELTA_LINE, 1)
         self.assertEqual(WebKit.DOM_DOM_DELTA_PAGE, 2)

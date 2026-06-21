@@ -9,13 +9,13 @@ class TestMKPinAnnotationView(TestCase):
         self.assertIsEnumType(MapKit.MKPinAnnotationColor)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(MapKit.MKPinAnnotationColorRed, 0)
         self.assertEqual(MapKit.MKPinAnnotationColorGreen, 1)
         self.assertEqual(MapKit.MKPinAnnotationColorPurple, 2)
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKPinAnnotationView, objc.objc_class)
 
         self.assertResultIsBOOL(MapKit.MKPinAnnotationView.animatesDrop)

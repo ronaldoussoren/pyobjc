@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVMovieTrack(TestCase):
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AVFoundation.AVMutableMovieTrack.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVMutableMovieTrack.setEnabled_, 0)
 
@@ -28,7 +28,7 @@ class TestAVMovieTrack(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(
             AVFoundation.AVMutableMovieTrack.appendSampleBuffer_decodeTime_presentationTime_error_  # noqa: B950
         )
@@ -50,13 +50,13 @@ class TestAVMovieTrack(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVMutableMovieTrack.hasMediaCharacteristic_
         )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(
             AVFoundation.AVFragmentedMovieTrackTimeRangeDidChangeNotification,
             str,  # noqa: B950

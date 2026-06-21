@@ -5,13 +5,13 @@ import MultipeerConnectivity
 
 class TestMCAdvertiserAssistant(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(
             MultipeerConnectivity.MCAdvertiserAssistant, objc.objc_class
         )
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "MCAdvertiserAssistantDelegate", MultipeerConnectivity
         )

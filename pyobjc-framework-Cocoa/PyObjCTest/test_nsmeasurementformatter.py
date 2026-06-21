@@ -7,7 +7,7 @@ class TestNSMeasurementFormatter(TestCase):
         self.assertIsEnumType(Foundation.NSMeasurementFormatterUnitOptions)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             Foundation.NSMeasurementFormatterUnitOptionsProvidedUnit, 1 << 0
         )

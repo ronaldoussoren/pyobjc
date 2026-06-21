@@ -6,7 +6,7 @@ import MapKit
 
 class TestMKDirectionsRequest(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKDirectionsResponse, objc.objc_class)
         self.assertIsInstance(MapKit.MKRoute, objc.objc_class)
         self.assertIsInstance(MapKit.MKRouteStep, objc.objc_class)

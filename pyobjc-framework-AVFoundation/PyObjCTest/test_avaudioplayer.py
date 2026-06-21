@@ -9,7 +9,7 @@ class TestAVAudioPlayerHelper(AVFoundation.NSObject):
 
 class TestAVAudioPlayer(TestCase):
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsOut(AVFoundation.AVAudioPlayer.initWithContentsOfURL_error_, 1)
         self.assertArgIsOut(AVFoundation.AVAudioPlayer.initWithData_error_, 1)
 
@@ -26,16 +26,16 @@ class TestAVAudioPlayer(TestCase):
         )
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVAudioPlayerDelegate", AVFoundation)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioPlayer.enableRate)
         self.assertArgIsBOOL(AVFoundation.AVAudioPlayer.setEnableRate_, 0)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsOut(
             AVFoundation.AVAudioPlayer.initWithContentsOfURL_fileTypeHint_error_, 2
         )

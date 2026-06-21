@@ -86,7 +86,7 @@ class TestWebUIDelegate(TestCase):
         self.assertIsEnumType(WebKit.WebDragDestinationAction)
         self.assertIsEnumType(WebKit.WebDragSourceAction)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.WebMenuItemTagOpenLinkInNewWindow, 1)
         self.assertEqual(WebKit.WebMenuItemTagDownloadLinkToDisk, 2)
         self.assertEqual(WebKit.WebMenuItemTagCopyLinkToClipboard, 3)
@@ -133,16 +133,16 @@ class TestWebUIDelegate(TestCase):
         self.assertEqual(WebKit.WebDragSourceActionSelection, 8)
         self.assertEqual(WebKit.WebDragSourceActionAny, UINT_MAX)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "WebOpenPanelResultListener", WebKit, "WebOpenPanelResultListenerProtocol"
         )
 
     @min_sdk_level("10.11")
-    def testProtocols10_11(self):
+    def test_protocols10_11(self):
         self.assertProtocolExists("WebUIDelegate", WebKit)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webViewAreToolbarsVisible_)
         self.assertArgIsBOOL(TestWebUIDelegateHelper.webView_setToolbarsVisible_, 1)
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webViewIsStatusBarVisible_)
@@ -222,7 +222,7 @@ class TestWebUIDelegate(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBOOL(
             TestWebUIDelegateHelper.webView_runOpenPanelForFileButtonWithResultListener_allowMultipleFiles_,  # noqa: B950
             2,

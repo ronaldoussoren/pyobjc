@@ -9,7 +9,7 @@ class TestWKWebView(TestCase):
         self.assertIsEnumType(WebKit.WKMediaCaptureState)
         self.assertIsEnumType(WebKit.WKMediaPlaybackState)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.WKMediaPlaybackStateNone, 0)
         self.assertEqual(WebKit.WKMediaPlaybackStatePlaying, 1)
         self.assertEqual(WebKit.WKMediaPlaybackStatePaused, 2)
@@ -28,7 +28,7 @@ class TestWKWebView(TestCase):
         self.assertEqual(WebKit.WKWebViewDataTypeSessionStorage, 1 << 0)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(WebKit.WKWebView.isLoading)
         self.assertResultIsBOOL(WebKit.WKWebView.hasOnlySecureContent)
         self.assertResultIsBOOL(WebKit.WKWebView.canGoBack)
@@ -44,19 +44,19 @@ class TestWKWebView(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(WebKit.WKWebView.allowsLinkPreview)
         self.assertArgIsBOOL(WebKit.WKWebView.setAllowsLinkPreview_, 0)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             WebKit.WKWebView.takeSnapshotWithConfiguration_completionHandler_, 1, b"v@@"
         )
         self.assertResultIsBOOL(WebKit.WKWebView.handlesURLScheme_)
 
     @min_os_level("10.15.4")
-    def testMethods10_15_4(self):
+    def test_methods10_15_4(self):
         self.assertArgIsBlock(
             WebKit.WKWebView.createPDFWithConfiguration_completionHandler_, 1, b"v@@"
         )
@@ -68,7 +68,7 @@ class TestWKWebView(TestCase):
         )
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             WebKit.WKWebView.evaluateJavaScript_inFrame_inContentWorld_completionHandler_,
             3,
@@ -107,7 +107,7 @@ class TestWKWebView(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertArgIsBlock(
             WebKit.WKWebView.closeAllMediaPresentationsWithCompletionHandler_,
             0,
@@ -141,16 +141,16 @@ class TestWKWebView(TestCase):
         )
 
     @min_os_level("13.3")
-    def testMethods13_3(self):
+    def test_methods13_3(self):
         self.assertResultIsBOOL(WebKit.WKWebView.isInspectable)
         self.assertArgIsBOOL(WebKit.WKWebView.setInspectable_, 0)
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(WebKit.WKWebView.isWritingToolsActive)
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(WebKit.WKWebView.isBlockedByScreenTime)
 
         self.assertArgIsBlock(
@@ -159,7 +159,7 @@ class TestWKWebView(TestCase):
         self.assertArgIsBlock(WebKit.WKWebView.restoreData_completionHandler_, 1, b"v@")
 
     @min_os_level("27.0")
-    def testMethods27_0(self):
+    def test_methods27_0(self):
         self.assertArgIsBlock(
             WebKit.WKWebView.dismissImmersiveEnvironmentWithCompletionHandler_, 0, b"v"
         )

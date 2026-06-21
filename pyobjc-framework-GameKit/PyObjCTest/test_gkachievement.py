@@ -8,7 +8,7 @@ class TestGKAchievementHelper(GameKit.GKAchievement):
 
 
 class TestGKAchievement(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             GameKit.GKAchievement.loadAchievementsWithCompletionHandler_, 0, b"v@@"
         )
@@ -28,7 +28,7 @@ class TestGKAchievement(TestCase):
         self.assertResultIsBOOL(TestGKAchievementHelper.isHidden)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         # Availability macro claims this is avaible on 10.8, but it isn't on 10.9
         self.assertResultIsBOOL(GameKit.GKAchievement.showsCompletionBanner)
         self.assertArgIsBOOL(GameKit.GKAchievement.setShowsCompletionBanner_, 0)

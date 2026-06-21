@@ -14,12 +14,12 @@ class TestNSGlyphGeneratorHelper(AppKit.NSObject):
 
 
 class TestNSGlyphGenerator(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSShowControlGlyphs, (1 << 0))
         self.assertEqual(AppKit.NSShowInvisibleGlyphs, (1 << 1))
         self.assertEqual(AppKit.NSWantsBidiLevels, (1 << 2))
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSGlyphStorage", AppKit)
         self.assertArgHasType(
             TestNSGlyphGeneratorHelper.setIntAttribute_value_forGlyphAtIndex_,
@@ -68,7 +68,7 @@ class TestNSGlyphGenerator(TestCase):
             objc._C_NSUInteger,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             AppKit.NSGlyphGenerator.generateGlyphsForGlyphStorage_desiredNumberOfCharacters_glyphIndex_characterIndex_,  # noqa: B950
             2,

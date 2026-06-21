@@ -16,7 +16,7 @@ class TestSCNLight(TestCase):
         self.assertIsEnumType(SceneKit.SCNShadowMode)
 
     @min_os_level("10.8")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(SceneKit.SCNLightTypeAmbient, str)
         self.assertIsInstance(SceneKit.SCNLightTypeOmni, str)
         self.assertIsInstance(SceneKit.SCNLightTypeDirectional, str)
@@ -44,16 +44,16 @@ class TestSCNLight(TestCase):
         self.assertEqual(SceneKit.SCNLightAreaTypePolygon, 4)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(SceneKit.SCNLightTypeIES, str)
         self.assertIsInstance(SceneKit.SCNLightTypeProbe, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SceneKit.SCNLight.castsShadow)
         self.assertArgIsBOOL(SceneKit.SCNLight.setCastsShadow_, 0)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(SceneKit.SCNLight.automaticallyAdjustsShadowProjection)
         self.assertArgIsBOOL(
             SceneKit.SCNLight.setAutomaticallyAdjustsShadowProjection_, 0
@@ -66,7 +66,7 @@ class TestSCNLight(TestCase):
         self.assertArgIsBOOL(SceneKit.SCNLight.setSampleDistributedShadowMaps_, 0)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(SceneKit.SCNLight.parallaxCorrectionEnabled)
         self.assertArgIsBOOL(SceneKit.SCNLight.setParallaxCorrectionEnabled_, 0)
 

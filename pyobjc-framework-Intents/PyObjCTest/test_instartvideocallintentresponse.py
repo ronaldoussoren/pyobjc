@@ -7,7 +7,7 @@ class TestINStartVideoCallIntentResponse(TestCase):
         self.assertIsEnumType(Intents.INStartVideoCallIntentResponseCode)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INStartVideoCallIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INStartVideoCallIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INStartVideoCallIntentResponseCodeContinueInApp, 2)

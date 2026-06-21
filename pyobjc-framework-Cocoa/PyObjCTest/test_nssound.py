@@ -8,10 +8,10 @@ class TestNSSoundHelper(AppKit.NSObject):
 
 
 class TestNSSound(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSSoundPboardType, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(AppKit.NSSound.initWithContentsOfURL_byReference_, 1)
         self.assertArgIsBOOL(AppKit.NSSound.initWithContentsOfFile_byReference_, 1)
         self.assertResultIsBOOL(AppKit.NSSound.setName_)
@@ -25,8 +25,8 @@ class TestNSSound(TestCase):
         self.assertArgIsBOOL(AppKit.NSSound.setLoops_, 0)
 
     @min_os_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSSoundDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(TestNSSoundHelper.sound_didFinishPlaying_, 1)

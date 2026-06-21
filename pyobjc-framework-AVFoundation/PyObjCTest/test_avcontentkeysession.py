@@ -21,7 +21,7 @@ class TestAVContentKeySession(TestCase):
         self.assertIsEnumType(AVFoundation.AVExternalContentProtectionStatus)
 
     @min_os_level("10.12.4")
-    def testConstants10_12_4(self):
+    def test_constants10_12_4(self):
         self.assertIsInstance(
             AVFoundation.AVContentKeySystemFairPlayStreaming, str
         )  # noqa: B950
@@ -58,11 +58,11 @@ class TestAVContentKeySession(TestCase):
         self.assertEqual(AVFoundation.AVExternalContentProtectionStatusInsufficient, 2)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AVFoundation.AVContentKeySystemClearKey, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(
             AVFoundation.AVContentKeySystemAuthorizationToken, str
         )  # noqa: B950
@@ -80,12 +80,12 @@ class TestAVContentKeySession(TestCase):
         )
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(
             AVFoundation.AVContentKeyRequestShouldRandomizeDeviceIdentifierKey, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             TestAVContentKeySessionHelper.contentKeySession_shouldRetryContentKeyRequest_reason_  # noqa: B950
         )
@@ -94,7 +94,7 @@ class TestAVContentKeySession(TestCase):
         )
 
     @min_os_level("10.12.4")
-    def testMethods10_12_4(self):
+    def test_methods10_12_4(self):
         self.assertResultIsBOOL(
             AVFoundation.AVContentKeyRequest.canProvidePersistableContentKey
         )
@@ -105,13 +105,13 @@ class TestAVContentKeySession(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsBOOL(
             AVFoundation.AVContentKeyRequest.renewsExpiringResponseData
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             AVFoundation.AVContentKeySession.invalidatePersistableContentKey_options_completionHandler_,  # noqa: B950
             2,
@@ -144,12 +144,12 @@ class TestAVContentKeySession(TestCase):
         )
 
     @min_os_level("11.3")
-    def testMethods11_3(self):
+    def test_methods11_3(self):
         self.assertResultIsBOOL(AVFoundation.AVSampleBufferAttachContentKey)
         self.assertArgIsOut(AVFoundation.AVSampleBufferAttachContentKey, 2)
 
     @min_os_level("27.0")
-    def testMethods27_0(self):
+    def test_methods27_0(self):
         self.assertArgIsBlock(
             AVFoundation.AVContentKeySession.makeOptionalStreamingContentKeyRequestDataForApp_contentIdentifier_options_completionHandler_,  # noqa: B950
             3,
@@ -157,6 +157,6 @@ class TestAVContentKeySession(TestCase):
         )
 
     @min_sdk_level("10.12.4")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("AVContentKeySessionDelegate", AVFoundation)
         self.assertProtocolExists("AVContentKeyRecipient", AVFoundation)

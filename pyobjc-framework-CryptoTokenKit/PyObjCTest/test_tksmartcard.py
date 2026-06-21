@@ -14,13 +14,13 @@ class TestTKSmartCard(TestCase):
         self.assertIsEnumType(CryptoTokenKit.TKSmartCardSlotState)
 
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(CryptoTokenKit.TKSmartCardSlotManager, objc.objc_class)
         self.assertIsInstance(CryptoTokenKit.TKSmartCardSlot, objc.objc_class)
         self.assertIsInstance(CryptoTokenKit.TKSmartCard, objc.objc_class)
 
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             CryptoTokenKit.TKSmartCardSlotManager.getSlotWithName_reply_, 1, b"v@"
         )
@@ -43,7 +43,7 @@ class TestTKSmartCard(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             CryptoTokenKit.TKSmartCardUserInteraction.runWithReply_, 0, b"vZ@"
         )
@@ -57,7 +57,7 @@ class TestTKSmartCard(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(
             CryptoTokenKit.TKSmartCard.inSessionWithError_executeBlock_
         )

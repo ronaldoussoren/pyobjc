@@ -5,7 +5,7 @@ import SpriteKit
 
 class TestSKNode_NSAccessibility(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SpriteKit.SKNode.isAccessibilityElement)
         self.assertArgIsBOOL(SpriteKit.SKNode.setAccessibilityElement_, 0)
 

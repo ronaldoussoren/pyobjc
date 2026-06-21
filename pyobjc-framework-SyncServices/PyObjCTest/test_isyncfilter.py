@@ -11,7 +11,7 @@ class TestISyncFilterHelper(SyncServices.NSObject):
 
 
 class TestISyncFilter(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("ISyncFiltering", SyncServices)
 
     def test_protocol_methods(self):

@@ -7,7 +7,7 @@ class TestNSManagedObjectContext(TestCase):
         self.assertIsEnumType(CoreData.NSManagedObjectContextConcurrencyType)
 
     @min_os_level("10.12.4")
-    def testConstants10_12_4(self):
+    def test_constants10_12_4(self):
         self.assertIsInstance(
             CoreData.NSManagedObjectContextDidSaveObjectIDsNotification, str
         )
@@ -19,17 +19,17 @@ class TestNSManagedObjectContext(TestCase):
         self.assertIsInstance(CoreData.NSDeletedObjectIDsKey, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(CoreData.NSManagedObjectContextQueryGenerationKey, str)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(CoreData.NSRefreshedObjectsKey, str)
         self.assertIsInstance(CoreData.NSInvalidatedObjectsKey, str)
         self.assertIsInstance(CoreData.NSInvalidatedAllObjectsKey, str)
         self.assertIsInstance(CoreData.NSManagedObjectContextWillSaveNotification, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreData.NSManagedObjectContextDidSaveNotification, str)
         self.assertIsInstance(
             CoreData.NSManagedObjectContextObjectsDidChangeNotification, str
@@ -52,7 +52,7 @@ class TestNSManagedObjectContext(TestCase):
         self.assertEqual(CoreData.NSPrivateQueueConcurrencyType, 1)
         self.assertEqual(CoreData.NSMainQueueConcurrencyType, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreData.NSManagedObjectContext.hasChanges)
         self.assertArgIsOut(
             CoreData.NSManagedObjectContext.executeFetchRequest_error_, 1
@@ -77,7 +77,7 @@ class TestNSManagedObjectContext(TestCase):
         )
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertArgIsOut(
             CoreData.NSManagedObjectContext.countForFetchRequest_error_, 1
         )
@@ -89,24 +89,24 @@ class TestNSManagedObjectContext(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsOut(
             CoreData.NSManagedObjectContext.existingObjectWithID_error_, 1
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsBlock(CoreData.NSManagedObjectContext.performBlock_, 0, b"v")
         self.assertArgIsBlock(
             CoreData.NSManagedObjectContext.performBlockAndWait_, 0, b"v"
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsOut(CoreData.NSManagedObjectContext.executeRequest_error_, 1)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(
             CoreData.NSManagedObjectContext.shouldDeleteInaccessibleFaults
         )
@@ -119,7 +119,7 @@ class TestNSManagedObjectContext(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(
             CoreData.NSManagedObjectContext.setQueryGenerationFromToken_error_
         )

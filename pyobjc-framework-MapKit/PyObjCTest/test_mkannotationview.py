@@ -14,7 +14,7 @@ class TestMKAnnotationView(TestCase):
         self.assertIsEnumType(MapKit.MKAnnotationViewDragState)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(MapKit.MKAnnotationCalloutInfoDidChangeNotification, str)
 
         self.assertEqual(MapKit.MKAnnotationViewDragStateNone, 0)
@@ -37,11 +37,11 @@ class TestMKAnnotationView(TestCase):
         self.assertEqual(MapKit.MKAnnotationViewZPriorityMin, 0.0)
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKAnnotationView, objc.objc_class)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             MapKit.MKAnnotationView.centerOffset, MapKit.CGPoint.__typestr__
         )

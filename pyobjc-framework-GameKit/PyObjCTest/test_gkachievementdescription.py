@@ -11,7 +11,7 @@ class TestGKAchievementDescriptionHelper(GameKit.GKAchievementDescription):
 
 
 class TestGKAchievementDescription(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             GameKit.GKAchievementDescription.loadAchievementDescriptionsWithCompletionHandler_,
             0,

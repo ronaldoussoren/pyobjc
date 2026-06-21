@@ -6,5 +6,5 @@ class TestGKSessionError(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(GameKit.GKSessionError)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(GameKit.GKSessionErrorDomain, str)

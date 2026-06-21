@@ -7,7 +7,7 @@ class TestSCNCameraController(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(SceneKit.SCNInteractionMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SceneKit.SCNInteractionModeFly, 0)
         self.assertEqual(SceneKit.SCNInteractionModeOrbitTurntable, 1)
         self.assertEqual(SceneKit.SCNInteractionModeOrbitAngleMapping, 2)
@@ -17,11 +17,11 @@ class TestSCNCameraController(TestCase):
         self.assertEqual(SceneKit.SCNInteractionModeTruck, 6)
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("SCNCameraControllerDelegate", SceneKit)
 
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SceneKit.SCNCameraController.automaticTarget)
         self.assertArgIsBOOL(SceneKit.SCNCameraController.setAutomaticTarget_, 0)
         self.assertResultIsBOOL(SceneKit.SCNCameraController.inertiaEnabled)

@@ -45,7 +45,7 @@ class TestIOSurfaceObjC(TestCase):
         self.assertEqual(IOSurface.kIOSurfaceMemoryLedgerFlagNoFootprint, 1 << 0)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(IOSurface.kIOSurfaceAllocSize, str)
         self.assertIsInstance(IOSurface.kIOSurfaceWidth, str)
         self.assertIsInstance(IOSurface.kIOSurfaceHeight, str)

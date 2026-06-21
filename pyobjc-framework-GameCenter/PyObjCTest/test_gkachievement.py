@@ -11,7 +11,7 @@ import GameCenter
 
 class TestGCAchievement(TestCase):
     @min_os_level("10.8")
-    def testClasses10_8(self):
+    def test_classes10_8(self):
         self.assertIsInstance(GameCenter.GKAchievement, objc.objc_class)
 
         self.assertArgIsBlock(
@@ -31,7 +31,7 @@ class TestGCAchievement(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
     @min_os_level("10.8")
-    def testClasses10_8_missing_10_9(self):
+    def test_classes10_8_missing_10_9(self):
         self.assertResultIsBOOL(GameCenter.GKAchievement.showsCompletionBanner)
         self.assertArgIsBOOL(GameCenter.GKAchievement.setShowsCompletionBanner_, 0)
         self.assertResultIsBOOL(GameCenter.GKAchievement.alloc().init().isHidden)

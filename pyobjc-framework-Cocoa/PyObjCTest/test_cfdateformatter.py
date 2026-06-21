@@ -8,7 +8,7 @@ class TestDateFormatter(TestCase):
     def testTypeID(self):
         self.assertIsInstance(CoreFoundation.CFDateGetTypeID(), int)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFDateFormatterNoStyle, 0)
         self.assertEqual(CoreFoundation.kCFDateFormatterShortStyle, 1)
         self.assertEqual(CoreFoundation.kCFDateFormatterMediumStyle, 2)
@@ -103,7 +103,7 @@ class TestDateFormatter(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(
             CoreFoundation.kCFDateFormatterDoesRelativeDateFormattingKey, str
         )
@@ -119,12 +119,12 @@ class TestDateFormatter(TestCase):
         self.assertIsInstance(r, str)
 
     @min_os_level("10.12")
-    def testFunctions10_12(self):
+    def test_functions10_12(self):
         self.assertResultIsCFRetained(
             CoreFoundation.CFDateFormatterCreateISO8601Formatter
         )
 
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFDateFormatterRef)
 
         self.assertIsInstance(CoreFoundation.CFDateFormatterGetTypeID(), int)

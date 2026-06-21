@@ -56,7 +56,7 @@ class TestNSTextFinder(TestCase):
         self.assertIsEnumType(AppKit.NSTextFinderMatchingType)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSTextFinderActionShowFindInterface, 1)
         self.assertEqual(AppKit.NSTextFinderActionNextMatch, 2)
         self.assertEqual(AppKit.NSTextFinderActionPreviousMatch, 3)
@@ -80,7 +80,7 @@ class TestNSTextFinder(TestCase):
         self.assertEqual(AppKit.NSTextFinderMatchingTypeEndsWith, 3)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSTextFinder.validateAction_)
         self.assertResultIsBOOL(AppKit.NSTextFinder.findIndicatorNeedsUpdate)
         self.assertArgIsBOOL(AppKit.NSTextFinder.setFindIndicatorNeedsUpdate_, 0)
@@ -94,7 +94,7 @@ class TestNSTextFinder(TestCase):
         )
 
     @min_os_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTextFinderClient", AppKit)
 
     @min_os_level("10.7")

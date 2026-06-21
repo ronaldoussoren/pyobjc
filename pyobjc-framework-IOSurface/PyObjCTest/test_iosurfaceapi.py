@@ -4,15 +4,15 @@ import objc
 
 
 class TestIOSurfaceAPI(TestCase):
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(IOSurface.IOSurfaceRef)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(IOSurface.kIOSurfacePixelSizeCastingAllowed, str)
 
     @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(IOSurface.kIOSurfaceAllocSize, str)
         self.assertIsInstance(IOSurface.kIOSurfaceWidth, str)
         self.assertIsInstance(IOSurface.kIOSurfaceHeight, str)
@@ -104,7 +104,7 @@ class TestIOSurfaceAPI(TestCase):
         )
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(IOSurface.kIOSurfacePlaneBitsPerElement, str)
         self.assertIsInstance(IOSurface.kIOSurfacePlaneComponentBitDepths, str)
         self.assertIsInstance(IOSurface.kIOSurfacePlaneComponentBitOffsets, str)
@@ -112,11 +112,11 @@ class TestIOSurfaceAPI(TestCase):
         self.assertIsInstance(IOSurface.kIOSurfaceSubsampling, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(IOSurface.kIOSurfaceName, str)
 
     @min_os_level("10.6")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(IOSurface.IOSurfaceGetTypeID(), int)
 
         self.assertResultIsCFRetained(IOSurface.IOSurfaceCreate)
@@ -180,17 +180,17 @@ class TestIOSurfaceAPI(TestCase):
         self.assertResultIsBOOL(IOSurface.IOSurfaceIsInUse)
 
     @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions10_7(self):
         IOSurface.IOSurfaceCreateXPCObject
 
         self.assertResultIsCFRetained(IOSurface.IOSurfaceLookupFromXPCObject)
 
     @min_os_level("10.12")
-    def testFunctions10_12(self):
+    def test_functions10_12(self):
         self.assertResultIsBOOL(IOSurface.IOSurfaceAllowsPixelSizeCasting)
 
     @min_os_level("10.13")
-    def testFunctions10_13(self):
+    def test_functions10_13(self):
         IOSurface.IOSurfaceGetNumberOfComponentsOfPlane
         IOSurface.IOSurfaceGetNameOfComponentOfPlane
         IOSurface.IOSurfaceGetTypeOfComponentOfPlane

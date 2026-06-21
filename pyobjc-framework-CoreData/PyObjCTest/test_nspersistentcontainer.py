@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSPersistentContainer(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             CoreData.NSPersistentContainer.loadPersistentStoresWithCompletionHandler_,
             0,

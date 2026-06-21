@@ -6,11 +6,11 @@ import GameCenter
 
 class TestGKMatchmakerViewController(TestCase):
     @min_os_level("10.8")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKMatchmakerViewControllerDelegate", GameCenter)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertIsInstance(GameCenter.GKMatchmakerViewController, objc.objc_class)
 
         self.assertResultIsBOOL(GameCenter.GKMatchmakerViewController.isHosted)
@@ -20,7 +20,7 @@ class TestGKMatchmakerViewController(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(
             GameCenter.GKMatchmakerViewController.setHostedPlayer_didConnect_, 1
         )

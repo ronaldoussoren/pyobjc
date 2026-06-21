@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSMethodSignature(TestCase):
-    def testTypes(self):
+    def test_types(self):
         o = Foundation.NSObject.instanceMethodSignatureForSelector_("description")
 
         m = Foundation.NSMethodSignature.signatureWithObjCTypes_.__metadata__()
@@ -28,7 +28,7 @@ class TestNSMethodSignature(TestCase):
         self.assertEqual(v, b"o^i")
         self.assertIsInstance(v, bytes)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             Foundation.NSMethodSignature.getArgumentTypeAtIndex_,
             b"^" + objc._C_CHAR_AS_TEXT,

@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCBUUID(TestCase):
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             CoreBluetooth.CBUUIDCharacteristicExtendedPropertiesString, str
         )
@@ -34,17 +34,17 @@ class TestCBUUID(TestCase):
         self.assertIsInstance(CoreBluetooth.CBUUIDServiceChangedString, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(CoreBluetooth.CBUUIDCharacteristicValidRangeString, str)
         self.assertIsInstance(CoreBluetooth.CBUUIDL2CAPPSMCharacteristicString, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         # Introduced in macOS 15 SDK without availability macro
         self.assertIsInstance(
             CoreBluetooth.CBUUIDCharacteristicObservationScheduleString, str
         )
 
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(CoreBluetooth.CBUUID, objc.objc_class)

@@ -4,7 +4,7 @@ import CloudKit
 
 class TestCKFetchWebAuthTokenOperation(TestCase):
     @min_os_level("10.11")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKFetchWebAuthTokenOperation")
 
         self.assertResultIsBlock(

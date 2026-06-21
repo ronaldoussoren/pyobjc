@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 class TestNSUserInterfaceCompression(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSUserInterfaceCompressionOptions.containsOptions_
         )
@@ -15,5 +15,5 @@ class TestNSUserInterfaceCompression(TestCase):
         # self.assertArgIsBOOL(AppKit.NSUserInterfaceCompressionOptions.setEmpty_)
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSUserInterfaceCompression", AppKit)

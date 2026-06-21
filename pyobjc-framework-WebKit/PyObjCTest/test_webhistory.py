@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestWebHistory(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(WebKit.WebHistoryItemsAddedNotification, str)
         self.assertIsInstance(WebKit.WebHistoryItemsRemovedNotification, str)
         self.assertIsInstance(WebKit.WebHistoryAllItemsRemovedNotification, str)
@@ -11,7 +11,7 @@ class TestWebHistory(TestCase):
         self.assertIsInstance(WebKit.WebHistorySavedNotification, str)
         self.assertIsInstance(WebKit.WebHistoryItemsKey, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.WebHistory.loadFromURL_error_)
         self.assertArgIsOut(WebKit.WebHistory.loadFromURL_error_, 1)
         self.assertResultIsBOOL(WebKit.WebHistory.saveToURL_error_)

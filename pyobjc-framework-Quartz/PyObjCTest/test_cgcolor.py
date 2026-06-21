@@ -4,22 +4,22 @@ import objc
 
 
 class TestCGColor(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGColorRef)
 
     @min_os_level("26.0")
-    def testFunctions26_0(self):
+    def test_functions26_0(self):
         self.assertResultIsCFRetained(Quartz.CGColorCreateWithContentHeadroom)
         Quartz.CGColorGetContentHeadroom
 
     @min_os_level("10.15")
-    def testFunctions10_15(self):
+    def test_functions10_15(self):
         self.assertResultIsCFRetained(Quartz.CGColorCreateGenericGrayGamma2_2)
         color = Quartz.CGColorCreateGenericGrayGamma2_2(1.5, 0.3)
         self.assertIsInstance(color, Quartz.CGColorRef)
 
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         self.assertResultIsCFRetained(Quartz.CGColorCreateCopyByMatchingToColorSpace)
         color = Quartz.CGColorCreateCopyByMatchingToColorSpace(
             Quartz.CGColorSpaceCreateDeviceGray(),
@@ -30,7 +30,7 @@ class TestCGColor(TestCase):
         self.assertIsInstance(color, Quartz.CGColorRef)
 
     @min_os_level("10.5")
-    def testFunctions10_5(self):
+    def test_functions10_5(self):
         self.assertResultIsCFRetained(Quartz.CGColorCreateGenericGray)
         color = Quartz.CGColorCreateGenericGray(0.75, 0.8)
         self.assertIsInstance(color, Quartz.CGColorRef)
@@ -46,7 +46,7 @@ class TestCGColor(TestCase):
         color = Quartz.CGColorGetConstantColor(Quartz.kCGColorWhite)
         self.assertIsInstance(color, Quartz.CGColorRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(Quartz.CGColorCreate)
         color = Quartz.CGColorCreate(
             Quartz.CGColorSpaceCreateDeviceRGB(), [1.0, 0.5, 0.5]
@@ -87,7 +87,7 @@ class TestCGColor(TestCase):
         # Quartz.CGColorCreateWithPattern, Quartz.CGColorGetPattern: tested in test_cgpattern
 
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCGColorWhite, str)
         self.assertIsInstance(Quartz.kCGColorBlack, str)
         self.assertIsInstance(Quartz.kCGColorClear, str)

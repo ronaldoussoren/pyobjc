@@ -5,10 +5,10 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestCFNetwork(TestCase):
     @expectedFailure
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CFNetwork.CFNetDiagnosticRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CFNetwork.kCFNetDiagnosticNoErr, 0)
         self.assertEqual(CFNetwork.kCFNetDiagnosticErr, -66560)
         self.assertEqual(CFNetwork.kCFNetDiagnosticConnectionUp, -66559)

@@ -7,7 +7,7 @@ CMIOStreamScheduledOutputNotificationProc = b"vQQ^v"
 
 
 class TestCMIOHardwareStream(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreMediaIO.kCMIOStreamClassID, fourcc(b"astr"))
         self.assertEqual(CoreMediaIO.kCMIOStreamUnknown, CoreMediaIO.kCMIOObjectUnknown)
 
@@ -132,7 +132,7 @@ class TestCMIOHardwareStream(TestCase):
             CoreMediaIO.kCMIOStreamPropertyPreferredFrameRate, fourcc(b"prfr")
         )
 
-    def testStructs(self):
+    def test_structs(self):
         v = CoreMediaIO.CMIOStreamDeck()
         self.assertEqual(v.mStatus, 0)
         self.assertEqual(v.mState, 0)
@@ -144,7 +144,7 @@ class TestCMIOHardwareStream(TestCase):
         self.assertEqual(v.scheduledOutputNotificationRefCon, None)
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsOut(CoreMediaIO.CMIOStreamCopyBufferQueue, 3)
 
         CoreMediaIO.CMIOStreamDeckPlay

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, os_level_key, os_release, min_os_l
 
 
 class TestCFBundle(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFBundleRef)
 
     def testMainBundle(self):
@@ -321,7 +321,7 @@ class TestCFBundle(TestCase):
         ref = CoreFoundation.CFBundleGetPlugIn(bundle)
         self.assertIs(ref, None)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreFoundation.kCFBundleInfoDictionaryVersionKey, str)
         self.assertIsInstance(CoreFoundation.kCFBundleExecutableKey, str)
         self.assertIsInstance(CoreFoundation.kCFBundleIdentifierKey, str)

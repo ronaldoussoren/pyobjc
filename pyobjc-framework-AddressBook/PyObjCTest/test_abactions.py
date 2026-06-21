@@ -8,7 +8,7 @@ class TestABActionHelper(AddressBook.NSObject):
 
 
 class TestABActions(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             TestABActionHelper.shouldEnableActionForPerson_identifier_
         )

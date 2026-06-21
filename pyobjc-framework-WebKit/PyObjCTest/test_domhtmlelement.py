@@ -3,5 +3,5 @@ import WebKit
 
 
 class TestDOMHTMLElement(TestCase):
-    def testMehods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLElement.isContentEditable)

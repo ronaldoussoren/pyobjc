@@ -4,5 +4,5 @@ import Quartz
 
 class TestPDFAnnotationButtonStamp(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.PDFAnnotationStamp.isSignature)

@@ -4,5 +4,5 @@ import Quartz
 
 class TestIKFilterBrowserView(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Quartz.IKFilterBrowserView.setPreviewState_, 0)

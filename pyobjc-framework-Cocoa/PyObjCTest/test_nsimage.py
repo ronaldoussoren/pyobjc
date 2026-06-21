@@ -36,7 +36,7 @@ class TestNSImage(TestCase):
         )
         comboIcon.unlockFocus()
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSImageLoadStatusCompleted, 0)
         self.assertEqual(AppKit.NSImageLoadStatusCancelled, 1)
         self.assertEqual(AppKit.NSImageLoadStatusInvalidData, 2)
@@ -70,7 +70,7 @@ class TestNSImage(TestCase):
         self.assertEqual(AppKit.NSImageSymbolColorRenderingModeGradient, 2)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(AppKit.NSImageNameQuickLookTemplate, str)
         self.assertIsInstance(AppKit.NSImageNameBluetoothTemplate, str)
         self.assertIsInstance(AppKit.NSImageNameIChatTheaterTemplate, str)
@@ -116,7 +116,7 @@ class TestNSImage(TestCase):
         self.assertIsInstance(AppKit.NSImageNameUserGroup, str)
         self.assertIsInstance(AppKit.NSImageNameEveryone, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSImage.setName_)
         self.assertArgIsBOOL(AppKit.NSImage.setScalesWhenResized_, 0)
         self.assertResultIsBOOL(AppKit.NSImage.scalesWhenResized)
@@ -140,7 +140,7 @@ class TestNSImage(TestCase):
         self.assertResultIsBOOL(AppKit.NSImage.isTemplate)
         self.assertArgIsBOOL(AppKit.NSImage.setTemplate_, 0)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertArgHasType(
             TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_,
             2,
@@ -153,11 +153,11 @@ class TestNSImage(TestCase):
         )
 
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols10_10(self):
         self.assertProtocolExists("NSImageDelegate", AppKit)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgHasType(
             AppKit.NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
             0,
@@ -197,12 +197,12 @@ class TestNSImage(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSImage.matchesOnlyOnBestFittingAxis)
         self.assertArgIsBOOL(AppKit.NSImage.setMatchesOnlyOnBestFittingAxis_, 0)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBOOL(AppKit.NSImage.imageWithSize_flipped_drawingHandler_, 1)
         self.assertArgIsBlock(
             AppKit.NSImage.imageWithSize_flipped_drawingHandler_,
@@ -211,7 +211,7 @@ class TestNSImage(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(AppKit.NSImageHintCTM, str)
         self.assertIsInstance(AppKit.NSImageHintInterpolation, str)
         self.assertIsInstance(AppKit.NSImageNameFolder, str)
@@ -231,11 +231,11 @@ class TestNSImage(TestCase):
         self.assertIsInstance(AppKit.NSImageNameStatusNone, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(AppKit.NSImageNameShareTemplate, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AppKit.NSImageHintUserInterfaceLayoutDirection, str)
         self.assertIsInstance(AppKit.NSImageNameGoForwardTemplate, str)
         self.assertIsInstance(AppKit.NSImageNameGoBackTemplate, str)
@@ -326,5 +326,5 @@ class TestNSImage(TestCase):
         self.assertIsInstance(AppKit.NSImageNameTouchBarVolumeUpTemplate, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AppKit.NSImageNameTouchBarRemoveTemplate, str)

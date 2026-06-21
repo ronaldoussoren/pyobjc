@@ -26,7 +26,7 @@ class TestNSTokenFieldCell(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSTokenStyle)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSDefaultTokenStyle, 0)
         self.assertEqual(AppKit.NSTokenStyleNone, 1)
         self.assertEqual(AppKit.NSTokenStyleRounded, 2)
@@ -41,15 +41,15 @@ class TestNSTokenFieldCell(TestCase):
         self.assertEqual(AppKit.NSTokenStylePlainSquared, 4)
 
     @min_os_level("10.10")
-    def testContants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(AppKit.NSTokenStyleSquared, 3)
         self.assertEqual(AppKit.NSTokenStylePlainSquared, 4)
 
     @min_sdk_level("10.7")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTokenFieldCellDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_,  # noqa: B950
             2,

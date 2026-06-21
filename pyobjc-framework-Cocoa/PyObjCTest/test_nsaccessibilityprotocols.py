@@ -298,7 +298,7 @@ class TestNSAccessibilityProtocolsHelper(AppKit.NSObject):
 
 class TestNSAccessibilityProtocols(TestCase):
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSAccessibilityGroup", AppKit)
         self.assertProtocolExists(
             "NSAccessibilityElement", AppKit, "NSAccessibilityElementProtocol"
@@ -323,10 +323,10 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertProtocolExists("NSAccessibility", AppKit)
 
     @min_sdk_level("10.13")
-    def testProtocolObjects10_13(self):
+    def test_protocols10_13(self):
         self.assertProtocolExists("NSAccessibilityElementLoading", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSAccessibilityProtocolsHelper.isAccessibilityFocused
         )

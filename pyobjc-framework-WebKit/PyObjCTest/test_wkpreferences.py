@@ -10,7 +10,7 @@ class TestWKPreferences(TestCase):
         self.assertEqual(WebKit.WKInactiveSchedulingPolicyNone, 2)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.javaScriptEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setJavaScriptEnabled_, 0)
         self.assertResultIsBOOL(
@@ -25,26 +25,26 @@ class TestWKPreferences(TestCase):
         self.assertArgIsBOOL(WebKit.WKPreferences.setPlugInsEnabled_, 0)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.tabFocusesLinks)
         self.assertArgIsBOOL(WebKit.WKPreferences.setTabFocusesLinks_, 0)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.isFraudulentWebsiteWarningEnabled)
         self.assertArgIsBOOL(
             WebKit.WKPreferences.setFraudulentWebsiteWarningEnabled_, 0
         )
 
     @min_os_level("12.0")
-    def testMethods11_3(self):
+    def test_methods11_3(self):
         # Documented as available on 11.3, but not present in 11.6...
 
         self.assertResultIsBOOL(WebKit.WKPreferences.isTextInteractionEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setTextInteractionEnabled_, 0)
 
     @min_os_level("12.3")
-    def testMethods12_3(self):
+    def test_methods12_3(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.isSiteSpecificQuirksModeEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setSiteSpecificQuirksModeEnabled_, 0)
 
@@ -52,6 +52,6 @@ class TestWKPreferences(TestCase):
         self.assertArgIsBOOL(WebKit.WKPreferences.setElementFullscreenEnabled_, 0)
 
     @min_os_level("13.3")
-    def testMethods13_3(self):
+    def test_methods13_3(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.shouldPrintBackgrounds)
         self.assertArgIsBOOL(WebKit.WKPreferences.setShouldPrintBackgrounds_, 0)

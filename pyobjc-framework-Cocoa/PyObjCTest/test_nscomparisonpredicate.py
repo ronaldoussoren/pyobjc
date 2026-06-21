@@ -9,7 +9,7 @@ class TestNSComparisonPredicate(TestCase):
         self.assertIsEnumType(Foundation.NSComparisonPredicateOptions)
         self.assertIsEnumType(Foundation.NSPredicateOperatorType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSCaseInsensitivePredicateOption, 1)
         self.assertEqual(Foundation.NSDiacriticInsensitivePredicateOption, 2)
         self.assertEqual(Foundation.NSNormalizedPredicateOption, 4)
@@ -33,7 +33,7 @@ class TestNSComparisonPredicate(TestCase):
         self.assertEqual(Foundation.NSContainsPredicateOperatorType, 99)
         self.assertEqual(Foundation.NSBetweenPredicateOperatorType, 100)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             Foundation.NSComparisonPredicate.predicateWithLeftExpression_rightExpression_customSelector_,  # noqa: B950
             2,

@@ -19,12 +19,12 @@ class TestNSPathControlHelper(AppKit.NSObject):
 
 class TestNSPathControl(TestCase):
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSPathControl.isEditable)
         self.assertArgIsBOOL(AppKit.NSPathControl.setEditable_, 0)
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         m = AppKit.NSPathControl.setDoubleAction_.__metadata__()
         self.assertEqual(m["arguments"][2]["sel_of_type"], b"v@:@")
 
@@ -33,11 +33,10 @@ class TestNSPathControl(TestCase):
         )
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSPathControlDelegate", AppKit)
 
-    @min_os_level("10.5")
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSPathControlHelper.pathControl_shouldDragItem_withPasteboard_
         )

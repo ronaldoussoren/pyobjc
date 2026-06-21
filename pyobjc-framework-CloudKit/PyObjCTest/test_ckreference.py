@@ -8,11 +8,11 @@ class TestCKReference(TestCase):
         self.assertIsEnumType(CloudKit.CKReferenceAction)
 
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKReference")
         self.assertIsInstance(CloudKit.CKReference, objc.objc_class)
 
     @min_os_level("10.10")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CloudKit.CKReferenceActionNone, 0)
         self.assertEqual(CloudKit.CKReferenceActionDeleteSelf, 1)

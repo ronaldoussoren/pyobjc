@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCoreDataErrors(TestCase):
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(CoreData.NSInferredMappingModelError, 134_190)
         self.assertEqual(CoreData.NSExternalRecordImportError, 134_200)
         self.assertEqual(CoreData.NSPersistentHistoryTokenExpiredError, 134_301)
@@ -17,7 +17,7 @@ class TestCoreDataErrors(TestCase):
         self.assertEqual(CoreData.NSStagedMigrationBackwardMigrationError, 134506)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(CoreData.NSSQLiteErrorDomain, str)
 
         self.assertEqual(CoreData.NSCoreDataError, 134_060)
@@ -38,7 +38,7 @@ class TestCoreDataErrors(TestCase):
         self.assertEqual(CoreData.NSEntityMigrationPolicyError, 134_170)
         self.assertEqual(CoreData.NSSQLiteError, 134_180)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreData.NSDetailedErrorsKey, str)
         self.assertIsInstance(CoreData.NSValidationObjectErrorKey, str)
         self.assertIsInstance(CoreData.NSValidationKeyErrorKey, str)
@@ -79,5 +79,5 @@ class TestCoreDataErrors(TestCase):
         self.assertEqual(CoreData.NSPersistentStoreSaveConflictsError, 134_050)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(CoreData.NSPersistentStoreSaveConflictsErrorKey, str)

@@ -4,11 +4,11 @@ import ColorSync
 
 class TestColorSyncTransform(TestCase):
     @min_os_level("10.13")
-    def testCFType(self):
+    def test_cftype(self):
         self.assertIsCFType(ColorSync.ColorSyncTransformRef)
 
     @min_os_level("10.13")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(ColorSync.ColorSyncTransformGetTypeID(), int)
 
         self.assertResultIsCFRetained(ColorSync.ColorSyncTransformCreate)
@@ -21,11 +21,11 @@ class TestColorSyncTransform(TestCase):
         self.assertArgIsVariableSize(ColorSync.ColorSyncTransformConvert, 7)
 
     @min_os_level("12.0")
-    def testFunctions11_0(self):
+    def test_functions11_0(self):
         ColorSync.ColorSyncTransformGetProfileSequence
 
     @min_os_level("10.13")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(ColorSync.kColorSync1BitGamut, 1)
         self.assertEqual(ColorSync.kColorSync8BitInteger, 2)
         self.assertEqual(ColorSync.kColorSync16BitInteger, 3)
@@ -107,27 +107,27 @@ class TestColorSyncTransform(TestCase):
 
     @min_os_level("10.13")
     @max_os_level("10.13")
-    def testConstants10_13_only(self):
+    def test_constants10_13_only(self):
         self.assertIsInstance(ColorSync.kColorSyncTranformInfo, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(ColorSync.kColorSyncTransformInfo, str)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(ColorSync.kColorSyncExtendedRange, str)
 
     @min_os_level("12.0")
-    def testConstants11_0_missing(self):
+    def test_constants11_0_missing(self):
         self.assertIsInstance(ColorSync.kColorSyncTransformProfileSequnce, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(ColorSync.kColorSyncHDRDerivative, str)
         self.assertIsInstance(ColorSync.kColorSyncPQDerivative, str)
         self.assertIsInstance(ColorSync.kColorSyncHLGDerivative, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(ColorSync.kColorSyncTransformUseITU709OETF, str)

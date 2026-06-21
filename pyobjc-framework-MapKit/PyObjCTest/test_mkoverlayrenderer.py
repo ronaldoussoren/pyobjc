@@ -6,11 +6,11 @@ import MapKit
 
 class TestMKOverlayRenderer(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(MapKit.MKOverlayRenderer, objc.objc_class)
 
         self.assertResultIsBOOL(MapKit.MKOverlayRenderer.canDrawMapRect_zoomScale_)
 
     @min_os_level("10.9")
-    def testFunctions(self):
+    def test_functions(self):
         MapKit.MKRoadWidthAtZoomScale

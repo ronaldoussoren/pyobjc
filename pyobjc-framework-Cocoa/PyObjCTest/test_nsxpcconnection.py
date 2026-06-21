@@ -15,12 +15,12 @@ class TestNSXPCConnection(TestCase):
         self.assertIsEnumType(Foundation.NSXPCConnectionOptions)
 
     @min_os_level("10.8")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSXPCProxyCreating", Foundation)
         self.assertProtocolExists("NSXPCListenerDelegate", Foundation)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(Foundation.NSXPCConnectionPrivileged, 1 << 12)
 
     @min_os_level("10.8")
@@ -29,7 +29,7 @@ class TestNSXPCConnection(TestCase):
         self.assertResultIsBOOL(XPCHelper.listener_shouldAcceptNewConnection_)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBlock(
             Foundation.NSXPCConnection.remoteObjectProxyWithErrorHandler_, 0, b"v@"
         )
@@ -56,7 +56,7 @@ class TestNSXPCConnection(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             Foundation.NSXPCConnection.synchronousRemoteObjectProxyWithErrorHandler_,
             0,
@@ -64,7 +64,7 @@ class TestNSXPCConnection(TestCase):
         )
 
     @min_os_level("10.15")  # Not actually on 10.14...
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertArgIsBOOL(
             Foundation.NSXPCInterface.setXPCType_forSelector_argumentIndex_ofReply_, 3
         )

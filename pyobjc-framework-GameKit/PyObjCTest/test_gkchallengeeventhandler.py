@@ -14,10 +14,10 @@ class TestGKChallengeEventHandlerHelper(GameKit.NSObject):
 
 
 class TestGKChallengeEventHandler(TestCase):
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("GKChallengeEventHandlerDelegate", GameKit)
 
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestGKChallengeEventHandlerHelper.shouldShowBannerForLocallyReceivedChallenge_
         )

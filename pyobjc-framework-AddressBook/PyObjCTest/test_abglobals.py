@@ -5,24 +5,24 @@ from PyObjCTools.TestSupport import os_level_key, os_release
 
 class TestABGlobals(TestCase):
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AddressBook.kABOrganizationPhoneticProperty, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(AddressBook.kABSocialProfileServiceTencentWeibo, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AddressBook.kABSocialProfileServiceYelp, str)
         self.assertIsInstance(AddressBook.kABAlternateBirthdayComponentsProperty, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(AddressBook.kABSocialProfileServiceSinaWeibo, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(AddressBook.kABMobileMeLabel, str)
         self.assertIsInstance(AddressBook.kABBirthdayComponentsProperty, str)
         self.assertIsInstance(AddressBook.kABOtherDateComponentsProperty, str)
@@ -51,21 +51,21 @@ class TestABGlobals(TestCase):
         self.assertIsInstance(AddressBook.kABSocialProfileServiceMySpace, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(AddressBook.kABPhoneiPhoneLabel, str)
         self.assertEqual(AddressBook.kABShowAsResource, 2)
         self.assertEqual(AddressBook.kABShowAsRoom, 3)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(AddressBook.kABCalendarURIsProperty, str)
 
     @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.14"))
-    def testConstants_10_7_broken(self):
+    def test_constants_10_7_broken(self):
         self.assertIsInstance(AddressBook.kABEmailMobileMeLabel, str)
         self.assertIsInstance(AddressBook.kABAIMMobileMeLabel, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AddressBook.kABShowAsMask, 0o7)
         self.assertEqual(AddressBook.kABShowAsPerson, 0o0)
         self.assertEqual(AddressBook.kABShowAsCompany, 0o1)
@@ -156,6 +156,6 @@ class TestABGlobals(TestCase):
         self.assertIsInstance(AddressBook.kABUpdatedRecords, str)
         self.assertIsInstance(AddressBook.kABDeletedRecords, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = AddressBook.ABLocalizedPropertyOrLabel(AddressBook.kABAssistantLabel)
         self.assertIsInstance(v, str)

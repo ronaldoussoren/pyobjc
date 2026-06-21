@@ -28,13 +28,13 @@ class TestPHLivePhotoView(TestCase):
         self.assertEqual(PhotosUI.PHLivePhotoViewContentModeAspectFill, 1)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(PhotosUI.PHLivePhotoView.isMuted)
         self.assertArgIsBOOL(PhotosUI.PHLivePhotoView.setMuted_, 0)
         self.assertArgIsBOOL(PhotosUI.PHLivePhotoView.stopPlaybackAnimated_, 0)
 
     @min_sdk_level("10.12")
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestPHLivePhotoViewHelper.livePhotoView_willBeginPlaybackWithStyle_,
             1,
@@ -57,5 +57,5 @@ class TestPHLivePhotoView(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("PHLivePhotoViewDelegate", PhotosUI)

@@ -14,7 +14,7 @@ class TestCSUserQuery(TestCase):
         self.assertEqual(CoreSpotlight.CSUserInteractionFocus, 1)
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(CoreSpotlight.CSUserQueryContext.enableRankedResults)
         self.assertArgIsBOOL(
             CoreSpotlight.CSUserQueryContext.setEnableRankedResults_, 0
@@ -28,7 +28,7 @@ class TestCSUserQuery(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(CoreSpotlight.CSUserQueryContext.disableSemanticSearch)
         self.assertArgIsBOOL(
             CoreSpotlight.CSUserQueryContext.setDisableSemanticSearch_, 0

@@ -8,7 +8,7 @@ class TestCGPDFObject(TestCase):
     def testIncomplete(self):
         self.fail("Add header tests for <CoreGraphics/CGPDFObject.h>")
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGPDFObjectTypeNull, 1)
         self.assertEqual(Quartz.kCGPDFObjectTypeBoolean, 2)
         self.assertEqual(Quartz.kCGPDFObjectTypeInteger, 3)
@@ -19,7 +19,7 @@ class TestCGPDFObject(TestCase):
         self.assertEqual(Quartz.kCGPDFObjectTypeDictionary, 8)
         self.assertEqual(Quartz.kCGPDFObjectTypeStream, 9)
 
-    def testFunctions(self):
+    def test_functions(self):
         Quartz.CGPDFObjectGetType
 
         self.assertNotIsInstance(Quartz.CGPDFObjectGetValue, objc.function)

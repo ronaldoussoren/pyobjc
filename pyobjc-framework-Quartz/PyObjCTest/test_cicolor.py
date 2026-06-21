@@ -3,5 +3,5 @@ import Quartz
 
 
 class TestCIColor(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsVariableSize(Quartz.CIColor.components)

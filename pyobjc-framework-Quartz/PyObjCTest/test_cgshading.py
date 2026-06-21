@@ -4,10 +4,10 @@ import objc
 
 
 class TestCGShading(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGShadingRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGShadingGetTypeID(), int)
 
         values = []

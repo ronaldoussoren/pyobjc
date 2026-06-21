@@ -4,16 +4,16 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 class TestNSUserActivity(TestCase):
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(Foundation.NSUserActivityTypeBrowsingWeb, str)
 
     @min_os_level("10.10")
     @expectedFailure  # XXX
-    def testConstants10_10_failon1015beta(self):
+    def test_constants10_10_failon1015beta(self):
         self.assertIsInstance(Foundation.NSUserActivityDocumentURLKey, str)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(Foundation.NSUserActivity.needsSave)
         self.assertArgIsBOOL(Foundation.NSUserActivity.setNeedsSave_, 0)
 
@@ -29,7 +29,7 @@ class TestNSUserActivity(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(Foundation.NSUserActivity.isEligibleForHandoff)
         self.assertArgIsBOOL(Foundation.NSUserActivity.setEligibleForHandoff_, 0)
 
@@ -53,5 +53,5 @@ class TestNSUserActivity(TestCase):
         )
 
     @min_os_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSUserActivityDelegate", Foundation)

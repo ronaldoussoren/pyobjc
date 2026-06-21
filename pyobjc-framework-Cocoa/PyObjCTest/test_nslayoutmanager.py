@@ -73,7 +73,7 @@ class TestNSLayoutManager(TestCase):
         self.assertIsEnumType(AppKit.NSTextLayoutOrientation)
         self.assertIsEnumType(AppKit.NSTypesetterBehavior)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSGlyphAttributeSoft, 0)
         self.assertEqual(AppKit.NSGlyphAttributeElastic, 1)
         self.assertEqual(AppKit.NSGlyphAttributeBidiLevel, 2)
@@ -109,11 +109,11 @@ class TestNSLayoutManager(TestCase):
         self.assertEqual(AppKit.NSControlCharacterActionContainerBreak, 1 << 5)
 
     @min_sdk_level("10.7")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTextLayoutOrientationProvider", AppKit)
         self.assertProtocolExists("NSLayoutManagerDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSLayoutManagerHelper.layoutOrientation, objc._C_NSInteger
         )
@@ -290,7 +290,7 @@ class TestNSLayoutManager(TestCase):
             AppKit.NSRange.__typestr__,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSLayoutManager.usesScreenFonts)
         self.assertArgIsBOOL(AppKit.NSLayoutManager.setUsesScreenFonts_, 0)
 
@@ -517,14 +517,14 @@ class TestNSLayoutManager(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods_missing_10_10(self):
+    def test_methods_missing_10_10(self):
         # Document, but not present on 10.10??
         self.assertArgHasType(
             AppKit.NSLayoutManager.CGGlyphAtIndex_isValidIndex_, 1, b"o^Z"
         )
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(AppKit.NSLayoutManager.allowsNonContiguousLayout)
         self.assertArgIsBOOL(AppKit.NSLayoutManager.setAllowsNonContiguousLayout_, 0)
 
@@ -611,7 +611,7 @@ class TestNSLayoutManager(TestCase):
             AppKit.NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_
         )
 
-    def testMethods10_5_failon11beta(self):
+    def test_methods10_5_failon11beta(self):
         self.assertArgIsBOOL(
             AppKit.NSLayoutManager.rulerAccessoryViewForTextView_paragraphStyle_ruler_enabled_,
             3,
@@ -621,7 +621,7 @@ class TestNSLayoutManager(TestCase):
         os_release().rsplit(".", 1)[0] in ("10.5", "10.6", "10.7", "10.8", "10.9")
     )
     @min_os_level("10.5")
-    def testMethods10_5_not_available(self):
+    def test_methods10_5_not_available(self):
         self.assertHasAttr(
             AppKit.NSLayoutManager,
             "getGlyphsInRange_glyphs_properties_characterIndexes_bidiLevels_",
@@ -665,13 +665,13 @@ class TestNSLayoutManager(TestCase):
 
     @min_os_level("10.5")
     @expectedFailure
-    def testMethods10_5_fail(self):
+    def test_methods10_5_fail(self):
         self.fail(
             "Buffer size is non-trivial: - (AppKit.NSUInteger)getLineFragmentInsertionPointsForCharacterAtIndex:(AppKit.NSUInteger)charIndex alternatePositions:(BOOL)aFlag inDisplayOrder:(BOOL)dFlag positions:(CGFloat *)positions characterIndexes:(AppKit.NSUInteger *)charIndexes;"  # noqa: B950
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgHasType(
             AppKit.NSLayoutManager.characterIndexForPoint_inTextContainer_fractionOfDistanceBetweenInsertionPoints_,  # noqa: B950
             0,
@@ -699,7 +699,7 @@ class TestNSLayoutManager(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsIn(
             AppKit.NSLayoutManager.showCGGlyphs_positions_count_font_matrix_attributes_inContext_,  # noqa: B950
             0,
@@ -720,7 +720,7 @@ class TestNSLayoutManager(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgSizeInArg(
             AppKit.NSLayoutManager.setGlyphs_properties_characterIndexes_font_forGlyphRange_,
             0,
@@ -754,7 +754,7 @@ class TestNSLayoutManager(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(AppKit.NSLayoutManager.usesDefaultHyphenation)
         self.assertArgIsBOOL(AppKit.NSLayoutManager.setUsesDefaultHyphenation_, 0)
 

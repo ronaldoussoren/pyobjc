@@ -8,10 +8,10 @@ DRNotificationCallback = (
 
 class TestDRCoreNotifications(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(DiscRecording.DRNotificationCenterRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(DiscRecording.DRNotificationCenterGetTypeID(), int)
 
         self.assertResultIsCFRetained(DiscRecording.DRNotificationCenterCreate)

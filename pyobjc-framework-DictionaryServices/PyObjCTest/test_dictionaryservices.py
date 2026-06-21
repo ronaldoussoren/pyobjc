@@ -8,13 +8,13 @@ with warnings.catch_warnings():
 
 
 class TestDictionaryServices(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsCFType(DictionaryServices.DCSDictionaryRef)
 
     @skipUnless(
         os_release().rsplit(".", 1)[0] not in ("10.12", "10.13"), "buggy OS release"
     )
-    def testFunctions(self):
+    def test_functions(self):
         txt = "the hello world program"
         r = DictionaryServices.DCSGetTermRangeInString(None, txt, 5)
         self.assertIsInstance(r, DictionaryServices.CFRange)

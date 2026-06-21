@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSMigrationManager(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             CoreData.NSMigrationManager.migrateStoreFromURL_type_options_withMappingModel_toDestinationURL_destinationType_destinationOptions_error_  # noqa: B950
         )
@@ -14,7 +14,7 @@ class TestNSMigrationManager(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsBOOL(
             CoreData.NSMigrationManager.setUsesStoreSpecificMigrationManager_, 0
         )

@@ -99,28 +99,28 @@ class TestJSValueRef(TestCase):
         )
 
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         self.assertResultHasType(JavaScriptCore.JSValueIsArray, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueIsDate, objc._C_BOOL)
 
     @min_os_level("10.12")
-    def testFunctions10_12(self):
+    def test_functions10_12(self):
         self.assertResultHasType(JavaScriptCore.JSValueGetTypedArrayType, objc._C_UINT)
         self.assertArgIsOut(JavaScriptCore.JSValueGetTypedArrayType, 2)
 
     @min_os_level("10.14.4")
-    def testFunctions10_14_4(self):
+    def test_functions10_14_4(self):
         self.assertResultHasType(
             JavaScriptCore.JSValueMakeSymbol, JavaScriptCore.JSValueRef.__typestr__
         )
 
     @min_os_level("10.15")
-    def testFunctions10_15(self):
+    def test_functions10_15(self):
         JavaScriptCore.JSValueIsSymbol
         JavaScriptCore.JSValueMakeSymbol
 
     @min_os_level("15.0")
-    def testFunctions15_0(self):
+    def test_functions15_0(self):
         JavaScriptCore.JSValueIsBigInt
         self.assertArgIsOut(JavaScriptCore.JSValueCompare, 3)
         self.assertArgIsOut(JavaScriptCore.JSValueCompareInt64, 3)

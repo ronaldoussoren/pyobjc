@@ -11,7 +11,7 @@ class TestLARight_UI(TestCase):
         "method not present",
     )
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertArgIsBlock(
             LocalAuthentication.LARight.authorizeWithLocalizedReason_inPresentationContext_completion_,
             2,

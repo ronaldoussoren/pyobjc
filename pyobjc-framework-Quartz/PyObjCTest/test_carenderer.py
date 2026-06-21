@@ -4,7 +4,7 @@ import Quartz
 
 class TestCARenderer(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             Quartz.CARenderer.rendererWithCGLContext_options_,
             0,
@@ -13,9 +13,9 @@ class TestCARenderer(TestCase):
         self.assertArgIsIn(Quartz.CARenderer.beginFrameAtTime_timeStamp_, 1)
 
     @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCARendererColorSpace, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(Quartz.kCARendererMetalCommandQueue, str)

@@ -9,7 +9,7 @@ class TestNEAppProxyFlow(TestCase):
         self.assertIsEnumType(NetworkExtension.NEOnDemandRuleInterfaceType)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(NetworkExtension.NEOnDemandRuleActionConnect, 1)
         self.assertEqual(NetworkExtension.NEOnDemandRuleActionDisconnect, 2)
         self.assertEqual(NetworkExtension.NEOnDemandRuleActionEvaluateConnection, 3)

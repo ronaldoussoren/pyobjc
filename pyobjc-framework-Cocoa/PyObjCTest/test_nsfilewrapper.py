@@ -8,7 +8,7 @@ class TestNSFileWrapper(TestCase):
         self.assertIsEnumType(Foundation.NSFileWrapperReadingOptions)
         self.assertIsEnumType(Foundation.NSFileWrapperWritingOptions)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSFileWrapper.writeToFile_atomically_updateFilenames_
         )
@@ -26,14 +26,14 @@ class TestNSFileWrapper(TestCase):
         self.assertResultIsBOOL(AppKit.NSFileWrapper.updateFromPath_)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSFileWrapperReadingImmediate, 1 << 0)
         self.assertEqual(AppKit.NSFileWrapperReadingWithoutMapping, 1 << 1)
         self.assertEqual(AppKit.NSFileWrapperWritingAtomic, 1 << 0)
         self.assertEqual(AppKit.NSFileWrapperWritingWithNameUpdating, 1 << 1)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsOut(AppKit.NSFileWrapper.initWithURL_options_error_, 2)
         self.assertResultIsBOOL(AppKit.NSFileWrapper.matchesContentsOfURL_)
         self.assertResultIsBOOL(AppKit.NSFileWrapper.readFromURL_options_error_)

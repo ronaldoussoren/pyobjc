@@ -4,5 +4,5 @@ import PhotosUI
 
 class TestPHSharedAlbumPostingViewController(TestCase):
     @min_os_level("10.11")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("PHContentEditingController", PhotosUI)

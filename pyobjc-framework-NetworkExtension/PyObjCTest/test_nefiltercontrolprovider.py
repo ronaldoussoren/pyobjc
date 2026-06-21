@@ -4,7 +4,7 @@ import NetworkExtension
 
 class TestNEFilterControlProvider(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEFilterControlProvider.handleRemediationForFlow_completionHandler_,
             1,
@@ -17,7 +17,7 @@ class TestNEFilterControlProvider(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             NetworkExtension.NEFilterControlProvider.handleNewFlow_completionHandler_,
             1,

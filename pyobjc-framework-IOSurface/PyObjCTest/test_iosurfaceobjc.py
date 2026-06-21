@@ -3,11 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestIOSurfaceObjC(TestCase):
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(IOSurface.IOSurfaceRef)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(IOSurface.IOSurfacePropertyAllocSizeKey, str)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyWidth, str)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyHeight, str)
@@ -33,15 +33,15 @@ class TestIOSurfaceObjC(TestCase):
         )
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyAllocSize, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyName, str)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(IOSurface.IOSurface.lockWithOptions_seed_, 1)
         self.assertArgIsOut(IOSurface.IOSurface.unlockWithOptions_seed_, 1)
         self.assertResultIsBOOL(IOSurface.IOSurface.isInUse)
@@ -49,10 +49,10 @@ class TestIOSurfaceObjC(TestCase):
         self.assertResultIsVariableSize(IOSurface.IOSurface.baseAddressOfPlaneAtIndex_)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsOut(IOSurface.IOSurface.setPurgeable_oldState_, 1)
 
     @expectedFailure
     @min_os_level("10.12")
-    def testMethods_unsupported(self):
+    def test_methods_unsupported(self):
         self.fail(IOSurface.IOSurface.baseAddressOfPlaneAtIndex_)  # Buffer

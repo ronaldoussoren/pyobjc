@@ -24,7 +24,7 @@ class TestLSInfo(TestCase):
         if os.path.exists(self.path):
             os.unlink(self.path)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(LaunchServices.kLSInvalidExtensionIndex, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(LaunchServices.kLSAppInTrashErr, -10660)
         self.assertEqual(LaunchServices.kLSExecutableIncorrectFormat, -10661)
@@ -101,7 +101,7 @@ class TestLSInfo(TestCase):
         self.assertEqual(LaunchServices.kLSHandlerOptionsDefault, 0)
         self.assertEqual(LaunchServices.kLSHandlerOptionsIgnoreCreator, 1)
 
-    def testStructs(self):
+    def test_structs(self):
         v = LaunchServices.LSItemInfoRecord()
         self.assertHasAttr(v, "flags")
         self.assertHasAttr(v, "filetype")
@@ -110,7 +110,7 @@ class TestLSInfo(TestCase):
         self.assertNotHasAttr(v, "iconFileName")
         self.assertNotHasAttr(v, "kindID")
 
-    def testFunctions(self):
+    def test_functions(self):
         LaunchServices.LSInit(LaunchServices.kLSInitializeDefaults)
         LaunchServices.LSTerm()
 
@@ -346,7 +346,7 @@ class TestLSInfo(TestCase):
         self.assertIsInstance(ok, int)
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsCFRetained(LaunchServices.LSCopyDefaultApplicationURLForURL)
         self.assertArgIsOut(LaunchServices.LSCopyDefaultApplicationURLForURL, 2)
 

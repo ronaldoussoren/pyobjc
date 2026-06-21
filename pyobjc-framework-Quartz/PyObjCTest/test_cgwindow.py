@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGWindow(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGWindowIDCFNumberType, Quartz.kCFNumberSInt32Type)
         self.assertEqual(
             Quartz.kCGWindowSharingCFNumberType, Quartz.kCFNumberSInt32Type
@@ -52,7 +52,7 @@ class TestCGWindow(TestCase):
         self.assertEqual(Quartz.kCGWindowImageBestResolution, (1 << 3))
         self.assertEqual(Quartz.kCGWindowImageNominalResolution, (1 << 4))
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(Quartz.CGWindowListCopyWindowInfo)
         v = Quartz.CGWindowListCopyWindowInfo(0, 0)
         self.assertIsInstance(v, Quartz.CFArrayRef)
@@ -84,6 +84,6 @@ class TestCGWindow(TestCase):
         self.assertIsInstance(v, (Quartz.CGImageRef, type(None)))
 
     @min_os_level("11.0")
-    def testFunctions10_15(self):
+    def test_functions10_15(self):
         Quartz.CGPreflightScreenCaptureAccess
         Quartz.CGRequestScreenCaptureAccess

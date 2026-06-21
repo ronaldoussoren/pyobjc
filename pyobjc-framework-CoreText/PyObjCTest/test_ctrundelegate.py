@@ -5,11 +5,11 @@ import objc
 
 class TestCTRunDelegate(TestCase):
     @min_os_level("10.9")
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreText.CTRunDelegateRef)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreText.kCTRunDelegateVersion1, 1)
         self.assertEqual(
             CoreText.kCTRunDelegateCurrentVersion, CoreText.kCTRunDelegateVersion1
@@ -17,7 +17,7 @@ class TestCTRunDelegate(TestCase):
 
     @expectedFailure
     @min_os_level("10.9")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreText.CTRunDelegateGetTypeID(), int)
 
         self.assertNotIsInstance(CoreText.CTRunDelegateCreate, objc.function)

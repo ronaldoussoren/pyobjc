@@ -6,7 +6,7 @@ class TestNSPersistentStoreRequest(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(CoreData.NSPersistentStoreRequestType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreData.NSFetchRequestType, 1)
         self.assertEqual(CoreData.NSSaveRequestType, 2)
         self.assertEqual(CoreData.NSBatchInsertRequestType, 5)
@@ -14,7 +14,7 @@ class TestNSPersistentStoreRequest(TestCase):
         self.assertEqual(CoreData.NSBatchDeleteRequestType, 7)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             CoreData.NSAsynchronousFetchRequest.initWithFetchRequest_completionBlock_,
             1,

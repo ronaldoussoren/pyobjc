@@ -16,7 +16,7 @@ class TestCoreWLANTypes(TestCase):
         self.assertIsEnumType(CoreWLAN.CWPHYMode)
         self.assertIsEnumType(CoreWLAN.CWSecurity)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreWLAN.kCWNoErr, 0)
         self.assertEqual(CoreWLAN.kCWEAPOLErr, 1)
         self.assertEqual(CoreWLAN.kCWInvalidParameterErr, -3900)

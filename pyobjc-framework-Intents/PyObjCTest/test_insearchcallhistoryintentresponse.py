@@ -7,7 +7,7 @@ class TestINSearchCallHistoryIntentResponse(TestCase):
         self.assertIsEnumType(Intents.INSearchCallHistoryIntentResponseCode)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeContinueInApp, 2)

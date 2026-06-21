@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestOSAScriptView(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(OSAKit.OSAScriptView.usesScriptAssistant)
         self.assertArgIsBOOL(OSAKit.OSAScriptView.setUsesScriptAssistant_, 0)
         self.assertResultIsBOOL(OSAKit.OSAScriptView.usesTabs)

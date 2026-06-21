@@ -8,7 +8,7 @@ class TestNSScriptObjectSpecifiers(TestCase):
         self.assertIsEnumType(Foundation.NSRelativePosition)
         self.assertIsEnumType(Foundation.NSWhoseSubelementIdentifier)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSNoSpecifierError, 0)
         self.assertEqual(Foundation.NSNoTopLevelContainersSpecifierError, 1)
         self.assertEqual(Foundation.NSContainerSpecifierError, 2)
@@ -32,7 +32,7 @@ class TestNSScriptObjectSpecifiers(TestCase):
         self.assertEqual(Foundation.NSRandomSubelement, 3)
         self.assertEqual(Foundation.NSNoSubelement, 4)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Foundation.NSScriptObjectSpecifier.containerIsObjectBeingTested
         )

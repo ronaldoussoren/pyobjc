@@ -7,7 +7,7 @@ class TestINRecurrenceFrequency(TestCase):
         self.assertIsEnumType(Intents.INRecurrenceFrequency)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Intents.INRecurrenceFrequencyUnknown, 0)
         self.assertEqual(Intents.INRecurrenceFrequencyMinute, 1)
         self.assertEqual(Intents.INRecurrenceFrequencyHourly, 2)

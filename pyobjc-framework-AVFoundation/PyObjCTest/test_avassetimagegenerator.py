@@ -11,7 +11,7 @@ class TestAVAssetImageGenerator(TestCase):
         self.assertIsEnumType(AVFoundation.AVAssetImageGeneratorResult)
 
     @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             AVFoundation.AVAssetImageGeneratorApertureModeCleanAperture, str
         )
@@ -28,7 +28,7 @@ class TestAVAssetImageGenerator(TestCase):
         self.assertEqual(AVFoundation.AVAssetImageGeneratorCancelled, 2)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(
             AVFoundation.AVAssetImageGeneratorDynamicRangePolicyForceSDR, str
         )
@@ -37,7 +37,7 @@ class TestAVAssetImageGenerator(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetImageGenerator.appliesPreferredTrackTransform
         )

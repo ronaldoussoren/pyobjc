@@ -4,7 +4,7 @@ import objc
 
 
 class TestData(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             NSCFData = objc.lookUpClass("__NSCFData")
         except objc.error:
@@ -86,12 +86,12 @@ class TestData(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(CoreFoundation.kCFDataSearchBackwards, 1 << 0)
         self.assertEqual(CoreFoundation.kCFDataSearchAnchored, 1 << 1)
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         data = CoreFoundation.CFDataCreate(None, b"hello world", 11)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
         src = CoreFoundation.CFDataCreate(None, b"wor", 3)

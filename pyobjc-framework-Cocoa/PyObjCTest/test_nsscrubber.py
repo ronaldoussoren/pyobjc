@@ -26,7 +26,7 @@ class TestNSScrubber(TestCase):
         self.assertIsEnumType(AppKit.NSScrubberMode)
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSScrubberModeFixed, 0)
         self.assertEqual(AppKit.NSScrubberModeFree, 1)
 
@@ -36,7 +36,7 @@ class TestNSScrubber(TestCase):
         self.assertEqual(AppKit.NSScrubberAlignmentCenter, 3)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             TestNSScrubberHelper.numberOfItemsForScrubber_, objc._C_NSInteger
         )
@@ -70,6 +70,6 @@ class TestNSScrubber(TestCase):
         self.assertArgIsBlock(AppKit.NSScrubber.performSequentialBatchUpdates_, 0, b"v")
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSScrubberDataSource", AppKit)
         self.assertProtocolExists("NSScrubberDelegate", AppKit)

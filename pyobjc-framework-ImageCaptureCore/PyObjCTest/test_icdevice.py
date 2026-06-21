@@ -19,7 +19,7 @@ class TestICDevice(TestCase):
         self.assertIsEnumType(ImageCaptureCore.ICDeviceType)
         self.assertIsEnumType(ImageCaptureCore.ICDeviceTypeMask)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(ImageCaptureCore.ICDeviceTypeCamera, 0x00000001)
         self.assertEqual(ImageCaptureCore.ICDeviceTypeScanner, 0x00000002)
 
@@ -59,21 +59,21 @@ class TestICDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICDeviceCanEjectOrDisconnect, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(ImageCaptureCore.ICStatusCodeKey, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(ImageCaptureCore.ICEnumerationChronologicalOrder, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(ImageCaptureCore.ICTransportTypeProximity, str)
 
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("ICDeviceDelegate", ImageCaptureCore)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.isRemote)
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.hasOpenSession)
 
@@ -84,11 +84,11 @@ class TestICDevice(TestCase):
         )
 
     @max_os_level("10.14")
-    def testMethods_removed_in_10_15(self):
+    def test_methods_removed_in_10_15(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.isShared)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             ImageCaptureCore.ICDevice.requestOpenSessionWithOptions_completion_,
             1,

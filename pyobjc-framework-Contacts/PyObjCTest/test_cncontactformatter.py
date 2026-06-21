@@ -8,7 +8,7 @@ class TestCNContactFormatter(TestCase):
         self.assertIsEnumType(Contacts.CNContactFormatterStyle)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Contacts.CNContactFormatterStyleFullName, 0)
         self.assertEqual(Contacts.CNContactFormatterStylePhoneticFullName, 1)
 

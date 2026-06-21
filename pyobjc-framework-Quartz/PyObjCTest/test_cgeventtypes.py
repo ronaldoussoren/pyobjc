@@ -3,11 +3,11 @@ import Quartz
 
 
 class TestCGEventTypes(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGEventRef)
         self.assertIsCFType(Quartz.CGEventSourceRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGMomentumScrollPhaseNone, 0)
         self.assertEqual(Quartz.kCGMomentumScrollPhaseBegin, 1)
         self.assertEqual(Quartz.kCGMomentumScrollPhaseContinue, 2)
@@ -159,7 +159,7 @@ class TestCGEventTypes(TestCase):
         self.assertEqual(Quartz.kCGAnyInputEventType, 0xFFFFFFFF)
         self.assertEqual(Quartz.kCGEventMaskForAllEvents, 0xFFFFFFFFFFFFFFFF)
 
-    def testStructs(self):
+    def test_structs(self):
         v = Quartz.CGEventTapInformation()
         self.assertTrue(hasattr(v, "eventTapID"))
         self.assertTrue(hasattr(v, "tapPoint"))

@@ -25,7 +25,7 @@ class TestNSExceptionInteraction(TestCase):
 
 
 class TestNSException(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSGenericException, str)
         self.assertIsInstance(Foundation.NSRangeException, str)
         self.assertIsInstance(Foundation.NSInvalidArgumentException, str)
@@ -42,7 +42,7 @@ class TestNSException(TestCase):
         self.assertIsInstance(Foundation.NSOldStyleException, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Foundation.NSAssertionHandlerKey, str)
 
     def testUncaughtExceptionHandler(self):
@@ -67,7 +67,7 @@ class TestNSException(TestCase):
         self.assertNotHasAttr(Foundation, "NSCAssert")
         self.assertNotHasAttr(Foundation, "NSCParameterAssert")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsPrintf(Foundation.NSException.raise_format_, 1)
 
         self.assertArgIsPrintf(

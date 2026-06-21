@@ -5,7 +5,7 @@ import Photos
 
 class TestPHAssetChangeRequest(TestCase):
     @min_os_level("10.15")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Photos.PHAssetChangeRequest.isFavorite)
         self.assertArgIsBOOL(Photos.PHAssetChangeRequest.setFavorite_, 0)
 

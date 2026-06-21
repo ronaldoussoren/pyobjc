@@ -28,7 +28,7 @@ class TestNSHost(TestCase):
         o = PyObjC_TestClass3.createAHostWithAddress_("127.0.0.1")
         self.assertEqual(o.address(), "127.0.0.1")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Foundation.NSHost.setHostCacheEnabled_, 0)
         self.assertResultIsBOOL(Foundation.NSHost.isHostCacheEnabled)
         self.assertResultIsBOOL(Foundation.NSHost.isEqualToHost_)

@@ -7,7 +7,7 @@ class TestNSXMLParser(TestCase):
         self.assertIsEnumType(Foundation.NSXMLParserError)
         self.assertIsEnumType(Foundation.NSXMLParserExternalEntityResolvingPolicy)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSXMLParserInternalError, 1)
         self.assertEqual(Foundation.NSXMLParserOutOfMemoryError, 2)
         self.assertEqual(Foundation.NSXMLParserDocumentStartError, 3)
@@ -111,7 +111,7 @@ class TestNSXMLParser(TestCase):
         self.assertEqual(Foundation.NSXMLParserResolveExternalEntitiesSameOriginOnly, 2)
         self.assertEqual(Foundation.NSXMLParserResolveExternalEntitiesAlways, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Foundation.NSXMLParser.setShouldProcessNamespaces_, 0)
         self.assertArgIsBOOL(
             Foundation.NSXMLParser.setShouldReportNamespacePrefixes_, 0
@@ -125,5 +125,5 @@ class TestNSXMLParser(TestCase):
         self.assertResultIsBOOL(Foundation.NSXMLParser.parse)
 
     @min_sdk_level("10.6")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSXMLParserDelegate", Foundation)

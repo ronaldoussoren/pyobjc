@@ -11,7 +11,7 @@ if hasattr(GameKit, "GKLeaderboardSet"):
 
 class TestGKLeaderboardSet(TestCase):
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             GameKit.GKLeaderboardSet.loadLeaderboardSetsWithCompletionHandler_,
             0,
@@ -25,7 +25,7 @@ class TestGKLeaderboardSet(TestCase):
         )
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             GameKit.GKLeaderboardSet.loadLeaderboardsWithHandler_, 0, b"v@@"
         )

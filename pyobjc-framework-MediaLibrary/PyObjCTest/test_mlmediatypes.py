@@ -8,7 +8,7 @@ class TestMLMediaTypes(TestCase):
         self.assertIsEnumType(MediaLibrary.MLMediaType)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(MediaLibrary.MLMediaSourceTypeAudio, 1)
         self.assertEqual(MediaLibrary.MLMediaSourceTypeImage, 2)
         self.assertEqual(MediaLibrary.MLMediaSourceTypeMovie, 4)
@@ -156,7 +156,7 @@ class TestMLMediaTypes(TestCase):
         self.assertIsInstance(MediaLibrary.MLMediaObjectProtectedKey, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(
             MediaLibrary.MLiTunesMusicVideosPlaylistTypeIdentifier, str
         )
@@ -189,16 +189,16 @@ class TestMLMediaTypes(TestCase):
         self.assertIsInstance(MediaLibrary.MLPhotosAllPhotosAlbumTypeIdentifier, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(MediaLibrary.MLPhotosFrontCameraGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosScreenshotGroupTypeIdentifier, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(MediaLibrary.MLPhotosDepthEffectGroupTypeIdentifier, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(MediaLibrary.MLPhotosLivePhotosGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosLongExposureGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLPhotosAnimatedGroupTypeIdentifier, str)

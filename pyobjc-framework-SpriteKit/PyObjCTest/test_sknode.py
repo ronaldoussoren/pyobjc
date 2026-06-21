@@ -10,7 +10,7 @@ class TestSKNode(TestCase):
         self.assertIsEnumType(SpriteKit.SKNodeFocusBehavior)
 
     @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SpriteKit.SKBlendModeAlpha, 0)
         self.assertEqual(SpriteKit.SKBlendModeAdd, 1)
         self.assertEqual(SpriteKit.SKBlendModeSubtract, 2)
@@ -20,7 +20,7 @@ class TestSKNode(TestCase):
         self.assertEqual(SpriteKit.SKBlendModeReplace, 6)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertIsInstance(SpriteKit.SKNode, objc.objc_class)
 
         self.assertArgIsBOOL(SpriteKit.SKNode.setPaused_, 0)
@@ -40,7 +40,7 @@ class TestSKNode(TestCase):
         self.assertArgIsBlock(SpriteKit.SKNode.runAction_completion_, 1, b"v")
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertArgIsOut(
             SpriteKit.SKNode.nodeWithFileNamed_securelyWithClasses_andError_, 2
         )

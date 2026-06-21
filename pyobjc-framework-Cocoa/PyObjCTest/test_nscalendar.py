@@ -11,7 +11,7 @@ class TestNSCalendar(TestCase):
         self.assertIsEnumType(Foundation.NSCalendarOptions)
         self.assertIsEnumType(Foundation.NSCalendarUnit)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             Foundation.NSEraCalendarUnit, CoreFoundation.kCFCalendarUnitEra
         )
@@ -117,7 +117,7 @@ class TestNSCalendar(TestCase):
         self.assertEqual(Foundation.NSCalendarMatchLast, (1 << 13))
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(
             Foundation.NSQuarterCalendarUnit, CoreFoundation.kCFCalendarUnitQuarter
         )
@@ -138,7 +138,7 @@ class TestNSCalendar(TestCase):
         self.assertIsInstance(Foundation.NSCalendarIdentifierRepublicOfChina, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(
             Foundation.NSWeekOfMonthCalendarUnit,
             CoreFoundation.kCFCalendarUnitWeekOfMonth,
@@ -155,16 +155,16 @@ class TestNSCalendar(TestCase):
         self.assertEqual(Foundation.NSTimeZoneCalendarUnit, (1 << 21))
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(Foundation.NSCalendarDayChangedNotification, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(Foundation.NSCalendarIdentifierIslamicTabular, str)
         self.assertIsInstance(Foundation.NSCalendarIdentifierIslamicUmmAlQura, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(Foundation.NSCalendarIdentifierBangla, str)
         self.assertIsInstance(Foundation.NSCalendarIdentifierGujarati, str)
         self.assertIsInstance(Foundation.NSCalendarIdentifierKannada, str)
@@ -178,7 +178,7 @@ class TestNSCalendar(TestCase):
         self.assertIsInstance(Foundation.NSCalendarIdentifierVietnamese, str)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         Foundation.NSCalendar.currentCalendar()
 
         self.assertResultIsBOOL(
@@ -192,12 +192,12 @@ class TestNSCalendar(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSDateComponents.isLeapMonth)
         self.assertArgIsBOOL(Foundation.NSDateComponents.setLeapMonth_, 0)
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 0)
         self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 1)
         self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 2)
@@ -269,6 +269,6 @@ class TestNSCalendar(TestCase):
         self.assertResultIsBOOL(Foundation.NSDateComponents.isValidDateInCalendar_)
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(Foundation.NSDateComponents.isRepeatedDay)
         self.assertArgIsBOOL(Foundation.NSDateComponents.setRepeatedDay_, 0)

@@ -4,6 +4,6 @@ import Contacts
 
 class TestCNSaveRequest(TestCase):
     @min_os_level("12.3")
-    def testMethods12_3(self):
+    def test_methods12_3(self):
         self.assertResultIsBOOL(Contacts.CNSaveRequest.shouldRefetchContacts)
         self.assertArgIsBOOL(Contacts.CNSaveRequest.setShouldRefetchContacts_, 0)

@@ -4,7 +4,7 @@ import objc
 
 
 class TestBase(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.TRUE, 1)
         self.assertEqual(CoreFoundation.FALSE, 0)
 
@@ -113,7 +113,7 @@ class TestBase(TestCase):
 
         self.assertEqual(CoreFoundation.kCFNotFound, -1)
 
-    def testStructs(self):
+    def test_structs(self):
         o = CoreFoundation.CFRange()
         self.assertHasAttr(o, "location")
         self.assertHasAttr(o, "length")
@@ -218,7 +218,7 @@ class TestBase(TestCase):
             self.assertIsInstance(v, CoreFoundation.CFAllocatorRef)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5, 476.00)
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_1, 476.00)
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_2, 476.10)
@@ -228,7 +228,7 @@ class TestBase(TestCase):
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_6, 476.17)
 
     @min_os_level("10.9")
-    def testFunctions10_9(self):
+    def test_functions10_9(self):
         obj = CoreFoundation.CFURLCreateWithString(None, "http://www.apple.com/", None)
         CoreFoundation.CFRetain(obj)
         CoreFoundation.CFAutorelease(obj)

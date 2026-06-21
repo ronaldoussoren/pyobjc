@@ -4,6 +4,6 @@ import Quartz
 
 class TestCGDirectDisplayMetal(TestCase):
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         self.assertResultIsCFRetained(Quartz.CGDirectDisplayCopyCurrentMetalDevice)
         Quartz.CGDirectDisplayCopyCurrentMetalDevice(Quartz.CGMainDisplayID())

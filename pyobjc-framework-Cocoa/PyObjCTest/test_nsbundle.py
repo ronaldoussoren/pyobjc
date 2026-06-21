@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSBundle(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         b = AppKit.NSBundle.mainBundle()
         # Test on an instance because AppKit.NSBundle has class methods
         # that interfere with this test
@@ -13,18 +13,18 @@ class TestNSBundle(TestCase):
         self.assertResultIsBOOL(b.unload)
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(AppKit.NSBundle.loadNibNamed_owner_topLevelObjects_)
         self.assertArgIsOut(AppKit.NSBundle.loadNibNamed_owner_topLevelObjects_, 2)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(AppKit.NSBundle.preflightAndReturnError_)
         self.assertArgIsOut(AppKit.NSBundle.preflightAndReturnError_, 0)
         self.assertResultIsBOOL(AppKit.NSBundle.loadAndReturnError_)
         self.assertArgIsOut(AppKit.NSBundle.loadAndReturnError_, 0)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSBundleExecutableArchitectureI386, 0x00000007)
         self.assertEqual(AppKit.NSBundleExecutableArchitecturePPC, 0x00000012)
         self.assertEqual(AppKit.NSBundleExecutableArchitectureX86_64, 0x01000007)

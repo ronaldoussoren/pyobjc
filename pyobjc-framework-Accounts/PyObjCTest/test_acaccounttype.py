@@ -4,7 +4,7 @@ import Accounts
 
 class TestACAccountType(TestCase):
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(Accounts.ACAccountTypeIdentifierLinkedIn, str)
         self.assertIsInstance(Accounts.ACAccountTypeIdentifierTencentWeibo, str)
         self.assertIsInstance(Accounts.ACLinkedInAppIdKey, str)
@@ -12,7 +12,7 @@ class TestACAccountType(TestCase):
         self.assertIsInstance(Accounts.ACTencentWeiboAppIdKey, str)
 
     @min_os_level("10.8")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Accounts.ACAccountTypeIdentifierTwitter, str)
         self.assertIsInstance(Accounts.ACAccountTypeIdentifierSinaWeibo, str)
         self.assertIsInstance(Accounts.ACFacebookAppIdKey, str)
@@ -23,5 +23,5 @@ class TestACAccountType(TestCase):
         self.assertIsInstance(Accounts.ACFacebookAudienceOnlyMe, str)
 
     @min_os_level("10.8")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Accounts.ACAccountType.accessGranted)

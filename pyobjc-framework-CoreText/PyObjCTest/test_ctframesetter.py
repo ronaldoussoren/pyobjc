@@ -9,10 +9,10 @@ except ImportError:
 
 
 class TestCTFramesetter(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreText.CTFramesetterRef, objc.objc_class)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = CoreText.CTFramesetterGetTypeID()
         self.assertIsInstance(v, int)
 
@@ -28,7 +28,7 @@ class TestCTFramesetter(TestCase):
 
     @min_os_level("10.5")
     @skipUnless(CGSize is not None, "CoreGraphics not available")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         setter = CoreText.CTFramesetterCreateWithAttributedString(
             CoreText.CFAttributedStringCreate(None, "hello", None)
         )
@@ -48,5 +48,5 @@ class TestCTFramesetter(TestCase):
         self.assertIsInstance(a_range, CoreText.CFRange)
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsCFRetained(CoreText.CTFramesetterCreateWithTypesetter)

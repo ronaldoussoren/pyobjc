@@ -4,12 +4,12 @@ import objc
 
 
 class TestSCNetworkConnection(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(
             SystemConfiguration.SCNetworkConnectionRef, objc.objc_class
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionInvalid, -1)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionDisconnected, 0)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionConnecting, 1)
@@ -57,7 +57,7 @@ class TestSCNetworkConnection(TestCase):
             "OnDemandRetry",
         )
 
-    def testFunctions(self):
+    def test_functions(self):
         v = SystemConfiguration.SCNetworkConnectionGetTypeID()
         self.assertIsInstance(v, int)
 
@@ -117,5 +117,5 @@ class TestSCNetworkConnection(TestCase):
         )
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         self.assertResultIsBOOL(SystemConfiguration.SCNetworkConnectionSetDispatchQueue)

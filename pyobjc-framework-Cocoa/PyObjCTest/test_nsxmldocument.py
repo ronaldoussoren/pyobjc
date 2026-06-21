@@ -6,7 +6,7 @@ class TestXMLDocument(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSXMLDocumentContentKind)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSXMLDocumentXMLKind, 0)
         self.assertEqual(Foundation.NSXMLDocumentXHTMLKind, 1)
         self.assertEqual(Foundation.NSXMLDocumentHTMLKind, 2)

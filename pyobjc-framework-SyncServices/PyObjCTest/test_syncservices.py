@@ -8,7 +8,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestSyncServices(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(SyncServices, "ISyncClient")
         self.assertIsInstance(SyncServices.ISyncClient, objc.objc_class)
 

@@ -9,7 +9,7 @@ from PyObjCTools.TestSupport import (
 
 
 class TestCFOpenDirectoryConstants(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CFOpenDirectory.kODSessionProxyAddress, str)
         self.assertIsInstance(CFOpenDirectory.kODSessionProxyPort, str)
         self.assertIsInstance(CFOpenDirectory.kODSessionProxyUsername, str)
@@ -470,7 +470,7 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeSecureHash, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMetaAmbiguousName, str)
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypeMetaAugmentedAttributes, str
@@ -489,18 +489,18 @@ class TestCFOpenDirectoryConstants(TestCase):
 
     @expectedFailure
     @min_os_level("10.7")
-    def testConstants10_7_missing(self):
+    def test_constants10_7_missing(self):
         self.assertIsInstance(
             CFOpenDirectory.kODAuthenticationTypeSetCertificateHashAsCurrent, str
         )
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(CFOpenDirectory.kODNodeOptionsQuerySkippedSubnode, str)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypeQueryInformation, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeProfiles, str)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeProfilesTimestamp, str)
         self.assertIsInstance(
@@ -539,7 +539,7 @@ class TestCFOpenDirectoryConstants(TestCase):
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] in ("10.9", "10.10"))
     @min_os_level("10.9")
-    def testConstants10_9_missing(self):
+    def test_constants10_9_missing(self):
         self.assertIsInstance(
             CFOpenDirectory.kODPolicyTypeAccountMaximumMinutesUntilDisabled, str
         )
@@ -548,7 +548,7 @@ class TestCFOpenDirectoryConstants(TestCase):
         )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(CFOpenDirectory.kODPolicyKeyIdentifier, str)
         self.assertIsInstance(CFOpenDirectory.kODPolicyKeyParameters, str)
         self.assertIsInstance(CFOpenDirectory.kODPolicyKeyContent, str)
@@ -598,7 +598,7 @@ class TestCFOpenDirectoryConstants(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(CFOpenDirectory.kODPolicyKeyContentDescription, str)
         self.assertIsInstance(CFOpenDirectory.kODPolicyKeyEvaluationDetails, str)
         self.assertIsInstance(CFOpenDirectory.kODPolicyKeyPolicySatisfied, str)
@@ -620,16 +620,16 @@ class TestCFOpenDirectoryConstants(TestCase):
 
     @expectedFailure
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         # Not actually exported...
         self.assertIsInstance(
             CFOpenDirectory.kODAuthenticationTypeClearTextReadOnly, str
         )
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(CFOpenDirectory.kODBackOffSeconds, str)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeMPPEPrimaryKeys, str)

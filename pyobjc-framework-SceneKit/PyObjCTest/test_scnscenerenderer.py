@@ -190,14 +190,14 @@ class TestSCNSceneRenderer(TestCase):
     def test_constants10_12(self):
         self.assertIsInstance(SceneKit.SCNHitTestOptionCategoryBitMask, str)
 
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("SCNSceneRenderer", SceneKit)
 
     @min_sdk_level("10.10")
-    def testProtocolObjects10_10(self):
+    def test_protocols10_10(self):
         self.assertProtocolExists("SCNSceneRendererDelegate", SceneKit)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             TestSCNSceneRendererHelper.presentScene_withTransition_incomingPointOfView_completionHandler_,
             3,
@@ -298,7 +298,7 @@ class TestSCNSceneRenderer(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(
             TestSCNSceneRendererHelper.isTemporalAntialiasingEnabled
         )

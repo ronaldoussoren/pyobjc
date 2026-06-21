@@ -3,13 +3,13 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestFileDescriptor(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFFileDescriptorRef)
 
     def testTypeID(self):
         self.assertIsInstance(CoreFoundation.CFFileDescriptorGetTypeID(), int)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFFileDescriptorReadCallBack, 1 << 0)
         self.assertEqual(CoreFoundation.kCFFileDescriptorWriteCallBack, 1 << 1)
 

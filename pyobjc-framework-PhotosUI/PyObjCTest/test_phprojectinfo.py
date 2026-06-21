@@ -8,7 +8,7 @@ class TestPHProjectInfo(TestCase):
         self.assertIsEnumType(PhotosUI.PHProjectSectionType)
         self.assertIsEnumType(PhotosUI.PHProjectTextElementType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(PhotosUI.PHProjectCreationSourceUndefined, 0)
         self.assertEqual(PhotosUI.PHProjectCreationSourceUserSelection, 1)
         self.assertEqual(PhotosUI.PHProjectCreationSourceAlbum, 2)
@@ -32,7 +32,7 @@ class TestPHProjectInfo(TestCase):
         self.assertEqual(PhotosUI.PHProjectTextElementTypeSubtitle, 2)
 
     @min_os_level("10.14")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(PhotosUI.PHProjectInfo.brandingEnabled)
         self.assertResultIsBOOL(PhotosUI.PHProjectInfo.pageNumbersEnabled)
         self.assertResultIsBOOL(PhotosUI.PHProjectAssetElement.horizontallyFlipped)

@@ -41,7 +41,7 @@ class TestNSDateFormatter(TestCase):
             Foundation.NSDateFormatter.getObjectValue_forString_range_error_, 3
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             Foundation.NSDateFormatterNoStyle, CoreFoundation.kCFDateFormatterNoStyle
         )
@@ -66,7 +66,7 @@ class TestNSDateFormatter(TestCase):
         self.assertEqual(Foundation.NSDateFormatterBehavior10_0, 1000)
         self.assertEqual(Foundation.NSDateFormatterBehavior10_4, 1040)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSDateFormatter.generatesCalendarDates)
         self.assertArgIsBOOL(Foundation.NSDateFormatter.setGeneratesCalendarDates_, 0)
         self.assertResultIsBOOL(Foundation.NSDateFormatter.isLenient)
@@ -78,7 +78,7 @@ class TestNSDateFormatter(TestCase):
         self.assertResultIsBOOL(Foundation.NSDateFormatter.allowsNaturalLanguage)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(Foundation.NSDateFormatter.doesRelativeDateFormatting)
         self.assertArgIsBOOL(
             Foundation.NSDateFormatter.setDoesRelativeDateFormatting_, 0

@@ -7,7 +7,7 @@ class TestCIContext(TestCase):
         self.assertIsTypedEnum(Quartz.CIContextOption, str)
         self.assertIsTypedEnum(Quartz.CIImageRepresentationOption, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCIContextOutputColorSpace, str)
         self.assertIsInstance(Quartz.kCIContextWorkingColorSpace, str)
         self.assertIsInstance(Quartz.kCIContextUseSoftwareRenderer, str)
@@ -17,23 +17,23 @@ class TestCIContext(TestCase):
         self.assertIsInstance(Quartz.kCIContextOutputPremultiplied, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(Quartz.kCIContextHighQualityDownsample, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(Quartz.kCIContextCacheIntermediates, str)
         self.assertIsInstance(Quartz.kCIContextPriorityRequestLow, str)
         self.assertIsInstance(Quartz.kCIContextAllowLowPower, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.kCIImageRepresentationAVDepthData, str)
         self.assertIsInstance(Quartz.kCIImageRepresentationDepthImage, str)
         self.assertIsInstance(Quartz.kCIImageRepresentationDisparityImage, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(Quartz.kCIImageRepresentationAVPortraitEffectsMatte, str)
         self.assertIsInstance(
             Quartz.kCIImageRepresentationPortraitEffectsMatteImage, str
@@ -41,7 +41,7 @@ class TestCIContext(TestCase):
         self.assertIsInstance(Quartz.kCIContextName, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(
             Quartz.kCIImageRepresentationAVSemanticSegmentationMattes, str
         )
@@ -56,32 +56,32 @@ class TestCIContext(TestCase):
         )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(
             Quartz.kCIImageRepresentationSemanticSegmentationGlassesMatteImage, str
         )
         self.assertIsInstance(Quartz.kCIImageRepresentationHDRGainMapImage, str)
 
     @min_os_level("11.1")
-    def testConstants11_1(self):
+    def test_constants11_1(self):
         self.assertIsInstance(
             Quartz.kCIImageRepresentationSemanticSegmentationSkyMatteImage, str
         )
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(Quartz.kCIContextMemoryLimit, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(Quartz.kCIImageRepresentationHDRImage, str)
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(Quartz.kCIContextCVMetalTextureCache, str)
         self.assertIsInstance(Quartz.kCIImageRepresentationHDRGainMapAsRGB, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             Quartz.CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1
         )
@@ -91,7 +91,7 @@ class TestCIContext(TestCase):
         self.assertResultIsCFRetained(Quartz.CIContext.createCGLayerWithSize_info_)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBOOL(
             Quartz.CIContext.createCGImage_fromRect_format_colorSpace_deferred_, 4
         )
@@ -100,7 +100,7 @@ class TestCIContext(TestCase):
         )
 
     @min_os_level("10.13.4")
-    def testMethods_10_13_4(self):
+    def test_methods_10_13_4(self):
         self.assertResultIsBOOL(
             Quartz.CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_
         )
@@ -110,7 +110,7 @@ class TestCIContext(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertArgIsOut(
             Quartz.CIContext.HEIF10RepresentationOfImage_colorSpace_options_error_,
             3,
@@ -133,7 +133,7 @@ class TestCIContext(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsOut(
             Quartz.CIContext.OpenEXRRepresentationOfImage_options_error_,
             2,
@@ -148,7 +148,7 @@ class TestCIContext(TestCase):
         )
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertArgIsBOOL(
             Quartz.CIContext.createCGImage_fromRect_format_colorSpace_deferred_calculateHDRStats_,
             4,

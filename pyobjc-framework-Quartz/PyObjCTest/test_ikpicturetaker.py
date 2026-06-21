@@ -5,7 +5,7 @@ import objc
 
 class TestIKPictureTaker(TestCase):
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             Quartz.IKPictureTaker.beginPictureTakerWithDelegate_didEndSelector_contextInfo_,
             1,
@@ -26,7 +26,7 @@ class TestIKPictureTaker(TestCase):
         self.assertArgIsBOOL(Quartz.IKPictureTaker.setMirroring_, 0)
 
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.IKPictureTakerAllowsVideoCaptureKey, str)
         self.assertIsInstance(Quartz.IKPictureTakerAllowsFileChoosingKey, str)
         self.assertIsInstance(Quartz.IKPictureTakerShowRecentPictureKey, str)
@@ -41,5 +41,5 @@ class TestIKPictureTaker(TestCase):
         self.assertIsInstance(Quartz.IKPictureTakerShowEmptyPictureKey, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(Quartz.IKPictureTakerRemainOpenAfterValidateKey, str)

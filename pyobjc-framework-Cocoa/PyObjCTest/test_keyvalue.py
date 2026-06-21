@@ -236,7 +236,7 @@ class PyKeyValueCoding(TestCase):
         )
 
     @max_os_level("10.5")
-    def testValuesForKeys(self):
+    def test_valuesForKeys(self):
         o = KeyValueClass1.alloc().init()
 
         self.assertEqual(
@@ -494,7 +494,7 @@ class PyKeyValueCodingExplicit(TestCase):
         )
 
     @max_os_level("10.5")
-    def testValuesForKeys(self):
+    def test_valuesForKeys(self):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(

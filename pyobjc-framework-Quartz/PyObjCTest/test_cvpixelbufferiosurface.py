@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCVPixelBufferIOSurface(TestCase):
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(
             Quartz.kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey, str
         )
@@ -16,7 +16,7 @@ class TestCVPixelBufferIOSurface(TestCase):
         )
 
     @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions10_6(self):
         Quartz.CVPixelBufferGetIOSurface
 
         self.assertArgIsCFRetained(Quartz.CVPixelBufferCreateWithIOSurface, 3)

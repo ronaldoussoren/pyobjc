@@ -421,7 +421,7 @@ class TestVariadic(TestCase):
 
 
 class TestNSArray(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSArray.isEqualToArray_)
         self.assertResultIsBOOL(Foundation.NSArray.containsObject_)
         self.assertResultIsBOOL(Foundation.NSArray.writeToFile_atomically_)
@@ -475,7 +475,7 @@ class TestNSArray(TestCase):
         self.assertIsNullTerminated(Foundation.NSArray.initWithObjects_)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSArray.enumerateObjectsUsingBlock_,
             0,
@@ -549,7 +549,7 @@ class TestNSArray(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(Foundation.NSArray.writeToURL_error_)
         self.assertArgIsOut(Foundation.NSArray.writeToURL_error_, 1)
 
@@ -557,7 +557,7 @@ class TestNSArray(TestCase):
         self.assertArgIsOut(Foundation.NSArray.arrayWithContentsOfURL_error_, 1)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             Foundation.NSArray.differenceFromArray_withOptions_usingEquivalenceTest_,
             2,
@@ -565,7 +565,7 @@ class TestNSArray(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(Foundation.NSBinarySearchingFirstEqual, 1 << 8)
         self.assertEqual(Foundation.NSBinarySearchingLastEqual, 1 << 9)
         self.assertEqual(Foundation.NSBinarySearchingInsertionIndex, 1 << 10)

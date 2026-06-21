@@ -5,7 +5,7 @@ import objc
 
 class TestCKDiscoverUserInfosOperation(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKDiscoveredUserInfo")
         self.assertIsInstance(CloudKit.CKDiscoveredUserInfo, objc.objc_class)
 

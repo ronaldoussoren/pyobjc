@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSAnimationContext(TestCase):
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBlock(AppKit.NSAnimationContext.completionHandler, b"v")
         self.assertArgIsBlock(AppKit.NSAnimationContext.setCompletionHandler_, 0, b"v")
 
@@ -16,6 +16,6 @@ class TestNSAnimationContext(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(AppKit.NSAnimationContext.allowsImplicitAnimation)
         self.assertArgIsBOOL(AppKit.NSAnimationContext.setAllowsImplicitAnimation_, 0)

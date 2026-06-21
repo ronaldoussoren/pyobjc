@@ -3,7 +3,7 @@ import Intents
 
 
 class INEditMessageIntentResponse(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsEnumType(Intents.INEditMessageIntentResponseCode)
         self.assertEqual(Intents.INEditMessageIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INEditMessageIntentResponseCodeReady, 1)

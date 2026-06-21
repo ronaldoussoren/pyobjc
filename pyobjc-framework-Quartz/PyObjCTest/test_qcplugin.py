@@ -4,7 +4,7 @@ import Quartz
 
 class TestQCPlugIn(TestCase):
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(Quartz.QCPlugInAttributeNameKey, str)
         self.assertIsInstance(Quartz.QCPlugInAttributeDescriptionKey, str)
         self.assertIsInstance(Quartz.QCPlugInAttributeCopyrightKey, str)
@@ -28,11 +28,11 @@ class TestQCPlugIn(TestCase):
         self.assertEqual(Quartz.kQCPlugInTimeModeTimeBase, 2)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(Quartz.QCPlugInAttributeCategoriesKey, str)
         self.assertIsInstance(Quartz.QCPlugInAttributeExamplesKey, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.QCPortAttributeTypeKey, str)
         self.assertIsInstance(Quartz.QCPortAttributeNameKey, str)
         self.assertIsInstance(Quartz.QCPortAttributeMinimumValueKey, str)
@@ -46,14 +46,14 @@ class TestQCPlugIn(TestCase):
         self.assertIsInstance(Quartz.QCPortTypeStructure, str)
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.QCPlugIn.startExecution_)
         self.assertResultIsBOOL(Quartz.QCPlugIn.execute_atTime_withArguments_)
         self.assertResultIsBOOL(Quartz.QCPlugIn.didValueForInputKeyChange_)
         self.assertResultIsBOOL(Quartz.QCPlugIn.setValue_forOutputKey_)
         self.assertResultIsBOOL(Quartz.QCPlugIn.loadPlugInAtPath_)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("QCPlugInContext", Quartz)
         self.assertProtocolExists("QCPlugInInputImageSource", Quartz)
         self.assertProtocolExists("QCPlugInOutputImageProvider", Quartz)

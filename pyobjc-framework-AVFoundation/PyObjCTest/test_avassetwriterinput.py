@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVAssetWriterInput(TestCase):
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetWriterInputCaptionAdaptor.appendCaption_
         )
@@ -13,7 +13,7 @@ class TestAVAssetWriterInput(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetWriterInput.performsMultiPassEncodingIfSupported
         )
@@ -33,7 +33,7 @@ class TestAVAssetWriterInput(TestCase):
         )
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetWriterInput.marksOutputTrackAsEnabled
         )
@@ -45,7 +45,7 @@ class TestAVAssetWriterInput(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriterInput.isReadyForMoreMediaData)
         self.assertResultIsBOOL(
             AVFoundation.AVAssetWriterInput.expectsMediaDataInRealTime
@@ -64,7 +64,7 @@ class TestAVAssetWriterInput(TestCase):
         )
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(
             AVFoundation.AVAssetWriterInputMediaDataLocationInterleavedWithMainMediaData,  # noqa: B950
             str,

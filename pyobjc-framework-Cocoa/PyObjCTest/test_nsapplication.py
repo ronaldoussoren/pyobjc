@@ -76,7 +76,7 @@ class TestNSApplication(TestCase):
         self.assertIsEnumType(AppKit.NSRequestUserAttentionType)
         self.assertIsEnumType(AppKit.NSWindowListOptions)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSAppKitVersionNumber, float)
 
         self.assertEqual(AppKit.NSAppKitVersionNumber10_0, 577)
@@ -205,7 +205,7 @@ class TestNSApplication(TestCase):
         self.assertEqual(AppKit.NSModalResponseAbort, -1001)
         self.assertEqual(AppKit.NSModalResponseContinue, -1002)
 
-    def testFunctions(self):
+    def test_functions(self):
         # Testing the next function is not doable in this context...
         AppKit.NSApplicationMain
         self.assertResultIsBOOL(AppKit.NSApplicationLoad)
@@ -258,7 +258,7 @@ class TestNSApplication(TestCase):
         self.assertIsInstance(session, AppKit.NSModalSession)
         app.endModalSession_(session)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSApplication.isActive)
         self.assertResultIsBOOL(AppKit.NSApplication.isHidden)
         self.assertResultIsBOOL(AppKit.NSApplication.isRunning)
@@ -336,7 +336,7 @@ class TestNSApplication(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSAppKitVersionNumber10_4_1, 824.1)
         self.assertEqual(AppKit.NSAppKitVersionNumber10_4_3, 824.23)
         self.assertEqual(AppKit.NSAppKitVersionNumber10_4_4, 824.33)
@@ -370,7 +370,7 @@ class TestNSApplication(TestCase):
         self.assertEqual(AppKit.NSUserInterfaceLayoutDirectionRightToLeft, 1)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSApplicationPresentationFullScreen, 1 << 10)
         self.assertEqual(AppKit.NSApplicationPresentationAutoHideToolbar, 1 << 11)
         self.assertEqual(AppKit.NSRemoteNotificationTypeNone, 0)
@@ -383,7 +383,7 @@ class TestNSApplication(TestCase):
         self.assertIsInstance(AppKit.NSApplicationLaunchIsDefaultLaunchKey, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(AppKit.NSApplicationLaunchUserNotificationKey, str)
         self.assertIsInstance(AppKit.NSTextAlternativesAttributeName, str)
         self.assertIsInstance(AppKit.NSUsesScreenFontsDocumentAttribute, str)
@@ -392,7 +392,7 @@ class TestNSApplication(TestCase):
         self.assertEqual(AppKit.NSRemoteNotificationTypeAlert, 4)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertEqual(AppKit.NSApplicationOcclusionStateVisible, 1 << 1)
 
         self.assertIsInstance(
@@ -400,7 +400,7 @@ class TestNSApplication(TestCase):
         )
 
     @min_os_level("10.11.2")
-    def testConstants10_11_2(self):
+    def test_constants10_11_2(self):
         self.assertEqual(
             AppKit.NSApplicationPresentationDisableCursorLocationAssistance, 1 << 12
         )
@@ -409,7 +409,7 @@ class TestNSApplication(TestCase):
         )
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AppKit.NSAboutPanelOptionCredits, str)
         self.assertIsInstance(AppKit.NSAboutPanelOptionApplicationName, str)
         self.assertIsInstance(AppKit.NSAboutPanelOptionApplicationIcon, str)
@@ -417,11 +417,11 @@ class TestNSApplication(TestCase):
         self.assertIsInstance(AppKit.NSAboutPanelOptionApplicationVersion, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(AppKit.NSAppearanceDocumentAttribute, str)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(
             AppKit.NSApplicationProtectedDataWillBecomeUnavailableNotification, str
         )
@@ -430,7 +430,7 @@ class TestNSApplication(TestCase):
         )
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(
             AppKit.NSApplicationShouldBeginSuppressingHighDynamicRangeContentNotification,
             str,
@@ -441,32 +441,32 @@ class TestNSApplication(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSApplication.setActivationPolicy_)
         self.assertResultIsBOOL(AppKit.NSApplication.isFullKeyboardAccessEnabled)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(
             AppKit.NSApplication.enumerateWindowsWithOptions_usingBlock_, 1, b"v@o^Z"
         )
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsBOOL(AppKit.NSApplication.isRegisteredForRemoteNotifications)
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
         self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             AppKit.NSApplication.applicationShouldSuppressHighDynamicRangeContent
         )
         self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
 
     @min_sdk_level("10.10")
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSApplicationDelegate", AppKit)

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestValueTrans(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSNegateBooleanTransformerName, str)
         self.assertIsInstance(Foundation.NSIsNilTransformerName, str)
         self.assertIsInstance(Foundation.NSIsNotNilTransformerName, str)
@@ -11,10 +11,10 @@ class TestValueTrans(TestCase):
         self.assertIsInstance(Foundation.NSKeyedUnarchiveFromDataTransformerName, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(Foundation.NSSecureUnarchiveFromDataTransformerName, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Foundation.NSValueTransformer.allowsReverseTransformation
         )

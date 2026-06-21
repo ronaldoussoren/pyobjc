@@ -7,7 +7,7 @@ class TestNSTextCheckingResult(TestCase):
         self.assertIsEnumType(Foundation.NSTextCheckingType)
 
     @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSTextCheckingTypeOrthography, 1 << 0)
         self.assertEqual(Foundation.NSTextCheckingTypeSpelling, 1 << 1)
         self.assertEqual(Foundation.NSTextCheckingTypeGrammar, 1 << 2)
@@ -40,7 +40,7 @@ class TestNSTextCheckingResult(TestCase):
         self.assertIsInstance(Foundation.NSTextCheckingPhoneKey, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(Foundation.NSTextCheckingTypeRegularExpression, 1 << 10)
         self.assertEqual(Foundation.NSTextCheckingTypePhoneNumber, 1 << 11)
         self.assertEqual(Foundation.NSTextCheckingTypeTransitInformation, 1 << 12)
@@ -49,7 +49,7 @@ class TestNSTextCheckingResult(TestCase):
         self.assertIsInstance(Foundation.NSTextCheckingFlightKey, str)
 
     @min_os_level("10.6")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             Foundation.NSTextCheckingResult.range, Foundation.NSRange.__typestr__
         )
@@ -111,7 +111,7 @@ class TestNSTextCheckingResult(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgHasType(
             Foundation.NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_,  # noqa: B950
             0,

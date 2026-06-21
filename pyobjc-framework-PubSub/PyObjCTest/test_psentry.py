@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestPSEntry(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(PubSub.PSEntry.isCurrent)
         self.assertResultIsBOOL(PubSub.PSEntry.isRead)
         self.assertArgIsBOOL(PubSub.PSEntry.setRead_, 0)

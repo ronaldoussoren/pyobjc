@@ -7,10 +7,10 @@ import objc
 
 
 class TestCTFrame(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreText.CTFrameRef, objc.objc_class)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreText.kCTFrameProgressionTopToBottom, 0)
         self.assertEqual(CoreText.kCTFrameProgressionRightToLeft, 1)
         self.assertEqual(CoreText.kCTFrameProgressionLeftToRight, 2)
@@ -21,13 +21,13 @@ class TestCTFrame(TestCase):
         self.assertIsInstance(CoreText.kCTFrameProgressionAttributeName, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(CoreText.kCTFramePathFillRuleAttributeName, str)
         self.assertIsInstance(CoreText.kCTFramePathWidthAttributeName, str)
         self.assertIsInstance(CoreText.kCTFrameClippingPathsAttributeName, str)
         self.assertIsInstance(CoreText.kCTFramePathClippingPathAttributeName, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = CoreText.CTFrameGetTypeID()
         self.assertIsInstance(v, int)
 

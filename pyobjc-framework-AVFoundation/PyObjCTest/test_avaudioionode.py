@@ -27,7 +27,7 @@ class TestAVAudioIONode(TestCase):
         )
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(AVFoundation.AVCoreAnimationBeginTimeAtZero, float)
         self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspect, str)
         self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspectFill, str)
@@ -39,7 +39,7 @@ class TestAVAudioIONode(TestCase):
         self.assertIsInstance(v.duckingLevel, int)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioInputNode.setManualRenderingInputPCMFormat_inputBlock_
         )
@@ -50,7 +50,7 @@ class TestAVAudioIONode(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioIONode.isVoiceProcessingEnabled)
 
         self.assertResultIsBOOL(
@@ -66,7 +66,7 @@ class TestAVAudioIONode(TestCase):
         )
 
     @min_os_level("27.0")
-    def testMethods27_0(self):
+    def test_methods27_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioInputNode.setRealtimeSafeManualRenderingInputPCMFormat_inputBlock_
         )

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSIncrementalStore(TestCase):
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(CoreData.NSIncrementalStore.loadMetadata_)
         self.assertArgIsOut(CoreData.NSIncrementalStore.loadMetadata_, 0)
         self.assertArgIsOut(

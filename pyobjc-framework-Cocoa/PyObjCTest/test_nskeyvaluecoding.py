@@ -19,7 +19,7 @@ class TestNSKeyValueCoding(TestCase):
     def test_typed_enum(self):
         self.assertIsTypedEnum(Foundation.NSKeyValueOperator, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSUndefinedKeyException, str)
         self.assertIsInstance(Foundation.NSAverageKeyValueOperator, str)
         self.assertIsInstance(Foundation.NSCountKeyValueOperator, str)
@@ -42,7 +42,7 @@ class TestNSKeyValueCoding(TestCase):
         m = o.validateValue_forKeyPath_error_.__metadata__()
         self.assertEqual(m["arguments"][4]["type"], b"o^@")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSObject.accessInstanceVariablesDirectly)
 
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.validateValue_forKey_error_)

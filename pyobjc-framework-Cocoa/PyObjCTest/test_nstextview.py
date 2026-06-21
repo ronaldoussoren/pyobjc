@@ -96,7 +96,7 @@ class TestNSTextView(TestCase):
         self.assertIsEnumType(AppKit.NSSelectionAffinity)
         self.assertIsEnumType(AppKit.NSSelectionGranularity)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSSelectByCharacter, 0)
         self.assertEqual(AppKit.NSSelectByWord, 1)
         self.assertEqual(AppKit.NSSelectByParagraph, 2)
@@ -146,7 +146,7 @@ class TestNSTextView(TestCase):
         )
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AppKit.NSTouchBarItemIdentifierCharacterPicker, str)
         self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextColorPicker, str)
         self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextStyle, str)
@@ -155,7 +155,7 @@ class TestNSTextView(TestCase):
         self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextFormat, str)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(
             AppKit.NSTextViewWillSwitchToNSLayoutManagerNotification, str
         )
@@ -163,7 +163,7 @@ class TestNSTextView(TestCase):
             AppKit.NSTextViewDidSwitchToNSLayoutManagerNotification, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTextView.shouldDrawInsertionPoint)
         # self.assertArgIsBOOL(AppKit.NSTextView.setShouldDrawInsertionPoint_, 0)
         self.assertResultIsBOOL(AppKit.NSTextView.rulerView_shouldMoveMarker_)
@@ -255,12 +255,12 @@ class TestNSTextView(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSTextView.usesRolloverButtonForSelection)
         self.assertArgIsBOOL(AppKit.NSTextView.setUsesRolloverButtonForSelection_, 0)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSTextView.usesInspectorBar)
         self.assertArgIsBOOL(AppKit.NSTextView.setUsesInspectorBar_, 0)
         self.assertResultIsBOOL(AppKit.NSTextView.usesFindBar)
@@ -269,7 +269,7 @@ class TestNSTextView(TestCase):
         self.assertArgIsBOOL(AppKit.NSTextView.setIncrementalSearchingEnabled_, 0)
 
     @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(AppKit.NSTextView.displaysLinkToolTips)
         self.assertArgIsBOOL(AppKit.NSTextView.setDisplaysLinkToolTips_, 0)
         self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticQuoteSubstitutionEnabled)
@@ -278,10 +278,10 @@ class TestNSTextView(TestCase):
         self.assertArgIsBOOL(AppKit.NSTextView.setAutomaticLinkDetectionEnabled_, 0)
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTextViewDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_clickedOnLink_atIndex_)
         self.assertArgHasType(
             TestNSTextViewHelper.textView_clickedOnLink_atIndex_, 2, objc._C_NSUInteger
@@ -387,7 +387,7 @@ class TestNSTextView(TestCase):
         )
 
     @min_os_level("10.5")
-    def testProtocols10_5(self):
+    def test_protocols10_5(self):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_shouldSetSpellingState_range_,
             1,
@@ -403,7 +403,7 @@ class TestNSTextView(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSTextView.isCoalescingUndo)
 
         self.assertArgIsBOOL(AppKit.NSTextView.setAutomaticDataDetectionEnabled_, 0)
@@ -429,14 +429,14 @@ class TestNSTextView(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSTextView.stronglyReferencesTextStorage)
 
         self.assertResultIsBOOL(AppKit.NSTextView.allowsCharacterPickerTouchBarItem)
         self.assertArgIsBOOL(AppKit.NSTextView.setAllowsCharacterPickerTouchBarItem_, 0)
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsBOOL(
             AppKit.NSTextView.performValidatedReplacementInRange_withAttributedString_
         )
@@ -448,16 +448,16 @@ class TestNSTextView(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertArgIsBOOL(AppKit.NSTextView.initUsingTextLayoutManager_, 0)
         self.assertArgIsBOOL(AppKit.NSTextView.textViewUsingTextLayoutManager_, 0)
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(AppKit.NSTextView.isWritingToolsActive)
 
     @min_os_level("10.6")
-    def testProtocols10_6(self):
+    def test_protocols10_6(self):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_willCheckTextInRange_options_types_,
             1,
@@ -486,7 +486,7 @@ class TestNSTextView(TestCase):
         )
 
     @min_os_level("10.7")
-    def testProtocols10_7(self):
+    def test_protocols10_7(self):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_URLForContentsOfTextAttachment_atIndex_,
             2,
@@ -494,7 +494,7 @@ class TestNSTextView(TestCase):
         )
 
     @min_os_level("10.12")
-    def testProtocols10_12(self):
+    def test_protocols10_12(self):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_candidatesForSelectedRange_,
             1,
@@ -520,5 +520,5 @@ class TestNSTextView(TestCase):
         )
 
     @min_os_level("10.14")
-    def testProtocols10_14(self):
+    def test_protocols10_14(self):
         self.assertProtocolExists("NSUserActivityRestoring", AppKit)

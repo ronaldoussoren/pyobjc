@@ -8,12 +8,12 @@ class TestCKRecordZone(TestCase):
         self.assertIsEnumType(CloudKit.CKRecordZoneCapabilities)
 
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKRecordZone")
         self.assertIsInstance(CloudKit.CKRecordZone, objc.objc_class)
 
     @min_os_level("10.8")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CloudKit.CKRecordZoneCapabilityFetchChanges, 1 << 0)
         self.assertEqual(CloudKit.CKRecordZoneCapabilityAtomic, 1 << 1)
         self.assertEqual(CloudKit.CKRecordZoneCapabilitySharing, 1 << 2)

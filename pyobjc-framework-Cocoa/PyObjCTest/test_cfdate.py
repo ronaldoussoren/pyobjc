@@ -7,7 +7,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDate(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             cls = objc.lookUpClass("__NSDate")
             self.assertIs(cls, CoreFoundation.CFDateRef)
@@ -28,7 +28,7 @@ class TestDate(TestCase):
         v = CoreFoundation.CFDateGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreFoundation.kCFAbsoluteTimeIntervalSince1970, float)
         self.assertIsInstance(CoreFoundation.kCFAbsoluteTimeIntervalSince1904, float)
         self.assertEqual(CoreFoundation.kCFGregorianUnitsYears, (1 << 0))
@@ -39,7 +39,7 @@ class TestDate(TestCase):
         self.assertEqual(CoreFoundation.kCFGregorianUnitsSeconds, (1 << 5))
         self.assertEqual(CoreFoundation.kCFGregorianAllUnits, 0x00FFFFFF)
 
-    def testStructs(self):
+    def test_structs(self):
         v = CoreFoundation.CFGregorianDate()
         self.assertHasAttr(v, "year")
         self.assertHasAttr(v, "month")

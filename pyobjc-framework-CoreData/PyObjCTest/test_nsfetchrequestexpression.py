@@ -4,11 +4,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSFetchRequestExpression(TestCase):
     @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreData.NSFetchRequestExpressionType, 50)
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             CoreData.NSFetchRequestExpression.expressionForFetch_context_countOnly_, 2
         )

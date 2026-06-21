@@ -15,7 +15,7 @@ class TestMDLTypes(TestCase):
         self.assertIsEnumType(ModelIO.MDLIndexBitDepth)
         self.assertIsEnumType(ModelIO.MDLProbePlacement)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(ModelIO.kUTTypeAlembic, str)
         self.assertIsInstance(ModelIO.kUTType3dObject, str)
         self.assertIsInstance(ModelIO.kUTTypePolygon, str)
@@ -44,25 +44,25 @@ class TestMDLTypes(TestCase):
         self.assertEqual(ModelIO.MDLProbePlacementIrradianceDistribution, 1)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(ModelIO.kUTTypeUniversalSceneDescription, str)
 
     @min_os_level("12.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         # Documented as available on 11.0 and later, but not present until 12.0
         self.assertIsInstance(ModelIO.kUTTypeUniversalSceneDescriptionMobile, str)
 
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("MDLNamed", ModelIO)
         self.assertProtocolExists("MDLComponent", ModelIO)
         self.assertProtocolExists("MDLObjectContainerComponent", ModelIO)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             TestMDLTypesHelper.objectAtIndexedSubscript_, 0, objc._C_NSUInteger
         )
 
-    def testStructs(self):
+    def test_structs(self):
         self.assertEqual(
             ModelIO.MDLAxisAlignedBoundingBox.__typestr__,
             b"{MDLAxisAlignedBoundingBox=<3f><3f>}",

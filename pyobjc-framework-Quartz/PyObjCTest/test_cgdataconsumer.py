@@ -6,10 +6,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCGDataConsumer(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGDataConsumerRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGDataConsumerGetTypeID(), int)
 
         url = Quartz.CFURLCreateWithFileSystemPath(

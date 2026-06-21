@@ -12,7 +12,7 @@ class TestNSOpenGL(TestCase):
         self.assertIsEnumType(AppKit.NSOpenGLContextParameter)
         self.assertIsEnumType(AppKit.NSOpenGLGlobalOption)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSOpenGLGOFormatCacheSize, 501)
         self.assertEqual(AppKit.NSOpenGLGOClearFormatCache, 502)
         self.assertEqual(AppKit.NSOpenGLGORetainRenderers, 503)
@@ -88,20 +88,20 @@ class TestNSOpenGL(TestCase):
         self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceSurfaceVolatile, 306)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertEqual(AppKit.NSOpenGLPFAAllowOfflineRenderers, 96)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSOpenGLPFAOpenGLProfile, 99)
         self.assertEqual(AppKit.NSOpenGLProfileVersionLegacy, 0x1000)
         self.assertEqual(AppKit.NSOpenGLProfileVersion3_2Core, 0x3200)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertEqual(AppKit.NSOpenGLProfileVersion4_1Core, 0x4100)
 
-    def testFunctions(self):
+    def test_functions(self):
         major, minor = AppKit.NSOpenGLGetVersion(None, None)
         self.assertIsInstance(major, int)
         self.assertIsInstance(minor, int)
@@ -112,7 +112,7 @@ class TestNSOpenGL(TestCase):
 
         AppKit.NSOpenGLSetOption(AppKit.NSOpenGLGOFormatCacheSize, v)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsNullTerminated(
             AppKit.NSOpenGLPixelFormat.initWithAttributes_, 0
         )
@@ -161,7 +161,7 @@ class TestNSOpenGL(TestCase):
     @expectedFailure
     @min_os_level("10.6")
     @max_os_level("10.11")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgHasType(
             AppKit.NSOpenGLPixelFormat.initWithCGLPixelFormatObj_,
             0,
@@ -175,6 +175,6 @@ class TestNSOpenGL(TestCase):
         )
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSOpenGLPFARemotePixelBuffer, 91)
         self.assertEqual(AppKit.NSOpenGLPFAAcceleratedCompute, 97)

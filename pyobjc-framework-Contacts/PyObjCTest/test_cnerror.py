@@ -7,7 +7,7 @@ class TestCNError(TestCase):
         self.assertIsEnumType(Contacts.CNErrorCode)
 
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Contacts.CNErrorDomain, str)
 
         self.assertEqual(Contacts.CNErrorCodeCommunicationError, 1)

@@ -9,7 +9,7 @@ with warnings.catch_warnings():
 
 
 class TestIconsCore(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(LaunchServices.kGenericDocumentIconResource, -4000)
         self.assertEqual(LaunchServices.kGenericStationeryIconResource, -3985)
         self.assertEqual(LaunchServices.kGenericEditionFileIconResource, -3989)
@@ -369,7 +369,7 @@ class TestIconsCore(TestCase):
         self.assertEqual(LaunchServices.kIconServicesUpdateIfNeededFlag, 2)
         self.assertEqual(LaunchServices.kIconServicesCatalogInfoMask, 531_550)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsOut(LaunchServices.GetIconRef, 3)
         err, icon = LaunchServices.GetIconRef(
             0, LaunchServices.kSystemIconsCreator, LaunchServices.kShortcutIcon, None
@@ -437,5 +437,5 @@ class TestIconsCore(TestCase):
             err = LaunchServices.ReleaseIconRef(icon)
             self.assertEqual(err, 0)
 
-    def testOpaque(self):
+    def test_opaque(self):
         self.assertIsOpaquePointer(LaunchServices.IconRef)

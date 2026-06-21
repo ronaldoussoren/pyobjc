@@ -155,7 +155,7 @@ class TestPreferences(TestCase):
         self.assertIsInstance(keys, CoreFoundation.CFArrayRef)
         self.assertTrue("region" in keys or "version" in keys)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreFoundation.kCFPreferencesAnyApplication, str)
         self.assertIsInstance(CoreFoundation.kCFPreferencesCurrentApplication, str)
         self.assertIsInstance(CoreFoundation.kCFPreferencesAnyHost, str)

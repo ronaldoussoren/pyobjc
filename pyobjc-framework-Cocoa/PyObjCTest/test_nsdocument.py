@@ -8,7 +8,7 @@ class TestNSDocument(TestCase):
         self.assertIsEnumType(AppKit.NSDocumentChangeType)
         self.assertIsEnumType(AppKit.NSSaveOperationType)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSChangeDone, 0)
         self.assertEqual(AppKit.NSChangeUndone, 1)
         self.assertEqual(AppKit.NSChangeCleared, 2)
@@ -22,16 +22,16 @@ class TestNSDocument(TestCase):
         self.assertEqual(AppKit.NSAutosaveOperation, 3)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertEqual(AppKit.NSChangeDiscardable, 256)
         self.assertEqual(AppKit.NSAutosaveInPlaceOperation, 4)
         self.assertEqual(AppKit.NSAutosaveElsewhereOperation, 3)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(AppKit.NSAutosaveAsOperation, 5)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(AppKit.NSDocument.initWithType_error_, 1)
         self.assertArgIsOut(AppKit.NSDocument.initWithContentsOfURL_ofType_error_, 2)
         self.assertArgIsOut(
@@ -214,11 +214,11 @@ class TestNSDocument(TestCase):
         )
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSDocument.canConcurrentlyReadDocumentsOfType_)
 
     @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods10_7(self):
         self.assertArgIsBOOL(
             AppKit.NSDocument.performActivityWithSynchronousWaiting_usingBlock_, 0
         )
@@ -292,7 +292,7 @@ class TestNSDocument(TestCase):
         )
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBOOL(AppKit.NSDocument.setDraft_, 0)
         self.assertResultIsBOOL(AppKit.NSDocument.isDraft)
         self.assertResultIsBOOL(AppKit.NSDocument.autosavesDrafts)
@@ -321,7 +321,7 @@ class TestNSDocument(TestCase):
         self.assertResultIsBOOL(AppKit.NSDocument.usesUbiquitousStorage)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSDocument.isBrowsingVersions)
 
         self.assertArgIsBlock(
@@ -329,7 +329,7 @@ class TestNSDocument(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(AppKit.NSDocument.allowsDocumentSharing)
         self.assertArgIsBlock(
             AppKit.NSDocument.shareDocumentWithSharingService_completionHandler_,
@@ -338,5 +338,5 @@ class TestNSDocument(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(AppKit.NSDocument.savePanelShowsFileFormatsControl)

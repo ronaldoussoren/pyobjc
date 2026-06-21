@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAXVAlue(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(HIServices.kAXValueTypeCGPoint, 1)
         self.assertEqual(HIServices.kAXValueTypeCGSize, 2)
         self.assertEqual(HIServices.kAXValueTypeCGRect, 3)

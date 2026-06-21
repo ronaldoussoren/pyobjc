@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, os_release, os_level
 
 class TestCFSocketStream(TestCase):
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(
             CFNetwork.kCFStreamPropertyAllowExpensiveNetworkAccess, str
         )
@@ -14,15 +14,15 @@ class TestCFSocketStream(TestCase):
         )
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeCallSignaling, str)
 
     @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants10_9(self):
         self.assertIsInstance(CFNetwork.kCFStreamPropertySSLContext, str)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertIsInstance(CFNetwork.kCFStreamPropertyNoCellular, str)
         self.assertIsInstance(CFNetwork.kCFStreamPropertyConnectionIsCellular, str)
         self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeResponsiveData, str)
@@ -34,7 +34,7 @@ class TestCFSocketStream(TestCase):
         self.assertIsInstance(CFNetwork.kCFStreamPropertyConnectionIsCellular, str)
 
     @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants10_7(self):
         self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceType, str)
         self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeVoIP, str)
         self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeVideo, str)
@@ -42,11 +42,11 @@ class TestCFSocketStream(TestCase):
         self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeVoice, str)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(CFNetwork.kCFStreamPropertySSLPeerTrust, str)
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainWinSock, int)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CFNetwork.kCFStreamPropertySSLPeerCertificates, str)
         self.assertIsInstance(CFNetwork.kCFStreamPropertySSLSettings, str)
         self.assertIsInstance(CFNetwork.kCFStreamSSLLevel, str)
@@ -103,7 +103,7 @@ class TestCFSocketStream(TestCase):
 
         self.assertIsInstance(CFNetwork.kCFStreamPropertyProxyLocalBypass, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         err = CFNetwork.CFStreamError()
         err.error = (1 << 16) + 2
 
@@ -150,7 +150,7 @@ class TestCFSocketStream(TestCase):
         self.assertIsInstance(wr, CFNetwork.CFWriteStreamRef)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(
             CFNetwork.kCFStreamPropertySocketExtendedBackgroundIdleMode, str
         )

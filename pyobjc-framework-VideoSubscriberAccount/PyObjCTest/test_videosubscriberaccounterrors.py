@@ -6,7 +6,7 @@ class TestVideoSubscriberAccountErrors(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(VideoSubscriberAccount.VSErrorCode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(VideoSubscriberAccount.VSErrorDomain, str)
         self.assertIsInstance(VideoSubscriberAccount.VSErrorInfoKeySAMLResponse, str)
         self.assertIsInstance(

@@ -6,7 +6,7 @@ CLGeocodeCompletionHandler = b"v@@"
 
 class TestCLGeocoder(TestCase):
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertArgIsBlock(
             CoreLocation.CLGeocoder.geocodeAddressDictionary_completionHandler_,
             1,
@@ -31,7 +31,7 @@ class TestCLGeocoder(TestCase):
         self.assertResultIsBOOL(CoreLocation.CLGeocoder.isGeocoding)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             CoreLocation.CLGeocoder.reverseGeocodeLocation_preferredLocale_completionHandler_,
             2,

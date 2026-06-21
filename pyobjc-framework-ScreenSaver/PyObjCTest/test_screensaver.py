@@ -4,7 +4,7 @@ import objc
 
 
 class TestScreenSaver(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(ScreenSaver, "ScreenSaverDefaults")
         self.assertIsInstance(ScreenSaver.ScreenSaverDefaults, objc.objc_class)
 

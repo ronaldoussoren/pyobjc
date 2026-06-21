@@ -40,11 +40,11 @@ class TestNSSavePanelHelper(AppKit.NSObject):
 
 
 class TestNSSavePanel(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSFileHandlingPanelCancelButton, AppKit.NSCancelButton)
         self.assertEqual(AppKit.NSFileHandlingPanelOKButton, AppKit.NSOKButton)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSavePanel.showsHiddenFiles)
         self.assertArgIsBOOL(AppKit.NSSavePanel.setShowsHiddenFiles_, 0)
         self.assertResultIsBOOL(AppKit.NSSavePanel.allowsOtherFileTypes)
@@ -71,7 +71,7 @@ class TestNSSavePanel(TestCase):
         )
 
     @min_sdk_level("10.6")
-    def testProtocolObjects(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSOpenSavePanelDelegate", AppKit)
 
     def testProtocol(self):
@@ -90,7 +90,7 @@ class TestNSSavePanel(TestCase):
         self.assertArgIsBOOL(TestNSSavePanelHelper.panel_willExpand_, 1)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBlock(
             AppKit.NSSavePanel.beginWithCompletionHandler_, 0, b"v" + objc._C_NSInteger
         )
@@ -109,7 +109,7 @@ class TestNSSavePanel(TestCase):
         )
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertArgIsBOOL(AppKit.NSSavePanel.setShowsTagField_, 0)
         self.assertResultIsBOOL(AppKit.NSSavePanel.showsTagField)
 

@@ -5,7 +5,7 @@ import CoreSpotlight
 
 
 class TestCSSearchableItem(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreSpotlight.CSSearchableItemActionType, str)
         self.assertIsInstance(CoreSpotlight.CSSearchableItemActivityIdentifier, str)
         self.assertIsInstance(CoreSpotlight.CSQueryContinuationActionType, str)

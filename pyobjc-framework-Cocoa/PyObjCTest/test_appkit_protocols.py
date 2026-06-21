@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 
 class TestProtocolsExisting(TestCase):
     @min_sdk_level("10.10")
-    def testProtocols10_10(self):
+    def test_protocols10_10(self):
         self.assertProtocolExists("NSAlertDelegate", AppKit)
         self.assertProtocolExists("NSApplicationDelegate", AppKit)
         self.assertProtocolExists("NSCollectionViewDelegate", AppKit)
@@ -27,7 +27,7 @@ class TestProtocolsExisting(TestCase):
         self.assertProtocolExists("NSTabViewDelegate", AppKit)
 
     @min_os_level("10.6")
-    def testProtocols10_6(self):
+    def test_protocols10_6(self):
         self.assertProtocolExists("NSAnimatablePropertyContainer", AppKit)
         self.assertProtocolExists("NSAnimationDelegate", AppKit)
         self.assertProtocolExists("NSBrowserDelegate", AppKit)
@@ -70,7 +70,7 @@ class TestProtocolsExisting(TestCase):
         self.assertProtocolExists("NSWindowDelegate", AppKit)
 
     @min_os_level("10.7")
-    def testProtocols10_7(self):
+    def test_protocols10_7(self):
         self.assertProtocolExists("NSDraggingDestination", AppKit)
         self.assertProtocolExists("NSDraggingSource", AppKit)
         self.assertProtocolExists("NSPopoverDelegate", AppKit)
@@ -80,6 +80,6 @@ class TestProtocolsExisting(TestCase):
         self.assertProtocolExists("NSWindowRestoration", AppKit)
 
     @min_sdk_level("10.8")
-    def testProtocols10_8(self):
+    def test_protocols10_8(self):
         self.assertProtocolExists("NSSharingServiceDelegate", AppKit)
         self.assertProtocolExists("NSSharingServicePickerDelegate", AppKit)

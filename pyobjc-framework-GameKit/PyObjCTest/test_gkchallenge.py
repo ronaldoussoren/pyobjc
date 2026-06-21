@@ -10,13 +10,13 @@ class TestGKChallenge(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(GameKit.GKChallengeState)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(GameKit.GKChallengeStateInvalid, 0)
         self.assertEqual(GameKit.GKChallengeStatePending, 1)
         self.assertEqual(GameKit.GKChallengeStateCompleted, 2)
         self.assertEqual(GameKit.GKChallengeStateDeclined, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             GameKit.GKChallenge.loadReceivedChallengesWithCompletionHandler_, 0, b"v@@"
         )
@@ -28,7 +28,7 @@ class TestGKChallenge(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             GameKit.GKScore.challengeComposeControllerWithMessage_players_completionHandler_,
             2,
@@ -56,7 +56,7 @@ class TestGKChallenge(TestCase):
         )
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             GameKit.GKScore.reportLeaderboardScores_withEligibleChallenges_withCompletionHandler_,
             2,
@@ -69,7 +69,7 @@ class TestGKChallenge(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsBlock(
             GameKit.GKScore.challengeComposeControllerWithMessage_players_completion_,
             2,
@@ -86,8 +86,6 @@ class TestGKChallenge(TestCase):
             GKChallengeComposeHandler,
         )
 
-    @min_os_level("14.0")
-    def test_methods14_0(self):
         self.assertArgIsBlock(
             GameKit.GKScore.challengeComposeControllerWithMessage_players_completion_,
             2,

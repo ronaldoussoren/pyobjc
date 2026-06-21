@@ -14,7 +14,7 @@ class TestAVPlayer(TestCase):
         self.assertIsEnumType(AVFoundation.AVPlayerStatus)
         self.assertIsEnumType(AVFoundation.AVPlayerTimeControlStatus)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVPlayerStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVPlayerStatusReadyToPlay, 1)
         self.assertEqual(AVFoundation.AVPlayerStatusFailed, 2)
@@ -51,7 +51,7 @@ class TestAVPlayer(TestCase):
         self.assertEqual(AVFoundation.AVPlayerNetworkResourcePriorityHigh, 2)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(
             AVFoundation.AVPlayerWaitingToMinimizeStallsReason, str
         )  # noqa: B950
@@ -63,14 +63,14 @@ class TestAVPlayer(TestCase):
         )  # noqa: B950
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(
             AVFoundation.AVPlayerEligibleForHDRPlaybackDidChangeNotification,
             str,  # noqa: B950
         )
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(
             AVFoundation.AVPlayerRateDidChangeReasonKey,
             str,  # noqa: B950
@@ -109,7 +109,7 @@ class TestAVPlayer(TestCase):
         )
 
     @min_os_level("26.4")
-    def testConstants26_4(self):
+    def test_constants26_4(self):
         self.assertIsInstance(
             AVFoundation.AVPlayerRateDidChangeReasonPlayheadReachedLiveEdge,
             str,  # noqa: B950
@@ -120,7 +120,7 @@ class TestAVPlayer(TestCase):
         )
 
     @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             AVFoundation.AVPlayer.seekToDate_completionHandler_, 1, b"vZ"
         )
@@ -159,7 +159,7 @@ class TestAVPlayer(TestCase):
         )  # noqa: B950
 
     @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayer.appliesMediaSelectionCriteriaAutomatically
         )
@@ -169,7 +169,7 @@ class TestAVPlayer(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.allowsExternalPlayback)
         self.assertArgIsBOOL(
             AVFoundation.AVPlayer.setAllowsExternalPlayback_, 0
@@ -177,7 +177,7 @@ class TestAVPlayer(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.isExternalPlaybackActive)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayer.automaticallyWaitsToMinimizeStalling
         )
@@ -190,7 +190,7 @@ class TestAVPlayer(TestCase):
         )
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayer.preventsDisplaySleepDuringVideoPlayback
         )
@@ -199,11 +199,11 @@ class TestAVPlayer(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.eligibleForHDRPlayback)
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayerItem.automaticallyHandlesInterstitialEvents
         )
@@ -212,7 +212,7 @@ class TestAVPlayer(TestCase):
         )
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayer.audioOutputSuppressedDueToNonMixableAudioRoute
         )
@@ -221,6 +221,6 @@ class TestAVPlayer(TestCase):
         self.assertArgIsBOOL(AVFoundation.AVPlayer.setObservationEnabled_, 0)
 
     @min_os_level("26.4")
-    def testMethods26_4(self):
+    def test_methods26_4(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.allowsCaptureOfClearKeyVideo)
         self.assertArgIsBOOL(AVFoundation.AVPlayer.setAllowsCaptureOfClearKeyVideo_, 0)

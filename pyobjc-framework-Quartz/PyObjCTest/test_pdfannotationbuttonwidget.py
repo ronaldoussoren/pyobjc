@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestPDFAnnotationButtonWidget(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kPDFWidgetUnknownControl, -1)
         self.assertEqual(Quartz.kPDFWidgetPushButtonControl, 0)
         self.assertEqual(Quartz.kPDFWidgetRadioButtonControl, 1)
@@ -14,11 +14,11 @@ class TestPDFAnnotationButtonWidget(TestCase):
         self.assertEqual(Quartz.kPDFWidgetOnState, 1)
 
     @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.PDFAnnotationButtonWidget.isHighlighted)
         self.assertArgIsBOOL(Quartz.PDFAnnotationButtonWidget.setHighlighted_, 0)
         self.assertResultIsBOOL(Quartz.PDFAnnotationButtonWidget.allowsToggleToOff)
 
     @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods10_6(self):
         self.assertArgIsBOOL(Quartz.PDFAnnotationButtonWidget.setAllowsToggleToOff_, 0)

@@ -6,12 +6,12 @@ import objc
 
 
 class TestLSSharedFileList(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreServices.LSSharedFileListRef)
         self.assertIsCFType(CoreServices.LSSharedFileListItemRef)
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(CoreServices.kLSSharedFileListFavoriteVolumes, str)
         self.assertIsInstance(CoreServices.kLSSharedFileListFavoriteItems, str)
         self.assertIsInstance(CoreServices.kLSSharedFileListRecentApplicationItems, str)
@@ -26,7 +26,7 @@ class TestLSSharedFileList(TestCase):
         self.assertIsInstance(CoreServices.kLSSharedFileListItemHidden, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertIsInstance(CoreServices.kLSSharedFileListLoginItemHidden, str)
 
     @min_os_level("10.5")
@@ -39,11 +39,11 @@ class TestLSSharedFileList(TestCase):
             CoreServices.kLSSharedFileListItemLast, CoreServices.LSSharedFileListItemRef
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreServices.kLSSharedFileListNoUserInteraction, 1)
         self.assertEqual(CoreServices.kLSSharedFileListDoNotMountVolumes, 2)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreServices.LSSharedFileListGetTypeID(), int)
         self.assertIsInstance(CoreServices.LSSharedFileListItemGetTypeID(), int)
 
@@ -160,6 +160,6 @@ class TestLSSharedFileList(TestCase):
         self.fail("LSSharedFileListItemRef")
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsCFRetained(CoreServices.LSSharedFileListItemCopyResolvedURL)
         self.assertArgIsOut(CoreServices.LSSharedFileListItemCopyResolvedURL, 2)

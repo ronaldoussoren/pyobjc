@@ -9,7 +9,7 @@ class TestEKCalendarItem(TestCase):
         self.assertTrue(hasattr(EventKit, "EKCalendarItem"))
 
     @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         self.assertResultIsBOOL(EventKit.EKCalendarItem.hasAlarms)
         self.assertResultIsBOOL(EventKit.EKCalendarItem.hasAttendees)
         self.assertResultIsBOOL(EventKit.EKCalendarItem.hasNotes)

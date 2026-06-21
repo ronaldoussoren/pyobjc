@@ -6,10 +6,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCGContext(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGContextRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGLineJoinMiter, 0)
         self.assertEqual(Quartz.kCGLineJoinRound, 1)
         self.assertEqual(Quartz.kCGLineJoinBevel, 2)
@@ -89,7 +89,7 @@ class TestCGContext(TestCase):
         self.assertIsInstance(Quartz.kCGEXRToneMappingGammaKneeHigh, str)
 
     @min_os_level("10.5")
-    def testFunctions10_5(self):
+    def test_functions10_5(self):
         url = Quartz.CFURLCreateWithFileSystemPath(
             None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
         )
@@ -193,7 +193,7 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGContextGetTypeID(), int)
 
         url = Quartz.CFURLCreateWithFileSystemPath(
@@ -632,7 +632,7 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def testFunctions_n(self):
+    def test_functions_n(self):
         Quartz.CGContextResetClip
 
     @min_os_level("14.0")

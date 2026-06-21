@@ -19,7 +19,7 @@ class TestNSGraphics(TestCase):
         self.assertIsEnumType(AppKit.NSWindowDepth)
         self.assertIsEnumType(AppKit.NSWindowOrderingMode)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSCompositeClear, 0)
         self.assertEqual(AppKit.NSCompositeCopy, 1)
         self.assertEqual(AppKit.NSCompositeSourceOver, 2)
@@ -123,7 +123,7 @@ class TestNSGraphics(TestCase):
         self.assertEqual(AppKit.NSDisplayGamutSRGB, 1)
         self.assertEqual(AppKit.NSDisplayGamutP3, 2)
 
-    def testFunctions(self):
+    def test_functions(self):
         app = AppKit.NSApplication.sharedApplication()  # noqa: F841
 
         self.assertArgHasType(AppKit.NSBestDepth, 4, b"o^" + objc._C_NSBOOL)
@@ -302,7 +302,7 @@ class TestNSGraphics(TestCase):
             pass
 
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertEqual(AppKit.NSColorRenderingIntentDefault, 0)
         self.assertEqual(AppKit.NSColorRenderingIntentAbsoluteColorimetric, 1)
         self.assertEqual(AppKit.NSColorRenderingIntentRelativeColorimetric, 2)
@@ -315,7 +315,7 @@ class TestNSGraphics(TestCase):
         self.assertEqual(AppKit.NSImageInterpolationHigh, 3)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(AppKit.NSWindowDepthTwentyfourBitRGB, 0x208)
         self.assertEqual(AppKit.NSWindowDepthSixtyfourBitRGB, 0x210)
         self.assertEqual(AppKit.NSWindowDepthOnehundredtwentyeightBitRGB, 0x220)

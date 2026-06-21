@@ -10,12 +10,12 @@ class TestEAWiFiUnconfiguredAccessoryBrowser(TestCase):
             ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatus
         )
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertProtocolExists(
             "EAWiFiUnconfiguredAccessoryBrowserDelegate", ExternalAccessory
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             ExternalAccessory.EAWiFiUnconfiguredAccessoryBrowserStateWiFiUnavailable, 0
         )
@@ -40,7 +40,7 @@ class TestEAWiFiUnconfiguredAccessoryBrowser(TestCase):
             ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatusFailed, 2
         )
 
-    def testMethods(self):
+    def test_methods(self):
         # Not on macOS:
         # self.assertArgIsBlock(ExternalAccessory.EAAccessoryManager.showBluetoothAccessoryPickerWithNameFilter_completion_, 1, b'v@')   # noqa: B950
         pass

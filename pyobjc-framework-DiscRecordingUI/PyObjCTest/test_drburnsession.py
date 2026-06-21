@@ -4,10 +4,10 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRBurnSession(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypes(self):
         self.assertIsCFType(DiscRecordingUI.DRBurnSessionRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(DiscRecordingUI.kDRBurnSessionOK, 1)
         self.assertEqual(DiscRecordingUI.kDRBurnSessionCancel, 0)
 
@@ -43,7 +43,7 @@ class TestDRBurnSession(TestCase):
             DiscRecordingUI.kBurnSessionProgressDialogDisplayVerboseProgress, 0x00000001
         )
 
-    def testStructs(self):
+    def test_structs(self):
         v = DiscRecordingUI.DRBurnSessionSetupDialogOptions()
         self.assertEqual(v.version, 0)
         self.assertEqual(v.dialogOptionFlags, 0)
@@ -56,7 +56,7 @@ class TestDRBurnSession(TestCase):
         self.assertEqual(v.description, None)
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(DiscRecordingUI.DRBurnSessionGetTypeID(), int)
 
         self.assertResultIsCFRetained(DiscRecordingUI.DRBurnSessionCreate)

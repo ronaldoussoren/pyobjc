@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCFNetwork(TestCase):
     @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         self.assertIsInstance(CFNetwork.kCFErrorDomainCFNetwork, str)
         self.assertIsInstance(CFNetwork.kCFErrorDomainWinSock, str)
         self.assertIsInstance(CFNetwork.kCFGetAddrInfoFailureKey, str)
@@ -17,7 +17,7 @@ class TestCFNetwork(TestCase):
         self.assertIsInstance(CFNetwork.kCFURLErrorFailingURLStringErrorKey, str)
 
     @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants10_6(self):
         self.assertEqual(CFNetwork.kCFErrorPACFileAuth, 309)
         self.assertEqual(CFNetwork.kCFErrorHTTPSProxyConnectionFailure, 310)
 
@@ -67,7 +67,7 @@ class TestCFNetwork(TestCase):
         self.assertEqual(CFNetwork.kCFURLErrorDownloadDecodingFailedToComplete, -3007)
         self.assertEqual(CFNetwork.kCFHTTPCookieCannotParseCookieFile, -4000)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CFNetwork.kCFHostErrorHostNotFound, 1)
         self.assertEqual(CFNetwork.kCFHostErrorUnknown, 2)
         self.assertEqual(CFNetwork.kCFSOCKSErrorUnknownClientVersion, 100)
@@ -111,7 +111,7 @@ class TestCFNetwork(TestCase):
         self.assertEqual(CFNetwork.kCFURLErrorFileOutsideSafeArea, -1104)
 
     @min_os_level("10.8")
-    def testConstants10_8(self):
+    def test_constants10_8(self):
         self.assertEqual(
             CFNetwork.kCFStreamErrorHTTPSProxyFailureUnexpectedResponseToCONNECTMethod,
             311,

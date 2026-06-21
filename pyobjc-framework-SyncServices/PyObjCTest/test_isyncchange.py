@@ -3,7 +3,7 @@ import SyncServices
 
 
 class TestISyncChange(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(SyncServices.ISyncChangeTypeNone, 0)
         self.assertEqual(SyncServices.ISyncChangeTypeAdd, 1)
         self.assertEqual(SyncServices.ISyncChangeTypeModify, 2)
@@ -16,6 +16,6 @@ class TestISyncChange(TestCase):
         self.assertIsInstance(SyncServices.ISyncChangePropertyValueKey, str)
 
     @min_os_level("10.6")
-    def testConstants10_5(self):
+    def test_constants10_5(self):
         # Document for 10.5, but not actually present there
         self.assertIsInstance(SyncServices.ISyncChangePropertyValueIsDefaultKey, str)
